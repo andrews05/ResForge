@@ -310,6 +310,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	if( tmpl && [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)] )
 	{
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
+		// update: doug says window controllers automatically release themselves when their window is closed.
 		NSWindowController *plugController = [(id <ResKnifePluginProtocol>)[[templateEditor principalClass] alloc] initWithResources:resource, tmpl, nil];
 		if( plugController ) return;
 	}
