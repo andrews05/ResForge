@@ -598,8 +598,8 @@ OSStatus HandleKeyDown( WindowRef window, unsigned char charCode, EventModifiers
 				{
 					// shift typed char into high bits and add new low char
 					if( charCode >= 0x30 && charCode <= 0x39 )		charCode -= 0x30;		// 0 to 9
+					else if( charCode >= 0x41 && charCode <= 0x46 )	charCode -= 0x37;		// A to F
 					else if( charCode >= 0x61 && charCode <= 0x66 )	charCode -= 0x57;		// a to f
-					else if( charCode >= 0x93 && charCode <= 0x98 )	charCode -= 0x8A;		// A to F
 					else break;
 					hexWindow->hexChar <<=  4;				// store high bit
 				 	hexWindow->hexChar += charCode & 0x0F;	// add low bit
@@ -612,8 +612,8 @@ OSStatus HandleKeyDown( WindowRef window, unsigned char charCode, EventModifiers
 				{
 					// put typed char into low bits
 					if( charCode >= 0x30 && charCode <= 0x39 )		charCode -= 0x30;		// 0 to 9
+					else if( charCode >= 0x41 && charCode <= 0x46 )	charCode -= 0x37;		// A to F
 					else if( charCode >= 0x61 && charCode <= 0x66 )	charCode -= 0x57;		// a to f
-					else if( charCode >= 0x93 && charCode <= 0x98 )	charCode -= 0x8A;		// A to F
 					else break;
 					hexWindow->hexChar = charCode & 0x0F;
 					hexWindow->editedHigh = true;

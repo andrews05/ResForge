@@ -5,6 +5,13 @@
 
 @implementation HexEditorDelegate
 
+- (id)init
+{
+	self = [super init];
+	if( self ) editedLow = NO;
+	return self;
+}
+
 /* data re-representation methods */
 
 - (NSString *)offsetRepresentation:(NSData *)data;
@@ -205,6 +212,16 @@
 - (NSTextView *)ascii
 {
 	return ascii;
+}
+
+- (BOOL)editedLow
+{
+	return editedLow;
+}
+
+- (void)setEditedLow:(BOOL)flag
+{
+	editedLow = flag;
 }
 
 @end

@@ -13,6 +13,7 @@
 	
 	if( [type length] == 4 && [[resIDView stringValue] length] > 0 )
 	{
+		// I could use +[Resource resourceOfType:andID:inDocument:] != nil, but that would be much slower
 		Resource *resource;
 		NSEnumerator *enumerator = [[[document dataSource] resources] objectEnumerator];
 		while( resource = [enumerator nextObject] )

@@ -30,11 +30,6 @@
 	government3 = [[NSNumber alloc] initWithShort:130];
 	government4 = [[NSNumber alloc] initWithShort:131];
 	
-	// load the window from the nib file and set it's title
-	[self window];	// implicitly loads nib
-	if( [newResource name] && ![[newResource name] isEqualToString:@""] )
-		[[self window] setTitle:[NSString stringWithFormat:@"%@: %@", [[self window] title], [newResource name]]];
-	[self update];
 	return self;
 }
 
@@ -80,6 +75,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(controlTextDidEndEditing:) name:NSControlTextDidEndEditingNotification object:governmentField4];
 	
 	// finally, show the window
+	[self update];
 	[self showWindow:self];
 }
 

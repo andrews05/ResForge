@@ -4,20 +4,6 @@
 
 @implementation TemplateWindowController
 
-NSString *ResourceWillChangeNotification			= @"ResourceWillChangeNotification";
-NSString *ResourceNameWillChangeNotification		= @"ResourceNameWillChangeNotification";
-NSString *ResourceTypeWillChangeNotification		= @"ResourceTypeWillChangeNotification";
-NSString *ResourceIDWillChangeNotification			= @"ResourceIDWillChangeNotification";
-NSString *ResourceAttributesWillChangeNotification	= @"ResourceAttributesWillChangeNotification";
-NSString *ResourceDataWillChangeNotification		= @"ResourceDataWillChangeNotification";
-
-NSString *ResourceNameDidChangeNotification			= @"ResourceNameDidChangeNotification";
-NSString *ResourceTypeDidChangeNotification			= @"ResourceTypeDidChangeNotification";
-NSString *ResourceIDDidChangeNotification			= @"ResourceIDDidChangeNotification";
-NSString *ResourceAttributesDidChangeNotification	= @"ResourceAttributesDidChangeNotification";
-NSString *ResourceDataDidChangeNotification			= @"ResourceDataDidChangeNotification";
-NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
-
 - (id)initWithResource:(id)newResource
 {
 	return [self initWithResources:newResource, nil];

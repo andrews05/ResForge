@@ -3,5 +3,6 @@
 
 @interface BoomWindowController : NovaWindowController
 {
+	BoomRec *boomRec;
 }
 @end

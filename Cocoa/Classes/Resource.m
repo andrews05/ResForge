@@ -2,21 +2,6 @@
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
 
-// should these be above or below "@implementation Resource" ?
-NSString *ResourceWillChangeNotification			= @"ResourceWillChangeNotification";
-NSString *ResourceNameWillChangeNotification		= @"ResourceNameWillChangeNotification";
-NSString *ResourceTypeWillChangeNotification		= @"ResourceTypeWillChangeNotification";
-NSString *ResourceIDWillChangeNotification			= @"ResourceIDWillChangeNotification";
-NSString *ResourceAttributesWillChangeNotification	= @"ResourceAttributesWillChangeNotification";
-NSString *ResourceDataWillChangeNotification		= @"ResourceDataWillChangeNotification";
-
-NSString *ResourceNameDidChangeNotification			= @"ResourceNameDidChangeNotification";
-NSString *ResourceTypeDidChangeNotification			= @"ResourceTypeDidChangeNotification";
-NSString *ResourceIDDidChangeNotification			= @"ResourceIDDidChangeNotification";
-NSString *ResourceAttributesDidChangeNotification	= @"ResourceAttributesDidChangeNotification";
-NSString *ResourceDataDidChangeNotification			= @"ResourceDataDidChangeNotification";
-NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
-
 @implementation Resource
 
 - (id)init

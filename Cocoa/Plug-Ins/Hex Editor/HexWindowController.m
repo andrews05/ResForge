@@ -4,20 +4,6 @@
 
 @implementation HexWindowController
 
-NSString *ResourceWillChangeNotification			= @"ResourceWillChangeNotification";
-NSString *ResourceNameWillChangeNotification		= @"ResourceNameWillChangeNotification";
-NSString *ResourceTypeWillChangeNotification		= @"ResourceTypeWillChangeNotification";
-NSString *ResourceIDWillChangeNotification			= @"ResourceIDWillChangeNotification";
-NSString *ResourceAttributesWillChangeNotification	= @"ResourceAttributesWillChangeNotification";
-NSString *ResourceDataWillChangeNotification		= @"ResourceDataWillChangeNotification";
-
-NSString *ResourceNameDidChangeNotification			= @"ResourceNameDidChangeNotification";
-NSString *ResourceTypeDidChangeNotification			= @"ResourceTypeDidChangeNotification";
-NSString *ResourceIDDidChangeNotification			= @"ResourceIDDidChangeNotification";
-NSString *ResourceAttributesDidChangeNotification	= @"ResourceAttributesDidChangeNotification";
-NSString *ResourceDataDidChangeNotification			= @"ResourceDataDidChangeNotification";
-NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
-
 - (id)initWithResource:(id)newResource
 {
 	self = [self initWithWindowNibName:@"HexWindow"];
@@ -67,6 +53,7 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	[self refreshData:[resource data]];
 	
 	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameDidChange:) name:ResourceNameDidChangeNotification object:resource];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 	
 	// put other notifications here too, just for togetherness
@@ -123,6 +110,13 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:offsetClip];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:hexClip];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:asciiClip];
+}
+
+- (void)resourceNameDidChange:(NSNotification *)notification
+{
+	if( ![[(id <ResKnifeResourceProtocol>)[notification object] name] isEqualToString:@""] )
+		[[self window] setTitle:[(id <ResKnifeResourceProtocol>)[notification object] name]];
+	else [[self window] setTitle:NSLocalizedStringFromTableInBundle(@"Untitled Resource", @"Localizable", [NSBundle mainBundle], nil)];
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification

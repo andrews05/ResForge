@@ -1,4 +1,5 @@
 #import <Cocoa/Cocoa.h>
+#import "Structs.h"
 #import "DataSource.h"
 
 #import "ResKnifePluginProtocol.h"
@@ -17,5 +18,7 @@
 - (void)setResource:(id <ResKnifeResourceProtocol>)newResource;
 - (void)setUndoManager:(NSUndoManager *)newUndoManager;
 - (IBAction)toggleResID:(id)sender;
+
+- (void)resourceNameDidChange:(NSNotification *)notification;
 
 @end

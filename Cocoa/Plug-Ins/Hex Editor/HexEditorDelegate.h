@@ -11,6 +11,8 @@
 	IBOutlet NSTextView		*hex;
 	IBOutlet NSTextView		*offset;
     IBOutlet NSTextField	*message;
+	
+	BOOL editedLow;
 }
 
 - (NSString *)offsetRepresentation:(NSData *)data;
@@ -24,5 +26,8 @@
 
 - (NSTextView *)hex;
 - (NSTextView *)ascii;
+
+- (BOOL)editedLow;
+- (void)setEditedLow:(BOOL)flag;
 
 @end

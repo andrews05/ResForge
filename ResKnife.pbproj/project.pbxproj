@@ -135,6 +135,7 @@
 			files = (
 				F53544420226752901A80001,
 				F53544500226B5F501A80001,
+				F5C9ECD4027F474A01A8010C,
 			);
 			isa = PBXSourcesBuildPhase;
 		};
@@ -492,6 +493,7 @@
 		};
 		F57CEE0B0189C95101A8010B = {
 			children = (
+				F5C9ECCE027F474A01A8010C,
 				F5502C4001C579FF01C57124,
 				F5CDEBAB01FC893201A80001,
 				F5EF839F020C08E601A80001,
@@ -592,6 +594,7 @@
 				F5EF83B1020C08E601A80001,
 				F5EF83B3020C08E601A80001,
 				F54E6226021B6A0901A80001,
+				F5C9ECD2027F474A01A8010C,
 			);
 			isa = PBXSourcesBuildPhase;
 		};
@@ -610,6 +613,7 @@
 		};
 		F58A183F0278353501A8010C = {
 			children = (
+				F5C9ECD8027F562201A8010C,
 				F543AFDB027B2A5001A8010C,
 				F543AFDC027B2A5001A8010C,
 				F58A18410278355D01A8010C,
@@ -1071,6 +1075,7 @@
 				F5B588710156D40B01000001,
 				F5D0CBD2022744C701A80001,
 				F5DF1C070254AD8801A80001,
+				F5C9ECD0027F474A01A8010C,
 			);
 			isa = PBXSourcesBuildPhase;
 		};
@@ -1371,7 +1376,9 @@
 			refType = 2;
 		};
 		F5B588450156D40B01000001 = {
+			fileEncoding = 10;
 			isa = PBXFileReference;
+			lineEnding = 0;
 			name = English;
 			path = English.lproj/Localizable.strings;
 			refType = 4;
@@ -2868,6 +2875,46 @@
 			);
 			isa = PBXRezBuildPhase;
 		};
+		F5C9ECCE027F474A01A8010C = {
+			isa = PBXFileReference;
+			path = Notifications.m;
+			refType = 4;
+		};
+		F5C9ECD0027F474A01A8010C = {
+			fileRef = F5C9ECCE027F474A01A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C9ECD2027F474A01A8010C = {
+			fileRef = F5C9ECCE027F474A01A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C9ECD4027F474A01A8010C = {
+			fileRef = F5C9ECCE027F474A01A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C9ECD6027F474A01A8010C = {
+			fileRef = F5C9ECCE027F474A01A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C9ECD8027F562201A8010C = {
+			isa = PBXFileReference;
+			path = Structs.h;
+			refType = 4;
+		};
+		F5C9ECD9027F562201A8010C = {
+			fileRef = F5C9ECD8027F562201A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F5CDEBAB01FC893201A80001 = {
 			isa = PBXFileReference;
 			path = ResKnifeResourceProtocol.h;
@@ -3167,6 +3214,7 @@
 				F58F6BAD025BE14801A8010C,
 				F58A18430278355D01A8010C,
 				F543AFDD027B2A5001A8010C,
+				F5C9ECD9027F562201A8010C,
 			);
 			isa = PBXHeadersBuildPhase;
 		};
@@ -3194,6 +3242,7 @@
 				F58F6B95025BD97801A8010C,
 				F58A18420278355D01A8010C,
 				F543AFDE027B2A5001A8010C,
+				F5C9ECD6027F474A01A8010C,
 			);
 			isa = PBXSourcesBuildPhase;
 		};

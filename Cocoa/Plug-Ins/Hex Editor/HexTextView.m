@@ -52,8 +52,8 @@
 			newRange.location += 3;
 	}
 	
-	// select return character if selecting ascii
-	else if( self == (id) [[self delegate] ascii] )
+	// select return character if selecting ascii - no longer necessary as there's a one-to-one for ascii
+/*	else if( self == (id) [[self delegate] ascii] )
 	{
 		// if ascii selection goes up to sixteenth byte on last line, select return character too
 		if( (charRange.length + charRange.location) % 17 == 16)
@@ -70,60 +70,78 @@
 			else newRange.length += 1;
 		}
 	}
-	
+*/	
 	// call the superclass to update the selection
 	[super setSelectedRange:newRange affinity:affinity stillSelecting:NO];
 }
 
 /* NSResponder overrides */
 
-- (IBAction)insertText:(NSString *)string
+- (void)insertText:(NSString *)string
 {
-	NSLog( @"Inserting text: %@", string );
-/*	if( hexWindow->editingHex )		// editing in hexadecimal
+	NSRange selection = [self rangeForUserTextChange], byteSelection;
+	NSMutableData *data = [[[[self window] windowController] data] mutableCopy];
+	NSData *replaceData = [NSData dataWithBytes:[string cString] length:[string cStringLength]];
+	
+	// get selection range
+	if( self == (id) [[self delegate] hex] )
+		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
+	else if( self == (id) [[self delegate] ascii] )
+		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
+	else
 	{
-		Boolean deletePrev = false;	// delete prev typing to add new one
-		if( hexWindow->editedHigh )	// edited high bits already
-		{
-			// shift typed char into high bits and add new low char
-			if( charCode >= 0x30 && charCode <= 0x39 )		charCode -= 0x30;		// 0 to 9
-			else if( charCode >= 0x61 && charCode <= 0x66 )	charCode -= 0x57;		// a to f
-			else if( charCode >= 0x93 && charCode <= 0x98 )	charCode -= 0x8A;		// A to F
-			else break;
-			hexWindow->hexChar <<=  4;				// store high bit
-			hexWindow->hexChar += charCode & 0x0F;	// add low bit
-			hexWindow->selStart += 1;
-			hexWindow->selEnd = hexWindow->selStart;
-			hexWindow->editedHigh = false;
-			deletePrev = true;
-		}
-		else				// editing low bits
-		{
-			// put typed char into low bits
-			if( charCode >= 0x30 && charCode <= 0x39 )		charCode -= 0x30;		// 0 to 9
-			else if( charCode >= 0x61 && charCode <= 0x66 )	charCode -= 0x57;		// a to f
-			else if( charCode >= 0x93 && charCode <= 0x98 )	charCode -= 0x8A;		// A to F
-			else break;
-			hexWindow->hexChar = charCode & 0x0F;
-			hexWindow->editedHigh = true;
-		}
-		hexWindow->InsertBytes( nil, hexWindow->selStart - hexWindow->selEnd, hexWindow->selEnd );	// remove selection
-		hexWindow->selEnd = hexWindow->selStart;
-		if( deletePrev )
-		{
-			hexWindow->InsertBytes( nil, -1, hexWindow->selStart );									// remove previous hex char
-			hexWindow->InsertBytes( &hexWindow->hexChar, 1, hexWindow->selStart -1 );				// insert typed char (bug fix hack)
-		}
-		else hexWindow->InsertBytes( &hexWindow->hexChar, 1, hexWindow->selStart );					// insert typed char
+		NSLog( @"Inserting text into illegal object: %@", self );
+		return;
 	}
-	else					// editing in ascii
+	
+	if( self == (id) [[self delegate] hex] )
 	{
-		hexWindow->InsertBytes( nil, hexWindow->selStart - hexWindow->selEnd, hexWindow->selEnd );	// remove selection
-		hexWindow->selEnd = hexWindow->selStart;
-		hexWindow->InsertBytes( &charCode, 1, hexWindow->selStart );								// insert typed char
-		hexWindow->selStart += 1;
-		hexWindow->selEnd = hexWindow->selStart;
-	}*/
+		// bug: iteration through each character in string is broken, paste not yet mapped to this function
+		int i;
+		for( i= 0; i < [string cStringLength]; i++ )
+		{
+			char typedChar = [string characterAtIndex:i];
+			if( typedChar >= 0x30 && typedChar <= 0x39 )		typedChar -= 0x30;		// 0 to 9
+			else if( typedChar >= 0x41 && typedChar <= 0x46 )	typedChar -= 0x37;		// A to F
+			else if( typedChar >= 0x61 && typedChar <= 0x66 )	typedChar -= 0x57;		// a to f
+			else return;
+			
+			if( [[self delegate] editedLow] )	// edited low bits already
+			{
+				// select & retrieve old byte so it gets replaced
+				char prevByte;
+				byteSelection = NSMakeRange(byteSelection.location -1, 1);
+				[data getBytes:&prevByte range:byteSelection];
+				
+				// shift typed char into high bits and add new low char
+				prevByte <<=  4;				// store high bit
+				prevByte += typedChar & 0x0F;	// add low bit
+				replaceData = [NSData dataWithBytes:&prevByte length:1];
+				[[self delegate] setEditedLow:NO];
+			}
+			else								// editing low bits
+			{
+				// put typed char into low bits
+				typedChar &= 0x0F;
+				replaceData = [NSData dataWithBytes:&typedChar length:1];
+				[[self delegate] setEditedLow:YES];
+			}
+		}
+	}
+		
+	// replace bytes (updates views implicitly)
+	[data replaceBytesInRange:byteSelection withBytes:[replaceData bytes] length:[replaceData length]];
+	[[(HexWindowController *)[[self window] windowController] resource] setData:data];
+	
+	// set the new selection/insertion point
+	byteSelection.location++;
+	byteSelection.length = 0;
+	if( self == (id) [[self delegate] hex] )
+		selection = [[self delegate] hexRangeFromByteRange:byteSelection];
+	else if( self == (id) [[self delegate] ascii] )
+		selection = [[self delegate] asciiRangeFromByteRange:byteSelection];
+	[self setSelectedRange:selection];
+	[data release];
 }
 
 - (IBAction)deleteBackward:(id)sender
@@ -134,7 +152,13 @@
 	// get selection range
 	if( self == (id) [[self delegate] hex] )
 		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
-	else byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
+	else if( self == (id) [[self delegate] ascii] )
+		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
+	else
+	{
+		NSLog( @"Inserting text into illegal object: %@", self );
+		return;
+	}
 	
 	// adjust selection if is insertion point
 	if( byteSelection.length == 0 && selection.location > 0 )
@@ -163,7 +187,13 @@
 	// get selection range
 	if( self == (id) [[self delegate] hex] )
 		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
-	else byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
+	else if( self == (id) [[self delegate] ascii] )
+		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
+	else
+	{
+		NSLog( @"Inserting text into illegal object: %@", self );
+		return;
+	}
 	
 	// adjust selection if is insertion point
 	if( byteSelection.length == 0 && selection.location < [[self string] length] -1 )

@@ -9,6 +9,7 @@
 	IBOutlet NSWindow				*mainWindow;
 	IBOutlet NSOutlineView			*outlineView;
 	
+	NSMutableDictionary	*toolbarItems;
 	NSMutableArray	*resources;
 	HFSUniStr255	*fork;		// name of fork to save to, usually empty string (data fork) or 'RESOURCE_FORK' as returned from FSGetResourceForkName()
 	NSString *creator;

@@ -11,17 +11,13 @@
 	startDate = [[NSCalendarDate date] retain];
 	endDate = [[[NSCalendarDate date] dateByAddingYears:0 months:1 days:0 hours:0 minutes:0 seconds:0] retain];
 	
-	// load the window from the nib file and set it's title
-	[self window];	// implicitly loads nib
-	if( [newResource name] && ![[newResource name] isEqualToString:@""] )
-		[[self window] setTitle:[NSString stringWithFormat:@"%@: %@", [[self window] title], [newResource name]]];
-	[self update];
 	return self;
 }
 
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
+	[self update];
 	[self showWindow:self];
 }
 

@@ -15,6 +15,7 @@ NSString *DocumentInfoDidChangeNotification			= @"DocumentInfoDidChangeNotificat
 - (id)init
 {
 	self = [super init];
+	toolbarItems = [[NSMutableDictionary alloc] init];
 	resources = [[NSMutableArray alloc] init];
 	fork = nil;
 	return self;
@@ -25,6 +26,7 @@ NSString *DocumentInfoDidChangeNotification			= @"DocumentInfoDidChangeNotificat
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	if( fork ) DisposePtr( (Ptr) fork );
 	[resources release];
+	[toolbarItems release];
 	[super dealloc];
 }
 
@@ -119,6 +121,69 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 {
 	/* This routine should become invalid once toolbars are integrated into nib files */
 	
+	NSToolbarItem *item;
+	[toolbarItems removeAllObjects];	// just in case this method is called more than once per document (which it shouldn't be!)
+	
+	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKCreateItemIdentifier];
+	[item setLabel:NSLocalizedString(@"Create", nil)];
+	[item setPaletteLabel:NSLocalizedString(@"Create", nil)];
+	[item setToolTip:NSLocalizedString(@"Create New Resource", nil)];
+	[item setImage:[NSImage imageNamed:@"Create"]];
+	[item setTarget:self];
+	[item setAction:@selector(showCreateResourceSheet:)];
+	[toolbarItems setObject:item forKey:RKCreateItemIdentifier];
+	[item release];
+	
+	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKDeleteItemIdentifier];
+	[item setLabel:NSLocalizedString(@"Delete", nil)];
+	[item setPaletteLabel:NSLocalizedString(@"Delete", nil)];
+	[item setToolTip:NSLocalizedString(@"Delete Selected Resource", nil)];
+	[item setImage:[NSImage imageNamed:@"Delete"]];
+	[item setTarget:self];
+	[item setAction:@selector(clear:)];
+	[toolbarItems setObject:item forKey:RKDeleteItemIdentifier];
+	[item release];
+	
+	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKEditItemIdentifier];
+	[item setLabel:NSLocalizedString(@"Edit", nil)];
+	[item setPaletteLabel:NSLocalizedString(@"Edit", nil)];
+	[item setToolTip:NSLocalizedString(@"Edit Resource In Default Editor", nil)];
+	[item setImage:[NSImage imageNamed:@"Edit"]];
+	[item setTarget:self];
+	[item setAction:@selector(openResources:)];
+	[toolbarItems setObject:item forKey:RKEditItemIdentifier];
+	[item release];
+	
+	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKEditHexItemIdentifier];
+	[item setLabel:NSLocalizedString(@"Edit Hex", nil)];
+	[item setPaletteLabel:NSLocalizedString(@"Edit Hex", nil)];
+	[item setToolTip:NSLocalizedString(@"Edit Resource As Hexadecimal", nil)];
+	[item setImage:[NSImage imageNamed:@"Edit Hex"]];
+	[item setTarget:self];
+	[item setAction:@selector(openResourcesAsHex:)];
+	[toolbarItems setObject:item forKey:RKEditHexItemIdentifier];
+	[item release];
+	
+	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKSaveItemIdentifier];
+	[item setLabel:NSLocalizedString(@"Save", nil)];
+	[item setPaletteLabel:NSLocalizedString(@"Save", nil)];
+	[item setToolTip:[NSString stringWithFormat:NSLocalizedString(@"Save To %@ Fork", nil), !fork? NSLocalizedString(@"Data", nil) : NSLocalizedString(@"Resource", nil)]];
+	[item setImage:[NSImage imageNamed:@"Save"]];
+	[item setTarget:self];
+	[item setAction:@selector(saveDocument:)];
+	[toolbarItems setObject:item forKey:RKSaveItemIdentifier];
+	[item release];
+	
+	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKShowInfoItemIdentifier];
+	[item setLabel:NSLocalizedString(@"Show Info", nil)];
+	[item setPaletteLabel:NSLocalizedString(@"Show Info", nil)];
+	[item setToolTip:NSLocalizedString(@"Show Resource Information Window", nil)];
+	[item setImage:[NSImage imageNamed:@"Show Info"]];
+	[item setTarget:[NSApp delegate]];
+	[item setAction:@selector(showInfo:)];
+	[toolbarItems setObject:item forKey:RKShowInfoItemIdentifier];
+	[item release];
+	
 	if( [windowController window] == mainWindow )
 	{
 		NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:RKToolbarIdentifier] autorelease];
@@ -129,77 +194,15 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		[toolbar setAllowsUserCustomization:YES];
 		[toolbar setDisplayMode:NSToolbarDisplayModeDefault];
 		
-		// attach toolbar to window 
+		// attach toolbar to window
 		[toolbar setDelegate:self];
 		[mainWindow setToolbar:toolbar];
-	}
+	}	
 }
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
-	NSToolbarItem *item = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
-	
-	if( [itemIdentifier isEqualToString:RKCreateItemIdentifier] )
-	{
-		[item setLabel:NSLocalizedString(@"Create", nil)];
-		[item setPaletteLabel:NSLocalizedString(@"Create", nil)];
-		[item setToolTip:NSLocalizedString(@"Create New Resource", nil)];
-		[item setImage:[NSImage imageNamed:@"Create"]];
-		[item setTarget:self];
-		[item setAction:@selector(showCreateResourceSheet:)];
-		return item;
-	}
-	else if( [itemIdentifier isEqualToString:RKDeleteItemIdentifier] )
-	{
-		[item setLabel:NSLocalizedString(@"Delete", nil)];
-		[item setPaletteLabel:NSLocalizedString(@"Delete", nil)];
-		[item setToolTip:NSLocalizedString(@"Delete Selected Resource", nil)];
-		[item setImage:[NSImage imageNamed:@"Delete"]];
-		[item setTarget:self];
-		[item setAction:@selector(clear:)];
-		return item;
-	}
-	else if( [itemIdentifier isEqualToString:RKEditItemIdentifier] )
-	{
-		[item setLabel:NSLocalizedString(@"Edit", nil)];
-		[item setPaletteLabel:NSLocalizedString(@"Edit", nil)];
-		[item setToolTip:NSLocalizedString(@"Edit Resource In Default Editor", nil)];
-		[item setImage:[NSImage imageNamed:@"Edit"]];
-		[item setTarget:self];
-		[item setAction:@selector(openResources:)];
-		return item;
-	}
-	else if( [itemIdentifier isEqualToString:RKEditHexItemIdentifier] )
-	{
-		[item setLabel:NSLocalizedString(@"Edit Hex", nil)];
-		[item setPaletteLabel:NSLocalizedString(@"Edit Hex", nil)];
-		[item setToolTip:NSLocalizedString(@"Edit Resource As Hexadecimal", nil)];
-		[item setImage:[NSImage imageNamed:@"Edit Hex"]];
-		[item setTarget:self];
-		[item setAction:@selector(openResourcesAsHex:)];
-		return item;
-	}
-	else if( [itemIdentifier isEqualToString:RKSaveItemIdentifier] )
-	{
-		[item setLabel:NSLocalizedString(@"Save", nil)];
-		[item setPaletteLabel:NSLocalizedString(@"Save", nil)];
-		[item setToolTip:[NSString stringWithFormat:NSLocalizedString(@"Save To %@ Fork", nil), !fork? NSLocalizedString(@"Data", nil) : NSLocalizedString(@"Resource", nil)]];
-		[item setImage:[NSImage imageNamed:@"Save"]];
-		[item setTarget:self];
-		[item setAction:@selector(saveDocument:)];
-		return item;
-	}
-	else if( [itemIdentifier isEqualToString:RKShowInfoItemIdentifier] )
-	{
-		[item setLabel:NSLocalizedString(@"Show Info", nil)];
-		[item setPaletteLabel:NSLocalizedString(@"Show Info", nil)];
-		[item setToolTip:NSLocalizedString(@"Show Resource Information Window", nil)];
-		[item setImage:[NSImage imageNamed:@"Show Info"]];
-		[item setTarget:[NSApp delegate]];
-		[item setAction:@selector(showInfo:)];
-		return item;
-	}
-	else return nil;
+	return [toolbarItems objectForKey:itemIdentifier];
 }
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar

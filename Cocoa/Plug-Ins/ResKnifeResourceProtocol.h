@@ -31,7 +31,7 @@
 @end
 
 // Resource notifications
-// Note: when using internal notifications in your own plug-in, DO NOT use [NSNotificationCenter defaultCenter]. This is an application-wide notificaton center, use of it by plug-ins for their own means (i.e. not interacting with ResKnife) can cause conflicts with other plug-ins. You should create your own notification center and post to that.
+//	See note in Notifications.m about usage
 extern NSString *ResourceWillChangeNotification;
 extern NSString *ResourceNameWillChangeNotification;
 extern NSString *ResourceTypeWillChangeNotification;

@@ -25,6 +25,7 @@
 
 // normal methods
 - (void)viewDidScroll:(NSNotification *)notification;
+- (void)resourceNameDidChange:(NSNotification *)notification;
 - (void)resourceDataDidChange:(NSNotification *)notification;
 - (void)refreshData:(NSData *)data;
 
