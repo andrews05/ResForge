@@ -5,6 +5,724 @@
 	};
 	objectVersion = 38;
 	objects = {
+		3D0933A604DEFEE600DD74B1 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = NuTemplateElement.h;
+			refType = 4;
+		};
+		3D0933A704DEFEE600DD74B1 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = NuTemplateElement.m;
+			refType = 4;
+		};
+		3D0933A804DEFEE600DD74B1 = {
+			fileRef = 3D0933A604DEFEE600DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933A904DEFEE600DD74B1 = {
+			fileRef = 3D0933A704DEFEE600DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933B704DF061600DD74B1 = {
+			fileRef = 3D0B38BD04DEF48D005AED5E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933BA04DF10D700DD74B1 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = NuTemplateGroupElement.h;
+			refType = 4;
+		};
+		3D0933BB04DF10D700DD74B1 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = NuTemplateGroupElement.m;
+			refType = 4;
+		};
+		3D0933BC04DF10D700DD74B1 = {
+			fileRef = 3D0933BA04DF10D700DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933BD04DF10D700DD74B1 = {
+			fileRef = 3D0933BB04DF10D700DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933BE04DF151C00DD74B1 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = NuTemplateStream.h;
+			refType = 4;
+		};
+		3D0933BF04DF151C00DD74B1 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = NuTemplateStream.m;
+			refType = 4;
+		};
+		3D0933C004DF151C00DD74B1 = {
+			fileRef = 3D0933BE04DF151C00DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933C104DF151C00DD74B1 = {
+			fileRef = 3D0933BF04DF151C00DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933C404DF1C0800DD74B1 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = NuTemplateLSTBElement.h;
+			refType = 4;
+		};
+		3D0933C504DF1C0800DD74B1 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = NuTemplateLSTBElement.m;
+			refType = 4;
+		};
+		3D0933C604DF1C0800DD74B1 = {
+			fileRef = 3D0933C404DF1C0800DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933C704DF1C0800DD74B1 = {
+			fileRef = 3D0933C504DF1C0800DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933E304DF2FF700DD74B1 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateTNAMElement.h;
+			refType = 4;
+		};
+		3D0933E404DF2FF700DD74B1 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateTNAMElement.m;
+			refType = 4;
+		};
+		3D0933E504DF2FF700DD74B1 = {
+			fileRef = 3D0933E304DF2FF700DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933E604DF2FF700DD74B1 = {
+			fileRef = 3D0933E404DF2FF700DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933E704DF317D00DD74B1 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplatePSTRElement.h;
+			refType = 4;
+		};
+		3D0933E804DF317D00DD74B1 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplatePSTRElement.m;
+			refType = 4;
+		};
+		3D0933E904DF317D00DD74B1 = {
+			fileRef = 3D0933E704DF317D00DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933EA04DF317D00DD74B1 = {
+			fileRef = 3D0933E804DF317D00DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933EB04DF319F00DD74B1 = {
+			children = (
+				3D0933C404DF1C0800DD74B1,
+				3D0933C504DF1C0800DD74B1,
+				3D0933F604DFE80500DD74B1,
+				3D0933F704DFE80500DD74B1,
+				3D0933E304DF2FF700DD74B1,
+				3D0933E404DF2FF700DD74B1,
+				3D0933E704DF317D00DD74B1,
+				3D0933E804DF317D00DD74B1,
+				3D0933EF04DF381900DD74B1,
+				3D0933EE04DF381900DD74B1,
+			);
+			isa = PBXGroup;
+			name = "Field Types";
+			refType = 4;
+		};
+		3D0933EE04DF381900DD74B1 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateDWRDElement.m;
+			refType = 4;
+		};
+		3D0933EF04DF381900DD74B1 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateDWRDElement.h;
+			refType = 4;
+		};
+		3D0933F004DF381900DD74B1 = {
+			fileRef = 3D0933EE04DF381900DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933F104DF381900DD74B1 = {
+			fileRef = 3D0933EF04DF381900DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933F404DFD7CF00DD74B1 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = TODO.txt;
+			refType = 2;
+		};
+		3D0933F504DFD7CF00DD74B1 = {
+			fileRef = 3D0933F404DFD7CF00DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933F604DFE80500DD74B1 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateLSTEElement.h;
+			refType = 4;
+		};
+		3D0933F704DFE80500DD74B1 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateLSTEElement.m;
+			refType = 4;
+		};
+		3D0933F804DFE80500DD74B1 = {
+			fileRef = 3D0933F604DFE80500DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0933F904DFE80500DD74B1 = {
+			fileRef = 3D0933F704DFE80500DD74B1;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0ABFB904E152CA00C85300 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			name = "TEMPLATE EDITOR.txt";
+			path = "NuTemplateEditor/TEMPLATE EDITOR.txt";
+			refType = 2;
+		};
+		3D0ABFBC04E172F700C85300 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = README.txt;
+			refType = 2;
+		};
+		3D0B38A504DEF41E005AED5E = {
+			children = (
+				3D0ABFB904E152CA00C85300,
+				3D0B38B204DEF41E005AED5E,
+				3D0B38B304DEF41E005AED5E,
+				3D0933A604DEFEE600DD74B1,
+				3D0933A704DEFEE600DD74B1,
+				3D0933BA04DF10D700DD74B1,
+				3D0933BB04DF10D700DD74B1,
+				3D0933BE04DF151C00DD74B1,
+				3D0933BF04DF151C00DD74B1,
+				3D0933EB04DF319F00DD74B1,
+				3D0B38B504DEF465005AED5E,
+			);
+			isa = PBXGroup;
+			path = NuTemplateEditor;
+			refType = 2;
+		};
+		3D0B38B204DEF41E005AED5E = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateWindowController.h;
+			refType = 4;
+		};
+		3D0B38B304DEF41E005AED5E = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateWindowController.m;
+			refType = 4;
+		};
+		3D0B38B504DEF465005AED5E = {
+			children = (
+				3D0B38B604DEF465005AED5E,
+			);
+			isa = PBXVariantGroup;
+			name = NuTemplateWindow.nib;
+			path = "";
+			refType = 4;
+		};
+		3D0B38B604DEF465005AED5E = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/NuTemplateWindow.nib;
+			refType = 4;
+		};
+		3D0B38B704DEF48D005AED5E = {
+			buildActionMask = 2147483647;
+			files = (
+				3D0B38C104DEF5E4005AED5E,
+				3D0B38C404DEF659005AED5E,
+				3D0B38C504DEF659005AED5E,
+				3D0933A804DEFEE600DD74B1,
+				3D0933BC04DF10D700DD74B1,
+				3D0933C004DF151C00DD74B1,
+				3D0933C604DF1C0800DD74B1,
+				3D0933E504DF2FF700DD74B1,
+				3D0933E904DF317D00DD74B1,
+				3D0933F104DF381900DD74B1,
+				3D0933F804DFE80500DD74B1,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D0B38B804DEF48D005AED5E = {
+			buildActionMask = 2147483647;
+			files = (
+				3D0B38C204DEF5E5005AED5E,
+				3D0933F504DFD7CF00DD74B1,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D0B38B904DEF48D005AED5E = {
+			buildActionMask = 2147483647;
+			files = (
+				3D0B38C004DEF5E3005AED5E,
+				3D0B38C604DEF65A005AED5E,
+				3D0933A904DEFEE600DD74B1,
+				3D0933BD04DF10D700DD74B1,
+				3D0933C104DF151C00DD74B1,
+				3D0933C704DF1C0800DD74B1,
+				3D0933E604DF2FF700DD74B1,
+				3D0933EA04DF317D00DD74B1,
+				3D0933F004DF381900DD74B1,
+				3D0933F904DFE80500DD74B1,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D0B38BA04DEF48D005AED5E = {
+			buildActionMask = 2147483647;
+			files = (
+				3D0B38C304DEF602005AED5E,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D0B38BB04DEF48D005AED5E = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D0B38BC04DEF48D005AED5E = {
+			buildPhases = (
+				3D0B38B704DEF48D005AED5E,
+				3D0B38B804DEF48D005AED5E,
+				3D0B38B904DEF48D005AED5E,
+				3D0B38BA04DEF48D005AED5E,
+				3D0B38BB04DEF48D005AED5E,
+			);
+			buildSettings = {
+				GCC_VERSION = 3.1;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "New Template Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = plugin;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = "NuTemplateEditor Cocoa";
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = "NuTemplateEditor Cocoa";
+			productReference = 3D0B38BD04DEF48D005AED5E;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>New Template Editor</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>com.ulikusterer.resknife.nutemplateeditor</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>ResK</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+	<key>NSMainNibFile</key>
+	<string>NuTemplateWindow</string>
+	<key>NSPrincipalClass</key>
+	<string>NuTemplateWindowController</string>
+	<key>RKEditedType</key>
+	<string>Template Editor</string>
+</dict>
+</plist>
+";
+		};
+		3D0B38BD04DEF48D005AED5E = {
+			isa = PBXBundleReference;
+			path = "New Template Editor.plugin";
+			refType = 3;
+		};
+		3D0B38BE04DEF48D005AED5E = {
+			isa = PBXTargetDependency;
+			target = 3D0B38BC04DEF48D005AED5E;
+		};
+		3D0B38C004DEF5E3005AED5E = {
+			fileRef = 3D0B38B304DEF41E005AED5E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0B38C104DEF5E4005AED5E = {
+			fileRef = 3D0B38B204DEF41E005AED5E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0B38C204DEF5E5005AED5E = {
+			fileRef = 3D0B38B504DEF465005AED5E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0B38C304DEF602005AED5E = {
+			fileRef = F5B5884B0156D40B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0B38C404DEF659005AED5E = {
+			fileRef = F5502C4001C579FF01C57124;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0B38C504DEF659005AED5E = {
+			fileRef = F5CDEBAB01FC893201A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D0B38C604DEF65A005AED5E = {
+			fileRef = F5C9ECCE027F474A01A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D3292F604DC1980008C719F = {
+			fileRef = 3D3B99B104DC15600056861E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D35755A04DAEB4300B8225B = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = main.m;
+			refType = 4;
+		};
+		3D35755B04DAEB4300B8225B = {
+			fileRef = 3D35755A04DAEB4300B8225B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D35755C04DAEB6200B8225B = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = RKEditorRegistry.h;
+			refType = 4;
+		};
+		3D35755D04DAEB6200B8225B = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = RKEditorRegistry.m;
+			refType = 4;
+		};
+		3D35755E04DAEB6200B8225B = {
+			fileRef = 3D35755C04DAEB6200B8225B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D35755F04DAEB6200B8225B = {
+			fileRef = 3D35755D04DAEB6200B8225B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D35756004DAEB7F00B8225B = {
+			isa = PBXFileReference;
+			path = Export.tiff;
+			refType = 4;
+		};
+		3D35756104DAEB7F00B8225B = {
+			fileRef = 3D35756004DAEB7F00B8225B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D3B99AB04DC15600056861E = {
+			buildActionMask = 2147483647;
+			files = (
+				3D3B99B404DC16690056861E,
+				3D3B99B504DC166A0056861E,
+				3D3B99BB04DC16A30056861E,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D3B99AC04DC15600056861E = {
+			buildActionMask = 2147483647;
+			files = (
+				3D3B99BE04DC16FC0056861E,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D3B99AD04DC15600056861E = {
+			buildActionMask = 2147483647;
+			files = (
+				3D3B99B604DC166F0056861E,
+				3D3B99BA04DC16A30056861E,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D3B99AE04DC15600056861E = {
+			buildActionMask = 2147483647;
+			files = (
+				3D3B99CD04DC18580056861E,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D3B99AF04DC15600056861E = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D3B99B004DC15600056861E = {
+			buildPhases = (
+				3D3B99AB04DC15600056861E,
+				3D3B99AC04DC15600056861E,
+				3D3B99AD04DC15600056861E,
+				3D3B99AE04DC15600056861E,
+				3D3B99AF04DC15600056861E,
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Bitmap Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = plugin;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = "Bitmap Editor Cocoa";
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = "Bitmap Editor Cocoa";
+			productReference = 3D3B99B104DC15600056861E;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Bitmap Editor</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>com.ulikusterer.resknife.bitmapeditor</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>ResK</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+	<key>NSMainNibFile</key>
+	<string>ICONWindow</string>
+	<key>NSPrincipalClass</key>
+	<string>ICONWindowController</string>
+	<key>RKEditedTypes</key>
+	<array>
+		<string>ICN#</string>
+		<string>icm#</string>
+		<string>ics#</string>
+		<string>ICON</string>
+		<string>CURS</string>
+	</array>
+</dict>
+</plist>
+";
+		};
+		3D3B99B104DC15600056861E = {
+			isa = PBXBundleReference;
+			path = "Bitmap Editor.plugin";
+			refType = 3;
+		};
+		3D3B99B204DC15600056861E = {
+			isa = PBXTargetDependency;
+			target = 3D3B99B004DC15600056861E;
+		};
+		3D3B99B404DC16690056861E = {
+			fileRef = F5502C4001C579FF01C57124;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D3B99B504DC166A0056861E = {
+			fileRef = F5CDEBAB01FC893201A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D3B99B604DC166F0056861E = {
+			fileRef = F5C9ECCE027F474A01A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D3B99B704DC167D0056861E = {
+			children = (
+				3D3B99B804DC16A30056861E,
+				3D3B99B904DC16A30056861E,
+				3D3B99BC04DC16FC0056861E,
+			);
+			isa = PBXGroup;
+			name = "Bitmap Editor";
+			path = "Template Editor";
+			refType = 4;
+		};
+		3D3B99B804DC16A30056861E = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ICONWindowController.m;
+			path = ICONEditor/ICONWindowController.m;
+			refType = 2;
+		};
+		3D3B99B904DC16A30056861E = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ICONWindowController.h;
+			path = ICONEditor/ICONWindowController.h;
+			refType = 2;
+		};
+		3D3B99BA04DC16A30056861E = {
+			fileRef = 3D3B99B804DC16A30056861E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D3B99BB04DC16A30056861E = {
+			fileRef = 3D3B99B904DC16A30056861E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D3B99BC04DC16FC0056861E = {
+			children = (
+				3D3B99BD04DC16FC0056861E,
+			);
+			isa = PBXVariantGroup;
+			name = ICONWindow.nib;
+			path = "";
+			refType = 4;
+		};
+		3D3B99BD04DC16FC0056861E = {
+			isa = PBXFileReference;
+			name = English;
+			path = ICONEditor/English.lproj/ICONWindow.nib;
+			refType = 2;
+		};
+		3D3B99BE04DC16FC0056861E = {
+			fileRef = 3D3B99BC04DC16FC0056861E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D3B99CD04DC18580056861E = {
+			fileRef = F5B5884B0156D40B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//3D0
+//3D1
+//3D2
+//3D3
+//3D4
+//F50
+//F51
+//F52
+//F53
+//F54
 		F5041736036BD60801A8010A = {
 			isa = PBXFileReference;
 			path = ResKnife.scriptSuite;
@@ -486,7 +1204,6 @@
 				F535444D0226B5F501A80001,
 				F535444E0226B5F501A80001,
 				F5D0CBD302278F8B01A80001,
-				F535443D0226752901A80001,
 			);
 			isa = PBXGroup;
 			path = "Template Editor";
@@ -552,6 +1269,8 @@
 	<string>TemplateWindow</string>
 	<key>NSPrincipalClass</key>
 	<string>TemplateWindowController</string>
+	<key>RKEditedType</key>
+	<string>Template Editor</string>
 </dict>
 </plist>
 ";
@@ -568,7 +1287,6 @@
 		F5354439022674B401A80001 = {
 			buildActionMask = 2147483647;
 			files = (
-				F53544410226752901A80001,
 				F5D0CBD402278F8B01A80001,
 			);
 			isa = PBXResourcesBuildPhase;
@@ -599,12 +1317,6 @@
 			isa = PBXRezBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F535443D0226752901A80001 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = SupportedTypes.plist;
-			refType = 4;
-		};
 		F535443E0226752901A80001 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -619,12 +1331,6 @@
 		};
 		F53544400226752901A80001 = {
 			fileRef = F535443E0226752901A80001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F53544410226752901A80001 = {
-			fileRef = F535443D0226752901A80001;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -647,12 +1353,6 @@
 		};
 		F53544460226907801A80001 = {
 			fileRef = F5B5884B0156D40B01000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F53544470226912301A80001 = {
-			fileRef = F5354436022674B301A80001;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -756,11 +1456,6 @@
 			name = ApplicationServices.framework;
 			path = /System/Library/Frameworks/ApplicationServices.framework;
 			refType = 0;
-		};
-		F54627040291767E01A8010C = {
-			isa = PBXFileReference;
-			path = "ResKnife-rsrcfork.rsrc";
-			refType = 4;
 		};
 		F546270B02917D1501A8010C = {
 			buildActionMask = 2147483647;
@@ -1293,8 +1988,9 @@
 			dstSubfolderSpec = 13;
 			files = (
 				F577A9060212B69C01A80001,
-				F53544470226912301A80001,
 				F58F6BB0025BE22201A8010C,
+				3D3292F604DC1980008C719F,
+				3D0933B704DF061600DD74B1,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1306,6 +2002,8 @@
 				F5CDEBAB01FC893201A80001,
 				F5EF839F020C08E601A80001,
 				F5354435022673C101A80001,
+				3D3B99B704DC167D0056861E,
+				3D0B38A504DEF41E005AED5E,
 			);
 			isa = PBXGroup;
 			path = "Plug-Ins";
@@ -1370,6 +2068,8 @@
 	<string>HexWindow</string>
 	<key>NSPrincipalClass</key>
 	<string>HexWindowController</string>
+	<key>RKEditedType</key>
+	<string>Hexadecimal Editor</string>
 </dict>
 </plist>
 ";
@@ -1390,7 +2090,6 @@
 		F57CEE100189C95101A8010B = {
 			buildActionMask = 2147483647;
 			files = (
-				F5EF83AF020C08E601A80001,
 				F5EF83C9020C20D801A80001,
 				F54E6225021B6A0901A80001,
 				F5606FDF02ACF2F701A8010C,
@@ -1789,6 +2488,8 @@
 				F5B588EE0156DAF301000001,
 				F5B5890B0156DC2201000001,
 				F50DFE1E036C255E01A8010A,
+				3D3B99B004DC15600056861E,
+				3D0B38BC04DEF48D005AED5E,
 			);
 		};
 		F5B588100156D2A601000001 = {
@@ -1816,6 +2517,8 @@
 				F5B588ED0156DAF301000001,
 				F5B589030156DC2201000001,
 				F50DFE1F036C255E01A8010A,
+				3D3B99B104DC15600056861E,
+				3D0B38BD04DEF48D005AED5E,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -1852,6 +2555,8 @@
 				F5CDEBAF01FCA71501A80001,
 				F535444502268F9501A80001,
 				F58F6BAF025BE21401A8010C,
+				3D3B99B204DC15600056861E,
+				3D0B38BE04DEF48D005AED5E,
 			);
 			isa = PBXApplicationTarget;
 			name = "ResKnife Cocoa";
@@ -1935,11 +2640,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>Development version 0.4d3</string>
+	<string>Development version 0.5d1</string>
 	<key>CFBundleSignature</key>
 	<string>ResK</string>
 	<key>CFBundleVersion</key>
-	<string>0.4d3</string>
+	<string>0.5d1</string>
 	<key>NSMainNibFile</key>
 	<string>Application</string>
 	<key>NSPrincipalClass</key>
@@ -1972,6 +2677,7 @@
 				F5F1071C03CCFAAC01A8010A,
 				F59481AF03D0776C01A8010A,
 				F59481B303D077DC01A8010A,
+				3D35755E04DAEB6200B8225B,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1999,6 +2705,7 @@
 				F577A8F90211DC1E01A80001,
 				F5041737036BD60801A8010A,
 				F50DFE18036C203F01A8010A,
+				3D35756104DAEB7F00B8225B,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2006,7 +2713,6 @@
 		F5B588160156D30301000001 = {
 			buildActionMask = 2147483647;
 			files = (
-				F5B588650156D40B01000001,
 				F5B588660156D40B01000001,
 				F5B588670156D40B01000001,
 				F5B588680156D40B01000001,
@@ -2027,6 +2733,8 @@
 				F5F1071D03CCFAAC01A8010A,
 				F59481B003D0776C01A8010A,
 				F59481B403D077DC01A8010A,
+				3D35755B04DAEB4300B8225B,
+				3D35755F04DAEB6200B8225B,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2049,7 +2757,9 @@
 		};
 		F5B5881A0156D40B01000001 = {
 			children = (
-				F5B5881B0156D40B01000001,
+				3D0ABFBC04E172F700C85300,
+				3D0933F404DFD7CF00DD74B1,
+				3D35755A04DAEB4300B8225B,
 				F5B5881C0156D40B01000001,
 				F5594EE9021F3E2301A80001,
 				F5B588350156D40B01000001,
@@ -2057,12 +2767,6 @@
 			);
 			isa = PBXGroup;
 			path = Cocoa;
-			refType = 4;
-		};
-		F5B5881B0156D40B01000001 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = main.c;
 			refType = 4;
 		};
 		F5B5881C0156D40B01000001 = {
@@ -2089,6 +2793,8 @@
 				F5B5882C0156D40B01000001,
 				F5B5882D0156D40B01000001,
 				F5B5882E0156D40B01000001,
+				3D35755C04DAEB6200B8225B,
+				3D35755D04DAEB6200B8225B,
 				F5B5882F0156D40B01000001,
 				F5B588300156D40B01000001,
 				F5B588310156D40B01000001,
@@ -2258,6 +2964,7 @@
 				F577A8FC0211E4D401A80001,
 				F577A8F30211CFA701A80001,
 				F577A8F80211DC1E01A80001,
+				3D35756004DAEB7F00B8225B,
 			);
 			isa = PBXGroup;
 			path = Resources;
@@ -2533,12 +3240,6 @@
 		};
 		F5B588640156D40B01000001 = {
 			fileRef = F5B588480156D40B01000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F5B588650156D40B01000001 = {
-			fileRef = F5B5881B0156D40B01000001;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -3067,7 +3768,6 @@
 				F5B588A30156D6D901000001,
 				F5B588A40156D6D901000001,
 				F5B588A50156D6D901000001,
-				F54627040291767E01A8010C,
 				F5B588A60156D6D901000001,
 			);
 			isa = PBXGroup;
@@ -4260,6 +4960,8 @@
 	<string>NovaTools</string>
 	<key>NSPrincipalClass</key>
 	<string>NovaWindowController</string>
+	<key>RKEditedType</key>
+	<string>boom</string>
 </dict>
 </plist>
 ";
@@ -4333,7 +5035,6 @@
 		};
 		F5DF1C0F0254C78801A80001 = {
 			children = (
-				F7C028FD03BBB39D017A2919,
 				F58F6B82025BC73001A8010C,
 				F58F6B83025BC73001A8010C,
 				F58F6B7E025BC3A501A8010C,
@@ -4384,6 +5085,7 @@
 			);
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
+				DEBUGGING_SYMBOLS = NO;
 			};
 			isa = PBXBuildStyle;
 			name = Deployment;
@@ -4506,7 +5208,6 @@
 				F5EF83C7020C20D701A80001,
 				F5606FDD02ACF2F701A8010C,
 				F54E6222021B6A0801A80001,
-				F5EF83A9020C08E601A80001,
 			);
 			isa = PBXGroup;
 			path = "Hex Editor";
@@ -4548,12 +5249,6 @@
 			path = HexWindowController.m;
 			refType = 4;
 		};
-		F5EF83A9020C08E601A80001 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = SupportedTypes.plist;
-			refType = 4;
-		};
 		F5EF83AA020C08E601A80001 = {
 			fileRef = F5EF83A0020C08E601A80001;
 			isa = PBXBuildFile;
@@ -4568,12 +5263,6 @@
 		};
 		F5EF83AD020C08E601A80001 = {
 			fileRef = F5EF83A7020C08E601A80001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F5EF83AF020C08E601A80001 = {
-			fileRef = F5EF83A9020C08E601A80001;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -4692,12 +5381,6 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
-		};
-		F7C028FD03BBB39D017A2919 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = novabible.html;
-			refType = 4;
 		};
 //F70
 //F71
