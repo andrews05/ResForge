@@ -10,8 +10,7 @@
 	IBOutlet NSOutlineView			*outlineView;
 	
 	NSMutableArray	*resources;
-	BOOL			saveToDataFork;
-	HFSUniStr255	*otherFork;		// name of fork to save to if not using data fork (usually 'RESOURCE_FORK' as returned from FSGetResourceForkName() -- ignored if saveToDataFork is YES )
+	HFSUniStr255	*fork;		// name of fork to save to, usually empty string (data fork) or 'RESOURCE_FORK' as returned from FSGetResourceForkName()
 }
 
 - (void)setupToolbar:(NSWindowController *)windowController;

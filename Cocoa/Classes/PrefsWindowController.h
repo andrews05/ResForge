@@ -14,6 +14,8 @@ enum LaunchAction
 	displayOpenPanelBox
 };
 
+#define	prefs		[NSUserDefaults standardUserDefaults]
+
 @interface PrefsWindowController : NSWindowController
 {
     IBOutlet NSTextField	*autosaveIntervalField;
@@ -27,5 +29,12 @@ enum LaunchAction
 - (IBAction)resetToDefault:(id)sender;
 
 + (id)sharedPrefsWindowController;
+
+@end
+
+@interface NSString (BooleanSupport)
+
+- (BOOL)boolValue;
++ (NSString *)stringWithBool:(BOOL)boolean;
 
 @end

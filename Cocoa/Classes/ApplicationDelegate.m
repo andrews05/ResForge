@@ -27,6 +27,7 @@
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
+#pragma unused( sender )
 	NSString *launchAction = [[NSUserDefaults standardUserDefaults] stringForKey:@"LaunchAction"];
     if( [launchAction isEqualToString:@"OpenUntitledFile"] )
 		return YES;
@@ -36,6 +37,12 @@
 		return NO;
 	}
 	else return NO;	// should be @"None", but we shall return NO for any other value
+}
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
+{
+#pragma unused( sender )
+	return !flag;
 }
 
 - (IBAction)showAbout:(id)sender

@@ -1,5 +1,6 @@
 #import "HexWindowController.h"
 #import "HexTextView.h"
+#import "FindSheetController.h"
 
 @implementation HexWindowController
 
@@ -24,12 +25,18 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	
 	// one instance of your principal class will be created for every resource the user wants to edit (similar to Windows apps)
 	resource = [newResource retain];
+	bytesPerRow = 16;
 	
 	// load the window from the nib file and set it's title
 	[self window];	// implicitly loads nib
 	if( ![[resource name] isEqualToString:@""] )
 		[[self window] setTitle:[resource name]];
 	return self;
+}
+
+- (id)initWithResources:(id)newResource, ...
+{
+	return nil;
 }
 
 - (void)dealloc
@@ -69,6 +76,13 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	
 	// finally, show the window
 	[self showWindow:self];
+}
+
+- (IBAction)showFind:(id)sender
+{
+	// bug: HexWindowController allocs a sheet controller, but it's never disposed of
+	FindSheetController *sheetController = [[FindSheetController alloc] initWithWindowNibName:@"FindSheet"];
+	[sheetController showFindSheet:self];
 }
 
 - (void)viewDidScroll:(NSNotification *)notification
@@ -119,6 +133,9 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 
 - (void)refreshData:(NSData *)data;
 {
+	NSDictionary *dictionary;
+	NSMutableParagraphStyle *paragraph = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+	
 	// save selections
 	NSRange hexSelection = [hex selectedRange];
 	NSRange asciiSelection = [ascii selectedRange];
@@ -128,10 +145,19 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	[hex setDelegate:nil];
 	[ascii setDelegate:nil];
 	
+	// prepare attributes dictionary
+	[paragraph setLineBreakMode:NSLineBreakByCharWrapping];
+	dictionary = [NSDictionary dictionaryWithObject:paragraph forKey:NSParagraphStyleAttributeName];
+	
 	// do stuff with data
 	[offset	setString:[hexDelegate offsetRepresentation:data]];
 	[hex	setString:[hexDelegate hexRepresentation:data]];
 	[ascii	setString:[hexDelegate asciiRepresentation:data]];
+	
+	// apply attributes
+	[[offset textStorage] addAttributes:dictionary range:NSMakeRange(0, [[offset textStorage] length])];
+	[[hex	 textStorage] addAttributes:dictionary range:NSMakeRange(0, [[hex textStorage] length])];
+	[[ascii	 textStorage] addAttributes:dictionary range:NSMakeRange(0, [[ascii textStorage] length])];
 	
 	// restore selections (this is the dumbest way to do it, but it'll do for now)
 	[hex setSelectedRange:hexSelection];
@@ -150,6 +176,11 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 - (NSData *)data
 {
 	return [resource data];
+}
+
+- (int)bytesPerRow
+{
+	return bytesPerRow;
 }
 
 @end

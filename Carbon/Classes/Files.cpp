@@ -347,6 +347,11 @@ pascal void NavEventFilter( NavEventCallbackMessage callBackSelector, NavCBRecPt
 					break;
 			}
 			break;
+		
+/*		// Don't open file if it gets double-clicked (e.g. to add to an 'open' list instead)
+		case kNavCBOpenSelection:
+			NavCustomControl( callBackParms->context, (long) kNavCtlSetActionState, (void *) kNavDontOpenState );
+			break;	*/
 	}
 }
 

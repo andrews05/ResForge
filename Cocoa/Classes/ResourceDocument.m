@@ -13,15 +13,14 @@
 {
 	self = [super init];
 	resources = [[NSMutableArray alloc] init];
-	otherFork = nil;
+	fork = nil;
 	return self;
 }
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if( otherFork )
-		DisposePtr( (Ptr) otherFork );
+	if( fork ) DisposePtr( (Ptr) fork );
 	[resources release];
 	[super dealloc];
 }
@@ -179,7 +178,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	{
 		[item setLabel:NSLocalizedString(@"Save", nil)];
 		[item setPaletteLabel:NSLocalizedString(@"Save", nil)];
-		[item setToolTip:[NSString stringWithFormat:NSLocalizedString(@"Save To %@ Fork", nil), !otherFork? NSLocalizedString(@"Data", nil) : NSLocalizedString(@"Resource", nil)]];
+		[item setToolTip:[NSString stringWithFormat:NSLocalizedString(@"Save To %@ Fork", nil), !fork? NSLocalizedString(@"Data", nil) : NSLocalizedString(@"Resource", nil)]];
 		[item setImage:[NSImage imageNamed:@"Save"]];
 		[item setTarget:self];
 		[item setAction:@selector(saveDocument:)];
@@ -244,7 +243,6 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 {
 	// opens the resource in it's default template
 	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
-	NSLog( [resource type] );
 	[self openResourceUsingTemplate:[resource type]];
 }
 
@@ -256,22 +254,14 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
 	Resource *tmpl = [dataSource resourceNamed:[resource type] ofType:@"TMPL"];
 	
-	NSLog( @"attempting to open %@ using template %@", [resource name], templateName );
-	
 	// open the resource, passing in the template to use
 	if( tmpl /*&& [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)]*/ )
 	{
-		NSLog( @"opening using %@ template", templateName );
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 		[(id <ResKnifePluginProtocol>)[[templateEditor principalClass] alloc] initWithResources:resource, tmpl, nil];
 	}
 	// if no template exists, or template editor is broken, open as hex
-	else
-	{
-		if( !tmpl )	NSLog( @"no %@ template present, opening as hex", templateName );
-		else		NSLog( @"template editor does not respond to -initWithResources:, opening as hex" );
-		[self openResourceAsHex:self];
-	}
+	else [self openResourceAsHex:self];
 }
 
 - (IBAction)openResourceAsHex:(id)sender
@@ -402,19 +392,23 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		NSLog( @"Opening Resource fork failed, trying data fork..." );
 		error = FSOpenResourceFile( fileRef, 0, nil, fsRdPerm, &fileRefNum);
 	}
-	else otherFork = resourceForkName;
+	else fork = resourceForkName;
 	SetResLoad( true );		// restore resource loading as soon as is possible
 	
 	// read the resources (without spawning thousands of undos for resource creation)
 	[[self undoManager] disableUndoRegistration];
 	if( fileRefNum && !error )
 		succeeded = [self readResourceMap:fileRefNum];
-	else if( !fileRefNum ) NSLog( @"Opening data fork failed too! (fileRef)" );
+	else if( !fileRefNum )
+	{
+		// supposed to read data fork as byte stream here
+		NSLog( @"Opening data fork failed too! (fileRef)" );
+	}
 	else NSLog( @"Opening data fork failed too! (error)" );
 	[[self undoManager] enableUndoRegistration];
 	
 	// tidy up loose ends
-	if( !otherFork ) DisposePtr( (Ptr) resourceForkName );	// only delete if we're not saving it
+	if( !fork ) DisposePtr( (Ptr) resourceForkName );	// only delete if we're not saving it
 	if( fileRefNum ) FSClose( fileRefNum );
 	DisposePtr( (Ptr) fileRef );
 	return succeeded;
@@ -426,8 +420,6 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	unsigned short i, j, n;
 	SInt16 oldResFile = CurResFile();
 	UseResFile( fileRefNum );
-	
-	NSLog( @"Reading resource map..." );
 	
 	for( i = 1; i <= Count1Types(); i++ )
 	{
@@ -472,8 +464,6 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		}
 	}
 	
-	NSLog( @"Resource map read" );
-	
 	// save resource map and clean up
 	UseResFile( oldResFile );
 	return YES;
@@ -490,13 +480,13 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	
 	// create and open file for writing
 	error = FSPathMakeRef( [[fileName stringByDeletingLastPathComponent] cString], parentRef, nil );
- 	if( otherFork )
+ 	if( fork )
 	{
 		unichar *uniname = (unichar *) NewPtrClear( sizeof(unichar) *256 );
 		[[fileName lastPathComponent] getCharacters:uniname];
-		error = FSCreateResourceFile( parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, nil, otherFork->length, (UniChar *) &otherFork->unicode, fileRef, fileSpec );
+		error = FSCreateResourceFile( parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, nil, fork->length, (UniChar *) &fork->unicode, fileRef, fileSpec );
 		if( !error )
-			error = FSOpenResourceFile( fileRef, otherFork->length, (UniChar *) &otherFork->unicode, fsWrPerm, &fileRefNum);
+			error = FSOpenResourceFile( fileRef, fork->length, (UniChar *) &fork->unicode, fsWrPerm, &fileRefNum);
 	}
 	else
 	{

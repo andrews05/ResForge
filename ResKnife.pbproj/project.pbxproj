@@ -5,6 +5,214 @@
 	};
 	objectVersion = 34;
 	objects = {
+		F535442F0225D46C01A80001 = {
+			fileRef = F5B588920156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F53544320226550001A80001 = {
+			fileRef = F5B588920156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5354435022673C101A80001 = {
+			children = (
+				F535444D0226B5F501A80001,
+				F535444E0226B5F501A80001,
+				F535443E0226752901A80001,
+				F535443F0226752901A80001,
+				F5D0CBD302278F8B01A80001,
+				F535443D0226752901A80001,
+			);
+			isa = PBXGroup;
+			path = "Template Editor";
+			refType = 4;
+		};
+		F5354436022674B301A80001 = {
+			isa = PBXBundleReference;
+			path = "Template Editor.plugin";
+			refType = 3;
+		};
+		F5354437022674B401A80001 = {
+			buildPhases = (
+				F5354438022674B401A80001,
+				F5354439022674B401A80001,
+				F535443A022674B401A80001,
+				F535443B022674B401A80001,
+				F535443C022674B401A80001,
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Template Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = plugin;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = "Template Editor Cocoa";
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = "Template Editor Cocoa";
+			productReference = F5354436022674B301A80001;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Template Editor</string>
+	<key>CFBundleGetInfoString</key>
+	<string>© Nicholas Shanks 2002</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>com.nickshanks.resknife.template</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>ResKnife Template Editor</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>ResK</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+	<key>NSMainNibFile</key>
+	<string>TemplateWindow</string>
+	<key>NSPrincipalClass</key>
+	<string>TemplateWindowController</string>
+</dict>
+</plist>
+";
+			shouldUseHeadermap = 0;
+		};
+		F5354438022674B401A80001 = {
+			buildActionMask = 2147483647;
+			files = (
+				F53544400226752901A80001,
+				F535444F0226B5F501A80001,
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		F5354439022674B401A80001 = {
+			buildActionMask = 2147483647;
+			files = (
+				F53544410226752901A80001,
+				F5D0CBD402278F8B01A80001,
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		F535443A022674B401A80001 = {
+			buildActionMask = 2147483647;
+			files = (
+				F53544420226752901A80001,
+				F53544500226B5F501A80001,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		F535443B022674B401A80001 = {
+			buildActionMask = 2147483647;
+			files = (
+				F53544460226907801A80001,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		F535443C022674B401A80001 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		F535443D0226752901A80001 = {
+			isa = PBXFileReference;
+			path = SupportedTypes.plist;
+			refType = 4;
+		};
+		F535443E0226752901A80001 = {
+			isa = PBXFileReference;
+			path = TemplateWindowController.h;
+			refType = 4;
+		};
+		F535443F0226752901A80001 = {
+			isa = PBXFileReference;
+			path = TemplateWindowController.m;
+			refType = 4;
+		};
+		F53544400226752901A80001 = {
+			fileRef = F535443E0226752901A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F53544410226752901A80001 = {
+			fileRef = F535443D0226752901A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F53544420226752901A80001 = {
+			fileRef = F535443F0226752901A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F53544430226778D01A80001 = {
+			isa = PBXFileReference;
+			name = TemplateWindow.nib;
+			path = English.lproj/TemplateWindow.nib;
+			refType = 4;
+		};
+		F535444502268F9501A80001 = {
+			isa = PBXTargetDependency;
+			target = F5354437022674B401A80001;
+		};
+		F53544460226907801A80001 = {
+			fileRef = F5B5884B0156D40B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F53544470226912301A80001 = {
+			fileRef = F5354436022674B301A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F535444D0226B5F501A80001 = {
+			isa = PBXFileReference;
+			path = Element.h;
+			refType = 4;
+		};
+		F535444E0226B5F501A80001 = {
+			isa = PBXFileReference;
+			path = Element.m;
+			refType = 4;
+		};
+		F535444F0226B5F501A80001 = {
+			fileRef = F535444D0226B5F501A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F53544500226B5F501A80001 = {
+			fileRef = F535444E0226B5F501A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F53B5F3001C97EFB01A8010C = {
 			fileRef = F5B588210156D40B01000001;
 			isa = PBXBuildFile;
@@ -66,6 +274,27 @@
 			settings = {
 			};
 		};
+		F54E622B021D192201A80001 = {
+			children = (
+				F54E622C021D192201A80001,
+			);
+			isa = PBXVariantGroup;
+			name = CreateResourceSheet.nib;
+			path = "";
+			refType = 4;
+		};
+		F54E622C021D192201A80001 = {
+			isa = PBXFileReference;
+			name = English;
+			path = Cocoa/English.lproj/CreateResourceSheet.nib;
+			refType = 2;
+		};
+		F54E622D021D192201A80001 = {
+			fileRef = F54E622B021D192201A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F5502C3301C5586301C57124 = {
 			fileRef = F5B5884B0156D40B01000001;
 			isa = PBXBuildFile;
@@ -74,8 +303,7 @@
 		};
 		F5502C4001C579FF01C57124 = {
 			isa = PBXFileReference;
-			name = ResKnifePluginProtocol.h;
-			path = "Plug-Ins/ResKnifePluginProtocol.h";
+			path = ResKnifePluginProtocol.h;
 			refType = 4;
 		};
 		F5502C4101C579FF01C57124 = {
@@ -83,6 +311,15 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		F5594EE9021F3E2301A80001 = {
+			children = (
+				F5D0CBCF022744C701A80001,
+				F5D0CBD0022744C701A80001,
+			);
+			isa = PBXGroup;
+			path = Catagories;
+			refType = 4;
 		};
 		F5730B930159528A01000001 = {
 			isa = PBXFileReference;
@@ -195,6 +432,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				F577A9060212B69C01A80001,
+				F53544470226912301A80001,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			name = "Copy Files";
@@ -204,10 +442,10 @@
 				F5502C4001C579FF01C57124,
 				F5CDEBAB01FC893201A80001,
 				F5EF839F020C08E601A80001,
+				F5354435022673C101A80001,
 			);
 			isa = PBXGroup;
-			name = "Plug-Ins";
-			path = "";
+			path = "Plug-Ins";
 			refType = 4;
 		};
 		F57CEE0D0189C95101A8010B = {
@@ -333,9 +571,10 @@
 			projectDirPath = "";
 			targets = (
 				F5B588130156D30301000001,
+				F57CEE0E0189C95101A8010B,
+				F5354437022674B401A80001,
 				F5B588750156D5CB01000001,
 				F5B588D20156D78201000001,
-				F57CEE0E0189C95101A8010B,
 				F5B588EE0156DAF301000001,
 				F5B5890B0156DC2201000001,
 			);
@@ -358,10 +597,11 @@
 			children = (
 				F5B588120156D30301000001,
 				F5B588740156D5CB01000001,
+				F57CEE0D0189C95101A8010B,
+				F5354436022674B301A80001,
 				F5B588D10156D78201000001,
 				F5B588ED0156DAF301000001,
 				F5B589030156DC2201000001,
-				F57CEE0D0189C95101A8010B,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -385,6 +625,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
 				PRODUCT_NAME = "ResKnife Cocoa";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
@@ -392,6 +633,7 @@
 			};
 			dependencies = (
 				F5CDEBAF01FCA71501A80001,
+				F535444502268F9501A80001,
 			);
 			isa = PBXApplicationTarget;
 			name = "ResKnife Cocoa";
@@ -406,6 +648,22 @@
 	<string>English</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>*</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Any file</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>****</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>ResourceDocument</string>
+		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
@@ -437,22 +695,6 @@
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>icns</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>NSDocumentClass</key>
-			<string>ResourceDocument</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>*</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>NSFilenamesPboardType</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>****</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -492,7 +734,11 @@
 		F5B588140156D30301000001 = {
 			buildActionMask = 2147483647;
 			files = (
+				F5CDEBAC01FC893201A80001,
+				F5502C4101C579FF01C57124,
+				F53B5F3101C97EFB01A8010C,
 				F5B5884F0156D40B01000001,
+				F53B5F3001C97EFB01A8010C,
 				F5B588520156D40B01000001,
 				F5B588530156D40B01000001,
 				F5B588540156D40B01000001,
@@ -500,12 +746,9 @@
 				F5B588560156D40B01000001,
 				F5B588570156D40B01000001,
 				F5B588580156D40B01000001,
-				F5B588590156D40B01000001,
-				F5502C4101C579FF01C57124,
-				F53B5F3001C97EFB01A8010C,
-				F53B5F3101C97EFB01A8010C,
-				F5CDEBAC01FC893201A80001,
 				F577A902021215C901A80001,
+				F5B588590156D40B01000001,
+				F5D0CBD1022744C701A80001,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -518,18 +761,19 @@
 				F5B5885C0156D40B01000001,
 				F5B5885E0156D40B01000001,
 				F5B5885F0156D40B01000001,
+				F54E622D021D192201A80001,
 				F5B588600156D40B01000001,
 				F5B588610156D40B01000001,
+				F5730B940159528A01000001,
 				F5B588620156D40B01000001,
 				F5B588630156D40B01000001,
 				F5B588640156D40B01000001,
-				F5730B940159528A01000001,
-				F577A8F50211D05E01A80001,
-				F577A8F90211DC1E01A80001,
 				F577A8FD0211E4D401A80001,
+				F577A905021220D601A80001,
 				F577A8FE0211E4D401A80001,
 				F577A8FF0211E4D401A80001,
-				F577A905021220D601A80001,
+				F577A8F50211D05E01A80001,
+				F577A8F90211DC1E01A80001,
 			);
 			isa = PBXResourcesBuildPhase;
 			name = "Bundle Resources";
@@ -548,8 +792,9 @@
 				F5B5886E0156D40B01000001,
 				F5B5886F0156D40B01000001,
 				F5B588700156D40B01000001,
-				F5B588710156D40B01000001,
 				F577A903021215C901A80001,
+				F5B588710156D40B01000001,
+				F5D0CBD2022744C701A80001,
 			);
 			isa = PBXSourcesBuildPhase;
 			name = Sources;
@@ -574,6 +819,7 @@
 			children = (
 				F5B5881B0156D40B01000001,
 				F5B5881C0156D40B01000001,
+				F5594EE9021F3E2301A80001,
 				F5B588350156D40B01000001,
 				F57CEE0B0189C95101A8010B,
 			);
@@ -594,8 +840,6 @@
 				F5B588200156D40B01000001,
 				F5B588210156D40B01000001,
 				F5B588220156D40B01000001,
-				F5B588230156D40B01000001,
-				F5B588240156D40B01000001,
 				F5B588250156D40B01000001,
 				F5B588260156D40B01000001,
 				F5B588270156D40B01000001,
@@ -647,16 +891,6 @@
 		F5B588220156D40B01000001 = {
 			isa = PBXFileReference;
 			path = CreateResourceSheetController.m;
-			refType = 4;
-		};
-		F5B588230156D40B01000001 = {
-			isa = PBXFileReference;
-			path = InfoWindow.h;
-			refType = 4;
-		};
-		F5B588240156D40B01000001 = {
-			isa = PBXFileReference;
-			path = InfoWindow.m;
 			refType = 4;
 		};
 		F5B588250156D40B01000001 = {
@@ -743,6 +977,7 @@
 			children = (
 				F5B588360156D40B01000001,
 				F5B588380156D40B01000001,
+				F54E622B021D192201A80001,
 				F5B5883A0156D40B01000001,
 				F5B5883E0156D40B01000001,
 				F5B588400156D40B01000001,
@@ -1272,7 +1507,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F53B5F3201C984F301A8010C,
-				F5D0BAFC0202558901A80001,
 			);
 			isa = PBXFrameworksBuildPhase;
 			name = "Frameworks & Libraries";
@@ -1312,7 +1546,6 @@
 				F5B588800156D6D901000001,
 				F5B588830156D6D901000001,
 				F5B588A20156D6D901000001,
-				F5B588A70156D6D901000001,
 			);
 			isa = PBXGroup;
 			path = Carbon;
@@ -1551,12 +1784,6 @@
 			path = ResKnife.nib;
 			refType = 4;
 		};
-		F5B588A70156D6D901000001 = {
-			isa = PBXFileReference;
-			name = ResKnife.lib;
-			path = Carbon/ResKnife.lib;
-			refType = 2;
-		};
 		F5B588A80156D6D901000001 = {
 			fileRef = F5B588840156D6D901000001;
 			isa = PBXBuildFile;
@@ -1787,6 +2014,7 @@
 				F5B588D70156D78201000001,
 			);
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = /Volumes/DeskStar/nicholas/Projects/ResKnife/Carbon;
 				OTHER_LDFLAGS = "-bundle -bundle_loader \"$HOME/Projects/ResKnife/build/ResKnife Cocoa.app/Contents/MacOS/ResKnife Cocoa\" -undefined error";
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Hex Editor";
@@ -1797,7 +2025,7 @@
 			dependencies = (
 			);
 			isa = PBXBundleTarget;
-			name = "Hex Editor";
+			name = "Hex Editor Carbon";
 			productName = "Hex Editor";
 			productReference = F5B588D10156D78201000001;
 			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -1839,6 +2067,7 @@
 				F5B588E40156D9D401000001,
 				F5B588E50156D9D401000001,
 				F5B588E60156D9D401000001,
+				F535442F0225D46C01A80001,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -2019,8 +2248,8 @@
 				F5B588F30156DAF301000001,
 			);
 			buildSettings = {
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "-bundle -undefined suppress";
+				LIBRARY_SEARCH_PATHS = /Volumes/DeskStar/nicholas/Projects/ResKnife/Carbon;
+				OTHER_LDFLAGS = "-bundle -undefined error";
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Template Editor";
 				SECTORDER_FLAGS = "";
@@ -2030,7 +2259,7 @@
 			dependencies = (
 			);
 			isa = PBXBundleTarget;
-			name = "Template Editor";
+			name = "Template Editor Carbon";
 			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
 			productName = "Template Editor";
 			productReference = F5B588ED0156DAF301000001;
@@ -2071,6 +2300,7 @@
 				F5B589040156DC2201000001,
 				F5B589050156DC2201000001,
 				F5B589060156DC2201000001,
+				F53544320226550001A80001,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -2384,8 +2614,7 @@
 		};
 		F5CDEBAB01FC893201A80001 = {
 			isa = PBXFileReference;
-			name = ResKnifeResourceProtocol.h;
-			path = "Plug-Ins/ResKnifeResourceProtocol.h";
+			path = ResKnifeResourceProtocol.h;
 			refType = 4;
 		};
 		F5CDEBAC01FC893201A80001 = {
@@ -2410,8 +2639,38 @@
 			isa = PBXTargetDependency;
 			target = F57CEE0E0189C95101A8010B;
 		};
-		F5D0BAFC0202558901A80001 = {
-			fileRef = F5B588A70156D6D901000001;
+		F5D0CBCF022744C701A80001 = {
+			isa = PBXFileReference;
+			path = "NSOutlineView-SelectedItems.h";
+			refType = 4;
+		};
+		F5D0CBD0022744C701A80001 = {
+			isa = PBXFileReference;
+			path = "NSOutlineView-SelectedItems.m";
+			refType = 4;
+		};
+		F5D0CBD1022744C701A80001 = {
+			fileRef = F5D0CBCF022744C701A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5D0CBD2022744C701A80001 = {
+			fileRef = F5D0CBD0022744C701A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5D0CBD302278F8B01A80001 = {
+			children = (
+				F53544430226778D01A80001,
+			);
+			isa = PBXVariantGroup;
+			name = TemplateWindow.nib;
+			refType = 4;
+		};
+		F5D0CBD402278F8B01A80001 = {
+			fileRef = F5D0CBD302278F8B01A80001;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -2450,8 +2709,7 @@
 				F5EF83A9020C08E601A80001,
 			);
 			isa = PBXGroup;
-			name = "Hex Editor";
-			path = "Plug-Ins/Hex Editor";
+			path = "Hex Editor";
 			refType = 4;
 		};
 		F5EF83A0020C08E601A80001 = {

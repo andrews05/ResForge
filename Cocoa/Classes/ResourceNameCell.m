@@ -18,7 +18,7 @@
 - (void)setImage:(NSImage *)newImage
 {
 	// save image and set to 16x16 pixels
-	[image autorelease];	// would this be better autoreleased instead?
+	[image autorelease];
 	image = [newImage retain];
 	[image setScalesWhenResized:YES];
 	[image setSize:NSMakeSize(16,16)];

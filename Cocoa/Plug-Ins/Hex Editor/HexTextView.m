@@ -2,6 +2,13 @@
 
 @implementation HexTextView
 
+- (id)init
+{
+	self = [super init];
+	[[[NSCursor alloc] initWithImage:[NSImage imageNamed:@"Show Info"] hotSpot:NSMakePoint(0,0)] set];
+	return self;
+}
+
 - (void)setSelectedRange:(NSRange)charRange affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)flag
 {
 	NSRange newRange = charRange;

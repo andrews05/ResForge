@@ -25,6 +25,8 @@
 	
 	// set window to only accept key when editing text boxes
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
+	[[self window] setBackgroundColor:[NSColor clearColor]];
+	[[self window] setOpaque:NO];
 	
 	// retain views for swapping in and out
 	[documentView retain];

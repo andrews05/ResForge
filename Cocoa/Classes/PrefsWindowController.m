@@ -110,3 +110,17 @@
 }
 
 @end
+
+@implementation NSString (BooleanSupport)
+
+- (BOOL)boolValue
+{
+	return [self isEqualToString:@"YES"];
+}
+
++ (NSString *)stringWithBool:(BOOL)boolean
+{
+	return boolean? @"YES" : @"NO";
+}
+
+@end

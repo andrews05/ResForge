@@ -14,10 +14,14 @@
     IBOutlet NSTextField		*message;
 	
 	id <ResKnifeResourceProtocol>	resource;
+	int								bytesPerRow;
 }
 
 // conform to the ResKnifePluginProtocol with the inclusion of these methods
 - (id)initWithResource:(id)newResource;
+
+// show find sheet
+- (IBAction)showFind:(id)sender;
 
 // normal methods
 - (void)viewDidScroll:(NSNotification *)notification;
@@ -27,5 +31,6 @@
 // accessors
 - (id)resource;
 - (NSData *)data;
+- (int)bytesPerRow;
 
 @end

@@ -9,34 +9,28 @@
 
 - (NSString *)offsetRepresentation:(NSData *)data;
 {
-#warning The hex editor window is currently limited to 16 bytes per row
-	int row, dataLength = [data length];
-	int rows = (dataLength / 16) + ((dataLength % 16)? 1:0);
+	int row, dataLength = [data length], bytesPerRow = [controller bytesPerRow];
+	int rows = (dataLength / bytesPerRow) + ((dataLength % bytesPerRow)? 1:0);
 	NSMutableString *representation = [NSMutableString string];
 	
 	for( row = 0; row < rows; row++ )
-		[representation appendFormat:@"%08lX:\n", row * 16];
-	
-	// remove last character (the return on the end)
-	if( dataLength % 16 != 0 )
-		[representation deleteCharactersInRange:NSMakeRange([representation length] -1, 1)];
+		[representation appendFormat:@"%08lX:", row * bytesPerRow];
 	
 	return representation;
 }
 
 - (NSString *)hexRepresentation:(NSData *)data;
 {
-#warning The hex editor window is currently limited to 16 bytes per row
-	int row, addr, currentByte = 0, dataLength = [data length];
-	int rows = (dataLength / 16) + ((dataLength % 16)? 1:0);
-	char buffer[16*3], hex1, hex2;
+	int row, addr, currentByte = 0, dataLength = [data length], bytesPerRow = [controller bytesPerRow];
+	int rows = (dataLength / bytesPerRow) + ((dataLength % bytesPerRow)? 1:0);
+	char buffer[bytesPerRow*3 +1], hex1, hex2;
 	char *bytes = (char *) [data bytes];
 	NSMutableString *representation = [NSMutableString string];
 	
 	// draw bytes
 	for( row = 0; row < rows; row++ )
 	{
-		for( addr = 0; addr < 16; addr++ )
+		for( addr = 0; addr < bytesPerRow; addr++ )
 		{
 			if( currentByte < dataLength )
 			{
@@ -63,12 +57,10 @@
 		}
 		
 		// clear last byte on line
-		buffer[16*3 -1] = 0x00;
+		buffer[bytesPerRow*3] = 0x00;
 		
 		// append buffer to representation
 		[representation appendString:[NSString stringWithCString:buffer]];
-		if( currentByte != dataLength || dataLength % 16 == 0 )
-			[representation appendString:@"\n"];
 	}
 	
 	return representation;
@@ -76,17 +68,16 @@
 
 - (NSString *)asciiRepresentation:(NSData *)data;
 {
-#warning The hex editor window is currently limited to 16 bytes per row
-	int row, addr, currentByte = 0, dataLength = [data length];
-	int rows = (dataLength / 16) + ((dataLength % 16)? 1:0);
-	char buffer[17];
+	int row, addr, currentByte = 0, dataLength = [data length], bytesPerRow = [controller bytesPerRow];
+	int rows = (dataLength / bytesPerRow) + ((dataLength % bytesPerRow)? 1:0);
+	char buffer[bytesPerRow +1];
 	char *bytes = (char *) [data bytes];
 	NSMutableString *representation = [NSMutableString string];
 	
 	// draw bytes
 	for( row = 0; row < rows; row++ )
 	{
-		for( addr = 0; addr < 16; addr++ )
+		for( addr = 0; addr < bytesPerRow; addr++ )
 		{
 			if( currentByte < dataLength )
 			{
@@ -105,12 +96,10 @@
 		}
 		
 		// clear last byte on line
-		buffer[16] = 0x00;
+		buffer[bytesPerRow] = 0x00;
 		
 		// append buffer to representation
 		[representation appendString:[NSString stringWithCString:buffer]];
-		if( currentByte != dataLength || dataLength % 16 == 0 )
-			[representation appendString:@"\n"];
 	}
 	
 	return representation;
@@ -118,7 +107,9 @@
 
 /* delegation methods */
 
-- (BOOL)textView:(NSTextView *)textView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString;
+// I'm going to try a lower level approach overriding NSResponder methods in the HexTextView class.
+
+/*- (BOOL)textView:(NSTextView *)textView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString;
 {
 #warning Every time a character is typed or string pasted, the entire resource is duplicated, operated on and disposed of! Perhaps I could do this in a better way?
 	NSMutableData *data = [NSMutableData dataWithData:[controller data]];
@@ -137,7 +128,7 @@
 	// update resource data - this causes a notification to be sent out, which the plug receives and acts upon to update the text views
 	[[controller resource] setData:data];
 	return NO;
-}
+}*/
 
 - (NSRange)textView:(NSTextView *)textView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange
 {
@@ -176,44 +167,30 @@
 {
 	// valid for all window widths
 	NSRange byteRange = NSMakeRange(0,0);
-	
 	byteRange.location = (hexRange.location / 3);
 	byteRange.length = (hexRange.length / 3) + ((hexRange.length % 3)? 1:0);
-	
 	return byteRange;
 }
 
 - (NSRange)hexRangeFromByteRange:(NSRange)byteRange;
 {
+	// valid for all window widths
 	NSRange hexRange = NSMakeRange(0,0);
-	
 	hexRange.location = (byteRange.location * 3);
 	hexRange.length = (byteRange.length * 3);
-	
 	return hexRange;
 }
 
 - (NSRange)byteRangeFromAsciiRange:(NSRange)asciiRange;
 {
-	// assumes 16 byte wide window
-	NSRange byteRange;
-	
-	byteRange.location = asciiRange.location - (asciiRange.location / 17);
-	byteRange.length = asciiRange.length - ((asciiRange.location + asciiRange.length) / 17) +  (asciiRange.location / 17);
-	
-	return byteRange;
+	// one-to-one mapping
+	return asciiRange;
 }
 
 - (NSRange)asciiRangeFromByteRange:(NSRange)byteRange;
 {
-#warning There's a bug in this somewhere!
-	// assumes 16 byte wide window
-	NSRange asciiRange = NSMakeRange(0,0);
-	
-	asciiRange.location = byteRange.location + (byteRange.location / 17);
-	asciiRange.length = byteRange.length + ((byteRange.location + byteRange.length) / 17) - (byteRange.location / 17);
-	
-	return asciiRange;
+	// one-to-one mapping
+	return byteRange;
 }
 
 - (NSTextView *)hex
