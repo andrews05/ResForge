@@ -245,7 +245,11 @@
 
 -(void)	outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-	[item takeValue:object forKey: [tableColumn identifier]];
+	NS_DURING
+		[item takeValue:object forKey: [tableColumn identifier]];
+	NS_HANDLER
+		
+	NS_ENDHANDLER
 }
 
 
