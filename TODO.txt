@@ -1,2 +1,3 @@
 -> "Open as Hex" displays "(null)" as the document name. Why?
--> Template editor always forces at least one item in a list. Make it support empty lists.
+-> Changing the type/creator of a file isn't written to disk by ResourceDocument.
+-> Create small versions of the doc icons in Photoshop instead of letting IconComposer use its cheap scaling on them.

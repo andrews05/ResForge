@@ -13,12 +13,12 @@
 	return self;
 }
 
-- (void)readPasteboard:(NSString *)pbName
+-(void)	readPasteboard:(NSString *)pbName
 {
-	NSPasteboard *pb = [NSPasteboard pasteboardWithName:pbName];
-	NSArray *types = [pb types];
-	NSEnumerator *enumerator = [types objectEnumerator];
-	NSString *currentType;
+	NSPasteboard	*pb = [NSPasteboard pasteboardWithName:pbName];
+	NSArray			*types = [pb types];
+	NSEnumerator	*enumerator = [types objectEnumerator];
+	NSString		*currentType;
 	
 	[[self undoManager] disableUndoRegistration];
 	while( currentType = [enumerator nextObject] )
@@ -42,6 +42,18 @@
 		[resources addObject:resource];		// array retains resource
 	}
 	[[self undoManager] enableUndoRegistration];
+	
+	[outlineView reloadData];
 }
+
+-(void)	windowDidBecomeKey: (NSNotification*)notification
+{
+	// This mess sponsored by Uli Kusterer ;-)
+	generalChangeCount = [[NSPasteboard generalPasteboard] changeCount];
+	[resources removeAllObjects];
+	
+	[self readPasteboard:NSGeneralPboard];	// Update window contents.
+}
+
 
 @end

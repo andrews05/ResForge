@@ -3,7 +3,7 @@
 
 @interface PasteboardDocument : ResourceDocument
 {
-	unsigned long	generalChangeCount;		// change count for the general pasteboard
+	int		generalChangeCount;		// change count for the general pasteboard
 }
 
 - (void)readPasteboard:(NSString *)pbName;
