@@ -41,11 +41,6 @@ functionality: */
 				image format. This will be a lossy conversion to a TIFF
 				file. */
 +(NSImage*)		imageForImageFileExport: (id <ResKnifeResourceProtocol>)theRes;
-/*! @method		extensionForImageFileExport:
-	@abstract   If you implement imageForImageFileExport, return a string here that
-				provides the proper file extension for your file. By default the
-				host application substitutes "tiff" here. */
-+(NSString*)	extensionForImageFileExport: (id <ResKnifeResourceProtocol>)theRes;
 
 @end
 

@@ -1045,10 +1045,6 @@ static NSString *RKExportItemIdentifier		= @"com.ulikusterer.resknife.toolbar.ex
 		return;
 	
 	theData = [edClass imageForImageFileExport: resource];
-
-	if( [edClass respondsToSelector:@selector(extensionForImageFileExport:)] )
-		extension = [edClass extensionForFileExport];
-	
 	panel = [NSSavePanel savePanel];
 	fName = [[resource name] stringByAppendingFormat: @".%@", extension];
 	

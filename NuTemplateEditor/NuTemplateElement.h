@@ -58,5 +58,15 @@
 -(unsigned int)			sizeOnDisk;
 -(void)					writeDataTo: (NuTemplateStream*)stream;
 
+/* Apart from these messages, a NuTemplateElement may also implement the IBActions for
+	the standard edit commands (cut, copy, paste, clear). When an element is selected,
+	the template editor will forward any calls to these items to the element, if it
+	implements them, and it will automatically enable the appropriate menu items. It
+	will also forward validateMenuItem: for the Paste menu item to the element.
+	
+	The showCreateResourceSheet: action will also be forwarded to elements by the
+	template editor. Use this to allow creating new list items or for similar
+	purposes ("Create New Resource..." is renamed to "Create List Entry" while the
+	template editor is key). */
 
 @end
