@@ -354,7 +354,6 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 
 - (IBAction)clear:(id)sender
 {
-	NSNumber *row;
 	Resource *resource;
 	NSEnumerator *enumerator;
 	NSArray *selectedItems = [outlineView selectedItems];
