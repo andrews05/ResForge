@@ -20,8 +20,8 @@
 - (id)initWithResource:(id)newResource;
 
 // normal methods
-- (void)resourceDidChange:(NSNotification *)notification;
 - (void)viewDidScroll:(NSNotification *)notification;
+- (void)resourceDidChange:(NSNotification *)notification;
 - (void)refreshData:(NSData *)data;
 
 // accessors

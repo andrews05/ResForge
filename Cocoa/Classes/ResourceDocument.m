@@ -474,4 +474,9 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	return dataSource;
 }
 
+- (NSArray *)resources
+{
+	return resources;
+}
+
 @end

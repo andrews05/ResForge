@@ -24,5 +24,6 @@
 
 - (NSOutlineView *)outlineView;
 - (ResourceDataSource *)dataSource;
+- (NSArray *)resources;		// return the array as non-mutable
 
 @end

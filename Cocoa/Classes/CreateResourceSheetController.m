@@ -1,7 +1,26 @@
 #import "CreateResourceSheetController.h"
-#import <Carbon/Carbon.h>
 
 @implementation CreateResourceSheetController
+
+- (void)controlTextDidChange:(NSNotification *)notification
+{
+	BOOL enableButton = NO, clash = NO;
+	NSString *type = [typeView stringValue];
+	NSNumber *resID = [NSNumber numberWithInt:[resIDView intValue]];
+	
+	if( [type length] == 4 && [[resIDView stringValue] length] > 0 )
+	{
+		Resource *resource;
+		NSEnumerator *enumerator = [[dataSource resources] objectEnumerator];
+		while( resource = [enumerator nextObject] )
+		{
+			if( [type isEqualToString:[resource type]] && [resID isEqualToNumber:[resource resID]] )
+				clash = YES;
+		}
+		if( !clash ) enableButton = YES;
+	}
+	[createButton setEnabled:enableButton];
+}
 
 - (IBAction)showCreateResourceSheet:(id)sender
 {
@@ -26,7 +45,8 @@
 
 - (IBAction)typePopupSelection:(id)sender
 {
-
+	[typeView setStringValue:[typePopup titleOfSelectedItem]];
+	[typeView selectText:sender];
 }
 
 @end

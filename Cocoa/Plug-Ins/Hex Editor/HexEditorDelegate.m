@@ -182,6 +182,7 @@
 
 - (NSRange)asciiRangeFromByteRange:(NSRange)byteRange;
 {
+#warning There's a bug in this somewhere!
 	// assumes 16 byte wide window
 	NSRange asciiRange = NSMakeRange(0,0);
 	
@@ -191,47 +192,14 @@
 	return asciiRange;
 }
 
-/*
-- (void)textViewDidChangeSelection:(NSNotification *)notification;
-{
-}
-
 - (BOOL)textView:(NSTextView *)textView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString;
 {
 	if( textView == hex )				// we're editing in hexadecimal constrain to 0-9, A-F
 	{
+		return YES;
 	}
 	else return YES;					// we're editing in ASCII
-}*/
-
-/*
-Raphael Sebbe's code
-- (void)textViewDidChangeSelection:(NSNotification *)aNotification
-{
-    BOOL shouldUpdate = NO;
-    id textView = [aNotification object];
-    if(textView == _hexText)
-    {
-        NSRange hexRange = [textView selectedRange];
-        NSRange byteRange = [HVHexInterpreter byteRangeFromHexRange:hexRange];
-        
-        _selectedByteRange = byteRange; shouldUpdate = YES;
-    }
-    else if(textView == _asciiText)
-    {
-        NSRange asciiRange = [textView selectedRange];
-        NSRange byteRange = [HVHexInterpreter byteRangeFromAsciiRange:asciiRange];
-        
-        _selectedByteRange = byteRange; shouldUpdate = YES;
-    }
-    if(shouldUpdate) 
-    {
-        [self updateSelectionFeedback];
-        [self updateSelectionOffsetTF];
-        [self updateForms];
-    }
 }
-*/
 
 - (NSTextView *)hex
 {

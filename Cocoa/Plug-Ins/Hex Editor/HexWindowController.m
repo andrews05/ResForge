@@ -36,6 +36,9 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 {
 	[super windowDidLoad];
 	
+	// swap text views to instances of my class instead
+	//	An experianced NeXT programmer told me that poseAsClass would come back to bite me in the ass at some point, and that I should instead instanciate some HexTextViews and swap them in for now, and use IB do do things properly once IB is fixed. But, for now I think I'll not bother :-P
+	
 	// we don't want this notification until we have a window!
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDidChange:) name:ResourceChangedNotification object:nil];
 	
@@ -49,13 +52,6 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	
 	// finally, show the window
 	[self showWindow:self];
-}
-
-- (void)resourceDidChange:(NSNotification *)notification
-{
-	// see if it's our resource which got changed (we receive notifications for any resource being changed, allowing multi-resource editors)
-	if( [notification object] == resource )
-		[self refreshData:[(id <ResKnifeResourceProtocol>)resource data]];
 }
 
 - (void)viewDidScroll:(NSNotification *)notification
@@ -95,6 +91,13 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:offsetClip];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:hexClip];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:asciiClip];
+}
+
+- (void)resourceDidChange:(NSNotification *)notification
+{
+	// see if it's our resource which got changed (we receive notifications for any resource being changed, allowing multi-resource editors)
+	if( [notification object] == resource )
+		[self refreshData:[(id <ResKnifeResourceProtocol>)resource data]];
 }
 
 - (void)refreshData:(NSData *)data;
