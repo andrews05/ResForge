@@ -94,6 +94,7 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	NSClipView *asciiClip	= [[ascii enclosingScrollView] contentView];
 	
 	// due to a bug in -[NSView setPostsBoundsChangedNotifications:] (it basically doesn't work), I am having to work around it by removing myself from the notification center and restoring things later on!
+	// update, Apple say this isn't their bug.
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];
 	
 	// when a view scrolls, update the other two

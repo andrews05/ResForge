@@ -27,7 +27,7 @@
 	char *bytes = (char *) [data bytes];
 	NSMutableString *representation = [NSMutableString string];
 	
-	// draw bytes
+	// calculate bytes
 	for( row = 0; row < rows; row++ )
 	{
 		for( addr = 0; addr < bytesPerRow; addr++ )
@@ -74,15 +74,17 @@
 	char *bytes = (char *) [data bytes];
 	NSMutableString *representation = [NSMutableString string];
 	
-	// draw bytes
+	// calculate bytes
 	for( row = 0; row < rows; row++ )
 	{
 		for( addr = 0; addr < bytesPerRow; addr++ )
 		{
 			if( currentByte < dataLength )
 			{
-				if( bytes[currentByte] >= 0x20 && bytes[currentByte] < 0x7F )
+				if( bytes[currentByte] > 0x20 && bytes[currentByte] < 0x7F )
 					buffer[addr] = bytes[currentByte];
+				else if( bytes[currentByte] == 0x20 )
+					buffer[addr] = 0xCA;	// nbsp to stop maligned wraps
 				else buffer[addr] = 0x2E;	// full stop								
 				
 				// advance current byte
@@ -149,6 +151,8 @@
 	{
 		byteRange = [self byteRangeFromAsciiRange:newSelectedCharRange];
 		hexRange = [self hexRangeFromByteRange:byteRange];
+		if( hexRange.length > 0 )
+			hexRange.length -= 1;
 		[hex setSelectedRange:hexRange];
 	}
 	
