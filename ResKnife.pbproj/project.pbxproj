@@ -736,12 +736,6 @@
 			path = "ResKnife-rsrcfork.rsrc";
 			refType = 4;
 		};
-		F54627050291767E01A8010C = {
-			fileRef = F54627040291767E01A8010C;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		F546270B02917D1501A8010C = {
 			buildActionMask = 2147483647;
 			files = (
@@ -2656,7 +2650,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5B588CF0156D6D901000001,
-				F54627050291767E01A8010C,
+				F7634BC703B90A220107CC6F,
 			);
 			isa = PBXRezBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4087,6 +4081,7 @@
 				F5EDC61D025BFB8E01A8010C,
 				F5EDC620025BFBB501A8010C,
 				F543AFF1027C716E01A8010C,
+				F7C028FE03BBB39D017A2919,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4126,6 +4121,7 @@
 		};
 		F5DF1C0F0254C78801A80001 = {
 			children = (
+				F7C028FD03BBB39D017A2919,
 				F58F6B82025BC73001A8010C,
 				F58F6B83025BC73001A8010C,
 				F58F6B7E025BC3A501A8010C,
@@ -4417,6 +4413,33 @@
 //F52
 //F53
 //F54
+//F70
+//F71
+//F72
+//F73
+//F74
+		F7634BC703B90A220107CC6F = {
+			fileRef = F5B588A50156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F7C028FD03BBB39D017A2919 = {
+			isa = PBXFileReference;
+			path = novabible.html;
+			refType = 4;
+		};
+		F7C028FE03BBB39D017A2919 = {
+			fileRef = F7C028FD03BBB39D017A2919;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//F70
+//F71
+//F72
+//F73
+//F74
 //FD0
 //FD1
 //FD2

@@ -5,7 +5,7 @@
 
 /* FORM DELEGATION METHOD */
 
-- (void)controlTextDidEndEditing:(NSNotification *)aNotification
+- (void)controlTextDidEndEditing:(NSNotification *)notification
 {
 	[self updateStrings];
 }
@@ -23,6 +23,16 @@
 
 - (IBAction)showFindSheet:(id)sender
 {
+	// load window so I can play with boxes
+	[self window];
+	
+	// enable/disable boxes
+	[searchSelectionOnlyBox setEnabled:([(NSTextView *)[[sender window] firstResponder] rangeForUserTextChange].length != 0)];
+	
+	// set inital vales
+	if( ![searchSelectionOnlyBox isEnabled] )	[searchSelectionOnlyBox setIntValue:0];
+	
+	// show sheet
 	[NSApp beginSheet:[self window] modalForWindow:[sender window] modalDelegate:self didEndSelector:NULL contextInfo:nil];
 }
 

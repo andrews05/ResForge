@@ -4,8 +4,7 @@
 {
 	NSString 		*type;
 	NSString		*label;	
-	NSMutableArray	*subelements;	// elements of a list type have a sub-array of elements
-	union	// for resource data only, ignored for templates
+	union	// for resource arrays only, ignored for TMPL arrays
 	{
 		NSString	*string;
 		NSNumber	*number;
@@ -19,7 +18,6 @@
 
 - (NSString *)label;
 - (NSString *)type;
-- (NSMutableArray *)subelements;
 - (unsigned long)typeAsLong;
 - (NSString *)string;
 - (void)setString:(NSString *)string;

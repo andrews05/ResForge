@@ -5,7 +5,7 @@
 - (FSRef *)createFSRef
 {
 	FSRef *fsRef = NULL;
-	OSStatus error = FSPathMakeRef( [self fileSystemRepresentation], &fsRef, NULL );
+	OSStatus error = FSPathMakeRef( [self fileSystemRepresentation], fsRef, NULL );
 	if( error == noErr )
 		return fsRef;
 	return NULL;
@@ -15,10 +15,10 @@
 {
 	FSRef *fsRef = NULL;
 	FSSpec *fsSpec = NULL;
-	OSStatus error = FSPathMakeRef( [self fileSystemRepresentation], &fsRef, NULL );
+	OSStatus error = FSPathMakeRef( [self fileSystemRepresentation], fsRef, NULL );
 	if( error == noErr )
 	{
-		error = FSGetCatalogInfo( &fsRef, kFSCatInfoNone, NULL, NULL, fsSpec, NULL );
+		error = FSGetCatalogInfo( fsRef, kFSCatInfoNone, NULL, NULL, fsSpec, NULL );
 		if( error == noErr )
 			return fsSpec;
 	}

@@ -1,7 +1,12 @@
 {
     IBClasses = (
         {
-            ACTIONS = {editDate = id; stepDate = id; }; 
+            ACTIONS = {
+                editDate = id; 
+                rotateIntroPictEarly = id; 
+                stepDate = id; 
+                togglePrincipalChar = id; 
+            }; 
             CLASS = CharWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
@@ -13,7 +18,7 @@
                 governmentField3 = NSComboBox; 
                 governmentField4 = NSComboBox; 
                 introDelayForm = NSForm; 
-                introImageView = NSImageView; 
+                introImageView = NSButton; 
                 introPictField1 = NSComboBox; 
                 introPictField2 = NSComboBox; 
                 introPictField3 = NSComboBox; 
@@ -23,7 +28,7 @@
                 monthField = NSTextField; 
                 monthStepper = NSStepper; 
                 ncbForm = NSForm; 
-                principalChar = NSButton; 
+                principalCharButton = NSButton; 
                 shipField = NSComboBox; 
                 startField1 = NSComboBox; 
                 startField2 = NSComboBox; 

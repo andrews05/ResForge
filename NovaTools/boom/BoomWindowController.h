@@ -1,12 +1,18 @@
 #import <Cocoa/Cocoa.h>
 #import "NovaWindowController.h"
 
-enum
+enum	// boom defaults
 {
-	kMinSpinID = 400,
-	kSpinIDRange = 64,
-	kMinSoundID = 300,
-	kSoundIDRange = 64
+	kMinBoomSpinID = 400,
+	kBoomSpinIDRange = 64,
+	kMinBoomSoundID = 300,
+	kBoomSoundIDRange = 64,
+	kMinBoomFrameAdvance = 1,
+	kBoomFrameAdvanceRange = 1000,
+	
+	kDefaultBoomSpinID = kMinBoomSpinID,
+	kDefaultBoomSoundID = kMinBoomSoundID,
+	kDefaultBoomFrameAdvance = 100
 };
 
 @interface BoomWindowController : NovaWindowController

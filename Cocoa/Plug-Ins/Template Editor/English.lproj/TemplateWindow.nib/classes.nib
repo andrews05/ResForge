@@ -4,7 +4,7 @@
         {
             CLASS = TemplateWindowController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {fieldsMatrix = NSMatrix; }; 
+            OUTLETS = {containerView = NSView; }; 
             SUPERCLASS = NSWindowController; 
         }
     ); 

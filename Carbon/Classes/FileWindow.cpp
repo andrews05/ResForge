@@ -369,7 +369,7 @@ pascal OSStatus FileWindowEventHandler( EventHandlerCallRef callRef, EventRef ev
 pascal OSStatus FileWindowUpdateMenus( EventHandlerCallRef callRef, EventRef event, void *userData )
 {
 	#pragma unused( callRef, event )
-	OSStatus error = eventNotHandledErr;
+//	OSStatus error = eventNotHandledErr;
 	
 	// get file window
 	FileWindowPtr file = (FileWindowPtr) userData;
@@ -1602,7 +1602,7 @@ OSStatus FileWindow::OpenResource( DataBrowserItemID itemID, MenuCommand command
 	#pragma unused( command )
 	// get opened resource
 	OSStatus error = noErr;
-	Boolean stop = false;
+//	Boolean stop = false;
 	ResourceObjectPtr resource = GetResource( itemID );
 	
 	// check for null resource

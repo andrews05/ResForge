@@ -9,10 +9,19 @@
 	
 	boomRec = (BoomRec *) calloc( 1, sizeof(BoomRec) );
 	[[newResource data] getBytes:boomRec];
+	
+	// fill in default values if necessary
+	if( boomRec->GraphicIndex < 0 || boomRec->GraphicIndex > 63 )
+		boomRec->GraphicIndex = 0;
+	if( (boomRec->SoundIndex < 0 || boomRec->SoundIndex > 63) && (boomRec->SoundIndex != -1) )
+		boomRec->SoundIndex = 0;
+	if( boomRec->FrameAdvance < 1 || boomRec->FrameAdvance > 1000 )
+		boomRec->FrameAdvance = 100;
+	
+	// use resource values to create NS objects
 	silent = (boomRec->SoundIndex == -1);
-	if( boomRec->FrameAdvance == 0 ) boomRec->FrameAdvance = 100;
-	image = [[NSNumber alloc] initWithShort:boomRec->GraphicIndex +400];
-	sound = [[NSNumber alloc] initWithShort:boomRec->SoundIndex +300 + (silent? 1:0)];
+	image = [[NSNumber alloc] initWithShort:boomRec->GraphicIndex + kMinBoomSpinID];
+	sound = [[NSNumber alloc] initWithShort:(silent? kMinBoomSoundID : boomRec->SoundIndex + kMinBoomSoundID)];
 	frameRate = [[NSNumber alloc] initWithShort:boomRec->FrameAdvance];
 	
 	return self;
@@ -33,6 +42,13 @@
 	[localCenter addObserver:self selector:@selector(controlTextDidChange:) name:NSComboBoxWillDismissNotification object:nil];
 	[localCenter addObserver:self selector:@selector(controlTextDidChange:) name:NSControlTextDidChangeNotification object:nil];
 	
+	// mark window changed if initial values were invalid
+	if( ![[resource data] isEqualToData:[NSData dataWithBytes:boomRec length:sizeof(BoomRec)]] )
+	{
+		[resource touch];
+		[self setDocumentEdited:YES];
+	}
+	
 	[self update];
 	[self showWindow:self];
 }
@@ -41,12 +57,10 @@
 {
 	// graphics
 	[graphicsField setObjectValue:[spinDataSource stringValueForResID:image]];
-//	[spinDataSource parseForString:[graphicsField stringValue] withinRange:NSMakeRange(kMinSpinID, kSpinIDRange) sorted:NO];
 	[frameRateField setObjectValue:frameRate];
 	
 	// sound
 	[soundField setObjectValue:[soundDataSource stringValueForResID:sound]];
-//	[soundDataSource parseForString:[soundField stringValue] withinRange:NSMakeRange(kMinSoundID, kSoundIDRange) sorted:NO];
 	[soundButton setState:!silent];
 	[soundField setEnabled:!silent];
 	[playButton setEnabled:!silent];
@@ -59,11 +73,11 @@
 {
 	id sender = [notification object];
 	if( sender == graphicsField )
-		[spinDataSource parseForString:[sender stringValue] withinRange:NSMakeRange(kMinSpinID, kSpinIDRange) sorted:YES];
+		[spinDataSource parseForString:[sender stringValue] withinRange:NSMakeRange(kMinBoomSpinID, kBoomSpinIDRange) sorted:YES];
 	else if( sender == soundField )
-		[soundDataSource parseForString:[sender stringValue] withinRange:NSMakeRange(kMinSoundID, kSoundIDRange) sorted:YES];
+		[soundDataSource parseForString:[sender stringValue] withinRange:NSMakeRange(kMinBoomSoundID, kBoomSoundIDRange) sorted:YES];
 	
-	if( [sender class] == NSClassFromString(@"NSComboBox") )
+	if( [sender class] == [NSComboBox class] )
 		[sender reloadData];
 }
 
@@ -121,9 +135,9 @@
 {
 	NSMutableDictionary *errorValues = [NSMutableDictionary dictionary];
 	
-	// get current values
-	boomRec->GraphicIndex = [image shortValue] -400;
-	boomRec->SoundIndex = [sound shortValue] -300;
+	// put current values into boomRec
+	boomRec->GraphicIndex = [image shortValue] - kMinBoomSpinID;
+	boomRec->SoundIndex = [sound shortValue] - kMinBoomSoundID;
 	boomRec->FrameAdvance = [frameRate shortValue];
 	if( silent ) boomRec->SoundIndex = -1;
 	
@@ -142,7 +156,7 @@
 - (void)saveResource
 {
 	// save new data into resource structure (should have already been validated, and boomRec filled out correctly)
-	[resource setData:[NSData dataWithBytes:boomRec length:sizeof(boomRec)]];
+	[resource setData:[NSData dataWithBytes:boomRec length:sizeof(BoomRec)]];
 }
 
 @end

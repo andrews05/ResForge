@@ -444,7 +444,7 @@ static NSRange draggedRange;
 	[newData replaceBytesInRange:range withBytes:[newBytes bytes] length:[newBytes length]];
 	[[(HexWindowController *)[[self window] windowController] resource] setData:newData];
 	[self setSelectedRange:NSMakeRange(range.location + [newBytes length], 0)];
-	[[self window] setDocumentEdited:YES];
+//	[[self window] setDocumentEdited:YES];	// moved to window controller's -resourceDataDidChange: notification method
 	
 	// record undo with new data object
 	[[[[self window] undoManager] prepareWithInvocationTarget:self] editData:newData replaceBytesInRange:newRange withData:oldBytes];

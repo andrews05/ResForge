@@ -25,85 +25,89 @@ InspectorWindow::InspectorWindow( void )
 	SetRect( &creationBounds, 0, 0, kInspectorWindowWidth, kInspectorWindowHeight );
 	OffsetRect( &creationBounds, 520, 45 );
 	OSStatus error = CreateNewWindow( kFloatingWindowClass, kWindowStandardFloatingAttributes | kWindowStandardHandlerAttribute, &creationBounds, &window );
-	GetIndString( windowName, kWindowNameStrings, kStringInspectorWindowName );
-	SetWindowTitle( window, windowName );
-	SetWindowKind( window, kInspectorWindowKind );
-	SetThemeWindowBackground( window, kThemeBrushUtilityWindowBackgroundActive, false );
-
-	// install window event handler
-	EventHandlerRef	ref			= null;
-	EventHandlerUPP	eventHandler = NewEventHandlerUPP( CloseInspectorWindow );
-	EventTypeSpec	events[]	= {	{ kEventClassWindow, kEventWindowClose } };
-	InstallWindowEventHandler( window, eventHandler, GetEventTypeCount(events), (EventTypeSpec *) &events, this, &ref );
-	
-	// create root control
-	Rect bounds;
-	if( g.systemVersion < kMacOSX )
+	if( !error )
 	{
-		ControlRef root;
-		CreateRootControl( window, &root );
+		GetIndString( windowName, kWindowNameStrings, kStringInspectorWindowName );
+		SetWindowTitle( window, windowName );
+		SetWindowKind( window, kInspectorWindowKind );
+		SetThemeWindowBackground( window, kThemeBrushUtilityWindowBackgroundActive, false );
+	
+		// install window event handler
+		EventHandlerRef	ref			= null;
+		EventHandlerUPP	eventHandler = NewEventHandlerUPP( CloseInspectorWindow );
+		EventTypeSpec	events[]	= {	{ kEventClassWindow, kEventWindowClose } };
+		InstallWindowEventHandler( window, eventHandler, GetEventTypeCount(events), (EventTypeSpec *) &events, this, &ref );
+		
+		// create root control
+		Rect bounds;
+		if( g.systemVersion < kMacOSX )
+		{
+			ControlRef root;
+			CreateRootControl( window, &root );
+		}
+		
+		// create image well
+		ControlRef imageWell;
+		ControlButtonContentInfo content;
+		content.contentType = kControlNoContent;
+		SetRect( &bounds, 0, 0, 44, 44 );
+		OffsetRect( &bounds, 8, 8 );
+		CreateImageWellControl( window, &bounds, &content, &imageWell );
+		
+		// create static text controls
+		Rect windowRect;
+		ControlRef name, type, id;
+		ControlFontStyleRec fontStyle;
+		fontStyle.flags = kControlUseFontMask + kControlUseJustMask;
+		fontStyle.font = kControlFontSmallSystemFont;
+		fontStyle.just = teJustLeft;
+		GetWindowPortBounds( window, &windowRect );
+		SetRect( &bounds, windowRect.left +60, windowRect.top +8, windowRect.right - windowRect.left -8, windowRect.top +36 );
+		CreateStaticTextControl( window, &bounds, CFSTR(""), &fontStyle, &name );
+		fontStyle.font = kControlFontSmallBoldSystemFont;
+		SetRect( &bounds, windowRect.left +60, windowRect.top +38, windowRect.right - windowRect.left -70, windowRect.top +52 );
+		CreateStaticTextControl( window, &bounds, CFSTR(""), &fontStyle, &type );
+		SetRect( &bounds, windowRect.right - windowRect.left -70, windowRect.top +38, windowRect.right - windowRect.left -8, windowRect.top +52 );
+		CreateStaticTextControl( window, &bounds, CFSTR(""), &fontStyle, &id );
+		
+		// create group control
+		ControlRef group;
+		GetWindowPortBounds( window, &bounds );
+		InsetRect( &bounds, 8, 8 );
+		bounds.top += kInspectorHeaderHeight;
+		CreateGroupBoxControl( window, &bounds, CFSTR("Attributes"), true, &group );
+		
+		// create checkboxes
+		ControlRef changedBox, preloadBox, protectedBox,
+					lockedBox, purgeableBox, sysHeapBox;
+		InsetRect( &bounds, 4, 4 );
+		bounds.top	= bounds.bottom - kControlCheckBoxHeight;
+		CreateCheckBoxControl( window, &bounds, CFSTR("System Heap"), kControlCheckBoxUncheckedValue, true, &sysHeapBox );
+		bounds.top		-= kControlCheckBoxHeight;
+		bounds.bottom	-= kControlCheckBoxHeight;
+		CreateCheckBoxControl( window, &bounds, CFSTR("Purgeable"), kControlCheckBoxUncheckedValue, true, &purgeableBox );
+		bounds.top		-= kControlCheckBoxHeight;
+		bounds.bottom	-= kControlCheckBoxHeight;
+		CreateCheckBoxControl( window, &bounds, CFSTR("Locked"), kControlCheckBoxUncheckedValue, true, &lockedBox );
+		bounds.top		-= kControlCheckBoxHeight;
+		bounds.bottom	-= kControlCheckBoxHeight;
+		CreateCheckBoxControl( window, &bounds, CFSTR("Protected"), kControlCheckBoxUncheckedValue, true, &protectedBox );
+		bounds.top		-= kControlCheckBoxHeight;
+		bounds.bottom	-= kControlCheckBoxHeight;
+		CreateCheckBoxControl( window, &bounds, CFSTR("Preload"), kControlCheckBoxUncheckedValue, true, &preloadBox );
+		bounds.top		-= kControlCheckBoxHeight;
+		bounds.bottom	-= kControlCheckBoxHeight;
+		CreateCheckBoxControl( window, &bounds, CFSTR("Changed"), kControlCheckBoxUncheckedValue, true, &changedBox );
+		
+		// embed controls
+		EmbedControl( changedBox, group );
+		EmbedControl( preloadBox, group );
+		EmbedControl( protectedBox, group );
+		EmbedControl( lockedBox, group );
+		EmbedControl( purgeableBox, group );
+		EmbedControl( sysHeapBox, group );
 	}
-	
-	// create image well
-	ControlRef imageWell;
-	ControlButtonContentInfo content;
-	content.contentType = kControlNoContent;
-	SetRect( &bounds, 0, 0, 44, 44 );
-	OffsetRect( &bounds, 8, 8 );
-	CreateImageWellControl( window, &bounds, &content, &imageWell );
-	
-	// create static text controls
-	Rect windowRect;
-	ControlRef name, type, id;
-	ControlFontStyleRec fontStyle;
-	fontStyle.flags = kControlUseFontMask + kControlUseJustMask;
-	fontStyle.font = kControlFontSmallSystemFont;
-	fontStyle.just = teJustLeft;
-	GetWindowPortBounds( window, &windowRect );
-	SetRect( &bounds, windowRect.left +60, windowRect.top +8, windowRect.right - windowRect.left -8, windowRect.top +36 );
-	CreateStaticTextControl( window, &bounds, CFSTR(""), &fontStyle, &name );
-	fontStyle.font = kControlFontSmallBoldSystemFont;
-	SetRect( &bounds, windowRect.left +60, windowRect.top +38, windowRect.right - windowRect.left -70, windowRect.top +52 );
-	CreateStaticTextControl( window, &bounds, CFSTR(""), &fontStyle, &type );
-	SetRect( &bounds, windowRect.right - windowRect.left -70, windowRect.top +38, windowRect.right - windowRect.left -8, windowRect.top +52 );
-	CreateStaticTextControl( window, &bounds, CFSTR(""), &fontStyle, &id );
-	
-	// create group control
-	ControlRef group;
-	GetWindowPortBounds( window, &bounds );
-	InsetRect( &bounds, 8, 8 );
-	bounds.top += kInspectorHeaderHeight;
-	CreateGroupBoxControl( window, &bounds, CFSTR("Attributes"), true, &group );
-	
-	// create checkboxes
-	ControlRef changedBox, preloadBox, protectedBox,
-				lockedBox, purgeableBox, sysHeapBox;
-	InsetRect( &bounds, 4, 4 );
-	bounds.top	= bounds.bottom - kControlCheckBoxHeight;
-	CreateCheckBoxControl( window, &bounds, CFSTR("System Heap"), kControlCheckBoxUncheckedValue, true, &sysHeapBox );
-	bounds.top		-= kControlCheckBoxHeight;
-	bounds.bottom	-= kControlCheckBoxHeight;
-	CreateCheckBoxControl( window, &bounds, CFSTR("Purgeable"), kControlCheckBoxUncheckedValue, true, &purgeableBox );
-	bounds.top		-= kControlCheckBoxHeight;
-	bounds.bottom	-= kControlCheckBoxHeight;
-	CreateCheckBoxControl( window, &bounds, CFSTR("Locked"), kControlCheckBoxUncheckedValue, true, &lockedBox );
-	bounds.top		-= kControlCheckBoxHeight;
-	bounds.bottom	-= kControlCheckBoxHeight;
-	CreateCheckBoxControl( window, &bounds, CFSTR("Protected"), kControlCheckBoxUncheckedValue, true, &protectedBox );
-	bounds.top		-= kControlCheckBoxHeight;
-	bounds.bottom	-= kControlCheckBoxHeight;
-	CreateCheckBoxControl( window, &bounds, CFSTR("Preload"), kControlCheckBoxUncheckedValue, true, &preloadBox );
-	bounds.top		-= kControlCheckBoxHeight;
-	bounds.bottom	-= kControlCheckBoxHeight;
-	CreateCheckBoxControl( window, &bounds, CFSTR("Changed"), kControlCheckBoxUncheckedValue, true, &changedBox );
-	
-	// embed controls
-	EmbedControl( changedBox, group );
-	EmbedControl( preloadBox, group );
-	EmbedControl( protectedBox, group );
-	EmbedControl( lockedBox, group );
-	EmbedControl( purgeableBox, group );
-	EmbedControl( sysHeapBox, group );
+	else window = NULL;
 #else
 	if( g.useAppearance && g.systemVersion >= kMacOS8 )
 		window = GetNewCWindow( kFileWindow8, null, kFirstWindowOfClass );
@@ -111,10 +115,14 @@ InspectorWindow::InspectorWindow( void )
 		window = GetNewCWindow( kFileWindow7, null, kFirstWindowOfClass );
 #endif
 	
-	// update and show window
-	Update();
-	ShowWindow( window );
-	g.inspector = this;
+	if( window )
+	{
+		// update and show window
+		Update();
+		ShowWindow( window );
+		g.inspector = this;
+	}
+	else g.inspector = NULL;
 }
 
 /*** DESTRUCTOR ***/

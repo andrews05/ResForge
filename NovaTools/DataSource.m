@@ -54,7 +54,8 @@
 
 - (void)parseForString:(NSString *)string sorted:(BOOL)sort
 {
-	[self parseForString:string withinRange:NSMakeRange(-32767, 65536) sorted:sort];
+	// bug: for some reason +[NSNumber isBoundedByRange:] doesn't like a range with a minimum below -30,000 (such as INT16_MIN), so I'm using INT8_MIN and screw everyone using resource IDs below that :P
+	[self parseForString:string withinRange:NSMakeRange(INT8_MIN, INT16_MAX) sorted:sort];
 }
 
 - (void)parseForString:(NSString *)string withinRange:(NSRange)resIDRange sorted:(BOOL)sort
@@ -63,6 +64,7 @@
 	NSString *trimmedString = [DataSource resNameFromStringValue:string];
 	NSEnumerator *enumerator = [[data allKeys] objectEnumerator];
 	[parsed removeAllObjects];
+	if( trimmedString == nil ) trimmedString = @"";
 	while( resID = [enumerator nextObject] )
 	{
 		NSString *value = [data objectForKey:resID];
@@ -70,6 +72,11 @@
 		if( ((range.location != NSNotFound && range.length != 0) || [trimmedString isEqualToString:@""]) && [resID isBoundedByRange:resIDRange] )
 			[parsed addObject:[self stringValueForResID:resID]];
 	}
+	
+	// crap hack to allow user to change the insertion point if what they typed doesn't yet match an existing resource
+	if( [parsed count] == 0 ) [parsed addObject:string];
+	
+	// sort case insensitive if sorting is requested
 	if( sort ) [parsed sortUsingSelector:@selector(caseInsensitiveCompare:)];
 }
 
@@ -82,7 +89,7 @@
 {
 	if( resID && [data objectForKey:resID] )
 		return [NSString stringWithFormat:@"%@ {%@}", [data objectForKey:resID], resID];
-	else if( [resID isEqualToNumber:[NSNumber numberWithInt:-1]] )
+	else if( [resID shortValue] == -1 )
 		return @"";
 	else if( resID )
 		return [NSString stringWithFormat:@"{%@}", resID];
@@ -101,21 +108,17 @@
 	NS_DURING
 		NS_VALUERETURN( [[[NSNumber alloc] initWithInt:[[string substringWithRange:range] intValue]] autorelease], NSNumber* );
 	NS_HANDLER
-		NS_VALUERETURN( nil, NSNumber* );
+		NS_VALUERETURN( [NSNumber numberWithInt:-1], NSNumber* );
 	NS_ENDHANDLER
 }
 
 + (NSString *)resNameFromStringValue:(NSString *)string
 {
 	NSRange range = [string rangeOfString:@"{" options:NSBackwardsSearch];
-	if( range.location != NSNotFound )
-	{
-		NS_DURING
-			NS_VALUERETURN( [string substringToIndex:range.location -1], NSString* );
-		NS_HANDLER
-			NS_VALUERETURN( nil, NSString* );
-		NS_ENDHANDLER
-	}
+	if( range.location != NSNotFound && range.location > 0 )
+		return [string substringToIndex:range.location -1];
+	else if( range.location == 0 )
+		return nil;
 	else return string;
 }
 

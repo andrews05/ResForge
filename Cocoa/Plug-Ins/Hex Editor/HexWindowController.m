@@ -11,7 +11,17 @@
 	
 	// one instance of your principal class will be created for every resource the user wants to edit (similar to Windows apps)
 	undoManager = [[NSUndoManager alloc] init];
-	resource = [newResource retain];
+	liveEdit = NO;
+	if( liveEdit )
+	{
+		resource = [newResource retain];
+		backup = [newResource copy];
+	}
+	else
+	{
+		resource = [newResource copy];
+		backup = [newResource retain];
+	}
 	bytesPerRow = 16;
 	
 	// load the window from the nib file and set it's title
@@ -30,7 +40,7 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[(id)resource autorelease];
+	[(id)resource release];
 	[super dealloc];
 }
 
@@ -59,6 +69,8 @@
 	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameDidChange:) name:ResourceNameDidChangeNotification object:resource];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceWasSaved:) name:ResourceWasSavedNotification object:resource];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceWasSaved:) name:ResourceWasSavedNotification object:backup];
 	
 	// put other notifications here too, just for togetherness
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[offset enclosingScrollView] contentView]];
@@ -105,11 +117,55 @@
 	[pasteItem setKeyEquivalentModifierMask:NSCommandKeyMask];
 }
 
-/*
-- (BOOL)windowShouldClose:(NSWindow *)sender
+- (BOOL)windowShouldClose:(id)sender
 {
-	return [sender isDocumentEdited];
-}*/
+	if( [[self window] isDocumentEdited] )
+	{
+		NSBeginAlertSheet( @"Do you want to save the changes you made to this resource?", @"Save", @"Don’t Save", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes will be lost if you don't save them." );
+		return NO;
+	}
+	else return YES;
+}
+
+- (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	switch( returnCode )
+	{
+		case NSAlertDefaultReturn:		// save
+			[self saveResource];
+			[[self window] close];
+			break;
+		
+		case NSAlertAlternateReturn:	// don't save
+			[self revertResource];
+			[[self window] close];
+			break;
+		
+		case NSAlertOtherReturn:		// cancel
+			break;
+	}
+}
+
+- (void)saveResource
+{
+	if( liveEdit )
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillBeSavedNotification object:resource];
+		[backup setData:[resource data]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWasSavedNotification object:resource];
+	}
+	else
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillBeSavedNotification object:backup];
+		[backup setData:[resource data]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWasSavedNotification object:backup];
+	}
+}
+
+- (void)revertResource
+{
+	[resource setData:[backup data]];
+}
 
 - (IBAction)showFind:(id)sender
 {
@@ -127,7 +183,7 @@
 	NSClipView *asciiClip	= [[ascii enclosingScrollView] contentView];
 	
 	// due to a bug in -[NSView setPostsBoundsChangedNotifications:] (it basically doesn't work), I am having to work around it by removing myself from the notification center and restoring things later on!
-	// update, Apple say this isn't their bug.
+	// update, Apple say this isn't their bug. Yeah, right!
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];
 	
 	// when a view scrolls, update the other two
@@ -169,7 +225,36 @@
 {
 	// ensure it's our resource which got changed (should always be true, we don't register for other resource notifications)
 	if( [notification object] == (id)resource )
+	{
 		[self refreshData:[resource data]];
+		[self setDocumentEdited:YES];
+	}
+}
+
+- (void)resourceWasSaved:(NSNotification *)notification
+{
+	NSLog( @"%@; %@; %@", [notification object], resource, backup );
+	if( [notification object] == (id)resource )
+	{
+		// if resource gets saved, liveEdit is true and this resource is saving
+		[backup setData:[resource data]];
+		[self setDocumentEdited:NO];
+	}
+	else if( [notification object] == (id)backup && !liveEdit )
+	{
+		// backup will get saved by this resource if liveEdit is false, rather than the 'resource' variable
+		//	but really the data to preserve is in the resource variable
+		[backup setData:[resource data]];
+//		[self refreshData:[resource data]];
+		[self setDocumentEdited:NO];
+	}
+	else if( [notification object] == (id)backup )
+	{
+		// backup will get saved by another editor too if liveEdit is false
+		[resource setData:[backup data]];
+//		[self refreshData:[resource data]];
+		[self setDocumentEdited:NO];
+	}
 }
 
 - (void)refreshData:(NSData *)data;

@@ -55,7 +55,7 @@ Plug_PlugInRef Host_GetPlugRef( WindowRef window )
 
 Plug_ResourceRef Host_GetResource( ResType type, SInt32 resID, Plug_ResourceRef sameFileAsResource )
 {
-	FilWindowPtr file;
+//	FileWindowPtr file;
 	if( sameFileAsResource != NULL )
 	{
 //		file = ((ResourceObjectPtr) sameFileAsResource)->file;

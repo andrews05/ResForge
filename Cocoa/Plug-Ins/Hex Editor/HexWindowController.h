@@ -21,6 +21,8 @@
 	
 	NSUndoManager					*undoManager;
 	id <ResKnifeResourceProtocol>	resource;
+	id <ResKnifeResourceProtocol>	backup;
+	BOOL							liveEdit;
 	int								bytesPerRow;
 }
 
@@ -30,10 +32,16 @@
 // show find sheet
 - (IBAction)showFind:(id)sender;
 
+// save sheet methods
+- (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void)saveResource;
+- (void)revertResource;
+
 // normal methods
 - (void)viewDidScroll:(NSNotification *)notification;
 - (void)resourceNameDidChange:(NSNotification *)notification;
 - (void)resourceDataDidChange:(NSNotification *)notification;
+- (void)resourceWasSaved:(NSNotification *)notification;
 - (void)refreshData:(NSData *)data;
 
 // accessors

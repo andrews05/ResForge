@@ -310,10 +310,11 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	NSBundle *templateEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Template Editor.plugin"]];
 	
 	// bug: this checks EVERY DOCUMENT for template resources (might not be desired)
+	// bug: it doesn't, however, check the application's resource map for a matching template!
 	Resource *tmpl = [Resource resourceOfType:@"TMPL" withName:[resource type] inDocument:nil];
 	
 	// open the resources, passing in the template to use
-	if( tmpl && [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)] )
+	if( tmpl /*&& [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)]*/ )
 	{
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 		// update: doug says window controllers automatically release themselves when their window is closed.

@@ -12,6 +12,7 @@ NSString *ResourceTypeWillChangeNotification		= @"ResourceTypeWillChangeNotifica
 NSString *ResourceIDWillChangeNotification			= @"ResourceIDWillChangeNotification";
 NSString *ResourceAttributesWillChangeNotification	= @"ResourceAttributesWillChangeNotification";
 NSString *ResourceDataWillChangeNotification		= @"ResourceDataWillChangeNotification";
+NSString *ResourceWillBeSavedNotification			= @"ResourceWillBeSavedNotification";
 
 NSString *ResourceNameDidChangeNotification			= @"ResourceNameDidChangeNotification";
 NSString *ResourceTypeDidChangeNotification			= @"ResourceTypeDidChangeNotification";
@@ -19,3 +20,4 @@ NSString *ResourceIDDidChangeNotification			= @"ResourceIDDidChangeNotification"
 NSString *ResourceAttributesDidChangeNotification	= @"ResourceAttributesDidChangeNotification";
 NSString *ResourceDataDidChangeNotification			= @"ResourceDataDidChangeNotification";
 NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
+NSString *ResourceWasSavedNotification				= @"ResourceWasSavedNotification";

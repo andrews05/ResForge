@@ -2,6 +2,10 @@
 
 #import <Carbon/Carbon.h>
 
+#pragma options align=packed
+// see http://developer.apple.com/techpubs/macosx/DeveloperTools/MachORuntime/2rt_powerpc_abi/PowerPC_Data_Alignment.html
+// align=reset is at the bottom of the file.
+
 typedef struct RLEPixelData
 {
 	// 'rl‘#' resource
@@ -577,7 +581,7 @@ typedef struct NebuRec
 typedef struct BoomRec
 {
 	short FrameAdvance;		// 100 = normal speed, less is slower, higher faster
-	short SoundIndex;		// 0-63 index, mapping to 300-363 resID
+	short SoundIndex;		// 0-63 index, mapping to 300-363 resID, -1 == no sound
 	short GraphicIndex;		// 0-63 index, mapping to 400-463 resID
 } BoomRec;
 
@@ -717,3 +721,5 @@ typedef struct IntfRec
 	short SubtitleSize;
 	short StatusBkgnd;
 } IntfRec;
+
+#pragma options align=reset

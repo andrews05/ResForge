@@ -5,7 +5,7 @@
 
 @interface TemplateWindowController : NSWindowController <ResKnifePluginProtocol>
 {
-	IBOutlet NSMatrix	*fieldsMatrix;
+	IBOutlet NSView	*containerView;
 	
 	NSMutableArray	*tmpl;
 	NSMutableArray	*res;

@@ -48,7 +48,7 @@
 	IBOutlet NSComboBox *introPictField4;
 	IBOutlet NSForm *introDelayForm;
 	IBOutlet NSComboBox *introTextField;
-	IBOutlet NSImageView *introImageView;
+	IBOutlet NSButton *introImageView;		// button so user can click to skip to next pic
 	IBOutlet NSTextView *introTextView;
 	
 	IBOutlet NSForm *ncbForm;
@@ -93,6 +93,7 @@
 	NSNumber *introDelay3;
 	NSNumber *introDelay4;
 	NSTimer *introPictTimer;
+	short currentPict;
 	
 	// Nova Control Bits
 	NSString *onStart;
@@ -101,6 +102,8 @@
 - (void)update;
 - (IBAction)editDate:(id)sender;
 - (IBAction)stepDate:(id)sender;
+- (IBAction)togglePrincipalChar:(id)sender;
+- (void)rotateIntroPict:(NSTimer *)timer;
 - (void)comboBoxWillPopUp:(NSNotification *)notification;
 - (void)controlTextDidChange:(NSNotification *)notification;
 

@@ -8,7 +8,7 @@ extern globals g;
 /*** CREATOR ***/
 EditorWindow::EditorWindow( FileWindowPtr ownerFile, ResourceObjectPtr targetResource, WindowRef inputWindow ) : PlugWindow( ownerFile )
 {
-	OSStatus error = noErr;
+//	OSStatus error = noErr;
 
 	// set default variables
 	window = inputWindow;

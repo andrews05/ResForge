@@ -20,7 +20,7 @@
 - (id)copy
 {
 	Element *element = [[Element alloc] initWithType:type andLabel:label];
-	// copy other stuff here
+	// bug: copy other stuff here
 	return element;
 }
 
@@ -40,7 +40,7 @@
 {
 	return *(unsigned long *)[type cString];
 }
-
+/*
 - (NSMutableArray *)subelements;
 {
 	long myType = [self typeAsLong];
@@ -52,7 +52,7 @@
 	else subelements = nil;
 	return subelements;
 }
-
+*/
 /* DATA ACCESSORS */
 
 - (NSString *)string
@@ -103,6 +103,11 @@
 - (void)setBoolean:(BOOL)boolean
 {
 	elementData.boolean = boolean;
+}
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"{ %@, %@ }", type, label];
 }
 
 @end

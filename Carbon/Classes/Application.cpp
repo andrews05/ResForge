@@ -667,7 +667,7 @@ pascal OSStatus CarbonEventUpdateMenus( EventHandlerCallRef callRef, EventRef ev
 {
 	#pragma unused( callRef, event, userData )
 	OSStatus error = eventNotHandledErr;
-	Boolean fileOpen = (Boolean) FrontNonFloatingWindow();
+	Boolean fileOpen = (Boolean) (FrontNonFloatingWindow() != NULL);
 	
 	// application menu (passing null causes all menus to be searched)
 	EnableCommand( null, kMenuCommandAbout, true );
@@ -1046,6 +1046,7 @@ OSStatus ShowAboutBox( void )
 	SetRect( &creationBounds, 0, 0, 300, 300 );
 	OffsetRect( &creationBounds, 50, 50 );
 	OSStatus error = CreateNewWindow( kDocumentWindowClass, kWindowStandardDocumentAttributes | kWindowStandardHandlerAttribute | kWindowInWindowMenuAttribute, &creationBounds, &window );
+	if( error ) return error;
 	
 	ControlRef picControl;
 	ControlButtonContentInfo content;

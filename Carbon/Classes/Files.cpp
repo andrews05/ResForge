@@ -200,10 +200,10 @@ OSStatus FileWindow::DisplayModelessAskSaveChangesDialog( void )
 {
 	OSStatus			error;
 	NavEventUPP			eventProc = NewNavEventUPP( ModelessAskSaveChangesHandler );
-	NavPreviewUPP		previewProc = null;
+/*	NavPreviewUPP		previewProc = null;
 	NavObjectFilterUPP	filterProc = null;
 	NavTypeListHandle	typeList = null;
-	NavAskSaveChangesAction	action = g.quitting? kNavSaveChangesQuittingApplication : kNavSaveChangesClosingDocument;
+*/	NavAskSaveChangesAction	action = g.quitting? kNavSaveChangesQuittingApplication : kNavSaveChangesClosingDocument;
 	NavDialogCreationOptions options;
 	error = NavGetDefaultDialogCreationOptions( &options );
 	options.parentWindow = window;
@@ -438,7 +438,7 @@ pascal void ModelessAskSaveChangesHandler( const NavEventCallbackMessage callBac
 pascal void ModelessPutFileHandler( const NavEventCallbackMessage callBackSelector, NavCBRecPtr cbRecord, NavCallBackUserData callBackUD )
 {
 	OSStatus error = noErr;
-	FileWindowPtr file = (FileWindowPtr) callBackUD;
+//	FileWindowPtr file = (FileWindowPtr) callBackUD;
 	switch( callBackSelector )
 	{	
 		case kNavCBUserAction:
@@ -464,7 +464,7 @@ pascal void ModelessPutFileHandler( const NavEventCallbackMessage callBackSelect
 pascal void ModelessAskDiscardChangesHandler( const NavEventCallbackMessage callBackSelector, NavCBRecPtr cbRecord, NavCallBackUserData callBackUD )
 {
 	OSStatus error = noErr;
-	FileWindowPtr file = (FileWindowPtr) callBackUD;
+//	FileWindowPtr file = (FileWindowPtr) callBackUD;
 	switch( callBackSelector )
 	{	
 		case kNavCBUserAction:

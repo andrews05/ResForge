@@ -5,6 +5,7 @@
 @interface HexTextView : NSTextView
 {
 }
+- (IBAction)clear:(id)sender;
 - (IBAction)pasteAsASCII:(id)sender;
 - (IBAction)pasteAsHex:(id)sender;
 - (IBAction)pasteAsUnicode:(id)sender;

@@ -42,7 +42,8 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[(id)resource autorelease];
 	[undoManager release];
-	[shipDataSource release];	// bug: release all data sources
+	[shipDataSource release];
+	[soundDataSource release];
 	[super dealloc];
 }
 
@@ -75,7 +76,7 @@
 	if( [[self window] isDocumentEdited] )
 	{
 		NSDictionary *errorValues = [self validateValues];
-		NSArray *fields = [errorValues allKeys];
+		NSArray *fields = [errorValues allKeys];	// bug: order of items in array is not guaranteed
 		NSArray *descriptions = [errorValues allValues];
 		switch( [errorValues count] )
 		{

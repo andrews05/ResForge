@@ -130,6 +130,12 @@ NSString *RKResourcePboardType		= @"RKResourcePboardType";
 	[super dealloc];
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+	Resource *copy = [[Resource alloc] initWithType:type andID:resID withName:name andAttributes:attributes data:[data copy]];
+	return copy;
+}
+
 /* Accessors */
 
 - (void)touch
@@ -284,7 +290,7 @@ NSString *RKResourcePboardType		= @"RKResourcePboardType";
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"\nName: %@\nType: %@  ID: %@\nModified: %@", name, type, resID, dirty? @"YES":@"NO"];
+	return [NSString stringWithFormat:@"\n%@\nName: %@\nType: %@  ID: %@\nSize: %d  Modified: %@", [super description], name, type, resID, [data length], dirty? @"YES":@"NO"];
 }
 
 @end

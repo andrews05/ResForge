@@ -39,6 +39,7 @@ extern NSString *ResourceTypeWillChangeNotification;
 extern NSString *ResourceIDWillChangeNotification;
 extern NSString *ResourceAttributesWillChangeNotification;
 extern NSString *ResourceDataWillChangeNotification;
+extern NSString *ResourceWillBeSavedNotification;
 
 extern NSString *ResourceNameDidChangeNotification;
 extern NSString *ResourceTypeDidChangeNotification;
@@ -46,3 +47,4 @@ extern NSString *ResourceIDDidChangeNotification;
 extern NSString *ResourceAttributesDidChangeNotification;
 extern NSString *ResourceDataDidChangeNotification;
 extern NSString *ResourceDidChangeNotification;
+extern NSString *ResourceWasSavedNotification;
