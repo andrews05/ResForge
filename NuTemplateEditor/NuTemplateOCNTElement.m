@@ -56,9 +56,20 @@ static NuTemplateOCNTElement*	sLastParsedElement = nil;
 		[stream readAmount:4 toBuffer: &longValue];
 	else if( [type isEqualToString: @"LZCT"] )
 	{
-		short		n = -1;
+		[stream readAmount:sizeof(longValue) toBuffer: &longValue];
+		longValue += 1;
+	}
+	else if( [type isEqualToString: @"BCNT"] )
+	{
+		unsigned char		n = 0;
 		[stream readAmount:sizeof(n) toBuffer: &n];
-		longValue = n +1;
+		longValue = n;
+	}
+	else if( [type isEqualToString: @"BZCT"] )
+	{
+		char		n = 0;
+		[stream readAmount:sizeof(n) toBuffer: &n];
+		longValue = n;
 	}
 	else if( [type isEqualToString: @"ZCNT"] )
 	{
@@ -66,9 +77,9 @@ static NuTemplateOCNTElement*	sLastParsedElement = nil;
 		[stream readAmount:sizeof(n) toBuffer: &n];
 		longValue = n +1;
 	}
-	else
+	else	// OCNT, WCNT
 	{
-		short		n = 0;
+		unsigned short		n = 0;
 		[stream readAmount:sizeof(n) toBuffer: &n];
 		longValue = n;
 	}
@@ -81,7 +92,11 @@ static NuTemplateOCNTElement*	sLastParsedElement = nil;
 		return 4;
 	else if( [type isEqualToString: @"LZCT"] )
 		return 4;
-	else
+	else if( [type isEqualToString: @"BZCT"] )
+		return 1;
+	else if( [type isEqualToString: @"BCNT"] )
+		return 1;
+	else	// OCNT, WCNT, ZCNT
 		return 2;
 }
 
@@ -94,25 +109,35 @@ static NuTemplateOCNTElement*	sLastParsedElement = nil;
 		long		n = longValue -1;
 		[stream writeAmount:sizeof(n) fromBuffer: &n];
 	}
+	else if( [type isEqualToString: @"BZCT"] )
+	{
+		char		n = longValue -1;
+		[stream writeAmount:sizeof(n) fromBuffer: &n];
+	}
+	else if( [type isEqualToString: @"BCNT"] )
+	{
+		unsigned char		n = longValue -1;
+		[stream writeAmount:sizeof(n) fromBuffer: &n];
+	}
 	else if( [type isEqualToString: @"ZCNT"] )
 	{
 		short		n = longValue -1;
 		[stream writeAmount:sizeof(n) fromBuffer: &n];
 	}
-	else
+	else	// OCNT, WCNT
 	{
-		short		n = longValue;
+		unsigned short		n = longValue;
 		[stream writeAmount:sizeof(n) fromBuffer: &n];
 	}
 }
 
 
--(void)	setLongValue: (long)d
+-(void)	setLongValue: (unsigned long)d
 {
 	longValue = d;
 }
 
--(long)	longValue
+-(unsigned long)	longValue
 {
 	return longValue;
 }

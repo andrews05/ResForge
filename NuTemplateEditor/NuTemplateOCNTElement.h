@@ -11,14 +11,14 @@
 
 @interface NuTemplateOCNTElement : NuTemplateElement
 {
-	long		longValue;
+	unsigned long		longValue;
 }
 
 +(NuTemplateOCNTElement*)	lastParsedElement;
 +(void)						setLastParsedElement: (NuTemplateOCNTElement*)e;
 
--(void)			setLongValue: (long)n;
--(long)			longValue;
+-(void)				setLongValue: (unsigned long)n;
+-(unsigned long)	longValue;
 
 -(NSString*)	stringValue;
 -(void)			setStringValue: (NSString*)str;
