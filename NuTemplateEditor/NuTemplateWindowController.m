@@ -239,6 +239,12 @@
 	return [item valueForKey:[tableColumn identifier]];
 }
 
+-(void)	outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
+{
+	[item takeValue:object forKey: [tableColumn identifier]];
+}
+
+
 
 -(BOOL)	windowShouldClose: (id)sender	// Window delegate.
 {

@@ -18,5 +18,6 @@
 -(short)		shortValue;
 
 -(NSString*)	stringValue;
+-(void)			setStringValue: (NSString*)str;
 
 @end

@@ -64,5 +64,15 @@
 }
 
 
+-(void)		setStringValue: (NSString*)str
+{
+	char		cstr[256];
+	char*		endPtr = cstr +255;
+	
+	strncpy( cstr, [str cString], 255 );
+	shortValue = strtol( cstr, &endPtr, 10 );
+}
+
+
 
 @end

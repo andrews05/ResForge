@@ -45,7 +45,7 @@
 	
 	[self setStringValue: [NSString stringWithCString:buf length:4]];
 
-	NSLog(@"PSTR: %@", stringValue);
+	NSLog(@"TNAM: %@", stringValue);
 }
 
 
