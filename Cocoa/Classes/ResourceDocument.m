@@ -3,6 +3,8 @@
 #import "ResourceNameCell.h"
 #import "CreateResourceSheetController.h"
 
+#import "ResKnifePluginProtocol.h"
+
 @implementation ResourceDocument
 
 - (id)init
@@ -267,30 +269,25 @@ static NSString *RKShowInfoItemIdentifier = @"com.nickshanks.resknife.toolbar.sh
 {
 	[[dataSource createResourceSheetController] showCreateResourceSheet:self];
 }
-
+/*
 - (IBAction)openResource:(id)sender
 {
 	if( NO );
 	else [self openResourceAsHex:sender];
 }
-
+*/
 - (IBAction)openResourceAsHex:(id)sender
 {
-	// bug: only opens the hex editor!
-//	NSBundle *hexEditor = [NSBundle bundleWithIdentifier:@"com.nickshanks.resknife.hexadecimal"];
-//	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
-	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Hexadecimal Editor.bundle"]];
-//	[hexEditor load];
-	
+	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
 	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
-	// bug: I alloc a plug instance here, but have no idea where it gets dealloc'd
-	[[[hexEditor principalClass] alloc] initWithResource:resource];
+	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self dealloc] when it's last window is closed?
+	[(id <ResKnifePluginProtocol>)[[hexEditor principalClass] alloc] initWithResource:resource];
 }
-
+/*
 - (IBAction)playSound:(id)sender
 {
 }
-
+*/
 /* FILE HANDLING */
 #pragma mark -
 

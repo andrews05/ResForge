@@ -29,12 +29,6 @@
 			settings = {
 			};
 		};
-		F5502C3401C5588601C57124 = {
-			fileRef = F57CEE0D0189C95101A8010B;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		F5502C4001C579FF01C57124 = {
 			isa = PBXFileReference;
 			name = ResKnifePluginProtocol.h;
@@ -146,6 +140,22 @@
 			settings = {
 			};
 		};
+		F577A9060212B69C01A80001 = {
+			fileRef = F57CEE0D0189C95101A8010B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F577A90702131AB001A80001 = {
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F577A9060212B69C01A80001,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			name = "Copy Files";
+		};
 		F57CEE0B0189C95101A8010B = {
 			children = (
 				F5502C4001C579FF01C57124,
@@ -159,7 +169,7 @@
 		};
 		F57CEE0D0189C95101A8010B = {
 			isa = PBXBundleReference;
-			path = "Hexadecimal Editor.bundle";
+			path = "Hexadecimal Editor.plugin";
 			refType = 3;
 		};
 		F57CEE0E0189C95101A8010B = {
@@ -177,7 +187,7 @@
 				PRODUCT_NAME = "Hexadecimal Editor";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			dependencies = (
 			);
@@ -322,6 +332,7 @@
 			buildPhases = (
 				F5B588140156D30301000001,
 				F5B588150156D30301000001,
+				F577A90702131AB001A80001,
 				F5B588160156D30301000001,
 				F5B588170156D30301000001,
 				F5B588180156D30301000001,
@@ -385,6 +396,24 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>ResourceDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>*</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>NSFilenamesPboardType</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>****</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>ResourceDocument</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
@@ -452,7 +481,6 @@
 				F5B588630156D40B01000001,
 				F5B588640156D40B01000001,
 				F5730B940159528A01000001,
-				F5502C3401C5588601C57124,
 				F577A8F50211D05E01A80001,
 				F577A8F90211DC1E01A80001,
 				F577A8FD0211E4D401A80001,

@@ -53,7 +53,7 @@
 	{
 		[[self window] setTitle:@"Document Info"];
 		[placeholderView setContentView:documentView];
-		[nameView setStringValue:[currentDocument fileName]? [currentDocument fileName]:[currentDocument displayName]];
+		[nameView setStringValue:[currentDocument fileName]? [[currentDocument fileName] lastPathComponent]:[currentDocument displayName]];
 	}
 }
 
