@@ -2,6 +2,7 @@
 #import "ResourceDataSource.h"
 #import "ResourceNameCell.h"
 #import "Resource.h"
+#import "PrefsWindowController.h"
 #import "CreateResourceSheetController.h"
 #import "NSOutlineView-SelectedItems.h"
 
@@ -309,8 +310,8 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	if( tmpl && [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)] )
 	{
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
-		id plug = [(id <ResKnifePluginProtocol>)[[templateEditor principalClass] alloc] initWithResources:resource, tmpl, nil];
-		if( plug ) return;
+		NSWindowController *plugController = [(id <ResKnifePluginProtocol>)[[templateEditor principalClass] alloc] initWithResources:resource, tmpl, nil];
+		if( plugController ) return;
 	}
 	
 	// if no template exists, or template editor is broken, open as hex
@@ -382,6 +383,22 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 #pragma mark -
 
 - (IBAction)clear:(id)sender
+{
+	if( [prefs boolForKey:@"DeleteResourceWarning"] )
+	{
+		NSBeginCriticalAlertSheet( @"Delete Resource", @"Delete", @"Cancel", nil, [self mainWindow], self, nil, @selector(deleteResourcesSheetDidDismiss:returnCode:contextInfo:), nil, @"Please confirm you wish to delete the selected resources." );
+	}
+	else [self deleteSelectedResources];
+}
+
+- (void)deleteResourcesSheetDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+#pragma unused( contextInfo )
+	if( returnCode == NSOKButton )
+		[self deleteSelectedResources];
+}
+
+- (void)deleteSelectedResources
 {
 	Resource *resource;
 	NSEnumerator *enumerator;

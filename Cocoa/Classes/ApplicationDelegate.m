@@ -56,6 +56,7 @@
 #pragma unused( application )
 	// bug: check if application was an external editor (e.g. Iconographer) and update existing open file instead
 	[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:file display:YES];
+	return YES;
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag

@@ -135,3 +135,12 @@
 }
 
 @end
+
+@implementation NSWindowController (InfoWindowAdditions)
+
+- (Resource *)resource
+{
+	return nil;
+}
+
+@end

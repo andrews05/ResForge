@@ -30,6 +30,8 @@
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished;
 
 - (IBAction)clear:(id)sender;
+- (void)deleteResourcesSheetDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void)deleteSelectedResources;
 
 - (void)resourceNameWillChange:(NSNotification *)notification;
 - (void)resourceIDWillChange:(NSNotification *)notification;

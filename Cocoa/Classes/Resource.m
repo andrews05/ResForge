@@ -54,20 +54,6 @@
 	return [resource autorelease];
 }
 
-+ (NSArray *)getAllResourcesOfType:(NSString *)typeValue inDocument:(NSDocument *)document
-{
-	NSMutableArray *array = [NSMutableArray array];
-	NSDocument *doc;
-	NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
-	while( doc = [enumerator nextObject] )
-	{
-		// parse document for resources
-		if( document == nil || document == doc )
-			[array addObjectsFromArray:[[(ResourceDocument *)doc dataSource] allResourcesOfType:typeValue]];
-	}
-	return [NSArray arrayWithArray:array];
-}
-
 + (Resource *)getResourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)document
 {
 	NSDocument *doc;
@@ -84,6 +70,22 @@
 	return nil;
 }
 
+/* ResKnifeResourceProtocol implementation */
+
++ (NSArray *)allResourcesOfType:(NSString *)typeValue inDocument:(NSDocument *)document
+{
+	NSMutableArray *array = [NSMutableArray array];
+	NSDocument *doc;
+	NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
+	while( doc = [enumerator nextObject] )
+	{
+		// parse document for resources
+		if( document == nil || document == doc )
+			[array addObjectsFromArray:[[(ResourceDocument *)doc dataSource] allResourcesOfType:typeValue]];
+	}
+	return [NSArray arrayWithArray:array];
+}
+
 + (Resource *)resourceOfType:(NSString *)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)document
 {
 	NSDocument *doc;
@@ -94,6 +96,22 @@
 		{
 			// parse document for correct resource
 			Resource *resource = [[(ResourceDocument *)doc dataSource] resourceOfType:typeValue withName:nameValue];
+			if( resource ) return resource;
+		}
+	}
+	return nil;
+}
+
++ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)document
+{
+	NSDocument *doc;
+	NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
+	while( doc = [enumerator nextObject] )
+	{
+		if( document == nil || document == doc )
+		{
+			// parse document for correct resource
+			Resource *resource = [[(ResourceDocument *)doc dataSource] resourceOfType:typeValue andID:resIDValue];
 			if( resource ) return resource;
 		}
 	}

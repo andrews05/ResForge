@@ -41,3 +41,12 @@ enum Attributes
 + (id)sharedInfoWindowController;
 
 @end
+
+@interface NSWindowController (InfoWindowAdditions)
+
+/*!	@function	resource
+	@discussion	Your plug-in should override this method to return the resource it's editing. Default implementation returns nil.
+*/
+- (Resource *)resource;
+
+@end
