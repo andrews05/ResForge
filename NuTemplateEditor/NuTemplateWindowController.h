@@ -47,5 +47,7 @@
 -(void)	resourceDataDidChange: (NSNotification*)notification;
 -(void)	writeResData;
 
+-(IBAction)	showCreateResourceSheet: (id)sender;
+
 
 @end

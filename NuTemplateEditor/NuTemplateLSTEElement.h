@@ -6,6 +6,7 @@
 //  Copyright (c) 2003 M. Uli Kusterer. All rights reserved.
 //
 
+#import <AppKit/AppKit.h>
 #import "NuTemplateGroupElement.h"
 
 
@@ -13,5 +14,7 @@
 {
 	
 }
+
+-(IBAction)	showCreateResourceSheet: (id)sender;
 
 @end

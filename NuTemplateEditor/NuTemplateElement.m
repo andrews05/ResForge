@@ -22,6 +22,7 @@
 	{
 		label = [l retain];
 		type = [t retain];
+		containing = nil;
 	}
 	
 	return self;
@@ -69,6 +70,16 @@
 	return label;
 }
 
+-(void)		setContaining: (NSMutableArray*)arr
+{
+	containing = arr;	// It contains *us*, so it's unlikely it survives longer than we'd do, and we don't want to create a ring.
+}
+
+-(NSMutableArray*)		containing
+{
+	return containing;
+}
+
 
 -(int)	subElementCount
 {
@@ -86,7 +97,7 @@
 }
 
 
--(void)	readDataFrom: (NuTemplateStream*)stream containingArray: (NSMutableArray*)containing
+-(void)	readDataFrom: (NuTemplateStream*)stream
 {
 	// You should read whatever kind of data your template field stands for from "stream"
 	//	and store it in an instance variable.

@@ -37,7 +37,7 @@
 }
 
 
--(void)	readDataFrom: (NuTemplateStream*)stream containingArray: (NSMutableArray*)containing
+-(void)	readDataFrom: (NuTemplateStream*)stream
 {
 	char		buf[256] = { 0 };
 	

@@ -7,6 +7,7 @@
 //
 
 #import "NuTemplateLSTEElement.h"
+#import "NuTemplateLSTBElement.h"
 
 
 @implementation NuTemplateLSTEElement
@@ -18,14 +19,14 @@
 }
 
 
--(void)	readDataFrom: (NuTemplateStream*)stream containingArray: (NSMutableArray*)containing
+-(void)	readDataFrom: (NuTemplateStream*)stream
 {
 	NSEnumerator*		enny = [subElements objectEnumerator];
 	NuTemplateElement*	el;
 	
 	while( el = [enny nextObject] )
 	{
-		[el readDataFrom: stream containingArray: subElements];
+		[el readDataFrom: stream];
 	}
 }
 
@@ -52,6 +53,18 @@
 {
 	return @"";
 }
+
+
+-(IBAction)	showCreateResourceSheet: (id)sender
+{
+	unsigned				idx = [containing indexOfObject:self];
+	NuTemplateGroupElement*	ge = [NuTemplateLSTBElement elementForType:@"LSTB" withLabel:[self label]];
+
+	[ge setSubElements: [subElements copy]];
+	[containing insertObject:ge atIndex:idx];
+	[ge setContaining: containing];
+}
+
 
 
 

@@ -25,7 +25,7 @@
 }
 
 
--(void)	readDataFrom: (NuTemplateStream*)stream containingArray: (NSMutableArray*)containing
+-(void)	readDataFrom: (NuTemplateStream*)stream
 {
 	NSEnumerator		*enny = [subElements objectEnumerator];
 	NuTemplateElement	*el, *nextItem;
@@ -36,7 +36,7 @@
 		fill themselves with default values. */
 	while( el = [enny nextObject] )
 	{
-		[el readDataFrom: stream containingArray: subElements];
+		[el readDataFrom: stream];
 	}
 	
 	/* Read additional elements until we have enough items,
@@ -47,13 +47,15 @@
 		{
 			nextItem = [self copy];				// Make another list item just like this one.
 			[containing addObject: nextItem];	// Add it below ourselves.
-			[nextItem readDataFrom:stream containingArray:nil];	// Read it the same way we were.
+			[nextItem readDataFrom:stream];		// Read it the same way we were.
+			[nextItem setContaining: containing];	// Set "containing" *after* readDataFrom so it doesn't pass the "containing == nil" check above.
 		}
 		
 		// Now add a terminating 'LSTE' item:
 		NuTemplateLSTEElement*	tlee;
 		tlee = [NuTemplateLSTEElement elementForType:@"LSTE" withLabel:label];
 		[containing addObject: tlee];
+		[tlee setContaining: containing];
 		
 		if( bytesToGoAtStart == 0 )		// It's an empty list. Delete this LSTB again, so we only have the empty LSTE.
 		{
@@ -69,6 +71,15 @@
 -(NSString*)	stringValue
 {
 	return @"";
+}
+
+
+-(IBAction)	showCreateResourceSheet: (id)sender
+{
+	unsigned			idx = [containing indexOfObject:self];
+	NuTemplateElement*	te = [self copy];
+	[containing insertObject:te atIndex:idx+1];
+	[te setContaining:containing];
 }
 
 

@@ -22,8 +22,9 @@
 
 @interface NuTemplateElement : NSObject <NSCopying>
 {
-	NSString*		type;
-	NSString*		label;
+	NSString*		type;			// Type code of this item (4 chars if from TMPL resource, but we may support longer types later).
+	NSString*		label;			// Label ("name") of this field.
+	NSMutableArray*	containing;		// The NSMutableArray* of the template field containing us, or the template window's list.
 }
 
 +(id)					elementForType: (NSString*)type withLabel: (NSString*)label;
@@ -37,6 +38,9 @@
 -(void)					setLabel:(NSString*)l;
 -(NSString*)			label;
 
+-(void)					setContaining: (NSMutableArray*)arr;
+-(NSMutableArray*)		containing;
+
 -(NSString*)			stringValue;	// Used to display your data in the list.
 
 // Items that have sub-items (like LSTB, LSTZ, LSTC and other lists) should implement these:
@@ -45,7 +49,7 @@
 -(void)					readSubElementsFrom: (NuTemplateStream*)stream;
 
 // This is called on an item of your class when displaying resource data using a template that uses your field:
--(void)					readDataFrom: (NuTemplateStream*)stream containingArray: (NSMutableArray*)containing;
+-(void)					readDataFrom: (NuTemplateStream*)stream;
 
 // This is used to instantiate copies of the item from the template for storing data of the resource. A copy created with this is then sent readDataFrom:.
 -(id)					copyWithZone: (NSZone*)zone;

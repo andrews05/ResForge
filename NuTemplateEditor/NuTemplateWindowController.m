@@ -32,6 +32,8 @@
 #import "NuTemplateDWRDElement.h"
 #import "NuTemplateStream.h"
 
+#import "NSOutlineView-SelectedItems.h"
+
 
 @implementation NuTemplateWindowController
 
@@ -149,7 +151,8 @@
 		currElement = [currElement copy];		// Copy the template object.
 		
 		[resourceStructure addObject: currElement];		// Add it to our parsed resource data list. Do this right away so the element can append other items should it desire to.
-		[currElement readDataFrom: stream containingArray: resourceStructure];		// Fill it with resource data.
+		[currElement setContaining: resourceStructure];
+		[currElement readDataFrom: stream];		// Fill it with resource data.
 	}
 	
 	[dataList reloadData];	// Make sure our outline view displays the new data.
@@ -244,6 +247,29 @@
 	[item takeValue:object forKey: [tableColumn identifier]];
 }
 
+
+/* showCreateResourceSheet: we mis-use this menu item for creating new template fields.
+	This works by selecting an item that serves as a template (another LSTB), or knows
+	how to create an item (LSTE) and passing the message on to it. */
+
+-(IBAction)	showCreateResourceSheet: (id)sender;
+{
+	NuTemplateElement *selItem = (NuTemplateElement*) [dataList selectedItem];
+	
+	[selItem showCreateResourceSheet: sender];	// Let selected item do its magic.
+	
+	[dataList reloadData];	// Update our display.
+}
+
+
+-(BOOL)	validateMenuItem: (NSMenuItem*)item
+{
+	NuTemplateElement *selItem = (NuTemplateElement*) [dataList selectedItem];
+	
+	if( [item action] == @selector(showCreateResourceSheet:) )
+		return( selItem != nil && [selItem respondsToSelector: @selector(showCreateResourceSheet:)] );
+	else return [super validateMenuItem:item];
+}
 
 
 -(BOOL)	windowShouldClose: (id)sender	// Window delegate.

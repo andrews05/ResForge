@@ -30,7 +30,7 @@
 }
 
 
--(void)	readDataFrom: (NuTemplateStream*)stream containingArray: (NSMutableArray*)containing
+-(void)	readDataFrom: (NuTemplateStream*)stream
 {
 	[stream readAmount:2 toBuffer: &shortValue];
 }
