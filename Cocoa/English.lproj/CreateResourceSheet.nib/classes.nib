@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                hideCreateResourceSheet = id; 
+                showCreateResourceSheet = id; 
+                typePopupSelection = id; 
+            }; 
+            CLASS = CreateResourceSheetController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                attributesMatrix = NSMatrix; 
+                cancelButton = NSButton; 
+                createButton = NSButton; 
+                nameView = NSTextField; 
+                resIDView = NSTextField; 
+                typePopup = NSPopUpButton; 
+                typeView = NSTextField; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
