@@ -5,13 +5,12 @@
 
 @interface TemplateWindowController : NSWindowController <ResKnifePluginProtocol>
 {
+	IBOutlet NSMatrix	*fieldsMatrix;
+	
+	NSMutableArray	*tmpl;
+	NSMutableArray	*res;
 	id <ResKnifeResourceProtocol>	resource;
-	NSMutableArray *tmpl;
 }
-
-// conform to the ResKnifePluginProtocol with the inclusion of these methods
-- (id)initWithResource:(id)newResource;
-- (id)initWithResources:(id)newResource, ...;
 
 // normal methods
 - (void)readTemplate:(id <ResKnifeResourceProtocol>)tmpl;
