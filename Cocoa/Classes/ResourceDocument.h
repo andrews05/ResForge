@@ -12,6 +12,8 @@
 	HFSUniStr255	*otherFork;		// name of fork to save to if not using data fork (usually 'RESOURCE_FORK' as returned from FSGetResourceForkName() -- ignored if saveToDataFork is YES )
 }
 
+- (void)setupToolbar:(NSWindowController *)controller;
+
 - (BOOL)readResourceMap:(SInt16)fileRefNum;
 - (BOOL)writeResourceMap:(SInt16)fileRefNum;
 

@@ -6,17 +6,16 @@
 
 - (NSString *)offsetRepresentation:(NSData *)data;
 {
-	int row;
-	int rows = ([data length] / 16) + (([data length] % 16)? 1:0);
+	int row, dataLength = [data length];
+	int rows = (dataLength / 16) + ((dataLength % 16)? 1:0);
 	NSMutableString *representation = [NSMutableString string];
 	
 	for( row = 0; row < rows; row++ )
-	{
 		[representation appendFormat:@"%08lX:\n", row * 16];
-	}
 	
 	// remove last character (the return on the end)
-	[representation deleteCharactersInRange:NSMakeRange([representation length] -1, 1)];
+	if( dataLength % 16 != 0 )
+		[representation deleteCharactersInRange:NSMakeRange([representation length] -1, 1)];
 	
 	return representation;
 }
@@ -63,7 +62,7 @@
 		
 		// append buffer to representation
 		[representation appendString:[NSString stringWithCString:buffer]];
-		if( currentByte != dataLength )
+		if( currentByte != dataLength || dataLength % 16 == 0 )
 			[representation appendString:@"\n"];
 	}
 	
@@ -104,7 +103,7 @@
 		
 		// append buffer to representation
 		[representation appendString:[NSString stringWithCString:buffer]];
-		if( currentByte != dataLength )
+		if( currentByte != dataLength || dataLength % 16 == 0 )
 			[representation appendString:@"\n"];
 	}
 	
@@ -115,7 +114,7 @@
 
 - (NSRange)textView:(NSTextView *)textView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange
 {
-	NSRange hexRange, asciiRange;
+	NSRange hexRange, asciiRange, byteRange = NSMakeRange(0,0);
 	
 	// temporarilly removing the delegate stops this function being called recursivly!
 	id oldDelegate = [hex delegate];
@@ -124,42 +123,70 @@
 	
 	if( textView == hex )			// we're selecting hexadecimal
 	{
-		if( newSelectedCharRange.length == 0 )	// moving insertion point
-		{
-			asciiRange = NSMakeRange( newSelectedCharRange.location /3, 0 );
-		}
-		else									// dragging a selection
-		{
-			int numReturns = (newSelectedCharRange.length /47) + (newSelectedCharRange.location % 47? 1:0);
-			asciiRange = NSMakeRange( newSelectedCharRange.location /3, (newSelectedCharRange.length+1) /3 );
-		}
-		NSLog( @"hex selection changed from %@ to %@", NSStringFromRange(oldSelectedCharRange), NSStringFromRange(newSelectedCharRange) );
-		NSLog( @"changing ascii selection to %@", NSStringFromRange(asciiRange) );
+		byteRange = [self byteRangeFromHexRange:newSelectedCharRange];
+		asciiRange = [self asciiRangeFromByteRange:byteRange];
 		[ascii setSelectedRange:asciiRange];
 	}
 	else if( textView == ascii )	// we're selecting ASCII
 	{
-		
-		if( newSelectedCharRange.length == 0 )	// moving insertion point
-		{
-			hexRange = NSMakeRange( newSelectedCharRange.location *3, 0 );
-		}
-		else									// dragging a selection
-		{
-			int numReturns = (newSelectedCharRange.length /17) + (newSelectedCharRange.location % 17? 1:0);
-			hexRange = NSMakeRange( (newSelectedCharRange.location - numReturns) *3 + numReturns, ((newSelectedCharRange.length - numReturns) *3) -1 );
-		}
-		NSLog( @"ascii selection changed from %@ to %@", NSStringFromRange(oldSelectedCharRange), NSStringFromRange(newSelectedCharRange) );
-		NSLog( @"changing hex selection to %@", NSStringFromRange(hexRange) );
-		
+		byteRange = [self byteRangeFromAsciiRange:newSelectedCharRange];
+		hexRange = [self hexRangeFromByteRange:byteRange];
 		[hex setSelectedRange:hexRange];
 	}
+	else NSLog( @"What the hell are you selecting?" );
+	
+	// put the new selection into the message bar
+	[message setStringValue:[NSString stringWithFormat:@"Current selection: %@", NSStringFromRange(byteRange)]];
 	
 	// restore delegates
 	[hex setDelegate:oldDelegate];
 	[ascii setDelegate:oldDelegate];
 	return newSelectedCharRange;
 }
+
+- (NSRange)byteRangeFromHexRange:(NSRange)hexRange;
+{
+	// valid for all window widths
+	NSRange byteRange = NSMakeRange(0,0);
+	
+	byteRange.location = (hexRange.location / 3);
+	byteRange.length = (hexRange.length / 3) + ((hexRange.length % 3)? 1:0);
+	
+	return byteRange;
+}
+
+- (NSRange)hexRangeFromByteRange:(NSRange)byteRange;
+{
+	NSRange hexRange = NSMakeRange(0,0);
+	
+	hexRange.location = (byteRange.location * 3);
+	hexRange.length = (byteRange.length * 3);
+	
+	return hexRange;
+}
+
+- (NSRange)byteRangeFromAsciiRange:(NSRange)asciiRange;
+{
+	// assumes 16 byte wide window
+	NSRange byteRange;
+	
+	byteRange.location = asciiRange.location - (asciiRange.location / 17);
+	byteRange.length = asciiRange.length - ((asciiRange.location + asciiRange.length) / 17) +  (asciiRange.location / 17);
+	
+	return byteRange;
+}
+
+- (NSRange)asciiRangeFromByteRange:(NSRange)byteRange;
+{
+	// assumes 16 byte wide window
+	NSRange asciiRange = NSMakeRange(0,0);
+	
+	asciiRange.location = byteRange.location + (byteRange.location / 17);
+	asciiRange.length = byteRange.length + ((byteRange.location + byteRange.length) / 17) - (byteRange.location / 17);
+	
+	return asciiRange;
+}
+
 /*
 - (void)textViewDidChangeSelection:(NSNotification *)notification;
 {

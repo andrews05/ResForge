@@ -1,8 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "ResKnifeResourceProtocol.h"
 
-extern NSString *ResourceChangedNotification;
-
 @interface Resource : NSObject <ResKnifeResourceProtocol>
 {
 @private

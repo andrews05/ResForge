@@ -19,6 +19,8 @@
 	[super dealloc];
 }
 
+/* WINDOW DELEGATION */
+
 - (NSString *)windowNibName
 {
     // Override returning the nib file name of the document
@@ -30,6 +32,7 @@
 {
     [super windowControllerDidLoadNib:controller];
     // Add any code here that need to be executed once the windowController has loaded the document's window.
+	[self setupToolbar:controller];
 //	[controller setDocumet:self];
 	[dataSource setResources:resources];
 }
@@ -64,6 +67,145 @@
 	}
 	// else returnCode == NSAlertAlternateReturn, cancel
 }
+
+/* TOOLBAR MANAGMENT */
+
+static NSString *RKToolbarIdentifier = @"com.nickshanks.resknife.toolbar";
+static NSString *RKSaveItemIdentifier = @"com.nickshanks.resknife.toolbar.save";
+
+- (void)setupToolbar:(NSWindowController *)controller
+{
+	/* This routine should become invalid once toolbars are integrated into nib files */
+	
+	NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:RKToolbarIdentifier] autorelease];
+	
+	// set toolbar properties
+	[toolbar setVisible:NO];
+	[toolbar setAutosavesConfiguration:YES];
+	[toolbar setAllowsUserCustomization:YES];
+	[toolbar setDisplayMode:NSToolbarDisplayModeDefault];
+	
+	// attach toolbar to window 
+	[toolbar setDelegate:self];
+	[[controller window] setToolbar:toolbar];
+}
+
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
+{
+	if( [itemIdentifier isEqual:RKSaveItemIdentifier] )
+	{
+		NSToolbarItem *item = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+		[item setLabel:@"Save"];
+		[item setPaletteLabel:@"Save"];
+		[item setToolTip:[NSString stringWithFormat:@"Save To %@ Fork", saveToDataFork? @"Data":@"Resource"]];
+		[item setImage:[NSImage imageNamed:@"Save"]];
+		[item setTarget:self];
+		[item setAction:@selector(saveDocument:)];
+		return item;
+	}
+	else return nil;
+/*    // Required delegate method   Given an item identifier, self method returns an item 
+    // The toolbar will use self method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself 
+    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+    
+    if ([itemIdent isEqual: SaveDocToolbarItemIdentifier]) {
+	// Set the text label to be displayed in the toolbar and customization palette 
+	[toolbarItem setLabel: @"Save"];
+	[toolbarItem setPaletteLabel: @"Save"];
+	
+	// Set up a reasonable tooltip, and image   Note, these aren't localized, but you will likely want to localize many of the item's properties 
+	[toolbarItem setToolTip: @"Save Your Document"];
+	[toolbarItem setImage: [NSImage imageNamed: @"SaveDocumentItemImage"]];
+	
+	// Tell the item what message to send when it is clicked 
+	[toolbarItem setTarget: self];
+	[toolbarItem setAction: @selector(saveDocument:)];
+    } else if([itemIdent isEqual: SearchDocToolbarItemIdentifier]) {
+	NSMenu *submenu = nil;
+	NSMenuItem *submenuItem = nil, *menuFormRep = nil;
+	
+	// Set up the standard properties 
+	[toolbarItem setLabel: @"Search"];
+	[toolbarItem setPaletteLabel: @"Search"];
+	[toolbarItem setToolTip: @"Search Your Document"];
+	
+	// Use a custom view, a text field, for the search item 
+	[toolbarItem setView: searchFieldOutlet];
+	[toolbarItem setMinSize:NSMakeSize(30, NSHeight([searchFieldOutlet frame]))];
+	[toolbarItem setMaxSize:NSMakeSize(400,NSHeight([searchFieldOutlet frame]))];
+
+	// By default, in text only mode, a custom items label will be shown as disabled text, but you can provide a 
+	// custom menu of your own by using <item> setMenuFormRepresentation] 
+	submenu = [[[NSMenu alloc] init] autorelease];
+	submenuItem = [[[NSMenuItem alloc] initWithTitle: @"Search Panel" action: @selector(searchUsingSearchPanel:) keyEquivalent: @""] autorelease];
+	menuFormRep = [[[NSMenuItem alloc] init] autorelease];
+
+	[submenu addItem: submenuItem];
+	[submenuItem setTarget: self];
+	[menuFormRep setSubmenu: submenu];
+	[menuFormRep setTitle: [toolbarItem label]];
+	[toolbarItem setMenuFormRepresentation: menuFormRep];
+    } else {
+	// itemIdent refered to a toolbar item that is not provide or supported by us or cocoa 
+	// Returning nil will inform the toolbar self kind of item is not supported 
+	toolbarItem = nil;
+    }
+    return toolbarItem;*/
+}
+
+- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
+{
+    return [NSArray arrayWithObjects:RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, nil];
+}
+
+- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
+{
+    return [NSArray arrayWithObjects:RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
+}
+/*
+- (void) toolbarWillAddItem: (NSNotification *) notif {
+    // Optional delegate method   Before an new item is added to the toolbar, self notification is posted   
+    // self is the best place to notice a new item is going into the toolbar   For instance, if you need to 
+    // cache a reference to the toolbar item or need to set up some initial state, self is the best place 
+    // to do it    The notification object is the toolbar to which the item is being added   The item being 
+    // added is found by referencing the @"item" key in the userInfo 
+    NSToolbarItem *addedItem = [[notif userInfo] objectForKey: @"item"];
+    if([[addedItem itemIdentifier] isEqual: SearchDocToolbarItemIdentifier]) {
+	activeSearchItem = [addedItem retain];
+	[activeSearchItem setTarget: self];
+	[activeSearchItem setAction: @selector(searchUsingToolbarTextField:)];
+    } else if ([[addedItem itemIdentifier] isEqual: NSToolbarPrintItemIdentifier]) {
+	[addedItem setToolTip: @"Print Your Document"];
+	[addedItem setTarget: self];
+    }
+}  
+
+- (void) toolbarDidRemoveItem: (NSNotification *) notif {
+    // Optional delegate method   After an item is removed from a toolbar the notification is sent   self allows 
+    // the chance to tear down information related to the item that may have been cached   The notification object
+    // is the toolbar to which the item is being added   The item being added is found by referencing the @"item"
+    // key in the userInfo 
+    NSToolbarItem *removedItem = [[notif userInfo] objectForKey: @"item"];
+    if (removedItem==activeSearchItem) {
+	[activeSearchItem autorelease];
+	activeSearchItem = nil;    
+    }
+}
+
+- (BOOL) validateToolbarItem: (NSToolbarItem *) toolbarItem {
+    // Optional method   self message is sent to us since we are the target of some toolbar item actions 
+    // (for example:  of the save items action) 
+    BOOL enable = NO;
+    if ([[toolbarItem itemIdentifier] isEqual: SaveDocToolbarItemIdentifier]) {
+	// We will return YES (ie  the button is enabled) only when the document is dirty and needs saving 
+	enable = [self isDocumentEdited];
+    } else if ([[toolbarItem itemIdentifier] isEqual: NSToolbarPrintItemIdentifier]) {
+	enable = YES;
+    }	
+    return enable;
+}*/
+
+/* FILE HANDLING */
 
 - (BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)type
 {
@@ -233,6 +375,8 @@
 	UseResFile( oldResFile );
 	return error? NO:YES;
 }
+
+/* ACCESSORS */
 
 - (NSOutlineView *)outlineView
 {

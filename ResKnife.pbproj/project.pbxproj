@@ -58,6 +58,17 @@
 			settings = {
 			};
 		};
+		F577A8F30211CFA701A80001 = {
+			isa = PBXFileReference;
+			path = Save.tiff;
+			refType = 4;
+		};
+		F577A8F40211CFA801A80001 = {
+			fileRef = F577A8F30211CFA701A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F57CEE0B0189C95101A8010B = {
 			children = (
 				F5502C4001C579FF01C57124,
@@ -149,7 +160,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5EF83AF020C08E601A80001,
-				F5EF83C6020C162C01A80001,
+				F5EF83C9020C20D801A80001,
+				F577A8F40211CFA801A80001,
 			);
 			isa = PBXResourcesBuildPhase;
 			name = "Bundle Resources";
@@ -586,6 +598,7 @@
 				F5B588460156D40B01000001,
 				F5B588470156D40B01000001,
 				F5B588480156D40B01000001,
+				F577A8F30211CFA701A80001,
 			);
 			isa = PBXGroup;
 			path = Resources;
@@ -2306,8 +2319,8 @@
 				F5EF83A5020C08E601A80001,
 				F5EF83A7020C08E601A80001,
 				F5EF83A8020C08E601A80001,
+				F5EF83C7020C20D701A80001,
 				F5EF83A9020C08E601A80001,
-				F5EF83C5020C162B01A80001,
 			);
 			isa = PBXGroup;
 			name = "Hex Editor";
@@ -2413,22 +2426,23 @@
 			settings = {
 			};
 		};
-		F5EF83C3020C10C601A80001 = {
-			isa = PBXFileReference;
-			name = HexWindow.nib;
-			path = English.lproj/HexWindow.nib;
-			refType = 4;
-		};
-		F5EF83C5020C162B01A80001 = {
+		F5EF83C7020C20D701A80001 = {
 			children = (
-				F5EF83C3020C10C601A80001,
+				F5EF83C8020C20D701A80001,
 			);
 			isa = PBXVariantGroup;
 			name = HexWindow.nib;
+			path = "";
 			refType = 4;
 		};
-		F5EF83C6020C162C01A80001 = {
-			fileRef = F5EF83C5020C162B01A80001;
+		F5EF83C8020C20D701A80001 = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/HexWindow.nib;
+			refType = 4;
+		};
+		F5EF83C9020C20D801A80001 = {
+			fileRef = F5EF83C7020C20D701A80001;
 			isa = PBXBuildFile;
 			settings = {
 			};
