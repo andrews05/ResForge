@@ -8,6 +8,7 @@
 	if( ![obj isKindOfClass:[NSString class]] ) return nil;
 	if( [obj isEqualToString:@""] )
 	{
+		// bug: the NO should be some kind of 'icns' resource type identification
 		if( NO ) return NSLocalizedString( @"Custom Icon", nil );
 		else return NSLocalizedString( @"Untitled Resource", nil );
 	}

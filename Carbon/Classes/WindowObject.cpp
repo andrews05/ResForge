@@ -1,4 +1,6 @@
 #include "WindowObject.h"
+#include "string.h"
+
 
 /*** CONSTRUCTOR ***/
 WindowObject::WindowObject( void )

@@ -4,6 +4,7 @@
 {
 }
 
+- (IBAction)showAbout:(id)sender;
 - (IBAction)showInfo:(id)sender;
 - (IBAction)showPrefs:(id)sender;
 - (IBAction)showCreateResourceSheet:(id)sender;

@@ -16,6 +16,7 @@
             ACTIONS = {
                 openResource = id; 
                 playSound = id; 
+                showAbout = id; 
                 showCreateResourceSheet = id; 
                 showInfo = id; 
                 showPrefs = id; 

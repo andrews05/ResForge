@@ -1,5 +1,7 @@
 #if !TARGET_API_MAC_OS8
-	#include <Carbon/Carbon.h>
+	#if !defined(__MWERKS__)		// compiling with ProjectBuilder
+		#include <Carbon/Carbon.h>
+	#endif
 #endif
 
 #ifndef _ResKnife_HostCallbacks_

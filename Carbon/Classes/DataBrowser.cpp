@@ -356,9 +356,9 @@ pascal Boolean SortDataBrowser( ControlRef browser, DataBrowserItemID itemOne, D
 }
 
 /*** DATA BROWSER MESSAGE ***/
-pascal void DataBrowserMessage( ControlRef browser, DataBrowserItemID itemID, DataBrowserItemNotification message, DataBrowserItemDataRef itemData )
+pascal void DataBrowserMessage( ControlRef browser, DataBrowserItemID itemID, DataBrowserItemNotification message/*, DataBrowserItemDataRef itemData*/ )
 {
-	#pragma unused( itemID, itemData )
+	#pragma unused( itemID/*, itemData*/ )
 	FileWindowPtr file = (FileWindowPtr) GetControlReference( browser );
 	switch( message )
 	{

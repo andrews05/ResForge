@@ -1057,7 +1057,7 @@ OSStatus ShowAboutBox( void )
 #endif
 #else
 	WindowRef window = null;
-	if( g.useAppearance && g.systemVersion >= kMacOSEight )
+	if( g.useAppearance && g.systemVersion >= kMacOS8 )
 		window = GetNewCWindow( kFileWindow8, null, kFirstWindowOfClass );
 	else
 		window = GetNewCWindow( kFileWindow7, null, kFirstWindowOfClass );

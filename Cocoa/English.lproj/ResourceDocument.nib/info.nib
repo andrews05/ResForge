@@ -4,8 +4,10 @@
 <dict>
 	<key>IBDocumentLocation</key>
 	<string>14 132 480 547 0 74 1280 928 </string>
-	<key>IBMainMenuLocation</key>
-	<string>52 694 73 138 0 74 1280 928 </string>
+	<key>IBFramework Version</key>
+	<string>248.0</string>
+	<key>IBSystem Version</key>
+	<string>5P48</string>
 	<key>IBUserGuides</key>
 	<dict>
 		<key>CreateResourceSheet</key>

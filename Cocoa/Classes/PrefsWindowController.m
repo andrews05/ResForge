@@ -27,6 +27,7 @@
 
 - (IBAction)acceptPrefs:(id)sender
 {
+	// bug: hey! where's NSValue's boolValue method? I have to use "intValue? YES:NO" :(
 	NSUserDefaults*	defaults	= [NSUserDefaults standardUserDefaults];
 	BOOL preserveBackups		= [[dataProtectionMatrix cellAtRow:preserveBackupsBox column:0] intValue]? YES:NO;
 	BOOL autosave				= [[dataProtectionMatrix cellAtRow:autosaveBox column:0] intValue]? YES:NO;
@@ -37,7 +38,7 @@
 	[[self window] orderOut:nil];
 	
 	// now save the data to the defaults file
-	[defaults setBool:preserveBackups forKey:@"PreserveBackups"];	// bug: this put 1 or 0 into the defaults file rather than YES or NO
+	[defaults setBool:preserveBackups forKey:@"PreserveBackups"];	// bug: this puts 1 or 0 into the defaults file rather than YES or NO
 	[defaults setBool:autosave forKey:@"Autosave"];
 	[defaults setInteger:autosaveInterval forKey:@"AutosaveInterval"];
 	[defaults setBool:deleteResourceWarning forKey:@"DeleteResourceWarning"];
@@ -72,7 +73,7 @@
 	int autosaveInterval		= [[defaultsPlist objectForKey:@"AutosaveInterval"] intValue];
 	BOOL deleteResourceWarning	= [[defaultsPlist objectForKey:@"DeleteResourceWarning"] intValue]? YES:NO;
 	
-	// note that this function does notmodify the user defaults - the user still has to accept or cancel the panel
+	// note that this function does not modify the user defaults - the user still has to accept or cancel the panel
 	[[dataProtectionMatrix cellAtRow:preserveBackupsBox column:0] setState:preserveBackups];
 	[[dataProtectionMatrix cellAtRow:autosaveBox column:0] setState:autosave];
 	[autosaveIntervalField setStringValue:[NSString stringWithFormat:@"%d", autosaveInterval]];

@@ -116,7 +116,7 @@ void AppendPString( Str255 original, ConstStr255Param added )
 void MenuItemEnable( MenuRef menu, MenuItemIndex item, Boolean enable )
 {
 #if !TARGET_API_MAC_CARBON
-	if( g.systemVersion >= kMacOSEightPointFive )
+	if( g.systemVersion >= kMacOS85 )
 	{
 #endif
 		if( enable )	EnableMenuItem( menu, item );

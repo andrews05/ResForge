@@ -2,15 +2,19 @@
 <!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
 <plist version="0.9">
 <dict>
-	<key>IBUserGuides</key>
-	<dict>
-		<key>AboutPanel</key>
-		<dict>
-			<key>guideLocations</key>
-			<array/>
-			<key>guidesLocked</key>
-			<string>NO</string>
-		</dict>
-	</dict>
+	<key>IBDocumentLocation</key>
+	<string>109 310 356 240 0 0 1280 1002 </string>
+	<key>IBFramework Version</key>
+	<string>248.0</string>
+	<key>IBLockedObjects</key>
+	<array>
+		<integer>25</integer>
+	</array>
+	<key>IBOpenObjects</key>
+	<array>
+		<integer>23</integer>
+	</array>
+	<key>IBSystem Version</key>
+	<string>5P48</string>
 </dict>
 </plist>

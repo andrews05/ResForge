@@ -1,9 +1,11 @@
 #import <Foundation/Foundation.h>
+#import "ResKnifeResourceProtocol.h"
 
 extern NSString *ResourceChangedNotification;
 
-@interface Resource : NSObject
+@interface Resource : NSObject <ResKnifeResourceProtocol>
 {
+@private
 	// resource information
 	NSString		*name;
 	NSString		*type;

@@ -1,1 +1,10 @@
-// include file#define CALL_NOT_IN_CARBON 0#define TARGET_API_MAC_OS8 1#define TARGET_API_MAC_CARBON 1#define TARGET_API_MAC_OSX 0#define OPAQUE_UPP_TYPES 1#define OPAQUE_TOOLBOX_STRUCTS 1#define ACCESSOR_CALLS_ARE_FUNCTIONS 1#include <Carbon.h>
+// include file
+#define CALL_NOT_IN_CARBON 0
+#define TARGET_API_MAC_OS8 0
+#define TARGET_API_MAC_CARBON 1
+#define TARGET_API_MAC_OSX 0
+#define OPAQUE_UPP_TYPES 1
+#define OPAQUE_TOOLBOX_STRUCTS 1
+#define ACCESSOR_CALLS_ARE_FUNCTIONS 1
+
+#include <Carbon.h>

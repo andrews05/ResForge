@@ -39,15 +39,18 @@ FileWindow::FileWindow( FSSpecPtr spec )
 	
 #elif TARGET_API_MAC_CARBON
 	// create window
-	Rect creationBounds;
+	Rect creationBounds, sectRect;
 	SetRect( &creationBounds, 0, 0, kDefaultFileWindowWidth, kDefaultFileWindowHeight );
-	OffsetRect( &creationBounds, 10, 48 );
+	GetAvailableWindowPositioningBounds( GetMainDevice(), &sectRect );
+	InsetRect( &sectRect, 0, 10 );
+	SectRect( &sectRect, &creationBounds, &creationBounds );
+	OffsetRect( &creationBounds, 10, 0 );
 	WindowAttributes					attributes = kWindowStandardDocumentAttributes | kWindowStandardHandlerAttribute | kWindowInWindowMenuAttribute;
 	if( g.systemVersion >= kMacOSX )	attributes |= kWindowLiveResizeAttribute;
 	error = CreateNewWindow( kDocumentWindowClass, attributes, &creationBounds, &window );
 	if( error ) return;
 #else
-	if( g.useAppearance && g.systemVersion >= kMacOSEight )
+	if( g.useAppearance && g.systemVersion >= kMacOS8 )
 	{
 		window = GetNewCWindow( kFileWindow8, null, kFirstWindowOfClass );
 		themeSavvy = true;
@@ -596,7 +599,7 @@ OSStatus FileWindow::BoundsChanged( EventRef event )
 	SizeControl( horizScroll, windowBounds.right - (kScrollBarWidth -3), kScrollBarWidth );
 	MoveControl( vertScroll, windowBounds.right - (kScrollBarWidth -1), kFileWindowHeaderHeight );
 	SizeControl( vertScroll, kScrollBarWidth, windowBounds.bottom - kFileWindowHeaderHeight - (kScrollBarWidth -2) );
-	if( themeSavvy && g.systemVersion >= kMacOSEightPointFive )
+	if( themeSavvy && g.systemVersion >= kMacOS85 )
 	{
 		SetControlViewSize( horizScroll, nameColumnWidth + kFileWindowAllOtherColumnWidths );
 		SetControlViewSize( vertScroll, windowBounds.bottom - (kScrollBarWidth -1) - kFileWindowHeaderHeight );

@@ -32,7 +32,7 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	[name autorelease];
 	name = [newName copy];
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted beacause name changed to %@", ResourceChangedNotification, name );
+//	NSLog( @"%@ posted because name changed to %@", ResourceChangedNotification, name );
 }
 
 - (NSString *)type
@@ -45,7 +45,7 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	[type autorelease];
 	type = [newType copy];
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted beacause type changed to %@", ResourceChangedNotification, type );
+//	NSLog( @"%@ posted because type changed to %@", ResourceChangedNotification, type );
 }
 
 - (NSNumber *)resID
@@ -58,7 +58,7 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	[resID autorelease];
 	resID = [newResID copy];
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted beacause res ID changed to %@", ResourceChangedNotification, [resID stringValue] );
+//	NSLog( @"%@ posted because res ID changed to %@", ResourceChangedNotification, [resID stringValue] );
 }
 
 - (NSNumber *)size
@@ -71,7 +71,7 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	[size autorelease];
 	size = [newSize copy];
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted beacause size changed to %@", ResourceChangedNotification, [size stringValue] );
+//	NSLog( @"%@ posted because size changed to %@", ResourceChangedNotification, [size stringValue] );
 }
 
 - (NSNumber *)attributes
@@ -84,7 +84,7 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	[attributes autorelease];
 	attributes = [newAttributes copy];
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted beacause attributes changed to %@", ResourceChangedNotification, [attributes stringValue] );
+//	NSLog( @"%@ posted because attributes changed to %@", ResourceChangedNotification, [attributes stringValue] );
 }
 
 - (BOOL)dirty
@@ -96,7 +96,7 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 {
 	dirty = newValue;
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted beacause resource became %@", ResourceChangedNotification, dirty? @"dirty":@"clean" );
+//	NSLog( @"%@ posted because resource became %@", ResourceChangedNotification, dirty? @"dirty":@"clean" );
 }
 
 - (NSData *)data
@@ -109,7 +109,7 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	[data autorelease];
 	data = [newData retain];
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted beacause data changed", ResourceChangedNotification );
+//	NSLog( @"%@ posted because data changed", ResourceChangedNotification );
 }
 
 - (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue
@@ -126,7 +126,7 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 
 - (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue ofLength:(NSNumber *)sizeValue
 {
-	[super init];
+	self = [super init];
 	[self setName:nameValue];
 	[self setType:typeValue];
 	[self setResID:resIDValue];
@@ -138,17 +138,20 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 
 + (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue
 {
-	return [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue];
+	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue];
+	return [resource autorelease];
 }
 
 + (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue
 {
-	return [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue];
+	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue];
+	return [resource autorelease];
 }
 
 + (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue ofLength:(NSNumber *)sizeValue
 {
-	return [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:dataValue ofLength:sizeValue];
+	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:dataValue ofLength:sizeValue];
+	return [resource autorelease];
 }
 
 

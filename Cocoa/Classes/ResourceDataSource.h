@@ -16,7 +16,6 @@
 - (NSWindow *)window;
 - (NSArray *)resources;
 - (void)setResources:(NSMutableArray *)newResources;
-
 - (void)addResource:(Resource *)resource;
 - (void)generateTestData;
 

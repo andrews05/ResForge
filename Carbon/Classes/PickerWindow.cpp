@@ -37,7 +37,7 @@ PickerWindow::PickerWindow( FileWindowPtr ownerFile, ResType resType ) : PlugWin
 	SetRect( &creationBounds, 9, 45, 256 +9, 256 +45 );
 	error = CreateNewWindow( kDocumentWindowClass, kWindowStandardDocumentAttributes | kWindowStandardHandlerAttribute, &creationBounds, &window );
 #else
-	if( g.useAppearance && g.systemVersion >= kMacOSEight )
+	if( g.useAppearance && g.systemVersion >= kMacOS8 )
 	{
 		window = GetNewCWindow( kFileWindow8, null, kFirstWindowOfClass );
 		themeSavvy = true;

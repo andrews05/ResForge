@@ -3,8 +3,50 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 32;
+	objectVersion = 34;
 	objects = {
+		F53B5F3001C97EFB01A8010C = {
+			fileRef = F5B588210156D40B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F53B5F3101C97EFB01A8010C = {
+			fileRef = F5B5881D0156D40B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F53B5F3201C984F301A8010C = {
+			fileRef = F5B5884A0156D40B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5502C3301C5586301C57124 = {
+			fileRef = F5B5884B0156D40B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5502C3401C5588601C57124 = {
+			fileRef = F57CEE0D0189C95101A8010B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5502C4001C579FF01C57124 = {
+			isa = PBXFileReference;
+			name = ResKnifePluginProtocol.h;
+			path = "Plug–Ins/ResKnifePluginProtocol.h";
+			refType = 4;
+		};
+		F5502C4101C579FF01C57124 = {
+			fileRef = F5502C4001C579FF01C57124;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F5730B930159528A01000001 = {
 			isa = PBXFileReference;
 			path = defaults.plist;
@@ -12,6 +54,216 @@
 		};
 		F5730B940159528A01000001 = {
 			fileRef = F5730B930159528A01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F57CEE0B0189C95101A8010B = {
+			children = (
+				F5502C4001C579FF01C57124,
+				F5CDEBAB01FC893201A80001,
+				F57CEE0C0189C95101A8010B,
+			);
+			isa = PBXGroup;
+			name = "Plug-Ins";
+			refType = 4;
+		};
+		F57CEE0C0189C95101A8010B = {
+			children = (
+				F5CDEBA101FBD4E001A80001,
+				F5CDEBA201FBD4E001A80001,
+				F5CDEB9D01FB7C8601A80001,
+				F5CDEB9E01FB7C8601A80001,
+				F59CEE9E01A28CA001A8010B,
+				F59CEE9F01A28CA001A8010B,
+				F59CEEA201A28D4201A8010B,
+				F59CEEA301A28D4201A8010B,
+				F57CEE180189CE8801A8010B,
+				F5CDEBA901FC86CA01A80001,
+			);
+			isa = PBXGroup;
+			name = "Hex Editor";
+			refType = 4;
+		};
+		F57CEE0D0189C95101A8010B = {
+			isa = PBXBundleReference;
+			path = "Hexadecimal Editor.bundle";
+			refType = 3;
+		};
+		F57CEE0E0189C95101A8010B = {
+			buildPhases = (
+				F57CEE0F0189C95101A8010B,
+				F57CEE100189C95101A8010B,
+				F57CEE110189C95101A8010B,
+				F57CEE120189C95101A8010B,
+				F57CEE130189C95101A8010B,
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-bundle -undefined error";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Hexadecimal Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = bundle;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = "Hex Editor Cocoa";
+			productName = "Hex Editor Cocoa";
+			productReference = F57CEE0D0189C95101A8010B;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Hexadecimal Editor</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>com.nickshanks.resknife.hexadecimal</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>ResK</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+	<key>NSMainNibFile</key>
+	<string>HexWindow</string>
+	<key>NSPrincipalClass</key>
+	<string>HexWindowController</string>
+</dict>
+</plist>
+";
+			shouldUseHeadermap = 0;
+		};
+		F57CEE0F0189C95101A8010B = {
+			buildActionMask = 2147483647;
+			files = (
+				F59CEEA001A28CA101A8010B,
+				F59CEEA401A28D4301A8010B,
+				F5CDEBA301FBD4E101A80001,
+				F5CDEBAD01FC893301A80001,
+				F5CDEBAE01FC90AD01A80001,
+				F583B47802083A0A01A80001,
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		F57CEE100189C95101A8010B = {
+			buildActionMask = 2147483647;
+			files = (
+				F57CEE190189CE8901A8010B,
+				F5CDEBAA01FC86CB01A80001,
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		F57CEE110189C95101A8010B = {
+			buildActionMask = 2147483647;
+			files = (
+				F59CEEA101A28CA101A8010B,
+				F59CEEA501A28D4301A8010B,
+				F5CDEBA401FBD4E101A80001,
+				F583B47902083A0A01A80001,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		F57CEE120189C95101A8010B = {
+			buildActionMask = 2147483647;
+			files = (
+				F5502C3301C5586301C57124,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		F57CEE130189C95101A8010B = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		F57CEE180189CE8801A8010B = {
+			isa = PBXFileReference;
+			name = HexWindow.nib;
+			path = "Cocoa/Plug–Ins/Hex Editor/HexWindow.nib";
+			refType = 2;
+		};
+		F57CEE190189CE8901A8010B = {
+			fileRef = F57CEE180189CE8801A8010B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F583B47802083A0A01A80001 = {
+			fileRef = F5CDEB9D01FB7C8601A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F583B47902083A0A01A80001 = {
+			fileRef = F5CDEB9E01FB7C8601A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F59CEE9E01A28CA001A8010B = {
+			isa = PBXFileReference;
+			name = HexWindow.h;
+			path = "Plug–Ins/Hex Editor/HexWindow.h";
+			refType = 4;
+		};
+		F59CEE9F01A28CA001A8010B = {
+			isa = PBXFileReference;
+			name = HexWindow.m;
+			path = "Plug–Ins/Hex Editor/HexWindow.m";
+			refType = 4;
+		};
+		F59CEEA001A28CA101A8010B = {
+			fileRef = F59CEE9E01A28CA001A8010B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F59CEEA101A28CA101A8010B = {
+			fileRef = F59CEE9F01A28CA001A8010B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F59CEEA201A28D4201A8010B = {
+			isa = PBXFileReference;
+			name = HexWindowController.h;
+			path = "Plug–Ins/Hex Editor/HexWindowController.h";
+			refType = 4;
+		};
+		F59CEEA301A28D4201A8010B = {
+			isa = PBXFileReference;
+			name = HexWindowController.m;
+			path = "Plug–Ins/Hex Editor/HexWindowController.m";
+			refType = 4;
+		};
+		F59CEEA401A28D4301A8010B = {
+			fileRef = F59CEEA201A28D4201A8010B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F59CEEA501A28D4301A8010B = {
+			fileRef = F59CEEA301A28D4201A8010B;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -29,6 +281,7 @@
 				F5B588130156D30301000001,
 				F5B588750156D5CB01000001,
 				F5B588D20156D78201000001,
+				F57CEE0E0189C95101A8010B,
 				F5B588EE0156DAF301000001,
 				F5B5890B0156DC2201000001,
 			);
@@ -54,6 +307,7 @@
 				F5B588D10156D78201000001,
 				F5B588ED0156DAF301000001,
 				F5B589030156DC2201000001,
+				F57CEE0D0189C95101A8010B,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -73,7 +327,6 @@
 				F5B588180156D30301000001,
 			);
 			buildSettings = {
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -83,6 +336,7 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
+				F5CDEBAF01FCA71501A80001,
 			);
 			isa = PBXApplicationTarget;
 			name = "ResKnife Cocoa";
@@ -165,9 +419,7 @@
 		F5B588140156D30301000001 = {
 			buildActionMask = 2147483647;
 			files = (
-				F5B5884E0156D40B01000001,
 				F5B5884F0156D40B01000001,
-				F5B588500156D40B01000001,
 				F5B588510156D40B01000001,
 				F5B588520156D40B01000001,
 				F5B588530156D40B01000001,
@@ -177,6 +429,10 @@
 				F5B588570156D40B01000001,
 				F5B588580156D40B01000001,
 				F5B588590156D40B01000001,
+				F5502C4101C579FF01C57124,
+				F53B5F3001C97EFB01A8010C,
+				F53B5F3101C97EFB01A8010C,
+				F5CDEBAC01FC893201A80001,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -196,6 +452,7 @@
 				F5B588630156D40B01000001,
 				F5B588640156D40B01000001,
 				F5730B940159528A01000001,
+				F5502C3401C5588601C57124,
 			);
 			isa = PBXResourcesBuildPhase;
 			name = "Bundle Resources";
@@ -241,6 +498,7 @@
 				F5B5881B0156D40B01000001,
 				F5B5881C0156D40B01000001,
 				F5B588350156D40B01000001,
+				F57CEE0B0189C95101A8010B,
 			);
 			isa = PBXGroup;
 			path = Cocoa;
@@ -591,20 +849,8 @@
 			path = /System/Library/Frameworks/Foundation.framework;
 			refType = 0;
 		};
-		F5B5884E0156D40B01000001 = {
-			fileRef = F5B5881D0156D40B01000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		F5B5884F0156D40B01000001 = {
 			fileRef = F5B5881F0156D40B01000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F5B588500156D40B01000001 = {
-			fileRef = F5B588210156D40B01000001;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -833,8 +1079,7 @@
 				F5B5887A0156D5CB01000001,
 			);
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = "";
-				OPTIMIZATION_CFLAGS = "";
+				LIBRARY_SEARCH_PATHS = /Volumes/DeskStar/nicholas/Projects/ResKnife/Carbon;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -938,7 +1183,6 @@
 				F5B588B70156D6D901000001,
 				F5B588B80156D6D901000001,
 				F5B588B90156D6D901000001,
-				F5B588BA0156D6D901000001,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -976,7 +1220,8 @@
 		F5B588790156D5CB01000001 = {
 			buildActionMask = 2147483647;
 			files = (
-				F5B588CC0156D6D901000001,
+				F53B5F3201C984F301A8010C,
+				F5D0BAFC0202558901A80001,
 			);
 			isa = PBXFrameworksBuildPhase;
 			name = "Frameworks & Libraries";
@@ -984,7 +1229,6 @@
 		F5B5887A0156D5CB01000001 = {
 			buildActionMask = 2147483647;
 			files = (
-				F5B588CE0156D6D901000001,
 				F5B588CF0156D6D901000001,
 				F5B588D00156D6D901000001,
 			);
@@ -1370,12 +1614,6 @@
 			settings = {
 			};
 		};
-		F5B588BA0156D6D901000001 = {
-			fileRef = F5B5887D0156D6D901000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		F5B588BC0156D6D901000001 = {
 			fileRef = F5B588A60156D6D901000001;
 			isa = PBXBuildFile;
@@ -1472,18 +1710,6 @@
 			settings = {
 			};
 		};
-		F5B588CC0156D6D901000001 = {
-			fileRef = F5B588A70156D6D901000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F5B588CE0156D6D901000001 = {
-			fileRef = F5B588A30156D6D901000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		F5B588CF0156D6D901000001 = {
 			fileRef = F5B588A40156D6D901000001;
 			isa = PBXBuildFile;
@@ -1510,9 +1736,7 @@
 				F5B588D70156D78201000001,
 			);
 			buildSettings = {
-				OPTIMIZATION_CFLAGS = "";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "-bundle -undefined suppress";
+				OTHER_LDFLAGS = "-bundle -bundle_loader \"$HOME/Projects/ResKnife/build/ResKnife Cocoa.app/Contents/MacOS/ResKnife Cocoa\" -undefined error";
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Hex Editor";
 				SECTORDER_FLAGS = "";
@@ -1523,7 +1747,6 @@
 			);
 			isa = PBXBundleTarget;
 			name = "Hex Editor";
-			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
 			productName = "Hex Editor";
 			productReference = F5B588D10156D78201000001;
 			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -1745,7 +1968,6 @@
 				F5B588F30156DAF301000001,
 			);
 			buildSettings = {
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-bundle -undefined suppress";
 				OTHER_REZFLAGS = "";
@@ -1837,8 +2059,8 @@
 		F5B588F40156DC2201000001 = {
 			children = (
 				F5B588F50156DC2201000001,
-				F5B588F60156DC2201000001,
 				F5B588FB0156DC2201000001,
+				F5B588F60156DC2201000001,
 			);
 			isa = PBXGroup;
 			path = "Template Editor";
@@ -1986,7 +2208,6 @@
 				F5B589160156DC2201000001,
 			);
 			buildSettings = {
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-bundle -undefined suppress";
 				OTHER_REZFLAGS = "";
@@ -2110,11 +2331,94 @@
 			isa = PBXRezBuildPhase;
 			name = "ResourceManager Resources";
 		};
+		F5CDEB9D01FB7C8601A80001 = {
+			isa = PBXFileReference;
+			name = HexTextView.h;
+			path = "Plug–Ins/Hex Editor/HexTextView.h";
+			refType = 4;
+		};
+		F5CDEB9E01FB7C8601A80001 = {
+			isa = PBXFileReference;
+			name = HexTextView.m;
+			path = "Plug–Ins/Hex Editor/HexTextView.m";
+			refType = 4;
+		};
+		F5CDEBA101FBD4E001A80001 = {
+			isa = PBXFileReference;
+			name = HexEditorDelegate.h;
+			path = "Plug–Ins/Hex Editor/HexEditorDelegate.h";
+			refType = 4;
+		};
+		F5CDEBA201FBD4E001A80001 = {
+			isa = PBXFileReference;
+			name = HexEditorDelegate.m;
+			path = "Plug–Ins/Hex Editor/HexEditorDelegate.m";
+			refType = 4;
+		};
+		F5CDEBA301FBD4E101A80001 = {
+			fileRef = F5CDEBA101FBD4E001A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5CDEBA401FBD4E101A80001 = {
+			fileRef = F5CDEBA201FBD4E001A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5CDEBA901FC86CA01A80001 = {
+			isa = PBXFileReference;
+			name = SupportedTypes.plist;
+			path = "Cocoa/Plug–Ins/Hex Editor/SupportedTypes.plist";
+			refType = 2;
+		};
+		F5CDEBAA01FC86CB01A80001 = {
+			fileRef = F5CDEBA901FC86CA01A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5CDEBAB01FC893201A80001 = {
+			isa = PBXFileReference;
+			name = ResKnifeResourceProtocol.h;
+			path = "Plug–Ins/ResKnifeResourceProtocol.h";
+			refType = 4;
+		};
+		F5CDEBAC01FC893201A80001 = {
+			fileRef = F5CDEBAB01FC893201A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5CDEBAD01FC893301A80001 = {
+			fileRef = F5CDEBAB01FC893201A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5CDEBAE01FC90AD01A80001 = {
+			fileRef = F5502C4001C579FF01C57124;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5CDEBAF01FCA71501A80001 = {
+			isa = PBXTargetDependency;
+			target = F57CEE0E0189C95101A8010B;
+		};
+		F5D0BAFC0202558901A80001 = {
+			fileRef = F5B588A70156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F5EBF6B801573EC201000001 = {
 			buildRules = (
 			);
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				OPTIMIZATION_CFLAGS = "-O0";
 			};
 			isa = PBXBuildStyle;
 			name = Development;

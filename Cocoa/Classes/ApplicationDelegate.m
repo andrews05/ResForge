@@ -1,8 +1,11 @@
 #import "ApplicationDelegate.h"
 #import "InfoWindowController.h"
 #import "PrefsWindowController.h"
-#import "ResourceDataSource.h"
 #import "CreateResourceSheetController.h"
+#import "ResourceDocument.h"
+#import "ResourceDataSource.h"
+
+#import "ResknifePluginProtocol.h"
 
 @implementation ApplicationDelegate
 
@@ -22,6 +25,12 @@
     [self initUserDefaults];
 }    
 
+- (IBAction)showAbout:(id)sender
+{
+	[NSApp orderFrontStandardAboutPanel:sender];
+	// get about box code from http://cocoadevcentral.com/tutorials/showpage.php?show=00000041.php
+}
+
 - (IBAction)showInfo:(id)sender
 {
 	[[InfoWindowController sharedInfoWindowController] showWindow:sender];
@@ -34,17 +43,24 @@
 
 - (IBAction)showCreateResourceSheet:(id)sender
 {
-	// bug: requires ALL main window's delegates to have 'dataSource' declared,
-	//	would be better to use a resourceDocument variable which could point to self for document windows.
-	return [[[[[NSApp mainWindow] delegate] dataSource] createResourceSheetController] showCreateResourceSheet:sender];
+	// requires ALL main windows' controllers (even plugs) to have their document set correctly
+	NSDocument *document = [[[NSApp mainWindow] windowController] document];
+	return [[[(ResourceDocument *)document dataSource] createResourceSheetController] showCreateResourceSheet:document];
 }
 
 - (IBAction)openResource:(id)sender
 {
-//	[NSBundle loadNibNamed:@"HexWindow" owner:self]; 
-//- (NSString *)pathForAuxiliaryExecutable:(NSString *)executableName;
-//	[[NSBundle bundleWithIdentifier:@"com.nickshanks.resknife.hexadecimal"] load];
-	[[NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"HexEditor.plugin"]] load];
+	// bug: only opens the hex editor!
+//	NSBundle *hexEditor = [NSBundle bundleWithIdentifier:@"com.nickshanks.resknife.hexadecimal"];
+//	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
+	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Hexadecimal Editor.bundle"]];
+//	[hexEditor load];
+	
+	// bug: possible lack of necessary retains here, esp. resource - should the plug retain it?
+	ResourceDocument *resDocument = (ResourceDocument *) [[[NSApp mainWindow] windowController] document];
+	Resource *resource = [[resDocument outlineView] itemAtRow:[[resDocument outlineView] selectedRow]];
+	// bug: I alloc a plug instance here, but have no idea where it gets dealloc'd
+	id hexWindow = [[[hexEditor principalClass] alloc] initWithResource:resource];
 }
 
 - (IBAction)playSound:(id)sender

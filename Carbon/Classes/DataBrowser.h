@@ -52,7 +52,7 @@ pascal Boolean SortDataBrowser( ControlRef browser, DataBrowserItemID itemOne, D
  *	@function		DataBrowserMessage
  *	@discussion		DataBrowser callback.
  */
-pascal void DataBrowserMessage( ControlRef browser, DataBrowserItemID itemID, DataBrowserItemNotification message, DataBrowserItemDataRef itemData );
+pascal void DataBrowserMessage( ControlRef browser, DataBrowserItemID itemID, DataBrowserItemNotification message/*, DataBrowserItemDataRef itemData*/ );
 /*!
  *	@function		DataBrowserAddDragItem
  *	@discussion		DataBrowser callback.

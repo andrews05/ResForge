@@ -6,7 +6,7 @@
 - (id)init
 {
 	self = [super init];
-	resources = [NSMutableArray array];
+	resources = [[NSMutableArray alloc] init];
 	otherFork = nil;
 	return self;
 }
@@ -26,10 +26,11 @@
     return @"ResourceDocument";
 }
 
-- (void)windowControllerDidLoadNib:(NSWindowController *) aController
+- (void)windowControllerDidLoadNib:(NSWindowController *)controller
 {
-    [super windowControllerDidLoadNib:aController];
+    [super windowControllerDidLoadNib:controller];
     // Add any code here that need to be executed once the windowController has loaded the document's window.
+//	[controller setDocumet:self];
 	[dataSource setResources:resources];
 }
 
@@ -93,11 +94,6 @@
 	return succeeded;
 }
 
-- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)type
-{
-	return NO;
-}
-
 - (BOOL)readResourceMap:(SInt16)fileRefNum
 {
 	OSStatus error = noErr;
@@ -131,7 +127,7 @@
 			attrsShort = GetResAttrs( resourceHandle );
 			HLockHi( resourceHandle );
 			
-			// create the resource & add it to the array (am I leaking huge amounts of memory here, or are they dealloced automatically?)
+			// create the resource & add it to the array
 			{
 				NSString	*name		= [NSString stringWithCString:&nameStr[1] length:nameStr[0]];
 				NSString	*type		= [NSString stringWithCString:(char *) &resType length:4];
@@ -140,8 +136,7 @@
 				NSNumber	*attributes	= [NSNumber numberWithShort:attrsShort];
 				NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
 				Resource	*resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data ofLength:size];
-				[resources addObject:resource];
-				[resource autorelease];				
+				[resources addObject:resource];		// array retains resource
 			}
 			
 			HUnlock( resourceHandle );
@@ -192,11 +187,6 @@
 	return succeeded;
 }
 
-- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)type
-{
-	return NO;
-}
-
 - (BOOL)writeResourceMap:(SInt16)fileRefNum
 {
 	OSStatus error = noErr;
@@ -227,11 +217,12 @@
 		AddResource( resourceHandle, resType, resIDShort, nameStr );
 		if( ResError() == addResFailed )
 		{
-			NSLog( @"Saving failed; could not add resource \"%@\" of type %@ to file.", [resource name], [resource type] );
+			NSLog( @"*Saving failed*; could not add resource \"%@\" of type %@ to file.", [resource name], [resource type] );
 			error = addResFailed;
 		}
 		else
 		{
+			NSLog( @"Added resource %@, \"%@\", of type %@ to file.", [resource resID], [resource name], [resource type] );
 			SetResAttrs( resourceHandle, attrsShort );
 			ChangedResource( resourceHandle );
 			UpdateResFile( fileRefNum );

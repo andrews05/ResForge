@@ -105,7 +105,7 @@ InspectorWindow::InspectorWindow( void )
 	EmbedControl( purgeableBox, group );
 	EmbedControl( sysHeapBox, group );
 #else
-	if( g.useAppearance && g.systemVersion >= kMacOSEight )
+	if( g.useAppearance && g.systemVersion >= kMacOS8 )
 		window = GetNewCWindow( kFileWindow8, null, kFirstWindowOfClass );
 	else
 		window = GetNewCWindow( kFileWindow7, null, kFirstWindowOfClass );
