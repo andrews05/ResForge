@@ -70,12 +70,15 @@ int main( int argc, char* argv[] )
 			ParseDialogEvents( null, &theEvent, null );
 		else ParseEvents( &theEvent );
 	}
-	QuitResKnife();
 #endif
 	
 #if __profile__
 	ProfilerDump( "\pResKnife profile" );
 	ProfilerTerm();
+#endif
+
+#if !TARGET_API_MAC_CARBON
+	QuitResKnife();
 #endif
 
 	return error;

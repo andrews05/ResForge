@@ -30,6 +30,7 @@ FileWindow::FileWindow( FSSpecPtr spec )
 	error = CreateWindowFromNib( nibRef, CFSTR("File Window"), &window );
 	if( error != noErr || window == null )
 	{
+		DisposeNibReference( nibRef );
 		DisplayError( "\pA file window could not be obtained from the nib file." );
 		return;
 	}

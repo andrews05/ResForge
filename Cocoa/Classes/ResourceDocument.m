@@ -288,9 +288,10 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 
 - (void)openResourceUsingEditor:(Resource *)resource
 {
-#warning openResourceUsingEditor: shortcuts to NovaTools !!
+// #warning openResourceUsingEditor: shortcuts to NovaTools !!
 	// opens resource in template using TMPL resource with name templateName
-	NSBundle *editor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"NovaTools.plugin"]];
+//	NSBundle *editor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"NovaTools.plugin"]];
+	NSBundle *editor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@ Editor.plugin", [resource type]]]];
 	
 	// open the resources, passing in the template to use
 	if( editor /*&& [[editor principalClass] respondsToSelector:@selector(initWithResource:)]*/ )
@@ -339,6 +340,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	NSData *data = [(Resource *)[outlineView itemAtRow:[outlineView selectedRow]] data];
 	if( data && [data length] != 0 )
 	{
+		// bug: plays sound synchronously in main thread!
 		SndListPtr sndPtr = (SndListPtr) [data bytes];
 		SndPlay( nil, &sndPtr, false );
 	}
@@ -529,7 +531,11 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		NSLog( @"Opening Resource fork failed, trying data fork..." );
 		error = FSOpenResourceFile( fileRef, 0, nil, fsRdPerm, &fileRefNum);
 	}
-	else fork = resourceForkName;
+	else
+	{
+		fork = resourceForkName;
+		[self readFork:@"" asStreamFromFile:fileName];		// bug: only reads data fork for now, need to scan file for other forks too
+	}
 	SetResLoad( true );		// restore resource loading as soon as is possible
 	
 	// read the resources (without spawning thousands of undos for resource creation)
@@ -551,19 +557,38 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	return succeeded;
 }
 
+- (BOOL)readFork:(NSString *)forkName asStreamFromFile:(NSString *)fileName
+{
+	NSData		*data		= [NSData dataWithContentsOfFile:fileName];
+	Resource	*resource	= [Resource resourceOfType:@"" andID:0 withName:NSLocalizedString(@"Data Fork", nil) andAttributes:0 data:data];
+	if( data && resource )
+	{
+		/* NTFS Note: When running SFM (Services for Macintosh) a Windows NT-based system (including 2000 & XP) serving NTFS-formatted drives stores Mac resource forks in a stream named "AFP_Resource". The finder info/attributes are stored in a stream called "Afp_AfpInfo". The default data fork stream is called "$DATA" and any of these can be accessed thus: "c:\filename.txt:forkname". 
+		As a result, ResKnife prohibits creation of forks with the following names:	"" (empty string, Mac data fork name),
+																					"$DATA" (NTFS data fork name),
+																					"AFP_Resource" and "Afp_AfpInfo".
+		It is perfectly legal in ResKnife to read in forks of these names when accessing a shared NTFS drive from a server running SFM. */
+		
+		[resource setRepresentedFork:forkName];
+		[resources insertObject:resource atIndex:0];
+		return YES;
+	}
+	else return NO;
+}
+
 - (BOOL)readResourceMap:(SInt16)fileRefNum
 {
 	OSStatus error = noErr;
-	unsigned short i, j, n;
+	unsigned short n;
 	SInt16 oldResFile = CurResFile();
 	UseResFile( fileRefNum );
 	
-	for( i = 1; i <= Count1Types(); i++ )
+	for( unsigned short i = 1; i <= Count1Types(); i++ )
 	{
 		ResType resType;
 		Get1IndType( &resType, i );
 		n = Count1Resources( resType );
-		for( j = 1; j <= n; j++ )
+		for( unsigned short j = 1; j <= n; j++ )
 		{
 			Str255	nameStr;
 			long	sizeLong;
@@ -586,15 +611,13 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 			HLockHi( resourceHandle );
 			
 			// create the resource & add it to the array
-			{
-				NSString	*name		= [NSString stringWithCString:&nameStr[1] length:nameStr[0]];
-				NSString	*type		= [NSString stringWithCString:(char *) &resType length:4];
-				NSNumber	*resID		= [NSNumber numberWithShort:resIDShort];
-				NSNumber	*attributes	= [NSNumber numberWithShort:attrsShort];
-				NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
-				Resource	*resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data];
-				[resources addObject:resource];		// array retains resource
-			}
+			NSString	*name		= [NSString stringWithCString:&nameStr[1] length:nameStr[0]];
+			NSString	*type		= [NSString stringWithCString:(char *) &resType length:4];
+			NSNumber	*resID		= [NSNumber numberWithShort:resIDShort];
+			NSNumber	*attributes	= [NSNumber numberWithShort:attrsShort];
+			NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
+			Resource	*resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data];
+			[resources addObject:resource];		// array retains resource
 			
 			HUnlock( resourceHandle );
 			ReleaseResource( resourceHandle );
@@ -624,6 +647,17 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		error = FSCreateResourceFile( parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, nil, fork->length, (UniChar *) &fork->unicode, fileRef, fileSpec );
 		if( !error )
 			error = FSOpenResourceFile( fileRef, fork->length, (UniChar *) &fork->unicode, fsWrPerm, &fileRefNum);
+			
+			/* at some point make use of:
+			
+			FSCreateResourceFork(	const FSRef *    ref,
+									UniCharCount     forkNameLength,
+									const UniChar *  forkName,             // can be NULL
+									UInt32           flags);
+			
+			Creates the named fork and initalises as a resource fork
+			
+			Mac OS 10.2 or later */
 	}
 	else
 	{
@@ -654,12 +688,13 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	for( i = 0; i < [resources count]; i++ )
 	{
 		Resource *resource	= [resources objectAtIndex:i];
+		if( [resource representedFork] != nil ) continue;
 		
 		Str255	nameStr;
 		ResType	resType;
 		short	resIDShort	= [[resource resID] shortValue];
 		short	attrsShort	= [[resource attributes] shortValue];
-		Handle resourceHandle = NewHandleClear( [[resource data] length] );
+		Handle	resourceHandle = NewHandleClear( [[resource data] length] );
 		
 		nameStr[0] = [[resource name] cStringLength];
 		BlockMoveData( [[resource name] cString], &nameStr[1], nameStr[0] );

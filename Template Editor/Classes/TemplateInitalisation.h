@@ -1,0 +1,1 @@
+#include "Template Editor.h"pascal OSStatus CarbonWindowEventHandler( EventHandlerCallRef handler, EventRef event, void *userData );

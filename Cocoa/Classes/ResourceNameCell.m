@@ -42,12 +42,15 @@
 
 - (void)setImage:(NSImage *)newImage
 {
-	// save image and set to 16x16 pixels
-	id old = image;
-	image = [newImage retain];
-	[image setScalesWhenResized:YES];
-	[image setSize:NSMakeSize(16,16)];
-	[old autorelease];
+	if( image != newImage )
+	{
+		// save image and set to 16x16 pixels
+		id old = image;
+		image = [newImage retain];
+		[image setScalesWhenResized:YES];
+		[image setSize:NSMakeSize(16,16)];
+		[old release];
+	}
 }
 
 - (NSRect)imageFrameForCellFrame:(NSRect)cellFrame
@@ -104,7 +107,8 @@
 		
 		// get image frame
 		NSDivideRect( cellFrame, &imageFrame, &cellFrame, 3 + imageSize.width, NSMinXEdge );
-		if( [self drawsBackground] )
+//		NSLog( "drawing name cell with bg: %@ colour: %@", [self drawsBackground]? @"YES":@"NO", [self backgroundColor] );
+		if( [self drawsBackground] && ![self isHighlighted] /* ![self cellAttribute:NSCellHighlighted] */ )
 		{
 			[[self backgroundColor] set];
 			NSRectFill(imageFrame);

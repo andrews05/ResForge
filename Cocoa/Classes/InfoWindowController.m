@@ -28,10 +28,8 @@
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
 	
 	// retain views for swapping in and out
-	[documentView retain];
-	[documentView removeFromSuperview];
-	[resourceView retain];
-	[resourceView removeFromSuperview];
+	[[documentView retain] removeFromSuperview];
+	[[resourceView retain] removeFromSuperview];
 	
 	[self setMainWindow:[NSApp mainWindow]];
 	[self updateInfoWindow];

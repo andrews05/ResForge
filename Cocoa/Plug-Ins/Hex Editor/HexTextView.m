@@ -220,9 +220,11 @@
 	return charIndex;
 }
 
-- (unsigned int)draggingSourceOperationMaskForLocal:(BOOL)isLocal
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
 {
-	return NSDragOperationCopy | NSDragOperationMove | NSDragOperationGeneric;
+/*	if( isLocal ) return NSDragOperationEvery;
+	else return NSDragOperationCopy;
+*/	return NSDragOperationCopy | NSDragOperationMove | NSDragOperationGeneric;
 }
 
 static NSRange draggedRange;
@@ -234,16 +236,18 @@ static NSRange draggedRange;
 
 - (void)draggedImage:(NSImage *)image endedAt:(NSPoint)point operation:(NSDragOperation)operation
 {
-	if( operation == NSDragOperationMove )
+/*	if( operation == NSDragOperationMove )
 	{
 		NSRange selection = [self rangeForUserTextChange];
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:draggedRange withData:[NSData data]];
 		
 		// set the new selection/insertion point
+		selection.location -= draggedRange.length;
+		selection.length = draggedRange.length;
 		if( selection.location > draggedRange.location )
 			selection.location -= draggedRange.length;
 		[self setSelectedRange:selection];
-	}
+	}*/
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
@@ -256,13 +260,44 @@ static NSRange draggedRange;
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
+	// get the insertion point location
 	NSPasteboard *pb = [sender draggingPasteboard];
 	NSData *pastedData = [pb dataForType:NSStringPboardType];
 	int charIndex = [self _insertionGlyphIndexForDrag:sender];
-	if( self == [[self delegate] hex] ) charIndex /= 3;
+	
+	// convert hex string to data
 	if( [sender draggingSource] == [[self delegate] hex] )
 		pastedData = [[[self delegate] hexToAscii:pastedData] dataUsingEncoding:NSASCIIStringEncoding];
+	
+	if( [sender draggingSource] == [[self delegate] hex] || [sender draggingSource] == [[self delegate] ascii] )
+//	if( operation == NSDragOperationMove )
+	{
+		NSRange deleteRange = draggedRange;
+		if( self == [[self delegate] hex] )
+		{
+			deleteRange.location /= 3;
+			deleteRange.length += 1;
+			deleteRange.length /= 3;
+		}
+		
+		// if moving the data, remove the selection from the data
+		[self editData:[[[self window] windowController] data] replaceBytesInRange:deleteRange withData:[NSData data]];
+		
+		// compensate for already removing the dragged data
+		if( charIndex > draggedRange.location )
+			charIndex -= draggedRange.length;
+	}
+	
+	// insert data at insertion point
+	if( self == [[self delegate] hex] ) charIndex /= 3;
 	[self editData:[[[self window] windowController] data] replaceBytesInRange:NSMakeRange(charIndex,0) withData:pastedData];
+	
+	// set the new selection/insertion point
+	NSRange selection = [self rangeForUserTextChange];
+	selection.location -= draggedRange.length;
+	selection.length = draggedRange.length;
+	[self setSelectedRange:selection];
+	
 	return YES;
 }
 

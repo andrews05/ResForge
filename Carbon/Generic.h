@@ -1,6 +1,17 @@
 // abbreviations
-#define null	NULL
-#define	qdb		qd.screenBits.bounds
+#define null		NULL
+
+#if TARGET_API_MAC_CARBON
+	#define qdb		ScreenBounds()
+	inline Rect ScreenBounds()
+	{
+		Rect rect;
+		GetAvailableWindowPositioningBounds( GetMainDevice(), &rect );
+		return rect;
+	}
+#else
+	#define	qdb		qd.screenBits.bounds
+#endif
 
 // Easier API call names
 #define GetWindowRefCon( window )				(long)		GetWRefCon( window )

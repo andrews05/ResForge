@@ -112,12 +112,14 @@ struct prefs
 	Boolean	quitIfNoWindowsAreOpen; // silly name! - perhaps grandmaMode ?
 	Boolean	autoSave;
 	UInt32	autoSaveInterval;		// should be in units of time
-	Boolean	warnOnDelete;			// "Are you sure?" dialog, © Microsoft 1992-2000
+	Boolean	warnOnDelete;			// "Are you sure?" dialog, © Microsoft 1986-2003
 };
 
 /*** CONSTANTS ***/
 
 // Mac OS versions
+const SInt32 kMacOS607				= 0x00000607;
+const SInt32 kMacOS7				= 0x00000710;
 const SInt32 kMacOS71				= 0x00000710;
 const SInt32 kMacOS755				= 0x00000755;
 const SInt32 kMacOS8				= 0x00000800;
@@ -129,6 +131,7 @@ const SInt32 kMacOS91				= 0x00000910;
 const SInt32 kMacOS921				= 0x00000921;
 const SInt32 kMacOS10				= 0x00001000;
 const SInt32 kMacOS101				= 0x00001010;
+const SInt32 kMacOS102				= 0x00001020;
 const SInt32 kMacOSX				= kMacOS10;
 
 // CarbonLib versions
@@ -139,6 +142,8 @@ const SInt32 kCarbonLib125			= 0x00000125;
 const SInt32 kCarbonLib131			= 0x00000131;
 const SInt32 kCarbonLib14			= 0x00000140;
 const SInt32 kCarbonLib145			= 0x00000145;
+const SInt32 kCarbonLib15			= 0x00000150;
+const SInt32 kCarbonLib16			= 0x00000160;
 
 // ResKnife version & file types
 const UInt32 kCurrentVersion	= 0x00040001;

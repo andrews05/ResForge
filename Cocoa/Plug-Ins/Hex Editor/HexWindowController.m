@@ -2,6 +2,22 @@
 #import "HexTextView.h"
 #import "FindSheetController.h"
 
+/*
+OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
+{
+	// init function called by carbon apps
+	if( NSApplicationLoad() )
+	{
+		id newResource = [NSClassFromString(@"Resource") resourceOfType:[NSString stringWithCString:length:4] andID:[NSNumber numberWithInt:] withName:[NSString stringWithCString:length:] andAttributes:[NSNumber numberWithUnsignedShort:] data:[NSData dataWithBytes:length:]];
+		if( !newResource ) return paramErr;
+		id windowController = [[HexWindowController alloc] initWithResource:newResource];
+		if( !windowController ) return paramErr;
+		else return noErr;
+	}
+	else return paramErr;
+}
+*/
+
 @implementation HexWindowController
 
 - (id)initWithResource:(id)newResource
@@ -33,14 +49,14 @@
 
 - (id)initWithResources:(id)newResource, ...
 {
-	[undoManager release];
 	return nil;
 }
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[(id)resource release];
+	[(id)resource autorelease];
+	[undoManager release];
 	[super dealloc];
 }
 

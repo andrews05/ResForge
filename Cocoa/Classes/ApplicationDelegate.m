@@ -1,5 +1,7 @@
 #import "ApplicationDelegate.h"
+#import "RKDocumentController.h"
 #import "InfoWindowController.h"
+#import "PasteboardWindowController.h"
 #import "PrefsWindowController.h"
 #import "CreateResourceSheetController.h"
 #import "ResourceDocument.h"
@@ -16,6 +18,13 @@
 	return self;
 }
 
+- (void)applicationWillFinishLaunching:(NSNotification *)notification
+{
+	// instanciate my own subclass of NSDocumentController so I can override the open dialog
+	RKDocumentController *docController = [[RKDocumentController alloc] init];
+	#pragma unused( docController )
+}
+
 - (void)awakeFromNib
 {
 	// Part of my EvilPlanª to find out how many people use ResKnife and how often!
@@ -27,6 +36,13 @@
 	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"TEXT"] forKey:@"TEXT"];
 	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"PICT"] forKey:@"PICT"];
 	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"icns"] forKey:@"icns"];
+	
+	// set up open dialog's aux table view
+	NSTableColumn *tableColumn = [forkTableView tableColumnWithIdentifier:@"parse"];
+	NSButtonCell *buttonCell = [[[NSButtonCell alloc] initTextCell:@""] autorelease];
+	[buttonCell setEditable:YES];
+	[buttonCell setButtonType:NSSwitchButton];
+	[tableColumn setDataCell:buttonCell];
 	
     [self initUserDefaults];
 }
@@ -41,7 +57,7 @@
 {
 #pragma unused( sender )
 	NSString *launchAction = [[NSUserDefaults standardUserDefaults] stringForKey:@"LaunchAction"];
-    if( [launchAction isEqualToString:@"OpenUntitledFile"] )
+	if( [launchAction isEqualToString:@"OpenUntitledFile"] )
 		return YES;
 	else if( [launchAction isEqualToString:@"DisplayOpenPanel"] )
 	{
@@ -91,6 +107,11 @@
 	[[InfoWindowController sharedInfoWindowController] showWindow:sender];
 }
 
+- (IBAction)showPasteboard:(id)sender
+{
+	[[PasteboardWindowController sharedPasteboardWindowController] showWindow:sender];
+}
+
 - (IBAction)showPrefs:(id)sender
 {
 	[[PrefsWindowController sharedPrefsWindowController] showWindow:sender];
@@ -131,6 +152,11 @@
 	
 	// force the defaults to save to the disk
 	[defaults synchronize];
+}
+
+- (NSView *)openAuxView
+{
+	return openAuxView;
 }
 
 - (NSDictionary *)icons

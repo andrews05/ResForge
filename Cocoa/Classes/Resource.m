@@ -30,6 +30,7 @@ NSString *RKResourcePboardType		= @"RKResourcePboardType";
 	// sets values directly for speed reasons (less messaging overhead)
 	self = [super init];
 	dirty = NO;
+	representedFork = nil;
 	name = [nameValue copy];
 	type = [typeValue copy];
 	resID = [resIDValue copy];
@@ -122,6 +123,7 @@ NSString *RKResourcePboardType		= @"RKResourcePboardType";
 
 - (void)dealloc
 {
+	[representedFork release];
 	[name release];
 	[type release];
 	[resID release];
@@ -152,6 +154,16 @@ NSString *RKResourcePboardType		= @"RKResourcePboardType";
 {
 	dirty = newValue;
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDidChangeNotification object:self];
+}
+
+- (NSString *)representedFork
+{
+	return representedFork;
+}
+
+- (void)setRepresentedFork:(NSString *)forkName
+{
+	representedFork = [forkName copy];
 }
 
 - (NSString *)name

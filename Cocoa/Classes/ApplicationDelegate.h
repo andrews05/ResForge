@@ -10,7 +10,11 @@
 
 @interface ApplicationDelegate : NSObject
 {
-/*!	@var icons		A dictionary within which to cache icons. Keys are four-character <tt>NSStrings</tt> representing <tt>ResTypes</tt>. */
+/*!	@var openAuxView	Accessory view for <tt>NSOpenPanels</tt>. */
+	IBOutlet NSView		*openAuxView;
+/*!	@var forkTableView	Table view inside <tt>openAuxView</tt>. */
+	IBOutlet NSTableView *forkTableView;
+/*!	@var icons			A dictionary within which to cache icons. Keys are four-character <tt>NSStrings</tt> representing <tt>ResTypes</tt>. */
 	NSMutableDictionary *icons;
 }
 
@@ -39,6 +43,11 @@
  */
 - (IBAction)showInfo:(id)sender;
 
+/*! @function		showPasteboard:
+ *	@discussion		Displays the pasteboard document, a singleton instance of class <tt>PasteboardDocument</tt>
+ */
+- (IBAction)showPasteboard:(id)sender;
+
 /*! @function		showPrefs:
  *	@discussion		Displays the preferences panel stored in <b>PrefsWindow.nib</b>
  */
@@ -48,6 +57,11 @@
  *	@discussion		Initalises any unset user preferences to default values as read in from <b>defaults.plist</b>.
  */
 - (void)initUserDefaults;
+
+/*! @function		openAuxView
+ *	@discussion		Accessor method for the <tt>openAuxView</tt> instance variable.
+ */
+- (NSView *)openAuxView;
 
 /*! @function		icons
  *	@discussion		Accessor method for the <tt>icons</tt> instance variable.

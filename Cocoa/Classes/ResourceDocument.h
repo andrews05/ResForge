@@ -42,6 +42,7 @@
 - (void)resourceTypeWillChange:(NSNotification *)notification;
 - (void)resourceAttributesWillChange:(NSNotification *)notification;
 
+- (BOOL)readFork:(NSString *)forkName asStreamFromFile:(NSString *)fileName;
 - (BOOL)readResourceMap:(SInt16)fileRefNum;
 - (BOOL)writeResourceMap:(SInt16)fileRefNum;
 

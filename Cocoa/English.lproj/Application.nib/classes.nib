@@ -1,9 +1,10 @@
 {
     IBClasses = (
         {
-            ACTIONS = {showInfo = id; showPrefs = id; }; 
+            ACTIONS = {showInfo = id; showPasteboard = id; showPrefs = id; }; 
             CLASS = ApplicationDelegate; 
             LANGUAGE = ObjC; 
+            OUTLETS = {forkTableView = NSTableView; openAuxView = NSView; }; 
             SUPERCLASS = NSObject; 
         }, 
         {
@@ -28,6 +29,12 @@
             }; 
             CLASS = FirstResponder; 
             LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = OpenFileDataSource; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {forkTableView = NSTableView; }; 
             SUPERCLASS = NSObject; 
         }
     ); 

@@ -23,6 +23,10 @@
 		<integer>5</integer>
 	</array>
 	<key>IBSystem Version</key>
+<<<<<<< info.nib
+	<string>6F21</string>
+=======
 	<string>6G30</string>
+>>>>>>> 1.2
 </dict>
 </plist>
