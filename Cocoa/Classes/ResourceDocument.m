@@ -776,6 +776,16 @@ static NSString *RKExportItemIdentifier		= @"com.ulikusterer.resknife.toolbar.ex
 		[[fileName lastPathComponent] getCharacters:uniname];
 		error = FSCreateResourceFile( parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, nil, fork->length, (UniChar *) &fork->unicode, fileRef, fileSpec );
 		if( !error )
+		{
+			// Set type & creator code:
+			FInfo		macMetadata;
+			error = FSpGetFInfo( fileSpec, &macMetadata );
+			macMetadata.fdType = 'rsrc';
+			macMetadata.fdCreator = 'ResK';
+			if( !error )
+				FSpSetFInfo( fileSpec, &macMetadata );
+			
+			// Open fork for fetching resources:
 			error = FSOpenResourceFile( fileRef, fork->length, (UniChar *) &fork->unicode, fsWrPerm, &fileRefNum);
 			
 			/* at some point make use of:
@@ -788,6 +798,7 @@ static NSString *RKExportItemIdentifier		= @"com.ulikusterer.resknife.toolbar.ex
 			Creates the named fork and initalises as a resource fork
 			
 			Mac OS 10.2 or later */
+		}
 	}
 	else
 	{
@@ -795,7 +806,18 @@ static NSString *RKExportItemIdentifier		= @"com.ulikusterer.resknife.toolbar.ex
 		[[fileName lastPathComponent] getCharacters:uniname];
 		error = FSCreateResourceFile( parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, nil, 0, nil, fileRef, fileSpec );
 		if( !error )
+		{
+			// Set type & creator:
+			FInfo		macMetadata;
+			error = FSpGetFInfo( fileSpec, &macMetadata );
+			macMetadata.fdType = 'rsrc';
+			macMetadata.fdCreator = 'ResK';
+			if( !error )
+				error = FSpSetFInfo( fileSpec, &macMetadata );
+
+			// Open resource map for fetching resources:
 			error = FSOpenResourceFile( fileRef, 0, nil, fsWrPerm, &fileRefNum);
+		}
 	}
 	
 	// write resource array to file
