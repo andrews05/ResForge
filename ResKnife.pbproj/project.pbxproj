@@ -167,6 +167,10 @@
 				3D0933E804DF317D00DD74B1,
 				3D0933EF04DF381900DD74B1,
 				3D0933EE04DF381900DD74B1,
+				3D4737B404E872DB00AF65FE,
+				3D4737B304E872DB00AF65FE,
+				3D4737B804E873F300AF65FE,
+				3D4737B704E873F300AF65FE,
 			);
 			isa = PBXGroup;
 			name = "Field Types";
@@ -305,6 +309,8 @@
 				3D0933E904DF317D00DD74B1,
 				3D0933F104DF381900DD74B1,
 				3D0933F804DFE80500DD74B1,
+				3D4737B604E872DB00AF65FE,
+				3D4737BA04E873F300AF65FE,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,6 +338,8 @@
 				3D0933EA04DF317D00DD74B1,
 				3D0933F004DF381900DD74B1,
 				3D0933F904DFE80500DD74B1,
+				3D4737B504E872DB00AF65FE,
+				3D4737B904E873F300AF65FE,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -723,6 +731,54 @@
 		};
 		3D3B99CD04DC18580056861E = {
 			fileRef = F5B5884B0156D40B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D4737B304E872DB00AF65FE = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateDLNGElement.m;
+			refType = 4;
+		};
+		3D4737B404E872DB00AF65FE = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateDLNGElement.h;
+			refType = 4;
+		};
+		3D4737B504E872DB00AF65FE = {
+			fileRef = 3D4737B304E872DB00AF65FE;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D4737B604E872DB00AF65FE = {
+			fileRef = 3D4737B404E872DB00AF65FE;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D4737B704E873F300AF65FE = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateDBYTElement.m;
+			refType = 4;
+		};
+		3D4737B804E873F300AF65FE = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = NuTemplateDBYTElement.h;
+			refType = 4;
+		};
+		3D4737B904E873F300AF65FE = {
+			fileRef = 3D4737B704E873F300AF65FE;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D4737BA04E873F300AF65FE = {
+			fileRef = 3D4737B804E873F300AF65FE;
 			isa = PBXBuildFile;
 			settings = {
 			};
