@@ -2721,7 +2721,26 @@
 			<key>CFBundleTypeIconFile</key>
 			<string>Resource file.icns</string>
 			<key>CFBundleTypeName</key>
-			<string>Resource file</string>
+			<string>Resource File (Data Fork)</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>rsrc</string>
+				<string>RSRC</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>ResourceDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>rsrc</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Resource file.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Resource File (Res Fork)</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>rsrc</string>

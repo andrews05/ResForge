@@ -770,7 +770,7 @@ static NSString *RKExportItemIdentifier		= @"com.ulikusterer.resknife.toolbar.ex
 	
 	// create and open file for writing
 	error = FSPathMakeRef( [[fileName stringByDeletingLastPathComponent] cString], parentRef, nil );
- 	if( fork )
+ 	if( fork && ![type isEqualToString: @"Resource File (Data Fork)"] )
 	{
 		unichar *uniname = (unichar *) NewPtrClear( sizeof(unichar) *256 );
 		[[fileName lastPathComponent] getCharacters:uniname];

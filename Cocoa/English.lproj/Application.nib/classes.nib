@@ -24,6 +24,7 @@
                 scrollToSelection = id; 
                 showAbout = id; 
                 showCreateResourceSheet = id; 
+                showExportToDFSheet = id; 
                 showFind = id; 
                 showInfo = id; 
                 showPrefs = id; 
