@@ -125,7 +125,7 @@ static NSString *RKShowInfoItemIdentifier = @"com.nickshanks.resknife.toolbar.sh
 		[item setPaletteLabel:@"Delete"];
 		[item setToolTip:@"Delete Selected Resource"];
 		[item setImage:[NSImage imageNamed:@"Delete"]];
-		[item setTarget:self];
+		[item setTarget:outlineView];
 		[item setAction:@selector(clear:)];
 		return item;
 	}
@@ -220,7 +220,7 @@ static NSString *RKShowInfoItemIdentifier = @"com.nickshanks.resknife.toolbar.sh
 	NSString *identifier = [item itemIdentifier];
 	
 	if( [identifier isEqual:RKCreateItemIdentifier] )				valid = YES;
-	else if( [identifier isEqual:RKDeleteItemIdentifier] )			valid = [outlineView numberOfSelectedRows]? YES:NO;
+//	else if( [identifier isEqual:RKDeleteItemIdentifier] )			valid = [outlineView numberOfSelectedRows]? YES:NO;
 	else if( [identifier isEqual:RKEditItemIdentifier] )			valid = NO;
 	else if( [identifier isEqual:RKEditHexItemIdentifier] )			valid = [outlineView numberOfSelectedRows]? YES:NO;
 	else if( [identifier isEqual:RKSaveItemIdentifier] )			valid = [self isDocumentEdited];

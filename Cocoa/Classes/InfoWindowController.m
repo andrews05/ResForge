@@ -8,13 +8,19 @@
 - (id)init
 {
 	self = [self initWithWindowNibName:@"InfoWindow"];
-	if( self ) [self setWindowFrameAutosaveName:@"Resource Info"];
+	if( self ) [self setWindowFrameAutosaveName:@"InfoWindow"];
 	return self;
 }
 
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
+	
+	// retain views for swapping in and out
+	[documentView retain];
+	[documentView removeFromSuperview];
+	[resourceView retain];
+	[resourceView removeFromSuperview];
 	
 	[self setMainWindow:[NSApp mainWindow]];
 	[self updateInfoWindow];
@@ -33,9 +39,9 @@
 {
 	if( selectedResource )
 	{
+		[[self window] setTitle:@"Resource Info"];
+		[placeholderView setContentView:resourceView];
 		[nameView setStringValue:[selectedResource name]];
-		[typeView setStringValue:[selectedResource type]];
-		[resIDView setStringValue:[[selectedResource resID] stringValue]];
 		[[attributesMatrix cellAtRow:changedBox column:0]	setState:[[selectedResource attributes] shortValue] & resChanged];
 		[[attributesMatrix cellAtRow:preloadBox column:0]	setState:[[selectedResource attributes] shortValue] & resPreload];
 		[[attributesMatrix cellAtRow:protectedBox column:0]	setState:[[selectedResource attributes] shortValue] & resProtected];
@@ -45,15 +51,9 @@
 	}
 	else
 	{
-		[nameView setStringValue:@""];
-		[typeView setStringValue:@""];
-		[resIDView setStringValue:@""];
-		[[attributesMatrix cellAtRow:changedBox column:0]	setState:NSOffState];
-		[[attributesMatrix cellAtRow:preloadBox column:0]	setState:NSOffState];
-		[[attributesMatrix cellAtRow:protectedBox column:0]	setState:NSOffState];
-		[[attributesMatrix cellAtRow:lockedBox column:0]	setState:NSOffState];
-		[[attributesMatrix cellAtRow:purgableBox column:0]	setState:NSOffState];
-		[[attributesMatrix cellAtRow:systemHeapBox column:0] setState:NSOffState];
+		[[self window] setTitle:@"Document Info"];
+		[placeholderView setContentView:documentView];
+		[nameView setStringValue:[currentDocument fileName]? [currentDocument fileName]:[currentDocument displayName]];
 	}
 }
 

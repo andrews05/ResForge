@@ -444,7 +444,6 @@
 				F5B5885A0156D40B01000001,
 				F5B5885B0156D40B01000001,
 				F5B5885C0156D40B01000001,
-				F5B5885D0156D40B01000001,
 				F5B5885E0156D40B01000001,
 				F5B5885F0156D40B01000001,
 				F5B588600156D40B01000001,
@@ -675,7 +674,6 @@
 				F5B588360156D40B01000001,
 				F5B588380156D40B01000001,
 				F5B5883A0156D40B01000001,
-				F5B5883C0156D40B01000001,
 				F5B5883E0156D40B01000001,
 				F5B588400156D40B01000001,
 				F5B588420156D40B01000001,
@@ -738,21 +736,6 @@
 			isa = PBXFileReference;
 			name = English;
 			path = English.lproj/InfoWindow.nib;
-			refType = 4;
-		};
-		F5B5883C0156D40B01000001 = {
-			children = (
-				F5B5883D0156D40B01000001,
-			);
-			isa = PBXVariantGroup;
-			name = Inspector.nib;
-			path = Cocoa;
-			refType = 2;
-		};
-		F5B5883D0156D40B01000001 = {
-			isa = PBXFileReference;
-			name = English;
-			path = English.lproj/Inspector.nib;
 			refType = 4;
 		};
 		F5B5883E0156D40B01000001 = {
@@ -939,12 +922,6 @@
 		};
 		F5B5885C0156D40B01000001 = {
 			fileRef = F5B5883A0156D40B01000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F5B5885D0156D40B01000001 = {
-			fileRef = F5B5883C0156D40B01000001;
 			isa = PBXBuildFile;
 			settings = {
 			};

@@ -7,11 +7,12 @@
             CLASS = InfoWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                attributesMatrix = id; 
-                iconView = id; 
-                nameView = id; 
-                resIDView = id; 
-                typeView = id; 
+                attributesMatrix = NSMatrix; 
+                documentView = NSBox; 
+                iconView = NSImageView; 
+                nameView = NSTextField; 
+                placeholderView = NSBox; 
+                resourceView = NSBox; 
             }; 
             SUPERCLASS = NSWindowController; 
         }

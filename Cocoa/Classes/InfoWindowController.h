@@ -14,11 +14,14 @@ enum Attributes
 
 @interface InfoWindowController : NSWindowController
 {
-    IBOutlet NSMatrix 		*attributesMatrix;
-    IBOutlet NSImageView	*iconView;
-    IBOutlet NSTextField	*nameView;
-    IBOutlet NSTextField	*resIDView;
-    IBOutlet NSTextField	*typeView;
+	IBOutlet NSImageView	*iconView;
+	IBOutlet NSTextField	*nameView;
+	
+	IBOutlet NSBox			*placeholderView;
+	IBOutlet NSBox			*resourceView;
+	IBOutlet NSBox			*documentView;
+	
+	IBOutlet NSMatrix 		*attributesMatrix;
 	
 @private
 	ResourceDocument		*currentDocument;
