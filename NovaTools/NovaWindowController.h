@@ -7,4 +7,7 @@
 {
 	id <ResKnifeResourceProtocol>	resource;
 }
+
+- (IBAction)toggleResID:(id)sender;
+
 @end

@@ -1,8 +1,18 @@
 {
     IBClasses = (
         {
+            ACTIONS = {editDate = id; stepDate = id; }; 
             CLASS = CharWindowController; 
             LANGUAGE = ObjC; 
+            OUTLETS = {
+                dayField = NSTextField; 
+                dayStepper = NSStepper; 
+                monthField = NSTextField; 
+                monthStepper = NSStepper; 
+                timeForm = NSForm; 
+                yearField = NSTextField; 
+                yearStepper = NSStepper; 
+            }; 
             SUPERCLASS = NovaWindowController; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 

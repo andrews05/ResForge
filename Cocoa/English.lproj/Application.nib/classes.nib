@@ -16,7 +16,6 @@
                 openResources = id; 
                 openResourcesAsHex = id; 
                 openResourcesInTemplate = id; 
-                openResourcesWithOtherTemplate = id; 
                 playSound = id; 
                 revertResourceToSaved = id; 
                 scrollToSelection = id; 
@@ -25,6 +24,7 @@
                 showFind = id; 
                 showInfo = id; 
                 showPrefs = id; 
+                showSelectTemplateSheet = id; 
             }; 
             CLASS = FirstResponder; 
             LANGUAGE = ObjC; 

@@ -43,10 +43,11 @@
 - (void)setImage:(NSImage *)newImage
 {
 	// save image and set to 16x16 pixels
-	[image autorelease];
+	id old = image;
 	image = [newImage retain];
 	[image setScalesWhenResized:YES];
 	[image setSize:NSMakeSize(16,16)];
+	[old autorelease];
 }
 
 - (NSRect)imageFrameForCellFrame:(NSRect)cellFrame

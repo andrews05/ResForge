@@ -18,6 +18,7 @@
 - (void)setupToolbar:(NSWindowController *)windowController;
 
 - (IBAction)showCreateResourceSheet:(id)sender;
+- (IBAction)showSelectTemplateSheet:(id)sender;
 - (IBAction)openResources:(id)sender;
 - (IBAction)openResourcesInTemplate:(id)sender;
 - (IBAction)openResourcesAsHex:(id)sender;

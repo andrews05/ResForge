@@ -5,12 +5,12 @@
 - (id)initWithResource:(id)newResource
 {
 	self = [self initWithWindowNibName:@"boom"];
-	if( !self ) return self;
+	if( !self ) return nil;
 	
 	// load the window from the nib file and set it's title
 	[self window];	// implicitly loads nib
-	if( ![[resource name] isEqualToString:@""] )
-		[[self window] setTitle:[NSString stringWithFormat:@"Explosion: %@", [resource name]]];
+	if( [newResource name] && ![[newResource name] isEqualToString:@""] )
+		[[self window] setTitle:[NSString stringWithFormat:@"%@: %@", [[self window] title], [newResource name]]];
 	return self;
 }
 

@@ -161,8 +161,8 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	[[ascii	 textStorage] addAttributes:dictionary range:NSMakeRange(0, [[ascii textStorage] length])];
 	
 	// restore selections (this is the dumbest way to do it, but it'll do for now)
-	[hex setSelectedRange:hexSelection];
-	[ascii setSelectedRange:asciiSelection];
+	[hex setSelectedRange:NSIntersectionRange(hexSelection, [hex selectedRange])];
+	[ascii setSelectedRange:NSIntersectionRange(asciiSelection, [ascii selectedRange])];
 	
 	// restore delegates
 	[hex setDelegate:oldDelegate];

@@ -7,7 +7,7 @@
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {incrementDate = id; synchroniseDates = id; }; 
+            ACTIONS = {toggleResID = id; }; 
             CLASS = NovaWindowController; 
             LANGUAGE = ObjC; 
             SUPERCLASS = NSWindowController; 

@@ -9,45 +9,16 @@
 
 - (id)initWithResource:(id)newResource
 {
-	NSString *asciiType = NSLocalizedStringFromTable( [resource type], @"Resource Types", nil );
-	
-	resource = [newResource retain];
-	
-	NSLog( @"%s", [[resource type] lossyCString] );
-	NSLog( [[[resource type] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] description] );
-	if( [asciiType isEqualToString:@"boom"] )
-	{
-		id oldSelf = self;
-		self = [[BoomWindowController alloc] initWithResource:newResource];
-		[oldSelf release];
-	}
-	if( [asciiType isEqualToString:@"char"] )
-	{
-		id oldSelf = self;
-		self = [[CharWindowController alloc] initWithResource:newResource];
-		[oldSelf release];
-	}
-	if( [asciiType isEqualToString:@"colr"] )
-	{
-		id oldSelf = self;
-		self = [[ColrWindowController alloc] initWithResource:newResource];
-		[oldSelf release];
-	}
-	if( [asciiType isEqualToString:@"cron"] )
-	{
-		id oldSelf = self;
-		self = [[CronWindowController alloc] initWithResource:newResource];
-		[oldSelf release];
-	}
-	if( [asciiType isEqualToString:@"desc"] )
-	{
-		id oldSelf = self;
-		self = [[DescWindowController alloc] initWithResource:newResource];
-		[oldSelf release];
-	}
+	id oldSelf = self;
+	NSData *classData = [[(id <ResKnifeResourceProtocol>)newResource type] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+	NSString *className = [[[NSString stringWithCString:[classData bytes] length:[classData length]] capitalizedString] stringByAppendingString:@"WindowController"];
+	if( [className isEqualToString:@"Yea(R)WindowController"] ) className = @"YearWindowController";
+	self = [[NSClassFromString(className) alloc] initWithResource:newResource];
+	[oldSelf release];
 	if( !self ) return nil;
 	
 	// do global stuff here
+	resource = [newResource retain];
 	
 	return self;
 }
@@ -55,6 +26,27 @@
 - (id)initWithResources:(id)newResource, ...
 {
 	return nil;
+}
+
+- (void)windowDidLoad
+{
+	[super windowDidLoad];
+		
+	// insert the resources' data into the text fields
+//	[self refreshData:[resource data]];
+	
+	// we don't want this notification until we have a window!
+	// bug: only registers for notifications on the resource we're editing, need dependant resources too (pass nil for object?)
+//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+	
+	// finally, show the window
+	[self showWindow:self];
+}
+
+- (IBAction)toggleResID:(id)sender
+{
+	// toggles between resource IDs and index numbers
+	NSLog( @"%@", [resource type] );
 }
 
 @end

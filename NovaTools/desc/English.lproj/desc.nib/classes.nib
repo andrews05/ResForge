@@ -1,12 +1,15 @@
 {
     IBClasses = (
+        {CLASS = DescSplitViewDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             CLASS = DescWindowController; 
             LANGUAGE = ObjC; 
             SUPERCLASS = NovaWindowController; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NSObject; LANGUAGE = ObjC; }, 
         {
+            ACTIONS = {toggleResID = id; }; 
             CLASS = NovaWindowController; 
             LANGUAGE = ObjC; 
             SUPERCLASS = NSWindowController; 

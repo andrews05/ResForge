@@ -22,8 +22,19 @@
 	int launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"LaunchCount"];
 	[[NSUserDefaults standardUserDefaults] setInteger:launchCount + 1 forKey:@"LaunchCount"];
 	
+	// save a number of icons
+	icons = [[NSMutableDictionary alloc] init];
+	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"PICT"] forKey:@"PICT"];
+	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"icns"] forKey:@"icns"];
+	
     [self initUserDefaults];
-}    
+}
+
+- (void)dealloc
+{
+	[icons release];
+	[super dealloc];
+}
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
@@ -111,6 +122,11 @@
 	
 	// force the defaults to save to the disk
 	[defaults synchronize];
+}
+
+- (NSDictionary *)icons
+{
+	return icons;
 }
 
 @end

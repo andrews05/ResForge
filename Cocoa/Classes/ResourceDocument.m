@@ -96,6 +96,8 @@ NSString *DocumentInfoDidChangeNotification			= @"DocumentInfoDidChangeNotificat
 	
 	// resource menu
 	else if( [item action] == @selector(openResources:) )			return selectedRows > 0;
+	else if( [item action] == @selector(openResourcesInTemplate:) )	return selectedRows > 0;
+	else if( [item action] == @selector(openResourcesWithOtherTemplate:) )	return selectedRows > 0;
 	else if( [item action] == @selector(openResourcesAsHex:) )		return selectedRows > 0;
 	else if( [item action] == @selector(playSound:) )				return selectedRows == 1 && [[resource type] isEqualToString:@"snd "];
 	else if( [item action] == @selector(revertResourceToSaved:) )	return selectedRows == 1 && [resource isDirty];
@@ -137,7 +139,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 {
 	NSToolbarItem *item = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
 	
-	if( [itemIdentifier isEqual:RKCreateItemIdentifier] )
+	if( [itemIdentifier isEqualToString:RKCreateItemIdentifier] )
 	{
 		[item setLabel:NSLocalizedString(@"Create", nil)];
 		[item setPaletteLabel:NSLocalizedString(@"Create", nil)];
@@ -147,7 +149,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		[item setAction:@selector(showCreateResourceSheet:)];
 		return item;
 	}
-	else if( [itemIdentifier isEqual:RKDeleteItemIdentifier] )
+	else if( [itemIdentifier isEqualToString:RKDeleteItemIdentifier] )
 	{
 		[item setLabel:NSLocalizedString(@"Delete", nil)];
 		[item setPaletteLabel:NSLocalizedString(@"Delete", nil)];
@@ -157,27 +159,27 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		[item setAction:@selector(clear:)];
 		return item;
 	}
-	else if( [itemIdentifier isEqual:RKEditItemIdentifier] )
+	else if( [itemIdentifier isEqualToString:RKEditItemIdentifier] )
 	{
 		[item setLabel:NSLocalizedString(@"Edit", nil)];
 		[item setPaletteLabel:NSLocalizedString(@"Edit", nil)];
 		[item setToolTip:NSLocalizedString(@"Edit Resource In Default Editor", nil)];
 		[item setImage:[NSImage imageNamed:@"Edit"]];
 		[item setTarget:self];
-		[item setAction:@selector(openResource:)];
+		[item setAction:@selector(openResources:)];
 		return item;
 	}
-	else if( [itemIdentifier isEqual:RKEditHexItemIdentifier] )
+	else if( [itemIdentifier isEqualToString:RKEditHexItemIdentifier] )
 	{
 		[item setLabel:NSLocalizedString(@"Edit Hex", nil)];
 		[item setPaletteLabel:NSLocalizedString(@"Edit Hex", nil)];
 		[item setToolTip:NSLocalizedString(@"Edit Resource As Hexadecimal", nil)];
 		[item setImage:[NSImage imageNamed:@"Edit Hex"]];
 		[item setTarget:self];
-		[item setAction:@selector(openResourceAsHex:)];
+		[item setAction:@selector(openResourcesAsHex:)];
 		return item;
 	}
-	else if( [itemIdentifier isEqual:RKSaveItemIdentifier] )
+	else if( [itemIdentifier isEqualToString:RKSaveItemIdentifier] )
 	{
 		[item setLabel:NSLocalizedString(@"Save", nil)];
 		[item setPaletteLabel:NSLocalizedString(@"Save", nil)];
@@ -187,7 +189,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		[item setAction:@selector(saveDocument:)];
 		return item;
 	}
-	else if( [itemIdentifier isEqual:RKShowInfoItemIdentifier] )
+	else if( [itemIdentifier isEqualToString:RKShowInfoItemIdentifier] )
 	{
 		[item setLabel:NSLocalizedString(@"Show Info", nil)];
 		[item setPaletteLabel:NSLocalizedString(@"Show Info", nil)];
@@ -236,6 +238,13 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[sheetController showCreateResourceSheet:self];
 }
 
+- (IBAction)showSelectTemplateSheet:(id)sender
+{
+	// bug: ResourceDocument allocs a sheet controller, but it's never disposed of
+//	SelectTemplateSheetController *sheetController = [[CreateResourceSheetController alloc] initWithWindowNibName:@"SelectTemplateSheet"];
+//	[sheetController showSelectTemplateSheet:self];
+}
+
 - (IBAction)openResources:(id)sender
 {
 	Resource *resource;
@@ -271,13 +280,15 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	NSBundle *editor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"NovaTools.plugin"]];
 	
 	// open the resources, passing in the template to use
-	if( editor /* && [[editor principalClass] respondsToSelector:@selector(initWithResource:)] */ )
+	if( editor /*&& [[editor principalClass] respondsToSelector:@selector(initWithResource:)]*/ )
 	{
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
-		[(id <ResKnifePluginProtocol>)[[editor principalClass] alloc] initWithResource:resource];
+		id plug = [(id <ResKnifePluginProtocol>)[[editor principalClass] alloc] initWithResource:resource];
+		if( plug ) return;
 	}
+	
 	// if no editor exists, or the editor is broken, open using template
-	else [self openResource:resource usingTemplate:[resource type]];
+	[self openResource:resource usingTemplate:[resource type]];
 }
 
 - (void)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
@@ -292,10 +303,12 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	if( tmpl && [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)] )
 	{
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
-		[(id <ResKnifePluginProtocol>)[[templateEditor principalClass] alloc] initWithResources:resource, tmpl, nil];
+		id plug = [(id <ResKnifePluginProtocol>)[[templateEditor principalClass] alloc] initWithResources:resource, tmpl, nil];
+		if( plug ) return;
 	}
+	
 	// if no template exists, or template editor is broken, open as hex
-	else [self openResourceAsHex:resource];
+	[self openResourceAsHex:resource];
 }
 
 - (void)openResourceAsHex:(Resource *)resource
