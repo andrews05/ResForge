@@ -673,6 +673,7 @@ static NSString *RKExportItemIdentifier		= @"com.ulikusterer.resknife.toolbar.ex
 	if( !fork ) DisposePtr( (Ptr) resourceForkName );	// only delete if we're not saving it to "fork" instance var.
 	if( fileRefNum ) FSClose( fileRefNum );
 	DisposePtr( (Ptr) fileRef );
+	
 	return succeeded;
 }
 

@@ -8,6 +8,8 @@
 #import "ResourceDataSource.h"
 
 #import "ResknifePluginProtocol.h"
+#import "RKSupportResourceRegistry.h"
+
 
 @implementation ApplicationDelegate
 
@@ -22,7 +24,8 @@
 {
 	// instanciate my own subclass of NSDocumentController so I can override the open dialog
 	RKDocumentController *docController = [[RKDocumentController alloc] init];
-	#pragma unused( docController )
+	
+	[RKSupportResourceRegistry scanForSupportResources: [NSDocumentController sharedDocumentController]];
 }
 
 - (void)awakeFromNib

@@ -839,6 +839,30 @@
 			settings = {
 			};
 		};
+		3D53A9FD04F171DC006651FA = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = RKSupportResourceRegistry.h;
+			refType = 4;
+		};
+		3D53A9FE04F171DC006651FA = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = RKSupportResourceRegistry.m;
+			refType = 4;
+		};
+		3D53A9FF04F171DC006651FA = {
+			fileRef = 3D53A9FD04F171DC006651FA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D53AA0004F171DC006651FA = {
+			fileRef = 3D53A9FE04F171DC006651FA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 //3D0
 //3D1
 //3D2
@@ -2823,6 +2847,7 @@
 				F59481AF03D0776C01A8010A,
 				F59481B303D077DC01A8010A,
 				3D35755E04DAEB6200B8225B,
+				3D53A9FF04F171DC006651FA,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2880,6 +2905,7 @@
 				F59481B403D077DC01A8010A,
 				3D35755B04DAEB4300B8225B,
 				3D35755F04DAEB6200B8225B,
+				3D53AA0004F171DC006651FA,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2940,6 +2966,8 @@
 				F5B5882E0156D40B01000001,
 				3D35755C04DAEB6200B8225B,
 				3D35755D04DAEB6200B8225B,
+				3D53A9FD04F171DC006651FA,
+				3D53A9FE04F171DC006651FA,
 				F5B5882F0156D40B01000001,
 				F5B588300156D40B01000001,
 				F5B588310156D40B01000001,
