@@ -1,0 +1,29 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = HexEditorDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                ascii = NSTextView; 
+                hex = NSTextView; 
+                message = NSTextField; 
+                offset = NSTextView; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = HexWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                ascii = NSTextView; 
+                hex = NSTextView; 
+                hexDelegate = HexEditorDelegate; 
+                message = NSTextField; 
+                offset = NSTextView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}
