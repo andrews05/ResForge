@@ -11,17 +11,6 @@
 	if( !self ) return nil;
 	
 	editedLow = NO;
-	
-	// swap paste: menu item for my own paste submenu
-	{
-		NSMenu *editMenu = [[[NSApp mainMenu] itemAtIndex:2] submenu];
-		NSMenuItem *pasteItem = [editMenu itemAtIndex:[editMenu indexOfItemWithTarget:nil andAction:@selector(paste:)]];
-		[NSBundle loadNibNamed:@"PasteMenu" owner:self];
-		[pasteItem setEnabled:YES];
-		[pasteItem setKeyEquivalent:@""];
-		[pasteItem setKeyEquivalentModifierMask:0];
-		[editMenu setSubmenu:pasteSubmenu forItem:pasteItem];
-	}
 	return self;
 }
 
@@ -29,11 +18,11 @@
 
 - (NSString *)offsetRepresentation:(NSData *)data;
 {
-	int row, dataLength = [data length], bytesPerRow = [controller bytesPerRow];
+	int dataLength = [data length], bytesPerRow = [controller bytesPerRow];
 	int rows = (dataLength / bytesPerRow) + ((dataLength % bytesPerRow)? 1:0);
 	NSMutableString *representation = [NSMutableString string];
 	
-	for( row = 0; row < rows; row++ )
+	for( int row = 0; row < rows; row++ )
 		[representation appendFormat:@"%08lX:", row * bytesPerRow];
 	
 	return representation;
@@ -41,16 +30,16 @@
 
 - (NSString *)hexRepresentation:(NSData *)data;
 {
-	int row, addr, currentByte = 0, dataLength = [data length], bytesPerRow = [controller bytesPerRow];
+	int currentByte = 0, dataLength = [data length], bytesPerRow = [controller bytesPerRow];
 	int rows = (dataLength / bytesPerRow) + ((dataLength % bytesPerRow)? 1:0);
 	char buffer[bytesPerRow*3 +1], hex1, hex2;
 	char *bytes = (char *) [data bytes];
 	NSMutableString *representation = [NSMutableString string];
 	
 	// calculate bytes
-	for( row = 0; row < rows; row++ )
+	for( int row = 0; row < rows; row++ )
 	{
-		for( addr = 0; addr < bytesPerRow; addr++ )
+		for( int addr = 0; addr < bytesPerRow; addr++ )
 		{
 			if( currentByte < dataLength )
 			{
@@ -88,16 +77,16 @@
 
 - (NSString *)asciiRepresentation:(NSData *)data;
 {
-	int row, addr, currentByte = 0, dataLength = [data length], bytesPerRow = [controller bytesPerRow];
+	int currentByte = 0, dataLength = [data length], bytesPerRow = [controller bytesPerRow];
 	int rows = (dataLength / bytesPerRow) + ((dataLength % bytesPerRow)? 1:0);
 	char buffer[bytesPerRow +1];
 	char *bytes = (char *) [data bytes];
 	NSMutableString *representation = [NSMutableString string];
 	
 	// calculate bytes
-	for( row = 0; row < rows; row++ )
+	for( int row = 0; row < rows; row++ )
 	{
-		for( addr = 0; addr < bytesPerRow; addr++ )
+		for( int addr = 0; addr < bytesPerRow; addr++ )
 		{
 			if( currentByte < dataLength )
 			{

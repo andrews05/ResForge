@@ -7,7 +7,7 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            CLASS = HexEditorDelegate; 
+            CLASS = HexWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {pasteSubmenu = NSMenu; }; 
             SUPERCLASS = NSObject; 

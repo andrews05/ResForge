@@ -16,6 +16,7 @@
 - (void)readTemplate:(id <ResKnifeResourceProtocol>)tmpl;
 - (void)parseData;
 - (void)createUI;
+- (void)enumerateElements:(NSMutableArray *)elements;
 - (void)resourceDataDidChange:(NSNotification *)notification;
 - (void)refreshData:(NSData *)data;
 

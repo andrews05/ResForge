@@ -11,6 +11,8 @@
 NSString *DocumentInfoWillChangeNotification		= @"DocumentInfoWillChangeNotification";
 NSString *DocumentInfoDidChangeNotification			= @"DocumentInfoDidChangeNotification";
 
+extern NSString *RKResourcePboardType;
+
 @implementation ResourceDocument
 
 - (id)init
@@ -323,7 +325,6 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 {
 	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
 	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
-	
 	NSWindowController *plugController = [(id <ResKnifePluginProtocol>)[[hexEditor principalClass] alloc] initWithResource:resource];
 }
 
@@ -386,18 +387,86 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 /* EDIT OPERATIONS */
 #pragma mark -
 
+- (IBAction)cut:(id)sender
+{
+	[self copy:sender];
+	[self clear:sender];
+}
+
+- (IBAction)copy:(id)sender
+{
+	#pragma unused( sender )
+	NSArray *selectedItems = [outlineView selectedItems];
+	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
+	[pb declareTypes:[NSArray arrayWithObject:RKResourcePboardType] owner:self];
+	[pb setData:[NSArchiver archivedDataWithRootObject:selectedItems] forType:RKResourcePboardType];
+}
+
+- (IBAction)paste:(id)sender
+{
+	#pragma unused( sender )
+	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
+	if( [pb availableTypeFromArray:[NSArray arrayWithObject:RKResourcePboardType]] )
+		[self pasteResources:[NSUnarchiver unarchiveObjectWithData:[pb dataForType:RKResourcePboardType]]];
+}
+
+- (void)pasteResources:(NSArray *)pastedResources
+{
+	Resource *resource;
+	NSEnumerator *enumerator = [pastedResources objectEnumerator];
+	while( resource = (Resource *) [enumerator nextObject] )
+	{
+		// check resource type/ID is available
+		if( [dataSource resourceOfType:[resource type] andID:[resource resID]] == nil )
+		{
+			// resource slot is available, paste this one in
+			[dataSource addResource:resource];
+		}
+		else
+		{
+			// resource slot is ocupied, ask user what to do
+			NSMutableArray *remainingResources = [[NSMutableArray alloc] initWithCapacity:1];
+			[remainingResources addObject:resource];
+			[remainingResources addObjectsFromArray:[enumerator allObjects]];
+			NSBeginAlertSheet( @"Paste Error", @"Unique ID", @"Skip", @"Overwrite", mainWindow, self, NULL, @selector(overwritePasteSheetDidDismiss:returnCode:contextInfo:), remainingResources, @"There already exists a resource of type %@ with ID %@. Do you wish to assign the pasted resource a unique ID, overwrite the existing resource, or skip pasting of this resource?", [resource type], [resource resID] );
+		}
+	}
+}
+
+- (void)overwritePasteSheetDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	NSMutableArray *remainingResources = [NSMutableArray arrayWithArray:[(NSArray *)contextInfo autorelease]];
+	Resource *resource = [remainingResources objectAtIndex:0];
+	if( returnCode == NSAlertDefaultReturn )	// unique ID
+	{
+		Resource *newResource = [Resource resourceOfType:[resource type] andID:[dataSource uniqueIDForType:[resource type]] withName:[resource name] andAttributes:[resource attributes] data:[resource data]];
+		[dataSource addResource:newResource];
+	}
+	else if( NSAlertOtherReturn )				// overwrite
+	{
+		[dataSource removeResource:[dataSource resourceOfType:[resource type] andID:[resource resID]]];
+		[dataSource addResource:resource];
+	}
+//	else if( NSAlertAlternateReturn )			// skip
+	
+	// remove top resource and continue paste
+	[remainingResources removeObjectAtIndex:0];
+	[self pasteResources:remainingResources];
+}
+
 - (IBAction)clear:(id)sender
 {
+	#pragma unused( sender )
 	if( [prefs boolForKey:@"DeleteResourceWarning"] )
 	{
-		NSBeginCriticalAlertSheet( @"Delete Resource", @"Delete", @"Cancel", nil, [self mainWindow], self, nil, @selector(deleteResourcesSheetDidDismiss:returnCode:contextInfo:), nil, @"Please confirm you wish to delete the selected resources." );
+		NSBeginCriticalAlertSheet( @"Delete Resource", @"Delete", @"Cancel", nil, [self mainWindow], self, @selector(deleteResourcesSheetDidEnd:returnCode:contextInfo:), NULL, nil, @"Please confirm you wish to delete the selected resources." );
 	}
 	else [self deleteSelectedResources];
 }
 
-- (void)deleteResourcesSheetDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+- (void)deleteResourcesSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-#pragma unused( contextInfo )
+	#pragma unused( contextInfo )
 	if( returnCode == NSOKButton )
 		[self deleteSelectedResources];
 }

@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "ResKnifeResourceProtocol.h"
 
-@interface Resource : NSObject <ResKnifeResourceProtocol>
+@interface Resource : NSObject <NSCoding, ResKnifeResourceProtocol>
 {
 @private
 	// flags

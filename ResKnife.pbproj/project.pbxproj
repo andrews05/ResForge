@@ -64,9 +64,10 @@
 				F535443C022674B401A80001,
 			);
 			buildSettings = {
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-std=c99";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
+				PREFIX_HEADER = "\"Prefix Files/C99 Prefix.h\"";
 				PRODUCT_NAME = "Template Editor";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
@@ -877,9 +878,10 @@
 				F57CEE130189C95101A8010B,
 			);
 			buildSettings = {
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-std=c99";
 				OTHER_LDFLAGS = "-bundle -undefined error";
 				OTHER_REZFLAGS = "";
+				PREFIX_HEADER = "\"Prefix Files/C99 Prefix.h\"";
 				PRODUCT_NAME = "Hexadecimal Editor";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
@@ -1319,11 +1321,14 @@
 				F5B588180156D30301000001,
 			);
 			buildSettings = {
-				OTHER_CFLAGS = "";
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "-std=c99";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
+				PREFIX_HEADER = "\"Prefix Files/C99 Prefix.h\"";
 				PRODUCT_NAME = "ResKnife Cocoa";
+				PROFILING_CODE = YES;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 				WRAPPER_EXTENSION = app;
@@ -2232,6 +2237,7 @@
 			children = (
 				F5B5887D0156D6D901000001,
 				F5B5887E0156D6D901000001,
+				FDBB1C8E038062C0015E48C3,
 			);
 			isa = PBXGroup;
 			path = "Prefix Files";
@@ -3572,9 +3578,10 @@
 				F5DF1C0E0254C6BA01A80001,
 			);
 			buildSettings = {
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-std=c99";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
+				PREFIX_HEADER = "\"Prefix Files/C99 Prefix.h\"";
 				PRODUCT_NAME = NovaTools;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
@@ -3974,6 +3981,21 @@
 		F5F98D4602F0B06E01A8010C = {
 			isa = PBXFileReference;
 			path = TemplateInitalisation.cpp;
+			refType = 4;
+		};
+//F50
+//F51
+//F52
+//F53
+//F54
+//FD0
+//FD1
+//FD2
+//FD3
+//FD4
+		FDBB1C8E038062C0015E48C3 = {
+			isa = PBXFileReference;
+			path = "C99 Prefix.h";
 			refType = 4;
 		};
 	};

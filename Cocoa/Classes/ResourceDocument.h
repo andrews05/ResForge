@@ -29,8 +29,12 @@
 - (IBAction)playSound:(id)sender;
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished;
 
+- (IBAction)copy:(id)sender;
+- (IBAction)paste:(id)sender;
+- (void)pasteResources:(NSArray *)pastedResources;
+- (void)overwritePasteSheetDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (IBAction)clear:(id)sender;
-- (void)deleteResourcesSheetDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void)deleteResourcesSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)deleteSelectedResources;
 
 - (void)resourceNameWillChange:(NSNotification *)notification;

@@ -12,6 +12,7 @@
     IBOutlet NSTextView			*hex;
     IBOutlet NSTextView			*offset;
     IBOutlet NSTextField		*message;
+    IBOutlet NSMenu				*pasteSubmenu;
 	
 	NSUndoManager					*undoManager;
 	id <ResKnifeResourceProtocol>	resource;

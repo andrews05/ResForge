@@ -11,7 +11,6 @@
 	IBOutlet NSTextView		*hex;
 	IBOutlet NSTextView		*offset;
     IBOutlet NSTextField	*message;
-    IBOutlet NSMenu			*pasteSubmenu;
 	
 	BOOL editedLow;
 }

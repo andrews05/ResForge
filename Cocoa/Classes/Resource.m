@@ -2,6 +2,8 @@
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
 
+NSString *RKResourcePboardType		= @"RKResourcePboardType";
+
 @implementation Resource
 
 - (id)init
@@ -252,11 +254,37 @@
 	}
 }
 
+/* encoding */
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+	self = [super init];
+	if( self )
+	{
+		dirty = YES;
+		name = [[decoder decodeObject] retain];
+		type = [[decoder decodeObject] retain];
+		resID = [[decoder decodeObject] retain];
+		attributes = [[decoder decodeObject] retain];
+		data = [[decoder decodeDataObject] retain];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+	[encoder encodeObject:name];
+	[encoder encodeObject:type];
+	[encoder encodeObject:resID];
+	[encoder encodeObject:attributes];
+	[encoder encodeDataObject:data];
+}
+
 /* description */
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"\nName: %@\nType: %@ ID: %@\nModified: %@", name, type, resID, dirty? @"YES":@"NO"];
+	return [NSString stringWithFormat:@"\nName: %@\nType: %@  ID: %@\nModified: %@", name, type, resID, dirty? @"YES":@"NO"];
 }
 
 @end

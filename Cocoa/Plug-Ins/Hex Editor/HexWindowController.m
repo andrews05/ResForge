@@ -66,6 +66,31 @@
 	// finally, show the window
 	[self showWindow:self];
 }
+
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	// swap paste: menu item for my own paste submenu
+	NSMenu *editMenu = [[[NSApp mainMenu] itemAtIndex:2] submenu];
+	NSMenuItem *pasteItem = [editMenu itemAtIndex:[editMenu indexOfItemWithTarget:nil andAction:@selector(paste:)]];
+	[NSBundle loadNibNamed:@"PasteMenu" owner:self];
+	[pasteItem setEnabled:YES];
+	[pasteItem setKeyEquivalent:@"\0"];		// clear key equiv. (yes, really!)
+	[pasteItem setKeyEquivalentModifierMask:0];
+	[editMenu setSubmenu:pasteSubmenu forItem:pasteItem];
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+	// swap my submenu for plain paste menu item
+	NSMenu *editMenu = [[[NSApp mainMenu] itemAtIndex:2] submenu];
+	NSMenuItem *pasteItem = [editMenu itemAtIndex:[editMenu indexOfItemWithSubmenu:pasteSubmenu]];
+	[editMenu setSubmenu:nil forItem:pasteItem];
+	[pasteItem setTarget:nil];
+	[pasteItem setAction:@selector(paste:)];
+	[pasteItem setKeyEquivalent:@"v"];
+	[pasteItem setKeyEquivalentModifierMask:NSCommandKeyMask];
+}
+
 /*
 - (BOOL)windowShouldClose:(NSWindow *)sender
 {
@@ -183,6 +208,11 @@
 - (int)bytesPerRow
 {
 	return bytesPerRow;
+}
+
+- (NSMenu *)pasteSubmenu
+{
+	return pasteSubmenu;
 }
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)sender

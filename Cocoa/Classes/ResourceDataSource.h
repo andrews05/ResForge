@@ -16,6 +16,7 @@
 - (void)setResources:(NSMutableArray *)newResources;
 - (void)addResource:(Resource *)resource;
 - (void)removeResource:(Resource *)resource;
+- (NSNumber *)uniqueIDForType:(NSString *)type;
 
 // accessors
 - (Resource *)resourceOfType:(NSString *)type andID:(NSNumber *)resID;

@@ -72,6 +72,13 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 	[outlineView reloadItem:[notification object]];
 }
 
+- (NSNumber *)uniqueIDForType:(NSString *)type
+{
+	short resID = 128;
+	while( [self resourceOfType:type andID:[NSNumber numberWithShort:resID]] != nil ) resID++;
+	return [NSNumber numberWithShort:resID];
+}
+
 /* Data source protocol implementation */
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
