@@ -12,5 +12,5 @@
 #define RectToRegion( region, rect )						RectRgn( region, rect )
 #define NewPoint()								(Point)		{ 0, 0 }
 #define SetPoint( point, x, y )								SetPt( point, x, y )
-#define HilightColour( colour )								HiliteColor( colour )
-#define GetPortHilightColour( window, colour )				GetPortHiliteColor( window, colour )
+#define HighlightColour( colour )							HiliteColor( colour )
+#define GetPortHighlightColour( window, colour )			GetPortHiliteColor( window, colour )
