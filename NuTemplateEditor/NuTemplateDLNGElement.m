@@ -32,7 +32,7 @@
 
 -(void)	readDataFrom: (NuTemplateStream*)stream
 {
-	[stream readAmount:2 toBuffer: &longValue];
+	[stream readAmount:sizeof(longValue) toBuffer: &longValue];
 }
 
 

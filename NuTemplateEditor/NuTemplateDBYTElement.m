@@ -37,7 +37,7 @@
 
 -(void)	readDataFrom: (NuTemplateStream*)stream
 {
-	[stream readAmount:2 toBuffer: &charValue];
+	[stream readAmount:sizeof(charValue) toBuffer: &charValue];
 }
 
 
@@ -65,7 +65,7 @@
 
 -(NSString*)	stringValue
 {
-	if( [l isEqualToString: @"CHAR"] )
+	if( [type isEqualToString: @"CHAR"] )
 		return [NSString stringWithCString:&charValue length:1];
 	else
 		return [NSString stringWithFormat: @"%d", charValue];
@@ -74,7 +74,7 @@
 
 -(void)		setStringValue: (NSString*)str
 {
-	if( [l isEqualToString: @"CHAR"] )
+	if( [type isEqualToString: @"CHAR"] )
 		charValue = [str cString][0];
 	else
 	{
