@@ -716,6 +716,27 @@
 			path = Categories;
 			refType = 4;
 		};
+		F5606FDD02ACF2F701A8010C = {
+			children = (
+				F5606FDE02ACF2F701A8010C,
+			);
+			isa = PBXVariantGroup;
+			name = PasteMenu.nib;
+			path = "";
+			refType = 4;
+		};
+		F5606FDE02ACF2F701A8010C = {
+			isa = PBXFileReference;
+			name = PasteMenu.nib;
+			path = English.lproj/PasteMenu.nib;
+			refType = 4;
+		};
+		F5606FDF02ACF2F701A8010C = {
+			fileRef = F5606FDD02ACF2F701A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F5730B930159528A01000001 = {
 			isa = PBXFileReference;
 			path = defaults.plist;
@@ -925,6 +946,7 @@
 				F5EF83AF020C08E601A80001,
 				F5EF83C9020C20D801A80001,
 				F54E6225021B6A0901A80001,
+				F5606FDF02ACF2F701A8010C,
 			);
 			isa = PBXResourcesBuildPhase;
 		};
@@ -3776,6 +3798,7 @@
 				F5EF83A7020C08E601A80001,
 				F5EF83A8020C08E601A80001,
 				F5EF83C7020C20D701A80001,
+				F5606FDD02ACF2F701A8010C,
 				F54E6222021B6A0801A80001,
 				F5EF83A9020C08E601A80001,
 			);

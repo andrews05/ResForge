@@ -8,7 +8,20 @@
 - (id)init
 {
 	self = [super init];
-	if( self ) editedLow = NO;
+	if( !self ) return nil;
+	
+	editedLow = NO;
+	
+	// swap paste: menu item for my own paste submenu
+	{
+		NSMenu *editMenu = [[[NSApp mainMenu] itemAtIndex:2] submenu];
+		NSMenuItem *pasteItem = [editMenu itemAtIndex:[editMenu indexOfItemWithTarget:nil andAction:@selector(paste:)]];
+		[NSBundle loadNibNamed:@"PasteMenu" owner:self];
+		[pasteItem setEnabled:YES];
+		[pasteItem setKeyEquivalent:@""];
+		[pasteItem setKeyEquivalentModifierMask:0];
+		[editMenu setSubmenu:pasteSubmenu forItem:pasteItem];
+	}
 	return self;
 }
 
@@ -115,29 +128,6 @@
 }
 
 /* delegation methods */
-
-// I'm going to try a lower level approach overriding NSResponder methods in the HexTextView class.
-
-/*- (BOOL)textView:(NSTextView *)textView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString;
-{
-#warning Every time a character is typed or string pasted, the entire resource is duplicated, operated on and disposed of! Perhaps I could do this in a better way?
-	NSMutableData *data = [NSMutableData dataWithData:[controller data]];
-	NSMutableData *newData = [NSMutableData dataWithBytes:[replacementString cString] length:[replacementString cStringLength]];
-	NSRange range;
-	
-	NSLog( @"Delegate received:\ntextView: shouldChangeTextInRange:%@ replacementString:%@", NSStringFromRange(affectedCharRange), replacementString );
-	
-	if( textView == hex )			range = [self byteRangeFromHexRange:affectedCharRange];
-	else if( textView == ascii )	range = [self byteRangeFromAsciiRange:affectedCharRange];
-	else return YES;
-
-#warning Does not cater for delete, forward delete, etc.
-	[data replaceBytesInRange:range withBytes:[newData bytes] length:[newData length]];
-	
-	// update resource data - this causes a notification to be sent out, which the plug receives and acts upon to update the text views
-	[[controller resource] setData:data];
-	return NO;
-}*/
 
 - (NSRange)textView:(NSTextView *)textView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange
 {

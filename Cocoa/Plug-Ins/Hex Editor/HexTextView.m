@@ -75,6 +75,28 @@
 	[super setSelectedRange:newRange affinity:affinity stillSelecting:NO];
 }
 
+/* NSText overrides */
+
+- (void)paste:(id)sender
+{
+	NSLog( @"paste:" );
+	// be 'smart' - determine if the pasted text is in hex format, such as "5F 3E 04 8E" or ascii.
+	//	what about unicode? should I paste "00 63 00 64" as "63 64" ("Paste As ASCII" submenu item)?
+	[super paste:sender];
+}
+
+- (void)clear:(id)sender
+{
+	NSRange selection = [self rangeForUserTextChange];
+	if( selection.length > 0 )
+		[self delete:sender];
+}
+
+- (void)delete:(id)sender
+{
+	[self deleteBackward:sender];
+}
+
 /* NSResponder overrides */
 
 - (void)insertText:(NSString *)string
@@ -82,6 +104,7 @@
 	NSRange selection = [self rangeForUserTextChange], byteSelection;
 	NSMutableData *data = [[[[self window] windowController] data] mutableCopy];
 	NSData *replaceData = [NSData dataWithBytes:[string cString] length:[string cStringLength]];
+	NSLog( @"insertText:" );
 	
 	// get selection range
 	if( self == (id) [[self delegate] hex] )
@@ -147,6 +170,7 @@
 {
 	NSRange selection = [self rangeForUserTextChange], byteSelection;
 	NSMutableData *data = [[[[self window] windowController] data] mutableCopy];
+	NSLog( @"deleteBackward:" );
 	
 	// get selection range
 	if( self == (id) [[self delegate] hex] )
@@ -181,6 +205,7 @@
 {
 	NSRange selection = [self rangeForUserTextChange], byteSelection;
 	NSMutableData *data = [[[[self window] windowController] data] mutableCopy];
+	NSLog( @"deleteForward:" );
 	
 	// get selection range
 	if( self == (id) [[self delegate] hex] )

@@ -1,0 +1,17 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {pasteAsASCII = id; pasteAsHex = id; pasteAsUnicode = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = HexEditorDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {pasteSubmenu = NSMenu; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
