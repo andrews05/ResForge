@@ -13,9 +13,13 @@
 @interface NuTemplateLSTEElement : NuTemplateGroupElement
 {
 	NuTemplateGroupElement*		groupElemTemplate;	// The item of which we're to create a copy.
+	BOOL						writesZeroByte;		// Write a terminating zero-byte when writing out this item (used by LSTZ).
 }
 
 -(IBAction)	showCreateResourceSheet: (id)sender;
+
+-(void)						setWritesZeroByte: (BOOL)n;
+-(BOOL)						writesZeroByte;
 
 -(void)						setGroupElemTemplate: (NuTemplateGroupElement*)e;
 -(NuTemplateGroupElement*)	groupElemTemplate;

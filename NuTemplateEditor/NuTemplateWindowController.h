@@ -53,6 +53,7 @@
 -(IBAction)	copy: (id)sender;
 -(IBAction)	paste: (id)sender;
 -(IBAction)	clear: (id)sender;
+-(IBAction)	saveDocument: (id)sender;
 
 
 @end

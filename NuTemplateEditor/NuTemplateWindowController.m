@@ -193,6 +193,7 @@
 	if( [fieldReg count] == 0 )
 	{
 		[fieldReg setObject: [NuTemplateLSTBElement class] forKey: @"LSTB"];
+		[fieldReg setObject: [NuTemplateLSTBElement class] forKey: @"LSTZ"];
 		[fieldReg setObject: [NuTemplateLSTEElement class] forKey: @"LSTE"];
 		[fieldReg setObject: [NuTemplateTNAMElement class] forKey: @"TNAM"];
 		[fieldReg setObject: [NuTemplatePSTRElement class] forKey: @"PSTR"];
@@ -328,6 +329,8 @@
 		return( [selElement validateMenuItem: item] );
 	else if( [item action] == @selector(clear:) )
 		return( selElement != nil && [selElement respondsToSelector: @selector(clear:)] );
+	else if( [item action] == @selector(saveDocument:) )
+		return YES;
 	else return NO;
 }
 
@@ -339,6 +342,12 @@
 		[createFieldItem setTitle: NSLocalizedString(@"Create New Resource...",@"")];
 		createFieldItem = nil;
 	}
+}
+
+
+-(IBAction)	saveDocument: (id)sender
+{
+	[self writeResData];
 }
 
 

@@ -40,12 +40,10 @@
 
 -(void)	readDataFrom: (NuTemplateStream*)stream
 {
-	NSEnumerator*		enny = [subElements objectEnumerator];
-	NuTemplateElement*	el;
-	
-	while( el = [enny nextObject] )
+	if( writesZeroByte )
 	{
-		[el readDataFrom: stream];
+		char	termByte;
+		[stream readAmount:1 toBuffer: &termByte];
 	}
 }
 
@@ -53,12 +51,16 @@
 // Doesn't write any sub-elements because this is simply a placeholder to allow for empty lists:
 -(unsigned int)	sizeOnDisk
 {
-	return 0;
+	return writesZeroByte ? 1 : 0;
 }
 
 -(void)	writeDataTo: (NuTemplateStream*)stream
 {
-	
+	if( writesZeroByte )
+	{
+		char		fillByte = 0;
+		[stream writeAmount:sizeof(fillByte) fromBuffer: &fillByte];
+	}
 }
 
 
@@ -74,11 +76,23 @@
 }
 
 
+-(void)	setWritesZeroByte: (BOOL)n
+{
+	writesZeroByte = n;
+}
+
+-(BOOL)	writesZeroByte
+{
+	return writesZeroByte;
+}
+
+
 -(id)	copyWithZone: (NSZone*)zone
 {
 	NuTemplateLSTEElement*	el = [super copyWithZone: zone];
 	
 	[el setGroupElemTemplate: [self groupElemTemplate]];
+	[el setWritesZeroByte: [self writesZeroByte]];
 	
 	return el;
 }

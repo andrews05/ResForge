@@ -108,6 +108,16 @@
 }
 
 
+-(void)	peekAmount: (unsigned int)l toBuffer: (void*)buf
+{
+	if( l > bytesToGo )
+		l = bytesToGo;
+	
+	if( l > 0 )
+		memmove( buf, data, l );
+}
+
+
 -(void)	writeAmount: (unsigned int)l fromBuffer: (void*)buf
 {
 	if( l > bytesToGo )

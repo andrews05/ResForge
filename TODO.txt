@@ -1,3 +1,5 @@
 -> "Open as Hex" displays "(null)" as the document name. Why?
 -> Changing the type/creator of a file isn't written to disk by ResourceDocument.
 -> Create small versions of the doc icons in Photoshop instead of letting IconComposer use its cheap scaling on them.
+-> Auto-uncollapse list items in template editor when they are created and when a resource is opened.
+-> Template editor should maintain "dirty" flag for resource.

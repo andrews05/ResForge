@@ -31,6 +31,7 @@
 
 -(NuTemplateElement*)	readOneElement;		// For parsing of 'TMPL' resource as template.
 -(void)					readAmount: (unsigned int)l toBuffer: (void*)buf;	// For reading data from the resource.
+-(void)					peekAmount: (unsigned int)l toBuffer: (void*)buf;	// For examining data w/o advancing the read/write mark.
 
 -(void)					writeAmount: (unsigned int)l fromBuffer: (void*)buf;	// For writing data back to the resource.
 
