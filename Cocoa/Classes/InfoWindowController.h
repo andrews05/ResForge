@@ -31,6 +31,7 @@ enum Attributes
 - (void)updateInfoWindow;
 - (void)setMainWindow:(NSWindow *)mainWindow;
 - (IBAction)attributesChanged:(id)sender;
+- (void)resourceAttributesDidChange:(NSNotification *)notification;
 
 + (id)sharedInfoWindowController;
 

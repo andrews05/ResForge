@@ -1,13 +1,13 @@
 #import <Cocoa/Cocoa.h>
-#import "Resource.h"
 
-@class CreateResourceSheetController;
+@class CreateResourceSheetController, ResourceDocument, Resource;
 
 @interface ResourceDataSource : NSObject
 {
-	IBOutlet NSWindow		*window;
-	IBOutlet NSOutlineView	*outlineView;
 	IBOutlet CreateResourceSheetController	*createResourceSheetController;
+	IBOutlet ResourceDocument				*document;
+	IBOutlet NSOutlineView					*outlineView;
+	IBOutlet NSWindow						*window;
 	
 	NSMutableArray	*resources;
 }
@@ -17,6 +17,6 @@
 - (NSArray *)resources;
 - (void)setResources:(NSMutableArray *)newResources;
 - (void)addResource:(Resource *)resource;
-- (void)generateTestData;
+- (void)removeResource:(Resource *)resource;
 
 @end

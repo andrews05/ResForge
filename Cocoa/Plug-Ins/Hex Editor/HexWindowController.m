@@ -2,7 +2,19 @@
 
 @implementation HexWindowController
 
-NSString *ResourceChangedNotification = @"ResourceChangedNotification";
+NSString *ResourceWillChangeNotification			= @"ResourceWillChangeNotification";
+NSString *ResourceNameWillChangeNotification		= @"ResourceNameWillChangeNotification";
+NSString *ResourceTypeWillChangeNotification		= @"ResourceTypeWillChangeNotification";
+NSString *ResourceIDWillChangeNotification			= @"ResourceIDWillChangeNotification";
+NSString *ResourceAttributesWillChangeNotification	= @"ResourceAttributesWillChangeNotification";
+NSString *ResourceDataWillChangeNotification		= @"ResourceDataWillChangeNotification";
+
+NSString *ResourceNameDidChangeNotification			= @"ResourceNameDidChangeNotification";
+NSString *ResourceTypeDidChangeNotification			= @"ResourceTypeDidChangeNotification";
+NSString *ResourceIDDidChangeNotification			= @"ResourceIDDidChangeNotification";
+NSString *ResourceAttributesDidChangeNotification	= @"ResourceAttributesDidChangeNotification";
+NSString *ResourceDataDidChangeNotification			= @"ResourceDataDidChangeNotification";
+NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 
 + (void)initialize
 {
@@ -39,8 +51,8 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	// swap text views to instances of my class instead
 	//	An experianced NeXT programmer told me that poseAsClass would come back to bite me in the ass at some point, and that I should instead instanciate some HexTextViews and swap them in for now, and use IB do do things properly once IB is fixed. But, for now I think I'll not bother :-P
 	
-	// we don't want this notification until we have a window!
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDidChange:) name:ResourceChangedNotification object:nil];
+	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 	
 	// put other notifications here too, just for togetherness
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[offset enclosingScrollView] contentView]];
@@ -93,9 +105,9 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:asciiClip];
 }
 
-- (void)resourceDidChange:(NSNotification *)notification
+- (void)resourceDataDidChange:(NSNotification *)notification
 {
-	// see if it's our resource which got changed (we receive notifications for any resource being changed, allowing multi-resource editors)
+	// ensure it's our resource which got changed (should always be true, we don't register for other resource notifications)
 	if( [notification object] == resource )
 		[self refreshData:[(id <ResKnifeResourceProtocol>)resource data]];
 }

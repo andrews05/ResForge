@@ -1,5 +1,54 @@
 /* Localized versions of application-critical strings */
 
-/* File window default resource names */
+/* Save sheet contents */
+"Save Document?" = "Save Document?";
+"Do you wish to save %@?" = "Do you wish to save %@?";
+"this document" = "this document";
+"Save" = "Save";
+"Don’t Save" = "Don’t Save";
+"Cancel" = "Cancel";
+
+/* File window default (grey) resource names */
 "Untitled Resource" = "Untitled Resource";
 "Custom Icon" = "Custom Icon";
+
+/* Resource size indicators */
+"%.0f" = "%.0f";
+"%.1f KB" = "%.1f KB";
+"%.1f MB" = "%.1f MB";
+"%.1f GB" = "%.1f GB";
+
+/* Toolbar names and tooltips */
+"Create" = "Create";
+"Create New Resource" = "Create New Resource";
+"Delete" = "Delete";
+"Delete Selected Resource" = "Delete Selected Resource";
+"Edit" = "Edit";
+"Edit Resource In Default Editor" = "Edit Resource In Default Editor";
+"Edit Hex" = "Edit Hex";
+"Edit Resource As Hexadecimal" = "Edit Resource As Hexadecimal";
+"Save" = "Save";
+"Save To %@ Fork" = "Save To %@ Fork";
+"Data" = "Data";
+"Resource" = "Resource";
+"Show Info" = "Show Info";
+"Show Resource Information Window" = "Show Resource Information Window";
+
+/* Undo/Redo menu item titles */
+"Add Resource" = "Add Resource";
+"Add Resource “%@”" = "Add Resource “%@”";
+"Create Resource" = "Create Resource";
+"Create Resource “%@”" = "Create Resource “%@”";
+"Remove Resource" = "Remove Resource";
+"Remove Resource “%@”" = "Remove Resource “%@”";
+"Delete Resource" = "Delete Resource";
+"Delete Resource “%@”" = "Delete Resource “%@”";
+"Name Change" = "Name Change";
+"ID Change" = "ID Change";
+"ID Change for “%@”" = "ID Change for “%@”";
+"Type Change" = "Type Change";
+"Type Change for “%@”" = "Type Change for “%@”";
+"Attributes Change" = "Attributes Change";
+"Attributes Change for “%@”" = "Attributes Change for “%@”";
+"Edit Resource" = "Edit Resource";
+"Edit of “%@”" = "Edit of “%@”";

@@ -2,21 +2,13 @@
 
 @implementation HexTextView
 
-- (void)insertText:(id)insertString
+- (id)init
 {
-#warning Every time a character is typed or string pasted, the entire resource is duplicated, operated on and disposed of! Perhaps I could do this in a better way?
-	NSMutableData *newData = [NSMutableData dataWithData:[[[self window] windowController] data]];
-	NSRange selection = [self selectedRange];
-	if( self == (id) [[self delegate] hex] )
-		selection = [[self delegate] byteRangeFromHexRange:selection];
-	else if( self == (id) [[self delegate] ascii] )
-		selection = [[self delegate] byteRangeFromAsciiRange:selection];
+	self = [super init];
+	if( !self ) return self;
 	
-	NSLog( insertString );
-	// modify resource data
-	
-	// update resource data - this causes a notification to be sent out, which the plug receives and acts upon to update the text views
-	[(id <ResKnifeResourceProtocol>)[[[self window] windowController] resource] setData:newData];
+	[self setFieldEditor:YES];
+	return self;
 }
 
 - (void)setSelectedRange:(NSRange)charRange affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)flag

@@ -1,6 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>	// Actually I only need CarbonCore.framework
-#import "ResourceDataSource.h"
+
+@class ResourceDataSource;
 
 @interface ResourceDocument : NSDocument
 {
@@ -19,6 +20,13 @@
 - (IBAction)openResourceAsHex:(id)sender;
 - (IBAction)playSound:(id)sender;
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished;
+
+- (IBAction)clear:(id)sender;
+
+- (void)resourceNameWillChange:(NSNotification *)notification;
+- (void)resourceIDWillChange:(NSNotification *)notification;
+- (void)resourceTypeWillChange:(NSNotification *)notification;
+- (void)resourceAttributesWillChange:(NSNotification *)notification;
 
 - (BOOL)readResourceMap:(SInt16)fileRefNum;
 - (BOOL)writeResourceMap:(SInt16)fileRefNum;

@@ -8,11 +8,20 @@
         }, 
         {
             ACTIONS = {
+                deselectAll = id; 
+                findNext = id; 
+                findPrevious = id; 
+                findWithSelection = id; 
                 openResource = id; 
                 openResourceAsHex = id; 
+                openResourceTemplate = id; 
+                openResourceWithOtherTemplate = id; 
                 playSound = id; 
+                revertResourceToSaved = id; 
+                scrollToSelection = id; 
                 showAbout = id; 
                 showCreateResourceSheet = id; 
+                showFind = id; 
                 showInfo = id; 
                 showPrefs = id; 
             }; 

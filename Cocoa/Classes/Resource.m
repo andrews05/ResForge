@@ -2,12 +2,24 @@
 
 @implementation Resource
 
-NSString *ResourceChangedNotification = @"ResourceChangedNotification";
+NSString *ResourceWillChangeNotification			= @"ResourceWillChangeNotification";
+NSString *ResourceNameWillChangeNotification		= @"ResourceNameWillChangeNotification";
+NSString *ResourceTypeWillChangeNotification		= @"ResourceTypeWillChangeNotification";
+NSString *ResourceIDWillChangeNotification			= @"ResourceIDWillChangeNotification";
+NSString *ResourceAttributesWillChangeNotification	= @"ResourceAttributesWillChangeNotification";
+NSString *ResourceDataWillChangeNotification		= @"ResourceDataWillChangeNotification";
+
+NSString *ResourceNameDidChangeNotification			= @"ResourceNameDidChangeNotification";
+NSString *ResourceTypeDidChangeNotification			= @"ResourceTypeDidChangeNotification";
+NSString *ResourceIDDidChangeNotification			= @"ResourceIDDidChangeNotification";
+NSString *ResourceAttributesDidChangeNotification	= @"ResourceAttributesDidChangeNotification";
+NSString *ResourceDataDidChangeNotification			= @"ResourceDataDidChangeNotification";
+NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 
 - (id)init
 {
 	self = [super init];
-	[self initWithType:@"" andID:[NSNumber numberWithShort:128]];
+	[self initWithType:@"NULL" andID:[NSNumber numberWithShort:128]];
 	return self;
 }
 
@@ -16,10 +28,22 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	[name release];
 	[type release];
 	[resID release];
-	[size release];
 	[attributes release];
 	[data release];
 	[super dealloc];
+}
+
+/* Accessors */
+
+- (BOOL)isDirty
+{
+	return dirty;
+}
+
+- (void)setDirty:(BOOL)newValue
+{
+	dirty = newValue;
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDidChangeNotification object:self];
 }
 
 - (NSString *)name
@@ -29,10 +53,14 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 
 - (void)setName:(NSString *)newName
 {
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameWillChangeNotification object:self];
+	
 	[name autorelease];
 	name = [newName copy];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted because name changed to %@", ResourceChangedNotification, name );
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameDidChangeNotification object:self];
+	[self setDirty:YES];
 }
 
 - (NSString *)type
@@ -42,10 +70,14 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 
 - (void)setType:(NSString *)newType
 {
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeWillChangeNotification object:self];
+	
 	[type autorelease];
 	type = [newType copy];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted because type changed to %@", ResourceChangedNotification, type );
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeDidChangeNotification object:self];
+	[self setDirty:YES];
 }
 
 - (NSNumber *)resID
@@ -55,23 +87,14 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 
 - (void)setResID:(NSNumber *)newResID
 {
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDWillChangeNotification object:self];
+	
 	[resID autorelease];
 	resID = [newResID copy];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted because res ID changed to %@", ResourceChangedNotification, [resID stringValue] );
-}
-
-- (NSNumber *)size
-{
-	return size;
-}
-
-- (void)setSize:(NSNumber *)newSize
-{
-	[size autorelease];
-	size = [newSize copy];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted because size changed to %@", ResourceChangedNotification, [size stringValue] );
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDDidChangeNotification object:self];
+	[self setDirty:YES];
 }
 
 - (NSNumber *)attributes
@@ -81,22 +104,19 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 
 - (void)setAttributes:(NSNumber *)newAttributes
 {
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesWillChangeNotification object:self];
+	
 	[attributes autorelease];
 	attributes = [newAttributes copy];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted because attributes changed to %@", ResourceChangedNotification, [attributes stringValue] );
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesDidChangeNotification object:self];
+	[self setDirty:YES];
 }
 
-- (BOOL)dirty
+- (NSNumber *)size
 {
-	return dirty;
-}
-
-- (void)setDirty:(BOOL)newValue
-{
-	dirty = newValue;
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted because resource became %@", ResourceChangedNotification, dirty? @"dirty":@"clean" );
+	return [NSNumber numberWithUnsignedLong:[data length]];
 }
 
 - (NSData *)data
@@ -106,11 +126,18 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 
 - (void)setData:(NSData *)newData
 {
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataWillChangeNotification object:self];
+	
+	// note: this function retains, rather than copies, the supplied data
 	[data autorelease];
 	data = [newData retain];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceChangedNotification object:self];
-//	NSLog( @"%@ posted because data changed", ResourceChangedNotification );
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:self];
+	[self setDirty:YES];
 }
+
+/* Creation */
 
 - (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue
 {
@@ -120,19 +147,20 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 
 - (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue
 {
-	[self initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:[NSData data] ofLength:[NSNumber numberWithUnsignedLong:0]];
+	[self initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:[NSData data]];
 	return self;
 }
 
-- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue ofLength:(NSNumber *)sizeValue
+- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue
 {
+	// sets values directly to avoid triggering notifications (would create undos all over the place!)
 	self = [super init];
-	[self setName:nameValue];
-	[self setType:typeValue];
-	[self setResID:resIDValue];
-	[self setSize:sizeValue];
-	[self setAttributes:attributesValue];
-	[self setData:dataValue];
+	dirty = NO;
+	name = [nameValue copy];
+	type = [typeValue copy];
+	resID = [resIDValue copy];
+	attributes = [attributesValue copy];
+	data = [dataValue retain];
 	return self;
 }
 
@@ -148,9 +176,9 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	return [resource autorelease];
 }
 
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue ofLength:(NSNumber *)sizeValue
++ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue
 {
-	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:dataValue ofLength:sizeValue];
+	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:dataValue];
 	return [resource autorelease];
 }
 

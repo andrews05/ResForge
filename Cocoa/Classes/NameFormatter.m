@@ -1,5 +1,4 @@
 #import "NameFormatter.h"
-#import <AppKit/NSColor.h>
 
 @implementation NameFormatter
 
@@ -19,7 +18,7 @@
 {
 	NSString *string = [self stringForObjectValue:obj];
 	if( [obj isEqualToString:@""] )
-		return [[NSAttributedString alloc] initWithString:string attributes:[NSDictionary dictionaryWithObject:[NSColor grayColor] forKey:@"NSColor"]];
+		return [[NSAttributedString alloc] initWithString:string attributes:[NSDictionary dictionaryWithObject:[NSColor grayColor] forKey:NSForegroundColorAttributeName]];
 	else return [[NSAttributedString alloc] initWithString:string attributes:attrs];
 }
 

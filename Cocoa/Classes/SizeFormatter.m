@@ -24,19 +24,19 @@
 	switch( power )
 	{
 		case 0:
-			[string appendFormat:@"%.0f", value];
+			[string appendFormat:NSLocalizedString(@"%.0f", nil), value];
 			break;
 		
 		case 10:
-			[string appendFormat:@"%.1f KB", value];
+			[string appendFormat:NSLocalizedString(@"%.1f KB", nil), value];
 			break;
 		
 		case 20:
-			[string appendFormat:@"%.1f MB", value];
+			[string appendFormat:NSLocalizedString(@"%.1f MB", nil), value];
 			break;
 		
 		default:
-			[string appendFormat:@"%.1f GB", value];
+			[string appendFormat:NSLocalizedString(@"%.1f GB", nil), value];
 			break;
 	}
 	return string;

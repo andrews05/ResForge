@@ -23,6 +23,49 @@
 			settings = {
 			};
 		};
+		F54E6220021B6A0801A80001 = {
+			isa = PBXFileReference;
+			path = FindSheetController.h;
+			refType = 4;
+		};
+		F54E6221021B6A0801A80001 = {
+			isa = PBXFileReference;
+			path = FindSheetController.m;
+			refType = 4;
+		};
+		F54E6222021B6A0801A80001 = {
+			children = (
+				F54E6223021B6A0801A80001,
+			);
+			isa = PBXVariantGroup;
+			name = FindSheet.nib;
+			path = "";
+			refType = 4;
+		};
+		F54E6223021B6A0801A80001 = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/FindSheet.nib;
+			refType = 4;
+		};
+		F54E6224021B6A0901A80001 = {
+			fileRef = F54E6220021B6A0801A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F54E6225021B6A0901A80001 = {
+			fileRef = F54E6222021B6A0801A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F54E6226021B6A0901A80001 = {
+			fileRef = F54E6221021B6A0801A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F5502C3301C5586301C57124 = {
 			fileRef = F5B5884B0156D40B01000001;
 			isa = PBXBuildFile;
@@ -238,6 +281,7 @@
 				F5EF83AA020C08E601A80001,
 				F5EF83AB020C08E601A80001,
 				F5EF83AD020C08E601A80001,
+				F54E6224021B6A0901A80001,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -247,6 +291,7 @@
 			files = (
 				F5EF83AF020C08E601A80001,
 				F5EF83C9020C20D801A80001,
+				F54E6225021B6A0901A80001,
 			);
 			isa = PBXResourcesBuildPhase;
 			name = "Bundle Resources";
@@ -257,6 +302,7 @@
 				F5EF83B0020C08E601A80001,
 				F5EF83B1020C08E601A80001,
 				F5EF83B3020C08E601A80001,
+				F54E6226021B6A0901A80001,
 			);
 			isa = PBXSourcesBuildPhase;
 			name = Sources;
@@ -2405,6 +2451,8 @@
 		};
 		F5EF839F020C08E601A80001 = {
 			children = (
+				F54E6220021B6A0801A80001,
+				F54E6221021B6A0801A80001,
 				F5EF83A0020C08E601A80001,
 				F5EF83A1020C08E601A80001,
 				F5EF83A2020C08E601A80001,
@@ -2412,6 +2460,7 @@
 				F5EF83A7020C08E601A80001,
 				F5EF83A8020C08E601A80001,
 				F5EF83C7020C20D701A80001,
+				F54E6222021B6A0801A80001,
 				F5EF83A9020C08E601A80001,
 			);
 			isa = PBXGroup;

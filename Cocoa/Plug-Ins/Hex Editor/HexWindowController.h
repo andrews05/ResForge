@@ -21,7 +21,7 @@
 
 // normal methods
 - (void)viewDidScroll:(NSNotification *)notification;
-- (void)resourceDidChange:(NSNotification *)notification;
+- (void)resourceDataDidChange:(NSNotification *)notification;
 - (void)refreshData:(NSData *)data;
 
 // accessors

@@ -1,11 +1,18 @@
 #import "ResourceDataSource.h"
+#import "ResourceDocument.h"
+#import "Resource.h"
+
+NSString *DataSourceWillAddResourceNotification = @"DataSourceWillAddResourceNotification";
+NSString *DataSourceDidAddResourceNotification = @"DataSourceDidAddResourceNotification";
+NSString *DataSourceWillRemoveResourceNotification = @"DataSourceWillRemoveResourceNotification";
+NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourceNotification";
 
 @implementation ResourceDataSource
 
 - (id)init
 {
 	self = [super init];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDidChange:) name:ResourceChangedNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDidChange:) name:ResourceDidChangeNotification object:nil];
 	return self;
 }
 
@@ -39,23 +46,35 @@
 
 - (void)addResource:(Resource *)resource
 {
+	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self, @"DataSource", resource, @"Resource", nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceWillAddResourceNotification object:dictionary];
+	
+	// it seems very inefficient to reload the entire data source when just adding/removing one item
+	//	for large resource files, the data source gets reloaded hundereds of times upon load
 	[resources addObject:resource];
 	[outlineView reloadData];
-//	[outlineView noteNumberOfRowsChanged];	// what is this for if it doesn't update the damn outliine view!
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceDidAddResourceNotification object:dictionary];
+	[[document undoManager] registerUndoWithTarget:self selector:@selector(removeResource:) object:resource];
+}
+
+- (void)removeResource:(Resource *)resource
+{
+	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self, @"DataSource", resource, @"Resource", nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceWillRemoveResourceNotification object:dictionary];
+	
+	// see comments in addResource: about inefficiency of reloadData
+	[resources removeObjectIdenticalTo:resource];
+	[outlineView reloadData];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceDidRemoveResourceNotification object:dictionary];
+	[[document undoManager] registerUndoWithTarget:self selector:@selector(addResource:) object:resource];	// NB: I hope the undo manager retains the resource, because it just got deleted :)
 }
 
 - (void)resourceDidChange:(NSNotification *)notification
 {
-	[outlineView reloadData];
-}
-
-- (void)generateTestData
-{
-	[self addResource:[Resource resourceOfType:@"____" andID:[NSNumber numberWithShort:-1] withName:@"underscore" andAttributes:[NSNumber numberWithUnsignedShort:0x8080]]];
-	[self addResource:[Resource resourceOfType:@"ÐÐÐÐ" andID:[NSNumber numberWithShort:0] withName:@"hyphen" andAttributes:[NSNumber numberWithUnsignedShort:0xFFFF] data:[NSData data] ofLength:[NSNumber numberWithUnsignedLong:1023]]];
-	[self addResource:[Resource resourceOfType:@"----" andID:[NSNumber numberWithShort:128] withName:@"minus" andAttributes:[NSNumber numberWithUnsignedShort:0xABCD] data:[NSData data] ofLength:[NSNumber numberWithUnsignedLong:12000]]];
-	[self addResource:[Resource resourceOfType:@"ÑÑÑÑ" andID:[NSNumber numberWithShort:32000] withName:@"en-dash" andAttributes:[NSNumber numberWithUnsignedShort:0x1234] data:[NSData data] ofLength:[NSNumber numberWithUnsignedLong:4096]]];
-	[self addResource:[Resource resourceOfType:@"****" andID:[NSNumber numberWithShort:-32000]]];
+	// reload the data for the changed resource
+	[outlineView reloadItem:[notification object]];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
@@ -84,6 +103,7 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
+	#pragma unused( outlineView )
 	NSString *identifier = [tableColumn identifier];
 	[item takeValue:object forKey:identifier];
 }

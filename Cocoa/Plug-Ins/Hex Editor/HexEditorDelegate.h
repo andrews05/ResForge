@@ -1,7 +1,12 @@
 #import <Cocoa/Cocoa.h>
 
+#import "ResKnifeResourceProtocol.h"
+
+@class HexWindowController;
+
 @interface HexEditorDelegate : NSObject
 {
+    IBOutlet HexWindowController *controller;
 	IBOutlet NSTextView		*ascii;
 	IBOutlet NSTextView		*hex;
 	IBOutlet NSTextView		*offset;

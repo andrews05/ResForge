@@ -1,7 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
-#import "Resource.h"
-#import "ResourceDataSource.h"
+
+@class ResourceDocument, ResourceDataSource;
 
 @interface CreateResourceSheetController : NSWindowController
 {
@@ -13,6 +13,7 @@
 	IBOutlet NSTextField	*resIDView;
 	IBOutlet NSTextField	*typeView;
 	IBOutlet NSPopUpButton	*typePopup;
+	IBOutlet ResourceDocument *document;
 	IBOutlet NSWindow		*parent;
 }
 

@@ -33,6 +33,7 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mainWindowChanged:) name:NSWindowDidBecomeMainNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedResourceChanged:) name:NSOutlineViewSelectionDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesDidChange:) name:ResourceAttributesDidChangeNotification object:nil];
 }
 
 - (void)updateInfoWindow
@@ -86,6 +87,10 @@
 	short attr = 0x0001 << [sender selectedRow]+1;
 	short number = ([[selectedResource attributes] shortValue] ^ attr);
 	[selectedResource setAttributes:[NSNumber numberWithShort:number]];
+}
+
+- (void)resourceAttributesDidChange:(NSNotification *)notification;
+{
 	[self updateInfoWindow];
 }
 

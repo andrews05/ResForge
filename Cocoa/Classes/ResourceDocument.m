@@ -1,5 +1,6 @@
 #import "ResourceDocument.h"
 #import "Resource.h"
+#import "ResourceDataSource.h"
 #import "ResourceNameCell.h"
 #import "CreateResourceSheetController.h"
 
@@ -17,6 +18,7 @@
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	if( otherFork )
 		DisposePtr( (Ptr) otherFork );
 	[resources release];
@@ -44,6 +46,12 @@
 		[[outlineView tableColumnWithIdentifier:@"name"] setDataCell:resourceNameCell];
 	}
 	
+	// register for resource will change notifications (for undo management)
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameWillChange:) name:ResourceNameWillChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceIDWillChange:) name:ResourceIDWillChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeWillChange:) name:ResourceTypeWillChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesWillChange:) name:ResourceAttributesWillChangeNotification object:nil];
+	
 //	[[controller window] setResizeIncrements:NSMakeSize(1,18)];
 //	[controller setDocumet:self];
 	[dataSource setResources:resources];
@@ -54,11 +62,26 @@
 	return [[NSUserDefaults standardUserDefaults] boolForKey:@"PreserveBackups"];
 }
 
+- (BOOL)validateMenuItem:(NSMenuItem *)item
+{
+	Resource *resource = (Resource *) [outlineView itemAtRow:[outlineView selectedRow]];
+	if( [item action] == @selector(saveDocument:) )					return [self isDocumentEdited];
+	else if( [item action] == @selector(openResource:) )			return ([outlineView numberOfSelectedRows] == 1)? YES:NO;
+	else if( [item action] == @selector(openResourceAsHex:) )		return [outlineView numberOfSelectedRows]? YES:NO;
+	else if( [item action] == @selector(playSound:) )				return [[resource type] isEqualToString:@"snd "];
+	else if( [item action] == @selector(revertResourceToSaved:) )	return [resource isDirty];
+	else return [super validateMenuItem:item];
+}
+
+/*
 - (BOOL)windowShouldClose:(NSWindow *)sender
 {
+	if( [self isDocumentEdited] == NO ) return YES;
+	
+	// document has been modified, so display save dialog and defer close
 	NSString *file = [[[sender representedFilename] lastPathComponent] stringByDeletingPathExtension];
-	if( [file isEqualToString:@""] ) file = @"this document";
-	NSBeginAlertSheet( @"Save Document?", @"Save", @"DonÕt Save", @"Cancel", sender, self, @selector(didEndShouldCloseSheet:returnCode:contextInfo:), NULL, sender, @"Do you wish to save %@?", file );
+	if( [file isEqualToString:@""] ) file = NSLocalizedString(@"this document", nil);
+	NSBeginAlertSheet( NSLocalizedString(@"Save Document?", nil), NSLocalizedString(@"Save", nil), NSLocalizedString(@"DonÕt Save", nil), NSLocalizedString(@"Cancel", nil), sender, self, @selector(didEndShouldCloseSheet:returnCode:contextInfo:), NULL, sender, NSLocalizedString(@"Do you wish to save %@?", nil), file );
 	return NO;
 }
 
@@ -78,7 +101,7 @@
 		NSLog( @"didEndShouldCloseSheet received NSAlertErrorReturn return code" );
 	}
 	// else returnCode == NSAlertOtherReturn, cancel
-}
+}*/
 
 /* TOOLBAR MANAGMENT */
 #pragma mark -
@@ -114,9 +137,9 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	
 	if( [itemIdentifier isEqual:RKCreateItemIdentifier] )
 	{
-		[item setLabel:@"Create"];
-		[item setPaletteLabel:@"Create"];
-		[item setToolTip:@"Create New Resource"];
+		[item setLabel:NSLocalizedString(@"Create", nil)];
+		[item setPaletteLabel:NSLocalizedString(@"Create", nil)];
+		[item setToolTip:NSLocalizedString(@"Create New Resource", nil)];
 		[item setImage:[NSImage imageNamed:@"Create"]];
 		[item setTarget:self];
 		[item setAction:@selector(showCreateResourceSheet:)];
@@ -124,19 +147,19 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	}
 	else if( [itemIdentifier isEqual:RKDeleteItemIdentifier] )
 	{
-		[item setLabel:@"Delete"];
-		[item setPaletteLabel:@"Delete"];
-		[item setToolTip:@"Delete Selected Resource"];
+		[item setLabel:NSLocalizedString(@"Delete", nil)];
+		[item setPaletteLabel:NSLocalizedString(@"Delete", nil)];
+		[item setToolTip:NSLocalizedString(@"Delete Selected Resource", nil)];
 		[item setImage:[NSImage imageNamed:@"Delete"]];
-		[item setTarget:outlineView];
+		[item setTarget:self];
 		[item setAction:@selector(clear:)];
 		return item;
 	}
 	else if( [itemIdentifier isEqual:RKEditItemIdentifier] )
 	{
-		[item setLabel:@"Edit"];
-		[item setPaletteLabel:@"Edit"];
-		[item setToolTip:@"Edit Resource In Default Editor"];
+		[item setLabel:NSLocalizedString(@"Edit", nil)];
+		[item setPaletteLabel:NSLocalizedString(@"Edit", nil)];
+		[item setToolTip:NSLocalizedString(@"Edit Resource In Default Editor", nil)];
 		[item setImage:[NSImage imageNamed:@"Edit"]];
 		[item setTarget:self];
 		[item setAction:@selector(openResource:)];
@@ -144,9 +167,9 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	}
 	else if( [itemIdentifier isEqual:RKEditHexItemIdentifier] )
 	{
-		[item setLabel:@"Edit Hex"];
-		[item setPaletteLabel:@"Edit Hex"];
-		[item setToolTip:@"Edit Resource As Hexadecimal"];
+		[item setLabel:NSLocalizedString(@"Edit Hex", nil)];
+		[item setPaletteLabel:NSLocalizedString(@"Edit Hex", nil)];
+		[item setToolTip:NSLocalizedString(@"Edit Resource As Hexadecimal", nil)];
 		[item setImage:[NSImage imageNamed:@"Edit Hex"]];
 		[item setTarget:self];
 		[item setAction:@selector(openResourceAsHex:)];
@@ -154,9 +177,9 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	}
 	else if( [itemIdentifier isEqual:RKSaveItemIdentifier] )
 	{
-		[item setLabel:@"Save"];
-		[item setPaletteLabel:@"Save"];
-		[item setToolTip:[NSString stringWithFormat:@"Save To %@ Fork", !otherFork? @"Data":@"Resource"]];
+		[item setLabel:NSLocalizedString(@"Save", nil)];
+		[item setPaletteLabel:NSLocalizedString(@"Save", nil)];
+		[item setToolTip:[NSString stringWithFormat:NSLocalizedString(@"Save To %@ Fork", nil), !otherFork? NSLocalizedString(@"Data", nil) : NSLocalizedString(@"Resource", nil)]];
 		[item setImage:[NSImage imageNamed:@"Save"]];
 		[item setTarget:self];
 		[item setAction:@selector(saveDocument:)];
@@ -164,9 +187,9 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	}
 	else if( [itemIdentifier isEqual:RKShowInfoItemIdentifier] )
 	{
-		[item setLabel:@"Show Info"];
-		[item setPaletteLabel:@"Show Info"];
-		[item setToolTip:@"Show Resource Information Window"];
+		[item setLabel:NSLocalizedString(@"Show Info", nil)];
+		[item setPaletteLabel:NSLocalizedString(@"Show Info", nil)];
+		[item setToolTip:NSLocalizedString(@"Show Resource Information Window", nil)];
 		[item setImage:[NSImage imageNamed:@"Show Info"]];
 		[item setTarget:[NSApp delegate]];
 		[item setAction:@selector(showInfo:)];
@@ -220,14 +243,15 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 - (BOOL)validateToolbarItem:(NSToolbarItem *)item
 {
 	BOOL valid = NO;
+	int selection = [outlineView numberOfSelectedRows];
 	NSString *identifier = [item itemIdentifier];
 	
-	if( [identifier isEqual:RKCreateItemIdentifier] )				valid = YES;
-//	else if( [identifier isEqual:RKDeleteItemIdentifier] )			valid = [outlineView numberOfSelectedRows]? YES:NO;
-	else if( [identifier isEqual:RKEditItemIdentifier] )			valid = NO;
-	else if( [identifier isEqual:RKEditHexItemIdentifier] )			valid = [outlineView numberOfSelectedRows]? YES:NO;
-	else if( [identifier isEqual:RKSaveItemIdentifier] )			valid = [self isDocumentEdited];
-	else if( [identifier isEqual:NSToolbarPrintItemIdentifier] )	valid = YES;
+	if( [identifier isEqualToString:RKCreateItemIdentifier] )				valid = YES;
+	else if( [identifier isEqualToString:RKDeleteItemIdentifier] )			valid = selection? YES:NO;
+	else if( [identifier isEqualToString:RKEditItemIdentifier] )			valid = (selection == 1)? YES:NO;
+	else if( [identifier isEqualToString:RKEditHexItemIdentifier] )			valid = selection? YES:NO;
+	else if( [identifier isEqualToString:RKSaveItemIdentifier] )			valid = [self isDocumentEdited];
+	else if( [identifier isEqualToString:NSToolbarPrintItemIdentifier] )	valid = YES;
 	
 	return valid;
 }
@@ -299,6 +323,82 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	NSLog( @"sound released" );
 }
 
+- (void)resourceNameWillChange:(NSNotification *)notification
+{
+	// this saves the current resource's name so we can undo the change
+	Resource *resource = (Resource *) [notification object];
+	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setName:) object:[[[resource name] copy] autorelease]];
+	[[self undoManager] setActionName:NSLocalizedString(@"Name Change", nil)];
+}
+
+- (void)resourceIDWillChange:(NSNotification *)notification
+{
+	// this saves the current resource's ID number so we can undo the change
+	Resource *resource = (Resource *) [notification object];
+	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setResID:) object:[[[resource resID] copy] autorelease]];
+	if( [[resource name] length] == 0 )
+		[[self undoManager] setActionName:NSLocalizedString(@"ID Change", nil)];
+	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"ID Change for Ò%@Ó", nil), [resource name]]];
+}
+
+- (void)resourceTypeWillChange:(NSNotification *)notification
+{
+	// this saves the current resource's type so we can undo the change
+	Resource *resource = (Resource *) [notification object];
+	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setType:) object:[[[resource type] copy] autorelease]];
+	if( [[resource name] length] == 0 )
+		[[self undoManager] setActionName:NSLocalizedString(@"Type Change", nil)];
+	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Type Change for Ò%@Ó", nil), [resource name]]];
+}
+
+- (void)resourceAttributesWillChange:(NSNotification *)notification
+{
+	// this saves the current state of the resource's attributes so we can undo the change
+	Resource *resource = (Resource *) [notification object];
+	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setAttributes:) object:[[[resource attributes] copy] autorelease]];
+	if( [[resource name] length] == 0 )
+		[[self undoManager] setActionName:NSLocalizedString(@"Attributes Change", nil)];
+	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Attributes Change for Ò%@Ó", nil), [resource name]]];
+}
+
+/* EDIT OPERATIONS */
+#pragma mark -
+
+- (IBAction)clear:(id)sender
+{
+	NSNumber *row;
+	Resource *resource;
+	NSMutableArray *selectedObjects = [NSMutableArray array];
+	NSEnumerator *enumerator = [outlineView selectedRowEnumerator];
+	int selectedRows = [outlineView numberOfSelectedRows];
+	
+	// obtain array of selected resources
+	[[self undoManager] beginUndoGrouping];
+	while( row = [enumerator nextObject] )
+	{
+		[selectedObjects addObject:[outlineView itemAtRow:[row intValue]]];
+	}
+	
+	// enumerate through array and delete resources
+	//	i can't just delete resources above, because it screws with the enumeration!
+	enumerator = [selectedObjects reverseObjectEnumerator];		// reverse so an undo will replace items in original order
+	while( resource = [enumerator nextObject] )
+	{
+		[dataSource removeResource:resource];
+		if( [[resource name] length] == 0 )
+			[[self undoManager] setActionName:NSLocalizedString(@"Delete Resource", nil)];
+		else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Delete Resource Ò%@Ó", nil), [resource name]]];
+	}
+	[[self undoManager] endUndoGrouping];
+	
+	// generalise undo name if more than one was deleted
+	if( selectedRows > 1 )
+		[[self undoManager] setActionName:NSLocalizedString(@"Delete Resources", nil)];
+	
+	// deselct resources (otherwise other resources move into selected rows!)
+	[outlineView deselectAll:self];
+}
+
 /* FILE HANDLING */
 #pragma mark -
 
@@ -368,11 +468,10 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 			{
 				NSString	*name		= [NSString stringWithCString:&nameStr[1] length:nameStr[0]];
 				NSString	*type		= [NSString stringWithCString:(char *) &resType length:4];
-				NSNumber	*size		= [NSNumber numberWithLong:sizeLong];
 				NSNumber	*resID		= [NSNumber numberWithShort:resIDShort];
 				NSNumber	*attributes	= [NSNumber numberWithShort:attrsShort];
 				NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
-				Resource	*resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data ofLength:size];
+				Resource	*resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data];
 				[resources addObject:resource];		// array retains resource
 			}
 			
@@ -438,9 +537,8 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		Str255	nameStr;
 		ResType	resType;
 		short	resIDShort	= [[resource resID] shortValue];
-		long	sizeLong	= [[resource size] longValue];
 		short	attrsShort	= [[resource attributes] shortValue];
-		Handle resourceHandle = NewHandleClear( sizeLong );
+		Handle resourceHandle = NewHandleClear( [[resource data] length] );
 		
 		nameStr[0] = [[resource name] cStringLength];
 		BlockMoveData( [[resource name] cString], &nameStr[1], nameStr[0] );
@@ -454,7 +552,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		AddResource( resourceHandle, resType, resIDShort, nameStr );
 		if( ResError() == addResFailed )
 		{
-			NSLog( @"*Saving failed*; could not add resource \"%@\" of type %@ to file.", [resource name], [resource type] );
+			NSLog( @"*Saving failed*; could not add resource ID %@ of type %@ to file.", [resource resID], [resource type] );
 			error = addResFailed;
 		}
 		else

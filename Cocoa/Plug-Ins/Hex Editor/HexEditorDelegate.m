@@ -1,4 +1,5 @@
 #import "HexEditorDelegate.h"
+#import "HexWindowController.h"
 
 /* Ideas, method names, and occasionally code stolen from HexEditor by Raphael Sebbe http://raphaelsebbe.multimania.com/ */
 
@@ -117,6 +118,31 @@
 
 /* delegation methods */
 
+- (BOOL)textView:(NSTextView *)textView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString;
+{
+#warning Every time a character is typed or string pasted, the entire resource is duplicated, operated on and disposed of! Perhaps I could do this in a better way?
+	unsigned char *buffer;
+	NSMutableData *data = [NSMutableData dataWithData:[controller data]];
+	NSMutableData *newData = [NSMutableData dataWithBytes:[replacementString cString] length:[replacementString cStringLength]];
+	NSRange range;
+	
+	NSLog( @"Delegate received:\ntextView: shouldChangeTextInRange:%@ replacementString:%@", NSStringFromRange(affectedCharRange), replacementString );
+	
+	if( textView == hex )			range = [self byteRangeFromHexRange:affectedCharRange];
+	else if( textView == ascii )	range = [self byteRangeFromAsciiRange:affectedCharRange];
+	else return YES;
+
+#warning Does not cater for delete, forward delete, etc.
+	buffer = malloc( [newData length] );
+	[newData getBytes:buffer];
+	[data replaceBytesInRange:range withBytes:buffer];
+	free(buffer);
+	
+	// update resource data - this causes a notification to be sent out, which the plug receives and acts upon to update the text views
+	[(id <ResKnifeResourceProtocol>)[controller resource] setData:data];
+	return NO;
+}
+
 - (NSRange)textView:(NSTextView *)textView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange
 {
 	NSRange hexRange, asciiRange, byteRange = NSMakeRange(0,0);
@@ -147,6 +173,8 @@
 	[ascii setDelegate:oldDelegate];
 	return newSelectedCharRange;
 }
+
+/* range conversion methods */
 
 - (NSRange)byteRangeFromHexRange:(NSRange)hexRange;
 {
@@ -190,15 +218,6 @@
 	asciiRange.length = byteRange.length + ((byteRange.location + byteRange.length) / 17) - (byteRange.location / 17);
 	
 	return asciiRange;
-}
-
-- (BOOL)textView:(NSTextView *)textView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString;
-{
-	if( textView == hex )				// we're editing in hexadecimal constrain to 0-9, A-F
-	{
-		return YES;
-	}
-	else return YES;					// we're editing in ASCII
 }
 
 - (NSTextView *)hex

@@ -1,4 +1,7 @@
 #import "CreateResourceSheetController.h"
+#import "ResourceDataSource.h"
+#import "ResourceDocument.h"
+#import "Resource.h"
 
 @implementation CreateResourceSheetController
 
@@ -37,7 +40,13 @@
 		attributes ^= [[attributesMatrix cellAtRow:2 column:0] intValue]? resLocked:0;
 		attributes ^= [[attributesMatrix cellAtRow:0 column:1] intValue]? resSysHeap:0;
 		attributes ^= [[attributesMatrix cellAtRow:1 column:1] intValue]? resProtected:0;
+		
+		[[document undoManager] beginUndoGrouping];
 		[dataSource addResource:[Resource resourceOfType:[typeView stringValue] andID:[NSNumber numberWithShort:(short) [resIDView intValue]] withName:[nameView stringValue] andAttributes:[NSNumber numberWithUnsignedShort:attributes]]];
+		if( [[nameView stringValue] length] == 0 )
+			[[document undoManager] setActionName:NSLocalizedString(@"Create Resource", nil)];
+		else [[document undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Create Resource Ò%@Ó", nil), [nameView stringValue]]];
+		[[document undoManager] endUndoGrouping];
 	}
 	[[self window] orderOut:nil];
 	[NSApp endSheet:[self window]];

@@ -10,15 +10,16 @@
             CLASS = CreateResourceSheetController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                attributesMatrix = id; 
-                cancelButton = id; 
-                createButton = id; 
-                dataSource = id; 
-                nameView = id; 
-                parent = id; 
-                resIDView = id; 
-                typePopup = id; 
-                typeView = id; 
+                attributesMatrix = NSMatrix; 
+                cancelButton = NSButton; 
+                createButton = NSButton; 
+                dataSource = ResourceDataSource; 
+                document = ResourceDocument; 
+                nameView = NSTextField; 
+                parent = NSWindow; 
+                resIDView = NSTextField; 
+                typePopup = NSPopUpButton; 
+                typeView = NSTextField; 
             }; 
             SUPERCLASS = NSWindowController; 
         }, 
@@ -38,7 +39,12 @@
         {
             CLASS = ResourceDataSource; 
             LANGUAGE = ObjC; 
-            OUTLETS = {createResourceSheetController = id; outlineView = id; window = id; }; 
+            OUTLETS = {
+                createResourceSheetController = CreateResourceSheetController; 
+                document = ResourceDocument; 
+                outlineView = NSOutlineView; 
+                window = NSWindow; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
         {

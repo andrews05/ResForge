@@ -2,5 +2,5 @@
 
 CFBundleName = "ResKnife";
 CFBundleShortVersionString = "Development Version";
-CFBundleGetInfoString = "ResKnife 0.4d3, Copyright 2001 Nicholas Shanks.";
-NSHumanReadableCopyright = "Copyright © 2001 Nicholas Shanks.";
+CFBundleGetInfoString = "ResKnife 0.4d3, Copyright 2001-2 Nicholas Shanks.";
+NSHumanReadableCopyright = "Copyright © 2001-2 Nicholas Shanks.";
