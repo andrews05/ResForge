@@ -4,5 +4,5 @@
 	AutosaveInterval = 5;
 	DeleteResourceWarning = YES;
 	
-	OpenUntitledFileOnLaunch = YES;
+	LaunchAction = OpenUntitledFile;
 }
