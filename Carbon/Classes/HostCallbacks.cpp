@@ -53,6 +53,21 @@ Plug_PlugInRef Host_GetPlugRef( WindowRef window )
 	return null;
 }
 
+Plug_ResourceRef Host_GetResource( ResType type, SInt32 resID, Plug_ResourceRef sameFileAsResource )
+{
+	FilWindowPtr file;
+	if( sameFileAsResource != NULL )
+	{
+//		file = ((ResourceObjectPtr) sameFileAsResource)->file;
+		short oldResFile = CurResFile();
+		UseResFile( HomeResFile( ((ResourceObjectPtr) sameFileAsResource)->Data() ) );
+		Get1Resource( type, resID );	// bug: handle ignored at present
+		UseResFile( oldResFile );
+	}
+	else GetResource( type, resID );	// bug: handle ignored at present
+	return nil;							// bug: handle ignored at present
+}
+
 Plug_ResourceRef Host_GetTargetResource( Plug_WindowRef plugWindow )
 {
 	return (Plug_ResourceRef) ((EditorWindowPtr) plugWindow)->Resource();

@@ -122,7 +122,14 @@ extern "C"						// functions beginning "Host_" are in ResKnife/Resurrection
  */
 	ResCall Plug_PlugInRef		Host_GetPlugRef( WindowRef window );
 /*!
+ *	@function					Host_GetResource
+ *	@discussion					Returns a reference to any arbitrary resource.
+ *	@param limitToDoc			If true, the function will only search the same document that contains the resource returned by Host_GetTargetResource. If false, it will return any resource in the current resource chain.
+ */
+	ResCall Plug_ResourceRef	Host_GetResource( SInt32 type, SInt32 resID, Boolean limitToDoc );
+/*!
  *	@function					Host_GetTargetResource
+ *	@discussion					Returns the reference to the resource you're actually editing.
  */
 	ResCall Plug_ResourceRef	Host_GetTargetResource( Plug_WindowRef plugWindow );
 /*!

@@ -18,6 +18,7 @@
 - (NSString *)offsetRepresentation:(NSData *)data;
 - (NSString *)hexRepresentation:(NSData *)data;
 - (NSString *)asciiRepresentation:(NSData *)data;
+- (NSString *)hexToAscii:(NSData *)data;
 
 - (NSRange)byteRangeFromHexRange:(NSRange)hexRange;
 - (NSRange)hexRangeFromByteRange:(NSRange)byteRange;

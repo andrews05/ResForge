@@ -116,21 +116,22 @@
 	return representation;
 }
 
-- (NSString *)hexToAscii:(NSData *)data;
+- (NSString *)hexToAscii:(NSData *)data
 {
+	NSString *result;
 	unsigned long bytesEncoded = ([data length] + 1) / 3;
-	char *buffer = (char *) malloc( bytesEncoded ), hex1, hex2, ascii;
+	char *buffer = (char *) malloc( bytesEncoded ), hex1, hex2;
 	for( int i = 0; i < bytesEncoded; i++ )
 	{
 		hex1 = ((char *)[data bytes])[3*i];
 		hex2 = ((char *)[data bytes])[3*i+1];
 		hex1 -= (hex1 < 'A')? 0x30 : 0x37;
 		hex2 -= (hex2 < 'A')? 0x30 : 0x37;
-		hex1 <<= 4;
-		ascii = hex1 + hex2;
-		buffer[i] = ascii;
+		buffer[i] = (hex1 << 4) + hex2;
 	}
-	return [NSString stringWithCString:buffer length:bytesEncoded];
+	result = [NSString stringWithCString:buffer length:bytesEncoded];
+	free( buffer );
+	return result;
 }
 
 /* delegation methods */

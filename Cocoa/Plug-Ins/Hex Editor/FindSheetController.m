@@ -15,8 +15,8 @@
 	[findString autorelease];
 	[replaceString autorelease];
 	
-	findString = [[[form cellAtIndex:0] stringValue] copy];
-	replaceString = [[[form cellAtIndex:1] stringValue] copy];
+	findString = [[[findReplaceForm cellAtIndex:0] stringValue] copy];
+	replaceString = [[[findReplaceForm cellAtIndex:1] stringValue] copy];
 }
 
 /* HIDE AND SHOW SHEET */

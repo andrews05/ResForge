@@ -1,7 +1,5 @@
 #import "HexTextView.h"
 
-@class _NSUndoStack;
-
 @implementation HexTextView
 
 - (void)drawRect:(NSRect)rect
@@ -82,7 +80,7 @@
 		NSMenu *editMenu = [[item menu] supermenu];
 		[[editMenu itemAtIndex:[editMenu indexOfItemWithSubmenu:[item menu]]] setEnabled:[super validateMenuItem:item]];
 	}
-	else return [super validateMenuItem:item];
+	return [super validateMenuItem:item];
 }
 
 - (IBAction)cut:(id)sender
@@ -216,7 +214,7 @@
 
 - (unsigned int)_insertionGlyphIndexForDrag:(id <NSDraggingInfo>)sender
 {
-	int charIndex = [super _insertionGlyphIndexForDrag:sender];
+	unsigned int charIndex = [super _insertionGlyphIndexForDrag:sender];
 	if( self == [[self delegate] hex] )
 		charIndex -= charIndex % 3;
 	return charIndex;
@@ -258,7 +256,6 @@ static NSRange draggedRange;
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-	NSRange range;
 	NSPasteboard *pb = [sender draggingPasteboard];
 	NSData *pastedData = [pb dataForType:NSStringPboardType];
 	int charIndex = [self _insertionGlyphIndexForDrag:sender];
@@ -433,11 +430,11 @@ static NSRange draggedRange;
 	
 	// manipulate undo stack to concatenate multiple undos
 	BOOL closeUndoGroup = NO;
-	_NSUndoStack *undoStack = nil;
+	id undoStack = nil;		// object of class _NSUndoStack
 	if( ![[[self window] undoManager] isUndoing] )
 		undoStack = [[[self window] undoManager] _undoStack];
 	
-	if( undoStack && [undoStack count] > 0 && [[[self window] undoManager] groupingLevel] == 0 )
+	if( undoStack && (int)[undoStack count] > 0 && [[[self window] undoManager] groupingLevel] == 0 )
 	{
 		[undoStack popUndoObject];		// pop endUndoGrouping item
 		closeUndoGroup = YES;

@@ -2,11 +2,19 @@
 
 @interface FindSheetController : NSWindowController
 {
-    IBOutlet NSButton	*cancelButton;
-    IBOutlet NSButton	*findNextButton;
-    IBOutlet NSForm		*form;
-    IBOutlet NSButton	*replaceAllButton;
-    IBOutlet NSButton	*replaceFindNextButton;
+	IBOutlet NSButton	*cancelButton;
+	IBOutlet NSButton	*findNextButton;
+	IBOutlet NSForm		*findReplaceForm;
+	IBOutlet NSButton	*replaceAllButton;
+//	IBOutlet NSButton	*replaceFindNextButton;
+	
+	IBOutlet NSButton	*startAtTopBox;
+	IBOutlet NSButton	*wrapAroundBox;
+	IBOutlet NSButton	*searchBackwardsBox;
+	IBOutlet NSButton	*searchSelectionOnlyBox;
+	IBOutlet NSButton	*caseSensitiveBox;
+	IBOutlet NSButton	*matchEntireWordsBox;
+	IBOutlet NSMatrix	*searchASCIIOrHexRadios;
 	
 	NSString *findString;
 	NSString *replaceString;
