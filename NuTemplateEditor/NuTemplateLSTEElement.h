@@ -9,10 +9,12 @@
 #import <AppKit/AppKit.h>
 #import "NuTemplateGroupElement.h"
 
+@class NuTemplateOCNTElement;
 
 @interface NuTemplateLSTEElement : NuTemplateGroupElement
 {
 	NuTemplateGroupElement*		groupElemTemplate;	// The item of which we're to create a copy.
+	NuTemplateOCNTElement*		countElement;		// The "counter" element if we're the end of an LSTC list.
 	BOOL						writesZeroByte;		// Write a terminating zero-byte when writing out this item (used by LSTZ).
 }
 
@@ -23,5 +25,8 @@
 
 -(void)						setGroupElemTemplate: (NuTemplateGroupElement*)e;
 -(NuTemplateGroupElement*)	groupElemTemplate;
+
+-(void)						setCountElement: (NuTemplateOCNTElement*)e;
+-(NuTemplateOCNTElement*)	countElement;
 
 @end

@@ -122,8 +122,6 @@ RKEditorRegistry*		gRKEditorRegistryMainRegistry = nil;	// Access through +mainR
 		NSEnumerator *e = [[[NSFileManager defaultManager] directoryContentsAtPath:path] objectEnumerator];
 		NSString *name;
 		
-		NSLog(@"Looking for plugins at %@", path);
-		
 		while( name = [e nextObject] )
 		{
 			name = [path stringByAppendingPathComponent:name];
@@ -132,10 +130,8 @@ RKEditorRegistry*		gRKEditorRegistryMainRegistry = nil;	// Access through +mainR
 			{
 				NSBundle *plugin = [NSBundle bundleWithPath: name];
 				
-				NSLog(@"Identifier %@", [plugin bundleIdentifier]);
 				if( pluginClass = [plugin principalClass] )
 				{
-					NSLog(@"Found plugin: %@", name);
 					if( [pluginClass instancesRespondToSelector:@selector(initWithResource:)] )
 					{
 						NSString		*resType;

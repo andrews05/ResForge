@@ -32,6 +32,8 @@
 #import "NuTemplateDWRDElement.h"
 #import "NuTemplateDLNGElement.h"
 #import "NuTemplateDBYTElement.h"
+#import "NuTemplateOCNTElement.h"
+#import "NuTemplateLSTCElement.h"
 #import "NuTemplateStream.h"
 
 #import "NSOutlineView-SelectedItems.h"
@@ -153,6 +155,9 @@
 	{
 		currElement = [[currElement copy] autorelease];		// Copy the template object.
 		
+		if( [[currElement type] isEqualToString: @"OCNT"] )
+			NSLog( @"Instantiated: %@", currElement );
+		
 		[resourceStructure addObject: currElement];		// Add it to our parsed resource data list. Do this right away so the element can append other items should it desire to.
 		[currElement setContaining: resourceStructure];
 		[currElement readDataFrom: stream];		// Fill it with resource data.
@@ -204,6 +209,11 @@
 		[fieldReg setObject: [NuTemplateDLNGElement class] forKey: @"DLNG"];
 		[fieldReg setObject: [NuTemplateDBYTElement class] forKey: @"DBYT"];
 		[fieldReg setObject: [NuTemplateDBYTElement class] forKey: @"CHAR"];
+		[fieldReg setObject: [NuTemplateOCNTElement class] forKey: @"OCNT"];
+		[fieldReg setObject: [NuTemplateOCNTElement class] forKey: @"ZCNT"];
+		[fieldReg setObject: [NuTemplateOCNTElement class] forKey: @"LCNT"];
+		[fieldReg setObject: [NuTemplateOCNTElement class] forKey: @"LZCT"];
+		[fieldReg setObject: [NuTemplateLSTCElement class] forKey: @"LSTC"];
 	}
 	
 	// Read new fields from the template and add them to our list:

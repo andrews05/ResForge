@@ -8,7 +8,7 @@
 
 #import "NuTemplateLSTEElement.h"
 #import "NuTemplateLSTBElement.h"
-
+#import "NuTemplateOCNTElement.h"
 
 @implementation NuTemplateLSTEElement
 
@@ -29,6 +29,17 @@
 -(NuTemplateGroupElement*)	groupElemTemplate
 {
 	return groupElemTemplate;
+}
+
+
+-(void)	setCountElement: (NuTemplateOCNTElement*)e
+{
+	countElement = e;
+}
+
+-(NuTemplateOCNTElement*)	countElement
+{
+	return countElement;
 }
 
 
@@ -93,6 +104,7 @@
 	
 	[el setGroupElemTemplate: [self groupElemTemplate]];
 	[el setWritesZeroByte: [self writesZeroByte]];
+	[el setCountElement: [self countElement]];
 	
 	return el;
 }
@@ -105,6 +117,7 @@
 
 	[containing insertObject:ge atIndex:idx];
 	[ge setContaining: containing];
+	[countElement setLongValue: ([countElement longValue] +1)];
 }
 
 
