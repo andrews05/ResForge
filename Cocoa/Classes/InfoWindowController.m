@@ -57,7 +57,7 @@
 		[[attributesMatrix cellAtRow:purgableBox column:0]	setState:[[selectedResource attributes] shortValue] & resPurgeable];
 		[[attributesMatrix cellAtRow:systemHeapBox column:0] setState:[[selectedResource attributes] shortValue] & resSysHeap];
 	}
-	else
+	else if( currentDocument != nil )
 	{
 		// get sizes of forks as they are on disk
 		UInt64 dataLogicalSize = 0, rsrcLogicalSize = 0;
@@ -73,8 +73,8 @@
 		[[self window] setTitle:@"Document Info"];
 		[iconView setImage:[NSImage imageNamed:@"Resource file"]];
 		[nameView setStringValue:[currentDocument fileName]? [[currentDocument fileName] lastPathComponent]:[currentDocument displayName]];
-		[[filePropertyForm cellAtIndex:0] setStringValue:[currentDocument creator]];
-		[[filePropertyForm cellAtIndex:1] setStringValue:[currentDocument type]];
+		[[filePropertyForm cellAtIndex:0] setStringValue:@"hi:)"/*[currentDocument creator]*/];
+		[[filePropertyForm cellAtIndex:1] setStringValue:@"helo"/*[currentDocument type]*/];
 //		[[filePropertyForm cellAtIndex:2] setObjectValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
 //		[[filePropertyForm cellAtIndex:3] setObjectValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
 		[[filePropertyForm cellAtIndex:2] setStringValue:[[NSNumber numberWithUnsignedLongLong:dataLogicalSize] description]];
@@ -91,7 +91,9 @@
 		currentDocument = [controller document];
 	else currentDocument = nil;
 	
-	selectedResource = [[currentDocument outlineView] selectedItem];
+	if( currentDocument )
+		selectedResource = [[currentDocument outlineView] selectedItem];
+	else selectedResource = [controller resource];
 	[self updateInfoWindow];
 }
 

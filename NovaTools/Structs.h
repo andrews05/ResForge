@@ -13,7 +13,7 @@ typedef struct RLEPixelData
 	short reserved1;
 	short reserved2;
 	short reserved3;
-	char tokens[];	// the RLE token data (variable size array)
+	char tokens[1];	// the RLE token data (variable size array)
 } RLEPixelData;
 
 #define kRLEResourceHeaderSize	(sizeof(RLEPixelData) - 1)

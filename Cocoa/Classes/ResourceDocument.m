@@ -299,8 +299,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	// opens resource in template using TMPL resource with name templateName
 	NSBundle *templateEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Template Editor.plugin"]];
 	
-	// bug: this only checks the CURRENT DOCUMENT for template resources
-//	Resource *tmpl = [dataSource resourceOfType:@"TMPL" withName:[resource type]];
+	// bug: this checks EVERY DOCUMENT for template resources (might not be desired)
 	Resource *tmpl = [Resource resourceOfType:@"TMPL" withName:[resource type] inDocument:nil];
 	
 	// open the resources, passing in the template to use
@@ -320,7 +319,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
 	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 	
-	[(id <ResKnifePluginProtocol>)[[hexEditor principalClass] alloc] initWithResource:resource];
+	NSWindowController *plugController = [(id <ResKnifePluginProtocol>)[[hexEditor principalClass] alloc] initWithResource:resource];
 }
 
 - (IBAction)playSound:(id)sender

@@ -12,6 +12,7 @@
 	// one instance of your principal class will be created for every resource the user wants to edit (similar to Windows apps)
 	resource = [newResource retain];
 	bytesPerRow = 16;
+	hexUndo = [[NSUndoManager alloc] init];
 	
 	// load the window from the nib file and set it's title
 	[self window];	// implicitly loads nib
@@ -176,6 +177,12 @@
 - (int)bytesPerRow
 {
 	return bytesPerRow;
+}
+
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)sender
+{
+	NSLog(@"returning undo manager %@", hexUndo);
+	return hexUndo;
 }
 
 @end

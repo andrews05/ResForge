@@ -142,6 +142,7 @@
 		selection = [[self delegate] asciiRangeFromByteRange:byteSelection];
 	[self setSelectedRange:selection];
 	[data release];
+	NSLog(@"undo manager %@", [[self window] undoManager]);
 }
 
 - (IBAction)deleteBackward:(id)sender
