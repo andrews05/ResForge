@@ -7,6 +7,9 @@
 
 #import "ResKnifePluginProtocol.h"
 
+NSString *DocumentInfoWillChangeNotification		= @"DocumentInfoWillChangeNotification";
+NSString *DocumentInfoDidChangeNotification			= @"DocumentInfoDidChangeNotification";
+
 @implementation ResourceDocument
 
 - (id)init
@@ -92,8 +95,8 @@
 	else if( [item action] == @selector(deselectAll:) )				return selectedRows > 0;
 	
 	// resource menu
-	else if( [item action] == @selector(openResource:) )			return selectedRows == 1;
-	else if( [item action] == @selector(openResourceAsHex:) )		return selectedRows > 0;
+	else if( [item action] == @selector(openResources:) )			return selectedRows > 0;
+	else if( [item action] == @selector(openResourcesAsHex:) )		return selectedRows > 0;
 	else if( [item action] == @selector(playSound:) )				return selectedRows == 1 && [[resource type] isEqualToString:@"snd "];
 	else if( [item action] == @selector(revertResourceToSaved:) )	return selectedRows == 1 && [resource isDirty];
 	else return [super validateMenuItem:item];
@@ -233,50 +236,69 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[sheetController showCreateResourceSheet:self];
 }
 
-- (IBAction)openResource:(id)sender
+- (IBAction)openResources:(id)sender
 {
-	// bug: Can only cope with one selected item
-	[self openResourceInTemplate:sender];
+	Resource *resource;
+	NSArray *selected = [outlineView selectedItems];
+	NSEnumerator *enumerator = [selected objectEnumerator];
+	while( resource = [enumerator nextObject] )
+		[self openResourceUsingEditor:resource];
 }
 
-- (IBAction)openResourceInTemplate:(id)sender
+- (IBAction)openResourcesInTemplate:(id)sender
 {
-	// opens the resource in it's default template
-	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
-	[self openResourceUsingTemplate:[resource type]];
+	// opens the resource in its default template
+	Resource *resource;
+	NSArray *selected = [outlineView selectedItems];
+	NSEnumerator *enumerator = [selected objectEnumerator];
+	while( resource = [enumerator nextObject] )
+		[self openResource:resource usingTemplate:[resource type]];
 }
 
-- (void)openResourceUsingTemplate:(NSString *)templateName
+- (IBAction)openResourcesAsHex:(id)sender
+{
+	Resource *resource;
+	NSArray *selected = [outlineView selectedItems];
+	NSEnumerator *enumerator = [selected objectEnumerator];
+	while( resource = [enumerator nextObject] )
+		[self openResourceAsHex:resource];
+}
+
+- (void)openResourceUsingEditor:(Resource *)resource
+{
+	// Placeholder, change at some point.
+	[self openResource:resource usingTemplate:[resource type]];
+}
+
+- (void)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
 {
 	// opens resource in template using TMPL resource with name templateName
-	// bug: Can only cope with one selected item
 	NSBundle *templateEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Template Editor.plugin"]];
-	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
+	
+	// nug: this only checks the CURRENT DOCUMENT for template resources
 	Resource *tmpl = [dataSource resourceNamed:[resource type] ofType:@"TMPL"];
 	
-	// open the resource, passing in the template to use
+	// open the resources, passing in the template to use
 	if( tmpl /*&& [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)]*/ )
 	{
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 		[(id <ResKnifePluginProtocol>)[[templateEditor principalClass] alloc] initWithResources:resource, tmpl, nil];
 	}
 	// if no template exists, or template editor is broken, open as hex
-	else [self openResourceAsHex:self];
+	else [self openResourceAsHex:resource];
 }
 
-- (IBAction)openResourceAsHex:(id)sender
+- (void)openResourceAsHex:(Resource *)resource
 {
-#warning Can only cope with one selected item
 	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
-	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
-#warning I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
+	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 	
 	[(id <ResKnifePluginProtocol>)[[hexEditor principalClass] alloc] initWithResource:resource];
 }
 
 - (IBAction)playSound:(id)sender
 {
-#warning Can only cope with one selected item
+	// bug: Can only cope with one selected item
 	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
 	NSSound *sound = [[NSSound alloc] initWithData:[resource data]];
 	[sound setDelegate:self];
@@ -574,6 +596,65 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 - (NSArray *)resources
 {
 	return resources;
+}
+
+- (NSString *)creator
+{
+	return creator;
+}
+
+- (NSString *)type
+{
+	return type;
+}
+
+- (IBAction)creatorChanged:(id)sender
+{
+	[self setCreator:[sender stringValue]];
+}
+
+- (IBAction)typeChanged:(id)sender
+{
+	[self setType:[sender stringValue]];
+}
+
+- (void)setCreator:(NSString *)newCreator
+{
+	if( ![newCreator isEqualToString:creator] )
+	{
+		id old = creator;
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:[NSDictionary dictionaryWithObjectsAndKeys:self, @"NSDocument", newCreator, @"NSString creator", nil]];
+		[[self undoManager] registerUndoWithTarget:self selector:@selector(setCreator:) object:creator];
+		[[self undoManager] setActionName:NSLocalizedString( @"Change Creator Code", nil)];
+		creator = [newCreator copy];
+		[old release];
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:[NSDictionary dictionaryWithObjectsAndKeys:self, @"NSDocument", newCreator, @"NSString creator", nil]];
+	}
+}
+
+- (void)setType:(NSString *)newType
+{
+	if( ![newType isEqualToString:type] )
+	{
+		id old = type;
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:[NSDictionary dictionaryWithObjectsAndKeys:self, @"NSDocument", newType, @"NSString type", nil]];
+		[[self undoManager] registerUndoWithTarget:self selector:@selector(setType:) object:type];
+		[[self undoManager] setActionName:NSLocalizedString( @"Change File Type", nil)];
+		type = [newType copy];
+		[old release];
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:[NSDictionary dictionaryWithObjectsAndKeys:self, @"NSDocument", newType, @"NSString type", nil]];
+	}
+}
+
+- (void)setCreator:(NSString *)newCreator andType:(NSString *)newType
+{
+	BOOL changeAction = ![newCreator isEqualToString:creator] && ![newType isEqualToString:type];
+	[[self undoManager] beginUndoGrouping];
+	[self setCreator:newCreator];
+	[self setType:newType];
+	[[self undoManager] endUndoGrouping];
+	if( changeAction )
+		[[self undoManager] setActionName:NSLocalizedString( @"Change Creator & Type", nil)];
 }
 
 @end

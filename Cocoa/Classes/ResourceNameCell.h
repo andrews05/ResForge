@@ -2,11 +2,14 @@
 
 @interface ResourceNameCell : NSTextFieldCell
 {
+	BOOL	drawImage;
 	NSImage	*image;
 }
 
-- (void)setImage:(NSImage *)anImage;
+- (BOOL)drawsImage;
+- (void)setDrawsImage:(BOOL)flag;
 - (NSImage *)image;
+- (void)setImage:(NSImage *)anImage;
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 - (NSSize)cellSize;

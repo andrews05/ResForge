@@ -2,6 +2,9 @@
 
 @class ResourceDocument, Resource;
 
+extern NSString *DocumentInfoWillChangeNotification;
+extern NSString *DocumentInfoDidChangeNotification;
+
 enum Attributes
 {
 	changedBox = 0,
@@ -22,6 +25,7 @@ enum Attributes
 	IBOutlet NSBox			*documentView;
 	
 	IBOutlet NSMatrix 		*attributesMatrix;
+	IBOutlet NSForm			*creatorTypeView;
 	
 @private
 	ResourceDocument		*currentDocument;

@@ -12,10 +12,11 @@
                 findNext = id; 
                 findPrevious = id; 
                 findWithSelection = id; 
-                openResource = id; 
-                openResourceAsHex = id; 
-                openResourceTemplate = id; 
-                openResourceWithOtherTemplate = id; 
+                myAction = id; 
+                openResources = id; 
+                openResourcesAsHex = id; 
+                openResourcesInTemplate = id; 
+                openResourcesWithOtherTemplate = id; 
                 playSound = id; 
                 revertResourceToSaved = id; 
                 scrollToSelection = id; 

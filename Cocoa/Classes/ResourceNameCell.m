@@ -2,6 +2,16 @@
 
 @implementation ResourceNameCell
 
+- (id)init
+{
+	self = [super init];
+	if( self )
+	{
+		drawImage = YES;
+	}
+	return self;
+}
+
 - (void)dealloc
 {
 	[image release];
@@ -15,6 +25,21 @@
 	return cell;
 }
 
+- (BOOL)drawsImage
+{
+	return drawImage;
+}
+
+- (void)setDrawsImage:(BOOL)flag
+{
+	drawImage = flag;
+}
+
+- (NSImage *)image
+{
+	return image;
+}
+
 - (void)setImage:(NSImage *)newImage
 {
 	// save image and set to 16x16 pixels
@@ -24,14 +49,9 @@
 	[image setSize:NSMakeSize(16,16)];
 }
 
-- (NSImage *)image
-{
-	return image;
-}
-
 - (NSRect)imageFrameForCellFrame:(NSRect)cellFrame
 {
-	if( image != nil )
+	if( image != nil && drawImage == YES )
 	{
 		// center image vertically in frame, offset right by three
 		NSRect imageFrame;
@@ -46,23 +66,37 @@
 
 - (void)editWithFrame:(NSRect)cellFrame inView:(NSView *)controlView editor:(NSText *)textObject delegate:(id)delegateObject event:(NSEvent *)theEvent
 {
-	// split cell frame into two, pass the text part to the superclass
-	NSRect textFrame, imageFrame;
-	NSDivideRect( cellFrame, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge );
-	[super editWithFrame:textFrame inView:controlView editor:textObject delegate:delegateObject event:theEvent];
+	if( drawImage == YES )
+	{
+		// split cell frame into two, pass the text part to the superclass
+		NSRect textFrame, imageFrame;
+		NSDivideRect( cellFrame, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge );
+		[super editWithFrame:textFrame inView:controlView editor:textObject delegate:delegateObject event:theEvent];
+	}
+	else
+	{
+		[super editWithFrame:cellFrame inView:controlView editor:textObject delegate:delegateObject event:theEvent];
+	}
 }
 
 - (void)selectWithFrame:(NSRect)cellFrame inView:(NSView *)controlView editor:(NSText *)textObject delegate:(id)delegateObject start:(int)selStart length:(int)selLength
 {
-	// split cell frame into two, pass the text part to the superclass
-	NSRect textFrame, imageFrame;
-	NSDivideRect( cellFrame, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge);
-	[super selectWithFrame:textFrame inView:controlView editor:textObject delegate:delegateObject start:selStart length:selLength];
+	if( drawImage == YES )
+	{
+		// split cell frame into two, pass the text part to the superclass
+		NSRect textFrame, imageFrame;
+		NSDivideRect( cellFrame, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge);
+		[super selectWithFrame:textFrame inView:controlView editor:textObject delegate:delegateObject start:selStart length:selLength];
+	}
+	else
+	{
+		[super selectWithFrame:cellFrame inView:controlView editor:textObject delegate:delegateObject start:selStart length:selLength];
+	}
 }
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	if( image != nil )
+	if( image != nil && drawImage == YES )
 	{
 		NSRect imageFrame;
 		NSSize imageSize = [image size];
@@ -93,7 +127,8 @@
 - (NSSize)cellSize
 {
 	NSSize cellSize = [super cellSize];
-	cellSize.width += (image? [image size].width:0) + 3;
+	if( drawImage == YES )
+		cellSize.width += (image? [image size].width:0) + 3;
 	return cellSize;
 }
 

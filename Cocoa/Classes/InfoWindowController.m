@@ -40,6 +40,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mainWindowChanged:) name:NSWindowDidBecomeMainNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedResourceChanged:) name:NSOutlineViewSelectionDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesDidChange:) name:ResourceAttributesDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateInfoWindow:) name:DocumentInfoDidChangeNotification object:nil];
 }
 
 - (void)updateInfoWindow
@@ -62,6 +63,8 @@
 		[[self window] setTitle:@"Document Info"];
 		[iconView setImage:[NSImage imageNamed:@"Resource file"]];
 		[nameView setStringValue:[currentDocument fileName]? [[currentDocument fileName] lastPathComponent]:[currentDocument displayName]];
+		[[creatorTypeView cellAtIndex:0] setStringValue:[currentDocument creator]];
+		[[creatorTypeView cellAtIndex:1] setStringValue:[currentDocument type]];
 		[placeholderView setContentView:documentView];
 	}
 }

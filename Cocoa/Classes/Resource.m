@@ -1,7 +1,5 @@
 #import "Resource.h"
 
-@implementation Resource
-
 // should these be above or below "@implementation Resource" ?
 NSString *ResourceWillChangeNotification			= @"ResourceWillChangeNotification";
 NSString *ResourceNameWillChangeNotification		= @"ResourceNameWillChangeNotification";
@@ -16,6 +14,8 @@ NSString *ResourceIDDidChangeNotification			= @"ResourceIDDidChangeNotification"
 NSString *ResourceAttributesDidChangeNotification	= @"ResourceAttributesDidChangeNotification";
 NSString *ResourceDataDidChangeNotification			= @"ResourceDataDidChangeNotification";
 NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
+
+@implementation Resource
 
 - (id)init
 {
@@ -97,14 +97,17 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 
 - (void)setName:(NSString *)newName
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameWillChangeNotification object:self];
-	
-	[name autorelease];
-	name = [newName copy];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameDidChangeNotification object:self];
-	[self setDirty:YES];
+	if( ![name isEqualToString:newName] )
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameWillChangeNotification object:self];
+		
+		[name autorelease];
+		name = [newName copy];
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameDidChangeNotification object:self];
+		[self setDirty:YES];
+	}
 }
 
 - (NSString *)type
@@ -114,14 +117,17 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 
 - (void)setType:(NSString *)newType
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeWillChangeNotification object:self];
-	
-	[type autorelease];
-	type = [newType copy];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeDidChangeNotification object:self];
-	[self setDirty:YES];
+	if( ![type isEqualToString:newType] )
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeWillChangeNotification object:self];
+		
+		[type autorelease];
+		type = [newType copy];
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeDidChangeNotification object:self];
+		[self setDirty:YES];
+	}
 }
 
 - (NSNumber *)resID
@@ -131,14 +137,17 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 
 - (void)setResID:(NSNumber *)newResID
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDWillChangeNotification object:self];
-	
-	[resID autorelease];
-	resID = [newResID copy];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDDidChangeNotification object:self];
-	[self setDirty:YES];
+	if( ![resID isEqualToNumber:newResID] )
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDWillChangeNotification object:self];
+		
+		[resID autorelease];
+		resID = [newResID copy];
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDDidChangeNotification object:self];
+		[self setDirty:YES];
+	}
 }
 
 - (NSNumber *)attributes
@@ -148,14 +157,17 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 
 - (void)setAttributes:(NSNumber *)newAttributes
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesWillChangeNotification object:self];
-	
-	[attributes autorelease];
-	attributes = [newAttributes copy];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesDidChangeNotification object:self];
-	[self setDirty:YES];
+	if( ![attributes isEqualToNumber:newAttributes] )
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesWillChangeNotification object:self];
+		
+		[attributes autorelease];
+		attributes = [newAttributes copy];
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesDidChangeNotification object:self];
+		[self setDirty:YES];
+	}
 }
 
 - (NSNumber *)size
@@ -170,15 +182,18 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 
 - (void)setData:(NSData *)newData
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataWillChangeNotification object:self];
-	
-	// note: this function retains, rather than copies, the supplied data
-	[data autorelease];
-	data = [newData retain];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:self];
-	[self setDirty:YES];
+	if( ![data isEqualToData:newData] )
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataWillChangeNotification object:self];
+		
+		// note: this function retains, rather than copies, the supplied data
+		[data autorelease];
+		data = [newData retain];
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:self];
+		[self setDirty:YES];
+	}
 }
 
 @end

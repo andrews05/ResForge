@@ -27,7 +27,7 @@
 
 - (void)showCreateResourceSheet:(ResourceDocument *)sheetDoc
 {
-#warning didEndSelector could be better employed than using the button's targets from interface builder
+	// bug: didEndSelector could be better employed than using the button's targets from interface builder
 	document = sheetDoc;
 	[NSApp beginSheet:[self window] modalForWindow:[document mainWindow] modalDelegate:self didEndSelector:NULL contextInfo:nil];
 }
