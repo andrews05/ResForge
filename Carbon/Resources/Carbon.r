@@ -1,7 +1,7 @@
-#if defined(__MWERKS__)		// compiling with CodeWarrior
-	#include "MacTypes.r"
-#else
+#if defined(__APPLE_CC__)		// compiling with gcc
 	#include <Carbon/Carbon.r>
+#else							// compiling with CodeWarrior, __MWERKS__
+	#include <Carbon.r>
 #endif
 
 /*** CARBON RESOURCES ***/

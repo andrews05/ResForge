@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
 
-@interface NSOutlineView (SelectedItems)
+@interface NSOutlineView (ResKnifeSelectedItemExtensions)
 
 - (id)selectedItem;
 - (NSArray *)selectedItems;

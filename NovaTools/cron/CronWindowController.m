@@ -2,7 +2,7 @@
 
 @implementation CronWindowController
 
-- (id)initWithResource:(id)newResource
+- (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
 {
 	self = [self initWithWindowNibName:@"cron"];
 	if( !self ) return nil;
@@ -17,6 +17,16 @@
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
+	
+/*	[governmentField1 setDelegate:governmentDataSource];
+	[governmentField1 setDataSource:governmentDataSource];
+	[governmentField2 setDelegate:governmentDataSource];
+	[governmentField2 setDataSource:governmentDataSource];
+	[governmentField3 setDelegate:governmentDataSource];
+	[governmentField3 setDataSource:governmentDataSource];
+	[governmentField4 setDelegate:governmentDataSource];
+	[governmentField4 setDataSource:governmentDataSource];
+*/	
 	[self update];
 	[self showWindow:self];
 }

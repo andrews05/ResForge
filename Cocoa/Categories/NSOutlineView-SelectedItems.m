@@ -1,8 +1,8 @@
 #import "NSOutlineView-SelectedItems.h"
 
-/* The methods in the following catagory were taken from OmniAppKit */
+/* The methods in the following catagory were based upon those in OmniAppKit */
 
-@implementation NSOutlineView (SelectedItems)
+@implementation NSOutlineView (ResKnifeSelectedItemExtensions)
 
 - (id)selectedItem
 {

@@ -1,7 +1,7 @@
 #include "HexWindow.h"
 #include "Events.h"
-#include "stdio.h"
-// #include "strings.h"
+#include <stdio.h>
+#include <string.h>
 
 extern globals g;
 extern prefs p;
@@ -303,8 +303,9 @@ OSStatus HexWindow::DrawContent( EventRef event )
 			if( currentByte < length )
 			{
 			//	BlockMoveData( *data + currentByte, &ascii, 1 );
-				hex1 = *(*data + currentByte);
-				hex2 = *(*data + currentByte);
+			//	hex1 = *(*data + currentByte);
+			//	hex2 = *(*data + currentByte);
+				ascii = hex1 = hex2 = *(*data + currentByte);
 				hex1 >>= 4;
 				hex1 &= 0x0F;
 				hex2 &= 0x0F;

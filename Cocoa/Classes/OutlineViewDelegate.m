@@ -1,13 +1,49 @@
 #import "OutlineViewDelegate.h"
-#import "ResourceNameCell.h"
 #import "Resource.h"
+#import "ResourceDataSource.h"
+#import "ResourceNameCell.h"
 #import "ApplicationDelegate.h"
 
 @implementation OutlineViewDelegate
 
 - (void)tableView:(NSTableView*)tableView didClickTableColumn:(NSTableColumn *)tableColumn
 {
+	NSArray *oldResources = [(ResourceDataSource *)[tableView dataSource] resources];
+	NSArray *newResources;
+	
+	NSLog( @"Clicked table column: %@", tableColumn );
+	
+	// sort the array
+	if( ![[tableView indicatorImageInTableColumn:tableColumn] isFlipped] )
+		newResources = [oldResources sortedArrayUsingFunction:compareResourcesAscending context:(void*)[tableColumn identifier]];
+	else
+		newResources = [oldResources sortedArrayUsingFunction:compareResourcesDescending context:(void*)[tableColumn identifier]];
+	
+	// swap new array for old one
+	[(ResourceDataSource *)[tableView dataSource] setResources:[NSMutableArray arrayWithArray:newResources]];
+	[tableView reloadData];
+}
 
+int compareResourcesAscending( Resource *r1, Resource *r2, void *context )
+{
+	NSString *key = (NSString *)context;
+	SEL sel = NSSelectorFromString(key);
+
+	if( [key isEqualToString:@"name"] || [key isEqualToString:@"type"] )
+		return [(NSString *)[r1 performSelector:sel] caseInsensitiveCompare: (NSString *)[r2 performSelector:sel]];
+	else
+		return [(NSNumber *)[r1 performSelector:sel] compare: (NSNumber *)[r2 performSelector:sel]];
+}
+
+int compareResourcesDescending( Resource *r1, Resource *r2, void *context )
+{
+	NSString *key = (NSString *)context;
+	SEL sel = NSSelectorFromString(key);
+
+	if( [key isEqualToString:@"name"] || [key isEqualToString:@"type"] )
+		return -1 * [(NSString *)[r1 performSelector:sel] caseInsensitiveCompare: (NSString *)[r2 performSelector:sel]];
+	else
+		return -1 * [(NSNumber *)[r1 performSelector:sel] compare: (NSNumber *)[r2 performSelector:sel]];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item

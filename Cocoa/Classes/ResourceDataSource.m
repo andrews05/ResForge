@@ -113,7 +113,7 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 	NSEnumerator *enumerator = [resources objectEnumerator];
 	while( resource = [enumerator nextObject] )
 	{
-		if( [[resource resID] isEqualToNumber:resID] && [[resource type] isEqualToString:type] )
+		if( resID && [[resource resID] isEqualToNumber:resID] && type && [[resource type] isEqualToString:type] )
 			return resource;
 	}
 	return nil;

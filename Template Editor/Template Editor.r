@@ -1,7 +1,7 @@
-#ifdef __MWERKS__
-	#include <Types.r>
-#else
+#if defined(__APPLE_CC__)		// compiling with gcc
 	#include <Carbon/Carbon.r>
+#else							// compiling with CodeWarrior, __MWERKS__
+	#include <Carbon.r>
 #endif
 
 /*** FILE MENU ***/

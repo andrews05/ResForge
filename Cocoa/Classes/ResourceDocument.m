@@ -328,11 +328,14 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 
 - (IBAction)playSound:(id)sender
 {
-	// bug: Can only cope with one selected item
-	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
-	NSSound *sound = [[NSSound alloc] initWithData:[resource data]];
-	[sound setDelegate:self];
-	[sound play];
+	// bug: can only cope with one selected item
+	NSData *data = [(Resource *)[outlineView itemAtRow:[outlineView selectedRow]] data];
+	if( data && [data length] != 0 )
+	{
+		SndListPtr sndPtr = (SndListPtr) [data bytes];
+		SndPlay( nil, &sndPtr, false );
+	}
+	else NSBeep();
 }
 
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished

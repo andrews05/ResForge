@@ -1,5 +1,9 @@
 #if !TARGET_API_MAC_OS8
-	#include <Carbon/Carbon.h>
+	#if defined(__APPLE_CC__)		// compiling with gcc
+		#include <Carbon/Carbon.h>
+	#else							// compiling with CodeWarrior, __MWERKS__
+		#include <Carbon.h>
+	#endif
 #endif
 
 #ifndef _ResKnife_Plug_

@@ -2,7 +2,7 @@
 
 @implementation ColrWindowController
 
-- (id)initWithResource:(id)newResource
+- (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
 {
 	self = [self initWithWindowNibName:@"colr"];
 	if( !self ) return nil;

@@ -39,10 +39,10 @@
 		};
 		F5354435022673C101A80001 = {
 			children = (
-				F535444D0226B5F501A80001,
-				F535444E0226B5F501A80001,
 				F535443E0226752901A80001,
 				F535443F0226752901A80001,
+				F535444D0226B5F501A80001,
+				F535444E0226B5F501A80001,
 				F5D0CBD302278F8B01A80001,
 				F535443D0226752901A80001,
 			);
@@ -80,8 +80,8 @@
 			productName = "Template Editor Cocoa";
 			productReference = F5354436022674B301A80001;
 			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
-<plist version=\"0.9\">
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
@@ -121,6 +121,7 @@
 				F535444F0226B5F501A80001,
 			);
 			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5354439022674B401A80001 = {
 			buildActionMask = 2147483647;
@@ -129,6 +130,7 @@
 				F5D0CBD402278F8B01A80001,
 			);
 			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F535443A022674B401A80001 = {
 			buildActionMask = 2147483647;
@@ -138,6 +140,7 @@
 				F5C9ECD4027F474A01A8010C,
 			);
 			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F535443B022674B401A80001 = {
 			buildActionMask = 2147483647;
@@ -145,12 +148,14 @@
 				F53544460226907801A80001,
 			);
 			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F535443C022674B401A80001 = {
 			buildActionMask = 2147483647;
 			files = (
 			);
 			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F535443D0226752901A80001 = {
 			isa = PBXFileReference;
@@ -314,18 +319,6 @@
 			settings = {
 			};
 		};
-		F54627060291788401A8010C = {
-			isa = PBXTargetDependency;
-			target = F5B588D20156D78201000001;
-		};
-		F54627070291788801A8010C = {
-			isa = PBXTargetDependency;
-			target = F5B588EE0156DAF301000001;
-		};
-		F54627080291788A01A8010C = {
-			isa = PBXTargetDependency;
-			target = F5B5890B0156DC2201000001;
-		};
 		F546270B02917D1501A8010C = {
 			buildActionMask = 2147483647;
 			files = (
@@ -349,6 +342,7 @@
 				F546273202917DE801A8010C,
 			);
 			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F546270C02917D1501A8010C = {
 			buildActionMask = 2147483647;
@@ -370,6 +364,7 @@
 				F546273302917DE901A8010C,
 			);
 			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F546270D02917D1501A8010C = {
 			buildActionMask = 2147483647;
@@ -377,12 +372,14 @@
 				F546271202917DBB01A8010C,
 			);
 			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F546270E02917D1501A8010C = {
 			buildActionMask = 2147483647;
 			files = (
 			);
 			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F546270F02917D1501A8010C = {
 			buildPhases = (
@@ -417,10 +414,6 @@
 			isa = PBXLibraryReference;
 			path = libResKnife.dylib;
 			refType = 3;
-		};
-		F546271102917D2001A8010C = {
-			isa = PBXTargetDependency;
-			target = F546270F02917D1501A8010C;
 		};
 		F546271202917DBB01A8010C = {
 			fileRef = F5B5884A0156D40B01000001;
@@ -711,6 +704,10 @@
 			children = (
 				F5D0CBCF022744C701A80001,
 				F5D0CBD0022744C701A80001,
+				F59D5DE40320DFF601A8010C,
+				F59D5DE50320DFF601A8010C,
+				F59D5DE8032106D201A8010C,
+				F59D5DE9032106D201A8010C,
 			);
 			isa = PBXGroup;
 			path = Categories;
@@ -852,6 +849,7 @@
 				F58F6BB0025BE22201A8010C,
 			);
 			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F57CEE0B0189C95101A8010B = {
 			children = (
@@ -894,8 +892,8 @@
 			productName = "Hex Editor Cocoa";
 			productReference = F57CEE0D0189C95101A8010B;
 			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
-<plist version=\"0.9\">
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
@@ -939,6 +937,7 @@
 				F54E6224021B6A0901A80001,
 			);
 			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F57CEE100189C95101A8010B = {
 			buildActionMask = 2147483647;
@@ -949,6 +948,7 @@
 				F5606FDF02ACF2F701A8010C,
 			);
 			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F57CEE110189C95101A8010B = {
 			buildActionMask = 2147483647;
@@ -960,6 +960,7 @@
 				F5C9ECD2027F474A01A8010C,
 			);
 			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F57CEE120189C95101A8010B = {
 			buildActionMask = 2147483647;
@@ -967,12 +968,14 @@
 				F5502C3301C5586301C57124,
 			);
 			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F57CEE130189C95101A8010B = {
 			buildActionMask = 2147483647;
 			files = (
 			);
 			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F58A183F0278353501A8010C = {
 			children = (
@@ -1201,6 +1204,56 @@
 			settings = {
 			};
 		};
+		F591B14F030E9DAA01A8010C = {
+			fileRef = F5B5884A0156D40B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F59D5DE40320DFF601A8010C = {
+			isa = PBXFileReference;
+			path = "NSString-FSSpec.h";
+			refType = 4;
+		};
+		F59D5DE50320DFF601A8010C = {
+			isa = PBXFileReference;
+			path = "NSString-FSSpec.m";
+			refType = 4;
+		};
+		F59D5DE60320DFF601A8010C = {
+			fileRef = F59D5DE40320DFF601A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F59D5DE70320DFF601A8010C = {
+			fileRef = F59D5DE50320DFF601A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F59D5DE8032106D201A8010C = {
+			isa = PBXFileReference;
+			path = "NSNumber-Range.h";
+			refType = 4;
+		};
+		F59D5DE9032106D201A8010C = {
+			isa = PBXFileReference;
+			path = "NSNumber-Range.m";
+			refType = 4;
+		};
+		F59D5DEA032106D201A8010C = {
+			fileRef = F59D5DE8032106D201A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F59D5DEB032106D201A8010C = {
+			fileRef = F59D5DE9032106D201A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F5B5880F0156D2A601000001 = {
 			buildStyles = (
 				F5EBF6B801573EC201000001,
@@ -1286,8 +1339,8 @@
 			productName = "ResKnife Cocoa";
 			productReference = F5B588120156D30301000001;
 			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
-<plist version=\"0.9\">
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
@@ -1395,8 +1448,10 @@
 				F5B588590156D40B01000001,
 				F5D0CBD1022744C701A80001,
 				F5DF1BFD0254AD8801A80001,
+				F59D5DE60320DFF601A8010C,
 			);
 			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588150156D30301000001 = {
 			buildActionMask = 2147483647;
@@ -1421,6 +1476,7 @@
 				F577A8F90211DC1E01A80001,
 			);
 			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588160156D30301000001 = {
 			buildActionMask = 2147483647;
@@ -1441,8 +1497,10 @@
 				F5D0CBD2022744C701A80001,
 				F5DF1C070254AD8801A80001,
 				F5C9ECD0027F474A01A8010C,
+				F59D5DE70320DFF601A8010C,
 			);
 			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588170156D30301000001 = {
 			buildActionMask = 2147483647;
@@ -1451,12 +1509,14 @@
 				F5B588730156D40B01000001,
 			);
 			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588180156D30301000001 = {
 			buildActionMask = 2147483647;
 			files = (
 			);
 			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B5881A0156D40B01000001 = {
 			children = (
@@ -2023,10 +2083,6 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
-				F546271102917D2001A8010C,
-				F54627060291788401A8010C,
-				F54627070291788801A8010C,
-				F54627080291788A01A8010C,
 			);
 			isa = PBXApplicationTarget;
 			name = "ResKnife Carbon";
@@ -2034,8 +2090,8 @@
 			productName = "ResKnife Carbon";
 			productReference = F5B588740156D5CB01000001;
 			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
-<plist version=\"0.9\">
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
@@ -2123,6 +2179,7 @@
 				F5B588B90156D6D901000001,
 			);
 			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588770156D5CB01000001 = {
 			buildActionMask = 2147483647;
@@ -2130,6 +2187,7 @@
 				F5B588BC0156D6D901000001,
 			);
 			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588780156D5CB01000001 = {
 			buildActionMask = 2147483647;
@@ -2151,6 +2209,7 @@
 				F5B588CB0156D6D901000001,
 			);
 			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588790156D5CB01000001 = {
 			buildActionMask = 2147483647;
@@ -2158,6 +2217,7 @@
 				F53B5F3201C984F301A8010C,
 			);
 			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B5887A0156D5CB01000001 = {
 			buildActionMask = 2147483647;
@@ -2166,6 +2226,7 @@
 				F54627050291767E01A8010C,
 			);
 			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B5887C0156D6D901000001 = {
 			children = (
@@ -2659,8 +2720,8 @@
 				F5B588D70156D78201000001,
 			);
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = /Volumes/DeskStar/nicholas/Projects/ResKnife/Carbon;
-				OTHER_LDFLAGS = "-bundle -bundle_loader \"$HOME/Projects/ResKnife/build/ResKnife Cocoa.app/Contents/MacOS/ResKnife Cocoa\" -undefined error";
+				LIBRARY_SEARCH_PATHS = "\"/Users/nicholas/Projects/ResKnife/Carbon\"";
+				OTHER_LDFLAGS = "-bundle -bundle_loader \"$HOME/Projects/ResKnife/build/ResKnife Carbon\" -undefined error";
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Hex Editor";
 				SECTORDER_FLAGS = "";
@@ -2674,8 +2735,8 @@
 			productName = "Hex Editor";
 			productReference = F5B588D10156D78201000001;
 			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
-<plist version=\"0.9\">
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
@@ -2715,12 +2776,14 @@
 				F535442F0225D46C01A80001,
 			);
 			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588D40156D78201000001 = {
 			buildActionMask = 2147483647;
 			files = (
 			);
 			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588D50156D78201000001 = {
 			buildActionMask = 2147483647;
@@ -2731,6 +2794,7 @@
 				F5B588EB0156D9D401000001,
 			);
 			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588D60156D78201000001 = {
 			buildActionMask = 2147483647;
@@ -2739,12 +2803,14 @@
 				F546273402917E5601A8010C,
 			);
 			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588D70156D78201000001 = {
 			buildActionMask = 2147483647;
 			files = (
 			);
 			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588D80156D9D401000001 = {
 			children = (
@@ -2807,12 +2873,14 @@
 		};
 		F5B588E10156D9D401000001 = {
 			isa = PBXFileReference;
-			path = Utility.h;
+			name = Utility.h;
+			path = HexUtility.h;
 			refType = 4;
 		};
 		F5B588E20156D9D401000001 = {
 			isa = PBXFileReference;
-			path = Utility.cpp;
+			name = Utility.cpp;
+			path = HexUtility.cpp;
 			refType = 4;
 		};
 		F5B588E30156D9D401000001 = {
@@ -2905,8 +2973,8 @@
 			productName = "Template Editor";
 			productReference = F5B588ED0156DAF301000001;
 			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
-<plist version=\"0.9\">
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
@@ -2939,25 +3007,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5B589040156DC2201000001,
-				F5B589050156DC2201000001,
 				F5B589060156DC2201000001,
 				F53544320226550001A80001,
 			);
 			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588F00156DAF301000001 = {
 			buildActionMask = 2147483647;
 			files = (
 			);
 			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588F10156DAF301000001 = {
 			buildActionMask = 2147483647;
 			files = (
-				F5B589070156DC2201000001,
 				F5B589080156DC2201000001,
 			);
 			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588F20156DAF301000001 = {
 			buildActionMask = 2147483647;
@@ -2965,6 +3034,7 @@
 				F5B589090156DC2201000001,
 			);
 			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588F30156DAF301000001 = {
 			buildActionMask = 2147483647;
@@ -2972,6 +3042,7 @@
 				F5B5890A0156DC2201000001,
 			);
 			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B588F40156DC2201000001 = {
 			children = (
@@ -2990,23 +3061,13 @@
 		};
 		F5B588F60156DC2201000001 = {
 			children = (
-				F5B588F70156DC2201000001,
-				F5B588F80156DC2201000001,
+				F5F98D4502F0B06E01A8010C,
+				F5F98D4602F0B06E01A8010C,
 				F5B588F90156DC2201000001,
 				F5B588FA0156DC2201000001,
 			);
 			isa = PBXGroup;
 			path = Classes;
-			refType = 4;
-		};
-		F5B588F70156DC2201000001 = {
-			isa = PBXFileReference;
-			path = Initalisation.h;
-			refType = 4;
-		};
-		F5B588F80156DC2201000001 = {
-			isa = PBXFileReference;
-			path = Initalisation.cpp;
 			refType = 4;
 		};
 		F5B588F90156DC2201000001 = {
@@ -3080,20 +3141,8 @@
 			settings = {
 			};
 		};
-		F5B589050156DC2201000001 = {
-			fileRef = F5B588F70156DC2201000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		F5B589060156DC2201000001 = {
 			fileRef = F5B588F90156DC2201000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F5B589070156DC2201000001 = {
-			fileRef = F5B588F80156DC2201000001;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -3141,8 +3190,8 @@
 			productName = "PICT Editor";
 			productReference = F5B589030156DC2201000001;
 			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
-<plist version=\"0.9\">
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
@@ -3179,6 +3228,7 @@
 				F5B5890F0156DC2201000001,
 			);
 			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B5890D0156DC2201000001 = {
 			fileRef = F5B588FF0156DC2201000001;
@@ -3203,6 +3253,7 @@
 			files = (
 			);
 			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B589110156DC2201000001 = {
 			buildActionMask = 2147483647;
@@ -3211,6 +3262,7 @@
 				F5B589130156DC2201000001,
 			);
 			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B589120156DC2201000001 = {
 			fileRef = F5B589000156DC2201000001;
@@ -3230,6 +3282,7 @@
 				F5B589150156DC2201000001,
 			);
 			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5B589150156DC2201000001 = {
 			fileRef = F5B5884A0156D40B01000001;
@@ -3242,6 +3295,7 @@
 			files = (
 			);
 			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5C9ECCE027F474A01A8010C = {
 			isa = PBXFileReference;
@@ -3534,8 +3588,8 @@
 			productName = "NovaTools™";
 			productReference = F5DF1C080254C6BA01A80001;
 			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
-<plist version=\"0.9\">
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
@@ -3583,8 +3637,10 @@
 				F58A18430278355D01A8010C,
 				F543AFDD027B2A5001A8010C,
 				F5C9ECD9027F562201A8010C,
+				F59D5DEA032106D201A8010C,
 			);
 			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5DF1C0B0254C6BA01A80001 = {
 			buildActionMask = 2147483647;
@@ -3598,6 +3654,7 @@
 				F543AFF1027C716E01A8010C,
 			);
 			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5DF1C0C0254C6BA01A80001 = {
 			buildActionMask = 2147483647;
@@ -3611,21 +3668,26 @@
 				F58A18420278355D01A8010C,
 				F543AFDE027B2A5001A8010C,
 				F5C9ECD6027F474A01A8010C,
+				F59D5DEB032106D201A8010C,
 			);
 			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5DF1C0D0254C6BA01A80001 = {
 			buildActionMask = 2147483647;
 			files = (
 				F58F6BAE025BE1E001A8010C,
+				F591B14F030E9DAA01A8010C,
 			);
 			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5DF1C0E0254C6BA01A80001 = {
 			buildActionMask = 2147483647;
 			files = (
 			);
 			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5DF1C0F0254C78801A80001 = {
 			children = (
@@ -3903,6 +3965,16 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		F5F98D4502F0B06E01A8010C = {
+			isa = PBXFileReference;
+			path = TemplateInitalisation.h;
+			refType = 4;
+		};
+		F5F98D4602F0B06E01A8010C = {
+			isa = PBXFileReference;
+			path = TemplateInitalisation.cpp;
+			refType = 4;
 		};
 	};
 	rootObject = F5B5880F0156D2A601000001;

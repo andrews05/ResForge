@@ -1,6 +1,6 @@
 #include "Events.h"
 #include "HexWindow.h"
-#include "Utility.h"
+#include "HexUtility.h"
 
 extern globals g;
 extern prefs p;
@@ -86,7 +86,7 @@ pascal OSStatus CarbonWindowEventHandler( EventHandlerCallRef handler, EventRef 
 						Boolean	clickAscii	= false;	// clicked in ascii rect? - neither means not editing
 						Plug_WindowRef plugWindow = Host_GetPlugWindowFromWindowRef( window );
 						HexWindowPtr hexWindow = (HexWindowPtr) Host_GetWindowRefCon( plugWindow );
-						if( PtInRect( mouse, &hexWindow->hexRect ) )	{ clickHex = true;		hexWindow->editingHex = true;		}
+						if( PtInRect( mouse, &hexWindow->hexRect ) )	{ clickHex = true;		hexWindow->editingHex = true;	}
 						if( PtInRect( mouse, &hexWindow->asciiRect ) )	{ clickAscii = true;	hexWindow->editingHex = false;	}
 						if( clickHex || clickAscii )					error = HandleEditClick( window, event, mouse, (EventModifiers) LoWord(modifiers) );
 						else error = eventNotHandledErr;

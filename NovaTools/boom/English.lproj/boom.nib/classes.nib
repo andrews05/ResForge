@@ -1,8 +1,17 @@
 {
     IBClasses = (
         {
+            ACTIONS = {playSound = id; toggleSilence = id; }; 
             CLASS = BoomWindowController; 
             LANGUAGE = ObjC; 
+            OUTLETS = {
+                frameRateField = NSTextField; 
+                graphicsField = NSComboBox; 
+                imageWell = NSImageView; 
+                playButton = NSButton; 
+                soundButton = NSButton; 
+                soundField = NSComboBox; 
+            }; 
             SUPERCLASS = NovaWindowController; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 

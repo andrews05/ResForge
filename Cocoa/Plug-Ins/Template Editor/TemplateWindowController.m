@@ -96,8 +96,12 @@
 
 - (void)parseData
 {
-	unsigned long position = 0, loopStart;
+	unsigned long position = 0;
 	char *data = (char *) [resource data];
+	
+	// used for nesting of elements, 'target' is current object to append to, targetStack is a FILO stack of mutable array pointers
+	NSMutableArray *target = res;
+	NSMutableArray *targetArray = [NSMutableArray arrayWithObject:res];
 	
 	// creates an array of elements containing the data in whatever format the template dictates
 	//	array can then simply be manipulated one element at a time, or flattened to save
@@ -134,7 +138,7 @@
 				position += 1;
 				break;
 			case 'DWRD':
-				[resourceElement setNumberWithLong:*(int *)(data + position)];
+				[resourceElement setNumberWithLong:*(short *)(data + position)];
 				position += 2;
 				break;
 			case 'DLNG':
@@ -155,32 +159,87 @@
 				[resourceElement setData:[NSData dataWithBytes:(void *)(data + position) length:4]];
 				position += 4;
 				break;
+			case 'HEXD':
+				// bug: doesn't check HEXD is the last element
+				[resourceElement setData:[NSData dataWithBytes:(void *)(data + position) length:([[resource size] intValue] - position)]];
+				position = [[resource size] intValue];
+			
+			/* List Counts */
+			case 'BCNT':
+			case 'BZCT':
+				// bug: how big are these various count fields?
+				[resourceElement setNumberWithLong:*(char *)(data + position)];
+				position += 1;
+				break;
+			case 'OCNT':
+			case 'ZCNT':
+				// bug: how big are these various count fields?
+				[resourceElement setNumberWithLong:*(short *)(data + position)];
+				position += 2;
+				break;
+			case 'LCNT':
+			case 'LZCT':
+				// bug: how big are these various count fields?
+				[resourceElement setNumberWithLong:*(long *)(data + position)];
+				position += 4;
+				break;
+				
+			/* List beginning and end */
+			case 'LSTB':
+			case 'LSTC':
+				target = [resourceElement subelements];
+				[targetArray addObject:target];
+				break;
+			case 'LSTE':
+				// bug: if there is a LSTE without a preceeding LSTB or LSTC this will crash
+				[targetArray removeLastObject];
+				target = [targetArray lastObject];
+				resourceElement = nil;		// relies on element being previously autoreleased to avoid a leak
+				break;
 			
 			/* Cxxx, Hxxx or P0xx */
 			default:
-			{	unsigned long length = type & 0x00FFFFFF;
-				NSLog( @"error, Cxxx, Hxxx and P0xx unsupported" );
+			// bug: should look for Cxxx, Hxxx or P0xx and complain if it's something else (an unknown type)!!
+			{/*	long lengthStr = (type & 0x00FFFFFF) << 8;
+				unsigned long length = strtoul( (char *) &lengthStr, nil, 10 );
+			*/	char *lengthStr = (type & 0x00FFFFFF) & (3 << 24);
+				unsigned long length;
+				StringToNum(lengthStr, &length);
+				NSLog( @"error, Cxxx, Hxxx and P0xx unsupported, skipping %d bytes", length );
 				resourceElement = nil;		// relies on element being previously autoreleased to avoid a leak
+				position += length;
 			}	break;
 		}	// end switch
-		if( resourceElement )	[res addObject:resourceElement];
+		if( resourceElement )	[target addObject:resourceElement];
 	}		// end while loop
 }
 
 - (void)createUI
 {
 	// iterate through res creating fields
-	Element *currentResourceElement;
-	NSEnumerator *enumerator = [res objectEnumerator];
-	NSLog( @"%d", [res count] );
-	while( currentResourceElement = [enumerator nextObject] )
-	{
-		NSFormCell *newField = [[NSFormCell alloc] initTextCell:[currentResourceElement label]];
-		[fieldsMatrix addRowWithCells:[NSArray arrayWithObject:[newField autorelease]]];
-		NSLog( @"%@ added to matrix", [newField description] );
-	}
+	[self enumerateElements:res];
 	NSLog( [fieldsMatrix description] );
 	[fieldsMatrix setNeedsDisplay];
+}
+
+- (void)enumerateElements:(NSMutableArray *)elements
+{
+	// iterate through the array of resource elements, creating fields
+	Element *currentResourceElement;
+	NSEnumerator *enumerator = [elements objectEnumerator];
+	NSLog( @"%d", [elements count] );
+	while( currentResourceElement = [enumerator nextObject] )
+	{
+		// if element is a container, iterate inside it first
+		if( [currentResourceElement subelements] )
+			[self enumerateElements:[currentResourceElement subelements]];
+		else	// element is normal
+		{
+			NSFormCell *newField = [[NSFormCell alloc] initTextCell:[currentResourceElement label]];
+			[fieldsMatrix addRowWithCells:[NSArray arrayWithObject:[newField autorelease]]];
+			NSLog( @"%@ added to matrix", [newField description] );
+		}
+	}
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
@@ -192,7 +251,6 @@
 
 - (void)refreshData:(NSData *)data;
 {
-#warning Should update data when datachanged notification received
 	// put data from resource into correct fields 
 }
 

@@ -41,6 +41,18 @@
 	return *(unsigned long *)[type cString];
 }
 
+- (NSMutableArray *)subelements;
+{
+	long myType = [self typeAsLong];
+	if( myType == 'LSTB' || myType == 'LSTC' )
+	{
+		if( subelements == nil )
+			subelements = [[NSMutableArray alloc] init];
+	}
+	else subelements = nil;
+	return subelements;
+}
+
 /* DATA ACCESSORS */
 
 - (NSString *)string

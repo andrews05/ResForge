@@ -576,9 +576,9 @@ typedef struct NebuRec
 
 typedef struct BoomRec
 {
-	short FrameAdvance;
-	short SoundIndex;
-	short GraphicIndex;
+	short FrameAdvance;		// 100 = normal speed, less is slower, higher faster
+	short SoundIndex;		// 0-63 index, mapping to 300-363 resID
+	short GraphicIndex;		// 0-63 index, mapping to 400-463 resID
 } BoomRec;
 
 typedef struct FletRec

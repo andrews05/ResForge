@@ -130,6 +130,11 @@
 
 /* Accessors */
 
+- (void)touch
+{
+	[self setDirty:YES];
+}
+
 - (BOOL)isDirty
 {
 	return dirty;
@@ -245,6 +250,13 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:self];
 		[self setDirty:YES];
 	}
+}
+
+/* description */
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"\nName: %@\nType: %@ ID: %@\nModified: %@", name, type, resID, dirty? @"YES":@"NO"];
 }
 
 @end

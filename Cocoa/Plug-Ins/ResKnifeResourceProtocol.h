@@ -4,6 +4,7 @@
 
 @protocol ResKnifeResourceProtocol
 
+- (void)touch;
 - (BOOL)isDirty;
 - (NSString *)name;
 - (void)setName:(NSString *)newName;
