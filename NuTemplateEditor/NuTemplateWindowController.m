@@ -30,6 +30,8 @@
 #import "NuTemplateTNAMElement.h"
 #import "NuTemplatePSTRElement.h"
 #import "NuTemplateDWRDElement.h"
+#import "NuTemplateDLNGElement.h"
+#import "NuTemplateDBYTElement.h"
 #import "NuTemplateStream.h"
 
 #import "NSOutlineView-SelectedItems.h"
@@ -198,6 +200,9 @@
 		[fieldReg setObject: [NuTemplatePSTRElement class] forKey: @"P020"];
 		[fieldReg setObject: [NuTemplatePSTRElement class] forKey: @"P040"];
 		[fieldReg setObject: [NuTemplateDWRDElement class] forKey: @"DWRD"];
+		[fieldReg setObject: [NuTemplateDLNGElement class] forKey: @"DLNG"];
+		[fieldReg setObject: [NuTemplateDBYTElement class] forKey: @"DBYT"];
+		[fieldReg setObject: [NuTemplateDBYTElement class] forKey: @"CHAR"];
 	}
 	
 	// Read new fields from the template and add them to our list:
