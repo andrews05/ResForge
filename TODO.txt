@@ -1,0 +1,2 @@
+-> "Open as Hex" displays "(null)" as the document name. Why?
+-> Template editor always forces at least one item in a list. Make it support empty lists.

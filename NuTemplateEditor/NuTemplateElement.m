@@ -38,6 +38,7 @@
 -(id)	copyWithZone: (NSZone*)zone
 {
 	NuTemplateElement*	el = [[[self class] allocWithZone: zone] initForType: type withLabel: label];
+	//NuTemplateElement*	el = [[[self class] alloc] initForType:type withLabel:label];
 	
 	return el;
 }

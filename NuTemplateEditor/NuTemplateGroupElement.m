@@ -29,10 +29,20 @@
 -(id)	copyWithZone: (NSZone*)zone
 {
 	NuTemplateGroupElement*	el = [super copyWithZone: zone];
-	
+
 	if( el )
 	{
-		NSMutableArray*		arr = [[[NSMutableArray allocWithZone:zone] autorelease] initWithArray:subElements copyItems:YES];
+		NSMutableArray*		arr = [[subElements mutableCopy] autorelease];
+		NSEnumerator*		enny = [arr objectEnumerator];
+		NSObject*			obj;
+		unsigned			x = 0;
+		
+		while( obj = [enny nextObject] )
+		{
+			[arr replaceObjectAtIndex:x withObject: [[obj copy] autorelease]];
+			x++;
+		}
+		
 		[el setSubElements: arr];
 	}
 	
