@@ -27,13 +27,36 @@
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"OpenUntitledFileOnLaunch"];
+	NSString *launchAction = [[NSUserDefaults standardUserDefaults] stringForKey:@"LaunchAction"];
+    if( [launchAction isEqualToString:@"OpenUntitledFile"] )
+		return YES;
+	else if( [launchAction isEqualToString:@"DisplayOpenPanel"] )
+	{
+		[[NSDocumentController sharedDocumentController] openDocument:sender];
+		return NO;
+	}
+	else return NO;	// should be @"None", but we shall return NO for any other value
 }
 
 - (IBAction)showAbout:(id)sender
 {
 	[NSApp orderFrontStandardAboutPanel:sender];
 	// get about box code from http://cocoadevcentral.com/tutorials/showpage.php?show=00000041.php
+}
+
+- (IBAction)visitWebsite:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://nickshanks.com/resknife/"]];
+}
+
+- (IBAction)visitSourceforge:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://resknife.sourceforge.net/"]];
+}
+
+- (IBAction)emailDeveloper:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"mailto:resknife@nickshanks.com?Subject=Comments,%20Suggestions%20and%20Bug%20Reports"]];
 }
 
 - (IBAction)showInfo:(id)sender
@@ -45,14 +68,6 @@
 {
 	[[PrefsWindowController sharedPrefsWindowController] showWindow:sender];
 }
-/*
-- (IBAction)showCreateResourceSheet:(id)sender
-{
-	// requires ALL main windows' controllers (even plugs) to have their document set correctly
-	NSDocument *document = [[[NSApp mainWindow] windowController] document];
-	return [[[(ResourceDocument *)document showCreateResourceSheet:sender];
-}
-*/
 
 - (void)initUserDefaults
 {
@@ -89,6 +104,18 @@
 	
 	// force the defaults to save to the disk
 	[defaults synchronize];
+}
+
+@end
+
+@implementation NSSavePanel (PackageBrowser)
+
+/* Don't tell anyone I did this... */
+
+- (void)setTreatsFilePackagesAsDirectories:(BOOL)flag
+{
+#pragma unused( flag )
+	_spFlags.treatsFilePackagesAsDirectories = YES;
 }
 
 @end

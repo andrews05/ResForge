@@ -2,6 +2,7 @@
 
 @interface NameFormatter : NSFormatter
 {
+	IBOutlet NSOutlineView *outlineView;
 }
 
 - (NSString *)stringForObjectValue:(id)obj;

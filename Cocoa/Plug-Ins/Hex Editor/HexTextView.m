@@ -2,15 +2,6 @@
 
 @implementation HexTextView
 
-- (id)init
-{
-	self = [super init];
-	if( !self ) return self;
-	
-	[self setFieldEditor:YES];
-	return self;
-}
-
 - (void)setSelectedRange:(NSRange)charRange affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)flag
 {
 	NSRange newRange = charRange;
@@ -53,6 +44,15 @@
 	
 	// call the superclass to update the selection
 	[super setSelectedRange:newRange affinity:affinity stillSelecting:NO];
+}
+
+@end
+
+@implementation NSTextView (HexTextView)
+
+- (void)swapForHexTextView
+{
+	isa = [HexTextView class];
 }
 
 @end

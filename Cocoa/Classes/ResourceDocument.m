@@ -1,8 +1,9 @@
 #import "ResourceDocument.h"
-#import "Resource.h"
 #import "ResourceDataSource.h"
 #import "ResourceNameCell.h"
+#import "Resource.h"
 #import "CreateResourceSheetController.h"
+#import "NSOutlineView-SelectedItems.h"
 
 #import "ResKnifePluginProtocol.h"
 
@@ -30,10 +31,16 @@
 
 - (NSString *)windowNibName
 {
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"ResourceDocument";
 }
+
+/*	This is not used, just here for reference in case I need it in the future
+
+- (void)makeWindowControllers
+{
+	ResourceWindowController *resourceController = [[ResourceWindowController allocWithZone:[self zone]] initWithWindowNibName:@"ResourceDocument"];
+    [self addWindowController:resourceController];
+}*/
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)controller
 {
@@ -53,14 +60,13 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesWillChange:) name:ResourceAttributesWillChangeNotification object:nil];
 	
 //	[[controller window] setResizeIncrements:NSMakeSize(1,18)];
-//	[controller setDocumet:self];
 	[dataSource setResources:resources];
 }
 
 - (void)printShowingPrintPanel:(BOOL)flag
 {
-	NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:[[outlineView window] contentView]];
-	[printOperation runOperationModalForWindow:[outlineView window] delegate:self didRunSelector:@selector(printOperationDidRun:success:contextInfo:) contextInfo:nil];
+	NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:[mainWindow contentView]];
+	[printOperation runOperationModalForWindow:mainWindow delegate:self didRunSelector:@selector(printOperationDidRun:success:contextInfo:) contextInfo:nil];
 }
 
 - (void)printOperationDidRun:(NSPrintOperation *)printOperation success:(BOOL)success contextInfo:(void *)contextInfo
@@ -76,7 +82,7 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
 	int selectedRows = [outlineView numberOfSelectedRows];
-	Resource *resource = (Resource *) [outlineView itemAtRow:[outlineView selectedRow]];
+	Resource *resource = (Resource *) [outlineView selectedItem];
 	
 	// file menu
 	if( [item action] == @selector(saveDocument:) )					return [self isDocumentEdited];
@@ -94,36 +100,6 @@
 	else return [super validateMenuItem:item];
 }
 
-/*
-- (BOOL)windowShouldClose:(NSWindow *)sender
-{
-	if( [self isDocumentEdited] == NO ) return YES;
-	
-	// document has been modified, so display save dialog and defer close
-	NSString *file = [[[sender representedFilename] lastPathComponent] stringByDeletingPathExtension];
-	if( [file isEqualToString:@""] ) file = NSLocalizedString(@"this document", nil);
-	NSBeginAlertSheet( NSLocalizedString(@"Save Document?", nil), NSLocalizedString(@"Save", nil), NSLocalizedString(@"Don’t Save", nil), NSLocalizedString(@"Cancel", nil), sender, self, @selector(didEndShouldCloseSheet:returnCode:contextInfo:), NULL, sender, NSLocalizedString(@"Do you wish to save %@?", nil), file );
-	return NO;
-}
-
-- (void)didEndShouldCloseSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	if( returnCode == NSAlertDefaultReturn )		// save then close
-	{
-		[self saveDocument:contextInfo];
-		[(NSWindow *)contextInfo close];
-	}
-	else if( returnCode == NSAlertAlternateReturn )	// don't save, just close
-	{
-		[(NSWindow *)contextInfo close];
-	}
-	else if( returnCode == NSAlertErrorReturn )
-	{
-		NSLog( @"didEndShouldCloseSheet received NSAlertErrorReturn return code" );
-	}
-	// else returnCode == NSAlertOtherReturn, cancel
-}*/
-
 /* TOOLBAR MANAGMENT */
 #pragma mark -
 
@@ -135,21 +111,24 @@ static NSString *RKEditHexItemIdentifier	= @"com.nickshanks.resknife.toolbar.edi
 static NSString *RKSaveItemIdentifier		= @"com.nickshanks.resknife.toolbar.save";
 static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.showinfo";
 
-- (void)setupToolbar:(NSWindowController *)controller
+- (void)setupToolbar:(NSWindowController *)windowController
 {
 	/* This routine should become invalid once toolbars are integrated into nib files */
 	
-	NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:RKToolbarIdentifier] autorelease];
-	
-	// set toolbar properties
-	[toolbar setVisible:NO];
-	[toolbar setAutosavesConfiguration:YES];
-	[toolbar setAllowsUserCustomization:YES];
-	[toolbar setDisplayMode:NSToolbarDisplayModeDefault];
-	
-	// attach toolbar to window 
-	[toolbar setDelegate:self];
-	[[controller window] setToolbar:toolbar];
+	if( [windowController window] == mainWindow )
+	{
+		NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:RKToolbarIdentifier] autorelease];
+		
+		// set toolbar properties
+		[toolbar setVisible:NO];
+		[toolbar setAutosavesConfiguration:YES];
+		[toolbar setAllowsUserCustomization:YES];
+		[toolbar setDisplayMode:NSToolbarDisplayModeDefault];
+		
+		// attach toolbar to window 
+		[toolbar setDelegate:self];
+		[mainWindow setToolbar:toolbar];
+	}
 }
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
@@ -217,38 +196,6 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		return item;
 	}
 	else return nil;
-
-/*	if([itemIdent isEqual: SearchDocToolbarItemIdentifier]) {
-	NSMenu *submenu = nil;
-	NSMenuItem *submenuItem = nil, *menuFormRep = nil;
-	
-	// Set up the standard properties 
-	[toolbarItem setLabel: @"Search"];
-	[toolbarItem setPaletteLabel: @"Search"];
-	[toolbarItem setToolTip: @"Search Your Document"];
-	
-	// Use a custom view, a text field, for the search item 
-	[toolbarItem setView: searchFieldOutlet];
-	[toolbarItem setMinSize:NSMakeSize(30, NSHeight([searchFieldOutlet frame]))];
-	[toolbarItem setMaxSize:NSMakeSize(400,NSHeight([searchFieldOutlet frame]))];
-
-	// By default, in text only mode, a custom items label will be shown as disabled text, but you can provide a 
-	// custom menu of your own by using <item> setMenuFormRepresentation] 
-	submenu = [[[NSMenu alloc] init] autorelease];
-	submenuItem = [[[NSMenuItem alloc] initWithTitle: @"Search Panel" action: @selector(searchUsingSearchPanel:) keyEquivalent: @""] autorelease];
-	menuFormRep = [[[NSMenuItem alloc] init] autorelease];
-
-	[submenu addItem: submenuItem];
-	[submenuItem setTarget: self];
-	[menuFormRep setSubmenu: submenu];
-	[menuFormRep setTitle: [toolbarItem label]];
-	[toolbarItem setMenuFormRepresentation: menuFormRep];
-    } else {
-	// itemIdent refered to a toolbar item that is not provide or supported by us or cocoa 
-	// Returning nil will inform the toolbar self kind of item is not supported 
-	toolbarItem = nil;
-    }
-    return toolbarItem;	*/
 }
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
@@ -264,74 +211,82 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 - (BOOL)validateToolbarItem:(NSToolbarItem *)item
 {
 	BOOL valid = NO;
-	int selection = [outlineView numberOfSelectedRows];
+	int selectedRows = [outlineView numberOfSelectedRows];
 	NSString *identifier = [item itemIdentifier];
 	
 	if( [identifier isEqualToString:RKCreateItemIdentifier] )				valid = YES;
-	else if( [identifier isEqualToString:RKDeleteItemIdentifier] )			valid = selection? YES:NO;
-	else if( [identifier isEqualToString:RKEditItemIdentifier] )			valid = (selection == 1)? YES:NO;
-	else if( [identifier isEqualToString:RKEditHexItemIdentifier] )			valid = selection? YES:NO;
+	else if( [identifier isEqualToString:RKDeleteItemIdentifier] )			valid = selectedRows > 0;
+	else if( [identifier isEqualToString:RKEditItemIdentifier] )			valid = selectedRows == 1;
+	else if( [identifier isEqualToString:RKEditHexItemIdentifier] )			valid = selectedRows > 0;
 	else if( [identifier isEqualToString:RKSaveItemIdentifier] )			valid = [self isDocumentEdited];
 	else if( [identifier isEqualToString:NSToolbarPrintItemIdentifier] )	valid = YES;
 	
 	return valid;
 }
 
-/*
-- (void) toolbarWillAddItem: (NSNotification *) notif {
-    // Optional delegate method   Before an new item is added to the toolbar, self notification is posted   
-    // self is the best place to notice a new item is going into the toolbar   For instance, if you need to 
-    // cache a reference to the toolbar item or need to set up some initial state, self is the best place 
-    // to do it    The notification object is the toolbar to which the item is being added   The item being 
-    // added is found by referencing the @"item" key in the userInfo 
-    NSToolbarItem *addedItem = [[notif userInfo] objectForKey: @"item"];
-    if([[addedItem itemIdentifier] isEqual: SearchDocToolbarItemIdentifier]) {
-	activeSearchItem = [addedItem retain];
-	[activeSearchItem setTarget: self];
-	[activeSearchItem setAction: @selector(searchUsingToolbarTextField:)];
-    } else if ([[addedItem itemIdentifier] isEqual: NSToolbarPrintItemIdentifier]) {
-	[addedItem setToolTip: @"Print Your Document"];
-	[addedItem setTarget: self];
-    }
-}  
-
-- (void) toolbarDidRemoveItem: (NSNotification *) notif {
-    // Optional delegate method   After an item is removed from a toolbar the notification is sent   self allows 
-    // the chance to tear down information related to the item that may have been cached   The notification object
-    // is the toolbar to which the item is being added   The item being added is found by referencing the @"item"
-    // key in the userInfo 
-    NSToolbarItem *removedItem = [[notif userInfo] objectForKey: @"item"];
-    if (removedItem==activeSearchItem) {
-	[activeSearchItem autorelease];
-	activeSearchItem = nil;    
-    }
-}
-*/
-
 /* DOCUMENT MANAGEMENT */
 #pragma mark -
 
 - (IBAction)showCreateResourceSheet:(id)sender
 {
-	[[dataSource createResourceSheetController] showCreateResourceSheet:self];
+	// bug: ResourceDocument allocs a sheet controller, but it's never disposed of
+	CreateResourceSheetController *sheetController = [[CreateResourceSheetController alloc] initWithWindowNibName:@"CreateResourceSheet"];
+	[sheetController showCreateResourceSheet:self];
 }
 
 - (IBAction)openResource:(id)sender
 {
-	if( NO );
-	else [self openResourceAsHex:sender];
+	// bug: Can only cope with one selected item
+	[self openResourceInTemplate:sender];
+}
+
+- (IBAction)openResourceInTemplate:(id)sender
+{
+	// opens the resource in it's default template
+	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
+	NSLog( [resource type] );
+	[self openResourceUsingTemplate:[resource type]];
+}
+
+- (void)openResourceUsingTemplate:(NSString *)templateName
+{
+	// opens resource in template using TMPL resource with name templateName
+	// bug: Can only cope with one selected item
+	NSBundle *templateEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Template Editor.plugin"]];
+	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
+	Resource *tmpl = [dataSource resourceNamed:[resource type] ofType:@"TMPL"];
+	
+	NSLog( @"attempting to open %@ using template %@", [resource name], templateName );
+	
+	// open the resource, passing in the template to use
+	if( tmpl /*&& [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)]*/ )
+	{
+		NSLog( @"opening using %@ template", templateName );
+		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
+		[(id <ResKnifePluginProtocol>)[[templateEditor principalClass] alloc] initWithResources:resource, tmpl, nil];
+	}
+	// if no template exists, or template editor is broken, open as hex
+	else
+	{
+		if( !tmpl )	NSLog( @"no %@ template present, opening as hex", templateName );
+		else		NSLog( @"template editor does not respond to -initWithResources:, opening as hex" );
+		[self openResourceAsHex:self];
+	}
 }
 
 - (IBAction)openResourceAsHex:(id)sender
 {
+#warning Can only cope with one selected item
 	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
 	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
-	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
+#warning I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
+	
 	[(id <ResKnifePluginProtocol>)[[hexEditor principalClass] alloc] initWithResource:resource];
 }
 
 - (IBAction)playSound:(id)sender
 {
+#warning Can only cope with one selected item
 	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
 	NSSound *sound = [[NSSound alloc] initWithData:[resource data]];
 	[sound setDelegate:self];
@@ -423,6 +378,12 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 /* FILE HANDLING */
 #pragma mark -
 
+/*- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
+{
+	[savePanel setTreatsFilePackagesAsDirectories:YES];
+	return YES;
+}*/
+
 - (BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)type
 {
 	BOOL succeeded = NO;
@@ -437,13 +398,20 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	SetResLoad( false );	// don't load "preload" resources
 	error = FSOpenResourceFile( fileRef, resourceForkName->length, (UniChar *) &resourceForkName->unicode, fsRdPerm, &fileRefNum);
 	if( error )				// try to open data fork instead
+	{
+		NSLog( @"Opening Resource fork failed, trying data fork..." );
 		error = FSOpenResourceFile( fileRef, 0, nil, fsRdPerm, &fileRefNum);
+	}
 	else otherFork = resourceForkName;
 	SetResLoad( true );		// restore resource loading as soon as is possible
 	
-	// read the resources
+	// read the resources (without spawning thousands of undos for resource creation)
+	[[self undoManager] disableUndoRegistration];
 	if( fileRefNum && !error )
 		succeeded = [self readResourceMap:fileRefNum];
+	else if( !fileRefNum ) NSLog( @"Opening data fork failed too! (fileRef)" );
+	else NSLog( @"Opening data fork failed too! (error)" );
+	[[self undoManager] enableUndoRegistration];
 	
 	// tidy up loose ends
 	if( !otherFork ) DisposePtr( (Ptr) resourceForkName );	// only delete if we're not saving it
@@ -458,6 +426,8 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	unsigned short i, j, n;
 	SInt16 oldResFile = CurResFile();
 	UseResFile( fileRefNum );
+	
+	NSLog( @"Reading resource map..." );
 	
 	for( i = 1; i <= Count1Types(); i++ )
 	{
@@ -476,6 +446,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 			error = ResError();
 			if( error != noErr )
 			{
+				NSLog( @"Error reading resource map..." );
 				UseResFile( oldResFile );
 				return NO;
 			}
@@ -500,6 +471,8 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 			ReleaseResource( resourceHandle );
 		}
 	}
+	
+	NSLog( @"Resource map read" );
 	
 	// save resource map and clean up
 	UseResFile( oldResFile );
@@ -593,14 +566,19 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 /* ACCESSORS */
 #pragma mark -
 
-- (NSOutlineView *)outlineView
+- (NSWindow *)mainWindow
 {
-	return outlineView;
+	return mainWindow;
 }
 
 - (ResourceDataSource *)dataSource
 {
 	return dataSource;
+}
+
+- (NSOutlineView *)outlineView
+{
+	return outlineView;
 }
 
 - (NSArray *)resources

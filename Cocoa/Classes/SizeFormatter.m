@@ -17,7 +17,7 @@
 			
 	while( value >= 1024 && power <= 30 )
 	{
-		power += 10;	// 10 == KB, 20 == MB, 30 == GB
+		power += 10;	// 10 == KB, 20 == MB, 30+ == GB
 		value /= 1024;
 	}
 	

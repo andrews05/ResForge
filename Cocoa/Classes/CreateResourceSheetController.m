@@ -14,7 +14,7 @@
 	if( [type length] == 4 && [[resIDView stringValue] length] > 0 )
 	{
 		Resource *resource;
-		NSEnumerator *enumerator = [[dataSource resources] objectEnumerator];
+		NSEnumerator *enumerator = [[[document dataSource] resources] objectEnumerator];
 		while( resource = [enumerator nextObject] )
 		{
 			if( [type isEqualToString:[resource type]] && [resID isEqualToNumber:[resource resID]] )
@@ -25,9 +25,11 @@
 	[createButton setEnabled:enableButton];
 }
 
-- (IBAction)showCreateResourceSheet:(id)sender
+- (void)showCreateResourceSheet:(ResourceDocument *)sheetDoc
 {
-	[NSApp beginSheet:[self window] modalForWindow:parent modalDelegate:self didEndSelector:NULL contextInfo:nil];
+#warning didEndSelector could be better employed than using the button's targets from interface builder
+	document = sheetDoc;
+	[NSApp beginSheet:[self window] modalForWindow:[document mainWindow] modalDelegate:self didEndSelector:NULL contextInfo:nil];
 }
 
 - (IBAction)hideCreateResourceSheet:(id)sender
@@ -42,7 +44,7 @@
 		attributes ^= [[attributesMatrix cellAtRow:1 column:1] intValue]? resProtected:0;
 		
 		[[document undoManager] beginUndoGrouping];
-		[dataSource addResource:[Resource resourceOfType:[typeView stringValue] andID:[NSNumber numberWithShort:(short) [resIDView intValue]] withName:[nameView stringValue] andAttributes:[NSNumber numberWithUnsignedShort:attributes]]];
+		[[document dataSource] addResource:[Resource resourceOfType:[typeView stringValue] andID:[NSNumber numberWithShort:(short) [resIDView intValue]] withName:[nameView stringValue] andAttributes:[NSNumber numberWithUnsignedShort:attributes]]];
 		if( [[nameView stringValue] length] == 0 )
 			[[document undoManager] setActionName:NSLocalizedString(@"Create Resource", nil)];
 		else [[document undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Create Resource Ò%@Ó", nil), [nameView stringValue]]];

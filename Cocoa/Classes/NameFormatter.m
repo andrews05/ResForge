@@ -1,4 +1,6 @@
 #import "NameFormatter.h"
+#import "NSOutlineView-SelectedItems.h"
+#import "Resource.h"
 
 @implementation NameFormatter
 
@@ -7,8 +9,9 @@
 	if( ![obj isKindOfClass:[NSString class]] ) return nil;
 	if( [obj isEqualToString:@""] )
 	{
-		// bug: the NO should be some kind of 'icns' resource type identification
-		if( NO ) return NSLocalizedString( @"Custom Icon", nil );
+		// unfortunetly this is wrong, the resource I'm being asked about is NOT the selected one!
+		if( [[(Resource *)[outlineView selectedItem] type] isEqualToString:@"icns"] )
+			return NSLocalizedString( @"Custom Icon", nil );
 		else return NSLocalizedString( @"Untitled Resource", nil );
 	}
 	else return obj;

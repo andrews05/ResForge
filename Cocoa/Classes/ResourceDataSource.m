@@ -22,11 +22,6 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 	[super dealloc];
 }
 
-- (CreateResourceSheetController *)createResourceSheetController
-{
-	return createResourceSheetController;
-}
-
 - (NSWindow *)window
 {
 	return window;
@@ -55,7 +50,7 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 	[outlineView reloadData];
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceDidAddResourceNotification object:dictionary];
-	[[document undoManager] registerUndoWithTarget:self selector:@selector(removeResource:) object:resource];
+	[[document undoManager] registerUndoWithTarget:self selector:@selector(removeResource:) object:resource];	// undo action name set by calling function
 }
 
 - (void)removeResource:(Resource *)resource
@@ -68,7 +63,7 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 	[outlineView reloadData];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceDidRemoveResourceNotification object:dictionary];
-	[[document undoManager] registerUndoWithTarget:self selector:@selector(addResource:) object:resource];	// NB: I hope the undo manager retains the resource, because it just got deleted :)
+	[[document undoManager] registerUndoWithTarget:self selector:@selector(addResource:) object:resource];	// NB: I hope the undo manager retains the resource, because it just got deleted :)  -  undo action name set by calling function
 }
 
 - (void)resourceDidChange:(NSNotification *)notification
@@ -76,6 +71,8 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 	// reload the data for the changed resource
 	[outlineView reloadItem:[notification object]];
 }
+
+/* Data source protocol implementation */
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
 {
@@ -106,6 +103,20 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 	#pragma unused( outlineView )
 	NSString *identifier = [tableColumn identifier];
 	[item takeValue:object forKey:identifier];
+}
+
+/* ACCESSORS */
+
+- (Resource *)resourceNamed:(NSString *)name ofType:(NSString *)type
+{
+	Resource *resource;
+	NSEnumerator *enumerator = [resources objectEnumerator];
+	while( resource = [enumerator nextObject] )
+	{
+		if( [[resource name] isEqualToString:name] && [[resource type] isEqualToString:type] )
+			return resource;
+	}
+	return nil;
 }
 
 @end

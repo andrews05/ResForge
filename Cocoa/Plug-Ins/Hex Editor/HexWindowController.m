@@ -1,4 +1,5 @@
 #import "HexWindowController.h"
+#import "HexTextView.h"
 
 @implementation HexWindowController
 
@@ -16,12 +17,6 @@ NSString *ResourceAttributesDidChangeNotification	= @"ResourceAttributesDidChang
 NSString *ResourceDataDidChangeNotification			= @"ResourceDataDidChangeNotification";
 NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 
-+ (void)initialize
-{
-	// causes window controller to use HexTextViews wherever it would previously use NSTextView
-    [HexTextView poseAsClass:[NSTextView class]];
-}
-
 - (id)initWithResource:(id)newResource
 {
 	self = [self initWithWindowNibName:@"HexWindow"];
@@ -30,17 +25,17 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	// one instance of your principal class will be created for every resource the user wants to edit (similar to Windows apps)
 	resource = [newResource retain];
 	
-	// load the window
-	[self setWindowFrameAutosaveName:@"Hexadecimal Editor"];
-//	[self setShouldCascadeWindows:YES];
-	[self window];
+	// load the window from the nib file and set it's title
+	[self window];	// implicitly loads nib
+	if( ![[resource name] isEqualToString:@""] )
+		[[self window] setTitle:[resource name]];
 	return self;
 }
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[resource autorelease];
+	[(id)resource autorelease];
 	[super dealloc];
 }
 
@@ -49,7 +44,20 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	[super windowDidLoad];
 	
 	// swap text views to instances of my class instead
-	//	An experianced NeXT programmer told me that poseAsClass would come back to bite me in the ass at some point, and that I should instead instanciate some HexTextViews and swap them in for now, and use IB do do things properly once IB is fixed. But, for now I think I'll not bother :-P
+	[offset swapForHexTextView];
+	[hex swapForHexTextView];
+	[ascii swapForHexTextView];
+	
+	// turn off the background for the offset column (IB is broken when it comes to this)
+	[offset setDrawsBackground:NO];
+	[[offset enclosingScrollView] setDrawsBackground:NO];
+	
+	// set up tab, shift-tab and enter behaviour
+	[hex setFieldEditor:YES];
+	[ascii setFieldEditor:YES];
+	
+	// insert the resources' data into the text fields
+	[self refreshData:[resource data]];
 	
 	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
@@ -58,9 +66,6 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[offset enclosingScrollView] contentView]];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[hex enclosingScrollView] contentView]];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[ascii enclosingScrollView] contentView]];
-	
-	// insert the resources' data into the text fields
-	[self refreshData:[(id <ResKnifeResourceProtocol>)resource data]];
 	
 	// finally, show the window
 	[self showWindow:self];
@@ -108,12 +113,16 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 - (void)resourceDataDidChange:(NSNotification *)notification
 {
 	// ensure it's our resource which got changed (should always be true, we don't register for other resource notifications)
-	if( [notification object] == resource )
-		[self refreshData:[(id <ResKnifeResourceProtocol>)resource data]];
+	if( [notification object] == (id)resource )
+		[self refreshData:[resource data]];
 }
 
 - (void)refreshData:(NSData *)data;
 {
+	// save selections
+	NSRange hexSelection = [hex selectedRange];
+	NSRange asciiSelection = [ascii selectedRange];
+	
 	// clear delegates (see HexEditorDelegate class for explanation of why)
 	id oldDelegate = [hex delegate];
 	[hex setDelegate:nil];
@@ -123,6 +132,10 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	[offset	setString:[hexDelegate offsetRepresentation:data]];
 	[hex	setString:[hexDelegate hexRepresentation:data]];
 	[ascii	setString:[hexDelegate asciiRepresentation:data]];
+	
+	// restore selections (this is the dumbest way to do it, but it'll do for now)
+	[hex setSelectedRange:hexSelection];
+	[ascii setSelectedRange:asciiSelection];
 	
 	// restore delegates
 	[hex setDelegate:oldDelegate];
@@ -136,7 +149,7 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 
 - (NSData *)data
 {
-	return [(id <ResKnifeResourceProtocol>)resource data];
+	return [resource data];
 }
 
 @end

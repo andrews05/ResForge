@@ -121,7 +121,6 @@
 - (BOOL)textView:(NSTextView *)textView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString;
 {
 #warning Every time a character is typed or string pasted, the entire resource is duplicated, operated on and disposed of! Perhaps I could do this in a better way?
-	unsigned char *buffer;
 	NSMutableData *data = [NSMutableData dataWithData:[controller data]];
 	NSMutableData *newData = [NSMutableData dataWithBytes:[replacementString cString] length:[replacementString cStringLength]];
 	NSRange range;
@@ -133,13 +132,10 @@
 	else return YES;
 
 #warning Does not cater for delete, forward delete, etc.
-	buffer = malloc( [newData length] );
-	[newData getBytes:buffer];
-	[data replaceBytesInRange:range withBytes:buffer];
-	free(buffer);
+	[data replaceBytesInRange:range withBytes:[newData bytes] length:[newData length]];
 	
 	// update resource data - this causes a notification to be sent out, which the plug receives and acts upon to update the text views
-	[(id <ResKnifeResourceProtocol>)[controller resource] setData:data];
+	[[controller resource] setData:data];
 	return NO;
 }
 

@@ -27,30 +27,33 @@
 - (void)updatePrefs:(NSNotification *)notification
 {
 	// load preferences…
-	NSUserDefaults*	defaults	= [NSUserDefaults standardUserDefaults];
+	NSUserDefaults *defaults	= [NSUserDefaults standardUserDefaults];
 	BOOL preserveBackups		= [defaults boolForKey:@"PreserveBackups"];
 	BOOL autosave				= [defaults boolForKey:@"Autosave"];
 	int autosaveInterval		= [defaults integerForKey:@"AutosaveInterval"];
 	BOOL deleteResourceWarning	= [defaults boolForKey:@"DeleteResourceWarning"];
-	int createNewDocument		= [defaults integerForKey:@"OpenUntitledFileOnLaunch"];
+	BOOL createNewDocument		= [[defaults stringForKey:@"LaunchAction"] isEqualToString:@"OpenUntitledFile"];
+	BOOL displayOpenPanel		= [[defaults stringForKey:@"LaunchAction"] isEqualToString:@"DisplayOpenPanel"];
+	int launchAction			= createNewDocument? 1:(displayOpenPanel? 2:0);
 	
 	// …and set widgets accordingly
 	[[dataProtectionMatrix cellAtRow:preserveBackupsBox column:0] setState:preserveBackups];
 	[[dataProtectionMatrix cellAtRow:autosaveBox column:0] setState:autosave];
 	[autosaveIntervalField setStringValue:[NSString stringWithFormat:@"%d", autosaveInterval]];
 	[[dataProtectionMatrix cellAtRow:deleteResourceWarningBox column:0] setState:deleteResourceWarning];
-	[launchActionMatrix selectCellAtRow:createNewDocument column:0];
+	[launchActionMatrix selectCellAtRow:launchAction column:0];
 }
 
 - (IBAction)acceptPrefs:(id)sender
 {
 	// bug: hey! where's NSValue's boolValue method? I have to use "intValue? YES:NO" :(
-	NSUserDefaults*	defaults	= [NSUserDefaults standardUserDefaults];
+	NSUserDefaults *defaults	= [NSUserDefaults standardUserDefaults];
 	BOOL preserveBackups		= [[dataProtectionMatrix cellAtRow:preserveBackupsBox column:0] intValue]? YES:NO;
 	BOOL autosave				= [[dataProtectionMatrix cellAtRow:autosaveBox column:0] intValue]? YES:NO;
 	int autosaveInterval		= [autosaveIntervalField intValue];
 	BOOL deleteResourceWarning	= [[dataProtectionMatrix cellAtRow:deleteResourceWarningBox column:0] intValue]? YES:NO;
 	BOOL createNewDocument		= ([launchActionMatrix selectedRow] == createNewDocumentBox)? YES:NO;
+	BOOL displayOpenPanel		= ([launchActionMatrix selectedRow] == displayOpenPanelBox)? YES:NO;
 	
 	// hide the window
 	[[self window] orderOut:nil];
@@ -60,7 +63,9 @@
 	[defaults setBool:autosave forKey:@"Autosave"];
 	[defaults setInteger:autosaveInterval forKey:@"AutosaveInterval"];
 	[defaults setBool:deleteResourceWarning forKey:@"DeleteResourceWarning"];
-	[defaults setBool:createNewDocument forKey:@"OpenUntitledFileOnLaunch"];
+	if( createNewDocument )		[defaults setObject:@"OpenUntitledFile" forKey:@"LaunchAction"];
+	else if( displayOpenPanel )	[defaults setObject:@"DisplayOpenPanel" forKey:@"LaunchAction"];
+	else						[defaults setObject:@"None" forKey:@"LaunchAction"];
 	[defaults synchronize];
 }
 
@@ -81,14 +86,16 @@
 	BOOL autosave				= [[defaultsPlist objectForKey:@"Autosave"] intValue]? YES:NO;
 	int autosaveInterval		= [[defaultsPlist objectForKey:@"AutosaveInterval"] intValue];
 	BOOL deleteResourceWarning	= [[defaultsPlist objectForKey:@"DeleteResourceWarning"] intValue]? YES:NO;
-	int createNewDocument		= [[defaultsPlist objectForKey:@"OpenUntitledFileOnLaunch"] intValue];
+	BOOL createNewDocument		= [[defaultsPlist objectForKey:@"LaunchAction"] isEqualToString:@"OpenUntitledFile"];
+	BOOL displayOpenPanel		= [[defaultsPlist objectForKey:@"LaunchAction"] isEqualToString:@"DisplayOpenPanel"];
+	int launchAction			= createNewDocument? 1:(displayOpenPanel? 2:0);
 	
 	// note that this function does not modify the user defaults - the user still has to accept or cancel the panel
 	[[dataProtectionMatrix cellAtRow:preserveBackupsBox column:0] setState:preserveBackups];
 	[[dataProtectionMatrix cellAtRow:autosaveBox column:0] setState:autosave];
 	[autosaveIntervalField setStringValue:[NSString stringWithFormat:@"%d", autosaveInterval]];
 	[[dataProtectionMatrix cellAtRow:deleteResourceWarningBox column:0] setState:deleteResourceWarning];
-	[launchActionMatrix selectCellAtRow:createNewDocument column:0];
+	[launchActionMatrix selectCellAtRow:launchAction column:0];
 }
 
 + (id)sharedPrefsWindowController

@@ -2,6 +2,7 @@
 #import <Carbon/Carbon.h>	// Actually I only need CarbonCore.framework, but <Carbon/CarbonCore.h> and <CarbonCore/CarbonCore.h> don't work, so I don't know what else to do
 #import "ResourceDocument.h"
 #import "Resource.h"
+#import "NSOutlineView-SelectedItems.h"
 
 @implementation InfoWindowController
 
@@ -57,8 +58,9 @@
 	else
 	{
 		[[self window] setTitle:@"Document Info"];
-		[placeholderView setContentView:documentView];
+		[iconView setImage:[NSImage imageNamed:@"Resource file"]];
 		[nameView setStringValue:[currentDocument fileName]? [[currentDocument fileName] lastPathComponent]:[currentDocument displayName]];
+		[placeholderView setContentView:documentView];
 	}
 }
 
@@ -70,7 +72,7 @@
 		currentDocument = [controller document];
 	else currentDocument = nil;
 	
-	selectedResource = [[currentDocument outlineView] itemAtRow:[[currentDocument outlineView] selectedRow]];
+	selectedResource = [[currentDocument outlineView] selectedItem];
 	[self updateInfoWindow];
 }
 
@@ -81,7 +83,7 @@
 
 - (void)selectedResourceChanged:(NSNotification *)notification
 {
-	selectedResource = [[notification object] itemAtRow:[[notification object] selectedRow]];
+	selectedResource = [[notification object] selectedItem];
 	[self updateInfoWindow];
 }
 

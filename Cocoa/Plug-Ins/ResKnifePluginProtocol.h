@@ -8,5 +8,6 @@
  *	@abstract	Your plug-in is inited with this call. This allows immediate access to the resource you are about to edit, and with this information you can set up different windows, etc.
  */
 - (id)initWithResource:(id)newResource;
+- (id)initWithResources:(id)newResource, ...;
 
 @end

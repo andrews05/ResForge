@@ -2,6 +2,7 @@
 
 @implementation Resource
 
+// should these be above or below "@implementation Resource" ?
 NSString *ResourceWillChangeNotification			= @"ResourceWillChangeNotification";
 NSString *ResourceNameWillChangeNotification		= @"ResourceNameWillChangeNotification";
 NSString *ResourceTypeWillChangeNotification		= @"ResourceTypeWillChangeNotification";
@@ -21,6 +22,49 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	self = [super init];
 	[self initWithType:@"NULL" andID:[NSNumber numberWithShort:128]];
 	return self;
+}
+
+- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue
+{
+	[self initWithType:typeValue andID:resIDValue withName:@"" andAttributes:[NSNumber numberWithUnsignedShort:0]];
+	return self;
+}
+
+- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue
+{
+	[self initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:[NSData data]];
+	return self;
+}
+
+- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue
+{
+	// sets values directly for speed reasons (less messaging overhead)
+	self = [super init];
+	dirty = NO;
+	name = [nameValue copy];
+	type = [typeValue copy];
+	resID = [resIDValue copy];
+	attributes = [attributesValue copy];
+	data = [dataValue retain];
+	return self;
+}
+
++ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue
+{
+	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue];
+	return [resource autorelease];
+}
+
++ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue
+{
+	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue];
+	return [resource autorelease];
+}
+
++ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue
+{
+	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:dataValue];
+	return [resource autorelease];
 }
 
 - (void)dealloc
@@ -136,51 +180,5 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:self];
 	[self setDirty:YES];
 }
-
-/* Creation */
-
-- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue
-{
-	[self initWithType:typeValue andID:resIDValue withName:@"" andAttributes:[NSNumber numberWithUnsignedShort:0]];
-	return self;
-}
-
-- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue
-{
-	[self initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:[NSData data]];
-	return self;
-}
-
-- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue
-{
-	// sets values directly to avoid triggering notifications (would create undos all over the place!)
-	self = [super init];
-	dirty = NO;
-	name = [nameValue copy];
-	type = [typeValue copy];
-	resID = [resIDValue copy];
-	attributes = [attributesValue copy];
-	data = [dataValue retain];
-	return self;
-}
-
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue
-{
-	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue];
-	return [resource autorelease];
-}
-
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue
-{
-	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue];
-	return [resource autorelease];
-}
-
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue
-{
-	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:dataValue];
-	return [resource autorelease];
-}
-
 
 @end

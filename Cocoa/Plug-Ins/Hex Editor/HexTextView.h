@@ -5,3 +5,9 @@
 {
 }
 @end
+
+@interface NSTextView (HexTextView)
+
+- (void)swapForHexTextView;
+
+@end

@@ -1,26 +1,22 @@
 #import <Cocoa/Cocoa.h>
-#import "HexEditorDelegate.h"
-#import "HexTextView.h"
 
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"
 
-@interface HexWindowController : NSWindowController <ResKnifePluginProtocol>
+@interface TemplateWindowController : NSWindowController <ResKnifePluginProtocol>
 {
-	IBOutlet HexEditorDelegate	*hexDelegate;
-    IBOutlet NSTextView			*ascii;
-    IBOutlet NSTextView			*hex;
-    IBOutlet NSTextView			*offset;
-    IBOutlet NSTextField		*message;
-	
 	id <ResKnifeResourceProtocol>	resource;
+	NSMutableArray *tmpl;
 }
 
 // conform to the ResKnifePluginProtocol with the inclusion of these methods
 - (id)initWithResource:(id)newResource;
+- (id)initWithResources:(id)newResource, ...;
 
 // normal methods
-- (void)viewDidScroll:(NSNotification *)notification;
+- (void)readTemplate:(id <ResKnifeResourceProtocol>)tmpl;
+- (void)parseData;
+- (void)createUI;
 - (void)resourceDataDidChange:(NSNotification *)notification;
 - (void)refreshData:(NSData *)data;
 
