@@ -1,0 +1,12 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = NuTemplateWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {dataList = NSOutlineView; displayList = NSOutlineView; resource = id; }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

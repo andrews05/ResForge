@@ -10,6 +10,8 @@
         {
             ACTIONS = {
                 deselectAll = id; 
+                exportResourceToFile = id; 
+                exportResourceToImageFile = id; 
                 findNext = id; 
                 findPrevious = id; 
                 findWithSelection = id; 
@@ -36,6 +38,31 @@
             LANGUAGE = ObjC; 
             OUTLETS = {forkTableView = NSTableView; }; 
             SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                clear = id; 
+                copy = id; 
+                creatorChanged = id; 
+                exportResourceToFile = id; 
+                exportResourceToImageFile = id; 
+                openResources = id; 
+                openResourcesAsHex = id; 
+                openResourcesInTemplate = id; 
+                paste = id; 
+                playSound = id; 
+                showCreateResourceSheet = id; 
+                showSelectTemplateSheet = id; 
+                typeChanged = id; 
+            }; 
+            CLASS = ResourceDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                dataSource = ResourceDataSource; 
+                mainWindow = NSWindow; 
+                outlineView = NSOutlineView; 
+            }; 
+            SUPERCLASS = NSDocument; 
         }
     ); 
     IBVersion = 1; 

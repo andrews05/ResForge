@@ -200,6 +200,16 @@ NSString *RKResourcePboardType		= @"RKResourcePboardType";
 	}
 }
 
+
+-(NSString*)	nameForEditorWindow
+{
+	if( [name length] > 0 )
+		return [NSString stringWithFormat: @"%@: '%@' ID=%@ \"%@\"", [document displayName], type, resID, name];
+	else
+		return [NSString stringWithFormat: @"%@: '%@' ID=%@", [document displayName], type, resID];
+}
+
+
 - (NSString *)type
 {
 	return type;

@@ -1,5 +1,5 @@
 #import "PictWindowController.h"
-#import "Element.h"
+//#import "Element.h"
 #import <stdarg.h>
 
 @implementation PictWindowController
