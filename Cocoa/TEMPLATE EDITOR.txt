@@ -1,0 +1,38 @@
+ABOUT THE CODE
+--------------
+
+
+WHAT HAPPENS WHEN A TEMPLATE EDITOR IS OPENED FOR A RESOURCE
+
+The template editor uses a dedicated class for each field type (or family of field types).
+These classes are all subclasses of the common base class NuTemplateElement. For things like
+lists, there is a subclass NuTemplateGroupElement from which you can instead subclass to
+have some of the work done for you.
+
+When opening a resource, the template editor first creates a NuTemplateStream for the template
+resource and calls readOneObject: on it until it runs out of data, instantiating a hierarchy
+of NuTemplateElement subclasses for based on the template.
+
+After that, it creates a NuTemplateStream for the resource and loops over the template object
+hierarchy, creating a copy of each item, and then calling readDataFrom:containingArray: on
+the copy, which in turn reads data from the NuTemplateStream and stores it in its instance
+variables. For this to work, subclasses of NuTemplateElement *must* implement the NSCopying
+protocol.
+
+This results in an object hierarchy that describes the entire resource using template fields
+containing the data, which can now be edited, displayed in lists, etc.
+
+
+WHAT HAPPENS WHEN THE TEMPLATE EDITOR IS CLOSED
+
+As soon as the template editor is closed, another NuTemplateStream is created for the
+resource and passed to all template fields (the copies with the resource data, not the
+pre-parsed template hierarchy), via writeDataTo:, which is where they should write their
+data to the stream. Before that, sizeOnDisk is called on each NuTemplateElement to
+calculate the new size of the resource before the actual process of writing them out.
+This size must include the size of all of their sub-items, and writeDataTo: must call
+these sub items if they are to be written to disk.
+
+
+SPECIAL CASE: LISTS
+
