@@ -22,6 +22,9 @@
 {
 	[super windowDidLoad];
 	
+	// set window to only accept key when editing text boxes
+	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
+	
 	// retain views for swapping in and out
 	[documentView retain];
 	[documentView removeFromSuperview];

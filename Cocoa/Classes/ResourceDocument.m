@@ -57,6 +57,17 @@
 	[dataSource setResources:resources];
 }
 
+- (void)printShowingPrintPanel:(BOOL)flag
+{
+	NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:[[outlineView window] contentView]];
+	[printOperation runOperationModalForWindow:[outlineView window] delegate:self didRunSelector:@selector(printOperationDidRun:success:contextInfo:) contextInfo:nil];
+}
+
+- (void)printOperationDidRun:(NSPrintOperation *)printOperation success:(BOOL)success contextInfo:(void *)contextInfo
+{
+	if( !success ) NSLog( @"Printing Failed!" );
+}
+
 - (BOOL)keepBackupFile
 {
 	return [[NSUserDefaults standardUserDefaults] boolForKey:@"PreserveBackups"];
@@ -64,12 +75,22 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
+	int selectedRows = [outlineView numberOfSelectedRows];
 	Resource *resource = (Resource *) [outlineView itemAtRow:[outlineView selectedRow]];
+	
+	// file menu
 	if( [item action] == @selector(saveDocument:) )					return [self isDocumentEdited];
-	else if( [item action] == @selector(openResource:) )			return ([outlineView numberOfSelectedRows] == 1)? YES:NO;
-	else if( [item action] == @selector(openResourceAsHex:) )		return [outlineView numberOfSelectedRows]? YES:NO;
-	else if( [item action] == @selector(playSound:) )				return [[resource type] isEqualToString:@"snd "];
-	else if( [item action] == @selector(revertResourceToSaved:) )	return [resource isDirty];
+	
+	// edit menu
+	else if( [item action] == @selector(clear:) )					return selectedRows > 0;
+	else if( [item action] == @selector(selectAll:) )				return [outlineView numberOfRows] > 0;
+	else if( [item action] == @selector(deselectAll:) )				return selectedRows > 0;
+	
+	// resource menu
+	else if( [item action] == @selector(openResource:) )			return selectedRows == 1;
+	else if( [item action] == @selector(openResourceAsHex:) )		return selectedRows > 0;
+	else if( [item action] == @selector(playSound:) )				return selectedRows == 1 && [[resource type] isEqualToString:@"snd "];
+	else if( [item action] == @selector(revertResourceToSaved:) )	return selectedRows == 1 && [resource isDirty];
 	else return [super validateMenuItem:item];
 }
 
