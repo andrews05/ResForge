@@ -13,7 +13,7 @@
     IBOutlet NSTextView			*offset;
     IBOutlet NSTextField		*message;
 	
-	NSUndoManager *hexUndo;
+	NSUndoManager					*undoManager;
 	id <ResKnifeResourceProtocol>	resource;
 	int								bytesPerRow;
 }

@@ -10,9 +10,9 @@
 	if( !self ) return self;
 	
 	// one instance of your principal class will be created for every resource the user wants to edit (similar to Windows apps)
+	undoManager = [[NSUndoManager alloc] init];
 	resource = [newResource retain];
 	bytesPerRow = 16;
-	hexUndo = [[NSUndoManager alloc] init];
 	
 	// load the window from the nib file and set it's title
 	[self window];	// implicitly loads nib
@@ -23,6 +23,7 @@
 
 - (id)initWithResources:(id)newResource, ...
 {
+	[undoManager release];
 	return nil;
 }
 
@@ -65,6 +66,11 @@
 	// finally, show the window
 	[self showWindow:self];
 }
+/*
+- (BOOL)windowShouldClose:(NSWindow *)sender
+{
+	return [sender isDocumentEdited];
+}*/
 
 - (IBAction)showFind:(id)sender
 {
@@ -181,8 +187,7 @@
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)sender
 {
-	NSLog(@"returning undo manager %@", hexUndo);
-	return hexUndo;
+	return undoManager;
 }
 
 @end

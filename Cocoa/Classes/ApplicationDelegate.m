@@ -24,6 +24,7 @@
 	
 	// save a number of icons
 	icons = [[NSMutableDictionary alloc] init];
+	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"TEXT"] forKey:@"TEXT"];
 	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"PICT"] forKey:@"PICT"];
 	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"icns"] forKey:@"icns"];
 	
@@ -50,6 +51,13 @@
 	else return NO;	// should be @"None", but we shall return NO for any other value
 }
 
+- (BOOL)application:(NSApplication *)application openFile:(NSString *)file
+{
+#pragma unused( application )
+	// bug: check if application was an external editor (e.g. Iconographer) and update existing open file instead
+	[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:file display:YES];
+}
+
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
 #pragma unused( sender )
@@ -64,7 +72,7 @@
 
 - (IBAction)visitWebsite:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://nickshanks.com/resknife/"]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://web.nickshanks.com/resknife/"]];
 }
 
 - (IBAction)visitSourceforge:(id)sender

@@ -128,10 +128,10 @@
 			}
 		}
 	}
-		
-	// replace bytes (updates views implicitly)
-	[data replaceBytesInRange:byteSelection withBytes:[replaceData bytes] length:[replaceData length]];
-	[[(HexWindowController *)[[self window] windowController] resource] setData:data];
+	
+	// replace bytes (updates views implicitly, records an undo)
+	[self editData:data replaceBytesInRange:byteSelection withData:replaceData];
+	[data release];
 	
 	// set the new selection/insertion point
 	byteSelection.location++;
@@ -141,8 +141,6 @@
 	else if( self == (id) [[self delegate] ascii] )
 		selection = [[self delegate] asciiRangeFromByteRange:byteSelection];
 	[self setSelectedRange:selection];
-	[data release];
-	NSLog(@"undo manager %@", [[self window] undoManager]);
 }
 
 - (IBAction)deleteBackward:(id)sender
@@ -169,8 +167,7 @@
 	}
 	
 	// replace bytes (updates views implicitly)
-	[data replaceBytesInRange:byteSelection withBytes:nil length:0];
-	[[(HexWindowController *)[[self window] windowController] resource] setData:data];
+	[self editData:data replaceBytesInRange:byteSelection withData:[NSData data]];
 	[data release];
 	
 	// set the new selection/insertion point
@@ -201,8 +198,7 @@
 		byteSelection.length = 1;
 	
 	// replace bytes (updates views implicitly)
-	[data replaceBytesInRange:byteSelection withBytes:nil length:0];
-	[[(HexWindowController *)[[self window] windowController] resource] setData:data];
+	[self editData:data replaceBytesInRange:byteSelection withData:[NSData data]];
 	[data release];
 	
 	// set the new selection/insertion point
@@ -228,6 +224,24 @@
 - (IBAction)transposeWords:(id)sender
 {
 	[self transpose:sender];
+}
+
+- (void)editData:(NSMutableData *)data replaceBytesInRange:(NSRange)range withData:(NSData *)newData
+{
+	// record an undo
+	NSRange newRange = NSMakeRange( range.location, [newData length] );
+	NSData *oldData = [[data subdataWithRange:range] retain];	// bug: memory leak, need to release somewhere
+	[[[[self window] undoManager] prepareWithInvocationTarget:self] editData:data replaceBytesInRange:newRange withData:oldData];
+	[[[self window] undoManager] setActionName:NSLocalizedString(@"Typing", nil)];
+
+	NSLog( @"Edit Called: replaceBytesInRange: %@ withData: %@", NSStringFromRange(range), [[[NSString alloc] initWithData:newData encoding:NSMacOSRomanStringEncoding] autorelease] );
+	NSLog( @"Edit Saved: replaceBytesInRange: %@ withData: %@", NSStringFromRange(newRange), [[[NSString alloc] initWithData:oldData encoding:NSMacOSRomanStringEncoding] autorelease] );
+	
+	// replace bytes (updates views implicitly)
+	[data replaceBytesInRange:range withBytes:[newData bytes] length:[newData length]];
+	[[(HexWindowController *)[[self window] windowController] resource] setData:data];
+	[self setSelectedRange:NSMakeRange(range.location, [newData length])];
+	[[self window] setDocumentEdited:YES];
 }
 
 @end

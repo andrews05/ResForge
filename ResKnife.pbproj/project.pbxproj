@@ -291,6 +291,347 @@
 			settings = {
 			};
 		};
+		F54625C6029174F601A8010C = {
+			isa = PBXFrameworkReference;
+			name = CoreServices.framework;
+			path = /System/Library/Frameworks/CoreServices.framework;
+			refType = 0;
+		};
+		F54626490291750201A8010C = {
+			isa = PBXFrameworkReference;
+			name = ApplicationServices.framework;
+			path = /System/Library/Frameworks/ApplicationServices.framework;
+			refType = 0;
+		};
+		F54627040291767E01A8010C = {
+			isa = PBXFileReference;
+			path = "ResKnife-rsrcfork.rsrc";
+			refType = 4;
+		};
+		F54627050291767E01A8010C = {
+			fileRef = F54627040291767E01A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F54627060291788401A8010C = {
+			isa = PBXTargetDependency;
+			target = F5B588D20156D78201000001;
+		};
+		F54627070291788801A8010C = {
+			isa = PBXTargetDependency;
+			target = F5B588EE0156DAF301000001;
+		};
+		F54627080291788A01A8010C = {
+			isa = PBXTargetDependency;
+			target = F5B5890B0156DC2201000001;
+		};
+		F546270B02917D1501A8010C = {
+			buildActionMask = 2147483647;
+			files = (
+				F546271302917DC501A8010C,
+				F546271402917DC601A8010C,
+				F546271502917DC701A8010C,
+				F546271602917DC801A8010C,
+				F546271802917DCB01A8010C,
+				F546271A02917DCD01A8010C,
+				F546271C02917DCE01A8010C,
+				F546271E02917DD101A8010C,
+				F546272002917DD201A8010C,
+				F546272202917DD301A8010C,
+				F546272402917DD601A8010C,
+				F546272602917DD701A8010C,
+				F546272802917DE001A8010C,
+				F546272A02917DE201A8010C,
+				F546272C02917DE401A8010C,
+				F546272E02917DE601A8010C,
+				F546273002917DE701A8010C,
+				F546273202917DE801A8010C,
+			);
+			isa = PBXHeadersBuildPhase;
+		};
+		F546270C02917D1501A8010C = {
+			buildActionMask = 2147483647;
+			files = (
+				F546271702917DC901A8010C,
+				F546271902917DCC01A8010C,
+				F546271B02917DCD01A8010C,
+				F546271D02917DCF01A8010C,
+				F546271F02917DD101A8010C,
+				F546272102917DD301A8010C,
+				F546272302917DD501A8010C,
+				F546272502917DD601A8010C,
+				F546272702917DE001A8010C,
+				F546272902917DE101A8010C,
+				F546272B02917DE301A8010C,
+				F546272D02917DE501A8010C,
+				F546272F02917DE601A8010C,
+				F546273102917DE801A8010C,
+				F546273302917DE901A8010C,
+			);
+			isa = PBXSourcesBuildPhase;
+		};
+		F546270D02917D1501A8010C = {
+			buildActionMask = 2147483647;
+			files = (
+				F546271202917DBB01A8010C,
+			);
+			isa = PBXFrameworksBuildPhase;
+		};
+		F546270E02917D1501A8010C = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+		};
+		F546270F02917D1501A8010C = {
+			buildPhases = (
+				F546270B02917D1501A8010C,
+				F546270C02917D1501A8010C,
+				F546270D02917D1501A8010C,
+				F546270E02917D1501A8010C,
+			);
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOL_FLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = libResKnife.dylib;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+			);
+			isa = PBXLibraryTarget;
+			name = libResKnife;
+			productInstallPath = /usr/local/lib;
+			productName = libResKnife;
+			productReference = F546271002917D1501A8010C;
+			shouldUseHeadermap = 0;
+		};
+		F546271002917D1501A8010C = {
+			isa = PBXLibraryReference;
+			path = libResKnife.dylib;
+			refType = 3;
+		};
+		F546271102917D2001A8010C = {
+			isa = PBXTargetDependency;
+			target = F546270F02917D1501A8010C;
+		};
+		F546271202917DBB01A8010C = {
+			fileRef = F5B5884A0156D40B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271302917DC501A8010C = {
+			fileRef = F5B588810156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271402917DC601A8010C = {
+			fileRef = F5B588820156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271502917DC701A8010C = {
+			fileRef = F5B588800156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271602917DC801A8010C = {
+			fileRef = F5B588840156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271702917DC901A8010C = {
+			fileRef = F5B588850156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271802917DCB01A8010C = {
+			fileRef = F5B588860156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271902917DCC01A8010C = {
+			fileRef = F5B588870156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271A02917DCD01A8010C = {
+			fileRef = F5B588880156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271B02917DCD01A8010C = {
+			fileRef = F5B588890156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271C02917DCE01A8010C = {
+			fileRef = F5B5888A0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271D02917DCF01A8010C = {
+			fileRef = F5B5888B0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271E02917DD101A8010C = {
+			fileRef = F5B5888C0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546271F02917DD101A8010C = {
+			fileRef = F5B5888D0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272002917DD201A8010C = {
+			fileRef = F5B5888E0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272102917DD301A8010C = {
+			fileRef = F5B5888F0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272202917DD301A8010C = {
+			fileRef = F5B588900156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272302917DD501A8010C = {
+			fileRef = F5B588910156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272402917DD601A8010C = {
+			fileRef = F5B588920156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272502917DD601A8010C = {
+			fileRef = F5B588930156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272602917DD701A8010C = {
+			fileRef = F5B588940156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272702917DE001A8010C = {
+			fileRef = F5B588A10156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272802917DE001A8010C = {
+			fileRef = F5B588A00156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272902917DE101A8010C = {
+			fileRef = F5B5889F0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272A02917DE201A8010C = {
+			fileRef = F5B5889E0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272B02917DE301A8010C = {
+			fileRef = F5B5889D0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272C02917DE401A8010C = {
+			fileRef = F5B5889C0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272D02917DE501A8010C = {
+			fileRef = F5B5889B0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272E02917DE601A8010C = {
+			fileRef = F5B5889A0156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546272F02917DE601A8010C = {
+			fileRef = F5B588990156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546273002917DE701A8010C = {
+			fileRef = F5B588980156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546273102917DE801A8010C = {
+			fileRef = F5B588970156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546273202917DE801A8010C = {
+			fileRef = F5B588960156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546273302917DE901A8010C = {
+			fileRef = F5B588950156D6D901000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F546273402917E5601A8010C = {
+			fileRef = F546271002917D1501A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		F54E6220021B6A0801A80001 = {
 			isa = PBXFileReference;
 			path = FindSheetController.h;
@@ -853,6 +1194,7 @@
 				F5354437022674B401A80001,
 				F5DF1C090254C6BA01A80001,
 				F5B588750156D5CB01000001,
+				F546270F02917D1501A8010C,
 				F5B588D20156D78201000001,
 				F5B588EE0156DAF301000001,
 				F5B5890B0156DC2201000001,
@@ -874,10 +1216,11 @@
 		F5B588110156D30301000001 = {
 			children = (
 				F5B588120156D30301000001,
-				F5B588740156D5CB01000001,
 				F57CEE0D0189C95101A8010B,
 				F5354436022674B301A80001,
 				F5DF1C080254C6BA01A80001,
+				F5B588740156D5CB01000001,
+				F546271002917D1501A8010C,
 				F5B588D10156D78201000001,
 				F5B588ED0156DAF301000001,
 				F5B589030156DC2201000001,
@@ -1401,6 +1744,8 @@
 		F5B588490156D40B01000001 = {
 			children = (
 				F5B5884A0156D40B01000001,
+				F54625C6029174F601A8010C,
+				F54626490291750201A8010C,
 				F5B5884B0156D40B01000001,
 				F5B5884C0156D40B01000001,
 				F5B5884D0156D40B01000001,
@@ -1645,6 +1990,7 @@
 				F5B5887A0156D5CB01000001,
 			);
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
 				LIBRARY_SEARCH_PATHS = Carbon;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -1655,6 +2001,10 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
+				F546271102917D2001A8010C,
+				F54627060291788401A8010C,
+				F54627070291788801A8010C,
+				F54627080291788A01A8010C,
 			);
 			isa = PBXApplicationTarget;
 			name = "ResKnife Carbon";
@@ -1791,7 +2141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5B588CF0156D6D901000001,
-				F5B588D00156D6D901000001,
+				F54627050291767E01A8010C,
 			);
 			isa = PBXRezBuildPhase;
 		};
@@ -2036,6 +2386,7 @@
 				F5B588A30156D6D901000001,
 				F5B588A40156D6D901000001,
 				F5B588A50156D6D901000001,
+				F54627040291767E01A8010C,
 				F5B588A60156D6D901000001,
 			);
 			isa = PBXGroup;
@@ -2272,12 +2623,6 @@
 			settings = {
 			};
 		};
-		F5B588D00156D6D901000001 = {
-			fileRef = F5B588A50156D6D901000001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		F5B588D10156D78201000001 = {
 			isa = PBXBundleReference;
 			path = "Hex Editor.bundle";
@@ -2369,6 +2714,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5B588EC0156DA1601000001,
+				F546273402917E5601A8010C,
 			);
 			isa = PBXFrameworksBuildPhase;
 		};

@@ -159,7 +159,7 @@ resource 'xmnu' (200, purgeable)
 #define kAEResourceType			'type'
 #define kAECompactResource		'cpct'
 
-resource kAETerminologyExtension ( roman, "AppleScript Dictionary" )
+resource kAETerminologyExtension ( 0, "AppleScript Dictionary" )
 {
 	1,	// major version
 	0,	// minor version
@@ -344,7 +344,7 @@ resource kAETerminologyExtension ( roman, "AppleScript Dictionary" )
 				
 /* b */			"type",
 				kAEResourceType,
-				typeSInt16,
+				typeUInt32,
 				"the type of the resource (four chars in length)",
 				reserved,
 				singleItem,

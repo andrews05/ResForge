@@ -57,6 +57,9 @@ NSString *DocumentInfoDidChangeNotification			= @"DocumentInfoDidChangeNotificat
 		[[outlineView tableColumnWithIdentifier:@"name"] setDataCell:resourceNameCell];
 	}
 	
+	// set outline view's inter-cell psacing to zero to avoid getting gaps between blue bits
+	[outlineView setIntercellSpacing:NSMakeSize(0,0)];
+	
 	// register for resource will change notifications (for undo management)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameWillChange:) name:ResourceNameWillChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceIDWillChange:) name:ResourceIDWillChangeNotification object:nil];

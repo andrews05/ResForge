@@ -54,7 +54,7 @@
 	return [resource autorelease];
 }
 
-+ (NSArray *)allResourcesOfType:(NSString *)typeValue inDocument:(NSDocument *)document
++ (NSArray *)getAllResourcesOfType:(NSString *)typeValue inDocument:(NSDocument *)document
 {
 	NSMutableArray *array = [NSMutableArray array];
 	NSDocument *doc;
@@ -68,7 +68,7 @@
 	return [NSArray arrayWithArray:array];
 }
 
-+ (Resource *)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)document
++ (Resource *)getResourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)document
 {
 	NSDocument *doc;
 	NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];

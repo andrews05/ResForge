@@ -39,6 +39,7 @@ int main( int argc, char* argv[] )
 		QuitResKnife();
 	}
 	
+#if TARGET_API_MAC_CARBON
 	// check carbon version is at least 1.1
 	error = Gestalt( gestaltCarbonVersion, &g.carbonVersion );
 	if( g.carbonVersion < kCarbonLib11 || error )
@@ -50,6 +51,7 @@ int main( int argc, char* argv[] )
 	{
 		DisplayError( kStringRecommendedCarbonLib, kExplanationRecommendedCarbonLib );
 	}
+#endif
 	
 #if __profile__
 	error = ProfilerInit( collectDetailed, bestTimeBase, 400, 40 );

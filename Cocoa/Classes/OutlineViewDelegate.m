@@ -31,8 +31,16 @@
 		[(ResourceNameCell *)cell setImage:[[(ApplicationDelegate *)[NSApp delegate] icons] valueForKey:[(Resource *)item type]]];
 	}
 	
-	if( row % 2 == 0 )	[cell setBackgroundColor:[NSColor whiteColor]];
-	else				[cell setBackgroundColor:[NSColor colorWithCalibratedRed:0.93 green:0.95 blue:1.0 alpha:1.0]];
+	if( row % 2 )
+	{
+		[cell setDrawsBackground:NO];
+		[cell setBackgroundColor:[NSColor whiteColor]];
+	}
+	else
+	{
+		[cell setDrawsBackground:YES];
+		[cell setBackgroundColor:[NSColor colorWithCalibratedRed:0.93 green:0.95 blue:1.0 alpha:1.0]];
+	}
 }
 
 @end
