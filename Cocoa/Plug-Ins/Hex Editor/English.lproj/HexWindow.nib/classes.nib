@@ -14,12 +14,15 @@
             SUPERCLASS = NSObject; 
         }, 
         {
+            ACTIONS = {showFind = id; }; 
             CLASS = HexWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 ascii = NSTextView; 
+                asciiScroll = NSScrollView; 
                 hex = NSTextView; 
                 hexDelegate = HexEditorDelegate; 
+                hexScroll = NSScrollView; 
                 message = NSTextField; 
                 offset = NSTextView; 
             }; 

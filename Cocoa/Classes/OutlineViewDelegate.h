@@ -17,3 +17,10 @@ int compareResourcesAscending( Resource *r1, Resource *r2, void *context );
 int compareResourcesDescending( Resource *r1, Resource *r2, void *context );
 
 @end
+
+@interface NSOutlineView (OutlineSortView)
+- (void)swapForOutlineSortView;
+@end
+
+@interface OutlineSortView : NSOutlineView
+@end

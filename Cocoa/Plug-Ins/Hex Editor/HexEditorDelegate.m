@@ -116,6 +116,23 @@
 	return representation;
 }
 
+- (NSString *)hexToAscii:(NSData *)data;
+{
+	unsigned long bytesEncoded = ([data length] + 1) / 3;
+	char *buffer = (char *) malloc( bytesEncoded ), hex1, hex2, ascii;
+	for( int i = 0; i < bytesEncoded; i++ )
+	{
+		hex1 = ((char *)[data bytes])[3*i];
+		hex2 = ((char *)[data bytes])[3*i+1];
+		hex1 -= (hex1 < 'A')? 0x30 : 0x37;
+		hex2 -= (hex2 < 'A')? 0x30 : 0x37;
+		hex1 <<= 4;
+		ascii = hex1 + hex2;
+		buffer[i] = ascii;
+	}
+	return [NSString stringWithCString:buffer length:bytesEncoded];
+}
+
 /* delegation methods */
 
 - (NSRange)textView:(NSTextView *)textView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange

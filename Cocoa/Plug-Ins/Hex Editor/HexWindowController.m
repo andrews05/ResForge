@@ -53,6 +53,8 @@
 	
 	// insert the resources' data into the text fields
 	[self refreshData:[resource data]];
+	[[self window] setResizeIncrements:NSMakeSize(kWindowStepWidthPerChar * kWindowStepCharsPerStep, 1)];
+	// min 346, step 224, norm 570, step 224, max 794
 	
 	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameDidChange:) name:ResourceNameDidChangeNotification object:resource];
@@ -65,6 +67,18 @@
 	
 	// finally, show the window
 	[self showWindow:self];
+}
+
+- (void)windowDidResize:(NSNotification *)notification
+{
+	int width = [[notification object] frame].size.width;
+	int oldBytesPerRow = bytesPerRow;
+	bytesPerRow = (((width - (kWindowStepWidthPerChar * kWindowStepCharsPerStep) - 122) / (kWindowStepWidthPerChar * kWindowStepCharsPerStep)) + 1) * kWindowStepCharsPerStep;
+	if( bytesPerRow != oldBytesPerRow )
+		[offset	setString:[hexDelegate offsetRepresentation:[resource data]]];
+	[hexScroll setFrameSize:NSMakeSize( (bytesPerRow * 21) + 5, [hexScroll frame].size.height)];
+	[asciiScroll setFrameOrigin:NSMakePoint( (bytesPerRow * 21) + 95, 20)];
+	[asciiScroll setFrameSize:NSMakeSize( (bytesPerRow * 7) + 28, [asciiScroll frame].size.height)];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification

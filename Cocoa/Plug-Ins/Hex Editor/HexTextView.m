@@ -76,8 +76,6 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
-//	NSMenuItem *pasteItem = [[item menu] itemAtIndex:[[item menu] indexOfItemWithTarget:nil andAction:@selector(paste:)]];
-	
 	// paste submenu
 	if( [item action] == @selector(paste:) )
 	{
@@ -87,7 +85,33 @@
 	else return [super validateMenuItem:item];
 }
 
-- (void)paste:(id)sender
+- (IBAction)cut:(id)sender
+{
+	[self copy:sender];
+	[self clear:sender];
+}
+
+- (IBAction)copy:(id)sender
+{
+	NSRange selection = [self rangeForUserTextChange], byteSelection;
+	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
+	
+	// get selection range
+	if( self == (id) [[self delegate] hex] )
+		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
+	else if( self == (id) [[self delegate] ascii] )
+		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
+	else
+	{
+		NSLog( @"Pasting text into illegal object: %@", self );
+		return;
+	}
+	
+	[pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:self];
+	[pb setData:[[[[self window] windowController] data] subdataWithRange:byteSelection] forType:NSStringPboardType];
+}
+
+- (IBAction)paste:(id)sender
 {
 	// be 'smart' - determine if the pasted text is in hex format, such as "5F 3E 04 8E" or ascii.
 	//	what about unicode? should I paste "00 63 00 64" as "63 64" ("Paste As ASCII" submenu item)?
@@ -110,7 +134,7 @@
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:byteSelection withData:[pb dataForType:NSStringPboardType]];
 }
 
-- (void)pasteAsASCII:(id)sender
+- (IBAction)pasteAsASCII:(id)sender
 {
 	NSRange selection = [self rangeForUserTextChange], byteSelection;
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
@@ -130,7 +154,7 @@
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:byteSelection withData:[pb dataForType:NSStringPboardType]];
 }
 
-- (void)pasteAsHex:(id)sender
+- (IBAction)pasteAsHex:(id)sender
 {
 	NSRange selection = [self rangeForUserTextChange], byteSelection;
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
@@ -153,7 +177,7 @@
 	}
 }
 
-- (void)pasteAsUnicode:(id)sender
+- (IBAction)pasteAsUnicode:(id)sender
 {
 	NSRange selection = [self rangeForUserTextChange], byteSelection;
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
@@ -171,21 +195,83 @@
 	
 	if( [pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]] )
 	{
-		NSData *unicodeData = [[pb stringForType:NSStringPboardType] dataUsingEncoding:NSUnicodeStringEncoding];
+		NSData *unicodeData = [[NSString stringWithUTF8String:[[pb dataForType:NSStringPboardType] bytes]] dataUsingEncoding:NSUnicodeStringEncoding];
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:byteSelection withData:unicodeData];
 	}
 }
 
-- (void)clear:(id)sender
+- (IBAction)clear:(id)sender
 {
 	NSRange selection = [self rangeForUserTextChange];
 	if( selection.length > 0 )
 		[self delete:sender];
 }
 
-- (void)delete:(id)sender
+- (IBAction)delete:(id)sender
 {
 	[self deleteBackward:sender];
+}
+
+/* Dragging routines */
+
+- (unsigned int)_insertionGlyphIndexForDrag:(id <NSDraggingInfo>)sender
+{
+	int charIndex = [super _insertionGlyphIndexForDrag:sender];
+	if( self == [[self delegate] hex] )
+		charIndex -= charIndex % 3;
+	return charIndex;
+}
+
+- (unsigned int)draggingSourceOperationMaskForLocal:(BOOL)isLocal
+{
+	return NSDragOperationCopy | NSDragOperationMove | NSDragOperationGeneric;
+}
+
+static NSRange draggedRange;
+
+- (void)draggedImage:(NSImage *)image beganAt:(NSPoint)point
+{
+	draggedRange = [self rangeForUserTextChange];
+}
+
+- (void)draggedImage:(NSImage *)image endedAt:(NSPoint)point operation:(NSDragOperation)operation
+{
+	if( operation == NSDragOperationMove )
+	{
+		NSRange selection = [self rangeForUserTextChange];
+		[self editData:[[[self window] windowController] data] replaceBytesInRange:draggedRange withData:[NSData data]];
+		
+		// set the new selection/insertion point
+		if( selection.location > draggedRange.location )
+			selection.location -= draggedRange.length;
+		[self setSelectedRange:selection];
+	}
+}
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
+{
+	[super draggingUpdated:sender];		// ignore return value
+	if( [sender draggingSource] == [[self delegate] hex] || [sender draggingSource] == [[self delegate] ascii] )
+		return NSDragOperationMove;
+	else return NSDragOperationCopy;
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
+	NSRange range;
+	NSPasteboard *pb = [sender draggingPasteboard];
+	NSData *pastedData = [pb dataForType:NSStringPboardType];
+	int charIndex = [self _insertionGlyphIndexForDrag:sender];
+	if( self == [[self delegate] hex] ) charIndex /= 3;
+	if( [sender draggingSource] == [[self delegate] hex] )
+		pastedData = [[[self delegate] hexToAscii:pastedData] dataUsingEncoding:NSASCIIStringEncoding];
+	[self editData:[[[self window] windowController] data] replaceBytesInRange:NSMakeRange(charIndex,0) withData:pastedData];
+	return YES;
+}
+
+- (void)concludeDragOperation:(id <NSDraggingInfo>)sender
+{
+	// override and do nothing
 }
 
 /* NSResponder overrides */

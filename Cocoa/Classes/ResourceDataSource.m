@@ -109,7 +109,9 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 {
 	#pragma unused( outlineView )
 	NSString *identifier = [tableColumn identifier];
-	[item takeValue:object forKey:identifier];
+	if( [identifier isEqualToString:@"resID"] )
+		[item takeValue:[NSNumber numberWithInt:[object intValue]] forKey:identifier];
+	else [item takeValue:object forKey:identifier];
 }
 
 /* ACCESSORS */

@@ -5,14 +5,19 @@
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"
 
+#define kWindowStepWidthPerChar		28
+#define kWindowStepCharsPerStep		1
+
 @interface HexWindowController : NSWindowController <ResKnifePluginProtocol>
 {
 	IBOutlet HexEditorDelegate	*hexDelegate;
-    IBOutlet NSTextView			*ascii;
-    IBOutlet NSTextView			*hex;
-    IBOutlet NSTextView			*offset;
-    IBOutlet NSTextField		*message;
-    IBOutlet NSMenu				*pasteSubmenu;
+	IBOutlet NSScrollView		*asciiScroll;
+	IBOutlet NSScrollView		*hexScroll;
+	IBOutlet NSTextView			*ascii;
+	IBOutlet NSTextView			*hex;
+	IBOutlet NSTextView			*offset;
+	IBOutlet NSTextField		*message;
+	IBOutlet NSMenu				*pasteSubmenu;
 	
 	NSUndoManager					*undoManager;
 	id <ResKnifeResourceProtocol>	resource;

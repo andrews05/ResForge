@@ -124,7 +124,7 @@
 	// get the superclass to draw the text stuff
 	[super drawWithFrame:cellFrame inView:controlView];
 }
-
+/*
 - (NSSize)cellSize
 {
 	NSSize cellSize = [super cellSize];
@@ -132,5 +132,5 @@
 		cellSize.width += (image? [image size].width:0) + 3;
 	return cellSize;
 }
-
+*/
 @end

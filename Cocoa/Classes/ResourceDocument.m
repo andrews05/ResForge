@@ -4,6 +4,7 @@
 #import "Resource.h"
 #import "PrefsWindowController.h"
 #import "CreateResourceSheetController.h"
+#import "OutlineViewDelegate.h"
 #import "NSOutlineView-SelectedItems.h"
 
 #import "ResKnifePluginProtocol.h"
@@ -62,6 +63,9 @@ extern NSString *RKResourcePboardType;
 	
 	// set outline view's inter-cell psacing to zero to avoid getting gaps between blue bits
 	[outlineView setIntercellSpacing:NSMakeSize(0,0)];
+	[outlineView swapForOutlineSortView];
+	[outlineView setTarget:self];
+	[outlineView setDoubleAction:@selector(openResources:)];
 	
 	// register for resource will change notifications (for undo management)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameWillChange:) name:ResourceNameWillChangeNotification object:nil];
