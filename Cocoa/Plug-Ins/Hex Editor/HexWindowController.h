@@ -1,5 +1,6 @@
-#import <AppKit/AppKit.h>
+#import <Cocoa/Cocoa.h>
 #import "HexEditorDelegate.h"
+#import "HexTextView.h"
 
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"

@@ -44,6 +44,7 @@
 		[[outlineView tableColumnWithIdentifier:@"name"] setDataCell:resourceNameCell];
 	}
 	
+//	[[controller window] setResizeIncrements:NSMakeSize(1,18)];
 //	[controller setDocumet:self];
 	[dataSource setResources:resources];
 }
@@ -57,7 +58,7 @@
 {
 	NSString *file = [[[sender representedFilename] lastPathComponent] stringByDeletingPathExtension];
 	if( [file isEqualToString:@""] ) file = @"this document";
-	NSBeginAlertSheet( @"Save Document?", @"Save", @"Cancel", @"Don’t Save", sender, self, @selector(didEndShouldCloseSheet:returnCode:contextInfo:), NULL, sender, @"Do you wish to save %@?", file );
+	NSBeginAlertSheet( @"Save Document?", @"Save", @"Don’t Save", @"Cancel", sender, self, @selector(didEndShouldCloseSheet:returnCode:contextInfo:), NULL, sender, @"Do you wish to save %@?", file );
 	return NO;
 }
 
@@ -68,7 +69,7 @@
 		[self saveDocument:contextInfo];
 		[(NSWindow *)contextInfo close];
 	}
-	else if( returnCode == NSAlertOtherReturn )		// don't save, just close
+	else if( returnCode == NSAlertAlternateReturn )	// don't save, just close
 	{
 		[(NSWindow *)contextInfo close];
 	}
@@ -76,19 +77,19 @@
 	{
 		NSLog( @"didEndShouldCloseSheet received NSAlertErrorReturn return code" );
 	}
-	// else returnCode == NSAlertAlternateReturn, cancel
+	// else returnCode == NSAlertOtherReturn, cancel
 }
 
 /* TOOLBAR MANAGMENT */
 #pragma mark -
 
-static NSString *RKToolbarIdentifier = @"com.nickshanks.resknife.toolbar";
-static NSString *RKCreateItemIdentifier = @"com.nickshanks.resknife.toolbar.create";
-static NSString *RKDeleteItemIdentifier = @"com.nickshanks.resknife.toolbar.delete";
-static NSString *RKEditItemIdentifier = @"com.nickshanks.resknife.toolbar.edit";
-static NSString *RKEditHexItemIdentifier = @"com.nickshanks.resknife.toolbar.edithex";
-static NSString *RKSaveItemIdentifier = @"com.nickshanks.resknife.toolbar.save";
-static NSString *RKShowInfoItemIdentifier = @"com.nickshanks.resknife.toolbar.showinfo";
+static NSString *RKToolbarIdentifier		= @"com.nickshanks.resknife.toolbar";
+static NSString *RKCreateItemIdentifier		= @"com.nickshanks.resknife.toolbar.create";
+static NSString *RKDeleteItemIdentifier		= @"com.nickshanks.resknife.toolbar.delete";
+static NSString *RKEditItemIdentifier		= @"com.nickshanks.resknife.toolbar.edit";
+static NSString *RKEditHexItemIdentifier	= @"com.nickshanks.resknife.toolbar.edithex";
+static NSString *RKSaveItemIdentifier		= @"com.nickshanks.resknife.toolbar.save";
+static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.showinfo";
 
 - (void)setupToolbar:(NSWindowController *)controller
 {
@@ -269,25 +270,25 @@ static NSString *RKShowInfoItemIdentifier = @"com.nickshanks.resknife.toolbar.sh
 {
 	[[dataSource createResourceSheetController] showCreateResourceSheet:self];
 }
-/*
+
 - (IBAction)openResource:(id)sender
 {
 	if( NO );
 	else [self openResourceAsHex:sender];
 }
-*/
+
 - (IBAction)openResourceAsHex:(id)sender
 {
 	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
 	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
-	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self dealloc] when it's last window is closed?
+	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 	[(id <ResKnifePluginProtocol>)[[hexEditor principalClass] alloc] initWithResource:resource];
 }
-/*
+
 - (IBAction)playSound:(id)sender
 {
 }
-*/
+
 /* FILE HANDLING */
 #pragma mark -
 

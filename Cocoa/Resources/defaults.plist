@@ -3,4 +3,6 @@
 	Autosave = YES;
 	AutosaveInterval = 5;
 	DeleteResourceWarning = YES;
+	
+	OpenUntitledFileOnLaunch = YES;
 }

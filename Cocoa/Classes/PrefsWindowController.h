@@ -13,6 +13,7 @@ enum DataProtection
     IBOutlet NSMatrix		*dataProtectionMatrix;
 }
 
+- (void)updatePrefs:(NSNotification *)notification;
 - (IBAction)acceptPrefs:(id)sender;
 - (IBAction)cancelPrefs:(id)sender;
 - (IBAction)resetToDefault:(id)sender;

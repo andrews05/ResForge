@@ -12,7 +12,7 @@
 - (id)init
 {
 	self = [super init];
-	[NSApp registerServicesMenuSendTypes:[NSArray arrayWithObject:@"NSString"] returnTypes:[NSArray arrayWithObject:@"NSString"]];
+	[NSApp registerServicesMenuSendTypes:[NSArray arrayWithObject:NSStringPboardType] returnTypes:[NSArray arrayWithObject:NSStringPboardType]];
 	return self;
 }
 
@@ -24,6 +24,11 @@
 	
     [self initUserDefaults];
 }    
+
+- (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"OpenUntitledFileOnLaunch"];
+}
 
 - (IBAction)showAbout:(id)sender
 {

@@ -1,7 +1,4 @@
 #import "HexWindowController.h"
-#import "HexTextView.h"
-
-#import "ResKnifeResourceProtocol.h"
 
 @implementation HexWindowController
 

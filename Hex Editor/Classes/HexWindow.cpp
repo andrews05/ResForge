@@ -302,9 +302,9 @@ OSStatus HexWindow::DrawContent( EventRef event )
 		{
 			if( currentByte < length )
 			{
-				BlockMoveData( *data + currentByte, &ascii, 1 );
-				hex1 = ascii;
-				hex2 = ascii;
+			//	BlockMoveData( *data + currentByte, &ascii, 1 );
+				hex1 = *(*data + currentByte);
+				hex2 = *(*data + currentByte);
 				hex1 >>= 4;
 				hex1 &= 0x0F;
 				hex2 &= 0x0F;

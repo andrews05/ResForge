@@ -8,6 +8,7 @@
 
 - (NSString *)offsetRepresentation:(NSData *)data;
 {
+#warning The hex editor window is currently limited to 16 bytes per row
 	int row, dataLength = [data length];
 	int rows = (dataLength / 16) + ((dataLength % 16)? 1:0);
 	NSMutableString *representation = [NSMutableString string];
@@ -24,9 +25,11 @@
 
 - (NSString *)hexRepresentation:(NSData *)data;
 {
+#warning The hex editor window is currently limited to 16 bytes per row
 	int row, addr, currentByte = 0, dataLength = [data length];
 	int rows = (dataLength / 16) + ((dataLength % 16)? 1:0);
-	char buffer[16*3], byte, hex1, hex2;
+	char buffer[16*3], hex1, hex2;
+	char *bytes = (char *) [data bytes];
 	NSMutableString *representation = [NSMutableString string];
 	
 	// draw bytes
@@ -36,9 +39,8 @@
 		{
 			if( currentByte < dataLength )
 			{
-				[data getBytes:&byte range:NSMakeRange(currentByte, 1)];
-				hex1 = byte;
-				hex2 = byte;
+				hex1 = bytes[currentByte];
+				hex2 = bytes[currentByte];
 				hex1 >>= 4;
 				hex1 &= 0x0F;
 				hex2 &= 0x0F;
@@ -73,9 +75,11 @@
 
 - (NSString *)asciiRepresentation:(NSData *)data;
 {
+#warning The hex editor window is currently limited to 16 bytes per row
 	int row, addr, currentByte = 0, dataLength = [data length];
 	int rows = (dataLength / 16) + ((dataLength % 16)? 1:0);
-	char buffer[17], byte = 0x00;
+	char buffer[17];
+	char *bytes = (char *) [data bytes];
 	NSMutableString *representation = [NSMutableString string];
 	
 	// draw bytes
@@ -85,9 +89,8 @@
 		{
 			if( currentByte < dataLength )
 			{
-				[data getBytes:&byte range:NSMakeRange(currentByte, 1)];
-				if( byte >= 0x20 && byte < 0x7F )
-					buffer[addr] = byte;
+				if( bytes[currentByte] >= 0x20 && bytes[currentByte] < 0x7F )
+					buffer[addr] = bytes[currentByte];
 				else buffer[addr] = 0x2E;	// full stop								
 				
 				// advance current byte
@@ -135,7 +138,6 @@
 		hexRange = [self hexRangeFromByteRange:byteRange];
 		[hex setSelectedRange:hexRange];
 	}
-	else NSLog( @"What the hell are you selecting?" );
 	
 	// put the new selection into the message bar
 	[message setStringValue:[NSString stringWithFormat:@"Current selection: %@", NSStringFromRange(byteRange)]];

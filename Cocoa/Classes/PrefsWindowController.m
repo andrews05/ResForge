@@ -9,7 +9,22 @@
 	return self;
 }
 
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[super dealloc];
+}
+
 - (void)awakeFromNib
+{
+	// represent current prefs in window state
+	[self updatePrefs:nil];
+	
+	// listen out for pref changes from elsewhere
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePrefs:) name:NSUserDefaultsDidChangeNotification object:nil];
+}
+
+- (void)updatePrefs:(NSNotification *)notification
 {
 	// load preferences…
 	NSUserDefaults*	defaults	= [NSUserDefaults standardUserDefaults];
@@ -23,7 +38,7 @@
 	[[dataProtectionMatrix cellAtRow:autosaveBox column:0] setState:autosave];
 	[autosaveIntervalField setStringValue:[NSString stringWithFormat:@"%d", autosaveInterval]];
 	[[dataProtectionMatrix cellAtRow:deleteResourceWarningBox column:0] setState:deleteResourceWarning];
-}    
+}
 
 - (IBAction)acceptPrefs:(id)sender
 {

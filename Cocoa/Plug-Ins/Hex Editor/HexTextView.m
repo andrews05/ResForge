@@ -1,13 +1,16 @@
 #import "HexTextView.h"
-#import "ResKnifeResourceProtocol.h"
 
 @implementation HexTextView
 
 - (void)insertText:(id)insertString
 {
-	// bug: Every time a character is typed or string pasted, the entire resource is duplicated, operated on and disposed of! Perhaps I could do this in a better way?
+#warning Every time a character is typed or string pasted, the entire resource is duplicated, operated on and disposed of! Perhaps I could do this in a better way?
 	NSMutableData *newData = [NSMutableData dataWithData:[[[self window] windowController] data]];
 	NSRange selection = [self selectedRange];
+	if( self == (id) [[self delegate] hex] )
+		selection = [[self delegate] byteRangeFromHexRange:selection];
+	else if( self == (id) [[self delegate] ascii] )
+		selection = [[self delegate] byteRangeFromAsciiRange:selection];
 	
 	NSLog( insertString );
 	// modify resource data
@@ -23,8 +26,6 @@
 	// select whole bytes at a time (only if selecting in hex!)
 	if( self == (id) [[self delegate] hex] )
 	{
-//		NSLog( NSStringFromRange(newRange) );
-		
 		// move selection offset to beginning of byte
 		newRange.location -= (charRange.location % 3);
 		newRange.length += (charRange.location % 3);
@@ -37,10 +38,8 @@
 		// move insertion point to next byte if needs be
 		if( newRange.location == charRange.location -1 && newRange.length == 0 )
 			newRange.location += 3;
-		
-//		NSLog( NSStringFromRange(newRange) );
-//		NSLog( @"===========" );
 	}
+	
 	// select return character if selecting ascii
 	else if( self == (id) [[self delegate] ascii] )
 	{
