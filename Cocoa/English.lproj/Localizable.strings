@@ -1,14 +1,6 @@
 /* Localized versions of application-critical strings */
 
-/* Save sheet contents */
-"Save Document?" = "Save Document?";
-"Do you wish to save %@?" = "Do you wish to save %@?";
-"this document" = "this document";
-"Save" = "Save";
-"Don’t Save" = "Don’t Save";
-"Cancel" = "Cancel";
-
-/* File window default (grey) resource names */
+/* Document window default (grey) resource names */
 "Untitled Resource" = "Untitled Resource";
 "Custom Icon" = "Custom Icon";
 
@@ -35,12 +27,8 @@
 "Show Resource Information Window" = "Show Resource Information Window";
 
 /* Undo/Redo menu item titles */
-"Add Resource" = "Add Resource";
-"Add Resource “%@”" = "Add Resource “%@”";
 "Create Resource" = "Create Resource";
 "Create Resource “%@”" = "Create Resource “%@”";
-"Remove Resource" = "Remove Resource";
-"Remove Resource “%@”" = "Remove Resource “%@”";
 "Delete Resource" = "Delete Resource";
 "Delete Resource “%@”" = "Delete Resource “%@”";
 "Name Change" = "Name Change";

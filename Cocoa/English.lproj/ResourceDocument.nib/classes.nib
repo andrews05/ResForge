@@ -1,57 +1,45 @@
 {
     IBClasses = (
         {CLASS = AttributesFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
-        {
-            ACTIONS = {
-                hideCreateResourceSheet = id; 
-                showCreateResourceSheet = id; 
-                typePopupSelection = id; 
-            }; 
-            CLASS = CreateResourceSheetController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                attributesMatrix = NSMatrix; 
-                cancelButton = NSButton; 
-                createButton = NSButton; 
-                dataSource = ResourceDataSource; 
-                document = ResourceDocument; 
-                nameView = NSTextField; 
-                parent = NSWindow; 
-                resIDView = NSTextField; 
-                typePopup = NSPopUpButton; 
-                typeView = NSTextField; 
-            }; 
-            SUPERCLASS = NSWindowController; 
-        }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = NameFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
+        {
+            CLASS = NameFormatter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {outlineView = NSOutlineView; }; 
+            SUPERCLASS = NSFormatter; 
+        }, 
         {
             CLASS = OutlineViewDelegate; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                attributesFormatter = id; 
-                nameFormatter = id; 
-                sizeFormatter = id; 
-                window = id; 
+                attributesFormatter = NSFormatter; 
+                nameFormatter = NSFormatter; 
+                sizeFormatter = NSNumberFormatter; 
+                window = NSWindow; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
         {
             CLASS = ResourceDataSource; 
             LANGUAGE = ObjC; 
-            OUTLETS = {
-                createResourceSheetController = CreateResourceSheetController; 
-                document = ResourceDocument; 
-                outlineView = NSOutlineView; 
-                window = NSWindow; 
-            }; 
+            OUTLETS = {document = ResourceDocument; outlineView = NSOutlineView; window = NSWindow; }; 
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {showCreateResourceSheet = id; }; 
+            ACTIONS = {
+                clear = id; 
+                openResource = id; 
+                openResourceAsHex = id; 
+                playSound = id; 
+                showCreateResourceSheet = id; 
+            }; 
             CLASS = ResourceDocument; 
             LANGUAGE = ObjC; 
-            OUTLETS = {dataSource = ResourceDataSource; outlineView = NSOutlineView; }; 
+            OUTLETS = {
+                dataSource = ResourceDataSource; 
+                mainWindow = NSWindow; 
+                outlineView = NSOutlineView; 
+            }; 
             SUPERCLASS = NSDocument; 
         }, 
         {CLASS = SizeFormatter; LANGUAGE = ObjC; SUPERCLASS = NSNumberFormatter; }

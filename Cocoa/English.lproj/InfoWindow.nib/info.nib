@@ -6,7 +6,11 @@
 	<string>142 473 384 240 0 0 1024 746 </string>
 	<key>IBFramework Version</key>
 	<string>248.0</string>
+	<key>IBOpenObjects</key>
+	<array>
+		<integer>50</integer>
+	</array>
 	<key>IBSystem Version</key>
-	<string>5P48</string>
+	<string>5Q45</string>
 </dict>
 </plist>

@@ -1,6 +1,11 @@
 {
     IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {creatorChanged = id; typeChanged = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
         {
             ACTIONS = {attributesChanged = id; }; 
             CLASS = InfoWindowController; 
@@ -8,13 +13,15 @@
             OUTLETS = {
                 attributesMatrix = NSMatrix; 
                 documentView = NSBox; 
+                filePropertyForm = NSForm; 
                 iconView = NSImageView; 
                 nameView = NSTextField; 
                 placeholderView = NSBox; 
                 resourceView = NSBox; 
             }; 
             SUPERCLASS = NSWindowController; 
-        }
+        }, 
+        {CLASS = SizeFormatter; LANGUAGE = ObjC; SUPERCLASS = NSNumberFormatter; }
     ); 
     IBVersion = 1; 
 }
