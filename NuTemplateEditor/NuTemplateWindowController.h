@@ -40,6 +40,7 @@
 	NSMutableArray*					templateStructure;	// Pre-parsed form of our template.
 	NSMutableArray*					resourceStructure;	// Parsed form of our resource.
 	id <ResKnifeResourceProtocol>	resource;			// The resource we operate on.
+	NSMenuItem*						createFieldItem;	// "Create Resource" menu item we usurp to create list items.
 }
 
 -(void)	readTemplate: (id <ResKnifeResourceProtocol>)tmplRes;
@@ -48,6 +49,10 @@
 -(void)	writeResData;
 
 -(IBAction)	showCreateResourceSheet: (id)sender;
+-(IBAction)	cut: (id)sender;
+-(IBAction)	copy: (id)sender;
+-(IBAction)	paste: (id)sender;
+-(IBAction)	clear: (id)sender;
 
 
 @end

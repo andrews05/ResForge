@@ -83,5 +83,11 @@
 }
 
 
+-(IBAction)	clear: (id)sender
+{
+	[containing removeObject: self];
+	[self autorelease];
+}
+
 
 @end

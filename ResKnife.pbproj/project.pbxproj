@@ -258,6 +258,7 @@
 				3D0933BF04DF151C00DD74B1,
 				3D0933EB04DF319F00DD74B1,
 				3D0B38B504DEF465005AED5E,
+				3D2EE5E204E5C56F00515930,
 			);
 			isa = PBXGroup;
 			path = NuTemplateEditor;
@@ -313,6 +314,7 @@
 			files = (
 				3D0B38C204DEF5E5005AED5E,
 				3D0933F504DFD7CF00DD74B1,
+				3D2EE5E304E5C56F00515930,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,6 +459,18 @@
 		};
 		3D0B38C604DEF65A005AED5E = {
 			fileRef = F5C9ECCE027F474A01A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D2EE5E204E5C56F00515930 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = Localizable.strings;
+			refType = 4;
+		};
+		3D2EE5E304E5C56F00515930 = {
+			fileRef = 3D2EE5E204E5C56F00515930;
 			isa = PBXBuildFile;
 			settings = {
 			};

@@ -65,6 +65,7 @@
 		return self;
 	}
 	
+	createFieldItem = nil;
 	resource = [newResource retain];
 	templateStructure = [[NSMutableArray alloc] init];
 	resourceStructure = [[NSMutableArray alloc] init];
@@ -248,6 +249,42 @@
 }
 
 
+-(IBAction)	cut: (id)sender;
+{
+	NuTemplateElement *selItem = (NuTemplateElement*) [dataList selectedItem];
+	
+	[selItem cut: sender];	// Let selected item do its magic.
+	
+	[dataList reloadData];	// Update our display.
+}
+
+-(IBAction)	copy: (id)sender;
+{
+	NuTemplateElement *selItem = (NuTemplateElement*) [dataList selectedItem];
+	
+	[selItem copy: sender];	// Let selected item do its magic.
+	
+	[dataList reloadData];	// Update our display.
+}
+
+-(IBAction)	paste: (id)sender;
+{
+	NuTemplateElement *selItem = (NuTemplateElement*) [dataList selectedItem];
+	
+	[selItem paste: sender];	// Let selected item do its magic.
+	
+	[dataList reloadData];	// Update our display.
+}
+
+-(IBAction)	clear: (id)sender;
+{
+	NuTemplateElement *selItem = (NuTemplateElement*) [dataList selectedItem];
+	
+	[selItem clear: sender];	// Let selected item do its magic.
+	
+	[dataList reloadData];	// Update our display.
+}
+
 /* showCreateResourceSheet: we mis-use this menu item for creating new template fields.
 	This works by selecting an item that serves as a template (another LSTB), or knows
 	how to create an item (LSTE) and passing the message on to it. */
@@ -264,11 +301,35 @@
 
 -(BOOL)	validateMenuItem: (NSMenuItem*)item
 {
-	NuTemplateElement *selItem = (NuTemplateElement*) [dataList selectedItem];
+	NuTemplateElement *selElement = (NuTemplateElement*) [dataList selectedItem];
 	
 	if( [item action] == @selector(showCreateResourceSheet:) )
-		return( selItem != nil && [selItem respondsToSelector: @selector(showCreateResourceSheet:)] );
+	{
+		createFieldItem = item;
+		[item setTitle: NSLocalizedString(@"Create List Entry",@"")];
+		
+		return( selElement != nil && [selElement respondsToSelector: @selector(showCreateResourceSheet:)] );
+	}
+	else if( [item action] == @selector(cut:) )
+		return( selElement != nil && [selElement respondsToSelector: @selector(cut:)] );
+	else if( [item action] == @selector(copy:) )
+		return( selElement != nil && [selElement respondsToSelector: @selector(copy:)] );
+	else if( [item action] == @selector(paste:) && selElement != nil
+			&& [selElement respondsToSelector: @selector(validateMenuItem:)] )
+		return( [selElement validateMenuItem: item] );
+	else if( [item action] == @selector(clear:) )
+		return( selElement != nil && [selElement respondsToSelector: @selector(clear:)] );
 	else return [super validateMenuItem:item];
+}
+
+
+-(void)	windowDidResignKey: (NSNotification*)notification
+{
+	if( createFieldItem )
+	{
+		[createFieldItem setTitle: NSLocalizedString(@"Create New Resource...",@"")];
+		createFieldItem = nil;
+	}
 }
 
 
