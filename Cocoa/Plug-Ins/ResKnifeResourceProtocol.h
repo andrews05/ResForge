@@ -17,6 +17,7 @@
 				M. Uli Kusterer, witness(at)zathras.de, (c) 2003.
 	
 	REVISIONS:
+		2003-08-05	UK	Added nameForEditorWindow.
 		2003-07-31  UK  Added document accessor, commented.
    ========================================================================== */
 
@@ -38,6 +39,7 @@
 
 -(NSString*)	name;
 -(void)			setName: (NSString*)newName;
+-(NSString*)	nameForEditorWindow;
 
 -(NSString*)	type;
 -(void)			setType: (NSString*)newType;

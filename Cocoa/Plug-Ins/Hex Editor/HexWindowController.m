@@ -42,8 +42,8 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 	
 	// load the window from the nib file and set it's title
 	[self window];	// implicitly loads nib
-	if( ![[resource name] isEqualToString:@""] )
-		[[self window] setTitle:[resource name]];
+	[[self window] setTitle:[resource nameForEditorWindow]];
+
 	return self;
 }
 
@@ -227,9 +227,7 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 
 - (void)resourceNameDidChange:(NSNotification *)notification
 {
-	if( ![[(id <ResKnifeResourceProtocol>)[notification object] name] isEqualToString:@""] )
-		[[self window] setTitle:[(id <ResKnifeResourceProtocol>)[notification object] name]];
-	else [[self window] setTitle:NSLocalizedStringFromTableInBundle(@"Untitled Resource", @"Localizable", [NSBundle mainBundle], nil)];
+	[[self window] setTitle:[(id <ResKnifeResourceProtocol>)[notification object] nameForEditorWindow]];
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
