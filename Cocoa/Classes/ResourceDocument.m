@@ -287,6 +287,16 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 
 - (IBAction)playSound:(id)sender
 {
+	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
+	NSSound *sound = [[NSSound alloc] initWithData:[resource data]];
+	[sound setDelegate:self];
+	[sound play];
+}
+
+- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished
+{
+	if( finished ) [sound release];
+	NSLog( @"sound released" );
 }
 
 /* FILE HANDLING */

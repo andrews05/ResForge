@@ -7,10 +7,18 @@ enum DataProtection
 	deleteResourceWarningBox
 };
 
+enum LaunchAction
+{
+	doNothingBox = 0,
+	createNewDocumentBox,
+	displayOpenPanelBox
+};
+
 @interface PrefsWindowController : NSWindowController
 {
     IBOutlet NSTextField	*autosaveIntervalField;
     IBOutlet NSMatrix		*dataProtectionMatrix;
+    IBOutlet NSMatrix		*launchActionMatrix;
 }
 
 - (void)updatePrefs:(NSNotification *)notification;

@@ -18,6 +18,7 @@
 - (IBAction)openResource:(id)sender;
 - (IBAction)openResourceAsHex:(id)sender;
 - (IBAction)playSound:(id)sender;
+- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished;
 
 - (BOOL)readResourceMap:(SInt16)fileRefNum;
 - (BOOL)writeResourceMap:(SInt16)fileRefNum;

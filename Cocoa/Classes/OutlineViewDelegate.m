@@ -1,5 +1,6 @@
 #import "OutlineViewDelegate.h"
 #import "ResourceNameCell.h"
+#import "Resource.h"
 
 @implementation OutlineViewDelegate
 
@@ -18,6 +19,7 @@
 	if( [tableColumn isEqual:nameColumn] )
 	{
 		[(ResourceNameCell *)cell setImage:[NSImage imageNamed:@"Resource file"]];
+//		[(ResourceNameCell *)cell setImage:[[NSWorkspace sharedWorkspace] iconForFileType:[(Resource *)item type]]];
 	}
 }
 

@@ -4,6 +4,14 @@
 <dict>
 	<key>IBDocumentLocation</key>
 	<string>70 184 468 280 0 74 1280 928 </string>
+	<key>IBFramework Version</key>
+	<string>248.0</string>
+	<key>IBOpenObjects</key>
+	<array>
+		<integer>5</integer>
+	</array>
+	<key>IBSystem Version</key>
+	<string>5P48</string>
 	<key>IBUserGuides</key>
 	<dict>
 		<key>PrefsWindow</key>

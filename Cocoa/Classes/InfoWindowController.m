@@ -42,6 +42,7 @@
 		[[self window] setTitle:@"Resource Info"];
 		[placeholderView setContentView:resourceView];
 		[nameView setStringValue:[selectedResource name]];
+		[iconView setImage:[[NSWorkspace sharedWorkspace] iconForFileType:[selectedResource type]]];
 		[[attributesMatrix cellAtRow:changedBox column:0]	setState:[[selectedResource attributes] shortValue] & resChanged];
 		[[attributesMatrix cellAtRow:preloadBox column:0]	setState:[[selectedResource attributes] shortValue] & resPreload];
 		[[attributesMatrix cellAtRow:protectedBox column:0]	setState:[[selectedResource attributes] shortValue] & resProtected];

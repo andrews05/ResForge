@@ -5,7 +5,11 @@
             ACTIONS = {acceptPrefs = id; cancelPrefs = id; resetToDefault = id; }; 
             CLASS = PrefsWindowController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {autosaveIntervalField = id; dataProtectionMatrix = id; }; 
+            OUTLETS = {
+                autosaveIntervalField = NSTextField; 
+                dataProtectionMatrix = NSMatrix; 
+                launchActionMatrix = NSMatrix; 
+            }; 
             SUPERCLASS = NSWindowController; 
         }
     ); 
