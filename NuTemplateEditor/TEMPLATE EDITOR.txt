@@ -36,3 +36,37 @@ these sub items if they are to be written to disk.
 
 SPECIAL CASE: LISTS
 
+When the editor encounters an LSTB element, the LSTB element is called upon to parse its
+"sub-elements" (the items that make up one list item). The LSTB element reads all elements
+from the template, up to the terminating LSTE element, and keeps the array of parsed
+sub-elements around in one of its data member variables. Parsing then resumes after the
+"LSTE" element.
+
+When the LSTB element is later called upon to read its data from the resource displayed in
+the template, it will loop over its list of sub-elements and will generate a copy of itself
+and all sub-elements except the "LSTE" for each list item. After all items have been read,
+a single copy of the "LSTE" element is added at the end of the list. If the list is empty,
+the "LSTB" will simply create an "LSTE" element and delete itself.
+
+The "LSTE" element contains a copy of the sub-elements list of the LSTB, but doesn't read
+any data from the resource. When either an "LSTE" or "LSTB" element are selected, the user
+can choose "New List Item..." from the "Resource" menu to create a copy of the selected
+element's sub-elements, along with an "LSTB" element containing them. Thus, the user can
+create new items before any existing item (i.e. "LSTB" element), as well as at the end of
+the list or when the list is empty, by selecting the "LSTE". "LSTB" items can also be
+deleted using the "Edit" menu.
+
+In short:
+-> New list items are created by copying an existing "LSTB" and all its sub-elementss.
+-> A single "LSTE" element serves as an "end marker" for full and as a placeholder for
+   empty lists, and can also be used to create new "LSTB"s with sub-elements.
+
+Analogous behaviour is employed for other kinds of lists, except that additional
+features in LSTEs are activated to allow writing terminating zeroes to the file, and
+that the equivalent to the "LSTB" item may also update a counter field.
+
+
+
+REVISIONS:
+	2003-08-13	UK	Finished chapter on lists, added revision history.
+	2003-08-08	UK	Created.
