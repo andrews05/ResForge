@@ -1,8 +1,16 @@
+#if defined(__MWERKS__)		// compiling with codewarrior
+	#include <Carbon.r>
+#else						// compiling with gcc (__APPLE_CC__)
+	#include <Carbon/Carbon.r>
+#endif
+
+/*
 #if defined(__APPLE_CC__)		// compiling with gcc
 	#include <Carbon/Carbon.r>
 #else							// compiling with CodeWarrior, __MWERKS__
 	#include <Carbon.r>
 #endif
+*/
 
 /*** CARBON RESOURCES ***/
 data 'carb' ( 0 )
