@@ -10,11 +10,17 @@
 #import "NuTemplateGroupElement.h"
 
 
+@class NuTemplateLSTEElement;
+
+
 @interface NuTemplateLSTBElement : NuTemplateGroupElement
 {
-	
+	NuTemplateLSTEElement*		endElement;		// Template to create our "list end" element from.
 }
 
 -(IBAction)	showCreateResourceSheet: (id)sender;
+
+-(void)						setEndElement: (NuTemplateLSTEElement*)e;
+-(NuTemplateLSTEElement*)	endElement;
 
 @end

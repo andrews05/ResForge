@@ -149,7 +149,7 @@
 	// Loop over template and read each field:
 	while( currElement = [enny nextObject] )
 	{
-		currElement = [currElement copy];		// Copy the template object.
+		currElement = [[currElement copy] autorelease];		// Copy the template object.
 		
 		[resourceStructure addObject: currElement];		// Add it to our parsed resource data list. Do this right away so the element can append other items should it desire to.
 		[currElement setContaining: resourceStructure];
@@ -319,7 +319,7 @@
 		return( [selElement validateMenuItem: item] );
 	else if( [item action] == @selector(clear:) )
 		return( selElement != nil && [selElement respondsToSelector: @selector(clear:)] );
-	else return [super validateMenuItem:item];
+	else return NO;
 }
 
 

@@ -39,7 +39,8 @@
 -(id)	copyWithZone: (NSZone*)zone
 {
 	NuTemplateElement*	el = [[[self class] allocWithZone: zone] initForType: type withLabel: label];
-	//NuTemplateElement*	el = [[[self class] alloc] initForType:type withLabel:label];
+	
+	[el setContaining: [self containing]];
 	
 	return el;
 }
@@ -72,7 +73,7 @@
 
 -(void)		setContaining: (NSMutableArray*)arr
 {
-	containing = arr;	// It contains *us*, so it's unlikely it survives longer than we'd do, and we don't want to create a ring.
+	containing = arr;	// It contains *us*, so it's unlikely we survive longer than it'd do, and we don't want to create a ring.
 }
 
 -(NSMutableArray*)		containing
@@ -122,6 +123,12 @@
 	return @"<unknown>";
 }
 
+
+-(void)	setStringValue: (NSString*)str
+{
+	// We need this method. Otherwise key/value coding throws an exception which screws up the table.
+	NSLog(@"This template item can't accept any values, especially not \"%@\".",str);
+}
 
 
 @end

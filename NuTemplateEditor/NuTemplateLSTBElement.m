@@ -12,6 +12,13 @@
 
 @implementation NuTemplateLSTBElement
 
+-(void)	dealloc
+{
+	[endElement release];
+	[super dealloc];
+}
+
+
 -(void)		readSubElementsFrom: (NuTemplateStream*)stream
 {
 	while( [stream bytesToGo] > 0 )
@@ -19,7 +26,10 @@
 		NuTemplateElement*	obj = [stream readOneElement];
 		
 		if( [[obj type] isEqualToString: @"LSTE"] )
+		{
+			endElement = [obj retain];
 			break;
+		}
 		[subElements addObject: obj];
 	}
 }
@@ -45,17 +55,19 @@
 	{
 		while( [stream bytesToGo] > 0 )
 		{
-			nextItem = [self copy];				// Make another list item just like this one.
-			[containing addObject: nextItem];	// Add it below ourselves.
-			[nextItem readDataFrom:stream];		// Read it the same way we were.
+			nextItem = [[self copy] autorelease];	// Make another list item just like this one.
+			[nextItem setContaining: nil];			// Make sure it doesn't get into this "if" clause.
+			[containing addObject: nextItem];		// Add it below ourselves.
+			[nextItem readDataFrom:stream];			// Read it the same way we were.
 			[nextItem setContaining: containing];	// Set "containing" *after* readDataFrom so it doesn't pass the "containing == nil" check above.
 		}
 		
 		// Now add a terminating 'LSTE' item:
 		NuTemplateLSTEElement*	tlee;
-		tlee = [NuTemplateLSTEElement elementForType:@"LSTE" withLabel:label];
+		tlee = [[endElement copy] autorelease];
 		[containing addObject: tlee];
 		[tlee setContaining: containing];
+		[tlee setGroupElemTemplate: self];
 		
 		if( bytesToGoAtStart == 0 )		// It's an empty list. Delete this LSTB again, so we only have the empty LSTE.
 		{
@@ -63,7 +75,7 @@
 			[containing removeObject:self];		// Remove the LSTB.
 		}
 		else
-			[tlee setSubElements: [subElements copy]];	// Make a copy. So each has its own array.
+			[tlee setSubElements: [[subElements copy] autorelease]];	// Make a copy. So each has its own array.
 	}
 }
 
@@ -74,10 +86,34 @@
 }
 
 
+-(id)	copyWithZone: (NSZone*)zone
+{
+	NuTemplateLSTBElement*	el = [super copyWithZone: zone];
+	
+	[el setEndElement: [self endElement]];
+	
+	return el;
+}
+
+-(void)	setEndElement: (NuTemplateLSTEElement*)e
+{
+	[e retain];
+	[endElement release];
+	endElement = e;
+}
+
+
+-(NuTemplateLSTEElement*)	endElement
+{
+	return endElement;
+}
+
+
 -(IBAction)	showCreateResourceSheet: (id)sender
 {
-	unsigned			idx = [containing indexOfObject:self];
-	NuTemplateElement*	te = [self copy];
+	unsigned				idx = [containing indexOfObject:self];
+	NuTemplateGroupElement*	te = [[self copy] autorelease];
+	
 	[containing insertObject:te atIndex:idx+1];
 	[te setContaining:containing];
 }
@@ -85,8 +121,8 @@
 
 -(IBAction)	clear: (id)sender
 {
-	[containing removeObject: self];
-	[self autorelease];
+	[[self retain] autorelease];		// Make sure we don't go away right now. That may surprise the one who called clear, or otherwise be bad.
+	[containing removeObject: self];	// Remove us from the array we're in. (this releases us once)
 }
 
 

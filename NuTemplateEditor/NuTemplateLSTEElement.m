@@ -12,6 +12,25 @@
 
 @implementation NuTemplateLSTEElement
 
+-(void)	dealloc
+{
+	[groupElemTemplate release];
+	[super dealloc];
+}
+
+
+-(void)	setGroupElemTemplate: (NuTemplateGroupElement*)e
+{
+	[e retain];
+	[groupElemTemplate release];
+	groupElemTemplate = e;
+}
+
+-(NuTemplateGroupElement*)	groupElemTemplate
+{
+	return groupElemTemplate;
+}
+
 
 -(void)		readSubElementsFrom: (NuTemplateStream*)stream
 {
@@ -55,12 +74,21 @@
 }
 
 
+-(id)	copyWithZone: (NSZone*)zone
+{
+	NuTemplateLSTEElement*	el = [super copyWithZone: zone];
+	
+	[el setGroupElemTemplate: [self groupElemTemplate]];
+	
+	return el;
+}
+
+
 -(IBAction)	showCreateResourceSheet: (id)sender
 {
 	unsigned				idx = [containing indexOfObject:self];
-	NuTemplateGroupElement*	ge = [NuTemplateLSTBElement elementForType:@"LSTB" withLabel:[self label]];
+	NuTemplateGroupElement*	ge = [[groupElemTemplate copy] autorelease];
 
-	[ge setSubElements: [subElements copy]];
 	[containing insertObject:ge atIndex:idx];
 	[ge setContaining: containing];
 }

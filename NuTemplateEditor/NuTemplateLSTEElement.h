@@ -12,9 +12,12 @@
 
 @interface NuTemplateLSTEElement : NuTemplateGroupElement
 {
-	
+	NuTemplateGroupElement*		groupElemTemplate;	// The item of which we're to create a copy.
 }
 
 -(IBAction)	showCreateResourceSheet: (id)sender;
+
+-(void)						setGroupElemTemplate: (NuTemplateGroupElement*)e;
+-(NuTemplateGroupElement*)	groupElemTemplate;
 
 @end
