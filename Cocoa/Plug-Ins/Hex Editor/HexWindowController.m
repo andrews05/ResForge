@@ -13,12 +13,13 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 - (id)initWithResource:(id)newResource
 {
 	self = [self initWithWindowNibName:@"HexWindow"];
-	if( self ) [self setWindowFrameAutosaveName:@"Hexadecimal Editor"];
+	if( !self ) return self;
 	
 	// one instance of your principal class will be created for every resource the user wants to edit (similar to Windows apps)
 	resource = [newResource retain];
 	
 	// load the window
+	[self setWindowFrameAutosaveName:@"Hexadecimal Editor"];
 //	[self setShouldCascadeWindows:YES];
 	[self window];
 	return self;
@@ -38,6 +39,11 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	// we don't want this notification until we have a window!
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDidChange:) name:ResourceChangedNotification object:nil];
 	
+	// put other notifications here too, just for togetherness
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[offset enclosingScrollView] contentView]];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[hex enclosingScrollView] contentView]];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[ascii enclosingScrollView] contentView]];
+	
 	// insert the resources' data into the text fields
 	[self refreshData:[(id <ResKnifeResourceProtocol>)resource data]];
 	
@@ -50,6 +56,45 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	// see if it's our resource which got changed (we receive notifications for any resource being changed, allowing multi-resource editors)
 	if( [notification object] == resource )
 		[self refreshData:[(id <ResKnifeResourceProtocol>)resource data]];
+}
+
+- (void)viewDidScroll:(NSNotification *)notification
+{
+	// get object refs for increased speed
+	NSClipView *object		= (NSClipView *) [notification object];
+	NSClipView *offsetClip	= [[offset enclosingScrollView] contentView];
+	NSClipView *hexClip		= [[hex enclosingScrollView] contentView];
+	NSClipView *asciiClip	= [[ascii enclosingScrollView] contentView];
+	
+	// due to a bug in -[NSView setPostsBoundsChangedNotifications:] (it basically doesn't work), I am having to work around it by removing myself from the notification center and restoring things later on!
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];
+	
+	// when a view scrolls, update the other two
+	if( object != offsetClip )
+	{
+//		[offsetClip setPostsBoundsChangedNotifications:NO];
+		[offsetClip setBoundsOrigin:[object bounds].origin];
+//		[offsetClip setPostsBoundsChangedNotifications:YES];
+	}
+	
+	if( object != hexClip )
+	{
+//		[hexClip setPostsBoundsChangedNotifications:NO];
+		[hexClip setBoundsOrigin:[object bounds].origin];
+//		[hexClip setPostsBoundsChangedNotifications:YES];
+	}
+	
+	if( object != asciiClip )
+	{
+//		[asciiClip setPostsBoundsChangedNotifications:NO];
+		[asciiClip setBoundsOrigin:[object bounds].origin];
+//		[asciiClip setPostsBoundsChangedNotifications:YES];
+	}
+	
+	// restore notifications
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:offsetClip];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:hexClip];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:asciiClip];
 }
 
 - (void)refreshData:(NSData *)data;

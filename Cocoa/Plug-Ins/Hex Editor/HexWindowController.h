@@ -16,11 +16,13 @@
 	id		resource;
 }
 
-- (void)resourceDidChange:(NSNotification *)notification;
-- (void)refreshData:(NSData *)data;
-
 // conform to the ResKnifePluginProtocol with the inclusion of these methods
 - (id)initWithResource:(id)newResource;
+
+// normal methods
+- (void)resourceDidChange:(NSNotification *)notification;
+- (void)viewDidScroll:(NSNotification *)notification;
+- (void)refreshData:(NSData *)data;
 
 // accessors
 - (id)resource;
