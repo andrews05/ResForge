@@ -1,0 +1,17 @@
+{
+    IBClasses = (
+        {
+            CLASS = CronWindowController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NovaWindowController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {incrementDate = id; synchroniseDates = id; }; 
+            CLASS = NovaWindowController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}
