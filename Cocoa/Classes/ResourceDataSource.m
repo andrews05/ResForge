@@ -107,7 +107,19 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 
 /* ACCESSORS */
 
-- (Resource *)resourceNamed:(NSString *)name ofType:(NSString *)type
+- (Resource *)resourceOfType:(NSString *)type andID:(NSNumber *)resID
+{
+	Resource *resource;
+	NSEnumerator *enumerator = [resources objectEnumerator];
+	while( resource = [enumerator nextObject] )
+	{
+		if( [[resource resID] isEqualToNumber:resID] && [[resource type] isEqualToString:type] )
+			return resource;
+	}
+	return nil;
+}
+
+- (Resource *)resourceOfType:(NSString *)type withName:(NSString *)name
 {
 	Resource *resource;
 	NSEnumerator *enumerator = [resources objectEnumerator];
@@ -117,6 +129,19 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 			return resource;
 	}
 	return nil;
+}
+
+- (NSArray *)allResourcesOfType:(NSString *)type
+{
+	Resource *resource;
+	NSMutableArray *array = [NSMutableArray array];
+	NSEnumerator *enumerator = [resources objectEnumerator];
+	while( resource = [enumerator nextObject] )
+	{
+		if( [[resource type] isEqualToString:type] )
+			[array addObject:resource];
+	}
+	return [NSArray arrayWithArray:array];
 }
 
 @end

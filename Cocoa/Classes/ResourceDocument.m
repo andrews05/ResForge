@@ -297,7 +297,8 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	NSBundle *templateEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Template Editor.plugin"]];
 	
 	// bug: this only checks the CURRENT DOCUMENT for template resources
-	Resource *tmpl = [dataSource resourceNamed:[resource type] ofType:@"TMPL"];
+//	Resource *tmpl = [dataSource resourceOfType:@"TMPL" withName:[resource type]];
+	Resource *tmpl = [Resource resourceOfType:@"TMPL" withName:[resource type] inDocument:nil];
 	
 	// open the resources, passing in the template to use
 	if( tmpl && [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)] )

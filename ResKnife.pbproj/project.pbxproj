@@ -19,6 +19,7 @@
 				F5EDC618025BFB8601A8010C,
 				F5EDC61B025BFB8E01A8010C,
 				F5EDC61E025BFBB501A8010C,
+				F543AFEF027C716E01A8010C,
 			);
 			isa = PBXGroup;
 			name = Resources;
@@ -245,38 +246,49 @@
 			settings = {
 			};
 		};
-		F543B8790274842E01A8010C = {
+		F543AFDB027B2A5001A8010C = {
 			isa = PBXFileReference;
-			name = ShipDataSource.m;
-			path = NovaTools/ship/ShipDataSource.m;
-			refType = 2;
-		};
-		F543B87A0274842E01A8010C = {
-			isa = PBXFileReference;
-			name = ShipDataSource.h;
-			path = NovaTools/ship/ShipDataSource.h;
-			refType = 2;
-		};
-		F543B87B0274842E01A8010C = {
-			fileRef = F543B8790274842E01A8010C;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F543B87C0274842E01A8010C = {
-			fileRef = F543B87A0274842E01A8010C;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F543B87D0274845501A8010C = {
-			children = (
-				F543B87A0274842E01A8010C,
-				F543B8790274842E01A8010C,
-			);
-			isa = PBXGroup;
-			name = "Data Sources";
+			path = DataSource.h;
 			refType = 4;
+		};
+		F543AFDC027B2A5001A8010C = {
+			isa = PBXFileReference;
+			path = DataSource.m;
+			refType = 4;
+		};
+		F543AFDD027B2A5001A8010C = {
+			fileRef = F543AFDB027B2A5001A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F543AFDE027B2A5001A8010C = {
+			fileRef = F543AFDC027B2A5001A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F543AFEF027C716E01A8010C = {
+			children = (
+				F543AFF0027C716E01A8010C,
+			);
+			isa = PBXVariantGroup;
+			name = "Resource Types.strings";
+			path = "";
+			refType = 4;
+		};
+		F543AFF0027C716E01A8010C = {
+			fileEncoding = 10;
+			isa = PBXFileReference;
+			name = English;
+			path = "English.lproj/Resource Types.strings";
+			refType = 4;
+		};
+		F543AFF1027C716E01A8010C = {
+			fileRef = F543AFEF027C716E01A8010C;
+			isa = PBXBuildFile;
+			settings = {
+			};
 		};
 		F54E6220021B6A0801A80001 = {
 			isa = PBXFileReference;
@@ -598,6 +610,8 @@
 		};
 		F58A183F0278353501A8010C = {
 			children = (
+				F543AFDB027B2A5001A8010C,
+				F543AFDC027B2A5001A8010C,
 				F58A18410278355D01A8010C,
 				F58A18400278355D01A8010C,
 			);
@@ -1023,6 +1037,7 @@
 				F5B5885C0156D40B01000001,
 				F5B5885E0156D40B01000001,
 				F5B5885F0156D40B01000001,
+				F51C71F60269C7E701A8010C,
 				F5B588600156D40B01000001,
 				F5B588610156D40B01000001,
 				F5730B940159528A01000001,
@@ -1035,7 +1050,6 @@
 				F577A8FF0211E4D401A80001,
 				F577A8F50211D05E01A80001,
 				F577A8F90211DC1E01A80001,
-				F51C71F60269C7E701A8010C,
 			);
 			isa = PBXResourcesBuildPhase;
 		};
@@ -3151,8 +3165,8 @@
 				F58F6B94025BD97701A8010C,
 				F58F6BAC025BE14801A8010C,
 				F58F6BAD025BE14801A8010C,
-				F543B87C0274842E01A8010C,
 				F58A18430278355D01A8010C,
+				F543AFDD027B2A5001A8010C,
 			);
 			isa = PBXHeadersBuildPhase;
 		};
@@ -3165,6 +3179,7 @@
 				F5EDC61A025BFB8601A8010C,
 				F5EDC61D025BFB8E01A8010C,
 				F5EDC620025BFBB501A8010C,
+				F543AFF1027C716E01A8010C,
 			);
 			isa = PBXResourcesBuildPhase;
 		};
@@ -3177,8 +3192,8 @@
 				F58F6B8D025BC7C001A8010C,
 				F58F6B91025BCF5901A8010C,
 				F58F6B95025BD97801A8010C,
-				F543B87B0274842E01A8010C,
 				F58A18420278355D01A8010C,
+				F543AFDE027B2A5001A8010C,
 			);
 			isa = PBXSourcesBuildPhase;
 		};
@@ -3209,7 +3224,6 @@
 				F58F6B8F025BCF5901A8010C,
 				F58F6B93025BD97701A8010C,
 				F58F6B92025BD97701A8010C,
-				F543B87D0274845501A8010C,
 				F58A183F0278353501A8010C,
 				F51FB38E0256057F01A80001,
 			);

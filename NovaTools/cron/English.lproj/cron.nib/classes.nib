@@ -1,8 +1,31 @@
 {
     IBClasses = (
         {
+            ACTIONS = {
+                editEnd = id; 
+                editEndField = id; 
+                editStart = id; 
+                editStartField = id; 
+                stepEnd = id; 
+                stepStart = id; 
+            }; 
             CLASS = CronWindowController; 
             LANGUAGE = ObjC; 
+            OUTLETS = {
+                activationForm = NSForm; 
+                endDayField = NSTextField; 
+                endDayStepper = NSStepper; 
+                endMonthField = NSTextField; 
+                endMonthStepper = NSStepper; 
+                endYearField = NSTextField; 
+                endYearStepper = NSStepper; 
+                startDayField = NSTextField; 
+                startDayStepper = NSStepper; 
+                startMonthField = NSTextField; 
+                startMonthStepper = NSStepper; 
+                startYearField = NSTextField; 
+                startYearStepper = NSStepper; 
+            }; 
             SUPERCLASS = NovaWindowController; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 

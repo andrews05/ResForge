@@ -14,4 +14,10 @@
 	return self;
 }
 
+- (void)windowDidLoad
+{
+	[super windowDidLoad];
+	[self showWindow:self];
+}
+
 @end

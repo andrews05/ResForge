@@ -18,6 +18,8 @@
 - (void)removeResource:(Resource *)resource;
 
 // accessors
-- (Resource *)resourceNamed:(NSString *)name ofType:(NSString *)type;
+- (Resource *)resourceOfType:(NSString *)type andID:(NSNumber *)resID;
+- (Resource *)resourceOfType:(NSString *)type withName:(NSString *)name;
+- (NSArray *)allResourcesOfType:(NSString *)type;
 
 @end

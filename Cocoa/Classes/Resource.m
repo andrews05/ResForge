@@ -1,4 +1,6 @@
 #import "Resource.h"
+#import "ResourceDocument.h"
+#import "ResourceDataSource.h"
 
 // should these be above or below "@implementation Resource" ?
 NSString *ResourceWillChangeNotification			= @"ResourceWillChangeNotification";
@@ -65,6 +67,52 @@ NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
 {
 	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:dataValue];
 	return [resource autorelease];
+}
+
++ (NSArray *)allResourcesOfType:(NSString *)typeValue inDocument:(NSDocument *)document
+{
+	NSMutableArray *array = [NSMutableArray array];
+	NSDocument *doc;
+	NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
+	while( doc = [enumerator nextObject] )
+	{
+		// parse document for resources
+		if( document == nil || document == doc )
+			[array addObjectsFromArray:[[(ResourceDocument *)doc dataSource] allResourcesOfType:typeValue]];
+	}
+	return [NSArray arrayWithArray:array];
+}
+
++ (Resource *)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)document
+{
+	NSDocument *doc;
+	NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
+	while( doc = [enumerator nextObject] )
+	{
+		if( document == nil || document == doc )
+		{
+			// parse document for correct resource
+			Resource *resource = [[(ResourceDocument *)doc dataSource] resourceOfType:typeValue andID:resIDValue];
+			if( resource ) return resource;
+		}
+	}
+	return nil;
+}
+
++ (Resource *)resourceOfType:(NSString *)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)document
+{
+	NSDocument *doc;
+	NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
+	while( doc = [enumerator nextObject] )
+	{
+		if( document == nil || document == doc )
+		{
+			// parse document for correct resource
+			Resource *resource = [[(ResourceDocument *)doc dataSource] resourceOfType:typeValue withName:nameValue];
+			if( resource ) return resource;
+		}
+	}
+	return nil;
 }
 
 - (void)dealloc

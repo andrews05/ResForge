@@ -1,4 +1,4 @@
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 /* This protocol allows your plug to interrogate a resource to find out information about it. */
 
@@ -16,6 +16,17 @@
 - (NSNumber *)size;
 - (NSData *)data;
 - (void)setData:(NSData *)newData;
+
+// These methods are used to retrieve resources other than the one you're editing.
+//	Passing a document of nil will indicate to search in all open documents.
+//	There is currently no way to search in files which haven't been opened.
+//	All returned objects are auoreleased. Retain if you want to keep them.
+
+//	This method may return an empty array
++ (NSArray *)allResourcesOfType:(NSString *)typeValue inDocument:(NSDocument *)document;
+//	The next two return the first matching resource found, or nil.
++ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)document;
++ (id)resourceOfType:(NSString *)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)document;
 
 @end
 
