@@ -5,54 +5,6 @@
 	};
 	objectVersion = 34;
 	objects = {
-		F51FB3830255C5B301A80001 = {
-			isa = PBXFileReference;
-			name = NovaTools.nib;
-			path = NovaTools/Carbon/NovaTools.nib;
-			refType = 2;
-		};
-		F51FB3850255C65101A80001 = {
-			children = (
-				F5DF1C8A0254F9F201A80001,
-				F5DF1C8B0254F9F301A80001,
-				F5DF1C110254E32201A80001,
-				F5DF1C120254E32201A80001,
-				F5DF1C130254E32201A80001,
-				F5DF1C140254E32201A80001,
-				F5DF1C150254E32201A80001,
-				F5DF1C160254E32201A80001,
-				F5DF1C170254E32201A80001,
-				F5DF1C180254E32201A80001,
-				F5DF1C190254E32201A80001,
-				F5DF1C1A0254E32201A80001,
-				F5DF1C1B0254E32201A80001,
-				F5DF1C1C0254E32201A80001,
-				F5DF1C1D0254E32201A80001,
-				F5DF1C1E0254E32201A80001,
-				F5DF1C1F0254E32201A80001,
-				F5DF1C200254E32201A80001,
-				F5DF1C210254E32201A80001,
-				F5DF1C220254E32201A80001,
-				F5DF1C230254E32201A80001,
-				F5DF1C240254E32201A80001,
-				F5DF1C250254E32201A80001,
-				F5DF1C260254E32201A80001,
-				F5DF1C270254E32201A80001,
-				F5DF1C280254E32201A80001,
-				F5DF1C290254E32201A80001,
-				F5DF1C2A0254E32201A80001,
-				F5DF1C2B0254E32201A80001,
-				F5DF1C2C0254E32201A80001,
-				F5DF1C2D0254E32201A80001,
-				F5DF1C2E0254E32201A80001,
-				F5DF1C2F0254E32201A80001,
-				F5DF1C300254E32201A80001,
-				F5DF1C310254E32201A80001,
-			);
-			isa = PBXGroup;
-			path = Carbon;
-			refType = 4;
-		};
 		F51FB38E0256057F01A80001 = {
 			children = (
 				F58F6BA9025BDBA701A8010C,
@@ -351,12 +303,6 @@
 			path = Cocoa/English.lproj/CreateResourceSheet.nib;
 			refType = 2;
 		};
-		F54E622D021D192201A80001 = {
-			fileRef = F54E622B021D192201A80001;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		F5502C3301C5586301C57124 = {
 			fileRef = F5B5884B0156D40B01000001;
 			isa = PBXBuildFile;
@@ -393,6 +339,7 @@
 			refType = 4;
 		};
 		F55F7F8C025BF4BA01A8010C = {
+			fileEncoding = 10;
 			isa = PBXFileReference;
 			name = English;
 			path = "English.lproj/Resource Types.strings";
@@ -647,13 +594,13 @@
 		F58F6B7E025BC3A501A8010C = {
 			isa = PBXFileReference;
 			name = BoomWindowController.h;
-			path = "bööm/BoomWindowController.h";
+			path = boom/BoomWindowController.h;
 			refType = 4;
 		};
 		F58F6B7F025BC3A501A8010C = {
 			isa = PBXFileReference;
 			name = BoomWindowController.m;
-			path = "bööm/BoomWindowController.m";
+			path = boom/BoomWindowController.m;
 			refType = 4;
 		};
 		F58F6B80025BC3A501A8010C = {
@@ -693,13 +640,13 @@
 		F58F6B86025BC76D01A8010C = {
 			isa = PBXFileReference;
 			name = CharWindowController.h;
-			path = "chär/CharWindowController.h";
+			path = char/CharWindowController.h;
 			refType = 4;
 		};
 		F58F6B87025BC76D01A8010C = {
 			isa = PBXFileReference;
 			name = CharWindowController.m;
-			path = "chär/CharWindowController.m";
+			path = char/CharWindowController.m;
 			refType = 4;
 		};
 		F58F6B88025BC76E01A8010C = {
@@ -717,13 +664,13 @@
 		F58F6B8A025BC7C001A8010C = {
 			isa = PBXFileReference;
 			name = ColrWindowController.h;
-			path = "cölr/ColrWindowController.h";
+			path = colr/ColrWindowController.h;
 			refType = 4;
 		};
 		F58F6B8B025BC7C001A8010C = {
 			isa = PBXFileReference;
 			name = ColrWindowController.m;
-			path = "cölr/ColrWindowController.m";
+			path = colr/ColrWindowController.m;
 			refType = 4;
 		};
 		F58F6B8C025BC7C001A8010C = {
@@ -741,13 +688,13 @@
 		F58F6B8E025BCF5901A8010C = {
 			isa = PBXFileReference;
 			name = CronWindowController.h;
-			path = "crön/CronWindowController.h";
+			path = cron/CronWindowController.h;
 			refType = 4;
 		};
 		F58F6B8F025BCF5901A8010C = {
 			isa = PBXFileReference;
 			name = CronWindowController.m;
-			path = "crön/CronWindowController.m";
+			path = cron/CronWindowController.m;
 			refType = 4;
 		};
 		F58F6B90025BCF5901A8010C = {
@@ -765,13 +712,13 @@
 		F58F6B92025BD97701A8010C = {
 			isa = PBXFileReference;
 			name = DescWindowController.m;
-			path = "dësc/DescWindowController.m";
+			path = desc/DescWindowController.m;
 			refType = 4;
 		};
 		F58F6B93025BD97701A8010C = {
 			isa = PBXFileReference;
 			name = DescWindowController.h;
-			path = "dësc/DescWindowController.h";
+			path = desc/DescWindowController.h;
 			refType = 4;
 		};
 		F58F6B94025BD97701A8010C = {
@@ -1039,7 +986,6 @@
 				F5B5885C0156D40B01000001,
 				F5B5885E0156D40B01000001,
 				F5B5885F0156D40B01000001,
-				F54E622D021D192201A80001,
 				F5B588600156D40B01000001,
 				F5B588610156D40B01000001,
 				F5730B940159528A01000001,
@@ -3252,356 +3198,9 @@
 				F58F6B93025BD97701A8010C,
 				F58F6B92025BD97701A8010C,
 				F51FB38E0256057F01A80001,
-				F51FB3850255C65101A80001,
 			);
 			isa = PBXGroup;
 			path = NovaTools;
-			refType = 4;
-		};
-		F5DF1C110254E32201A80001 = {
-			isa = PBXFileReference;
-			path = ResEd.p;
-			refType = 4;
-		};
-		F5DF1C120254E32201A80001 = {
-			isa = PBXFileReference;
-			path = EVNRes.p;
-			refType = 4;
-		};
-		F5DF1C130254E32201A80001 = {
-			isa = PBXFileReference;
-			path = EVNTextInput.p;
-			refType = 4;
-		};
-		F5DF1C140254E32201A80001 = {
-			isa = PBXFileReference;
-			path = EVNTextOutput.p;
-			refType = 4;
-		};
-		F5DF1C150254E32201A80001 = {
-			isa = PBXFileReference;
-			path = EVNTypes.p;
-			refType = 4;
-		};
-		F5DF1C160254E32201A80001 = {
-			isa = PBXFileReference;
-			path = RSSCUtils.p;
-			refType = 4;
-		};
-		F5DF1C170254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "bööm.Edit.p";
-			refType = 4;
-		};
-		F5DF1C180254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "chär.Edit.p";
-			refType = 4;
-		};
-		F5DF1C190254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "cölr.Edit.p";
-			refType = 4;
-		};
-		F5DF1C1A0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "crön.Edit.p";
-			refType = 4;
-		};
-		F5DF1C1B0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "dësc.Edit.p";
-			refType = 4;
-		};
-		F5DF1C1C0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "düde.Edit.p";
-			refType = 4;
-		};
-		F5DF1C1D0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "flët.Edit.p";
-			refType = 4;
-		};
-		F5DF1C1E0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "gövt.Edit.p";
-			refType = 4;
-		};
-		F5DF1C1F0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "ïntf.Edit.p";
-			refType = 4;
-		};
-		F5DF1C200254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "jünk.Edit.p";
-			refType = 4;
-		};
-		F5DF1C210254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "mïsn.Edit.p";
-			refType = 4;
-		};
-		F5DF1C220254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "nëbu.Edit.p";
-			refType = 4;
-		};
-		F5DF1C230254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "öops.Edit.p";
-			refType = 4;
-		};
-		F5DF1C240254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "oütf.Edit.p";
-			refType = 4;
-		};
-		F5DF1C250254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "përs.Edit.p";
-			refType = 4;
-		};
-		F5DF1C260254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "ränk.Edit.p";
-			refType = 4;
-		};
-		F5DF1C270254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "rlë8.Edit.p";
-			refType = 4;
-		};
-		F5DF1C280254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "rlëD.Edit.p";
-			refType = 4;
-		};
-		F5DF1C290254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "röid.Edit.p";
-			refType = 4;
-		};
-		F5DF1C2A0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "shän.Edit.p";
-			refType = 4;
-		};
-		F5DF1C2B0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "shïp.Edit.p";
-			refType = 4;
-		};
-		F5DF1C2C0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "spïn.Edit.p";
-			refType = 4;
-		};
-		F5DF1C2D0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "spöb.Edit.p";
-			refType = 4;
-		};
-		F5DF1C2E0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "sÿst.Edit.p";
-			refType = 4;
-		};
-		F5DF1C2F0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "wëap.Edit.p";
-			refType = 4;
-		};
-		F5DF1C300254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "yëä®.Edit.p";
-			refType = 4;
-		};
-		F5DF1C310254E32201A80001 = {
-			children = (
-				F51FB3830255C5B301A80001,
-				F5DF1C320254E32201A80001,
-				F5DF1C330254E32201A80001,
-				F5DF1C340254E32201A80001,
-				F5DF1C350254E32201A80001,
-				F5DF1C360254E32201A80001,
-				F5DF1C370254E32201A80001,
-				F5DF1C380254E32201A80001,
-				F5DF1C390254E32201A80001,
-				F5DF1C3A0254E32201A80001,
-				F5DF1C3B0254E32201A80001,
-				F5DF1C3C0254E32201A80001,
-				F5DF1C3D0254E32201A80001,
-				F5DF1C3E0254E32201A80001,
-				F5DF1C3F0254E32201A80001,
-				F5DF1C400254E32201A80001,
-				F5DF1C410254E32201A80001,
-				F5DF1C420254E32201A80001,
-				F5DF1C430254E32201A80001,
-				F5DF1C440254E32201A80001,
-				F5DF1C450254E32201A80001,
-				F5DF1C460254E32201A80001,
-				F5DF1C470254E32201A80001,
-				F5DF1C480254E32201A80001,
-				F5DF1C490254E32201A80001,
-				F5DF1C4A0254E32201A80001,
-				F5DF1C4B0254E32201A80001,
-				F5DF1C4C0254E32201A80001,
-				F5DF1C4D0254E32201A80001,
-			);
-			isa = PBXGroup;
-			path = Resources;
-			refType = 4;
-		};
-		F5DF1C320254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "bööm.res";
-			refType = 4;
-		};
-		F5DF1C330254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "chär.res";
-			refType = 4;
-		};
-		F5DF1C340254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "cölr.res";
-			refType = 4;
-		};
-		F5DF1C350254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "crön.res";
-			refType = 4;
-		};
-		F5DF1C360254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "dësc.res";
-			refType = 4;
-		};
-		F5DF1C370254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "düde.res";
-			refType = 4;
-		};
-		F5DF1C380254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "flët.res";
-			refType = 4;
-		};
-		F5DF1C390254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "gövt.res";
-			refType = 4;
-		};
-		F5DF1C3A0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "ïntf.res";
-			refType = 4;
-		};
-		F5DF1C3B0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "jünk.res";
-			refType = 4;
-		};
-		F5DF1C3C0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "mïsn.res";
-			refType = 4;
-		};
-		F5DF1C3D0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "nëbu.res";
-			refType = 4;
-		};
-		F5DF1C3E0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = novatools.res;
-			refType = 4;
-		};
-		F5DF1C3F0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "oütf.res";
-			refType = 4;
-		};
-		F5DF1C400254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "öops.res";
-			refType = 4;
-		};
-		F5DF1C410254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "përs.res";
-			refType = 4;
-		};
-		F5DF1C420254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "ränk.res";
-			refType = 4;
-		};
-		F5DF1C430254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "rlë8.res";
-			refType = 4;
-		};
-		F5DF1C440254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "rlëD.res";
-			refType = 4;
-		};
-		F5DF1C450254E32201A80001 = {
-			isa = PBXFileReference;
-			path = RndR;
-			refType = 4;
-		};
-		F5DF1C460254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "röid.res";
-			refType = 4;
-		};
-		F5DF1C470254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "shän.res";
-			refType = 4;
-		};
-		F5DF1C480254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "shïp.res";
-			refType = 4;
-		};
-		F5DF1C490254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "spïn.res";
-			refType = 4;
-		};
-		F5DF1C4A0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "spöb.res";
-			refType = 4;
-		};
-		F5DF1C4B0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "sÿst.res";
-			refType = 4;
-		};
-		F5DF1C4C0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "wëap.res";
-			refType = 4;
-		};
-		F5DF1C4D0254E32201A80001 = {
-			isa = PBXFileReference;
-			path = "yëä®.res";
-			refType = 4;
-		};
-		F5DF1C8A0254F9F201A80001 = {
-			isa = PBXFileReference;
-			path = NovaTools.h;
-			refType = 4;
-		};
-		F5DF1C8B0254F9F301A80001 = {
-			isa = PBXFileReference;
-			path = NovaTools.cpp;
 			refType = 4;
 		};
 		F5DF1C8E0254FFD001A80001 = {
@@ -3650,7 +3249,7 @@
 		F5EDC613025BFB7301A8010C = {
 			isa = PBXFileReference;
 			name = English;
-			path = "bööm/English.lproj/boom.nib";
+			path = boom/English.lproj/boom.nib;
 			refType = 4;
 		};
 		F5EDC614025BFB7301A8010C = {
@@ -3671,7 +3270,7 @@
 		F5EDC616025BFB7C01A8010C = {
 			isa = PBXFileReference;
 			name = English;
-			path = "chär/English.lproj/char.nib";
+			path = char/English.lproj/char.nib;
 			refType = 4;
 		};
 		F5EDC617025BFB7C01A8010C = {
@@ -3692,7 +3291,7 @@
 		F5EDC619025BFB8601A8010C = {
 			isa = PBXFileReference;
 			name = English;
-			path = "cölr/English.lproj/colr.nib";
+			path = colr/English.lproj/colr.nib;
 			refType = 4;
 		};
 		F5EDC61A025BFB8601A8010C = {
@@ -3713,7 +3312,7 @@
 		F5EDC61C025BFB8E01A8010C = {
 			isa = PBXFileReference;
 			name = English;
-			path = "crön/English.lproj/cron.nib";
+			path = cron/English.lproj/cron.nib;
 			refType = 4;
 		};
 		F5EDC61D025BFB8E01A8010C = {
@@ -3734,7 +3333,7 @@
 		F5EDC61F025BFBB501A8010C = {
 			isa = PBXFileReference;
 			name = English;
-			path = "dësc/English.lproj/desc.nib";
+			path = desc/English.lproj/desc.nib;
 			refType = 4;
 		};
 		F5EDC620025BFBB501A8010C = {
