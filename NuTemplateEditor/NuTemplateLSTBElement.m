@@ -29,14 +29,18 @@
 {
 	NSEnumerator		*enny = [subElements objectEnumerator];
 	NuTemplateElement	*el, *nextItem;
+	unsigned int		bytesToGoAtStart = [stream bytesToGo];
 	
-	// Fill this first list element with data:
+	/* Fill this first list element with data:
+		If there is no more data in the stream, the items will
+		fill themselves with default values. */
 	while( el = [enny nextObject] )
 	{
 		[el readDataFrom: stream containingArray: subElements];
 	}
 	
-	// Read additional elements until we have enough items:
+	/* Read additional elements until we have enough items,
+		except if we're not the first item in our list. */
 	if( containing != nil )
 	{
 		while( [stream bytesToGo] > 0 )
@@ -50,7 +54,14 @@
 		NuTemplateLSTEElement*	tlee;
 		tlee = [NuTemplateLSTEElement elementForType:@"LSTE" withLabel:label];
 		[containing addObject: tlee];
-		[tlee setSubElements: [subElements copy]];
+		
+		if( bytesToGoAtStart == 0 )		// It's an empty list. Delete this LSTB again, so we only have the empty LSTE.
+		{
+			[tlee setSubElements: subElements];	// Take over the LSTB's sub-elements.
+			[containing removeObject:self];		// Remove the LSTB.
+		}
+		else
+			[tlee setSubElements: [subElements copy]];	// Make a copy. So each has its own array.
 	}
 }
 
