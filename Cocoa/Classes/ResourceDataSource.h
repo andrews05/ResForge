@@ -19,8 +19,10 @@
 - (NSNumber *)uniqueIDForType:(NSString *)type;
 
 // accessors
-- (Resource *)resourceOfType:(NSString *)type andID:(NSNumber *)resID;
-- (Resource *)resourceOfType:(NSString *)type withName:(NSString *)name;
-- (NSArray *)allResourcesOfType:(NSString *)type;
+-(Resource*)	resourceOfType: (NSString*)type andID: (NSNumber*)resID;
+-(Resource*)	resourceOfType: (NSString*)type withName: (NSString*)name;
+-(NSArray*)		allResourcesOfType: (NSString*)type;
+-(NSArray*)		allResourceIDsOfType: (NSString*)type;
+
 
 @end

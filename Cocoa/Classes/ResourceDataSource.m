@@ -1,6 +1,32 @@
+/* =============================================================================
+	PROJECT:	ResKnife
+	FILE:		ResourceDataSource.m
+	
+	PURPOSE:
+		Dedicated data source for our resource list. Shares its list of
+		resources with ResourceDocument. I have no idea why Nick did this
+		split, though...
+	
+	AUTHORS:	Nick Shanks, nick(at)nickshanks.com, (c) ~2001.
+				M. Uli Kusterer, witness(at)zathras.de, (c) 2003.
+	
+	REVISIONS:
+		2003-07-31  UK  Added storing document pointer in resource, commented.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+	Headers:
+   -------------------------------------------------------------------------- */
+
 #import "ResourceDataSource.h"
 #import "ResourceDocument.h"
 #import "Resource.h"
+#import <limits.h>
+
+
+/* -----------------------------------------------------------------------------
+	Notification names:
+   -------------------------------------------------------------------------- */
 
 NSString *DataSourceWillAddResourceNotification = @"DataSourceWillAddResourceNotification";
 NSString *DataSourceDidAddResourceNotification = @"DataSourceDidAddResourceNotification";
@@ -46,6 +72,7 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 	
 	// it seems very inefficient to reload the entire data source when just adding/removing one item
 	//	for large resource files, the data source gets reloaded hundereds of times upon load
+	[resource setDocument:document];
 	[resources addObject:resource];
 	[outlineView reloadData];
 
@@ -66,17 +93,21 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 	[[document undoManager] registerUndoWithTarget:self selector:@selector(addResource:) object:resource];	// NB: I hope the undo manager retains the resource, because it just got deleted :)  -  undo action name set by calling function
 }
 
-- (void)resourceDidChange:(NSNotification *)notification
+
+/* -----------------------------------------------------------------------------
+	resourceDidChange:
+		Notification from the Resource class that we're registered to. It's
+		sent whenever the resource is "touch"ed.
+	
+	REVISIONS:
+		2003-08-01  UK  Commented, made this "touch" the document as well.
+   -------------------------------------------------------------------------- */
+
+-(void) resourceDidChange: (NSNotification*)notification
 {
 	// reload the data for the changed resource
 	[outlineView reloadItem:[notification object]];
-}
-
-- (NSNumber *)uniqueIDForType:(NSString *)type
-{
-	short resID = 128;
-	while( [self resourceOfType:type andID:[NSNumber numberWithShort:resID]] != nil ) resID++;
-	return [NSNumber numberWithShort:resID];
+	[document updateChangeCount: NSChangeDone];		// TODO: We shouldn't need to do this, Undo should take care of this, according to the docs, but somehow the document always forgets its changes.
 }
 
 /* Data source protocol implementation */
@@ -151,6 +182,56 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 			[array addObject:resource];
 	}
 	return [NSArray arrayWithArray:array];
+}
+
+
+/* -----------------------------------------------------------------------------
+	allResourceIDsOfType:
+		Returns an NSArray full of NSNumber* objects containing the IDs of all
+		resources of specified type. Used by uniqueIDForType:.
+	
+	REVISIONS:
+		2003-08-01  UK  Created based on allResourcesOfType:.
+   -------------------------------------------------------------------------- */
+
+-(NSArray*) allResourceIDsOfType: (NSString*)type
+{
+	Resource		*resource;
+	NSMutableArray  *array = [NSMutableArray array];
+	NSEnumerator	*enumerator = [resources objectEnumerator];
+	while( resource = [enumerator nextObject] )
+	{
+		if( [[resource type] isEqualToString:type] )
+			[array addObject:[resource resID]];
+	}
+	return [NSArray arrayWithArray:array];
+}
+
+
+/* -----------------------------------------------------------------------------
+	uniqueIDForType:
+		Tries to return an unused resource ID for a new resource of specified
+		type. If all IDs are used up (can't really happen, because the resource
+		manager can't take more than 2727 resources per file without crashing,
+		but just in theory...), this will return 128 no matter whether it's
+		used or not.
+	
+	REVISIONS:
+		2003-08-01  UK  Created.
+   -------------------------------------------------------------------------- */
+
+-(NSNumber*)	uniqueIDForType: (NSString*)type
+{
+	short		theID = 128;
+	NSArray		*array = [self allResourceIDsOfType: type];
+	
+	if( [array count] <= USHRT_MAX )
+	{
+		while( [array containsObject: [NSNumber numberWithShort:theID]] )
+			theID++;
+	}
+	
+	return [NSNumber numberWithShort: theID];
 }
 
 @end

@@ -1,22 +1,57 @@
+/* =============================================================================
+	PROJECT:	ResKnife
+	FILE:		ResKnifeResourceProtocol.h
+	
+	PURPOSE:	This protocol wraps up whatever implementation the host
+				application (i.e. ResKnife) uses for resources in a way that
+				every editor can get enough information about the resource
+				being edited.
+				
+				Or in Nick's immortal words (which I found only *after* I had
+				written the stuff above):
+				
+				This protocol allows your plug to interrogate a resource to
+				find out information about it.
+	
+	AUTHORS:	Nick Shanks, nick(at)nickshanks.com, (c) ~2001.
+				M. Uli Kusterer, witness(at)zathras.de, (c) 2003.
+	
+	REVISIONS:
+		2003-07-31  UK  Added document accessor, commented.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+	Headers:
+   -------------------------------------------------------------------------- */
+
 #import <Cocoa/Cocoa.h>
 
-/* This protocol allows your plug to interrogate a resource to find out information about it. */
+
+/* -----------------------------------------------------------------------------
+	Protocol:
+   -------------------------------------------------------------------------- */
 
 @protocol ResKnifeResourceProtocol
 
-- (void)touch;
-- (BOOL)isDirty;
-- (NSString *)name;
-- (void)setName:(NSString *)newName;
-- (NSString *)type;
-- (void)setType:(NSString *)newType;
-- (NSNumber *)resID;
-- (void)setResID:(NSNumber *)newResID;
-- (NSNumber *)attributes;
-- (void)setAttributes:(NSNumber *)newAttributes;
-- (NSNumber *)size;
-- (NSData *)data;
-- (void)setData:(NSData *)newData;
+-(void)			touch;
+-(BOOL)			isDirty;
+
+-(NSString*)	name;
+-(void)			setName: (NSString*)newName;
+
+-(NSString*)	type;
+-(void)			setType: (NSString*)newType;
+-(NSNumber*)	resID;
+-(void)			setResID: (NSNumber*)newResID;
+
+-(NSNumber*)	attributes;
+-(void)			setAttributes: (NSNumber*)newAttributes;
+
+-(NSNumber*)	size;
+-(NSData*)		data;
+-(void)			setData: (NSData*)newData;
+
+-(NSDocument*)  document;   // Owner of this resource. Useful for looking for resources in same file as yours.
 
 // These methods are used to retrieve resources other than the one you're editing.
 //	Passing a document of nil will indicate to search in all open documents.
@@ -31,8 +66,11 @@
 
 @end
 
-// Resource notifications
-//	See note in Notifications.m about usage
+/* -----------------------------------------------------------------------------
+	Resource Notifications:
+		See note in Notifications.m about usage.
+   -------------------------------------------------------------------------- */
+
 extern NSString *ResourceWillChangeNotification;
 extern NSString *ResourceNameWillChangeNotification;
 extern NSString *ResourceTypeWillChangeNotification;

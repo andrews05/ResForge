@@ -39,6 +39,7 @@ NSString *RKResourcePboardType		= @"RKResourcePboardType";
 	return self;
 }
 
+
 + (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue
 {
 	Resource *resource = [[Resource allocWithZone:[self zone]] initWithType:typeValue andID:resIDValue];
@@ -155,6 +156,19 @@ NSString *RKResourcePboardType		= @"RKResourcePboardType";
 	dirty = newValue;
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDidChangeNotification object:self];
 }
+
+
+-(void)			setDocument: (NSDocument*)doc
+{
+	document = doc;		// It owns us, so don't retain, or we could get a closed loop!
+}
+
+
+-(NSDocument*)  document
+{
+	return document;
+}
+
 
 - (NSString *)representedFork
 {

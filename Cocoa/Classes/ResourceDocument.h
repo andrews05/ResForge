@@ -29,6 +29,9 @@
 - (IBAction)playSound:(id)sender;
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished;
 
+-(IBAction) exportResourceToFile: (id)sender;
+-(IBAction) exportResourceToImageFile: (id)sender;
+
 - (IBAction)copy:(id)sender;
 - (IBAction)paste:(id)sender;
 - (void)pasteResources:(NSArray *)pastedResources;

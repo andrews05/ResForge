@@ -27,6 +27,9 @@
 
 - (void)awakeFromNib
 {
+	NSTableColumn *tableColumn;
+	NSButtonCell *buttonCell;
+	
 	// Part of my EvilPlanª to find out how many people use ResKnife and how often!
 	int launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"LaunchCount"];
 	[[NSUserDefaults standardUserDefaults] setInteger:launchCount + 1 forKey:@"LaunchCount"];
@@ -38,8 +41,8 @@
 	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"icns"] forKey:@"icns"];
 	
 	// set up open dialog's aux table view
-	NSTableColumn *tableColumn = [forkTableView tableColumnWithIdentifier:@"parse"];
-	NSButtonCell *buttonCell = [[[NSButtonCell alloc] initTextCell:@""] autorelease];
+	tableColumn = [forkTableView tableColumnWithIdentifier:@"parse"];
+	buttonCell = [[[NSButtonCell alloc] initTextCell:@""] autorelease];
 	[buttonCell setEditable:YES];
 	[buttonCell setButtonType:NSSwitchButton];
 	[tableColumn setDataCell:buttonCell];
@@ -170,10 +173,10 @@
 
 /* Don't tell anyone I did this... */
 
-- (void)setTreatsFilePackagesAsDirectories:(BOOL)flag
+/*- (void)setTreatsFilePackagesAsDirectories:(BOOL)flag
 {
 #pragma unused( flag )
 	_spFlags.treatsFilePackagesAsDirectories = YES;
-}
+}*/
 
 @end

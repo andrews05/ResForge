@@ -1,1 +1,1 @@
-#undef __STDC_VERSION__
+//#undef __STDC_VERSION__

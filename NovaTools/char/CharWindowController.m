@@ -4,6 +4,10 @@
 
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
 {
+	NSString *tempPrefix;
+	NSString *tempSuffix;
+	NSString *tempStart;
+	
 	self = [self initWithWindowNibName:@"char"];
 	if( !self ) return nil;
 	
@@ -66,9 +70,9 @@
 	cash = [[NSNumber alloc] initWithLong:charRec->startCash];
 	kills = [[NSNumber alloc] initWithShort:charRec->startKills];
 	date = [[NSCalendarDate alloc] initWithYear:charRec->startYear month:charRec->startMonth day:charRec->startDay hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-	NSString *tempPrefix = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Prefix length:16] encoding:NSMacOSRomanStringEncoding] autorelease];
+	tempPrefix = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Prefix length:16] encoding:NSMacOSRomanStringEncoding] autorelease];
 	prefix = [[NSString alloc] initWithCString:[tempPrefix cString] length:[tempPrefix cStringLength]];
-	NSString *tempSuffix = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Suffix length:16] encoding:NSMacOSRomanStringEncoding] autorelease];
+	tempSuffix = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Suffix length:16] encoding:NSMacOSRomanStringEncoding] autorelease];
 	suffix = [[NSString alloc] initWithCString:[tempSuffix cString] length:[tempSuffix cStringLength]];
 	start1 = [[NSNumber alloc] initWithShort:charRec->startSystem[0]];
 	start2 = [[NSNumber alloc] initWithShort:charRec->startSystem[1]];
@@ -91,7 +95,7 @@
 	introDelay2 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[1]];
 	introDelay3 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[2]];
 	introDelay4 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[3]];
-	NSString *tempStart = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->OnStart length:256] encoding:NSMacOSRomanStringEncoding] autorelease];
+	tempStart = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->OnStart length:256] encoding:NSMacOSRomanStringEncoding] autorelease];
 	onStart = [[NSString alloc] initWithCString:[tempStart cString] length:[tempStart cStringLength]];
 	
 	// rotating image
@@ -162,6 +166,8 @@
 
 - (void)update
 {
+	NSData *stringData;
+	
 	// principal character
 	[principalCharButton setState:principalChar];
 	
@@ -207,7 +213,7 @@
 	[introPictField4 setObjectValue:[pictureDataSource stringValueForResID:introPict4]];
 	[introTextField setObjectValue:[descriptionDataSource stringValueForResID:introText]];
 	
-	NSData *stringData = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"desc" value:@"" table:@"Resource Types"] andID:introText inDocument:nil] data];
+	stringData = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"desc" value:@"" table:@"Resource Types"] andID:introText inDocument:nil] data];
 	if( stringData != nil )
 	{
 		[introTextView setString:[[[NSString alloc] initWithData:stringData encoding:NSMacOSRomanStringEncoding] autorelease]];

@@ -3,7 +3,7 @@
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"
 
-@interface TemplateWindowController : NSWindowController <ResKnifePluginProtocol>
+@interface TemplateWindowController : NSWindowController <ResKnifePluginProtocol, ResKnifeTemplatePluginProtocol>
 {
 	IBOutlet NSView	*containerView;
 	

@@ -5,32 +5,56 @@
 
 @implementation CreateResourceSheetController
 
-- (void)controlTextDidChange:(NSNotification *)notification
-{
-	BOOL enableButton = NO, clash = NO;
-	NSString *type = [typeView stringValue];
-	NSNumber *resID = [NSNumber numberWithInt:[resIDView intValue]];
+/* -----------------------------------------------------------------------------
+	controlTextDidChange:
+		Someone changed the control ID edit field. Check whether this is
+		a unique ID and appropriately enable the "create" button.
+		
+		Check "notification" against being nil, which is how we call it when
+		we need to explicitly update the enabled state of the "create" button.
+		
 	
-	if( [type length] == 4 && [[resIDView stringValue] length] > 0 )
+	REVISIONS:
+		2003-08-01  UK  Commented, changed to use data source's resourceOfType
+						instead of directly messing with the resource list's
+						enumerator Removed ID > 0 check -- negative IDs are
+						allowed as well.
+   -------------------------------------------------------------------------- */
+
+-(void) controlTextDidChange: (NSNotification*)notification
+{
+	BOOL		enableButton = NO;
+	NSString	*type = [typeView stringValue];
+	NSNumber	*resID = [NSNumber numberWithInt:[resIDView intValue]];
+	
+	if( [type length] == 4 )
 	{
 		// I could use +[Resource getResourceOfType:andID:inDocument:] != nil, but that would be much slower
-		Resource *resource;
-		NSEnumerator *enumerator = [[[document dataSource] resources] objectEnumerator];
-		while( resource = [enumerator nextObject] )
-		{
-			if( [type isEqualToString:[resource type]] && [resID isEqualToNumber:[resource resID]] )
-				clash = YES;
-		}
-		if( !clash ) enableButton = YES;
+		Resource *resource = [[document dataSource] resourceOfType:type andID:resID];
+		if( resource == nil )   // No resource with that type and ID yet?
+			enableButton = YES;
 	}
 	[createButton setEnabled:enableButton];
 }
 
-- (void)showCreateResourceSheet:(ResourceDocument *)sheetDoc
+
+/* -----------------------------------------------------------------------------
+	showCreateResourceSheet:
+		Show our sheet and set it up before that.
+	
+	REVISIONS:
+		2003-08-01  UK  Commented, made it "fake" a popup selection so
+						type field and popup match. Made it suggest an unused
+						resource ID.
+   -------------------------------------------------------------------------- */
+
+-(void) showCreateResourceSheet: (ResourceDocument*)sheetDoc
 {
 	// bug: didEndSelector could be better employed than using the button's targets from interface builder
 	document = sheetDoc;
 	[NSApp beginSheet:[self window] modalForWindow:[document mainWindow] modalDelegate:self didEndSelector:NULL contextInfo:nil];
+	[resIDView setObjectValue: [[document dataSource] uniqueIDForType: [typeView stringValue]]];
+	[self typePopupSelection: typePopup];   // Puts current popup value in text field and updates state of "create" button.
 }
 
 - (IBAction)hideCreateResourceSheet:(id)sender
@@ -55,10 +79,21 @@
 	[NSApp endSheet:[self window]];
 }
 
-- (IBAction)typePopupSelection:(id)sender
+
+/* -----------------------------------------------------------------------------
+	typePopupSelection:
+		Someone chose an item from our "res type" popup menu. Update our
+		edit field to show that.
+	
+	REVISIONS:
+		2003-08-01  UK  Commented, made it update state of "create" button..
+   -------------------------------------------------------------------------- */
+
+-(IBAction) typePopupSelection:(id)sender
 {
 	[typeView setStringValue:[typePopup titleOfSelectedItem]];
 	[typeView selectText:sender];
+	[self controlTextDidChange: nil];   // Make sure "create" button is updated.
 }
 
 @end

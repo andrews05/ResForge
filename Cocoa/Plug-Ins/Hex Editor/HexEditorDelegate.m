@@ -21,8 +21,9 @@
 	int dataLength = [data length], bytesPerRow = [controller bytesPerRow];
 	int rows = (dataLength / bytesPerRow) + ((dataLength % bytesPerRow)? 1:0);
 	NSMutableString *representation = [NSMutableString string];
+	int	row;
 	
-	for( int row = 0; row < rows; row++ )
+	for( row = 0; row < rows; row++ )
 		[representation appendFormat:@"%08lX:", row * bytesPerRow];
 	
 	return representation;
@@ -35,11 +36,14 @@
 	char buffer[bytesPerRow*3 +1], hex1, hex2;
 	char *bytes = (char *) [data bytes];
 	NSMutableString *representation = [NSMutableString string];
+	int	row;
 	
 	// calculate bytes
-	for( int row = 0; row < rows; row++ )
+	for( row = 0; row < rows; row++ )
 	{
-		for( int addr = 0; addr < bytesPerRow; addr++ )
+		int	addr;
+		
+		for( addr = 0; addr < bytesPerRow; addr++ )
 		{
 			if( currentByte < dataLength )
 			{
@@ -82,11 +86,14 @@
 	char buffer[bytesPerRow +1];
 	char *bytes = (char *) [data bytes];
 	NSMutableString *representation = [NSMutableString string];
+	int	row;
 	
 	// calculate bytes
-	for( int row = 0; row < rows; row++ )
+	for( row = 0; row < rows; row++ )
 	{
-		for( int addr = 0; addr < bytesPerRow; addr++ )
+		int addr;
+		
+		for( addr = 0; addr < bytesPerRow; addr++ )
 		{
 			if( currentByte < dataLength )
 			{
@@ -121,7 +128,9 @@
 	NSString *result;
 	unsigned long bytesEncoded = ([data length] + 1) / 3;
 	char *buffer = (char *) malloc( bytesEncoded ), hex1, hex2;
-	for( int i = 0; i < bytesEncoded; i++ )
+	int i;
+	
+	for( i = 0; i < bytesEncoded; i++ )
 	{
 		hex1 = ((char *)[data bytes])[3*i];
 		hex2 = ((char *)[data bytes])[3*i+1];

@@ -16,6 +16,8 @@
 	
 	// the actual data
 	NSData			*data;
+	
+	NSDocument		*document;		// Our owner.
 }
 
 // accessor methods not part of the protocol
@@ -32,5 +34,8 @@
 + (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue;
 + (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue;
 + (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue;
+
+-(void)			setDocument: (NSDocument*)doc;
+-(NSDocument*)  document;   // Resource protocol guarantees this.
 
 @end

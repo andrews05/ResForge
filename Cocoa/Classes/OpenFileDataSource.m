@@ -3,8 +3,8 @@
 #import <sys/attr.h>
 
 struct directoryinfo {
-   unsigned long length;
-   u_int32_t dirid;
+	unsigned long   length;
+	u_int32_t   dirid;
 };
 
 struct dunnowhat
@@ -25,8 +25,8 @@ struct dunnowhat
 /* NSTableView data source protocol implementation */
 - (int)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	NSBrowser *browser = [(NSOpenPanel *)[tableView window] browser];
-	if( [[browser selectedCells] count] == 1 )
+	//NSBrowser *browser = [(NSOpenPanel *)[tableView window] browser];
+	//if( [[browser selectedCells] count] == 1 )
 	{
 		// only one file is selected, parse it for forks
 /*		const char *path = [[browser path] cString];
@@ -45,7 +45,7 @@ struct dunnowhat
 		NSLog( @"%d", fileinfo.length );
 		NSLog( @"%d", fileinfo.dirid );
 */		
-		struct attrlist alist;
+		/*struct attrlist alist;
 		struct directoryinfo dirinfo;
 		char *path = [[browser path] cString];
 		bzero(&alist, sizeof(alist));
@@ -54,11 +54,11 @@ struct dunnowhat
 		int result = getattrlist(path, &alist, &dirinfo, sizeof(dirinfo), 0);
 		printf("result: %d; directory id: %lu; %s\n", result, dirinfo.dirid, path);
 
-		return 3;
+		return 3;*/
 	}
 	
 	// multiple/no selected files, return nothing
-	else return 0;
+	/*else*/ return 0;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row
@@ -107,7 +107,7 @@ struct dunnowhat
 
 - (NSBrowser *)browser
 {
-	return _browser;
+	return nil; //return _browser;
 }
 
 @end

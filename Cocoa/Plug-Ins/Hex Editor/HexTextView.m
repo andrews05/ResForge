@@ -264,6 +264,7 @@ static NSRange draggedRange;
 	NSPasteboard *pb = [sender draggingPasteboard];
 	NSData *pastedData = [pb dataForType:NSStringPboardType];
 	int charIndex = [self _insertionGlyphIndexForDrag:sender];
+	NSRange selection;
 	
 	// convert hex string to data
 	if( [sender draggingSource] == [[self delegate] hex] )
@@ -293,7 +294,7 @@ static NSRange draggedRange;
 	[self editData:[[[self window] windowController] data] replaceBytesInRange:NSMakeRange(charIndex,0) withData:pastedData];
 	
 	// set the new selection/insertion point
-	NSRange selection = [self rangeForUserTextChange];
+	selection = [self rangeForUserTextChange];
 	selection.location -= draggedRange.length;
 	selection.length = draggedRange.length;
 	[self setSelectedRange:selection];
@@ -327,8 +328,9 @@ static NSRange draggedRange;
 	
 	if( self == (id) [[self delegate] hex] )
 	{
+		int	i;
 		// bug: iteration through each character in string is broken, paste not yet mapped to this function
-		for( int i = 0; i < [string cStringLength]; i++ )
+		for( i = 0; i < [string cStringLength]; i++ )
 		{
 			char typedChar = [string characterAtIndex:i];
 			if( typedChar >= 0x30 && typedChar <= 0x39 )		typedChar -= 0x30;		// 0 to 9

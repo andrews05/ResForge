@@ -26,15 +26,19 @@
 		// create the resource & add it to the array
 		NSString	*name		= pbName;
 		NSString	*type;
+		NSNumber	*resID;
+		NSNumber	*attributes;
+		NSData		*data;
+		Resource	*resource;
 		NS_DURING
 			type = [currentType substringToIndex:3];
 		NS_HANDLER
 			type = currentType;
 		NS_ENDHANDLER
-		NSNumber	*resID		= [NSNumber numberWithShort:0];
-		NSNumber	*attributes	= [NSNumber numberWithShort:0];
-		NSData		*data		= [pb dataForType:type];
-		Resource	*resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data];
+		resID		= [NSNumber numberWithShort:0];
+		attributes	= [NSNumber numberWithShort:0];
+		data		= [pb dataForType:type];
+		resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data];
 		[resources addObject:resource];		// array retains resource
 	}
 	[[self undoManager] enableUndoRegistration];

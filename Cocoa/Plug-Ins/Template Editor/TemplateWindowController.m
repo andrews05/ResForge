@@ -171,9 +171,11 @@
 //	while( currentTemplateElement = [enumerator nextObject] )
 	while( position < [[resource size] unsignedLongValue] )
 	{
+		unsigned long type;
+		
 		currentTemplateElement = [tmpl objectAtIndex:n];
 		n++, c++;
-		unsigned long type = [currentTemplateElement typeAsLong];
+		type = [currentTemplateElement typeAsLong];
 		resourceElement = [[currentTemplateElement copy] autorelease];
 		NSLog( @"tmpl element = %@; position = %d", currentTemplateElement, position );
 		switch( type )

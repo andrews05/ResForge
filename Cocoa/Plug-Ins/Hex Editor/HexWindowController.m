@@ -47,11 +47,6 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 	return self;
 }
 
-- (id)initWithResources:(id)newResource, ...
-{
-	return nil;
-}
-
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];

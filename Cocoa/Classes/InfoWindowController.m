@@ -40,8 +40,11 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentInfoDidChange:) name:DocumentInfoDidChangeNotification object:nil];
 }
 
-- (void)updateInfoWindow
+-(void) updateInfoWindow
 {
+	[nameView setEditable:(selectedResource != nil)];
+	[nameView setDrawsBackground:(selectedResource != nil)];
+	
 	if( selectedResource )
 	{
 		[[self window] setTitle:@"Resource Info"];
@@ -71,8 +74,8 @@
 		[[self window] setTitle:@"Document Info"];
 		[iconView setImage:[NSImage imageNamed:@"Resource file"]];
 		[nameView setStringValue:[currentDocument fileName]? [[currentDocument fileName] lastPathComponent]:[currentDocument displayName]];
-		[[filePropertyForm cellAtIndex:0] setStringValue:@"hi:)"/*[currentDocument creator]*/];
-		[[filePropertyForm cellAtIndex:1] setStringValue:@"helo"/*[currentDocument type]*/];
+		[[filePropertyForm cellAtIndex:0] setStringValue:[currentDocument creator]];
+		[[filePropertyForm cellAtIndex:1] setStringValue:[currentDocument type]];
 //		[[filePropertyForm cellAtIndex:2] setObjectValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
 //		[[filePropertyForm cellAtIndex:3] setObjectValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
 		[[filePropertyForm cellAtIndex:2] setStringValue:[[NSNumber numberWithUnsignedLongLong:dataLogicalSize] description]];
@@ -102,6 +105,8 @@
 
 - (void)selectedResourceChanged:(NSNotification *)notification
 {
+	if( ![[nameView stringValue] isEqualToString: [selectedResource name]] )
+		[self nameChanged:nameView];
 	selectedResource = [[notification object] selectedItem];
 	[self updateInfoWindow];
 }
@@ -119,8 +124,15 @@
 	[selectedResource setAttributes:[NSNumber numberWithShort:number]];
 }
 
+-(IBAction) nameChanged: (id)sender
+{
+	[selectedResource setName: [nameView stringValue]];
+}
+
 - (void)resourceAttributesDidChange:(NSNotification *)notification;
 {
+	if( ![[nameView stringValue] isEqualToString: [selectedResource name]] )
+		[self nameChanged:nameView];
 	[self updateInfoWindow];
 }
 

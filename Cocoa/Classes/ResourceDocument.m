@@ -1,3 +1,25 @@
+/* =============================================================================
+	PROJECT:	ResKnife
+	FILE:		ResourceDocument.m
+	
+	PURPOSE:
+		This is a ResKnife document (I still write Resurrection occasionally,
+		sorry Nick...), it handles loading, display etc. of resources.
+		
+		It uses a separate object as the data source for its outline view,
+		though, ResourceDataSource. I'd better ask Nick why.
+	
+	AUTHORS:	Nick Shanks, nick(at)nickshanks.com, (c) ~2001.
+				M. Uli Kusterer, witness(at)zathras.de, (c) 2003.
+	
+	REVISIONS:
+		2003-07-31  UK  Added support for plugin registry, commented.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+	Headers:
+   -------------------------------------------------------------------------- */
+
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
 #import "ResourceNameCell.h"
@@ -8,9 +30,16 @@
 #import "NSOutlineView-SelectedItems.h"
 
 #import "ResKnifePluginProtocol.h"
+#import "RKEditorRegistry.h"
+
+
+/* -----------------------------------------------------------------------------
+	Notification names:
+   -------------------------------------------------------------------------- */
 
 NSString *DocumentInfoWillChangeNotification		= @"DocumentInfoWillChangeNotification";
 NSString *DocumentInfoDidChangeNotification			= @"DocumentInfoDidChangeNotification";
+
 
 extern NSString *RKResourcePboardType;
 
@@ -19,9 +48,13 @@ extern NSString *RKResourcePboardType;
 - (id)init
 {
 	self = [super init];
+	if( !self )
+		return nil;
 	toolbarItems = [[NSMutableDictionary alloc] init];
 	resources = [[NSMutableArray alloc] init];
 	fork = nil;
+	creator = [@"ResK" retain];
+	type = [@"rsrc" retain];
 	return self;
 }
 
@@ -31,6 +64,8 @@ extern NSString *RKResourcePboardType;
 	if( fork ) DisposePtr( (Ptr) fork );
 	[resources release];
 	[toolbarItems release];
+	[type release];
+	[creator release];
 	[super dealloc];
 }
 
@@ -111,6 +146,16 @@ extern NSString *RKResourcePboardType;
 	else if( [item action] == @selector(openResourcesInTemplate:) )	return selectedRows > 0;
 	else if( [item action] == @selector(openResourcesWithOtherTemplate:) )	return selectedRows > 0;
 	else if( [item action] == @selector(openResourcesAsHex:) )		return selectedRows > 0;
+	else if( [item action] == @selector(exportResourceToImageFile:) )
+	{
+		Class   edClass;
+		
+		if( selectedRows < 1 )
+			return NO;
+		
+		edClass = [[RKEditorRegistry mainRegistry] editorForType: [resource type]];
+		return [edClass respondsToSelector:@selector(imageForImageFileExport:)];
+	}
 	else if( [item action] == @selector(playSound:) )				return selectedRows == 1 && [[resource type] isEqualToString:@"snd "];
 	else if( [item action] == @selector(revertResourceToSaved:) )	return selectedRows == 1 && [resource isDirty];
 	else return [super validateMenuItem:item];
@@ -126,6 +171,7 @@ static NSString *RKEditItemIdentifier		= @"com.nickshanks.resknife.toolbar.edit"
 static NSString *RKEditHexItemIdentifier	= @"com.nickshanks.resknife.toolbar.edithex";
 static NSString *RKSaveItemIdentifier		= @"com.nickshanks.resknife.toolbar.save";
 static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.showinfo";
+static NSString *RKExportItemIdentifier		= @"com.ulikusterer.resknife.toolbar.export";
 
 - (void)setupToolbar:(NSWindowController *)windowController
 {
@@ -135,6 +181,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[toolbarItems removeAllObjects];	// just in case this method is called more than once per document (which it shouldn't be!)
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKCreateItemIdentifier];
+	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Create", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Create", nil)];
 	[item setToolTip:NSLocalizedString(@"Create New Resource", nil)];
@@ -142,9 +189,9 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[item setTarget:self];
 	[item setAction:@selector(showCreateResourceSheet:)];
 	[toolbarItems setObject:item forKey:RKCreateItemIdentifier];
-	[item release];
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKDeleteItemIdentifier];
+	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Delete", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Delete", nil)];
 	[item setToolTip:NSLocalizedString(@"Delete Selected Resource", nil)];
@@ -152,9 +199,9 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[item setTarget:self];
 	[item setAction:@selector(clear:)];
 	[toolbarItems setObject:item forKey:RKDeleteItemIdentifier];
-	[item release];
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKEditItemIdentifier];
+	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Edit", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Edit", nil)];
 	[item setToolTip:NSLocalizedString(@"Edit Resource In Default Editor", nil)];
@@ -162,9 +209,9 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[item setTarget:self];
 	[item setAction:@selector(openResources:)];
 	[toolbarItems setObject:item forKey:RKEditItemIdentifier];
-	[item release];
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKEditHexItemIdentifier];
+	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Edit Hex", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Edit Hex", nil)];
 	[item setToolTip:NSLocalizedString(@"Edit Resource As Hexadecimal", nil)];
@@ -172,9 +219,9 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[item setTarget:self];
 	[item setAction:@selector(openResourcesAsHex:)];
 	[toolbarItems setObject:item forKey:RKEditHexItemIdentifier];
-	[item release];
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKSaveItemIdentifier];
+	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Save", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Save", nil)];
 	[item setToolTip:[NSString stringWithFormat:NSLocalizedString(@"Save To %@ Fork", nil), !fork? NSLocalizedString(@"Data", nil) : NSLocalizedString(@"Resource", nil)]];
@@ -182,9 +229,9 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[item setTarget:self];
 	[item setAction:@selector(saveDocument:)];
 	[toolbarItems setObject:item forKey:RKSaveItemIdentifier];
-	[item release];
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKShowInfoItemIdentifier];
+	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Show Info", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Show Info", nil)];
 	[item setToolTip:NSLocalizedString(@"Show Resource Information Window", nil)];
@@ -192,14 +239,23 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[item setTarget:[NSApp delegate]];
 	[item setAction:@selector(showInfo:)];
 	[toolbarItems setObject:item forKey:RKShowInfoItemIdentifier];
-	[item release];
+	
+	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKExportItemIdentifier];
+	[item autorelease];
+	[item setLabel:NSLocalizedString(@"Export Data", nil)];
+	[item setPaletteLabel:NSLocalizedString(@"Export Resource Data", nil)];
+	[item setToolTip:NSLocalizedString(@"Export the resource's data to a file", nil)];
+	[item setImage:[NSImage imageNamed:@"Export"]];
+	[item setTarget:self];
+	[item setAction:@selector(exportResourceToFile:)];
+	[toolbarItems setObject:item forKey:RKExportItemIdentifier];
 	
 	if( [windowController window] == mainWindow )
 	{
 		NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:RKToolbarIdentifier] autorelease];
 		
 		// set toolbar properties
-		[toolbar setVisible:NO];
+		[toolbar setVisible:YES];
 		[toolbar setAutosavesConfiguration:YES];
 		[toolbar setAllowsUserCustomization:YES];
 		[toolbar setDisplayMode:NSToolbarDisplayModeDefault];
@@ -217,12 +273,12 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, NSToolbarSeparatorItemIdentifier, RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, nil];
+    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKShowInfoItemIdentifier, RKDeleteItemIdentifier, NSToolbarSeparatorItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, NSToolbarSeparatorItemIdentifier, RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, nil];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKDeleteItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, RKSaveItemIdentifier, RKShowInfoItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
+    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKDeleteItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, RKSaveItemIdentifier, RKExportItemIdentifier, RKShowInfoItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
 }
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)item
@@ -235,6 +291,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	else if( [identifier isEqualToString:RKDeleteItemIdentifier] )			valid = selectedRows > 0;
 	else if( [identifier isEqualToString:RKEditItemIdentifier] )			valid = selectedRows > 0;
 	else if( [identifier isEqualToString:RKEditHexItemIdentifier] )			valid = selectedRows > 0;
+	else if( [identifier isEqualToString:RKExportItemIdentifier] )			valid = selectedRows > 0;
 	else if( [identifier isEqualToString:RKSaveItemIdentifier] )			valid = [self isDocumentEdited];
 	else if( [identifier isEqualToString:NSToolbarPrintItemIdentifier] )	valid = YES;
 	
@@ -286,18 +343,29 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		[self openResourceAsHex:resource];
 }
 
-- (void)openResourceUsingEditor:(Resource *)resource
+
+/* -----------------------------------------------------------------------------
+	openResourceUsingEditor:
+		Open an editor for the specified Resource instance. This looks up
+		the editor to use in the plugin registry and then instantiates an
+		editor object, handing it the resource. If there is no editor for this
+		type registered, it falls back to the template editor, which in turn
+		uses the hex editor as a fallback.
+	
+	REVISIONS:
+		2003-07-31  UK  Changed to use plugin registry instead of file name.
+   -------------------------------------------------------------------------- */
+
+-(void) openResourceUsingEditor: (Resource*)resource
 {
-// #warning openResourceUsingEditor: shortcuts to NovaTools !!
-	// opens resource in template using TMPL resource with name templateName
-//	NSBundle *editor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"NovaTools.plugin"]];
-	NSBundle *editor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@ Editor.plugin", [resource type]]]];
+	Class					editorClass = [[RKEditorRegistry mainRegistry] editorForType: [resource type]];
 	
 	// open the resources, passing in the template to use
-	if( editor /*&& [[editor principalClass] respondsToSelector:@selector(initWithResource:)]*/ )
+	if( editorClass )
 	{
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
-		id plug = [(id <ResKnifePluginProtocol>)[[editor principalClass] alloc] initWithResource:resource];
+		// update: doug says window controllers automatically release themselves when their window is closed.
+		id plug = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
 		if( plug ) return;
 	}
 	
@@ -305,21 +373,34 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[self openResource:resource usingTemplate:[resource type]];
 }
 
-- (void)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
+
+/* -----------------------------------------------------------------------------
+	openResource:usingTemplate:
+		Open a template editor for the specified Resource instance. This looks
+		up the template editor in the plugin registry and then instantiates an
+		editor object, handing it the resource and the template resource to use.
+		If there is no template editor registered, or there is no template for
+		this resource type, it falls back to the hex editor.
+	
+	REVISIONS:
+		2003-07-31  UK  Changed to use plugin registry instead of file name.
+   -------------------------------------------------------------------------- */
+
+-(void) openResource: (Resource*)resource usingTemplate: (NSString*)templateName
 {
 	// opens resource in template using TMPL resource with name templateName
-	NSBundle *templateEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Template Editor.plugin"]];
+	Class					editorClass = [[RKEditorRegistry mainRegistry] editorForType: @"Template Editor"];
 	
-	// bug: this checks EVERY DOCUMENT for template resources (might not be desired)
-	// bug: it doesn't, however, check the application's resource map for a matching template!
+	// TODO: this checks EVERY DOCUMENT for template resources (might not be desired)
+	// TODO: it doesn't, however, check the application's resource map for a matching template!
 	Resource *tmpl = [Resource resourceOfType:@"TMPL" withName:[resource type] inDocument:nil];
 	
 	// open the resources, passing in the template to use
-	if( tmpl /*&& [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)]*/ )
+	if( tmpl && editorClass )
 	{
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 		// update: doug says window controllers automatically release themselves when their window is closed.
-		NSWindowController *plugController = [(id <ResKnifePluginProtocol>)[[templateEditor principalClass] alloc] initWithResources:resource, tmpl, nil];
+		NSWindowController *plugController = [(id <ResKnifeTemplatePluginProtocol>)[editorClass alloc] initWithResources:resource, tmpl, nil];
 		if( plugController ) return;
 	}
 	
@@ -327,13 +408,30 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[self openResourceAsHex:resource];
 }
 
-- (void)openResourceAsHex:(Resource *)resource
+
+/* -----------------------------------------------------------------------------
+	openResourceAsHex:
+		Open a hex editor for the specified Resource instance. This looks
+		up the hexadecimal editor in the plugin registry and then instantiates an
+		editor object, handing it the resource.
+	
+	REVISIONS:
+		2003-07-31  UK  Changed to use plugin registry instead of file name.
+   -------------------------------------------------------------------------- */
+
+-(void) openResourceAsHex: (Resource*)resource
 {
-	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
+	Class					editorClass = [[RKEditorRegistry mainRegistry] editorForType: @"Hexadecimal Editor"];
 	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
-	NSWindowController *plugController = [(id <ResKnifePluginProtocol>)[[hexEditor principalClass] alloc] initWithResource:resource];
+	// update: doug says window controllers automatically release themselves when their window is closed.
+	NSWindowController *plugController = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
 }
 
+
+// TODO:	These two should really be moved to a 'snd ' editor, but first we'd
+//			need to extend the plugin protocol to call the class so it can add
+//			such menu items. Of course, we could just make the 'snd ' editor
+//			have a button in its window that plays the sound.
 - (IBAction)playSound:(id)sender
 {
 	// bug: can only cope with one selected item
@@ -500,7 +598,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	if( [outlineView numberOfSelectedRows] > 1 )
 		[[self undoManager] setActionName:NSLocalizedString(@"Delete Resources", nil)];
 	
-	// deselct resources (otherwise other resources move into selected rows!)
+	// deselect resources (otherwise other resources move into selected rows!)
 	[outlineView deselectAll:self];
 }
 
@@ -513,18 +611,39 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	return YES;
 }*/
 
-- (BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)type
+
+/* -----------------------------------------------------------------------------
+	readFromFile:ofType:
+		Open the specified file and read its resources. This first tries to
+		load the resources from the res fork, and failing that tries the data
+		fork.
+	
+	REVISIONS:
+		2003-08-01  UK  Commented.
+   -------------------------------------------------------------------------- */
+
+-(BOOL) readFromFile: (NSString*)fileName ofType: (NSString*)fileKind
 {
-	BOOL succeeded = NO;
-	OSStatus error = noErr;
-	HFSUniStr255 *resourceForkName = (HFSUniStr255 *) NewPtrClear( sizeof(HFSUniStr255) );
-	FSRef *fileRef = (FSRef *) NewPtrClear( sizeof(FSRef) );
-	SInt16 fileRefNum = 0;
+	BOOL			succeeded = NO;
+	OSStatus		error = noErr;
+	HFSUniStr255	*resourceForkName = (HFSUniStr255 *) NewPtrClear( sizeof(HFSUniStr255) );   // This may be saved away in the instance variable "fork" to keep track of which fork our resources are in.
+	FSRef			*fileRef = (FSRef *) NewPtrClear( sizeof(FSRef) );
+	SInt16			fileRefNum = 0;
+	FSCatalogInfo   info = { 0 };
 	
 	// open fork with resources in it
 	error = FSPathMakeRef( [fileName cString], fileRef, nil );
 	error = FSGetResourceForkName( resourceForkName );
 	SetResLoad( false );	// don't load "preload" resources
+	
+	[type release];
+	[creator release];
+	
+	error = FSGetCatalogInfo( fileRef, kFSCatInfoFinderInfo, &info, nil, nil, nil );
+	type = [[NSString stringWithCString: &((FileInfo*)info.finderInfo)->fileType length:4] retain];
+	creator = [[NSString stringWithCString: &((FileInfo*)info.finderInfo)->fileCreator length:4] retain];
+	
+	// Try res fork first:
 	error = FSOpenResourceFile( fileRef, resourceForkName->length, (UniChar *) &resourceForkName->unicode, fsRdPerm, &fileRefNum);
 	if( error )				// try to open data fork instead
 	{
@@ -540,7 +659,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	
 	// read the resources (without spawning thousands of undos for resource creation)
 	[[self undoManager] disableUndoRegistration];
-	if( fileRefNum && !error )
+	if( fileRefNum && error == noErr )
 		succeeded = [self readResourceMap:fileRefNum];
 	else if( !fileRefNum )
 	{
@@ -551,7 +670,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[[self undoManager] enableUndoRegistration];
 	
 	// tidy up loose ends
-	if( !fork ) DisposePtr( (Ptr) resourceForkName );	// only delete if we're not saving it
+	if( !fork ) DisposePtr( (Ptr) resourceForkName );	// only delete if we're not saving it to "fork" instance var.
 	if( fileRefNum ) FSClose( fileRefNum );
 	DisposePtr( (Ptr) fileRef );
 	return succeeded;
@@ -570,31 +689,41 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		It is perfectly legal in ResKnife to read in forks of these names when accessing a shared NTFS drive from a server running SFM. */
 		
 		[resource setRepresentedFork:forkName];
+		[resource setDocument:self];
 		[resources insertObject:resource atIndex:0];
 		return YES;
 	}
 	else return NO;
 }
 
-- (BOOL)readResourceMap:(SInt16)fileRefNum
+-(BOOL) readResourceMap: (SInt16)fileRefNum
 {
 	OSStatus error = noErr;
 	unsigned short n;
+	unsigned short i;
 	SInt16 oldResFile = CurResFile();
 	UseResFile( fileRefNum );
 	
-	for( unsigned short i = 1; i <= Count1Types(); i++ )
+	for( i = 1; i <= Count1Types(); i++ )
 	{
 		ResType resType;
+		unsigned short j;
+	
 		Get1IndType( &resType, i );
 		n = Count1Resources( resType );
-		for( unsigned short j = 1; j <= n; j++ )
+		for( j = 1; j <= n; j++ )
 		{
-			Str255	nameStr;
-			long	sizeLong;
-			short	resIDShort;
-			short	attrsShort;
-			Handle	resourceHandle;
+			Str255		nameStr;
+			long		sizeLong;
+			short		resIDShort;
+			short		attrsShort;
+			Handle		resourceHandle;
+			NSString	*name;
+			NSString	*type;
+			NSNumber	*resID;
+			NSNumber	*attributes;
+			NSData		*data;
+			Resource	*resource;
 			
 			resourceHandle = Get1IndResource( resType, j );
 			error = ResError();
@@ -611,12 +740,13 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 			HLockHi( resourceHandle );
 			
 			// create the resource & add it to the array
-			NSString	*name		= [NSString stringWithCString:&nameStr[1] length:nameStr[0]];
-			NSString	*type		= [NSString stringWithCString:(char *) &resType length:4];
-			NSNumber	*resID		= [NSNumber numberWithShort:resIDShort];
-			NSNumber	*attributes	= [NSNumber numberWithShort:attrsShort];
-			NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
-			Resource	*resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data];
+			name		= [NSString stringWithCString:&nameStr[1] length:nameStr[0]];
+			type		= [NSString stringWithCString:(char *) &resType length:4];
+			resID		= [NSNumber numberWithShort:resIDShort];
+			attributes	= [NSNumber numberWithShort:attrsShort];
+			data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
+			resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data];
+			[resource setDocument:self];
 			[resources addObject:resource];		// array retains resource
 			
 			HUnlock( resourceHandle );
@@ -678,33 +808,57 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	return succeeded;
 }
 
-- (BOOL)writeResourceMap:(SInt16)fileRefNum
+
+/* -----------------------------------------------------------------------------
+	writeResourceMap:
+		Writes all resources (except the ones representing other forks of the
+		file) to the specified resource file.
+	
+	REVISIONS:
+		2003-08-01  UK  Swiss national holiday, and I'm stuck in Germany...
+						Commented, changed to use enumerator instead of
+						objectAtIndex.
+   -------------------------------------------------------------------------- */
+
+-(BOOL) writeResourceMap: (SInt16)fileRefNum
 {
-	OSStatus error = noErr;
-	unsigned long i;
-	SInt16 oldResFile = CurResFile();
+	OSStatus		error = noErr;
+	NSEnumerator*   enny;
+	Resource		*resource;
+	
+	// Make the resource file current:
+	SInt16			oldResFile = CurResFile();
 	UseResFile( fileRefNum );
 	
-	for( i = 0; i < [resources count]; i++ )
+	// Loop over all our resources:
+	for( enny = [resources objectEnumerator]; resource = [enny nextObject]; )
 	{
-		Resource *resource	= [resources objectAtIndex:i];
-		if( [resource representedFork] != nil ) continue;
-		
 		Str255	nameStr;
 		ResType	resType;
-		short	resIDShort	= [[resource resID] shortValue];
-		short	attrsShort	= [[resource attributes] shortValue];
-		Handle	resourceHandle = NewHandleClear( [[resource data] length] );
+		short	resIDShort;
+		short	attrsShort;
+		Handle	resourceHandle;
+
+		// Resource represents another fork in the file? Skip it.
+		if( [resource representedFork] != nil ) continue;
 		
+		resIDShort	= [[resource resID] shortValue];
+		attrsShort	= [[resource attributes] shortValue];
+		resourceHandle = NewHandleClear( [[resource data] length] );
+		
+		// Unicode name -> P-String:
 		nameStr[0] = [[resource name] cStringLength];
 		BlockMoveData( [[resource name] cString], &nameStr[1], nameStr[0] );
 		
+		// Type string to ResType:
 		[[resource type] getCString:(char *) &resType maxLength:4];
 		
+		// NSData to resource data Handle:
 		HLockHi( resourceHandle );
 		[[resource data] getBytes:*resourceHandle];
 		HUnlock( resourceHandle );
 		
+		// Now that everything's converted, write it to our file:
 		AddResource( resourceHandle, resType, resIDShort, nameStr );
 		if( ResError() == addResFailed )
 		{
@@ -720,7 +874,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 		}
 	}
 	
-	// save resource map and clean up
+	// Save resource map and clean up:
 	UseResFile( oldResFile );
 	return error? NO:YES;
 }
@@ -805,6 +959,79 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[[self undoManager] endUndoGrouping];
 	if( changeAction )
 		[[self undoManager] setActionName:NSLocalizedString( @"Change Creator & Type", nil)];
+}
+
+
+-(void)		exportDataPanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	NSData* data = contextInfo;
+	[data autorelease];
+	
+	if( returnCode == NSOKButton )
+		[data writeToFile:[sheet filename] atomically: YES];
+}
+
+
+-(void)		exportImagePanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	NSImage* img = contextInfo;
+	[img autorelease];
+	
+	if( returnCode == NSOKButton )
+	{
+		NSData* data = [img TIFFRepresentation];
+		[data writeToFile:[sheet filename] atomically: YES];
+	}
+}
+
+
+-(IBAction)		exportResourceToFile: (id)sender
+{
+	Resource*		resource = (Resource*) [outlineView selectedItem];
+	NSData*			theData;
+	Class			edClass = [[RKEditorRegistry mainRegistry] editorForType: [resource type]];
+	NSString*		extension = [resource type];
+	NSSavePanel*	panel;
+	NSString*		fName;
+
+	if( [edClass respondsToSelector:@selector(dataForFileExport:)] )
+		theData = [edClass dataForFileExport: resource];
+	else
+		theData = [resource data];
+	
+	if( [edClass respondsToSelector:@selector(extensionForFileExport:)] )
+		extension = [edClass extensionForFileExport];
+
+	panel = [NSSavePanel savePanel];
+	fName = [[resource name] stringByAppendingFormat: @".%@", extension];
+
+	[panel beginSheetForDirectory:nil file:fName modalForWindow:mainWindow modalDelegate:self
+			didEndSelector:@selector(exportDataPanelDidEnd:returnCode:contextInfo:) contextInfo:[theData retain]];
+}
+
+
+-(IBAction)		exportResourceToImageFile: (id)sender
+{
+	Resource*		resource = (Resource*) [outlineView selectedItem];
+	NSImage*		theData;
+	Class			edClass = [[RKEditorRegistry mainRegistry] editorForType: [resource type]];
+	NSString*		extension = @"tiff";
+	NSSavePanel*	panel;
+	NSString*		fName;
+	
+	if( ![edClass respondsToSelector:@selector(imageForImageFileExport:)] )
+		return;
+	
+	theData = [edClass imageForImageFileExport: resource];
+
+	if( [edClass respondsToSelector:@selector(extensionForImageFileExport:)] )
+		extension = [edClass extensionForFileExport];
+	
+	panel = [NSSavePanel savePanel];
+	fName = [[resource name] stringByAppendingFormat: @".%@", extension];
+	
+	[panel beginSheetForDirectory:nil file:fName modalForWindow:mainWindow modalDelegate:self
+			didEndSelector:@selector(exportImagePanelDidEnd:returnCode:contextInfo:) contextInfo:[theData retain]];
 }
 
 @end
