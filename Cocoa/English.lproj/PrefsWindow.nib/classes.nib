@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {acceptPrefs = id; cancelPrefs = id; resetToDefault = id; }; 
+            CLASS = PrefsWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {autosaveIntervalField = id; dataProtectionMatrix = id; }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

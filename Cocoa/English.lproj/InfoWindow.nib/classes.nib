@@ -1,0 +1,20 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = InfoWindow; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {
+            ACTIONS = {attributesChanged = id; }; 
+            CLASS = InfoWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                attributesMatrix = id; 
+                iconView = id; 
+                nameView = id; 
+                resIDView = id; 
+                typeView = id; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,56 @@
+ResKnife (Carbon & Classic):
+*	quit doesn't check for files to save (unverified, seems to check front window on 9.1 - don't know about others)
+*	files without a resource fork (inc. DF-based resource files) crash upon opening
+*	when saving a file, the temporary file cannot be deleted because it is open. I cannot find where I open it without closing it again.
+*	there's a crash on quit when there's an unsaved file open
+	temporary file handling is not very good. make it cooler.
+	should pass plug-ins a copy of the data handle, not the real thing
+	window header text non-existant
+	Revert Resource menu item not plugged in
+	should call memset() not BlockZero() on pre 8.5 systems (and include strings.h)
+
+ResKnife (Carbon Only):
+	DataBrowser still doesn't draw the line at the top
+	choosing debugging menu items doesn't checkmark them
+	cannot drag items into/out of the data browser
+
+ResKnife (Classic Only):
+	no column sorting
+	no GWorld support or clipRgn managment
+	headers don't toggle (Appearance)
+	no headers present (non-Appearance)
+
+All Editors
+*	only have carbon support
+
+Hex Editor:
+	closing winodow sometimes (rarely) causes crashes. cause unknown
+
+Template Editor:
+*	some fields are not saved (elaborate)
+*	does not save repeating templates (I really need help with this)
+*	cannot handle Hxxx, P0xx, Cxxx
+	multi-line strings do not cause the text box to expand (anyone know how to make this work?)
+
+PICT Editor:
+	Window doesn't have minimum size
+	Window is not resizable, has no scrollbars either
+
+
+* denotes important bug (e.g. reproducable crasher, loss of data, et cetera)
+I am currently working to eliminate these asterisked bugs, the others I'm not so bothered about yet.
+I shall soon begin implementing an event mechanism for the editors which doesn't use CarbonEvents, allowing me to release the Classic build with some editors. (Fear not all you System 7.1-ers!)
+
+please send bug reports (or better yet, contribute code) to resknife@nickshanks.com
+
+One-time only bugs:
+choosing save after editing a data fork caused only 2 of 14 resources to be saved.
+clicking in the hex window does weird things to the selection. No selection was present, and the insertion point was not visible either. Typing subsequently deleted everything after where I typed, but no character appeared
+
+
+
+ResKnife (Cocoa):
+*	Setting a type which is longer than four bytes on one resource will cause all resources below it to not be saved.
+	- (should require user to enter no more or less than four bytes, use formatter objects' isPartialStringValid: method)
+*	create new resource sheet not yet implemented
+*	no editors

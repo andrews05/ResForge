@@ -1,0 +1,29 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                openResource = id; 
+                playSound = id; 
+                showCreateResourceSheet = id; 
+                showInfo = id; 
+                showPrefs = id; 
+            }; 
+            CLASS = ApplicationDelegate; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                openResource = id; 
+                playSound = id; 
+                showCreateResourceSheet = id; 
+                showInfo = id; 
+                showPrefs = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

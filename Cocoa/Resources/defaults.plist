@@ -1,0 +1,6 @@
+{
+	PreserveBackups = YES;
+	Autosave = YES;
+	AutosaveInterval = 5;
+	DeleteResourceWarning = YES;
+}

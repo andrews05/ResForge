@@ -1,0 +1,295 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = IBCarbonBevelButton; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {CLASS = IBCarbonButton; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {
+            CLASS = IBCarbonChasingArrows; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                carbonBounds = id; 
+                command = id; 
+                controlHandle = id; 
+                controlID = id; 
+                controlMaximum = id; 
+                controlMinimum = id; 
+                controlName = id; 
+                controlSignature = id; 
+                controlSize = id; 
+                controlTitle = id; 
+                controlValue = id; 
+                enabled = id; 
+                hidden = id; 
+                isEnabled = id; 
+                isHidden = id; 
+                objectNameForInspectorTitle = id; 
+                targetFrameworkName = id; 
+                targetFrameworkSupportsConnections = id; 
+                titleRect = id; 
+            }; 
+            SUPERCLASS = IBCarbonControl; 
+        }, 
+        {CLASS = IBCarbonCheckBox; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {
+            CLASS = IBCarbonClockDate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                carbonBounds = id; 
+                clockType = id; 
+                command = id; 
+                controlHandle = id; 
+                controlID = id; 
+                controlMaximum = id; 
+                controlMinimum = id; 
+                controlName = id; 
+                controlSignature = id; 
+                controlSize = id; 
+                controlTitle = id; 
+                controlValue = id; 
+                enabled = id; 
+                hidden = id; 
+                isEditable = id; 
+                isEnabled = id; 
+                isHidden = id; 
+                isLive = id; 
+                objectNameForInspectorTitle = id; 
+                targetFrameworkName = id; 
+                targetFrameworkSupportsConnections = id; 
+                titleRect = id; 
+            }; 
+            SUPERCLASS = IBCarbonControl; 
+        }, 
+        {
+            CLASS = IBCarbonControl; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                carbonBounds = id; 
+                command = id; 
+                controlHandle = id; 
+                controlID = id; 
+                controlMaximum = id; 
+                controlMinimum = id; 
+                controlName = id; 
+                controlSignature = id; 
+                controlSize = id; 
+                controlTitle = id; 
+                controlValue = id; 
+                enabled = id; 
+                hidden = id; 
+                isEnabled = id; 
+                isHidden = id; 
+                objectNameForInspectorTitle = id; 
+                targetFrameworkName = id; 
+                targetFrameworkSupportsConnections = id; 
+                titleRect = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = IBCarbonDBListView; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = IBCarbonDataBrowser; 
+        }, 
+        {CLASS = IBCarbonDataBrowser; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {CLASS = IBCarbonEditText; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {
+            CLASS = IBCarbonGroupBox; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                autoToggle = id; 
+                carbonBounds = id; 
+                command = id; 
+                contentRect = id; 
+                controlHandle = id; 
+                controlID = id; 
+                controlMaximum = id; 
+                controlMinimum = id; 
+                controlName = id; 
+                controlSignature = id; 
+                controlSize = id; 
+                controlTitle = id; 
+                controlValue = id; 
+                enabled = id; 
+                groupBoxTitleType = id; 
+                groupBoxType = id; 
+                hasVariableWidth = id; 
+                hidden = id; 
+                isAutoToggle = id; 
+                isEnabled = id; 
+                isHidden = id; 
+                isPrimary = id; 
+                objectNameForInspectorTitle = id; 
+                primary = id; 
+                selectedItem = id; 
+                supportsInsideOutSelection = id; 
+                targetFrameworkName = id; 
+                targetFrameworkSupportsConnections = id; 
+                titleJustification = id; 
+                titleRect = id; 
+                variableWidth = id; 
+            }; 
+            SUPERCLASS = IBCarbonControl; 
+        }, 
+        {
+            CLASS = IBCarbonIcon; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                carbonBounds = id; 
+                command = id; 
+                contentResID = id; 
+                contentType = id; 
+                controlHandle = id; 
+                controlID = id; 
+                controlMaximum = id; 
+                controlMinimum = id; 
+                controlName = id; 
+                controlSignature = id; 
+                controlSize = id; 
+                controlTitle = id; 
+                controlValue = id; 
+                dontTrack = id; 
+                enabled = id; 
+                hidden = id; 
+                isEnabled = id; 
+                isHidden = id; 
+                objectNameForInspectorTitle = id; 
+                targetFrameworkName = id; 
+                targetFrameworkSupportsConnections = id; 
+                titleRect = id; 
+            }; 
+            SUPERCLASS = IBCarbonControl; 
+        }, 
+        {CLASS = IBCarbonImageWell; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {
+            CLASS = IBCarbonLittleArrows; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                carbonBounds = id; 
+                command = id; 
+                controlHandle = id; 
+                controlID = id; 
+                controlMaximum = id; 
+                controlMinimum = id; 
+                controlName = id; 
+                controlSignature = id; 
+                controlSize = id; 
+                controlTitle = id; 
+                controlValue = id; 
+                enabled = id; 
+                hidden = id; 
+                increment = id; 
+                initialValue = id; 
+                isEnabled = id; 
+                isHidden = id; 
+                maximumValue = id; 
+                minimumValue = id; 
+                objectNameForInspectorTitle = id; 
+                targetFrameworkName = id; 
+                targetFrameworkSupportsConnections = id; 
+                titleRect = id; 
+            }; 
+            SUPERCLASS = IBCarbonControl; 
+        }, 
+        {CLASS = IBCarbonMenu; LANGUAGE = ObjC; SUPERCLASS = NSMenu; }, 
+        {CLASS = IBCarbonMenuItem; LANGUAGE = ObjC; SUPERCLASS = NSMenuItem; }, 
+        {CLASS = IBCarbonPopupButton; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {CLASS = IBCarbonRadioGroup; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {CLASS = IBCarbonRelevanceBar; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {CLASS = IBCarbonRootControl; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {CLASS = IBCarbonRoundButton; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {CLASS = IBCarbonScrollBar; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {
+            CLASS = IBCarbonSeparator; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                carbonBounds = id; 
+                command = id; 
+                controlHandle = id; 
+                controlID = id; 
+                controlMaximum = id; 
+                controlMinimum = id; 
+                controlName = id; 
+                controlSignature = id; 
+                controlSize = id; 
+                controlTitle = id; 
+                controlValue = id; 
+                enabled = id; 
+                hidden = id; 
+                isEnabled = id; 
+                isHidden = id; 
+                objectNameForInspectorTitle = id; 
+                targetFrameworkName = id; 
+                targetFrameworkSupportsConnections = id; 
+                titleRect = id; 
+            }; 
+            SUPERCLASS = IBCarbonControl; 
+        }, 
+        {
+            CLASS = IBCarbonSlider; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                carbonBounds = id; 
+                command = id; 
+                controlHandle = id; 
+                controlID = id; 
+                controlMaximum = id; 
+                controlMinimum = id; 
+                controlName = id; 
+                controlSignature = id; 
+                controlSize = id; 
+                controlTitle = id; 
+                controlValue = id; 
+                enabled = id; 
+                hidden = id; 
+                initialValue = id; 
+                isEnabled = id; 
+                isHidden = id; 
+                isLive = id; 
+                maximumValue = id; 
+                minimumValue = id; 
+                numTickMarks = id; 
+                objectNameForInspectorTitle = id; 
+                orientation = id; 
+                targetFrameworkName = id; 
+                targetFrameworkSupportsConnections = id; 
+                titleRect = id; 
+            }; 
+            SUPERCLASS = IBCarbonControl; 
+        }, 
+        {CLASS = IBCarbonStaticText; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {CLASS = IBCarbonTab; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }, 
+        {
+            CLASS = IBCarbonTriangle; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                autoToggle = id; 
+                carbonBounds = id; 
+                collapsed = id; 
+                command = id; 
+                controlHandle = id; 
+                controlID = id; 
+                controlMaximum = id; 
+                controlMinimum = id; 
+                controlName = id; 
+                controlSignature = id; 
+                controlSize = id; 
+                controlTitle = id; 
+                controlValue = id; 
+                drawTitle = id; 
+                enabled = id; 
+                hidden = id; 
+                isCollapsed = id; 
+                isEnabled = id; 
+                isHidden = id; 
+                objectNameForInspectorTitle = id; 
+                orientation = id; 
+                targetFrameworkName = id; 
+                targetFrameworkSupportsConnections = id; 
+                titleRect = id; 
+            }; 
+            SUPERCLASS = IBCarbonControl; 
+        }, 
+        {CLASS = IBCarbonUserPane; LANGUAGE = ObjC; SUPERCLASS = IBCarbonControl; }
+    ); 
+    IBVersion = 1; 
+}

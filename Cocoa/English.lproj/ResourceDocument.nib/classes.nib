@@ -1,0 +1,53 @@
+{
+    IBClasses = (
+        {CLASS = AttributesFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
+        {
+            ACTIONS = {
+                hideCreateResourceSheet = id; 
+                showCreateResourceSheet = id; 
+                typePopupSelection = id; 
+            }; 
+            CLASS = CreateResourceSheetController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                attributesMatrix = id; 
+                cancelButton = id; 
+                createButton = id; 
+                dataSource = id; 
+                nameView = id; 
+                parent = id; 
+                resIDView = id; 
+                typePopup = id; 
+                typeView = id; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NameFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
+        {
+            CLASS = OutlineViewDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                attributesFormatter = id; 
+                nameFormatter = id; 
+                sizeFormatter = id; 
+                window = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = ResourceDataSource; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {createResourceSheetController = id; outlineView = id; window = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = ResourceDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {dataSource = id; outlineView = id; }; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {CLASS = SizeFormatter; LANGUAGE = ObjC; SUPERCLASS = NSNumberFormatter; }
+    ); 
+    IBVersion = 1; 
+}

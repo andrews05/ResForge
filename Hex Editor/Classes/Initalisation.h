@@ -1,0 +1,1 @@
+#include "Hex Editor.h"#ifndef _ResKnife_HexEditor_Initalisation_#define _ResKnife_HexEditor_Initalisation_/*! *	@function		InitGlobals */OSStatus InitGlobals( void );#endif
