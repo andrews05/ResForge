@@ -15,7 +15,7 @@
 #define Use_Nibs	0
 #define	Use_GWorlds	1
 
-// Easire constants
+// Easier constants
 #define RGBColour	RGBColor
 
 // Easier API call names

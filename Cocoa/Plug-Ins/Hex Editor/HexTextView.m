@@ -137,7 +137,7 @@
 	else byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
 	
 	// adjust selection if is insertion point
-	if( byteSelection.length == 0 )
+	if( byteSelection.length == 0 && selection.location > 0 )
 	{
 		byteSelection.location -= 1;
 		byteSelection.length = 1;
@@ -166,7 +166,7 @@
 	else byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
 	
 	// adjust selection if is insertion point
-	if( byteSelection.length == 0 )
+	if( byteSelection.length == 0 && selection.location < [[self string] length] -1 )
 		byteSelection.length = 1;
 	
 	// replace bytes (updates views implicitly)

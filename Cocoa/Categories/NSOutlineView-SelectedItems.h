@@ -3,6 +3,6 @@
 @interface NSOutlineView (SelectedItems)
 
 - (id)selectedItem;
-- (id)selectedItems;
+- (NSArray *)selectedItems;
 
 @end

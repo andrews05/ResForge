@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "ResKnifeResourceProtocol.h"
 
 /* Your plug-in's principle class must implement initWithResource: else it won't be loaded by ResKnife (so neh-neh!), all other methods are optional */
 
@@ -7,7 +8,7 @@
 /*!	@function	initWithResource:
  *	@abstract	Your plug-in is inited with this call. This allows immediate access to the resource you are about to edit, and with this information you can set up different windows, etc.
  */
-- (id)initWithResource:(id)newResource;
-- (id)initWithResources:(id)newResource, ...;
+- (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource;
+- (id)initWithResources:(id <ResKnifeResourceProtocol>)newResource, ...;
 
 @end

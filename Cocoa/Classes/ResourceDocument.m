@@ -266,8 +266,18 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 
 - (void)openResourceUsingEditor:(Resource *)resource
 {
-	// Placeholder, change at some point.
-	[self openResource:resource usingTemplate:[resource type]];
+#warning openResourceUsingEditor: shortcuts to NovaTools !!
+	// opens resource in template using TMPL resource with name templateName
+	NSBundle *editor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"NovaTools.plugin"]];
+	
+	// open the resources, passing in the template to use
+	if( editor /* && [[editor principalClass] respondsToSelector:@selector(initWithResource:)] */ )
+	{
+		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
+		[(id <ResKnifePluginProtocol>)[[editor principalClass] alloc] initWithResource:resource];
+	}
+	// if no editor exists, or the editor is broken, open using template
+	else [self openResource:resource usingTemplate:[resource type]];
 }
 
 - (void)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
@@ -279,7 +289,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	Resource *tmpl = [dataSource resourceNamed:[resource type] ofType:@"TMPL"];
 	
 	// open the resources, passing in the template to use
-	if( tmpl /*&& [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)]*/ )
+	if( tmpl && [[templateEditor principalClass] respondsToSelector:@selector(initWithResources:)] )
 	{
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 		[(id <ResKnifePluginProtocol>)[[templateEditor principalClass] alloc] initWithResources:resource, tmpl, nil];

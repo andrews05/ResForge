@@ -77,8 +77,8 @@
 		[[filePropertyForm cellAtIndex:1] setStringValue:[currentDocument type]];
 //		[[filePropertyForm cellAtIndex:2] setObjectValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
 //		[[filePropertyForm cellAtIndex:3] setObjectValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
-		[[filePropertyForm cellAtIndex:2] setStringValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
-		[[filePropertyForm cellAtIndex:3] setStringValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
+		[[filePropertyForm cellAtIndex:2] setStringValue:[NSString stringWithUnsignedLongLong:dataLogicalSize]];
+		[[filePropertyForm cellAtIndex:3] setStringValue:[NSString stringWithUnsignedLongLong:rsrcLogicalSize]];
 		[placeholderView setContentView:documentView];
 	}
 }
