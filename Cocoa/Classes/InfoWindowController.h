@@ -25,7 +25,7 @@ enum Attributes
 	IBOutlet NSBox			*documentView;
 	
 	IBOutlet NSMatrix 		*attributesMatrix;
-	IBOutlet NSForm			*creatorTypeView;
+	IBOutlet NSForm			*filePropertyForm;
 	
 @private
 	ResourceDocument		*currentDocument;
@@ -36,6 +36,7 @@ enum Attributes
 - (void)setMainWindow:(NSWindow *)mainWindow;
 - (IBAction)attributesChanged:(id)sender;
 - (void)resourceAttributesDidChange:(NSNotification *)notification;
+- (void)documentInfoDidChange:(NSNotification *)notification;
 
 + (id)sharedInfoWindowController;
 

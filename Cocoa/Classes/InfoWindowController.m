@@ -3,6 +3,7 @@
 #import "ResourceDocument.h"
 #import "Resource.h"
 #import "NSOutlineView-SelectedItems.h"
+#import "MoreFilesX.h"
 
 @implementation InfoWindowController
 
@@ -25,8 +26,6 @@
 	
 	// set window to only accept key when editing text boxes
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
-	[[self window] setBackgroundColor:[NSColor clearColor]];
-	[[self window] setOpaque:NO];
 	
 	// retain views for swapping in and out
 	[documentView retain];
@@ -40,7 +39,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mainWindowChanged:) name:NSWindowDidBecomeMainNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedResourceChanged:) name:NSOutlineViewSelectionDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesDidChange:) name:ResourceAttributesDidChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateInfoWindow:) name:DocumentInfoDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentInfoDidChange:) name:DocumentInfoDidChangeNotification object:nil];
 }
 
 - (void)updateInfoWindow
@@ -60,11 +59,26 @@
 	}
 	else
 	{
+		// get sizes of forks as they are on disk
+		UInt64 dataLogicalSize = 0, rsrcLogicalSize = 0;
+		FSRef *fileRef = (FSRef *) NewPtrClear( sizeof(FSRef) );
+		if( fileRef && [currentDocument fileName] )
+		{
+			OSStatus error = FSPathMakeRef( [[currentDocument fileName] cString], fileRef, nil );
+			if( !error ) FSGetForkSizes( fileRef, &dataLogicalSize, &rsrcLogicalSize );
+		}
+		if( fileRef ) DisposePtr( (Ptr) fileRef );
+		
+		// set info window elements to correct values
 		[[self window] setTitle:@"Document Info"];
 		[iconView setImage:[NSImage imageNamed:@"Resource file"]];
 		[nameView setStringValue:[currentDocument fileName]? [[currentDocument fileName] lastPathComponent]:[currentDocument displayName]];
-		[[creatorTypeView cellAtIndex:0] setStringValue:[currentDocument creator]];
-		[[creatorTypeView cellAtIndex:1] setStringValue:[currentDocument type]];
+		[[filePropertyForm cellAtIndex:0] setStringValue:[currentDocument creator]];
+		[[filePropertyForm cellAtIndex:1] setStringValue:[currentDocument type]];
+//		[[filePropertyForm cellAtIndex:2] setObjectValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
+//		[[filePropertyForm cellAtIndex:3] setObjectValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
+		[[filePropertyForm cellAtIndex:2] setStringValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
+		[[filePropertyForm cellAtIndex:3] setStringValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
 		[placeholderView setContentView:documentView];
 	}
 }
@@ -89,6 +103,12 @@
 - (void)selectedResourceChanged:(NSNotification *)notification
 {
 	selectedResource = [[notification object] selectedItem];
+	[self updateInfoWindow];
+}
+
+- (void)documentInfoDidChange:(NSNotification *)notification
+{
+#pragma unused( notification )
 	[self updateInfoWindow];
 }
 
