@@ -218,7 +218,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	
 	if( [identifier isEqualToString:RKCreateItemIdentifier] )				valid = YES;
 	else if( [identifier isEqualToString:RKDeleteItemIdentifier] )			valid = selectedRows > 0;
-	else if( [identifier isEqualToString:RKEditItemIdentifier] )			valid = selectedRows == 1;
+	else if( [identifier isEqualToString:RKEditItemIdentifier] )			valid = selectedRows > 0;
 	else if( [identifier isEqualToString:RKEditHexItemIdentifier] )			valid = selectedRows > 0;
 	else if( [identifier isEqualToString:RKSaveItemIdentifier] )			valid = [self isDocumentEdited];
 	else if( [identifier isEqualToString:NSToolbarPrintItemIdentifier] )	valid = YES;
@@ -275,7 +275,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	// opens resource in template using TMPL resource with name templateName
 	NSBundle *templateEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Template Editor.plugin"]];
 	
-	// nug: this only checks the CURRENT DOCUMENT for template resources
+	// bug: this only checks the CURRENT DOCUMENT for template resources
 	Resource *tmpl = [dataSource resourceNamed:[resource type] ofType:@"TMPL"];
 	
 	// open the resources, passing in the template to use
@@ -356,20 +356,12 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 {
 	NSNumber *row;
 	Resource *resource;
-	NSMutableArray *selectedObjects = [NSMutableArray array];
-	NSEnumerator *enumerator = [outlineView selectedRowEnumerator];
-	int selectedRows = [outlineView numberOfSelectedRows];
-	
-	// obtain array of selected resources
-	[[self undoManager] beginUndoGrouping];
-	while( row = [enumerator nextObject] )
-	{
-		[selectedObjects addObject:[outlineView itemAtRow:[row intValue]]];
-	}
+	NSEnumerator *enumerator;
+	NSArray *selectedItems = [outlineView selectedItems];
 	
 	// enumerate through array and delete resources
-	//	i can't just delete resources above, because it screws with the enumeration!
-	enumerator = [selectedObjects reverseObjectEnumerator];		// reverse so an undo will replace items in original order
+	[[self undoManager] beginUndoGrouping];
+	enumerator = [selectedItems reverseObjectEnumerator];		// reverse so an undo will replace items in original order
 	while( resource = [enumerator nextObject] )
 	{
 		[dataSource removeResource:resource];
@@ -380,7 +372,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 	[[self undoManager] endUndoGrouping];
 	
 	// generalise undo name if more than one was deleted
-	if( selectedRows > 1 )
+	if( [outlineView numberOfSelectedRows] > 1 )
 		[[self undoManager] setActionName:NSLocalizedString(@"Delete Resources", nil)];
 	
 	// deselct resources (otherwise other resources move into selected rows!)
