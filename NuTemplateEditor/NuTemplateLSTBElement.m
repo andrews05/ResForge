@@ -55,4 +55,11 @@
 }
 
 
+-(NSString*)	stringValue
+{
+	return @"";
+}
+
+
+
 @end

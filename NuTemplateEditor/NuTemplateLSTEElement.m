@@ -48,6 +48,10 @@
 }
 
 
+-(NSString*)	stringValue
+{
+	return @"";
+}
 
 
 
