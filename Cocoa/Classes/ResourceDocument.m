@@ -1,5 +1,7 @@
 #import "ResourceDocument.h"
 #import "Resource.h"
+#import "ResourceNameCell.h"
+#import "CreateResourceSheetController.h"
 
 @implementation ResourceDocument
 
@@ -20,6 +22,7 @@
 }
 
 /* WINDOW DELEGATION */
+#pragma mark -
 
 - (NSString *)windowNibName
 {
@@ -30,16 +33,22 @@
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)controller
 {
-    [super windowControllerDidLoadNib:controller];
-    // Add any code here that need to be executed once the windowController has loaded the document's window.
+	[super windowControllerDidLoadNib:controller];
 	[self setupToolbar:controller];
+	
+	{	// set up first column in outline view to display images as well as text
+		ResourceNameCell *resourceNameCell = [[[ResourceNameCell alloc] init] autorelease];
+		[resourceNameCell setEditable:YES];
+		[[outlineView tableColumnWithIdentifier:@"name"] setDataCell:resourceNameCell];
+	}
+	
 //	[controller setDocumet:self];
 	[dataSource setResources:resources];
 }
 
 - (BOOL)keepBackupFile
 {
-	return NO;		// return whatever the user preference is for this! (NSDefaults)
+	return [[NSUserDefaults standardUserDefaults] boolForKey:@"PreserveBackups"];
 }
 
 - (BOOL)windowShouldClose:(NSWindow *)sender
@@ -69,9 +78,15 @@
 }
 
 /* TOOLBAR MANAGMENT */
+#pragma mark -
 
 static NSString *RKToolbarIdentifier = @"com.nickshanks.resknife.toolbar";
+static NSString *RKCreateItemIdentifier = @"com.nickshanks.resknife.toolbar.create";
+static NSString *RKDeleteItemIdentifier = @"com.nickshanks.resknife.toolbar.delete";
+static NSString *RKEditItemIdentifier = @"com.nickshanks.resknife.toolbar.edit";
+static NSString *RKEditHexItemIdentifier = @"com.nickshanks.resknife.toolbar.edithex";
 static NSString *RKSaveItemIdentifier = @"com.nickshanks.resknife.toolbar.save";
+static NSString *RKShowInfoItemIdentifier = @"com.nickshanks.resknife.toolbar.showinfo";
 
 - (void)setupToolbar:(NSWindowController *)controller
 {
@@ -92,35 +107,71 @@ static NSString *RKSaveItemIdentifier = @"com.nickshanks.resknife.toolbar.save";
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
-	if( [itemIdentifier isEqual:RKSaveItemIdentifier] )
+	NSToolbarItem *item = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+	
+	if( [itemIdentifier isEqual:RKCreateItemIdentifier] )
 	{
-		NSToolbarItem *item = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+		[item setLabel:@"Create"];
+		[item setPaletteLabel:@"Create"];
+		[item setToolTip:@"Create New Resource"];
+		[item setImage:[NSImage imageNamed:@"Create"]];
+		[item setTarget:self];
+		[item setAction:@selector(showCreateResourceSheet:)];
+		return item;
+	}
+	else if( [itemIdentifier isEqual:RKDeleteItemIdentifier] )
+	{
+		[item setLabel:@"Delete"];
+		[item setPaletteLabel:@"Delete"];
+		[item setToolTip:@"Delete Selected Resource"];
+		[item setImage:[NSImage imageNamed:@"Delete"]];
+		[item setTarget:self];
+		[item setAction:@selector(clear:)];
+		return item;
+	}
+	else if( [itemIdentifier isEqual:RKEditItemIdentifier] )
+	{
+		[item setLabel:@"Edit"];
+		[item setPaletteLabel:@"Edit"];
+		[item setToolTip:@"Edit Resource In Default Editor"];
+		[item setImage:[NSImage imageNamed:@"Edit"]];
+		[item setTarget:self];
+		[item setAction:@selector(openResource:)];
+		return item;
+	}
+	else if( [itemIdentifier isEqual:RKEditHexItemIdentifier] )
+	{
+		[item setLabel:@"Edit Hex"];
+		[item setPaletteLabel:@"Edit Hex"];
+		[item setToolTip:@"Edit Resource As Hexadecimal"];
+		[item setImage:[NSImage imageNamed:@"Edit Hex"]];
+		[item setTarget:self];
+		[item setAction:@selector(openResourceAsHex:)];
+		return item;
+	}
+	else if( [itemIdentifier isEqual:RKSaveItemIdentifier] )
+	{
 		[item setLabel:@"Save"];
 		[item setPaletteLabel:@"Save"];
-		[item setToolTip:[NSString stringWithFormat:@"Save To %@ Fork", saveToDataFork? @"Data":@"Resource"]];
+		[item setToolTip:[NSString stringWithFormat:@"Save To %@ Fork", !otherFork? @"Data":@"Resource"]];
 		[item setImage:[NSImage imageNamed:@"Save"]];
 		[item setTarget:self];
 		[item setAction:@selector(saveDocument:)];
 		return item;
 	}
+	else if( [itemIdentifier isEqual:RKShowInfoItemIdentifier] )
+	{
+		[item setLabel:@"Show Info"];
+		[item setPaletteLabel:@"Show Info"];
+		[item setToolTip:@"Show Resource Information Window"];
+		[item setImage:[NSImage imageNamed:@"Show Info"]];
+		[item setTarget:[NSApp delegate]];
+		[item setAction:@selector(showInfo:)];
+		return item;
+	}
 	else return nil;
-/*    // Required delegate method   Given an item identifier, self method returns an item 
-    // The toolbar will use self method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself 
-    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
-    
-    if ([itemIdent isEqual: SaveDocToolbarItemIdentifier]) {
-	// Set the text label to be displayed in the toolbar and customization palette 
-	[toolbarItem setLabel: @"Save"];
-	[toolbarItem setPaletteLabel: @"Save"];
-	
-	// Set up a reasonable tooltip, and image   Note, these aren't localized, but you will likely want to localize many of the item's properties 
-	[toolbarItem setToolTip: @"Save Your Document"];
-	[toolbarItem setImage: [NSImage imageNamed: @"SaveDocumentItemImage"]];
-	
-	// Tell the item what message to send when it is clicked 
-	[toolbarItem setTarget: self];
-	[toolbarItem setAction: @selector(saveDocument:)];
-    } else if([itemIdent isEqual: SearchDocToolbarItemIdentifier]) {
+
+/*	if([itemIdent isEqual: SearchDocToolbarItemIdentifier]) {
 	NSMenu *submenu = nil;
 	NSMenuItem *submenuItem = nil, *menuFormRep = nil;
 	
@@ -150,18 +201,34 @@ static NSString *RKSaveItemIdentifier = @"com.nickshanks.resknife.toolbar.save";
 	// Returning nil will inform the toolbar self kind of item is not supported 
 	toolbarItem = nil;
     }
-    return toolbarItem;*/
+    return toolbarItem;	*/
 }
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObjects:RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, nil];
+    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, NSToolbarSeparatorItemIdentifier, RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, nil];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObjects:RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
+    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKDeleteItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, RKSaveItemIdentifier, RKShowInfoItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
 }
+
+- (BOOL)validateToolbarItem:(NSToolbarItem *)item
+{
+	BOOL valid = NO;
+	NSString *identifier = [item itemIdentifier];
+	
+	if( [identifier isEqual:RKCreateItemIdentifier] )				valid = YES;
+	else if( [identifier isEqual:RKDeleteItemIdentifier] )			valid = [outlineView numberOfSelectedRows]? YES:NO;
+	else if( [identifier isEqual:RKEditItemIdentifier] )			valid = NO;
+	else if( [identifier isEqual:RKEditHexItemIdentifier] )			valid = [outlineView numberOfSelectedRows]? YES:NO;
+	else if( [identifier isEqual:RKSaveItemIdentifier] )			valid = [self isDocumentEdited];
+	else if( [identifier isEqual:NSToolbarPrintItemIdentifier] )	valid = YES;
+	
+	return valid;
+}
+
 /*
 - (void) toolbarWillAddItem: (NSNotification *) notif {
     // Optional delegate method   Before an new item is added to the toolbar, self notification is posted   
@@ -191,21 +258,41 @@ static NSString *RKSaveItemIdentifier = @"com.nickshanks.resknife.toolbar.save";
 	activeSearchItem = nil;    
     }
 }
+*/
 
-- (BOOL) validateToolbarItem: (NSToolbarItem *) toolbarItem {
-    // Optional method   self message is sent to us since we are the target of some toolbar item actions 
-    // (for example:  of the save items action) 
-    BOOL enable = NO;
-    if ([[toolbarItem itemIdentifier] isEqual: SaveDocToolbarItemIdentifier]) {
-	// We will return YES (ie  the button is enabled) only when the document is dirty and needs saving 
-	enable = [self isDocumentEdited];
-    } else if ([[toolbarItem itemIdentifier] isEqual: NSToolbarPrintItemIdentifier]) {
-	enable = YES;
-    }	
-    return enable;
-}*/
+/* DOCUMENT MANAGEMENT */
+#pragma mark -
+
+- (IBAction)showCreateResourceSheet:(id)sender
+{
+	[[dataSource createResourceSheetController] showCreateResourceSheet:self];
+}
+
+- (IBAction)openResource:(id)sender
+{
+	if( NO );
+	else [self openResourceAsHex:sender];
+}
+
+- (IBAction)openResourceAsHex:(id)sender
+{
+	// bug: only opens the hex editor!
+//	NSBundle *hexEditor = [NSBundle bundleWithIdentifier:@"com.nickshanks.resknife.hexadecimal"];
+//	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
+	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Hexadecimal Editor.bundle"]];
+//	[hexEditor load];
+	
+	Resource *resource = [outlineView itemAtRow:[outlineView selectedRow]];
+	// bug: I alloc a plug instance here, but have no idea where it gets dealloc'd
+	[[[hexEditor principalClass] alloc] initWithResource:resource];
+}
+
+- (IBAction)playSound:(id)sender
+{
+}
 
 /* FILE HANDLING */
+#pragma mark -
 
 - (BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)type
 {
@@ -377,6 +464,7 @@ static NSString *RKSaveItemIdentifier = @"com.nickshanks.resknife.toolbar.save";
 }
 
 /* ACCESSORS */
+#pragma mark -
 
 - (NSOutlineView *)outlineView
 {

@@ -42,9 +42,10 @@
             SUPERCLASS = NSObject; 
         }, 
         {
+            ACTIONS = {showCreateResourceSheet = id; }; 
             CLASS = ResourceDocument; 
             LANGUAGE = ObjC; 
-            OUTLETS = {dataSource = id; outlineView = id; }; 
+            OUTLETS = {dataSource = ResourceDataSource; outlineView = NSOutlineView; }; 
             SUPERCLASS = NSDocument; 
         }, 
         {CLASS = SizeFormatter; LANGUAGE = ObjC; SUPERCLASS = NSNumberFormatter; }

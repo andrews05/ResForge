@@ -1,5 +1,7 @@
 #import "HexEditorDelegate.h"
 
+/* Ideas, method names, and occasionally code stolen from HexEditor by Raphael Sebbe http://raphaelsebbe.multimania.com/ */
+
 @implementation HexEditorDelegate
 
 /* data re-representation methods */

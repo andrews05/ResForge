@@ -63,8 +63,85 @@
 			path = Save.tiff;
 			refType = 4;
 		};
-		F577A8F40211CFA801A80001 = {
+		F577A8F50211D05E01A80001 = {
 			fileRef = F577A8F30211CFA701A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F577A8F80211DC1E01A80001 = {
+			isa = PBXFileReference;
+			path = "Show Info.tiff";
+			refType = 4;
+		};
+		F577A8F90211DC1E01A80001 = {
+			fileRef = F577A8F80211DC1E01A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F577A8FA0211E4D401A80001 = {
+			isa = PBXFileReference;
+			path = Create.tiff;
+			refType = 4;
+		};
+		F577A8FB0211E4D401A80001 = {
+			isa = PBXFileReference;
+			path = Edit.tiff;
+			refType = 4;
+		};
+		F577A8FC0211E4D401A80001 = {
+			isa = PBXFileReference;
+			path = "Edit Hex.tiff";
+			refType = 4;
+		};
+		F577A8FD0211E4D401A80001 = {
+			fileRef = F577A8FA0211E4D401A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F577A8FE0211E4D401A80001 = {
+			fileRef = F577A8FB0211E4D401A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F577A8FF0211E4D401A80001 = {
+			fileRef = F577A8FC0211E4D401A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F577A900021215C801A80001 = {
+			isa = PBXFileReference;
+			path = ResourceNameCell.h;
+			refType = 4;
+		};
+		F577A901021215C801A80001 = {
+			isa = PBXFileReference;
+			path = ResourceNameCell.m;
+			refType = 4;
+		};
+		F577A902021215C901A80001 = {
+			fileRef = F577A900021215C801A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F577A903021215C901A80001 = {
+			fileRef = F577A901021215C801A80001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F577A904021220D601A80001 = {
+			isa = PBXFileReference;
+			path = Delete.tiff;
+			refType = 4;
+		};
+		F577A905021220D601A80001 = {
+			fileRef = F577A904021220D601A80001;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -161,7 +238,6 @@
 			files = (
 				F5EF83AF020C08E601A80001,
 				F5EF83C9020C20D801A80001,
-				F577A8F40211CFA801A80001,
 			);
 			isa = PBXResourcesBuildPhase;
 			name = "Bundle Resources";
@@ -357,6 +433,7 @@
 				F53B5F3001C97EFB01A8010C,
 				F53B5F3101C97EFB01A8010C,
 				F5CDEBAC01FC893201A80001,
+				F577A902021215C901A80001,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -377,6 +454,12 @@
 				F5B588640156D40B01000001,
 				F5730B940159528A01000001,
 				F5502C3401C5588601C57124,
+				F577A8F50211D05E01A80001,
+				F577A8F90211DC1E01A80001,
+				F577A8FD0211E4D401A80001,
+				F577A8FE0211E4D401A80001,
+				F577A8FF0211E4D401A80001,
+				F577A905021220D601A80001,
 			);
 			isa = PBXResourcesBuildPhase;
 			name = "Bundle Resources";
@@ -397,6 +480,7 @@
 				F5B5886F0156D40B01000001,
 				F5B588700156D40B01000001,
 				F5B588710156D40B01000001,
+				F577A903021215C901A80001,
 			);
 			isa = PBXSourcesBuildPhase;
 			name = Sources;
@@ -453,6 +537,8 @@
 				F5B5882C0156D40B01000001,
 				F5B5882D0156D40B01000001,
 				F5B5882E0156D40B01000001,
+				F577A900021215C801A80001,
+				F577A901021215C801A80001,
 				F5B5882F0156D40B01000001,
 				F5B588300156D40B01000001,
 				F5B588310156D40B01000001,
@@ -598,7 +684,12 @@
 				F5B588460156D40B01000001,
 				F5B588470156D40B01000001,
 				F5B588480156D40B01000001,
+				F577A8FA0211E4D401A80001,
+				F577A904021220D601A80001,
+				F577A8FB0211E4D401A80001,
+				F577A8FC0211E4D401A80001,
 				F577A8F30211CFA701A80001,
+				F577A8F80211DC1E01A80001,
 			);
 			isa = PBXGroup;
 			path = Resources;

@@ -14,6 +14,11 @@
 
 - (void)setupToolbar:(NSWindowController *)controller;
 
+- (IBAction)showCreateResourceSheet:(id)sender;
+- (IBAction)openResource:(id)sender;
+- (IBAction)openResourceAsHex:(id)sender;
+- (IBAction)playSound:(id)sender;
+
 - (BOOL)readResourceMap:(SInt16)fileRefNum;
 - (BOOL)writeResourceMap:(SInt16)fileRefNum;
 

@@ -40,32 +40,14 @@
 {
 	[[PrefsWindowController sharedPrefsWindowController] showWindow:sender];
 }
-
+/*
 - (IBAction)showCreateResourceSheet:(id)sender
 {
 	// requires ALL main windows' controllers (even plugs) to have their document set correctly
 	NSDocument *document = [[[NSApp mainWindow] windowController] document];
-	return [[[(ResourceDocument *)document dataSource] createResourceSheetController] showCreateResourceSheet:document];
+	return [[[(ResourceDocument *)document showCreateResourceSheet:sender];
 }
-
-- (IBAction)openResource:(id)sender
-{
-	// bug: only opens the hex editor!
-//	NSBundle *hexEditor = [NSBundle bundleWithIdentifier:@"com.nickshanks.resknife.hexadecimal"];
-//	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] builtInPlugInsPath] stringByAppendingPathComponent:@"Hexadecimal Editor.plugin"]];
-	NSBundle *hexEditor = [NSBundle bundleWithPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Hexadecimal Editor.bundle"]];
-//	[hexEditor load];
-	
-	// bug: possible lack of necessary retains here, esp. resource - should the plug retain it?
-	ResourceDocument *resDocument = (ResourceDocument *) [[[NSApp mainWindow] windowController] document];
-	Resource *resource = [[resDocument outlineView] itemAtRow:[[resDocument outlineView] selectedRow]];
-	// bug: I alloc a plug instance here, but have no idea where it gets dealloc'd
-	id hexWindow = [[[hexEditor principalClass] alloc] initWithResource:resource];
-}
-
-- (IBAction)playSound:(id)sender
-{
-}
+*/
 
 - (void)initUserDefaults
 {

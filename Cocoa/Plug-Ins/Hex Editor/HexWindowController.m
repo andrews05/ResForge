@@ -19,7 +19,7 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 	if( self ) [self setWindowFrameAutosaveName:@"Hexadecimal Editor"];
 	
 	// one instance of your principal class will be created for every resource the user wants to edit (similar to Windows apps)
-	resource = newResource;
+	resource = [newResource retain];
 	
 	// load the window
 //	[self setShouldCascadeWindows:YES];
@@ -30,6 +30,7 @@ NSString *ResourceChangedNotification = @"ResourceChangedNotification";
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[resource autorelease];
 	[super dealloc];
 }
 
