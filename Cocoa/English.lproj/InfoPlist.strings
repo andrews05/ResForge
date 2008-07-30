@@ -1,6 +1,6 @@
 /* Localized versions of Info.plist keys */
 
 CFBundleName = "ResKnife";
-CFBundleShortVersionString = "Development Version";
-CFBundleGetInfoString = "ResKnife 0.4d3, Copyright 2001-2 Nicholas Shanks.";
-NSHumanReadableCopyright = "Copyright © 2001-2 Nicholas Shanks.";
+CFBundleShortVersionString = "0.6 beta 4";
+CFBundleGetInfoString = "0.6 beta 4\r© 2001-8 Nicholas Shanks.";
+NSHumanReadableCopyright = "© 2001-8 Nicholas Shanks.";

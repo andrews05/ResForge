@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>rsrc</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Resource file.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Resource file</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>rsrc</string>
+				<string>RSRC</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>icns</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Icon file.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Icon file</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>icns</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>ResKnife Carbon</string>
+	<key>CFBundleGetInfoString</key>
+	<string>A resource editor for Mac OS X</string>
+	<key>CFBundleIconFile</key>
+	<string>ResKnife.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.nickshanks.resknife</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>ResKnife</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>Development version 0.4d3</string>
+	<key>CFBundleSignature</key>
+	<string>ResK</string>
+	<key>CFBundleVersion</key>
+	<string>0.4d3</string>
+</dict>
+</plist>

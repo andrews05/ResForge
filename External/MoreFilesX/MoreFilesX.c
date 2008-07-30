@@ -2133,6 +2133,9 @@ BadParameter:
 
 /*****************************************************************************/
 
+#if 0
+/* These methods were added in 10.4, and are not used by ResKnife, so we just comment them out to avoid errors */
+
 OSErr
 FSLockRange(
 	SInt16 refNum,
@@ -2176,6 +2179,8 @@ PBUnlockRangeSync:
 
 	return ( result );
 }
+
+#endif
 
 /*****************************************************************************/
 
@@ -2315,6 +2320,9 @@ BadParameter:
 
 /*****************************************************************************/
 
+#if 0
+/* This method was added in 10.4, and is not used by ResKnife, so we just comment it out to avoid errors */
+
 OSErr
 FSVolumeMount(
 	const void *volMountInfo,
@@ -2338,6 +2346,8 @@ BadParameter:
 
 	return ( result );
 }
+
+#endif
 
 /*****************************************************************************/
 

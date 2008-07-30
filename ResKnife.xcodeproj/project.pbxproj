@@ -1,0 +1,3105 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E1B2A3EA0E41103700A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
+		E1B2A3EB0E41103700A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
+		E1B2A3EC0E41103700A72928 /* ApplicationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5881D0156D40B01000001 /* ApplicationDelegate.h */; };
+		E1B2A3ED0E41103700A72928 /* AttributesFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5881F0156D40B01000001 /* AttributesFormatter.h */; };
+		E1B2A3EE0E41103700A72928 /* CreateResourceSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588210156D40B01000001 /* CreateResourceSheetController.h */; };
+		E1B2A3EF0E41103700A72928 /* InfoWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588250156D40B01000001 /* InfoWindowController.h */; };
+		E1B2A3F00E41103700A72928 /* NameFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588270156D40B01000001 /* NameFormatter.h */; };
+		E1B2A3F10E41103700A72928 /* OutlineViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588290156D40B01000001 /* OutlineViewDelegate.h */; };
+		E1B2A3F20E41103700A72928 /* PrefsWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882B0156D40B01000001 /* PrefsWindowController.h */; };
+		E1B2A3F30E41103700A72928 /* Resource.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882D0156D40B01000001 /* Resource.h */; };
+		E1B2A3F40E41103700A72928 /* ResourceDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882F0156D40B01000001 /* ResourceDataSource.h */; };
+		E1B2A3F50E41103700A72928 /* ResourceDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588310156D40B01000001 /* ResourceDocument.h */; };
+		E1B2A3F60E41103700A72928 /* ResourceNameCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F577A900021215C801A80001 /* ResourceNameCell.h */; };
+		E1B2A3F70E41103700A72928 /* SizeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588330156D40B01000001 /* SizeFormatter.h */; };
+		E1B2A3F80E41103700A72928 /* NSOutlineView-SelectedItems.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */; };
+		E1B2A3F90E41103700A72928 /* MoreFilesX.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DF1BF10254AD8801A80001 /* MoreFilesX.h */; };
+		E1B2A3FA0E41103700A72928 /* NSString-FSSpec.h in Headers */ = {isa = PBXBuildFile; fileRef = F59D5DE40320DFF601A8010C /* NSString-FSSpec.h */; };
+		E1B2A3FB0E41103700A72928 /* PasteboardDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071603CCC61E01A8010A /* PasteboardDocument.h */; };
+		E1B2A3FC0E41103700A72928 /* PasteboardWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */; };
+		E1B2A3FD0E41103700A72928 /* RKDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = F59481AD03D0776C01A8010A /* RKDocumentController.h */; };
+		E1B2A3FE0E41103700A72928 /* OpenFileDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F59481B103D077DC01A8010A /* OpenFileDataSource.h */; };
+		E1B2A3FF0E41103700A72928 /* RKEditorRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */; };
+		E1B2A4000E41103700A72928 /* RKSupportResourceRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */; };
+		E1B2A4020E41103700A72928 /* AboutPanel.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B588360156D40B01000001 /* AboutPanel.nib */; };
+		E1B2A4030E41103700A72928 /* Application.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B588380156D40B01000001 /* Application.nib */; };
+		E1B2A4040E41103700A72928 /* InfoWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B5883A0156D40B01000001 /* InfoWindow.nib */; };
+		E1B2A4050E41103700A72928 /* PrefsWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B5883E0156D40B01000001 /* PrefsWindow.nib */; };
+		E1B2A4060E41103700A72928 /* ResourceDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B588400156D40B01000001 /* ResourceDocument.nib */; };
+		E1B2A4070E41103700A72928 /* CreateResourceSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = F54E622B021D192201A80001 /* CreateResourceSheet.nib */; };
+		E1B2A4080E41103700A72928 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588420156D40B01000001 /* InfoPlist.strings */; };
+		E1B2A4090E41103700A72928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588440156D40B01000001 /* Localizable.strings */; };
+		E1B2A40A0E41103700A72928 /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5730B930159528A01000001 /* defaults.plist */; };
+		E1B2A40B0E41103700A72928 /* ResKnife.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5B588460156D40B01000001 /* ResKnife.icns */; };
+		E1B2A40C0E41103700A72928 /* Resource file.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5B588470156D40B01000001 /* Resource file.icns */; };
+		E1B2A40D0E41103700A72928 /* Icon file.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5B588480156D40B01000001 /* Icon file.icns */; };
+		E1B2A40E0E41103700A72928 /* Create.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FA0211E4D401A80001 /* Create.tiff */; };
+		E1B2A40F0E41103700A72928 /* Delete.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A904021220D601A80001 /* Delete.tiff */; };
+		E1B2A4100E41103700A72928 /* Edit.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FB0211E4D401A80001 /* Edit.tiff */; };
+		E1B2A4110E41103700A72928 /* Edit Hex.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FC0211E4D401A80001 /* Edit Hex.tiff */; };
+		E1B2A4120E41103700A72928 /* Save.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8F30211CFA701A80001 /* Save.tiff */; };
+		E1B2A4130E41103700A72928 /* Show Info.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8F80211DC1E01A80001 /* Show Info.tiff */; };
+		E1B2A4140E41103700A72928 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
+		E1B2A4150E41103700A72928 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
+		E1B2A4160E41103700A72928 /* Export.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3D35756004DAEB7F00B8225B /* Export.tiff */; };
+		E1B2A41D0E41103700A72928 /* ApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5881E0156D40B01000001 /* ApplicationDelegate.m */; };
+		E1B2A41E0E41103700A72928 /* AttributesFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588200156D40B01000001 /* AttributesFormatter.m */; };
+		E1B2A41F0E41103700A72928 /* CreateResourceSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588220156D40B01000001 /* CreateResourceSheetController.m */; };
+		E1B2A4200E41103700A72928 /* InfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588260156D40B01000001 /* InfoWindowController.m */; };
+		E1B2A4210E41103700A72928 /* NameFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588280156D40B01000001 /* NameFormatter.m */; };
+		E1B2A4220E41103700A72928 /* OutlineViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */; };
+		E1B2A4230E41103700A72928 /* PrefsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882C0156D40B01000001 /* PrefsWindowController.m */; };
+		E1B2A4240E41103700A72928 /* Resource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882E0156D40B01000001 /* Resource.m */; };
+		E1B2A4250E41103700A72928 /* ResourceDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588300156D40B01000001 /* ResourceDataSource.m */; };
+		E1B2A4260E41103700A72928 /* ResourceDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588320156D40B01000001 /* ResourceDocument.m */; };
+		E1B2A4270E41103700A72928 /* ResourceNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F577A901021215C801A80001 /* ResourceNameCell.m */; };
+		E1B2A4280E41103700A72928 /* SizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588340156D40B01000001 /* SizeFormatter.m */; };
+		E1B2A4290E41103700A72928 /* NSOutlineView-SelectedItems.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */; };
+		E1B2A42A0E41103700A72928 /* MoreFilesX.c in Sources */ = {isa = PBXBuildFile; fileRef = F5DF1BF00254AD8801A80001 /* MoreFilesX.c */; };
+		E1B2A42B0E41103700A72928 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
+		E1B2A42C0E41103700A72928 /* NSString-FSSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = F59D5DE50320DFF601A8010C /* NSString-FSSpec.m */; };
+		E1B2A42D0E41103700A72928 /* PasteboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071703CCC61E01A8010A /* PasteboardDocument.m */; };
+		E1B2A42E0E41103700A72928 /* PasteboardWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071B03CCFAAC01A8010A /* PasteboardWindowController.m */; };
+		E1B2A42F0E41103700A72928 /* RKDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F59481AE03D0776C01A8010A /* RKDocumentController.m */; };
+		E1B2A4300E41103700A72928 /* OpenFileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F59481B203D077DC01A8010A /* OpenFileDataSource.m */; };
+		E1B2A4310E41103700A72928 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755A04DAEB4300B8225B /* main.m */; };
+		E1B2A4320E41103700A72928 /* RKEditorRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */; };
+		E1B2A4330E41103700A72928 /* RKSupportResourceRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */; };
+		E1B2A4350E41103700A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		E1B2A4360E41103700A72928 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
+		E1B2A4400E41103800A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
+		E1B2A4410E41103800A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
+		E1B2A4420E41103800A72928 /* HexEditorDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A0020C08E601A80001 /* HexEditorDelegate.h */; };
+		E1B2A4430E41103800A72928 /* HexTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A2020C08E601A80001 /* HexTextView.h */; };
+		E1B2A4440E41103800A72928 /* HexWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A7020C08E601A80001 /* HexWindowController.h */; };
+		E1B2A4450E41103800A72928 /* FindSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = F54E6220021B6A0801A80001 /* FindSheetController.h */; };
+		E1B2A4470E41103800A72928 /* HexWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EF83C7020C20D701A80001 /* HexWindow.nib */; };
+		E1B2A4480E41103800A72928 /* FindSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = F54E6222021B6A0801A80001 /* FindSheet.nib */; };
+		E1B2A4490E41103800A72928 /* PasteMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5606FDD02ACF2F701A8010C /* PasteMenu.nib */; };
+		E1B2A44B0E41103800A72928 /* HexEditorDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A1020C08E601A80001 /* HexEditorDelegate.m */; };
+		E1B2A44C0E41103800A72928 /* HexTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A3020C08E601A80001 /* HexTextView.m */; };
+		E1B2A44D0E41103800A72928 /* HexWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A8020C08E601A80001 /* HexWindowController.m */; };
+		E1B2A44E0E41103800A72928 /* FindSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54E6221021B6A0801A80001 /* FindSheetController.m */; };
+		E1B2A44F0E41103800A72928 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
+		E1B2A4510E41103800A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		E1B2A45A0E41103800A72928 /* TemplateWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F535443E0226752901A80001 /* TemplateWindowController.h */; };
+		E1B2A45B0E41103800A72928 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = F535444D0226B5F501A80001 /* Element.h */; };
+		E1B2A45D0E41103800A72928 /* TemplateWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5D0CBD302278F8B01A80001 /* TemplateWindow.nib */; };
+		E1B2A45F0E41103800A72928 /* TemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F535443F0226752901A80001 /* TemplateWindowController.m */; };
+		E1B2A4600E41103800A72928 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = F535444E0226B5F501A80001 /* Element.m */; };
+		E1B2A4610E41103800A72928 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
+		E1B2A4630E41103800A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		E1B2A46C0E41103800A72928 /* HostCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588920156D6D901000001 /* HostCallbacks.h */; };
+		E1B2A46D0E41103800A72928 /* BoomWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B7E025BC3A501A8010C /* BoomWindowController.h */; };
+		E1B2A46E0E41103800A72928 /* NovaWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B82025BC73001A8010C /* NovaWindowController.h */; };
+		E1B2A46F0E41103800A72928 /* CharWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B86025BC76D01A8010C /* CharWindowController.h */; };
+		E1B2A4700E41103800A72928 /* ColrWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B8A025BC7C001A8010C /* ColrWindowController.h */; };
+		E1B2A4710E41103800A72928 /* CronWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B8E025BCF5901A8010C /* CronWindowController.h */; };
+		E1B2A4720E41103800A72928 /* DescWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B93025BD97701A8010C /* DescWindowController.h */; };
+		E1B2A4730E41103800A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
+		E1B2A4740E41103800A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
+		E1B2A4750E41103800A72928 /* DescSplitViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F58A18410278355D01A8010C /* DescSplitViewDelegate.h */; };
+		E1B2A4760E41103800A72928 /* DataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F543AFDB027B2A5001A8010C /* DataSource.h */; };
+		E1B2A4770E41103800A72928 /* Structs.h in Headers */ = {isa = PBXBuildFile; fileRef = F5C9ECD8027F562201A8010C /* Structs.h */; };
+		E1B2A4780E41103800A72928 /* NSNumber-Range.h in Headers */ = {isa = PBXBuildFile; fileRef = F59D5DE8032106D201A8010C /* NSNumber-Range.h */; };
+		E1B2A47A0E41103800A72928 /* NovaTools.nib in Resources */ = {isa = PBXBuildFile; fileRef = F58F6BA9025BDBA701A8010C /* NovaTools.nib */; };
+		E1B2A47B0E41103800A72928 /* boom.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC612025BFB7301A8010C /* boom.nib */; };
+		E1B2A47C0E41103800A72928 /* char.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC615025BFB7C01A8010C /* char.nib */; };
+		E1B2A47D0E41103800A72928 /* colr.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC618025BFB8601A8010C /* colr.nib */; };
+		E1B2A47E0E41103800A72928 /* cron.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC61B025BFB8E01A8010C /* cron.nib */; };
+		E1B2A47F0E41103800A72928 /* desc.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC61E025BFBB501A8010C /* desc.nib */; };
+		E1B2A4800E41103800A72928 /* Resource Types.strings in Resources */ = {isa = PBXBuildFile; fileRef = F543AFEF027C716E01A8010C /* Resource Types.strings */; };
+		E1B2A4820E41103800A72928 /* BoomWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B7F025BC3A501A8010C /* BoomWindowController.m */; };
+		E1B2A4830E41103800A72928 /* NovaWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B83025BC73001A8010C /* NovaWindowController.m */; };
+		E1B2A4840E41103800A72928 /* CharWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B87025BC76D01A8010C /* CharWindowController.m */; };
+		E1B2A4850E41103800A72928 /* ColrWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B8B025BC7C001A8010C /* ColrWindowController.m */; };
+		E1B2A4860E41103800A72928 /* CronWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B8F025BCF5901A8010C /* CronWindowController.m */; };
+		E1B2A4870E41103800A72928 /* DescWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B92025BD97701A8010C /* DescWindowController.m */; };
+		E1B2A4880E41103800A72928 /* DescSplitViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F58A18400278355D01A8010C /* DescSplitViewDelegate.m */; };
+		E1B2A4890E41103800A72928 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F543AFDC027B2A5001A8010C /* DataSource.m */; };
+		E1B2A48A0E41103800A72928 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
+		E1B2A48B0E41103800A72928 /* NSNumber-Range.m in Sources */ = {isa = PBXBuildFile; fileRef = F59D5DE9032106D201A8010C /* NSNumber-Range.m */; };
+		E1B2A48D0E41103800A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		E1B2A48E0E41103800A72928 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
+		E1B2A4970E41103800A72928 /* Application.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588840156D6D901000001 /* Application.h */; };
+		E1B2A4980E41103800A72928 /* Asynchronous.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588860156D6D901000001 /* Asynchronous.h */; };
+		E1B2A4990E41103800A72928 /* DataBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588880156D6D901000001 /* DataBrowser.h */; };
+		E1B2A49A0E41103800A72928 /* EditorWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5888A0156D6D901000001 /* EditorWindow.h */; };
+		E1B2A49B0E41103800A72928 /* Errors.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5888C0156D6D901000001 /* Errors.h */; };
+		E1B2A49C0E41103800A72928 /* Files.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5888E0156D6D901000001 /* Files.h */; };
+		E1B2A49D0E41103800A72928 /* FileWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588900156D6D901000001 /* FileWindow.h */; };
+		E1B2A49E0E41103800A72928 /* HostCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588920156D6D901000001 /* HostCallbacks.h */; };
+		E1B2A49F0E41103800A72928 /* InspectorWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588940156D6D901000001 /* InspectorWindow.h */; };
+		E1B2A4A00E41103800A72928 /* PickerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588960156D6D901000001 /* PickerWindow.h */; };
+		E1B2A4A10E41103800A72928 /* PlugObject.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588980156D6D901000001 /* PlugObject.h */; };
+		E1B2A4A20E41103800A72928 /* PlugWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5889A0156D6D901000001 /* PlugWindow.h */; };
+		E1B2A4A30E41103800A72928 /* ResourceObject.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5889C0156D6D901000001 /* ResourceObject.h */; };
+		E1B2A4A40E41103800A72928 /* Utility.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5889E0156D6D901000001 /* Utility.h */; };
+		E1B2A4A50E41103800A72928 /* WindowObject.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588A00156D6D901000001 /* WindowObject.h */; };
+		E1B2A4A60E41103800A72928 /* Generic.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588820156D6D901000001 /* Generic.h */; };
+		E1B2A4A70E41103800A72928 /* ResKnife.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588810156D6D901000001 /* ResKnife.h */; };
+		E1B2A4A80E41103800A72928 /* Transfer.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588800156D6D901000001 /* Transfer.h */; };
+		E1B2A4AA0E41103800A72928 /* ResKnife.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B588A60156D6D901000001 /* ResKnife.nib */; };
+		E1B2A4AC0E41103800A72928 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588850156D6D901000001 /* Application.cpp */; };
+		E1B2A4AD0E41103800A72928 /* Asynchronous.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588870156D6D901000001 /* Asynchronous.cpp */; };
+		E1B2A4AE0E41103800A72928 /* DataBrowser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588890156D6D901000001 /* DataBrowser.cpp */; };
+		E1B2A4AF0E41103800A72928 /* EditorWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5888B0156D6D901000001 /* EditorWindow.cpp */; };
+		E1B2A4B00E41103800A72928 /* Errors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5888D0156D6D901000001 /* Errors.cpp */; };
+		E1B2A4B10E41103800A72928 /* Files.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5888F0156D6D901000001 /* Files.cpp */; };
+		E1B2A4B20E41103800A72928 /* FileWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588910156D6D901000001 /* FileWindow.cpp */; };
+		E1B2A4B30E41103800A72928 /* HostCallbacks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588930156D6D901000001 /* HostCallbacks.cpp */; };
+		E1B2A4B40E41103800A72928 /* InspectorWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588950156D6D901000001 /* InspectorWindow.cpp */; };
+		E1B2A4B50E41103800A72928 /* PickerWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588970156D6D901000001 /* PickerWindow.cpp */; };
+		E1B2A4B60E41103800A72928 /* PlugObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588990156D6D901000001 /* PlugObject.cpp */; };
+		E1B2A4B70E41103800A72928 /* PlugWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5889B0156D6D901000001 /* PlugWindow.cpp */; };
+		E1B2A4B80E41103800A72928 /* ResourceObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5889D0156D6D901000001 /* ResourceObject.cpp */; };
+		E1B2A4B90E41103800A72928 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5889F0156D6D901000001 /* Utility.cpp */; };
+		E1B2A4BA0E41103800A72928 /* WindowObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588A10156D6D901000001 /* WindowObject.cpp */; };
+		E1B2A4BC0E41103800A72928 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
+		E1B2A4BE0E41103800A72928 /* ResKnife.r in Rez */ = {isa = PBXBuildFile; fileRef = F5B588A40156D6D901000001 /* ResKnife.r */; };
+		E1B2A4BF0E41103800A72928 /* ResKnife.rsrc in Rez */ = {isa = PBXBuildFile; fileRef = F5B588A50156D6D901000001 /* ResKnife.rsrc */; };
+		E1B2A4C80E41103900A72928 /* ResKnife.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588810156D6D901000001 /* ResKnife.h */; };
+		E1B2A4C90E41103900A72928 /* Generic.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588820156D6D901000001 /* Generic.h */; };
+		E1B2A4CA0E41103900A72928 /* Transfer.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588800156D6D901000001 /* Transfer.h */; };
+		E1B2A4CB0E41103900A72928 /* Application.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588840156D6D901000001 /* Application.h */; };
+		E1B2A4CC0E41103900A72928 /* Asynchronous.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588860156D6D901000001 /* Asynchronous.h */; };
+		E1B2A4CD0E41103900A72928 /* DataBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588880156D6D901000001 /* DataBrowser.h */; };
+		E1B2A4CE0E41103900A72928 /* EditorWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5888A0156D6D901000001 /* EditorWindow.h */; };
+		E1B2A4CF0E41103900A72928 /* Errors.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5888C0156D6D901000001 /* Errors.h */; };
+		E1B2A4D00E41103900A72928 /* Files.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5888E0156D6D901000001 /* Files.h */; };
+		E1B2A4D10E41103900A72928 /* FileWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588900156D6D901000001 /* FileWindow.h */; };
+		E1B2A4D20E41103900A72928 /* HostCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588920156D6D901000001 /* HostCallbacks.h */; };
+		E1B2A4D30E41103900A72928 /* InspectorWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588940156D6D901000001 /* InspectorWindow.h */; };
+		E1B2A4D40E41103900A72928 /* WindowObject.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588A00156D6D901000001 /* WindowObject.h */; };
+		E1B2A4D50E41103900A72928 /* Utility.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5889E0156D6D901000001 /* Utility.h */; };
+		E1B2A4D60E41103900A72928 /* ResourceObject.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5889C0156D6D901000001 /* ResourceObject.h */; };
+		E1B2A4D70E41103900A72928 /* PlugWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5889A0156D6D901000001 /* PlugWindow.h */; };
+		E1B2A4D80E41103900A72928 /* PlugObject.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588980156D6D901000001 /* PlugObject.h */; };
+		E1B2A4D90E41103900A72928 /* PickerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588960156D6D901000001 /* PickerWindow.h */; };
+		E1B2A4DB0E41103900A72928 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588850156D6D901000001 /* Application.cpp */; };
+		E1B2A4DC0E41103900A72928 /* Asynchronous.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588870156D6D901000001 /* Asynchronous.cpp */; };
+		E1B2A4DD0E41103900A72928 /* DataBrowser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588890156D6D901000001 /* DataBrowser.cpp */; };
+		E1B2A4DE0E41103900A72928 /* EditorWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5888B0156D6D901000001 /* EditorWindow.cpp */; };
+		E1B2A4DF0E41103900A72928 /* Errors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5888D0156D6D901000001 /* Errors.cpp */; };
+		E1B2A4E00E41103900A72928 /* Files.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5888F0156D6D901000001 /* Files.cpp */; };
+		E1B2A4E10E41103900A72928 /* FileWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588910156D6D901000001 /* FileWindow.cpp */; };
+		E1B2A4E20E41103900A72928 /* HostCallbacks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588930156D6D901000001 /* HostCallbacks.cpp */; };
+		E1B2A4E30E41103900A72928 /* WindowObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588A10156D6D901000001 /* WindowObject.cpp */; };
+		E1B2A4E40E41103900A72928 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5889F0156D6D901000001 /* Utility.cpp */; };
+		E1B2A4E50E41103900A72928 /* ResourceObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5889D0156D6D901000001 /* ResourceObject.cpp */; };
+		E1B2A4E60E41103900A72928 /* PlugWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B5889B0156D6D901000001 /* PlugWindow.cpp */; };
+		E1B2A4E70E41103900A72928 /* PlugObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588990156D6D901000001 /* PlugObject.cpp */; };
+		E1B2A4E80E41103900A72928 /* PickerWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588970156D6D901000001 /* PickerWindow.cpp */; };
+		E1B2A4E90E41103900A72928 /* InspectorWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588950156D6D901000001 /* InspectorWindow.cpp */; };
+		E1B2A4EB0E41103900A72928 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
+		E1B2A4F30E41103900A72928 /* Hex Editor.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588D90156D9D401000001 /* Hex Editor.h */; };
+		E1B2A4F40E41103900A72928 /* Events.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588DB0156D9D401000001 /* Events.h */; };
+		E1B2A4F50E41103900A72928 /* HexWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588DD0156D9D401000001 /* HexWindow.h */; };
+		E1B2A4F60E41103900A72928 /* Initalisation.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588DF0156D9D401000001 /* Initalisation.h */; };
+		E1B2A4F70E41103900A72928 /* Utility.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588E10156D9D401000001 /* Utility.h */; };
+		E1B2A4F80E41103900A72928 /* HostCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588920156D6D901000001 /* HostCallbacks.h */; };
+		E1B2A4FB0E41103900A72928 /* Events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588DC0156D9D401000001 /* Events.cpp */; };
+		E1B2A4FC0E41103900A72928 /* HexWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588DE0156D9D401000001 /* HexWindow.cpp */; };
+		E1B2A4FD0E41103900A72928 /* Initalisation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588E00156D9D401000001 /* Initalisation.cpp */; };
+		E1B2A4FE0E41103900A72928 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588E20156D9D401000001 /* Utility.cpp */; };
+		E1B2A5000E41103900A72928 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
+		E1B2A50A0E41103900A72928 /* Template Editor.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588F50156DC2201000001 /* Template Editor.h */; };
+		E1B2A50B0E41103900A72928 /* TemplateWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588F90156DC2201000001 /* TemplateWindow.h */; };
+		E1B2A50C0E41103900A72928 /* HostCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588920156D6D901000001 /* HostCallbacks.h */; };
+		E1B2A50F0E41103900A72928 /* TemplateWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B588FA0156DC2201000001 /* TemplateWindow.cpp */; };
+		E1B2A5110E41103900A72928 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
+		E1B2A5130E41103900A72928 /* Template Editor.r in Rez */ = {isa = PBXBuildFile; fileRef = F5B588FB0156DC2201000001 /* Template Editor.r */; };
+		E1B2A51B0E41103900A72928 /* Initalisation.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588FF0156DC2201000001 /* Initalisation.h */; };
+		E1B2A51C0E41103900A72928 /* Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B589010156DC2201000001 /* Parser.h */; };
+		E1B2A51D0E41103900A72928 /* PICT Editor.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588FD0156DC2201000001 /* PICT Editor.h */; };
+		E1B2A5200E41103900A72928 /* Initalisation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B589000156DC2201000001 /* Initalisation.cpp */; };
+		E1B2A5210E41103900A72928 /* PictWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5B589020156DC2201000001 /* PictWindow.cpp */; };
+		E1B2A5230E41103900A72928 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
+		E1B2A52C0E41103900A72928 /* BoolTemplateField.h in Headers */ = {isa = PBXBuildFile; fileRef = F50DFE23036C258201A8010A /* BoolTemplateField.h */; };
+		E1B2A52D0E41103900A72928 /* DividerTemplateField.h in Headers */ = {isa = PBXBuildFile; fileRef = F50DFE57036C258301A8010A /* DividerTemplateField.h */; };
+		E1B2A52E0E41103900A72928 /* IntegerTemplateField.h in Headers */ = {isa = PBXBuildFile; fileRef = F50DFE5B036C258301A8010A /* IntegerTemplateField.h */; };
+		E1B2A52F0E41103900A72928 /* KHandleStream.h in Headers */ = {isa = PBXBuildFile; fileRef = F50DFE5D036C258301A8010A /* KHandleStream.h */; };
+		E1B2A5300E41103900A72928 /* ListTemplateField.h in Headers */ = {isa = PBXBuildFile; fileRef = F50DFE5F036C258301A8010A /* ListTemplateField.h */; };
+		E1B2A5310E41103900A72928 /* LSTCTemplateField.h in Headers */ = {isa = PBXBuildFile; fileRef = F50DFE61036C258301A8010A /* LSTCTemplateField.h */; };
+		E1B2A5320E41103900A72928 /* StringTemplateField.h in Headers */ = {isa = PBXBuildFile; fileRef = F50DFE66036C258301A8010A /* StringTemplateField.h */; };
+		E1B2A5330E41103900A72928 /* TemplateWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F50DFE6E036C258301A8010A /* TemplateWindow.h */; };
+		E1B2A5340E41103900A72928 /* HostCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588920156D6D901000001 /* HostCallbacks.h */; };
+		E1B2A5360E41103900A72928 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE58036C258301A8010A /* InfoPlist.strings */; };
+		E1B2A5380E41103900A72928 /* BoolTemplateField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE22036C258201A8010A /* BoolTemplateField.cpp */; };
+		E1B2A5390E41103900A72928 /* DividerTemplateField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE56036C258301A8010A /* DividerTemplateField.cpp */; };
+		E1B2A53A0E41103900A72928 /* IntegerTemplateField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE5A036C258301A8010A /* IntegerTemplateField.cpp */; };
+		E1B2A53B0E41103900A72928 /* KHandleStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE5C036C258301A8010A /* KHandleStream.cpp */; };
+		E1B2A53C0E41103900A72928 /* ListTemplateField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE5E036C258301A8010A /* ListTemplateField.cpp */; };
+		E1B2A53D0E41103900A72928 /* LSTCTemplateField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE60036C258301A8010A /* LSTCTemplateField.cpp */; };
+		E1B2A53E0E41103900A72928 /* StringTemplateField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE65036C258301A8010A /* StringTemplateField.cpp */; };
+		E1B2A53F0E41103900A72928 /* Templar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE67036C258301A8010A /* Templar.cpp */; };
+		E1B2A5400E41103900A72928 /* TemplateWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE6D036C258301A8010A /* TemplateWindow.cpp */; };
+		E1B2A5430E41103900A72928 /* Templar.rsrc in Rez */ = {isa = PBXBuildFile; fileRef = F50DFE6C036C258301A8010A /* Templar.rsrc */; };
+		E1B2A54B0E41103A00A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
+		E1B2A54C0E41103A00A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
+		E1B2A54D0E41103A00A72928 /* ICONWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D3B99B904DC16A30056861E /* ICONWindowController.h */; };
+		E1B2A54F0E41103A00A72928 /* ICONWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B99BC04DC16FC0056861E /* ICONWindow.nib */; };
+		E1B2A5510E41103A00A72928 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
+		E1B2A5520E41103A00A72928 /* ICONWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B99B804DC16A30056861E /* ICONWindowController.m */; };
+		E1B2A5540E41103A00A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		E1B2A55D0E41103A00A72928 /* NuTemplateWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0B38B204DEF41E005AED5E /* NuTemplateWindowController.h */; };
+		E1B2A55E0E41103A00A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
+		E1B2A55F0E41103A00A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
+		E1B2A5600E41103A00A72928 /* NuTemplateElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933A604DEFEE600DD74B1 /* NuTemplateElement.h */; };
+		E1B2A5610E41103A00A72928 /* NuTemplateGroupElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BA04DF10D700DD74B1 /* NuTemplateGroupElement.h */; };
+		E1B2A5620E41103A00A72928 /* NuTemplateStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BE04DF151C00DD74B1 /* NuTemplateStream.h */; };
+		E1B2A5630E41103A00A72928 /* NuTemplateLSTBElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933C404DF1C0800DD74B1 /* NuTemplateLSTBElement.h */; };
+		E1B2A5640E41103A00A72928 /* NuTemplateTNAMElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933E304DF2FF700DD74B1 /* NuTemplateTNAMElement.h */; };
+		E1B2A5650E41103A00A72928 /* NuTemplatePSTRElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933E704DF317D00DD74B1 /* NuTemplatePSTRElement.h */; };
+		E1B2A5660E41103A00A72928 /* NuTemplateDWRDElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933EF04DF381900DD74B1 /* NuTemplateDWRDElement.h */; };
+		E1B2A5670E41103A00A72928 /* NuTemplateLSTEElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933F604DFE80500DD74B1 /* NuTemplateLSTEElement.h */; };
+		E1B2A5680E41103A00A72928 /* NuTemplateDLNGElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B404E872DB00AF65FE /* NuTemplateDLNGElement.h */; };
+		E1B2A5690E41103A00A72928 /* NuTemplateDBYTElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B804E873F300AF65FE /* NuTemplateDBYTElement.h */; };
+		E1B2A56A0E41103A00A72928 /* NuTemplateOCNTElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50046F04EF040900F3B64D /* NuTemplateOCNTElement.h */; };
+		E1B2A56B0E41103A00A72928 /* NuTemplateLSTCElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50047404EF122000F3B64D /* NuTemplateLSTCElement.h */; };
+		E1B2A56D0E41103A00A72928 /* NuTemplateWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B38B504DEF465005AED5E /* NuTemplateWindow.nib */; };
+		E1B2A56F0E41103A00A72928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D2EE5E204E5C56F00515930 /* Localizable.strings */; };
+		E1B2A5710E41103A00A72928 /* NuTemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B38B304DEF41E005AED5E /* NuTemplateWindowController.m */; };
+		E1B2A5720E41103A00A72928 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
+		E1B2A5730E41103A00A72928 /* NuTemplateElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* NuTemplateElement.m */; };
+		E1B2A5740E41103A00A72928 /* NuTemplateGroupElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BB04DF10D700DD74B1 /* NuTemplateGroupElement.m */; };
+		E1B2A5750E41103A00A72928 /* NuTemplateStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* NuTemplateStream.m */; };
+		E1B2A5760E41103A00A72928 /* NuTemplateLSTBElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* NuTemplateLSTBElement.m */; };
+		E1B2A5770E41103A00A72928 /* NuTemplateTNAMElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933E404DF2FF700DD74B1 /* NuTemplateTNAMElement.m */; };
+		E1B2A5780E41103A00A72928 /* NuTemplatePSTRElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933E804DF317D00DD74B1 /* NuTemplatePSTRElement.m */; };
+		E1B2A5790E41103A00A72928 /* NuTemplateDWRDElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933EE04DF381900DD74B1 /* NuTemplateDWRDElement.m */; };
+		E1B2A57A0E41103A00A72928 /* NuTemplateLSTEElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933F704DFE80500DD74B1 /* NuTemplateLSTEElement.m */; };
+		E1B2A57B0E41103A00A72928 /* NuTemplateDLNGElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B304E872DB00AF65FE /* NuTemplateDLNGElement.m */; };
+		E1B2A57C0E41103A00A72928 /* NuTemplateDBYTElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B704E873F300AF65FE /* NuTemplateDBYTElement.m */; };
+		E1B2A57D0E41103A00A72928 /* NuTemplateOCNTElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047004EF040900F3B64D /* NuTemplateOCNTElement.m */; };
+		E1B2A57E0E41103A00A72928 /* NuTemplateLSTCElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047304EF122000F3B64D /* NuTemplateLSTCElement.m */; };
+		E1B2A5800E41103A00A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		E1B2A5920E41103A00A72928 /* Template Editor.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2A5860E41103A00A72928 /* Template Editor.plugin */; };
+		E1B2A5930E41103A00A72928 /* Hexadecimal Editor.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2A4570E41103800A72928 /* Hexadecimal Editor.plugin */; };
+		E1B2A5950E41103A00A72928 /* libResKnife.dylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1B2A4F00E41103900A72928 /* libResKnife.dylib.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		E1B2A5980E41103D00A72928 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.gcc.3_1;
+			fileType = sourcecode.c;
+			isEditable = 1;
+			outputFiles = (
+			);
+		};
+		E1B2A5990E41103D00A72928 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.gcc.3_1;
+			fileType = sourcecode.c;
+			isEditable = 1;
+			outputFiles = (
+			);
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXContainerItemProxy section */
+		E1B2A5870E41103A00A72928 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1B2A43E0E41103800A72928;
+			remoteInfo = "Hex Editor Cocoa (Upgraded)";
+		};
+		E1B2A58F0E41103A00A72928 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1B2A55B0E41103A00A72928;
+			remoteInfo = "NuTemplateEditor Cocoa (Upgraded)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E1B2A4170E41103700A72928 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E1B2A5930E41103A00A72928 /* Hexadecimal Editor.plugin in CopyFiles */,
+				E1B2A5920E41103A00A72928 /* Template Editor.plugin in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3D0933A604DEFEE600DD74B1 /* NuTemplateElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuTemplateElement.h; sourceTree = "<group>"; };
+		3D0933A704DEFEE600DD74B1 /* NuTemplateElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuTemplateElement.m; sourceTree = "<group>"; };
+		3D0933BA04DF10D700DD74B1 /* NuTemplateGroupElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuTemplateGroupElement.h; sourceTree = "<group>"; };
+		3D0933BB04DF10D700DD74B1 /* NuTemplateGroupElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuTemplateGroupElement.m; sourceTree = "<group>"; };
+		3D0933BE04DF151C00DD74B1 /* NuTemplateStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuTemplateStream.h; sourceTree = "<group>"; };
+		3D0933BF04DF151C00DD74B1 /* NuTemplateStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuTemplateStream.m; sourceTree = "<group>"; };
+		3D0933C404DF1C0800DD74B1 /* NuTemplateLSTBElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuTemplateLSTBElement.h; sourceTree = "<group>"; };
+		3D0933C504DF1C0800DD74B1 /* NuTemplateLSTBElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuTemplateLSTBElement.m; sourceTree = "<group>"; };
+		3D0933E304DF2FF700DD74B1 /* NuTemplateTNAMElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateTNAMElement.h; sourceTree = "<group>"; };
+		3D0933E404DF2FF700DD74B1 /* NuTemplateTNAMElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateTNAMElement.m; sourceTree = "<group>"; };
+		3D0933E704DF317D00DD74B1 /* NuTemplatePSTRElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplatePSTRElement.h; sourceTree = "<group>"; };
+		3D0933E804DF317D00DD74B1 /* NuTemplatePSTRElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplatePSTRElement.m; sourceTree = "<group>"; };
+		3D0933EE04DF381900DD74B1 /* NuTemplateDWRDElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateDWRDElement.m; sourceTree = "<group>"; };
+		3D0933EF04DF381900DD74B1 /* NuTemplateDWRDElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateDWRDElement.h; sourceTree = "<group>"; };
+		3D0933F404DFD7CF00DD74B1 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = SOURCE_ROOT; };
+		3D0933F604DFE80500DD74B1 /* NuTemplateLSTEElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateLSTEElement.h; sourceTree = "<group>"; };
+		3D0933F704DFE80500DD74B1 /* NuTemplateLSTEElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateLSTEElement.m; sourceTree = "<group>"; };
+		3D0ABFB904E152CA00C85300 /* TEMPLATE EDITOR.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "TEMPLATE EDITOR.txt"; path = "NuTemplateEditor/TEMPLATE EDITOR.txt"; sourceTree = SOURCE_ROOT; };
+		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
+		3D0B38B204DEF41E005AED5E /* NuTemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateWindowController.h; sourceTree = "<group>"; };
+		3D0B38B304DEF41E005AED5E /* NuTemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateWindowController.m; sourceTree = "<group>"; };
+		3D0B38B604DEF465005AED5E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NuTemplateWindow.nib; sourceTree = "<group>"; };
+		3D2EE5E204E5C56F00515930 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKEditorRegistry.h; sourceTree = "<group>"; };
+		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RKEditorRegistry.m; sourceTree = "<group>"; };
+		3D35756004DAEB7F00B8225B /* Export.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Export.tiff; sourceTree = "<group>"; };
+		3D3B99B804DC16A30056861E /* ICONWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = ICONWindowController.m; path = ICONEditor/ICONWindowController.m; sourceTree = SOURCE_ROOT; };
+		3D3B99B904DC16A30056861E /* ICONWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ICONWindowController.h; path = ICONEditor/ICONWindowController.h; sourceTree = SOURCE_ROOT; };
+		3D3B99BD04DC16FC0056861E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ICONEditor/English.lproj/ICONWindow.nib; sourceTree = SOURCE_ROOT; };
+		3D4737B304E872DB00AF65FE /* NuTemplateDLNGElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateDLNGElement.m; sourceTree = "<group>"; };
+		3D4737B404E872DB00AF65FE /* NuTemplateDLNGElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateDLNGElement.h; sourceTree = "<group>"; };
+		3D4737B704E873F300AF65FE /* NuTemplateDBYTElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateDBYTElement.m; sourceTree = "<group>"; };
+		3D4737B804E873F300AF65FE /* NuTemplateDBYTElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateDBYTElement.h; sourceTree = "<group>"; };
+		3D50046F04EF040900F3B64D /* NuTemplateOCNTElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateOCNTElement.h; sourceTree = "<group>"; };
+		3D50047004EF040900F3B64D /* NuTemplateOCNTElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateOCNTElement.m; sourceTree = "<group>"; };
+		3D50047304EF122000F3B64D /* NuTemplateLSTCElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateLSTCElement.m; sourceTree = "<group>"; };
+		3D50047404EF122000F3B64D /* NuTemplateLSTCElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateLSTCElement.h; sourceTree = "<group>"; };
+		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
+		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
+		E1B2A43B0E41103700A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../Plug-Ins/Hex Editor/Info.plist"; sourceTree = "<group>"; };
+		E1B2A43C0E41103800A72928 /* ResKnife Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ResKnife Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A4560E41103800A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1B2A4570E41103800A72928 /* Hexadecimal Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hexadecimal Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A4680E41103800A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1B2A4690E41103800A72928 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A4930E41103800A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1B2A4940E41103800A72928 /* NovaTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovaTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A4C30E41103800A72928 /* Info-ResKnife_Carbon__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-ResKnife_Carbon__Upgraded_.plist"; sourceTree = "<group>"; };
+		E1B2A4C40E41103900A72928 /* ResKnife Carbon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ResKnife Carbon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A4F00E41103900A72928 /* libResKnife.dylib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libResKnife.dylib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A5060E41103900A72928 /* Info-Hex_Editor_Carbon__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Hex_Editor_Carbon__Upgraded_.plist"; sourceTree = "<group>"; };
+		E1B2A5070E41103900A72928 /* Hex Editor.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hex Editor.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A5170E41103900A72928 /* Info-Template_Editor_Carbon__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Template_Editor_Carbon__Upgraded_.plist"; sourceTree = "<group>"; };
+		E1B2A5180E41103900A72928 /* Template Editor.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A5280E41103900A72928 /* Info-PICT_Editor__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-PICT_Editor__Upgraded_.plist"; sourceTree = "<group>"; };
+		E1B2A5290E41103900A72928 /* PICT Editor.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PICT Editor.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A5470E41103900A72928 /* Info-Uli_s_Template_Editor__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Uli_s_Template_Editor__Upgraded_.plist"; sourceTree = "<group>"; };
+		E1B2A5480E41103A00A72928 /* Ulis Template Editor.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ulis Template Editor.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A5590E41103A00A72928 /* Info-Bitmap_Editor_Cocoa__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Bitmap_Editor_Cocoa__Upgraded_.plist"; sourceTree = "<group>"; };
+		E1B2A55A0E41103A00A72928 /* Bitmap Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bitmap Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A5850E41103A00A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1B2A5860E41103A00A72928 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5041736036BD60801A8010A /* ResKnife.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ResKnife.scriptSuite; sourceTree = "<group>"; };
+		F50DFE17036C203F01A8010A /* English */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = English; path = Cocoa/English.lproj/ResKnife.scriptTerminology; sourceTree = SOURCE_ROOT; };
+		F50DFE22036C258201A8010A /* BoolTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = BoolTemplateField.cpp; sourceTree = "<group>"; };
+		F50DFE23036C258201A8010A /* BoolTemplateField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BoolTemplateField.h; sourceTree = "<group>"; };
+		F50DFE56036C258301A8010A /* DividerTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DividerTemplateField.cpp; sourceTree = "<group>"; };
+		F50DFE57036C258301A8010A /* DividerTemplateField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DividerTemplateField.h; sourceTree = "<group>"; };
+		F50DFE59036C258301A8010A /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F50DFE5A036C258301A8010A /* IntegerTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IntegerTemplateField.cpp; sourceTree = "<group>"; };
+		F50DFE5B036C258301A8010A /* IntegerTemplateField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IntegerTemplateField.h; sourceTree = "<group>"; };
+		F50DFE5C036C258301A8010A /* KHandleStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = KHandleStream.cpp; sourceTree = "<group>"; };
+		F50DFE5D036C258301A8010A /* KHandleStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = KHandleStream.h; sourceTree = "<group>"; };
+		F50DFE5E036C258301A8010A /* ListTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ListTemplateField.cpp; sourceTree = "<group>"; };
+		F50DFE5F036C258301A8010A /* ListTemplateField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ListTemplateField.h; sourceTree = "<group>"; };
+		F50DFE60036C258301A8010A /* LSTCTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = LSTCTemplateField.cpp; sourceTree = "<group>"; };
+		F50DFE61036C258301A8010A /* LSTCTemplateField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = LSTCTemplateField.h; sourceTree = "<group>"; };
+		F50DFE62036C258301A8010A /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F50DFE63036C258301A8010A /* main.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		F50DFE64036C258301A8010A /* main.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = main.r; sourceTree = "<group>"; };
+		F50DFE65036C258301A8010A /* StringTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = StringTemplateField.cpp; sourceTree = "<group>"; };
+		F50DFE66036C258301A8010A /* StringTemplateField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = StringTemplateField.h; sourceTree = "<group>"; };
+		F50DFE67036C258301A8010A /* Templar.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Templar.cpp; sourceTree = "<group>"; };
+		F50DFE6C036C258301A8010A /* Templar.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templar.rsrc; sourceTree = "<group>"; };
+		F50DFE6D036C258301A8010A /* TemplateWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = TemplateWindow.cpp; sourceTree = "<group>"; };
+		F50DFE6E036C258301A8010A /* TemplateWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TemplateWindow.h; sourceTree = "<group>"; };
+		F535443E0226752901A80001 /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TemplateWindowController.h; sourceTree = "<group>"; };
+		F535443F0226752901A80001 /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TemplateWindowController.m; sourceTree = "<group>"; };
+		F53544430226778D01A80001 /* TemplateWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = TemplateWindow.nib; path = English.lproj/TemplateWindow.nib; sourceTree = "<group>"; };
+		F535444D0226B5F501A80001 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
+		F535444E0226B5F501A80001 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Element.m; sourceTree = "<group>"; };
+		F543AFDB027B2A5001A8010C /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
+		F543AFDC027B2A5001A8010C /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
+		F543AFF0027C716E01A8010C /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = "English.lproj/Resource Types.strings"; sourceTree = "<group>"; };
+		F54625C6029174F601A8010C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		F54626490291750201A8010C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
+		F54E6220021B6A0801A80001 /* FindSheetController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FindSheetController.h; sourceTree = "<group>"; };
+		F54E6221021B6A0801A80001 /* FindSheetController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FindSheetController.m; sourceTree = "<group>"; };
+		F54E6223021B6A0801A80001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FindSheet.nib; sourceTree = "<group>"; };
+		F54E622C021D192201A80001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Cocoa/English.lproj/CreateResourceSheet.nib; sourceTree = SOURCE_ROOT; };
+		F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnifePluginProtocol.h; sourceTree = "<group>"; };
+		F5606FDE02ACF2F701A8010C /* PasteMenu.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PasteMenu.nib; path = English.lproj/PasteMenu.nib; sourceTree = "<group>"; };
+		F5730B930159528A01000001 /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist; path = defaults.plist; sourceTree = "<group>"; };
+		F577A8F30211CFA701A80001 /* Save.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Save.tiff; sourceTree = "<group>"; };
+		F577A8F80211DC1E01A80001 /* Show Info.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Show Info.tiff"; sourceTree = "<group>"; };
+		F577A8FA0211E4D401A80001 /* Create.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Create.tiff; sourceTree = "<group>"; };
+		F577A8FB0211E4D401A80001 /* Edit.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Edit.tiff; sourceTree = "<group>"; };
+		F577A8FC0211E4D401A80001 /* Edit Hex.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Edit Hex.tiff"; sourceTree = "<group>"; };
+		F577A900021215C801A80001 /* ResourceNameCell.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceNameCell.h; sourceTree = "<group>"; };
+		F577A901021215C801A80001 /* ResourceNameCell.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceNameCell.m; sourceTree = "<group>"; };
+		F577A904021220D601A80001 /* Delete.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Delete.tiff; sourceTree = "<group>"; };
+		F58A18400278355D01A8010C /* DescSplitViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = DescSplitViewDelegate.m; path = desc/DescSplitViewDelegate.m; sourceTree = "<group>"; };
+		F58A18410278355D01A8010C /* DescSplitViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescSplitViewDelegate.h; path = desc/DescSplitViewDelegate.h; sourceTree = "<group>"; };
+		F58F6B7E025BC3A501A8010C /* BoomWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = BoomWindowController.h; path = boom/BoomWindowController.h; sourceTree = "<group>"; };
+		F58F6B7F025BC3A501A8010C /* BoomWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = BoomWindowController.m; path = boom/BoomWindowController.m; sourceTree = "<group>"; };
+		F58F6B82025BC73001A8010C /* NovaWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NovaWindowController.h; sourceTree = "<group>"; };
+		F58F6B83025BC73001A8010C /* NovaWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NovaWindowController.m; sourceTree = "<group>"; };
+		F58F6B86025BC76D01A8010C /* CharWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CharWindowController.h; path = char/CharWindowController.h; sourceTree = "<group>"; };
+		F58F6B87025BC76D01A8010C /* CharWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = CharWindowController.m; path = char/CharWindowController.m; sourceTree = "<group>"; };
+		F58F6B8A025BC7C001A8010C /* ColrWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ColrWindowController.h; path = colr/ColrWindowController.h; sourceTree = "<group>"; };
+		F58F6B8B025BC7C001A8010C /* ColrWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = ColrWindowController.m; path = colr/ColrWindowController.m; sourceTree = "<group>"; };
+		F58F6B8E025BCF5901A8010C /* CronWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CronWindowController.h; path = cron/CronWindowController.h; sourceTree = "<group>"; };
+		F58F6B8F025BCF5901A8010C /* CronWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = CronWindowController.m; path = cron/CronWindowController.m; sourceTree = "<group>"; };
+		F58F6B92025BD97701A8010C /* DescWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = DescWindowController.m; path = desc/DescWindowController.m; sourceTree = "<group>"; };
+		F58F6B93025BD97701A8010C /* DescWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescWindowController.h; path = desc/DescWindowController.h; sourceTree = "<group>"; };
+		F58F6BAA025BDBA701A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NovaTools.nib; sourceTree = "<group>"; };
+		F59481AD03D0776C01A8010A /* RKDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKDocumentController.h; sourceTree = "<group>"; };
+		F59481AE03D0776C01A8010A /* RKDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RKDocumentController.m; sourceTree = "<group>"; };
+		F59481B103D077DC01A8010A /* OpenFileDataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OpenFileDataSource.h; sourceTree = "<group>"; };
+		F59481B203D077DC01A8010A /* OpenFileDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = OpenFileDataSource.m; sourceTree = "<group>"; };
+		F59D5DE40320DFF601A8010C /* NSString-FSSpec.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSString-FSSpec.h"; sourceTree = "<group>"; };
+		F59D5DE50320DFF601A8010C /* NSString-FSSpec.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSString-FSSpec.m"; sourceTree = "<group>"; };
+		F59D5DE8032106D201A8010C /* NSNumber-Range.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSNumber-Range.h"; sourceTree = "<group>"; };
+		F59D5DE9032106D201A8010C /* NSNumber-Range.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSNumber-Range.m"; sourceTree = "<group>"; };
+		F5B5881D0156D40B01000001 /* ApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ApplicationDelegate.h; sourceTree = "<group>"; };
+		F5B5881E0156D40B01000001 /* ApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ApplicationDelegate.m; sourceTree = "<group>"; };
+		F5B5881F0156D40B01000001 /* AttributesFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AttributesFormatter.h; sourceTree = "<group>"; };
+		F5B588200156D40B01000001 /* AttributesFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AttributesFormatter.m; sourceTree = "<group>"; };
+		F5B588210156D40B01000001 /* CreateResourceSheetController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CreateResourceSheetController.h; sourceTree = "<group>"; };
+		F5B588220156D40B01000001 /* CreateResourceSheetController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CreateResourceSheetController.m; sourceTree = "<group>"; };
+		F5B588250156D40B01000001 /* InfoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = InfoWindowController.h; sourceTree = "<group>"; };
+		F5B588260156D40B01000001 /* InfoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = InfoWindowController.m; sourceTree = "<group>"; };
+		F5B588270156D40B01000001 /* NameFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NameFormatter.h; sourceTree = "<group>"; };
+		F5B588280156D40B01000001 /* NameFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NameFormatter.m; sourceTree = "<group>"; };
+		F5B588290156D40B01000001 /* OutlineViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OutlineViewDelegate.h; sourceTree = "<group>"; };
+		F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = OutlineViewDelegate.m; sourceTree = "<group>"; };
+		F5B5882B0156D40B01000001 /* PrefsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PrefsWindowController.h; sourceTree = "<group>"; };
+		F5B5882C0156D40B01000001 /* PrefsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = PrefsWindowController.m; sourceTree = "<group>"; };
+		F5B5882D0156D40B01000001 /* Resource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Resource.h; sourceTree = "<group>"; };
+		F5B5882E0156D40B01000001 /* Resource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Resource.m; sourceTree = "<group>"; };
+		F5B5882F0156D40B01000001 /* ResourceDataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceDataSource.h; sourceTree = "<group>"; };
+		F5B588300156D40B01000001 /* ResourceDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDataSource.m; sourceTree = "<group>"; };
+		F5B588310156D40B01000001 /* ResourceDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceDocument.h; sourceTree = "<group>"; };
+		F5B588320156D40B01000001 /* ResourceDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDocument.m; sourceTree = "<group>"; };
+		F5B588330156D40B01000001 /* SizeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SizeFormatter.h; sourceTree = "<group>"; };
+		F5B588340156D40B01000001 /* SizeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SizeFormatter.m; sourceTree = "<group>"; };
+		F5B588370156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/AboutPanel.nib; sourceTree = "<group>"; };
+		F5B588390156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Application.nib; sourceTree = "<group>"; };
+		F5B5883B0156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/InfoWindow.nib; sourceTree = "<group>"; };
+		F5B5883F0156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PrefsWindow.nib; sourceTree = "<group>"; };
+		F5B588410156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ResourceDocument.nib; sourceTree = "<group>"; };
+		F5B588430156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F5B588450156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F5B588460156D40B01000001 /* ResKnife.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ResKnife.icns; sourceTree = "<group>"; };
+		F5B588470156D40B01000001 /* Resource file.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Resource file.icns"; sourceTree = "<group>"; };
+		F5B588480156D40B01000001 /* Icon file.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Icon file.icns"; sourceTree = "<group>"; };
+		F5B5884A0156D40B01000001 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		F5B5884B0156D40B01000001 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		F5B5884C0156D40B01000001 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		F5B5884D0156D40B01000001 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		F5B5887D0156D6D901000001 /* Carbon Prefix.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "Carbon Prefix.h"; sourceTree = "<group>"; };
+		F5B5887E0156D6D901000001 /* Classic Prefix.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "Classic Prefix.h"; sourceTree = "<group>"; };
+		F5B588800156D6D901000001 /* Transfer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Transfer.h; sourceTree = "<group>"; };
+		F5B588810156D6D901000001 /* ResKnife.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnife.h; sourceTree = "<group>"; };
+		F5B588820156D6D901000001 /* Generic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Generic.h; sourceTree = "<group>"; };
+		F5B588840156D6D901000001 /* Application.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
+		F5B588850156D6D901000001 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
+		F5B588860156D6D901000001 /* Asynchronous.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Asynchronous.h; sourceTree = "<group>"; };
+		F5B588870156D6D901000001 /* Asynchronous.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Asynchronous.cpp; sourceTree = "<group>"; };
+		F5B588880156D6D901000001 /* DataBrowser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DataBrowser.h; sourceTree = "<group>"; };
+		F5B588890156D6D901000001 /* DataBrowser.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DataBrowser.cpp; sourceTree = "<group>"; };
+		F5B5888A0156D6D901000001 /* EditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = EditorWindow.h; sourceTree = "<group>"; };
+		F5B5888B0156D6D901000001 /* EditorWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = EditorWindow.cpp; sourceTree = "<group>"; };
+		F5B5888C0156D6D901000001 /* Errors.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Errors.h; sourceTree = "<group>"; };
+		F5B5888D0156D6D901000001 /* Errors.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Errors.cpp; sourceTree = "<group>"; };
+		F5B5888E0156D6D901000001 /* Files.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Files.h; sourceTree = "<group>"; };
+		F5B5888F0156D6D901000001 /* Files.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Files.cpp; sourceTree = "<group>"; };
+		F5B588900156D6D901000001 /* FileWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FileWindow.h; sourceTree = "<group>"; };
+		F5B588910156D6D901000001 /* FileWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = FileWindow.cpp; sourceTree = "<group>"; };
+		F5B588920156D6D901000001 /* HostCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HostCallbacks.h; sourceTree = "<group>"; };
+		F5B588930156D6D901000001 /* HostCallbacks.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = HostCallbacks.cpp; sourceTree = "<group>"; };
+		F5B588940156D6D901000001 /* InspectorWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = InspectorWindow.h; sourceTree = "<group>"; };
+		F5B588950156D6D901000001 /* InspectorWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = InspectorWindow.cpp; sourceTree = "<group>"; };
+		F5B588960156D6D901000001 /* PickerWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PickerWindow.h; sourceTree = "<group>"; };
+		F5B588970156D6D901000001 /* PickerWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = PickerWindow.cpp; sourceTree = "<group>"; };
+		F5B588980156D6D901000001 /* PlugObject.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PlugObject.h; sourceTree = "<group>"; };
+		F5B588990156D6D901000001 /* PlugObject.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = PlugObject.cpp; sourceTree = "<group>"; };
+		F5B5889A0156D6D901000001 /* PlugWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PlugWindow.h; sourceTree = "<group>"; };
+		F5B5889B0156D6D901000001 /* PlugWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = PlugWindow.cpp; sourceTree = "<group>"; };
+		F5B5889C0156D6D901000001 /* ResourceObject.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceObject.h; sourceTree = "<group>"; };
+		F5B5889D0156D6D901000001 /* ResourceObject.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceObject.cpp; sourceTree = "<group>"; };
+		F5B5889E0156D6D901000001 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		F5B5889F0156D6D901000001 /* Utility.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Utility.cpp; sourceTree = "<group>"; };
+		F5B588A00156D6D901000001 /* WindowObject.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = WindowObject.h; sourceTree = "<group>"; };
+		F5B588A10156D6D901000001 /* WindowObject.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = WindowObject.cpp; sourceTree = "<group>"; };
+		F5B588A30156D6D901000001 /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = Carbon.r; sourceTree = "<group>"; };
+		F5B588A40156D6D901000001 /* ResKnife.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = ResKnife.r; sourceTree = "<group>"; };
+		F5B588A50156D6D901000001 /* ResKnife.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = ResKnife.rsrc; sourceTree = "<group>"; };
+		F5B588A60156D6D901000001 /* ResKnife.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = ResKnife.nib; sourceTree = "<group>"; };
+		F5B588D90156D9D401000001 /* Hex Editor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "Hex Editor.h"; sourceTree = "<group>"; };
+		F5B588DB0156D9D401000001 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
+		F5B588DC0156D9D401000001 /* Events.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Events.cpp; sourceTree = "<group>"; };
+		F5B588DD0156D9D401000001 /* HexWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HexWindow.h; sourceTree = "<group>"; };
+		F5B588DE0156D9D401000001 /* HexWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = HexWindow.cpp; sourceTree = "<group>"; };
+		F5B588DF0156D9D401000001 /* Initalisation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Initalisation.h; sourceTree = "<group>"; };
+		F5B588E00156D9D401000001 /* Initalisation.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Initalisation.cpp; sourceTree = "<group>"; };
+		F5B588E10156D9D401000001 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = HexUtility.h; sourceTree = "<group>"; };
+		F5B588E20156D9D401000001 /* Utility.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Utility.cpp; path = HexUtility.cpp; sourceTree = "<group>"; };
+		F5B588F50156DC2201000001 /* Template Editor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "Template Editor.h"; sourceTree = "<group>"; };
+		F5B588F90156DC2201000001 /* TemplateWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TemplateWindow.h; sourceTree = "<group>"; };
+		F5B588FA0156DC2201000001 /* TemplateWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = TemplateWindow.cpp; sourceTree = "<group>"; };
+		F5B588FB0156DC2201000001 /* Template Editor.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = "Template Editor.r"; sourceTree = "<group>"; };
+		F5B588FD0156DC2201000001 /* PICT Editor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "PICT Editor.h"; sourceTree = "<group>"; };
+		F5B588FF0156DC2201000001 /* Initalisation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Initalisation.h; sourceTree = "<group>"; };
+		F5B589000156DC2201000001 /* Initalisation.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Initalisation.cpp; sourceTree = "<group>"; };
+		F5B589010156DC2201000001 /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
+		F5B589020156DC2201000001 /* PictWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = PictWindow.cpp; sourceTree = "<group>"; };
+		F5C9ECCE027F474A01A8010C /* Notifications.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
+		F5C9ECD8027F562201A8010C /* Structs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Structs.h; sourceTree = "<group>"; };
+		F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnifeResourceProtocol.h; sourceTree = "<group>"; };
+		F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView-SelectedItems.h"; sourceTree = "<group>"; };
+		F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView-SelectedItems.m"; sourceTree = "<group>"; };
+		F5DF1BDB0254AD8801A80001 /* DirectoryCopy.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = DirectoryCopy.c; sourceTree = "<group>"; };
+		F5DF1BDC0254AD8801A80001 /* DirectoryCopy.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DirectoryCopy.h; sourceTree = "<group>"; };
+		F5DF1BDD0254AD8801A80001 /* FileCopy.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = FileCopy.c; sourceTree = "<group>"; };
+		F5DF1BDE0254AD8801A80001 /* FileCopy.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FileCopy.h; sourceTree = "<group>"; };
+		F5DF1BDF0254AD8801A80001 /* FSpCompat.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = FSpCompat.c; sourceTree = "<group>"; };
+		F5DF1BE00254AD8801A80001 /* FSpCompat.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FSpCompat.h; sourceTree = "<group>"; };
+		F5DF1BE10254AD8801A80001 /* FullPath.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = FullPath.c; sourceTree = "<group>"; };
+		F5DF1BE20254AD8801A80001 /* FullPath.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FullPath.h; sourceTree = "<group>"; };
+		F5DF1BE30254AD8801A80001 /* IterateDirectory.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = IterateDirectory.c; sourceTree = "<group>"; };
+		F5DF1BE40254AD8801A80001 /* IterateDirectory.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IterateDirectory.h; sourceTree = "<group>"; };
+		F5DF1BE50254AD8801A80001 /* MoreDesktopMgr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = MoreDesktopMgr.c; sourceTree = "<group>"; };
+		F5DF1BE60254AD8801A80001 /* MoreDesktopMgr.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MoreDesktopMgr.h; sourceTree = "<group>"; };
+		F5DF1BE70254AD8801A80001 /* MoreFiles.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = MoreFiles.c; sourceTree = "<group>"; };
+		F5DF1BE80254AD8801A80001 /* MoreFiles.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MoreFiles.h; sourceTree = "<group>"; };
+		F5DF1BE90254AD8801A80001 /* MoreFilesExtras.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = MoreFilesExtras.c; sourceTree = "<group>"; };
+		F5DF1BEA0254AD8801A80001 /* MoreFilesExtras.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MoreFilesExtras.h; sourceTree = "<group>"; };
+		F5DF1BEB0254AD8801A80001 /* Optimization.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Optimization.h; sourceTree = "<group>"; };
+		F5DF1BEC0254AD8801A80001 /* OptimizationEnd.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OptimizationEnd.h; sourceTree = "<group>"; };
+		F5DF1BED0254AD8801A80001 /* Search.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = Search.c; sourceTree = "<group>"; };
+		F5DF1BEE0254AD8801A80001 /* Search.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Search.h; sourceTree = "<group>"; };
+		F5DF1BF00254AD8801A80001 /* MoreFilesX.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = MoreFilesX.c; sourceTree = "<group>"; };
+		F5DF1BF10254AD8801A80001 /* MoreFilesX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MoreFilesX.h; sourceTree = "<group>"; };
+		F5EDC613025BFB7301A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = boom/English.lproj/boom.nib; sourceTree = "<group>"; };
+		F5EDC616025BFB7C01A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = char/English.lproj/char.nib; sourceTree = "<group>"; };
+		F5EDC619025BFB8601A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = colr/English.lproj/colr.nib; sourceTree = "<group>"; };
+		F5EDC61C025BFB8E01A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = cron/English.lproj/cron.nib; sourceTree = "<group>"; };
+		F5EDC61F025BFBB501A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = desc/English.lproj/desc.nib; sourceTree = "<group>"; };
+		F5EF83A0020C08E601A80001 /* HexEditorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HexEditorDelegate.h; sourceTree = "<group>"; };
+		F5EF83A1020C08E601A80001 /* HexEditorDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HexEditorDelegate.m; sourceTree = "<group>"; };
+		F5EF83A2020C08E601A80001 /* HexTextView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HexTextView.h; sourceTree = "<group>"; };
+		F5EF83A3020C08E601A80001 /* HexTextView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HexTextView.m; sourceTree = "<group>"; };
+		F5EF83A7020C08E601A80001 /* HexWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HexWindowController.h; sourceTree = "<group>"; };
+		F5EF83A8020C08E601A80001 /* HexWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HexWindowController.m; sourceTree = "<group>"; };
+		F5EF83C8020C20D701A80001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/HexWindow.nib; sourceTree = "<group>"; };
+		F5F1071603CCC61E01A8010A /* PasteboardDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardDocument.h; sourceTree = "<group>"; };
+		F5F1071703CCC61E01A8010A /* PasteboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = PasteboardDocument.m; sourceTree = "<group>"; };
+		F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardWindowController.h; sourceTree = "<group>"; };
+		F5F1071B03CCFAAC01A8010A /* PasteboardWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = PasteboardWindowController.m; sourceTree = "<group>"; };
+		F5F98D4502F0B06E01A8010C /* TemplateInitalisation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TemplateInitalisation.h; sourceTree = "<group>"; };
+		F5F98D4602F0B06E01A8010C /* TemplateInitalisation.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = TemplateInitalisation.cpp; sourceTree = "<group>"; };
+		FDBB1C8E038062C0015E48C3 /* C99 Prefix.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "C99 Prefix.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E1B2A4340E41103700A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4350E41103700A72928 /* Cocoa.framework in Frameworks */,
+				E1B2A4360E41103700A72928 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4500E41103800A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4510E41103800A72928 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4620E41103800A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4630E41103800A72928 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A48C0E41103800A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A48D0E41103800A72928 /* Cocoa.framework in Frameworks */,
+				E1B2A48E0E41103800A72928 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4BB0E41103800A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4BC0E41103800A72928 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4EA0E41103900A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4EB0E41103900A72928 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4FF0E41103900A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5000E41103900A72928 /* Carbon.framework in Frameworks */,
+				E1B2A5950E41103A00A72928 /* libResKnife.dylib.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5100E41103900A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5110E41103900A72928 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5220E41103900A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5230E41103900A72928 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5410E41103900A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5530E41103A00A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5540E41103A00A72928 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A57F0E41103A00A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5800E41103A00A72928 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3D0933EB04DF319F00DD74B1 /* Field Types */ = {
+			isa = PBXGroup;
+			children = (
+				3D0933C404DF1C0800DD74B1 /* NuTemplateLSTBElement.h */,
+				3D0933C504DF1C0800DD74B1 /* NuTemplateLSTBElement.m */,
+				3D0933F604DFE80500DD74B1 /* NuTemplateLSTEElement.h */,
+				3D0933F704DFE80500DD74B1 /* NuTemplateLSTEElement.m */,
+				3D0933E304DF2FF700DD74B1 /* NuTemplateTNAMElement.h */,
+				3D0933E404DF2FF700DD74B1 /* NuTemplateTNAMElement.m */,
+				3D0933E704DF317D00DD74B1 /* NuTemplatePSTRElement.h */,
+				3D0933E804DF317D00DD74B1 /* NuTemplatePSTRElement.m */,
+				3D0933EF04DF381900DD74B1 /* NuTemplateDWRDElement.h */,
+				3D0933EE04DF381900DD74B1 /* NuTemplateDWRDElement.m */,
+				3D4737B404E872DB00AF65FE /* NuTemplateDLNGElement.h */,
+				3D4737B304E872DB00AF65FE /* NuTemplateDLNGElement.m */,
+				3D4737B804E873F300AF65FE /* NuTemplateDBYTElement.h */,
+				3D4737B704E873F300AF65FE /* NuTemplateDBYTElement.m */,
+				3D50046F04EF040900F3B64D /* NuTemplateOCNTElement.h */,
+				3D50047004EF040900F3B64D /* NuTemplateOCNTElement.m */,
+				3D50047404EF122000F3B64D /* NuTemplateLSTCElement.h */,
+				3D50047304EF122000F3B64D /* NuTemplateLSTCElement.m */,
+			);
+			name = "Field Types";
+			sourceTree = "<group>";
+		};
+		3D0B38A504DEF41E005AED5E /* Template Editor */ = {
+			isa = PBXGroup;
+			children = (
+				3D0ABFB904E152CA00C85300 /* TEMPLATE EDITOR.txt */,
+				3D0B38B204DEF41E005AED5E /* NuTemplateWindowController.h */,
+				3D0B38B304DEF41E005AED5E /* NuTemplateWindowController.m */,
+				3D0933A604DEFEE600DD74B1 /* NuTemplateElement.h */,
+				3D0933A704DEFEE600DD74B1 /* NuTemplateElement.m */,
+				3D0933BA04DF10D700DD74B1 /* NuTemplateGroupElement.h */,
+				3D0933BB04DF10D700DD74B1 /* NuTemplateGroupElement.m */,
+				3D0933BE04DF151C00DD74B1 /* NuTemplateStream.h */,
+				3D0933BF04DF151C00DD74B1 /* NuTemplateStream.m */,
+				3D0933EB04DF319F00DD74B1 /* Field Types */,
+				E1B2A5850E41103A00A72928 /* Info.plist */,
+				3D2EE5E204E5C56F00515930 /* Localizable.strings */,
+				3D0B38B504DEF465005AED5E /* NuTemplateWindow.nib */,
+			);
+			name = "Template Editor";
+			path = NuTemplateEditor;
+			sourceTree = SOURCE_ROOT;
+		};
+		3D3B99B704DC167D0056861E /* Bitmap Editor */ = {
+			isa = PBXGroup;
+			children = (
+				3D3B99B804DC16A30056861E /* ICONWindowController.m */,
+				3D3B99B904DC16A30056861E /* ICONWindowController.h */,
+				3D3B99BC04DC16FC0056861E /* ICONWindow.nib */,
+			);
+			name = "Bitmap Editor";
+			path = "Template Editor";
+			sourceTree = "<group>";
+		};
+		F50DFE20036C258201A8010A /* Uli's Template Editor */ = {
+			isa = PBXGroup;
+			children = (
+				F50DFE63036C258301A8010A /* main.h */,
+				F50DFE62036C258301A8010A /* main.cpp */,
+				F50DFE67036C258301A8010A /* Templar.cpp */,
+				F50DFE22036C258201A8010A /* BoolTemplateField.cpp */,
+				F50DFE23036C258201A8010A /* BoolTemplateField.h */,
+				F50DFE56036C258301A8010A /* DividerTemplateField.cpp */,
+				F50DFE57036C258301A8010A /* DividerTemplateField.h */,
+				F50DFE5A036C258301A8010A /* IntegerTemplateField.cpp */,
+				F50DFE5B036C258301A8010A /* IntegerTemplateField.h */,
+				F50DFE5C036C258301A8010A /* KHandleStream.cpp */,
+				F50DFE5D036C258301A8010A /* KHandleStream.h */,
+				F50DFE5E036C258301A8010A /* ListTemplateField.cpp */,
+				F50DFE5F036C258301A8010A /* ListTemplateField.h */,
+				F50DFE60036C258301A8010A /* LSTCTemplateField.cpp */,
+				F50DFE61036C258301A8010A /* LSTCTemplateField.h */,
+				F50DFE65036C258301A8010A /* StringTemplateField.cpp */,
+				F50DFE66036C258301A8010A /* StringTemplateField.h */,
+				F50DFE6D036C258301A8010A /* TemplateWindow.cpp */,
+				F50DFE6E036C258301A8010A /* TemplateWindow.h */,
+				F50DFE64036C258301A8010A /* main.r */,
+				F50DFE6C036C258301A8010A /* Templar.rsrc */,
+				F50DFE58036C258301A8010A /* InfoPlist.strings */,
+			);
+			path = "Uli's Template Editor";
+			sourceTree = SOURCE_ROOT;
+		};
+		F51FB38E0256057F01A80001 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E1B2A4930E41103800A72928 /* Info.plist */,
+				F543AFEF027C716E01A8010C /* Resource Types.strings */,
+				F58F6BA9025BDBA701A8010C /* NovaTools.nib */,
+				F5EDC612025BFB7301A8010C /* boom.nib */,
+				F5EDC615025BFB7C01A8010C /* char.nib */,
+				F5EDC618025BFB8601A8010C /* colr.nib */,
+				F5EDC61B025BFB8E01A8010C /* cron.nib */,
+				F5EDC61E025BFBB501A8010C /* desc.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		F5354435022673C101A80001 /* Template Editor (Abandoned) */ = {
+			isa = PBXGroup;
+			children = (
+				F535443E0226752901A80001 /* TemplateWindowController.h */,
+				F535443F0226752901A80001 /* TemplateWindowController.m */,
+				F535444D0226B5F501A80001 /* Element.h */,
+				F535444E0226B5F501A80001 /* Element.m */,
+				E1B2A4680E41103800A72928 /* Info.plist */,
+				F5D0CBD302278F8B01A80001 /* TemplateWindow.nib */,
+			);
+			name = "Template Editor (Abandoned)";
+			path = "Template Editor";
+			sourceTree = "<group>";
+		};
+		F5594EE9021F3E2301A80001 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */,
+				F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */,
+				F59D5DE40320DFF601A8010C /* NSString-FSSpec.h */,
+				F59D5DE50320DFF601A8010C /* NSString-FSSpec.m */,
+				F59D5DE8032106D201A8010C /* NSNumber-Range.h */,
+				F59D5DE9032106D201A8010C /* NSNumber-Range.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		F57CEE0B0189C95101A8010B /* Plug-Ins */ = {
+			isa = PBXGroup;
+			children = (
+				F5C9ECCE027F474A01A8010C /* Notifications.m */,
+				F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */,
+				F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */,
+				F5EF839F020C08E601A80001 /* Hex Editor */,
+				3D3B99B704DC167D0056861E /* Bitmap Editor */,
+				3D0B38A504DEF41E005AED5E /* Template Editor */,
+				F5354435022673C101A80001 /* Template Editor (Abandoned) */,
+			);
+			path = "Plug-Ins";
+			sourceTree = "<group>";
+		};
+		F58A183F0278353501A8010C /* Aux Support */ = {
+			isa = PBXGroup;
+			children = (
+				F5C9ECD8027F562201A8010C /* Structs.h */,
+				F543AFDB027B2A5001A8010C /* DataSource.h */,
+				F543AFDC027B2A5001A8010C /* DataSource.m */,
+				F58A18410278355D01A8010C /* DescSplitViewDelegate.h */,
+				F58A18400278355D01A8010C /* DescSplitViewDelegate.m */,
+			);
+			name = "Aux Support";
+			sourceTree = "<group>";
+		};
+		F5B588100156D2A601000001 = {
+			isa = PBXGroup;
+			children = (
+				F5B5887C0156D6D901000001 /* Prefix Files */,
+				F5B5881A0156D40B01000001 /* Cocoa */,
+				F5B5887F0156D6D901000001 /* Carbon */,
+				F5EA10690254A7B401A80001 /* External */,
+				F5DF1C0F0254C78801A80001 /* NovaTools */,
+				F5B588490156D40B01000001 /* Frameworks */,
+				F5B588110156D30301000001 /* Products */,
+				E1B2A4C30E41103800A72928 /* Info-ResKnife_Carbon__Upgraded_.plist */,
+				E1B2A5060E41103900A72928 /* Info-Hex_Editor_Carbon__Upgraded_.plist */,
+				E1B2A5170E41103900A72928 /* Info-Template_Editor_Carbon__Upgraded_.plist */,
+				E1B2A5280E41103900A72928 /* Info-PICT_Editor__Upgraded_.plist */,
+				E1B2A5470E41103900A72928 /* Info-Uli_s_Template_Editor__Upgraded_.plist */,
+				E1B2A5590E41103A00A72928 /* Info-Bitmap_Editor_Cocoa__Upgraded_.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		F5B588110156D30301000001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E1B2A43C0E41103800A72928 /* ResKnife Cocoa.app */,
+				E1B2A4570E41103800A72928 /* Hexadecimal Editor.plugin */,
+				E1B2A4690E41103800A72928 /* Template Editor.plugin */,
+				E1B2A4940E41103800A72928 /* NovaTools.plugin */,
+				E1B2A4C40E41103900A72928 /* ResKnife Carbon.app */,
+				E1B2A4F00E41103900A72928 /* libResKnife.dylib.a */,
+				E1B2A5070E41103900A72928 /* Hex Editor.bundle */,
+				E1B2A5180E41103900A72928 /* Template Editor.bundle */,
+				E1B2A5290E41103900A72928 /* PICT Editor.bundle */,
+				E1B2A5480E41103A00A72928 /* Ulis Template Editor.bundle */,
+				E1B2A55A0E41103A00A72928 /* Bitmap Editor.plugin */,
+				E1B2A5860E41103A00A72928 /* Template Editor.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5B5881A0156D40B01000001 /* Cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				3D0ABFBC04E172F700C85300 /* README.txt */,
+				3D0933F404DFD7CF00DD74B1 /* TODO.txt */,
+				3D35755A04DAEB4300B8225B /* main.m */,
+				F5B5881C0156D40B01000001 /* Classes */,
+				F5594EE9021F3E2301A80001 /* Categories */,
+				F5B588350156D40B01000001 /* Resources */,
+				F57CEE0B0189C95101A8010B /* Plug-Ins */,
+			);
+			path = Cocoa;
+			sourceTree = "<group>";
+		};
+		F5B5881C0156D40B01000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F5B5881D0156D40B01000001 /* ApplicationDelegate.h */,
+				F5B5881E0156D40B01000001 /* ApplicationDelegate.m */,
+				F5B5881F0156D40B01000001 /* AttributesFormatter.h */,
+				F5B588200156D40B01000001 /* AttributesFormatter.m */,
+				F5B588210156D40B01000001 /* CreateResourceSheetController.h */,
+				F5B588220156D40B01000001 /* CreateResourceSheetController.m */,
+				F5B588250156D40B01000001 /* InfoWindowController.h */,
+				F5B588260156D40B01000001 /* InfoWindowController.m */,
+				F5B588270156D40B01000001 /* NameFormatter.h */,
+				F5B588280156D40B01000001 /* NameFormatter.m */,
+				F59481B103D077DC01A8010A /* OpenFileDataSource.h */,
+				F59481B203D077DC01A8010A /* OpenFileDataSource.m */,
+				F5B588290156D40B01000001 /* OutlineViewDelegate.h */,
+				F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */,
+				F5F1071603CCC61E01A8010A /* PasteboardDocument.h */,
+				F5F1071703CCC61E01A8010A /* PasteboardDocument.m */,
+				F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */,
+				F5F1071B03CCFAAC01A8010A /* PasteboardWindowController.m */,
+				F5B5882B0156D40B01000001 /* PrefsWindowController.h */,
+				F5B5882C0156D40B01000001 /* PrefsWindowController.m */,
+				F5B5882D0156D40B01000001 /* Resource.h */,
+				F5B5882E0156D40B01000001 /* Resource.m */,
+				3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */,
+				3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */,
+				3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */,
+				3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */,
+				F5B5882F0156D40B01000001 /* ResourceDataSource.h */,
+				F5B588300156D40B01000001 /* ResourceDataSource.m */,
+				F5B588310156D40B01000001 /* ResourceDocument.h */,
+				F5B588320156D40B01000001 /* ResourceDocument.m */,
+				F577A900021215C801A80001 /* ResourceNameCell.h */,
+				F577A901021215C801A80001 /* ResourceNameCell.m */,
+				F59481AD03D0776C01A8010A /* RKDocumentController.h */,
+				F59481AE03D0776C01A8010A /* RKDocumentController.m */,
+				F5B588330156D40B01000001 /* SizeFormatter.h */,
+				F5B588340156D40B01000001 /* SizeFormatter.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F5B588350156D40B01000001 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E1B2A43B0E41103700A72928 /* Info.plist */,
+				F5B588420156D40B01000001 /* InfoPlist.strings */,
+				F5B588440156D40B01000001 /* Localizable.strings */,
+				F5730B930159528A01000001 /* defaults.plist */,
+				F5041736036BD60801A8010A /* ResKnife.scriptSuite */,
+				F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */,
+				F5B588360156D40B01000001 /* AboutPanel.nib */,
+				F5B588380156D40B01000001 /* Application.nib */,
+				F54E622B021D192201A80001 /* CreateResourceSheet.nib */,
+				F5B5883A0156D40B01000001 /* InfoWindow.nib */,
+				F5B5883E0156D40B01000001 /* PrefsWindow.nib */,
+				F5B588400156D40B01000001 /* ResourceDocument.nib */,
+				F5B588460156D40B01000001 /* ResKnife.icns */,
+				F5B588470156D40B01000001 /* Resource file.icns */,
+				F5B588480156D40B01000001 /* Icon file.icns */,
+				F577A8FA0211E4D401A80001 /* Create.tiff */,
+				F577A904021220D601A80001 /* Delete.tiff */,
+				F577A8FB0211E4D401A80001 /* Edit.tiff */,
+				F577A8FC0211E4D401A80001 /* Edit Hex.tiff */,
+				F577A8F30211CFA701A80001 /* Save.tiff */,
+				F577A8F80211DC1E01A80001 /* Show Info.tiff */,
+				3D35756004DAEB7F00B8225B /* Export.tiff */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F5B588490156D40B01000001 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F5B5884A0156D40B01000001 /* Carbon.framework */,
+				F54625C6029174F601A8010C /* CoreServices.framework */,
+				F54626490291750201A8010C /* ApplicationServices.framework */,
+				F5B5884B0156D40B01000001 /* Cocoa.framework */,
+				F5B5884C0156D40B01000001 /* AppKit.framework */,
+				F5B5884D0156D40B01000001 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F5B5887C0156D6D901000001 /* Prefix Files */ = {
+			isa = PBXGroup;
+			children = (
+				F5B5887D0156D6D901000001 /* Carbon Prefix.h */,
+				F5B5887E0156D6D901000001 /* Classic Prefix.h */,
+				FDBB1C8E038062C0015E48C3 /* C99 Prefix.h */,
+			);
+			path = "Prefix Files";
+			sourceTree = "<group>";
+		};
+		F5B5887F0156D6D901000001 /* Carbon */ = {
+			isa = PBXGroup;
+			children = (
+				F5B588810156D6D901000001 /* ResKnife.h */,
+				F5B588820156D6D901000001 /* Generic.h */,
+				F5B588800156D6D901000001 /* Transfer.h */,
+				F5B588830156D6D901000001 /* Classes */,
+				F5B588A20156D6D901000001 /* Resources */,
+				F5B588D80156D9D401000001 /* Hex Editor */,
+				F5B588F40156DC2201000001 /* Template Editor */,
+				F5B588FC0156DC2201000001 /* PICT Editor */,
+			);
+			path = Carbon;
+			sourceTree = "<group>";
+		};
+		F5B588830156D6D901000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F5B588840156D6D901000001 /* Application.h */,
+				F5B588850156D6D901000001 /* Application.cpp */,
+				F5B588860156D6D901000001 /* Asynchronous.h */,
+				F5B588870156D6D901000001 /* Asynchronous.cpp */,
+				F5B588880156D6D901000001 /* DataBrowser.h */,
+				F5B588890156D6D901000001 /* DataBrowser.cpp */,
+				F5B5888A0156D6D901000001 /* EditorWindow.h */,
+				F5B5888B0156D6D901000001 /* EditorWindow.cpp */,
+				F5B5888C0156D6D901000001 /* Errors.h */,
+				F5B5888D0156D6D901000001 /* Errors.cpp */,
+				F5B5888E0156D6D901000001 /* Files.h */,
+				F5B5888F0156D6D901000001 /* Files.cpp */,
+				F5B588900156D6D901000001 /* FileWindow.h */,
+				F5B588910156D6D901000001 /* FileWindow.cpp */,
+				F5B588920156D6D901000001 /* HostCallbacks.h */,
+				F5B588930156D6D901000001 /* HostCallbacks.cpp */,
+				F5B588940156D6D901000001 /* InspectorWindow.h */,
+				F5B588950156D6D901000001 /* InspectorWindow.cpp */,
+				F5B588960156D6D901000001 /* PickerWindow.h */,
+				F5B588970156D6D901000001 /* PickerWindow.cpp */,
+				F5B588980156D6D901000001 /* PlugObject.h */,
+				F5B588990156D6D901000001 /* PlugObject.cpp */,
+				F5B5889A0156D6D901000001 /* PlugWindow.h */,
+				F5B5889B0156D6D901000001 /* PlugWindow.cpp */,
+				F5B5889C0156D6D901000001 /* ResourceObject.h */,
+				F5B5889D0156D6D901000001 /* ResourceObject.cpp */,
+				F5B5889E0156D6D901000001 /* Utility.h */,
+				F5B5889F0156D6D901000001 /* Utility.cpp */,
+				F5B588A00156D6D901000001 /* WindowObject.h */,
+				F5B588A10156D6D901000001 /* WindowObject.cpp */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F5B588A20156D6D901000001 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F5B588A30156D6D901000001 /* Carbon.r */,
+				F5B588A40156D6D901000001 /* ResKnife.r */,
+				F5B588A50156D6D901000001 /* ResKnife.rsrc */,
+				F5B588A60156D6D901000001 /* ResKnife.nib */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F5B588D80156D9D401000001 /* Hex Editor */ = {
+			isa = PBXGroup;
+			children = (
+				F5B588D90156D9D401000001 /* Hex Editor.h */,
+				F5B588DA0156D9D401000001 /* Classes */,
+			);
+			path = "Hex Editor";
+			sourceTree = SOURCE_ROOT;
+		};
+		F5B588DA0156D9D401000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F5B588DB0156D9D401000001 /* Events.h */,
+				F5B588DC0156D9D401000001 /* Events.cpp */,
+				F5B588DD0156D9D401000001 /* HexWindow.h */,
+				F5B588DE0156D9D401000001 /* HexWindow.cpp */,
+				F5B588DF0156D9D401000001 /* Initalisation.h */,
+				F5B588E00156D9D401000001 /* Initalisation.cpp */,
+				F5B588E10156D9D401000001 /* Utility.h */,
+				F5B588E20156D9D401000001 /* Utility.cpp */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F5B588F40156DC2201000001 /* Template Editor */ = {
+			isa = PBXGroup;
+			children = (
+				F5B588F50156DC2201000001 /* Template Editor.h */,
+				F5B588FB0156DC2201000001 /* Template Editor.r */,
+				F5B588F60156DC2201000001 /* Classes */,
+			);
+			path = "Template Editor";
+			sourceTree = SOURCE_ROOT;
+		};
+		F5B588F60156DC2201000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F5F98D4502F0B06E01A8010C /* TemplateInitalisation.h */,
+				F5F98D4602F0B06E01A8010C /* TemplateInitalisation.cpp */,
+				F5B588F90156DC2201000001 /* TemplateWindow.h */,
+				F5B588FA0156DC2201000001 /* TemplateWindow.cpp */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F5B588FC0156DC2201000001 /* PICT Editor */ = {
+			isa = PBXGroup;
+			children = (
+				F5B588FD0156DC2201000001 /* PICT Editor.h */,
+				F5B588FE0156DC2201000001 /* Classes */,
+			);
+			path = "PICT Editor";
+			sourceTree = SOURCE_ROOT;
+		};
+		F5B588FE0156DC2201000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F5B588FF0156DC2201000001 /* Initalisation.h */,
+				F5B589000156DC2201000001 /* Initalisation.cpp */,
+				F5B589010156DC2201000001 /* Parser.h */,
+				F5B589020156DC2201000001 /* PictWindow.cpp */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F5DF1BDA0254AD8801A80001 /* MoreFiles */ = {
+			isa = PBXGroup;
+			children = (
+				F5DF1BDB0254AD8801A80001 /* DirectoryCopy.c */,
+				F5DF1BDC0254AD8801A80001 /* DirectoryCopy.h */,
+				F5DF1BDD0254AD8801A80001 /* FileCopy.c */,
+				F5DF1BDE0254AD8801A80001 /* FileCopy.h */,
+				F5DF1BDF0254AD8801A80001 /* FSpCompat.c */,
+				F5DF1BE00254AD8801A80001 /* FSpCompat.h */,
+				F5DF1BE10254AD8801A80001 /* FullPath.c */,
+				F5DF1BE20254AD8801A80001 /* FullPath.h */,
+				F5DF1BE30254AD8801A80001 /* IterateDirectory.c */,
+				F5DF1BE40254AD8801A80001 /* IterateDirectory.h */,
+				F5DF1BE50254AD8801A80001 /* MoreDesktopMgr.c */,
+				F5DF1BE60254AD8801A80001 /* MoreDesktopMgr.h */,
+				F5DF1BE70254AD8801A80001 /* MoreFiles.c */,
+				F5DF1BE80254AD8801A80001 /* MoreFiles.h */,
+				F5DF1BE90254AD8801A80001 /* MoreFilesExtras.c */,
+				F5DF1BEA0254AD8801A80001 /* MoreFilesExtras.h */,
+				F5DF1BEB0254AD8801A80001 /* Optimization.h */,
+				F5DF1BEC0254AD8801A80001 /* OptimizationEnd.h */,
+				F5DF1BED0254AD8801A80001 /* Search.c */,
+				F5DF1BEE0254AD8801A80001 /* Search.h */,
+			);
+			path = MoreFiles;
+			sourceTree = "<group>";
+		};
+		F5DF1BEF0254AD8801A80001 /* MoreFilesX */ = {
+			isa = PBXGroup;
+			children = (
+				F5DF1BF10254AD8801A80001 /* MoreFilesX.h */,
+				F5DF1BF00254AD8801A80001 /* MoreFilesX.c */,
+			);
+			path = MoreFilesX;
+			sourceTree = "<group>";
+		};
+		F5DF1C0F0254C78801A80001 /* NovaTools */ = {
+			isa = PBXGroup;
+			children = (
+				F58F6B82025BC73001A8010C /* NovaWindowController.h */,
+				F58F6B83025BC73001A8010C /* NovaWindowController.m */,
+				F58F6B7E025BC3A501A8010C /* BoomWindowController.h */,
+				F58F6B7F025BC3A501A8010C /* BoomWindowController.m */,
+				F58F6B86025BC76D01A8010C /* CharWindowController.h */,
+				F58F6B87025BC76D01A8010C /* CharWindowController.m */,
+				F58F6B8A025BC7C001A8010C /* ColrWindowController.h */,
+				F58F6B8B025BC7C001A8010C /* ColrWindowController.m */,
+				F58F6B8E025BCF5901A8010C /* CronWindowController.h */,
+				F58F6B8F025BCF5901A8010C /* CronWindowController.m */,
+				F58F6B93025BD97701A8010C /* DescWindowController.h */,
+				F58F6B92025BD97701A8010C /* DescWindowController.m */,
+				F58A183F0278353501A8010C /* Aux Support */,
+				F51FB38E0256057F01A80001 /* Resources */,
+			);
+			path = NovaTools;
+			sourceTree = "<group>";
+		};
+		F5EA10690254A7B401A80001 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				F50DFE20036C258201A8010A /* Uli's Template Editor */,
+				F5DF1BDA0254AD8801A80001 /* MoreFiles */,
+				F5DF1BEF0254AD8801A80001 /* MoreFilesX */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		F5EF839F020C08E601A80001 /* Hex Editor */ = {
+			isa = PBXGroup;
+			children = (
+				F54E6220021B6A0801A80001 /* FindSheetController.h */,
+				F54E6221021B6A0801A80001 /* FindSheetController.m */,
+				F5EF83A0020C08E601A80001 /* HexEditorDelegate.h */,
+				F5EF83A1020C08E601A80001 /* HexEditorDelegate.m */,
+				F5EF83A2020C08E601A80001 /* HexTextView.h */,
+				F5EF83A3020C08E601A80001 /* HexTextView.m */,
+				F5EF83A7020C08E601A80001 /* HexWindowController.h */,
+				F5EF83A8020C08E601A80001 /* HexWindowController.m */,
+				E1B2A4560E41103800A72928 /* Info.plist */,
+				F5EF83C7020C20D701A80001 /* HexWindow.nib */,
+				F5606FDD02ACF2F701A8010C /* PasteMenu.nib */,
+				F54E6222021B6A0801A80001 /* FindSheet.nib */,
+			);
+			path = "Hex Editor";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E1B2A3E90E41103700A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A3EA0E41103700A72928 /* ResKnifeResourceProtocol.h in Headers */,
+				E1B2A3EB0E41103700A72928 /* ResKnifePluginProtocol.h in Headers */,
+				E1B2A3EC0E41103700A72928 /* ApplicationDelegate.h in Headers */,
+				E1B2A3ED0E41103700A72928 /* AttributesFormatter.h in Headers */,
+				E1B2A3EE0E41103700A72928 /* CreateResourceSheetController.h in Headers */,
+				E1B2A3EF0E41103700A72928 /* InfoWindowController.h in Headers */,
+				E1B2A3F00E41103700A72928 /* NameFormatter.h in Headers */,
+				E1B2A3F10E41103700A72928 /* OutlineViewDelegate.h in Headers */,
+				E1B2A3F20E41103700A72928 /* PrefsWindowController.h in Headers */,
+				E1B2A3F30E41103700A72928 /* Resource.h in Headers */,
+				E1B2A3F40E41103700A72928 /* ResourceDataSource.h in Headers */,
+				E1B2A3F50E41103700A72928 /* ResourceDocument.h in Headers */,
+				E1B2A3F60E41103700A72928 /* ResourceNameCell.h in Headers */,
+				E1B2A3F70E41103700A72928 /* SizeFormatter.h in Headers */,
+				E1B2A3F80E41103700A72928 /* NSOutlineView-SelectedItems.h in Headers */,
+				E1B2A3F90E41103700A72928 /* MoreFilesX.h in Headers */,
+				E1B2A3FA0E41103700A72928 /* NSString-FSSpec.h in Headers */,
+				E1B2A3FB0E41103700A72928 /* PasteboardDocument.h in Headers */,
+				E1B2A3FC0E41103700A72928 /* PasteboardWindowController.h in Headers */,
+				E1B2A3FD0E41103700A72928 /* RKDocumentController.h in Headers */,
+				E1B2A3FE0E41103700A72928 /* OpenFileDataSource.h in Headers */,
+				E1B2A3FF0E41103700A72928 /* RKEditorRegistry.h in Headers */,
+				E1B2A4000E41103700A72928 /* RKSupportResourceRegistry.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A43F0E41103800A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4400E41103800A72928 /* ResKnifeResourceProtocol.h in Headers */,
+				E1B2A4410E41103800A72928 /* ResKnifePluginProtocol.h in Headers */,
+				E1B2A4420E41103800A72928 /* HexEditorDelegate.h in Headers */,
+				E1B2A4430E41103800A72928 /* HexTextView.h in Headers */,
+				E1B2A4440E41103800A72928 /* HexWindowController.h in Headers */,
+				E1B2A4450E41103800A72928 /* FindSheetController.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4590E41103800A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A45A0E41103800A72928 /* TemplateWindowController.h in Headers */,
+				E1B2A45B0E41103800A72928 /* Element.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A46B0E41103800A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A46C0E41103800A72928 /* HostCallbacks.h in Headers */,
+				E1B2A46D0E41103800A72928 /* BoomWindowController.h in Headers */,
+				E1B2A46E0E41103800A72928 /* NovaWindowController.h in Headers */,
+				E1B2A46F0E41103800A72928 /* CharWindowController.h in Headers */,
+				E1B2A4700E41103800A72928 /* ColrWindowController.h in Headers */,
+				E1B2A4710E41103800A72928 /* CronWindowController.h in Headers */,
+				E1B2A4720E41103800A72928 /* DescWindowController.h in Headers */,
+				E1B2A4730E41103800A72928 /* ResKnifeResourceProtocol.h in Headers */,
+				E1B2A4740E41103800A72928 /* ResKnifePluginProtocol.h in Headers */,
+				E1B2A4750E41103800A72928 /* DescSplitViewDelegate.h in Headers */,
+				E1B2A4760E41103800A72928 /* DataSource.h in Headers */,
+				E1B2A4770E41103800A72928 /* Structs.h in Headers */,
+				E1B2A4780E41103800A72928 /* NSNumber-Range.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4960E41103800A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4970E41103800A72928 /* Application.h in Headers */,
+				E1B2A4980E41103800A72928 /* Asynchronous.h in Headers */,
+				E1B2A4990E41103800A72928 /* DataBrowser.h in Headers */,
+				E1B2A49A0E41103800A72928 /* EditorWindow.h in Headers */,
+				E1B2A49B0E41103800A72928 /* Errors.h in Headers */,
+				E1B2A49C0E41103800A72928 /* Files.h in Headers */,
+				E1B2A49D0E41103800A72928 /* FileWindow.h in Headers */,
+				E1B2A49E0E41103800A72928 /* HostCallbacks.h in Headers */,
+				E1B2A49F0E41103800A72928 /* InspectorWindow.h in Headers */,
+				E1B2A4A00E41103800A72928 /* PickerWindow.h in Headers */,
+				E1B2A4A10E41103800A72928 /* PlugObject.h in Headers */,
+				E1B2A4A20E41103800A72928 /* PlugWindow.h in Headers */,
+				E1B2A4A30E41103800A72928 /* ResourceObject.h in Headers */,
+				E1B2A4A40E41103800A72928 /* Utility.h in Headers */,
+				E1B2A4A50E41103800A72928 /* WindowObject.h in Headers */,
+				E1B2A4A60E41103800A72928 /* Generic.h in Headers */,
+				E1B2A4A70E41103800A72928 /* ResKnife.h in Headers */,
+				E1B2A4A80E41103800A72928 /* Transfer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4C70E41103900A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4C80E41103900A72928 /* ResKnife.h in Headers */,
+				E1B2A4C90E41103900A72928 /* Generic.h in Headers */,
+				E1B2A4CA0E41103900A72928 /* Transfer.h in Headers */,
+				E1B2A4CB0E41103900A72928 /* Application.h in Headers */,
+				E1B2A4CC0E41103900A72928 /* Asynchronous.h in Headers */,
+				E1B2A4CD0E41103900A72928 /* DataBrowser.h in Headers */,
+				E1B2A4CE0E41103900A72928 /* EditorWindow.h in Headers */,
+				E1B2A4CF0E41103900A72928 /* Errors.h in Headers */,
+				E1B2A4D00E41103900A72928 /* Files.h in Headers */,
+				E1B2A4D10E41103900A72928 /* FileWindow.h in Headers */,
+				E1B2A4D20E41103900A72928 /* HostCallbacks.h in Headers */,
+				E1B2A4D30E41103900A72928 /* InspectorWindow.h in Headers */,
+				E1B2A4D40E41103900A72928 /* WindowObject.h in Headers */,
+				E1B2A4D50E41103900A72928 /* Utility.h in Headers */,
+				E1B2A4D60E41103900A72928 /* ResourceObject.h in Headers */,
+				E1B2A4D70E41103900A72928 /* PlugWindow.h in Headers */,
+				E1B2A4D80E41103900A72928 /* PlugObject.h in Headers */,
+				E1B2A4D90E41103900A72928 /* PickerWindow.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4F20E41103900A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4F30E41103900A72928 /* Hex Editor.h in Headers */,
+				E1B2A4F40E41103900A72928 /* Events.h in Headers */,
+				E1B2A4F50E41103900A72928 /* HexWindow.h in Headers */,
+				E1B2A4F60E41103900A72928 /* Initalisation.h in Headers */,
+				E1B2A4F70E41103900A72928 /* Utility.h in Headers */,
+				E1B2A4F80E41103900A72928 /* HostCallbacks.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5090E41103900A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A50A0E41103900A72928 /* Template Editor.h in Headers */,
+				E1B2A50B0E41103900A72928 /* TemplateWindow.h in Headers */,
+				E1B2A50C0E41103900A72928 /* HostCallbacks.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A51A0E41103900A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A51B0E41103900A72928 /* Initalisation.h in Headers */,
+				E1B2A51C0E41103900A72928 /* Parser.h in Headers */,
+				E1B2A51D0E41103900A72928 /* PICT Editor.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A52B0E41103900A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A52C0E41103900A72928 /* BoolTemplateField.h in Headers */,
+				E1B2A52D0E41103900A72928 /* DividerTemplateField.h in Headers */,
+				E1B2A52E0E41103900A72928 /* IntegerTemplateField.h in Headers */,
+				E1B2A52F0E41103900A72928 /* KHandleStream.h in Headers */,
+				E1B2A5300E41103900A72928 /* ListTemplateField.h in Headers */,
+				E1B2A5310E41103900A72928 /* LSTCTemplateField.h in Headers */,
+				E1B2A5320E41103900A72928 /* StringTemplateField.h in Headers */,
+				E1B2A5330E41103900A72928 /* TemplateWindow.h in Headers */,
+				E1B2A5340E41103900A72928 /* HostCallbacks.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A54A0E41103A00A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A54B0E41103A00A72928 /* ResKnifePluginProtocol.h in Headers */,
+				E1B2A54C0E41103A00A72928 /* ResKnifeResourceProtocol.h in Headers */,
+				E1B2A54D0E41103A00A72928 /* ICONWindowController.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A55C0E41103A00A72928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A55D0E41103A00A72928 /* NuTemplateWindowController.h in Headers */,
+				E1B2A55E0E41103A00A72928 /* ResKnifePluginProtocol.h in Headers */,
+				E1B2A55F0E41103A00A72928 /* ResKnifeResourceProtocol.h in Headers */,
+				E1B2A5600E41103A00A72928 /* NuTemplateElement.h in Headers */,
+				E1B2A5610E41103A00A72928 /* NuTemplateGroupElement.h in Headers */,
+				E1B2A5620E41103A00A72928 /* NuTemplateStream.h in Headers */,
+				E1B2A5630E41103A00A72928 /* NuTemplateLSTBElement.h in Headers */,
+				E1B2A5640E41103A00A72928 /* NuTemplateTNAMElement.h in Headers */,
+				E1B2A5650E41103A00A72928 /* NuTemplatePSTRElement.h in Headers */,
+				E1B2A5660E41103A00A72928 /* NuTemplateDWRDElement.h in Headers */,
+				E1B2A5670E41103A00A72928 /* NuTemplateLSTEElement.h in Headers */,
+				E1B2A5680E41103A00A72928 /* NuTemplateDLNGElement.h in Headers */,
+				E1B2A5690E41103A00A72928 /* NuTemplateDBYTElement.h in Headers */,
+				E1B2A56A0E41103A00A72928 /* NuTemplateOCNTElement.h in Headers */,
+				E1B2A56B0E41103A00A72928 /* NuTemplateLSTCElement.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		E1B2A3DE0E41103700A72928 /* ResKnife Cocoa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A4380E41103700A72928 /* Build configuration list for PBXNativeTarget "ResKnife Cocoa" */;
+			buildPhases = (
+				E1B2A3E90E41103700A72928 /* Headers */,
+				E1B2A4010E41103700A72928 /* Resources */,
+				E1B2A4170E41103700A72928 /* CopyFiles */,
+				E1B2A41C0E41103700A72928 /* Sources */,
+				E1B2A4340E41103700A72928 /* Frameworks */,
+				E1B2A4370E41103700A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E1B2A5880E41103A00A72928 /* PBXTargetDependency */,
+				E1B2A5900E41103A00A72928 /* PBXTargetDependency */,
+			);
+			name = "ResKnife Cocoa";
+			productInstallPath = "$(USER_APPS_DIR)";
+			productName = "ResKnife Cocoa";
+			productReference = E1B2A43C0E41103800A72928 /* ResKnife Cocoa.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E1B2A43E0E41103800A72928 /* Hex Editor Cocoa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A4530E41103800A72928 /* Build configuration list for PBXNativeTarget "Hex Editor Cocoa" */;
+			buildPhases = (
+				E1B2A43F0E41103800A72928 /* Headers */,
+				E1B2A4460E41103800A72928 /* Resources */,
+				E1B2A44A0E41103800A72928 /* Sources */,
+				E1B2A4500E41103800A72928 /* Frameworks */,
+				E1B2A4520E41103800A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Hex Editor Cocoa";
+			productName = "Hex Editor Cocoa";
+			productReference = E1B2A4570E41103800A72928 /* Hexadecimal Editor.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E1B2A4580E41103800A72928 /* Nick's Template Editor (Abandoned) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A4650E41103800A72928 /* Build configuration list for PBXNativeTarget "Nick's Template Editor (Abandoned)" */;
+			buildPhases = (
+				E1B2A4590E41103800A72928 /* Headers */,
+				E1B2A45C0E41103800A72928 /* Resources */,
+				E1B2A45E0E41103800A72928 /* Sources */,
+				E1B2A4620E41103800A72928 /* Frameworks */,
+				E1B2A4640E41103800A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Nick's Template Editor (Abandoned)";
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = "Template Editor Cocoa";
+			productReference = E1B2A4690E41103800A72928 /* Template Editor.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E1B2A46A0E41103800A72928 /* NovaTools */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A4900E41103800A72928 /* Build configuration list for PBXNativeTarget "NovaTools" */;
+			buildPhases = (
+				E1B2A46B0E41103800A72928 /* Headers */,
+				E1B2A4790E41103800A72928 /* Resources */,
+				E1B2A4810E41103800A72928 /* Sources */,
+				E1B2A48C0E41103800A72928 /* Frameworks */,
+				E1B2A48F0E41103800A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NovaTools;
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = "NovaTools™";
+			productReference = E1B2A4940E41103800A72928 /* NovaTools.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E1B2A4950E41103800A72928 /* ResKnife Carbon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A4C00E41103800A72928 /* Build configuration list for PBXNativeTarget "ResKnife Carbon" */;
+			buildPhases = (
+				E1B2A4960E41103800A72928 /* Headers */,
+				E1B2A4A90E41103800A72928 /* Resources */,
+				E1B2A4AB0E41103800A72928 /* Sources */,
+				E1B2A4BB0E41103800A72928 /* Frameworks */,
+				E1B2A4BD0E41103800A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ResKnife Carbon";
+			productInstallPath = "$(USER_APPS_DIR)";
+			productName = "ResKnife Carbon";
+			productReference = E1B2A4C40E41103900A72928 /* ResKnife Carbon.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E1B2A4C60E41103900A72928 /* libResKnife */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A4ED0E41103900A72928 /* Build configuration list for PBXNativeTarget "libResKnife" */;
+			buildPhases = (
+				E1B2A4C70E41103900A72928 /* Headers */,
+				E1B2A4DA0E41103900A72928 /* Sources */,
+				E1B2A4EA0E41103900A72928 /* Frameworks */,
+				E1B2A4EC0E41103900A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libResKnife;
+			productInstallPath = /usr/local/lib;
+			productName = libResKnife;
+			productReference = E1B2A4F00E41103900A72928 /* libResKnife.dylib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		E1B2A4F10E41103900A72928 /* Hex Editor Carbon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A5030E41103900A72928 /* Build configuration list for PBXNativeTarget "Hex Editor Carbon" */;
+			buildPhases = (
+				E1B2A4F20E41103900A72928 /* Headers */,
+				E1B2A4F90E41103900A72928 /* Resources */,
+				E1B2A4FA0E41103900A72928 /* Sources */,
+				E1B2A4FF0E41103900A72928 /* Frameworks */,
+				E1B2A5020E41103900A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Hex Editor Carbon";
+			productName = "Hex Editor";
+			productReference = E1B2A5070E41103900A72928 /* Hex Editor.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E1B2A5080E41103900A72928 /* Template Editor Carbon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A5140E41103900A72928 /* Build configuration list for PBXNativeTarget "Template Editor Carbon" */;
+			buildPhases = (
+				E1B2A5090E41103900A72928 /* Headers */,
+				E1B2A50D0E41103900A72928 /* Resources */,
+				E1B2A50E0E41103900A72928 /* Sources */,
+				E1B2A5100E41103900A72928 /* Frameworks */,
+				E1B2A5120E41103900A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Template Editor Carbon";
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = "Template Editor";
+			productReference = E1B2A5180E41103900A72928 /* Template Editor.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E1B2A5190E41103900A72928 /* PICT Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A5250E41103900A72928 /* Build configuration list for PBXNativeTarget "PICT Editor" */;
+			buildPhases = (
+				E1B2A51A0E41103900A72928 /* Headers */,
+				E1B2A51E0E41103900A72928 /* Resources */,
+				E1B2A51F0E41103900A72928 /* Sources */,
+				E1B2A5220E41103900A72928 /* Frameworks */,
+				E1B2A5240E41103900A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PICT Editor";
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = "PICT Editor";
+			productReference = E1B2A5290E41103900A72928 /* PICT Editor.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E1B2A52A0E41103900A72928 /* Uli's Template Editor (Abandoned) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A5440E41103900A72928 /* Build configuration list for PBXNativeTarget "Uli's Template Editor (Abandoned)" */;
+			buildPhases = (
+				E1B2A52B0E41103900A72928 /* Headers */,
+				E1B2A5350E41103900A72928 /* Resources */,
+				E1B2A5370E41103900A72928 /* Sources */,
+				E1B2A5410E41103900A72928 /* Frameworks */,
+				E1B2A5420E41103900A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Uli's Template Editor (Abandoned)";
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = "Uli's Template Editor";
+			productReference = E1B2A5480E41103A00A72928 /* Ulis Template Editor.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E1B2A5490E41103A00A72928 /* Bitmap Editor Cocoa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A5560E41103A00A72928 /* Build configuration list for PBXNativeTarget "Bitmap Editor Cocoa" */;
+			buildPhases = (
+				E1B2A54A0E41103A00A72928 /* Headers */,
+				E1B2A54E0E41103A00A72928 /* Resources */,
+				E1B2A5500E41103A00A72928 /* Sources */,
+				E1B2A5530E41103A00A72928 /* Frameworks */,
+				E1B2A5550E41103A00A72928 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Bitmap Editor Cocoa";
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = "Bitmap Editor Cocoa";
+			productReference = E1B2A55A0E41103A00A72928 /* Bitmap Editor.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E1B2A55B0E41103A00A72928 /* Template Editor Cocoa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A5820E41103A00A72928 /* Build configuration list for PBXNativeTarget "Template Editor Cocoa" */;
+			buildPhases = (
+				E1B2A55C0E41103A00A72928 /* Headers */,
+				E1B2A56C0E41103A00A72928 /* Resources */,
+				E1B2A5700E41103A00A72928 /* Sources */,
+				E1B2A57F0E41103A00A72928 /* Frameworks */,
+				E1B2A5810E41103A00A72928 /* Rez */,
+			);
+			buildRules = (
+				E1B2A5980E41103D00A72928 /* PBXBuildRule */,
+				E1B2A5990E41103D00A72928 /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = "Template Editor Cocoa";
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = "NuTemplateEditor Cocoa";
+			productReference = E1B2A5860E41103A00A72928 /* Template Editor.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F5B5880F0156D2A601000001 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 84A45AA50E410BAD008598FD /* Build configuration list for PBXProject "ResKnife" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = F5B588100156D2A601000001;
+			productRefGroup = F5B588110156D30301000001 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E1B2A3DE0E41103700A72928 /* ResKnife Cocoa */,
+				E1B2A43E0E41103800A72928 /* Hex Editor Cocoa */,
+				E1B2A55B0E41103A00A72928 /* Template Editor Cocoa */,
+				E1B2A5490E41103A00A72928 /* Bitmap Editor Cocoa */,
+				E1B2A46A0E41103800A72928 /* NovaTools */,
+				E1B2A4950E41103800A72928 /* ResKnife Carbon */,
+				E1B2A4C60E41103900A72928 /* libResKnife */,
+				E1B2A4F10E41103900A72928 /* Hex Editor Carbon */,
+				E1B2A5080E41103900A72928 /* Template Editor Carbon */,
+				E1B2A5190E41103900A72928 /* PICT Editor */,
+				E1B2A52A0E41103900A72928 /* Uli's Template Editor (Abandoned) */,
+				E1B2A4580E41103800A72928 /* Nick's Template Editor (Abandoned) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E1B2A4010E41103700A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4020E41103700A72928 /* AboutPanel.nib in Resources */,
+				E1B2A4030E41103700A72928 /* Application.nib in Resources */,
+				E1B2A4040E41103700A72928 /* InfoWindow.nib in Resources */,
+				E1B2A4050E41103700A72928 /* PrefsWindow.nib in Resources */,
+				E1B2A4060E41103700A72928 /* ResourceDocument.nib in Resources */,
+				E1B2A4070E41103700A72928 /* CreateResourceSheet.nib in Resources */,
+				E1B2A4080E41103700A72928 /* InfoPlist.strings in Resources */,
+				E1B2A4090E41103700A72928 /* Localizable.strings in Resources */,
+				E1B2A40A0E41103700A72928 /* defaults.plist in Resources */,
+				E1B2A40B0E41103700A72928 /* ResKnife.icns in Resources */,
+				E1B2A40C0E41103700A72928 /* Resource file.icns in Resources */,
+				E1B2A40D0E41103700A72928 /* Icon file.icns in Resources */,
+				E1B2A40E0E41103700A72928 /* Create.tiff in Resources */,
+				E1B2A40F0E41103700A72928 /* Delete.tiff in Resources */,
+				E1B2A4100E41103700A72928 /* Edit.tiff in Resources */,
+				E1B2A4110E41103700A72928 /* Edit Hex.tiff in Resources */,
+				E1B2A4120E41103700A72928 /* Save.tiff in Resources */,
+				E1B2A4130E41103700A72928 /* Show Info.tiff in Resources */,
+				E1B2A4140E41103700A72928 /* ResKnife.scriptSuite in Resources */,
+				E1B2A4150E41103700A72928 /* ResKnife.scriptTerminology in Resources */,
+				E1B2A4160E41103700A72928 /* Export.tiff in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4460E41103800A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4470E41103800A72928 /* HexWindow.nib in Resources */,
+				E1B2A4480E41103800A72928 /* FindSheet.nib in Resources */,
+				E1B2A4490E41103800A72928 /* PasteMenu.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A45C0E41103800A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A45D0E41103800A72928 /* TemplateWindow.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4790E41103800A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A47A0E41103800A72928 /* NovaTools.nib in Resources */,
+				E1B2A47B0E41103800A72928 /* boom.nib in Resources */,
+				E1B2A47C0E41103800A72928 /* char.nib in Resources */,
+				E1B2A47D0E41103800A72928 /* colr.nib in Resources */,
+				E1B2A47E0E41103800A72928 /* cron.nib in Resources */,
+				E1B2A47F0E41103800A72928 /* desc.nib in Resources */,
+				E1B2A4800E41103800A72928 /* Resource Types.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4A90E41103800A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4AA0E41103800A72928 /* ResKnife.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4F90E41103900A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A50D0E41103900A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A51E0E41103900A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5350E41103900A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5360E41103900A72928 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A54E0E41103A00A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A54F0E41103A00A72928 /* ICONWindow.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A56C0E41103A00A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A56D0E41103A00A72928 /* NuTemplateWindow.nib in Resources */,
+				E1B2A56F0E41103A00A72928 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		E1B2A4370E41103700A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4520E41103800A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4640E41103800A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A48F0E41103800A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4BD0E41103800A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4BE0E41103800A72928 /* ResKnife.r in Rez */,
+				E1B2A4BF0E41103800A72928 /* ResKnife.rsrc in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4EC0E41103900A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5020E41103900A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5120E41103900A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5130E41103900A72928 /* Template Editor.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5240E41103900A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5420E41103900A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5430E41103900A72928 /* Templar.rsrc in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5550E41103A00A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5810E41103A00A72928 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E1B2A41C0E41103700A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A41D0E41103700A72928 /* ApplicationDelegate.m in Sources */,
+				E1B2A41E0E41103700A72928 /* AttributesFormatter.m in Sources */,
+				E1B2A41F0E41103700A72928 /* CreateResourceSheetController.m in Sources */,
+				E1B2A4200E41103700A72928 /* InfoWindowController.m in Sources */,
+				E1B2A4210E41103700A72928 /* NameFormatter.m in Sources */,
+				E1B2A4220E41103700A72928 /* OutlineViewDelegate.m in Sources */,
+				E1B2A4230E41103700A72928 /* PrefsWindowController.m in Sources */,
+				E1B2A4240E41103700A72928 /* Resource.m in Sources */,
+				E1B2A4250E41103700A72928 /* ResourceDataSource.m in Sources */,
+				E1B2A4260E41103700A72928 /* ResourceDocument.m in Sources */,
+				E1B2A4270E41103700A72928 /* ResourceNameCell.m in Sources */,
+				E1B2A4280E41103700A72928 /* SizeFormatter.m in Sources */,
+				E1B2A4290E41103700A72928 /* NSOutlineView-SelectedItems.m in Sources */,
+				E1B2A42A0E41103700A72928 /* MoreFilesX.c in Sources */,
+				E1B2A42B0E41103700A72928 /* Notifications.m in Sources */,
+				E1B2A42C0E41103700A72928 /* NSString-FSSpec.m in Sources */,
+				E1B2A42D0E41103700A72928 /* PasteboardDocument.m in Sources */,
+				E1B2A42E0E41103700A72928 /* PasteboardWindowController.m in Sources */,
+				E1B2A42F0E41103700A72928 /* RKDocumentController.m in Sources */,
+				E1B2A4300E41103700A72928 /* OpenFileDataSource.m in Sources */,
+				E1B2A4310E41103700A72928 /* main.m in Sources */,
+				E1B2A4320E41103700A72928 /* RKEditorRegistry.m in Sources */,
+				E1B2A4330E41103700A72928 /* RKSupportResourceRegistry.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A44A0E41103800A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A44B0E41103800A72928 /* HexEditorDelegate.m in Sources */,
+				E1B2A44C0E41103800A72928 /* HexTextView.m in Sources */,
+				E1B2A44D0E41103800A72928 /* HexWindowController.m in Sources */,
+				E1B2A44E0E41103800A72928 /* FindSheetController.m in Sources */,
+				E1B2A44F0E41103800A72928 /* Notifications.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A45E0E41103800A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A45F0E41103800A72928 /* TemplateWindowController.m in Sources */,
+				E1B2A4600E41103800A72928 /* Element.m in Sources */,
+				E1B2A4610E41103800A72928 /* Notifications.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4810E41103800A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4820E41103800A72928 /* BoomWindowController.m in Sources */,
+				E1B2A4830E41103800A72928 /* NovaWindowController.m in Sources */,
+				E1B2A4840E41103800A72928 /* CharWindowController.m in Sources */,
+				E1B2A4850E41103800A72928 /* ColrWindowController.m in Sources */,
+				E1B2A4860E41103800A72928 /* CronWindowController.m in Sources */,
+				E1B2A4870E41103800A72928 /* DescWindowController.m in Sources */,
+				E1B2A4880E41103800A72928 /* DescSplitViewDelegate.m in Sources */,
+				E1B2A4890E41103800A72928 /* DataSource.m in Sources */,
+				E1B2A48A0E41103800A72928 /* Notifications.m in Sources */,
+				E1B2A48B0E41103800A72928 /* NSNumber-Range.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4AB0E41103800A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4AC0E41103800A72928 /* Application.cpp in Sources */,
+				E1B2A4AD0E41103800A72928 /* Asynchronous.cpp in Sources */,
+				E1B2A4AE0E41103800A72928 /* DataBrowser.cpp in Sources */,
+				E1B2A4AF0E41103800A72928 /* EditorWindow.cpp in Sources */,
+				E1B2A4B00E41103800A72928 /* Errors.cpp in Sources */,
+				E1B2A4B10E41103800A72928 /* Files.cpp in Sources */,
+				E1B2A4B20E41103800A72928 /* FileWindow.cpp in Sources */,
+				E1B2A4B30E41103800A72928 /* HostCallbacks.cpp in Sources */,
+				E1B2A4B40E41103800A72928 /* InspectorWindow.cpp in Sources */,
+				E1B2A4B50E41103800A72928 /* PickerWindow.cpp in Sources */,
+				E1B2A4B60E41103800A72928 /* PlugObject.cpp in Sources */,
+				E1B2A4B70E41103800A72928 /* PlugWindow.cpp in Sources */,
+				E1B2A4B80E41103800A72928 /* ResourceObject.cpp in Sources */,
+				E1B2A4B90E41103800A72928 /* Utility.cpp in Sources */,
+				E1B2A4BA0E41103800A72928 /* WindowObject.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4DA0E41103900A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4DB0E41103900A72928 /* Application.cpp in Sources */,
+				E1B2A4DC0E41103900A72928 /* Asynchronous.cpp in Sources */,
+				E1B2A4DD0E41103900A72928 /* DataBrowser.cpp in Sources */,
+				E1B2A4DE0E41103900A72928 /* EditorWindow.cpp in Sources */,
+				E1B2A4DF0E41103900A72928 /* Errors.cpp in Sources */,
+				E1B2A4E00E41103900A72928 /* Files.cpp in Sources */,
+				E1B2A4E10E41103900A72928 /* FileWindow.cpp in Sources */,
+				E1B2A4E20E41103900A72928 /* HostCallbacks.cpp in Sources */,
+				E1B2A4E30E41103900A72928 /* WindowObject.cpp in Sources */,
+				E1B2A4E40E41103900A72928 /* Utility.cpp in Sources */,
+				E1B2A4E50E41103900A72928 /* ResourceObject.cpp in Sources */,
+				E1B2A4E60E41103900A72928 /* PlugWindow.cpp in Sources */,
+				E1B2A4E70E41103900A72928 /* PlugObject.cpp in Sources */,
+				E1B2A4E80E41103900A72928 /* PickerWindow.cpp in Sources */,
+				E1B2A4E90E41103900A72928 /* InspectorWindow.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A4FA0E41103900A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A4FB0E41103900A72928 /* Events.cpp in Sources */,
+				E1B2A4FC0E41103900A72928 /* HexWindow.cpp in Sources */,
+				E1B2A4FD0E41103900A72928 /* Initalisation.cpp in Sources */,
+				E1B2A4FE0E41103900A72928 /* Utility.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A50E0E41103900A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A50F0E41103900A72928 /* TemplateWindow.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A51F0E41103900A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5200E41103900A72928 /* Initalisation.cpp in Sources */,
+				E1B2A5210E41103900A72928 /* PictWindow.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5370E41103900A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5380E41103900A72928 /* BoolTemplateField.cpp in Sources */,
+				E1B2A5390E41103900A72928 /* DividerTemplateField.cpp in Sources */,
+				E1B2A53A0E41103900A72928 /* IntegerTemplateField.cpp in Sources */,
+				E1B2A53B0E41103900A72928 /* KHandleStream.cpp in Sources */,
+				E1B2A53C0E41103900A72928 /* ListTemplateField.cpp in Sources */,
+				E1B2A53D0E41103900A72928 /* LSTCTemplateField.cpp in Sources */,
+				E1B2A53E0E41103900A72928 /* StringTemplateField.cpp in Sources */,
+				E1B2A53F0E41103900A72928 /* Templar.cpp in Sources */,
+				E1B2A5400E41103900A72928 /* TemplateWindow.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5500E41103A00A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5510E41103A00A72928 /* Notifications.m in Sources */,
+				E1B2A5520E41103A00A72928 /* ICONWindowController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A5700E41103A00A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A5710E41103A00A72928 /* NuTemplateWindowController.m in Sources */,
+				E1B2A5720E41103A00A72928 /* Notifications.m in Sources */,
+				E1B2A5730E41103A00A72928 /* NuTemplateElement.m in Sources */,
+				E1B2A5740E41103A00A72928 /* NuTemplateGroupElement.m in Sources */,
+				E1B2A5750E41103A00A72928 /* NuTemplateStream.m in Sources */,
+				E1B2A5760E41103A00A72928 /* NuTemplateLSTBElement.m in Sources */,
+				E1B2A5770E41103A00A72928 /* NuTemplateTNAMElement.m in Sources */,
+				E1B2A5780E41103A00A72928 /* NuTemplatePSTRElement.m in Sources */,
+				E1B2A5790E41103A00A72928 /* NuTemplateDWRDElement.m in Sources */,
+				E1B2A57A0E41103A00A72928 /* NuTemplateLSTEElement.m in Sources */,
+				E1B2A57B0E41103A00A72928 /* NuTemplateDLNGElement.m in Sources */,
+				E1B2A57C0E41103A00A72928 /* NuTemplateDBYTElement.m in Sources */,
+				E1B2A57D0E41103A00A72928 /* NuTemplateOCNTElement.m in Sources */,
+				E1B2A57E0E41103A00A72928 /* NuTemplateLSTCElement.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E1B2A5880E41103A00A72928 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1B2A43E0E41103800A72928 /* Hex Editor Cocoa */;
+			targetProxy = E1B2A5870E41103A00A72928 /* PBXContainerItemProxy */;
+		};
+		E1B2A5900E41103A00A72928 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1B2A55B0E41103A00A72928 /* Template Editor Cocoa */;
+			targetProxy = E1B2A58F0E41103A00A72928 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3D0B38B504DEF465005AED5E /* NuTemplateWindow.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D0B38B604DEF465005AED5E /* English */,
+			);
+			name = NuTemplateWindow.nib;
+			sourceTree = "<group>";
+		};
+		3D3B99BC04DC16FC0056861E /* ICONWindow.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D3B99BD04DC16FC0056861E /* English */,
+			);
+			name = ICONWindow.nib;
+			sourceTree = "<group>";
+		};
+		F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F50DFE17036C203F01A8010A /* English */,
+			);
+			name = ResKnife.scriptTerminology;
+			sourceTree = "<group>";
+		};
+		F50DFE58036C258301A8010A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F50DFE59036C258301A8010A /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F543AFEF027C716E01A8010C /* Resource Types.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F543AFF0027C716E01A8010C /* English */,
+			);
+			name = "Resource Types.strings";
+			sourceTree = "<group>";
+		};
+		F54E6222021B6A0801A80001 /* FindSheet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F54E6223021B6A0801A80001 /* English */,
+			);
+			name = FindSheet.nib;
+			sourceTree = "<group>";
+		};
+		F54E622B021D192201A80001 /* CreateResourceSheet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F54E622C021D192201A80001 /* English */,
+			);
+			name = CreateResourceSheet.nib;
+			sourceTree = "<group>";
+		};
+		F5606FDD02ACF2F701A8010C /* PasteMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5606FDE02ACF2F701A8010C /* PasteMenu.nib */,
+			);
+			name = PasteMenu.nib;
+			sourceTree = "<group>";
+		};
+		F58F6BA9025BDBA701A8010C /* NovaTools.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F58F6BAA025BDBA701A8010C /* English */,
+			);
+			name = NovaTools.nib;
+			sourceTree = "<group>";
+		};
+		F5B588360156D40B01000001 /* AboutPanel.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5B588370156D40B01000001 /* English */,
+			);
+			name = AboutPanel.nib;
+			path = Cocoa;
+			sourceTree = SOURCE_ROOT;
+		};
+		F5B588380156D40B01000001 /* Application.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5B588390156D40B01000001 /* English */,
+			);
+			name = Application.nib;
+			path = Cocoa;
+			sourceTree = SOURCE_ROOT;
+		};
+		F5B5883A0156D40B01000001 /* InfoWindow.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5B5883B0156D40B01000001 /* English */,
+			);
+			name = InfoWindow.nib;
+			path = Cocoa;
+			sourceTree = SOURCE_ROOT;
+		};
+		F5B5883E0156D40B01000001 /* PrefsWindow.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5B5883F0156D40B01000001 /* English */,
+			);
+			name = PrefsWindow.nib;
+			path = Cocoa;
+			sourceTree = SOURCE_ROOT;
+		};
+		F5B588400156D40B01000001 /* ResourceDocument.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5B588410156D40B01000001 /* English */,
+			);
+			name = ResourceDocument.nib;
+			path = Cocoa;
+			sourceTree = SOURCE_ROOT;
+		};
+		F5B588420156D40B01000001 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5B588430156D40B01000001 /* English */,
+			);
+			name = InfoPlist.strings;
+			path = Cocoa;
+			sourceTree = SOURCE_ROOT;
+		};
+		F5B588440156D40B01000001 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5B588450156D40B01000001 /* English */,
+			);
+			name = Localizable.strings;
+			path = Cocoa;
+			sourceTree = SOURCE_ROOT;
+		};
+		F5D0CBD302278F8B01A80001 /* TemplateWindow.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F53544430226778D01A80001 /* TemplateWindow.nib */,
+			);
+			name = TemplateWindow.nib;
+			sourceTree = "<group>";
+		};
+		F5EDC612025BFB7301A8010C /* boom.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5EDC613025BFB7301A8010C /* English */,
+			);
+			name = boom.nib;
+			sourceTree = "<group>";
+		};
+		F5EDC615025BFB7C01A8010C /* char.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5EDC616025BFB7C01A8010C /* English */,
+			);
+			name = char.nib;
+			sourceTree = "<group>";
+		};
+		F5EDC618025BFB8601A8010C /* colr.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5EDC619025BFB8601A8010C /* English */,
+			);
+			name = colr.nib;
+			sourceTree = "<group>";
+		};
+		F5EDC61B025BFB8E01A8010C /* cron.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5EDC61C025BFB8E01A8010C /* English */,
+			);
+			name = cron.nib;
+			sourceTree = "<group>";
+		};
+		F5EDC61E025BFBB501A8010C /* desc.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5EDC61F025BFBB501A8010C /* English */,
+			);
+			name = desc.nib;
+			sourceTree = "<group>";
+		};
+		F5EF83C7020C20D701A80001 /* HexWindow.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5EF83C8020C20D701A80001 /* English */,
+			);
+			name = HexWindow.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		84A45AA60E410BAD008598FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+			};
+			name = Debug;
+		};
+		84A45AA70E410BAD008598FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+			};
+			name = Release;
+		};
+		E1B2A4390E41103700A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Cocoa/Info.plist;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = "ResKnife Cocoa";
+				PROFILING_CODE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A43A0E41103700A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = Cocoa/Info.plist;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = "ResKnife Cocoa";
+				PROFILING_CODE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A4540E41103800A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Hex Editor/Info.plist";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-bundle",
+					"-undefined",
+					error,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Hexadecimal Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A4550E41103800A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Hex Editor/Info.plist";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-bundle",
+					"-undefined",
+					error,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Hexadecimal Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A4660E41103800A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Template Editor/Info.plist";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Template Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A4670E41103800A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Template Editor/Info.plist";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Template Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A4910E41103800A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = NovaTools/Info.plist;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = NovaTools;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A4920E41103800A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = NovaTools/Info.plist;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = NovaTools;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A4C10E41103800A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-ResKnife_Carbon__Upgraded_.plist";
+				LIBRARY_SEARCH_PATHS = Carbon;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "ResKnife Carbon";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A4C20E41103800A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-ResKnife_Carbon__Upgraded_.plist";
+				LIBRARY_SEARCH_PATHS = Carbon;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "ResKnife Carbon";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A4EE0E41103900A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOL_FLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ResKnife.dylib;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A4EF0E41103900A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOL_FLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ResKnife.dylib;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A5040E41103900A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-Hex_Editor_Carbon__Upgraded_.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"\"/Users/nicholas/Projects/ResKnife/Carbon\"",
+					"\"$(SRCROOT)/../build/Debug\"",
+				);
+				OTHER_LDFLAGS = (
+					"-bundle",
+					"-bundle_loader",
+					"$HOME/Projects/ResKnife/build/ResKnife\\\\\\ Carbon",
+					"-undefined",
+					error,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Hex Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A5050E41103900A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-Hex_Editor_Carbon__Upgraded_.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"\"/Users/nicholas/Projects/ResKnife/Carbon\"",
+					"\"$(SRCROOT)/../build/Debug\"",
+				);
+				OTHER_LDFLAGS = (
+					"-bundle",
+					"-bundle_loader",
+					"$HOME/Projects/ResKnife/build/ResKnife\\\\\\ Carbon",
+					"-undefined",
+					error,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Hex Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A5150E41103900A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-Template_Editor_Carbon__Upgraded_.plist";
+				LIBRARY_SEARCH_PATHS = /Volumes/DeskStar/nicholas/Projects/ResKnife/Carbon;
+				OTHER_LDFLAGS = (
+					"-bundle",
+					"-undefined",
+					error,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Template Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A5160E41103900A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-Template_Editor_Carbon__Upgraded_.plist";
+				LIBRARY_SEARCH_PATHS = /Volumes/DeskStar/nicholas/Projects/ResKnife/Carbon;
+				OTHER_LDFLAGS = (
+					"-bundle",
+					"-undefined",
+					error,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Template Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A5260E41103900A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-PICT_Editor__Upgraded_.plist";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-bundle",
+					"-undefined",
+					suppress,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "PICT Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A5270E41103900A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-PICT_Editor__Upgraded_.plist";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-bundle",
+					"-undefined",
+					suppress,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "PICT Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A5450E41103900A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-Uli_s_Template_Editor__Upgraded_.plist";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Ulis Template Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A5460E41103900A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-Uli_s_Template_Editor__Upgraded_.plist";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Ulis Template Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A5570E41103A00A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-Bitmap_Editor_Cocoa__Upgraded_.plist";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Bitmap Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A5580E41103A00A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Info-Bitmap_Editor_Cocoa__Upgraded_.plist";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Bitmap Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A5830E41103A00A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = NuTemplateEditor/Info.plist;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Template Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		E1B2A5840E41103A00A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = NuTemplateEditor/Info.plist;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Template Editor";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		84A45AA50E410BAD008598FD /* Build configuration list for PBXProject "ResKnife" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84A45AA60E410BAD008598FD /* Debug */,
+				84A45AA70E410BAD008598FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A4380E41103700A72928 /* Build configuration list for PBXNativeTarget "ResKnife Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A4390E41103700A72928 /* Debug */,
+				E1B2A43A0E41103700A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A4530E41103800A72928 /* Build configuration list for PBXNativeTarget "Hex Editor Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A4540E41103800A72928 /* Debug */,
+				E1B2A4550E41103800A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A4650E41103800A72928 /* Build configuration list for PBXNativeTarget "Nick's Template Editor (Abandoned)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A4660E41103800A72928 /* Debug */,
+				E1B2A4670E41103800A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A4900E41103800A72928 /* Build configuration list for PBXNativeTarget "NovaTools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A4910E41103800A72928 /* Debug */,
+				E1B2A4920E41103800A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A4C00E41103800A72928 /* Build configuration list for PBXNativeTarget "ResKnife Carbon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A4C10E41103800A72928 /* Debug */,
+				E1B2A4C20E41103800A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A4ED0E41103900A72928 /* Build configuration list for PBXNativeTarget "libResKnife" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A4EE0E41103900A72928 /* Debug */,
+				E1B2A4EF0E41103900A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A5030E41103900A72928 /* Build configuration list for PBXNativeTarget "Hex Editor Carbon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A5040E41103900A72928 /* Debug */,
+				E1B2A5050E41103900A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A5140E41103900A72928 /* Build configuration list for PBXNativeTarget "Template Editor Carbon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A5150E41103900A72928 /* Debug */,
+				E1B2A5160E41103900A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A5250E41103900A72928 /* Build configuration list for PBXNativeTarget "PICT Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A5260E41103900A72928 /* Debug */,
+				E1B2A5270E41103900A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A5440E41103900A72928 /* Build configuration list for PBXNativeTarget "Uli's Template Editor (Abandoned)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A5450E41103900A72928 /* Debug */,
+				E1B2A5460E41103900A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A5560E41103A00A72928 /* Build configuration list for PBXNativeTarget "Bitmap Editor Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A5570E41103A00A72928 /* Debug */,
+				E1B2A5580E41103A00A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A5820E41103A00A72928 /* Build configuration list for PBXNativeTarget "Template Editor Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A5830E41103A00A72928 /* Debug */,
+				E1B2A5840E41103A00A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F5B5880F0156D2A601000001 /* Project object */;
+}
