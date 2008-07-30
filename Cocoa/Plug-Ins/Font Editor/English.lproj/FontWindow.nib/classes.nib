@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {imageViewChanged = id; }; 
+            CLASS = FontWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {resource = id; tableList = NSTableView; tableListDrawer = NSDrawer; }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

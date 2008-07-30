@@ -286,6 +286,22 @@
 		E1B2A5920E41103A00A72928 /* Template Editor.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2A5860E41103A00A72928 /* Template Editor.plugin */; };
 		E1B2A5930E41103A00A72928 /* Hexadecimal Editor.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2A4570E41103800A72928 /* Hexadecimal Editor.plugin */; };
 		E1B2A5950E41103A00A72928 /* libResKnife.dylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1B2A4F00E41103900A72928 /* libResKnife.dylib.a */; };
+		E1B2A73F0E41218F00A72928 /* FontDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1B2A7350E41218F00A72928 /* FontDocument.nib */; };
+		E1B2A7400E41218F00A72928 /* FontWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1B2A7370E41218F00A72928 /* FontWindow.nib */; };
+		E1B2A7410E41219000A72928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1B2A7390E41218F00A72928 /* Localizable.strings */; };
+		E1B2A7420E41219000A72928 /* Font Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = E1B2A73B0E41218F00A72928 /* Font Templates.rsrc */; };
+		E1B2A7430E41219000A72928 /* FontWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A73D0E41218F00A72928 /* FontWindowController.m */; };
+		E1B2A7760E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
+		E1B2A7770E41230E00A72928 /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B2A7740E41230E00A72928 /* NGSCategories.h */; };
+		E1B2A7780E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
+		E1B2A7790E41230E00A72928 /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B2A7740E41230E00A72928 /* NGSCategories.h */; };
+		E1B2A77A0E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
+		E1B2A77B0E41230E00A72928 /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B2A7740E41230E00A72928 /* NGSCategories.h */; };
+		E1B2A77C0E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
+		E1B2A77D0E41230E00A72928 /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B2A7740E41230E00A72928 /* NGSCategories.h */; };
+		E1B2A77E0E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
+		E1B2A77F0E41230E00A72928 /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B2A7740E41230E00A72928 /* NGSCategories.h */; };
+		E1B2A7800E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -402,6 +418,16 @@
 		E1B2A55A0E41103A00A72928 /* Bitmap Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bitmap Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A5850E41103A00A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1B2A5860E41103A00A72928 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A7220E41213300A72928 /* Font Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Font Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2A7360E41218F00A72928 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FontDocument.nib; sourceTree = "<group>"; };
+		E1B2A7380E41218F00A72928 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FontWindow.nib; sourceTree = "<group>"; };
+		E1B2A73A0E41218F00A72928 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E1B2A73B0E41218F00A72928 /* Font Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Font Templates.rsrc"; sourceTree = "<group>"; };
+		E1B2A73C0E41218F00A72928 /* FontWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontWindowController.h; sourceTree = "<group>"; };
+		E1B2A73D0E41218F00A72928 /* FontWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontWindowController.m; sourceTree = "<group>"; };
+		E1B2A73E0E41218F00A72928 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1B2A7740E41230E00A72928 /* NGSCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NGSCategories.h; sourceTree = "<group>"; };
+		E1B2A7750E41230E00A72928 /* NGSCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NGSCategories.m; sourceTree = "<group>"; };
 		F5041736036BD60801A8010A /* ResKnife.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ResKnife.scriptSuite; sourceTree = "<group>"; };
 		F50DFE17036C203F01A8010A /* English */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = English; path = Cocoa/English.lproj/ResKnife.scriptTerminology; sourceTree = SOURCE_ROOT; };
 		F50DFE22036C258201A8010A /* BoolTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = BoolTemplateField.cpp; sourceTree = "<group>"; };
@@ -714,6 +740,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1B2A7200E41213300A72928 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -772,6 +805,20 @@
 			);
 			name = "Bitmap Editor";
 			path = "Template Editor";
+			sourceTree = "<group>";
+		};
+		E1B2A7340E41218F00A72928 /* Font Editor */ = {
+			isa = PBXGroup;
+			children = (
+				E1B2A73C0E41218F00A72928 /* FontWindowController.h */,
+				E1B2A73D0E41218F00A72928 /* FontWindowController.m */,
+				E1B2A73B0E41218F00A72928 /* Font Templates.rsrc */,
+				E1B2A73E0E41218F00A72928 /* Info.plist */,
+				E1B2A7390E41218F00A72928 /* Localizable.strings */,
+				E1B2A7350E41218F00A72928 /* FontDocument.nib */,
+				E1B2A7370E41218F00A72928 /* FontWindow.nib */,
+			);
+			path = "Font Editor";
 			sourceTree = "<group>";
 		};
 		F50DFE20036C258201A8010A /* Uli's Template Editor */ = {
@@ -835,6 +882,8 @@
 		F5594EE9021F3E2301A80001 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				E1B2A7740E41230E00A72928 /* NGSCategories.h */,
+				E1B2A7750E41230E00A72928 /* NGSCategories.m */,
 				F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */,
 				F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */,
 				F59D5DE40320DFF601A8010C /* NSString-FSSpec.h */,
@@ -852,6 +901,7 @@
 				F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */,
 				F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */,
 				F5EF839F020C08E601A80001 /* Hex Editor */,
+				E1B2A7340E41218F00A72928 /* Font Editor */,
 				3D3B99B704DC167D0056861E /* Bitmap Editor */,
 				3D0B38A504DEF41E005AED5E /* Template Editor */,
 				F5354435022673C101A80001 /* Template Editor (Abandoned) */,
@@ -905,6 +955,7 @@
 				E1B2A5480E41103A00A72928 /* Ulis Template Editor.bundle */,
 				E1B2A55A0E41103A00A72928 /* Bitmap Editor.plugin */,
 				E1B2A5860E41103A00A72928 /* Template Editor.plugin */,
+				E1B2A7220E41213300A72928 /* Font Editor.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1262,6 +1313,7 @@
 				E1B2A3FE0E41103700A72928 /* OpenFileDataSource.h in Headers */,
 				E1B2A3FF0E41103700A72928 /* RKEditorRegistry.h in Headers */,
 				E1B2A4000E41103700A72928 /* RKSupportResourceRegistry.h in Headers */,
+				E1B2A7770E41230E00A72928 /* NGSCategories.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1275,6 +1327,7 @@
 				E1B2A4430E41103800A72928 /* HexTextView.h in Headers */,
 				E1B2A4440E41103800A72928 /* HexWindowController.h in Headers */,
 				E1B2A4450E41103800A72928 /* FindSheetController.h in Headers */,
+				E1B2A7790E41230E00A72928 /* NGSCategories.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1304,6 +1357,7 @@
 				E1B2A4760E41103800A72928 /* DataSource.h in Headers */,
 				E1B2A4770E41103800A72928 /* Structs.h in Headers */,
 				E1B2A4780E41103800A72928 /* NSNumber-Range.h in Headers */,
+				E1B2A77F0E41230E00A72928 /* NGSCategories.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1413,6 +1467,7 @@
 				E1B2A54B0E41103A00A72928 /* ResKnifePluginProtocol.h in Headers */,
 				E1B2A54C0E41103A00A72928 /* ResKnifeResourceProtocol.h in Headers */,
 				E1B2A54D0E41103A00A72928 /* ICONWindowController.h in Headers */,
+				E1B2A77D0E41230E00A72928 /* NGSCategories.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1435,6 +1490,7 @@
 				E1B2A5690E41103A00A72928 /* NuTemplateDBYTElement.h in Headers */,
 				E1B2A56A0E41103A00A72928 /* NuTemplateOCNTElement.h in Headers */,
 				E1B2A56B0E41103A00A72928 /* NuTemplateLSTCElement.h in Headers */,
+				E1B2A77B0E41230E00A72928 /* NGSCategories.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1683,6 +1739,23 @@
 			productReference = E1B2A5860E41103A00A72928 /* Template Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		E1B2A7210E41213300A72928 /* Font Editor Cocoa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B2A7260E41213400A72928 /* Build configuration list for PBXNativeTarget "Font Editor Cocoa" */;
+			buildPhases = (
+				E1B2A71E0E41213300A72928 /* Resources */,
+				E1B2A71F0E41213300A72928 /* Sources */,
+				E1B2A7200E41213300A72928 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Font Editor Cocoa";
+			productName = "Font Editor";
+			productReference = E1B2A7220E41213300A72928 /* Font Editor.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1699,6 +1772,7 @@
 				E1B2A3DE0E41103700A72928 /* ResKnife Cocoa */,
 				E1B2A43E0E41103800A72928 /* Hex Editor Cocoa */,
 				E1B2A55B0E41103A00A72928 /* Template Editor Cocoa */,
+				E1B2A7210E41213300A72928 /* Font Editor Cocoa */,
 				E1B2A5490E41103A00A72928 /* Bitmap Editor Cocoa */,
 				E1B2A46A0E41103800A72928 /* NovaTools */,
 				E1B2A4950E41103800A72928 /* ResKnife Carbon */,
@@ -1827,6 +1901,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1B2A71E0E41213300A72928 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A73F0E41218F00A72928 /* FontDocument.nib in Resources */,
+				E1B2A7400E41218F00A72928 /* FontWindow.nib in Resources */,
+				E1B2A7410E41219000A72928 /* Localizable.strings in Resources */,
+				E1B2A7420E41219000A72928 /* Font Templates.rsrc in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXRezBuildPhase section */
@@ -1948,6 +2033,7 @@
 				E1B2A4310E41103700A72928 /* main.m in Sources */,
 				E1B2A4320E41103700A72928 /* RKEditorRegistry.m in Sources */,
 				E1B2A4330E41103700A72928 /* RKSupportResourceRegistry.m in Sources */,
+				E1B2A7780E41230E00A72928 /* NGSCategories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1960,6 +2046,7 @@
 				E1B2A44D0E41103800A72928 /* HexWindowController.m in Sources */,
 				E1B2A44E0E41103800A72928 /* FindSheetController.m in Sources */,
 				E1B2A44F0E41103800A72928 /* Notifications.m in Sources */,
+				E1B2A77A0E41230E00A72928 /* NGSCategories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1987,6 +2074,7 @@
 				E1B2A4890E41103800A72928 /* DataSource.m in Sources */,
 				E1B2A48A0E41103800A72928 /* Notifications.m in Sources */,
 				E1B2A48B0E41103800A72928 /* NSNumber-Range.m in Sources */,
+				E1B2A7800E41230E00A72928 /* NGSCategories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2084,6 +2172,7 @@
 			files = (
 				E1B2A5510E41103A00A72928 /* Notifications.m in Sources */,
 				E1B2A5520E41103A00A72928 /* ICONWindowController.m in Sources */,
+				E1B2A77E0E41230E00A72928 /* NGSCategories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2105,6 +2194,16 @@
 				E1B2A57C0E41103A00A72928 /* NuTemplateDBYTElement.m in Sources */,
 				E1B2A57D0E41103A00A72928 /* NuTemplateOCNTElement.m in Sources */,
 				E1B2A57E0E41103A00A72928 /* NuTemplateLSTCElement.m in Sources */,
+				E1B2A77C0E41230E00A72928 /* NGSCategories.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1B2A71F0E41213300A72928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B2A7430E41219000A72928 /* FontWindowController.m in Sources */,
+				E1B2A7760E41230E00A72928 /* NGSCategories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2138,6 +2237,30 @@
 				3D3B99BD04DC16FC0056861E /* English */,
 			);
 			name = ICONWindow.nib;
+			sourceTree = "<group>";
+		};
+		E1B2A7350E41218F00A72928 /* FontDocument.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1B2A7360E41218F00A72928 /* English */,
+			);
+			name = FontDocument.nib;
+			sourceTree = "<group>";
+		};
+		E1B2A7370E41218F00A72928 /* FontWindow.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1B2A7380E41218F00A72928 /* English */,
+			);
+			name = FontWindow.nib;
+			sourceTree = "<group>";
+		};
+		E1B2A7390E41218F00A72928 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1B2A73A0E41218F00A72928 /* English */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */ = {
@@ -2321,14 +2444,18 @@
 		84A45AA60E410BAD008598FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				MACOSX_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		84A45AA70E410BAD008598FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				MACOSX_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
 		};
@@ -2939,20 +3066,17 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = NuTemplateEditor/Info.plist;
-				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Template Editor";
-				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = plugin;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2962,20 +3086,60 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = NuTemplateEditor/Info.plist;
-				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Template Editor";
-				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = plugin;
-				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E1B2A7240E41213400A72928 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Font Editor/Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Font Editor";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		E1B2A7250E41213400A72928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Font Editor/Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Font Editor";
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
 		};
@@ -3095,6 +3259,15 @@
 			buildConfigurations = (
 				E1B2A5830E41103A00A72928 /* Debug */,
 				E1B2A5840E41103A00A72928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1B2A7260E41213400A72928 /* Build configuration list for PBXNativeTarget "Font Editor Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1B2A7240E41213400A72928 /* Debug */,
+				E1B2A7250E41213400A72928 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
