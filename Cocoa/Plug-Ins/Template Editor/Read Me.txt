@@ -1,0 +1,68 @@
+ABOUT THE CODE
+--------------
+
+WHAT HAPPENS WHEN A TEMPLATE EDITOR IS OPENED FOR A RESOURCE
+
+The template editor uses a dedicated class for each field type (or family of field types).
+These classes are all subclasses of the common base class Element. For things like
+lists, there is a subclass GroupElement from which you can instead subclass to
+have some of the work done for you.
+
+When opening a resource, the template editor first creates a TemplateStream for the template
+resource and calls readOneObject: on it until it runs out of data, instantiating a hierarchy
+of Element subclasses for based on the template.
+
+After that, it creates a TemplateStream for the resource and loops over the template object
+hierarchy, creating a copy of each item, and then calling readDataFrom:containingArray: on
+the copy, which in turn reads data from the TemplateStream and stores it in its instance
+variables. For this to work, subclasses of Element *must* implement the NSCopying
+protocol.
+
+This results in an object hierarchy that describes the entire resource using template fields
+containing the data, which can now be edited, displayed in lists, etc.
+
+WHAT HAPPENS WHEN THE TEMPLATE EDITOR IS CLOSED
+
+As soon as the template editor is closed, another TemplateStream is created for the
+resource and passed to all template fields (the copies with the resource data, not the
+pre-parsed template hierarchy), via writeDataTo:, which is where they should write their
+data to the stream. Before that, sizeOnDisk is called on each Element to
+calculate the new size of the resource before the actual process of writing them out.
+This size must include the size of all of their sub-items, and writeDataTo: must call
+these sub items if they are to be written to disk.
+
+SPECIAL CASE: LISTS
+
+When the editor encounters an LSTB element, the LSTB element is called upon to parse its
+"sub-elements" (the items that make up one list item). The LSTB element reads all elements
+from the template, up to the terminating LSTE element, and keeps the array of parsed
+sub-elements around in one of its data member variables. Parsing then resumes after the
+"LSTE" element.
+
+When the LSTB element is later called upon to read its data from the resource displayed in
+the template, it will loop over its list of sub-elements and will generate a copy of itself
+and all sub-elements except the "LSTE" for each list item. After all items have been read,
+a single copy of the "LSTE" element is added at the end of the list. If the list is empty,
+the "LSTB" will simply create an "LSTE" element and delete itself.
+
+The "LSTE" element contains a copy of the sub-elements list of the LSTB, but doesn't read
+any data from the resource. When either an "LSTE" or "LSTB" element are selected, the user
+can choose "New List Item..." from the "Resource" menu to create a copy of the selected
+element's sub-elements, along with an "LSTB" element containing them. Thus, the user can
+create new items before any existing item (i.e. "LSTB" element), as well as at the end of
+the list or when the list is empty, by selecting the "LSTE". "LSTB" items can also be
+deleted using the "Edit" menu.
+
+In short:
+-> New list items are created by copying an existing "LSTB" and all its sub-elementss.
+-> A single "LSTE" element serves as an "end marker" for full and as a placeholder for
+   empty lists, and can also be used to create new "LSTB"s with sub-elements.
+
+Analogous behaviour is employed for other kinds of lists, except that additional
+features in LSTEs are activated to allow writing terminating zeroes to the file, and
+that the equivalent to the "LSTB" item may also update a counter field.
+
+REVISIONS:
+	2006-02-05	NS	Rewrote plugin.
+	2003-08-13	UK	Finished chapter on lists, added revision history.
+	2003-08-08	UK	Created.

@@ -1,0 +1,11 @@
+/* menu item for creating new array entries */
+"Create List Entry" = "Create List Entry";
+
+/* label for HEXD fields created in response to a template error */
+"Error: Hex Dump" = "Error: Dumping Hex";
+
+/* Keep changes dialog */
+"Do you want to keep the changes you made to this resource?" = "Do you want to keep the changes you made to this resource?";
+"Keep" = "Keep";
+"Don't Keep" = "Don’t Keep";
+"Your changes cannot be saved later if you don't keep them." = "Your changes cannot be saved later if you don’t keep them.";

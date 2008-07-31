@@ -12,12 +12,37 @@
 		E17752700E424DCB00F737F8 /* OpenPanelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E177526E0E424DCB00F737F8 /* OpenPanelDelegate.h */; };
 		E17752760E424ED400F737F8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E17753350E424F0C00F737F8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
-		E177538B0E4251C600F737F8 /* DisplayTMPL.png in Resources */ = {isa = PBXBuildFile; fileRef = E17753880E4251C600F737F8 /* DisplayTMPL.png */; };
-		E177538E0E4251D000F737F8 /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E17753890E4251C600F737F8 /* Templates.rsrc */; };
 		E177539D0E42521800F737F8 /* Font Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E1B2A73B0E41218F00A72928 /* Font Templates.rsrc */; };
 		E17753B90E42528100F737F8 /* NovaTools.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2A4940E41103800A72928 /* NovaTools.plugin */; };
 		E17753CD0E42528400F737F8 /* Font Editor.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2A7220E41213300A72928 /* Font Editor.plugin */; };
 		E17753E40E42534300F737F8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		E17757380E425EE600F737F8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757030E425EE200F737F8 /* Element.m */; };
+		E17757390E425EE600F737F8 /* ElementDATE.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757050E425EE200F737F8 /* ElementDATE.m */; };
+		E177573A0E425EE600F737F8 /* ElementDBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757070E425EE200F737F8 /* ElementDBYT.m */; };
+		E177573B0E425EE600F737F8 /* ElementDLLG.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757090E425EE200F737F8 /* ElementDLLG.m */; };
+		E177573C0E425EE600F737F8 /* ElementDLNG.m in Sources */ = {isa = PBXBuildFile; fileRef = E177570B0E425EE200F737F8 /* ElementDLNG.m */; };
+		E177573D0E425EE600F737F8 /* ElementDWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = E177570D0E425EE200F737F8 /* ElementDWRD.m */; };
+		E177573E0E425EE600F737F8 /* ElementFBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = E177570F0E425EE200F737F8 /* ElementFBYT.m */; };
+		E177573F0E425EE600F737F8 /* ElementFIXD.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757110E425EE200F737F8 /* ElementFIXD.m */; };
+		E17757400E425EE600F737F8 /* ElementFRAC.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757130E425EE200F737F8 /* ElementFRAC.m */; };
+		E17757410E425EE600F737F8 /* ElementHEXD.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757150E425EE200F737F8 /* ElementHEXD.m */; };
+		E17757420E425EE600F737F8 /* ElementKEYB.mm in Sources */ = {isa = PBXBuildFile; fileRef = E17757170E425EE200F737F8 /* ElementKEYB.mm */; };
+		E17757430E425EE600F737F8 /* ElementLSTB.mm in Sources */ = {isa = PBXBuildFile; fileRef = E17757190E425EE200F737F8 /* ElementLSTB.mm */; };
+		E17757440E425EE600F737F8 /* ElementLSTC.mm in Sources */ = {isa = PBXBuildFile; fileRef = E177571B0E425EE200F737F8 /* ElementLSTC.mm */; };
+		E17757450E425EE600F737F8 /* ElementLSTE.m in Sources */ = {isa = PBXBuildFile; fileRef = E177571D0E425EE200F737F8 /* ElementLSTE.m */; };
+		E17757460E425EE600F737F8 /* ElementOCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = E177571F0E425EE200F737F8 /* ElementOCNT.m */; };
+		E17757470E425EE600F737F8 /* ElementPSTR.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757210E425EE200F737F8 /* ElementPSTR.m */; };
+		E17757480E425EE600F737F8 /* ElementUBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757230E425EE200F737F8 /* ElementUBYT.m */; };
+		E17757490E425EE600F737F8 /* ElementULLG.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757250E425EE200F737F8 /* ElementULLG.m */; };
+		E177574A0E425EE600F737F8 /* ElementULNG.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757270E425EE200F737F8 /* ElementULNG.m */; };
+		E177574B0E425EE600F737F8 /* ElementUWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757290E425EE200F737F8 /* ElementUWRD.m */; };
+		E177574C0E425EE600F737F8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E177572A0E425EE200F737F8 /* Localizable.strings */; };
+		E177574D0E425EE600F737F8 /* TemplateWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = E177572C0E425EE200F737F8 /* TemplateWindow.nib */; };
+		E177574E0E425EE600F737F8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E177572E0E425EE200F737F8 /* Info.plist */; };
+		E17757500E425EE600F737F8 /* DisplayTMPL.png in Resources */ = {isa = PBXBuildFile; fileRef = E17757310E425EE200F737F8 /* DisplayTMPL.png */; };
+		E17757520E425EE600F737F8 /* TemplateStream.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757340E425EE200F737F8 /* TemplateStream.m */; };
+		E17757530E425EE600F737F8 /* TemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17757360E425EE200F737F8 /* TemplateWindowController.m */; };
+		E17757580E425F1D00F737F8 /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E17757320E425EE200F737F8 /* Templates.rsrc */; };
 		E1B2A3EA0E41103700A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
 		E1B2A3EB0E41103700A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
 		E1B2A3EC0E41103700A72928 /* ApplicationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5881D0156D40B01000001 /* ApplicationDelegate.h */; };
@@ -231,22 +256,7 @@
 		E1B2A5510E41103A00A72928 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E1B2A5520E41103A00A72928 /* ICONWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B99B804DC16A30056861E /* ICONWindowController.m */; };
 		E1B2A5540E41103A00A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E1B2A56D0E41103A00A72928 /* NuTemplateWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B38B504DEF465005AED5E /* NuTemplateWindow.nib */; };
-		E1B2A56F0E41103A00A72928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D2EE5E204E5C56F00515930 /* Localizable.strings */; };
-		E1B2A5710E41103A00A72928 /* NuTemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B38B304DEF41E005AED5E /* NuTemplateWindowController.m */; };
 		E1B2A5720E41103A00A72928 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
-		E1B2A5730E41103A00A72928 /* NuTemplateElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* NuTemplateElement.m */; };
-		E1B2A5740E41103A00A72928 /* NuTemplateGroupElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BB04DF10D700DD74B1 /* NuTemplateGroupElement.m */; };
-		E1B2A5750E41103A00A72928 /* NuTemplateStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* NuTemplateStream.m */; };
-		E1B2A5760E41103A00A72928 /* NuTemplateLSTBElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* NuTemplateLSTBElement.m */; };
-		E1B2A5770E41103A00A72928 /* NuTemplateTNAMElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933E404DF2FF700DD74B1 /* NuTemplateTNAMElement.m */; };
-		E1B2A5780E41103A00A72928 /* NuTemplatePSTRElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933E804DF317D00DD74B1 /* NuTemplatePSTRElement.m */; };
-		E1B2A5790E41103A00A72928 /* NuTemplateDWRDElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933EE04DF381900DD74B1 /* NuTemplateDWRDElement.m */; };
-		E1B2A57A0E41103A00A72928 /* NuTemplateLSTEElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933F704DFE80500DD74B1 /* NuTemplateLSTEElement.m */; };
-		E1B2A57B0E41103A00A72928 /* NuTemplateDLNGElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B304E872DB00AF65FE /* NuTemplateDLNGElement.m */; };
-		E1B2A57C0E41103A00A72928 /* NuTemplateDBYTElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B704E873F300AF65FE /* NuTemplateDBYTElement.m */; };
-		E1B2A57D0E41103A00A72928 /* NuTemplateOCNTElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047004EF040900F3B64D /* NuTemplateOCNTElement.m */; };
-		E1B2A57E0E41103A00A72928 /* NuTemplateLSTCElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047304EF122000F3B64D /* NuTemplateLSTCElement.m */; };
 		E1B2A5800E41103A00A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E1B2A5920E41103A00A72928 /* Template Editor.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2A5860E41103A00A72928 /* Template Editor.plugin */; };
 		E1B2A5930E41103A00A72928 /* Hexadecimal Editor.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2A4570E41103800A72928 /* Hexadecimal Editor.plugin */; };
@@ -288,14 +298,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E1B2A7210E41213300A72928 /* Font Editor Cocoa */;
+			remoteGlobalIDString = E1B2A7210E41213300A72928;
 			remoteInfo = "Font Editor Cocoa";
 		};
 		E17753B30E42526F00F737F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E1B2A46A0E41103800A72928 /* NovaTools */;
+			remoteGlobalIDString = E1B2A46A0E41103800A72928;
 			remoteInfo = NovaTools;
 		};
 		E1B2A5870E41103A00A72928 /* PBXContainerItemProxy */ = {
@@ -321,7 +331,7 @@
 			dstPath = "Support Resources";
 			dstSubfolderSpec = 7;
 			files = (
-				E177538E0E4251D000F737F8 /* Templates.rsrc in Copy Support Resources */,
+				E17757580E425F1D00F737F8 /* Templates.rsrc in Copy Support Resources */,
 			);
 			name = "Copy Support Resources";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,29 +363,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3D0933A604DEFEE600DD74B1 /* NuTemplateElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuTemplateElement.h; sourceTree = "<group>"; };
-		3D0933A704DEFEE600DD74B1 /* NuTemplateElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuTemplateElement.m; sourceTree = "<group>"; };
-		3D0933BA04DF10D700DD74B1 /* NuTemplateGroupElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuTemplateGroupElement.h; sourceTree = "<group>"; };
-		3D0933BB04DF10D700DD74B1 /* NuTemplateGroupElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuTemplateGroupElement.m; sourceTree = "<group>"; };
-		3D0933BE04DF151C00DD74B1 /* NuTemplateStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuTemplateStream.h; sourceTree = "<group>"; };
-		3D0933BF04DF151C00DD74B1 /* NuTemplateStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuTemplateStream.m; sourceTree = "<group>"; };
-		3D0933C404DF1C0800DD74B1 /* NuTemplateLSTBElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuTemplateLSTBElement.h; sourceTree = "<group>"; };
-		3D0933C504DF1C0800DD74B1 /* NuTemplateLSTBElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuTemplateLSTBElement.m; sourceTree = "<group>"; };
-		3D0933E304DF2FF700DD74B1 /* NuTemplateTNAMElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateTNAMElement.h; sourceTree = "<group>"; };
-		3D0933E404DF2FF700DD74B1 /* NuTemplateTNAMElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateTNAMElement.m; sourceTree = "<group>"; };
-		3D0933E704DF317D00DD74B1 /* NuTemplatePSTRElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplatePSTRElement.h; sourceTree = "<group>"; };
-		3D0933E804DF317D00DD74B1 /* NuTemplatePSTRElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplatePSTRElement.m; sourceTree = "<group>"; };
-		3D0933EE04DF381900DD74B1 /* NuTemplateDWRDElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateDWRDElement.m; sourceTree = "<group>"; };
-		3D0933EF04DF381900DD74B1 /* NuTemplateDWRDElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateDWRDElement.h; sourceTree = "<group>"; };
 		3D0933F404DFD7CF00DD74B1 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = SOURCE_ROOT; };
-		3D0933F604DFE80500DD74B1 /* NuTemplateLSTEElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateLSTEElement.h; sourceTree = "<group>"; };
-		3D0933F704DFE80500DD74B1 /* NuTemplateLSTEElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateLSTEElement.m; sourceTree = "<group>"; };
-		3D0ABFB904E152CA00C85300 /* Read Me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read Me.txt"; sourceTree = "<group>"; };
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
-		3D0B38B204DEF41E005AED5E /* NuTemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateWindowController.h; sourceTree = "<group>"; };
-		3D0B38B304DEF41E005AED5E /* NuTemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateWindowController.m; sourceTree = "<group>"; };
-		3D0B38B604DEF465005AED5E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NuTemplateWindow.nib; sourceTree = "<group>"; };
-		3D2EE5E204E5C56F00515930 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../Localizable.strings; sourceTree = "<group>"; };
 		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKEditorRegistry.h; sourceTree = "<group>"; };
 		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RKEditorRegistry.m; sourceTree = "<group>"; };
@@ -383,23 +372,63 @@
 		3D3B99B804DC16A30056861E /* ICONWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = ICONWindowController.m; path = ICONEditor/ICONWindowController.m; sourceTree = SOURCE_ROOT; };
 		3D3B99B904DC16A30056861E /* ICONWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ICONWindowController.h; path = ICONEditor/ICONWindowController.h; sourceTree = SOURCE_ROOT; };
 		3D3B99BD04DC16FC0056861E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ICONEditor/English.lproj/ICONWindow.nib; sourceTree = SOURCE_ROOT; };
-		3D4737B304E872DB00AF65FE /* NuTemplateDLNGElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateDLNGElement.m; sourceTree = "<group>"; };
-		3D4737B404E872DB00AF65FE /* NuTemplateDLNGElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateDLNGElement.h; sourceTree = "<group>"; };
-		3D4737B704E873F300AF65FE /* NuTemplateDBYTElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateDBYTElement.m; sourceTree = "<group>"; };
-		3D4737B804E873F300AF65FE /* NuTemplateDBYTElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateDBYTElement.h; sourceTree = "<group>"; };
-		3D50046F04EF040900F3B64D /* NuTemplateOCNTElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateOCNTElement.h; sourceTree = "<group>"; };
-		3D50047004EF040900F3B64D /* NuTemplateOCNTElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateOCNTElement.m; sourceTree = "<group>"; };
-		3D50047304EF122000F3B64D /* NuTemplateLSTCElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateLSTCElement.m; sourceTree = "<group>"; };
-		3D50047404EF122000F3B64D /* NuTemplateLSTCElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateLSTCElement.h; sourceTree = "<group>"; };
 		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
 		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
 		E17752320E424BAB00F737F8 /* NSData-HexRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData-HexRepresentation.h"; sourceTree = "<group>"; };
 		E17752330E424BAB00F737F8 /* NSData-HexRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData-HexRepresentation.m"; sourceTree = "<group>"; };
 		E177526D0E424DCB00F737F8 /* OpenPanelDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenPanelDelegate.m; sourceTree = "<group>"; };
 		E177526E0E424DCB00F737F8 /* OpenPanelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenPanelDelegate.h; sourceTree = "<group>"; };
-		E17753880E4251C600F737F8 /* DisplayTMPL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DisplayTMPL.png; sourceTree = "<group>"; };
-		E17753890E4251C600F737F8 /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = Templates.rsrc; path = ../Templates.rsrc; sourceTree = "<group>"; };
-		E177538A0E4251C600F737F8 /* TMPLs.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = TMPLs.rsrc; path = ../TMPLs.rsrc; sourceTree = "<group>"; };
+		E17757020E425EE200F737F8 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
+		E17757030E425EE200F737F8 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Element.m; sourceTree = "<group>"; };
+		E17757040E425EE200F737F8 /* ElementDATE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementDATE.h; sourceTree = "<group>"; };
+		E17757050E425EE200F737F8 /* ElementDATE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementDATE.m; sourceTree = "<group>"; };
+		E17757060E425EE200F737F8 /* ElementDBYT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementDBYT.h; sourceTree = "<group>"; };
+		E17757070E425EE200F737F8 /* ElementDBYT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementDBYT.m; sourceTree = "<group>"; };
+		E17757080E425EE200F737F8 /* ElementDLLG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementDLLG.h; sourceTree = "<group>"; };
+		E17757090E425EE200F737F8 /* ElementDLLG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementDLLG.m; sourceTree = "<group>"; };
+		E177570A0E425EE200F737F8 /* ElementDLNG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementDLNG.h; sourceTree = "<group>"; };
+		E177570B0E425EE200F737F8 /* ElementDLNG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementDLNG.m; sourceTree = "<group>"; };
+		E177570C0E425EE200F737F8 /* ElementDWRD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementDWRD.h; sourceTree = "<group>"; };
+		E177570D0E425EE200F737F8 /* ElementDWRD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementDWRD.m; sourceTree = "<group>"; };
+		E177570E0E425EE200F737F8 /* ElementFBYT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementFBYT.h; sourceTree = "<group>"; };
+		E177570F0E425EE200F737F8 /* ElementFBYT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementFBYT.m; sourceTree = "<group>"; };
+		E17757100E425EE200F737F8 /* ElementFIXD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementFIXD.h; sourceTree = "<group>"; };
+		E17757110E425EE200F737F8 /* ElementFIXD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementFIXD.m; sourceTree = "<group>"; };
+		E17757120E425EE200F737F8 /* ElementFRAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementFRAC.h; sourceTree = "<group>"; };
+		E17757130E425EE200F737F8 /* ElementFRAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementFRAC.m; sourceTree = "<group>"; };
+		E17757140E425EE200F737F8 /* ElementHEXD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementHEXD.h; sourceTree = "<group>"; };
+		E17757150E425EE200F737F8 /* ElementHEXD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementHEXD.m; sourceTree = "<group>"; };
+		E17757160E425EE200F737F8 /* ElementKEYB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementKEYB.h; sourceTree = "<group>"; };
+		E17757170E425EE200F737F8 /* ElementKEYB.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ElementKEYB.mm; sourceTree = "<group>"; };
+		E17757180E425EE200F737F8 /* ElementLSTB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementLSTB.h; sourceTree = "<group>"; };
+		E17757190E425EE200F737F8 /* ElementLSTB.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ElementLSTB.mm; sourceTree = "<group>"; };
+		E177571A0E425EE200F737F8 /* ElementLSTC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementLSTC.h; sourceTree = "<group>"; };
+		E177571B0E425EE200F737F8 /* ElementLSTC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ElementLSTC.mm; sourceTree = "<group>"; };
+		E177571C0E425EE200F737F8 /* ElementLSTE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementLSTE.h; sourceTree = "<group>"; };
+		E177571D0E425EE200F737F8 /* ElementLSTE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementLSTE.m; sourceTree = "<group>"; };
+		E177571E0E425EE200F737F8 /* ElementOCNT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementOCNT.h; sourceTree = "<group>"; };
+		E177571F0E425EE200F737F8 /* ElementOCNT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementOCNT.m; sourceTree = "<group>"; };
+		E17757200E425EE200F737F8 /* ElementPSTR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementPSTR.h; sourceTree = "<group>"; };
+		E17757210E425EE200F737F8 /* ElementPSTR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementPSTR.m; sourceTree = "<group>"; };
+		E17757220E425EE200F737F8 /* ElementUBYT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementUBYT.h; sourceTree = "<group>"; };
+		E17757230E425EE200F737F8 /* ElementUBYT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementUBYT.m; sourceTree = "<group>"; };
+		E17757240E425EE200F737F8 /* ElementULLG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementULLG.h; sourceTree = "<group>"; };
+		E17757250E425EE200F737F8 /* ElementULLG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementULLG.m; sourceTree = "<group>"; };
+		E17757260E425EE200F737F8 /* ElementULNG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementULNG.h; sourceTree = "<group>"; };
+		E17757270E425EE200F737F8 /* ElementULNG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementULNG.m; sourceTree = "<group>"; };
+		E17757280E425EE200F737F8 /* ElementUWRD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementUWRD.h; sourceTree = "<group>"; };
+		E17757290E425EE200F737F8 /* ElementUWRD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementUWRD.m; sourceTree = "<group>"; };
+		E177572B0E425EE200F737F8 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E177572D0E425EE200F737F8 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/TemplateWindow.nib; sourceTree = "<group>"; };
+		E177572E0E425EE200F737F8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
+		E177572F0E425EE200F737F8 /* Read Me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read Me.txt"; sourceTree = "<group>"; };
+		E17757310E425EE200F737F8 /* DisplayTMPL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DisplayTMPL.png; sourceTree = "<group>"; };
+		E17757320E425EE200F737F8 /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
+		E17757330E425EE200F737F8 /* TemplateStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateStream.h; sourceTree = "<group>"; };
+		E17757340E425EE200F737F8 /* TemplateStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateStream.m; sourceTree = "<group>"; };
+		E17757350E425EE200F737F8 /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateWindowController.h; sourceTree = "<group>"; };
+		E17757360E425EE200F737F8 /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateWindowController.m; sourceTree = "<group>"; };
+		E17757370E425EE200F737F8 /* TMPLs.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = TMPLs.rsrc; sourceTree = "<group>"; };
 		E1B2A43B0E41103700A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../Plug-Ins/Hex Editor/Info.plist"; sourceTree = "<group>"; };
 		E1B2A43C0E41103800A72928 /* ResKnife Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ResKnife Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A4560E41103800A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -418,7 +447,6 @@
 		E1B2A5470E41103900A72928 /* Info-Uli_s_Template_Editor__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Uli_s_Template_Editor__Upgraded_.plist"; sourceTree = "<group>"; };
 		E1B2A5480E41103A00A72928 /* Ulis Template Editor.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ulis Template Editor.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A55A0E41103A00A72928 /* Bitmap Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bitmap Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1B2A5850E41103A00A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 		E1B2A5860E41103A00A72928 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A7220E41213300A72928 /* Font Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Font Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A7360E41218F00A72928 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FontDocument.nib; sourceTree = "<group>"; };
@@ -736,50 +764,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3D0933EB04DF319F00DD74B1 /* Field Types */ = {
-			isa = PBXGroup;
-			children = (
-				3D0933C404DF1C0800DD74B1 /* NuTemplateLSTBElement.h */,
-				3D0933C504DF1C0800DD74B1 /* NuTemplateLSTBElement.m */,
-				3D0933F604DFE80500DD74B1 /* NuTemplateLSTEElement.h */,
-				3D0933F704DFE80500DD74B1 /* NuTemplateLSTEElement.m */,
-				3D0933E304DF2FF700DD74B1 /* NuTemplateTNAMElement.h */,
-				3D0933E404DF2FF700DD74B1 /* NuTemplateTNAMElement.m */,
-				3D0933E704DF317D00DD74B1 /* NuTemplatePSTRElement.h */,
-				3D0933E804DF317D00DD74B1 /* NuTemplatePSTRElement.m */,
-				3D0933EF04DF381900DD74B1 /* NuTemplateDWRDElement.h */,
-				3D0933EE04DF381900DD74B1 /* NuTemplateDWRDElement.m */,
-				3D4737B404E872DB00AF65FE /* NuTemplateDLNGElement.h */,
-				3D4737B304E872DB00AF65FE /* NuTemplateDLNGElement.m */,
-				3D4737B804E873F300AF65FE /* NuTemplateDBYTElement.h */,
-				3D4737B704E873F300AF65FE /* NuTemplateDBYTElement.m */,
-				3D50046F04EF040900F3B64D /* NuTemplateOCNTElement.h */,
-				3D50047004EF040900F3B64D /* NuTemplateOCNTElement.m */,
-				3D50047404EF122000F3B64D /* NuTemplateLSTCElement.h */,
-				3D50047304EF122000F3B64D /* NuTemplateLSTCElement.m */,
-			);
-			name = "Field Types";
-			sourceTree = "<group>";
-		};
-		3D0B38A504DEF41E005AED5E /* Template Editor */ = {
-			isa = PBXGroup;
-			children = (
-				3D0ABFB904E152CA00C85300 /* Read Me.txt */,
-				3D0B38B204DEF41E005AED5E /* NuTemplateWindowController.h */,
-				3D0B38B304DEF41E005AED5E /* NuTemplateWindowController.m */,
-				3D0933A604DEFEE600DD74B1 /* NuTemplateElement.h */,
-				3D0933A704DEFEE600DD74B1 /* NuTemplateElement.m */,
-				3D0933BA04DF10D700DD74B1 /* NuTemplateGroupElement.h */,
-				3D0933BB04DF10D700DD74B1 /* NuTemplateGroupElement.m */,
-				3D0933BE04DF151C00DD74B1 /* NuTemplateStream.h */,
-				3D0933BF04DF151C00DD74B1 /* NuTemplateStream.m */,
-				3D0933EB04DF319F00DD74B1 /* Field Types */,
-				E17753870E4251C600F737F8 /* Resources */,
-			);
-			name = "Template Editor";
-			path = NuTemplateEditor;
-			sourceTree = SOURCE_ROOT;
-		};
 		3D3B99B704DC167D0056861E /* Bitmap Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -801,17 +785,78 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		E17753870E4251C600F737F8 /* Resources */ = {
+		E17757010E425EE200F737F8 /* Template Editor */ = {
 			isa = PBXGroup;
 			children = (
-				E1B2A5850E41103A00A72928 /* Info.plist */,
-				3D2EE5E204E5C56F00515930 /* Localizable.strings */,
-				E17753880E4251C600F737F8 /* DisplayTMPL.png */,
-				E17753890E4251C600F737F8 /* Templates.rsrc */,
-				E177538A0E4251C600F737F8 /* TMPLs.rsrc */,
-				3D0B38B504DEF465005AED5E /* NuTemplateWindow.nib */,
+				E177572F0E425EE200F737F8 /* Read Me.txt */,
+				E17757350E425EE200F737F8 /* TemplateWindowController.h */,
+				E17757360E425EE200F737F8 /* TemplateWindowController.m */,
+				E17757330E425EE200F737F8 /* TemplateStream.h */,
+				E17757340E425EE200F737F8 /* TemplateStream.m */,
+				E17757020E425EE200F737F8 /* Element.h */,
+				E17757030E425EE200F737F8 /* Element.m */,
+				E17757570E425EFF00F737F8 /* Elements */,
+				E17757300E425EE200F737F8 /* Resources */,
+				E17757320E425EE200F737F8 /* Templates.rsrc */,
+				E17757370E425EE200F737F8 /* TMPLs.rsrc */,
+			);
+			path = "Template Editor";
+			sourceTree = "<group>";
+		};
+		E17757300E425EE200F737F8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E177572A0E425EE200F737F8 /* Localizable.strings */,
+				E177572C0E425EE200F737F8 /* TemplateWindow.nib */,
+				E177572E0E425EE200F737F8 /* Info.plist */,
+				E17757310E425EE200F737F8 /* DisplayTMPL.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		E17757570E425EFF00F737F8 /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				E17757040E425EE200F737F8 /* ElementDATE.h */,
+				E17757050E425EE200F737F8 /* ElementDATE.m */,
+				E17757060E425EE200F737F8 /* ElementDBYT.h */,
+				E17757070E425EE200F737F8 /* ElementDBYT.m */,
+				E17757080E425EE200F737F8 /* ElementDLLG.h */,
+				E17757090E425EE200F737F8 /* ElementDLLG.m */,
+				E177570A0E425EE200F737F8 /* ElementDLNG.h */,
+				E177570B0E425EE200F737F8 /* ElementDLNG.m */,
+				E177570C0E425EE200F737F8 /* ElementDWRD.h */,
+				E177570D0E425EE200F737F8 /* ElementDWRD.m */,
+				E177570E0E425EE200F737F8 /* ElementFBYT.h */,
+				E177570F0E425EE200F737F8 /* ElementFBYT.m */,
+				E17757100E425EE200F737F8 /* ElementFIXD.h */,
+				E17757110E425EE200F737F8 /* ElementFIXD.m */,
+				E17757120E425EE200F737F8 /* ElementFRAC.h */,
+				E17757130E425EE200F737F8 /* ElementFRAC.m */,
+				E17757140E425EE200F737F8 /* ElementHEXD.h */,
+				E17757150E425EE200F737F8 /* ElementHEXD.m */,
+				E17757160E425EE200F737F8 /* ElementKEYB.h */,
+				E17757170E425EE200F737F8 /* ElementKEYB.mm */,
+				E17757180E425EE200F737F8 /* ElementLSTB.h */,
+				E17757190E425EE200F737F8 /* ElementLSTB.mm */,
+				E177571A0E425EE200F737F8 /* ElementLSTC.h */,
+				E177571B0E425EE200F737F8 /* ElementLSTC.mm */,
+				E177571C0E425EE200F737F8 /* ElementLSTE.h */,
+				E177571D0E425EE200F737F8 /* ElementLSTE.m */,
+				E177571E0E425EE200F737F8 /* ElementOCNT.h */,
+				E177571F0E425EE200F737F8 /* ElementOCNT.m */,
+				E17757200E425EE200F737F8 /* ElementPSTR.h */,
+				E17757210E425EE200F737F8 /* ElementPSTR.m */,
+				E17757220E425EE200F737F8 /* ElementUBYT.h */,
+				E17757230E425EE200F737F8 /* ElementUBYT.m */,
+				E17757240E425EE200F737F8 /* ElementULLG.h */,
+				E17757250E425EE200F737F8 /* ElementULLG.m */,
+				E17757260E425EE200F737F8 /* ElementULNG.h */,
+				E17757270E425EE200F737F8 /* ElementULNG.m */,
+				E17757280E425EE200F737F8 /* ElementUWRD.h */,
+				E17757290E425EE200F737F8 /* ElementUWRD.m */,
+			);
+			name = Elements;
 			sourceTree = "<group>";
 		};
 		E1B2A7340E41218F00A72928 /* Font Editor */ = {
@@ -894,7 +939,7 @@
 				F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */,
 				F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */,
 				F5EF839F020C08E601A80001 /* Hex Editor */,
-				3D0B38A504DEF41E005AED5E /* Template Editor */,
+				E17757010E425EE200F737F8 /* Template Editor */,
 				3D3B99B704DC167D0056861E /* Bitmap Editor */,
 				E1B2A7340E41218F00A72928 /* Font Editor */,
 				F5DF1C0F0254C78801A80001 /* NovaTools */,
@@ -1774,9 +1819,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1B2A56D0E41103A00A72928 /* NuTemplateWindow.nib in Resources */,
-				E1B2A56F0E41103A00A72928 /* Localizable.strings in Resources */,
-				E177538B0E4251C600F737F8 /* DisplayTMPL.png in Resources */,
+				E177574E0E425EE600F737F8 /* Info.plist in Resources */,
+				E177574C0E425EE600F737F8 /* Localizable.strings in Resources */,
+				E177574D0E425EE600F737F8 /* TemplateWindow.nib in Resources */,
+				E17757500E425EE600F737F8 /* DisplayTMPL.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2021,21 +2067,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1B2A5710E41103A00A72928 /* NuTemplateWindowController.m in Sources */,
 				E1B2A5720E41103A00A72928 /* Notifications.m in Sources */,
-				E1B2A5730E41103A00A72928 /* NuTemplateElement.m in Sources */,
-				E1B2A5740E41103A00A72928 /* NuTemplateGroupElement.m in Sources */,
-				E1B2A5750E41103A00A72928 /* NuTemplateStream.m in Sources */,
-				E1B2A5760E41103A00A72928 /* NuTemplateLSTBElement.m in Sources */,
-				E1B2A5770E41103A00A72928 /* NuTemplateTNAMElement.m in Sources */,
-				E1B2A5780E41103A00A72928 /* NuTemplatePSTRElement.m in Sources */,
-				E1B2A5790E41103A00A72928 /* NuTemplateDWRDElement.m in Sources */,
-				E1B2A57A0E41103A00A72928 /* NuTemplateLSTEElement.m in Sources */,
-				E1B2A57B0E41103A00A72928 /* NuTemplateDLNGElement.m in Sources */,
-				E1B2A57C0E41103A00A72928 /* NuTemplateDBYTElement.m in Sources */,
-				E1B2A57D0E41103A00A72928 /* NuTemplateOCNTElement.m in Sources */,
-				E1B2A57E0E41103A00A72928 /* NuTemplateLSTCElement.m in Sources */,
 				E1B2A77C0E41230E00A72928 /* NGSCategories.m in Sources */,
+				E17757380E425EE600F737F8 /* Element.m in Sources */,
+				E17757390E425EE600F737F8 /* ElementDATE.m in Sources */,
+				E177573A0E425EE600F737F8 /* ElementDBYT.m in Sources */,
+				E177573B0E425EE600F737F8 /* ElementDLLG.m in Sources */,
+				E177573C0E425EE600F737F8 /* ElementDLNG.m in Sources */,
+				E177573D0E425EE600F737F8 /* ElementDWRD.m in Sources */,
+				E177573E0E425EE600F737F8 /* ElementFBYT.m in Sources */,
+				E177573F0E425EE600F737F8 /* ElementFIXD.m in Sources */,
+				E17757400E425EE600F737F8 /* ElementFRAC.m in Sources */,
+				E17757410E425EE600F737F8 /* ElementHEXD.m in Sources */,
+				E17757420E425EE600F737F8 /* ElementKEYB.mm in Sources */,
+				E17757430E425EE600F737F8 /* ElementLSTB.mm in Sources */,
+				E17757440E425EE600F737F8 /* ElementLSTC.mm in Sources */,
+				E17757450E425EE600F737F8 /* ElementLSTE.m in Sources */,
+				E17757460E425EE600F737F8 /* ElementOCNT.m in Sources */,
+				E17757470E425EE600F737F8 /* ElementPSTR.m in Sources */,
+				E17757480E425EE600F737F8 /* ElementUBYT.m in Sources */,
+				E17757490E425EE600F737F8 /* ElementULLG.m in Sources */,
+				E177574A0E425EE600F737F8 /* ElementULNG.m in Sources */,
+				E177574B0E425EE600F737F8 /* ElementUWRD.m in Sources */,
+				E17757520E425EE600F737F8 /* TemplateStream.m in Sources */,
+				E17757530E425EE600F737F8 /* TemplateWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2075,21 +2130,30 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		3D0B38B504DEF465005AED5E /* NuTemplateWindow.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D0B38B604DEF465005AED5E /* English */,
-			);
-			name = NuTemplateWindow.nib;
-			path = ..;
-			sourceTree = "<group>";
-		};
 		3D3B99BC04DC16FC0056861E /* ICONWindow.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				3D3B99BD04DC16FC0056861E /* English */,
 			);
 			name = ICONWindow.nib;
+			sourceTree = "<group>";
+		};
+		E177572A0E425EE200F737F8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E177572B0E425EE200F737F8 /* English */,
+			);
+			name = Localizable.strings;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		E177572C0E425EE200F737F8 /* TemplateWindow.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E177572D0E425EE200F737F8 /* English */,
+			);
+			name = TemplateWindow.nib;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		E1B2A7350E41218F00A72928 /* FontDocument.nib */ = {
@@ -2832,7 +2896,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = NuTemplateEditor/Info.plist;
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Template Editor/Info.plist";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "Template Editor";
 				WARNING_CFLAGS = (
@@ -2852,7 +2916,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = NuTemplateEditor/Info.plist;
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Template Editor/Info.plist";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "Template Editor";
 				WARNING_CFLAGS = (
