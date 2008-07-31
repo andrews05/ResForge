@@ -414,7 +414,6 @@
 		E1B2A5290E41103900A72928 /* PICT Editor.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PICT Editor.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A5470E41103900A72928 /* Info-Uli_s_Template_Editor__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Uli_s_Template_Editor__Upgraded_.plist"; sourceTree = "<group>"; };
 		E1B2A5480E41103A00A72928 /* Ulis Template Editor.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ulis Template Editor.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1B2A5590E41103A00A72928 /* Info-Bitmap_Editor_Cocoa__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Bitmap_Editor_Cocoa__Upgraded_.plist"; sourceTree = "<group>"; };
 		E1B2A55A0E41103A00A72928 /* Bitmap Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bitmap Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A5850E41103A00A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1B2A5860E41103A00A72928 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -428,6 +427,7 @@
 		E1B2A73E0E41218F00A72928 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1B2A7740E41230E00A72928 /* NGSCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NGSCategories.h; sourceTree = "<group>"; };
 		E1B2A7750E41230E00A72928 /* NGSCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NGSCategories.m; sourceTree = "<group>"; };
+		E1B2A7D20E41994C00A72928 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ICONEditor/Info.plist; sourceTree = SOURCE_ROOT; };
 		F5041736036BD60801A8010A /* ResKnife.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ResKnife.scriptSuite; sourceTree = "<group>"; };
 		F50DFE17036C203F01A8010A /* English */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = English; path = Cocoa/English.lproj/ResKnife.scriptTerminology; sourceTree = SOURCE_ROOT; };
 		F50DFE22036C258201A8010A /* BoolTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = BoolTemplateField.cpp; sourceTree = "<group>"; };
@@ -801,6 +801,7 @@
 			children = (
 				3D3B99B804DC16A30056861E /* ICONWindowController.m */,
 				3D3B99B904DC16A30056861E /* ICONWindowController.h */,
+				E1B2A7D20E41994C00A72928 /* Info.plist */,
 				3D3B99BC04DC16FC0056861E /* ICONWindow.nib */,
 			);
 			name = "Bitmap Editor";
@@ -936,7 +937,6 @@
 				E1B2A5170E41103900A72928 /* Info-Template_Editor_Carbon__Upgraded_.plist */,
 				E1B2A5280E41103900A72928 /* Info-PICT_Editor__Upgraded_.plist */,
 				E1B2A5470E41103900A72928 /* Info-Uli_s_Template_Editor__Upgraded_.plist */,
-				E1B2A5590E41103A00A72928 /* Info-Bitmap_Editor_Cocoa__Upgraded_.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2445,6 +2445,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				MACOSX_DEPLOYMENT_TARGET = 10.1;
 			};
@@ -2463,17 +2464,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cocoa/Info.plist;
-				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "ResKnife Cocoa";
 				PROFILING_CODE = YES;
@@ -2484,7 +2481,6 @@
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2492,16 +2488,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cocoa/Info.plist;
-				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "ResKnife Cocoa";
 				PROFILING_CODE = YES;
@@ -2512,7 +2504,6 @@
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -2520,7 +2511,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -2528,22 +2518,18 @@
 				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Hex Editor/Info.plist";
-				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-bundle",
 					"-undefined",
 					error,
 				);
-				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Hexadecimal Editor";
-				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = plugin;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2551,28 +2537,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Hex Editor/Info.plist";
-				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-bundle",
 					"-undefined",
 					error,
 				);
-				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Hexadecimal Editor";
-				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = plugin;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -3019,10 +3000,8 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "Info-Bitmap_Editor_Cocoa__Upgraded_.plist";
-				OTHER_CFLAGS = "";
+				INFOPLIST_FILE = ICONEditor/Info.plist;
 				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Bitmap Editor";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
@@ -3031,7 +3010,6 @@
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = plugin;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -3042,10 +3020,8 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "Info-Bitmap_Editor_Cocoa__Upgraded_.plist";
-				OTHER_CFLAGS = "";
+				INFOPLIST_FILE = ICONEditor/Info.plist;
 				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Bitmap Editor";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
@@ -3054,7 +3030,6 @@
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = plugin;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
