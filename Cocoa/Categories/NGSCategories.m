@@ -171,6 +171,8 @@
 @end
 
 #pragma mark -
+
+#if MAC_OS_X_VERSION_10_3 <= MAC_OS_X_VERSION_MAX_ALLOWED
 /*
 @implementation NSMatrix (NGSSelectionIndicies)
 - (NSIndexSet *)selectedRows
@@ -196,6 +198,8 @@
 }
 @end
 */
+#endif
+
 @implementation NSOutlineView (NGSSelectedItemExtensions)
 - (id)selectedItem
 {
@@ -214,7 +218,9 @@
 @end
 
 #pragma mark -
-/*
+
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
+
 @implementation NSGradient (NGSGradientExtensions)
 + (NSGradient *)aquaGradient
 {
@@ -249,7 +255,9 @@
 	return [gradient autorelease];
 }
 @end
-*/
+
+#endif
+
 #pragma mark -
 
 /* CGLContext access for pre-10.3 */
