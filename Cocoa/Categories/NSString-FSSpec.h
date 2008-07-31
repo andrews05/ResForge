@@ -6,3 +6,11 @@
 - (FSSpec *)createFSSpec;
 
 @end
+
+
+@interface NSString (ResKnifeBooleanExtensions)
+
+- (BOOL)boolValue;
++ (NSString *)stringWithBool:(BOOL)boolean;
+
+@end

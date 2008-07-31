@@ -1,6 +1,19 @@
 {
     IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = AsciiTextView; LANGUAGE = ObjC; SUPERCLASS = HexEditorTextView; }, 
+        {
+            ACTIONS = {
+                copyASCII = id; 
+                copyHex = id; 
+                pasteAsASCII = id; 
+                pasteAsHex = id; 
+                pasteAsUnicode = id; 
+                pasteFromHex = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
         {
             CLASS = HexEditorDelegate; 
             LANGUAGE = ObjC; 
@@ -13,18 +26,20 @@
             }; 
             SUPERCLASS = NSObject; 
         }, 
+        {CLASS = HexEditorTextView; LANGUAGE = ObjC; SUPERCLASS = NSTextView; }, 
+        {CLASS = HexTextView; LANGUAGE = ObjC; SUPERCLASS = HexEditorTextView; }, 
         {
             ACTIONS = {showFind = id; }; 
             CLASS = HexWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 ascii = NSTextView; 
-                asciiScroll = NSScrollView; 
+                copySubmenu = NSMenu; 
                 hex = NSTextView; 
                 hexDelegate = HexEditorDelegate; 
-                hexScroll = NSScrollView; 
                 message = NSTextField; 
                 offset = NSTextView; 
+                pasteSubmenu = NSMenu; 
             }; 
             SUPERCLASS = NSWindowController; 
         }

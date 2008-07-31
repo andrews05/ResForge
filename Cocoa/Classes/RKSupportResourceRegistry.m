@@ -1,44 +1,32 @@
-//
-//  RKSupportResourceRegistry.m
-//  ResKnife
-//
-//  Created by Uli Kusterer on Mon Aug 18 2003.
-//  Copyright (c) 2003 __MyCompanyName__. All rights reserved.
-//
-
 #import "RKSupportResourceRegistry.h"
-
+#import "NGSCategories.h"
 
 @implementation RKSupportResourceRegistry
 
-+(void) scanForSupportResources: (NSDocumentController*)c
++ (void)scanForSupportResources
 {
 	// TODO: Instead of hard-coding sysPath we should use some FindFolder-like API!
-	NSString		*appSupport = @"Library/Application Support/ResKnife/Support Resources/";
-	NSString		*appPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Support Resources"];
-	NSString		*userPath = [NSHomeDirectory() stringByAppendingPathComponent:appSupport];
-	NSString		*sysPath = [@"/" stringByAppendingPathComponent:appSupport];
-	NSArray			*paths = [NSArray arrayWithObjects:appPath, userPath, sysPath, nil];
-	NSEnumerator	*pathEnum = [paths objectEnumerator];
-	NSString		*path;
-	
-	while( path = [pathEnum nextObject] )
+#if MAC_OS_X_VERSION_10_4 <= MAC_OS_X_VERSION_MAX_ALLOWED
+	NSArray *dirsArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSAllDomainsMask, YES);
+	dirsArray = [dirsArray arrayByMakingObjectsPerformSelector:@selector(stringByAppendingPathComponent:) withObject:@"ResKnife/Support Resources"];
+#endif
+	[RKSupportResourceRegistry scanForSupportResourcesInFolder:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Support Resources"]];
+	[RKSupportResourceRegistry scanForSupportResourcesInFolder:[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Application Support/ResKnife/Support Resources"]];
+	[RKSupportResourceRegistry scanForSupportResourcesInFolder:@"/Library/Application Support/ResKnife/Support Resources"];
+	[RKSupportResourceRegistry scanForSupportResourcesInFolder:@"/Network/Library/Application Support/ResKnife/Support Resources"];
+}
+
++ (void)scanForSupportResourcesInFolder:(NSString *)path
+{
+//	NSLog(@"Looking for resources in %@", path);
+	NSString *name;
+	NSEnumerator *enumerator = [[[NSFileManager defaultManager] directoryContentsAtPath:path] objectEnumerator];
+	while(name = [enumerator nextObject])
 	{
-		NSEnumerator	*e = [[[NSFileManager defaultManager] directoryContentsAtPath:path] objectEnumerator];
-		NSString		*name;
-	
-		NSLog(@"Looking for resources in %@", path);
-		
-		while( name = [e nextObject] )
-		{
-			name = [path stringByAppendingPathComponent:name];
-			NSLog(@"Examining %@", name);
-			if( [[name pathExtension] isEqualToString:@"rsrc"] )
-			{
-				[c openDocumentWithContentsOfFile:name display:YES];
-				//[[[[[c openDocumentWithContentsOfFile:name display:YES] windowControllers] objectAtIndex:0] window] orderOut: self];
-			}
-		}
+//		NSLog(@"Examining %@", name);
+		if([[name pathExtension] isEqualToString:@"rsrc"])
+			// FIXME: this method was deprecate in 10.4 in favour of - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError;
+			[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:[path stringByAppendingPathComponent:name] display:YES];
 	}
 }
 

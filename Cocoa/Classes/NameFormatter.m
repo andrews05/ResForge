@@ -2,6 +2,9 @@
 #import "NSOutlineView-SelectedItems.h"
 #import "Resource.h"
 
+/* NameFormatter has been deprecated (it never did what I wanted anyway :-) */
+/* functionality is now in -outlineView:willDisplayCell:forTableColumn:item: */
+
 @implementation NameFormatter
 
 - (NSString *)stringForObjectValue:(id)obj

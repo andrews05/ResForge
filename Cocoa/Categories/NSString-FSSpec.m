@@ -4,25 +4,46 @@
 
 - (FSRef *)createFSRef
 {
-	FSRef *fsRef = NULL;
-	OSStatus error = FSPathMakeRef( [self fileSystemRepresentation], fsRef, NULL );
-	if( error == noErr )
+	// caller is responsible for disposing of the FSRef (method is a 'create' method)
+	FSRef *fsRef = (FSRef *) NewPtrClear(sizeof(FSRef));
+	OSStatus error = FSPathMakeRef([self fileSystemRepresentation], fsRef, NULL);
+	if(error == noErr)
 		return fsRef;
 	return NULL;
 }
 
 - (FSSpec *)createFSSpec
 {
-	FSRef *fsRef = NULL;
-	FSSpec *fsSpec = NULL;
-	OSStatus error = FSPathMakeRef( [self fileSystemRepresentation], fsRef, NULL );
-	if( error == noErr )
+	// caller is responsible for disposing of the FSSpec (method is a 'create' method)
+	FSRef *fsRef = (FSRef *) NewPtrClear(sizeof(FSRef));
+	FSSpec *fsSpec = (FSSpec *) NewPtrClear(sizeof(FSSpec));
+	OSStatus error = FSPathMakeRef([self fileSystemRepresentation], fsRef, NULL);
+	if(error == noErr)
 	{
-		error = FSGetCatalogInfo( fsRef, kFSCatInfoNone, NULL, NULL, fsSpec, NULL );
-		if( error == noErr )
+		error = FSGetCatalogInfo(fsRef, kFSCatInfoNone, NULL, NULL, fsSpec, NULL);
+		if(error == noErr)
+		{
+			DisposePtr((Ptr) fsRef);
 			return fsSpec;
+		}
 	}
+	DisposePtr((Ptr) fsRef);
 	return NULL;
+}
+
+@end
+
+@implementation NSString (ResKnifeBooleanExtensions)
+
+- (BOOL)boolValue
+{
+	return ![self isEqualToString:@"NO"];
+//	return [self isEqualToString:@"YES"];
+}
+
++ (NSString *)stringWithBool:(BOOL)boolean
+{
+	return boolean? @"YES" : @"NO";
 }
 
 @end

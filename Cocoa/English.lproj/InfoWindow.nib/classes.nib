@@ -7,7 +7,7 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {attributesChanged = id; nameChanged = id; }; 
+            ACTIONS = {attributesChanged = id; }; 
             CLASS = InfoWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
@@ -21,7 +21,6 @@
             }; 
             SUPERCLASS = NSWindowController; 
         }, 
-        {CLASS = NSWindowController; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
         {CLASS = SizeFormatter; LANGUAGE = ObjC; SUPERCLASS = NSNumberFormatter; }
     ); 
     IBVersion = 1; 

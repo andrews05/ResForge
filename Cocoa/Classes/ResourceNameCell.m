@@ -5,10 +5,9 @@
 - (id)init
 {
 	self = [super init];
-	if( self )
-	{
-		drawImage = YES;
-	}
+	if(!self) return nil;
+	[self setWraps:NO];
+	drawImage = YES;
 	return self;
 }
 
@@ -42,7 +41,7 @@
 
 - (void)setImage:(NSImage *)newImage
 {
-	if( image != newImage )
+	if(image != newImage)
 	{
 		// save image and set to 16x16 pixels
 		id old = image;
@@ -55,7 +54,7 @@
 
 - (NSRect)imageFrameForCellFrame:(NSRect)cellFrame
 {
-	if( image != nil && drawImage == YES )
+	if(image != nil && drawImage == YES)
 	{
 		// center image vertically in frame, offset right by three
 		NSRect imageFrame;
@@ -70,11 +69,11 @@
 
 - (void)editWithFrame:(NSRect)cellFrame inView:(NSView *)controlView editor:(NSText *)textObject delegate:(id)delegateObject event:(NSEvent *)theEvent
 {
-	if( drawImage == YES )
+	if(drawImage == YES)
 	{
 		// split cell frame into two, pass the text part to the superclass
 		NSRect textFrame, imageFrame;
-		NSDivideRect( cellFrame, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge );
+		NSDivideRect(cellFrame, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge);
 		[super editWithFrame:textFrame inView:controlView editor:textObject delegate:delegateObject event:theEvent];
 	}
 	else
@@ -85,11 +84,11 @@
 
 - (void)selectWithFrame:(NSRect)cellFrame inView:(NSView *)controlView editor:(NSText *)textObject delegate:(id)delegateObject start:(int)selStart length:(int)selLength
 {
-	if( drawImage == YES )
+	if(drawImage == YES)
 	{
 		// split cell frame into two, pass the text part to the superclass
 		NSRect textFrame, imageFrame;
-		NSDivideRect( cellFrame, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge);
+		NSDivideRect(cellFrame, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge);
 		[super selectWithFrame:textFrame inView:controlView editor:textObject delegate:delegateObject start:selStart length:selLength];
 	}
 	else
@@ -100,15 +99,14 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	if( image != nil && drawImage == YES )
+	if(image != nil && drawImage == YES)
 	{
 		NSRect imageFrame;
 		NSSize imageSize = [image size];
 		
 		// get image frame
-		NSDivideRect( cellFrame, &imageFrame, &cellFrame, 3 + imageSize.width, NSMinXEdge );
-//		NSLog( "drawing name cell with bg: %@ colour: %@", [self drawsBackground]? @"YES":@"NO", [self backgroundColor] );
-		if( [self drawsBackground] && ![self isHighlighted] /* ![self cellAttribute:NSCellHighlighted] */ )
+		NSDivideRect(cellFrame, &imageFrame, &cellFrame, 3 + imageSize.width, NSMinXEdge);
+		if([self drawsBackground] && ![self isHighlighted] /* ![self cellAttribute:NSCellHighlighted] */)
 		{
 			[[self backgroundColor] set];
 			NSRectFill(imageFrame);
@@ -117,7 +115,7 @@
 		imageFrame.size = imageSize;
 		
 		// center vertically
-		if( [controlView isFlipped] )
+		if([controlView isFlipped])
 			imageFrame.origin.y += ceil((cellFrame.size.height + imageFrame.size.height) / 2);
 		else imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
 		
@@ -132,7 +130,7 @@
 - (NSSize)cellSize
 {
 	NSSize cellSize = [super cellSize];
-	if( drawImage == YES )
+	if(drawImage == YES)
 		cellSize.width += (image? [image size].width:0) + 3;
 	return cellSize;
 }

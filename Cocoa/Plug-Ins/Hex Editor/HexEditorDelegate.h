@@ -2,33 +2,34 @@
 
 #import "ResKnifeResourceProtocol.h"
 
-@class HexWindowController;
+@class HexWindowController, HexTextView, AsciiTextView;
 
 @interface HexEditorDelegate : NSObject
 {
-    IBOutlet HexWindowController *controller;
-	IBOutlet NSTextView		*ascii;
-	IBOutlet NSTextView		*hex;
+	IBOutlet HexWindowController *controller;
 	IBOutlet NSTextView		*offset;
-    IBOutlet NSTextField	*message;
+	IBOutlet HexTextView	*hex;
+	IBOutlet AsciiTextView	*ascii;
+	IBOutlet NSTextField	*message;
 	
-	BOOL editedLow;
+	BOOL		editedLow;
+	NSRange		rangeForUserTextChange;
 }
 
+/* REMOVE THESE WHEN I.B. IS FIXED */
+- (void)setHex:(id)newView;
+- (void)setAscii:(id)newView;
+/* END REMOVE MARKER */
+
+- (void)viewDidScroll:(NSNotification *)notification;
 - (NSString *)offsetRepresentation:(NSData *)data;
-- (NSString *)hexRepresentation:(NSData *)data;
-- (NSString *)asciiRepresentation:(NSData *)data;
-- (NSString *)hexToAscii:(NSData *)data;
 
-- (NSRange)byteRangeFromHexRange:(NSRange)hexRange;
-- (NSRange)hexRangeFromByteRange:(NSRange)byteRange;
-- (NSRange)byteRangeFromAsciiRange:(NSRange)asciiRange;
-- (NSRange)asciiRangeFromByteRange:(NSRange)byteRange;
-
+- (HexWindowController *)controller;
 - (NSTextView *)hex;
 - (NSTextView *)ascii;
 
 - (BOOL)editedLow;
 - (void)setEditedLow:(BOOL)flag;
+- (NSRange)rangeForUserTextChange;
 
 @end

@@ -1,6 +1,8 @@
 #import "PasteboardDocument.h"
 #import "Resource.h"
 
+extern NSString *RKResourcePboardType;
+
 @implementation PasteboardDocument
 
 - (id)init
@@ -13,40 +15,44 @@
 	return self;
 }
 
--(void)	readPasteboard:(NSString *)pbName
+-(void)readPasteboard:(NSString *)pbName
 {
-	NSPasteboard	*pb = [NSPasteboard pasteboardWithName:pbName];
-	NSArray			*types = [pb types];
-	NSEnumerator	*enumerator = [types objectEnumerator];
-	NSString		*currentType;
+	// this method is mostly a duplicate of -[ResourceDocument paste:] but takes a pasteboard name for an argument
+	NSPasteboard *pb = [NSPasteboard pasteboardWithName:pbName];
+	NSEnumerator *enumerator = [[pb types] objectEnumerator];
+	NSString *pbType;
 	
+	// clear current pasteboard representation
+	[self selectAll:nil];
+	[self clear:nil];
+	
+	// set the window's title to represent the pasteboard being shown (at some point I anticipate having several of these)
+	[[self window] setTitle:pbName];
+	
+	// disable undos during loading
 	[[self undoManager] disableUndoRegistration];
-	while( currentType = [enumerator nextObject] )
+	
+	// get all types off the pasteboard
+	while( pbType = [enumerator nextObject] )
 	{
-		// create the resource & add it to the array
-		NSString	*name		= pbName;
-		NSString	*type;
-		NSNumber	*resID;
-		NSNumber	*attributes;
-		NSData		*data;
-		Resource	*resource;
-		NS_DURING
-			type = [currentType substringToIndex:3];
-		NS_HANDLER
-			type = currentType;
-		NS_ENDHANDLER
-		resID		= [NSNumber numberWithShort:0];
-		attributes	= [NSNumber numberWithShort:0];
-		data		= [pb dataForType:type];
-		resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data];
-		[resources addObject:resource];		// array retains resource
+		// 'paste' any resources into pbdoc's data source
+		if( [pbType isEqualToString:RKResourcePboardType] )
+			[self pasteResources:[NSUnarchiver unarchiveObjectWithData:[pb dataForType:RKResourcePboardType]]];
+		else
+		{
+			// create the faux resource & add it to the array
+			Resource *resource = [Resource resourceOfType:nil andID:nil withName:pbType andAttributes:nil data:[pb dataForType:pbType]];
+			[resources addObject:resource];		// array retains resource
+		}
 	}
+	
+	// re-enable undos
 	[[self undoManager] enableUndoRegistration];
 	
 	[outlineView reloadData];
 }
 
--(void)	windowDidBecomeKey: (NSNotification*)notification
+-(void)windowDidBecomeKey:(NSNotification *)notification
 {
 	// This mess sponsored by Uli Kusterer ;-)
 	generalChangeCount = [[NSPasteboard generalPasteboard] changeCount];

@@ -32,13 +32,12 @@
 
 @interface RKEditorRegistry : NSObject
 {
-	NSMutableDictionary*		typeRegistry;   // Private. Use editorForType: to access this.
+@private
+	NSMutableDictionary *typeRegistry;
 }
 
-+(RKEditorRegistry*)	mainRegistry;   // There's usually only one object, and this returns or creates it.
-
--(IBAction)				scanForPlugins: (id)sender;			// Called automatically by mainRegistry.
--(Class)				editorForType: (NSString*)typeStr;  // You probably want to call this.
-
++ (RKEditorRegistry *)defaultRegistry;		// There's usually only one object, and this returns or creates it.
+- (IBAction)scanForPlugins:(id)sender;		// Called automatically by mainRegistry.
+- (Class)editorForType:(NSString *)typeStr;	// You probably want to call this.
 
 @end

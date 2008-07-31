@@ -4,9 +4,7 @@
 
 - (id)init
 {
-	self = [self initWithWindowNibName:@"PrefsWindow"];
-	if( self ) [self setWindowFrameAutosaveName:@"ResKnife Preferences"];
-	return self;
+	return [self initWithWindowNibName:@"PrefsWindow"];
 }
 
 - (void)dealloc
@@ -19,6 +17,7 @@
 {
 	// represent current prefs in window state
 	[self updatePrefs:nil];
+	[[self window] center];
 	
 	// listen out for pref changes from elsewhere
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePrefs:) name:NSUserDefaultsDidChangeNotification object:nil];
@@ -63,8 +62,8 @@
 	[defaults setBool:autosave forKey:@"Autosave"];
 	[defaults setInteger:autosaveInterval forKey:@"AutosaveInterval"];
 	[defaults setBool:deleteResourceWarning forKey:@"DeleteResourceWarning"];
-	if( createNewDocument )		[defaults setObject:@"OpenUntitledFile" forKey:@"LaunchAction"];
-	else if( displayOpenPanel )	[defaults setObject:@"DisplayOpenPanel" forKey:@"LaunchAction"];
+	if(createNewDocument)		[defaults setObject:@"OpenUntitledFile" forKey:@"LaunchAction"];
+	else if(displayOpenPanel)	[defaults setObject:@"DisplayOpenPanel" forKey:@"LaunchAction"];
 	else						[defaults setObject:@"None" forKey:@"LaunchAction"];
 	[defaults synchronize];
 }
@@ -101,26 +100,9 @@
 + (id)sharedPrefsWindowController
 {
 	static PrefsWindowController *sharedPrefsWindowController = nil;
-	
 	if( !sharedPrefsWindowController )
-	{
 		sharedPrefsWindowController = [[PrefsWindowController allocWithZone:[self zone]] init];
-	}
 	return sharedPrefsWindowController;
-}
-
-@end
-
-@implementation NSString (BooleanSupport)
-
-- (BOOL)boolValue
-{
-	return [self isEqualToString:@"YES"];
-}
-
-+ (NSString *)stringWithBool:(BOOL)boolean
-{
-	return boolean? @"YES" : @"NO";
 }
 
 @end

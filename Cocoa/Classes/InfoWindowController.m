@@ -2,17 +2,11 @@
 #import <Carbon/Carbon.h>	// Actually I only need CarbonCore.framework, but <Carbon/CarbonCore.h> and <CarbonCore/CarbonCore.h> don't work, so I don't know what else to do
 #import "ResourceDocument.h"
 #import "Resource.h"
+#import "ApplicationDelegate.h"
 #import "NSOutlineView-SelectedItems.h"
 #import "MoreFilesX.h"
 
 @implementation InfoWindowController
-
-- (id)init
-{
-	self = [self initWithWindowNibName:@"InfoWindow"];
-	if( self ) [self setWindowFrameAutosaveName:@"InfoWindow"];
-	return self;
-}
 
 - (void)dealloc
 {
@@ -40,47 +34,75 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentInfoDidChange:) name:DocumentInfoDidChangeNotification object:nil];
 }
 
--(void) updateInfoWindow
+/*!
+@method		updateInfoWindow
+@updated	2003-11-06 NGS:	Fixed creator/type handling.
+@updated	2003-10-26 NGS:	Now asks app delegate for icon instead of NSWorkspace.
+@updated	2003-10-26 NGS:	Improved document name & icon display.
+*/
+
+- (void)updateInfoWindow
 {
 	[nameView setEditable:(selectedResource != nil)];
 	[nameView setDrawsBackground:(selectedResource != nil)];
 	
-	if( selectedResource )
+	if(selectedResource)
 	{
-		[[self window] setTitle:@"Resource Info"];
-		[placeholderView setContentView:resourceView];
+		// set UI values
+		[[self window] setTitle:NSLocalizedString(@"Resource Info",nil)];
 		[nameView setStringValue:[selectedResource name]];
-		[iconView setImage:[[NSWorkspace sharedWorkspace] iconForFileType:[selectedResource type]]];
+		[iconView setImage:[(ApplicationDelegate *)[NSApp delegate] iconForResourceType:[selectedResource type]]];
 		[[attributesMatrix cellAtRow:changedBox column:0]	setState:[[selectedResource attributes] shortValue] & resChanged];
 		[[attributesMatrix cellAtRow:preloadBox column:0]	setState:[[selectedResource attributes] shortValue] & resPreload];
 		[[attributesMatrix cellAtRow:protectedBox column:0]	setState:[[selectedResource attributes] shortValue] & resProtected];
 		[[attributesMatrix cellAtRow:lockedBox column:0]	setState:[[selectedResource attributes] shortValue] & resLocked];
 		[[attributesMatrix cellAtRow:purgableBox column:0]	setState:[[selectedResource attributes] shortValue] & resPurgeable];
 		[[attributesMatrix cellAtRow:systemHeapBox column:0] setState:[[selectedResource attributes] shortValue] & resSysHeap];
+		
+		// swap box
+		[placeholderView setContentView:resourceView];
 	}
-	else if( currentDocument != nil )
+	else if(currentDocument != nil)
 	{
 		// get sizes of forks as they are on disk
 		UInt64 dataLogicalSize = 0, rsrcLogicalSize = 0;
-		FSRef *fileRef = (FSRef *) NewPtrClear( sizeof(FSRef) );
-		if( fileRef && [currentDocument fileName] )
+		FSRef *fileRef = (FSRef *) NewPtrClear(sizeof(FSRef));
+		if(fileRef && [currentDocument fileName])
 		{
-			OSStatus error = FSPathMakeRef( [[currentDocument fileName] cString], fileRef, nil );
-			if( !error ) FSGetForkSizes( fileRef, &dataLogicalSize, &rsrcLogicalSize );
+			OSStatus error = FSPathMakeRef([[currentDocument fileName] fileSystemRepresentation], fileRef, nil);
+			if(!error) FSGetForkSizes(fileRef, &dataLogicalSize, &rsrcLogicalSize);
 		}
-		if( fileRef ) DisposePtr( (Ptr) fileRef );
+		if(fileRef) DisposePtr((Ptr) fileRef);
 		
 		// set info window elements to correct values
-		[[self window] setTitle:@"Document Info"];
-		[iconView setImage:[NSImage imageNamed:@"Resource file"]];
-		[nameView setStringValue:[currentDocument fileName]? [[currentDocument fileName] lastPathComponent]:[currentDocument displayName]];
-		[[filePropertyForm cellAtIndex:0] setStringValue:[currentDocument creator]];
-		[[filePropertyForm cellAtIndex:1] setStringValue:[currentDocument type]];
+		[[self window] setTitle:NSLocalizedString(@"Document Info",nil)];
+		if([currentDocument fileName])	// document has been saved
+		{
+			[iconView setImage:[[NSWorkspace sharedWorkspace] iconForFile:[currentDocument fileName]]];
+			[nameView setStringValue:[[currentDocument fileName] lastPathComponent]];
+		}
+		else								// new, untitled document
+		{
+			[iconView setImage:[NSImage imageNamed:@"Resource file"]];
+			[nameView setStringValue:[currentDocument displayName]];
+		}
+		[currentDocument creator];
+		[[NSString alloc] initWithData:[currentDocument creator] encoding:NSMacOSRomanStringEncoding];
+		[[filePropertyForm cellAtIndex:0] setStringValue:[[[NSString alloc] initWithData:[currentDocument creator] encoding:NSMacOSRomanStringEncoding] autorelease]];
+		[[filePropertyForm cellAtIndex:1] setStringValue:[[[NSString alloc] initWithData:[currentDocument type] encoding:NSMacOSRomanStringEncoding] autorelease]];
 //		[[filePropertyForm cellAtIndex:2] setObjectValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
 //		[[filePropertyForm cellAtIndex:3] setObjectValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
 		[[filePropertyForm cellAtIndex:2] setStringValue:[[NSNumber numberWithUnsignedLongLong:dataLogicalSize] description]];
 		[[filePropertyForm cellAtIndex:3] setStringValue:[[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize] description]];
+		
+		// swap box
 		[placeholderView setContentView:documentView];
+	}
+	else
+	{
+		[iconView setImage:nil];
+		[nameView setStringValue:nil];
+		[placeholderView setContentView:nil];
 	}
 }
 
@@ -88,11 +110,11 @@
 {
 	NSWindowController *controller = [mainWindow windowController];
 	
-	if( [[controller document] isKindOfClass:[ResourceDocument class]] )
+	if([[controller document] isKindOfClass:[ResourceDocument class]])
 		currentDocument = [controller document];
 	else currentDocument = nil;
 	
-	if( currentDocument )
+	if(currentDocument)
 		selectedResource = [[currentDocument outlineView] selectedItem];
 	else selectedResource = [controller resource];
 	[self updateInfoWindow];
@@ -105,15 +127,15 @@
 
 - (void)selectedResourceChanged:(NSNotification *)notification
 {
-	if( ![[nameView stringValue] isEqualToString: [selectedResource name]] )
-		[self nameChanged:nameView];
-	selectedResource = [[notification object] selectedItem];
+	if(![[nameView stringValue] isEqualToString:[selectedResource name]])
+		[self nameDidChange:nameView];
+	selectedResource = (Resource *) [[notification object] selectedItem];
 	[self updateInfoWindow];
 }
 
 - (void)documentInfoDidChange:(NSNotification *)notification
 {
-#pragma unused( notification )
+#pragma unused(notification)
 	[self updateInfoWindow];
 }
 
@@ -124,23 +146,21 @@
 	[selectedResource setAttributes:[NSNumber numberWithShort:number]];
 }
 
--(IBAction) nameChanged: (id)sender
+- (IBAction)nameDidChange:(id)sender
 {
-	[selectedResource setName: [nameView stringValue]];
+	[selectedResource setName:[nameView stringValue]];
 }
 
 - (void)resourceAttributesDidChange:(NSNotification *)notification;
 {
-	if( ![[nameView stringValue] isEqualToString: [selectedResource name]] )
-		[self nameChanged:nameView];
 	[self updateInfoWindow];
 }
 
 + (id)sharedInfoWindowController
 {
 	static InfoWindowController *sharedInfoWindowController = nil;
-	if( !sharedInfoWindowController )
-		sharedInfoWindowController = [[InfoWindowController allocWithZone:[self zone]] init];
+	if(!sharedInfoWindowController)
+		sharedInfoWindowController = [[InfoWindowController allocWithZone:[self zone]] initWithWindowNibName:@"InfoWindow"];
 	return sharedInfoWindowController;
 }
 

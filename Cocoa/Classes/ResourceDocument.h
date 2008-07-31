@@ -12,9 +12,19 @@
 	NSMutableDictionary	*toolbarItems;
 	NSMutableArray	*resources;
 	HFSUniStr255	*fork;		// name of fork to save to, usually empty string (data fork) or 'RESOURCE_FORK' as returned from FSGetResourceForkName()
-	NSString *creator;
-	NSString *type;
+	NSData			*creator;
+	NSData			*type;
+	BOOL			_createFork;	// file had no existing resource map when opened
 }
+
+- (BOOL)readFork:(NSString *)forkName asStreamFromFile:(FSRef *)fileRef;
+- (BOOL)readResourceMap:(SInt16)fileRefNum;
+- (BOOL)writeResourceMap:(SInt16)fileRefNum;
+- (BOOL)writeForkStreamsToFile:(NSString *)fileName;
+
+- (IBAction)exportResources:(id)sender;
+- (void)exportResource:(Resource *)resource;
+- (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
 - (void)setupToolbar:(NSWindowController *)windowController;
 
@@ -29,9 +39,6 @@
 - (IBAction)playSound:(id)sender;
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished;
 
--(IBAction) exportResourceToFile: (id)sender;
--(IBAction) exportResourceToImageFile: (id)sender;
-
 - (IBAction)copy:(id)sender;
 - (IBAction)paste:(id)sender;
 - (void)pasteResources:(NSArray *)pastedResources;
@@ -45,21 +52,17 @@
 - (void)resourceTypeWillChange:(NSNotification *)notification;
 - (void)resourceAttributesWillChange:(NSNotification *)notification;
 
-- (BOOL)readFork:(NSString *)forkName asStreamFromFile:(NSString *)fileName;
-- (BOOL)readResourceMap:(SInt16)fileRefNum;
-- (BOOL)writeResourceMap:(SInt16)fileRefNum;
-
 - (NSWindow *)mainWindow;
 - (ResourceDataSource *)dataSource;
 - (NSOutlineView *)outlineView;
 - (NSArray *)resources;		// return the array as non-mutable
 
-- (NSString *)creator;
-- (NSString *)type;
+- (NSData *)creator;
+- (NSData *)type;
 - (IBAction)creatorChanged:(id)sender;
 - (IBAction)typeChanged:(id)sender;
-- (void)setCreator:(NSString *)oldCreator;
-- (void)setType:(NSString *)oldType;
-- (void)setCreator:(NSString *)newCreator andType:(NSString *)newType;
+- (BOOL)setCreator:(NSData *)newCreator;
+- (BOOL)setType:(NSData *)newType;
+- (BOOL)setCreator:(NSData *)newCreator andType:(NSData *)newType;
 
 @end

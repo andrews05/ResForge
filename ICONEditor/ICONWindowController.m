@@ -82,7 +82,7 @@
 	resImage = [[NSImage alloc] init];
 	
 	resData = [[resource data] retain];
-	planes[0] = (char*) [resData bytes];
+	planes[0] = (unsigned char*) [resData bytes];
 	
 	if( [resType isEqualToString: @"ICN#"] )
 	{

@@ -1,75 +1,100 @@
 #import <Cocoa/Cocoa.h>
 
-/*!	@header			ApplicationDelegate.h
- *	@discussion		This class is the delegate object for NSApp.
- */
+/*!
+@header			ApplicationDelegate.h
+@abstract		This class is the delegate object for NSApp.
+*/
 
-/*!	@class			ApplicationDelegate
- *	@discussion		This class is the delegate object for NSApp.
- */
+/*!
+@class			ApplicationDelegate
+@abstract		This class is the delegate object for NSApp.
+*/
+@class OpenPanelDelegate;
 
 @interface ApplicationDelegate : NSObject
 {
-/*!	@var openAuxView	Accessory view for <tt>NSOpenPanels</tt>. */
-	IBOutlet NSView		*openAuxView;
-/*!	@var forkTableView	Table view inside <tt>openAuxView</tt>. */
-	IBOutlet NSTableView *forkTableView;
-/*!	@var icons			A dictionary within which to cache icons. Keys are four-character <tt>NSStrings</tt> representing <tt>ResTypes</tt>. */
-	NSMutableDictionary *icons;
+/*!	@var openPanelDelegate		Delegate for <tt>NSOpenPanels</tt>. */
+	IBOutlet OpenPanelDelegate  *openPanelDelegate;
+/*!	@var icons					A dictionary within which to cache icons. Keys are four-character <tt>NSStrings</tt> representing <tt>ResTypes</tt>. */
+	NSMutableDictionary			*_icons;
 }
 
-/*! @function		showAbout:
- *	@discussion		Displays the about box located in <b>AboutPanel.nib</b>.
- */
+/*!
+@method			showAbout:
+@abstract		Displays the about box located in <b>AboutPanel.nib</b>.
+*/
 - (IBAction)showAbout:(id)sender;
 
-/*! @function		visitWebsite:
- *	@discussion		Takes the user to <i>http://web.nickshanks.com/resknife/</i>.
- */
+/*!
+@method			visitWebsite:
+@abstract		Takes the user to <i>http://web.nickshanks.com/resknife/</i>.
+*/
 - (IBAction)visitWebsite:(id)sender;
 
-/*! @function		visitSourceforge:
- *	@discussion		Takes the user to <i>http://resknife.sourceforge.net/</i>.
- */
+/*!
+@method			visitSourceforge:
+@abstract		Takes the user to <i>http://resknife.sourceforge.net/</i>.
+*/
 - (IBAction)visitSourceforge:(id)sender;
 
-/*! @function		emailDeveloper:
- *	@discussion		Launches email client and inserts <i>resknife@nickshanks.com</i> into To field.
- */
+/*!
+@method			emailDeveloper:
+@abstract		Launches email client and inserts <i>resknife@nickshanks.com</i> into To field.
+*/
 - (IBAction)emailDeveloper:(id)sender;
 
-/*! @function		showInfo:
- *	@discussion		Displays the Info panel stored in <b>InfoWindow.nib</b>
- */
+/*!
+@method			showInfo:
+@abstract		Displays the Info panel stored in <b>InfoWindow.nib</b>
+*/
 - (IBAction)showInfo:(id)sender;
 
-/*! @function		showPasteboard:
- *	@discussion		Displays the pasteboard document, a singleton instance of class <tt>PasteboardDocument</tt>
- */
+/*!
+@method			showPasteboard:
+@abstract		Displays the pasteboard document, a singleton instance of class <tt>PasteboardDocument</tt>
+*/
 - (IBAction)showPasteboard:(id)sender;
 
-/*! @function		showPrefs:
- *	@discussion		Displays the preferences panel stored in <b>PrefsWindow.nib</b>
- */
+/*!
+@method			showPrefs:
+@abstract		Displays the preferences panel stored in <b>PrefsWindow.nib</b>
+*/
 - (IBAction)showPrefs:(id)sender;
 
-/*! @function		initUserDefaults
- *	@discussion		Initalises any unset user preferences to default values as read in from <b>defaults.plist</b>.
- */
+/*!
+@method			initUserDefaults
+@abstract		Initalises any unset user preferences to default values as read in from <b>defaults.plist</b>.
+*/
 - (void)initUserDefaults;
 
-/*! @function		openAuxView
- *	@discussion		Accessor method for the <tt>openAuxView</tt> instance variable.
- */
-- (NSView *)openAuxView;
+/* accessors */
 
-/*! @function		icons
- *	@discussion		Accessor method for the <tt>icons</tt> instance variable.
- */
+/*!
+@method			openPanelDelegate
+@abstract		Accessor method for the <tt>openPanelDelegate</tt> instance variable.
+*/
+- (OpenPanelDelegate *)openPanelDelegate;
+
+/*!
+@@method		iconForResourceType:
+@abstract		Returns the icon to be used throughout the UI for any given resource type.
+*/
+- (NSImage *)iconForResourceType:(NSString *)resourceType;
+
+/*!
+@@method		_icons
+@abstract		Private accessor method for the <tt>_icons</tt> instance variable.
+*/
+- (NSMutableDictionary *)_icons;
+
+/*!
+@method			icons
+@abstract		Accessor method for the <tt>_icons</tt> instance variable. Returns an immutable dictionary.
+*/
 - (NSDictionary *)icons;
 
-@end
- 
-@interface NSSavePanel (PackageBrowser)
+/* utility methods */
+
+- (NSArray *)forksForFile:(FSRef *)fileRef;
 
 @end

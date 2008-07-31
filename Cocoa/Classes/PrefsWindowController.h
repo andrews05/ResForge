@@ -31,10 +31,3 @@ enum LaunchAction
 + (id)sharedPrefsWindowController;
 
 @end
-
-@interface NSString (BooleanSupport)
-
-- (BOOL)boolValue;
-+ (NSString *)stringWithBool:(BOOL)boolean;
-
-@end

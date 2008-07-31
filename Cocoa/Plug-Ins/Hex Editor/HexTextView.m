@@ -1,87 +1,9 @@
 #import "HexTextView.h"
+#import "NSData-HexRepresentation.h"
 
-@implementation HexTextView
-
-- (void)drawRect:(NSRect)rect
-{
-	[super drawRect:rect];
-/*	if( [[self window] isKeyWindow] && [[self window] firstResponder] == self )
-	{
-		NSSetFocusRingStyle( NSFocusRingOnly );
-		[self setKeyboardFocusRingNeedsDisplayInRect:rect];
-	}*/
-	
-/*	[super drawRect:rect];
-	if( [[self window] isKeyWindow] )
-	{
-		NSResponder *responder = [[self window] firstResponder];
-		if( [responder isKindOfClass:[NSView class]] && [(NSView *)responder isDescendantOf:self])
-		{
-			NSSetFocusRingStyle( NSFocusRingOnly );
-			NSRectFill( rect );
-		}
-	}
-	[self setKeyboardFocusRingNeedsDisplayInRect:rect];*/
-}
-
-- (void)setSelectedRange:(NSRange)charRange affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)flag
-{
-	NSRange newRange = charRange;
-	
-	// select whole bytes at a time (only if selecting in hex!)
-	if( self == (id) [[self delegate] hex] )
-	{
-		// move selection offset to beginning of byte
-		newRange.location -= (charRange.location % 3);
-		newRange.length += (charRange.location % 3);
-		
-		// set selection length to whole number of bytes
-		if( charRange.length != 0 )
-			newRange.length -= (newRange.length % 3) -2;
-		else newRange.length = 0;
-		
-		// move insertion point to next byte if needs be
-		if( newRange.location == charRange.location -1 && newRange.length == 0 )
-			newRange.location += 3;
-	}
-	
-	// select return character if selecting ascii
-#if( 0 )	// no longer necessary as there's a one-to-one for ascii, and the thing wraps properly instead :-)
-	else if( self == (id) [[self delegate] ascii] )
-	{
-		// if ascii selection goes up to sixteenth byte on last line, select return character too
-		if( (charRange.length + charRange.location) % 17 == 16)
-		{
-			// if selection is zero bytes long, move insertion point to character after return
-			if( charRange.length == 0 )
-			{
-				// if moving back from first byte of line to previous line, skip return char
-				NSRange selected = [self selectedRange];
-				if( (selected.length + selected.location) % 17 == 0 )
-					newRange.location -= 1;
-				else newRange.location += 1;
-			}
-			else newRange.length += 1;
-		}
-	}
-#endif
-	
-	// call the superclass to update the selection
-	[super setSelectedRange:newRange affinity:affinity stillSelecting:NO];
-}
+@implementation HexEditorTextView
 
 /* NSText overrides */
-
-- (BOOL)validateMenuItem:(NSMenuItem *)item
-{
-	// paste submenu
-	if( [item action] == @selector(paste:) )
-	{
-		NSMenu *editMenu = [[item menu] supermenu];
-		[[editMenu itemAtIndex:[editMenu indexOfItemWithSubmenu:[item menu]]] setEnabled:[super validateMenuItem:item]];
-	}
-	return [super validateMenuItem:item];
-}
 
 - (IBAction)cut:(id)sender
 {
@@ -91,117 +13,91 @@
 
 - (IBAction)copy:(id)sender
 {
-	NSRange selection = [self rangeForUserTextChange], byteSelection;
+	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
-	// get selection range
-	if( self == (id) [[self delegate] hex] )
-		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
-	else if( self == (id) [[self delegate] ascii] )
-		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
-	else
-	{
-		NSLog( @"Pasting text into illegal object: %@", self );
-		return;
-	}
-	
 	[pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:self];
-	[pb setData:[[[[self window] windowController] data] subdataWithRange:byteSelection] forType:NSStringPboardType];
+	[pb setData:[[(HexWindowController *)[[self window] windowController] data] subdataWithRange:selection] forType:NSStringPboardType];
+}
+
+- (IBAction)copyASCII:(id)sender
+{
+
+}
+
+- (IBAction)copyHex:(id)sender
+{
+
 }
 
 - (IBAction)paste:(id)sender
 {
-	// be 'smart' - determine if the pasted text is in hex format, such as "5F 3E 04 8E" or ascii.
-	//	what about unicode? should I paste "00 63 00 64" as "63 64" ("Paste As ASCII" submenu item)?
-	
-	NSRange selection = [self rangeForUserTextChange], byteSelection;
+	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
-	// get selection range
-	if( self == (id) [[self delegate] hex] )
-		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
-	else if( self == (id) [[self delegate] ascii] )
-		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
-	else
-	{
-		NSLog( @"Pasting text into illegal object: %@", self );
-		return;
-	}
-	
-	if( [pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]] )
-		[self editData:[[[self window] windowController] data] replaceBytesInRange:byteSelection withData:[pb dataForType:NSStringPboardType]];
+	// pastes data as it is on the clipboard
+	if([pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]])
+		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:[pb dataForType:NSStringPboardType]];
 }
 
 - (IBAction)pasteAsASCII:(id)sender
 {
-	NSRange selection = [self rangeForUserTextChange], byteSelection;
+	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
-	// get selection range
-	if( self == (id) [[self delegate] hex] )
-		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
-	else if( self == (id) [[self delegate] ascii] )
-		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
-	else
+	// converts whatever string encoding is on the clipboard to the default C string encoding, then pastes
+	if([pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]])
 	{
-		NSLog( @"Pasting text into illegal object: %@", self );
-		return;
-	}
-	
-	if( [pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]] )
-		[self editData:[[[self window] windowController] data] replaceBytesInRange:byteSelection withData:[pb dataForType:NSStringPboardType]];
-}
-
-- (IBAction)pasteAsHex:(id)sender
-{
-	NSRange selection = [self rangeForUserTextChange], byteSelection;
-	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
-	
-	// get selection range
-	if( self == (id) [[self delegate] hex] )
-		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
-	else if( self == (id) [[self delegate] ascii] )
-		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
-	else
-	{
-		NSLog( @"Pasting text into illegal object: %@", self );
-		return;
-	}
-	
-	if( [pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]] )
-	{
-		NSString *hexString = [[self delegate] hexRepresentation:[pb dataForType:NSStringPboardType]];
-		[self editData:[[[self window] windowController] data] replaceBytesInRange:byteSelection withData:[NSData dataWithBytes:[hexString cString] length:[hexString cStringLength]]];
+		NSData *asciiData = [[pb stringForType:NSStringPboardType] dataUsingEncoding:[NSString defaultCStringEncoding] allowLossyConversion:YES];
+		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:asciiData];
 	}
 }
 
 - (IBAction)pasteAsUnicode:(id)sender
 {
-	NSRange selection = [self rangeForUserTextChange], byteSelection;
+	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
-	// get selection range
-	if( self == (id) [[self delegate] hex] )
-		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
-	else if( self == (id) [[self delegate] ascii] )
-		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
-	else
+	// converts whatever string encoding is on the clipboard to Unicode, strips off the byte order mark, then pastes
+	if([pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]])
 	{
-		NSLog( @"Pasting text into illegal object: %@", self );
-		return;
+		NSMutableData *unicodeData = [[[pb stringForType:NSStringPboardType] dataUsingEncoding:NSUnicodeStringEncoding] mutableCopy];
+		if(*((unsigned short *)[unicodeData mutableBytes]) == 0xFEFF || *((unsigned short *)[unicodeData mutableBytes]) == 0xFFFE)
+			[unicodeData replaceBytesInRange:NSMakeRange(0,2) withBytes:NULL length:0];
+		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:unicodeData];
 	}
+}
+
+- (IBAction)pasteAsHex:(id)sender
+{
+	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
+	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
-	if( [pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]] )
+	// converts whatever data is on the clipboard to a hex representation of that data, then pastes
+	if([pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]])
 	{
-		NSData *unicodeData = [[NSString stringWithUTF8String:[[pb dataForType:NSStringPboardType] bytes]] dataUsingEncoding:NSUnicodeStringEncoding];
-		[self editData:[[[self window] windowController] data] replaceBytesInRange:byteSelection withData:unicodeData];
+		NSData *hexData = [[[pb dataForType:NSStringPboardType] hexRepresentation] dataUsingEncoding:[NSString defaultCStringEncoding] allowLossyConversion:YES];
+		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:hexData];
+	}
+}
+
+- (IBAction)pasteFromHex:(id)sender
+{
+	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
+	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
+	
+	// converts hex data present on the clipboard to the bytes they represent, then pastes
+	if([pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]])
+	{
+		NSData *binaryData = [[pb stringForType:NSStringPboardType] dataFromHex];
+		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:binaryData];
 	}
 }
 
 - (IBAction)clear:(id)sender
 {
 	NSRange selection = [self rangeForUserTextChange];
-	if( selection.length > 0 )
+	if(selection.length > 0)
 		[self delete:sender];
 }
 
@@ -212,20 +108,13 @@
 
 /* Dragging routines */
 
-- (unsigned int)_insertionGlyphIndexForDrag:(id <NSDraggingInfo>)sender
-{
-	unsigned int charIndex = [super _insertionGlyphIndexForDrag:sender];
-	if( self == [[self delegate] hex] )
-		charIndex -= charIndex % 3;
-	return charIndex;
-}
-
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
 {
-/*	if( isLocal ) return NSDragOperationEvery;
+	return NSDragOperationNone;
+/*	if(isLocal) return NSDragOperationEvery;
 	else return NSDragOperationCopy;
-*/	return NSDragOperationCopy | NSDragOperationMove | NSDragOperationGeneric;
-}
+	return NSDragOperationCopy | NSDragOperationMove | NSDragOperationGeneric;
+*/}
 
 static NSRange draggedRange;
 
@@ -236,7 +125,7 @@ static NSRange draggedRange;
 
 - (void)draggedImage:(NSImage *)image endedAt:(NSPoint)point operation:(NSDragOperation)operation
 {
-/*	if( operation == NSDragOperationMove )
+	if(operation == NSDragOperationMove)
 	{
 		NSRange selection = [self rangeForUserTextChange];
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:draggedRange withData:[NSData data]];
@@ -244,16 +133,16 @@ static NSRange draggedRange;
 		// set the new selection/insertion point
 		selection.location -= draggedRange.length;
 		selection.length = draggedRange.length;
-		if( selection.location > draggedRange.location )
+		if(selection.location > draggedRange.location)
 			selection.location -= draggedRange.length;
 		[self setSelectedRange:selection];
-	}*/
+	}
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
 	[super draggingUpdated:sender];		// ignore return value
-	if( [sender draggingSource] == [[self delegate] hex] || [sender draggingSource] == [[self delegate] ascii] )
+	if([sender draggingSource] == [[self delegate] hex] || [sender draggingSource] == [[self delegate] ascii])
 		return NSDragOperationMove;
 	else return NSDragOperationCopy;
 }
@@ -263,18 +152,18 @@ static NSRange draggedRange;
 	// get the insertion point location
 	NSPasteboard *pb = [sender draggingPasteboard];
 	NSData *pastedData = [pb dataForType:NSStringPboardType];
-	int charIndex = [self _insertionGlyphIndexForDrag:sender];
+	unsigned int charIndex = (unsigned int) [self _insertionGlyphIndexForDrag:sender];
 	NSRange selection;
 	
 	// convert hex string to data
-	if( [sender draggingSource] == [[self delegate] hex] )
-		pastedData = [[[self delegate] hexToAscii:pastedData] dataUsingEncoding:NSASCIIStringEncoding];
+	if([sender draggingSource] == [[self delegate] hex])
+		pastedData = [[[[NSString alloc] initWithData:pastedData encoding:[NSString defaultCStringEncoding]] autorelease] dataFromHex];
 	
-	if( [sender draggingSource] == [[self delegate] hex] || [sender draggingSource] == [[self delegate] ascii] )
-//	if( operation == NSDragOperationMove )
+	if([sender draggingSource] == [[self delegate] hex] || [sender draggingSource] == [[self delegate] ascii])
+//	if(operation == NSDragOperationMove)
 	{
 		NSRange deleteRange = draggedRange;
-		if( self == [[self delegate] hex] )
+		if(self == (id) [[self delegate] hex])
 		{
 			deleteRange.location /= 3;
 			deleteRange.length += 1;
@@ -285,12 +174,12 @@ static NSRange draggedRange;
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:deleteRange withData:[NSData data]];
 		
 		// compensate for already removing the dragged data
-		if( charIndex > draggedRange.location )
+		if(charIndex > draggedRange.location)
 			charIndex -= draggedRange.length;
 	}
 	
 	// insert data at insertion point
-	if( self == [[self delegate] hex] ) charIndex /= 3;
+	if(self == (id) [[self delegate] hex]) charIndex /= 3;
 	[self editData:[[[self window] windowController] data] replaceBytesInRange:NSMakeRange(charIndex,0) withData:pastedData];
 	
 	// set the new selection/insertion point
@@ -311,39 +200,35 @@ static NSRange draggedRange;
 
 - (void)insertText:(NSString *)string
 {
-	NSRange selection = [self rangeForUserTextChange], byteSelection;
+	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
 	NSMutableData *data = [[[[self window] windowController] data] mutableCopy];
 	NSData *replaceData = [NSData dataWithBytes:[string cString] length:[string cStringLength]];
 	
-	// get selection range
-	if( self == (id) [[self delegate] hex] )
-		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
-	else if( self == (id) [[self delegate] ascii] )
-		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
-	else
-	{
-		NSLog( @"Inserting text into illegal object: %@", self );
-		return;
-	}
-	
-	if( self == (id) [[self delegate] hex] )
+	if(self == (id) [[self delegate] hex])
 	{
 		int	i;
 		// bug: iteration through each character in string is broken, paste not yet mapped to this function
-		for( i = 0; i < [string cStringLength]; i++ )
+		for(i = 0; i < [string cStringLength]; i++)
 		{
 			char typedChar = [string characterAtIndex:i];
-			if( typedChar >= 0x30 && typedChar <= 0x39 )		typedChar -= 0x30;		// 0 to 9
-			else if( typedChar >= 0x41 && typedChar <= 0x46 )	typedChar -= 0x37;		// A to F
-			else if( typedChar >= 0x61 && typedChar <= 0x66 )	typedChar -= 0x57;		// a to f
+			if(typedChar >= 0x30 && typedChar <= 0x39)		typedChar -= 0x30;		// 0 to 9
+			else if(typedChar >= 0x41 && typedChar <= 0x46)	typedChar -= 0x37;		// A to F
+			else if(typedChar >= 0x61 && typedChar <= 0x66)	typedChar -= 0x57;		// a to f
 			else return;
 			
-			if( [[self delegate] editedLow] )	// edited low bits already
+			if(![[self delegate] editedLow])	// editing low bits
+			{
+				// put typed char into low bits
+				typedChar &= 0x0F;
+				replaceData = [NSData dataWithBytes:&typedChar length:1];
+				[[self delegate] setEditedLow:YES];
+			}
+			else								// edited low bits already
 			{
 				// select & retrieve old byte so it gets replaced
 				char prevByte;
-				byteSelection = NSMakeRange(byteSelection.location -1, 1);
-				[data getBytes:&prevByte range:byteSelection];
+				selection = NSMakeRange(selection.location -1, 1);
+				[data getBytes:&prevByte range:selection];
 				
 				// shift typed char into high bits and add new low char
 				prevByte <<=  4;				// store high bit
@@ -351,89 +236,61 @@ static NSRange draggedRange;
 				replaceData = [NSData dataWithBytes:&prevByte length:1];
 				[[self delegate] setEditedLow:NO];
 			}
-			else								// editing low bits
-			{
-				// put typed char into low bits
-				typedChar &= 0x0F;
-				replaceData = [NSData dataWithBytes:&typedChar length:1];
-				[[self delegate] setEditedLow:YES];
-			}
 		}
 	}
 	
 	// replace bytes (updates views implicitly, records an undo)
-	[self editData:data replaceBytesInRange:byteSelection withData:replaceData];
+	[self editData:data replaceBytesInRange:selection withData:replaceData];
 	[data release];
 	
-	// set the new selection/insertion point
-	byteSelection.location++;
-	byteSelection.length = 0;
-	if( self == (id) [[self delegate] hex] )
-		selection = [[self delegate] hexRangeFromByteRange:byteSelection];
-	else if( self == (id) [[self delegate] ascii] )
-		selection = [[self delegate] asciiRangeFromByteRange:byteSelection];
+	// set the new selection (insertion point)
+	selection.location++;
+	selection.length = 0;
+	if(self == (id) [[self delegate] hex])	selection = [HexWindowController hexRangeFromByteRange:selection];
+	if(self == (id) [[self delegate] ascii])  selection = [HexWindowController asciiRangeFromByteRange:selection];
 	[self setSelectedRange:selection];
 }
 
 - (IBAction)deleteBackward:(id)sender
 {
-	NSRange selection = [self rangeForUserTextChange], byteSelection;
+	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
 	NSMutableData *data = [[[[self window] windowController] data] mutableCopy];
 	
-	// get selection range
-	if( self == (id) [[self delegate] hex] )
-		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
-	else if( self == (id) [[self delegate] ascii] )
-		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
-	else
-	{
-		NSLog( @"Inserting text into illegal object: %@", self );
-		return;
-	}
-	
 	// adjust selection if is insertion point
-	if( byteSelection.length == 0 && selection.location > 0 )
+	if(selection.length == 0 && selection.location > 0)
 	{
-		byteSelection.location -= 1;
-		byteSelection.length = 1;
+		selection.location -= 1;
+		selection.length = 1;
 	}
 	
 	// replace bytes (updates views implicitly)
-	[self editData:data replaceBytesInRange:byteSelection withData:[NSData data]];
+	[self editData:data replaceBytesInRange:selection withData:[NSData data]];
 	[data release];
 	
-	// set the new selection/insertion point
-	if( selection.length == 0 )
+	// set the new selection (insertion point)
+	if(selection.length == 0 && selection.location > 0)
 		selection.location -= 1;
 	else selection.length = 0;
+	if(self == (id) [[self delegate] hex])	selection = [HexWindowController hexRangeFromByteRange:selection];
+	if(self == (id) [[self delegate] ascii])  selection = [HexWindowController asciiRangeFromByteRange:selection];
 	[self setSelectedRange:selection];
 }
 
 - (IBAction)deleteForward:(id)sender
 {
-	NSRange selection = [self rangeForUserTextChange], byteSelection;
+	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
 	NSMutableData *data = [[[[self window] windowController] data] mutableCopy];
 	
-	// get selection range
-	if( self == (id) [[self delegate] hex] )
-		byteSelection = [[self delegate] byteRangeFromHexRange:selection];
-	else if( self == (id) [[self delegate] ascii] )
-		byteSelection = [[self delegate] byteRangeFromAsciiRange:selection];
-	else
-	{
-		NSLog( @"Inserting text into illegal object: %@", self );
-		return;
-	}
-	
 	// adjust selection if is insertion point
-	if( byteSelection.length == 0 && selection.location < [[self string] length] -1 )
-		byteSelection.length = 1;
+	if(selection.length == 0 && [self rangeForUserTextChange].location < [[self string] length] -1)
+		selection.length = 1;
 	
 	// replace bytes (updates views implicitly)
-	[self editData:data replaceBytesInRange:byteSelection withData:[NSData data]];
+	[self editData:data replaceBytesInRange:selection withData:[NSData data]];
 	[data release];
 	
 	// set the new selection/insertion point
+	selection = [self rangeForUserTextChange];
 	selection.length = 0;
 	[self setSelectedRange:selection];
 }
@@ -458,20 +315,25 @@ static NSRange draggedRange;
 	[self transpose:sender];
 }
 
+- (void)setSelectedRange:(NSRange)charRange affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag
+{
+	[super setSelectedRange:charRange affinity:affinity stillSelecting:NO];
+}
+
 - (void)editData:(NSData *)data replaceBytesInRange:(NSRange)range withData:(NSData *)newBytes
 {
 	// save data we're about to replace so we can restore it in an undo
-	NSRange newRange = NSMakeRange( range.location, [newBytes length] );
+	NSRange newRange = NSMakeRange(range.location, [newBytes length]);
 	NSMutableData *newData = [NSMutableData dataWithData:data];
 	NSMutableData *oldBytes = [[data subdataWithRange:range] retain];	// bug: memory leak, need to release somewhere (call -[NSInvocation retainArguments] instead?)
 	
 	// manipulate undo stack to concatenate multiple undos
 	BOOL closeUndoGroup = NO;
 	id undoStack = nil;		// object of class _NSUndoStack
-	if( ![[[self window] undoManager] isUndoing] )
-		undoStack = [[[self window] undoManager] _undoStack];
+	if(![[[self window] undoManager] isUndoing])
+		undoStack = (id) [[[self window] undoManager] _undoStack];
 	
-	if( undoStack && (int)[undoStack count] > 0 && [[[self window] undoManager] groupingLevel] == 0 )
+	if(undoStack && (int)[undoStack count] > 0 && [[[self window] undoManager] groupingLevel] == 0)
 	{
 		[undoStack popUndoObject];		// pop endUndoGrouping item
 		closeUndoGroup = YES;
@@ -481,23 +343,162 @@ static NSRange draggedRange;
 	[newData replaceBytesInRange:range withBytes:[newBytes bytes] length:[newBytes length]];
 	[[(HexWindowController *)[[self window] windowController] resource] setData:newData];
 	[self setSelectedRange:NSMakeRange(range.location + [newBytes length], 0)];
-//	[[self window] setDocumentEdited:YES];	// moved to window controller's -resourceDataDidChange: notification method
 	
 	// record undo with new data object
 	[[[[self window] undoManager] prepareWithInvocationTarget:self] editData:newData replaceBytesInRange:newRange withData:oldBytes];
 	[[[self window] undoManager] setActionName:NSLocalizedString(@"Typing", nil)];
-	if( closeUndoGroup )
+	if(closeUndoGroup)
 		[[[self window] undoManager] endUndoGrouping];
-//	NSLog( @"%@", undoStack );
+}
+
+@end
+	
+@implementation HexTextView
+
+/*!
+@method		selectionRangeForProposedRange:granularity:
+@abstract	Adjusts the selection for insertion point and byte-selection
+@author		Nicholas Shanks
+@created	2003-11-10
+*/
+
+- (NSRange)selectionRangeForProposedRange:(NSRange)proposedCharRange granularity:(NSSelectionGranularity)granularity
+{
+	NSRange newRange = proposedCharRange;
+	
+	if(newRange.length == 0)
+	{
+		// set insertion point location
+		if(newRange.location % 3 == 1)	newRange.location--;
+		if(newRange.location % 3 == 2)	newRange.location++;
+	}
+	else
+	{
+		// select whole bytes at a time - bug: this doesn't quite work when selecting forwards one byte with the mouse
+		granularity = NSSelectByWord;
+		newRange.location -= (proposedCharRange.location % 3);
+		newRange.length += (proposedCharRange.location % 3);
+		
+		// set selection length to whole number of bytes
+		if(newRange.length > 0)
+		{
+			if(newRange.length % 3 == 0)	newRange.length--;
+			if(newRange.length % 3 == 1)	newRange.length++;
+		}
+	}
+	
+	return [super selectionRangeForProposedRange:newRange granularity:granularity];
+}
+//	also, lots of subclasser pasteboard support better to use than overriding copy: and paste:?  see NSTextView.h
+
+- (void)setSelectedRange:(NSRange)newRange affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag
+{
+	if(newRange.length == 0 && stillSelectingFlag == NO)
+	{
+		// moving insertion point
+		if(newRange.location % 3 == 1)   newRange.location += 2;
+		if(newRange.location % 3 == 2)   newRange.location -= 2;
+	}
+	else if(stillSelectingFlag == NO && [[self window] firstResponder] == self)
+	{
+		NSRange oldRange = [self rangeForUserTextChange];
+		
+		// selecting forwards
+		if(oldRange.location == newRange.location && oldRange.length != newRange.length)
+//		if(affinity == NSSelectionAffinityDownstream)
+		{
+			// selecting first byte
+			if(newRange.location % 3 == 0 && newRange.length == 1 && oldRange.length < newRange.length)
+																					newRange.length += 1;
+			// deselecting first byte
+			if(newRange.location % 3 == 0 && newRange.length == 1 && oldRange.length > newRange.length)
+																					newRange.length = 0;
+			// extending selection
+			else if(newRange.location % 3 == 0 && newRange.length % 3 == 0)		newRange.length += 2;
+			
+			// reducing selection
+			else if(newRange.location % 3 == 0 && newRange.length % 3 == 1)		newRange.length -= 2;
+		}
+		
+		// reducing forwards selection spanning multiple rows past start point
+		else if(newRange.location + newRange.length == oldRange.location && newRange.length % 3 == 1 && oldRange.length > 0)
+		{
+			// example:		00 00 00 00 00 00 FF FF		=>		00 00 00|FF FF FF 00 00
+			//				FF FF FF|00 00 00 00 00		=>		00 00 00 00 00 00 00 00
+			
+			newRange.location += 1;
+			newRange.length -= 2;
+		}
+		
+		// inverse of above
+		else if(oldRange.location + oldRange.length == newRange.location && newRange.length % 3 == 0 && oldRange.length > 0)
+		{
+			// example:		00 00 00|FF FF FF 00 00		=>		00 00 00 00 00 00 FF FF
+			//				00 00 00 00 00 00 00 00		=>		FF FF FF|00 00 00 00 00
+			
+			newRange.location += 1;
+			newRange.length -= 1;
+		}
+		
+		// reducing backwards selection spanning multiple rows past start point
+		else if(oldRange.location + oldRange.length == newRange.location && newRange.length % 3 == 1 && oldRange.length > 0)
+		{
+			// example:		00 00 00 00 00 00|FF FF		=>		00 00 00 00 00 00 00 00
+			//				FF FF FF 00 00 00 00 00		=>		00 00 00 FF FF FF|00 00
+			
+			newRange.location += 1;
+			newRange.length -= 2;
+		}
+		
+		// inverse of above
+		else if(newRange.location + newRange.length == oldRange.location && newRange.length % 3 == 0 && oldRange.length > 0)
+		{
+			// example:		00 00 00 00 00 00 00 00		=>		00 00 00 00 00 00|FF FF
+			//				00 00 00 FF FF FF|00 00		=>		FF FF FF 00 00 00 00 00
+			
+			newRange.location += 1;
+			newRange.length -= 2;
+		}
+		
+		// selecting backwards
+		else if(oldRange.location != newRange.location && oldRange.length != newRange.length)
+//		else if(affinity == NSSelectionAffinityDownstream)
+		{
+			// selecting first byte
+			if(newRange.location % 3 == 2 && newRange.length == 1)			{	newRange.location -= 2;
+																					newRange.length += 1;		}
+			// deselecting first byte
+			else if(newRange.location % 3 == 1 && newRange.length == 1)		{	newRange.location += 2;
+																					newRange.length = 0;		}
+			// extending selection
+			else if(newRange.location % 3 == 2 && newRange.length % 3 == 0)	{	newRange.location -= 2;
+																					newRange.length += 2;		}
+			// reducing selection
+			else if(newRange.location % 3 == 1 && newRange.length % 3 == 1)	{	newRange.location += 2;
+																					newRange.length -= 2;		}
+		}
+	}
+	
+	[super setSelectedRange:newRange affinity:affinity stillSelecting:stillSelectingFlag];
+}
+
+/*!
+@method		selectionRangeForProposedRange:granularity:
+@abstract	Puts insertion pointer between bytes during drag operation
+@author		Nicholas Shanks
+@updated	2003-11-10 NGS:  Changed algorithm.
+*/
+
+- (unsigned int)_insertionGlyphIndexForDrag:(id <NSDraggingInfo>)sender
+{
+	unsigned int glyphIndex = (unsigned int) [super _insertionGlyphIndexForDrag:sender];
+	if(glyphIndex % 3 == 1)	glyphIndex--;
+	if(glyphIndex % 3 == 2)	glyphIndex++;
+	return glyphIndex;
 }
 
 @end
 
-@implementation NSTextView (HexTextView)
-
-- (void)swapForHexTextView
-{
-	isa = [HexTextView class];
-}
+@implementation AsciiTextView
 
 @end

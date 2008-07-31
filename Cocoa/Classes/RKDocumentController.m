@@ -1,29 +1,26 @@
 #import "RKDocumentController.h"
 #import "ApplicationDelegate.h"
-#import "OpenFileDataSource.h"
+#import "OpenPanelDelegate.h"
 
 @implementation RKDocumentController
 
-// because I swap the isa pointer I can't add instance variables, so use statics instead (there will only ever be one RKDocumentController)
-static id oldDelegate = nil;
-
-- (id)init
-{
-	self = [super init];
-	if( self )
-	{
-		// for some reason calling -[super init] causes a new instance of self to be returned (which is not of my subclass) so to get my overridden methods called again, I have to do this...
-		isa = [RKDocumentController class];
-		oldDelegate = [[NSOpenPanel openPanel] delegate];
-		[[NSOpenPanel openPanel] setDelegate:[[[OpenPanelDelegate alloc] init] autorelease]];
-	}
-	return self;
-}
-
 - (int)runModalOpenPanel:(NSOpenPanel *)openPanel forTypes:(NSArray *)extensions
 {
-	[openPanel setAccessoryView:[(ApplicationDelegate *)[NSApp delegate] openAuxView]];
-	return [super runModalOpenPanel:openPanel forTypes:extensions];
+	// set-up open panel (this happens every time, but no harm done)
+	ApplicationDelegate *appDelegate = [NSApp delegate];
+	OpenPanelDelegate *openPanelDelegate = [appDelegate openPanelDelegate];
+	NSView *openPanelAccessoryView = [openPanelDelegate openPanelAccessoryView];
+	[openPanel setDelegate:openPanelDelegate];
+	[openPanel setAccessoryView:openPanelAccessoryView];
+	[openPanel setAllowsOtherFileTypes:YES];
+	[openPanel setTreatsFilePackagesAsDirectories:YES];
+	[openPanelAccessoryView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+	
+	// run panel
+	int button = [super runModalOpenPanel:openPanel forTypes:extensions];
+	if(button == NSOKButton)
+		[openPanelDelegate setReadOpenPanelForFork:YES];
+	return button;
 }
 
 @end

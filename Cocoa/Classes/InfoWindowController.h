@@ -35,7 +35,7 @@ enum Attributes
 - (void)updateInfoWindow;
 - (void)setMainWindow:(NSWindow *)mainWindow;
 - (IBAction)attributesChanged:(id)sender;
-- (IBAction)nameChanged: (id)sender;
+- (IBAction)nameDidChange:(id)sender;
 - (void)resourceAttributesDidChange:(NSNotification *)notification;
 - (void)documentInfoDidChange:(NSNotification *)notification;
 
@@ -46,7 +46,7 @@ enum Attributes
 @interface NSWindowController (InfoWindowAdditions)
 
 /*!	@function	resource
-	@discussion	Your plug-in should override this method to return the resource it's editing. Default implementation returns nil.
+	@discussion	Your plug-in should override this method to return the primary resource it's editing. Default implementation returns nil.
 */
 - (Resource *)resource;
 

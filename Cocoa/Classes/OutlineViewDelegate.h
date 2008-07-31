@@ -1,5 +1,4 @@
 #import <Cocoa/Cocoa.h>
-#import "NameFormatter.h"
 #import "SizeFormatter.h"
 #import "AttributesFormatter.h"
 
@@ -7,20 +6,16 @@
 
 @interface OutlineViewDelegate : NSObject
 {
-	IBOutlet NSWindow		*window;
-	IBOutlet NameFormatter	*nameFormatter;
-	IBOutlet SizeFormatter	*sizeFormatter;
-	IBOutlet AttributesFormatter *attributesFormatter;
+	IBOutlet NSWindow				*window;
+	IBOutlet NSOutlineView			*outlineView;
+	IBOutlet SizeFormatter			*sizeFormatter;
+	IBOutlet AttributesFormatter 	*attributesFormatter;
 }
 
-int compareResourcesAscending( Resource *r1, Resource *r2, void *context );
-int compareResourcesDescending( Resource *r1, Resource *r2, void *context );
+int compareResourcesAscending(Resource *r1, Resource *r2, void *context);
+int compareResourcesDescending(Resource *r1, Resource *r2, void *context);
 
 @end
 
-@interface NSOutlineView (OutlineSortView)
-- (void)swapForOutlineSortView;
-@end
-
-@interface OutlineSortView : NSOutlineView
+@interface RKOutlineView : NSOutlineView
 @end

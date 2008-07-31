@@ -3,22 +3,16 @@
         {CLASS = AttributesFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            CLASS = NameFormatter; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {outlineView = NSOutlineView; }; 
-            SUPERCLASS = NSFormatter; 
-        }, 
-        {
             CLASS = OutlineViewDelegate; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 attributesFormatter = NSFormatter; 
-                nameFormatter = NSFormatter; 
                 sizeFormatter = NSNumberFormatter; 
                 window = NSWindow; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
+        {CLASS = RKOutlineView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }, 
         {
             CLASS = ResourceDataSource; 
             LANGUAGE = ObjC; 

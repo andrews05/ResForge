@@ -11,10 +11,7 @@
 
 @interface RKSupportResourceRegistry : NSObject
 {
-
 }
-
-+(void) scanForSupportResources: (NSDocumentController*)c;
-
-
++ (void)scanForSupportResources;
++ (void)scanForSupportResourcesInFolder:(NSString *)path;
 @end

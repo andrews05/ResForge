@@ -15,7 +15,7 @@
 	float value = [obj floatValue];
 	int power = 0;
 			
-	while( value >= 1024 && power <= 30 )
+	while( value >= 1024 /*&& power <= 30*/ )
 	{
 		power += 10;	// 10 == KB, 20 == MB, 30+ == GB
 		value /= 1024;

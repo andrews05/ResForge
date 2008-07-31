@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E17752350E424BAB00F737F8 /* NSData-HexRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = E17752330E424BAB00F737F8 /* NSData-HexRepresentation.m */; };
+		E177526F0E424DCB00F737F8 /* OpenPanelDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E177526D0E424DCB00F737F8 /* OpenPanelDelegate.m */; };
+		E17752700E424DCB00F737F8 /* OpenPanelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E177526E0E424DCB00F737F8 /* OpenPanelDelegate.h */; };
+		E17752760E424ED400F737F8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
+		E17753350E424F0C00F737F8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
+		E177538B0E4251C600F737F8 /* DisplayTMPL.png in Resources */ = {isa = PBXBuildFile; fileRef = E17753880E4251C600F737F8 /* DisplayTMPL.png */; };
+		E177538E0E4251D000F737F8 /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E17753890E4251C600F737F8 /* Templates.rsrc */; };
+		E177539D0E42521800F737F8 /* Font Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E1B2A73B0E41218F00A72928 /* Font Templates.rsrc */; };
+		E17753B90E42528100F737F8 /* NovaTools.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2A4940E41103800A72928 /* NovaTools.plugin */; };
+		E17753CD0E42528400F737F8 /* Font Editor.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2A7220E41213300A72928 /* Font Editor.plugin */; };
+		E17753E40E42534300F737F8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E1B2A3EA0E41103700A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
 		E1B2A3EB0E41103700A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
 		E1B2A3EC0E41103700A72928 /* ApplicationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5881D0156D40B01000001 /* ApplicationDelegate.h */; };
@@ -27,7 +38,6 @@
 		E1B2A3FB0E41103700A72928 /* PasteboardDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071603CCC61E01A8010A /* PasteboardDocument.h */; };
 		E1B2A3FC0E41103700A72928 /* PasteboardWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */; };
 		E1B2A3FD0E41103700A72928 /* RKDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = F59481AD03D0776C01A8010A /* RKDocumentController.h */; };
-		E1B2A3FE0E41103700A72928 /* OpenFileDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F59481B103D077DC01A8010A /* OpenFileDataSource.h */; };
 		E1B2A3FF0E41103700A72928 /* RKEditorRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */; };
 		E1B2A4000E41103700A72928 /* RKSupportResourceRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */; };
 		E1B2A4020E41103700A72928 /* AboutPanel.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B588360156D40B01000001 /* AboutPanel.nib */; };
@@ -70,18 +80,11 @@
 		E1B2A42D0E41103700A72928 /* PasteboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071703CCC61E01A8010A /* PasteboardDocument.m */; };
 		E1B2A42E0E41103700A72928 /* PasteboardWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071B03CCFAAC01A8010A /* PasteboardWindowController.m */; };
 		E1B2A42F0E41103700A72928 /* RKDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F59481AE03D0776C01A8010A /* RKDocumentController.m */; };
-		E1B2A4300E41103700A72928 /* OpenFileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F59481B203D077DC01A8010A /* OpenFileDataSource.m */; };
 		E1B2A4310E41103700A72928 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755A04DAEB4300B8225B /* main.m */; };
 		E1B2A4320E41103700A72928 /* RKEditorRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */; };
 		E1B2A4330E41103700A72928 /* RKSupportResourceRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */; };
 		E1B2A4350E41103700A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E1B2A4360E41103700A72928 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
-		E1B2A4400E41103800A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
-		E1B2A4410E41103800A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
-		E1B2A4420E41103800A72928 /* HexEditorDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A0020C08E601A80001 /* HexEditorDelegate.h */; };
-		E1B2A4430E41103800A72928 /* HexTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A2020C08E601A80001 /* HexTextView.h */; };
-		E1B2A4440E41103800A72928 /* HexWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A7020C08E601A80001 /* HexWindowController.h */; };
-		E1B2A4450E41103800A72928 /* FindSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = F54E6220021B6A0801A80001 /* FindSheetController.h */; };
 		E1B2A4470E41103800A72928 /* HexWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EF83C7020C20D701A80001 /* HexWindow.nib */; };
 		E1B2A4480E41103800A72928 /* FindSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = F54E6222021B6A0801A80001 /* FindSheet.nib */; };
 		E1B2A4490E41103800A72928 /* PasteMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5606FDD02ACF2F701A8010C /* PasteMenu.nib */; };
@@ -98,19 +101,6 @@
 		E1B2A4600E41103800A72928 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = F535444E0226B5F501A80001 /* Element.m */; };
 		E1B2A4610E41103800A72928 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E1B2A4630E41103800A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E1B2A46C0E41103800A72928 /* HostCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588920156D6D901000001 /* HostCallbacks.h */; };
-		E1B2A46D0E41103800A72928 /* BoomWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B7E025BC3A501A8010C /* BoomWindowController.h */; };
-		E1B2A46E0E41103800A72928 /* NovaWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B82025BC73001A8010C /* NovaWindowController.h */; };
-		E1B2A46F0E41103800A72928 /* CharWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B86025BC76D01A8010C /* CharWindowController.h */; };
-		E1B2A4700E41103800A72928 /* ColrWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B8A025BC7C001A8010C /* ColrWindowController.h */; };
-		E1B2A4710E41103800A72928 /* CronWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B8E025BCF5901A8010C /* CronWindowController.h */; };
-		E1B2A4720E41103800A72928 /* DescWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B93025BD97701A8010C /* DescWindowController.h */; };
-		E1B2A4730E41103800A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
-		E1B2A4740E41103800A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
-		E1B2A4750E41103800A72928 /* DescSplitViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F58A18410278355D01A8010C /* DescSplitViewDelegate.h */; };
-		E1B2A4760E41103800A72928 /* DataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F543AFDB027B2A5001A8010C /* DataSource.h */; };
-		E1B2A4770E41103800A72928 /* Structs.h in Headers */ = {isa = PBXBuildFile; fileRef = F5C9ECD8027F562201A8010C /* Structs.h */; };
-		E1B2A4780E41103800A72928 /* NSNumber-Range.h in Headers */ = {isa = PBXBuildFile; fileRef = F59D5DE8032106D201A8010C /* NSNumber-Range.h */; };
 		E1B2A47A0E41103800A72928 /* NovaTools.nib in Resources */ = {isa = PBXBuildFile; fileRef = F58F6BA9025BDBA701A8010C /* NovaTools.nib */; };
 		E1B2A47B0E41103800A72928 /* boom.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC612025BFB7301A8010C /* boom.nib */; };
 		E1B2A47C0E41103800A72928 /* char.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC615025BFB7C01A8010C /* char.nib */; };
@@ -244,28 +234,10 @@
 		E1B2A53F0E41103900A72928 /* Templar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE67036C258301A8010A /* Templar.cpp */; };
 		E1B2A5400E41103900A72928 /* TemplateWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50DFE6D036C258301A8010A /* TemplateWindow.cpp */; };
 		E1B2A5430E41103900A72928 /* Templar.rsrc in Rez */ = {isa = PBXBuildFile; fileRef = F50DFE6C036C258301A8010A /* Templar.rsrc */; };
-		E1B2A54B0E41103A00A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
-		E1B2A54C0E41103A00A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
-		E1B2A54D0E41103A00A72928 /* ICONWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D3B99B904DC16A30056861E /* ICONWindowController.h */; };
 		E1B2A54F0E41103A00A72928 /* ICONWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B99BC04DC16FC0056861E /* ICONWindow.nib */; };
 		E1B2A5510E41103A00A72928 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E1B2A5520E41103A00A72928 /* ICONWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B99B804DC16A30056861E /* ICONWindowController.m */; };
 		E1B2A5540E41103A00A72928 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E1B2A55D0E41103A00A72928 /* NuTemplateWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0B38B204DEF41E005AED5E /* NuTemplateWindowController.h */; };
-		E1B2A55E0E41103A00A72928 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
-		E1B2A55F0E41103A00A72928 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
-		E1B2A5600E41103A00A72928 /* NuTemplateElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933A604DEFEE600DD74B1 /* NuTemplateElement.h */; };
-		E1B2A5610E41103A00A72928 /* NuTemplateGroupElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BA04DF10D700DD74B1 /* NuTemplateGroupElement.h */; };
-		E1B2A5620E41103A00A72928 /* NuTemplateStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BE04DF151C00DD74B1 /* NuTemplateStream.h */; };
-		E1B2A5630E41103A00A72928 /* NuTemplateLSTBElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933C404DF1C0800DD74B1 /* NuTemplateLSTBElement.h */; };
-		E1B2A5640E41103A00A72928 /* NuTemplateTNAMElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933E304DF2FF700DD74B1 /* NuTemplateTNAMElement.h */; };
-		E1B2A5650E41103A00A72928 /* NuTemplatePSTRElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933E704DF317D00DD74B1 /* NuTemplatePSTRElement.h */; };
-		E1B2A5660E41103A00A72928 /* NuTemplateDWRDElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933EF04DF381900DD74B1 /* NuTemplateDWRDElement.h */; };
-		E1B2A5670E41103A00A72928 /* NuTemplateLSTEElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933F604DFE80500DD74B1 /* NuTemplateLSTEElement.h */; };
-		E1B2A5680E41103A00A72928 /* NuTemplateDLNGElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B404E872DB00AF65FE /* NuTemplateDLNGElement.h */; };
-		E1B2A5690E41103A00A72928 /* NuTemplateDBYTElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B804E873F300AF65FE /* NuTemplateDBYTElement.h */; };
-		E1B2A56A0E41103A00A72928 /* NuTemplateOCNTElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50046F04EF040900F3B64D /* NuTemplateOCNTElement.h */; };
-		E1B2A56B0E41103A00A72928 /* NuTemplateLSTCElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50047404EF122000F3B64D /* NuTemplateLSTCElement.h */; };
 		E1B2A56D0E41103A00A72928 /* NuTemplateWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B38B504DEF465005AED5E /* NuTemplateWindow.nib */; };
 		E1B2A56F0E41103A00A72928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D2EE5E204E5C56F00515930 /* Localizable.strings */; };
 		E1B2A5710E41103A00A72928 /* NuTemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B38B304DEF41E005AED5E /* NuTemplateWindowController.m */; };
@@ -289,18 +261,13 @@
 		E1B2A73F0E41218F00A72928 /* FontDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1B2A7350E41218F00A72928 /* FontDocument.nib */; };
 		E1B2A7400E41218F00A72928 /* FontWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1B2A7370E41218F00A72928 /* FontWindow.nib */; };
 		E1B2A7410E41219000A72928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1B2A7390E41218F00A72928 /* Localizable.strings */; };
-		E1B2A7420E41219000A72928 /* Font Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = E1B2A73B0E41218F00A72928 /* Font Templates.rsrc */; };
 		E1B2A7430E41219000A72928 /* FontWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A73D0E41218F00A72928 /* FontWindowController.m */; };
 		E1B2A7760E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
 		E1B2A7770E41230E00A72928 /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B2A7740E41230E00A72928 /* NGSCategories.h */; };
 		E1B2A7780E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
-		E1B2A7790E41230E00A72928 /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B2A7740E41230E00A72928 /* NGSCategories.h */; };
 		E1B2A77A0E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
-		E1B2A77B0E41230E00A72928 /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B2A7740E41230E00A72928 /* NGSCategories.h */; };
 		E1B2A77C0E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
-		E1B2A77D0E41230E00A72928 /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B2A7740E41230E00A72928 /* NGSCategories.h */; };
 		E1B2A77E0E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
-		E1B2A77F0E41230E00A72928 /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B2A7740E41230E00A72928 /* NGSCategories.h */; };
 		E1B2A7800E41230E00A72928 /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2A7750E41230E00A72928 /* NGSCategories.m */; };
 /* End PBXBuildFile section */
 
@@ -324,6 +291,20 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
+		E17753B10E42526500F737F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1B2A7210E41213300A72928 /* Font Editor Cocoa */;
+			remoteInfo = "Font Editor Cocoa";
+		};
+		E17753B30E42526F00F737F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1B2A46A0E41103800A72928 /* NovaTools */;
+			remoteInfo = NovaTools;
+		};
 		E1B2A5870E41103A00A72928 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -341,6 +322,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		E17753850E4250CA00F737F8 /* Copy Support Resources */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "Support Resources";
+			dstSubfolderSpec = 7;
+			files = (
+				E177538E0E4251D000F737F8 /* Templates.rsrc in Copy Support Resources */,
+			);
+			name = "Copy Support Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E177539C0E42520800F737F8 /* Copy Support Resources */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "Support Resources";
+			dstSubfolderSpec = 7;
+			files = (
+				E177539D0E42521800F737F8 /* Font Templates.rsrc in Copy Support Resources */,
+			);
+			name = "Copy Support Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E1B2A4170E41103700A72928 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -349,6 +352,8 @@
 			files = (
 				E1B2A5930E41103A00A72928 /* Hexadecimal Editor.plugin in CopyFiles */,
 				E1B2A5920E41103A00A72928 /* Template Editor.plugin in CopyFiles */,
+				E17753CD0E42528400F737F8 /* Font Editor.plugin in CopyFiles */,
+				E17753B90E42528100F737F8 /* NovaTools.plugin in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,12 +377,12 @@
 		3D0933F404DFD7CF00DD74B1 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = SOURCE_ROOT; };
 		3D0933F604DFE80500DD74B1 /* NuTemplateLSTEElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateLSTEElement.h; sourceTree = "<group>"; };
 		3D0933F704DFE80500DD74B1 /* NuTemplateLSTEElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateLSTEElement.m; sourceTree = "<group>"; };
-		3D0ABFB904E152CA00C85300 /* TEMPLATE EDITOR.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "TEMPLATE EDITOR.txt"; path = "NuTemplateEditor/TEMPLATE EDITOR.txt"; sourceTree = SOURCE_ROOT; };
+		3D0ABFB904E152CA00C85300 /* Read Me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read Me.txt"; sourceTree = "<group>"; };
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		3D0B38B204DEF41E005AED5E /* NuTemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateWindowController.h; sourceTree = "<group>"; };
 		3D0B38B304DEF41E005AED5E /* NuTemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NuTemplateWindowController.m; sourceTree = "<group>"; };
 		3D0B38B604DEF465005AED5E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NuTemplateWindow.nib; sourceTree = "<group>"; };
-		3D2EE5E204E5C56F00515930 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		3D2EE5E204E5C56F00515930 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../Localizable.strings; sourceTree = "<group>"; };
 		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKEditorRegistry.h; sourceTree = "<group>"; };
 		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RKEditorRegistry.m; sourceTree = "<group>"; };
@@ -395,6 +400,13 @@
 		3D50047404EF122000F3B64D /* NuTemplateLSTCElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NuTemplateLSTCElement.h; sourceTree = "<group>"; };
 		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
 		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
+		E17752320E424BAB00F737F8 /* NSData-HexRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData-HexRepresentation.h"; sourceTree = "<group>"; };
+		E17752330E424BAB00F737F8 /* NSData-HexRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData-HexRepresentation.m"; sourceTree = "<group>"; };
+		E177526D0E424DCB00F737F8 /* OpenPanelDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenPanelDelegate.m; sourceTree = "<group>"; };
+		E177526E0E424DCB00F737F8 /* OpenPanelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenPanelDelegate.h; sourceTree = "<group>"; };
+		E17753880E4251C600F737F8 /* DisplayTMPL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DisplayTMPL.png; sourceTree = "<group>"; };
+		E17753890E4251C600F737F8 /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = Templates.rsrc; path = ../Templates.rsrc; sourceTree = "<group>"; };
+		E177538A0E4251C600F737F8 /* TMPLs.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = TMPLs.rsrc; path = ../TMPLs.rsrc; sourceTree = "<group>"; };
 		E1B2A43B0E41103700A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../Plug-Ins/Hex Editor/Info.plist"; sourceTree = "<group>"; };
 		E1B2A43C0E41103800A72928 /* ResKnife Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ResKnife Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A4560E41103800A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -415,7 +427,7 @@
 		E1B2A5470E41103900A72928 /* Info-Uli_s_Template_Editor__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Uli_s_Template_Editor__Upgraded_.plist"; sourceTree = "<group>"; };
 		E1B2A5480E41103A00A72928 /* Ulis Template Editor.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ulis Template Editor.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A55A0E41103A00A72928 /* Bitmap Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bitmap Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1B2A5850E41103A00A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1B2A5850E41103A00A72928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 		E1B2A5860E41103A00A72928 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A7220E41213300A72928 /* Font Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Font Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2A7360E41218F00A72928 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FontDocument.nib; sourceTree = "<group>"; };
@@ -460,8 +472,6 @@
 		F543AFDB027B2A5001A8010C /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
 		F543AFDC027B2A5001A8010C /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
 		F543AFF0027C716E01A8010C /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = "English.lproj/Resource Types.strings"; sourceTree = "<group>"; };
-		F54625C6029174F601A8010C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		F54626490291750201A8010C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		F54E6220021B6A0801A80001 /* FindSheetController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FindSheetController.h; sourceTree = "<group>"; };
 		F54E6221021B6A0801A80001 /* FindSheetController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FindSheetController.m; sourceTree = "<group>"; };
 		F54E6223021B6A0801A80001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FindSheet.nib; sourceTree = "<group>"; };
@@ -494,8 +504,6 @@
 		F58F6BAA025BDBA701A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NovaTools.nib; sourceTree = "<group>"; };
 		F59481AD03D0776C01A8010A /* RKDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKDocumentController.h; sourceTree = "<group>"; };
 		F59481AE03D0776C01A8010A /* RKDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RKDocumentController.m; sourceTree = "<group>"; };
-		F59481B103D077DC01A8010A /* OpenFileDataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OpenFileDataSource.h; sourceTree = "<group>"; };
-		F59481B203D077DC01A8010A /* OpenFileDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = OpenFileDataSource.m; sourceTree = "<group>"; };
 		F59D5DE40320DFF601A8010C /* NSString-FSSpec.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSString-FSSpec.h"; sourceTree = "<group>"; };
 		F59D5DE50320DFF601A8010C /* NSString-FSSpec.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSString-FSSpec.m"; sourceTree = "<group>"; };
 		F59D5DE8032106D201A8010C /* NSNumber-Range.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSNumber-Range.h"; sourceTree = "<group>"; };
@@ -527,15 +535,13 @@
 		F5B5883B0156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/InfoWindow.nib; sourceTree = "<group>"; };
 		F5B5883F0156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PrefsWindow.nib; sourceTree = "<group>"; };
 		F5B588410156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ResourceDocument.nib; sourceTree = "<group>"; };
-		F5B588430156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F5B588430156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F5B588450156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F5B588460156D40B01000001 /* ResKnife.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ResKnife.icns; sourceTree = "<group>"; };
 		F5B588470156D40B01000001 /* Resource file.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Resource file.icns"; sourceTree = "<group>"; };
 		F5B588480156D40B01000001 /* Icon file.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Icon file.icns"; sourceTree = "<group>"; };
 		F5B5884A0156D40B01000001 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		F5B5884B0156D40B01000001 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		F5B5884C0156D40B01000001 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		F5B5884D0156D40B01000001 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		F5B5887D0156D6D901000001 /* Carbon Prefix.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "Carbon Prefix.h"; sourceTree = "<group>"; };
 		F5B5887E0156D6D901000001 /* Classic Prefix.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "Classic Prefix.h"; sourceTree = "<group>"; };
 		F5B588800156D6D901000001 /* Transfer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Transfer.h; sourceTree = "<group>"; };
@@ -744,6 +750,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E17753350E424F0C00F737F8 /* Carbon.framework in Frameworks */,
+				E17753E40E42534300F737F8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,7 +786,7 @@
 		3D0B38A504DEF41E005AED5E /* Template Editor */ = {
 			isa = PBXGroup;
 			children = (
-				3D0ABFB904E152CA00C85300 /* TEMPLATE EDITOR.txt */,
+				3D0ABFB904E152CA00C85300 /* Read Me.txt */,
 				3D0B38B204DEF41E005AED5E /* NuTemplateWindowController.h */,
 				3D0B38B304DEF41E005AED5E /* NuTemplateWindowController.m */,
 				3D0933A604DEFEE600DD74B1 /* NuTemplateElement.h */,
@@ -788,9 +796,7 @@
 				3D0933BE04DF151C00DD74B1 /* NuTemplateStream.h */,
 				3D0933BF04DF151C00DD74B1 /* NuTemplateStream.m */,
 				3D0933EB04DF319F00DD74B1 /* Field Types */,
-				E1B2A5850E41103A00A72928 /* Info.plist */,
-				3D2EE5E204E5C56F00515930 /* Localizable.strings */,
-				3D0B38B504DEF465005AED5E /* NuTemplateWindow.nib */,
+				E17753870E4251C600F737F8 /* Resources */,
 			);
 			name = "Template Editor";
 			path = NuTemplateEditor;
@@ -808,14 +814,36 @@
 			path = "Template Editor";
 			sourceTree = "<group>";
 		};
+		E17752310E424BAB00F737F8 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				E17752320E424BAB00F737F8 /* NSData-HexRepresentation.h */,
+				E17752330E424BAB00F737F8 /* NSData-HexRepresentation.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		E17753870E4251C600F737F8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E1B2A5850E41103A00A72928 /* Info.plist */,
+				3D2EE5E204E5C56F00515930 /* Localizable.strings */,
+				E17753880E4251C600F737F8 /* DisplayTMPL.png */,
+				E17753890E4251C600F737F8 /* Templates.rsrc */,
+				E177538A0E4251C600F737F8 /* TMPLs.rsrc */,
+				3D0B38B504DEF465005AED5E /* NuTemplateWindow.nib */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		E1B2A7340E41218F00A72928 /* Font Editor */ = {
 			isa = PBXGroup;
 			children = (
 				E1B2A73C0E41218F00A72928 /* FontWindowController.h */,
 				E1B2A73D0E41218F00A72928 /* FontWindowController.m */,
-				E1B2A73B0E41218F00A72928 /* Font Templates.rsrc */,
 				E1B2A73E0E41218F00A72928 /* Info.plist */,
 				E1B2A7390E41218F00A72928 /* Localizable.strings */,
+				E1B2A73B0E41218F00A72928 /* Font Templates.rsrc */,
 				E1B2A7350E41218F00A72928 /* FontDocument.nib */,
 				E1B2A7370E41218F00A72928 /* FontWindow.nib */,
 			);
@@ -902,9 +930,10 @@
 				F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */,
 				F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */,
 				F5EF839F020C08E601A80001 /* Hex Editor */,
-				E1B2A7340E41218F00A72928 /* Font Editor */,
-				3D3B99B704DC167D0056861E /* Bitmap Editor */,
 				3D0B38A504DEF41E005AED5E /* Template Editor */,
+				3D3B99B704DC167D0056861E /* Bitmap Editor */,
+				E1B2A7340E41218F00A72928 /* Font Editor */,
+				F5DF1C0F0254C78801A80001 /* NovaTools */,
 				F5354435022673C101A80001 /* Template Editor (Abandoned) */,
 			);
 			path = "Plug-Ins";
@@ -929,7 +958,6 @@
 				F5B5881A0156D40B01000001 /* Cocoa */,
 				F5B5887F0156D6D901000001 /* Carbon */,
 				F5EA10690254A7B401A80001 /* External */,
-				F5DF1C0F0254C78801A80001 /* NovaTools */,
 				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 				E1B2A4C30E41103800A72928 /* Info-ResKnife_Carbon__Upgraded_.plist */,
@@ -987,8 +1015,8 @@
 				F5B588260156D40B01000001 /* InfoWindowController.m */,
 				F5B588270156D40B01000001 /* NameFormatter.h */,
 				F5B588280156D40B01000001 /* NameFormatter.m */,
-				F59481B103D077DC01A8010A /* OpenFileDataSource.h */,
-				F59481B203D077DC01A8010A /* OpenFileDataSource.m */,
+				E177526E0E424DCB00F737F8 /* OpenPanelDelegate.h */,
+				E177526D0E424DCB00F737F8 /* OpenPanelDelegate.m */,
 				F5B588290156D40B01000001 /* OutlineViewDelegate.h */,
 				F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */,
 				F5F1071603CCC61E01A8010A /* PasteboardDocument.h */,
@@ -1050,11 +1078,7 @@
 			isa = PBXGroup;
 			children = (
 				F5B5884A0156D40B01000001 /* Carbon.framework */,
-				F54625C6029174F601A8010C /* CoreServices.framework */,
-				F54626490291750201A8010C /* ApplicationServices.framework */,
 				F5B5884B0156D40B01000001 /* Cocoa.framework */,
-				F5B5884C0156D40B01000001 /* AppKit.framework */,
-				F5B5884D0156D40B01000001 /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1251,7 +1275,8 @@
 				F58A183F0278353501A8010C /* Aux Support */,
 				F51FB38E0256057F01A80001 /* Resources */,
 			);
-			path = NovaTools;
+			name = NovaTools;
+			path = ../../NovaTools;
 			sourceTree = "<group>";
 		};
 		F5EA10690254A7B401A80001 /* External */ = {
@@ -1276,6 +1301,7 @@
 				F5EF83A7020C08E601A80001 /* HexWindowController.h */,
 				F5EF83A8020C08E601A80001 /* HexWindowController.m */,
 				E1B2A4560E41103800A72928 /* Info.plist */,
+				E17752310E424BAB00F737F8 /* Categories */,
 				F5EF83C7020C20D701A80001 /* HexWindow.nib */,
 				F5606FDD02ACF2F701A8010C /* PasteMenu.nib */,
 				F54E6222021B6A0801A80001 /* FindSheet.nib */,
@@ -1310,24 +1336,10 @@
 				E1B2A3FB0E41103700A72928 /* PasteboardDocument.h in Headers */,
 				E1B2A3FC0E41103700A72928 /* PasteboardWindowController.h in Headers */,
 				E1B2A3FD0E41103700A72928 /* RKDocumentController.h in Headers */,
-				E1B2A3FE0E41103700A72928 /* OpenFileDataSource.h in Headers */,
 				E1B2A3FF0E41103700A72928 /* RKEditorRegistry.h in Headers */,
 				E1B2A4000E41103700A72928 /* RKSupportResourceRegistry.h in Headers */,
 				E1B2A7770E41230E00A72928 /* NGSCategories.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E1B2A43F0E41103800A72928 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1B2A4400E41103800A72928 /* ResKnifeResourceProtocol.h in Headers */,
-				E1B2A4410E41103800A72928 /* ResKnifePluginProtocol.h in Headers */,
-				E1B2A4420E41103800A72928 /* HexEditorDelegate.h in Headers */,
-				E1B2A4430E41103800A72928 /* HexTextView.h in Headers */,
-				E1B2A4440E41103800A72928 /* HexWindowController.h in Headers */,
-				E1B2A4450E41103800A72928 /* FindSheetController.h in Headers */,
-				E1B2A7790E41230E00A72928 /* NGSCategories.h in Headers */,
+				E17752700E424DCB00F737F8 /* OpenPanelDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1337,27 +1349,6 @@
 			files = (
 				E1B2A45A0E41103800A72928 /* TemplateWindowController.h in Headers */,
 				E1B2A45B0E41103800A72928 /* Element.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E1B2A46B0E41103800A72928 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1B2A46C0E41103800A72928 /* HostCallbacks.h in Headers */,
-				E1B2A46D0E41103800A72928 /* BoomWindowController.h in Headers */,
-				E1B2A46E0E41103800A72928 /* NovaWindowController.h in Headers */,
-				E1B2A46F0E41103800A72928 /* CharWindowController.h in Headers */,
-				E1B2A4700E41103800A72928 /* ColrWindowController.h in Headers */,
-				E1B2A4710E41103800A72928 /* CronWindowController.h in Headers */,
-				E1B2A4720E41103800A72928 /* DescWindowController.h in Headers */,
-				E1B2A4730E41103800A72928 /* ResKnifeResourceProtocol.h in Headers */,
-				E1B2A4740E41103800A72928 /* ResKnifePluginProtocol.h in Headers */,
-				E1B2A4750E41103800A72928 /* DescSplitViewDelegate.h in Headers */,
-				E1B2A4760E41103800A72928 /* DataSource.h in Headers */,
-				E1B2A4770E41103800A72928 /* Structs.h in Headers */,
-				E1B2A4780E41103800A72928 /* NSNumber-Range.h in Headers */,
-				E1B2A77F0E41230E00A72928 /* NGSCategories.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1460,40 +1451,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E1B2A54A0E41103A00A72928 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1B2A54B0E41103A00A72928 /* ResKnifePluginProtocol.h in Headers */,
-				E1B2A54C0E41103A00A72928 /* ResKnifeResourceProtocol.h in Headers */,
-				E1B2A54D0E41103A00A72928 /* ICONWindowController.h in Headers */,
-				E1B2A77D0E41230E00A72928 /* NGSCategories.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E1B2A55C0E41103A00A72928 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1B2A55D0E41103A00A72928 /* NuTemplateWindowController.h in Headers */,
-				E1B2A55E0E41103A00A72928 /* ResKnifePluginProtocol.h in Headers */,
-				E1B2A55F0E41103A00A72928 /* ResKnifeResourceProtocol.h in Headers */,
-				E1B2A5600E41103A00A72928 /* NuTemplateElement.h in Headers */,
-				E1B2A5610E41103A00A72928 /* NuTemplateGroupElement.h in Headers */,
-				E1B2A5620E41103A00A72928 /* NuTemplateStream.h in Headers */,
-				E1B2A5630E41103A00A72928 /* NuTemplateLSTBElement.h in Headers */,
-				E1B2A5640E41103A00A72928 /* NuTemplateTNAMElement.h in Headers */,
-				E1B2A5650E41103A00A72928 /* NuTemplatePSTRElement.h in Headers */,
-				E1B2A5660E41103A00A72928 /* NuTemplateDWRDElement.h in Headers */,
-				E1B2A5670E41103A00A72928 /* NuTemplateLSTEElement.h in Headers */,
-				E1B2A5680E41103A00A72928 /* NuTemplateDLNGElement.h in Headers */,
-				E1B2A5690E41103A00A72928 /* NuTemplateDBYTElement.h in Headers */,
-				E1B2A56A0E41103A00A72928 /* NuTemplateOCNTElement.h in Headers */,
-				E1B2A56B0E41103A00A72928 /* NuTemplateLSTCElement.h in Headers */,
-				E1B2A77B0E41230E00A72928 /* NGSCategories.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -1513,6 +1470,8 @@
 			dependencies = (
 				E1B2A5880E41103A00A72928 /* PBXTargetDependency */,
 				E1B2A5900E41103A00A72928 /* PBXTargetDependency */,
+				E17753B20E42526500F737F8 /* PBXTargetDependency */,
+				E17753B40E42526F00F737F8 /* PBXTargetDependency */,
 			);
 			name = "ResKnife Cocoa";
 			productInstallPath = "$(USER_APPS_DIR)";
@@ -1524,7 +1483,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1B2A4530E41103800A72928 /* Build configuration list for PBXNativeTarget "Hex Editor Cocoa" */;
 			buildPhases = (
-				E1B2A43F0E41103800A72928 /* Headers */,
 				E1B2A4460E41103800A72928 /* Resources */,
 				E1B2A44A0E41103800A72928 /* Sources */,
 				E1B2A4500E41103800A72928 /* Frameworks */,
@@ -1563,11 +1521,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1B2A4900E41103800A72928 /* Build configuration list for PBXNativeTarget "NovaTools" */;
 			buildPhases = (
-				E1B2A46B0E41103800A72928 /* Headers */,
 				E1B2A4790E41103800A72928 /* Resources */,
 				E1B2A4810E41103800A72928 /* Sources */,
 				E1B2A48C0E41103800A72928 /* Frameworks */,
-				E1B2A48F0E41103800A72928 /* Rez */,
 			);
 			buildRules = (
 			);
@@ -1701,11 +1657,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1B2A5560E41103A00A72928 /* Build configuration list for PBXNativeTarget "Bitmap Editor Cocoa" */;
 			buildPhases = (
-				E1B2A54A0E41103A00A72928 /* Headers */,
 				E1B2A54E0E41103A00A72928 /* Resources */,
 				E1B2A5500E41103A00A72928 /* Sources */,
 				E1B2A5530E41103A00A72928 /* Frameworks */,
-				E1B2A5550E41103A00A72928 /* Rez */,
 			);
 			buildRules = (
 			);
@@ -1721,11 +1675,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1B2A5820E41103A00A72928 /* Build configuration list for PBXNativeTarget "Template Editor Cocoa" */;
 			buildPhases = (
-				E1B2A55C0E41103A00A72928 /* Headers */,
 				E1B2A56C0E41103A00A72928 /* Resources */,
+				E17753850E4250CA00F737F8 /* Copy Support Resources */,
 				E1B2A5700E41103A00A72928 /* Sources */,
 				E1B2A57F0E41103A00A72928 /* Frameworks */,
-				E1B2A5810E41103A00A72928 /* Rez */,
 			);
 			buildRules = (
 				E1B2A5980E41103D00A72928 /* PBXBuildRule */,
@@ -1744,6 +1697,7 @@
 			buildConfigurationList = E1B2A7260E41213400A72928 /* Build configuration list for PBXNativeTarget "Font Editor Cocoa" */;
 			buildPhases = (
 				E1B2A71E0E41213300A72928 /* Resources */,
+				E177539C0E42520800F737F8 /* Copy Support Resources */,
 				E1B2A71F0E41213300A72928 /* Sources */,
 				E1B2A7200E41213300A72928 /* Frameworks */,
 			);
@@ -1898,6 +1852,7 @@
 			files = (
 				E1B2A56D0E41103A00A72928 /* NuTemplateWindow.nib in Resources */,
 				E1B2A56F0E41103A00A72928 /* Localizable.strings in Resources */,
+				E177538B0E4251C600F737F8 /* DisplayTMPL.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1908,7 +1863,6 @@
 				E1B2A73F0E41218F00A72928 /* FontDocument.nib in Resources */,
 				E1B2A7400E41218F00A72928 /* FontWindow.nib in Resources */,
 				E1B2A7410E41219000A72928 /* Localizable.strings in Resources */,
-				E1B2A7420E41219000A72928 /* Font Templates.rsrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1930,13 +1884,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E1B2A4640E41103800A72928 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E1B2A48F0E41103800A72928 /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1989,20 +1936,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E1B2A5550E41103A00A72928 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E1B2A5810E41103A00A72928 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2029,11 +1962,11 @@
 				E1B2A42D0E41103700A72928 /* PasteboardDocument.m in Sources */,
 				E1B2A42E0E41103700A72928 /* PasteboardWindowController.m in Sources */,
 				E1B2A42F0E41103700A72928 /* RKDocumentController.m in Sources */,
-				E1B2A4300E41103700A72928 /* OpenFileDataSource.m in Sources */,
 				E1B2A4310E41103700A72928 /* main.m in Sources */,
 				E1B2A4320E41103700A72928 /* RKEditorRegistry.m in Sources */,
 				E1B2A4330E41103700A72928 /* RKSupportResourceRegistry.m in Sources */,
 				E1B2A7780E41230E00A72928 /* NGSCategories.m in Sources */,
+				E177526F0E424DCB00F737F8 /* OpenPanelDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2047,6 +1980,7 @@
 				E1B2A44E0E41103800A72928 /* FindSheetController.m in Sources */,
 				E1B2A44F0E41103800A72928 /* Notifications.m in Sources */,
 				E1B2A77A0E41230E00A72928 /* NGSCategories.m in Sources */,
+				E17752350E424BAB00F737F8 /* NSData-HexRepresentation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2204,12 +2138,23 @@
 			files = (
 				E1B2A7430E41219000A72928 /* FontWindowController.m in Sources */,
 				E1B2A7760E41230E00A72928 /* NGSCategories.m in Sources */,
+				E17752760E424ED400F737F8 /* Notifications.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E17753B20E42526500F737F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1B2A7210E41213300A72928 /* Font Editor Cocoa */;
+			targetProxy = E17753B10E42526500F737F8 /* PBXContainerItemProxy */;
+		};
+		E17753B40E42526F00F737F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1B2A46A0E41103800A72928 /* NovaTools */;
+			targetProxy = E17753B30E42526F00F737F8 /* PBXContainerItemProxy */;
+		};
 		E1B2A5880E41103A00A72928 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E1B2A43E0E41103800A72928 /* Hex Editor Cocoa */;
@@ -2229,6 +2174,7 @@
 				3D0B38B604DEF465005AED5E /* English */,
 			);
 			name = NuTemplateWindow.nib;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		3D3B99BC04DC16FC0056861E /* ICONWindow.nib */ = {
@@ -2444,19 +2390,17 @@
 		84A45AA60E410BAD008598FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				MACOSX_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		84A45AA70E410BAD008598FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				MACOSX_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
 		};
@@ -2470,7 +2414,6 @@
 				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cocoa/Info.plist;
-				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "ResKnife Cocoa";
 				PROFILING_CODE = YES;
@@ -2493,7 +2436,6 @@
 				GCC_PREFIX_HEADER = "Prefix Files/C99 Prefix.h";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Cocoa/Info.plist;
-				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "ResKnife Cocoa";
 				PROFILING_CODE = YES;

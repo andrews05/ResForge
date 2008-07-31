@@ -29,7 +29,7 @@
 	// enable/disable boxes
 	[searchSelectionOnlyBox setEnabled:([(NSTextView *)[[sender window] firstResponder] rangeForUserTextChange].length != 0)];
 	
-	// set inital vales
+	// set inital values
 	if( ![searchSelectionOnlyBox isEnabled] )	[searchSelectionOnlyBox setIntValue:0];
 	
 	// show sheet

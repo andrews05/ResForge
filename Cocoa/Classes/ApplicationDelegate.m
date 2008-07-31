@@ -1,4 +1,5 @@
 #import "ApplicationDelegate.h"
+#import "OpenPanelDelegate.h"
 #import "RKDocumentController.h"
 #import "InfoWindowController.h"
 #import "PasteboardWindowController.h"
@@ -6,8 +7,9 @@
 #import "CreateResourceSheetController.h"
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
+#import "RKEditorRegistry.h"
 
-#import "ResknifePluginProtocol.h"
+#import "ResKnifePluginProtocol.h"
 #import "RKSupportResourceRegistry.h"
 
 
@@ -23,49 +25,103 @@
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
 	// instanciate my own subclass of NSDocumentController so I can override the open dialog
-	RKDocumentController *docController = [[RKDocumentController alloc] init];
-	
-	[RKSupportResourceRegistry scanForSupportResources: [NSDocumentController sharedDocumentController]];
+	[[RKDocumentController alloc] init];
+	[RKSupportResourceRegistry scanForSupportResources];
 }
+
+/*!
+@method		awakeFromNib
+@updated	2003-10-24 NGS: moved icon caching into method called by timer (to speed up app launch time)
+*/
 
 - (void)awakeFromNib
 {
-	NSTableColumn *tableColumn;
-	NSButtonCell *buttonCell;
-	
 	// Part of my EvilPlanª to find out how many people use ResKnife and how often!
 	int launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"LaunchCount"];
 	[[NSUserDefaults standardUserDefaults] setInteger:launchCount + 1 forKey:@"LaunchCount"];
 	
-	// save a number of icons
-	icons = [[NSMutableDictionary alloc] init];
-	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"TEXT"] forKey:@"TEXT"];
-	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"PICT"] forKey:@"PICT"];
-	[icons setObject:[[NSWorkspace sharedWorkspace] iconForFileType:@"icns"] forKey:@"icns"];
+	// initalise an empty icon cache and create timer used to pre-cache a number of common icons
+	_icons = [[NSMutableDictionary alloc] init];
+	[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(precacheIcons:) userInfo:nil repeats:NO];
 	
-	// set up open dialog's aux table view
-	tableColumn = [forkTableView tableColumnWithIdentifier:@"parse"];
-	buttonCell = [[[NSButtonCell alloc] initTextCell:@""] autorelease];
-	[buttonCell setEditable:YES];
-	[buttonCell setButtonType:NSSwitchButton];
-	[tableColumn setDataCell:buttonCell];
-	
+	// set default preferences
     [self initUserDefaults];
 }
 
 - (void)dealloc
 {
-	[icons release];
+	[_icons release];
 	[super dealloc];
+}
+
+/*!
+@method			precacheIcons:
+@author			Nicholas Shanks
+@created		2003-10-24
+@abstract		Pre-caches the icons for a number of common resource types.
+@description	Icon pre-caching now uses the more sophisticated iconForResourceType: instead of obtaining the images directly from the file system (otherwise pre-cached icons would not be overridable by plug-ins). In addition it has been moved from the awakeFromNib: method into one called by a timer. This method should not be called until after the editor registry has been built.
+*/
+
+- (void)precacheIcons:(NSTimer *)timer
+{
+	// pre-cache a number of common icons (ignores return value, relies on iconForResourceType: to do the actual caching)
+	[self iconForResourceType:@"    "];
+	[self iconForResourceType:@"CODE"];
+	[self iconForResourceType:@"icns"];
+	[self iconForResourceType:@"PICT"];
+	[self iconForResourceType:@"plst"];
+	[self iconForResourceType:@"snd "];
+	[self iconForResourceType:@"TEXT"];
+}
+
+- (NSArray *)forksForFile:(FSRef *)fileRef
+{
+	if(!fileRef) return nil;
+	
+	FSCatalogInfo		catalogInfo;
+	FSCatalogInfoBitmap whichInfo = kFSCatInfoNodeFlags;
+	CatPositionRec		forkIterator = { 0 };
+	NSMutableArray *forks = [NSMutableArray array];
+	
+	// check we have a file, not a folder
+	OSErr error = FSGetCatalogInfo(fileRef, whichInfo, &catalogInfo, NULL, NULL, NULL);
+	if(!error && !(catalogInfo.nodeFlags & kFSNodeIsDirectoryMask))
+	{
+		// iterate over file and populate forks array
+		while(error == noErr)
+		{
+			HFSUniStr255 forkName;
+			SInt64 forkSize;
+			UInt64 forkPhysicalSize;	// used if opening selected fork fails to find empty forks
+			
+			error = FSIterateForks(fileRef, &forkIterator, &forkName, &forkSize, &forkPhysicalSize);
+			if(!error)
+			{
+				NSString *fName = [NSString stringWithCharacters:forkName.unicode length:forkName.length];
+				NSNumber *fSize = [NSNumber numberWithLongLong:forkSize];
+				NSNumber *fAlloc = [NSNumber numberWithUnsignedLongLong:forkPhysicalSize];
+				[forks addObject:[NSDictionary dictionaryWithObjectsAndKeys:fName, @"forkname", fSize, @"forksize", fAlloc, @"forkallocation", nil]];
+			}
+			else if(error != errFSNoMoreItems)
+			{
+				NSLog(@"FSIterateForks() error: %d", error);
+			}
+		}
+	}
+	else if(error)
+	{
+		NSLog(@"FSGetCatalogInfo() error: %d", error);
+	}
+	return forks;
 }
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
-#pragma unused( sender )
+#pragma unused(sender)
 	NSString *launchAction = [[NSUserDefaults standardUserDefaults] stringForKey:@"LaunchAction"];
-	if( [launchAction isEqualToString:@"OpenUntitledFile"] )
+	if([launchAction isEqualToString:@"OpenUntitledFile"])
 		return YES;
-	else if( [launchAction isEqualToString:@"DisplayOpenPanel"] )
+	else if([launchAction isEqualToString:@"DisplayOpenPanel"])
 	{
 		[[NSDocumentController sharedDocumentController] openDocument:sender];
 		return NO;
@@ -75,7 +131,7 @@
 
 - (BOOL)application:(NSApplication *)application openFile:(NSString *)file
 {
-#pragma unused( application )
+#pragma unused(application)
 	// bug: check if application was an external editor (e.g. Iconographer) and update existing open file instead
 	[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:file display:YES];
 	return YES;
@@ -83,14 +139,20 @@
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
-#pragma unused( sender )
+#pragma unused(sender)
 	return !flag;
 }
 
 - (IBAction)showAbout:(id)sender
 {
-	[NSApp orderFrontStandardAboutPanel:sender];
-	// get about box code from http://cocoadevcentral.com/tutorials/showpage.php?show=00000041.php
+	// could do with a better about box
+/*	NSWindowController *wc = [[NSWindowController alloc] initWithWindowNibName:@"AboutPanel"];
+	if([(NSTextView *)[[wc window] initialFirstResponder] readRTFDFromFile:[[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtf"]])
+	{
+		[[wc window] center];
+		[[wc window] orderFront:nil];
+	}
+	else*/ [NSApp orderFrontStandardAboutPanel:sender];
 }
 
 - (IBAction)visitWebsite:(id)sender
@@ -145,12 +207,12 @@
 	
 	// enumerate over all the keys in the dictionary
 	overDefaults = [[defaultsPlist allKeys] objectEnumerator];
-	while( eachDefault = [overDefaults nextObject] )
+	while(eachDefault = [overDefaults nextObject])
 	{
 		// for each key in the dictionary
 		//	check if there is a value already registered for it
 		//	and if there isn't, then register the value that was in the file
-		if( ![defaults stringForKey:eachDefault] )
+		if(![defaults stringForKey:eachDefault])
 		{
 			[defaults setObject:[defaultsPlist objectForKey:eachDefault] forKey:eachDefault];
 		}
@@ -160,26 +222,94 @@
 	[defaults synchronize];
 }
 
-- (NSView *)openAuxView
+- (OpenPanelDelegate *)openPanelDelegate
 {
-	return openAuxView;
+	return openPanelDelegate;
+}
+
+/*!
+@method			iconForResourceType:
+@author			Nicholas Shanks
+@created		2003-10-24
+@abstract		Manages the cache of icons used for representing resource types.
+@description	This method loads icons for each resource type from a variety of places and caches them for faster access. Your plug-in may be asked to return an icon for any resource type it declares it can edit. To implement this, your plug should respond to the iconForResourceType: selector with the same method signature as this method. The icons can be in any format recognised by NSImage. Alternativly, just leave your icons in "Your.plugin/Contents/Resources/Resource Type Icons/" (or any equivalent localised directory) with a name like "TYPE.tiff" and ResKnife will retreive them automatically.
+@pending		I don't like the name I chose here for the resource type icons directory. Can anyone think of something better?
+*/
+
+- (NSImage *)iconForResourceType:(NSString *)resourceType
+{
+	// check if we have image in cache already
+	NSImage *icon = nil;
+	if([resourceType isEqualToString:@""])
+		resourceType = nil;
+	
+	if(resourceType);
+		icon = [[self _icons] valueForKey:resourceType];
+	if(!icon)
+	{
+		NSString *iconPath = nil;
+		
+		// try to load icon from the default editor for that type
+		Class editor = [[RKEditorRegistry defaultRegistry] editorForType:resourceType];
+		if(editor && resourceType)
+		{
+			// ask politly for icon
+			if([editor respondsToSelector:@selector(iconForResourceType:)])
+				icon = [editor iconForResourceType:resourceType];
+			
+			// try getting it myself
+			if(!icon)
+			{
+				iconPath = [[NSBundle bundleForClass:editor] pathForResource:resourceType ofType:nil inDirectory:@"Resource Type Icons"];
+				if(iconPath)
+					icon = [[[NSImage alloc] initWithContentsOfFile:iconPath] autorelease];
+			}
+		}
+		
+		// try to load icon from the ResKnife app bundle itself
+		if(!icon && resourceType)
+		{
+			iconPath = [[NSBundle mainBundle] pathForResource:resourceType ofType:nil inDirectory:@"Resource Type Icons"];
+			if(iconPath)
+				icon = [[[NSImage alloc] initWithContentsOfFile:iconPath] autorelease];
+		}
+		
+		// try to retreive from file system (after first mangling the type through our converter strings file)
+		if(!icon && resourceType)
+		{
+			NSString *fileType = [[NSBundle mainBundle] localizedStringForKey:resourceType value:@"" table:@"Resource Type Mappings"];
+			NSRange range = [fileType rangeOfString:@"."];
+			if(range.location == NSNotFound)
+				icon = [[NSWorkspace sharedWorkspace] iconForFileType:fileType];
+			else	// a '.' character in a file type means ResKnife should look for a bundle icon with fileType as the bundle's identifier
+			{
+				NSString *bundlePath = [[NSBundle bundleWithIdentifier:fileType] bundlePath];
+				if(bundlePath)
+					icon = [[NSWorkspace sharedWorkspace] iconForFile:bundlePath];
+			}
+		}
+		
+		// if we still don't have an icon, try to get the generic one - this is what icon represented forks get
+//		if(!icon)	icon = [NSImage imageNamed:@"NSMysteryDocument"];
+		if(!icon)	icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"'    '"];
+		
+		// save the newly retreived icon in the cache
+		if(icon && resourceType)
+			[[self _icons] setObject:icon forKey:resourceType];
+	}
+	
+	// return the cached icon, or nil if none was found
+	return icon;
+}
+
+- (NSMutableDictionary *)_icons
+{
+	return _icons;
 }
 
 - (NSDictionary *)icons
 {
-	return icons;
+	return [NSDictionary dictionaryWithDictionary:[self _icons]];
 }
-
-@end
-
-@implementation NSSavePanel (PackageBrowser)
-
-/* Don't tell anyone I did this... */
-
-/*- (void)setTreatsFilePackagesAsDirectories:(BOOL)flag
-{
-#pragma unused( flag )
-	_spFlags.treatsFilePackagesAsDirectories = YES;
-}*/
 
 @end

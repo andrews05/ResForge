@@ -1,17 +1,18 @@
 #import "HexWindowController.h"
 #import "HexTextView.h"
 #import "FindSheetController.h"
+#import "NSData-HexRepresentation.h"
 
 /*
-OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
+OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 {
 	// init function called by carbon apps
-	if( NSApplicationLoad() )
+	if(NSApplicationLoad())
 	{
 		id newResource = [NSClassFromString(@"Resource") resourceOfType:[NSString stringWithCString:length:4] andID:[NSNumber numberWithInt:] withName:[NSString stringWithCString:length:] andAttributes:[NSNumber numberWithUnsignedShort:] data:[NSData dataWithBytes:length:]];
-		if( !newResource ) return paramErr;
+		if(!newResource) return paramErr;
 		id windowController = [[HexWindowController alloc] initWithResource:newResource];
-		if( !windowController ) return paramErr;
+		if(!windowController) return paramErr;
 		else return noErr;
 	}
 	else return paramErr;
@@ -23,35 +24,33 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 - (id)initWithResource:(id)newResource
 {
 	self = [self initWithWindowNibName:@"HexWindow"];
-	if( !self ) return self;
+	if(!self) return nil;
 	
 	// one instance of your principal class will be created for every resource the user wants to edit (similar to Windows apps)
 	undoManager = [[NSUndoManager alloc] init];
 	liveEdit = NO;
-	if( liveEdit )
+	if(liveEdit)
 	{
-		resource = [newResource retain];
-		backup = [newResource copy];
+		resource = [newResource retain];	// resource to work on and monitor for external changes
+		backup = [newResource copy];		// for reverting only
 	}
 	else
 	{
-		resource = [newResource copy];
-		backup = [newResource retain];
+		resource = [newResource copy];		// resource to work on
+		backup = [newResource retain];		// actual resource to change when saving data and monitor for external changes
 	}
 	bytesPerRow = 16;
 	
-	// load the window from the nib file and set it's title
-	[self window];	// implicitly loads nib
-	[[self window] setTitle:[resource nameForEditorWindow]];
-
+	// load the window from the nib file
+	[self window];
 	return self;
 }
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[(id)resource autorelease];
 	[undoManager release];
+	[(id)resource release];
 	[super dealloc];
 }
 
@@ -59,68 +58,86 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 {
 	[super windowDidLoad];
 	
-	// swap text views to instances of my class instead
-	[offset swapForHexTextView];
-	[hex swapForHexTextView];
-	[ascii swapForHexTextView];
-	
-	// turn off the background for the offset column (IB is broken when it comes to this)
-	[offset setDrawsBackground:NO];
-	[[offset enclosingScrollView] setDrawsBackground:NO];
-	
-	// set up tab, shift-tab and enter behaviour
-	[hex setFieldEditor:YES];
-	[ascii setFieldEditor:YES];
+	{
+		// set up tab, shift-tab and enter behaviour (cannot set these in IB at the moment)
+		[hex setFieldEditor:YES];
+		[ascii setFieldEditor:YES];
+		[offset setDrawsBackground:NO];
+		[[offset enclosingScrollView] setDrawsBackground:NO];
+		
+		// IB fonts get ignored for some reason
+		NSFont *courier = [[NSFontManager sharedFontManager] fontWithFamily:@"Courier" traits:0 weight:5 size:12.0];
+		[hex setFont:courier];
+		[ascii setFont:courier];
+		[offset setFont:courier];
+		
+		// from HexEditorDelegate, here until bug is fixed
+		[[NSNotificationCenter defaultCenter] addObserver:hexDelegate selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[offset enclosingScrollView] contentView]];
+		[[NSNotificationCenter defaultCenter] addObserver:hexDelegate selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[hex enclosingScrollView] contentView]];
+		[[NSNotificationCenter defaultCenter] addObserver:hexDelegate selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[ascii enclosingScrollView] contentView]];
+	}
 	
 	// insert the resources' data into the text fields
 	[self refreshData:[resource data]];
-	[[self window] setResizeIncrements:NSMakeSize(kWindowStepWidthPerChar * kWindowStepCharsPerStep, 1)];
+	[[self window] setResizeIncrements:NSMakeSize(kWindowStepWidthPerChar * kWindowStepCharsPerStep * [[self window] userSpaceScaleFactor], 1)];
 	// min 346, step 224, norm 570, step 224, max 794
 	
-	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
+	// here because we don't want these notifications until we have a window! (Only register for notifications on the resource we're editing)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameDidChange:) name:ResourceNameDidChangeNotification object:resource];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceWasSaved:) name:ResourceWasSavedNotification object:resource];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceWasSaved:) name:ResourceWasSavedNotification object:backup];
+	if(liveEdit)	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceWasSaved:) name:ResourceDataDidChangeNotification object:resource];
+	else			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceWasSaved:) name:ResourceDataDidChangeNotification object:backup];
 	
-	// put other notifications here too, just for togetherness
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[offset enclosingScrollView] contentView]];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[hex enclosingScrollView] contentView]];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[ascii enclosingScrollView] contentView]];
-	
-	// finally, show the window
+	// finally, set the window title & show the window
+	[[self window] setTitle:[resource defaultWindowTitle]];
 	[self showWindow:self];
 }
 
 - (void)windowDidResize:(NSNotification *)notification
 {
-	int width = [[notification object] frame].size.width;
+	float width = [[(NSWindow *)[notification object] contentView] frame].size.width;
 	int oldBytesPerRow = bytesPerRow;
 	bytesPerRow = (((width - (kWindowStepWidthPerChar * kWindowStepCharsPerStep) - 122) / (kWindowStepWidthPerChar * kWindowStepCharsPerStep)) + 1) * kWindowStepCharsPerStep;
-	if( bytesPerRow != oldBytesPerRow )
+	if(bytesPerRow != oldBytesPerRow)
 		[offset	setString:[hexDelegate offsetRepresentation:[resource data]]];
-	[hexScroll setFrameSize:NSMakeSize( (bytesPerRow * 21) + 5, [hexScroll frame].size.height)];
-	[asciiScroll setFrameOrigin:NSMakePoint( (bytesPerRow * 21) + 95, 20)];
-	[asciiScroll setFrameSize:NSMakeSize( (bytesPerRow * 7) + 28, [asciiScroll frame].size.height)];
+	[[hex enclosingScrollView] setFrameSize:NSMakeSize((bytesPerRow * 21) + 5, [[hex enclosingScrollView] frame].size.height)];
+	[[ascii enclosingScrollView] setFrameOrigin:NSMakePoint((bytesPerRow * 21) + 95, 20)];
+	[[ascii enclosingScrollView] setFrameSize:NSMakeSize((bytesPerRow * 7) + 28, [[ascii enclosingScrollView] frame].size.height)];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	// swap paste: menu item for my own paste submenu
 	NSMenu *editMenu = [[[NSApp mainMenu] itemAtIndex:2] submenu];
+	NSMenuItem *copyItem = [editMenu itemAtIndex:[editMenu indexOfItemWithTarget:nil andAction:@selector(copy:)]];
 	NSMenuItem *pasteItem = [editMenu itemAtIndex:[editMenu indexOfItemWithTarget:nil andAction:@selector(paste:)]];
-	[NSBundle loadNibNamed:@"PasteMenu" owner:self];
+	
+	// swap copy: menu item for my own copy submenu
+	[copyItem setEnabled:YES];
+	[copyItem setKeyEquivalent:@"\0"];		// clear key equiv.
+	[copyItem setKeyEquivalentModifierMask:0];
+	[editMenu setSubmenu:copySubmenu forItem:copyItem];
+	
+	// swap paste: menu item for my own paste submenu
 	[pasteItem setEnabled:YES];
-	[pasteItem setKeyEquivalent:@"\0"];		// clear key equiv. (yes, really!)
+	[pasteItem setKeyEquivalent:@"\0"];
 	[pasteItem setKeyEquivalentModifierMask:0];
 	[editMenu setSubmenu:pasteSubmenu forItem:pasteItem];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
-	// swap my submenu for plain paste menu item
 	NSMenu *editMenu = [[[NSApp mainMenu] itemAtIndex:2] submenu];
+	NSMenuItem *copyItem = [editMenu itemAtIndex:[editMenu indexOfItemWithSubmenu:copySubmenu]];
 	NSMenuItem *pasteItem = [editMenu itemAtIndex:[editMenu indexOfItemWithSubmenu:pasteSubmenu]];
+	
+	// swap my submenu for plain copy menu item
+	[editMenu setSubmenu:nil forItem:copyItem];
+	[copyItem setTarget:nil];
+	[copyItem setAction:@selector(copy:)];
+	[copyItem setKeyEquivalent:@"c"];
+	[copyItem setKeyEquivalentModifierMask:NSCommandKeyMask];
+	
+	// swap my submenu for plain paste menu item
 	[editMenu setSubmenu:nil forItem:pasteItem];
 	[pasteItem setTarget:nil];
 	[pasteItem setAction:@selector(paste:)];
@@ -130,9 +147,9 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 
 - (BOOL)windowShouldClose:(id)sender
 {
-	if( [[self window] isDocumentEdited] )
+	if([[self window] isDocumentEdited])
 	{
-		NSBeginAlertSheet( @"Do you want to save the changes you made to this resource?", @"Save", @"Don’t Save", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes will be lost if you don't save them." );
+		NSBeginAlertSheet(@"Do you want to keep the changes you made to this resource?", @"Keep", @"Don’t Keep", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes cannot be saved later if you don't keep them.");
 		return NO;
 	}
 	else return YES;
@@ -140,15 +157,14 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 
 - (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	switch( returnCode )
+	switch(returnCode)
 	{
-		case NSAlertDefaultReturn:		// save
-			[self saveResource];
+		case NSAlertDefaultReturn:		// keep
+			[self saveResource:nil];
 			[[self window] close];
 			break;
 		
-		case NSAlertAlternateReturn:	// don't save
-			[self revertResource];
+		case NSAlertAlternateReturn:	// don't keep
 			[[self window] close];
 			break;
 		
@@ -157,83 +173,33 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 	}
 }
 
-- (void)saveResource
+- (void)saveResource:(id)sender
 {
-	if( liveEdit )
-	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillBeSavedNotification object:resource];
-		[backup setData:[resource data]];
-		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWasSavedNotification object:resource];
-	}
-	else
-	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillBeSavedNotification object:backup];
-		[backup setData:[resource data]];
-		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWasSavedNotification object:backup];
-	}
+	[backup setData:[[resource data] copy]];
 }
 
-- (void)revertResource
+- (void)revertResource:(id)sender
 {
-	[resource setData:[backup data]];
+	[resource setData:[[backup data] copy]];
 }
 
-- (IBAction)showFind:(id)sender
+- (void)showFind:(id)sender
 {
 	// bug: HexWindowController allocs a sheet controller, but it's never disposed of
 	FindSheetController *sheetController = [[FindSheetController alloc] initWithWindowNibName:@"FindSheet"];
 	[sheetController showFindSheet:self];
 }
 
-- (void)viewDidScroll:(NSNotification *)notification
-{
-	// get object refs for increased speed
-	NSClipView *object		= (NSClipView *) [notification object];
-	NSClipView *offsetClip	= [[offset enclosingScrollView] contentView];
-	NSClipView *hexClip		= [[hex enclosingScrollView] contentView];
-	NSClipView *asciiClip	= [[ascii enclosingScrollView] contentView];
-	
-	// due to a bug in -[NSView setPostsBoundsChangedNotifications:] (it basically doesn't work), I am having to work around it by removing myself from the notification center and restoring things later on!
-	// update, Apple say this isn't their bug. Yeah, right!
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];
-	
-	// when a view scrolls, update the other two
-	if( object != offsetClip )
-	{
-//		[offsetClip setPostsBoundsChangedNotifications:NO];
-		[offsetClip setBoundsOrigin:[object bounds].origin];
-//		[offsetClip setPostsBoundsChangedNotifications:YES];
-	}
-	
-	if( object != hexClip )
-	{
-//		[hexClip setPostsBoundsChangedNotifications:NO];
-		[hexClip setBoundsOrigin:[object bounds].origin];
-//		[hexClip setPostsBoundsChangedNotifications:YES];
-	}
-	
-	if( object != asciiClip )
-	{
-//		[asciiClip setPostsBoundsChangedNotifications:NO];
-		[asciiClip setBoundsOrigin:[object bounds].origin];
-//		[asciiClip setPostsBoundsChangedNotifications:YES];
-	}
-	
-	// restore notifications
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:offsetClip];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:hexClip];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:asciiClip];
-}
-
 - (void)resourceNameDidChange:(NSNotification *)notification
 {
-	[[self window] setTitle:[(id <ResKnifeResourceProtocol>)[notification object] nameForEditorWindow]];
+	[[self window] setTitle:[(id <ResKnifeResourceProtocol>)[notification object] defaultWindowTitle]];
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
 {
 	// ensure it's our resource which got changed (should always be true, we don't register for other resource notifications)
-	if( [notification object] == (id)resource )
+	// bug: if liveEdit is false and another editor changes backup, if we are dirty we need to ask the user whether to accept the changes from the other editor and discard our changes, or vice versa.
+	if([notification object] == (id)resource)
 	{
 		[self refreshData:[resource data]];
 		[self setDocumentEdited:YES];
@@ -242,35 +208,21 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 
 - (void)resourceWasSaved:(NSNotification *)notification
 {
-	NSLog( @"%@; %@; %@", [notification object], resource, backup );
-	if( [notification object] == (id)resource )
+	id <ResKnifeResourceProtocol> object = [notification object];
+	if(liveEdit)
 	{
-		// if resource gets saved, liveEdit is true and this resource is saving
-		[backup setData:[resource data]];
-		[self setDocumentEdited:NO];
+		// haven't worked out what to do here yet
 	}
-	else if( [notification object] == (id)backup && !liveEdit )
+	else
 	{
-		// backup will get saved by this resource if liveEdit is false, rather than the 'resource' variable
-		//	but really the data to preserve is in the resource variable
-		[backup setData:[resource data]];
-//		[self refreshData:[resource data]];
-		[self setDocumentEdited:NO];
-	}
-	else if( [notification object] == (id)backup )
-	{
-		// backup will get saved by another editor too if liveEdit is false
-		[resource setData:[backup data]];
-//		[self refreshData:[resource data]];
+		// this should refresh the view automatically
+		[resource setData:[[object data] copy]];
 		[self setDocumentEdited:NO];
 	}
 }
 
 - (void)refreshData:(NSData *)data;
 {
-	NSDictionary *dictionary;
-	NSMutableParagraphStyle *paragraph = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-	
 	// save selections
 	NSRange hexSelection = [hex selectedRange];
 	NSRange asciiSelection = [ascii selectedRange];
@@ -281,13 +233,16 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 	[ascii setDelegate:nil];
 	
 	// prepare attributes dictionary
+	NSMutableParagraphStyle *paragraph = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
 	[paragraph setLineBreakMode:NSLineBreakByCharWrapping];
-	dictionary = [NSDictionary dictionaryWithObject:paragraph forKey:NSParagraphStyleAttributeName];
+	NSDictionary *dictionary = [NSDictionary dictionaryWithObject:paragraph forKey:NSParagraphStyleAttributeName];
 	
 	// do stuff with data
-	[offset	setString:[hexDelegate offsetRepresentation:data]];
-	[hex	setString:[hexDelegate hexRepresentation:data]];
-	[ascii	setString:[hexDelegate asciiRepresentation:data]];
+	[offset setString:[hexDelegate offsetRepresentation:data]];
+	if([data length] > 0)
+		[hex setString:[[data hexRepresentation] stringByAppendingString:@" "]];
+	else [hex setString:[data hexRepresentation]];
+	[ascii setString:[data asciiRepresentation]];
 	
 	// apply attributes
 	[[offset textStorage] addAttributes:dictionary range:NSMakeRange(0, [[offset textStorage] length])];
@@ -318,6 +273,11 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 	return bytesPerRow;
 }
 
+- (NSMenu *)copySubmenu
+{
+	return copySubmenu;
+}
+
 - (NSMenu *)pasteSubmenu
 {
 	return pasteSubmenu;
@@ -326,6 +286,38 @@ OSStatus Plug_InitInstance( Plug_PlugInRef plug, Plug_ResourceRef resource )
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)sender
 {
 	return undoManager;
+}
+
+/* range conversion methods */
+
++ (NSRange)byteRangeFromHexRange:(NSRange)hexRange
+{
+	// valid for all window widths
+	NSRange byteRange = NSMakeRange(0,0);
+	byteRange.location = (hexRange.location / 3);
+	byteRange.length = (hexRange.length / 3) + ((hexRange.length % 3)? 1:0);
+	return byteRange;
+}
+
++ (NSRange)hexRangeFromByteRange:(NSRange)byteRange
+{
+	// valid for all window widths
+	NSRange hexRange = NSMakeRange(0,0);
+	hexRange.location = (byteRange.location * 3);
+	hexRange.length = (byteRange.length * 3) - ((byteRange.length > 0)? 1:0);
+	return hexRange;
+}
+
++ (NSRange)byteRangeFromAsciiRange:(NSRange)asciiRange
+{
+	// one-to-one mapping
+	return asciiRange;
+}
+
++ (NSRange)asciiRangeFromByteRange:(NSRange)byteRange
+{
+	// one-to-one mapping
+	return byteRange;
 }
 
 @end

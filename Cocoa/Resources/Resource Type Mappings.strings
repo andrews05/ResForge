@@ -1,0 +1,43 @@
+/* Resource type to file type mapping table */
+
+/* useful for mangling a resource type to yield an icon for a different file extension */
+/* also could be used in future for binding a resource to an external editor (the default editor for the corrisponding file type) */
+/* acceptable values are:
+	- file name extensions
+	- MacOS file types (four characters in single quotes)
+	- bundle identifiers
+*/
+
+"cfrg" = "shlb";
+"SIZE" = "shlb";
+
+"CODE" = "s";
+"MWBB" = "'MMPF'";
+"MWKB" = "'MMPF'";
+
+"STR " = "text";
+"STR#" = "text";
+
+"plst" = "plist";
+"snd " = "'sfil'";
+"url " = "webloc";
+
+"hfdr" = "com.apple.finder";
+
+"cicn" = "icns";
+"SICN" = "icns";
+"icl8" = "icns";
+"icl4" = "icns";
+"ICON" = "icns";
+"ICN#" = "icns";
+"ics8" = "icns";
+"ics4" = "icns";
+"ics#" = "icns";
+"icm8" = "icns";
+"icm4" = "icns";
+"icm#" = "icns";
+
+"PNG " = "png";
+
+"NFNT" = "'tfil'";
+"sfnt" = "ttf";

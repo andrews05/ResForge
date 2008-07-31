@@ -2,16 +2,18 @@
 #import "HexEditorDelegate.h"
 #import "HexWindowController.h"
 
-@interface HexTextView : NSTextView
-{
-}
-- (IBAction)clear:(id)sender;
+@interface HexEditorTextView : NSTextView
+- (IBAction)copyASCII:(id)sender;
+- (IBAction)copyHex:(id)sender;
 - (IBAction)pasteAsASCII:(id)sender;
 - (IBAction)pasteAsHex:(id)sender;
 - (IBAction)pasteAsUnicode:(id)sender;
+- (IBAction)clear:(id)sender;
 - (void)editData:(NSData *)data replaceBytesInRange:(NSRange)range withData:(NSData *)newData;
 @end
 
-@interface NSTextView (HexTextView)
-- (void)swapForHexTextView;
+@interface HexTextView : HexEditorTextView
+@end
+
+@interface AsciiTextView : HexEditorTextView
 @end

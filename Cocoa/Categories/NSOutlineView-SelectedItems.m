@@ -10,7 +10,7 @@
 	else return [self itemAtRow:[self selectedRow]];
 }
 
-- (NSArray *)selectedItems;
+- (NSArray *)selectedItems
 {
 	NSNumber *row;
 	NSMutableArray *items = [NSMutableArray array];
