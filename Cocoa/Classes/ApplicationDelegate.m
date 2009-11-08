@@ -31,7 +31,7 @@
 
 /*!
 @method		awakeFromNib
-@updated	2003-10-24 NGS: moved icon caching into method called by timer (to speed up app launch time)
+@change		2003-10-24 NGS: moved icon caching into method called by timer (to speed up app launch time)
 */
 
 - (void)awakeFromNib
@@ -65,7 +65,6 @@
 - (void)precacheIcons:(NSTimer *)timer
 {
 	// pre-cache a number of common icons (ignores return value, relies on iconForResourceType: to do the actual caching)
-	[self iconForResourceType:@"    "];
 	[self iconForResourceType:@"CODE"];
 	[self iconForResourceType:@"icns"];
 	[self iconForResourceType:@"PICT"];
@@ -290,8 +289,8 @@
 		}
 		
 		// if we still don't have an icon, try to get the generic one - this is what icon represented forks get
-//		if(!icon)	icon = [NSImage imageNamed:@"NSMysteryDocument"];
-		if(!icon)	icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"'    '"];
+		if(!icon)
+			icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"????"];
 		
 		// save the newly retreived icon in the cache
 		if(icon && resourceType)

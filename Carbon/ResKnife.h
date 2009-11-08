@@ -29,7 +29,7 @@ With thanks to:							  For:
 
 // compile options
 #if TARGET_API_MAC_CARBON
-	#define USE_NIBS 0		// toggle this
+	#define USE_NIBS 1		// toggle this
 #else
 	#define USE_NIBS 0		// leave this set to zero
 #endif

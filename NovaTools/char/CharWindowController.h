@@ -1,6 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import "NovaWindowController.h"
 
+#define titleField			[titleForm cellAtIndex:0]
 #define cashField			[goodiesForm cellAtIndex:0]
 #define killsField			[goodiesForm cellAtIndex:1]
 #define prefixField			[timeForm cellAtIndex:0]
@@ -9,6 +10,19 @@
 #define statusField2		[statusForm cellAtIndex:1]
 #define statusField3		[statusForm cellAtIndex:2]
 #define statusField4		[statusForm cellAtIndex:3]
+#define governmentField1	[governmentForm cellAtRow:0 column:0]
+#define governmentField2	[governmentForm cellAtRow:1 column:0]
+#define governmentField3	[governmentForm cellAtRow:2 column:0]
+#define governmentField4	[governmentForm cellAtRow:3 column:0]
+#define startField1			[startForm cellAtRow:0 column:0]
+#define startField2			[startForm cellAtRow:1 column:0]
+#define startField3			[startForm cellAtRow:2 column:0]
+#define startField4			[startForm cellAtRow:3 column:0]
+#define introPictField1		[introPictTextForm cellAtRow:0 column:0]
+#define introPictField2		[introPictTextForm cellAtRow:1 column:0]
+#define introPictField3		[introPictTextForm cellAtRow:2 column:0]
+#define introPictField4		[introPictTextForm cellAtRow:3 column:0]
+#define introTextField		[introPictTextForm cellAtRow:4 column:0]
 #define introDelayField1	[introDelayForm cellAtIndex:0]
 #define introDelayField2	[introDelayForm cellAtIndex:1]
 #define introDelayField3	[introDelayForm cellAtIndex:2]
@@ -19,10 +33,15 @@
 {
 	CharRec *charRec;
 	
+	// =====
+	
+	// char info
+	IBOutlet NSForm *titleForm;
 	IBOutlet NSButton *principalCharButton;
 	IBOutlet NSComboBox *shipField;
 	IBOutlet NSForm *goodiesForm;
 	
+	// beginning of time
 	IBOutlet NSTextField *dayField;
 	IBOutlet NSTextField *monthField;
 	IBOutlet NSTextField *yearField;
@@ -31,27 +50,21 @@
 	IBOutlet NSStepper *yearStepper;
 	IBOutlet NSForm *timeForm;
 	
-	IBOutlet NSComboBox *startField1;
-	IBOutlet NSComboBox *startField2;
-	IBOutlet NSComboBox *startField3;
-	IBOutlet NSComboBox *startField4;
-	
+	// govt status & start locs
 	IBOutlet NSForm *statusForm;
-	IBOutlet NSComboBox *governmentField1;
-	IBOutlet NSComboBox *governmentField2;
-	IBOutlet NSComboBox *governmentField3;
-	IBOutlet NSComboBox *governmentField4;
+	IBOutlet NSMatrix *governmentForm;
+	IBOutlet NSMatrix *startForm;
 	
-	IBOutlet NSComboBox *introPictField1;
-	IBOutlet NSComboBox *introPictField2;
-	IBOutlet NSComboBox *introPictField3;
-	IBOutlet NSComboBox *introPictField4;
+	// introduction
+	IBOutlet NSMatrix *introPictTextForm;
 	IBOutlet NSForm *introDelayForm;
-	IBOutlet NSComboBox *introTextField;
 	IBOutlet NSButton *introImageView;		// button so user can click to skip to next pic
 	IBOutlet NSTextView *introTextView;
 	
+	// ncbs
 	IBOutlet NSForm *ncbForm;
+	
+	// ======
 	
 	// char
 	BOOL principalChar;

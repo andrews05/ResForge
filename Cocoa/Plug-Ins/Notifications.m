@@ -6,18 +6,16 @@
 
 #import <Foundation/Foundation.h>
 
-NSString *ResourceWillChangeNotification			= @"ResourceWillChangeNotification";
-NSString *ResourceNameWillChangeNotification		= @"ResourceNameWillChangeNotification";
-NSString *ResourceTypeWillChangeNotification		= @"ResourceTypeWillChangeNotification";
-NSString *ResourceIDWillChangeNotification			= @"ResourceIDWillChangeNotification";
-NSString *ResourceAttributesWillChangeNotification	= @"ResourceAttributesWillChangeNotification";
-NSString *ResourceDataWillChangeNotification		= @"ResourceDataWillChangeNotification";
-NSString *ResourceWillBeSavedNotification			= @"ResourceWillBeSavedNotification";
+NSString *ResourceWillChangeNotification			= @"ResourceWillChange";
+NSString *ResourceNameWillChangeNotification		= @"ResourceNameWillChange";
+NSString *ResourceTypeWillChangeNotification		= @"ResourceTypeWillChange";
+NSString *ResourceIDWillChangeNotification			= @"ResourceIDWillChange";
+NSString *ResourceAttributesWillChangeNotification	= @"ResourceAttributesWillChange";
+NSString *ResourceDataWillChangeNotification		= @"ResourceDataWillChange";
 
-NSString *ResourceNameDidChangeNotification			= @"ResourceNameDidChangeNotification";
-NSString *ResourceTypeDidChangeNotification			= @"ResourceTypeDidChangeNotification";
-NSString *ResourceIDDidChangeNotification			= @"ResourceIDDidChangeNotification";
-NSString *ResourceAttributesDidChangeNotification	= @"ResourceAttributesDidChangeNotification";
-NSString *ResourceDataDidChangeNotification			= @"ResourceDataDidChangeNotification";
-NSString *ResourceDidChangeNotification				= @"ResourceDidChangeNotification";
-NSString *ResourceWasSavedNotification				= @"ResourceWasSavedNotification";
+NSString *ResourceNameDidChangeNotification			= @"ResourceNameDidChange";
+NSString *ResourceTypeDidChangeNotification			= @"ResourceTypeDidChange";
+NSString *ResourceIDDidChangeNotification			= @"ResourceIDDidChange";
+NSString *ResourceAttributesDidChangeNotification	= @"ResourceAttributesDidChange";
+NSString *ResourceDataDidChangeNotification			= @"ResourceDataDidChange";
+NSString *ResourceDidChangeNotification				= @"ResourceDidChange";

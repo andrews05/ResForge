@@ -4,6 +4,8 @@
 #import "ColrWindowController.h"
 #import "CronWindowController.h"
 #import "DescWindowController.h"
+#import "MisnWindowController.h"
+#import "ShipWindowController.h"
 
 @implementation NovaWindowController
 

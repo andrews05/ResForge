@@ -1,7 +1,7 @@
 {
     IBClasses = (
         {
-            ACTIONS = {playSound = id; toggleSilence = id; }; 
+            ACTIONS = {playSound = id; setSilent = id; }; 
             CLASS = BoomWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
@@ -16,7 +16,7 @@
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {toggleResID = id; }; 
+            ACTIONS = {}; 
             CLASS = NovaWindowController; 
             LANGUAGE = ObjC; 
             SUPERCLASS = NSWindowController; 

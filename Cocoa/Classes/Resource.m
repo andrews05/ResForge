@@ -177,7 +177,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDidChangeNotification object:self];
 }
 
-- (NSDocument *)document
+- (ResourceDocument *)document
 {
 	return [Resource documentForResource:self];
 }

@@ -2133,7 +2133,7 @@ BadParameter:
 
 /*****************************************************************************/
 
-#if 0
+#if COMPILING_ON_JAGUAR_OR_BELOW
 /* These methods were added in 10.4, and are not used by ResKnife, so we just comment them out to avoid errors */
 
 OSErr
@@ -2179,7 +2179,6 @@ PBUnlockRangeSync:
 
 	return ( result );
 }
-
 #endif
 
 /*****************************************************************************/

@@ -1,5 +1,8 @@
--> "Open as Hex" displays "(null)" as the document name. Why?
--> Changing the type/creator of a file isn't written to disk by ResourceDocument.
--> Create small versions of the doc icons in Photoshop instead of letting IconComposer use its cheap scaling on them.
--> Auto-uncollapse list items in template editor when they are created and when a resource is opened.
--> Template editor should maintain "dirty" flag for resource.
+// Global to-do list for the entire project
+//  to-do items specific to an object are associated directly with that object in the header or implementation files
+
+Create some nice icons instead of the crap ones we have now.
+Auto-uncollapse list items in template editor when they are created and when a resource is opened.
+Add preference to "Show Resource Fork even if empty."
+Add viewers for MooV and PICT.
+Modify -[Resource data] and -[Resource setData] to use ResourceManager functions behind the scenes instead of an NSData object. This should fix the problem with new resources not being saved at times.

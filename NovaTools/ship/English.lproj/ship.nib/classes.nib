@@ -1,0 +1,16 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = NovaWindowController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            CLASS = ShipWindowController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NovaWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -36,9 +36,9 @@
 
 /*!
 @method		updateInfoWindow
-@updated	2003-11-06 NGS:	Fixed creator/type handling.
-@updated	2003-10-26 NGS:	Now asks app delegate for icon instead of NSWorkspace.
-@updated	2003-10-26 NGS:	Improved document name & icon display.
+@change		2003-11-06 NS:	Fixed creator/type handling.
+@change		2003-10-26 NS:	Now asks app delegate for icon instead of NSWorkspace.
+@change		2003-10-26 NS:	Improved document name & icon display.
 */
 
 - (void)updateInfoWindow

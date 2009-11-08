@@ -486,7 +486,7 @@ static NSRange draggedRange;
 @method		selectionRangeForProposedRange:granularity:
 @abstract	Puts insertion pointer between bytes during drag operation
 @author		Nicholas Shanks
-@updated	2003-11-10 NGS:  Changed algorithm.
+@change		2003-11-10 NS:  Changed algorithm.
 */
 
 - (unsigned int)_insertionGlyphIndexForDrag:(id <NSDraggingInfo>)sender

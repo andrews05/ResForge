@@ -8,6 +8,7 @@
 @description	The Resource class fully complies with key-value coding, with the keys @"name", @"type", @"resID", @"attributes", @"data", @"dirty" and @"representedFork" available.
 */
 
+@class ResourceDocument;
 @interface Resource : NSObject <NSCopying, NSCoding, ResKnifeResourceProtocol>
 {
 @private
