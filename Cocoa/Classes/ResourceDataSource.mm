@@ -222,11 +222,11 @@ extern NSString *RKResourcePboardType;
 @method		outlineView:validateDrop:proposedItem:proposedChildIndex:
 @abstract   Called when the user is hovering with a drop over our outline view.
 */
-- (NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id <NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(int)childIndex
+- (NSDragOperation)outlineView:(NSOutlineView *)olView validateDrop:(id <NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(int)childIndex
 {
-	if([info draggingSource] != outlineView)
+	if([info draggingSource] != olView)
 	{
-		[outlineView setDropItem:nil dropChildIndex:NSOutlineViewDropOnItemIndex];
+		[olView setDropItem:nil dropChildIndex:NSOutlineViewDropOnItemIndex];
 		return NSDragOperationCopy;
 	}
 	else return NSDragOperationNone;

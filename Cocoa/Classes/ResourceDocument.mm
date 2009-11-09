@@ -180,7 +180,7 @@ extern NSString *RKResourcePboardType;
 	}
 	
 	// tidy up loose ends
-	if(fileRefNum) FSClose(fileRefNum);
+	if(fileRefNum) FSCloseFork(fileRefNum);
 	DisposePtr((Ptr) fileRef);
 	return succeeded;
 }
@@ -276,14 +276,14 @@ extern NSString *RKResourcePboardType;
 			
 			// create the resource & add it to the array
 			NSString	*name		= [[NSString alloc] initWithBytes:&nameStr[1] length:nameStr[0] encoding:NSMacOSRomanStringEncoding];
-			NSString	*type		= [[NSString alloc] initWithBytes:(char *) &swappedType length:4 encoding:NSMacOSRomanStringEncoding];
+			NSString	*resType	= [[NSString alloc] initWithBytes:(char *) &swappedType length:4 encoding:NSMacOSRomanStringEncoding];
 			NSNumber	*resID		= [NSNumber numberWithShort:resIDShort];
 			NSNumber	*attributes	= [NSNumber numberWithShort:attrsShort];
 			NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
-			Resource	*resource	= [Resource resourceOfType:type andID:resID withName:name andAttributes:attributes data:data];
+			Resource	*resource	= [Resource resourceOfType:resType andID:resID withName:name andAttributes:attributes data:data];
 			[resources addObject:resource];		// array retains resource
 			[name release];
-			[type release];
+			[resType release];
 			
 			HUnlock(resourceHandle);
 			ReleaseResource(resourceHandle);
@@ -346,7 +346,7 @@ extern NSString *RKResourcePboardType;
 		succeeded = [self writeResourceMap:fileRefNum];
 	
 	// tidy up loose ends
-	if(fileRefNum) FSClose(fileRefNum);
+	if(fileRefNum) FSCloseFork(fileRefNum);
 	DisposePtr((Ptr) fileRef);
 	
 	// update info window
@@ -383,7 +383,7 @@ extern NSString *RKResourcePboardType;
 		error = FSOpenFork(fileRef, [[resource representedFork] length], (UniChar *) uniname, fsWrPerm, &forkRefNum);
 		if(!error && forkRefNum)
 			error = FSWriteFork(forkRefNum, fsFromStart, 0, [[resource data] length], [[resource data] bytes], NULL);
-		if(forkRefNum) FSClose(forkRefNum);
+		if(forkRefNum) FSCloseFork(forkRefNum);
 	}
 	DisposePtr((Ptr) fileRef);
 	return YES;
@@ -977,7 +977,7 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setResID:) object:[[[resource resID] copy] autorelease]];
 	if([[resource name] length] == 0)
 		[[self undoManager] setActionName:NSLocalizedString(@"ID Change", nil)];
-	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"ID Change for Ò%@Ó", nil), [resource name]]];
+	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"ID Change for '%@'", nil), [resource name]]];
 }
 
 - (void)resourceTypeWillChange:(NSNotification *)notification
@@ -987,7 +987,7 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setType:) object:[[[resource type] copy] autorelease]];
 	if([[resource name] length] == 0)
 		[[self undoManager] setActionName:NSLocalizedString(@"Type Change", nil)];
-	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Type Change for Ò%@Ó", nil), [resource name]]];
+	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Type Change for '%@'", nil), [resource name]]];
 }
 
 - (void)resourceAttributesWillChange:(NSNotification *)notification
@@ -997,7 +997,7 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setAttributes:) object:[[[resource attributes] copy] autorelease]];
 	if([[resource name] length] == 0)
 		[[self undoManager] setActionName:NSLocalizedString(@"Attributes Change", nil)];
-	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Attributes Change for Ò%@Ó", nil), [resource name]]];
+	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Attributes Change for '%@'", nil), [resource name]]];
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
@@ -1106,7 +1106,7 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 		[dataSource removeResource:resource];
 		if([[resource name] length] == 0)
 			[[self undoManager] setActionName:NSLocalizedString(@"Delete Resource", nil)];
-		else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Delete Resource Ò%@Ó", nil), [resource name]]];
+		else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Delete Resource '%@'", nil), [resource name]]];
 	}
 	[[self undoManager] endUndoGrouping];
 	

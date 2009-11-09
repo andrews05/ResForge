@@ -99,7 +99,7 @@ int compareResourcesDescending(Resource *r1, Resource *r2, void *context)
 @pending	remove setting of the cell formatter when that capability is in interface builder
 */
 
-- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
+- (void)outlineView:(NSOutlineView *)olView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	Resource *resource = (Resource *)item;
 	NSString *identifier = [tableColumn identifier];
@@ -161,7 +161,7 @@ int compareResourcesDescending(Resource *r1, Resource *r2, void *context)
 	// draw alternating blue/white backgrounds (if pre-10.3)
 	if(NSAppKitVersionNumber < 700.0)
 	{
-		int row = [outlineView rowForItem:item];
+		int row = [olView rowForItem:item];
 		if(row % 2)	[cell setBackgroundColor:[NSColor colorWithCalibratedRed:0.93 green:0.95 blue:1.0 alpha:1.0]];
 		else		[cell setBackgroundColor:[NSColor whiteColor]];
 					[cell setDrawsBackground:YES];

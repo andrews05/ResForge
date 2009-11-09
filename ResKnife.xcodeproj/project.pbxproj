@@ -608,7 +608,7 @@
 		F5B5883F0156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PrefsWindow.nib; sourceTree = "<group>"; };
 		F5B588410156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ResourceDocument.nib; sourceTree = "<group>"; };
 		F5B588430156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F5B588450156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F5B588450156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F5B588460156D40B01000001 /* ResKnife.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ResKnife.icns; sourceTree = "<group>"; };
 		F5B588470156D40B01000001 /* Resource file.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Resource file.icns"; sourceTree = "<group>"; };
 		F5B588480156D40B01000001 /* Icon file.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Icon file.icns"; sourceTree = "<group>"; };

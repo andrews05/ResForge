@@ -69,7 +69,7 @@
 		FSRef *fileRef = (FSRef *) NewPtrClear(sizeof(FSRef));
 		if(fileRef && [currentDocument fileName])
 		{
-			OSStatus error = FSPathMakeRef([[currentDocument fileName] fileSystemRepresentation], fileRef, nil);
+			OSStatus error = FSPathMakeRef((unsigned char *)[[currentDocument fileName] fileSystemRepresentation], fileRef, nil);
 			if(!error) FSGetForkSizes(fileRef, &dataLogicalSize, &rsrcLogicalSize);
 		}
 		if(fileRef) DisposePtr((Ptr) fileRef);

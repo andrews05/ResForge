@@ -90,7 +90,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	return [NSArray arrayWithArray:array];
 }
 
-+ (Resource *)resourceOfType:(NSString *)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)searchDoc
++ (id)resourceOfType:(NSString *)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)searchDoc
 {
 	NSDocument *doc;
 	NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
@@ -106,7 +106,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	return nil;
 }
 
-+ (Resource *)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)searchDoc
++ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)searchDoc
 {
 	NSDocument *doc;
 	NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
@@ -177,7 +177,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDidChangeNotification object:self];
 }
 
-- (ResourceDocument *)document
+- (NSDocument *)document
 {
 	return [Resource documentForResource:self];
 }
