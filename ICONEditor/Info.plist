@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Bitmap Editor</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.ulikusterer.resknife.bitmapeditor</string>
+	<string>com.ulikusterer.resknife.bitmap-editor</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>

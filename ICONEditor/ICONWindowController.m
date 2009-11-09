@@ -127,7 +127,7 @@
 	[super windowDidLoad];
 
 	// set the window's title
-	[[self window] setTitle:[resource nameForEditorWindow]];
+	[[self window] setTitle:[resource defaultWindowTitle]];
 	
 	[self reloadResData];
 	
