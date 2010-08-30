@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E85D4AC10A72953004240C0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D2EE5E204E5C56F00515930 /* Localizable.strings */; };
+		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		E1193609099830D300A3A6EA /* FontDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1193607099830D200A3A6EA /* FontDocument.nib */; };
 		E119363A099833AE00A3A6EA /* Categories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1193638099833AE00A3A6EA /* Categories.h */; };
 		E119363B099833AE00A3A6EA /* Categories.mm in Sources */ = {isa = PBXBuildFile; fileRef = E1193639099833AE00A3A6EA /* Categories.mm */; };
@@ -302,7 +302,7 @@
 		E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50046F04EF040900F3B64D /* ElementOCNT.h */; };
 		E18BF6AE069FEA1800F076B8 /* ElementLSTC.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50047404EF122000F3B64D /* ElementLSTC.h */; };
 		E18BF6B0069FEA1800F076B8 /* TemplateWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B38B504DEF465005AED5E /* TemplateWindow.nib */; };
-		E18BF6B4069FEA1800F076B8 /* TemplateWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B38B304DEF41E005AED5E /* TemplateWindowController.mm */; };
+		E18BF6B4069FEA1800F076B8 /* TemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */; };
 		E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF6B6069FEA1800F076B8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* Element.m */; };
 		E18BF6B8069FEA1800F076B8 /* TemplateStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* TemplateStream.m */; };
@@ -430,9 +430,9 @@
 		3D0ABFB904E152CA00C85300 /* Read Me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read Me.txt"; sourceTree = "<group>"; };
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TemplateWindowController.h; sourceTree = "<group>"; };
-		3D0B38B304DEF41E005AED5E /* TemplateWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = TemplateWindowController.mm; sourceTree = "<group>"; };
+		3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TemplateWindowController.m; sourceTree = "<group>"; };
 		3D0B38B604DEF465005AED5E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/TemplateWindow.nib; sourceTree = "<group>"; };
-		3D2EE5E204E5C56F00515930 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		3D2EE5E204E5C56F00515930 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKEditorRegistry.h; sourceTree = "<group>"; };
 		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RKEditorRegistry.m; sourceTree = "<group>"; };
@@ -607,7 +607,7 @@
 		F5B5883B0156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/InfoWindow.nib; sourceTree = "<group>"; };
 		F5B5883F0156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PrefsWindow.nib; sourceTree = "<group>"; };
 		F5B588410156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ResourceDocument.nib; sourceTree = "<group>"; };
-		F5B588430156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F5B588430156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F5B588450156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F5B588460156D40B01000001 /* ResKnife.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ResKnife.icns; sourceTree = "<group>"; };
 		F5B588470156D40B01000001 /* Resource file.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Resource file.icns"; sourceTree = "<group>"; };
@@ -881,7 +881,7 @@
 			children = (
 				3D0ABFB904E152CA00C85300 /* Read Me.txt */,
 				3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */,
-				3D0B38B304DEF41E005AED5E /* TemplateWindowController.mm */,
+				3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */,
 				3D0933BE04DF151C00DD74B1 /* TemplateStream.h */,
 				3D0933BF04DF151C00DD74B1 /* TemplateStream.m */,
 				3D0933A604DEFEE600DD74B1 /* Element.h */,
@@ -890,7 +890,7 @@
 				E1A984F7099C2D7F00A70612 /* Resources */,
 				E11937F309991C1100A3A6EA /* Support Resources */,
 				E18BFA3606A20B7A00F076B8 /* Info.plist */,
-				3D2EE5E204E5C56F00515930 /* Localizable.strings */,
+				0EF7153F122BD0D0005DF94E /* Localizable.strings */,
 			);
 			path = "Template Editor";
 			sourceTree = "<group>";
@@ -2046,7 +2046,7 @@
 			files = (
 				E18BF6B0069FEA1800F076B8 /* TemplateWindow.nib in Resources */,
 				E1A984FE099C309400A70612 /* DisplayTMPL.png in Resources */,
-				0E85D4AC10A72953004240C0 /* Localizable.strings in Resources */,
+				0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2326,7 +2326,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF6B4069FEA1800F076B8 /* TemplateWindowController.mm in Sources */,
+				E18BF6B4069FEA1800F076B8 /* TemplateWindowController.m in Sources */,
 				E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */,
 				E18BF6B6069FEA1800F076B8 /* Element.m in Sources */,
 				E18BF6B8069FEA1800F076B8 /* TemplateStream.m in Sources */,
@@ -2383,6 +2383,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		0EF7153F122BD0D0005DF94E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D2EE5E204E5C56F00515930 /* English */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		3D0B38B504DEF465005AED5E /* TemplateWindow.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -3300,6 +3308,8 @@
 		E13F7F0708F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				GCC_VERSION = 4.0;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};

@@ -51,7 +51,11 @@
 	if(_lengthBytes > 0)
 	{
 		[stream readAmount:_lengthBytes toBuffer:&length];
+#if __BIG_ENDIAN__
 		length >>= (4 - _lengthBytes) << 3;
+#else
+		#warning FIXME: This probably doesn't work for WSTR and LSTR on intel machines
+#endif
 	}
 	if(_terminatingByte)
 		length += [stream bytesToNull];
@@ -72,8 +76,8 @@
 	
 	// skip over empty bytes
 	if(_terminatingByte) [stream advanceAmount:1 pad:NO];
-	if(_pad == kPadToOddLength && (length + _lengthBytes) % 2 == 0)		[stream advanceAmount:1 pad:NO];
-	if(_pad == kPadToEvenLength && (length + _lengthBytes) % 2 == 1)	[stream advanceAmount:1 pad:NO];
+	if(_pad == kPadToOddLength && (length + _terminatingByte ? 1:0) % 2 == 0)	[stream advanceAmount:1 pad:NO];
+	if(_pad == kPadToEvenLength && (length + _terminatingByte ? 1:0) % 2 == 1)	[stream advanceAmount:1 pad:NO];
 	// alignment unhandled here
 }
 
@@ -97,22 +101,30 @@
 	// write string
 	UInt32 length = [value length], writeLength;
 	if(_maxLength && length > _maxLength) length = _maxLength;
+#if __BIG_ENDIAN__
 	writeLength = length << ((4 - _lengthBytes) << 3);
+#else
+	#warning FIXME: This probably doesn't work for WSTR and LSTR on intel machines
+#endif
 	if(_lengthBytes)
 		[stream writeAmount:_lengthBytes fromBuffer:&writeLength];
 	
-	#warning FIXME: This code should display a warning saying that the string in the PSTR is not MacOSRoman
-	if([value respondsToSelector:@selector(cStringUsingEncoding:)])
+	if ([value canBeConvertedToEncoding:NSMacOSRomanStringEncoding])
 	{
-		const void *buffer = [value cStringUsingEncoding:NSMacOSRomanStringEncoding];
+		const void *buffer = NULL;
+		if([value respondsToSelector:@selector(cStringUsingEncoding:)])	// 10.4
+			buffer = [value cStringUsingEncoding:NSMacOSRomanStringEncoding];
+		else
+		{
+			NSData *data = [value dataUsingEncoding:NSMacOSRomanStringEncoding];
+			buffer = [data bytes];
+		}
 		if(buffer) [stream writeAmount:length fromBuffer:buffer];
 		else [stream advanceAmount:length pad:YES];
 	}
 	else
 	{
-		const void *buffer = [value cString];
-		if(buffer) [stream writeAmount:length fromBuffer:buffer];
-		else [stream advanceAmount:length pad:YES];
+		#warning FIXME: This code should display a warning saying that the string in the PSTR is not MacOSRoman
 	}
 	
 	// pad to minimum length with spaces

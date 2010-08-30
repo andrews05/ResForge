@@ -65,6 +65,8 @@
 - (void)precacheIcons:(NSTimer *)timer
 {
 	// pre-cache a number of common icons (ignores return value, relies on iconForResourceType: to do the actual caching)
+	[self iconForResourceType:@"    "];
+	[self iconForResourceType:@"????"];
 	[self iconForResourceType:@"CODE"];
 	[self iconForResourceType:@"icns"];
 	[self iconForResourceType:@"PICT"];
@@ -231,70 +233,82 @@
 @author			Nicholas Shanks
 @created		2003-10-24
 @abstract		Manages the cache of icons used for representing resource types.
-@description	This method loads icons for each resource type from a variety of places and caches them for faster access. Your plug-in may be asked to return an icon for any resource type it declares it can edit. To implement this, your plug should respond to the iconForResourceType: selector with the same method signature as this method. The icons can be in any format recognised by NSImage. Alternativly, just leave your icons in "Your.plugin/Contents/Resources/Resource Type Icons/" (or any equivalent localised directory) with a name like "TYPE.tiff" and ResKnife will retreive them automatically.
+@description	This method loads icons for each resource type from a variety of places and caches them for faster access. Your plug-in may be asked to return an icon for any resource type it declares it can edit. To implement this, your plug should respond to the iconForResourceType: selector with the same method signature as this method. The icons can be in any format recognised by NSImage. Alternativly, just leave your icons in "Your.plugin/Contents/Resources/Resource Type Icons/" (or any equivalent localised directory) with a name like "TYPE.tiff" and ResKnife will retrieve them automatically.
 @pending		I don't like the name I chose here for the resource type icons directory. Can anyone think of something better?
 */
 
 - (NSImage *)iconForResourceType:(NSString *)resourceType
 {
-	// check if we have image in cache already
 	NSImage *icon = nil;
 	if([resourceType isEqualToString:@""])
 		resourceType = nil;
 	
-	if(resourceType);
-		icon = [[self _icons] valueForKey:resourceType];
-	if(!icon)
+	if(resourceType)
 	{
-		NSString *iconPath = nil;
+		// check if we have image in cache already
+		icon = [[self _icons] objectForKey:resourceType];		// valueForKey: raises when the resourceType begins with '@' (e.g. the @GN4 owner resource from Gene!)
 		
-		// try to load icon from the default editor for that type
-		Class editor = [[RKEditorRegistry defaultRegistry] editorForType:resourceType];
-		if(editor && resourceType)
+		if(!icon)
 		{
-			// ask politly for icon
-			if([editor respondsToSelector:@selector(iconForResourceType:)])
-				icon = [editor iconForResourceType:resourceType];
+			NSString *iconPath = nil;
 			
-			// try getting it myself
+			// try to load icon from the default editor for that type
+			Class editor = [[RKEditorRegistry defaultRegistry] editorForType:resourceType];
+			if(editor)
+			{
+				// ask politly for icon
+				if([editor respondsToSelector:@selector(iconForResourceType:)])
+					icon = [editor iconForResourceType:resourceType];
+				
+				// try getting it myself
+				if(!icon)
+				{
+					iconPath = [[NSBundle bundleForClass:editor] pathForResource:resourceType ofType:nil inDirectory:@"Resource Type Icons"];
+					if(iconPath)
+						icon = [[[NSImage alloc] initWithContentsOfFile:iconPath] autorelease];
+				}
+			}
+			
+			// try to load icon from the ResKnife app bundle itself
 			if(!icon)
 			{
-				iconPath = [[NSBundle bundleForClass:editor] pathForResource:resourceType ofType:nil inDirectory:@"Resource Type Icons"];
+				iconPath = [[NSBundle mainBundle] pathForResource:resourceType ofType:nil inDirectory:@"Resource Type Icons"];
 				if(iconPath)
 					icon = [[[NSImage alloc] initWithContentsOfFile:iconPath] autorelease];
 			}
-		}
-		
-		// try to load icon from the ResKnife app bundle itself
-		if(!icon && resourceType)
-		{
-			iconPath = [[NSBundle mainBundle] pathForResource:resourceType ofType:nil inDirectory:@"Resource Type Icons"];
-			if(iconPath)
-				icon = [[[NSImage alloc] initWithContentsOfFile:iconPath] autorelease];
-		}
-		
-		// try to retreive from file system (after first mangling the type through our converter strings file)
-		if(!icon && resourceType)
-		{
-			NSString *fileType = [[NSBundle mainBundle] localizedStringForKey:resourceType value:@"" table:@"Resource Type Mappings"];
-			NSRange range = [fileType rangeOfString:@"."];
-			if(range.location == NSNotFound)
-				icon = [[NSWorkspace sharedWorkspace] iconForFileType:fileType];
-			else	// a '.' character in a file type means ResKnife should look for a bundle icon with fileType as the bundle's identifier
+			
+			// try to retrieve from file system using our resource type to file name extension/bundle identifier code
+			if(!icon)
 			{
-				NSString *bundlePath = [[NSBundle bundleWithIdentifier:fileType] bundlePath];
-				if(bundlePath)
-					icon = [[NSWorkspace sharedWorkspace] iconForFile:bundlePath];
+				NSString *fileType = [[NSBundle mainBundle] localizedStringForKey:resourceType value:@"" table:@"Resource Type Mappings"];
+				NSRange range = [fileType rangeOfString:@"."];
+				if(range.location == NSNotFound)
+					icon = [[NSWorkspace sharedWorkspace] iconForFileType:fileType];
+				else	// a '.' character in a file type means ResKnife should look for a bundle icon with fileType as the bundle's identifier
+				{
+					NSString *bundlePath = [[NSBundle bundleWithIdentifier:fileType] bundlePath];
+					if(bundlePath)
+						icon = [[NSWorkspace sharedWorkspace] iconForFile:bundlePath];
+				}
 			}
+			
+			// TODO: convert to a UTI and try that 
+			
+			// try to retrieve from file system as an OSType code
+			if(!icon)
+				icon = [[NSWorkspace sharedWorkspace] iconForFileType:[NSString stringWithFormat:@"'%@'", resourceType]];
+			
+			// save the newly retrieved icon in the cache
+			if(icon)
+				[[self _icons] setObject:icon forKey:resourceType];
 		}
-		
-		// if we still don't have an icon, try to get the generic one - this is what icon represented forks get
-		if(!icon)
-			icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"????"];
-		
-		// save the newly retreived icon in the cache
-		if(icon && resourceType)
-			[[self _icons] setObject:icon forKey:resourceType];
+	}
+	else
+	{
+		// we have no resource type, try to get a generic icon - this is what icon represented forks get
+//		if(!icon)	icon = [NSImage imageNamed:@"NSMysteryDocument"];
+//		if(!icon)	icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"'    '"];
+		if(!icon)	icon = [[NSWorkspace sharedWorkspace] iconForFileType:[NSString stringWithFormat:@"'%@'", @"????"]];
 	}
 	
 	// return the cached icon, or nil if none was found

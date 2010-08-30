@@ -19,6 +19,7 @@
 	if     ([type isEqualToString:@"LCNT"] || [type isEqualToString:@"LZCT"])	[stream readAmount:4 toBuffer:&value];
 	else if([type isEqualToString:@"BCNT"] || [type isEqualToString:@"BZCT"])	[stream readAmount:1 toBuffer:(char *)(&value)+3];
 	else																		[stream readAmount:2 toBuffer:(short *)(&value)+1];
+	value = CFSwapInt32BigToHost(value);
 	if([self countFromZero]) value += 1;
 }
 
@@ -32,9 +33,10 @@
 - (void)writeDataTo:(TemplateStream *)stream
 {
 	if([self countFromZero]) value -= 1;
-	if     ([type isEqualToString:@"LCNT"] || [type isEqualToString:@"LZCT"])	[stream writeAmount:4 fromBuffer:&value];
-	else if([type isEqualToString:@"BCNT"] || [type isEqualToString:@"BZCT"])	[stream writeAmount:1 fromBuffer:(char *)(&value)+3];
-	else																		[stream writeAmount:2 fromBuffer:(short *)(&value)+1];
+	unsigned long tmp = CFSwapInt32HostToBig(value);
+	if     ([type isEqualToString:@"LCNT"] || [type isEqualToString:@"LZCT"])	[stream writeAmount:4 fromBuffer:&tmp];
+	else if([type isEqualToString:@"BCNT"] || [type isEqualToString:@"BZCT"])	[stream writeAmount:1 fromBuffer:(char *)(&tmp)+3];
+	else																		[stream writeAmount:2 fromBuffer:(short *)(&tmp)+1];
 	if([self countFromZero]) value += 1;
 }
 

@@ -41,7 +41,7 @@
 - (void)setData:(NSData *)newData;
 
 - (NSString *)defaultWindowTitle;
-- (NSDocument *)document;
+- (NSDocument *)document;   // Owner of this resource. Useful for looking for resources in same file as yours.
 
 // These methods are used to retrieve resources other than the one you're editing.
 //	Passing a document of nil will indicate to search in all open documents.
@@ -56,6 +56,8 @@
 
 @end
 
+
+// See note in Notifications.m about usage of these
 extern NSString *ResourceWillChangeNotification;
 extern NSString *ResourceNameWillChangeNotification;
 extern NSString *ResourceTypeWillChangeNotification;

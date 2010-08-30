@@ -72,7 +72,7 @@ ResKnife methods, functions, headers, classes, ivars and practically anything el
 		@abstract
 		@author
 		@created
-		@change			[reverse chronological, i.e. most recent at the top]
+		@updated		[reverse chronological, i.e. most recent at the top]
 		 ...
 		@pending		[higher priority TODO items should be above lower priority ones]
 		 ...

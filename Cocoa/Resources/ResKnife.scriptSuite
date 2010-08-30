@@ -28,7 +28,7 @@
 			<dict>
 				<key>orderedDocuments</key>
 				<dict>
-					<key>AppleEventCode<</key>
+					<key>AppleEventCode</key>
 					<string>docu</string>
 					<key>Type</key>
 					<string>ResourceDocument</string>

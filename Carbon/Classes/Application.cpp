@@ -968,7 +968,7 @@ Boolean GotRequiredParams( const AppleEvent *event )
 	DescType	actualType;
 	Size		actualSize;
 	
-	// check if we have retreived the required parameters
+	// check if we have retrieved the required parameters
 	error = AEGetAttributePtr( event, keyMissedKeywordAttr, typeWildCard, &actualType, null, 0, &actualSize );
 	return error == errAEDescNotFound;
 }

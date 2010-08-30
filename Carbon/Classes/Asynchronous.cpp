@@ -566,7 +566,7 @@ OSErr SHQueueCallback( SndChannel *channel )
 //		causes a crash if more than one SndPlay call is made on the same channel.  Helper
 //		will never do this on its own, and you shouldn't either. If you want a sound
 //		channel that you want to send commands to, call SHPlayByHandle with a nil handle,
-//		then call SHGetChannel to retreive a pointer to the channel.
+//		then call SHGetChannel to retrieve a pointer to the channel.
 //
 //=======================================================================================
 OSErr SHBeginPlayback( SHOutPtr outRec )

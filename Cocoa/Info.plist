@@ -10,42 +10,24 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>rsrc</string>
+				<string>*</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>Resource file.icns</string>
 			<key>CFBundleTypeName</key>
-			<string>com.apple.resource-map</string>
+			<string>ResourceMap</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>rsrc</string>
 				<string>RSRC</string>
+				<string>????</string>
+				<string>****</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.apple.resource-map</string>
-			</array>
-			<key>NSDocumentClass</key>
-			<string>ResourceDocument</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>*</string>
-			</array>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>****</string>
-				<string>????</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>public.data</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.data</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>ResourceDocument</string>
@@ -66,11 +48,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.6 beta 4</string>
+	<string>0.6 cvs</string>
 	<key>CFBundleSignature</key>
 	<string>ResK</string>
 	<key>CFBundleVersion</key>
-	<string>18</string>
+	<string>19</string>
 	<key>NSAppleScriptEnabled</key>
 	<true/>
 	<key>NSMainNibFile</key>

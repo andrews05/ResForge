@@ -1,5 +1,7 @@
 #import "ElementULLG.h"
 
+#define SIZE_ON_DISK (8)
+
 @implementation ElementULLG
 
 - (id)copyWithZone:(NSZone*)zone
@@ -11,17 +13,20 @@
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	[stream readAmount:sizeof(value) toBuffer:&value];
+	UInt64 tmp;
+	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
+	value = CFSwapInt64BigToHost(tmp);
 }
 
 - (unsigned int)sizeOnDisk
 {
-	return sizeof(value);
+	return SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	[stream writeAmount:sizeof(value) fromBuffer:&value];
+	UInt64 tmp = CFSwapInt64HostToBig(value);
+	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
 - (void)setValue:(UInt64)v

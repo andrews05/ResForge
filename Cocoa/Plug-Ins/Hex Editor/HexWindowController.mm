@@ -143,7 +143,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 {
 	if([[self window] isDocumentEdited])
 	{
-		NSBeginAlertSheet(@"Do you want to keep the changes you made to this resource?", @"Keep", @"Don’t Keep", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes cannot be saved later if you don't keep them.");
+		NSBeginAlertSheet(@"Do you want to keep the changes you made to this resource?", @"Keep", @"Don't Keep", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes cannot be saved later if you don't keep them.");
 		return NO;
 	}
 	else return YES;

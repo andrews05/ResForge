@@ -36,9 +36,9 @@
 
 /*!
 @method		updateInfoWindow
-@change		2003-11-06 NS:	Fixed creator/type handling.
-@change		2003-10-26 NS:	Now asks app delegate for icon instead of NSWorkspace.
-@change		2003-10-26 NS:	Improved document name & icon display.
+@updated	2003-11-06 NGS:	Fixed creator/type handling.
+@updated	2003-10-26 NGS:	Now asks app delegate for icon instead of NSWorkspace.
+@updated	2003-10-26 NGS:	Improved document name & icon display.
 */
 
 - (void)updateInfoWindow
@@ -48,6 +48,8 @@
 	
 	if(selectedResource)
 	{
+		NSLog(@"selected resource data: %@", [selectedResource data]);
+		
 		// set UI values
 		[[self window] setTitle:NSLocalizedString(@"Resource Info",nil)];
 		[nameView setStringValue:[selectedResource name]];
@@ -86,8 +88,8 @@
 			[iconView setImage:[NSImage imageNamed:@"Resource file"]];
 			[nameView setStringValue:[currentDocument displayName]];
 		}
-		[currentDocument creator];
-		[[NSString alloc] initWithData:[currentDocument creator] encoding:NSMacOSRomanStringEncoding];
+		
+		#warning FIXME: the creator and type codes need to be swapped on intel
 		[[filePropertyForm cellAtIndex:0] setStringValue:[[[NSString alloc] initWithData:[currentDocument creator] encoding:NSMacOSRomanStringEncoding] autorelease]];
 		[[filePropertyForm cellAtIndex:1] setStringValue:[[[NSString alloc] initWithData:[currentDocument type] encoding:NSMacOSRomanStringEncoding] autorelease]];
 //		[[filePropertyForm cellAtIndex:2] setObjectValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
@@ -101,7 +103,7 @@
 	else
 	{
 		[iconView setImage:nil];
-		[nameView setStringValue:nil];
+		[nameView setStringValue:@""];
 		[placeholderView setContentView:nil];
 	}
 }

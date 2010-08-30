@@ -78,4 +78,10 @@
 
 + (NSString *)filenameExtensionForFileExport:(id <ResKnifeResourceProtocol>)resource;
 
+/*!
+@@method		iconForResourceType:
+@abstract		Returns the icon to be used throughout the UI for any given resource type.
+*/
+- (NSImage *)iconForResourceType:(NSString *)resourceType;
+
 @end

@@ -1,5 +1,7 @@
 #import "ElementDWRD.h"
 
+#define SIZE_ON_DISK (2)
+
 @implementation ElementDWRD
 
 - (id)copyWithZone:(NSZone *)zone
@@ -11,17 +13,20 @@
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	[stream readAmount:sizeof(value) toBuffer:&value];
+	SInt16 tmp;
+	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
+	value = CFSwapInt16BigToHost(tmp);
 }
 
 - (unsigned int)sizeOnDisk
 {
-	return sizeof(value);
+	return SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	[stream writeAmount:sizeof(value) fromBuffer:&value];
+	SInt16 tmp = CFSwapInt16HostToBig(value);
+	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
 - (void)setValue:(SInt16)v

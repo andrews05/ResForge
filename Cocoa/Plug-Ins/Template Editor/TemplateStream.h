@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@class	Element;
+@class	Element, ElementOCNT;
 @interface TemplateStream : NSObject
 {
 	char *data;
@@ -18,8 +18,8 @@
 - (char *)data;
 - (unsigned int)bytesToGo;
 - (void)setBytesToGo:(unsigned int)b;
-- (Element *)counter;
-- (void)pushCounter:(Element *)c;
+- (ElementOCNT *)counter;
+- (void)pushCounter:(ElementOCNT *)c;
 - (void)popCounter;
 - (Element *)key;
 - (void)pushKey:(Element *)k;

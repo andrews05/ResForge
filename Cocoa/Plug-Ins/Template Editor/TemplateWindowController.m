@@ -126,7 +126,7 @@
 		BOOL pushedCounter = NO;
 		BOOL pushedKey = NO;
 		if(cc == [ElementOCNT class])
-		{	[stream pushCounter:clone]; pushedCounter = YES; }
+		{	[stream pushCounter:(ElementOCNT *)clone]; pushedCounter = YES; }
 		if(cc == [ElementKBYT class] ||
 		   cc == [ElementKWRD class] ||
 		   cc == [ElementKLNG class] )
@@ -156,7 +156,8 @@
 	
 	if([[self window] isDocumentEdited])
 	{
-		NSBeginAlertSheet(NSLocalizedString(@"Do you want to keep the changes you made to this resource?", nil), NSLocalizedString(@"Keep", nil), NSLocalizedString(@"Don't Keep", nil), NSLocalizedString(@"Cancel", nil), sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, NSLocalizedString(@"Your changes cannot be saved later if you don't keep them.", nil));
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+		NSBeginAlertSheet(NSLocalizedStringFromTableInBundle(@"KeepChangesDialogTitle", nil, bundle, nil), NSLocalizedStringFromTableInBundle(@"KeepChangesButton", nil, bundle, nil), NSLocalizedStringFromTableInBundle(@"DiscardChangesButton", nil, bundle, nil), NSLocalizedStringFromTableInBundle(@"CancelButton", nil, bundle, nil), sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, NSLocalizedStringFromTableInBundle(@"KeepChangesDialogMessage", nil, bundle, nil));
 		return NO;
 	}
 	else return YES;
@@ -307,7 +308,7 @@
 #pragma mark -
 #pragma mark Menu Management
 
-// these next five methods are a crude hack - the items ought ot be in the responder chain themselves
+// these next five methods are a crude hack - the items ought to be in the responder chain themselves
 - (IBAction)createListEntry:(id)sender;
 {
 	// This works by selecting an item that serves as a template (another LSTB), or knows how to create an item (LSTE) and passing the message on to it.

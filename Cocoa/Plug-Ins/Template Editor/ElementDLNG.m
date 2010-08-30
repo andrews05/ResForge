@@ -1,5 +1,7 @@
 #import "ElementDLNG.h"
 
+#define SIZE_ON_DISK (4)
+
 @implementation ElementDLNG
 
 - (id)copyWithZone:(NSZone *)zone
@@ -11,17 +13,20 @@
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	[stream readAmount:sizeof(value) toBuffer:&value];
+	SInt32 tmp;
+	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
+	value = CFSwapInt32BigToHost(tmp);
 }
 
 - (unsigned int)sizeOnDisk
 {
-	return sizeof(value);
+	return SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	[stream writeAmount:sizeof(value) fromBuffer:&value];
+	SInt32 tmp = CFSwapInt32HostToBig(value);
+	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
 - (void)setValue:(SInt32)v
