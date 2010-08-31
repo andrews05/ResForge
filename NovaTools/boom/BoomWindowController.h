@@ -35,7 +35,7 @@ enum	// boom defaults
 
 - (void)update;
 - (void)controlTextDidChange:(NSNotification *)notification;
-- (IBAction)setSilent:(id)sender;
+- (IBAction)toggleSilence:(id)sender;
 - (IBAction)playSound:(id)sender;
 
 @end

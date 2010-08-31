@@ -111,9 +111,11 @@
 	[self setDocumentEdited:[resource isDirty]];
 }
 
-- (IBAction)setSilent:(id)sender
+- (IBAction)toggleSilence:(id)sender
 {
 	silent = ![soundButton state];
+	[soundField setEnabled:!silent];
+	[playButton setEnabled:!silent];
 	[resource touch];
 	[self setDocumentEdited:YES];
 }

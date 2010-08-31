@@ -8,8 +8,8 @@
 /*!
 @method			controlTextDidChange:
 @abstract		Handles updating of the 'Create' button when valid values are present in the sheet's fields.
-@change			2003-08-01 UK:  Changed to use data source's resourceOfType instead of directly messing with the resource list's enumerator.
-@change			2003-08-01 UK:  Removed ID > 0 check -- negative IDs are allowed as well.<br/><small>Note from Nick: IIRC this was there as a workaround for another bug which prohibited negative IDs from being used. Not sure if that got fixed though :)</small>
+@updated		2003-08-01 UK:  Changed to use data source's resourceOfType instead of directly messing with the resource list's enumerator.
+@updated		2003-08-01 UK:  Removed ID > 0 check -- negative IDs are allowed as well.<br/><small>Note from Nick: IIRC this was there as a workaround for another bug which prohibited negative IDs from being used. Not sure if that got fixed though :)</small>
 @description	Someone changed the control ID edit field. Check whether this is a unique ID and appropriately enable the "create" button.</p><p>Check "notification" against being nil, which is how we call it when we need to explicitly update the enabled state of the "create" button.
 */
 
@@ -32,8 +32,8 @@
 /*!
 @method		showCreateResourceSheet:
 @abstract   Shows the sheet allowing the user to define the properties of a new resource.
-@change		2003-08-01 UK:  Made it "fake" a popup selection so type field and popup match.
-@change		2003-08-01 UK:  Made it suggest an unused resource ID.
+@updated	2003-08-01 UK:  Made it "fake" a popup selection so type field and popup match.
+@updated	2003-08-01 UK:  Made it suggest an unused resource ID.
 */
 
 - (void)showCreateResourceSheet:(ResourceDocument *)sheetDoc

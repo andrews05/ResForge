@@ -1,14 +1,14 @@
 #import "RKSupportResourceRegistry.h"
-#import "NGSCategories.h"
+#import "../Categories/NGSCategories.h"
 
 @implementation RKSupportResourceRegistry
 
 + (void)scanForSupportResources
 {
-	// TODO: Instead of hard-coding sysPath we should use some FindFolder-like API!
 #if MAC_OS_X_VERSION_10_4 <= MAC_OS_X_VERSION_MAX_ALLOWED
 	NSArray *dirsArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSAllDomainsMask, YES);
 	dirsArray = [dirsArray arrayByMakingObjectsPerformSelector:@selector(stringByAppendingPathComponent:) withObject:@"ResKnife/Support Resources"];
+	// FIXME: log content of dirsArray and merge with the following:
 #endif
 	[RKSupportResourceRegistry scanForSupportResourcesInFolder:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Support Resources"]];
 	[RKSupportResourceRegistry scanForSupportResourcesInFolder:[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Application Support/ResKnife/Support Resources"]];
@@ -25,7 +25,7 @@
 	{
 //		NSLog(@"Examining %@", name);
 		if([[name pathExtension] isEqualToString:@"rsrc"])
-			// FIXME: this method was deprecate in 10.4 in favour of - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError;
+			// FIXME: this method was deprecated in 10.4 in favour of - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError;
 			[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:[path stringByAppendingPathComponent:name] display:YES];
 	}
 }

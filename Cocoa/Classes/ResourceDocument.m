@@ -8,7 +8,7 @@
 #import "InfoWindowController.h"
 #import "PrefsWindowController.h"
 #import "CreateResourceSheetController.h"
-#import "NGSCategories.h"
+#import "../Categories/NGSCategories.h"
 #import "../Categories/NSString-FSSpec.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
 
@@ -82,7 +82,7 @@ extern NSString *RKResourcePboardType;
 	{
 		// get selected fork from open panel, 10.3+
 		int row = [[openPanelDelegate forkTableView] selectedRow];
-		NSString *selectedFork = [(NSDictionary *)[[openPanelDelegate forks] objectAtIndex:row] valueForKey:@"forkname"];
+		NSString *selectedFork = [(NSDictionary *)[[openPanelDelegate forks] objectAtIndex:row] objectForKey:@"forkname"];
 		fork = (HFSUniStr255 *) NewPtrClear(sizeof(HFSUniStr255));
 		fork->length = ([selectedFork length] < 255)? [selectedFork length]:255;
 		if(fork->length > 0)
@@ -125,13 +125,13 @@ extern NSString *RKResourcePboardType;
 			if(error || !fileRefNum)
 			{
 				// bug: should check fork the user selected is empty before trying data fork
-				NSNumber *fAlloc = [[forks firstObjectReturningValue:[NSString stringWithCharacters:fork->unicode length:fork->length] forKey:@"forkname"] valueForKey:@"forkallocation"];
+				NSNumber *fAlloc = [[forks firstObjectReturningValue:[NSString stringWithCharacters:fork->unicode length:fork->length] forKey:@"forkname"] objectForKey:@"forkallocation"];
 				if([fAlloc unsignedLongLongValue] > 0)
 				{
 					// data fork is not empty, check resource fork
 					error = FSGetResourceForkName(fork);
 					if(error) return NO;
-					fAlloc = [[forks firstObjectReturningValue:[NSString stringWithCharacters:fork->unicode length:fork->length] forKey:@"forkname"] valueForKey:@"forkallocation"];
+					fAlloc = [[forks firstObjectReturningValue:[NSString stringWithCharacters:fork->unicode length:fork->length] forKey:@"forkname"] objectForKey:@"forkallocation"];
 					if([fAlloc unsignedLongLongValue] > 0)
 					{
 						// resource fork is not empty either, give up (ask user for a fork?)
@@ -173,7 +173,7 @@ extern NSString *RKResourcePboardType;
 	NSString *forkName;
 	NSEnumerator *forkEnumerator = [forks objectEnumerator];
 	NSString *selectedFork = [NSString stringWithCharacters:fork->unicode length:fork->length];
-	while(forkName = [[forkEnumerator nextObject] valueForKey:@"forkname"])
+	while(forkName = [[forkEnumerator nextObject] objectForKey:@"forkname"])
 	{
 		// check current fork is not the fork we're going to parse
 		if(![forkName isEqualToString:selectedFork])
@@ -181,7 +181,7 @@ extern NSString *RKResourcePboardType;
 	}
 	
 	// tidy up loose ends
-	if(fileRefNum) FSClose(fileRefNum);
+	if(fileRefNum) FSCloseFork(fileRefNum);
 	DisposePtr((Ptr) fileRef);
 	return succeeded;
 }
@@ -212,7 +212,7 @@ extern NSString *RKResourcePboardType;
 	else uniForkName.unicode[0] = 0;
 	
 	// get fork length and create empty buffer, bug: only sizeof(size_t) bytes long
-	ByteCount forkLength = (ByteCount) [[[[(ApplicationDelegate *)[NSApp delegate] forksForFile:fileRef] firstObjectReturningValue:forkName forKey:@"forkname"] valueForKey:@"forksize"] unsignedLongValue];
+	ByteCount forkLength = (ByteCount) [[[[(ApplicationDelegate *)[NSApp delegate] forksForFile:fileRef] firstObjectReturningValue:forkName forKey:@"forkname"] objectForKey:@"forksize"] unsignedLongValue];
 	void *buffer = malloc(forkLength);
 	if(!buffer) return NO;
 	
@@ -251,13 +251,12 @@ extern NSString *RKResourcePboardType;
 	
 	for(unsigned short i = 1; i <= Count1Types(); i++)
 	{
-		ResType resType;
-		Get1IndType(&resType, i);
-		ResType		swappedType = EndianS32_NtoB(resType);	// Swapped type for use as string (types are treated as numbers by the resource manager and swapped on Intel).
-		unsigned short n = Count1Resources(resType);
+		ResType resTypeCode;
+		Get1IndType(&resTypeCode, i);
+		unsigned short n = Count1Resources(resTypeCode);
 		for(unsigned short j = 1; j <= n; j++)
 		{
-			Handle resourceHandle = Get1IndResource(resType, j);
+			Handle resourceHandle = Get1IndResource(resTypeCode, j);
 			error = ResError();
 			if(error != noErr)
 			{
@@ -268,22 +267,34 @@ extern NSString *RKResourcePboardType;
 			
 			Str255 nameStr;
 			short resIDShort;
-			GetResInfo(resourceHandle, &resIDShort, &resType, nameStr);
-			long sizeLong = GetResourceSizeOnDisk(resourceHandle);
+			GetResInfo(resourceHandle, &resIDShort, &resTypeCode, nameStr);
+			long sizeLong = GetResourceSizeOnDisk(resourceHandle), badSize = 0;
+			if (sizeLong < 0 || sizeLong > 16777215)	// the max size of resource manager file is ~12 MB; I am rounding up to three bytes
+			{
+				// this only happens when opening ResEdit using the x86 binary (not under Rosetta, for example)
+				badSize = sizeLong;
+				sizeLong = EndianS32_BtoL(sizeLong);
+			}
 			short attrsShort = GetResAttrs(resourceHandle);
 			HLockHi(resourceHandle);
+#if __LITTLE_ENDIAN__
+			CoreEndianFlipData(kCoreEndianResourceManagerDomain, resTypeCode, resIDShort, *resourceHandle, sizeLong, true);
+#endif
 			
 			// cool: "The advantage of obtaining a method’s implementation and calling it as a function is that you can invoke the implementation multiple times within a loop, or similar C construct, without the overhead of Objective-C messaging."
 			
 			// create the resource & add it to the array
+			ResType		logicalType = EndianS32_NtoB(resTypeCode);	// swapped type for use as string (types are treated as numbers by the resource manager and swapped on Intel).
 			NSString	*name		= [[NSString alloc] initWithBytes:&nameStr[1] length:nameStr[0] encoding:NSMacOSRomanStringEncoding];
-			NSString	*resType	= [[NSString alloc] initWithBytes:(char *) &swappedType length:4 encoding:NSMacOSRomanStringEncoding];
+			NSString	*resType	= [[NSString alloc] initWithBytes:(char *) &logicalType length:4 encoding:NSMacOSRomanStringEncoding];
 			NSNumber	*resID		= [NSNumber numberWithShort:resIDShort];
 			NSNumber	*attributes	= [NSNumber numberWithShort:attrsShort];
 			NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
 			Resource	*resource	= [Resource resourceOfType:resType andID:resID withName:name andAttributes:attributes data:data];
 			[resource setDocumentName:[self displayName]];
 			[resources addObject:resource];		// array retains resource
+			if (badSize != 0)
+				NSLog(@"GetResourceSizeOnDisk() reported incorrect size for %@ resource %@ in %@: %li should be %li", resType, resID, [self displayName], badSize, sizeLong);
 			[name release];
 			[resType release];
 			
@@ -298,8 +309,8 @@ extern NSString *RKResourcePboardType;
 }
 
 /*!
-@pending		Uli's changed this routine - see what I had and unify the two
-@pending		Doesn't write correct type/creator info - always ResKnife's!
+@pending	Uli has changed this routine - see what I had and unify the two
+@pending	Doesn't write correct type/creator info - always ResKnife's!
 */
 
 - (BOOL)writeToFile:(NSString *)fileName ofType:(NSString *)type
@@ -348,7 +359,7 @@ extern NSString *RKResourcePboardType;
 		succeeded = [self writeResourceMap:fileRefNum];
 	
 	// tidy up loose ends
-	if(fileRefNum) FSClose(fileRefNum);
+	if(fileRefNum) FSCloseFork(fileRefNum);
 	DisposePtr((Ptr) fileRef);
 	
 	// update info window
@@ -386,7 +397,7 @@ extern NSString *RKResourcePboardType;
 		error = FSOpenFork(fileRef, [[resource representedFork] length], (UniChar *) uniname, fsWrPerm, &forkRefNum);
 		if(!error && forkRefNum)
 			error = FSWriteFork(forkRefNum, fsFromStart, 0, [[resource data] length], [[resource data] bytes], NULL);
-		if(forkRefNum) FSClose(forkRefNum);
+		if(forkRefNum) FSCloseFork(forkRefNum);
 	}
 	DisposePtr((Ptr) fileRef);
 	return YES;
@@ -410,32 +421,39 @@ extern NSString *RKResourcePboardType;
 	while(resource = [enumerator nextObject])
 	{
 		Str255	nameStr;
-		char	resType[5];		// includes null char for getCString:
+		ResType	resTypeCode;
+		char	resTypeStr[5];		// includes null char for getCString:
 		short	resIDShort;
 		short	attrsShort;
+		long	sizeLong;
 		Handle	resourceHandle;
 
 		// if the resource represents another fork in the file, skip it
 		if([resource representedFork] != nil) continue;
 		
+		sizeLong = [[resource data] length];
 		resIDShort	= [[resource resID] shortValue];
 		attrsShort	= [[resource attributes] shortValue];
-		resourceHandle = NewHandleClear([[resource data] length]);
+		resourceHandle = NewHandleClear(sizeLong);
 		
 		// convert unicode name to pascal string
 		nameStr[0] = [[resource name] lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
 		BlockMoveData([[resource name] cStringUsingEncoding:NSMacOSRomanStringEncoding], &nameStr[1], nameStr[0]);
 		
 		// convert type string to ResType
-		[[resource type] getCString:resType maxLength:4];
+		[[resource type] getCString:resTypeStr maxLength:4];
+		resTypeCode = CFSwapInt32HostToBig(*(ResType *)resTypeStr);
 		
 		// convert NSData to resource handle
 		HLockHi(resourceHandle);
 		[[resource data] getBytes:*resourceHandle];
+#if __LITTLE_ENDIAN__
+		CoreEndianFlipData(kCoreEndianResourceManagerDomain, resTypeCode, resIDShort, *resourceHandle, sizeLong, false);
+#endif
 		HUnlock(resourceHandle);
 		
 		// now that everything's converted, tell the resource manager we want to create this resource
-		AddResource(resourceHandle, *(ResType *)resType, resIDShort, nameStr);
+		AddResource(resourceHandle, resTypeCode, resIDShort, nameStr);
 		if(ResError() == addResFailed)
 		{
 			NSLog(@"*Saving failed*; could not add resource ID %@ of type %@ to file.", [resource resID], [resource type]);
@@ -494,7 +512,6 @@ extern NSString *RKResourcePboardType;
 @method		exportResources:
 @author		Nicholas Shanks
 @created	24 October 2003
-@pending	note that this method will cause a cascade of sheets to be displayed for each resource being exported! v.bad needs fixing
 */
 
 - (IBAction)exportResources:(id)sender
@@ -530,7 +547,7 @@ extern NSString *RKResourcePboardType;
 	// basic overrides for file name extensions (assume no plug-ins installed)
 	NSString *newExtension;
 	NSDictionary *adjustments = [NSDictionary dictionaryWithObjectsAndKeys: @"ttf", @"sfnt", nil];
-	if(newExtension = [adjustments valueForKey:extension])
+	if(newExtension = [adjustments objectForKey:extension])
 		extension = newExtension;
 	
 	// ask for data
@@ -560,7 +577,7 @@ extern NSString *RKResourcePboardType;
 {
 	if(returnCode == NSOKButton)
 	{
-		NSUInteger i = 1;
+		unsigned int i = 1;
 		Resource *resource;
 		NSString *path, *filename, *extension;
 		NSDictionary *adjustments = [NSDictionary dictionaryWithObjectsAndKeys: @"ttf", @"sfnt", @"png", @"PNGf", nil];
@@ -591,7 +608,7 @@ extern NSString *RKResourcePboardType;
 			}
 			else
 			{
-				NSUInteger j = 1;
+				unsigned int j = 1;
 				NSString *tempname = [filename stringByAppendingPathExtension:extension];
 				while ([[NSFileManager defaultManager] fileExistsAtPath:tempname])
 				{
@@ -850,12 +867,12 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	[sheetController showCreateResourceSheet:self];
 }
 
-/*- (IBAction)showSelectTemplateSheet:(id)sender
+- (IBAction)showSelectTemplateSheet:(id)sender
 {
 	// bug: ResourceDocument allocs a sheet controller, but it's never disposed of
 //	SelectTemplateSheetController *sheetController = [[CreateResourceSheetController alloc] initWithWindowNibName:@"SelectTemplateSheet"];
 //	[sheetController showSelectTemplateSheet:self];
-}*/
+}
 
 - (IBAction)openResources:(id)sender
 {

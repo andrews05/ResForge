@@ -48,8 +48,6 @@
 	
 	if(selectedResource)
 	{
-		NSLog(@"selected resource data: %@", [selectedResource data]);
-		
 		// set UI values
 		[[self window] setTitle:NSLocalizedString(@"Resource Info",nil)];
 		[nameView setStringValue:[selectedResource name]];

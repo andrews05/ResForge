@@ -44,7 +44,7 @@
 @method			+defaultRegistry
 @author			Uli Kusterer
 @created		2003-07-31
-@change			2003-10-28 NS: Changed method name from +mainRegistry (so it more closly matchs +defaultCenter) and moved global var inside method, making it a static.
+@updated		2003-10-28 NGS: Changed method name from +mainRegistry (so it more closly matchs +defaultCenter) and moved global var inside method, making it a static.
 @description	Returns the default plugin registry of this application, instantiating it first if there is none yet. As soon as this is instantiated, the plugins are loaded.
 */
 + (RKEditorRegistry *)defaultRegistry
@@ -74,7 +74,7 @@
 @abstract		(Re)loads our list of plugins. You can use this as an action for a menu item, if you want.
 @author			Uli Kusterer
 @created		2003-07-31
-@change			2003-10-28 NGS: Updated to look for more sophisticated RKSupportedTypes key in addition to (the now deprecated) RKEditedTypes.
+@updated		2003-10-28 NGS: Updated to look for more sophisticated RKSupportedTypes key in addition to (the now deprecated) RKEditedTypes.
 @pending		Use NSSearchPathForDirectoriesInDomains() or equivalent to get folder paths instead of hard coding them.
 @pending		Currently, Cocoa classes can't be unloaded, which means we're
 				not leaking the NSBundles we load here. However, if this one

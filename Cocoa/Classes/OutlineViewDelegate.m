@@ -56,7 +56,7 @@
 
 /*!
 @function	compareResourcesAscending
-@change		2003-10-25 NGS: now uses KVC methods to obtain the strings to compare
+@updated	2003-10-25 NGS: now uses KVC methods to obtain the strings to compare
 */
 
 int compareResourcesAscending(Resource *r1, Resource *r2, void *context)
@@ -71,7 +71,7 @@ int compareResourcesAscending(Resource *r1, Resource *r2, void *context)
 
 /*!
 @function	compareResourcesDescending
-@change		2003-10-25 NGS: now uses KVC methods to obtain the strings to compare
+@updated	2003-10-25 NGS: now uses KVC methods to obtain the strings to compare
 */
 
 int compareResourcesDescending(Resource *r1, Resource *r2, void *context)
@@ -93,13 +93,13 @@ int compareResourcesDescending(Resource *r1, Resource *r2, void *context)
 
 /*!
 @method		outlineView:willDisplayCell:forTableColumn:item:
-@change		2003-10-25 NGS: Moved functionality of NameFormatter into this method, removed NameFormatter class.
-@change		2003-10-24 NGS: Swapped row colours so first row is white (as per 10.3), conditionalised drawing line background colours to system versions < 10.3, since in 10.3 it is handled by the nib file.
-@change		2003-10-24 NGS: Added iconForResourceType method to app delegate instead of interrogating the cache here.
+@updated	2003-10-25 NGS: Moved functionality of NameFormatter into this method, removed NameFormatter class.
+@updated	2003-10-24 NGS: Swapped row colours so first row is white (as per 10.3), conditionalised drawing line background colours to system versions < 10.3, since in 10.3 it is handled by the nib file.
+@updated	2003-10-24 NGS: Added iconForResourceType method to app delegate instead of interrogating the cache here.
 @pending	remove setting of the cell formatter when that capability is in interface builder
 */
 
-- (void)outlineView:(NSOutlineView *)olView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
+- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	Resource *resource = (Resource *)item;
 	NSString *identifier = [tableColumn identifier];
@@ -161,7 +161,7 @@ int compareResourcesDescending(Resource *r1, Resource *r2, void *context)
 	// draw alternating blue/white backgrounds (if pre-10.3)
 	if(NSAppKitVersionNumber < 700.0)
 	{
-		int row = [olView rowForItem:item];
+		int row = [outlineView rowForItem:item];
 		if(row % 2)	[cell setBackgroundColor:[NSColor colorWithCalibratedRed:0.93 green:0.95 blue:1.0 alpha:1.0]];
 		else		[cell setBackgroundColor:[NSColor whiteColor]];
 					[cell setDrawsBackground:YES];

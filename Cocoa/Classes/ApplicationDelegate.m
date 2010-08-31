@@ -31,7 +31,7 @@
 
 /*!
 @method		awakeFromNib
-@change		2003-10-24 NGS: moved icon caching into method called by timer (to speed up app launch time)
+@updated	2003-10-24 NGS: moved icon caching into method called by timer (to speed up app launch time)
 */
 
 - (void)awakeFromNib

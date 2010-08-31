@@ -82,6 +82,6 @@ ResKnife methods, functions, headers, classes, ivars and practically anything el
 	
 	3) The pertinent keywords or their equivalents in the above item should retain the specified order wherever reasonably applicable (e.g. for @class and @protocol comments)
 	4) The value for the @created keyword should take the following form:	YYYY-MM-DD
-	5) The value for the @change keyword should take the following form:	YYYY-MM-DD Author: Description
+	5) The value for the @updated keyword should take the following form:	YYYY-MM-DD Author: Description
 		where Author is an identifier for the person who made the change, not necessarilly the value in @author. Convention is that it simply contains the initials of the person.
 */

@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EBA8664122CF49800FEC1AC /* NGSCategories.h */; };
+		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		E1193609099830D300A3A6EA /* FontDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1193607099830D200A3A6EA /* FontDocument.nib */; };
-		E119363A099833AE00A3A6EA /* Categories.h in Headers */ = {isa = PBXBuildFile; fileRef = E1193638099833AE00A3A6EA /* Categories.h */; };
-		E119363B099833AE00A3A6EA /* Categories.mm in Sources */ = {isa = PBXBuildFile; fileRef = E1193639099833AE00A3A6EA /* Categories.mm */; };
 		E11936660998552900A3A6EA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E11936650998552900A3A6EA /* Localizable.strings */; };
 		E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367D099864AD00A3A6EA /* ElementUBYT.h */; };
 		E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = E119367E099864AD00A3A6EA /* ElementUBYT.m */; };
@@ -89,8 +89,8 @@
 		E18BF574069FEA1300F076B8 /* OutlineViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */; };
 		E18BF575069FEA1300F076B8 /* PrefsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882C0156D40B01000001 /* PrefsWindowController.m */; };
 		E18BF576069FEA1300F076B8 /* Resource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882E0156D40B01000001 /* Resource.m */; };
-		E18BF577069FEA1300F076B8 /* ResourceDataSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = F5B588300156D40B01000001 /* ResourceDataSource.mm */; };
-		E18BF578069FEA1300F076B8 /* ResourceDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = F5B588320156D40B01000001 /* ResourceDocument.mm */; };
+		E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588300156D40B01000001 /* ResourceDataSource.m */; };
+		E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588320156D40B01000001 /* ResourceDocument.m */; };
 		E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F577A901021215C801A80001 /* ResourceNameCell.m */; };
 		E18BF57A069FEA1300F076B8 /* SizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588340156D40B01000001 /* SizeFormatter.m */; };
 		E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */; };
@@ -103,7 +103,7 @@
 		E18BF582069FEA1300F076B8 /* OpenPanelDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F59481B203D077DC01A8010A /* OpenPanelDelegate.m */; };
 		E18BF583069FEA1300F076B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755A04DAEB4300B8225B /* main.m */; };
 		E18BF584069FEA1300F076B8 /* RKEditorRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */; };
-		E18BF585069FEA1300F076B8 /* RKSupportResourceRegistry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.mm */; };
+		E18BF585069FEA1300F076B8 /* RKSupportResourceRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */; };
 		E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF588069FEA1300F076B8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
 		E18BF590069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
@@ -414,6 +414,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0EBA8664122CF49800FEC1AC /* NGSCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NGSCategories.h; sourceTree = "<group>"; };
+		0EBA8665122CF49800FEC1AC /* NGSCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NGSCategories.m; sourceTree = "<group>"; };
 		3D0933A604DEFEE600DD74B1 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
 		3D0933A704DEFEE600DD74B1 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Element.m; sourceTree = "<group>"; };
 		3D0933BE04DF151C00DD74B1 /* TemplateStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateStream.h; sourceTree = "<group>"; };
@@ -449,10 +451,8 @@
 		3D50047304EF122000F3B64D /* ElementLSTC.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = ElementLSTC.mm; sourceTree = "<group>"; };
 		3D50047404EF122000F3B64D /* ElementLSTC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementLSTC.h; sourceTree = "<group>"; };
 		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
-		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RKSupportResourceRegistry.mm; sourceTree = "<group>"; };
+		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
 		E1193608099830D300A3A6EA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FontDocument.nib; sourceTree = "<group>"; };
-		E1193638099833AE00A3A6EA /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = ../Categories.h; sourceTree = SOURCE_ROOT; };
-		E1193639099833AE00A3A6EA /* Categories.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = Categories.mm; path = ../Categories.mm; sourceTree = SOURCE_ROOT; };
 		E11936620998551200A3A6EA /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E119367D099864AD00A3A6EA /* ElementUBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementUBYT.h; sourceTree = "<group>"; };
 		E119367E099864AD00A3A6EA /* ElementUBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementUBYT.m; sourceTree = "<group>"; };
@@ -597,9 +597,9 @@
 		F5B5882D0156D40B01000001 /* Resource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Resource.h; sourceTree = "<group>"; };
 		F5B5882E0156D40B01000001 /* Resource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Resource.m; sourceTree = "<group>"; };
 		F5B5882F0156D40B01000001 /* ResourceDataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceDataSource.h; sourceTree = "<group>"; };
-		F5B588300156D40B01000001 /* ResourceDataSource.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceDataSource.mm; sourceTree = "<group>"; };
+		F5B588300156D40B01000001 /* ResourceDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDataSource.m; sourceTree = "<group>"; };
 		F5B588310156D40B01000001 /* ResourceDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceDocument.h; sourceTree = "<group>"; };
-		F5B588320156D40B01000001 /* ResourceDocument.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceDocument.mm; sourceTree = "<group>"; };
+		F5B588320156D40B01000001 /* ResourceDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDocument.m; sourceTree = "<group>"; };
 		F5B588330156D40B01000001 /* SizeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SizeFormatter.h; sourceTree = "<group>"; };
 		F5B588340156D40B01000001 /* SizeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SizeFormatter.m; sourceTree = "<group>"; };
 		F5B588370156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/AboutPanel.nib; sourceTree = "<group>"; };
@@ -1007,8 +1007,8 @@
 		F5594EE9021F3E2301A80001 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				E1193638099833AE00A3A6EA /* Categories.h */,
-				E1193639099833AE00A3A6EA /* Categories.mm */,
+				0EBA8664122CF49800FEC1AC /* NGSCategories.h */,
+				0EBA8665122CF49800FEC1AC /* NGSCategories.m */,
 				F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */,
 				F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */,
 				F59D5DE40320DFF601A8010C /* NSString-FSSpec.h */,
@@ -1118,9 +1118,9 @@
 				F5B5882D0156D40B01000001 /* Resource.h */,
 				F5B5882E0156D40B01000001 /* Resource.m */,
 				F5B5882F0156D40B01000001 /* ResourceDataSource.h */,
-				F5B588300156D40B01000001 /* ResourceDataSource.mm */,
+				F5B588300156D40B01000001 /* ResourceDataSource.m */,
 				F5B588310156D40B01000001 /* ResourceDocument.h */,
-				F5B588320156D40B01000001 /* ResourceDocument.mm */,
+				F5B588320156D40B01000001 /* ResourceDocument.m */,
 				F577A900021215C801A80001 /* ResourceNameCell.h */,
 				F577A901021215C801A80001 /* ResourceNameCell.m */,
 				F59481AD03D0776C01A8010A /* RKDocumentController.h */,
@@ -1128,7 +1128,7 @@
 				3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */,
 				3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */,
 				3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */,
-				3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.mm */,
+				3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */,
 				F5B588330156D40B01000001 /* SizeFormatter.h */,
 				F5B588340156D40B01000001 /* SizeFormatter.m */,
 			);
@@ -1435,6 +1435,7 @@
 				E18BF550069FEA1300F076B8 /* OpenPanelDelegate.h in Headers */,
 				E18BF551069FEA1300F076B8 /* RKEditorRegistry.h in Headers */,
 				E18BF552069FEA1300F076B8 /* RKSupportResourceRegistry.h in Headers */,
+				0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1628,7 +1629,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */,
-				E119363A099833AE00A3A6EA /* Categories.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2165,8 +2165,8 @@
 				E18BF574069FEA1300F076B8 /* OutlineViewDelegate.m in Sources */,
 				E18BF575069FEA1300F076B8 /* PrefsWindowController.m in Sources */,
 				E18BF576069FEA1300F076B8 /* Resource.m in Sources */,
-				E18BF577069FEA1300F076B8 /* ResourceDataSource.mm in Sources */,
-				E18BF578069FEA1300F076B8 /* ResourceDocument.mm in Sources */,
+				E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */,
+				E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */,
 				E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */,
 				E18BF57A069FEA1300F076B8 /* SizeFormatter.m in Sources */,
 				E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */,
@@ -2179,7 +2179,8 @@
 				E18BF582069FEA1300F076B8 /* OpenPanelDelegate.m in Sources */,
 				E18BF583069FEA1300F076B8 /* main.m in Sources */,
 				E18BF584069FEA1300F076B8 /* RKEditorRegistry.m in Sources */,
-				E18BF585069FEA1300F076B8 /* RKSupportResourceRegistry.mm in Sources */,
+				E18BF585069FEA1300F076B8 /* RKSupportResourceRegistry.m in Sources */,
+				0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2358,7 +2359,6 @@
 			files = (
 				E18BF7D5069FFC7600F076B8 /* FontWindowController.mm in Sources */,
 				E18BF8EB06A0027700F076B8 /* Notifications.m in Sources */,
-				E119363B099833AE00A3A6EA /* Categories.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
