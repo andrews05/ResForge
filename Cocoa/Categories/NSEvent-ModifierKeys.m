@@ -1,23 +1,23 @@
 #import "NSEvent-ModifierKeys.h"
 
-@implementation NSEvent (ModifierKeys)
+@implementation NSEvent (NGSModifierKeys)
 
-+ (BOOL) isControlKeyDown
++ (BOOL)isControlKeyDown
 {
     return (GetCurrentKeyModifiers() & controlKey) != 0;
 }
 
-+ (BOOL) isOptionKeyDown
++ (BOOL)isOptionKeyDown
 {
     return (GetCurrentKeyModifiers() & optionKey) != 0;
 }
 
-+ (BOOL) isCommandKeyDown
++ (BOOL)isCommandKeyDown
 {
     return (GetCurrentKeyModifiers() & cmdKey) != 0;
 }
 
-+ (BOOL) isShiftKeyDown
++ (BOOL)isShiftKeyDown
 {
     return (GetCurrentKeyModifiers() & shiftKey) != 0;
 }

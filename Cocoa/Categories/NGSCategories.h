@@ -1,5 +1,14 @@
 #import <Foundation/Foundation.h>
 
+/*******************************/
+/*****       WARNING       *****/
+/*  This file is being broken  */
+/*  apart into smaller files.  */
+/*  If you want to change any  */
+/*  methods here,  split them  */
+/*  into new files beforehand. */
+/*******************************/
+
 /*!
 @header
 @abstract		Numerous small category methods on Foundation and AppKit classes.

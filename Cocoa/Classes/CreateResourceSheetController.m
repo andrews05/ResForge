@@ -77,7 +77,7 @@
 /*!
 @method		typePopupSelection:
 @abstract   Updates the edit text field when the type pop-up selection is changed.
-@change		2003-08-01 UK:  Commented, made it update state of "create" button.
+@updated	2003-08-01 UK:  Commented, made it update state of "create" button.
 */
 
 - (IBAction)typePopupSelection:(id)sender

@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@interface NSNumber (ResKnifeRangeExtensions)
+@interface NSNumber (NGSRange)
 
 - (BOOL)isWithinRange:(NSRange)range;				// location <= self <= location+length
 - (BOOL)isExclusivelyWithinRange:(NSRange)range;	// location < self < location+length

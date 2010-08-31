@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@interface NSString (ResKnifeFSSpecExtensions)
+@interface NSString (NGSFSSpec)
 
 - (FSRef *)createFSRef;
 - (FSSpec *)createFSSpec;
@@ -8,7 +8,7 @@
 @end
 
 
-@interface NSString (ResKnifeBooleanExtensions)
+@interface NSString (NGSBoolean)
 
 - (BOOL)boolValue;
 + (NSString *)stringWithBool:(BOOL)boolean;

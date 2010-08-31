@@ -1,6 +1,6 @@
 #import "NSString-FSSpec.h"
 
-@implementation NSString (ResKnifeFSSpecExtensions)
+@implementation NSString (NGSFSSpec)
 
 - (FSRef *)createFSRef
 {
@@ -33,7 +33,7 @@
 
 @end
 
-@implementation NSString (ResKnifeBooleanExtensions)
+@implementation NSString (NGSBoolean)
 
 - (BOOL)boolValue
 {

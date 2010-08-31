@@ -35,7 +35,7 @@
 @protocol	ResKnifeInformalPluginProtocol
 @abstract	Optional methods your plugin may implement to provide additional functionality.
 @author		Uli Kusterer
-@change		2005-10-03 NGS: Added UTI, MIME Type and OSType methods, renamed extensionForFileExport: to filenameExtensionForFileExport:
+@updated	2005-10-03 NGS: Added UTI, MIME Type and OSType methods, renamed extensionForFileExport: to filenameExtensionForFileExport:
 */
 @interface ResKnifeInformalPluginProtocol
 

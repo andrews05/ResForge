@@ -63,7 +63,7 @@ Please try to conform to the existing formatting rules followed, including place
 
 Notes on commenting/documenting for the ResKnife project:
 
-ResKnife methods, functions, headers, classes, ivars and practically anything else is commented using the format specified by HeaderDoc (a C-based equivalent to JavaDoc), although with ResKnife-specific modifications (NB: although I've yet to modify HeaderDoc to read these new parameters, they should still be used for the time being). The general format is to use the standard C block-commenting mechanism, with the addition of an exclamation mark immediatly after the open comment marker. Following this are one or more lines beginning with an at sign, a keyword, arguments if any, and finally a string value. For source code consistancy, I (Nicholas) am dictating the following rules which must be followed when documenting an object.
+ResKnife methods, functions, headers, classes, ivars and practically anything else is commented using the format specified by HeaderDoc (a C-based equivalent to JavaDoc), although with ResKnife-specific modifications (NB: although I've yet to modify HeaderDoc to read these new parameters, they should still be used for the time being). The general format is to use the standard C block-commenting mechanism, with the addition of an exclamation mark immediatly after the open comment marker. Following this are one or more lines beginning with an at sign, a keyword, arguments if any, and finally a string value. For source code consistancy, I (Nicholas) am suggesting the following when documenting an object.
 
 	1) All HeaderDoc comments immediatly preceede the object to which they pertain.
 	2) HeaderDoc comments documenting a method or function must follow the following order (for consistancy & readability), where an ellipsis indicates the line above can be repeated multiple times:
@@ -72,7 +72,7 @@ ResKnife methods, functions, headers, classes, ivars and practically anything el
 		@abstract
 		@author
 		@created
-		@updated		[reverse chronological, i.e. most recent at the top]
+		@updated		[significant changes that other developers should be aware of; ordered reverse chronological, i.e. most recent at the top]
 		 ...
 		@pending		[higher priority TODO items should be above lower priority ones]
 		 ...
@@ -83,5 +83,7 @@ ResKnife methods, functions, headers, classes, ivars and practically anything el
 	3) The pertinent keywords or their equivalents in the above item should retain the specified order wherever reasonably applicable (e.g. for @class and @protocol comments)
 	4) The value for the @created keyword should take the following form:	YYYY-MM-DD
 	5) The value for the @updated keyword should take the following form:	YYYY-MM-DD Author: Description
-		where Author is an identifier for the person who made the change, not necessarilly the value in @author. Convention is that it simply contains the initials of the person.
+		where Author is your initials or sourceforge user name.
+	
+	Due to really poor maintance on my part, very few methods have @updated comments. Sorry :-(
 */

@@ -1,6 +1,6 @@
 #import "NSNumber-Range.h"
 
-@implementation NSNumber (ResKnifeRangeExtensions)
+@implementation NSNumber (NGSRange)
 
 - (BOOL)isWithinRange:(NSRange)range				// location <= self <= location+length
 {

@@ -2,7 +2,7 @@
 
 /* The methods in the following catagory were based upon those in OmniAppKit */
 
-@implementation NSOutlineView (RKSelectedItemExtensions)
+@implementation NSOutlineView (NGSSelectedItems)
 
 - (id)selectedItem
 {

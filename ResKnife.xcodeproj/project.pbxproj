@@ -416,6 +416,8 @@
 /* Begin PBXFileReference section */
 		0EBA8664122CF49800FEC1AC /* NGSCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NGSCategories.h; sourceTree = "<group>"; };
 		0EBA8665122CF49800FEC1AC /* NGSCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NGSCategories.m; sourceTree = "<group>"; };
+		0EBA866A122D0B4300FEC1AC /* NSEvent-ModifierKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent-ModifierKeys.h"; sourceTree = "<group>"; };
+		0EBA866B122D0B4300FEC1AC /* NSEvent-ModifierKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent-ModifierKeys.m"; sourceTree = "<group>"; };
 		3D0933A604DEFEE600DD74B1 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
 		3D0933A704DEFEE600DD74B1 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Element.m; sourceTree = "<group>"; };
 		3D0933BE04DF151C00DD74B1 /* TemplateStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateStream.h; sourceTree = "<group>"; };
@@ -1009,12 +1011,14 @@
 			children = (
 				0EBA8664122CF49800FEC1AC /* NGSCategories.h */,
 				0EBA8665122CF49800FEC1AC /* NGSCategories.m */,
+				0EBA866A122D0B4300FEC1AC /* NSEvent-ModifierKeys.h */,
+				0EBA866B122D0B4300FEC1AC /* NSEvent-ModifierKeys.m */,
+				F59D5DE8032106D201A8010C /* NSNumber-Range.h */,
+				F59D5DE9032106D201A8010C /* NSNumber-Range.m */,
 				F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */,
 				F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */,
 				F59D5DE40320DFF601A8010C /* NSString-FSSpec.h */,
 				F59D5DE50320DFF601A8010C /* NSString-FSSpec.m */,
-				F59D5DE8032106D201A8010C /* NSNumber-Range.h */,
-				F59D5DE9032106D201A8010C /* NSNumber-Range.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
