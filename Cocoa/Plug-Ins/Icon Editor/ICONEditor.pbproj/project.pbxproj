@@ -1,0 +1,415 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 38;
+	objects = {
+		014CEA410018CDE011CA2923 = {
+			isa = PBXBundleReference;
+			path = ICONEditor.plugin;
+			refType = 3;
+		};
+		014CEA420018CDE011CA2923 = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				OPTIMIZATION_CFLAGS = "-O0";
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		014CEA430018CDE011CA2923 = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+//010
+//011
+//012
+//013
+//014
+//080
+//081
+//082
+//083
+//084
+		089C1669FE841209C02AAC07 = {
+			buildStyles = (
+				014CEA420018CDE011CA2923,
+				014CEA430018CDE011CA2923,
+			);
+			hasScannedForEncodings = 1;
+			isa = PBXProject;
+			mainGroup = 089C166AFE841209C02AAC07;
+			projectDirPath = "";
+			targets = (
+				089C1673FE841209C02AAC07,
+			);
+		};
+		089C166AFE841209C02AAC07 = {
+			children = (
+				3D357B3104DB013D00B8225B,
+				08FB77AFFE84173DC02AAC07,
+				32C88E010371C26100C91783,
+				089C167CFE841241C02AAC07,
+				089C1671FE841209C02AAC07,
+				19C28FB8FE9D52D311CA2CBB,
+			);
+			isa = PBXGroup;
+			name = "ICONEditor (PB2)";
+			refType = 4;
+		};
+		089C1671FE841209C02AAC07 = {
+			children = (
+				1058C7ACFEA557BF11CA2CBB,
+				1058C7AEFEA557BF11CA2CBB,
+			);
+			isa = PBXGroup;
+			name = "Frameworks and Libraries";
+			refType = 4;
+		};
+		089C1672FE841209C02AAC07 = {
+			isa = PBXFrameworkReference;
+			name = Foundation.framework;
+			path = /System/Library/Frameworks/Foundation.framework;
+			refType = 0;
+		};
+		089C1673FE841209C02AAC07 = {
+			buildPhases = (
+				089C1674FE841209C02AAC07,
+				089C1675FE841209C02AAC07,
+				089C1676FE841209C02AAC07,
+				089C1677FE841209C02AAC07,
+				089C1679FE841209C02AAC07,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRECOMPILE_PREFIX_HEADER = YES;
+				PRODUCT_NAME = ICONEditor;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = plugin;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = "ICONEditor (PB2)";
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = "ICONEditor (PB2)";
+			productReference = 014CEA410018CDE011CA2923;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>ICONEditor</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>com.ulikusterer.resknife.bitmapeditor</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleSignature</key>
+	<string>ResK</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+	<key>NSMainNibFile</key>
+	<string>ICONWindow</string>
+	<key>NSPrincipalClass</key>
+	<string>ICONWindowController</string>
+	<key>RKEditedTypes</key>
+	<array>
+		<string>ICON</string>
+		<string>ICN#</string>
+		<string>icm#</string>
+		<string>ics#</string>
+		<string>CURS</string>
+	</array>
+</dict>
+</plist>
+";
+		};
+		089C1674FE841209C02AAC07 = {
+			buildActionMask = 2147483647;
+			files = (
+				3D357B2D04DB010F00B8225B,
+				3D3B99A604DBE3310056861E,
+				3D3B99A704DBE3310056861E,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		089C1675FE841209C02AAC07 = {
+			buildActionMask = 2147483647;
+			files = (
+				089C1680FE841241C02AAC07,
+				3D357B3004DB011A00B8225B,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		089C1676FE841209C02AAC07 = {
+			buildActionMask = 2147483647;
+			files = (
+				3D357B2C04DB010F00B8225B,
+				3D3B99A904DBE4450056861E,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		089C1677FE841209C02AAC07 = {
+			buildActionMask = 2147483647;
+			files = (
+				1058C7AFFEA557BF11CA2CBB,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		089C1679FE841209C02AAC07 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		089C167CFE841241C02AAC07 = {
+			children = (
+				3D357B2E04DB011A00B8225B,
+				089C167DFE841241C02AAC07,
+			);
+			isa = PBXGroup;
+			name = Resources;
+			refType = 4;
+		};
+		089C167DFE841241C02AAC07 = {
+			children = (
+				089C167EFE841241C02AAC07,
+			);
+			isa = PBXVariantGroup;
+			name = InfoPlist.strings;
+			refType = 4;
+		};
+		089C167EFE841241C02AAC07 = {
+			fileEncoding = 10;
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/InfoPlist.strings;
+			refType = 4;
+		};
+		089C167FFE841241C02AAC07 = {
+			isa = PBXFrameworkReference;
+			name = AppKit.framework;
+			path = /System/Library/Frameworks/AppKit.framework;
+			refType = 0;
+		};
+		089C1680FE841241C02AAC07 = {
+			fileRef = 089C167DFE841241C02AAC07;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		08FB77AFFE84173DC02AAC07 = {
+			children = (
+				3D357B2A04DB010F00B8225B,
+				3D357B2B04DB010F00B8225B,
+			);
+			isa = PBXGroup;
+			name = Classes;
+			refType = 4;
+		};
+//080
+//081
+//082
+//083
+//084
+//100
+//101
+//102
+//103
+//104
+		1058C7ACFEA557BF11CA2CBB = {
+			children = (
+				1058C7ADFEA557BF11CA2CBB,
+			);
+			isa = PBXGroup;
+			name = "Linked Frameworks";
+			refType = 4;
+		};
+		1058C7ADFEA557BF11CA2CBB = {
+			isa = PBXFrameworkReference;
+			name = Cocoa.framework;
+			path = /System/Library/Frameworks/Cocoa.framework;
+			refType = 0;
+		};
+		1058C7AEFEA557BF11CA2CBB = {
+			children = (
+				089C1672FE841209C02AAC07,
+				089C167FFE841241C02AAC07,
+			);
+			isa = PBXGroup;
+			name = "Other Frameworks";
+			refType = 4;
+		};
+		1058C7AFFEA557BF11CA2CBB = {
+			fileRef = 1058C7ADFEA557BF11CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//100
+//101
+//102
+//103
+//104
+//190
+//191
+//192
+//193
+//194
+		19C28FB8FE9D52D311CA2CBB = {
+			children = (
+				014CEA410018CDE011CA2923,
+			);
+			isa = PBXGroup;
+			name = Products;
+			refType = 4;
+		};
+//190
+//191
+//192
+//193
+//194
+//320
+//321
+//322
+//323
+//324
+		32C88E010371C26100C91783 = {
+			children = (
+				3D3B99A404DBE3310056861E,
+				3D3B99A504DBE3310056861E,
+				3D3B99A804DBE4450056861E,
+			);
+			isa = PBXGroup;
+			name = "Other Sources";
+			refType = 4;
+		};
+//320
+//321
+//322
+//323
+//324
+//3D0
+//3D1
+//3D2
+//3D3
+//3D4
+		3D357B2A04DB010F00B8225B = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = ICONWindowController.m;
+			refType = 4;
+		};
+		3D357B2B04DB010F00B8225B = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = ICONWindowController.h;
+			refType = 4;
+		};
+		3D357B2C04DB010F00B8225B = {
+			fileRef = 3D357B2A04DB010F00B8225B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D357B2D04DB010F00B8225B = {
+			fileRef = 3D357B2B04DB010F00B8225B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D357B2E04DB011A00B8225B = {
+			children = (
+				3D357B2F04DB011A00B8225B,
+			);
+			isa = PBXVariantGroup;
+			name = ICONWindow.nib;
+			path = "";
+			refType = 4;
+		};
+		3D357B2F04DB011A00B8225B = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/ICONWindow.nib;
+			refType = 4;
+		};
+		3D357B3004DB011A00B8225B = {
+			fileRef = 3D357B2E04DB011A00B8225B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D357B3104DB013D00B8225B = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = README.txt;
+			refType = 4;
+		};
+		3D3B99A404DBE3310056861E = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ResKnifePluginProtocol.h;
+			path = "../Cocoa/Plug-Ins/ResKnifePluginProtocol.h";
+			refType = 2;
+		};
+		3D3B99A504DBE3310056861E = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ResKnifeResourceProtocol.h;
+			path = "../Cocoa/Plug-Ins/ResKnifeResourceProtocol.h";
+			refType = 2;
+		};
+		3D3B99A604DBE3310056861E = {
+			fileRef = 3D3B99A404DBE3310056861E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D3B99A704DBE3310056861E = {
+			fileRef = 3D3B99A504DBE3310056861E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		3D3B99A804DBE4450056861E = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Notifications.m;
+			path = "/Users/witness/Programming/ResKnife/Cocoa/Plug-Ins/Notifications.m";
+			refType = 0;
+		};
+		3D3B99A904DBE4450056861E = {
+			fileRef = 3D3B99A804DBE4450056861E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+	};
+	rootObject = 089C1669FE841209C02AAC07;
+}
