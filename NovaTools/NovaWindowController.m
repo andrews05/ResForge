@@ -83,7 +83,7 @@
 		switch( [errorValues count] )
 		{
 			case 0:
-				NSBeginAlertSheet( @"Do you want to save the changes you made to this resource?", @"Save", @"Don’t Save", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes will be lost if you don't save them." );
+				NSBeginAlertSheet( @"Do you want to save the changes you made to this resource?", @"Save", @"Don't Save", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes will be lost if you don't save them." );
 				break;
 			
 			case 1:
