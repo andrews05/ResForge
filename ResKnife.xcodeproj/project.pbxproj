@@ -10,8 +10,8 @@
 		0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EBA8664122CF49800FEC1AC /* NGSCategories.h */; };
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
-		3DB9D66412307A9400DDA647 /* NovaTools.plugin in Resources */ = {isa = PBXBuildFile; fileRef = E17ADBC006A2132800842474 /* NovaTools.plugin */; };
-		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Resources */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; };
+		3DB9D66412307A9400DDA647 /* NovaTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E17ADBC006A2132800842474 /* NovaTools.plugin */; };
+		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; };
 		E1193609099830D300A3A6EA /* FontDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1193607099830D200A3A6EA /* FontDocument.nib */; };
 		E11936660998552900A3A6EA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E11936650998552900A3A6EA /* Localizable.strings */; };
 		E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367D099864AD00A3A6EA /* ElementUBYT.h */; };
@@ -247,6 +247,20 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
+		0ED5B4B513BF0A7400A5DC6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E18BF5B7069FEA1400F076B8;
+			remoteInfo = NovaTools;
+		};
+		0ED5B4B713BF0A7800A5DC6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E18BF68E069FEA1800F076B8;
+			remoteInfo = "Bitmap Editor Cocoa";
+		};
 		E13F836408F139E900E2A5CB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -312,6 +326,8 @@
 				E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */,
 				E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */,
 				E13F837F08F13A4C00E2A5CB /* Font Editor.plugin in Copy Plugins */,
+				3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */,
+				3DB9D66412307A9400DDA647 /* NovaTools.plugin in Copy Plugins */,
 			);
 			name = "Copy Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1427,7 +1443,9 @@
 			dependencies = (
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
 				E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */,
+				0ED5B4B813BF0A7800A5DC6D /* PBXTargetDependency */,
 				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
+				0ED5B4B613BF0A7400A5DC6D /* PBXTargetDependency */,
 			);
 			name = "ResKnife Cocoa";
 			productInstallPath = "$(USER_APPS_DIR)";
@@ -1585,7 +1603,14 @@
 			};
 			buildConfigurationList = E13F7F0508F0411100E2A5CB /* Build configuration list for PBXProject "ResKnife" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = F5B588100156D2A601000001;
 			productRefGroup = F5B588110156D30301000001 /* Products */;
 			projectDirPath = "";
@@ -1630,8 +1655,6 @@
 				E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */,
 				E18BF568069FEA1300F076B8 /* Export.tiff in Resources */,
 				E18BF569069FEA1300F076B8 /* Resource Type Mappings.strings in Resources */,
-				3DB9D66412307A9400DDA647 /* NovaTools.plugin in Resources */,
-				3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1901,6 +1924,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0ED5B4B613BF0A7400A5DC6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E18BF5B7069FEA1400F076B8 /* NovaTools */;
+			targetProxy = 0ED5B4B513BF0A7400A5DC6D /* PBXContainerItemProxy */;
+		};
+		0ED5B4B813BF0A7800A5DC6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E18BF68E069FEA1800F076B8 /* Bitmap Editor Cocoa */;
+			targetProxy = 0ED5B4B713BF0A7800A5DC6D /* PBXContainerItemProxy */;
+		};
 		E13F836508F139E900E2A5CB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E18BF78A069FF23700F076B8 /* Font Editor Cocoa */;
@@ -2278,14 +2311,12 @@
 				INFOPLIST_FILE = Cocoa/Info.plist;
 				PREBINDING = YES;
 				PRODUCT_NAME = "ResKnife Cocoa";
-				PROFILING_CODE = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2293,21 +2324,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Cocoa/Info.plist;
 				PREBINDING = YES;
 				PRODUCT_NAME = "ResKnife Cocoa";
-				PROFILING_CODE = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
