@@ -569,10 +569,10 @@
 	charRec->startDay = [date dayOfMonth];
 	charRec->startMonth = [date monthOfYear];
 	charRec->startYear = [date yearOfCommonEra];
-	BlockZero( charRec->Prefix, 16 );
-	BlockMoveData( [prefix cString], charRec->Prefix, [prefix cStringLength] <= 15? [prefix cStringLength]+1:16 );
-	BlockZero( charRec->Suffix, 16 );
-	BlockMoveData( [suffix cString], charRec->Suffix, [suffix cStringLength] <= 15? [suffix cStringLength]+1:16 );
+	bzero( charRec->Prefix, 16 );
+	memmove( charRec->Prefix, [prefix cString], [prefix cStringLength] <= 15? [prefix cStringLength]+1:16 );
+	bzero( charRec->Suffix, 16 );
+	memmove( charRec->Suffix, [suffix cString], [suffix cStringLength] <= 15? [suffix cStringLength]+1:16 );
 	charRec->startSystem[0] = [start1 shortValue];
 	charRec->startSystem[1] = [start2 shortValue];
 	charRec->startSystem[2] = [start3 shortValue];
@@ -594,9 +594,9 @@
 	charRec->introPictDelay[1] = [introDelay2 shortValue];
 	charRec->introPictDelay[2] = [introDelay3 shortValue];
 	charRec->introPictDelay[3] = [introDelay4 shortValue];
-	BlockZero( charRec->OnStart, 256 );
-	BlockMoveData( [onStart cString], charRec->OnStart, [onStart cStringLength] <= 255? [onStart cStringLength]+1:256 );
-	BlockZero( charRec->UnusedA, 8*sizeof(short) );
+	bzero( charRec->OnStart, 256 );
+	memmove( charRec->OnStart, [onStart cString], [onStart cStringLength] <= 255? [onStart cStringLength]+1:256 );
+	bzero( charRec->UnusedA, 8*sizeof(short) );
 	
 	// verify values are valid
 	if(charRec->startDay < 1 || charRec->startDay > 31 )

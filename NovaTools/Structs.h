@@ -2,8 +2,8 @@
 
 #import <Carbon/Carbon.h>
 
-#pragma options align=mac68k
-//#pragma options align=packed		// TODO: This doesn't compile in PB (but it does in xCode).
+//#pragma options align=mac68k
+#pragma options align=packed		// TODO: This doesn't compile in PB (but it does in xCode).
 // see http://developer.apple.com/techpubs/macosx/DeveloperTools/MachORuntime/2rt_powerpc_abi/PowerPC_Data_Alignment.html
 // align=reset is at the bottom of the file.
 

@@ -80,7 +80,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	if(![[resource name] isEqualToString:@""])
 	{
 		[[self window] setTitle:[resource name]];
-		SetWindowAlternateTitle((WindowRef) [[self window] windowRef], (CFStringRef) [NSString stringWithFormat:NSLocalizedString(@"%@ %@: '%@'", nil), [resource type], [resource resID], [resource name]]);
+		//SetWindowAlternateTitle((WindowRef) [[self window] windowRef], (CFStringRef) [NSString stringWithFormat:NSLocalizedString(@"%@ %@: '%@'", nil), [resource type], [resource resID], [resource name]]);
 	}
 	
 	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)

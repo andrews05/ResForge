@@ -61,7 +61,7 @@ extern NSString *RKResourcePboardType;
 	BOOL			succeeded = NO;
 	OSStatus		error = noErr;
 	FSRef			*fileRef = (FSRef *) NewPtrClear(sizeof(FSRef));
-	SInt16			fileRefNum = 0;
+	ResFileRefNum	fileRefNum = 0;
 	OpenPanelDelegate *openPanelDelegate = [(ApplicationDelegate *)[NSApp delegate] openPanelDelegate];
 	
 	// bug: need to handle error better here
@@ -157,7 +157,7 @@ extern NSString *RKResourcePboardType;
 		
 		// get creator and type
 		FSCatalogInfo info;
-		error = FSGetCatalogInfo(fileRef, kFSCatInfoFinderInfo, &info, nil, nil, nil);
+		error = FSGetCatalogInfo(fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
 		if(!error)
 		{
 			[self setType:[NSData dataWithBytes:&((FileInfo *)info.finderInfo)->fileType length:4]];
@@ -173,7 +173,7 @@ extern NSString *RKResourcePboardType;
 	NSString *forkName;
 	NSEnumerator *forkEnumerator = [forks objectEnumerator];
 	NSString *selectedFork = [NSString stringWithCharacters:fork->unicode length:fork->length];
-	while(forkName = [[forkEnumerator nextObject] objectForKey:@"forkname"])
+	while((forkName = [[forkEnumerator nextObject] objectForKey:@"forkname"]))
 	{
 		// check current fork is not the fork we're going to parse
 		if(![forkName isEqualToString:selectedFork])
@@ -182,7 +182,7 @@ extern NSString *RKResourcePboardType;
 	
 	// tidy up loose ends
 	if(fileRefNum) FSCloseFork(fileRefNum);
-	DisposePtr((Ptr) fileRef);
+	//DisposePtr((Ptr) fileRef);
 	return succeeded;
 }
 
@@ -217,7 +217,7 @@ extern NSString *RKResourcePboardType;
 	if(!buffer) return NO;
 	
 	// read fork contents into buffer, bug: assumes no errors
-	SInt16 forkRefNum;
+	FSIORefNum forkRefNum;
 	FSOpenFork(fileRef, uniForkName.length, uniForkName.unicode, fsRdPerm, &forkRefNum);
 	FSReadFork(forkRefNum, fsFromStart, 0, forkLength, buffer, &forkLength);
 	FSCloseFork(forkRefNum);
@@ -352,7 +352,7 @@ extern NSString *RKResourcePboardType;
 		else error = FSOpenResourceFile(fileRef, 0, NULL, fsWrPerm, &fileRefNum);
 	}
 //	else NSLog(@"error creating resource fork. (error=%d, spec=%d, ref=%d, parent=%d)", error, fileSpec, fileRef, parentRef);
-	else NSLog(@"error creating resource fork. (error=%d, ref=%d)", error, fileRef);
+	else NSLog(@"error creating resource fork. (error=%d, ref=%p)", error, fileRef);
 	
 	// write resource array to file
 	if(fileRefNum && !error)
@@ -438,7 +438,7 @@ extern NSString *RKResourcePboardType;
 		
 		// convert unicode name to pascal string
 		nameStr[0] = [[resource name] lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
-		BlockMoveData([[resource name] cStringUsingEncoding:NSMacOSRomanStringEncoding], &nameStr[1], nameStr[0]);
+		memmove(&nameStr[1], [[resource name] cStringUsingEncoding:NSMacOSRomanStringEncoding], nameStr[0]);
 		
 		// convert type string to ResType
 		[[resource type] getCString:resTypeStr maxLength:4];
@@ -479,30 +479,24 @@ extern NSString *RKResourcePboardType;
 
 - (void)setTypeCreatorAfterSave:(id)userInfo
 {
-	FInfo finderInfo;
 	FSRef *fileRef = (FSRef *) NewPtrClear(sizeof(FSRef));
-	FSSpec *fileSpec = (FSSpec *) NewPtrClear(sizeof(FSSpec));
 	OSStatus error = FSPathMakeRef((const UInt8 *)[[self fileName] UTF8String], fileRef, nil);
 	if(!error)
 	{
-		error = FSGetCatalogInfo(fileRef, kFSCatInfoNone, NULL, NULL, fileSpec, NULL);
+		FSCatalogInfo info;
+		error = FSGetCatalogInfo(fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
 		if(!error)
 		{
-			error = FSpGetFInfo(fileSpec, &finderInfo);
-			if(!error)
-			{
-				[[self type] getBytes:&finderInfo.fdType length:4];
-				[[self creator] getBytes:&finderInfo.fdCreator length:4];
-//				NSLog(@"setting finder info to type: %X; creator: %X", finderInfo.fdType, finderInfo.fdCreator);
-				error = FSpSetFInfo(fileSpec, &finderInfo);
-				FSpGetFInfo(fileSpec, &finderInfo);
-//				NSLog(@"finder info got set to type: %X; creator: %X", finderInfo.fdType, finderInfo.fdCreator);
-			}
-			else NSLog(@"error getting Finder info. (error=%d, spec=%d, ref=%d)", error, fileSpec, fileRef);
+			FInfo *finderInfo = (FInfo *)(info.finderInfo);
+			[[self type] getBytes:&finderInfo->fdType length:4];
+			[[self creator] getBytes:&finderInfo->fdCreator length:4];
+			//				NSLog(@"setting finder info to type: %X; creator: %X", finderInfo.fdType, finderInfo.fdCreator);
+			FSSetCatalogInfo(fileRef, kFSCatInfoFinderInfo, &info);
+			//				NSLog(@"finder info got set to type: %X; creator: %X", finderInfo.fdType, finderInfo.fdCreator);
 		}
-		else NSLog(@"error converting fsref to fsspec. (error=%d, spec=%d, ref=%d)", error, fileSpec, fileRef);
+		else NSLog(@"error getting Finder info. (error=%d, ref=%p)", error, fileRef);
 	}
-	else NSLog(@"error making fsref from file path. (error=%d, ref=%d, path=%@)", error, fileRef, [self fileName]);
+	else NSLog(@"error making fsref from file path. (error=%d, ref=%p, path=%@)", error, fileRef, [self fileName]);
 }
 
 #pragma mark -
@@ -1030,8 +1024,9 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	if(data && [data length] != 0)
 	{
 		// plays sound synchronously, thread exits when sound is done playing
-		SndListPtr sndPtr = (SndListPtr) [data bytes];
-		SndPlay(nil, &sndPtr, false);
+		//SndListPtr sndPtr = (SndListPtr) [data bytes];
+		//SndPlay(nil, &sndPtr, false);
+		[[[[NSSound alloc] initWithData:data] autorelease] play];
 	}
 	else NSBeep();
 	[pool release];

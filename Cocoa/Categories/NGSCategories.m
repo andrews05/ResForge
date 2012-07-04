@@ -21,7 +21,7 @@
 }
 - (id)firstObjectReturningValue:(id)value forKey:(id)key
 {
-	int index = [[self valueForKey:key] indexOfObject:value];
+	NSUInteger index = [[self valueForKey:key] indexOfObject:value];
 	if(index != NSNotFound)
 		return [self objectAtIndex:index];
 	else return nil;
@@ -211,7 +211,7 @@
 	NSMutableArray *items = [NSMutableArray array];
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_3
 	NSIndexSet *indicies = [self selectedRowIndexes];
-    unsigned int rowIndex = [indicies firstIndex];
+    NSUInteger rowIndex = [indicies firstIndex];
     while (rowIndex != NSNotFound)
 	{
         [items addObject:[self itemAtRow:rowIndex]];
@@ -272,10 +272,13 @@
 
 /* CGLContext access for pre-10.3 */
 @implementation NSOpenGLContext (CGLContextAccess)
-- (CGLContextObj)cglContext;
+- (CGLContextObj)cglContext
 {
+#if !__LP64__
 	if(NSAppKitVersionNumber < 700.0)
 		return _contextAuxiliary;
-	else return (CGLContextObj) [self CGLContextObj];
+	else
+#endif
+		return (CGLContextObj) [self CGLContextObj];
 }
 @end

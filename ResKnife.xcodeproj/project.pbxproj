@@ -2331,7 +2331,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2344,7 +2343,6 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2362,14 +2360,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PNG Editor/PNG Editor-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2781,7 +2777,10 @@
 		E13F7F0608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = 4.0;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -2789,8 +2788,10 @@
 		E13F7F0708F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_VERSION = 4.0;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
