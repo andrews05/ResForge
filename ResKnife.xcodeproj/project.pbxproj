@@ -18,6 +18,12 @@
 		B229EEDD15A4BA900032C12C /* PNG Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B229EECA15A4B8720032C12C /* PNG Editor.plugin */; };
 		B229EEDE15A4BABD0032C12C /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		B229EEE115A4BB2E0032C12C /* PNGWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = B229EEC015A4B7250032C12C /* PNGWindowController.h */; };
+		B229EEF415A4FB6F0032C12C /* AboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEE815A4FB6F0032C12C /* AboutPanel.xib */; };
+		B229EEF515A4FB6F0032C12C /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEA15A4FB6F0032C12C /* Application.xib */; };
+		B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */; };
+		B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */; };
+		B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */; };
+		B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */; };
 		E1193609099830D300A3A6EA /* FontDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1193607099830D200A3A6EA /* FontDocument.nib */; };
 		E11936660998552900A3A6EA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E11936650998552900A3A6EA /* Localizable.strings */; };
 		E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367D099864AD00A3A6EA /* ElementUBYT.h */; };
@@ -65,12 +71,6 @@
 		E18BF550069FEA1300F076B8 /* OpenPanelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F59481B103D077DC01A8010A /* OpenPanelDelegate.h */; };
 		E18BF551069FEA1300F076B8 /* RKEditorRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */; };
 		E18BF552069FEA1300F076B8 /* RKSupportResourceRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */; };
-		E18BF554069FEA1300F076B8 /* AboutPanel.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B588360156D40B01000001 /* AboutPanel.nib */; };
-		E18BF555069FEA1300F076B8 /* Application.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B588380156D40B01000001 /* Application.nib */; };
-		E18BF556069FEA1300F076B8 /* InfoWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B5883A0156D40B01000001 /* InfoWindow.nib */; };
-		E18BF557069FEA1300F076B8 /* PrefsWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B5883E0156D40B01000001 /* PrefsWindow.nib */; };
-		E18BF558069FEA1300F076B8 /* ResourceDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5B588400156D40B01000001 /* ResourceDocument.nib */; };
-		E18BF559069FEA1300F076B8 /* CreateResourceSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = F54E622B021D192201A80001 /* CreateResourceSheet.nib */; };
 		E18BF55A069FEA1300F076B8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588420156D40B01000001 /* InfoPlist.strings */; };
 		E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588440156D40B01000001 /* Localizable.strings */; };
 		E18BF55C069FEA1300F076B8 /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5730B930159528A01000001 /* defaults.plist */; };
@@ -389,6 +389,12 @@
 		B229EED215A4B8720032C12C /* PNG Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PNG Editor-Info.plist"; sourceTree = "<group>"; };
 		B229EED415A4B8720032C12C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B229EED615A4B8720032C12C /* PNG Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PNG Editor-Prefix.pch"; sourceTree = "<group>"; };
+		B229EEE915A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/AboutPanel.xib; sourceTree = SOURCE_ROOT; };
+		B229EEEB15A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/Application.xib; sourceTree = SOURCE_ROOT; };
+		B229EEED15A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/CreateResourceSheet.xib; sourceTree = SOURCE_ROOT; };
+		B229EEEF15A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/InfoWindow.xib; sourceTree = SOURCE_ROOT; };
+		B229EEF115A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/PrefsWindow.xib; sourceTree = SOURCE_ROOT; };
+		B229EEF315A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/ResourceDocument.xib; sourceTree = SOURCE_ROOT; };
 		E1193608099830D300A3A6EA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FontDocument.nib; sourceTree = "<group>"; };
 		E11936620998551200A3A6EA /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E119367D099864AD00A3A6EA /* ElementUBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementUBYT.h; sourceTree = "<group>"; };
@@ -480,7 +486,6 @@
 		F54E6220021B6A0801A80001 /* FindSheetController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FindSheetController.h; sourceTree = "<group>"; };
 		F54E6221021B6A0801A80001 /* FindSheetController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FindSheetController.m; sourceTree = "<group>"; };
 		F54E6223021B6A0801A80001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FindSheet.nib; sourceTree = "<group>"; };
-		F54E622C021D192201A80001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Cocoa/English.lproj/CreateResourceSheet.nib; sourceTree = SOURCE_ROOT; };
 		F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnifePluginProtocol.h; sourceTree = "<group>"; };
 		F5730B930159528A01000001 /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist; path = defaults.plist; sourceTree = "<group>"; };
 		F577A8F30211CFA701A80001 /* Save.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Save.tiff; sourceTree = "<group>"; };
@@ -534,11 +539,6 @@
 		F5B588320156D40B01000001 /* ResourceDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDocument.m; sourceTree = "<group>"; };
 		F5B588330156D40B01000001 /* SizeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SizeFormatter.h; sourceTree = "<group>"; };
 		F5B588340156D40B01000001 /* SizeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SizeFormatter.m; sourceTree = "<group>"; };
-		F5B588370156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/AboutPanel.nib; sourceTree = "<group>"; };
-		F5B588390156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Application.nib; sourceTree = "<group>"; };
-		F5B5883B0156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/InfoWindow.nib; sourceTree = "<group>"; };
-		F5B5883F0156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PrefsWindow.nib; sourceTree = "<group>"; };
-		F5B588410156D40B01000001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ResourceDocument.nib; sourceTree = "<group>"; };
 		F5B588430156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F5B588450156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F5B588460156D40B01000001 /* ResKnife.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ResKnife.icns; sourceTree = "<group>"; };
@@ -1075,12 +1075,12 @@
 		F5B588350156D40B01000001 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F5B588360156D40B01000001 /* AboutPanel.nib */,
-				F5B588380156D40B01000001 /* Application.nib */,
-				F54E622B021D192201A80001 /* CreateResourceSheet.nib */,
-				F5B5883A0156D40B01000001 /* InfoWindow.nib */,
-				F5B5883E0156D40B01000001 /* PrefsWindow.nib */,
-				F5B588400156D40B01000001 /* ResourceDocument.nib */,
+				B229EEE815A4FB6F0032C12C /* AboutPanel.xib */,
+				B229EEEA15A4FB6F0032C12C /* Application.xib */,
+				B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */,
+				B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */,
+				B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */,
+				B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */,
 				F5B588420156D40B01000001 /* InfoPlist.strings */,
 				F5B588440156D40B01000001 /* Localizable.strings */,
 				E196FEE10551AF9600FE7E58 /* Resource Type Mappings.strings */,
@@ -1733,12 +1733,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF554069FEA1300F076B8 /* AboutPanel.nib in Resources */,
-				E18BF555069FEA1300F076B8 /* Application.nib in Resources */,
-				E18BF556069FEA1300F076B8 /* InfoWindow.nib in Resources */,
-				E18BF557069FEA1300F076B8 /* PrefsWindow.nib in Resources */,
-				E18BF558069FEA1300F076B8 /* ResourceDocument.nib in Resources */,
-				E18BF559069FEA1300F076B8 /* CreateResourceSheet.nib in Resources */,
 				E18BF55A069FEA1300F076B8 /* InfoPlist.strings in Resources */,
 				E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */,
 				E18BF55C069FEA1300F076B8 /* defaults.plist in Resources */,
@@ -1755,6 +1749,12 @@
 				E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */,
 				E18BF568069FEA1300F076B8 /* Export.tiff in Resources */,
 				E18BF569069FEA1300F076B8 /* Resource Type Mappings.strings in Resources */,
+				B229EEF415A4FB6F0032C12C /* AboutPanel.xib in Resources */,
+				B229EEF515A4FB6F0032C12C /* Application.xib in Resources */,
+				B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */,
+				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,
+				B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */,
+				B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2093,6 +2093,54 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		B229EEE815A4FB6F0032C12C /* AboutPanel.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B229EEE915A4FB6F0032C12C /* English */,
+			);
+			name = AboutPanel.xib;
+			sourceTree = "<group>";
+		};
+		B229EEEA15A4FB6F0032C12C /* Application.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B229EEEB15A4FB6F0032C12C /* English */,
+			);
+			name = Application.xib;
+			sourceTree = "<group>";
+		};
+		B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B229EEED15A4FB6F0032C12C /* English */,
+			);
+			name = CreateResourceSheet.xib;
+			sourceTree = "<group>";
+		};
+		B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B229EEEF15A4FB6F0032C12C /* English */,
+			);
+			name = InfoWindow.xib;
+			sourceTree = "<group>";
+		};
+		B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B229EEF115A4FB6F0032C12C /* English */,
+			);
+			name = PrefsWindow.xib;
+			sourceTree = "<group>";
+		};
+		B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B229EEF315A4FB6F0032C12C /* English */,
+			);
+			name = ResourceDocument.xib;
+			sourceTree = "<group>";
+		};
 		E1193607099830D200A3A6EA /* FontDocument.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2174,14 +2222,6 @@
 			name = FindSheet.nib;
 			sourceTree = "<group>";
 		};
-		F54E622B021D192201A80001 /* CreateResourceSheet.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F54E622C021D192201A80001 /* English */,
-			);
-			name = CreateResourceSheet.nib;
-			sourceTree = "<group>";
-		};
 		F58F6BA9025BDBA701A8010C /* NovaTools.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2189,51 +2229,6 @@
 			);
 			name = NovaTools.nib;
 			sourceTree = "<group>";
-		};
-		F5B588360156D40B01000001 /* AboutPanel.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F5B588370156D40B01000001 /* English */,
-			);
-			name = AboutPanel.nib;
-			path = Cocoa;
-			sourceTree = SOURCE_ROOT;
-		};
-		F5B588380156D40B01000001 /* Application.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F5B588390156D40B01000001 /* English */,
-			);
-			name = Application.nib;
-			path = Cocoa;
-			sourceTree = SOURCE_ROOT;
-		};
-		F5B5883A0156D40B01000001 /* InfoWindow.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F5B5883B0156D40B01000001 /* English */,
-			);
-			name = InfoWindow.nib;
-			path = Cocoa;
-			sourceTree = SOURCE_ROOT;
-		};
-		F5B5883E0156D40B01000001 /* PrefsWindow.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F5B5883F0156D40B01000001 /* English */,
-			);
-			name = PrefsWindow.nib;
-			path = Cocoa;
-			sourceTree = SOURCE_ROOT;
-		};
-		F5B588400156D40B01000001 /* ResourceDocument.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F5B588410156D40B01000001 /* English */,
-			);
-			name = ResourceDocument.nib;
-			path = Cocoa;
-			sourceTree = SOURCE_ROOT;
 		};
 		F5B588420156D40B01000001 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
