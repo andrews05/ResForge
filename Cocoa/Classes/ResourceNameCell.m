@@ -82,7 +82,7 @@
 	}
 }
 
-- (void)selectWithFrame:(NSRect)cellFrame inView:(NSView *)controlView editor:(NSText *)textObject delegate:(id)delegateObject start:(int)selStart length:(int)selLength
+- (void)selectWithFrame:(NSRect)cellFrame inView:(NSView *)controlView editor:(NSText *)textObject delegate:(id)delegateObject start:(NSInteger)selStart length:(NSInteger)selLength
 {
 	if(drawImage == YES)
 	{

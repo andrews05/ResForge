@@ -1,6 +1,7 @@
 #import "FontWindowController.h"
 #import "NGSCategories.h"
 #import "ResourceDocument.h"
+#import "Resource.h"
 #import <stdarg.h>
 
 UInt32 TableChecksum(UInt32 *table, UInt32 length)

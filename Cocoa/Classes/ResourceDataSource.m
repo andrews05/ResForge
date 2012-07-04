@@ -78,7 +78,7 @@ extern NSString *RKResourcePboardType;
 
 /* Data source protocol implementation */
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	#pragma unused(outlineView, item)
 	return [resources objectAtIndex:index];
@@ -90,7 +90,7 @@ extern NSString *RKResourcePboardType;
 	return NO;
 }
 
-- (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	#pragma unused(outlineView, item)
 	return [resources count];
@@ -222,11 +222,11 @@ extern NSString *RKResourcePboardType;
 @method		outlineView:validateDrop:proposedItem:proposedChildIndex:
 @abstract   Called when the user is hovering with a drop over our outline view.
 */
-- (NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id <NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(int)childIndex
+- (NSDragOperation)outlineView:(NSOutlineView *)oView validateDrop:(id <NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)childIndex
 {
-	if([info draggingSource] != outlineView)
+	if([info draggingSource] != oView)
 	{
-		[outlineView setDropItem:nil dropChildIndex:NSOutlineViewDropOnItemIndex];
+		[oView setDropItem:nil dropChildIndex:NSOutlineViewDropOnItemIndex];
 		return NSDragOperationCopy;
 	}
 	else return NSDragOperationNone;
@@ -236,12 +236,18 @@ extern NSString *RKResourcePboardType;
 @method		outlineView:acceptDrop:item:childIndex:
 @abstract   Called when the user drops something on our outline view.
 */
-- (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id <NSDraggingInfo>)info item:(id)targetItem childIndex:(int)childIndex
+- (BOOL)outlineView:(NSOutlineView *)oView acceptDrop:(id <NSDraggingInfo>)info item:(id)targetItem childIndex:(NSInteger)childIndex
 {
 	NSPasteboard *pb = [info draggingPasteboard];
 	if([pb availableTypeFromArray:[NSArray arrayWithObject:RKResourcePboardType]])
 		[document pasteResources:[NSUnarchiver unarchiveObjectWithData:[pb dataForType:RKResourcePboardType]]];
 	return YES;
 }
+
+- (void)outlineView:(NSOutlineView *)oView sortDescriptorsDidChange:(NSArray *)oldDescriptors {	
+	[resources sortUsingDescriptors:[oView sortDescriptors]];
+	[oView reloadData];
+}
+
 
 @end

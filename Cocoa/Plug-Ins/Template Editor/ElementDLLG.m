@@ -48,7 +48,7 @@
 {
 	char cstr[256];
 	char *endPtr = cstr + 255;
-	strncpy(cstr, [str cString], 255);
+	strncpy(cstr, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], 255);
 	value = strtoll(cstr, &endPtr, 10);
 }
 

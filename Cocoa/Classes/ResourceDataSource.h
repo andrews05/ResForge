@@ -7,7 +7,7 @@
 @pending		This class needs to be made KVC compliant.
 */
 
-@interface ResourceDataSource : NSObject
+@interface ResourceDataSource : NSObject <NSOutlineViewDataSource>
 {
 	IBOutlet NSOutlineView		*outlineView;
 	IBOutlet NSWindow			*window;

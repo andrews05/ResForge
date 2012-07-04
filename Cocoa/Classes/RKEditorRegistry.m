@@ -117,7 +117,7 @@
 	// scan all paths
 	while(path = [pathEnumerator nextObject])
 	{
-		NSEnumerator *fileEnumerator = [[[NSFileManager defaultManager] directoryContentsAtPath:path] objectEnumerator];
+		NSEnumerator *fileEnumerator = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] objectEnumerator];
 		NSString *pluginName;
 		
 		// enumerate all files in this directory

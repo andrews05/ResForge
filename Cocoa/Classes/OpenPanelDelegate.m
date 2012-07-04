@@ -52,7 +52,7 @@
 	return [forks count];
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
 	// return object in array
 	if(row < [forks count])
@@ -97,7 +97,7 @@
 	[forkTableView reloadData];
 	
 	// start editing placeholder
-	[forkTableView selectRow:[forks count]-1 byExtendingSelection:NO];
+	[forkTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[forks count]-1] byExtendingSelection:NO];
 	[forkTableView editColumn:0 row:[forks count]-1 withEvent:nil select:YES];
 }
 

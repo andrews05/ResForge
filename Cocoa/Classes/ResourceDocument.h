@@ -3,7 +3,7 @@
 
 @class ResourceWindowController, ResourceDataSource, Resource;
 
-@interface ResourceDocument : NSDocument
+@interface ResourceDocument : NSDocument <NSToolbarDelegate>
 {
 	IBOutlet ResourceDataSource		*dataSource;
 	IBOutlet NSWindow				*mainWindow;

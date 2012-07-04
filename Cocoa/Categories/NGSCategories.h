@@ -70,7 +70,7 @@
 @interface NSIndexSet (NGSIndicies)
 + (id)indexSetWithIndiciesInRange:(NSRange)range;
 - (id)initWithIndiciesInRange:(NSRange)range;
-- (unsigned int)getIndicies:(unsigned int *)indexBuffer maxCount:(unsigned int)bufferSize inIndexRange:(NSRangePointer)range;
+- (NSUInteger)getIndicies:(NSUInteger *)indexBuffer maxCount:(NSUInteger)bufferSize inIndexRange:(NSRangePointer)range;
 - (BOOL)containsIndiciesInRange:(NSRange)range;
 - (BOOL)containsIndicies:(NSIndexSet *)indexSet;
 - (BOOL)intersectsIndiciesInRange:(NSRange)range;

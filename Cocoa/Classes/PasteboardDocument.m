@@ -27,7 +27,7 @@ extern NSString *RKResourcePboardType;
 	[self clear:nil];
 	
 	// set the window's title to represent the pasteboard being shown (at some point I anticipate having several of these)
-	[[self window] setTitle:pbName];
+	[[self mainWindow] setTitle:pbName];
 	
 	// disable undos during loading
 	[[self undoManager] disableUndoRegistration];

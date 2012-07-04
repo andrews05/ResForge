@@ -83,10 +83,7 @@
 
 - (unsigned int)sizeOnDisk
 {
-	UInt32 length;
-	if([value respondsToSelector:@selector(lengthOfBytesUsingEncoding:)])	// 10.4
-		length = [value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
-	else length = [value cStringLength];
+	UInt32 length = [value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
 	if(_maxLength && length > _maxLength) length = _maxLength;
 	if(length < _minLength) length = _minLength;
 	length += _lengthBytes + (_terminatingByte? 1:0);

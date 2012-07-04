@@ -4,8 +4,8 @@
 - (NSArray *)subarrayWithIndicies:(NSIndexSet *)indicies
 {
 	NSRange range = {0,[self count]};
-	unsigned int count = [indicies count];
-	unsigned int *buffer = (unsigned int *) calloc(count, sizeof(int));
+	NSUInteger count = [indicies count];
+	NSUInteger *buffer = (NSUInteger *)calloc(count, sizeof(NSUInteger));
 	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:count];
 	[indicies getIndexes:buffer maxCount:count inIndexRange:&range];
 	for(unsigned int i = 0; i < count; i++)
@@ -80,7 +80,7 @@
 {	return [NSIndexSet indexSetWithIndexesInRange:range]; }
 - (id)initWithIndiciesInRange:(NSRange)range
 {	return [self initWithIndexesInRange:range]; }
-- (unsigned int)getIndicies:(unsigned int *)indexBuffer maxCount:(unsigned int)bufferSize inIndexRange:(NSRangePointer)range
+- (NSUInteger)getIndicies:(NSUInteger *)indexBuffer maxCount:(NSUInteger)bufferSize inIndexRange:(NSRangePointer)range
 {	return [self getIndexes:indexBuffer maxCount:bufferSize inIndexRange:range]; }
 - (BOOL)containsIndiciesInRange:(NSRange)range
 {	return [self containsIndexesInRange:range]; }

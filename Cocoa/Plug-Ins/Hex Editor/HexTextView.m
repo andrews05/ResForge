@@ -1,6 +1,18 @@
 #import "HexTextView.h"
 #import "NSData-HexRepresentation.h"
 
+@interface NSTextView (Private)
+
+- (NSUInteger)_insertionGlyphIndexForDrag:(id)sender;
+
+@end
+
+@interface NSUndoManager (Private)
+
+- (id)_undoStack;
+
+@end
+
 @implementation HexEditorTextView
 
 /* NSText overrides */
@@ -142,7 +154,7 @@ static NSRange draggedRange;
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
 	[super draggingUpdated:sender];		// ignore return value
-	if([sender draggingSource] == [[self delegate] hex] || [sender draggingSource] == [[self delegate] ascii])
+	if([sender draggingSource] == [(HexEditorDelegate *)[self delegate] hex] || [sender draggingSource] == [(HexEditorDelegate *)[self delegate] ascii])
 		return NSDragOperationMove;
 	else return NSDragOperationCopy;
 }
@@ -156,14 +168,14 @@ static NSRange draggedRange;
 	NSRange selection;
 	
 	// convert hex string to data
-	if([sender draggingSource] == [[self delegate] hex])
+	if([sender draggingSource] == [(HexEditorDelegate *)[self delegate] hex])
 		pastedData = [[[[NSString alloc] initWithData:pastedData encoding:[NSString defaultCStringEncoding]] autorelease] dataFromHex];
 	
-	if([sender draggingSource] == [[self delegate] hex] || [sender draggingSource] == [[self delegate] ascii])
+	if([sender draggingSource] == [(HexEditorDelegate *)[self delegate] hex] || [sender draggingSource] == [(HexEditorDelegate *)[self delegate] ascii])
 //	if(operation == NSDragOperationMove)
 	{
 		NSRange deleteRange = draggedRange;
-		if(self == (id) [[self delegate] hex])
+		if(self == (id) [(HexEditorDelegate *)[self delegate] hex])
 		{
 			deleteRange.location /= 3;
 			deleteRange.length += 1;
@@ -179,7 +191,7 @@ static NSRange draggedRange;
 	}
 	
 	// insert data at insertion point
-	if(self == (id) [[self delegate] hex]) charIndex /= 3;
+	if(self == (id) [(HexEditorDelegate *)[self delegate] hex]) charIndex /= 3;
 	[self editData:[[[self window] windowController] data] replaceBytesInRange:NSMakeRange(charIndex,0) withData:pastedData];
 	
 	// set the new selection/insertion point
@@ -202,13 +214,12 @@ static NSRange draggedRange;
 {
 	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
 	NSMutableData *data = [[[[self window] windowController] data] mutableCopy];
-	NSData *replaceData = [NSData dataWithBytes:[string cString] length:[string cStringLength]];
+	NSData *replaceData = [string dataUsingEncoding:NSASCIIStringEncoding];
 	
-	if(self == (id) [[self delegate] hex])
+	if(self == (id) [(HexEditorDelegate *)[self delegate] hex])
 	{
-		int	i;
 		// bug: iteration through each character in string is broken, paste not yet mapped to this function
-		for(i = 0; i < [string cStringLength]; i++)
+		for(NSUInteger i = 0; i < [string lengthOfBytesUsingEncoding:NSASCIIStringEncoding]; i++)
 		{
 			char typedChar = [string characterAtIndex:i];
 			if(typedChar >= 0x30 && typedChar <= 0x39)		typedChar -= 0x30;		// 0 to 9
@@ -216,12 +227,12 @@ static NSRange draggedRange;
 			else if(typedChar >= 0x61 && typedChar <= 0x66)	typedChar -= 0x57;		// a to f
 			else return;
 			
-			if(![[self delegate] editedLow])	// editing low bits
+			if(![(HexEditorDelegate *)[self delegate] editedLow])	// editing low bits
 			{
 				// put typed char into low bits
 				typedChar &= 0x0F;
 				replaceData = [NSData dataWithBytes:&typedChar length:1];
-				[[self delegate] setEditedLow:YES];
+				[(HexEditorDelegate *)[self delegate] setEditedLow:YES];
 			}
 			else								// edited low bits already
 			{
@@ -234,7 +245,7 @@ static NSRange draggedRange;
 				prevByte <<=  4;				// store high bit
 				prevByte += typedChar & 0x0F;	// add low bit
 				replaceData = [NSData dataWithBytes:&prevByte length:1];
-				[[self delegate] setEditedLow:NO];
+				[(HexEditorDelegate *)[self delegate] setEditedLow:NO];
 			}
 		}
 	}
@@ -246,8 +257,8 @@ static NSRange draggedRange;
 	// set the new selection (insertion point)
 	selection.location++;
 	selection.length = 0;
-	if(self == (id) [[self delegate] hex])	selection = [HexWindowController hexRangeFromByteRange:selection];
-	if(self == (id) [[self delegate] ascii])  selection = [HexWindowController asciiRangeFromByteRange:selection];
+	if(self == (id) [(HexEditorDelegate *)[self delegate] hex])	selection = [HexWindowController hexRangeFromByteRange:selection];
+	if(self == (id) [(HexEditorDelegate *)[self delegate] ascii])  selection = [HexWindowController asciiRangeFromByteRange:selection];
 	[self setSelectedRange:selection];
 }
 
@@ -271,8 +282,8 @@ static NSRange draggedRange;
 	if(selection.length == 0 && selection.location > 0)
 		selection.location -= 1;
 	else selection.length = 0;
-	if(self == (id) [[self delegate] hex])	selection = [HexWindowController hexRangeFromByteRange:selection];
-	if(self == (id) [[self delegate] ascii])  selection = [HexWindowController asciiRangeFromByteRange:selection];
+	if(self == (id) [(HexEditorDelegate *)[self delegate] hex])	selection = [HexWindowController hexRangeFromByteRange:selection];
+	if(self == (id) [(HexEditorDelegate *)[self delegate] ascii])  selection = [HexWindowController asciiRangeFromByteRange:selection];
 	[self setSelectedRange:selection];
 }
 
@@ -325,7 +336,7 @@ static NSRange draggedRange;
 	// save data we're about to replace so we can restore it in an undo
 	NSRange newRange = NSMakeRange(range.location, [newBytes length]);
 	NSMutableData *newData = [NSMutableData dataWithData:data];
-	NSMutableData *oldBytes = [[data subdataWithRange:range] retain];	// bug: memory leak, need to release somewhere (call -[NSInvocation retainArguments] instead?)
+	NSData *oldBytes = [[data subdataWithRange:range] retain];	// bug: memory leak, need to release somewhere (call -[NSInvocation retainArguments] instead?)
 	
 	// manipulate undo stack to concatenate multiple undos
 	BOOL closeUndoGroup = NO;

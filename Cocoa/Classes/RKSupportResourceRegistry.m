@@ -20,7 +20,7 @@
 {
 //	NSLog(@"Looking for resources in %@", path);
 	NSString *name;
-	NSEnumerator *enumerator = [[[NSFileManager defaultManager] directoryContentsAtPath:path] objectEnumerator];
+	NSEnumerator *enumerator = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] objectEnumerator];
 	while(name = [enumerator nextObject])
 	{
 //		NSLog(@"Examining %@", name);

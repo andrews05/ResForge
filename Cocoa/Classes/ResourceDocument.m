@@ -316,7 +316,7 @@ extern NSString *RKResourcePboardType;
 - (BOOL)writeToFile:(NSString *)fileName ofType:(NSString *)type
 {
 	OSStatus error = noErr;
-	SInt16 fileRefNum = 0;
+	ResFileRefNum fileRefNum = 0;
 	FSRef *parentRef	= (FSRef *) NewPtrClear(sizeof(FSRef));
 	FSRef *fileRef		= (FSRef *) NewPtrClear(sizeof(FSRef));
 	
@@ -393,7 +393,7 @@ extern NSString *RKResourcePboardType;
 		if([resource representedFork] == nil) continue;
 		unichar *uniname = (unichar *) NewPtrClear(sizeof(unichar) *256);
 		[[resource representedFork] getCharacters:uniname];
-		SInt16 forkRefNum = 0;
+		FSIORefNum forkRefNum = 0;
 		error = FSOpenFork(fileRef, [[resource representedFork] length], (UniChar *) uniname, fsWrPerm, &forkRefNum);
 		if(!error && forkRefNum)
 			error = FSWriteFork(forkRefNum, fsFromStart, 0, [[resource data] length], [[resource data] bytes], NULL);
@@ -441,7 +441,7 @@ extern NSString *RKResourcePboardType;
 		memmove(&nameStr[1], [[resource name] cStringUsingEncoding:NSMacOSRomanStringEncoding], nameStr[0]);
 		
 		// convert type string to ResType
-		[[resource type] getCString:resTypeStr maxLength:4];
+		[[resource type] getCString:resTypeStr maxLength:4 encoding:NSMacOSRomanStringEncoding];
 		resTypeCode = CFSwapInt32HostToBig(*(ResType *)resTypeStr);
 		
 		// convert NSData to resource handle
@@ -480,7 +480,7 @@ extern NSString *RKResourcePboardType;
 - (void)setTypeCreatorAfterSave:(id)userInfo
 {
 	FSRef *fileRef = (FSRef *) NewPtrClear(sizeof(FSRef));
-	OSStatus error = FSPathMakeRef((const UInt8 *)[[self fileName] UTF8String], fileRef, nil);
+	OSStatus error = FSPathMakeRef((const UInt8 *)[[[self fileURL] path] UTF8String], fileRef, nil);
 	if(!error)
 	{
 		FSCatalogInfo info;
@@ -496,7 +496,7 @@ extern NSString *RKResourcePboardType;
 		}
 		else NSLog(@"error getting Finder info. (error=%d, ref=%p)", error, fileRef);
 	}
-	else NSLog(@"error making fsref from file path. (error=%d, ref=%p, path=%@)", error, fileRef, [self fileName]);
+	else NSLog(@"error making fsref from file path. (error=%d, ref=%p, path=%@)", error, fileRef, [[self fileURL] path]);
 }
 
 #pragma mark -
@@ -516,7 +516,10 @@ extern NSString *RKResourcePboardType;
 		[panel setAllowsMultipleSelection:NO];
 		[panel setCanChooseDirectories:YES];
 		[panel setCanChooseFiles:NO];
-		[panel beginSheetForDirectory:nil file:nil modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(folderChoosePanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+		//[panel beginSheetForDirectory:nil file:nil modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(folderChoosePanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+		[panel beginSheetModalForWindow:mainWindow completionHandler:^(NSInteger result) {
+			[self folderChoosePanelDidEnd:panel returnCode:result contextInfo:nil];
+		}];
 	}
 	else
 	{
@@ -541,7 +544,7 @@ extern NSString *RKResourcePboardType;
 	// basic overrides for file name extensions (assume no plug-ins installed)
 	NSString *newExtension;
 	NSDictionary *adjustments = [NSDictionary dictionaryWithObjectsAndKeys: @"ttf", @"sfnt", nil];
-	if(newExtension = [adjustments objectForKey:extension])
+	if((newExtension = [adjustments objectForKey:extension]))
 		extension = newExtension;
 	
 	// ask for data
@@ -554,8 +557,12 @@ extern NSString *RKResourcePboardType;
 	
 	NSSavePanel *panel = [NSSavePanel savePanel];
 	NSString *filename = [resource name] ? [resource name] : NSLocalizedString(@"Untitled Resource",nil);
-	filename = [filename stringByAppendingFormat:@".%@", extension];
-	[panel beginSheetForDirectory:nil file:filename modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(exportPanelDidEnd:returnCode:contextInfo:) contextInfo:[exportData retain]];
+	filename = [filename stringByAppendingPathExtension:extension];
+	[panel setNameFieldStringValue:filename];
+	//[panel beginSheetForDirectory:nil file:filename modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(exportPanelDidEnd:returnCode:contextInfo:) contextInfo:[exportData retain]];
+	[panel beginSheetModalForWindow:mainWindow completionHandler:^(NSInteger result) {
+		[self exportPanelDidEnd:panel returnCode:result contextInfo:exportData];
+	}];
 }
 
 - (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -564,7 +571,7 @@ extern NSString *RKResourcePboardType;
 	[data autorelease];
 	
 	if(returnCode == NSOKButton)
-		[data writeToFile:[sheet filename] atomically:YES];
+		[data writeToURL:[sheet URL] atomically:YES];
 }
 
 - (void)folderChoosePanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -573,7 +580,7 @@ extern NSString *RKResourcePboardType;
 	{
 		unsigned int i = 1;
 		Resource *resource;
-		NSString *path, *filename, *extension;
+		NSString *filename, *extension;
 		NSDictionary *adjustments = [NSDictionary dictionaryWithObjectsAndKeys: @"ttf", @"sfnt", @"png", @"PNGf", nil];
 		NSEnumerator *enumerator = [[outlineView selectedItems] objectEnumerator];
 		while(resource = [enumerator nextObject])
@@ -611,8 +618,8 @@ extern NSString *RKResourcePboardType;
 				}
 				filename = tempname;
 			}
-			path = [[sheet filename] stringByAppendingPathComponent:filename];
-			[exportData writeToFile:path atomically:YES];
+			NSURL *url = [[sheet URL] URLByAppendingPathComponent:filename];
+			[exportData writeToURL:url atomically:YES];
 		}
 	}
 }
@@ -752,7 +759,7 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	[item setLabel:NSLocalizedString(@"Edit", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Edit", nil)];
 	[item setToolTip:NSLocalizedString(@"Edit Resource In Default Editor", nil)];
-	if(image = [[NSWorkspace sharedWorkspace] iconForFileType:@"rtf"])
+	if((image = [[NSWorkspace sharedWorkspace] iconForFileType:@"rtf"]))
 	     [item setImage:image];
 	else [item setImage:[NSImage imageNamed:@"Edit"]];
 	[item setTarget:self];
@@ -764,7 +771,7 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	[item setLabel:NSLocalizedString(@"Edit Hex", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Edit Hex", nil)];
 	[item setToolTip:NSLocalizedString(@"Edit Resource As Hexadecimal", nil)];
-	if(image = [[NSWorkspace sharedWorkspace] iconForFileType:@"txt"])
+	if((image = [[NSWorkspace sharedWorkspace] iconForFileType:@"txt"]))
 	     [item setImage:image];
 	else [item setImage:[NSImage imageNamed:@"Edit Hex"]];
 	[item setTarget:self];
@@ -786,7 +793,7 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	[item setLabel:NSLocalizedString(@"Show Info", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Show Info", nil)];
 	[item setToolTip:NSLocalizedString(@"Show Resource Information Window", nil)];
-	if(image = [NSImage imageNamed:@"NSGetInfoToolbar"])
+	if((image = [NSImage imageNamed:@"NSGetInfoToolbar"]))
 	     [item setImage:image];
 	else [item setImage:[NSImage imageNamed:@"Show Info"]];
 	[item setTarget:[NSApp delegate]];
@@ -982,7 +989,7 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 	// update: doug says window controllers automatically release themselves when their window is closed.
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	NSWindowController *plugController = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
+	id <ResKnifePluginProtocol> plugController = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
 #pragma unused(plugController)
 }
 

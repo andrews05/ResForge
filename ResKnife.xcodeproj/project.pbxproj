@@ -10,7 +10,6 @@
 		0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EBA8664122CF49800FEC1AC /* NGSCategories.h */; };
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
-		3DB9D66412307A9400DDA647 /* NovaTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E17ADBC006A2132800842474 /* NovaTools.plugin */; };
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; };
 		B229EECB15A4B8720032C12C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B229EED315A4B8720032C12C /* InfoPlist.strings */; };
@@ -252,13 +251,6 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
-		0ED5B4B513BF0A7400A5DC6D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E18BF5B7069FEA1400F076B8;
-			remoteInfo = NovaTools;
-		};
 		0ED5B4B713BF0A7800A5DC6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -340,7 +332,6 @@
 				E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */,
 				E13F837F08F13A4C00E2A5CB /* Font Editor.plugin in Copy Plugins */,
 				3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */,
-				3DB9D66412307A9400DDA647 /* NovaTools.plugin in Copy Plugins */,
 			);
 			name = "Copy Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1543,7 +1534,6 @@
 				E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */,
 				0ED5B4B813BF0A7800A5DC6D /* PBXTargetDependency */,
 				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
-				0ED5B4B613BF0A7400A5DC6D /* PBXTargetDependency */,
 				B229EEE315A4BB720032C12C /* PBXTargetDependency */,
 			);
 			name = "ResKnife Cocoa";
@@ -2043,11 +2033,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0ED5B4B613BF0A7400A5DC6D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E18BF5B7069FEA1400F076B8 /* NovaTools */;
-			targetProxy = 0ED5B4B513BF0A7400A5DC6D /* PBXContainerItemProxy */;
-		};
 		0ED5B4B813BF0A7800A5DC6D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E18BF68E069FEA1800F076B8 /* Bitmap Editor Cocoa */;
@@ -2780,7 +2765,6 @@
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_SIGN_COMPARE = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -2791,7 +2775,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_SIGN_COMPARE = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;

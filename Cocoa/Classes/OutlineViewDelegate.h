@@ -4,7 +4,7 @@
 
 @class Resource;
 
-@interface OutlineViewDelegate : NSObject
+@interface OutlineViewDelegate : NSObject <NSOutlineViewDataSource>
 {
 	IBOutlet NSWindow				*window;
 	IBOutlet NSOutlineView			*outlineView;

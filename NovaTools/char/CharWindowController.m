@@ -1,4 +1,5 @@
 #import "CharWindowController.h"
+#import "Resource.h"
 
 @implementation CharWindowController
 

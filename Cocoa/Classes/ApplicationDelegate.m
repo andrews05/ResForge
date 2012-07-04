@@ -258,7 +258,7 @@
 			{
 				// ask politly for icon
 				if([editor respondsToSelector:@selector(iconForResourceType:)])
-					icon = [editor iconForResourceType:resourceType];
+					icon = [(id)editor iconForResourceType:resourceType];
 				
 				// try getting it myself
 				if(!icon)
