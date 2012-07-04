@@ -59,7 +59,6 @@
 		E18BF548069FEA1300F076B8 /* ResourceNameCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F577A900021215C801A80001 /* ResourceNameCell.h */; };
 		E18BF549069FEA1300F076B8 /* SizeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588330156D40B01000001 /* SizeFormatter.h */; };
 		E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */; };
-		E18BF54B069FEA1300F076B8 /* MoreFilesX.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DF1BF10254AD8801A80001 /* MoreFilesX.h */; };
 		E18BF54C069FEA1300F076B8 /* NSString-FSSpec.h in Headers */ = {isa = PBXBuildFile; fileRef = F59D5DE40320DFF601A8010C /* NSString-FSSpec.h */; };
 		E18BF54D069FEA1300F076B8 /* PasteboardDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071603CCC61E01A8010A /* PasteboardDocument.h */; };
 		E18BF54E069FEA1300F076B8 /* PasteboardWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */; };
@@ -101,7 +100,6 @@
 		E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F577A901021215C801A80001 /* ResourceNameCell.m */; };
 		E18BF57A069FEA1300F076B8 /* SizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588340156D40B01000001 /* SizeFormatter.m */; };
 		E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */; };
-		E18BF57C069FEA1300F076B8 /* MoreFilesX.c in Sources */ = {isa = PBXBuildFile; fileRef = F5DF1BF00254AD8801A80001 /* MoreFilesX.c */; };
 		E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF57E069FEA1300F076B8 /* NSString-FSSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = F59D5DE50320DFF601A8010C /* NSString-FSSpec.m */; };
 		E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071703CCC61E01A8010A /* PasteboardDocument.m */; };
@@ -1384,7 +1382,6 @@
 				E18BF548069FEA1300F076B8 /* ResourceNameCell.h in Headers */,
 				E18BF549069FEA1300F076B8 /* SizeFormatter.h in Headers */,
 				E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */,
-				E18BF54B069FEA1300F076B8 /* MoreFilesX.h in Headers */,
 				E18BF54C069FEA1300F076B8 /* NSString-FSSpec.h in Headers */,
 				E18BF54D069FEA1300F076B8 /* PasteboardDocument.h in Headers */,
 				E18BF54E069FEA1300F076B8 /* PasteboardWindowController.h in Headers */,
@@ -1924,7 +1921,6 @@
 				E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */,
 				E18BF57A069FEA1300F076B8 /* SizeFormatter.m in Sources */,
 				E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */,
-				E18BF57C069FEA1300F076B8 /* MoreFilesX.c in Sources */,
 				E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */,
 				E18BF57E069FEA1300F076B8 /* NSString-FSSpec.m in Sources */,
 				E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */,

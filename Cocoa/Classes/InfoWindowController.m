@@ -4,9 +4,56 @@
 #import "Resource.h"
 #import "ApplicationDelegate.h"
 #import "NSOutlineView-SelectedItems.h"
-#import "MoreFilesX.h"
+//#import "MoreFilesX.h"
 
 @implementation InfoWindowController
+
+static OSErr
+FSGetForkSizes(
+			   const FSRef *ref,
+			   UInt64 *dataLogicalSize,	/* can be NULL */
+			   UInt64 *rsrcLogicalSize)	/* can be NULL */
+{
+	OSErr				result;
+	FSCatalogInfoBitmap whichInfo;
+	FSCatalogInfo		catalogInfo;
+	
+	whichInfo = kFSCatInfoNodeFlags;
+	if ( NULL != dataLogicalSize )
+	{
+		/* get data fork size */
+		whichInfo |= kFSCatInfoDataSizes;
+	}
+	if ( NULL != rsrcLogicalSize )
+	{
+		/* get resource fork size */
+		whichInfo |= kFSCatInfoRsrcSizes;
+	}
+	
+	/* get nodeFlags and catalog info */
+	result = FSGetCatalogInfo(ref, whichInfo, &catalogInfo, NULL, NULL,NULL);
+	require_noerr(result, FSGetCatalogInfo);
+	
+	/* make sure FSRef was to a file */
+	require_action(0 == (catalogInfo.nodeFlags & kFSNodeIsDirectoryMask), FSRefNotFile, result = notAFileErr);
+	
+	if ( NULL != dataLogicalSize )
+	{
+		/* return data fork size */
+		*dataLogicalSize = catalogInfo.dataLogicalSize;
+	}
+	if ( NULL != rsrcLogicalSize )
+	{
+		/* return resource fork size */
+		*rsrcLogicalSize = catalogInfo.rsrcLogicalSize;
+	}
+	
+FSRefNotFile:
+FSGetCatalogInfo:
+	
+	return ( result );
+}
+
 
 - (void)dealloc
 {
