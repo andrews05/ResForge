@@ -134,9 +134,16 @@ FSGetCatalogInfo:
 			[nameView setStringValue:[currentDocument displayName]];
 		}
 		
-		#warning FIXME: the creator and type codes need to be swapped on intel
-		[[filePropertyForm cellAtIndex:0] setStringValue:[[[NSString alloc] initWithData:[currentDocument creator] encoding:NSMacOSRomanStringEncoding] autorelease]];
-		[[filePropertyForm cellAtIndex:1] setStringValue:[[[NSString alloc] initWithData:[currentDocument type] encoding:NSMacOSRomanStringEncoding] autorelease]];
+		FourCharCode creator;
+		[[currentDocument creator] getBytes:&creator length:sizeof(creator)];
+		FourCharCode type;
+		[[currentDocument type] getBytes:&type length:sizeof(type)];
+		
+		creator = CFSwapInt32BigToHost(creator);
+		type = CFSwapInt32BigToHost(type);
+
+		[[filePropertyForm cellAtIndex:0] setStringValue:[[[NSString alloc] initWithBytes:&creator length:sizeof(creator) encoding:NSMacOSRomanStringEncoding] autorelease]];
+		[[filePropertyForm cellAtIndex:1] setStringValue:[[[NSString alloc] initWithBytes:&type length:sizeof(type) encoding:NSMacOSRomanStringEncoding] autorelease]];
 //		[[filePropertyForm cellAtIndex:2] setObjectValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
 //		[[filePropertyForm cellAtIndex:3] setObjectValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
 		[[filePropertyForm cellAtIndex:2] setStringValue:[[NSNumber numberWithUnsignedLongLong:dataLogicalSize] description]];
