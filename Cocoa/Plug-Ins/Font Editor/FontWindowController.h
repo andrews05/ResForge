@@ -17,7 +17,7 @@
 }
 - (void)loadFontFromResource;
 - (IBAction)saveResource:(id)sender;
-- (void)setTableData:(id)tableResource;
+- (void)setTableData:(id <ResKnifeResourceProtocol>)tableResource;
 - (void)openTable:(NSDictionary *)table inEditor:(BOOL)editor;
 @end
 

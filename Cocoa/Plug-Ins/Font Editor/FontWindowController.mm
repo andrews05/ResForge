@@ -1,5 +1,6 @@
 #import "FontWindowController.h"
 #import "NGSCategories.h"
+#import "ResourceDocument.h"
 #import <stdarg.h>
 
 UInt32 TableChecksum(UInt32 *table, UInt32 length)
@@ -252,7 +253,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	[self setTableData:[notification object]];
 }
 
-- (void)setTableData:(id)tableResource
+- (void)setTableData:(id <ResKnifeResourceProtocol>)tableResource
 {
 	NSDictionary *table = [headerTable firstObjectReturningValue:[tableResource type] forKey:@"name"];
 	if(!table)

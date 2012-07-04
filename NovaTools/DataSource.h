@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
 
-@interface DataSource : NSObject
+@interface DataSource : NSObject <NSComboBoxDataSource, NSComboBoxDelegate>
 {
 	NSString *type;
 	NSMutableDictionary *data;

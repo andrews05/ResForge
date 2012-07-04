@@ -125,8 +125,10 @@
 	NSData *data = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:[plugBundle localizedStringForKey:@"snd" value:@"" table:@"Resource Types"] andID:sound inDocument:nil] data];
 	if( data && [data length] != 0 )
 	{
-		SndListPtr sndPtr = (SndListPtr) [data bytes];
-		SndPlay( nil, &sndPtr, false );
+//		SndListPtr sndPtr = (SndListPtr) [data bytes];
+//		SndPlay( nil, &sndPtr, false );
+		NSSound *nssound = [[[NSSound alloc] initWithData:data] autorelease];
+		[nssound play];
 	}
 	else NSBeep();
 }

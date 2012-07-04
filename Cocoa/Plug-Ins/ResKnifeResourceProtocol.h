@@ -40,6 +40,9 @@
 - (NSData *)data;
 - (void)setData:(NSData *)newData;
 
+// Prevent a warning
+- (id)copy;
+
 - (NSString *)defaultWindowTitle;
 - (NSDocument *)document;   // Owner of this resource. Useful for looking for resources in same file as yours.
 
