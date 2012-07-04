@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
 
-@interface OpenPanelDelegate : NSObject
+@interface OpenPanelDelegate : NSObject <NSOpenSavePanelDelegate>
 {
 /*!	@var openPanelAccessoryView	Accessory view for <tt>NSOpenPanels</tt>. */
 	IBOutlet NSView				*openPanelAccessoryView;

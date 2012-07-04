@@ -10,7 +10,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>rsrc</string>
-				<string>*</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>Resource file.icns</string>
@@ -28,6 +27,26 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.apple.resource-map</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>ResourceDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>*</string>
+			</array>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>*/*</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Anything</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.item</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>ResourceDocument</string>

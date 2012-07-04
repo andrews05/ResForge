@@ -5,7 +5,7 @@
 @protocol	ResKnifePluginProtocol
 @abstract	Your plug-in's principal class must implement initWithResource: or initWithResources:, all other methods are optional, and thus declared in ResKnifeInformalPluginProtocol.
 */
-@protocol ResKnifePluginProtocol
+@protocol ResKnifePluginProtocol <NSObject>
 
 /*!
 @method		initWithResource:

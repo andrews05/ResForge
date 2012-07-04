@@ -12,6 +12,13 @@
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		3DB9D66412307A9400DDA647 /* NovaTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E17ADBC006A2132800842474 /* NovaTools.plugin */; };
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; };
+		B229EECB15A4B8720032C12C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B229EED315A4B8720032C12C /* InfoPlist.strings */; };
+		B229EEDB15A4B9420032C12C /* PNGWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B229EEC115A4B7250032C12C /* PNGWindowController.m */; };
+		B229EEDC15A4B9420032C12C /* PNGWindowController.xib in Sources */ = {isa = PBXBuildFile; fileRef = B229EEC215A4B7250032C12C /* PNGWindowController.xib */; };
+		B229EEDD15A4BA900032C12C /* PNG Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B229EECA15A4B8720032C12C /* PNG Editor.plugin */; };
+		B229EEDE15A4BABD0032C12C /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
+		B229EEE115A4BB2E0032C12C /* PNGWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = B229EEC015A4B7250032C12C /* PNGWindowController.h */; };
 		E1193609099830D300A3A6EA /* FontDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1193607099830D200A3A6EA /* FontDocument.nib */; };
 		E11936660998552900A3A6EA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E11936650998552900A3A6EA /* Localizable.strings */; };
 		E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367D099864AD00A3A6EA /* ElementUBYT.h */; };
@@ -261,6 +268,13 @@
 			remoteGlobalIDString = E18BF68E069FEA1800F076B8;
 			remoteInfo = "Bitmap Editor Cocoa";
 		};
+		B229EEE215A4BB720032C12C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B229EEC915A4B8720032C12C;
+			remoteInfo = "PNG Editor";
+		};
 		E13F836408F139E900E2A5CB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -323,6 +337,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				B229EEDD15A4BA900032C12C /* PNG Editor.plugin in Copy Plugins */,
 				E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */,
 				E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */,
 				E13F837F08F13A4C00E2A5CB /* Font Editor.plugin in Copy Plugins */,
@@ -375,6 +390,16 @@
 		3D50047404EF122000F3B64D /* ElementLSTC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementLSTC.h; sourceTree = "<group>"; };
 		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
 		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
+		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PNGWindowController.h; path = "PNG Editor/PNGWindowController.h"; sourceTree = "<group>"; };
+		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PNGWindowController.m; path = "PNG Editor/PNGWindowController.m"; sourceTree = "<group>"; };
+		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PNGWindowController.xib; path = "PNG Editor/PNGWindowController.xib"; sourceTree = "<group>"; };
+		B229EECA15A4B8720032C12C /* PNG Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PNG Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B229EECD15A4B8720032C12C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		B229EECE15A4B8720032C12C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		B229EECF15A4B8720032C12C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B229EED215A4B8720032C12C /* PNG Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PNG Editor-Info.plist"; sourceTree = "<group>"; };
+		B229EED415A4B8720032C12C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B229EED615A4B8720032C12C /* PNG Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PNG Editor-Prefix.pch"; sourceTree = "<group>"; };
 		E1193608099830D300A3A6EA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FontDocument.nib; sourceTree = "<group>"; };
 		E11936620998551200A3A6EA /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E119367D099864AD00A3A6EA /* ElementUBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementUBYT.h; sourceTree = "<group>"; };
@@ -639,6 +664,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B229EEC715A4B8720032C12C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B229EECB15A4B8720032C12C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E18BF586069FEA1300F076B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -784,6 +817,44 @@
 			path = "Icon Editor";
 			sourceTree = "<group>";
 		};
+		B229EEBF15A4B6FE0032C12C /* PNG Editor */ = {
+			isa = PBXGroup;
+			children = (
+				B229EEC015A4B7250032C12C /* PNGWindowController.h */,
+				B229EEC115A4B7250032C12C /* PNGWindowController.m */,
+				B229EEC215A4B7250032C12C /* PNGWindowController.xib */,
+			);
+			name = "PNG Editor";
+			sourceTree = "<group>";
+		};
+		B229EECC15A4B8720032C12C /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B229EECD15A4B8720032C12C /* AppKit.framework */,
+				B229EECE15A4B8720032C12C /* CoreData.framework */,
+				B229EECF15A4B8720032C12C /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		B229EED015A4B8720032C12C /* PNG Editor */ = {
+			isa = PBXGroup;
+			children = (
+				B229EED115A4B8720032C12C /* Supporting Files */,
+			);
+			path = "PNG Editor";
+			sourceTree = "<group>";
+		};
+		B229EED115A4B8720032C12C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B229EED215A4B8720032C12C /* PNG Editor-Info.plist */,
+				B229EED315A4B8720032C12C /* InfoPlist.strings */,
+				B229EED615A4B8720032C12C /* PNG Editor-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		E11937F309991C1100A3A6EA /* Support Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -908,6 +979,7 @@
 				3D0B38A504DEF41E005AED5E /* Template Editor */,
 				F5354435022673C101A80001 /* Nick's Template Editor */,
 				E18BF7B8069FFA5200F076B8 /* Font Editor */,
+				B229EEBF15A4B6FE0032C12C /* PNG Editor */,
 				3D3B99B704DC167D0056861E /* Icon Editor */,
 				F5DF1C0F0254C78801A80001 /* NovaTools */,
 			);
@@ -933,6 +1005,7 @@
 				F5B5881A0156D40B01000001 /* Cocoa */,
 				F5B5887F0156D6D901000001 /* Carbon */,
 				F5EA10690254A7B401A80001 /* External */,
+				B229EED015A4B8720032C12C /* PNG Editor */,
 				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 			);
@@ -949,6 +1022,7 @@
 				E18BF78B069FF23700F076B8 /* Font Editor.plugin */,
 				E17ADBC006A2132800842474 /* NovaTools.plugin */,
 				E18BF68D069FEA1800F076B8 /* Ulis Template Editor.bundle */,
+				B229EECA15A4B8720032C12C /* PNG Editor.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1047,6 +1121,7 @@
 				F5B5884B0156D40B01000001 /* Cocoa.framework */,
 				F5B5884C0156D40B01000001 /* AppKit.framework */,
 				F5B5884D0156D40B01000001 /* Foundation.framework */,
+				B229EECC15A4B8720032C12C /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1283,6 +1358,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		B229EEE015A4BB250032C12C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B229EEE115A4BB2E0032C12C /* PNGWindowController.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E18BF53C069FEA1300F076B8 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1426,6 +1509,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		B229EEC915A4B8720032C12C /* PNG Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B229EED715A4B8720032C12C /* Build configuration list for PBXNativeTarget "PNG Editor" */;
+			buildPhases = (
+				B229EEC615A4B8720032C12C /* Sources */,
+				B229EEC715A4B8720032C12C /* Frameworks */,
+				B229EEC815A4B8720032C12C /* Resources */,
+				B229EEE015A4BB250032C12C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PNG Editor";
+			productName = "PNG Editor";
+			productReference = B229EECA15A4B8720032C12C /* PNG Editor.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		E18BF537069FEA1300F076B8 /* ResKnife Cocoa */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E13F7ED908F0411100E2A5CB /* Build configuration list for PBXNativeTarget "ResKnife Cocoa" */;
@@ -1446,6 +1547,7 @@
 				0ED5B4B813BF0A7800A5DC6D /* PBXTargetDependency */,
 				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
 				0ED5B4B613BF0A7400A5DC6D /* PBXTargetDependency */,
+				B229EEE315A4BB720032C12C /* PBXTargetDependency */,
 			);
 			name = "ResKnife Cocoa";
 			productInstallPath = "$(USER_APPS_DIR)";
@@ -1611,6 +1713,7 @@
 				Japanese,
 				French,
 				German,
+				en,
 			);
 			mainGroup = F5B588100156D2A601000001;
 			productRefGroup = F5B588110156D30301000001 /* Products */;
@@ -1625,11 +1728,20 @@
 				E18BF78A069FF23700F076B8 /* Font Editor Cocoa */,
 				E18BF5B7069FEA1400F076B8 /* NovaTools */,
 				E18BF671069FEA1700F076B8 /* Uli's Template Editor */,
+				B229EEC915A4B8720032C12C /* PNG Editor */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B229EEC815A4B8720032C12C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E18BF553069FEA1300F076B8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1786,6 +1898,16 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B229EEC615A4B8720032C12C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B229EEDB15A4B9420032C12C /* PNGWindowController.m in Sources */,
+				B229EEDC15A4B9420032C12C /* PNGWindowController.xib in Sources */,
+				B229EEDE15A4BABD0032C12C /* Notifications.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E18BF56F069FEA1300F076B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1935,6 +2057,11 @@
 			target = E18BF68E069FEA1800F076B8 /* Bitmap Editor Cocoa */;
 			targetProxy = 0ED5B4B713BF0A7800A5DC6D /* PBXContainerItemProxy */;
 		};
+		B229EEE315A4BB720032C12C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B229EEC915A4B8720032C12C /* PNG Editor */;
+			targetProxy = B229EEE215A4BB720032C12C /* PBXContainerItemProxy */;
+		};
 		E13F836508F139E900E2A5CB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E18BF78A069FF23700F076B8 /* Font Editor Cocoa */;
@@ -1975,6 +2102,14 @@
 				3D3B99BD04DC16FC0056861E /* ICONWindow.nib */,
 			);
 			name = ICONWindow.nib;
+			sourceTree = "<group>";
+		};
+		B229EED315A4B8720032C12C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B229EED415A4B8720032C12C /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		E1193607099830D200A3A6EA /* FontDocument.nib */ = {
@@ -2196,6 +2331,61 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B229EED815A4B8720032C12C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PNG Editor/PNG Editor-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "PNG Editor/PNG Editor-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		B229EED915A4B8720032C12C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PNG Editor/PNG Editor-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "PNG Editor/PNG Editor-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
 		E13F7ED208F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2310,7 +2500,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Cocoa/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "ResKnife Cocoa";
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2329,7 +2519,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Cocoa/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "ResKnife Cocoa";
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2612,6 +2802,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B229EED715A4B8720032C12C /* Build configuration list for PBXNativeTarget "PNG Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B229EED815A4B8720032C12C /* Debug */,
+				B229EED915A4B8720032C12C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		E13F7ED108F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Hex Editor Cocoa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

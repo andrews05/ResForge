@@ -23,7 +23,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@protocol ResKnifeResourceProtocol
+@protocol ResKnifeResourceProtocol <NSObject>
 
 - (void)touch;
 - (BOOL)isDirty;

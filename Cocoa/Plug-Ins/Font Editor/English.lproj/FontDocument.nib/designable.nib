@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1030</int>
-		<string key="IBDocument.SystemVersion">11B26</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1617</string>
-		<string key="IBDocument.AppKitVersion">1138</string>
-		<string key="IBDocument.HIToolboxVersion">566.00</string>
+		<int key="IBDocument.SystemTarget">1060</int>
+		<string key="IBDocument.SystemVersion">11E53</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
+		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1617</string>
+			<string key="NS.object.0">2182</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSView</string>
@@ -25,7 +25,10 @@
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</array>
-		<dictionary class="NSMutableDictionary" key="IBDocument.Metadata"/>
+		<object class="NSMutableDictionary" key="IBDocument.Metadata">
+			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
+			<integer value="1" key="NS.object.0"/>
+		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="920519606">
 			<object class="NSCustomObject" id="881664005">
 				<string key="NSClassName">FontWindowController</string>
@@ -63,12 +66,14 @@
 											<int key="NSvFlags">256</int>
 											<string key="NSFrameSize">{294, 356}</string>
 											<reference key="NSSuperview" ref="78681597"/>
+											<reference key="NSWindow"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="364974767">
 												<reference key="NSNextResponder" ref="419230410"/>
 												<int key="NSvFlags">256</int>
 												<string key="NSFrameSize">{294, 17}</string>
 												<reference key="NSSuperview" ref="419230410"/>
+												<reference key="NSWindow"/>
 												<reference key="NSTableView" ref="357669881"/>
 											</object>
 											<object class="_NSCornerView" key="NSCornerView">
@@ -245,6 +250,7 @@
 									</array>
 									<string key="NSFrame">{{0, 17}, {294, 356}}</string>
 									<reference key="NSSuperview" ref="297955553"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="357669881"/>
 									<reference key="NSDocView" ref="357669881"/>
 									<reference key="NSBGColor" ref="699347848"/>
@@ -255,6 +261,7 @@
 									<int key="NSvFlags">256</int>
 									<string key="NSFrame">{{279, 17}, {15, 356}}</string>
 									<reference key="NSSuperview" ref="297955553"/>
+									<reference key="NSWindow"/>
 									<reference key="NSTarget" ref="297955553"/>
 									<string key="NSAction">_doScroller:</string>
 									<double key="NSPercent">0.6631578803062439</double>
@@ -264,6 +271,7 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{-100, -100}, {281, 11}}</string>
 									<reference key="NSSuperview" ref="297955553"/>
+									<reference key="NSWindow"/>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="297955553"/>
 									<string key="NSAction">_doScroller:</string>
@@ -277,6 +285,7 @@
 									</array>
 									<string key="NSFrameSize">{294, 17}</string>
 									<reference key="NSSuperview" ref="297955553"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="364974767"/>
 									<reference key="NSDocView" ref="364974767"/>
 									<reference key="NSBGColor" ref="699347848"/>
@@ -285,6 +294,7 @@
 							</array>
 							<string key="NSFrameSize">{294, 373}</string>
 							<reference key="NSSuperview" ref="647756394"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="78681597"/>
 							<int key="NSsFlags">133136</int>
 							<reference key="NSVScroller" ref="26498154"/>
@@ -296,8 +306,9 @@
 					</array>
 					<string key="NSFrameSize">{294, 372}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{94, 108}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -323,19 +334,27 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="187492193"/>
-						<reference key="destination" ref="881664005"/>
-					</object>
-					<int key="connectionID">17</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">window</string>
 						<reference key="source" ref="881664005"/>
 						<reference key="destination" ref="187492193"/>
 					</object>
 					<int key="connectionID">18</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openTableInEditor:</string>
+						<reference key="source" ref="881664005"/>
+						<reference key="destination" ref="357669881"/>
+					</object>
+					<int key="connectionID">44</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="187492193"/>
+						<reference key="destination" ref="881664005"/>
+					</object>
+					<int key="connectionID">17</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -389,22 +408,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: arrangedObjects.name</string>
-						<reference key="source" ref="504009056"/>
-						<reference key="destination" ref="622054851"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="504009056"/>
-							<reference key="NSDestination" ref="622054851"/>
-							<string key="NSLabel">value: arrangedObjects.name</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">arrangedObjects.name</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">31</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: arrangedObjects.checksum</string>
 						<reference key="source" ref="409397792"/>
 						<reference key="destination" ref="622054851"/>
@@ -418,6 +421,22 @@
 						</object>
 					</object>
 					<int key="connectionID">32</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: arrangedObjects.name</string>
+						<reference key="source" ref="504009056"/>
+						<reference key="destination" ref="622054851"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="504009056"/>
+							<reference key="NSDestination" ref="622054851"/>
+							<string key="NSLabel">value: arrangedObjects.name</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">arrangedObjects.name</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">31</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -466,14 +485,6 @@
 						</object>
 					</object>
 					<int key="connectionID">37</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">openTableInEditor:</string>
-						<reference key="source" ref="881664005"/>
-						<reference key="destination" ref="357669881"/>
-					</object>
-					<int key="connectionID">44</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -643,12 +654,34 @@
 			<nil key="sourceID"/>
 			<int key="maxID">52</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">FontWindowController</string>
+					<string key="superclassName">NSWindowController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">saveResource:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">saveResource:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">saveResource:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/FontWindowController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1030" key="NS.object.0"/>
+			<real value="1060" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
