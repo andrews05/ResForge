@@ -1254,6 +1254,9 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 		newCreator = '    ';			// pad with spaces if not nil
 		[creatorData getBytes:&newCreator length:([creatorData length] < 4? [creatorData length]:4)];
 	}
+	
+	newCreator = CFSwapInt32HostToBig(newCreator);
+	
 	[self setCreator:[NSData dataWithBytes:&newCreator length:4]];
 //	NSLog(@"Creator changed to '%@'", [[[NSString alloc] initWithBytes:&newCreator length:4 encoding:NSMacOSRomanStringEncoding] autorelease]);
 }
@@ -1266,8 +1269,11 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	if(typeData && [typeData length] > 0)
 	{
 		newType = '    ';
-		[typeData getBytes:&newType length:([typeData length] < 4? [typeData length]:4)];
+		[typeData getBytes:&newType length:([typeData length] < 4 ? [typeData length]:4)];
 	}
+	
+	newType = CFSwapInt32HostToBig(newType);
+	
 	[self setType:[NSData dataWithBytes:&newType length:4]];
 //	NSLog(@"Type changed to '%@'", [[[NSString alloc] initWithBytes:&newType length:4 encoding:NSMacOSRomanStringEncoding] autorelease]);
 }
