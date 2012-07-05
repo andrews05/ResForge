@@ -219,7 +219,7 @@
 
 - (void)revertResource:(id)sender
 {
-	[resource setData:[[backup data] copy]];
+	[resource setData:[[[backup data] copy] autorelease]];
 }
 
 - (void)readTemplate:(id<ResKnifeResourceProtocol>)tmplRes

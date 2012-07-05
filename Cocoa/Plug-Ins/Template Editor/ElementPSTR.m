@@ -63,6 +63,10 @@
 	if(length < _minLength) length = _minLength;
 	
 	// read string
+	
+	if (length == 0)
+		return;
+	
 	void *buffer = malloc(length);
 	if(_minLength) memset(buffer, 0, _minLength);
 	[stream readAmount:length toBuffer:buffer];
