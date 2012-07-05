@@ -29,7 +29,7 @@
 //		NSLog(@"Examining %@", name);
 		if([[name pathExtension] isEqualToString:@"rsrc"])
 			// FIXME: this method was deprecated in 10.4 in favour of - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError;
-			[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:[path stringByAppendingPathComponent:name] display:YES];
+			[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:[path stringByAppendingPathComponent:name]] display:YES];
 	}
 }
 

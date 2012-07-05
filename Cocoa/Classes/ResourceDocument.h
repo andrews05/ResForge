@@ -1,13 +1,14 @@
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>	// Actually I only need CarbonCore.framework
 
-@class ResourceWindowController, ResourceDataSource, Resource;
+@class CreateResourceSheetController, ResourceWindowController, ResourceDataSource, Resource;
 
 @interface ResourceDocument : NSDocument <NSToolbarDelegate>
 {
 	IBOutlet ResourceDataSource		*dataSource;
 	IBOutlet NSWindow				*mainWindow;
 	IBOutlet NSOutlineView			*outlineView;
+	CreateResourceSheetController	*sheetController;
 	
 	NSMutableDictionary	*toolbarItems;
 	NSMutableArray	*resources;

@@ -49,7 +49,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{208.05900573730469, 200}</string>
 				<object class="NSView" key="NSWindowView" id="68889780">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSScrollView" id="787858034">
@@ -65,6 +65,7 @@
 											<int key="NSvFlags">4352</int>
 											<string key="NSFrameSize">{540, 384}</string>
 											<reference key="NSSuperview" ref="553411803"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="984748865"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="625879308">
@@ -72,6 +73,7 @@
 												<int key="NSvFlags">256</int>
 												<string key="NSFrameSize">{540, 17}</string>
 												<reference key="NSSuperview" ref="984748865"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="553411803"/>
 												<reference key="NSTableView" ref="531638983"/>
 											</object>
@@ -299,6 +301,7 @@
 									</array>
 									<string key="NSFrame">{{1, 17}, {540, 384}}</string>
 									<reference key="NSSuperview" ref="787858034"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="531638983"/>
 									<reference key="NSDocView" ref="531638983"/>
 									<reference key="NSBGColor" ref="269126464"/>
@@ -309,6 +312,7 @@
 									<int key="NSvFlags">256</int>
 									<string key="NSFrame">{{526, 17}, {15, 378}}</string>
 									<reference key="NSSuperview" ref="787858034"/>
+									<reference key="NSWindow"/>
 									<reference key="NSTarget" ref="787858034"/>
 									<string key="NSAction">_doScroller:</string>
 									<double key="NSPercent">0.96616542339324951</double>
@@ -318,6 +322,7 @@
 									<int key="NSvFlags">256</int>
 									<string key="NSFrame">{{1, 386}, {534, 15}}</string>
 									<reference key="NSSuperview" ref="787858034"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="873121742"/>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="787858034"/>
@@ -332,6 +337,7 @@
 									</array>
 									<string key="NSFrame">{{1, 0}, {540, 17}}</string>
 									<reference key="NSSuperview" ref="787858034"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="625879308"/>
 									<reference key="NSDocView" ref="625879308"/>
 									<reference key="NSBGColor" ref="269126464"/>
@@ -340,6 +346,7 @@
 							</array>
 							<string key="NSFrame">{{-1, -1}, {542, 402}}</string>
 							<reference key="NSSuperview" ref="68889780"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="553411803"/>
 							<int key="NSsFlags">2098</int>
 							<reference key="NSVScroller" ref="873121742"/>
@@ -350,13 +357,15 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{540, 400}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="787858034"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{208.05900573730469, 222}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<int key="NSWindowCollectionBehavior">128</int>
-				<bool key="NSWindowIsRestorable">YES</bool>
+				<bool key="NSWindowIsRestorable">NO</bool>
 			</object>
 			<object class="NSCustomObject" id="196072402">
 				<string key="NSClassName">OutlineViewDelegate</string>

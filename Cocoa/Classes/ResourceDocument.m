@@ -42,6 +42,7 @@ extern NSString *RKResourcePboardType;
 	[toolbarItems release];
 	[type release];
 	[creator release];
+	[sheetController release];
 	[super dealloc];
 }
 
@@ -872,7 +873,10 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 - (IBAction)showCreateResourceSheet:(id)sender
 {
 	// bug: ResourceDocument allocs a sheet controller, but it's never disposed of
-	CreateResourceSheetController *sheetController = [[CreateResourceSheetController alloc] initWithWindowNibName:@"CreateResourceSheet"];
+	
+	if (!sheetController)
+		sheetController = [[CreateResourceSheetController alloc] initWithWindowNibName:@"CreateResourceSheet"];
+	
 	[sheetController showCreateResourceSheet:self];
 }
 
