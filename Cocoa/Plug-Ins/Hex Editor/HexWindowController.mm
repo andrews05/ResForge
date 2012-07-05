@@ -51,6 +51,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[undoManager release];
 	[(id)resource release];
+	[sheetController release];
 	[super dealloc];
 }
 
@@ -180,7 +181,8 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 - (void)showFind:(id)sender
 {
 	// bug: HexWindowController allocs a sheet controller, but it's never disposed of
-	FindSheetController *sheetController = [[FindSheetController alloc] initWithWindowNibName:@"FindSheet"];
+	if (!sheetController)
+		sheetController = [[FindSheetController alloc] initWithWindowNibName:@"FindSheet"];
 	[sheetController showFindSheet:self];
 }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1060</int>
+		<int key="IBDocument.SystemTarget">1070</int>
 		<string key="IBDocument.SystemVersion">11E53</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
 		<string key="IBDocument.AppKitVersion">1138.47</string>
@@ -392,7 +392,6 @@
 											<int key="NSvFlags">274</int>
 											<string key="NSFrame">{{12, 28}, {209, 100}}</string>
 											<reference key="NSSuperview" ref="660391662"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="701055344"/>
 											<bool key="NSEnabled">YES</bool>
 											<int key="NSNumRows">4</int>
@@ -489,7 +488,6 @@
 											<int key="NSvFlags">290</int>
 											<string key="NSFrame">{{14, 8}, {210, 14}}</string>
 											<reference key="NSSuperview" ref="660391662"/>
-											<reference key="NSWindow"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="659593476">
 												<int key="NSCellFlags">67239424</int>
@@ -511,13 +509,11 @@
 									</array>
 									<string key="NSFrame">{{2, 2}, {238, 139}}</string>
 									<reference key="NSSuperview" ref="96514104"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="25418013"/>
 								</object>
 							</array>
 							<string key="NSFrame">{{20, 20}, {242, 159}}</string>
 							<reference key="NSSuperview" ref="134006945"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="660391662"/>
 							<string key="NSOffsets">{0, 0}</string>
 							<object class="NSTextFieldCell" key="NSTitleCell">
@@ -540,7 +536,6 @@
 					</array>
 					<string key="NSFrameSize">{279, 186}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="96514104"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
@@ -1139,7 +1134,7 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<real value="1060" key="NS.object.0"/>
+			<real value="1070" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>

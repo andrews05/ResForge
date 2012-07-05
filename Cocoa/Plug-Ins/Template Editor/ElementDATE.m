@@ -40,7 +40,8 @@
 	OSStatus error = UCConvertSecondsToCFAbsoluteTime(value, &cfTime);
 	if(error) return nil;
 //	return [[NSCalendarDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] descriptionWithLocale:[NSLocale currentLocale]];
-	return [[NSCalendarDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] descriptionWithLocale:[NSDictionary dictionaryWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:NSShortTimeDateFormatString] forKey:@"NSTimeDateFormatString"]];
+	return [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
+	//return [[NSCalendarDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] descriptionWithLocale:[NSDictionary dictionaryWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:NSShortTimeDateFormatString] forKey:@"NSTimeDateFormatString"]];
 //	return [[NSCalendarDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] descriptionWithLocale:[NSDictionary dictionaryWithObjectsAndKeys:
 //		[[NSUserDefaults standardUserDefaults] objectForKey:NSShortTimeDateFormatString], @"NSTimeDateFormatString",
 //		[[NSUserDefaults standardUserDefaults] objectForKey:NSAMPMDesignation], @"NSAMPMDesignation",
@@ -57,7 +58,11 @@
 - (void)setStringValue:(NSString *)str
 {
 //	UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[[NSCalendarDate dateWithString:str] timeIntervalSinceReferenceDate], &value);
-	UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[[NSCalendarDate dateWithNaturalLanguageString:str] timeIntervalSinceReferenceDate], &value);
+	NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+	[formatter setDateStyle:NSDateFormatterShortStyle];
+	[formatter setTimeStyle:NSDateFormatterShortStyle];
+	NSDate *date = [formatter dateFromString:str];
+	UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[date timeIntervalSinceReferenceDate], &value);
 //	UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[[NSCalendarDate dateWithNaturalLanguageString:str locale:[NSDictionary dictionaryWithObject:[NSLocale currentLocale] forKey:@"NSLocale"]] timeIntervalSinceReferenceDate], &value);
 }
 

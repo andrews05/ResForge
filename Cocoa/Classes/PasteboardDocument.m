@@ -23,7 +23,7 @@ extern NSString *RKResourcePboardType;
 	NSString *pbType;
 	
 	// clear current pasteboard representation
-	[self selectAll:nil];
+	//[self selectAll:nil];
 	[self clear:nil];
 	
 	// set the window's title to represent the pasteboard being shown (at some point I anticipate having several of these)

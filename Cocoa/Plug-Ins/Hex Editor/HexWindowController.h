@@ -17,6 +17,8 @@
 /* Based on HexEdit by Bill Bumgardner, Lane Roath & myself: http://hexedit.sourceforge.net/ */
 /* Some ideas, method names, and occasionally code stolen from HexEditor by Raphael Sebbe: http://raphaelsebbe.multimania.com/ */
 
+@class FindSheetController;
+
 @interface HexWindowController : NSWindowController <ResKnifePluginProtocol>
 {
 	IBOutlet HexEditorDelegate	*hexDelegate;
@@ -26,6 +28,8 @@
 	IBOutlet NSTextField		*message;		// these four should be phased out whenever possible
 	IBOutlet NSMenu				*copySubmenu;
 	IBOutlet NSMenu				*pasteSubmenu;
+	
+	FindSheetController			*sheetController;
 	
 	id <ResKnifeResourceProtocol>	resource;
 	id <ResKnifeResourceProtocol>	backup;

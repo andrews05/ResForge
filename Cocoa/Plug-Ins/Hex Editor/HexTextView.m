@@ -7,9 +7,15 @@
 
 @end
 
+@interface _NSUndoObject : NSObject
+
+- (id)popUndoObject;
+
+@end
+
 @interface NSUndoManager (Private)
 
-- (id)_undoStack;
+- (_NSUndoObject *)_undoStack;
 
 @end
 

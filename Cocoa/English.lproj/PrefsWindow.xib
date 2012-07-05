@@ -273,7 +273,7 @@
 											<object class="NSTextFieldCell" key="NSCell" id="813154465">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4194304</int>
-												<string type="base64-UTF8" key="NSContents">bWludXRlcwo</string>
+												<string key="NSContents">minutes</string>
 												<reference key="NSSupport" ref="222986949"/>
 												<reference key="NSControlView" ref="1073040734"/>
 												<reference key="NSBackgroundColor" ref="773907309"/>
@@ -470,7 +470,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1280, 1002}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{213, 129}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<int key="NSWindowCollectionBehavior">256</int>
