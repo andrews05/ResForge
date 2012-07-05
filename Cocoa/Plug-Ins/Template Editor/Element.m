@@ -4,7 +4,7 @@
 
 + (id)elementForType:(NSString *)t withLabel:(NSString *)l
 {
-	return [[[self alloc] autorelease] initForType:t withLabel:l];
+	return [[[self alloc]initForType:t withLabel:l] autorelease];
 }
 
 - (id)initForType:(NSString *)t withLabel:(NSString *)l

@@ -27,12 +27,12 @@
 
 + (id)streamWithBytes:(char *)d length:(unsigned int)l
 {
-	return [[[self alloc] autorelease] initStreamWithBytes:d length:l];
+	return [[[self alloc] initStreamWithBytes:d length:l] autorelease];
 }
 
 + (id)substreamWithStream:(TemplateStream *)s length:(unsigned int)l
 {
-	return [[[self alloc] autorelease] initWithStream:s length:l];
+	return [[[self alloc] initWithStream:s length:l] autorelease];
 }
 
 - (id)initStreamWithBytes:(char *)d length:(unsigned int)l

@@ -102,7 +102,7 @@
 {
 	if(!liveEdit)
 		// bug: should display alert asking if you want to replace data in this editor or reassert this data, revoking the other editor's changes
-		[resource setData:[[backup data] copy]];
+		[resource setData:[[[backup data] copy] autorelease]];
 	[self loadResource];
 }
 
@@ -204,14 +204,14 @@
 	{
 		[[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
 		[resource setData:newData];
-		[backup setData:[newData copy]];
+		[backup setData:[[newData copy] autorelease]];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 	}
 	else
 	{
 		[[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:backup];
 		[resource setData:newData];
-		[backup setData:[newData copy]];
+		[backup setData:[[newData copy] autorelease]];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:backup];
 		[self setDocumentEdited:NO];
 	}
