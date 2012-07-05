@@ -65,7 +65,7 @@
 #endif
 + (NSCharacterSet *)tabCharacterSet
 {
-	unsigned char bitmapRep[8192];
+	unsigned char bitmapRep[8192] = { 0 };
 	bitmapRep[0x09 >> 3] |= (((unsigned int)1) << (0x09 & 7));
 	bitmapRep[0x0B >> 3] |= (((unsigned int)1) << (0x0B & 7));
 	NSData *data = [NSData dataWithBytesNoCopy:bitmapRep length:8192 freeWhenDone:YES];

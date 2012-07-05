@@ -154,7 +154,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	Resource *copy = [[Resource alloc] initWithType:type andID:resID withName:name andAttributes:attributes data:[data copy]];
+	Resource *copy = [[Resource alloc] initWithType:type andID:resID withName:name andAttributes:attributes data:[[data copy] autorelease]];
 	[copy setDocumentName:_docName];
 	return copy;
 }
