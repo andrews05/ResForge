@@ -51,7 +51,7 @@
 		if( addComma )				[string appendString:@", "];
 		if( attributeCount > 2 )	[string appendString:@"Sys"];
 		else						[string appendString:@"SysHeap"];
-		addComma = YES;
+		/* addComma = YES; */
 	}
 	return string;
 }

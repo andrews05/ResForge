@@ -325,6 +325,10 @@ extern NSString *RKResourcePboardType;
 	unichar *uniname = (unichar *) NewPtrClear(sizeof(unichar) *256);
 	[[fileName lastPathComponent] getCharacters:uniname];
 	error = FSPathMakeRef((const UInt8 *)[[fileName stringByDeletingLastPathComponent] UTF8String], parentRef, nil);
+	
+	if (error != noErr)
+		NSLog(@"FSPathMakeRef got error %d", error);
+	
 	if(fork)
 		error = FSCreateResourceFile(parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, NULL, fork->length, (UniChar *) &fork->unicode, fileRef, NULL);
 	else error = FSCreateResourceFile(parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, NULL, 0, NULL, fileRef, NULL);
@@ -395,6 +399,10 @@ extern NSString *RKResourcePboardType;
 		[[resource representedFork] getCharacters:uniname];
 		FSIORefNum forkRefNum = 0;
 		error = FSOpenFork(fileRef, [[resource representedFork] length], (UniChar *) uniname, fsWrPerm, &forkRefNum);
+		
+		if (error != noErr)
+			NSLog(@"FSOpenFork got error %d", error);
+		
 		if(!error && forkRefNum)
 			error = FSWriteFork(forkRefNum, fsFromStart, 0, [[resource data] length], [[resource data] bytes], NULL);
 		if(forkRefNum) FSCloseFork(forkRefNum);

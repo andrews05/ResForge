@@ -25,7 +25,8 @@
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
 	// instanciate my own subclass of NSDocumentController so I can override the open dialog
-	[[RKDocumentController alloc] init];
+	// autorelease to fix an analyzer warning; the application already holds onto the document controller
+	[[[RKDocumentController alloc] init] autorelease];
 	[RKSupportResourceRegistry scanForSupportResources];
 }
 
