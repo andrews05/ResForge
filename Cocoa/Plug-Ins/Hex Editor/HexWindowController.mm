@@ -210,7 +210,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	else
 	{
 		// this should refresh the view automatically
-		[resource setData:[[[object data] copy]] autorelease];
+		[resource setData:[[[object data] copy] autorelease]];
 		[self setDocumentEdited:NO];
 	}
 }
