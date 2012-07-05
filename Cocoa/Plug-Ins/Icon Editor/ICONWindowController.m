@@ -90,28 +90,28 @@
 	if( [resType isEqualToString: @"ICN#"] )
 	{
 		planes[1] = planes[0] + (4 * 32);   // 32 lines a 4 bytes.
-		bir = [[[NSBitmapImageRep alloc] autorelease] initWithBitmapDataPlanes:planes pixelsWide:32 pixelsHigh:32
+		bir = [[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:planes pixelsWide:32 pixelsHigh:32
 				bitsPerSample:1 samplesPerPixel:2 hasAlpha:YES isPlanar:YES colorSpaceName:NSCalibratedWhiteColorSpace
-				bytesPerRow:4 bitsPerPixel:1];
+				bytesPerRow:4 bitsPerPixel:1] autorelease];
 	}
 	else if( [resType isEqualToString: @"ics#"] || [resType isEqualToString: @"CURS"] )
 	{
 		planes[1] = planes[0] + (2 * 16);   // 16 lines a 2 bytes.
-		bir = [[[NSBitmapImageRep alloc] autorelease] initWithBitmapDataPlanes:planes pixelsWide:16 pixelsHigh:16
+		bir = [[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:planes pixelsWide:16 pixelsHigh:16
 				bitsPerSample:1 samplesPerPixel:2 hasAlpha:YES isPlanar:YES colorSpaceName:NSCalibratedWhiteColorSpace
-				bytesPerRow:2 bitsPerPixel:1];
+				bytesPerRow:2 bitsPerPixel:1] autorelease];
 	}
 	else if( [resType isEqualToString: @"icm#"] )
 	{
 		planes[1] = planes[0] + (2 * 12);   // 12 lines a 2 bytes.
-		bir = [[[NSBitmapImageRep alloc] autorelease] initWithBitmapDataPlanes:planes pixelsWide:16 pixelsHigh:12
+		bir = [[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:planes pixelsWide:16 pixelsHigh:12
 				bitsPerSample:1 samplesPerPixel:2 hasAlpha:YES isPlanar:YES colorSpaceName:NSCalibratedWhiteColorSpace
-				bytesPerRow:2 bitsPerPixel:1];
+				bytesPerRow:2 bitsPerPixel:1] autorelease];
 	}
 	else
-		bir = [[[NSBitmapImageRep alloc] autorelease] initWithBitmapDataPlanes:planes pixelsWide:32 pixelsHigh:32
+		bir = [[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:planes pixelsWide:32 pixelsHigh:32
 				bitsPerSample:1 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:NSCalibratedWhiteColorSpace
-				bytesPerRow:4 bitsPerPixel:1]; 
+				bytesPerRow:4 bitsPerPixel:1] autorelease]; 
 	
 	[resImage addRepresentation:bir];
 	[imageView setImage: resImage];
