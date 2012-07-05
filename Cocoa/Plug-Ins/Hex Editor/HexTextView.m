@@ -77,6 +77,7 @@
 		if(*((unsigned short *)[unicodeData mutableBytes]) == 0xFEFF || *((unsigned short *)[unicodeData mutableBytes]) == 0xFFFE)
 			[unicodeData replaceBytesInRange:NSMakeRange(0,2) withBytes:NULL length:0];
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:unicodeData];
+		[unicodeData release];
 	}
 }
 
@@ -213,7 +214,7 @@ static NSRange draggedRange;
 - (void)insertText:(NSString *)string
 {
 	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
-	NSMutableData *data = [[[[self window] windowController] data] mutableCopy];
+	NSMutableData *data = [[[[[self window] windowController] data] mutableCopy] autorelease];
 	NSData *replaceData = [string dataUsingEncoding:NSASCIIStringEncoding];
 	
 	if(self == (id) [(HexEditorDelegate *)[self delegate] hex])
@@ -252,7 +253,6 @@ static NSRange draggedRange;
 	
 	// replace bytes (updates views implicitly, records an undo)
 	[self editData:data replaceBytesInRange:selection withData:replaceData];
-	[data release];
 	
 	// set the new selection (insertion point)
 	selection.location++;
@@ -357,6 +357,7 @@ static NSRange draggedRange;
 	
 	// record undo with new data object
 	[[[[self window] undoManager] prepareWithInvocationTarget:self] editData:newData replaceBytesInRange:newRange withData:oldBytes];
+	[oldBytes release];
 	[[[self window] undoManager] setActionName:NSLocalizedString(@"Typing", nil)];
 	if(closeUndoGroup)
 		[[[self window] undoManager] endUndoGrouping];

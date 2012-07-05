@@ -169,12 +169,12 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 - (void)saveResource:(id)sender
 {
-	[backup setData:[[resource data] copy]];
+	[backup setData:[[[resource data] copy] autorelease]];
 }
 
 - (void)revertResource:(id)sender
 {
-	[resource setData:[[backup data] copy]];
+	[resource setData:[[[backup data] copy] autorelease]];
 }
 
 - (void)showFind:(id)sender
@@ -210,7 +210,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	else
 	{
 		// this should refresh the view automatically
-		[resource setData:[[object data] copy]];
+		[resource setData:[[[object data] copy]] autorelease];
 		[self setDocumentEdited:NO];
 	}
 }
@@ -230,6 +230,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	NSMutableParagraphStyle *paragraph = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
 	[paragraph setLineBreakMode:NSLineBreakByCharWrapping];
 	NSDictionary *dictionary = [NSDictionary dictionaryWithObject:paragraph forKey:NSParagraphStyleAttributeName];
+	[paragraph release];
 	
 	// do stuff with data
 	[offset setString:[hexDelegate offsetRepresentation:data]];
