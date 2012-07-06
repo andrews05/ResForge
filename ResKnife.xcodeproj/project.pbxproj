@@ -24,11 +24,15 @@
 		B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */; };
 		B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */; };
 		B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */; };
+		B24925E215A6776600C22060 /* PictWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* PictWindow.xib */; };
+		B24925E615A6778C00C22060 /* ICONWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E415A6778C00C22060 /* ICONWindow.xib */; };
+		B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65CE15A677F00029141B /* TemplateWindow.xib */; };
+		B27A65D615A678260029141B /* FindSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D215A678260029141B /* FindSheet.xib */; };
+		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79115A66ACF00696598 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA78F15A66ACF00696598 /* InfoPlist.strings */; };
 		B2FCA79715A66B2A00696598 /* PictWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FCA78015A669C800696598 /* PictWindowController.m */; };
 		B2FCA79815A66B2A00696598 /* SupportedTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA78115A669C800696598 /* SupportedTypes.plist */; };
-		B2FCA79915A66B3800696598 /* PictWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA77D15A669C800696598 /* PictWindow.nib */; };
 		B2FCA79C15A66B5500696598 /* PICT Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */; };
 		B2FCA79D15A66B7200696598 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA79E15A6704900696598 /* FontDocument.xib */; };
@@ -125,8 +129,6 @@
 		E18BF594069FEA1400F076B8 /* HexWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A7020C08E601A80001 /* HexWindowController.h */; };
 		E18BF595069FEA1400F076B8 /* FindSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = F54E6220021B6A0801A80001 /* FindSheetController.h */; };
 		E18BF596069FEA1400F076B8 /* NSData-HexRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = E1C5E08B055D98790001A04A /* NSData-HexRepresentation.h */; };
-		E18BF598069FEA1400F076B8 /* HexWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EF83C7020C20D701A80001 /* HexWindow.nib */; };
-		E18BF599069FEA1400F076B8 /* FindSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = F54E6222021B6A0801A80001 /* FindSheet.nib */; };
 		E18BF59B069FEA1400F076B8 /* HexEditorDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A1020C08E601A80001 /* HexEditorDelegate.m */; };
 		E18BF59C069FEA1400F076B8 /* HexTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A3020C08E601A80001 /* HexTextView.m */; };
 		E18BF59D069FEA1400F076B8 /* HexWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A8020C08E601A80001 /* HexWindowController.mm */; };
@@ -136,7 +138,6 @@
 		E18BF5A2069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF5A9069FEA1400F076B8 /* NGSTemplateWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F535443E0226752901A80001 /* NGSTemplateWindowController.h */; };
 		E18BF5AA069FEA1400F076B8 /* NGSElement.h in Headers */ = {isa = PBXBuildFile; fileRef = F535444D0226B5F501A80001 /* NGSElement.h */; };
-		E18BF5AC069FEA1400F076B8 /* TemplateWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5D0CBD302278F8B01A80001 /* TemplateWindow.nib */; };
 		E18BF5AE069FEA1400F076B8 /* NGSTemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F535443F0226752901A80001 /* NGSTemplateWindowController.m */; };
 		E18BF5AF069FEA1400F076B8 /* NGSElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F535444E0226B5F501A80001 /* NGSElement.m */; };
 		E18BF5B0069FEA1400F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
@@ -200,7 +201,6 @@
 		E18BF690069FEA1800F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
 		E18BF691069FEA1800F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
 		E18BF692069FEA1800F076B8 /* ICONWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D3B99B904DC16A30056861E /* ICONWindowController.h */; };
-		E18BF694069FEA1800F076B8 /* ICONWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3D3B99BC04DC16FC0056861E /* ICONWindow.nib */; };
 		E18BF696069FEA1800F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF697069FEA1800F076B8 /* ICONWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B99B804DC16A30056861E /* ICONWindowController.m */; };
 		E18BF699069FEA1800F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
@@ -217,7 +217,6 @@
 		E18BF6AC069FEA1800F076B8 /* ElementDBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B804E873F300AF65FE /* ElementDBYT.h */; };
 		E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50046F04EF040900F3B64D /* ElementOCNT.h */; };
 		E18BF6AE069FEA1800F076B8 /* ElementLSTC.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50047404EF122000F3B64D /* ElementLSTC.h */; };
-		E18BF6B0069FEA1800F076B8 /* TemplateWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B38B504DEF465005AED5E /* TemplateWindow.nib */; };
 		E18BF6B4069FEA1800F076B8 /* TemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */; };
 		E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF6B6069FEA1800F076B8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* Element.m */; };
@@ -372,7 +371,6 @@
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TemplateWindowController.h; sourceTree = "<group>"; };
 		3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TemplateWindowController.m; sourceTree = "<group>"; };
-		3D0B38B604DEF465005AED5E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/TemplateWindow.nib; sourceTree = "<group>"; };
 		3D2EE5E204E5C56F00515930 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKEditorRegistry.h; sourceTree = "<group>"; };
@@ -380,7 +378,6 @@
 		3D35756004DAEB7F00B8225B /* Export.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Export.tiff; sourceTree = "<group>"; };
 		3D3B99B804DC16A30056861E /* ICONWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ICONWindowController.m; sourceTree = "<group>"; };
 		3D3B99B904DC16A30056861E /* ICONWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ICONWindowController.h; sourceTree = "<group>"; };
-		3D3B99BD04DC16FC0056861E /* ICONWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ICONWindow.nib; path = English.lproj/ICONWindow.nib; sourceTree = "<group>"; };
 		3D4737B304E872DB00AF65FE /* ElementDLNG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDLNG.m; sourceTree = "<group>"; };
 		3D4737B404E872DB00AF65FE /* ElementDLNG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDLNG.h; sourceTree = "<group>"; };
 		3D4737B704E873F300AF65FE /* ElementDBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDBYT.m; sourceTree = "<group>"; };
@@ -407,7 +404,11 @@
 		B229EEEF15A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/InfoWindow.xib; sourceTree = SOURCE_ROOT; };
 		B229EEF115A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/PrefsWindow.xib; sourceTree = SOURCE_ROOT; };
 		B229EEF315A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/ResourceDocument.xib; sourceTree = SOURCE_ROOT; };
-		B2FCA77E15A669C800696598 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PictWindow.nib; sourceTree = "<group>"; };
+		B24925E115A6776600C22060 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PictWindow.xib; sourceTree = "<group>"; };
+		B24925E515A6778C00C22060 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ICONWindow.xib; sourceTree = "<group>"; };
+		B27A65CF15A677F00029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TemplateWindow.xib; sourceTree = "<group>"; };
+		B27A65D315A678260029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FindSheet.xib; sourceTree = "<group>"; };
+		B27A65D515A678260029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/HexWindow.xib; sourceTree = "<group>"; };
 		B2FCA77F15A669C800696598 /* PictWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictWindowController.h; sourceTree = "<group>"; };
 		B2FCA78015A669C800696598 /* PictWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictWindowController.m; sourceTree = "<group>"; };
 		B2FCA78115A669C800696598 /* SupportedTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedTypes.plist; sourceTree = "<group>"; };
@@ -495,7 +496,6 @@
 		F50DFE6E036C258301A8010A /* TemplateWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TemplateWindow.h; sourceTree = "<group>"; };
 		F535443E0226752901A80001 /* NGSTemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NGSTemplateWindowController.h; sourceTree = "<group>"; };
 		F535443F0226752901A80001 /* NGSTemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NGSTemplateWindowController.m; sourceTree = "<group>"; };
-		F53544430226778D01A80001 /* TemplateWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = TemplateWindow.nib; path = English.lproj/TemplateWindow.nib; sourceTree = "<group>"; };
 		F535444D0226B5F501A80001 /* NGSElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NGSElement.h; sourceTree = "<group>"; };
 		F535444E0226B5F501A80001 /* NGSElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NGSElement.m; sourceTree = "<group>"; };
 		F543AFDB027B2A5001A8010C /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
@@ -505,7 +505,6 @@
 		F54626490291750201A8010C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		F54E6220021B6A0801A80001 /* FindSheetController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FindSheetController.h; sourceTree = "<group>"; };
 		F54E6221021B6A0801A80001 /* FindSheetController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FindSheetController.m; sourceTree = "<group>"; };
-		F54E6223021B6A0801A80001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FindSheet.nib; sourceTree = "<group>"; };
 		F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnifePluginProtocol.h; sourceTree = "<group>"; };
 		F5730B930159528A01000001 /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist; path = defaults.plist; sourceTree = "<group>"; };
 		F577A8F30211CFA701A80001 /* Save.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Save.tiff; sourceTree = "<group>"; };
@@ -586,7 +585,6 @@
 		F5EF83A3020C08E601A80001 /* HexTextView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HexTextView.m; sourceTree = "<group>"; };
 		F5EF83A7020C08E601A80001 /* HexWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HexWindowController.h; sourceTree = "<group>"; };
 		F5EF83A8020C08E601A80001 /* HexWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = HexWindowController.mm; sourceTree = "<group>"; };
-		F5EF83C8020C20D701A80001 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/HexWindow.nib; sourceTree = "<group>"; };
 		F5F1071603CCC61E01A8010A /* PasteboardDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardDocument.h; sourceTree = "<group>"; };
 		F5F1071703CCC61E01A8010A /* PasteboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = PasteboardDocument.m; sourceTree = "<group>"; };
 		F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardWindowController.h; sourceTree = "<group>"; };
@@ -747,7 +745,7 @@
 			children = (
 				3D3B99B904DC16A30056861E /* ICONWindowController.h */,
 				3D3B99B804DC16A30056861E /* ICONWindowController.m */,
-				3D3B99BC04DC16FC0056861E /* ICONWindow.nib */,
+				B24925E415A6778C00C22060 /* ICONWindow.xib */,
 				E13F7F9808F05B5C00E2A5CB /* Info.plist */,
 				E1193947099940FD00A3A6EA /* InfoPlist.strings */,
 			);
@@ -780,7 +778,7 @@
 		B2FCA77C15A669C800696598 /* PICT Editor */ = {
 			isa = PBXGroup;
 			children = (
-				B2FCA77D15A669C800696598 /* PictWindow.nib */,
+				B24925E015A6776600C22060 /* PictWindow.xib */,
 				B2FCA77F15A669C800696598 /* PictWindowController.h */,
 				B2FCA78015A669C800696598 /* PictWindowController.m */,
 				B2FCA78115A669C800696598 /* SupportedTypes.plist */,
@@ -824,7 +822,7 @@
 		E1A984F7099C2D7F00A70612 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3D0B38B504DEF465005AED5E /* TemplateWindow.nib */,
+				B27A65CE15A677F00029141B /* TemplateWindow.xib */,
 				E1A984FD099C309300A70612 /* DisplayTMPL.png */,
 			);
 			name = Resources;
@@ -882,7 +880,6 @@
 				F535443F0226752901A80001 /* NGSTemplateWindowController.m */,
 				F535444D0226B5F501A80001 /* NGSElement.h */,
 				F535444E0226B5F501A80001 /* NGSElement.m */,
-				F5D0CBD302278F8B01A80001 /* TemplateWindow.nib */,
 				E13F846908F18FBE00E2A5CB /* Info.plist */,
 			);
 			path = "Nick's Template Editor";
@@ -1118,8 +1115,8 @@
 				F5EF83A8020C08E601A80001 /* HexWindowController.mm */,
 				E1C5E08B055D98790001A04A /* NSData-HexRepresentation.h */,
 				E1C5E08F055D98D50001A04A /* NSData-HexRepresentation.m */,
-				F5EF83C7020C20D701A80001 /* HexWindow.nib */,
-				F54E6222021B6A0801A80001 /* FindSheet.nib */,
+				B27A65D215A678260029141B /* FindSheet.xib */,
+				B27A65D415A678260029141B /* HexWindow.xib */,
 				E18BF94B06A00F8E00F076B8 /* Info.plist */,
 			);
 			path = "Hex Editor";
@@ -1533,7 +1530,7 @@
 			files = (
 				B2FCA79115A66ACF00696598 /* InfoPlist.strings in Resources */,
 				B2FCA79815A66B2A00696598 /* SupportedTypes.plist in Resources */,
-				B2FCA79915A66B3800696598 /* PictWindow.nib in Resources */,
+				B24925E215A6776600C22060 /* PictWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1570,8 +1567,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF598069FEA1400F076B8 /* HexWindow.nib in Resources */,
-				E18BF599069FEA1400F076B8 /* FindSheet.nib in Resources */,
+				B27A65D615A678260029141B /* FindSheet.xib in Resources */,
+				B27A65D715A678260029141B /* HexWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1579,7 +1576,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF5AC069FEA1400F076B8 /* TemplateWindow.nib in Resources */,
 				E18BFA3706A20B7A00F076B8 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1612,8 +1608,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF694069FEA1800F076B8 /* ICONWindow.nib in Resources */,
 				E1193949099940FD00A3A6EA /* InfoPlist.strings in Resources */,
+				B24925E615A6778C00C22060 /* ICONWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1621,9 +1617,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF6B0069FEA1800F076B8 /* TemplateWindow.nib in Resources */,
 				E1A984FE099C309400A70612 /* DisplayTMPL.png in Resources */,
 				0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */,
+				B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1891,22 +1887,6 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		3D0B38B504DEF465005AED5E /* TemplateWindow.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D0B38B604DEF465005AED5E /* English */,
-			);
-			name = TemplateWindow.nib;
-			sourceTree = "<group>";
-		};
-		3D3B99BC04DC16FC0056861E /* ICONWindow.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D3B99BD04DC16FC0056861E /* ICONWindow.nib */,
-			);
-			name = ICONWindow.nib;
-			sourceTree = "<group>";
-		};
 		B229EED315A4B8720032C12C /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1964,12 +1944,44 @@
 			name = ResourceDocument.xib;
 			sourceTree = "<group>";
 		};
-		B2FCA77D15A669C800696598 /* PictWindow.nib */ = {
+		B24925E015A6776600C22060 /* PictWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B2FCA77E15A669C800696598 /* English */,
+				B24925E115A6776600C22060 /* English */,
 			);
-			name = PictWindow.nib;
+			name = PictWindow.xib;
+			sourceTree = "<group>";
+		};
+		B24925E415A6778C00C22060 /* ICONWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B24925E515A6778C00C22060 /* English */,
+			);
+			name = ICONWindow.xib;
+			sourceTree = "<group>";
+		};
+		B27A65CE15A677F00029141B /* TemplateWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B27A65CF15A677F00029141B /* English */,
+			);
+			name = TemplateWindow.xib;
+			sourceTree = "<group>";
+		};
+		B27A65D215A678260029141B /* FindSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B27A65D315A678260029141B /* English */,
+			);
+			name = FindSheet.xib;
+			sourceTree = "<group>";
+		};
+		B27A65D415A678260029141B /* HexWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B27A65D515A678260029141B /* English */,
+			);
+			name = HexWindow.xib;
 			sourceTree = "<group>";
 		};
 		B2FCA78F15A66ACF00696598 /* InfoPlist.strings */ = {
@@ -2053,14 +2065,6 @@
 			name = "Resource Types.strings";
 			sourceTree = "<group>";
 		};
-		F54E6222021B6A0801A80001 /* FindSheet.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F54E6223021B6A0801A80001 /* English */,
-			);
-			name = FindSheet.nib;
-			sourceTree = "<group>";
-		};
 		F58F6BA9025BDBA701A8010C /* NovaTools.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2086,14 +2090,6 @@
 			name = Localizable.strings;
 			path = Cocoa;
 			sourceTree = SOURCE_ROOT;
-		};
-		F5D0CBD302278F8B01A80001 /* TemplateWindow.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F53544430226778D01A80001 /* TemplateWindow.nib */,
-			);
-			name = TemplateWindow.nib;
-			sourceTree = "<group>";
 		};
 		F5EDC612025BFB7301A8010C /* boom.nib */ = {
 			isa = PBXVariantGroup;
@@ -2133,14 +2129,6 @@
 				F5EDC61F025BFBB501A8010C /* English */,
 			);
 			name = desc.nib;
-			sourceTree = "<group>";
-		};
-		F5EF83C7020C20D701A80001 /* HexWindow.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F5EF83C8020C20D701A80001 /* English */,
-			);
-			name = HexWindow.nib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2685,6 +2673,7 @@
 				B2FCA79515A66ACF00696598 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 		E13F7ED108F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Hex Editor Cocoa" */ = {
 			isa = XCConfigurationList;
