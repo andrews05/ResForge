@@ -16,6 +16,8 @@
 			<string>NSScrollView</string>
 			<string>NSWindowTemplate</string>
 			<string>NSTextFieldCell</string>
+			<string>NSSegmentedControl</string>
+			<string>NSSegmentedCell</string>
 			<string>NSTableHeaderView</string>
 			<string>NSTableColumn</string>
 			<string>NSScroller</string>
@@ -167,7 +169,7 @@
 													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
 														<string key="NSKey">type</string>
 														<bool key="NSAscending">YES</bool>
-														<string key="NSSelector">compare:</string>
+														<string key="NSSelector">localizedStandardCompare:</string>
 													</object>
 												</object>
 												<object class="NSTableColumn" id="476182781">
@@ -381,6 +383,46 @@
 			</object>
 			<object class="NSCustomObject" id="647945094">
 				<string key="NSClassName">AttributesFormatter</string>
+			</object>
+			<object class="NSSegmentedControl" id="915916486">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">268</int>
+				<string key="NSFrameSize">{69, 25}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
+				<string key="NSReuseIdentifierKey">_NS:9</string>
+				<bool key="NSEnabled">YES</bool>
+				<object class="NSSegmentedCell" key="NSCell" id="602701963">
+					<int key="NSCellFlags">67239424</int>
+					<int key="NSCellFlags2">0</int>
+					<reference key="NSSupport" ref="788683039"/>
+					<string key="NSCellIdentifier">_NS:9</string>
+					<reference key="NSControlView" ref="915916486"/>
+					<array class="NSMutableArray" key="NSSegmentImages">
+						<object class="NSSegmentItem">
+							<double key="NSSegmentItemWidth">33</double>
+							<object class="NSCustomResource" key="NSSegmentItemImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">NSListViewTemplate</string>
+							</object>
+							<string key="NSSegmentItemLabel"/>
+							<bool key="NSSegmentItemSelected">YES</bool>
+							<int key="NSSegmentItemImageScaling">0</int>
+						</object>
+						<object class="NSSegmentItem">
+							<double key="NSSegmentItemWidth">33</double>
+							<object class="NSCustomResource" key="NSSegmentItemImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">NSIconViewTemplate</string>
+							</object>
+							<string key="NSSegmentItemLabel"/>
+							<int key="NSSegmentItemTag">1</int>
+							<int key="NSSegmentItemImageScaling">0</int>
+						</object>
+					</array>
+					<int key="NSSegmentStyle">4</int>
+				</object>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -668,6 +710,19 @@
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Application</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">166</int>
+						<reference key="object" ref="915916486"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="602701963"/>
+						</array>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">167</int>
+						<reference key="object" ref="602701963"/>
+						<reference key="parent" ref="915916486"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -690,6 +745,9 @@
 				<string key="163.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="164.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="165.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="166.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<integer value="1" key="167.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<string key="167.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="32.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="38.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -701,7 +759,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">165</int>
+			<int key="maxID">167</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -889,5 +947,9 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NSIconViewTemplate">{11, 10}</string>
+			<string key="NSListViewTemplate">{11, 10}</string>
+		</dictionary>
 	</data>
 </archive>
