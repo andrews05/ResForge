@@ -50,7 +50,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{193.21755981445312, 168}</string>
 				<object class="NSView" key="NSWindowView" id="351500367">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSImageView" id="26345871">
@@ -66,6 +66,7 @@
 							</set>
 							<string key="NSFrame">{{17, 17}, {511, 323}}</string>
 							<reference key="NSSuperview" ref="351500367"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSImageCell" key="NSCell" id="550517431">
 								<int key="NSCellFlags">270663168</int>
@@ -79,6 +80,8 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{545, 357}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="26345871"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
@@ -105,14 +108,6 @@
 						<reference key="destination" ref="47396474"/>
 					</object>
 					<int key="connectionID">22</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">imageViewChanged:</string>
-						<reference key="source" ref="713509824"/>
-						<reference key="destination" ref="26345871"/>
-					</object>
-					<int key="connectionID">24</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
