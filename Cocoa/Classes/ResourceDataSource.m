@@ -40,6 +40,7 @@ extern NSString *RKResourcePboardType;
 	id old = resources;
 	resources = [newResources retain];
 	[old release];
+	[resources sortUsingDescriptors:[outlineView sortDescriptors]];
 	[outlineView reloadData];
 }
 
