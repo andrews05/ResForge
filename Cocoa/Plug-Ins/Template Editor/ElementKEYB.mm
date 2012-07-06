@@ -50,8 +50,7 @@
 //		return 0;
 	
 	unsigned int size = 0;
-	NSEnumerator *enumerator = [subElements objectEnumerator];
-	while(Element *element = [enumerator nextObject])
+	for (Element *element in subElements)
 		size += [element sizeOnDisk];
 	return size;
 }
@@ -61,8 +60,7 @@
 	if([[self label] isEqualToString: [[stream key] stringValue]])
 	{
 		// writes out the data of all our sub-elements here:
-		NSEnumerator *enumerator = [subElements objectEnumerator];
-		while(Element *element = [enumerator nextObject])
+		for (Element *element in subElements)
 			[element writeDataTo:stream];
 	}
 }
