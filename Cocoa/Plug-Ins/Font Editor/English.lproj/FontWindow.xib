@@ -58,12 +58,9 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{193, 168}</string>
 				<object class="NSView" key="NSWindowView" id="912718864">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<string key="NSFrameSize">{299, 218}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{193, 190}</string>
@@ -82,7 +79,7 @@
 				<nil key="NSDelegate"/>
 			</object>
 			<object class="NSCustomView" id="842202587">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSScrollView" id="837390482">
@@ -98,7 +95,7 @@
 										<int key="NSvFlags">8448</int>
 										<string key="NSFrameSize">{56, 205}</string>
 										<reference key="NSSuperview" ref="333315727"/>
-										<reference key="NSNextKeyView"/>
+										<reference key="NSNextKeyView" ref="722969521"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="_NSCornerView" key="NSCornerView">
 											<nil key="NSNextResponder"/>
@@ -223,7 +220,7 @@
 						</array>
 						<string key="NSFrameSize">{58, 207}</string>
 						<reference key="NSSuperview" ref="842202587"/>
-						<reference key="NSNextKeyView" ref="722969521"/>
+						<reference key="NSNextKeyView" ref="333315727"/>
 						<int key="NSsFlags">133650</int>
 						<reference key="NSVScroller" ref="1029464843"/>
 						<reference key="NSHScroller" ref="722969521"/>
@@ -232,7 +229,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{58, 207}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="837390482"/>
 				<object class="NSMutableString" key="NSClassName">
 					<characters key="NS.bytes">NSView</characters>
@@ -403,7 +399,7 @@
 														<int key="NSTCFlags">1</int>
 													</object>
 													<object class="NSTextViewSharedData" key="NSSharedData">
-														<int key="NSFlags">2912</int>
+														<int key="NSFlags">33557344</int>
 														<int key="NSTextCheckingTypes">0</int>
 														<nil key="NSMarkedAttributes"/>
 														<reference key="NSBackgroundColor" ref="521001443"/>
@@ -449,7 +445,7 @@
 											<reference key="NSDocView" ref="1019781041"/>
 											<reference key="NSBGColor" ref="521001443"/>
 											<object class="NSCursor" key="NSCursor">
-												<string key="NSHotSpot">{5, 5}</string>
+												<string key="NSHotSpot">{1, -1}</string>
 												<int key="NSCursorType">0</int>
 											</object>
 											<int key="NScvFlags">4</int>
