@@ -406,6 +406,10 @@ extern NSString *RKResourcePboardType;
 		
 		if(!error && forkRefNum)
 			error = FSWriteFork(forkRefNum, fsFromStart, 0, [[resource data] length], [[resource data] bytes], NULL);
+		
+		if (error != noErr)
+			NSLog(@"FSWriteFork got error %d", error);
+		
 		if(forkRefNum) FSCloseFork(forkRefNum);
 	}
 	DisposePtr((Ptr) fileRef);

@@ -130,7 +130,7 @@
 		if(cc == [ElementKBYT class] ||
 		   cc == [ElementKWRD class] ||
 		   cc == [ElementKLNG class] )
-		{	[stream pushKey:clone]; pushedKey = YES; }
+		{	[stream pushKey:clone]; /* pushedKey = YES; */ }
 		[clone readDataFrom:stream];				// fill it with resource data.
 		if(cc == [ElementLSTE class] && pushedCounter)
 			[stream popCounter];
