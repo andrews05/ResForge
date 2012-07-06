@@ -31,7 +31,8 @@
 		B2FCA79915A66B3800696598 /* PictWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA77D15A669C800696598 /* PictWindow.nib */; };
 		B2FCA79C15A66B5500696598 /* PICT Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */; };
 		B2FCA79D15A66B7200696598 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
-		E1193609099830D300A3A6EA /* FontDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1193607099830D200A3A6EA /* FontDocument.nib */; };
+		B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA79E15A6704900696598 /* FontDocument.xib */; };
+		B2FCA7A315A6704900696598 /* FontWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA7A015A6704900696598 /* FontWindow.xib */; };
 		E11936660998552900A3A6EA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E11936650998552900A3A6EA /* Localizable.strings */; };
 		E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367D099864AD00A3A6EA /* ElementUBYT.h */; };
 		E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = E119367E099864AD00A3A6EA /* ElementUBYT.m */; };
@@ -230,7 +231,6 @@
 		E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047004EF040900F3B64D /* ElementOCNT.m */; };
 		E18BF6C1069FEA1800F076B8 /* ElementLSTC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047304EF122000F3B64D /* ElementLSTC.mm */; };
 		E18BF6C3069FEA1800F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E18BF7D3069FFC7600F076B8 /* FontWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = E18BF7CF069FFC7600F076B8 /* FontWindow.nib */; };
 		E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E18BF7D1069FFC7600F076B8 /* FontWindowController.h */; };
 		E18BF7D5069FFC7600F076B8 /* FontWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E18BF7D2069FFC7600F076B8 /* FontWindowController.mm */; };
 		E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
@@ -412,10 +412,11 @@
 		B2FCA78015A669C800696598 /* PictWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictWindowController.m; sourceTree = "<group>"; };
 		B2FCA78115A669C800696598 /* SupportedTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedTypes.plist; sourceTree = "<group>"; };
 		B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PICT Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2FCA78E15A66ACF00696598 /* PICT Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PICT Editor-Info.plist"; sourceTree = "<group>"; };
+		B2FCA78E15A66ACF00696598 /* PICT Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PICT Editor-Info.plist"; path = "../../../PICT Editor/PICT Editor-Info.plist"; sourceTree = "<group>"; };
 		B2FCA79015A66ACF00696598 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B2FCA79215A66ACF00696598 /* PICT Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PICT Editor-Prefix.pch"; sourceTree = "<group>"; };
-		E1193608099830D300A3A6EA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/FontDocument.nib; sourceTree = "<group>"; };
+		B2FCA79215A66ACF00696598 /* PICT Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PICT Editor-Prefix.pch"; path = "../../../PICT Editor/PICT Editor-Prefix.pch"; sourceTree = "<group>"; };
+		B2FCA79F15A6704900696598 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FontDocument.xib; sourceTree = "<group>"; };
+		B2FCA7A115A6704900696598 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FontWindow.xib; sourceTree = "<group>"; };
 		E11936620998551200A3A6EA /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E119367D099864AD00A3A6EA /* ElementUBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementUBYT.h; sourceTree = "<group>"; };
 		E119367E099864AD00A3A6EA /* ElementUBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementUBYT.m; sourceTree = "<group>"; };
@@ -451,7 +452,6 @@
 		E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF78B069FF23700F076B8 /* Font Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Font Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF78C069FF23800F076B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E18BF7D0069FFC7600F076B8 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = FontWindow.nib; sourceTree = "<group>"; };
 		E18BF7D1069FFC7600F076B8 /* FontWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FontWindowController.h; sourceTree = "<group>"; };
 		E18BF7D2069FFC7600F076B8 /* FontWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = FontWindowController.mm; sourceTree = "<group>"; };
 		E18BF94B06A00F8E00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -575,28 +575,6 @@
 		F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnifeResourceProtocol.h; sourceTree = "<group>"; };
 		F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView-SelectedItems.h"; sourceTree = "<group>"; };
 		F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView-SelectedItems.m"; sourceTree = "<group>"; };
-		F5DF1BDB0254AD8801A80001 /* DirectoryCopy.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = DirectoryCopy.c; sourceTree = "<group>"; };
-		F5DF1BDC0254AD8801A80001 /* DirectoryCopy.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DirectoryCopy.h; sourceTree = "<group>"; };
-		F5DF1BDD0254AD8801A80001 /* FileCopy.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = FileCopy.c; sourceTree = "<group>"; };
-		F5DF1BDE0254AD8801A80001 /* FileCopy.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FileCopy.h; sourceTree = "<group>"; };
-		F5DF1BDF0254AD8801A80001 /* FSpCompat.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = FSpCompat.c; sourceTree = "<group>"; };
-		F5DF1BE00254AD8801A80001 /* FSpCompat.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FSpCompat.h; sourceTree = "<group>"; };
-		F5DF1BE10254AD8801A80001 /* FullPath.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = FullPath.c; sourceTree = "<group>"; };
-		F5DF1BE20254AD8801A80001 /* FullPath.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FullPath.h; sourceTree = "<group>"; };
-		F5DF1BE30254AD8801A80001 /* IterateDirectory.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = IterateDirectory.c; sourceTree = "<group>"; };
-		F5DF1BE40254AD8801A80001 /* IterateDirectory.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IterateDirectory.h; sourceTree = "<group>"; };
-		F5DF1BE50254AD8801A80001 /* MoreDesktopMgr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = MoreDesktopMgr.c; sourceTree = "<group>"; };
-		F5DF1BE60254AD8801A80001 /* MoreDesktopMgr.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MoreDesktopMgr.h; sourceTree = "<group>"; };
-		F5DF1BE70254AD8801A80001 /* MoreFiles.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = MoreFiles.c; sourceTree = "<group>"; };
-		F5DF1BE80254AD8801A80001 /* MoreFiles.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MoreFiles.h; sourceTree = "<group>"; };
-		F5DF1BE90254AD8801A80001 /* MoreFilesExtras.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = MoreFilesExtras.c; sourceTree = "<group>"; };
-		F5DF1BEA0254AD8801A80001 /* MoreFilesExtras.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MoreFilesExtras.h; sourceTree = "<group>"; };
-		F5DF1BEB0254AD8801A80001 /* Optimization.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Optimization.h; sourceTree = "<group>"; };
-		F5DF1BEC0254AD8801A80001 /* OptimizationEnd.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OptimizationEnd.h; sourceTree = "<group>"; };
-		F5DF1BED0254AD8801A80001 /* Search.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = Search.c; sourceTree = "<group>"; };
-		F5DF1BEE0254AD8801A80001 /* Search.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Search.h; sourceTree = "<group>"; };
-		F5DF1BF00254AD8801A80001 /* MoreFilesX.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = MoreFilesX.c; sourceTree = "<group>"; };
-		F5DF1BF10254AD8801A80001 /* MoreFilesX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MoreFilesX.h; sourceTree = "<group>"; };
 		F5EDC613025BFB7301A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = boom/English.lproj/boom.nib; sourceTree = "<group>"; };
 		F5EDC616025BFB7C01A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = char/English.lproj/char.nib; sourceTree = "<group>"; };
 		F5EDC619025BFB8601A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = colr/English.lproj/colr.nib; sourceTree = "<group>"; };
@@ -806,26 +784,11 @@
 				B2FCA77F15A669C800696598 /* PictWindowController.h */,
 				B2FCA78015A669C800696598 /* PictWindowController.m */,
 				B2FCA78115A669C800696598 /* SupportedTypes.plist */,
-			);
-			path = "PICT Editor";
-			sourceTree = "<group>";
-		};
-		B2FCA78C15A66ACE00696598 /* PICT Editor */ = {
-			isa = PBXGroup;
-			children = (
-				B2FCA78D15A66ACF00696598 /* Supporting Files */,
-			);
-			path = "PICT Editor";
-			sourceTree = "<group>";
-		};
-		B2FCA78D15A66ACF00696598 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
 				B2FCA78E15A66ACF00696598 /* PICT Editor-Info.plist */,
 				B2FCA78F15A66ACF00696598 /* InfoPlist.strings */,
 				B2FCA79215A66ACF00696598 /* PICT Editor-Prefix.pch */,
 			);
-			name = "Supporting Files";
+			path = "PICT Editor";
 			sourceTree = "<group>";
 		};
 		E11937F309991C1100A3A6EA /* Support Resources */ = {
@@ -849,8 +812,8 @@
 			children = (
 				E18BF7D1069FFC7600F076B8 /* FontWindowController.h */,
 				E18BF7D2069FFC7600F076B8 /* FontWindowController.mm */,
-				E1193607099830D200A3A6EA /* FontDocument.nib */,
-				E18BF7CF069FFC7600F076B8 /* FontWindow.nib */,
+				B2FCA79E15A6704900696598 /* FontDocument.xib */,
+				B2FCA7A015A6704900696598 /* FontWindow.xib */,
 				E15CFDA009999637004929B6 /* Support Resources */,
 				E18BF78C069FF23800F076B8 /* Info.plist */,
 				E11936650998552900A3A6EA /* Localizable.strings */,
@@ -978,7 +941,6 @@
 				F5B5887C0156D6D901000001 /* Prefix Files */,
 				F5B5881A0156D40B01000001 /* Cocoa */,
 				F5EA10690254A7B401A80001 /* External */,
-				B2FCA78C15A66ACE00696598 /* PICT Editor */,
 				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 			);
@@ -1109,42 +1071,6 @@
 			path = "Prefix Files";
 			sourceTree = "<group>";
 		};
-		F5DF1BDA0254AD8801A80001 /* MoreFiles */ = {
-			isa = PBXGroup;
-			children = (
-				F5DF1BDB0254AD8801A80001 /* DirectoryCopy.c */,
-				F5DF1BDC0254AD8801A80001 /* DirectoryCopy.h */,
-				F5DF1BDD0254AD8801A80001 /* FileCopy.c */,
-				F5DF1BDE0254AD8801A80001 /* FileCopy.h */,
-				F5DF1BDF0254AD8801A80001 /* FSpCompat.c */,
-				F5DF1BE00254AD8801A80001 /* FSpCompat.h */,
-				F5DF1BE10254AD8801A80001 /* FullPath.c */,
-				F5DF1BE20254AD8801A80001 /* FullPath.h */,
-				F5DF1BE30254AD8801A80001 /* IterateDirectory.c */,
-				F5DF1BE40254AD8801A80001 /* IterateDirectory.h */,
-				F5DF1BE50254AD8801A80001 /* MoreDesktopMgr.c */,
-				F5DF1BE60254AD8801A80001 /* MoreDesktopMgr.h */,
-				F5DF1BE70254AD8801A80001 /* MoreFiles.c */,
-				F5DF1BE80254AD8801A80001 /* MoreFiles.h */,
-				F5DF1BE90254AD8801A80001 /* MoreFilesExtras.c */,
-				F5DF1BEA0254AD8801A80001 /* MoreFilesExtras.h */,
-				F5DF1BEB0254AD8801A80001 /* Optimization.h */,
-				F5DF1BEC0254AD8801A80001 /* OptimizationEnd.h */,
-				F5DF1BED0254AD8801A80001 /* Search.c */,
-				F5DF1BEE0254AD8801A80001 /* Search.h */,
-			);
-			path = MoreFiles;
-			sourceTree = "<group>";
-		};
-		F5DF1BEF0254AD8801A80001 /* MoreFilesX */ = {
-			isa = PBXGroup;
-			children = (
-				F5DF1BF10254AD8801A80001 /* MoreFilesX.h */,
-				F5DF1BF00254AD8801A80001 /* MoreFilesX.c */,
-			);
-			path = MoreFilesX;
-			sourceTree = "<group>";
-		};
 		F5DF1C0F0254C78801A80001 /* NovaTools */ = {
 			isa = PBXGroup;
 			children = (
@@ -1175,8 +1101,6 @@
 			isa = PBXGroup;
 			children = (
 				F50DFE20036C258201A8010A /* Uli's Template Editor */,
-				F5DF1BDA0254AD8801A80001 /* MoreFiles */,
-				F5DF1BEF0254AD8801A80001 /* MoreFilesX */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -1707,9 +1631,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF7D3069FFC7600F076B8 /* FontWindow.nib in Resources */,
-				E1193609099830D300A3A6EA /* FontDocument.nib in Resources */,
 				E11936660998552900A3A6EA /* Localizable.strings in Resources */,
+				B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */,
+				B2FCA7A315A6704900696598 /* FontWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2054,14 +1978,23 @@
 				B2FCA79015A66ACF00696598 /* en */,
 			);
 			name = InfoPlist.strings;
+			path = "../../../PICT Editor";
 			sourceTree = "<group>";
 		};
-		E1193607099830D200A3A6EA /* FontDocument.nib */ = {
+		B2FCA79E15A6704900696598 /* FontDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E1193608099830D300A3A6EA /* English */,
+				B2FCA79F15A6704900696598 /* English */,
 			);
-			name = FontDocument.nib;
+			name = FontDocument.xib;
+			sourceTree = "<group>";
+		};
+		B2FCA7A015A6704900696598 /* FontWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2FCA7A115A6704900696598 /* English */,
+			);
+			name = FontWindow.xib;
 			sourceTree = "<group>";
 		};
 		E11936650998552900A3A6EA /* Localizable.strings */ = {
@@ -2078,15 +2011,6 @@
 				E1193948099940FD00A3A6EA /* English */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E18BF7CF069FFC7600F076B8 /* FontWindow.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E18BF7D0069FFC7600F076B8 /* English */,
-			);
-			name = FontWindow.nib;
-			path = English.lproj;
 			sourceTree = "<group>";
 		};
 		E19FB51C054E919F00A80202 /* misn.nib */ = {

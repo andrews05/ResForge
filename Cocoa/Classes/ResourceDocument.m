@@ -802,7 +802,7 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	[item setLabel:NSLocalizedString(@"Show Info", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Show Info", nil)];
 	[item setToolTip:NSLocalizedString(@"Show Resource Information Window", nil)];
-	if((image = [NSImage imageNamed:@"NSGetInfoToolbar"]))
+	if((image = [NSImage imageNamed:NSImageNameInfo]))
 	     [item setImage:image];
 	else [item setImage:[NSImage imageNamed:@"Show Info"]];
 	[item setTarget:[NSApp delegate]];

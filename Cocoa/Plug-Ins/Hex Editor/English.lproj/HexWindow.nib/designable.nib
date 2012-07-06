@@ -154,7 +154,7 @@
 			<object class="NSWindowTemplate" id="447655345">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{63, 656}, {570, 319}}</string>
+				<string key="NSWindowRect">{{387, 534}, {570, 319}}</string>
 				<int key="NSWTFlags">813170688</int>
 				<string key="NSWindowTitle">Untitled Resource</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -285,7 +285,7 @@
 									<reference key="NSDocView" ref="706277205"/>
 									<reference key="NSBGColor" ref="89734044"/>
 									<object class="NSCursor" key="NSCursor">
-										<string key="NSHotSpot">{1, -1}</string>
+										<string key="NSHotSpot">{5, 5}</string>
 										<int key="NSCursorType">0</int>
 									</object>
 									<int key="NScvFlags">4</int>
