@@ -33,17 +33,14 @@
 	[super windowDidLoad];
 
 	// set the window's title
-	if( ![[resource name] isEqualToString:@""] )
-	{
-		[[self window] setTitle:[resource name]];
-		SetWindowAlternateTitle( (WindowRef) [[self window] windowRef], (CFStringRef) [NSString stringWithFormat:@"%@ %@: Ò%@Ó", [resource type], [resource resID], [resource name]] );
-	}
+		[[self window] setTitle:[resource defaultWindowTitle]];
+		//SetWindowAlternateTitle( (WindowRef) [[self window] windowRef], (CFStringRef) [NSString stringWithFormat:@"%@ %@: Ò%@Ó", [resource type], [resource resID], [resource name]] );
 	
 	NSImage *image = [[[NSImage alloc] initWithData:[resource data]] autorelease];
 	if( image )
 	{
 		// resize the window to the size of the image
-		[[self window] setContentSize:[image size]];
+		//[[self window] setContentSize:[image size]];
 	
 		// update image view with PICT
 		[imageView setImage:image];
