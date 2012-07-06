@@ -190,6 +190,7 @@ FSGetCatalogInfo:
 - (void)documentInfoDidChange:(NSNotification *)notification
 {
 #pragma unused(notification)
+	currentDocument = [[notification object] objectForKey:@"NSDocument"];
 	[self updateInfoWindow];
 }
 

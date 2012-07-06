@@ -24,7 +24,7 @@
 	switch( power )
 	{
 		case 0:
-			[string appendFormat:NSLocalizedString(@"%.0f", nil), value];
+			[string appendFormat:NSLocalizedString(@"%.0f bytes", nil), value];
 			break;
 		
 		case 10:
