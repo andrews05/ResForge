@@ -24,23 +24,20 @@
 			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
 			<integer value="1" key="NS.object.0"/>
 		</object>
-		<array class="NSMutableArray" key="IBDocument.RootObjects" id="912899315">
-			<object class="NSCustomObject" id="713509824">
+		<array class="NSMutableArray" key="IBDocument.RootObjects" id="781167064">
+			<object class="NSCustomObject" id="97216217">
 				<string key="NSClassName">ICONWindowController</string>
 			</object>
-			<object class="NSCustomObject" id="716938804">
+			<object class="NSCustomObject" id="92017252">
 				<string key="NSClassName">FirstResponder</string>
 			</object>
-			<object class="NSCustomObject" id="894214552">
+			<object class="NSCustomObject" id="408707901">
 				<string key="NSClassName">NSApplication</string>
 			</object>
-			<object class="NSCustomObject" id="275962985">
-				<string key="NSClassName">NSApplication</string>
-			</object>
-			<object class="NSWindowTemplate" id="47396474">
+			<object class="NSWindowTemplate" id="768082782">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{0, 556}, {545, 357}}</string>
+				<string key="NSWindowRect">{{0, 556}, {316, 168}}</string>
 				<int key="NSWTFlags">813170688</int>
 				<string key="NSWindowTitle">Untitled Resource</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -49,13 +46,12 @@
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{193.21755981445312, 168}</string>
-				<object class="NSView" key="NSWindowView" id="351500367">
-					<reference key="NSNextResponder"/>
-					<int key="NSvFlags">256</int>
+				<object class="NSView" key="NSWindowView" id="669127375">
+					<nil key="NSNextResponder"/>
 					<array class="NSMutableArray" key="NSSubviews">
-						<object class="NSImageView" id="26345871">
-							<reference key="NSNextResponder" ref="351500367"/>
-							<int key="NSvFlags">274</int>
+						<object class="NSImageView" id="979198533">
+							<reference key="NSNextResponder" ref="669127375"/>
+							<int key="NSvFlags">12</int>
 							<set class="NSMutableSet" key="NSDragTypes">
 								<string>Apple PDF pasteboard type</string>
 								<string>Apple PICT pasteboard type</string>
@@ -64,11 +60,10 @@
 								<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 								<string>NeXT TIFF v4.0 pasteboard type</string>
 							</set>
-							<string key="NSFrame">{{17, 17}, {511, 323}}</string>
-							<reference key="NSSuperview" ref="351500367"/>
-							<reference key="NSWindow"/>
+							<string key="NSFrame">{{17, 17}, {134, 134}}</string>
+							<reference key="NSSuperview" ref="669127375"/>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSImageCell" key="NSCell" id="550517431">
+							<object class="NSImageCell" key="NSCell" id="357416430">
 								<int key="NSCellFlags">270663168</int>
 								<int key="NSCellFlags2">0</int>
 								<int key="NSAlign">0</int>
@@ -79,15 +74,11 @@
 							<bool key="NSEditable">YES</bool>
 						</object>
 					</array>
-					<string key="NSFrameSize">{545, 357}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="26345871"/>
+					<string key="NSFrame">{{1, 9}, {316, 168}}</string>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1024, 746}}</string>
 				<string key="NSMinSize">{193.21755981445312, 190}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
-				<string key="NSFrameAutosaveName">PICT</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 		</array>
@@ -95,35 +86,35 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">imageView</string>
-						<reference key="source" ref="713509824"/>
-						<reference key="destination" ref="26345871"/>
+						<string key="label">window</string>
+						<reference key="source" ref="97216217"/>
+						<reference key="destination" ref="768082782"/>
 					</object>
-					<int key="connectionID">21</int>
+					<int key="connectionID">9</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">window</string>
-						<reference key="source" ref="713509824"/>
-						<reference key="destination" ref="47396474"/>
+						<string key="label">imageView</string>
+						<reference key="source" ref="97216217"/>
+						<reference key="destination" ref="979198533"/>
 					</object>
-					<int key="connectionID">22</int>
+					<int key="connectionID">10</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">imageViewChanged:</string>
-						<reference key="source" ref="713509824"/>
-						<reference key="destination" ref="26345871"/>
+						<reference key="source" ref="97216217"/>
+						<reference key="destination" ref="979198533"/>
 					</object>
-					<int key="connectionID">24</int>
+					<int key="connectionID">12</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="47396474"/>
-						<reference key="destination" ref="713509824"/>
+						<reference key="source" ref="768082782"/>
+						<reference key="destination" ref="97216217"/>
 					</object>
-					<int key="connectionID">23</int>
+					<int key="connectionID">11</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -131,58 +122,54 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">0</int>
 						<array key="object" id="0"/>
-						<reference key="children" ref="912899315"/>
+						<reference key="children" ref="781167064"/>
 						<nil key="parent"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">-2</int>
-						<reference key="object" ref="713509824"/>
+						<reference key="object" ref="97216217"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">File's Owner</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">-1</int>
-						<reference key="object" ref="716938804"/>
+						<reference key="object" ref="92017252"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">First Responder</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">16</int>
-						<reference key="object" ref="275962985"/>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">17</int>
-						<reference key="object" ref="47396474"/>
+						<int key="objectID">5</int>
+						<reference key="object" ref="768082782"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="351500367"/>
+							<reference ref="669127375"/>
 						</array>
 						<reference key="parent" ref="0"/>
+						<string key="objectName">PICT Window</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">18</int>
-						<reference key="object" ref="351500367"/>
+						<int key="objectID">6</int>
+						<reference key="object" ref="669127375"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="26345871"/>
+							<reference ref="979198533"/>
 						</array>
-						<reference key="parent" ref="47396474"/>
+						<reference key="parent" ref="768082782"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">19</int>
-						<reference key="object" ref="26345871"/>
+						<int key="objectID">8</int>
+						<reference key="object" ref="979198533"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="550517431"/>
+							<reference ref="357416430"/>
 						</array>
-						<reference key="parent" ref="351500367"/>
+						<reference key="parent" ref="669127375"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">20</int>
-						<reference key="object" ref="550517431"/>
-						<reference key="parent" ref="26345871"/>
+						<int key="objectID">14</int>
+						<reference key="object" ref="357416430"/>
+						<reference key="parent" ref="979198533"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">-3</int>
-						<reference key="object" ref="894214552"/>
+						<reference key="object" ref="408707901"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Application</string>
 					</object>
@@ -192,57 +179,23 @@
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="17.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">25</int>
+			<int key="maxID">14</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">ICONWindowController</string>
-					<string key="superclassName">NSWindowController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">imageViewChanged:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">imageViewChanged:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">imageViewChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">imageView</string>
-						<string key="NS.object.0">NSImageView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">imageView</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">imageView</string>
-							<string key="candidateClassName">NSImageView</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ICONWindowController.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<real value="1070" key="NS.object.0"/>
+			<integer value="1070" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
