@@ -370,6 +370,11 @@
 	[createItem setAction:@selector(createListEntry:)];
 }
 
+- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
+{
+	return [resource defaultWindowTitle];
+}
+
 - (void)windowDidResignKey:(NSNotification *)notification
 {
 	NSMenu *resourceMenu = [[[NSApp mainMenu] itemAtIndex:3] submenu];

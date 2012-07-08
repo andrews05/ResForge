@@ -29,6 +29,12 @@
 		B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65CE15A677F00029141B /* TemplateWindow.xib */; };
 		B27A65D615A678260029141B /* FindSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D215A678260029141B /* FindSheet.xib */; };
 		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
+		B2B2C40815A9464400D6F61C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		B2B2C40E15A9464400D6F61C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2B2C40C15A9464400D6F61C /* InfoPlist.strings */; };
+		B2B2C41515A9468300D6F61C /* Pattern Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */; };
+		B2B2C41615A946FB00D6F61C /* PatternWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */; };
+		B2B2C41715A9470500D6F61C /* PatternWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */; };
+		B2B2C41815A9473C00D6F61C /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79115A66ACF00696598 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA78F15A66ACF00696598 /* InfoPlist.strings */; };
 		B2FCA79715A66B2A00696598 /* PictWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FCA78015A669C800696598 /* PictWindowController.m */; };
@@ -269,6 +275,13 @@
 			remoteGlobalIDString = B229EEC915A4B8720032C12C;
 			remoteInfo = "PNG Editor";
 		};
+		B2B2C41315A9467100D6F61C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B2B2C40615A9464400D6F61C;
+			remoteInfo = "Pattern Editor";
+		};
 		B2FCA79A15A66B4A00696598 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -338,6 +351,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				B2B2C41515A9468300D6F61C /* Pattern Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* PICT Editor.plugin in Copy Plugins */,
 				B229EEDD15A4BA900032C12C /* PNG Editor.plugin in Copy Plugins */,
 				E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */,
@@ -409,6 +423,13 @@
 		B27A65CF15A677F00029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TemplateWindow.xib; sourceTree = "<group>"; };
 		B27A65D315A678260029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FindSheet.xib; sourceTree = "<group>"; };
 		B27A65D515A678260029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/HexWindow.xib; sourceTree = "<group>"; };
+		B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatternWindowController.h; path = "Pattern Editor/PatternWindowController.h"; sourceTree = "<group>"; };
+		B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PatternWindowController.m; path = "Pattern Editor/PatternWindowController.m"; sourceTree = "<group>"; };
+		B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PatternWindowController.xib; path = "Pattern Editor/PatternWindowController.xib"; sourceTree = "<group>"; };
+		B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pattern Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2B2C40B15A9464400D6F61C /* Pattern Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pattern Editor-Info.plist"; sourceTree = "<group>"; };
+		B2B2C40D15A9464400D6F61C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2B2C40F15A9464400D6F61C /* Pattern Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pattern Editor-Prefix.pch"; sourceTree = "<group>"; };
 		B2FCA77F15A669C800696598 /* PictWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictWindowController.h; sourceTree = "<group>"; };
 		B2FCA78015A669C800696598 /* PictWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictWindowController.m; sourceTree = "<group>"; };
 		B2FCA78115A669C800696598 /* SupportedTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedTypes.plist; sourceTree = "<group>"; };
@@ -600,6 +621,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2B2C40415A9464400D6F61C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2B2C40815A9464400D6F61C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2FCA78715A66ACE00696598 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -775,6 +804,34 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
+		B2B2C3FC15A9451800D6F61C /* Pattern Editor */ = {
+			isa = PBXGroup;
+			children = (
+				B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */,
+				B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */,
+				B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */,
+			);
+			name = "Pattern Editor";
+			sourceTree = "<group>";
+		};
+		B2B2C40915A9464400D6F61C /* Pattern Editor */ = {
+			isa = PBXGroup;
+			children = (
+				B2B2C40A15A9464400D6F61C /* Supporting Files */,
+			);
+			path = "Pattern Editor";
+			sourceTree = "<group>";
+		};
+		B2B2C40A15A9464400D6F61C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B2B2C40B15A9464400D6F61C /* Pattern Editor-Info.plist */,
+				B2B2C40C15A9464400D6F61C /* InfoPlist.strings */,
+				B2B2C40F15A9464400D6F61C /* Pattern Editor-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		B2FCA77C15A669C800696598 /* PICT Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -905,6 +962,7 @@
 		F57CEE0B0189C95101A8010B /* Plug-Ins */ = {
 			isa = PBXGroup;
 			children = (
+				B2B2C3FC15A9451800D6F61C /* Pattern Editor */,
 				F5C9ECCE027F474A01A8010C /* Notifications.m */,
 				F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */,
 				F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */,
@@ -938,6 +996,7 @@
 				F5B5887C0156D6D901000001 /* Prefix Files */,
 				F5B5881A0156D40B01000001 /* Cocoa */,
 				F5EA10690254A7B401A80001 /* External */,
+				B2B2C40915A9464400D6F61C /* Pattern Editor */,
 				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 			);
@@ -956,6 +1015,7 @@
 				E18BF68D069FEA1800F076B8 /* Ulis Template Editor.bundle */,
 				B229EECA15A4B8720032C12C /* PNG Editor.plugin */,
 				B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */,
+				B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1291,6 +1351,23 @@
 			productReference = B229EECA15A4B8720032C12C /* PNG Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		B2B2C40615A9464400D6F61C /* Pattern Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2B2C41015A9464400D6F61C /* Build configuration list for PBXNativeTarget "Pattern Editor" */;
+			buildPhases = (
+				B2B2C40315A9464400D6F61C /* Sources */,
+				B2B2C40415A9464400D6F61C /* Frameworks */,
+				B2B2C40515A9464400D6F61C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pattern Editor";
+			productName = "Pattern Editor";
+			productReference = B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		B2FCA78915A66ACE00696598 /* PICT Editor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2FCA79315A66ACF00696598 /* Build configuration list for PBXNativeTarget "PICT Editor" */;
@@ -1329,6 +1406,7 @@
 				0ED5B4B813BF0A7800A5DC6D /* PBXTargetDependency */,
 				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
 				B229EEE315A4BB720032C12C /* PBXTargetDependency */,
+				B2B2C41415A9467100D6F61C /* PBXTargetDependency */,
 			);
 			name = ResKnife;
 			productInstallPath = "$(USER_APPS_DIR)";
@@ -1511,6 +1589,7 @@
 				E18BF671069FEA1700F076B8 /* Uli's Template Editor */,
 				B229EEC915A4B8720032C12C /* PNG Editor */,
 				B2FCA78915A66ACE00696598 /* PICT Editor */,
+				B2B2C40615A9464400D6F61C /* Pattern Editor */,
 			);
 		};
 /* End PBXProject section */
@@ -1521,6 +1600,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2B2C40515A9464400D6F61C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2B2C40E15A9464400D6F61C /* InfoPlist.strings in Resources */,
+				B2B2C41715A9470500D6F61C /* PatternWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1699,6 +1787,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2B2C40315A9464400D6F61C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2B2C41615A946FB00D6F61C /* PatternWindowController.m in Sources */,
+				B2B2C41815A9473C00D6F61C /* Notifications.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2FCA78615A66ACE00696598 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1856,6 +1953,11 @@
 			target = B229EEC915A4B8720032C12C /* PNG Editor */;
 			targetProxy = B229EEE215A4BB720032C12C /* PBXContainerItemProxy */;
 		};
+		B2B2C41415A9467100D6F61C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B2B2C40615A9464400D6F61C /* Pattern Editor */;
+			targetProxy = B2B2C41315A9467100D6F61C /* PBXContainerItemProxy */;
+		};
 		B2FCA79B15A66B4A00696598 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B2FCA78915A66ACE00696598 /* PICT Editor */;
@@ -1982,6 +2084,14 @@
 				B27A65D515A678260029141B /* English */,
 			);
 			name = HexWindow.xib;
+			sourceTree = "<group>";
+		};
+		B2B2C40C15A9464400D6F61C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2B2C40D15A9464400D6F61C /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		B2FCA78F15A66ACF00696598 /* InfoPlist.strings */ = {
@@ -2185,11 +2295,63 @@
 			};
 			name = Release;
 		};
-		B2FCA79415A66ACF00696598 /* Debug */ = {
+		B2B2C41115A9464400D6F61C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pattern Editor/Pattern Editor-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Pattern Editor/Pattern Editor-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		B2B2C41215A9464400D6F61C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pattern Editor/Pattern Editor-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Pattern Editor/Pattern Editor-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		B2FCA79415A66ACF00696598 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2219,7 +2381,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2665,6 +2826,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
+		};
+		B2B2C41015A9464400D6F61C /* Build configuration list for PBXNativeTarget "Pattern Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2B2C41115A9464400D6F61C /* Debug */,
+				B2B2C41215A9464400D6F61C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		B2FCA79315A66ACF00696598 /* Build configuration list for PBXNativeTarget "PICT Editor" */ = {
 			isa = XCConfigurationList;

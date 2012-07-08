@@ -1,18 +1,19 @@
 //
-//  PNGWindowController.m
+//  PatternWindowController.m
 //  ResKnife
 //
-//  Created by Nate Weaver on 2012-7-4.
+//  Created by Nate Weaver on 2012-7-7.
 //  Copyright (c) 2012 Derailer. All rights reserved.
 //
 
-#import "PNGWindowController.h"
+#import "PatternWindowController.h"
+#import "ResKnifeResourceProtocol.h"
 
-@interface PNGWindowController ()
+@interface PatternWindowController ()
 
 @end
 
-@implementation PNGWindowController
+@implementation PatternWindowController
 @synthesize imageView;
 
 - (id)initWithWindow:(NSWindow *)window
@@ -33,7 +34,17 @@
 	[[self window] setTitle:[resource defaultWindowTitle]];
 	
 	NSData *data = [resource data];
-	image = [[NSImage alloc] initWithData:data];
+	
+	unsigned char *planes[1] = { 0 };
+	planes[0] = (unsigned char *)[data bytes];
+	
+	NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:planes pixelsWide:8 pixelsHigh:8 bitsPerSample:1 samplesPerPixel:1 hasAlpha:NO isPlanar:NO colorSpaceName:NSCalibratedWhiteColorSpace bytesPerRow:1 bitsPerPixel:1];
+	
+	for (NSUInteger i = 0; i < 8; ++i)
+		[rep bitmapData][i] ^= 0xff;
+	
+	image = [[NSImage alloc] initWithSize:(NSSize){ .width = 8.0, .height = 8.0 }];
+	[image addRepresentation:rep];
 	[imageView setImage:image];
 	
 	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
@@ -43,19 +54,8 @@
 	[self showWindow:self];
 }
 
-- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
-{
-	return [resource defaultWindowTitle];
-}
-
-- (void)dealloc {
-	[image release];
-	[resource release];
-	[super dealloc];
-}
-
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)inResource {
-	if (self = [self initWithWindowNibName:@"PNGWindowController"]) {
+	if (self = [self initWithWindowNibName:@"PatternWindowController"]) {
 		resource = [inResource retain];
 		[self window];
 	}
@@ -63,11 +63,9 @@
 	return self;
 }
 
-- (void)resourceDataDidChange:(NSNotification *)note {
-	NSData *data = [resource data];
-	[image release];
-	image = [[NSImage alloc] initWithData:data];
-	[imageView setImage:image];
+- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
+{
+	return [resource defaultWindowTitle];
 }
 
 @end

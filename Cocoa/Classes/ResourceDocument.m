@@ -11,6 +11,7 @@
 #import "../Categories/NGSCategories.h"
 #import "../Categories/NSString-FSSpec.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
+#import <Carbon/Carbon.h>
 
 #import "../Plug-Ins/ResKnifePluginProtocol.h"
 #import "RKEditorRegistry.h"
@@ -1015,6 +1016,11 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	return plugController;
 }
 
+
+- (void)saveSoundAsMovie:(NSData *)sndData {
+
+}
+
 /*!
 @method			playSound:
 @abstract		Plays the selected carbon 'snd ' resource.
@@ -1031,7 +1037,7 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	// bug: can only cope with one selected item
 	NSData *data = [(Resource *)[outlineView itemAtRow:[outlineView selectedRow]] data];
 	if(data && [data length] != 0)
-	{
+	{		
 		[NSThread detachNewThreadSelector:@selector(playSoundThreadController:) toTarget:self withObject:data];
 	}
 	else NSBeep();
@@ -1053,9 +1059,10 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	if(data && [data length] != 0)
 	{
 		// plays sound synchronously, thread exits when sound is done playing
-		//SndListPtr sndPtr = (SndListPtr) [data bytes];
-		//SndPlay(nil, &sndPtr, false);
-		[[[[NSSound alloc] initWithData:data] autorelease] play];
+#if !__LP64__
+		SndListPtr sndPtr = (SndListPtr) [data bytes];
+		SndPlay(nil, &sndPtr, false);
+#endif
 	}
 	else NSBeep();
 	[pool release];

@@ -53,6 +53,11 @@
 	[self showWindow:self];
 }
 
+- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
+{
+	return [resource defaultWindowTitle];
+}
+
 - (void)resourceDataDidChange:(NSNotification *)notification
 {
 	// ensure it's our resource which got changed (should always be true, we don't register for notifications on other resource objects)

@@ -3,6 +3,8 @@
 
 @class CreateResourceSheetController, ResourceWindowController, ResourceDataSource, Resource;
 
+@protocol ResKnifePluginProtocol;
+
 @interface ResourceDocument : NSDocument <NSToolbarDelegate>
 {
 	IBOutlet ResourceDataSource		*dataSource;
