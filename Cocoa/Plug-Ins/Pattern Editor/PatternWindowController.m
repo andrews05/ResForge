@@ -63,6 +63,11 @@
 	return self;
 }
 
+- (void)dealloc {
+	[resource release];
+	[super dealloc];
+}
+
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
 	return [resource defaultWindowTitle];
