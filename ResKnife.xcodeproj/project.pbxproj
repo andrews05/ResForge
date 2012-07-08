@@ -445,7 +445,7 @@
 		E15CFF80099BECAE004929B6 /* ElementDATE.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDATE.h; sourceTree = "<group>"; };
 		E15CFF81099BECAF004929B6 /* ElementDATE.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDATE.m; sourceTree = "<group>"; };
 		E17ADBC006A2132800842474 /* NovaTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovaTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
-		E18BF58C069FEA1400F076B8 /* ResKnife Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ResKnife Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E18BF58C069FEA1400F076B8 /* ResKnife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResKnife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hexadecimal Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF5B6069FEA1400F076B8 /* Nicks Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Nicks Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF68D069FEA1800F076B8 /* Ulis Template Editor.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ulis Template Editor.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -946,7 +946,7 @@
 		F5B588110156D30301000001 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E18BF58C069FEA1400F076B8 /* ResKnife Cocoa.app */,
+				E18BF58C069FEA1400F076B8 /* ResKnife.app */,
 				E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */,
 				E18BF5B6069FEA1400F076B8 /* Nicks Template Editor.plugin */,
 				E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */,
@@ -1308,9 +1308,9 @@
 			productReference = B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		E18BF537069FEA1300F076B8 /* ResKnife Cocoa */ = {
+		E18BF537069FEA1300F076B8 /* ResKnife */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E13F7ED908F0411100E2A5CB /* Build configuration list for PBXNativeTarget "ResKnife Cocoa" */;
+			buildConfigurationList = E13F7ED908F0411100E2A5CB /* Build configuration list for PBXNativeTarget "ResKnife" */;
 			buildPhases = (
 				E18BF53C069FEA1300F076B8 /* Headers */,
 				E18BF553069FEA1300F076B8 /* Resources */,
@@ -1330,10 +1330,10 @@
 				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
 				B229EEE315A4BB720032C12C /* PBXTargetDependency */,
 			);
-			name = "ResKnife Cocoa";
+			name = ResKnife;
 			productInstallPath = "$(USER_APPS_DIR)";
 			productName = "ResKnife Cocoa";
-			productReference = E18BF58C069FEA1400F076B8 /* ResKnife Cocoa.app */;
+			productReference = E18BF58C069FEA1400F076B8 /* ResKnife.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E18BF58E069FEA1400F076B8 /* Hex Editor Cocoa */ = {
@@ -1501,7 +1501,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E18BF537069FEA1300F076B8 /* ResKnife Cocoa */,
+				E18BF537069FEA1300F076B8 /* ResKnife */,
 				E18BF58E069FEA1400F076B8 /* Hex Editor Cocoa */,
 				E18BF69E069FEA1800F076B8 /* Template Editor Cocoa */,
 				E18BF5A7069FEA1400F076B8 /* Nick's Template Editor Cocoa */,
@@ -2353,7 +2353,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Cocoa/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PRODUCT_NAME = "ResKnife Cocoa";
+				PRODUCT_NAME = ResKnife;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -2372,7 +2372,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Cocoa/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PRODUCT_NAME = "ResKnife Cocoa";
+				PRODUCT_NAME = ResKnife;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -2693,7 +2693,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		E13F7ED908F0411100E2A5CB /* Build configuration list for PBXNativeTarget "ResKnife Cocoa" */ = {
+		E13F7ED908F0411100E2A5CB /* Build configuration list for PBXNativeTarget "ResKnife" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E13F7EDA08F0411100E2A5CB /* Debug */,

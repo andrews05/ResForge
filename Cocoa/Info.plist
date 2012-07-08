@@ -12,7 +12,7 @@
 				<string>rsrc</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>Resource file.icns</string>
+			<string>Resource file</string>
 			<key>CFBundleTypeName</key>
 			<string>ResourceMap</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -53,11 +53,11 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>ResKnife Cocoa</string>
+	<string>ResKnife</string>
 	<key>CFBundleGetInfoString</key>
 	<string>A resource editor for Mac OS X.</string>
 	<key>CFBundleIconFile</key>
-	<string>ResKnife.icns</string>
+	<string>ResKnife</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.nickshanks.resknife</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -71,7 +71,7 @@
 	<key>CFBundleSignature</key>
 	<string>ResK</string>
 	<key>CFBundleVersion</key>
-	<string>19</string>
+	<string>20</string>
 	<key>NSAppleScriptEnabled</key>
 	<true/>
 	<key>NSMainNibFile</key>

@@ -900,8 +900,11 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	Resource *resource;
 	NSArray *selected = [outlineView selectedItems];
 	NSEnumerator *enumerator = [selected objectEnumerator];
-	while(resource = [enumerator nextObject])
-		[self openResourceUsingEditor:resource];
+	while(resource = [enumerator nextObject]) {
+		id usedPlug = [self openResourceUsingEditor:resource];
+		if ([usedPlug isKindOfClass:[NSWindowController class]])
+			[self addWindowController:usedPlug];
+	}
 }
 
 - (IBAction)openResourcesInTemplate:(id)sender
@@ -934,11 +937,12 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	
 	REVISIONS:
 		2003-07-31  UK  Changed to use plugin registry instead of file name.
+		2012-07-07	NW	Changed to return the used plugin.
    -------------------------------------------------------------------------- */
 
 /* Method name should be changed to:  -(void)openResource:(Resource *)resource usingEditor:(Class)overrideEditor <nil == default editor>   */
 
-- (void)openResourceUsingEditor:(Resource *)resource
+- (id <ResKnifePluginProtocol>)openResourceUsingEditor:(Resource *)resource
 {
 	Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:[resource type]];
 	
@@ -949,11 +953,11 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 		// update: doug says window controllers automatically release themselves when their window is closed. All default plugs have a window controller as their principal class, but 3rd party ones might not
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 		id plug = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
-		if(plug) return;
+		if(plug) return plug;
 	}
 	
 	// if no editor exists, or the editor is broken, open using template
-	[self openResource:resource usingTemplate:[resource type]];
+	return [self openResource:resource usingTemplate:[resource type]];
 }
 
 
@@ -967,9 +971,10 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	
 	REVISIONS:
 		2003-07-31  UK  Changed to use plugin registry instead of file name.
+		2012-07-07	NW	Changed to return the used plugin.
    -------------------------------------------------------------------------- */
 
-- (void)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
+- (id <ResKnifePluginProtocol>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
 {
 	// opens resource in template using TMPL resource with name templateName
 	Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:@"Template Editor"];
@@ -983,11 +988,11 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	{
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 		id plug = [(id <ResKnifeTemplatePluginProtocol>)[editorClass alloc] initWithResources:resource, tmpl, nil];
-		if(plug) return;
+		if(plug) return plug;
 	}
 	
 	// if no template exists, or template editor is broken, open as hex
-	[self openResourceAsHex:resource];
+	return [self openResourceAsHex:resource];
 }
 
 /*!
@@ -995,18 +1000,19 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 @author			Nicholas Shanks
 @created		2001
 @updated		2003-07-31 UK:	Changed to use plugin registry instead of file name.
+				2012-07-07 NW:	Changed to return the used plugin.
 @description	Open a hex editor for the specified Resource instance. This looks up the hexadecimal editor in the plugin registry and then instantiates an editor object, handing it the resource.
 @param			resource	Resource to edit
 */
 
-- (void)openResourceAsHex:(Resource *)resource
+- (id <ResKnifePluginProtocol>)openResourceAsHex:(Resource *)resource
 {
 	Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType: @"Hexadecimal Editor"];
 	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 	// update: doug says window controllers automatically release themselves when their window is closed.
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 	id <ResKnifePluginProtocol> plugController = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
-#pragma unused(plugController)
+	return plugController;
 }
 
 /*!

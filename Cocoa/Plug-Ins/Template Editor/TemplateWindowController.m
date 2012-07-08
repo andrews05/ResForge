@@ -124,7 +124,7 @@
 		Class cc = [clone class];
 		
 		BOOL pushedCounter = NO;
-		BOOL pushedKey = NO;
+		//BOOL pushedKey = NO;
 		if(cc == [ElementOCNT class])
 		{	[stream pushCounter:(ElementOCNT *)clone]; pushedCounter = YES; }
 		if(cc == [ElementKBYT class] ||

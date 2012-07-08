@@ -34,9 +34,9 @@
 - (IBAction)openResources:(id)sender;
 - (IBAction)openResourcesInTemplate:(id)sender;
 - (IBAction)openResourcesAsHex:(id)sender;
-- (void)openResourceUsingEditor:(Resource *)resource;
-- (void)openResource:(Resource *)resource usingTemplate:(NSString *)templateName;
-- (void)openResourceAsHex:(Resource *)resource;
+- (id <ResKnifePluginProtocol>)openResourceUsingEditor:(Resource *)resource;
+- (id <ResKnifePluginProtocol>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName;
+- (id <ResKnifePluginProtocol>)openResourceAsHex:(Resource *)resource;
 - (IBAction)playSound:(id)sender;
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished;
 
