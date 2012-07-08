@@ -43,7 +43,7 @@
 	for (NSUInteger i = 0; i < 8; ++i)
 		[rep bitmapData][i] ^= 0xff;
 	
-	image = [[NSImage alloc] initWithSize:(NSSize){ .width = 8.0, .height = 8.0 }];
+	image = [[NSImage alloc] init];
 	[image addRepresentation:rep];
 	[imageView setImage:image];
 	
