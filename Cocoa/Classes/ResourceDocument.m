@@ -897,10 +897,8 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	if(sender == outlineView && [outlineView clickedRow] == -1)
 		return;
 	
-	Resource *resource;
 	NSArray *selected = [outlineView selectedItems];
-	NSEnumerator *enumerator = [selected objectEnumerator];
-	while(resource = [enumerator nextObject]) {
+	for (Resource *resource in selected) {
 		id usedPlug = [self openResourceUsingEditor:resource];
 		if ([usedPlug isKindOfClass:[NSWindowController class]])
 			[self addWindowController:usedPlug];
@@ -910,20 +908,22 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 - (IBAction)openResourcesInTemplate:(id)sender
 {
 	// opens the resource in its default template
-	Resource *resource;
 	NSArray *selected = [outlineView selectedItems];
-	NSEnumerator *enumerator = [selected objectEnumerator];
-	while(resource = [enumerator nextObject])
-		[self openResource:resource usingTemplate:[resource type]];
+	for (Resource *resource in selected) {
+		id usedPlug = [self openResource:resource usingTemplate:[resource type]];
+		if ([usedPlug isKindOfClass:[NSWindowController class]])
+			[self addWindowController:usedPlug];
+	}
 }
 
 - (IBAction)openResourcesAsHex:(id)sender
 {
-	Resource *resource;
 	NSArray *selected = [outlineView selectedItems];
-	NSEnumerator *enumerator = [selected objectEnumerator];
-	while(resource = [enumerator nextObject])
-		[self openResourceAsHex:resource];
+	for (Resource *resource in selected) {
+		id usedPlug = [self openResourceAsHex:resource];
+		if ([usedPlug isKindOfClass:[NSWindowController class]])
+			[self addWindowController:usedPlug];
+	}
 }
 
 
