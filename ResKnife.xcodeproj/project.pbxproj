@@ -35,6 +35,8 @@
 		B2B2C41615A946FB00D6F61C /* PatternWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */; };
 		B2B2C41715A9470500D6F61C /* PatternWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */; };
 		B2B2C41815A9473C00D6F61C /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
+		B2B2C42115A9EEEF00D6F61C /* RKPatternImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */; };
+		B2B2C43A15A9FCCF00D6F61C /* RKPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */; };
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79115A66ACF00696598 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA78F15A66ACF00696598 /* InfoPlist.strings */; };
 		B2FCA79715A66B2A00696598 /* PictWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FCA78015A669C800696598 /* PictWindowController.m */; };
@@ -427,9 +429,13 @@
 		B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PatternWindowController.m; path = "Pattern Editor/PatternWindowController.m"; sourceTree = "<group>"; };
 		B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PatternWindowController.xib; path = "Pattern Editor/PatternWindowController.xib"; sourceTree = "<group>"; };
 		B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pattern Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2B2C40B15A9464400D6F61C /* Pattern Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pattern Editor-Info.plist"; sourceTree = "<group>"; };
+		B2B2C40B15A9464400D6F61C /* Pattern Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Pattern Editor-Info.plist"; path = "../../Pattern Editor/Pattern Editor-Info.plist"; sourceTree = "<group>"; };
 		B2B2C40D15A9464400D6F61C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B2B2C40F15A9464400D6F61C /* Pattern Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pattern Editor-Prefix.pch"; sourceTree = "<group>"; };
+		B2B2C40F15A9464400D6F61C /* Pattern Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Pattern Editor-Prefix.pch"; path = "../../Pattern Editor/Pattern Editor-Prefix.pch"; sourceTree = "<group>"; };
+		B2B2C41D15A9EEE100D6F61C /* RKPatternImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPatternImageCell.h; path = "Pattern Editor/RKPatternImageCell.h"; sourceTree = "<group>"; };
+		B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPatternImageCell.m; path = "Pattern Editor/RKPatternImageCell.m"; sourceTree = "<group>"; };
+		B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPatternView.h; path = "Pattern Editor/RKPatternView.h"; sourceTree = "<group>"; };
+		B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPatternView.m; path = "Pattern Editor/RKPatternView.m"; sourceTree = "<group>"; };
 		B2FCA77F15A669C800696598 /* PictWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictWindowController.h; sourceTree = "<group>"; };
 		B2FCA78015A669C800696598 /* PictWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictWindowController.m; sourceTree = "<group>"; };
 		B2FCA78115A669C800696598 /* SupportedTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedTypes.plist; sourceTree = "<group>"; };
@@ -807,29 +813,18 @@
 		B2B2C3FC15A9451800D6F61C /* Pattern Editor */ = {
 			isa = PBXGroup;
 			children = (
-				B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */,
-				B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */,
-				B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */,
-			);
-			name = "Pattern Editor";
-			sourceTree = "<group>";
-		};
-		B2B2C40915A9464400D6F61C /* Pattern Editor */ = {
-			isa = PBXGroup;
-			children = (
-				B2B2C40A15A9464400D6F61C /* Supporting Files */,
-			);
-			path = "Pattern Editor";
-			sourceTree = "<group>";
-		};
-		B2B2C40A15A9464400D6F61C /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
 				B2B2C40B15A9464400D6F61C /* Pattern Editor-Info.plist */,
 				B2B2C40C15A9464400D6F61C /* InfoPlist.strings */,
 				B2B2C40F15A9464400D6F61C /* Pattern Editor-Prefix.pch */,
+				B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */,
+				B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */,
+				B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */,
+				B2B2C41D15A9EEE100D6F61C /* RKPatternImageCell.h */,
+				B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */,
+				B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */,
+				B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */,
 			);
-			name = "Supporting Files";
+			name = "Pattern Editor";
 			sourceTree = "<group>";
 		};
 		B2FCA77C15A669C800696598 /* PICT Editor */ = {
@@ -996,7 +991,6 @@
 				F5B5887C0156D6D901000001 /* Prefix Files */,
 				F5B5881A0156D40B01000001 /* Cocoa */,
 				F5EA10690254A7B401A80001 /* External */,
-				B2B2C40915A9464400D6F61C /* Pattern Editor */,
 				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 			);
@@ -1793,6 +1787,8 @@
 			files = (
 				B2B2C41615A946FB00D6F61C /* PatternWindowController.m in Sources */,
 				B2B2C41815A9473C00D6F61C /* Notifications.m in Sources */,
+				B2B2C42115A9EEEF00D6F61C /* RKPatternImageCell.m in Sources */,
+				B2B2C43A15A9FCCF00D6F61C /* RKPatternView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2092,6 +2088,7 @@
 				B2B2C40D15A9464400D6F61C /* en */,
 			);
 			name = InfoPlist.strings;
+			path = "../../Pattern Editor";
 			sourceTree = "<group>";
 		};
 		B2FCA78F15A66ACF00696598 /* InfoPlist.strings */ = {
