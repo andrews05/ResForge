@@ -898,11 +898,17 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	if(sender == outlineView && [outlineView clickedRow] == -1)
 		return;
 	
-	NSArray *selected = [outlineView selectedItems];
-	for (Resource *resource in selected) {
-		id usedPlug = [self openResourceUsingEditor:resource];
-		if ([usedPlug isKindOfClass:[NSWindowController class]])
-			[self addWindowController:usedPlug];
+	
+	NSEvent *event = [NSApp currentEvent];
+	if ([event type] == NSLeftMouseUp && (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) & NSAlternateKeyMask) != 0)
+		[self openResourcesAsHex:sender];
+	else {
+		NSArray *selected = [outlineView selectedItems];
+		for (Resource *resource in selected) {
+			id usedPlug = [self openResourceUsingEditor:resource];
+			if ([usedPlug isKindOfClass:[NSWindowController class]])
+				[self addWindowController:usedPlug];
+		}
 	}
 }
 
