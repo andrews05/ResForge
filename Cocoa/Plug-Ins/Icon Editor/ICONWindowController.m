@@ -81,6 +81,8 @@
 	[resImage autorelease];
 	resImage = [[NSImage alloc] init];
 	
+	// -mutableCopy the data instead of retaining, so we don't get inverted pixels on reopening the resource
+	// (since switching to NSCalibratedWhiteColorSpace)
 	resData = [[resource data] mutableCopy];
 	planes[0] = (unsigned char*) [resData bytes];
 	NSUInteger plane0length = 0;
