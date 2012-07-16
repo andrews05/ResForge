@@ -201,9 +201,6 @@
 	//	easy to add new defaults just using a text editor instead of
 	//	hard-coding them into the application
 	NSDictionary *defaultsPlist = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"defaults" ofType:@"plist"]];
-	
-	// enumerate over all the keys in the dictionary
-	
 	[defaults registerDefaults:defaultsPlist];
 	
 	// force the defaults to save to the disk
