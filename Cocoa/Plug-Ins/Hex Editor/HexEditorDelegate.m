@@ -45,7 +45,7 @@
 	int	row;
 	
 	for( row = 0; row < rows; row++ )
-		[representation appendFormat:@"%08lX:", row * bytesPerRow];
+		[representation appendFormat:@"%08X:", row * bytesPerRow];
 	
 	return representation;
 }

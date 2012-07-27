@@ -49,7 +49,7 @@
 	char cstr[256];
 	char *endPtr = cstr + 255;
 	strncpy(cstr, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], 255);
-	value = strtol(cstr, &endPtr, 10);
+	value = (SInt16)strtol(cstr, &endPtr, 10);
 }
 
 @end

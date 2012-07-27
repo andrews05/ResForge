@@ -175,7 +175,7 @@
 /*!
 @method		draggingSourceOperationMaskForLocal:
 */
-- (unsigned int)draggingSourceOperationMaskForLocal:(BOOL)local
+- (NSUInteger)draggingSourceOperationMaskForLocal:(BOOL)local
 {
     if(local) return NSDragOperationEvery;
     else return NSDragOperationCopy;

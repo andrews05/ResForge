@@ -21,8 +21,8 @@
 }
 
 - (BOOL)readFork:(NSString *)forkName asStreamFromFile:(FSRef *)fileRef;
-- (BOOL)readResourceMap:(SInt16)fileRefNum;
-- (BOOL)writeResourceMap:(SInt16)fileRefNum;
+- (BOOL)readResourceMap:(ResFileRefNum)fileRefNum;
+- (BOOL)writeResourceMap:(ResFileRefNum)fileRefNum;
 - (BOOL)writeForkStreamsToFile:(NSString *)fileName;
 
 - (IBAction)exportResources:(id)sender;

@@ -95,7 +95,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 - (void)windowDidResize:(NSNotification *)notification
 {
-	int width = [(NSWindow *)[notification object] frame].size.width;
+	int width = (int)[(NSWindow *)[notification object] frame].size.width;
 	int oldBytesPerRow = bytesPerRow;
 	bytesPerRow = (((width - (kWindowStepWidthPerChar * kWindowStepCharsPerStep) - 122) / (kWindowStepWidthPerChar * kWindowStepCharsPerStep)) + 1) * kWindowStepCharsPerStep;
 	if(bytesPerRow != oldBytesPerRow)

@@ -346,7 +346,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"\n%@\nName: %@\nType: %@  ID: %@\nSize: %d  Modified: %@", [super description], name, type, resID, [data length], dirty? @"YES":@"NO"];
+	return [NSString stringWithFormat:@"\n%@\nName: %@\nType: %@  ID: %@\nSize: %ld  Modified: %@", [super description], name, type, resID, [data length], dirty? @"YES":@"NO"];
 }
 
 @end

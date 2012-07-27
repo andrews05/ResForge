@@ -214,7 +214,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 						[NSNumber numberWithUnsignedLong: 0], @"length",
 						[NSData data], @"data", nil];
 	[headerTable addObject:table];
-	numTables = [headerTable count];
+	numTables = (UInt16)[headerTable count];
 	[self openTable:table inEditor:YES];
 	[self setDocumentEdited:YES];
 }

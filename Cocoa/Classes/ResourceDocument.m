@@ -86,7 +86,7 @@ extern NSString *RKResourcePboardType;
 		int row = [[openPanelDelegate forkTableView] selectedRow];
 		NSString *selectedFork = [(NSDictionary *)[[openPanelDelegate forks] objectAtIndex:row] objectForKey:@"forkname"];
 		fork = (HFSUniStr255 *) NewPtrClear(sizeof(HFSUniStr255));
-		fork->length = ([selectedFork length] < 255)? [selectedFork length]:255;
+		fork->length = ([selectedFork length] < 255) ? (UInt16)[selectedFork length] : 255;
 		if(fork->length > 0)
 			[selectedFork getCharacters:fork->unicode range:NSMakeRange(0,fork->length)];
 		else fork->unicode[0] = 0;
@@ -208,7 +208,7 @@ extern NSString *RKResourcePboardType;
 	
 	// translate NSString into HFSUniStr255 -- in 10.4 this can be done with FSGetHFSUniStrFromString
 	HFSUniStr255 uniForkName = { 0 };
-	uniForkName.length = ([forkName length] < 255)? [forkName length]:255;
+	uniForkName.length = ([forkName length] < 255)? (UInt16)[forkName length]:255;
 	if(uniForkName.length > 0)
 		[forkName getCharacters:uniForkName.unicode range:NSMakeRange(0, uniForkName.length)];
 	else uniForkName.unicode[0] = 0;
@@ -245,10 +245,10 @@ extern NSString *RKResourcePboardType;
 	return YES;
 }
 
--(BOOL)readResourceMap:(SInt16)fileRefNum
+-(BOOL)readResourceMap:(ResFileRefNum)fileRefNum
 {
 	OSStatus error = noErr;
-	SInt16 oldResFile = CurResFile();
+	ResFileRefNum oldResFile = CurResFile();
 	UseResFile(fileRefNum);
 	
 	for(unsigned short i = 1; i <= Count1Types(); i++)
@@ -422,11 +422,11 @@ extern NSString *RKResourcePboardType;
 @abstract   Writes all resources (except the ones representing other forks of the file) to the specified resource file.
 */
 
-- (BOOL)writeResourceMap:(SInt16)fileRefNum
+- (BOOL)writeResourceMap:(ResFileRefNum)fileRefNum
 {
 	// make the resource file current
 	OSStatus error = noErr;
-	SInt16 oldResFile = CurResFile();
+	ResFileRefNum oldResFile = CurResFile();
 	UseResFile(fileRefNum);
 	
 	// loop over all our resources
@@ -451,7 +451,7 @@ extern NSString *RKResourcePboardType;
 		resourceHandle = NewHandleClear(sizeLong);
 		
 		// convert unicode name to pascal string
-		nameStr[0] = [[resource name] lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
+		nameStr[0] = (unsigned char)[[resource name] lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
 		memmove(&nameStr[1], [[resource name] cStringUsingEncoding:NSMacOSRomanStringEncoding], nameStr[0]);
 		
 		// convert type string to ResType

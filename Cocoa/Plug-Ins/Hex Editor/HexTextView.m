@@ -228,7 +228,7 @@ static NSRange draggedRange;
 		// bug: iteration through each character in string is broken, paste not yet mapped to this function
 		for(NSUInteger i = 0; i < [string lengthOfBytesUsingEncoding:NSASCIIStringEncoding]; i++)
 		{
-			char typedChar = [string characterAtIndex:i];
+			unichar typedChar = [string characterAtIndex:i];
 			if(typedChar >= 0x30 && typedChar <= 0x39)		typedChar -= 0x30;		// 0 to 9
 			else if(typedChar >= 0x41 && typedChar <= 0x46)	typedChar -= 0x37;		// A to F
 			else if(typedChar >= 0x61 && typedChar <= 0x66)	typedChar -= 0x57;		// a to f

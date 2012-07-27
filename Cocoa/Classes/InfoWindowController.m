@@ -196,7 +196,7 @@ FSGetCatalogInfo:
 
 - (IBAction)attributesChanged:(id)sender
 {
-	short attr = 0x0001 << [sender selectedRow]+1;
+	short attr = (short)(0x0001 << [sender selectedRow]+1);
 	short number = ([[selectedResource attributes] shortValue] ^ attr);
 	[selectedResource setAttributes:[NSNumber numberWithShort:number]];
 }

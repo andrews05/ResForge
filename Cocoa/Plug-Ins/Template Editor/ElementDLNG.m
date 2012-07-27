@@ -41,7 +41,7 @@
 
 - (NSString *)stringValue
 {
-	return [NSString stringWithFormat:@"%ld", value];
+	return [NSString stringWithFormat:@"%d", value];
 }
 
 - (void)setStringValue:(NSString *)str

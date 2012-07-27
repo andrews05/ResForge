@@ -26,6 +26,7 @@
 		B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */; };
 		B24925E215A6776600C22060 /* PictWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* PictWindow.xib */; };
 		B24925E615A6778C00C22060 /* ICONWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E415A6778C00C22060 /* ICONWindow.xib */; };
+		B271D08015B6CFC70039A282 /* EditHexTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B271D07F15B6CFC70039A282 /* EditHexTemplate.pdf */; };
 		B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65CE15A677F00029141B /* TemplateWindow.xib */; };
 		B27A65D615A678260029141B /* FindSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D215A678260029141B /* FindSheet.xib */; };
 		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
@@ -37,6 +38,7 @@
 		B2B2C41815A9473C00D6F61C /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		B2B2C42115A9EEEF00D6F61C /* RKPatternImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */; };
 		B2B2C43A15A9FCCF00D6F61C /* RKPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */; };
+		B2B51C9115B700560087978B /* Edit Hex.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FC0211E4D401A80001 /* Edit Hex.tiff */; };
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79115A66ACF00696598 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA78F15A66ACF00696598 /* InfoPlist.strings */; };
 		B2FCA79715A66B2A00696598 /* PictWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FCA78015A669C800696598 /* PictWindowController.m */; };
@@ -100,7 +102,6 @@
 		E18BF560069FEA1300F076B8 /* Create.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FA0211E4D401A80001 /* Create.tiff */; };
 		E18BF561069FEA1300F076B8 /* Delete.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A904021220D601A80001 /* Delete.tiff */; };
 		E18BF562069FEA1300F076B8 /* Edit.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FB0211E4D401A80001 /* Edit.tiff */; };
-		E18BF563069FEA1300F076B8 /* Edit Hex.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FC0211E4D401A80001 /* Edit Hex.tiff */; };
 		E18BF564069FEA1300F076B8 /* Save.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8F30211CFA701A80001 /* Save.tiff */; };
 		E18BF565069FEA1300F076B8 /* Show Info.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8F80211DC1E01A80001 /* Show Info.tiff */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
@@ -422,6 +423,7 @@
 		B229EEF315A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/ResourceDocument.xib; sourceTree = SOURCE_ROOT; };
 		B24925E115A6776600C22060 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PictWindow.xib; sourceTree = "<group>"; };
 		B24925E515A6778C00C22060 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ICONWindow.xib; sourceTree = "<group>"; };
+		B271D07F15B6CFC70039A282 /* EditHexTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = EditHexTemplate.pdf; path = ../../../../Documents/ResKnife/EditHexTemplate.pdf; sourceTree = "<group>"; };
 		B27A65CF15A677F00029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TemplateWindow.xib; sourceTree = "<group>"; };
 		B27A65D315A678260029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FindSheet.xib; sourceTree = "<group>"; };
 		B27A65D515A678260029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/HexWindow.xib; sourceTree = "<group>"; };
@@ -1092,6 +1094,7 @@
 				F577A904021220D601A80001 /* Delete.tiff */,
 				F577A8FB0211E4D401A80001 /* Edit.tiff */,
 				F577A8FC0211E4D401A80001 /* Edit Hex.tiff */,
+				B271D07F15B6CFC70039A282 /* EditHexTemplate.pdf */,
 				F577A8F30211CFA701A80001 /* Save.tiff */,
 				F577A8F80211DC1E01A80001 /* Show Info.tiff */,
 				3D35756004DAEB7F00B8225B /* Export.tiff */,
@@ -1555,7 +1558,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = E13F7F0508F0411100E2A5CB /* Build configuration list for PBXProject "ResKnife" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1629,7 +1632,6 @@
 				E18BF560069FEA1300F076B8 /* Create.tiff in Resources */,
 				E18BF561069FEA1300F076B8 /* Delete.tiff in Resources */,
 				E18BF562069FEA1300F076B8 /* Edit.tiff in Resources */,
-				E18BF563069FEA1300F076B8 /* Edit Hex.tiff in Resources */,
 				E18BF564069FEA1300F076B8 /* Save.tiff in Resources */,
 				E18BF565069FEA1300F076B8 /* Show Info.tiff in Resources */,
 				E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */,
@@ -1642,6 +1644,8 @@
 				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,
 				B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */,
 				B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */,
+				B271D08015B6CFC70039A282 /* EditHexTemplate.pdf in Resources */,
+				B2B51C9115B700560087978B /* Edit Hex.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2245,6 +2249,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2274,6 +2279,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2296,7 +2302,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2309,7 +2315,6 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -2326,14 +2331,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pattern Editor/Pattern Editor-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -2349,6 +2353,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2361,7 +2366,6 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -2378,13 +2382,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PICT Editor/PICT Editor-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -2399,12 +2403,12 @@
 		E13F7ED208F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Hex Editor/Info.plist";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -2428,10 +2432,10 @@
 		E13F7ED308F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Hex Editor/Info.plist";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -2455,12 +2459,12 @@
 		E13F7ED608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Template Editor/Info.plist";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2480,10 +2484,10 @@
 		E13F7ED708F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Template Editor/Info.plist";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2503,6 +2507,7 @@
 		E13F7EDA08F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2524,6 +2529,7 @@
 		E13F7EDB08F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2543,12 +2549,12 @@
 		E13F7EDE08F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Nick's Template Editor/Info.plist";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2568,10 +2574,10 @@
 		E13F7EDF08F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Nick's Template Editor/Info.plist";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2591,12 +2597,12 @@
 		E13F7EE208F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = ICONEditor/Info.plist;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2616,10 +2622,10 @@
 		E13F7EE308F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = ICONEditor/Info.plist;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2639,6 +2645,7 @@
 		E13F7EE608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2646,7 +2653,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
@@ -2671,12 +2677,12 @@
 		E13F7EE708F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
@@ -2701,12 +2707,12 @@
 		E13F7EEA08F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = NovaTools/Info.plist;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2726,10 +2732,10 @@
 		E13F7EEB08F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = NovaTools/Info.plist;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2749,11 +2755,11 @@
 		E13F7F0208F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Info-Uli_s_Template_Editor__Upgraded_.plist";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2773,9 +2779,9 @@
 		E13F7F0308F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Info-Uli_s_Template_Editor__Upgraded_.plist";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2796,9 +2802,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				SDKROOT = macosx;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -2806,9 +2813,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				SDKROOT = macosx;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
@@ -2831,6 +2839,7 @@
 				B2B2C41215A9464400D6F61C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 		B2FCA79315A66ACF00696598 /* Build configuration list for PBXNativeTarget "PICT Editor" */ = {
 			isa = XCConfigurationList;
