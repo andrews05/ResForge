@@ -46,7 +46,7 @@
 			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>public.item</string>
+				<string>public.data</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>ResourceDocument</string>
@@ -71,7 +71,7 @@
 	<key>CFBundleSignature</key>
 	<string>ResK</string>
 	<key>CFBundleVersion</key>
-	<string>20</string>
+	<string>21</string>
 	<key>NSAppleScriptEnabled</key>
 	<true/>
 	<key>NSMainNibFile</key>
