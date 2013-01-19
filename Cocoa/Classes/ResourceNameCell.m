@@ -115,12 +115,22 @@
 		imageFrame.size = imageSize;
 		
 		// center vertically
-		if([controlView isFlipped])
-			imageFrame.origin.y += ceil((cellFrame.size.height + imageFrame.size.height) / 2);
-		else imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
-		
+		imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2.0);
+
+		NSAffineTransform *t = nil;
+
+		if ([controlView isFlipped]) {
+			t = [NSAffineTransform transform];
+			[t translateXBy:0.0 yBy:cellFrame.origin.y * 2.0 + cellFrame.size.height];
+			[t scaleXBy:1.0 yBy:-1.0];
+			[t concat];
+		}
+
 		// draw image
-		[image compositeToPoint:imageFrame.origin operation:NSCompositeSourceOver];
+		[image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+
+		if ([controlView isFlipped])
+			[t concat];
 	}
 	
 	// get the superclass to draw the text stuff

@@ -11,6 +11,7 @@
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; };
+		B22100CD15D3F944009FDEE1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		B229EECB15A4B8720032C12C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B229EED315A4B8720032C12C /* InfoPlist.strings */; };
 		B229EEDB15A4B9420032C12C /* PNGWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B229EEC115A4B7250032C12C /* PNGWindowController.m */; };
@@ -26,6 +27,9 @@
 		B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */; };
 		B24925E215A6776600C22060 /* PictWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* PictWindow.xib */; };
 		B24925E615A6778C00C22060 /* ICONWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E415A6778C00C22060 /* ICONWindow.xib */; };
+		B24FA09915D303A800622683 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
+		B24FA09B15D303CD00622683 /* HexFiend.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
+		B24FA09C15D3041800622683 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
 		B271D08015B6CFC70039A282 /* EditHexTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B271D07F15B6CFC70039A282 /* EditHexTemplate.pdf */; };
 		B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65CE15A677F00029141B /* TemplateWindow.xib */; };
 		B27A65D615A678260029141B /* FindSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D215A678260029141B /* FindSheet.xib */; };
@@ -316,6 +320,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		B24FA09A15D303C900622683 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B24FA09B15D303CD00622683 /* HexFiend.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E119383F09991CA300A3A6EA /* Copy Support Resources */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -423,6 +437,7 @@
 		B229EEF315A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/ResourceDocument.xib; sourceTree = SOURCE_ROOT; };
 		B24925E115A6776600C22060 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PictWindow.xib; sourceTree = "<group>"; };
 		B24925E515A6778C00C22060 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ICONWindow.xib; sourceTree = "<group>"; };
+		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
 		B271D07F15B6CFC70039A282 /* EditHexTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = EditHexTemplate.pdf; path = ../../../../Documents/ResKnife/EditHexTemplate.pdf; sourceTree = "<group>"; };
 		B27A65CF15A677F00029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TemplateWindow.xib; sourceTree = "<group>"; };
 		B27A65D315A678260029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FindSheet.xib; sourceTree = "<group>"; };
@@ -651,6 +666,7 @@
 			files = (
 				E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */,
 				E18BF588069FEA1300F076B8 /* Carbon.framework in Frameworks */,
+				B24FA09915D303A800622683 /* HexFiend.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +675,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18BF5A2069FEA1400F076B8 /* Cocoa.framework in Frameworks */,
+				B24FA09C15D3041800622683 /* HexFiend.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1105,6 +1122,7 @@
 		F5B588490156D40B01000001 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B25C779815D2B0C500C005DE /* HexFiend.framework */,
 				F5B5884A0156D40B01000001 /* Carbon.framework */,
 				F54625C6029174F601A8010C /* CoreServices.framework */,
 				F54626490291750201A8010C /* ApplicationServices.framework */,
@@ -1393,6 +1411,7 @@
 				E18BF56F069FEA1300F076B8 /* Sources */,
 				E18BF586069FEA1300F076B8 /* Frameworks */,
 				E18BF589069FEA1300F076B8 /* Rez */,
+				B24FA09A15D303C900622683 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1558,7 +1577,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = E13F7F0508F0411100E2A5CB /* Build configuration list for PBXProject "ResKnife" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1655,6 +1674,7 @@
 			files = (
 				B27A65D615A678260029141B /* FindSheet.xib in Resources */,
 				B27A65D715A678260029141B /* HexWindow.xib in Resources */,
+				B22100CD15D3F944009FDEE1 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2405,6 +2425,10 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/**",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -2414,7 +2438,7 @@
 				OTHER_LDFLAGS = (
 					"-bundle",
 					"-undefined",
-					error,
+					dynamic_lookup,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Hexadecimal Editor";
@@ -2435,13 +2459,17 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/**",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Hex Editor/Info.plist";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-bundle",
 					"-undefined",
-					error,
+					dynamic_lookup,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Hexadecimal Editor";
@@ -2509,12 +2537,19 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"/**",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Cocoa/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = ResKnife;
 				WARNING_CFLAGS = (
@@ -2531,10 +2566,17 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"/**",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Cocoa/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = ResKnife;
 				WARNING_CFLAGS = (
@@ -2805,7 +2847,7 @@
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				GCC_VERSION = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -2816,7 +2858,7 @@
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				GCC_VERSION = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
