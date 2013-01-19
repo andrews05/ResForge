@@ -58,22 +58,8 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
-	
-	{
-		// set up tab, shift-tab and enter behaviour (cannot set these in IB at the moment)
-		[hex setFieldEditor:YES];
-		[ascii setFieldEditor:YES];
-		[offset setDrawsBackground:NO];
-		[[offset enclosingScrollView] setDrawsBackground:NO];
-		
-		// from HexEditorDelegate, here until bug is fixed
-		[[NSNotificationCenter defaultCenter] addObserver:hexDelegate selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[offset enclosingScrollView] contentView]];
-		[[NSNotificationCenter defaultCenter] addObserver:hexDelegate selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[hex enclosingScrollView] contentView]];
-		[[NSNotificationCenter defaultCenter] addObserver:hexDelegate selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[ascii enclosingScrollView] contentView]];
-	}
-	
+
 	// insert the resources' data into the text fields
-	[self refreshData:[resource data]];
 	[[self window] setResizeIncrements:NSMakeSize(kWindowStepWidthPerChar * kWindowStepCharsPerStep, 1)];
 	// min 346, step 224, norm 570, step 224, max 794
 	
@@ -82,10 +68,23 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 	if(liveEdit)	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceWasSaved:) name:ResourceDataDidChangeNotification object:resource];
 	else			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceWasSaved:) name:ResourceDataDidChangeNotification object:backup];
+
+
+	HFLineCountingRepresenter *lineCountingRepresenter = [[[HFLineCountingRepresenter alloc] init] autorelease];
+	HFStatusBarRepresenter *statusBarRepresenter = [[[HFStatusBarRepresenter alloc] init] autorelease];
+	
+	[[textView layoutRepresenter] addRepresenter:lineCountingRepresenter];
+	[[textView layoutRepresenter] addRepresenter:statusBarRepresenter];
+	[[textView controller] setFont:[NSFont userFixedPitchFontOfSize:10.0]];
+	[[textView controller] addRepresenter:lineCountingRepresenter];
+	[[textView controller] addRepresenter:statusBarRepresenter];
+	[textView bind:@"data" toObject:self withKeyPath:@"data" options:nil];
+	[lineCountingRepresenter cycleLineNumberFormat];
 	
 	// finally, set the window title & show the window
 	[[self window] setTitle:[resource defaultWindowTitle]];
 	[self showWindow:self];
+	[[textView layoutRepresenter] performLayout];
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
@@ -149,26 +148,37 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 {
 	if([[self window] isDocumentEdited])
 	{
-		NSBeginAlertSheet(@"Do you want to keep the changes you made to this resource?", @"Keep", @"Don't Keep", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes cannot be saved later if you don't keep them.");
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+		NSAlert *alert = [[NSAlert alloc] init];
+		[alert setMessageText:NSLocalizedStringFromTableInBundle(@"KeepChangesDialogTitle", nil, bundle, nil)];
+		[alert setInformativeText:NSLocalizedStringFromTableInBundle(@"KeepChangesDialogMessage", nil, bundle, nil)];
+		[alert addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"KeepChangesButton", nil, bundle, nil)];
+		[alert addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"CancelButton", nil, bundle, nil)];
+		NSButton *button = [alert addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"DiscardChangesButton", nil, bundle, nil)];
+		[button setKeyEquivalent:@"d"];
+		[button setKeyEquivalentModifierMask:NSCommandKeyMask];
+		[alert beginSheetModalForWindow:sender modalDelegate:self didEndSelector:@selector(saveSheetDidClose:returnCode:contextInfo:) contextInfo:NULL];
+		//[alert release];
 		return NO;
 	}
 	else return YES;
 }
 
-- (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+- (void)saveSheetDidClose:(NSAlert *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	switch(returnCode)
 	{
-		case NSAlertDefaultReturn:		// keep
+		case NSAlertFirstButtonReturn:		// keep
 			[self saveResource:nil];
 			[[self window] close];
 			break;
 		
-		case NSAlertAlternateReturn:	// don't keep
-			[[self window] close];
+		case NSAlertSecondButtonReturn:	// cancel
 			break;
 		
-		case NSAlertOtherReturn:		// cancel
+		case NSAlertThirdButtonReturn:		// don't keep
+			[[sheet window] orderOut:nil];
+			[[self window] close];
 			break;
 	}
 }
@@ -202,7 +212,6 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	// bug: if liveEdit is false and another editor changes backup, if we are dirty we need to ask the user whether to accept the changes from the other editor and discard our changes, or vice versa.
 	if([notification object] == (id)resource)
 	{
-		[self refreshData:[resource data]];
 		[self setDocumentEdited:YES];
 	}
 }
@@ -222,44 +231,6 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	}
 }
 
-- (void)refreshData:(NSData *)data;
-{
-	// save selections
-	NSRange hexSelection = [hex selectedRange];
-	NSRange asciiSelection = [ascii selectedRange];
-	
-	// clear delegates (see HexEditorDelegate class for explanation of why)
-	id oldDelegate = [hex delegate];
-	[hex setDelegate:nil];
-	[ascii setDelegate:nil];
-	
-	// prepare attributes dictionary
-	NSMutableParagraphStyle *paragraph = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-	[paragraph setLineBreakMode:NSLineBreakByCharWrapping];
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObject:paragraph forKey:NSParagraphStyleAttributeName];
-	[paragraph release];
-	
-	// do stuff with data
-	[offset setString:[hexDelegate offsetRepresentation:data]];
-	if([data length] > 0)
-		[hex setString:[[data hexRepresentation] stringByAppendingString:@" "]];
-	else [hex setString:[data hexRepresentation]];
-	[ascii setString:[data asciiRepresentation]];
-	
-	// apply attributes
-	[[offset textStorage] addAttributes:dictionary range:NSMakeRange(0, [[offset textStorage] length])];
-	[[hex	 textStorage] addAttributes:dictionary range:NSMakeRange(0, [[hex textStorage] length])];
-	[[ascii	 textStorage] addAttributes:dictionary range:NSMakeRange(0, [[ascii textStorage] length])];
-	
-	// restore selections (this is the dumbest way to do it, but it'll do for now)
-	[hex setSelectedRange:NSIntersectionRange(hexSelection, [hex selectedRange])];
-	[ascii setSelectedRange:NSIntersectionRange(asciiSelection, [ascii selectedRange])];
-	
-	// restore delegates
-	[hex setDelegate:oldDelegate];
-	[ascii setDelegate:oldDelegate];
-}
-
 - (id)resource
 {
 	return resource;
@@ -268,6 +239,10 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 - (NSData *)data
 {
 	return [resource data];
+}
+
+- (void)setData:(NSData *)data {
+	[resource setData:data];
 }
 
 - (int)bytesPerRow

@@ -1,6 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import "HexEditorDelegate.h"
 #import "HexTextView.h"
+#import <HexFiend/HexFiend.h>
 
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"
@@ -37,6 +38,9 @@
 	BOOL			liveEdit;
 	int				bytesPerRow;
 	NSUndoManager   *undoManager;
+
+	IBOutlet HFTextView		*textView;
+	HFController			*textViewController;
 }
 
 // conform to the ResKnifePluginProtocol with the inclusion of these methods
@@ -46,7 +50,7 @@
 - (IBAction)showFind:(id)sender;
 
 // save sheet methods
-- (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void)saveSheetDidClose:(NSAlert *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (IBAction)saveResource:(id)sender;
 - (IBAction)revertResource:(id)sender;
 
@@ -54,7 +58,6 @@
 - (void)resourceNameDidChange:(NSNotification *)notification;
 - (void)resourceDataDidChange:(NSNotification *)notification;
 - (void)resourceWasSaved:(NSNotification *)notification;
-- (void)refreshData:(NSData *)data;
 
 // accessors
 - (id)resource;
