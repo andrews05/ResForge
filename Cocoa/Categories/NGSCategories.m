@@ -10,6 +10,9 @@
 	[indicies getIndexes:buffer maxCount:count inIndexRange:&range];
 	for(unsigned int i = 0; i < count; i++)
 		[newArray addObject:[self objectAtIndex:*(buffer+i)]];
+
+	free(buffer);
+	
 	return [NSArray arrayWithArray:newArray];
 }
 @end
@@ -262,6 +265,8 @@
 		[colours addObject: [colour colorWithAlphaComponent: alpha]];
 	}
 	NSGradient *gradient = [[NSGradient alloc] initWithColors: colours atLocations: locations colorSpace: [self colorSpace]];
+
+	free(locations);
 	return [gradient autorelease];
 }
 @end
