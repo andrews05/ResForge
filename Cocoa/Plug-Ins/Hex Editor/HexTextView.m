@@ -507,9 +507,9 @@ static NSRange draggedRange;
 @updated	2003-11-10 NGS:  Changed algorithm.
 */
 
-- (unsigned int)_insertionGlyphIndexForDrag:(id <NSDraggingInfo>)sender
+- (NSUInteger)_insertionGlyphIndexForDrag:(id <NSDraggingInfo>)sender
 {
-	unsigned int glyphIndex = (unsigned int) [super _insertionGlyphIndexForDrag:sender];
+	NSUInteger glyphIndex = (unsigned int) [super _insertionGlyphIndexForDrag:sender];
 	if(glyphIndex % 3 == 1)	glyphIndex--;
 	if(glyphIndex % 3 == 2)	glyphIndex++;
 	return glyphIndex;
