@@ -21,6 +21,12 @@ NSString *DocumentInfoWillChangeNotification		= @"DocumentInfoWillChangeNotifica
 NSString *DocumentInfoDidChangeNotification			= @"DocumentInfoDidChangeNotification";
 extern NSString *RKResourcePboardType;
 
+@interface ResourceDocument ()
+
+@property (retain)	IBOutlet NSView		*viewToolbarView;
+
+@end
+
 @implementation ResourceDocument
 
 - (id)init
@@ -739,6 +745,7 @@ static NSString *RKEditHexItemIdentifier	= @"com.nickshanks.resknife.toolbar.edi
 static NSString *RKSaveItemIdentifier		= @"com.nickshanks.resknife.toolbar.save";
 static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.showinfo";
 static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.export";
+static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view";
 
 - (void)setupToolbar:(NSWindowController *)windowController
 {
@@ -823,6 +830,15 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	[item setTarget:self];
 	[item setAction:@selector(exportResources:)];
 	[toolbarItems setObject:item forKey:RKExportItemIdentifier];
+
+	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKViewItemIdentifier];
+	[item autorelease];
+	[item setLabel:NSLocalizedString(@"View", nil)];
+	[item setPaletteLabel:NSLocalizedString(@"View", nil)];
+	[item setToolTip:NSLocalizedString(@"View as a list or previews", nil)];
+	[item setView:self.viewToolbarView];
+	[item setTarget:self];
+	[toolbarItems setObject:item forKey:RKViewItemIdentifier];
 	
 	if([windowController window] == mainWindow)
 	{
@@ -847,12 +863,13 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKShowInfoItemIdentifier, RKDeleteItemIdentifier, NSToolbarSeparatorItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, NSToolbarSeparatorItemIdentifier, RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, nil];
+	NSString *separatorIdentifier = NSAppKitVersionNumber < NSAppKitVersionNumber10_7 ? NSToolbarSeparatorItemIdentifier : NSToolbarSpaceItemIdentifier;
+    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKShowInfoItemIdentifier, RKDeleteItemIdentifier, RKViewItemIdentifier, separatorIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, separatorIdentifier, RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, nil];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKDeleteItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, RKSaveItemIdentifier, RKExportItemIdentifier, RKShowInfoItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
+    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKDeleteItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, RKSaveItemIdentifier, RKExportItemIdentifier, RKShowInfoItemIdentifier, RKViewItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
 }
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)item
@@ -1044,7 +1061,18 @@ static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.exp
 	NSData *data = [(Resource *)[outlineView itemAtRow:[outlineView selectedRow]] data];
 	if(data && [data length] != 0)
 	{		
-		[NSThread detachNewThreadSelector:@selector(playSoundThreadController:) toTarget:self withObject:data];
+		xpc_connection_t connection = xpc_connection_create("org.derailer.ResKnife.System7SoundPlayer", NULL);
+		xpc_object_t dict = xpc_dictionary_create(NULL, NULL, 0);
+		xpc_dictionary_set_data(dict, "soundData", [data bytes], [data length]);
+		xpc_connection_set_event_handler(connection, ^(xpc_object_t object) {
+			if (xpc_get_type(object) == XPC_TYPE_ERROR) {
+				if (object == XPC_ERROR_CONNECTION_INVALID)
+					NSLog(@"invalid connection");
+			}
+		});
+		xpc_connection_resume(connection);
+		xpc_connection_send_message(connection, dict);
+		xpc_release(dict);
 	}
 	else NSBeep();
 }

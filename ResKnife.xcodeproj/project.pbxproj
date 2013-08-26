@@ -25,6 +25,12 @@
 		B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */; };
 		B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */; };
 		B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */; };
+		B234337F16AB59D0007134B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884D0156D40B01000001 /* Foundation.framework */; };
+		B234338516AB59D0007134B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B234338316AB59D0007134B9 /* InfoPlist.strings */; };
+		B234338816AB59D0007134B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B234338716AB59D0007134B9 /* main.m */; };
+		B234338E16AB5D5D007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */; };
+		B234339916AB6143007134B9 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
+		B23433DB16AB69AE007134B9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B24925E215A6776600C22060 /* PictWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* PictWindow.xib */; };
 		B24925E615A6778C00C22060 /* ICONWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E415A6778C00C22060 /* ICONWindow.xib */; };
 		B24FA09915D303A800622683 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
@@ -42,6 +48,7 @@
 		B2B2C41815A9473C00D6F61C /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		B2B2C42115A9EEEF00D6F61C /* RKPatternImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */; };
 		B2B2C43A15A9FCCF00D6F61C /* RKPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */; };
+		B2B3CEAA16B9DCE90027F33F /* ResourceGridView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */; };
 		B2B51C9115B700560087978B /* Edit Hex.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FC0211E4D401A80001 /* Edit Hex.tiff */; };
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79115A66ACF00696598 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA78F15A66ACF00696598 /* InfoPlist.strings */; };
@@ -282,6 +289,13 @@
 			remoteGlobalIDString = B229EEC915A4B8720032C12C;
 			remoteInfo = "PNG Editor";
 		};
+		B234338F16AB5D77007134B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B234337D16AB59D0007134B9;
+			remoteInfo = System7SoundPlayer;
+		};
 		B2B2C41315A9467100D6F61C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -320,6 +334,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		B234338D16AB5D4A007134B9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/XPCServices;
+			dstSubfolderSpec = 1;
+			files = (
+				B234338E16AB5D5D007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B24FA09A15D303C900622683 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -435,6 +459,11 @@
 		B229EEEF15A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/InfoWindow.xib; sourceTree = SOURCE_ROOT; };
 		B229EEF115A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/PrefsWindow.xib; sourceTree = SOURCE_ROOT; };
 		B229EEF315A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/ResourceDocument.xib; sourceTree = SOURCE_ROOT; };
+		B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = org.derailer.ResKnife.System7SoundPlayer.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		B234338216AB59D0007134B9 /* System7SoundPlayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "System7SoundPlayer-Info.plist"; sourceTree = "<group>"; };
+		B234338416AB59D0007134B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B234338616AB59D0007134B9 /* System7SoundPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "System7SoundPlayer-Prefix.pch"; sourceTree = "<group>"; };
+		B234338716AB59D0007134B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B24925E115A6776600C22060 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PictWindow.xib; sourceTree = "<group>"; };
 		B24925E515A6778C00C22060 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ICONWindow.xib; sourceTree = "<group>"; };
 		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
@@ -453,6 +482,7 @@
 		B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPatternImageCell.m; path = "Pattern Editor/RKPatternImageCell.m"; sourceTree = "<group>"; };
 		B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPatternView.h; path = "Pattern Editor/RKPatternView.h"; sourceTree = "<group>"; };
 		B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPatternView.m; path = "Pattern Editor/RKPatternView.m"; sourceTree = "<group>"; };
+		B2B3CEA916B9DCE90027F33F /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/ResourceGridView.xib; sourceTree = SOURCE_ROOT; };
 		B2FCA77F15A669C800696598 /* PictWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictWindowController.h; sourceTree = "<group>"; };
 		B2FCA78015A669C800696598 /* PictWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictWindowController.m; sourceTree = "<group>"; };
 		B2FCA78115A669C800696598 /* SupportedTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedTypes.plist; sourceTree = "<group>"; };
@@ -644,6 +674,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B234337B16AB59D0007134B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B234337F16AB59D0007134B9 /* Foundation.framework in Frameworks */,
+				B234339916AB6143007134B9 /* Carbon.framework in Frameworks */,
+				B23433DB16AB69AE007134B9 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2B2C40415A9464400D6F61C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -829,6 +869,25 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
+		B234338016AB59D0007134B9 /* System7SoundPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				B234338716AB59D0007134B9 /* main.m */,
+				B234338116AB59D0007134B9 /* Supporting Files */,
+			);
+			path = System7SoundPlayer;
+			sourceTree = "<group>";
+		};
+		B234338116AB59D0007134B9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B234338216AB59D0007134B9 /* System7SoundPlayer-Info.plist */,
+				B234338316AB59D0007134B9 /* InfoPlist.strings */,
+				B234338616AB59D0007134B9 /* System7SoundPlayer-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		B2B2C3FC15A9451800D6F61C /* Pattern Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1010,6 +1069,7 @@
 				F5B5887C0156D6D901000001 /* Prefix Files */,
 				F5B5881A0156D40B01000001 /* Cocoa */,
 				F5EA10690254A7B401A80001 /* External */,
+				B234338016AB59D0007134B9 /* System7SoundPlayer */,
 				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 			);
@@ -1029,6 +1089,7 @@
 				B229EECA15A4B8720032C12C /* PNG Editor.plugin */,
 				B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */,
 				B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */,
+				B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1115,6 +1176,7 @@
 				F577A8F30211CFA701A80001 /* Save.tiff */,
 				F577A8F80211DC1E01A80001 /* Show Info.tiff */,
 				3D35756004DAEB7F00B8225B /* Export.tiff */,
+				B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1366,6 +1428,23 @@
 			productReference = B229EECA15A4B8720032C12C /* PNG Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		B234337D16AB59D0007134B9 /* System7SoundPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B234338B16AB59D0007134B9 /* Build configuration list for PBXNativeTarget "System7SoundPlayer" */;
+			buildPhases = (
+				B234337A16AB59D0007134B9 /* Sources */,
+				B234337B16AB59D0007134B9 /* Frameworks */,
+				B234337C16AB59D0007134B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = System7SoundPlayer;
+			productName = System7SoundPlayer;
+			productReference = B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */;
+			productType = "com.apple.product-type.bundle";
+		};
 		B2B2C40615A9464400D6F61C /* Pattern Editor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2B2C41015A9464400D6F61C /* Build configuration list for PBXNativeTarget "Pattern Editor" */;
@@ -1412,6 +1491,7 @@
 				E18BF586069FEA1300F076B8 /* Frameworks */,
 				E18BF589069FEA1300F076B8 /* Rez */,
 				B24FA09A15D303C900622683 /* CopyFiles */,
+				B234338D16AB5D4A007134B9 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1423,6 +1503,7 @@
 				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
 				B229EEE315A4BB720032C12C /* PBXTargetDependency */,
 				B2B2C41415A9467100D6F61C /* PBXTargetDependency */,
+				B234339016AB5D77007134B9 /* PBXTargetDependency */,
 			);
 			name = ResKnife;
 			productInstallPath = "$(USER_APPS_DIR)";
@@ -1606,6 +1687,7 @@
 				B229EEC915A4B8720032C12C /* PNG Editor */,
 				B2FCA78915A66ACE00696598 /* PICT Editor */,
 				B2B2C40615A9464400D6F61C /* Pattern Editor */,
+				B234337D16AB59D0007134B9 /* System7SoundPlayer */,
 			);
 		};
 /* End PBXProject section */
@@ -1616,6 +1698,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B234337C16AB59D0007134B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B234338516AB59D0007134B9 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1665,6 +1755,7 @@
 				B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */,
 				B271D08015B6CFC70039A282 /* EditHexTemplate.pdf in Resources */,
 				B2B51C9115B700560087978B /* Edit Hex.tiff in Resources */,
+				B2B3CEAA16B9DCE90027F33F /* ResourceGridView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1802,6 +1893,14 @@
 				B229EEDB15A4B9420032C12C /* PNGWindowController.m in Sources */,
 				B229EEDC15A4B9420032C12C /* PNGWindowController.xib in Sources */,
 				B229EEDE15A4BABD0032C12C /* Notifications.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B234337A16AB59D0007134B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B234338816AB59D0007134B9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1973,6 +2072,11 @@
 			target = B229EEC915A4B8720032C12C /* PNG Editor */;
 			targetProxy = B229EEE215A4BB720032C12C /* PBXContainerItemProxy */;
 		};
+		B234339016AB5D77007134B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B234337D16AB59D0007134B9 /* System7SoundPlayer */;
+			targetProxy = B234338F16AB5D77007134B9 /* PBXContainerItemProxy */;
+		};
 		B2B2C41415A9467100D6F61C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B2B2C40615A9464400D6F61C /* Pattern Editor */;
@@ -2066,6 +2170,14 @@
 			name = ResourceDocument.xib;
 			sourceTree = "<group>";
 		};
+		B234338316AB59D0007134B9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B234338416AB59D0007134B9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		B24925E015A6776600C22060 /* PictWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2113,6 +2225,14 @@
 			);
 			name = InfoPlist.strings;
 			path = "../../Pattern Editor";
+			sourceTree = "<group>";
+		};
+		B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2B3CEA916B9DCE90027F33F /* English */,
+			);
+			name = ResourceGridView.xib;
 			sourceTree = "<group>";
 		};
 		B2FCA78F15A66ACF00696598 /* InfoPlist.strings */ = {
@@ -2315,6 +2435,69 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		B234338916AB59D0007134B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "System7SoundPlayer/System7SoundPlayer-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "System7SoundPlayer/System7SoundPlayer-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "org.derailer.ResKnife.$(TARGET_NAME:rfc1034identifier)";
+				WRAPPER_EXTENSION = xpc;
+			};
+			name = Debug;
+		};
+		B234338A16AB59D0007134B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "System7SoundPlayer/System7SoundPlayer-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "System7SoundPlayer/System7SoundPlayer-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "org.derailer.ResKnife.$(TARGET_NAME:rfc1034identifier)";
+				WRAPPER_EXTENSION = xpc;
 			};
 			name = Release;
 		};
@@ -2550,7 +2733,6 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Cocoa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = ResKnife;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2577,7 +2759,6 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Cocoa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = ResKnife;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2845,8 +3026,10 @@
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application: Nate Weaver";
 				GCC_VERSION = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -2856,8 +3039,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application: Nate Weaver";
 				GCC_VERSION = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -2870,6 +3055,15 @@
 			buildConfigurations = (
 				B229EED815A4B8720032C12C /* Debug */,
 				B229EED915A4B8720032C12C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B234338B16AB59D0007134B9 /* Build configuration list for PBXNativeTarget "System7SoundPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B234338916AB59D0007134B9 /* Debug */,
+				B234338A16AB59D0007134B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
