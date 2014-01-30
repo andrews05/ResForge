@@ -41,7 +41,7 @@
 
 - (NSString *)stringValue
 {
-	return [NSString stringWithFormat:@"%d", value];
+	return [NSString stringWithFormat:@"%d", (int)value];
 }
 
 - (void)setStringValue:(NSString *)str

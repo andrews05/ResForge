@@ -1,0 +1,1533 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1070" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MisnWindowController">
+            <connections>
+                <outlet property="window" destination="39" id="90"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <window title="Mission" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" frameAutosaveName="misn" animationBehavior="default" id="39" userLabel="misn">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="9" y="102" width="980" height="813"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <value key="minSize" type="size" width="400" height="230"/>
+            <view key="contentView" id="49">
+                <rect key="frame" x="0.0" y="0.0" width="980" height="813"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <box title="Origin &amp; Destination" id="147">
+                        <rect key="frame" x="20" y="619" width="460" height="187"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <view key="contentView">
+                            <rect key="frame" x="2" y="2" width="456" height="167"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <comboBox verticalHuggingPriority="750" id="91">
+                                    <rect key="frame" x="93" y="110" width="352" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="681">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                </comboBox>
+                                <popUpButton verticalHuggingPriority="750" id="92">
+                                    <rect key="frame" x="90" y="135" width="355" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="Any Inhabited Planet" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="96" id="682">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="94">
+                                            <items>
+                                                <menuItem title="Any Inhabited Planet" state="on" id="96"/>
+                                                <menuItem isSeparatorItem="YES" id="103">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Specific Planet…" id="93"/>
+                                                <menuItem title="Planet in System Adjacent To…" id="95"/>
+                                                <menuItem title="Any Planet of Government…" id="97"/>
+                                                <menuItem title="Any Planet NOT of Government…" id="98"/>
+                                                <menuItem title="Any Planet of Government or it’s Allies…" id="100"/>
+                                                <menuItem title="Any Planet NEITHER of Government NOR it’s Allies…" id="101"/>
+                                                <menuItem title="Any Planet of Government or it’s Classmates…" id="104"/>
+                                                <menuItem title="Any Planet NEITHER of Government NOR it’s Classmates…" id="105"/>
+                                                <menuItem title="Any Planet of an Enemy of Government…" id="99"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                                <popUpButton verticalHuggingPriority="750" id="121">
+                                    <rect key="frame" x="90" y="85" width="355" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="No Destination" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="124" id="683">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="116">
+                                            <items>
+                                                <menuItem title="No Destination" state="on" id="124"/>
+                                                <menuItem title="Any Inhabited Planet" id="123"/>
+                                                <menuItem title="Any Uninhabited Planet" id="125"/>
+                                                <menuItem isSeparatorItem="YES" id="112">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Specific Planet…" id="115"/>
+                                                <menuItem title="Planet in System Adjacent To…" id="117"/>
+                                                <menuItem title="Any Planet of Government…" id="111"/>
+                                                <menuItem title="Any Planet NOT of Government…" id="119"/>
+                                                <menuItem title="Any Planet of Government or it’s Allies…" id="120"/>
+                                                <menuItem title="Any Planet NEITHER of Government NOR it’s Allies…" id="122"/>
+                                                <menuItem title="Any Planet of Government or it’s Classmates…" id="113"/>
+                                                <menuItem title="Any Planet NEITHER of Government NOR it’s Classmates…" id="114"/>
+                                                <menuItem title="Any Planet of an Enemy of Government…" id="118"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                                <comboBox verticalHuggingPriority="750" id="126">
+                                    <rect key="frame" x="93" y="60" width="258" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="684">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                </comboBox>
+                                <popUpButton verticalHuggingPriority="750" id="131">
+                                    <rect key="frame" x="90" y="35" width="355" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="No Destination" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="141" id="685">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="129">
+                                            <items>
+                                                <menuItem title="No Destination" state="on" id="141"/>
+                                                <menuItem title="Planet of Origin" id="143"/>
+                                                <menuItem title="Any Inhabited Planet" id="134"/>
+                                                <menuItem title="Any Uninhabited Planet" id="135"/>
+                                                <menuItem isSeparatorItem="YES" id="140">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Specific Planet…" id="132"/>
+                                                <menuItem title="Planet in System Adjacent To…" id="139"/>
+                                                <menuItem title="Any Planet of Government…" id="127"/>
+                                                <menuItem title="Any Planet NOT of Government…" id="130"/>
+                                                <menuItem title="Any Planet of Government or it’s Allies…" id="133"/>
+                                                <menuItem title="Any Planet NEITHER of Government NOR it’s Allies…" id="138"/>
+                                                <menuItem title="Any Planet of Government or it’s Classmates…" id="136"/>
+                                                <menuItem title="Any Planet NEITHER of Government NOR it’s Classmates…" id="128"/>
+                                                <menuItem title="Any Planet of an Enemy of Government…" id="137"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                                <comboBox verticalHuggingPriority="750" id="142">
+                                    <rect key="frame" x="93" y="10" width="258" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="686">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                </comboBox>
+                                <textField verticalHuggingPriority="750" id="144">
+                                    <rect key="frame" x="11" y="140" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Available At:" id="687">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="145">
+                                    <rect key="frame" x="11" y="76" width="77" height="28"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" id="688">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <string key="title">Intermediate
+Destination:</string>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="146">
+                                    <rect key="frame" x="11" y="26" width="77" height="28"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" id="689">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <string key="title">Final
+Destination:</string>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <button id="544">
+                                    <rect key="frame" x="355" y="62" width="89" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Green Arrow" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="690">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                </button>
+                                <button id="545">
+                                    <rect key="frame" x="355" y="12" width="78" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Red Arrow" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="691">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                </button>
+                            </subviews>
+                        </view>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <box title="Availability" id="194">
+                        <rect key="frame" x="20" y="20" width="303" height="313"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <view key="contentView">
+                            <rect key="frame" x="2" y="2" width="299" height="293"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <popUpButton verticalHuggingPriority="750" id="150">
+                                    <rect key="frame" x="104" y="258" width="184" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <popUpButtonCell key="cell" type="push" title="Mission BBS" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="153" id="692">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="149">
+                                            <items>
+                                                <menuItem title="Upon Landing" tag="3" id="151"/>
+                                                <menuItem isSeparatorItem="YES" id="157">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Bar" tag="1" id="152"/>
+                                                <menuItem title="Mission BBS" state="on" id="153"/>
+                                                <menuItem isSeparatorItem="YES" id="158">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Trade Centre" tag="4" id="154"/>
+                                                <menuItem title="Shipyard" tag="5" id="156"/>
+                                                <menuItem title="Outfitters" tag="6" id="155"/>
+                                                <menuItem isSeparatorItem="YES" id="172">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="From Ship (requires përs)" tag="2" id="173"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="159">
+                                    <rect key="frame" x="157" y="233" width="15" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="100" id="693"/>
+                                </stepper>
+                                <textField verticalHuggingPriority="750" id="160">
+                                    <rect key="frame" x="107" y="235" width="44" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="100 %" drawsBackground="YES" id="694">
+                                        <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="#,##0 %" negativeFormat="-#,##0 %" localizesFormat="NO" thousandSeparator="," id="161">
+                                            <attributedString key="attributedStringForZero">
+                                                <fragment content="0 %"/>
+                                            </attributedString>
+                                            <decimal key="minimum" value="NaN"/>
+                                            <decimal key="maximum" value="NaN"/>
+                                        </numberFormatter>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="162">
+                                    <rect key="frame" x="11" y="264" width="91" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" id="695">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <string key="title">Location:
+</string>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="163">
+                                    <rect key="frame" x="11" y="237" width="91" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Probability:" id="696">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="164">
+                                    <rect key="frame" x="107" y="183" width="44" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="0" drawsBackground="YES" id="697">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.legalRecord" id="631"/>
+                                    </connections>
+                                </textField>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="165">
+                                    <rect key="frame" x="157" y="181" width="15" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" minValue="-32000" maxValue="32000" id="698"/>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.legalRecord" id="633"/>
+                                    </connections>
+                                </stepper>
+                                <textField verticalHuggingPriority="750" id="166">
+                                    <rect key="frame" x="11" y="212" width="91" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Legal Record:" id="699">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="167">
+                                    <rect key="frame" x="11" y="160" width="91" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Combat Rating:" id="700">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="168">
+                                    <rect key="frame" x="107" y="131" width="44" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="0" drawsBackground="YES" id="701">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="169">
+                                    <rect key="frame" x="157" y="129" width="15" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="409600" id="702"/>
+                                </stepper>
+                                <popUpButton verticalHuggingPriority="750" id="175">
+                                    <rect key="frame" x="104" y="206" width="184" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <popUpButtonCell key="cell" type="push" title="Ignored" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="178" id="703">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="174">
+                                            <items>
+                                                <menuItem title="Ignored" state="on" id="178"/>
+                                                <menuItem title="This Good or Better…" tag="1" id="176"/>
+                                                <menuItem title="This Evil or Worse…" tag="-1" id="177"/>
+                                                <menuItem isSeparatorItem="YES" id="179">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Dominated Origin Planet" tag="-32000" id="181"/>
+                                                <menuItem title="Dominated Any Planet" tag="-32001" id="182"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <binding destination="557" name="selectedTag" keyPath="selection.legalRecord" id="641"/>
+                                    </connections>
+                                </popUpButton>
+                                <textField verticalHuggingPriority="750" id="183">
+                                    <rect key="frame" x="177" y="185" width="111" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Clean" id="704">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.legalRecord" id="635"/>
+                                    </connections>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" id="184">
+                                    <rect key="frame" x="104" y="154" width="184" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <popUpButtonCell key="cell" type="push" title="Ignored" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" tag="-1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="189" id="705">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="188">
+                                            <items>
+                                                <menuItem title="Ignored" state="on" tag="-1" id="189"/>
+                                                <menuItem title="This Good or Better…" id="187"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <binding destination="557" name="selectedTag" keyPath="selection.combatRating" id="643"/>
+                                    </connections>
+                                </popUpButton>
+                                <textField verticalHuggingPriority="750" id="192">
+                                    <rect key="frame" x="177" y="133" width="111" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="No Ability" id="706">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="193">
+                                    <rect key="frame" x="177" y="237" width="111" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Certain" id="707">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="227">
+                                    <rect key="frame" x="11" y="68" width="91" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Specific:" id="708">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" id="228">
+                                    <rect key="frame" x="104" y="62" width="184" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <popUpButtonCell key="cell" type="push" title="Ignored" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" tag="-1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="237" id="709">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="231">
+                                            <items>
+                                                <menuItem title="Ignored" state="on" tag="-1" id="237"/>
+                                                <menuItem isSeparatorItem="YES" id="232">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Must Be…" tag="128" id="233"/>
+                                                <menuItem title="Must Not Be…" tag="1128" id="234"/>
+                                                <menuItem title="Must Be Government…" tag="2128" id="235"/>
+                                                <menuItem title="Must Not Be Government…" tag="3128" id="236"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <binding destination="557" name="selectedTag" keyPath="selection.playerShipType" id="667"/>
+                                    </connections>
+                                </popUpButton>
+                                <comboBox verticalHuggingPriority="750" id="238">
+                                    <rect key="frame" x="107" y="37" width="181" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="710">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                </comboBox>
+                                <textField verticalHuggingPriority="750" id="411">
+                                    <rect key="frame" x="11" y="16" width="91" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Display Weight:" id="711">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="413">
+                                    <rect key="frame" x="157" y="12" width="15" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="9999" id="713"/>
+                                </stepper>
+                                <textField verticalHuggingPriority="750" id="412">
+                                    <rect key="frame" x="107" y="14" width="44" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="0" drawsBackground="YES" id="712">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <matrix verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" autosizesCells="NO" id="497">
+                                    <rect key="frame" x="106" y="89" width="181" height="36"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="cellSize" width="181" height="18"/>
+                                    <buttonCell key="prototype" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="777">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <cells>
+                                        <column>
+                                            <buttonCell type="check" title="Available to Cargo Ships" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="498">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" title="Available to Warships" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" tag="1" inset="2" id="499">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                    </cells>
+                                </matrix>
+                                <textField verticalHuggingPriority="750" id="500">
+                                    <rect key="frame" x="11" y="108" width="91" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Player Ship:" id="714">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="665">
+                                    <rect key="frame" x="177" y="16" width="111" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Low Priority" id="715">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                        </view>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <box title="Cargo" id="279">
+                        <rect key="frame" x="343" y="130" width="303" height="203"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <view key="contentView">
+                            <rect key="frame" x="2" y="2" width="299" height="183"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <popUpButton verticalHuggingPriority="750" id="200">
+                                    <rect key="frame" x="68" y="148" width="220" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <popUpButtonCell key="cell" type="push" title="No Cargo" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" tag="-1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="198" id="716">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="199">
+                                            <items>
+                                                <menuItem title="No Cargo" state="on" tag="-1" id="198"/>
+                                                <menuItem title="Random Standard Cargo" id="197"/>
+                                                <menuItem isSeparatorItem="YES" id="201">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="(Cargo Strings)" tag="1000" id="196"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                                <textField verticalHuggingPriority="750" id="202">
+                                    <rect key="frame" x="71" y="125" width="153" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="0 tons" drawsBackground="YES" id="717">
+                                        <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="#,##0 tons" negativeFormat="-#,##0 tons" localizesFormat="NO" thousandSeparator="," id="204">
+                                            <attributedString key="attributedStringForZero">
+                                                <fragment content="0 tons"/>
+                                            </attributedString>
+                                            <decimal key="minimum" value="NaN"/>
+                                            <decimal key="maximum" value="NaN"/>
+                                        </numberFormatter>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <button id="203">
+                                    <rect key="frame" x="231" y="125" width="56" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <buttonCell key="cell" type="check" title="± 50%" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="718">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                </button>
+                                <popUpButton verticalHuggingPriority="750" id="210">
+                                    <rect key="frame" x="68" y="96" width="220" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <popUpButtonCell key="cell" type="push" title="Immediatly" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="205" id="719">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="208">
+                                            <items>
+                                                <menuItem title="Immediatly" state="on" id="205"/>
+                                                <menuItem title="At Intermediate Destination" tag="1" id="209"/>
+                                                <menuItem title="When Boarding Ship" tag="2" id="207"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                                <textField verticalHuggingPriority="750" id="211">
+                                    <rect key="frame" x="11" y="154" width="55" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Type:" id="720">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="212">
+                                    <rect key="frame" x="11" y="127" width="55" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Quantity:" id="721">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="213">
+                                    <rect key="frame" x="11" y="102" width="55" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Pick Up:" id="722">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" id="218">
+                                    <rect key="frame" x="68" y="71" width="220" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <popUpButtonCell key="cell" type="push" title="At Final Destination" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="217" id="723">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="215">
+                                            <items>
+                                                <menuItem title="At Intermediate Destination" id="214">
+                                                    <connections>
+                                                        <binding destination="557" name="enabled" keyPath="selection.cargoPickUp" id="673">
+                                                            <mutableDictionary key="options">
+                                                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                            </mutableDictionary>
+                                                        </binding>
+                                                    </connections>
+                                                </menuItem>
+                                                <menuItem title="At Final Destination" state="on" tag="1" id="217"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                                <textField verticalHuggingPriority="750" id="219">
+                                    <rect key="frame" x="11" y="76" width="55" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Drop Off:" id="724">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="220">
+                                    <rect key="frame" x="11" y="52" width="55" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Legality:" id="725">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" id="222">
+                                    <rect key="frame" x="68" y="46" width="220" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <popUpButtonCell key="cell" type="push" title="Considered Illegal By…" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" borderStyle="borderAndBezel" inset="2" pullsDown="YES" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="221" id="726">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="224">
+                                            <items>
+                                                <menuItem title="Considered Illegal By…" hidden="YES" id="221"/>
+                                                <menuItem title="(ScanMask Strings)" id="223"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <binding destination="668" name="contentValues" keyPath="arrangedObjects.strings" id="679"/>
+                                    </connections>
+                                </popUpButton>
+                                <matrix verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" id="239">
+                                    <rect key="frame" x="70" y="12" width="143" height="32"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="cellSize" width="17" height="16"/>
+                                    <buttonCell key="prototype" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="778">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <cells>
+                                        <column>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="271">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="8" inset="2" id="549">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                        <column>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="1" inset="2" id="272">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="9" inset="2" id="550">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                        <column>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="2" inset="2" id="273">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="10" inset="2" id="551">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                        <column>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="3" inset="2" id="274">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="11" inset="2" id="552">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                        <column>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="4" inset="2" id="275">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="12" inset="2" id="553">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                        <column>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="5" inset="2" id="276">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="13" inset="2" id="554">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                        <column>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="6" inset="2" id="277">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="14" inset="2" id="555">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                        <column>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="7" inset="2" id="278">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="15" inset="2" id="556">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                    </cells>
+                                </matrix>
+                                <textField verticalHuggingPriority="750" id="281">
+                                    <rect key="frame" x="229" y="13" width="59" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="0x0000" id="727">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                        </view>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <box title="Mission Ships" id="409">
+                        <rect key="frame" x="500" y="499" width="460" height="307"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <view key="contentView">
+                            <rect key="frame" x="2" y="2" width="456" height="287"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="324">
+                                    <rect key="frame" x="143" y="255" width="15" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="100" id="737"/>
+                                    <connections>
+                                        <binding destination="557" name="value" keyPath="selection.missionShipCount" id="616"/>
+                                    </connections>
+                                </stepper>
+                                <comboBox verticalHuggingPriority="750" id="326">
+                                    <rect key="frame" x="93" y="178" width="269" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="738">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="586"/>
+                                    </connections>
+                                </comboBox>
+                                <textField verticalHuggingPriority="750" id="332">
+                                    <rect key="frame" x="93" y="257" width="44" height="19"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="0" drawsBackground="YES" id="739">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="value" keyPath="selection.missionShipCount" id="614"/>
+                                    </connections>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="334">
+                                    <rect key="frame" x="11" y="232" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Dude Class:" id="740">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="648"/>
+                                    </connections>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="335">
+                                    <rect key="frame" x="11" y="259" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Count:" id="741">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <comboBox verticalHuggingPriority="750" id="337">
+                                    <rect key="frame" x="93" y="228" width="352" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="742">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="580"/>
+                                    </connections>
+                                </comboBox>
+                                <popUpButton verticalHuggingPriority="750" id="341">
+                                    <rect key="frame" x="90" y="203" width="355" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="Follow Player" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="338" id="743">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="333">
+                                            <items>
+                                                <menuItem title="Follow Player" state="on" id="338"/>
+                                                <menuItem title="Any Random System" id="361"/>
+                                                <menuItem title="System Adjacent to Initial System" id="363"/>
+                                                <menuItem isSeparatorItem="YES" id="362">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Initial System" id="360"/>
+                                                <menuItem title="Intermediate Destination" id="323"/>
+                                                <menuItem title="Final Destination" id="339"/>
+                                                <menuItem isSeparatorItem="YES" id="331">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Specific System…" id="327"/>
+                                                <menuItem title="System Adjacent To…" id="321"/>
+                                                <menuItem title="Any System of Government…" id="322"/>
+                                                <menuItem title="Any System NOT of Government…" id="330"/>
+                                                <menuItem title="Any System of Government or it’s Allies…" id="340"/>
+                                                <menuItem title="Any System NEITHER of Government NOR it’s Allies…" id="336"/>
+                                                <menuItem title="Any System of Government or it’s Classmates…" id="325"/>
+                                                <menuItem title="Any System NEITHER of Government NOR it’s Classmates…" id="329"/>
+                                                <menuItem title="Any System of an Enemy of Government…" id="328"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="584"/>
+                                    </connections>
+                                </popUpButton>
+                                <textField verticalHuggingPriority="750" id="342">
+                                    <rect key="frame" x="11" y="209" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="System:" id="744">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="650"/>
+                                    </connections>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" id="374">
+                                    <rect key="frame" x="90" y="153" width="355" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="Random" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="366" id="745">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="378">
+                                            <items>
+                                                <menuItem title="Random" state="on" id="366"/>
+                                                <menuItem title="Random; Cloaked" id="371"/>
+                                                <menuItem title="Jump In After Short Delay" id="375"/>
+                                                <menuItem isSeparatorItem="YES" id="365">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="(spob list)" id="367"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="592"/>
+                                    </connections>
+                                </popUpButton>
+                                <textField verticalHuggingPriority="750" id="383">
+                                    <rect key="frame" x="11" y="159" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Location:" id="746">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="652"/>
+                                    </connections>
+                                </textField>
+                                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" id="384">
+                                    <rect key="frame" x="92" y="87" width="117" height="62"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="cellSize" width="117" height="15"/>
+                                    <buttonCell key="prototype" type="radio" imagePosition="left" alignment="left" controlSize="small" inset="2" id="779">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <cells>
+                                        <column>
+                                            <buttonCell type="radio" title="Default Behaviour" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="387">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="radio" title="Attack Player" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="1" inset="2" id="388">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="radio" title="Defend Player" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="2" inset="2" id="546">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="radio" title="Attack Planets" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="3" inset="2" id="547">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                    </cells>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="594"/>
+                                    </connections>
+                                </matrix>
+                                <textField verticalHuggingPriority="750" id="389">
+                                    <rect key="frame" x="11" y="134" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Behaviour:" id="747">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="654"/>
+                                    </connections>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="391">
+                                    <rect key="frame" x="11" y="16" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Player Goal:" id="748">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="660"/>
+                                    </connections>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" id="396">
+                                    <rect key="frame" x="90" y="10" width="355" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="Destroy All Ships" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="390" id="749">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="397">
+                                            <items>
+                                                <menuItem title="Destroy All Ships" state="on" id="390"/>
+                                                <menuItem title="Disable Ships (But Do Not Destroy)" id="395"/>
+                                                <menuItem title="Board Ships" id="393"/>
+                                                <menuItem title="Escort Ships (Prevent From Being Killed)" id="394"/>
+                                                <menuItem title="Observe Ships" id="399"/>
+                                                <menuItem title="Rescue Ships (Board Them)" id="398"/>
+                                                <menuItem title="Chase Off Ships" id="400"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="612"/>
+                                    </connections>
+                                </popUpButton>
+                                <textField verticalHuggingPriority="750" id="401">
+                                    <rect key="frame" x="11" y="64" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Names:" id="750">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="656"/>
+                                    </connections>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="402">
+                                    <rect key="frame" x="11" y="39" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Subtitles:" id="751">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="658"/>
+                                    </connections>
+                                </textField>
+                                <comboBox verticalHuggingPriority="750" id="403">
+                                    <rect key="frame" x="113" y="60" width="221" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="752">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveNames" previousBinding="599" id="604"/>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="599"/>
+                                    </connections>
+                                </comboBox>
+                                <comboBox verticalHuggingPriority="750" id="404">
+                                    <rect key="frame" x="113" y="35" width="221" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="753">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveSubtitles" previousBinding="600" id="608"/>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="600"/>
+                                    </connections>
+                                </comboBox>
+                                <button verticalHuggingPriority="750" id="405">
+                                    <rect key="frame" x="334" y="57" width="113" height="28"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                    <buttonCell key="cell" type="push" title="Edit Name List" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" inset="2" id="754">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveNames" previousBinding="601" id="606"/>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="601"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" id="406">
+                                    <rect key="frame" x="334" y="32" width="113" height="28"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                    <buttonCell key="cell" type="push" title="Edit Subtitle List" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" inset="2" id="755">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveSubtitles" previousBinding="602" id="610"/>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="602"/>
+                                    </connections>
+                                </button>
+                                <button id="407">
+                                    <rect key="frame" x="90" y="62" width="23" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="756">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="596"/>
+                                        <binding destination="557" name="value" keyPath="selection.missionShipsHaveNames" id="578"/>
+                                    </connections>
+                                </button>
+                                <button id="408">
+                                    <rect key="frame" x="90" y="37" width="23" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="757">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="598"/>
+                                        <binding destination="557" name="value" keyPath="selection.missionShipsHaveSubtitles" id="574"/>
+                                    </connections>
+                                </button>
+                                <button id="543">
+                                    <rect key="frame" x="366" y="180" width="78" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <buttonCell key="cell" type="check" title="Red Arrow" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="758">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="590"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </view>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <box title="Completion" id="457">
+                        <rect key="frame" x="20" y="340" width="460" height="272"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <view key="contentView">
+                            <rect key="frame" x="2" y="2" width="456" height="252"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textField verticalHuggingPriority="750" id="459">
+                                    <rect key="frame" x="11" y="68" width="79" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Date Adjust:" id="759">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="463">
+                                    <rect key="frame" x="95" y="66" width="44" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="none" drawsBackground="YES" id="760">
+                                        <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="+#,##0" negativeFormat="-#,##0" localizesFormat="NO" thousandSeparator="," id="485">
+                                            <attributedString key="attributedStringForZero">
+                                                <fragment content="none"/>
+                                            </attributedString>
+                                            <decimal key="minimum" value="NaN"/>
+                                            <decimal key="maximum" value="NaN"/>
+                                        </numberFormatter>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="464">
+                                    <rect key="frame" x="95" y="118" width="251" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="0 points" drawsBackground="YES" id="761">
+                                        <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="#,##0 points" negativeFormat="-#,##0 points" thousandSeparator="," id="468">
+                                            <textAttributesForNegativeValues/>
+                                            <attributedString key="attributedStringForZero">
+                                                <fragment content="0 points"/>
+                                            </attributedString>
+                                            <decimal key="minimum" value="NaN"/>
+                                            <decimal key="maximum" value="NaN"/>
+                                        </numberFormatter>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <button id="469">
+                                    <rect key="frame" x="353" y="118" width="91" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <buttonCell key="cell" type="check" title="-2x on fail" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" enabled="NO" state="on" inset="2" id="762">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                </button>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="472">
+                                    <rect key="frame" x="145" y="64" width="15" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="32000" id="763"/>
+                                </stepper>
+                                <popUpButton verticalHuggingPriority="750" id="480">
+                                    <rect key="frame" x="92" y="141" width="353" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="Ignored" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="471" id="764">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="466">
+                                            <items>
+                                                <menuItem title="Ignored" state="on" id="471"/>
+                                                <menuItem title="Award Points to Legal Record with Government…" id="474"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                                <textField verticalHuggingPriority="750" id="481">
+                                    <rect key="frame" x="37" y="199" width="53" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Payment:" id="765">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" id="484">
+                                    <rect key="frame" x="92" y="193" width="353" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="Award Credits" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="470" id="766">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="477">
+                                            <items>
+                                                <menuItem title="Award Credits" state="on" id="470"/>
+                                                <menuItem title="Fine Credits At Mission Start" id="467"/>
+                                                <menuItem title="Fine Percentage of Current Wealth" tag="1" id="483"/>
+                                                <menuItem isSeparatorItem="YES" id="475">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Clean Legal Record for Government…" tag="2" id="489"/>
+                                                <menuItem title="Clean Legal Record for Government and it’s Allies…" tag="2" id="488"/>
+                                                <menuItem title="Clean Legal Record for Government and it’s Classmates…" tag="2" id="490"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <binding destination="557" name="selectedTag" keyPath="selection.paymentTab" id="559"/>
+                                    </connections>
+                                </popUpButton>
+                                <comboBox verticalHuggingPriority="750" id="487">
+                                    <rect key="frame" x="95" y="89" width="350" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="767">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                </comboBox>
+                                <textField verticalHuggingPriority="750" id="491">
+                                    <rect key="frame" x="11" y="147" width="79" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Legal Record:" id="768">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="493">
+                                    <rect key="frame" x="11" y="224" width="79" height="14"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Time Limit:" id="769">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="494">
+                                    <rect key="frame" x="95" y="222" width="44" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="none" drawsBackground="YES" id="770">
+                                        <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="+#,##0" negativeFormat="-#,##0" localizesFormat="NO" thousandSeparator="," id="495">
+                                            <attributedString key="attributedStringForZero">
+                                                <fragment content="none"/>
+                                            </attributedString>
+                                            <decimal key="minimum" value="NaN"/>
+                                            <decimal key="maximum" value="NaN"/>
+                                        </numberFormatter>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="496">
+                                    <rect key="frame" x="145" y="220" width="15" height="22"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" minValue="-32000" maxValue="32000" id="771"/>
+                                </stepper>
+                                <tabView drawsBackground="NO" controlSize="small" type="noTabsNoBorder" id="535">
+                                    <rect key="frame" x="95" y="170" width="347" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <tabViewItems>
+                                        <tabViewItem label="Credits" identifier="1" id="525">
+                                            <view key="view" id="531">
+                                                <rect key="frame" x="0.0" y="0.0" width="347" height="19"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <textField verticalHuggingPriority="750" id="532">
+                                                        <rect key="frame" x="0.0" y="0.0" width="251" height="19"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="0 cr" drawsBackground="YES" id="774">
+                                                            <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="#,##0 cr" negativeFormat="-#,##0 cr" thousandSeparator="," id="536">
+                                                                <textAttributesForNegativeValues/>
+                                                                <attributedString key="attributedStringForZero">
+                                                                    <fragment content="0 cr"/>
+                                                                </attributedString>
+                                                                <decimal key="minimum" value="NaN"/>
+                                                                <decimal key="maximum" value="NaN"/>
+                                                            </numberFormatter>
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <button id="527">
+                                                        <rect key="frame" x="258" y="0.0" width="91" height="18"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="check" title="-5x on abort" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="773">
+                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                        </buttonCell>
+                                                    </button>
+                                                </subviews>
+                                            </view>
+                                        </tabViewItem>
+                                        <tabViewItem label="Fine %" identifier="2" id="534">
+                                            <view key="view" id="529">
+                                                <rect key="frame" x="0.0" y="0.0" width="347" height="19"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <subviews>
+                                                    <textField verticalHuggingPriority="750" id="526">
+                                                        <rect key="frame" x="0.0" y="0.0" width="44" height="19"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="0 %" drawsBackground="YES" id="775">
+                                                            <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="#,##0 %" negativeFormat="-#,##0 %" localizesFormat="NO" thousandSeparator="," id="537">
+                                                                <attributedString key="attributedStringForZero">
+                                                                    <fragment content="0 %"/>
+                                                                </attributedString>
+                                                                <decimal key="minimum" value="NaN"/>
+                                                                <decimal key="maximum" value="NaN"/>
+                                                            </numberFormatter>
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="528">
+                                                        <rect key="frame" x="50" y="-2" width="15" height="22"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="100" id="776"/>
+                                                    </stepper>
+                                                </subviews>
+                                            </view>
+                                        </tabViewItem>
+                                        <tabViewItem label="Clean Record" identifier="3" id="524">
+                                            <view key="view" id="530">
+                                                <rect key="frame" x="0.0" y="0.0" width="347" height="19"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <subviews>
+                                                    <comboBox verticalHuggingPriority="750" id="533">
+                                                        <rect key="frame" x="0.0" y="-2" width="350" height="22"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="772">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </comboBoxCell>
+                                                    </comboBox>
+                                                </subviews>
+                                            </view>
+                                        </tabViewItem>
+                                    </tabViewItems>
+                                    <connections>
+                                        <binding destination="557" name="selectedIndex" keyPath="selection.paymentTab" id="562"/>
+                                    </connections>
+                                </tabView>
+                                <matrix verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" autosizesCells="NO" id="538">
+                                    <rect key="frame" x="92" y="12" width="171" height="48"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="cellSize" width="171" height="16"/>
+                                    <buttonCell key="prototype" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="780">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <cells>
+                                        <column>
+                                            <buttonCell type="check" title="Fail if scanned" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="541">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" title="Fail if boarded by pirates" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="1" inset="2" id="542">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <buttonCell type="check" title="Fail if disabled or destroyed" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="548">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                        </column>
+                                    </cells>
+                                </matrix>
+                            </subviews>
+                        </view>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <box title="Auxiliary Ships" id="319">
+                        <rect key="frame" x="500" y="355" width="460" height="137"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <view key="contentView">
+                            <rect key="frame" x="2" y="2" width="456" height="117"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textField verticalHuggingPriority="750" id="285">
+                                    <rect key="frame" x="93" y="87" width="44" height="19"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="0" drawsBackground="YES" id="728">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="value" keyPath="selection.auxShipCount" id="618"/>
+                                    </connections>
+                                </textField>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="286">
+                                    <rect key="frame" x="143" y="85" width="15" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="1000" id="729"/>
+                                    <connections>
+                                        <binding destination="557" name="value" keyPath="selection.auxShipCount" id="620"/>
+                                    </connections>
+                                </stepper>
+                                <textField verticalHuggingPriority="750" id="287">
+                                    <rect key="frame" x="11" y="89" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Count:" id="730">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <button id="288">
+                                    <rect key="frame" x="161" y="87" width="163" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Regenerate When Jumping" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="731">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.auxShipCount" id="623"/>
+                                    </connections>
+                                </button>
+                                <comboBox verticalHuggingPriority="750" id="289">
+                                    <rect key="frame" x="93" y="60" width="352" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="732">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.auxShipCount" id="625"/>
+                                        <binding destination="557" name="value" keyPath="selection" id="621"/>
+                                    </connections>
+                                </comboBox>
+                                <textField verticalHuggingPriority="750" id="290">
+                                    <rect key="frame" x="11" y="64" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Dude Class:" id="733">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.auxShipCount" id="662"/>
+                                    </connections>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" id="302">
+                                    <rect key="frame" x="90" y="35" width="355" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="Follow Player" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" tag="-1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="316" id="734">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" title="OtherViews" id="309">
+                                            <items>
+                                                <menuItem title="Follow Player" state="on" tag="-1" id="316"/>
+                                                <menuItem title="Intermediate Destination" tag="-2" id="306"/>
+                                                <menuItem title="Final Destination" tag="-3" id="310"/>
+                                                <menuItem isSeparatorItem="YES" id="305">
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </menuItem>
+                                                <menuItem title="Specific System…" tag="128" id="301"/>
+                                                <menuItem title="System Adjacent To…" tag="5000" id="312"/>
+                                                <menuItem title="Any System of Government…" tag="10000" id="300"/>
+                                                <menuItem title="Any System NOT of Government…" tag="20000" id="311"/>
+                                                <menuItem title="Any System of Government or it’s Allies…" tag="15000" id="303"/>
+                                                <menuItem title="Any System of Government or it’s Classmates…" tag="30000" id="307"/>
+                                                <menuItem title="Any System NEITHER of Government NOR it’s Classmates…" tag="35000" id="304"/>
+                                                <menuItem title="Any System of an Enemy of Government…" tag="25000" id="313"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.auxShipCount" id="627"/>
+                                    </connections>
+                                </popUpButton>
+                                <comboBox verticalHuggingPriority="750" id="314">
+                                    <rect key="frame" x="93" y="10" width="352" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="7" id="735">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </comboBoxCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.auxShipCount" id="629"/>
+                                    </connections>
+                                </comboBox>
+                                <textField verticalHuggingPriority="750" id="318">
+                                    <rect key="frame" x="11" y="41" width="77" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="System:" id="736">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="557" name="enabled" keyPath="selection.auxShipCount" id="664"/>
+                                    </connections>
+                                </textField>
+                            </subviews>
+                        </view>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                </subviews>
+            </view>
+        </window>
+        <objectController automaticallyPreparesContent="YES" id="557">
+            <declaredKeys>
+                <string>paymentTab</string>
+                <string>missionShipsHaveNames</string>
+                <string>missionShipsHaveSubtitles</string>
+                <string>missionShipCount</string>
+                <string>auxShipCount</string>
+                <string>legalRecord</string>
+                <string>combatRating</string>
+                <string>playerShipType</string>
+                <string>cargoPickUp</string>
+            </declaredKeys>
+        </objectController>
+        <arrayController automaticallyPreparesContent="YES" clearsFilterPredicateOnInsertion="NO" id="668" userLabel="ScanMaskStrings">
+            <declaredKeys>
+                <string>strings</string>
+            </declaredKeys>
+        </arrayController>
+    </objects>
+</document>

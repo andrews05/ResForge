@@ -36,7 +36,6 @@
 		B24FA09915D303A800622683 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
 		B24FA09B15D303CD00622683 /* HexFiend.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
 		B24FA09C15D3041800622683 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
-		B271D08015B6CFC70039A282 /* EditHexTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B271D07F15B6CFC70039A282 /* EditHexTemplate.pdf */; };
 		B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65CE15A677F00029141B /* TemplateWindow.xib */; };
 		B27A65D615A678260029141B /* FindSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D215A678260029141B /* FindSheet.xib */; };
 		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
@@ -114,7 +113,6 @@
 		E18BF561069FEA1300F076B8 /* Delete.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A904021220D601A80001 /* Delete.tiff */; };
 		E18BF562069FEA1300F076B8 /* Edit.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FB0211E4D401A80001 /* Edit.tiff */; };
 		E18BF564069FEA1300F076B8 /* Save.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8F30211CFA701A80001 /* Save.tiff */; };
-		E18BF565069FEA1300F076B8 /* Show Info.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8F80211DC1E01A80001 /* Show Info.tiff */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
 		E18BF568069FEA1300F076B8 /* Export.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3D35756004DAEB7F00B8225B /* Export.tiff */; };
@@ -443,6 +441,33 @@
 		3D50047404EF122000F3B64D /* ElementLSTC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementLSTC.h; sourceTree = "<group>"; };
 		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
 		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
+		550B9045189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AboutPanel.xib; sourceTree = "<group>"; };
+		550B9046189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Application.xib; sourceTree = "<group>"; };
+		550B9047189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CreateResourceSheet.xib; sourceTree = "<group>"; };
+		550B9048189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfoWindow.xib; sourceTree = "<group>"; };
+		550B9049189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrefsWindow.xib; sourceTree = "<group>"; };
+		550B904A189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ResourceDocument.xib; sourceTree = "<group>"; };
+		550B904B189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ResourceGridView.xib; sourceTree = "<group>"; };
+		550B904C189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FindSheet.xib; sourceTree = "<group>"; };
+		550B904D189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HexWindow.xib; sourceTree = "<group>"; };
+		550B904E189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TemplateWindow.xib; sourceTree = "<group>"; };
+		550B904F189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FontDocument.xib; sourceTree = "<group>"; };
+		550B9050189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FontWindow.xib; sourceTree = "<group>"; };
+		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PictWindow.xib; sourceTree = "<group>"; };
+		550B9052189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ICONWindow.xib; sourceTree = "<group>"; };
+		550B9053189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/NovaTools.nib; sourceTree = "<group>"; };
+		550B9054189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/boom.nib; sourceTree = "<group>"; };
+		550B9055189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/char.nib; sourceTree = "<group>"; };
+		550B9056189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/colr.nib; sourceTree = "<group>"; };
+		550B9057189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/cron.nib; sourceTree = "<group>"; };
+		550B9058189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/desc.nib; sourceTree = "<group>"; };
+		550B9059189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/misn.nib; sourceTree = "<group>"; };
+		550B905A189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/ship.nib; sourceTree = "<group>"; };
+		550B905C189A036F005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Application.strings; sourceTree = "<group>"; };
+		550B905F189A0421005AC38D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Application.strings; sourceTree = "<group>"; };
+		550B9060189A0876005AC38D /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Application.strings; sourceTree = "<group>"; };
+		550B9061189A0886005AC38D /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		550B9062189A08A4005AC38D /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PNGWindowController.h; path = "PNG Editor/PNGWindowController.h"; sourceTree = "<group>"; };
 		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PNGWindowController.m; path = "PNG Editor/PNGWindowController.m"; sourceTree = "<group>"; };
 		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PNGWindowController.xib; path = "PNG Editor/PNGWindowController.xib"; sourceTree = "<group>"; };
@@ -453,24 +478,12 @@
 		B229EED215A4B8720032C12C /* PNG Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PNG Editor-Info.plist"; path = "../../PNG Editor/PNG Editor-Info.plist"; sourceTree = "<group>"; };
 		B229EED415A4B8720032C12C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B229EED615A4B8720032C12C /* PNG Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PNG Editor-Prefix.pch"; path = "../../PNG Editor/PNG Editor-Prefix.pch"; sourceTree = "<group>"; };
-		B229EEE915A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/AboutPanel.xib; sourceTree = SOURCE_ROOT; };
-		B229EEEB15A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/Application.xib; sourceTree = SOURCE_ROOT; };
-		B229EEED15A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/CreateResourceSheet.xib; sourceTree = SOURCE_ROOT; };
-		B229EEEF15A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/InfoWindow.xib; sourceTree = SOURCE_ROOT; };
-		B229EEF115A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/PrefsWindow.xib; sourceTree = SOURCE_ROOT; };
-		B229EEF315A4FB6F0032C12C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/ResourceDocument.xib; sourceTree = SOURCE_ROOT; };
 		B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = org.derailer.ResKnife.System7SoundPlayer.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		B234338216AB59D0007134B9 /* System7SoundPlayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "System7SoundPlayer-Info.plist"; sourceTree = "<group>"; };
 		B234338416AB59D0007134B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B234338616AB59D0007134B9 /* System7SoundPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "System7SoundPlayer-Prefix.pch"; sourceTree = "<group>"; };
 		B234338716AB59D0007134B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		B24925E115A6776600C22060 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PictWindow.xib; sourceTree = "<group>"; };
-		B24925E515A6778C00C22060 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ICONWindow.xib; sourceTree = "<group>"; };
 		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
-		B271D07F15B6CFC70039A282 /* EditHexTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = EditHexTemplate.pdf; path = ../../../../Documents/ResKnife/EditHexTemplate.pdf; sourceTree = "<group>"; };
-		B27A65CF15A677F00029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TemplateWindow.xib; sourceTree = "<group>"; };
-		B27A65D315A678260029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FindSheet.xib; sourceTree = "<group>"; };
-		B27A65D515A678260029141B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/HexWindow.xib; sourceTree = "<group>"; };
 		B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatternWindowController.h; path = "Pattern Editor/PatternWindowController.h"; sourceTree = "<group>"; };
 		B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PatternWindowController.m; path = "Pattern Editor/PatternWindowController.m"; sourceTree = "<group>"; };
 		B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PatternWindowController.xib; path = "Pattern Editor/PatternWindowController.xib"; sourceTree = "<group>"; };
@@ -482,7 +495,6 @@
 		B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPatternImageCell.m; path = "Pattern Editor/RKPatternImageCell.m"; sourceTree = "<group>"; };
 		B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPatternView.h; path = "Pattern Editor/RKPatternView.h"; sourceTree = "<group>"; };
 		B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPatternView.m; path = "Pattern Editor/RKPatternView.m"; sourceTree = "<group>"; };
-		B2B3CEA916B9DCE90027F33F /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Cocoa/English.lproj/ResourceGridView.xib; sourceTree = SOURCE_ROOT; };
 		B2FCA77F15A669C800696598 /* PictWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictWindowController.h; sourceTree = "<group>"; };
 		B2FCA78015A669C800696598 /* PictWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictWindowController.m; sourceTree = "<group>"; };
 		B2FCA78115A669C800696598 /* SupportedTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedTypes.plist; sourceTree = "<group>"; };
@@ -490,8 +502,6 @@
 		B2FCA78E15A66ACF00696598 /* PICT Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PICT Editor-Info.plist"; path = "../../../PICT Editor/PICT Editor-Info.plist"; sourceTree = "<group>"; };
 		B2FCA79015A66ACF00696598 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2FCA79215A66ACF00696598 /* PICT Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PICT Editor-Prefix.pch"; path = "../../../PICT Editor/PICT Editor-Prefix.pch"; sourceTree = "<group>"; };
-		B2FCA79F15A6704900696598 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FontDocument.xib; sourceTree = "<group>"; };
-		B2FCA7A115A6704900696598 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/FontWindow.xib; sourceTree = "<group>"; };
 		E11936620998551200A3A6EA /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E119367D099864AD00A3A6EA /* ElementUBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementUBYT.h; sourceTree = "<group>"; };
 		E119367E099864AD00A3A6EA /* ElementUBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementUBYT.m; sourceTree = "<group>"; };
@@ -537,8 +547,6 @@
 		E19FB515054E918800A80202 /* MisnWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MisnWindowController.m; path = misn/MisnWindowController.m; sourceTree = "<group>"; };
 		E19FB518054E919200A80202 /* ShipWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ShipWindowController.h; path = ship/ShipWindowController.h; sourceTree = "<group>"; };
 		E19FB519054E919200A80202 /* ShipWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = ShipWindowController.m; path = ship/ShipWindowController.m; sourceTree = "<group>"; };
-		E19FB51D054E919F00A80202 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = misn/English.lproj/misn.nib; sourceTree = "<group>"; };
-		E19FB520054E91AA00A80202 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ship/English.lproj/ship.nib; sourceTree = "<group>"; };
 		E1A984FD099C309300A70612 /* DisplayTMPL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DisplayTMPL.png; path = Resources/DisplayTMPL.png; sourceTree = "<group>"; };
 		E1C5E08B055D98790001A04A /* NSData-HexRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData-HexRepresentation.h"; sourceTree = "<group>"; };
 		E1C5E08F055D98D50001A04A /* NSData-HexRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData-HexRepresentation.m"; sourceTree = "<group>"; };
@@ -603,7 +611,6 @@
 		F58F6B8F025BCF5901A8010C /* CronWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = CronWindowController.m; path = cron/CronWindowController.m; sourceTree = "<group>"; };
 		F58F6B92025BD97701A8010C /* DescWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = DescWindowController.m; path = desc/DescWindowController.m; sourceTree = "<group>"; };
 		F58F6B93025BD97701A8010C /* DescWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescWindowController.h; path = desc/DescWindowController.h; sourceTree = "<group>"; };
-		F58F6BAA025BDBA701A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NovaTools.nib; sourceTree = "<group>"; };
 		F59481AD03D0776C01A8010A /* RKDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKDocumentController.h; sourceTree = "<group>"; };
 		F59481AE03D0776C01A8010A /* RKDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RKDocumentController.m; sourceTree = "<group>"; };
 		F59481B103D077DC01A8010A /* OpenPanelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OpenPanelDelegate.h; sourceTree = "<group>"; };
@@ -648,11 +655,6 @@
 		F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnifeResourceProtocol.h; sourceTree = "<group>"; };
 		F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView-SelectedItems.h"; sourceTree = "<group>"; };
 		F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView-SelectedItems.m"; sourceTree = "<group>"; };
-		F5EDC613025BFB7301A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = boom/English.lproj/boom.nib; sourceTree = "<group>"; };
-		F5EDC616025BFB7C01A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = char/English.lproj/char.nib; sourceTree = "<group>"; };
-		F5EDC619025BFB8601A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = colr/English.lproj/colr.nib; sourceTree = "<group>"; };
-		F5EDC61C025BFB8E01A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = cron/English.lproj/cron.nib; sourceTree = "<group>"; };
-		F5EDC61F025BFBB501A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = desc/English.lproj/desc.nib; sourceTree = "<group>"; };
 		F5EF83A0020C08E601A80001 /* HexEditorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HexEditorDelegate.h; sourceTree = "<group>"; };
 		F5EF83A1020C08E601A80001 /* HexEditorDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HexEditorDelegate.m; sourceTree = "<group>"; };
 		F5EF83A2020C08E601A80001 /* HexTextView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HexTextView.h; sourceTree = "<group>"; };
@@ -1172,7 +1174,6 @@
 				F577A904021220D601A80001 /* Delete.tiff */,
 				F577A8FB0211E4D401A80001 /* Edit.tiff */,
 				F577A8FC0211E4D401A80001 /* Edit Hex.tiff */,
-				B271D07F15B6CFC70039A282 /* EditHexTemplate.pdf */,
 				F577A8F30211CFA701A80001 /* Save.tiff */,
 				F577A8F80211DC1E01A80001 /* Show Info.tiff */,
 				3D35756004DAEB7F00B8225B /* Export.tiff */,
@@ -1670,6 +1671,8 @@
 				French,
 				German,
 				en,
+				ja,
+				Base,
 			);
 			mainGroup = F5B588100156D2A601000001;
 			productRefGroup = F5B588110156D30301000001 /* Products */;
@@ -1742,7 +1745,6 @@
 				E18BF561069FEA1300F076B8 /* Delete.tiff in Resources */,
 				E18BF562069FEA1300F076B8 /* Edit.tiff in Resources */,
 				E18BF564069FEA1300F076B8 /* Save.tiff in Resources */,
-				E18BF565069FEA1300F076B8 /* Show Info.tiff in Resources */,
 				E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */,
 				E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */,
 				E18BF568069FEA1300F076B8 /* Export.tiff in Resources */,
@@ -1753,7 +1755,6 @@
 				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,
 				B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */,
 				B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */,
-				B271D08015B6CFC70039A282 /* EditHexTemplate.pdf in Resources */,
 				B2B51C9115B700560087978B /* Edit Hex.tiff in Resources */,
 				B2B3CEAA16B9DCE90027F33F /* ResourceGridView.xib in Resources */,
 			);
@@ -2125,7 +2126,7 @@
 		B229EEE815A4FB6F0032C12C /* AboutPanel.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B229EEE915A4FB6F0032C12C /* English */,
+				550B9045189A0360005AC38D /* Base */,
 			);
 			name = AboutPanel.xib;
 			sourceTree = "<group>";
@@ -2133,7 +2134,10 @@
 		B229EEEA15A4FB6F0032C12C /* Application.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B229EEEB15A4FB6F0032C12C /* English */,
+				550B9046189A0360005AC38D /* Base */,
+				550B905C189A036F005AC38D /* en */,
+				550B905F189A0421005AC38D /* ja */,
+				550B9060189A0876005AC38D /* cy */,
 			);
 			name = Application.xib;
 			sourceTree = "<group>";
@@ -2141,7 +2145,7 @@
 		B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B229EEED15A4FB6F0032C12C /* English */,
+				550B9047189A0360005AC38D /* Base */,
 			);
 			name = CreateResourceSheet.xib;
 			sourceTree = "<group>";
@@ -2149,7 +2153,7 @@
 		B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B229EEEF15A4FB6F0032C12C /* English */,
+				550B9048189A0360005AC38D /* Base */,
 			);
 			name = InfoWindow.xib;
 			sourceTree = "<group>";
@@ -2157,7 +2161,7 @@
 		B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B229EEF115A4FB6F0032C12C /* English */,
+				550B9049189A0360005AC38D /* Base */,
 			);
 			name = PrefsWindow.xib;
 			sourceTree = "<group>";
@@ -2165,7 +2169,7 @@
 		B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B229EEF315A4FB6F0032C12C /* English */,
+				550B904A189A0360005AC38D /* Base */,
 			);
 			name = ResourceDocument.xib;
 			sourceTree = "<group>";
@@ -2181,7 +2185,7 @@
 		B24925E015A6776600C22060 /* PictWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B24925E115A6776600C22060 /* English */,
+				550B9051189A0361005AC38D /* Base */,
 			);
 			name = PictWindow.xib;
 			sourceTree = "<group>";
@@ -2189,7 +2193,7 @@
 		B24925E415A6778C00C22060 /* ICONWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B24925E515A6778C00C22060 /* English */,
+				550B9052189A0361005AC38D /* Base */,
 			);
 			name = ICONWindow.xib;
 			sourceTree = "<group>";
@@ -2197,7 +2201,7 @@
 		B27A65CE15A677F00029141B /* TemplateWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B27A65CF15A677F00029141B /* English */,
+				550B904E189A0361005AC38D /* Base */,
 			);
 			name = TemplateWindow.xib;
 			sourceTree = "<group>";
@@ -2205,7 +2209,7 @@
 		B27A65D215A678260029141B /* FindSheet.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B27A65D315A678260029141B /* English */,
+				550B904C189A0360005AC38D /* Base */,
 			);
 			name = FindSheet.xib;
 			sourceTree = "<group>";
@@ -2213,7 +2217,7 @@
 		B27A65D415A678260029141B /* HexWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B27A65D515A678260029141B /* English */,
+				550B904D189A0360005AC38D /* Base */,
 			);
 			name = HexWindow.xib;
 			sourceTree = "<group>";
@@ -2230,7 +2234,7 @@
 		B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B2B3CEA916B9DCE90027F33F /* English */,
+				550B904B189A0360005AC38D /* Base */,
 			);
 			name = ResourceGridView.xib;
 			sourceTree = "<group>";
@@ -2247,7 +2251,7 @@
 		B2FCA79E15A6704900696598 /* FontDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B2FCA79F15A6704900696598 /* English */,
+				550B904F189A0361005AC38D /* Base */,
 			);
 			name = FontDocument.xib;
 			sourceTree = "<group>";
@@ -2255,7 +2259,7 @@
 		B2FCA7A015A6704900696598 /* FontWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B2FCA7A115A6704900696598 /* English */,
+				550B9050189A0361005AC38D /* Base */,
 			);
 			name = FontWindow.xib;
 			sourceTree = "<group>";
@@ -2279,7 +2283,7 @@
 		E19FB51C054E919F00A80202 /* misn.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E19FB51D054E919F00A80202 /* English */,
+				550B9059189A0361005AC38D /* Base */,
 			);
 			name = misn.nib;
 			sourceTree = "<group>";
@@ -2287,7 +2291,7 @@
 		E19FB51F054E91AA00A80202 /* ship.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E19FB520054E91AA00A80202 /* English */,
+				550B905A189A0361005AC38D /* Base */,
 			);
 			name = ship.nib;
 			sourceTree = "<group>";
@@ -2319,7 +2323,7 @@
 		F58F6BA9025BDBA701A8010C /* NovaTools.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F58F6BAA025BDBA701A8010C /* English */,
+				550B9053189A0361005AC38D /* Base */,
 			);
 			name = NovaTools.nib;
 			sourceTree = "<group>";
@@ -2328,6 +2332,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F5B588430156D40B01000001 /* English */,
+				550B9061189A0886005AC38D /* cy */,
 			);
 			name = InfoPlist.strings;
 			path = Cocoa;
@@ -2337,6 +2342,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F5B588450156D40B01000001 /* English */,
+				550B9062189A08A4005AC38D /* cy */,
 			);
 			name = Localizable.strings;
 			path = Cocoa;
@@ -2345,7 +2351,7 @@
 		F5EDC612025BFB7301A8010C /* boom.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F5EDC613025BFB7301A8010C /* English */,
+				550B9054189A0361005AC38D /* Base */,
 			);
 			name = boom.nib;
 			sourceTree = "<group>";
@@ -2353,7 +2359,7 @@
 		F5EDC615025BFB7C01A8010C /* char.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F5EDC616025BFB7C01A8010C /* English */,
+				550B9055189A0361005AC38D /* Base */,
 			);
 			name = char.nib;
 			sourceTree = "<group>";
@@ -2361,7 +2367,7 @@
 		F5EDC618025BFB8601A8010C /* colr.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F5EDC619025BFB8601A8010C /* English */,
+				550B9056189A0361005AC38D /* Base */,
 			);
 			name = colr.nib;
 			sourceTree = "<group>";
@@ -2369,7 +2375,7 @@
 		F5EDC61B025BFB8E01A8010C /* cron.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F5EDC61C025BFB8E01A8010C /* English */,
+				550B9057189A0361005AC38D /* Base */,
 			);
 			name = cron.nib;
 			sourceTree = "<group>";
@@ -2377,7 +2383,7 @@
 		F5EDC61E025BFBB501A8010C /* desc.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F5EDC61F025BFBB501A8010C /* English */,
+				550B9058189A0361005AC38D /* Base */,
 			);
 			name = desc.nib;
 			sourceTree = "<group>";
@@ -2389,7 +2395,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2408,7 +2413,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "PNG Editor/PNG Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
@@ -2419,7 +2423,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2432,7 +2435,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "PNG Editor/PNG Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -2447,7 +2449,6 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2466,7 +2467,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "System7SoundPlayer/System7SoundPlayer-Info.plist";
 				MACH_O_TYPE = mh_execute;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "org.derailer.ResKnife.$(TARGET_NAME:rfc1034identifier)";
 				WRAPPER_EXTENSION = xpc;
@@ -2482,7 +2482,6 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2495,7 +2494,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "System7SoundPlayer/System7SoundPlayer-Info.plist";
 				MACH_O_TYPE = mh_execute;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "org.derailer.ResKnife.$(TARGET_NAME:rfc1034identifier)";
 				WRAPPER_EXTENSION = xpc;
 			};
@@ -2505,7 +2503,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2523,7 +2520,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pattern Editor/Pattern Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
@@ -2534,7 +2530,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2546,7 +2541,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pattern Editor/Pattern Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -2556,7 +2550,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2574,7 +2567,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "PICT Editor/PICT Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
@@ -2585,7 +2577,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2597,7 +2588,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "PICT Editor/PICT Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -2606,7 +2596,6 @@
 		E13F7ED208F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/**",
@@ -2639,7 +2628,6 @@
 		E13F7ED308F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2670,7 +2658,6 @@
 		E13F7ED608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2695,7 +2682,6 @@
 		E13F7ED708F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2718,7 +2704,6 @@
 		E13F7EDA08F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2746,7 +2731,6 @@
 		E13F7EDB08F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2772,7 +2756,6 @@
 		E13F7EDE08F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2797,7 +2780,6 @@
 		E13F7EDF08F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2820,7 +2802,6 @@
 		E13F7EE208F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2845,7 +2826,6 @@
 		E13F7EE308F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2868,7 +2848,6 @@
 		E13F7EE608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2900,7 +2879,6 @@
 		E13F7EE708F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2930,7 +2908,6 @@
 		E13F7EEA08F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2955,7 +2932,6 @@
 		E13F7EEB08F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2978,7 +2954,6 @@
 		E13F7F0208F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -3002,7 +2977,6 @@
 		E13F7F0308F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				INFOPLIST_FILE = "Info-Uli_s_Template_Editor__Upgraded_.plist";
@@ -3024,11 +2998,11 @@
 		E13F7F0608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Nate Weaver";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_VERSION = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
@@ -3039,9 +3013,9 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Nate Weaver";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_VERSION = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};

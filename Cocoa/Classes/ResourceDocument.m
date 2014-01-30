@@ -28,6 +28,7 @@ extern NSString *RKResourcePboardType;
 @end
 
 @implementation ResourceDocument
+@synthesize viewToolbarView;
 
 - (id)init
 {
@@ -268,7 +269,7 @@ extern NSString *RKResourcePboardType;
 			error = ResError();
 			if(error != noErr)
 			{
-				NSLog(@"Error %d reading resource map...", error);
+				NSLog(@"Error %d reading resource map...", (int)error);
 				UseResFile(oldResFile);
 				return NO;
 			}
@@ -335,7 +336,7 @@ extern NSString *RKResourcePboardType;
 	error = FSPathMakeRef((const UInt8 *)[[fileName stringByDeletingLastPathComponent] UTF8String], parentRef, nil);
 	
 	if (error != noErr)
-		NSLog(@"FSPathMakeRef got error %d", error);
+		NSLog(@"FSPathMakeRef got error %d", (int)error);
 	
 	if(fork)
 		error = FSCreateResourceFile(parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, NULL, fork->length, (UniChar *) &fork->unicode, fileRef, NULL);
@@ -364,7 +365,7 @@ extern NSString *RKResourcePboardType;
 		else error = FSOpenResourceFile(fileRef, 0, NULL, fsWrPerm, &fileRefNum);
 	}
 //	else NSLog(@"error creating resource fork. (error=%d, spec=%d, ref=%d, parent=%d)", error, fileSpec, fileRef, parentRef);
-	else NSLog(@"error creating resource fork. (error=%d, ref=%p)", error, fileRef);
+	else NSLog(@"error creating resource fork. (error=%d, ref=%p)", (int)error, fileRef);
 	
 	// write resource array to file
 	if(fileRefNum && !error)
@@ -409,13 +410,13 @@ extern NSString *RKResourcePboardType;
 		error = FSOpenFork(fileRef, [[resource representedFork] length], (UniChar *) uniname, fsWrPerm, &forkRefNum);
 		
 		if (error != noErr)
-			NSLog(@"FSOpenFork got error %d", error);
+			NSLog(@"FSOpenFork got error %d", (int)error);
 		
 		if(!error && forkRefNum)
 			error = FSWriteFork(forkRefNum, fsFromStart, 0, [[resource data] length], [[resource data] bytes], NULL);
 		
 		if (error != noErr)
-			NSLog(@"FSWriteFork got error %d", error);
+			NSLog(@"FSWriteFork got error %d", (int)error);
 		
 		if(forkRefNum) FSCloseFork(forkRefNum);
 	}
@@ -514,9 +515,9 @@ extern NSString *RKResourcePboardType;
 			FSSetCatalogInfo(fileRef, kFSCatInfoFinderInfo, &info);
 			//				NSLog(@"finder info got set to type: %X; creator: %X", finderInfo.fdType, finderInfo.fdCreator);
 		}
-		else NSLog(@"error getting Finder info. (error=%d, ref=%p)", error, fileRef);
+		else NSLog(@"error getting Finder info. (error=%d, ref=%p)", (int)error, fileRef);
 	}
-	else NSLog(@"error making fsref from file path. (error=%d, ref=%p, path=%@)", error, fileRef, [[self fileURL] path]);
+	else NSLog(@"error making fsref from file path. (error=%d, ref=%p, path=%@)", (int)error, fileRef, [[self fileURL] path]);
 }
 
 #pragma mark -
@@ -814,9 +815,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[item setLabel:NSLocalizedString(@"Show Info", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Show Info", nil)];
 	[item setToolTip:NSLocalizedString(@"Show Resource Information Window", nil)];
-	if((image = [NSImage imageNamed:NSImageNameInfo]))
-	     [item setImage:image];
-	else [item setImage:[NSImage imageNamed:@"Show Info"]];
+	[item setImage:[NSImage imageNamed:NSImageNameInfo]];
 	[item setTarget:[NSApp delegate]];
 	[item setAction:@selector(showInfo:)];
 	[toolbarItems setObject:item forKey:RKShowInfoItemIdentifier];

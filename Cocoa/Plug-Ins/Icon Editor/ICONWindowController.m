@@ -183,7 +183,7 @@
 {
 	NSArray*	reps = [resImage representations];
 	
-	NSLog( @"# %lu", [reps count] );
+	NSLog( @"# %lu", (unsigned long)[reps count] );
 	
 	[resImage lockFocusOnRepresentation: [reps objectAtIndex:0]];
 	[[imageView image] dissolveToPoint: NSMakePoint(0,0) fraction:1];

@@ -41,7 +41,7 @@
 
 - (NSString *)stringValue
 {
-	return [NSString stringWithFormat:@"%u", value];
+	return [NSString stringWithFormat:@"%u", (unsigned int)value];
 }
 
 - (void)setStringValue:(NSString *)str

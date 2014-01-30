@@ -10,6 +10,8 @@
 	IBOutlet ResourceDataSource		*dataSource;
 	IBOutlet NSWindow				*mainWindow;
 	IBOutlet NSOutlineView			*outlineView;
+	IBOutlet NSView					*viewToolbarView;
+
 	CreateResourceSheetController	*sheetController;
 	
 	NSMutableDictionary	*toolbarItems;
