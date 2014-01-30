@@ -1,0 +1,48 @@
+
+/* Class = "NSPanel"; title = "Find & Replace"; ObjectID = "7"; */
+"7.title" = "Find & Replace";
+
+/* Class = "NSFormCell"; title = "Replace:"; ObjectID = "10"; */
+"10.title" = "Replace:";
+
+/* Class = "NSFormCell"; title = "Find:"; ObjectID = "11"; */
+"11.title" = "Find:";
+
+/* Class = "NSButtonCell"; title = "Search ASCII"; ObjectID = "18"; */
+"18.title" = "Search ASCII";
+
+/* Class = "NSButtonCell"; title = "Search Hexadecimal"; ObjectID = "19"; */
+"19.title" = "Search Hexadecimal";
+
+/* Class = "NSButtonCell"; title = "Find"; ObjectID = "68"; */
+"68.title" = "Find";
+
+/* Class = "NSButtonCell"; title = "Replace All"; ObjectID = "69"; */
+"69.title" = "Replace All";
+
+/* Class = "NSButtonCell"; title = "Start At Top"; ObjectID = "70"; */
+"70.title" = "Start At Top";
+
+/* Class = "NSButtonCell"; title = "Wrap Around"; ObjectID = "71"; */
+"71.title" = "Wrap Around";
+
+/* Class = "NSButtonCell"; title = "Search Backwards"; ObjectID = "72"; */
+"72.title" = "Search Backwards";
+
+/* Class = "NSButtonCell"; title = "Case Sensitive"; ObjectID = "73"; */
+"73.title" = "Case Sensitive";
+
+/* Class = "NSButtonCell"; title = "Match Entire Words"; ObjectID = "74"; */
+"74.title" = "Match Entire Words";
+
+/* Class = "NSButtonCell"; title = "Search Selection Only"; ObjectID = "75"; */
+"75.title" = "Search Selection Only";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "76"; */
+"76.title" = "Cancel";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "77"; */
+"77.title" = "Field:";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "78"; */
+"78.title" = "Radio";

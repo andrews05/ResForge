@@ -94,7 +94,6 @@
 		E18BF546069FEA1300F076B8 /* ResourceDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882F0156D40B01000001 /* ResourceDataSource.h */; };
 		E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588310156D40B01000001 /* ResourceDocument.h */; };
 		E18BF548069FEA1300F076B8 /* ResourceNameCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F577A900021215C801A80001 /* ResourceNameCell.h */; };
-		E18BF549069FEA1300F076B8 /* SizeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588330156D40B01000001 /* SizeFormatter.h */; };
 		E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */; };
 		E18BF54C069FEA1300F076B8 /* NSString-FSSpec.h in Headers */ = {isa = PBXBuildFile; fileRef = F59D5DE40320DFF601A8010C /* NSString-FSSpec.h */; };
 		E18BF54D069FEA1300F076B8 /* PasteboardDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071603CCC61E01A8010A /* PasteboardDocument.h */; };
@@ -467,7 +466,10 @@
 		550B905F189A0421005AC38D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Application.strings; sourceTree = "<group>"; };
 		550B9060189A0876005AC38D /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Application.strings; sourceTree = "<group>"; };
 		550B9061189A0886005AC38D /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		550B9062189A08A4005AC38D /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Localizable.strings; sourceTree = "<group>"; };
+		550B9062189A08A4005AC38D /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Localizable.strings; sourceTree = "<group>"; };
+		550B9064189A187D005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HexWindow.strings; sourceTree = "<group>"; };
+		550B9066189A1882005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FindSheet.strings; sourceTree = "<group>"; };
+		550B9068189A1AA9005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
 		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PNGWindowController.h; path = "PNG Editor/PNGWindowController.h"; sourceTree = "<group>"; };
 		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PNGWindowController.m; path = "PNG Editor/PNGWindowController.m"; sourceTree = "<group>"; };
 		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PNGWindowController.xib; path = "PNG Editor/PNGWindowController.xib"; sourceTree = "<group>"; };
@@ -1287,7 +1289,6 @@
 				E18BF546069FEA1300F076B8 /* ResourceDataSource.h in Headers */,
 				E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */,
 				E18BF548069FEA1300F076B8 /* ResourceNameCell.h in Headers */,
-				E18BF549069FEA1300F076B8 /* SizeFormatter.h in Headers */,
 				E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */,
 				E18BF54C069FEA1300F076B8 /* NSString-FSSpec.h in Headers */,
 				E18BF54D069FEA1300F076B8 /* PasteboardDocument.h in Headers */,
@@ -2170,6 +2171,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B904A189A0360005AC38D /* Base */,
+				550B9068189A1AA9005AC38D /* en */,
 			);
 			name = ResourceDocument.xib;
 			sourceTree = "<group>";
@@ -2210,6 +2212,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B904C189A0360005AC38D /* Base */,
+				550B9066189A1882005AC38D /* en */,
 			);
 			name = FindSheet.xib;
 			sourceTree = "<group>";
@@ -2218,6 +2221,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B904D189A0360005AC38D /* Base */,
+				550B9064189A187D005AC38D /* en */,
 			);
 			name = HexWindow.xib;
 			sourceTree = "<group>";
@@ -2413,7 +2417,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "PNG Editor/PNG Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -2521,7 +2524,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pattern Editor/Pattern Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -2568,7 +2570,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "PICT Editor/PICT Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -3019,8 +3020,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 			};
 			name = Release;
 		};

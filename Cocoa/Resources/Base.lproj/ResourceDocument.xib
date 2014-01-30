@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1070" identifier="macosx"/>
+        <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
@@ -83,7 +83,7 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="resID"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="size" editable="NO" width="75" minWidth="60" maxWidth="80" id="150">
+                                        <tableColumn identifier="size" editable="NO" width="74" minWidth="60" maxWidth="80" id="150">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Size">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -97,7 +97,7 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="size"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="attributes" editable="NO" width="112" minWidth="60" maxWidth="1000" id="151">
+                                        <tableColumn identifier="attributes" editable="NO" width="113" minWidth="60" maxWidth="1000" id="151">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Attributes">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -149,7 +149,7 @@
         <customObject id="24" userLabel="OutlineViewDelegate" customClass="OutlineViewDelegate">
             <connections>
                 <outlet property="attributesFormatter" destination="48" id="49"/>
-                <outlet property="sizeFormatter" destination="38" id="39"/>
+                <outlet property="sizeFormatter" destination="CPK-3m-O3g" id="Js7-dY-bQT"/>
                 <outlet property="window" destination="5" id="31"/>
             </connections>
         </customObject>
@@ -160,7 +160,7 @@
                 <outlet property="window" destination="5" id="46"/>
             </connections>
         </customObject>
-        <customObject id="38" userLabel="SizeFormatter" customClass="SizeFormatter"/>
+        <byteCountFormatter id="CPK-3m-O3g"/>
         <customObject id="48" userLabel="AttributesFormatter" customClass="AttributesFormatter"/>
         <segmentedControl verticalHuggingPriority="750" id="166">
             <rect key="frame" x="0.0" y="0.0" width="69" height="25"/>

@@ -15,22 +15,22 @@
 "339.title" = "ウインドウをしまう";
 
 /* Class = "NSMenuItem"; title = "Customize Toolbar…"; ObjectID = "341"; */
-"341.title" = "Customize Toolbar…";
+//"341.title" = "Customize Toolbar…";
 
 /* Class = "NSMenuItem"; title = "Show Toolbar"; ObjectID = "343"; */
-"343.title" = "Show Toolbar";
+//"343.title" = "Show Toolbar";
 
 /* Class = "NSMenuItem"; title = "Zoom Window"; ObjectID = "344"; */
 "344.title" = "拡大／縮小";
 
 /* Class = "NSMenuItem"; title = "Move to Back"; ObjectID = "345"; */
-"345.title" = "Move to Back";
+//"345.title" = "Move to Back";
 
 /* Class = "NSMenuItem"; title = "List View"; ObjectID = "347"; */
-"347.title" = "List View";
+//"347.title" = "List View";
 
 /* Class = "NSMenuItem"; title = "Icon View"; ObjectID = "348"; */
-"348.title" = "Icon View";
+//"348.title" = "Icon View";
 
 /* Class = "NSMenuItem"; title = "Cycle Through Windows"; ObjectID = "349"; */
 "349.title" = "Cycle Through Windows";
@@ -81,10 +81,10 @@
 "368.title" = "保存";
 
 /* Class = "NSMenuItem"; title = "Page Setup..."; ObjectID = "369"; */
-"369.title" = "Page Setup...";
+//"369.title" = "Page Setup...";
 
 /* Class = "NSMenuItem"; title = "Print..."; ObjectID = "370"; */
-"370.title" = "Print...";
+//"370.title" = "Print...";
 
 /* Class = "NSMenuItem"; title = "Save As..."; ObjectID = "372"; */
 "372.title" = "別名で保存...";
@@ -120,13 +120,13 @@
 "383.title" = "ResKnife ヘルプ";
 
 /* Class = "NSMenuItem"; title = "Visit Source Repository…"; ObjectID = "385"; */
-"385.title" = "Visit Source Repository…";
+//"385.title" = "Visit Source Repository…";
 
 /* Class = "NSMenuItem"; title = "Visit Official Website…"; ObjectID = "386"; */
-"386.title" = "Visit Official Website…";
+//"386.title" = "Visit Official Website…";
 
 /* Class = "NSMenuItem"; title = "Email Developer…"; ObjectID = "387"; */
-"387.title" = "Email Developer…";
+//"387.title" = "Email Developer…";
 
 /* Class = "NSMenuItem"; title = "Edit"; ObjectID = "388"; */
 "388.title" = "編集";
@@ -192,10 +192,10 @@
 "410.title" = "入力中に自動スペルチェック";
 
 /* Class = "NSMenuItem"; title = "Deselect All"; ObjectID = "411"; */
-"411.title" = "Deselect All";
+//"411.title" = "Deselect All";
 
 /* Class = "NSMenuItem"; title = "Show Pasteboard"; ObjectID = "413"; */
-"413.title" = "Show Pasteboard";
+//"413.title" = "Show Pasteboard";
 
 /* Class = "NSMenuItem"; title = "Speech"; ObjectID = "414"; */
 "414.title" = "スピーチ";
@@ -210,46 +210,46 @@
 "417.title" = "読み上げを停止";
 
 /* Class = "NSMenuItem"; title = "Resource"; ObjectID = "418"; */
-"418.title" = "Resource";
+//"418.title" = "Resource";
 
 /* Class = "NSMenu"; title = "Resource"; ObjectID = "419"; */
-"419.title" = "Resource";
+//"419.title" = "Resource";
 
 /* Class = "NSMenuItem"; title = "Create New Resource…"; ObjectID = "420"; */
-"420.title" = "Create New Resource…";
+//"420.title" = "Create New Resource…";
 
 /* Class = "NSMenuItem"; title = "Edit in Default Editor"; ObjectID = "422"; */
-"422.title" = "Edit in Default Editor";
+//"422.title" = "Edit in Default Editor";
 
 /* Class = "NSMenuItem"; title = "Edit with Default Template"; ObjectID = "423"; */
-"423.title" = "Edit with Default Template";
+//"423.title" = "Edit with Default Template";
 
 /* Class = "NSMenuItem"; title = "Edit with Specific Template…"; ObjectID = "424"; */
-"424.title" = "Edit with Specific Template…";
+//"424.title" = "Edit with Specific Template…";
 
 /* Class = "NSMenuItem"; title = "Revert Resource…"; ObjectID = "426"; */
-"426.title" = "Revert Resource…";
+//"426.title" = "Revert Resource…";
 
 /* Class = "NSMenuItem"; title = "Play Sound"; ObjectID = "427"; */
-"427.title" = "Play Sound";
+//"427.title" = "Play Sound";
 
 /* Class = "NSMenuItem"; title = "Edit as Hexadecimal"; ObjectID = "428"; */
-"428.title" = "Edit as Hexadecimal";
+//"428.title" = "Edit as Hexadecimal";
 
 /* Class = "NSMenuItem"; title = "Save Resource"; ObjectID = "429"; */
-"429.title" = "Save Resource";
+//"429.title" = "Save Resource";
 
 /* Class = "NSTextFieldCell"; title = "Select a fork to open:"; ObjectID = "434"; */
-"434.title" = "Select a fork to open:";
+//"434.title" = "Select a fork to open:";
 
 /* Class = "NSTableColumn"; headerCell.title = "Fork Size"; ObjectID = "437"; */
-"437.headerCell.title" = "Fork Size";
+//"437.headerCell.title" = "Fork Size";
 
 /* Class = "NSTableColumn"; headerCell.title = "Fork Name"; ObjectID = "440"; */
-"440.headerCell.title" = "Fork Name";
+//"440.headerCell.title" = "Fork Name";
 
 /* Class = "NSButtonCell"; title = "-"; ObjectID = "445"; */
-"445.title" = "-";
+//"445.title" = "-";
 
 /* Class = "NSButtonCell"; title = "+"; ObjectID = "447"; */
-"447.title" = "+";
+//"447.title" = "+";

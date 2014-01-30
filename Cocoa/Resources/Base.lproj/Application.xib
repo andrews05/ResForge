@@ -515,13 +515,9 @@
                                             <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                         </tableHeaderCell>
                                         <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" id="438">
-                                            <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="#,##0 bytes" negativeFormat="-#,##0 bytes" thousandSeparator="," id="439">
-                                                <attributedString key="attributedStringForZero">
-                                                    <fragment content="Empty"/>
-                                                </attributedString>
-                                                <decimal key="minimum" value="NaN"/>
-                                                <decimal key="maximum" value="NaN"/>
-                                            </numberFormatter>
+                                            <byteCountFormatter key="formatter" id="jRX-F5-soW">
+                                                <byteCountFormatterUnits key="allowedUnits" default="YES" bytes="YES"/>
+                                            </byteCountFormatter>
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -1,0 +1,18 @@
+
+/* Class = "NSWindow"; title = "Untitled Resource File"; ObjectID = "5"; */
+"5.title" = "Untitled Resource File";
+
+/* Class = "NSTableColumn"; headerCell.title = "Name"; ObjectID = "147"; */
+"147.headerCell.title" = "Name";
+
+/* Class = "NSTableColumn"; headerCell.title = "Type"; ObjectID = "148"; */
+"148.headerCell.title" = "Type";
+
+/* Class = "NSTableColumn"; headerCell.title = "ID"; ObjectID = "149"; */
+"149.headerCell.title" = "ID";
+
+/* Class = "NSTableColumn"; headerCell.title = "Size"; ObjectID = "150"; */
+"150.headerCell.title" = "Size";
+
+/* Class = "NSTableColumn"; headerCell.title = "Attributes"; ObjectID = "151"; */
+"151.headerCell.title" = "Attributes";

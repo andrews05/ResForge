@@ -1,6 +1,5 @@
 #import "OpenPanelDelegate.h"
 #import "ApplicationDelegate.h"
-#import "SizeFormatter.h"
 #import "../Categories/NSString-FSSpec.h"
 
 @implementation OpenPanelDelegate

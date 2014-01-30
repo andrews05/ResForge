@@ -1,5 +1,4 @@
 #import <Cocoa/Cocoa.h>
-#import "SizeFormatter.h"
 #import "AttributesFormatter.h"
 
 @class Resource;
@@ -8,7 +7,7 @@
 {
 	IBOutlet NSWindow				*window;
 	IBOutlet NSOutlineView			*outlineView;
-	IBOutlet SizeFormatter			*sizeFormatter;
+	IBOutlet NSFormatter			*sizeFormatter;
 	IBOutlet AttributesFormatter 	*attributesFormatter;
 }
 

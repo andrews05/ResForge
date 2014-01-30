@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1070" identifier="macosx"/>
+        <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
@@ -201,14 +201,14 @@
                                                 <font key="font" metaFont="system"/>
                                                 <font key="titleFont" metaFont="system"/>
                                                 <connections>
-                                                    <outlet property="formatter" destination="84" id="85"/>
+                                                    <outlet property="formatter" destination="t7T-4V-eof" id="BKC-LY-bLN"/>
                                                 </connections>
                                             </formCell>
                                             <formCell lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" tag="3" title="Resource Fork:" id="80">
                                                 <font key="font" metaFont="system"/>
                                                 <font key="titleFont" metaFont="system"/>
                                                 <connections>
-                                                    <outlet property="formatter" destination="84" id="86"/>
+                                                    <outlet property="formatter" destination="t7T-4V-eof" id="atx-bp-7XL"/>
                                                 </connections>
                                             </formCell>
                                         </column>
@@ -249,6 +249,6 @@
                 </constraints>
             </view>
         </window>
-        <customObject id="84" userLabel="SizeFormatter" customClass="SizeFormatter"/>
+        <byteCountFormatter id="t7T-4V-eof"/>
     </objects>
 </document>
