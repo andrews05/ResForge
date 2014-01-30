@@ -153,7 +153,7 @@
 "396.title" = "Find";
 
 /* Class = "NSMenuItem"; title = "Find..."; ObjectID = "397"; */
-"397.title" = "Find...";
+"397.title" = "Find…";
 
 /* Class = "NSMenuItem"; title = "Scroll to Selection"; ObjectID = "398"; */
 "398.title" = "Scroll to Selection";
@@ -183,7 +183,7 @@
 "407.title" = "Spelling";
 
 /* Class = "NSMenuItem"; title = "Spelling..."; ObjectID = "408"; */
-"408.title" = "Spelling...";
+"408.title" = "Spelling…";
 
 /* Class = "NSMenuItem"; title = "Check Spelling"; ObjectID = "409"; */
 "409.title" = "Check Spelling";
