@@ -571,9 +571,9 @@
 	charRec->startMonth = [date monthOfYear];
 	charRec->startYear = [date yearOfCommonEra];
 	bzero( charRec->Prefix, 16 );
-	memmove( charRec->Prefix, [prefix cString], [prefix cStringLength] <= 15? [prefix cStringLength]+1:16 );
+	memmove( charRec->Prefix, [prefix cStringUsingEncoding:NSMacOSRomanStringEncoding], [prefix lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding] <= 15? [prefix lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]+1:16 );
 	bzero( charRec->Suffix, 16 );
-	memmove( charRec->Suffix, [suffix cString], [suffix cStringLength] <= 15? [suffix cStringLength]+1:16 );
+	memmove( charRec->Suffix, [suffix cStringUsingEncoding:NSMacOSRomanStringEncoding], [suffix lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding] <= 15? [suffix lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]+1:16 );
 	charRec->startSystem[0] = [start1 shortValue];
 	charRec->startSystem[1] = [start2 shortValue];
 	charRec->startSystem[2] = [start3 shortValue];
@@ -596,7 +596,7 @@
 	charRec->introPictDelay[2] = [introDelay3 shortValue];
 	charRec->introPictDelay[3] = [introDelay4 shortValue];
 	bzero( charRec->OnStart, 256 );
-	memmove( charRec->OnStart, [onStart cString], [onStart cStringLength] <= 255? [onStart cStringLength]+1:256 );
+	memmove( charRec->OnStart, [onStart cStringUsingEncoding:NSMacOSRomanStringEncoding], [onStart lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding] <= 255? [onStart lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]+1:256 );
 	bzero( charRec->UnusedA, 8*sizeof(short) );
 	
 	// verify values are valid

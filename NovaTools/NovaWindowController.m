@@ -13,7 +13,7 @@
 {
 	id oldSelf = self;
 	NSData *classData = [[(id <ResKnifeResourceProtocol>)newResource type] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-	NSString *className = [[[NSString stringWithCString:[classData bytes] length:[classData length]] capitalizedString] stringByAppendingString:@"WindowController"];
+	NSString *className = [[[[NSString alloc] initWithBytes:[classData bytes] length:[classData length] encoding:NSMacOSRomanStringEncoding] capitalizedString] stringByAppendingString:@"WindowController"];
 	if( [className isEqualToString:@"Yea(R)WindowController"] ) className = @"YearWindowController"; // lossy conversion turns ¨ into (R), so i have to special-case Ø‘Š¨
 	self = [[NSClassFromString(className) alloc] initWithResource:newResource];
 	[oldSelf release];
