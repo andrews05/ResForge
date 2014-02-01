@@ -72,9 +72,9 @@
 	kills = [[NSNumber alloc] initWithShort:charRec->startKills];
 	date = [[NSCalendarDate alloc] initWithYear:charRec->startYear month:charRec->startMonth day:charRec->startDay hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
 	tempPrefix = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Prefix length:16] encoding:NSMacOSRomanStringEncoding] autorelease];
-	prefix = [[NSString alloc] initWithCString:[tempPrefix cString] length:[tempPrefix cStringLength]];
+	prefix = [[NSString alloc] initWithString:tempPrefix];
 	tempSuffix = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Suffix length:16] encoding:NSMacOSRomanStringEncoding] autorelease];
-	suffix = [[NSString alloc] initWithCString:[tempSuffix cString] length:[tempSuffix cStringLength]];
+	suffix = [[NSString alloc] initWithString:tempSuffix];
 	start1 = [[NSNumber alloc] initWithShort:charRec->startSystem[0]];
 	start2 = [[NSNumber alloc] initWithShort:charRec->startSystem[1]];
 	start3 = [[NSNumber alloc] initWithShort:charRec->startSystem[2]];
@@ -97,7 +97,7 @@
 	introDelay3 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[2]];
 	introDelay4 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[3]];
 	tempStart = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->OnStart length:256] encoding:NSMacOSRomanStringEncoding] autorelease];
-	onStart = [[NSString alloc] initWithCString:[tempStart cString] length:[tempStart cStringLength]];
+	onStart = [[NSString alloc] initWithString:tempStart];
 	
 	// rotating image
 	currentPict = 0;

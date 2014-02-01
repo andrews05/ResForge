@@ -11,6 +11,7 @@
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; };
+		559DE9B4189D665000D55D3A /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Icons.xcassets */; };
 		B22100CD15D3F944009FDEE1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		B229EECB15A4B8720032C12C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B229EED315A4B8720032C12C /* InfoPlist.strings */; };
@@ -48,7 +49,6 @@
 		B2B2C42115A9EEEF00D6F61C /* RKPatternImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */; };
 		B2B2C43A15A9FCCF00D6F61C /* RKPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */; };
 		B2B3CEAA16B9DCE90027F33F /* ResourceGridView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */; };
-		B2B51C9115B700560087978B /* Edit Hex.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FC0211E4D401A80001 /* Edit Hex.tiff */; };
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79115A66ACF00696598 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA78F15A66ACF00696598 /* InfoPlist.strings */; };
 		B2FCA79715A66B2A00696598 /* PictWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FCA78015A669C800696598 /* PictWindowController.m */; };
@@ -105,16 +105,8 @@
 		E18BF55A069FEA1300F076B8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588420156D40B01000001 /* InfoPlist.strings */; };
 		E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588440156D40B01000001 /* Localizable.strings */; };
 		E18BF55C069FEA1300F076B8 /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5730B930159528A01000001 /* defaults.plist */; };
-		E18BF55D069FEA1300F076B8 /* ResKnife.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5B588460156D40B01000001 /* ResKnife.icns */; };
-		E18BF55E069FEA1300F076B8 /* Resource file.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5B588470156D40B01000001 /* Resource file.icns */; };
-		E18BF55F069FEA1300F076B8 /* Icon file.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5B588480156D40B01000001 /* Icon file.icns */; };
-		E18BF560069FEA1300F076B8 /* Create.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FA0211E4D401A80001 /* Create.tiff */; };
-		E18BF561069FEA1300F076B8 /* Delete.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A904021220D601A80001 /* Delete.tiff */; };
-		E18BF562069FEA1300F076B8 /* Edit.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8FB0211E4D401A80001 /* Edit.tiff */; };
-		E18BF564069FEA1300F076B8 /* Save.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F577A8F30211CFA701A80001 /* Save.tiff */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
-		E18BF568069FEA1300F076B8 /* Export.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3D35756004DAEB7F00B8225B /* Export.tiff */; };
 		E18BF569069FEA1300F076B8 /* Resource Type Mappings.strings in Resources */ = {isa = PBXBuildFile; fileRef = E196FEE10551AF9600FE7E58 /* Resource Type Mappings.strings */; };
 		E18BF570069FEA1300F076B8 /* ApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5881E0156D40B01000001 /* ApplicationDelegate.m */; };
 		E18BF571069FEA1300F076B8 /* AttributesFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588200156D40B01000001 /* AttributesFormatter.m */; };
@@ -427,7 +419,6 @@
 		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKEditorRegistry.h; sourceTree = "<group>"; };
 		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RKEditorRegistry.m; sourceTree = "<group>"; };
-		3D35756004DAEB7F00B8225B /* Export.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Export.tiff; sourceTree = "<group>"; };
 		3D3B99B804DC16A30056861E /* ICONWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ICONWindowController.m; sourceTree = "<group>"; };
 		3D3B99B904DC16A30056861E /* ICONWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ICONWindowController.h; sourceTree = "<group>"; };
 		3D4737B304E872DB00AF65FE /* ElementDLNG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDLNG.m; sourceTree = "<group>"; };
@@ -470,6 +461,12 @@
 		550B9064189A187D005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HexWindow.strings; sourceTree = "<group>"; };
 		550B9066189A1882005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FindSheet.strings; sourceTree = "<group>"; };
 		550B9068189A1AA9005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
+		559DE9B3189D665000D55D3A /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		559DE9B6189D6B1B00D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrefsWindow.strings; sourceTree = "<group>"; };
+		559DE9B8189D6B2000D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoWindow.strings; sourceTree = "<group>"; };
+		559DE9BA189D6B2600D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CreateResourceSheet.strings; sourceTree = "<group>"; };
+		559DE9BC189D6B2B00D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AboutPanel.strings; sourceTree = "<group>"; };
+		559DE9BE189D6B3500D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceGridView.strings; sourceTree = "<group>"; };
 		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PNGWindowController.h; path = "PNG Editor/PNGWindowController.h"; sourceTree = "<group>"; };
 		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PNGWindowController.m; path = "PNG Editor/PNGWindowController.m"; sourceTree = "<group>"; };
 		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PNGWindowController.xib; path = "PNG Editor/PNGWindowController.xib"; sourceTree = "<group>"; };
@@ -591,14 +588,8 @@
 		F54E6221021B6A0801A80001 /* FindSheetController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FindSheetController.m; sourceTree = "<group>"; };
 		F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnifePluginProtocol.h; sourceTree = "<group>"; };
 		F5730B930159528A01000001 /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist; path = defaults.plist; sourceTree = "<group>"; };
-		F577A8F30211CFA701A80001 /* Save.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Save.tiff; sourceTree = "<group>"; };
-		F577A8F80211DC1E01A80001 /* Show Info.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Show Info.tiff"; sourceTree = "<group>"; };
-		F577A8FA0211E4D401A80001 /* Create.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Create.tiff; sourceTree = "<group>"; };
-		F577A8FB0211E4D401A80001 /* Edit.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Edit.tiff; sourceTree = "<group>"; };
-		F577A8FC0211E4D401A80001 /* Edit Hex.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Edit Hex.tiff"; sourceTree = "<group>"; };
 		F577A900021215C801A80001 /* ResourceNameCell.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceNameCell.h; sourceTree = "<group>"; };
 		F577A901021215C801A80001 /* ResourceNameCell.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceNameCell.m; sourceTree = "<group>"; };
-		F577A904021220D601A80001 /* Delete.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Delete.tiff; sourceTree = "<group>"; };
 		F58A18400278355D01A8010C /* DescSplitViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = DescSplitViewDelegate.m; path = desc/DescSplitViewDelegate.m; sourceTree = "<group>"; };
 		F58A18410278355D01A8010C /* DescSplitViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescSplitViewDelegate.h; path = desc/DescSplitViewDelegate.h; sourceTree = "<group>"; };
 		F58F6B7E025BC3A501A8010C /* BoomWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = BoomWindowController.h; path = boom/BoomWindowController.h; sourceTree = "<group>"; };
@@ -643,9 +634,6 @@
 		F5B588340156D40B01000001 /* SizeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SizeFormatter.m; sourceTree = "<group>"; };
 		F5B588430156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F5B588450156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
-		F5B588460156D40B01000001 /* ResKnife.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ResKnife.icns; sourceTree = "<group>"; };
-		F5B588470156D40B01000001 /* Resource file.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Resource file.icns"; sourceTree = "<group>"; };
-		F5B588480156D40B01000001 /* Icon file.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Icon file.icns"; sourceTree = "<group>"; };
 		F5B5884A0156D40B01000001 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		F5B5884B0156D40B01000001 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		F5B5884C0156D40B01000001 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -1169,17 +1157,8 @@
 				F5730B930159528A01000001 /* defaults.plist */,
 				F5041736036BD60801A8010A /* ResKnife.scriptSuite */,
 				F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */,
-				F5B588460156D40B01000001 /* ResKnife.icns */,
-				F5B588470156D40B01000001 /* Resource file.icns */,
-				F5B588480156D40B01000001 /* Icon file.icns */,
-				F577A8FA0211E4D401A80001 /* Create.tiff */,
-				F577A904021220D601A80001 /* Delete.tiff */,
-				F577A8FB0211E4D401A80001 /* Edit.tiff */,
-				F577A8FC0211E4D401A80001 /* Edit Hex.tiff */,
-				F577A8F30211CFA701A80001 /* Save.tiff */,
-				F577A8F80211DC1E01A80001 /* Show Info.tiff */,
-				3D35756004DAEB7F00B8225B /* Export.tiff */,
 				B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */,
+				559DE9B3189D665000D55D3A /* Icons.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1739,24 +1718,16 @@
 				E18BF55A069FEA1300F076B8 /* InfoPlist.strings in Resources */,
 				E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */,
 				E18BF55C069FEA1300F076B8 /* defaults.plist in Resources */,
-				E18BF55D069FEA1300F076B8 /* ResKnife.icns in Resources */,
-				E18BF55E069FEA1300F076B8 /* Resource file.icns in Resources */,
-				E18BF55F069FEA1300F076B8 /* Icon file.icns in Resources */,
-				E18BF560069FEA1300F076B8 /* Create.tiff in Resources */,
-				E18BF561069FEA1300F076B8 /* Delete.tiff in Resources */,
-				E18BF562069FEA1300F076B8 /* Edit.tiff in Resources */,
-				E18BF564069FEA1300F076B8 /* Save.tiff in Resources */,
 				E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */,
 				E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */,
-				E18BF568069FEA1300F076B8 /* Export.tiff in Resources */,
 				E18BF569069FEA1300F076B8 /* Resource Type Mappings.strings in Resources */,
 				B229EEF415A4FB6F0032C12C /* AboutPanel.xib in Resources */,
 				B229EEF515A4FB6F0032C12C /* Application.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */,
+				559DE9B4189D665000D55D3A /* Icons.xcassets in Resources */,
 				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,
 				B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */,
 				B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */,
-				B2B51C9115B700560087978B /* Edit Hex.tiff in Resources */,
 				B2B3CEAA16B9DCE90027F33F /* ResourceGridView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2128,6 +2099,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B9045189A0360005AC38D /* Base */,
+				559DE9BC189D6B2B00D55D3A /* en */,
 			);
 			name = AboutPanel.xib;
 			sourceTree = "<group>";
@@ -2147,6 +2119,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B9047189A0360005AC38D /* Base */,
+				559DE9BA189D6B2600D55D3A /* en */,
 			);
 			name = CreateResourceSheet.xib;
 			sourceTree = "<group>";
@@ -2155,6 +2128,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B9048189A0360005AC38D /* Base */,
+				559DE9B8189D6B2000D55D3A /* en */,
 			);
 			name = InfoWindow.xib;
 			sourceTree = "<group>";
@@ -2163,6 +2137,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B9049189A0360005AC38D /* Base */,
+				559DE9B6189D6B1B00D55D3A /* en */,
 			);
 			name = PrefsWindow.xib;
 			sourceTree = "<group>";
@@ -2239,6 +2214,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B904B189A0360005AC38D /* Base */,
+				559DE9BE189D6B3500D55D3A /* en */,
 			);
 			name = ResourceGridView.xib;
 			sourceTree = "<group>";
@@ -2706,6 +2682,7 @@
 		E13F7EDA08F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = ResKnife;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2732,6 +2709,7 @@
 		E13F7EDB08F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = ResKnife;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2913,6 +2891,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				IBC_STRIP_NIBS = NO;
 				INFOPLIST_FILE = NovaTools/Info.plist;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2935,6 +2914,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUGGING_SYMBOLS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				IBC_STRIP_NIBS = NO;
 				INFOPLIST_FILE = NovaTools/Info.plist;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";

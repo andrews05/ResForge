@@ -17,8 +17,7 @@
 		type = [typeString copy];
 		data = [[NSMutableDictionary alloc] init];
 		NSArray *resources = [NSClassFromString(@"Resource") allResourcesOfType:type inDocument:nil];	// nil document will search in ANY open document for the correct resource
-		NSEnumerator *enumerator = [resources objectEnumerator];
-		while( id <ResKnifeResourceProtocol> resource in resources )
+		for(id <ResKnifeResourceProtocol> resource in resources )
 			[data setObject:[resource name] forKey:[resource resID]];
 	}
 	parsed = [[NSMutableArray alloc] initWithArray:[data allValues]];

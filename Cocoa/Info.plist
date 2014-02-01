@@ -58,8 +58,6 @@
 	<string>ResKnife</string>
 	<key>CFBundleGetInfoString</key>
 	<string>A resource editor for Mac OS X.</string>
-	<key>CFBundleIconFile</key>
-	<string>ResKnife</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.nickshanks.resknife</string>
 	<key>CFBundleInfoDictionaryVersion</key>

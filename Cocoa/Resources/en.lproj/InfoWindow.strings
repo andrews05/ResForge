@@ -1,0 +1,57 @@
+
+/* Class = "NSPanel"; title = "InfoWindow"; ObjectID = "5"; */
+"5.title" = "InfoWindow";
+
+/* Class = "NSBox"; title = "Placeholder"; ObjectID = "7"; */
+"7.title" = "Placeholder";
+
+/* Class = "NSWindow"; title = "Resource Attributes"; ObjectID = "35"; */
+"35.title" = "Resource Attributes";
+
+/* Class = "NSButtonCell"; title = "System Heap"; ObjectID = "38"; */
+"38.title" = "System Heap";
+
+/* Class = "NSButtonCell"; title = "Changed"; ObjectID = "39"; */
+"39.title" = "Changed";
+
+/* Class = "NSButtonCell"; title = "Locked"; ObjectID = "40"; */
+"40.title" = "Locked";
+
+/* Class = "NSButtonCell"; title = "Purgable"; ObjectID = "41"; */
+"41.title" = "Purgable";
+
+/* Class = "NSButtonCell"; title = "Protected"; ObjectID = "42"; */
+"42.title" = "Protected";
+
+/* Class = "NSBox"; title = "Resource Attributes"; ObjectID = "43"; */
+"43.title" = "Resource Attributes";
+
+/* Class = "NSButtonCell"; title = "Preload"; ObjectID = "45"; */
+"45.title" = "Preload";
+
+/* Class = "NSWindow"; title = "File Information"; ObjectID = "50"; */
+"50.title" = "File Information";
+
+/* Class = "NSBox"; title = "File Properties"; ObjectID = "53"; */
+"53.title" = "File Properties";
+
+/* Class = "NSFormCell"; title = "Creator:"; ObjectID = "77"; */
+"77.title" = "Creator:";
+
+/* Class = "NSFormCell"; title = "Type:"; ObjectID = "78"; */
+"78.title" = "Type:";
+
+/* Class = "NSFormCell"; title = "Data Fork:"; ObjectID = "79"; */
+"79.title" = "Data Fork:";
+
+/* Class = "NSFormCell"; title = "Resource Fork:"; ObjectID = "80"; */
+"80.title" = "Resource Fork:";
+
+/* Class = "NSTextFieldCell"; title = "Fork sizes are as at last save"; ObjectID = "91"; */
+"91.title" = "Fork sizes are as at last save";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "92"; */
+"92.title" = "Radio";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "93"; */
+"93.title" = "Field:";
