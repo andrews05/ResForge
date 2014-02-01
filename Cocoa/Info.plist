@@ -101,7 +101,9 @@
 					<string>RSRC</string>
 				</array>
 				<key>public.filename-extension</key>
-				<string>rsrc</string>
+				<array>
+					<string>rsrc</string>
+				</array>
 			</dict>
 		</dict>
 	</array>

@@ -20,6 +20,7 @@
 		55FEF5BA189D762000888898 /* misn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5B8189D762000888898 /* misn.xib */; };
 		55FEF5BD189D762F00888898 /* ship.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BB189D762F00888898 /* ship.xib */; };
 		55FEF5C0189D764300888898 /* desc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BE189D764300888898 /* desc.xib */; };
+		55FEF5C9189D76F200888898 /* NovaTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E17ADBC006A2132800842474 /* NovaTools.plugin */; };
 		B22100CD15D3F944009FDEE1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		B229EECB15A4B8720032C12C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B229EED315A4B8720032C12C /* InfoPlist.strings */; };
@@ -271,6 +272,13 @@
 			remoteGlobalIDString = E18BF68E069FEA1800F076B8;
 			remoteInfo = "Bitmap Editor Cocoa";
 		};
+		55FEF5CA189D76FA00888898 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E18BF5B7069FEA1400F076B8;
+			remoteInfo = NovaTools;
+		};
 		B229EEE215A4BB720032C12C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -381,6 +389,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				55FEF5C9189D76F200888898 /* NovaTools.plugin in Copy Plugins */,
 				B2B2C41515A9468300D6F61C /* Pattern Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* PICT Editor.plugin in Copy Plugins */,
 				B229EEDD15A4BA900032C12C /* PNG Editor.plugin in Copy Plugins */,
@@ -1484,6 +1493,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55FEF5CB189D76FA00888898 /* PBXTargetDependency */,
 				B2FCA79B15A66B4A00696598 /* PBXTargetDependency */,
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
 				E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */,
@@ -2046,6 +2056,11 @@
 			isa = PBXTargetDependency;
 			target = E18BF68E069FEA1800F076B8 /* Bitmap Editor Cocoa */;
 			targetProxy = 0ED5B4B713BF0A7800A5DC6D /* PBXContainerItemProxy */;
+		};
+		55FEF5CB189D76FA00888898 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E18BF5B7069FEA1400F076B8 /* NovaTools */;
+			targetProxy = 55FEF5CA189D76FA00888898 /* PBXContainerItemProxy */;
 		};
 		B229EEE315A4BB720032C12C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
