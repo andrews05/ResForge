@@ -1,0 +1,129 @@
+
+/* Class = "NSWindow"; title = "Timed Event"; ObjectID = "5"; */
+"5.title" = "Timed Event";
+
+/* Class = "NSBox"; title = "Activation"; ObjectID = "28"; */
+"28.title" = "Activation";
+
+/* Class = "NSBox"; title = "Contributes"; ObjectID = "305"; */
+"305.title" = "Contributes";
+
+/* Class = "NSBox"; title = "Requires"; ObjectID = "324"; */
+"324.title" = "Requires";
+
+/* Class = "NSFormCell"; title = "Probability:"; ObjectID = "381"; */
+"381.title" = "Probability:";
+
+/* Class = "NSFormCell"; title = "Duration:"; ObjectID = "382"; */
+"382.title" = "Duration:";
+
+/* Class = "NSFormCell"; title = "Pre Holdoff:"; ObjectID = "383"; */
+"383.title" = "Pre Holdoff:";
+
+/* Class = "NSFormCell"; title = "Post Holdoff:"; ObjectID = "384"; */
+"384.title" = "Post Holdoff:";
+
+/* Class = "NSBox"; title = "Availability When Active"; ObjectID = "385"; */
+"385.title" = "Availability When Active";
+
+/* Class = "NSBox"; title = "Nova Control Bits"; ObjectID = "389"; */
+"389.title" = "Nova Control Bits";
+
+/* Class = "NSFormCell"; title = "Set On Start:"; ObjectID = "391"; */
+"391.title" = "Set On Start:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "392"; */
+"392.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "393"; */
+"393.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "End:"; ObjectID = "397"; */
+"397.title" = "End:";
+
+/* Class = "NSFormCell"; title = "Start:"; ObjectID = "398"; */
+"398.title" = "Start:";
+
+/* Class = "NSFormCell"; title = "News:"; ObjectID = "414"; */
+"414.title" = "News:";
+
+/* Class = "NSFormCell"; title = "News:"; ObjectID = "415"; */
+"415.title" = "News:";
+
+/* Class = "NSFormCell"; title = "News:"; ObjectID = "416"; */
+"416.title" = "News:";
+
+/* Class = "NSFormCell"; title = "News:"; ObjectID = "417"; */
+"417.title" = "News:";
+
+/* Class = "NSFormCell"; title = "Independent News:"; ObjectID = "418"; */
+"418.title" = "Independent News:";
+
+/* Class = "NSBox"; title = "News"; ObjectID = "422"; */
+"422.title" = "News";
+
+/* Class = "NSDateFormatter"; ibShadowedDateFormat = "%e %B %Y"; ObjectID = "424"; */
+"424.ibShadowedDateFormat" = "%e %B %Y";
+
+/* Class = "NSDateFormatter"; ibShadowedDateFormat = "%e %B %Y"; ObjectID = "425"; */
+"425.ibShadowedDateFormat" = "%e %B %Y";
+
+/* Class = "NSDateFormatter"; ibShadowedDateFormat = "%Y"; ObjectID = "426"; */
+"426.ibShadowedDateFormat" = "%Y";
+
+/* Class = "NSDateFormatter"; ibShadowedDateFormat = "%Y"; ObjectID = "427"; */
+"427.ibShadowedDateFormat" = "%Y";
+
+/* Class = "NSDateFormatter"; ibShadowedDateFormat = "%m"; ObjectID = "428"; */
+"428.ibShadowedDateFormat" = "%m";
+
+/* Class = "NSDateFormatter"; ibShadowedDateFormat = "%m"; ObjectID = "429"; */
+"429.ibShadowedDateFormat" = "%m";
+
+/* Class = "NSDateFormatter"; ibShadowedDateFormat = "%e"; ObjectID = "430"; */
+"430.ibShadowedDateFormat" = "%e";
+
+/* Class = "NSDateFormatter"; ibShadowedDateFormat = "%e"; ObjectID = "431"; */
+"431.ibShadowedDateFormat" = "%e";
+
+/* Class = "NSTextFieldCell"; title = "Start:"; ObjectID = "476"; */
+"476.title" = "Start:";
+
+/* Class = "NSTextFieldCell"; title = "End:"; ObjectID = "485"; */
+"485.title" = "End:";
+
+/* Class = "NSTextFieldCell"; title = "A   B   C   D   E   F   G   H"; ObjectID = "490"; */
+"490.title" = "A   B   C   D   E   F   G   H";
+
+/* Class = "NSTextFieldCell"; title = "1\n2\n3\n4\n5\n6\n7\n8"; ObjectID = "491"; */
+"491.title" = "1\n2\n3\n4\n5\n6\n7\n8";
+
+/* Class = "NSTextFieldCell"; title = "A   B   C   D   E   F   G   H"; ObjectID = "492"; */
+"492.title" = "A   B   C   D   E   F   G   H";
+
+/* Class = "NSTextFieldCell"; title = "1\n2\n3\n4\n5\n6\n7\n8"; ObjectID = "493"; */
+"493.title" = "1\n2\n3\n4\n5\n6\n7\n8";
+
+/* Class = "NSTextFieldCell"; title = "Government 1:"; ObjectID = "494"; */
+"494.title" = "Government 1:";
+
+/* Class = "NSTextFieldCell"; title = "Government 2:"; ObjectID = "499"; */
+"499.title" = "Government 2:";
+
+/* Class = "NSTextFieldCell"; title = "Government 3:"; ObjectID = "500"; */
+"500.title" = "Government 3:";
+
+/* Class = "NSTextFieldCell"; title = "Government 4:"; ObjectID = "501"; */
+"501.title" = "Government 4:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "502"; */
+"502.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "505"; */
+"505.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "506"; */
+"506.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "507"; */
+"507.title" = "Field:";

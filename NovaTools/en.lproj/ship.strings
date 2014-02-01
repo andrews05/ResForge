@@ -1,0 +1,81 @@
+
+/* Class = "NSWindow"; title = "Ship"; ObjectID = "5"; */
+"5.title" = "Ship";
+
+/* Class = "NSFormCell"; title = "Speed:"; ObjectID = "17"; */
+"17.title" = "Speed:";
+
+/* Class = "NSFormCell"; title = "Acceleration:"; ObjectID = "18"; */
+"18.title" = "Acceleration:";
+
+/* Class = "NSFormCell"; title = "Turning:"; ObjectID = "19"; */
+"19.title" = "Turning:";
+
+/* Class = "NSFormCell"; title = "Weapon Space:"; ObjectID = "20"; */
+"20.title" = "Weapon Space:";
+
+/* Class = "NSFormCell"; title = "Cargo Space:"; ObjectID = "21"; */
+"21.title" = "Cargo Space:";
+
+/* Class = "NSFormCell"; title = "Fuel:"; ObjectID = "22"; */
+"22.title" = "Fuel:";
+
+/* Class = "NSFormCell"; title = "Shields:"; ObjectID = "23"; */
+"23.title" = "Shields:";
+
+/* Class = "NSFormCell"; title = "Armour:"; ObjectID = "24"; */
+"24.title" = "Armour:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "25"; */
+"25.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "26"; */
+"26.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "27"; */
+"27.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Recharge:"; ObjectID = "47"; */
+"47.title" = "Recharge:";
+
+/* Class = "NSFormCell"; title = "Recharge:"; ObjectID = "48"; */
+"48.title" = "Recharge:";
+
+/* Class = "NSFormCell"; title = "Recharge:"; ObjectID = "49"; */
+"49.title" = "Recharge:";
+
+/* Class = "NSFormCell"; title = "Common Name:"; ObjectID = "61"; */
+"61.title" = "Common Name:";
+
+/* Class = "NSFormCell"; title = "Subtitle:"; ObjectID = "62"; */
+"62.title" = "Subtitle:";
+
+/* Class = "NSFormCell"; title = "Comms Name:"; ObjectID = "63"; */
+"63.title" = "Comms Name:";
+
+/* Class = "NSFormCell"; title = "Shipyard Short Name:"; ObjectID = "64"; */
+"64.title" = "Shipyard Short Name:";
+
+/* Class = "NSFormCell"; title = "Shipyard Price:"; ObjectID = "65"; */
+"65.title" = "Shipyard Price:";
+
+/* Class = "NSFormCell"; title = "Shipyard Full Name:"; ObjectID = "66"; */
+"66.title" = "Shipyard Full Name:";
+
+/* Class = "NSTextFieldCell"; title = "Average"; ObjectID = "72"; */
+"72.title" = "Average";
+
+/* Class = "NSTextFieldCell"; title = "Average"; ObjectID = "73"; */
+"73.title" = "Average";
+
+/* Class = "NSTextFieldCell"; title = "Average, 90°/s"; ObjectID = "74"; */
+"74.title" = "Average, 90°/s";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "75"; */
+"75.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "76"; */
+"76.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "77"; */
+"77.title" = "Field:";

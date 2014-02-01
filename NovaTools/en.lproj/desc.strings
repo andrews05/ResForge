@@ -1,0 +1,48 @@
+
+/* Class = "NSWindow"; title = "Description"; ObjectID = "39"; */
+"39.title" = "Description";
+
+/* Class = "NSButtonCell"; title = "Play after showing text"; ObjectID = "95"; */
+"95.title" = "Play after showing text";
+
+/* Class = "NSButtonCell"; title = "Play at double size"; ObjectID = "98"; */
+"98.title" = "Play at double size";
+
+/* Class = "NSButtonCell"; title = "Play before showing text"; ObjectID = "99"; */
+"99.title" = "Play before showing text";
+
+/* Class = "NSButtonCell"; title = "Fade in and out"; ObjectID = "102"; */
+"102.title" = "Fade in and out";
+
+/* Class = "NSTabViewItem"; label = "Graphic"; ObjectID = "105"; */
+"105.label" = "Graphic";
+
+/* Class = "NSTabViewItem"; label = "Movie"; ObjectID = "109"; */
+"109.label" = "Movie";
+
+/* Class = "NSBox"; title = "Movie Options"; ObjectID = "110"; */
+"110.title" = "Movie Options";
+
+/* Class = "NSTextFieldCell"; title = "Graphics & Movies"; ObjectID = "151"; */
+"151.title" = "Graphics & Movies";
+
+/* Class = "NSTextFieldCell"; title = "No Graphic Specified"; ObjectID = "153"; */
+"153.title" = "No Graphic Specified";
+
+/* Class = "NSTextFieldCell"; title = "No Movie Specified"; ObjectID = "154"; */
+"154.title" = "No Movie Specified";
+
+/* Class = "NSTextFieldCell"; title = "Graphic:"; ObjectID = "155"; */
+"155.title" = "Graphic:";
+
+/* Class = "NSTextFieldCell"; title = "Movie:"; ObjectID = "158"; */
+"158.title" = "Movie:";
+
+/* Class = "NSButtonCell"; title = "Choose"; ObjectID = "159"; */
+"159.title" = "Choose";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "160"; */
+"160.title" = "Radio";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "161"; */
+"161.title" = "Radio";

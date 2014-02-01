@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1070" identifier="macosx"/>
+        <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
@@ -599,9 +599,9 @@ Destination:</string>
                                                 <menuItem title="At Intermediate Destination" id="214">
                                                     <connections>
                                                         <binding destination="557" name="enabled" keyPath="selection.cargoPickUp" id="673">
-                                                            <mutableDictionary key="options">
+                                                            <dictionary key="options">
                                                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                            </mutableDictionary>
+                                                            </dictionary>
                                                         </binding>
                                                     </connections>
                                                 </menuItem>
@@ -1018,8 +1018,8 @@ Destination:</string>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </comboBoxCell>
                                     <connections>
-                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveNames" previousBinding="599" id="604"/>
                                         <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="599"/>
+                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveNames" previousBinding="599" id="604"/>
                                     </connections>
                                 </comboBox>
                                 <comboBox verticalHuggingPriority="750" id="404">
@@ -1031,8 +1031,8 @@ Destination:</string>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </comboBoxCell>
                                     <connections>
-                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveSubtitles" previousBinding="600" id="608"/>
                                         <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="600"/>
+                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveSubtitles" previousBinding="600" id="608"/>
                                     </connections>
                                 </comboBox>
                                 <button verticalHuggingPriority="750" id="405">
@@ -1043,8 +1043,8 @@ Destination:</string>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveNames" previousBinding="601" id="606"/>
                                         <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="601"/>
+                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveNames" previousBinding="601" id="606"/>
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" id="406">
@@ -1055,8 +1055,8 @@ Destination:</string>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveSubtitles" previousBinding="602" id="610"/>
                                         <binding destination="557" name="enabled" keyPath="selection.missionShipCount" id="602"/>
+                                        <binding destination="557" name="enabled2" keyPath="selection.missionShipsHaveSubtitles" previousBinding="602" id="610"/>
                                     </connections>
                                 </button>
                                 <button id="407">
@@ -1433,8 +1433,8 @@ Destination:</string>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </comboBoxCell>
                                     <connections>
-                                        <binding destination="557" name="enabled" keyPath="selection.auxShipCount" id="625"/>
                                         <binding destination="557" name="value" keyPath="selection" id="621"/>
+                                        <binding destination="557" name="enabled" keyPath="selection.auxShipCount" id="625"/>
                                     </connections>
                                 </comboBox>
                                 <textField verticalHuggingPriority="750" id="290">

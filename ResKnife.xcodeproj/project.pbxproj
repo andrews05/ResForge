@@ -12,6 +12,14 @@
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; };
 		559DE9B4189D665000D55D3A /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Icons.xcassets */; };
+		55FEF5A5189D758E00888898 /* NovaTools.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5A3189D758E00888898 /* NovaTools.xib */; };
+		55FEF5A8189D759F00888898 /* boom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5A6189D759F00888898 /* boom.xib */; };
+		55FEF5AF189D75C900888898 /* char.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5AD189D75C900888898 /* char.xib */; };
+		55FEF5B4189D75E500888898 /* colr.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5B2189D75E400888898 /* colr.xib */; };
+		55FEF5B7189D75F100888898 /* cron.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5B5189D75F100888898 /* cron.xib */; };
+		55FEF5BA189D762000888898 /* misn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5B8189D762000888898 /* misn.xib */; };
+		55FEF5BD189D762F00888898 /* ship.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BB189D762F00888898 /* ship.xib */; };
+		55FEF5C0189D764300888898 /* desc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BE189D764300888898 /* desc.xib */; };
 		B22100CD15D3F944009FDEE1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		B229EECB15A4B8720032C12C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B229EED315A4B8720032C12C /* InfoPlist.strings */; };
@@ -165,15 +173,7 @@
 		E18BF5C5069FEA1400F076B8 /* NSNumber-Range.h in Headers */ = {isa = PBXBuildFile; fileRef = F59D5DE8032106D201A8010C /* NSNumber-Range.h */; };
 		E18BF5C6069FEA1400F076B8 /* MisnWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E19FB514054E918800A80202 /* MisnWindowController.h */; };
 		E18BF5C7069FEA1400F076B8 /* ShipWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E19FB518054E919200A80202 /* ShipWindowController.h */; };
-		E18BF5C9069FEA1400F076B8 /* NovaTools.nib in Resources */ = {isa = PBXBuildFile; fileRef = F58F6BA9025BDBA701A8010C /* NovaTools.nib */; };
-		E18BF5CA069FEA1400F076B8 /* boom.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC612025BFB7301A8010C /* boom.nib */; };
-		E18BF5CB069FEA1400F076B8 /* char.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC615025BFB7C01A8010C /* char.nib */; };
-		E18BF5CC069FEA1400F076B8 /* colr.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC618025BFB8601A8010C /* colr.nib */; };
-		E18BF5CD069FEA1400F076B8 /* cron.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC61B025BFB8E01A8010C /* cron.nib */; };
-		E18BF5CE069FEA1400F076B8 /* desc.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5EDC61E025BFBB501A8010C /* desc.nib */; };
 		E18BF5CF069FEA1400F076B8 /* Resource Types.strings in Resources */ = {isa = PBXBuildFile; fileRef = F543AFEF027C716E01A8010C /* Resource Types.strings */; };
-		E18BF5D0069FEA1400F076B8 /* misn.nib in Resources */ = {isa = PBXBuildFile; fileRef = E19FB51C054E919F00A80202 /* misn.nib */; };
-		E18BF5D1069FEA1400F076B8 /* ship.nib in Resources */ = {isa = PBXBuildFile; fileRef = E19FB51F054E91AA00A80202 /* ship.nib */; };
 		E18BF5D3069FEA1400F076B8 /* BoomWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B7F025BC3A501A8010C /* BoomWindowController.m */; };
 		E18BF5D4069FEA1400F076B8 /* NovaWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B83025BC73001A8010C /* NovaWindowController.m */; };
 		E18BF5D5069FEA1400F076B8 /* CharWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B87025BC76D01A8010C /* CharWindowController.m */; };
@@ -445,14 +445,6 @@
 		550B9050189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FontWindow.xib; sourceTree = "<group>"; };
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PictWindow.xib; sourceTree = "<group>"; };
 		550B9052189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ICONWindow.xib; sourceTree = "<group>"; };
-		550B9053189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/NovaTools.nib; sourceTree = "<group>"; };
-		550B9054189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/boom.nib; sourceTree = "<group>"; };
-		550B9055189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/char.nib; sourceTree = "<group>"; };
-		550B9056189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/colr.nib; sourceTree = "<group>"; };
-		550B9057189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/cron.nib; sourceTree = "<group>"; };
-		550B9058189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/desc.nib; sourceTree = "<group>"; };
-		550B9059189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/misn.nib; sourceTree = "<group>"; };
-		550B905A189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/ship.nib; sourceTree = "<group>"; };
 		550B905C189A036F005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Application.strings; sourceTree = "<group>"; };
 		550B905F189A0421005AC38D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Application.strings; sourceTree = "<group>"; };
 		550B9060189A0876005AC38D /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Application.strings; sourceTree = "<group>"; };
@@ -467,6 +459,21 @@
 		559DE9BA189D6B2600D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CreateResourceSheet.strings; sourceTree = "<group>"; };
 		559DE9BC189D6B2B00D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AboutPanel.strings; sourceTree = "<group>"; };
 		559DE9BE189D6B3500D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceGridView.strings; sourceTree = "<group>"; };
+		55FEF5A4189D758E00888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NovaTools.xib; sourceTree = "<group>"; };
+		55FEF5A7189D759F00888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/boom.xib; sourceTree = "<group>"; };
+		55FEF5AA189D75AB00888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/boom.strings; sourceTree = "<group>"; };
+		55FEF5AC189D75AE00888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NovaTools.strings; sourceTree = "<group>"; };
+		55FEF5AE189D75C900888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/char.xib; sourceTree = "<group>"; };
+		55FEF5B1189D75D000888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/char.strings; sourceTree = "<group>"; };
+		55FEF5B3189D75E400888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/colr.xib; sourceTree = "<group>"; };
+		55FEF5B6189D75F100888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/cron.xib; sourceTree = "<group>"; };
+		55FEF5B9189D762000888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/misn.xib; sourceTree = "<group>"; };
+		55FEF5BC189D762F00888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ship.xib; sourceTree = "<group>"; };
+		55FEF5BF189D764300888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/desc.xib; sourceTree = "<group>"; };
+		55FEF5C2189D767A00888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/desc.strings; sourceTree = "<group>"; };
+		55FEF5C4189D768100888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/cron.strings; sourceTree = "<group>"; };
+		55FEF5C6189D769A00888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/misn.strings; sourceTree = "<group>"; };
+		55FEF5C8189D769F00888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ship.strings; sourceTree = "<group>"; };
 		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PNGWindowController.h; path = "PNG Editor/PNGWindowController.h"; sourceTree = "<group>"; };
 		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PNGWindowController.m; path = "PNG Editor/PNGWindowController.m"; sourceTree = "<group>"; };
 		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PNGWindowController.xib; path = "PNG Editor/PNGWindowController.xib"; sourceTree = "<group>"; };
@@ -982,14 +989,14 @@
 		F51FB38E0256057F01A80001 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F58F6BA9025BDBA701A8010C /* NovaTools.nib */,
-				F5EDC612025BFB7301A8010C /* boom.nib */,
-				F5EDC615025BFB7C01A8010C /* char.nib */,
-				F5EDC618025BFB8601A8010C /* colr.nib */,
-				F5EDC61B025BFB8E01A8010C /* cron.nib */,
-				F5EDC61E025BFBB501A8010C /* desc.nib */,
-				E19FB51C054E919F00A80202 /* misn.nib */,
-				E19FB51F054E91AA00A80202 /* ship.nib */,
+				55FEF5A3189D758E00888898 /* NovaTools.xib */,
+				55FEF5A6189D759F00888898 /* boom.xib */,
+				55FEF5AD189D75C900888898 /* char.xib */,
+				55FEF5B2189D75E400888898 /* colr.xib */,
+				55FEF5B5189D75F100888898 /* cron.xib */,
+				55FEF5BE189D764300888898 /* desc.xib */,
+				55FEF5B8189D762000888898 /* misn.xib */,
+				55FEF5BB189D762F00888898 /* ship.xib */,
 				F543AFEF027C716E01A8010C /* Resource Types.strings */,
 			);
 			name = Resources;
@@ -1754,15 +1761,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF5C9069FEA1400F076B8 /* NovaTools.nib in Resources */,
-				E18BF5CA069FEA1400F076B8 /* boom.nib in Resources */,
-				E18BF5CB069FEA1400F076B8 /* char.nib in Resources */,
-				E18BF5CC069FEA1400F076B8 /* colr.nib in Resources */,
-				E18BF5CD069FEA1400F076B8 /* cron.nib in Resources */,
-				E18BF5CE069FEA1400F076B8 /* desc.nib in Resources */,
+				55FEF5BA189D762000888898 /* misn.xib in Resources */,
+				55FEF5AF189D75C900888898 /* char.xib in Resources */,
+				55FEF5BD189D762F00888898 /* ship.xib in Resources */,
+				55FEF5A8189D759F00888898 /* boom.xib in Resources */,
+				55FEF5B7189D75F100888898 /* cron.xib in Resources */,
+				55FEF5C0189D764300888898 /* desc.xib in Resources */,
+				55FEF5B4189D75E500888898 /* colr.xib in Resources */,
 				E18BF5CF069FEA1400F076B8 /* Resource Types.strings in Resources */,
-				E18BF5D0069FEA1400F076B8 /* misn.nib in Resources */,
-				E18BF5D1069FEA1400F076B8 /* ship.nib in Resources */,
+				55FEF5A5189D758E00888898 /* NovaTools.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2086,6 +2093,77 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		55FEF5A3189D758E00888898 /* NovaTools.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FEF5A4189D758E00888898 /* Base */,
+				55FEF5AC189D75AE00888898 /* en */,
+			);
+			name = NovaTools.xib;
+			sourceTree = "<group>";
+		};
+		55FEF5A6189D759F00888898 /* boom.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FEF5A7189D759F00888898 /* Base */,
+				55FEF5AA189D75AB00888898 /* en */,
+			);
+			name = boom.xib;
+			sourceTree = "<group>";
+		};
+		55FEF5AD189D75C900888898 /* char.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FEF5AE189D75C900888898 /* Base */,
+				55FEF5B1189D75D000888898 /* en */,
+			);
+			name = char.xib;
+			sourceTree = "<group>";
+		};
+		55FEF5B2189D75E400888898 /* colr.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FEF5B3189D75E400888898 /* Base */,
+			);
+			name = colr.xib;
+			sourceTree = "<group>";
+		};
+		55FEF5B5189D75F100888898 /* cron.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FEF5B6189D75F100888898 /* Base */,
+				55FEF5C4189D768100888898 /* en */,
+			);
+			name = cron.xib;
+			sourceTree = "<group>";
+		};
+		55FEF5B8189D762000888898 /* misn.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FEF5B9189D762000888898 /* Base */,
+				55FEF5C6189D769A00888898 /* en */,
+			);
+			name = misn.xib;
+			sourceTree = "<group>";
+		};
+		55FEF5BB189D762F00888898 /* ship.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FEF5BC189D762F00888898 /* Base */,
+				55FEF5C8189D769F00888898 /* en */,
+			);
+			name = ship.xib;
+			sourceTree = "<group>";
+		};
+		55FEF5BE189D764300888898 /* desc.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FEF5BF189D764300888898 /* Base */,
+				55FEF5C2189D767A00888898 /* en */,
+			);
+			name = desc.xib;
+			sourceTree = "<group>";
+		};
 		B229EED315A4B8720032C12C /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2260,22 +2338,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		E19FB51C054E919F00A80202 /* misn.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B9059189A0361005AC38D /* Base */,
-			);
-			name = misn.nib;
-			sourceTree = "<group>";
-		};
-		E19FB51F054E91AA00A80202 /* ship.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B905A189A0361005AC38D /* Base */,
-			);
-			name = ship.nib;
-			sourceTree = "<group>";
-		};
 		F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2300,14 +2362,6 @@
 			name = "Resource Types.strings";
 			sourceTree = "<group>";
 		};
-		F58F6BA9025BDBA701A8010C /* NovaTools.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B9053189A0361005AC38D /* Base */,
-			);
-			name = NovaTools.nib;
-			sourceTree = "<group>";
-		};
 		F5B588420156D40B01000001 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2327,46 +2381,6 @@
 			name = Localizable.strings;
 			path = Cocoa;
 			sourceTree = SOURCE_ROOT;
-		};
-		F5EDC612025BFB7301A8010C /* boom.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B9054189A0361005AC38D /* Base */,
-			);
-			name = boom.nib;
-			sourceTree = "<group>";
-		};
-		F5EDC615025BFB7C01A8010C /* char.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B9055189A0361005AC38D /* Base */,
-			);
-			name = char.nib;
-			sourceTree = "<group>";
-		};
-		F5EDC618025BFB8601A8010C /* colr.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B9056189A0361005AC38D /* Base */,
-			);
-			name = colr.nib;
-			sourceTree = "<group>";
-		};
-		F5EDC61B025BFB8E01A8010C /* cron.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B9057189A0361005AC38D /* Base */,
-			);
-			name = cron.nib;
-			sourceTree = "<group>";
-		};
-		F5EDC61E025BFBB501A8010C /* desc.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B9058189A0361005AC38D /* Base */,
-			);
-			name = desc.nib;
-			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
