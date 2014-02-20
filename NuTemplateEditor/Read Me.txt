@@ -9,11 +9,11 @@ lists, there is a subclass GroupElement from which you can instead subclass to
 have some of the work done for you.
 
 When opening a resource, the template editor first creates a TemplateStream for the template
-resource and calls readOneObject: on it until it runs out of data, instantiating a hierarchy
+resource and calls readOneObject:on it until it runs out of data, instantiating a hierarchy
 of Element subclasses for based on the template.
 
 After that, it creates a TemplateStream for the resource and loops over the template object
-hierarchy, creating a copy of each item, and then calling readDataFrom:containingArray: on
+hierarchy, creating a copy of each item, and then calling readDataFrom:containingArray:on
 the copy, which in turn reads data from the TemplateStream and stores it in its instance
 variables. For this to work, subclasses of Element *must* implement the NSCopying
 protocol.
@@ -28,10 +28,10 @@ resource and passed to all template fields (the copies with the resource data, n
 pre-parsed template hierarchy), via writeDataTo:, which is where they should write their
 data to the stream. Before that, sizeOnDisk is called on each Element to
 calculate the new size of the resource before the actual process of writing them out.
-This size must include the size of all of their sub-items, and writeDataTo: must call
+This size must include the size of all of their sub-items, and writeDataTo:must call
 these sub items if they are to be written to disk.
 
-SPECIAL CASE: LISTS
+SPECIAL CASE:LISTS
 
 When the editor encounters an LSTB element, the LSTB element is called upon to parse its
 "sub-elements" (the items that make up one list item). The LSTB element reads all elements
