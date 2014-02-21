@@ -100,8 +100,8 @@
 			if(!error)
 			{
 				NSString *fName = [NSString stringWithCharacters:forkName.unicode length:forkName.length];
-				NSNumber *fSize = [NSNumber numberWithLongLong:forkSize];
-				NSNumber *fAlloc = [NSNumber numberWithUnsignedLongLong:forkPhysicalSize];
+				NSNumber *fSize = @(forkSize);
+				NSNumber *fAlloc = @(forkPhysicalSize);
 				[forks addObject:[NSDictionary dictionaryWithObjectsAndKeys:fName, @"forkname", fSize, @"forksize", fAlloc, @"forkallocation", nil]];
 			}
 			else if(error != errFSNoMoreItems)

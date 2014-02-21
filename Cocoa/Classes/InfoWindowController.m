@@ -146,8 +146,8 @@ FSGetCatalogInfo:
 		[[filePropertyForm cellAtIndex:1] setStringValue:[[[NSString alloc] initWithBytes:&type length:sizeof(type) encoding:NSMacOSRomanStringEncoding] autorelease]];
 //		[[filePropertyForm cellAtIndex:2] setObjectValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
 //		[[filePropertyForm cellAtIndex:3] setObjectValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
-		[[filePropertyForm cellAtIndex:2] setStringValue:[[NSNumber numberWithUnsignedLongLong:dataLogicalSize] description]];
-		[[filePropertyForm cellAtIndex:3] setStringValue:[[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize] description]];
+		[[filePropertyForm cellAtIndex:2] setStringValue:[@(dataLogicalSize) description]];
+		[[filePropertyForm cellAtIndex:3] setStringValue:[@(rsrcLogicalSize) description]];
 		
 		// swap box
 		[placeholderView setContentView:documentView];
@@ -198,7 +198,7 @@ FSGetCatalogInfo:
 {
 	short attr = (short)(0x0001 << ([sender selectedRow]+1));
 	short number = ([[selectedResource attributes] shortValue] ^ attr);
-	[selectedResource setAttributes:[NSNumber numberWithShort:number]];
+	[selectedResource setAttributes:@(number)];
 }
 
 - (IBAction)nameDidChange:(id)sender

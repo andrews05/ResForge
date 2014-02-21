@@ -4,8 +4,9 @@
 
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
 {
-	self = [self initWithWindowNibName:@"misn"];
-	if( !self ) return nil;
+	if (self = [self initWithWindowNibName:@"misn"]) {
+		
+	}
 	return self;
 }
 

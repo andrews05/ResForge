@@ -17,7 +17,7 @@
 {
 	BOOL		enableButton = NO;
 	NSString	*type = [typeView stringValue];
-	NSNumber	*resID = [NSNumber numberWithInt:[resIDView intValue]];
+	NSNumber	*resID = @([resIDView intValue]);
 	
 	if([type length] == 4)
 	{
@@ -61,7 +61,7 @@
 		attributes ^= [[attributesMatrix cellAtRow:0 column:1] intValue]? resSysHeap:0;
 		attributes ^= [[attributesMatrix cellAtRow:1 column:1] intValue]? resProtected:0;
 		
-		Resource *resource = [Resource resourceOfType:[typeView stringValue] andID:[NSNumber numberWithShort:(short) [resIDView intValue]] withName:[nameView stringValue] andAttributes:[NSNumber numberWithUnsignedShort:attributes]];
+		Resource *resource = [Resource resourceOfType:[typeView stringValue] andID:@((short) [resIDView intValue]) withName:[nameView stringValue] andAttributes:@(attributes)];
 		[resource setDocumentName:[document displayName]];
 		[[document undoManager] beginUndoGrouping];
 		[[document dataSource] addResource:resource];

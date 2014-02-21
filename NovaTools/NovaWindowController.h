@@ -12,7 +12,7 @@
 {
 	id <ResKnifeResourceProtocol>	resource;
 	NSUndoManager					*undoManager;
-//	NSNotificationCenter			*localCenter;
+	//NSNotificationCenter			*localCenter;
 	NSBundle						*plugBundle;
 	
 	DataSource *descriptionDataSource;
@@ -23,14 +23,21 @@
 	DataSource *soundDataSource;
 	DataSource *spinDataSource;
 }
+@property (retain) id<ResKnifeResourceProtocol> resource;
+@property (retain) NSUndoManager *undoManager;
+@property (retain) DataSource *descriptionDataSource;
+@property (retain) DataSource *governmentDataSource;
+@property (retain) DataSource *pictureDataSource;
+@property (retain) DataSource *planetDataSource;
+@property (retain) DataSource *shipDataSource;
+@property (retain) DataSource *soundDataSource;
+@property (retain) DataSource *spinDataSource;
 
-- (void)setResource:(id <ResKnifeResourceProtocol>)newResource;
-- (void)setUndoManager:(NSUndoManager *)newUndoManager;
 - (IBAction)toggleResID:(id)sender;
 
 - (void)resourceNameDidChange:(NSNotification *)notification;
-- (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
-- (void)invalidValuesSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)invalidValuesSheetDidClose:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 
 @end
 

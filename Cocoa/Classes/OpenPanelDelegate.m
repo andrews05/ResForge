@@ -91,7 +91,7 @@
 - (IBAction)addFork:(id)sender
 {
 	// add placeholder to forks array
-	[forks addObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"UNTITLED_FORK", nil), @"forkname", [NSNumber numberWithInt:0], @"forksize", [NSNumber numberWithInt:0], @"forkallocation", nil]];
+	[forks addObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"UNTITLED_FORK", nil), @"forkname", @(0), @"forksize", @(0), @"forkallocation", nil]];
 	[forkTableView noteNumberOfRowsChanged];
 	[forkTableView reloadData];
 	

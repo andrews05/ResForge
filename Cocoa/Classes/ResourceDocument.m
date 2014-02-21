@@ -295,8 +295,8 @@ extern NSString *RKResourcePboardType;
 			ResType		logicalType = EndianS32_NtoB(resTypeCode);	// swapped type for use as string (types are treated as numbers by the resource manager and swapped on Intel).
 			NSString	*name		= [[NSString alloc] initWithBytes:&nameStr[1] length:nameStr[0] encoding:NSMacOSRomanStringEncoding];
 			NSString	*resType	= [[NSString alloc] initWithBytes:(char *) &logicalType length:4 encoding:NSMacOSRomanStringEncoding];
-			NSNumber	*resID		= [NSNumber numberWithShort:resIDShort];
-			NSNumber	*attributes	= [NSNumber numberWithShort:attrsShort];
+			NSNumber	*resID		= @(resIDShort);
+			NSNumber	*attributes	= @(attrsShort);
 			NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
 			Resource	*resource	= [Resource resourceOfType:resType andID:resID withName:name andAttributes:attributes data:data];
 			[resource setDocumentName:[self displayName]];

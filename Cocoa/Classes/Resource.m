@@ -9,13 +9,13 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 - (id)init
 {
 	self = [super init];
-	[self initWithType:@"NULL" andID:[NSNumber numberWithShort:128]];
+	[self initWithType:@"NULL" andID:@(128)];
 	return self;
 }
 
 - (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue
 {
-	return [self initWithType:typeValue andID:resIDValue withName:@"" andAttributes:[NSNumber numberWithUnsignedShort:0]];
+	return [self initWithType:typeValue andID:resIDValue withName:@"" andAttributes:@(0)];
 }
 
 - (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue
@@ -289,7 +289,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 
 - (NSNumber *)size
 {
-	return [NSNumber numberWithUnsignedLong:[data length]];
+	return @([data length]);
 }
 
 - (NSData *)data

@@ -20,9 +20,9 @@
 	if( charRec->startYear == 0 || charRec->startMonth == 0 || charRec->startDay == 0 )
 	{
 		NSCalendarDate *today = [NSCalendarDate calendarDate];
-		charRec->startDay = [today dayOfMonth];
-		charRec->startMonth = [today monthOfYear];
-		charRec->startYear = [today yearOfCommonEra];
+		charRec->startDay = (short)[today dayOfMonth];
+		charRec->startMonth = (short)[today monthOfYear];
+		charRec->startYear = (short)[today yearOfCommonEra];
 	}
 	
 	// set ship to -1 if unused
@@ -242,7 +242,7 @@
 
 - (IBAction)togglePrincipalChar:(id)sender
 {
-	principalChar = [principalCharButton state];
+	principalChar = [principalCharButton state] ? YES : NO;
 	[resource touch];
 	[self setDocumentEdited:YES];
 }
@@ -567,9 +567,9 @@
 	charRec->startShipType = [ship shortValue];
 	charRec->startCash = [cash longValue];
 	charRec->startKills = [kills shortValue];
-	charRec->startDay = [date dayOfMonth];
-	charRec->startMonth = [date monthOfYear];
-	charRec->startYear = [date yearOfCommonEra];
+	charRec->startDay = (short)[date dayOfMonth];
+	charRec->startMonth = (short)[date monthOfYear];
+	charRec->startYear = (short)[date yearOfCommonEra];
 	bzero( charRec->Prefix, 16 );
 	memmove( charRec->Prefix, [prefix cStringUsingEncoding:NSMacOSRomanStringEncoding], [prefix lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding] <= 15? [prefix lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]+1:16 );
 	bzero( charRec->Suffix, 16 );

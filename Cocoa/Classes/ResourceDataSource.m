@@ -108,7 +108,7 @@ extern NSString *RKResourcePboardType;
 	#pragma unused(outlineView)
 	NSString *identifier = [tableColumn identifier];
 	if([identifier isEqualToString:@"resID"])
-		[item setValue:[NSNumber numberWithInt:[object intValue]] forKey:identifier];
+		[item setValue:@([object intValue]) forKey:identifier];
 	else [item setValue:object forKey:identifier];
 }
 
@@ -188,11 +188,11 @@ extern NSString *RKResourcePboardType;
 	
 	if([array count] <= USHRT_MAX)
 	{
-		while([array containsObject:[NSNumber numberWithShort:theID]])
+		while([array containsObject:@(theID)])
 			theID++;
 	}
 	
-	return [NSNumber numberWithShort: theID];
+	return @(theID);
 }
 
 /*!
@@ -203,7 +203,7 @@ extern NSString *RKResourcePboardType;
 - (NSNumber *)defaultIDForType:(NSString *)type
 {
 	short defaultID = 128;
-	return [NSNumber numberWithShort:defaultID];
+	return @(defaultID);
 }
 
 #pragma mark -

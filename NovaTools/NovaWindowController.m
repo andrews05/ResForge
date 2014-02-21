@@ -8,44 +8,61 @@
 #import "ShipWindowController.h"
 
 @implementation NovaWindowController
+@synthesize resource;
+@synthesize undoManager;
+@synthesize descriptionDataSource;
+@synthesize governmentDataSource;
+@synthesize pictureDataSource;
+@synthesize planetDataSource;
+@synthesize shipDataSource;
+@synthesize soundDataSource;
+@synthesize spinDataSource;
 
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
 {
 	id oldSelf = self;
 	NSData *classData = [[(id <ResKnifeResourceProtocol>)newResource type] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-	NSString *className = [[[[NSString alloc] initWithBytes:[classData bytes] length:[classData length] encoding:NSMacOSRomanStringEncoding] capitalizedString] stringByAppendingString:@"WindowController"];
+	NSString *className = [[[[[NSString alloc] initWithData:classData encoding:NSASCIIStringEncoding] autorelease] capitalizedString] stringByAppendingString:@"WindowController"];
 	if( [className isEqualToString:@"Yea(R)WindowController"] ) className = @"YearWindowController"; // lossy conversion turns ¨ into (R), so i have to special-case Ø‘Š¨
 	self = [[NSClassFromString(className) alloc] initWithResource:newResource];
 	[oldSelf release];
-	if( !self ) return nil;
+	if (!self)
+		return nil;
 	
 	// do global stuff here
 	resource = [(id)newResource retain];
-	undoManager = [[NSUndoManager alloc] init];
-//	localCenter = [[NSNotificationCenter alloc] init];
+	self.undoManager = [[[NSUndoManager alloc] init] autorelease];
+	//localCenter = [[NSNotificationCenter alloc] init];
 	plugBundle = [NSBundle bundleForClass:[self class]];
-//	plugBundle = [NSBundle bundleWithIdentifier:@"au.com.sutherland-studios.resknife.novatools"];
+	//plugBundle = [NSBundle bundleWithIdentifier:@"au.com.sutherland-studios.resknife.novatools"];
 	
 	// load the window from the nib file and set it's title
 	[self window];	// implicitly loads nib
-	if( [newResource name] && ![[newResource name] isEqualToString:@""] )
+	if ([newResource name] && ![[newResource name] isEqualToString:@""])
 		[[self window] setTitle:[NSString stringWithFormat:@"%@: %@", [[self window] title], [newResource name]]];
 	return self;
 }
 
 - (id)initWithResources:(id <ResKnifeResourceProtocol>)newResource, ...
 {
+	[self autorelease];
 	return nil;
 }
 
 - (void)dealloc
 {
-//	[localCenter release];
+	//[localCenter release];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[(id)resource autorelease];
-	[undoManager release];
-	[shipDataSource release];
-	[soundDataSource release];
+	self.resource = nil;
+	self.undoManager = nil;
+	self.descriptionDataSource = nil;
+	self.governmentDataSource = nil;
+	self.pictureDataSource = nil;
+	self.planetDataSource = nil;
+	self.shipDataSource = nil;
+	self.soundDataSource = nil;
+	self.spinDataSource = nil;
+
 	[super dealloc];
 }
 
@@ -80,8 +97,7 @@
 		NSDictionary *errorValues = [self validateValues];
 		NSArray *fields = [errorValues allKeys];	// bug: order of items in array is not guaranteed
 		NSArray *descriptions = [errorValues allValues];
-		switch( [errorValues count] )
-		{
+		switch ([errorValues count]) {
 			case 0:
 				NSBeginAlertSheet( @"Do you want to save the changes you made to this resource?", @"Save", @"Don't Save", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes will be lost if you don't save them." );
 				break;
@@ -107,20 +123,6 @@
 	else return YES;
 }
 
-- (void)setResource:(id <ResKnifeResourceProtocol>)newResource
-{
-	id old = resource;
-	resource = [(id)newResource retain];
-	[old release];
-}
-
-- (void)setUndoManager:(NSUndoManager *)newUndoManager
-{
-	id old = undoManager;
-	undoManager = [newUndoManager retain];
-	[old release];
-}
-
 - (IBAction)toggleResID:(id)sender
 {
 	// toggles between resource IDs and index numbers
@@ -133,15 +135,16 @@
 	NSScanner *scanner = [NSScanner scannerWithString:[[self window] title]];
 	if( ![scanner scanUpToString:@":" intoString:&prefix] )
 		prefix = [[self window] title];
-	if( ![[(id <ResKnifeResourceProtocol>)[notification object] name] isEqualToString:@""] )
+	if (![[(id <ResKnifeResourceProtocol>)[notification object] name] isEqualToString:@""]) {
 		[[self window] setTitle:[NSString stringWithFormat:@"%@: %@", prefix, [(id <ResKnifeResourceProtocol>)[notification object] name]]];
-	else [[self window] setTitle:prefix];
+	} else {
+		[[self window] setTitle:prefix];
+	}
 }
 
-- (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+- (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	switch( returnCode )
-	{
+	switch (returnCode) {
 		case NSAlertDefaultReturn:		// save
 			[self saveResource];
 			[[self window] close];
@@ -156,10 +159,9 @@
 	}
 }
 
-- (void)invalidValuesSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+- (void)invalidValuesSheetDidClose:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	switch( returnCode )
-	{
+	switch (returnCode) {
 		case NSAlertDefaultReturn:		// cancel
 			break;
 		

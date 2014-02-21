@@ -52,9 +52,9 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 			UInt32 length = *pos++;
 			[headerTable addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
 				[[[NSString alloc] initWithBytes:&name length:4 encoding:NSMacOSRomanStringEncoding] autorelease], @"name",
-				[NSNumber numberWithUnsignedLong: checksum], @"checksum",
-				[NSNumber numberWithUnsignedLong: offset], @"offset",
-				[NSNumber numberWithUnsignedLong: length], @"length",
+				@(checksum), @"checksum",
+				@(offset), @"offset",
+				@(length), @"length",
 				[NSData dataWithBytes:start+offset length:length], @"data",
 				nil]];
 		}
@@ -161,9 +161,9 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 		NSData *tableData = [table valueForKey:@"data"];
 		UInt32 length = [tableData length];
 		UInt32 checksum = TableChecksum((UInt32 *)[tableData bytes], length);
-		[table setValue:[NSNumber numberWithUnsignedLong:checksum] forKey:@"checksum"];
-		[table setValue:[NSNumber numberWithUnsignedLong:offset] forKey:@"offset"];
-		[table setValue:[NSNumber numberWithUnsignedLong:length] forKey:@"length"];
+		[table setValue:@(checksum) forKey:@"checksum"];
+		[table setValue:@(offset) forKey:@"offset"];
+		[table setValue:@(length) forKey:@"length"];
 		[data appendBytes:[[table valueForKey:@"name"] cStringUsingEncoding:NSMacOSRomanStringEncoding] length:4];
 		[data appendBytes:&checksum length:4];
 		[data appendBytes:&offset length:4];
@@ -209,9 +209,9 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 {
 	NSMutableDictionary *table = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 						name, @"name",
-						[NSNumber numberWithUnsignedLong: 0], @"checksum",
-						[NSNumber numberWithUnsignedLong: 0], @"offset",
-						[NSNumber numberWithUnsignedLong: 0], @"length",
+						@(0), @"checksum",
+						@(0), @"offset",
+						@(0), @"length",
 						[NSData data], @"data", nil];
 	[headerTable addObject:table];
 	numTables = (UInt16)[headerTable count];
@@ -237,7 +237,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	NSData *data = [table valueForKey:@"data"];
 	if (data)
 	{
-		id tableResource = [NSClassFromString(@"Resource") resourceOfType:[table valueForKey:@"name"] andID:[NSNumber numberWithInt:0] withName:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] andAttributes:[NSNumber numberWithUnsignedShort:0] data:[table valueForKey:@"data"]];
+		id tableResource = [NSClassFromString(@"Resource") resourceOfType:[table valueForKey:@"name"] andID:@(0) withName:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] andAttributes:@(0) data:[table valueForKey:@"data"]];
 		if (!tableResource)
 		{
 			NSLog(@"Couldn't create Resource with data for table '%@'.", [table valueForKey:@"name"]);

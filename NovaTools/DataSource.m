@@ -2,7 +2,12 @@
 #import "ResKnifeResourceProtocol.h"
 #import "NSNumber-Range.h"
 
+@interface DataSource ()
+@property NSMutableDictionary *data1;
+@end
+
 @implementation DataSource
+@synthesize data1 = data;
 
 - (id)init
 {
@@ -27,27 +32,25 @@
 - (void)dealloc
 {
 	[type release];
-	[data release];
+	self.data1 = nil;
 	[parsed release];
 	[super dealloc];
 }
 
 - (NSDictionary *)data
 {
-	return data;
+	return [NSDictionary dictionaryWithDictionary:data];
 }
 
 - (void)setData:(NSMutableDictionary *)newData
 {
-	id old = data;
-	data = [newData retain];
+	self.data1 = newData;
 	[self parseForString:@"" sorted:YES];
-	[old autorelease];
 }
 
 - (void)setString:(NSString *)string forResID:(int)resID
 {
-	[data setObject:string forKey:[NSNumber numberWithInt:resID]];
+	[data setObject:string forKey:@(resID)];
 }
 
 - (void)parseForString:(NSString *)string sorted:(BOOL)sort
@@ -99,15 +102,15 @@
 	NSRange span, range = NSMakeRange(0,0);
 	span = [string rangeOfString:@"{" options:NSBackwardsSearch];
 	if( span.location != NSNotFound )	range.location = span.location +1;
-	else return [NSNumber numberWithInt:-1];
+	else return @(-1);
 	span = [string rangeOfString:@"}" options:NSBackwardsSearch];
 	if( span.location != NSNotFound )	range.length = span.location - range.location;
-	else return [NSNumber numberWithInt:-1];
-	NS_DURING
-		NS_VALUERETURN( [[[NSNumber alloc] initWithInt:[[string substringWithRange:range] intValue]] autorelease], NSNumber* );
-	NS_HANDLER
-		NS_VALUERETURN( [NSNumber numberWithInt:-1], NSNumber* );
-	NS_ENDHANDLER
+	else return @(-1);
+	@try {
+		return [[[NSNumber alloc] initWithInt:[[string substringWithRange:range] intValue]] autorelease];
+	} @catch (NSException *localException) {
+		return @(1);
+	}
 }
 
 + (NSString *)resNameFromStringValue:(NSString *)string
@@ -117,7 +120,8 @@
 		return [string substringToIndex:range.location -1];
 	else if( range.location == 0 )
 		return nil;
-	else return string;
+	else
+		return string;
 }
 
 /* NSComboBox Informal Prototype Implementation */
