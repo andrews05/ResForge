@@ -129,7 +129,6 @@
 		E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588300156D40B01000001 /* ResourceDataSource.m */; };
 		E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588320156D40B01000001 /* ResourceDocument.m */; };
 		E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F577A901021215C801A80001 /* ResourceNameCell.m */; };
-		E18BF57A069FEA1300F076B8 /* SizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588340156D40B01000001 /* SizeFormatter.m */; };
 		E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */; };
 		E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF57E069FEA1300F076B8 /* NSString-FSSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = F59D5DE50320DFF601A8010C /* NSString-FSSpec.m */; };
@@ -646,8 +645,6 @@
 		F5B588300156D40B01000001 /* ResourceDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDataSource.m; sourceTree = "<group>"; };
 		F5B588310156D40B01000001 /* ResourceDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceDocument.h; sourceTree = "<group>"; };
 		F5B588320156D40B01000001 /* ResourceDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDocument.m; sourceTree = "<group>"; };
-		F5B588330156D40B01000001 /* SizeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SizeFormatter.h; sourceTree = "<group>"; };
-		F5B588340156D40B01000001 /* SizeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SizeFormatter.m; sourceTree = "<group>"; };
 		F5B588430156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F5B588450156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F5B5884A0156D40B01000001 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
@@ -1143,8 +1140,6 @@
 				3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */,
 				3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */,
 				3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */,
-				F5B588330156D40B01000001 /* SizeFormatter.h */,
-				F5B588340156D40B01000001 /* SizeFormatter.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1920,7 +1915,6 @@
 				E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */,
 				E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */,
 				E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */,
-				E18BF57A069FEA1300F076B8 /* SizeFormatter.m in Sources */,
 				E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */,
 				E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */,
 				E18BF57E069FEA1300F076B8 /* NSString-FSSpec.m in Sources */,
