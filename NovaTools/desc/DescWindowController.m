@@ -9,6 +9,11 @@
 	return self;
 }
 
+- (IBAction)chooseMovieFile:(id)sender
+{
+	
+}
+
 - (void)windowDidLoad
 {
 	[super windowDidLoad];

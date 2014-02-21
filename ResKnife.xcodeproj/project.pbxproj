@@ -1158,13 +1158,13 @@
 				B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */,
 				B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */,
 				B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */,
+				B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */,
 				F5B588420156D40B01000001 /* InfoPlist.strings */,
 				F5B588440156D40B01000001 /* Localizable.strings */,
 				E196FEE10551AF9600FE7E58 /* Resource Type Mappings.strings */,
 				F5730B930159528A01000001 /* defaults.plist */,
 				F5041736036BD60801A8010A /* ResKnife.scriptSuite */,
 				F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */,
-				B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */,
 				559DE9B3189D665000D55D3A /* Icons.xcassets */,
 			);
 			path = Resources;

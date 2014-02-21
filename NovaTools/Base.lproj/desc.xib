@@ -238,11 +238,11 @@
                     <tabViewItems>
                         <tabViewItem label="Graphic" identifier="1" id="105">
                             <view key="view" id="106">
-                                <rect key="frame" x="10" y="29" width="236" height="153"/>
+                                <rect key="frame" x="10" y="25" width="236" height="157"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="103">
-                                        <rect key="frame" x="0.0" y="0.0" width="236" height="153"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="236" height="157"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="152"/>
                                         <connections>
@@ -254,7 +254,7 @@
                                         </connections>
                                     </imageView>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="116">
-                                        <rect key="frame" x="59" y="70" width="119" height="14"/>
+                                        <rect key="frame" x="59" y="72" width="119" height="14"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="No Graphic Specified" id="153">
                                             <font key="font" metaFont="smallSystem"/>

@@ -3,5 +3,9 @@
 
 @interface DescWindowController : NovaWindowController
 {
+	IBOutlet NSView *graphicsView;
 }
+
+- (IBAction)chooseMovieFile:(id)sender;
+
 @end

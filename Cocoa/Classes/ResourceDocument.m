@@ -17,14 +17,12 @@
 #import "RKEditorRegistry.h"
 
 
-NSString *DocumentInfoWillChangeNotification		= @"DocumentInfoWillChangeNotification";
-NSString *DocumentInfoDidChangeNotification			= @"DocumentInfoDidChangeNotification";
+NSString *DocumentInfoWillChangeNotification = @"DocumentInfoWillChangeNotification";
+NSString *DocumentInfoDidChangeNotification = @"DocumentInfoDidChangeNotification";
 extern NSString *RKResourcePboardType;
 
 @interface ResourceDocument ()
-
-@property (retain)	IBOutlet NSView		*viewToolbarView;
-
+@property (retain) IBOutlet NSView *viewToolbarView;
 @end
 
 @implementation ResourceDocument
@@ -45,7 +43,8 @@ extern NSString *RKResourcePboardType;
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if(fork) DisposePtr((Ptr) fork);
+	if (fork)
+		DisposePtr((Ptr) fork);
 	[resources release];
 	[toolbarItems release];
 	[type release];
@@ -877,13 +876,20 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	int selectedRows = [outlineView numberOfSelectedRows];
 	NSString *identifier = [item itemIdentifier];
 	
-	if([identifier isEqualToString:RKCreateItemIdentifier])				valid = YES;
-	else if([identifier isEqualToString:RKDeleteItemIdentifier])		valid = selectedRows > 0;
-	else if([identifier isEqualToString:RKEditItemIdentifier])			valid = selectedRows > 0;
-	else if([identifier isEqualToString:RKEditHexItemIdentifier])		valid = selectedRows > 0;
-	else if([identifier isEqualToString:RKExportItemIdentifier])		valid = selectedRows > 0;
-	else if([identifier isEqualToString:RKSaveItemIdentifier])			valid = [self isDocumentEdited];
-	else if([identifier isEqualToString:NSToolbarPrintItemIdentifier])	valid = YES;
+	if([identifier isEqualToString:RKCreateItemIdentifier])
+		valid = YES;
+	else if([identifier isEqualToString:RKDeleteItemIdentifier])
+		valid = selectedRows > 0;
+	else if([identifier isEqualToString:RKEditItemIdentifier])
+		valid = selectedRows > 0;
+	else if([identifier isEqualToString:RKEditHexItemIdentifier])
+		valid = selectedRows > 0;
+	else if([identifier isEqualToString:RKExportItemIdentifier])
+		valid = selectedRows > 0;
+	else if([identifier isEqualToString:RKSaveItemIdentifier])
+		valid = [self isDocumentEdited];
+	else if([identifier isEqualToString:NSToolbarPrintItemIdentifier])
+		valid = YES;
 	
 	return valid;
 }
@@ -975,8 +981,9 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 		// update: doug says window controllers automatically release themselves when their window is closed. All default plugs have a window controller as their principal class, but 3rd party ones might not
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-		id plug = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
-		if(plug) return plug;
+		id<ResKnifePluginProtocol> plug = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
+		if (plug)
+			return [plug autorelease];
 	}
 	
 	// if no editor exists, or the editor is broken, open using template
@@ -1010,8 +1017,9 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	if(tmpl && editorClass)
 	{
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-		id plug = [(id <ResKnifeTemplatePluginProtocol>)[editorClass alloc] initWithResources:resource, tmpl, nil];
-		if(plug) return plug;
+		id<ResKnifeTemplatePluginProtocol> plug = [(id <ResKnifeTemplatePluginProtocol>)[editorClass alloc] initWithResources:resource, tmpl, nil];
+		if (plug)
+			return [plug autorelease];
 	}
 	
 	// if no template exists, or template editor is broken, open as hex
@@ -1035,7 +1043,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	// update: doug says window controllers automatically release themselves when their window is closed.
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 	id <ResKnifePluginProtocol> plugController = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
-	return plugController;
+	return [plugController autorelease];
 }
 
 

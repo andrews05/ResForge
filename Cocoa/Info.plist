@@ -30,6 +30,8 @@
 			<array>
 				<string>com.apple.resource-map</string>
 			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>ResourceDocument</string>
 		</dict>
@@ -50,12 +52,14 @@
 			<array>
 				<string>public.data</string>
 			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>ResourceDocument</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>ResKnife</string>
+	<string>${EXECUTABLE_FILE}</string>
 	<key>CFBundleGetInfoString</key>
 	<string>A resource editor for Mac OS X.</string>
 	<key>CFBundleIdentifier</key>
