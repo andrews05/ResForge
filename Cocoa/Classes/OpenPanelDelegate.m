@@ -55,7 +55,7 @@
 			NSString *forkName = nil;
 			HFSUniStr255 *resourceForkName = (HFSUniStr255 *) NewPtrClear(sizeof(HFSUniStr255));
 			OSErr error = FSGetResourceForkName(resourceForkName);
-			forkName = [(NSDictionary *)[forks objectAtIndex:row] objectForKey:[tableColumn identifier]];
+			forkName = ((NSDictionary *)forks[row])[[tableColumn identifier]];
 			
 			// return custom names for data and resource forks
 			if([forkName isEqualToString:@""])
@@ -68,7 +68,7 @@
 		}
 		
 		// return default value otherwise
-		return [(NSDictionary *)[forks objectAtIndex:row] objectForKey:[tableColumn identifier]];
+		return ((NSDictionary *)forks[row])[[tableColumn identifier]];
 	}
 	else return nil;
 }
@@ -85,7 +85,7 @@
 - (IBAction)addFork:(id)sender
 {
 	// add placeholder to forks array
-	[forks addObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"UNTITLED_FORK", nil), @"forkname", @(0), @"forksize", @(0), @"forkallocation", nil]];
+	[forks addObject:@{@"forkname": NSLocalizedString(@"UNTITLED_FORK", nil), @"forksize": @(0), @"forkallocation": @(0)}];
 	[forkTableView noteNumberOfRowsChanged];
 	[forkTableView reloadData];
 	

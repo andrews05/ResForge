@@ -18,7 +18,7 @@
 - (id)init
 {
 	self = [super init];
-	[NSApp registerServicesMenuSendTypes:[NSArray arrayWithObject:NSStringPboardType] returnTypes:[NSArray arrayWithObject:NSStringPboardType]];
+	[NSApp registerServicesMenuSendTypes:@[NSStringPboardType] returnTypes:@[NSStringPboardType]];
 	return self;
 }
 
@@ -95,9 +95,7 @@
 			if(!error)
 			{
 				NSString *fName = [NSString stringWithCharacters:forkName.unicode length:forkName.length];
-				NSNumber *fSize = @(forkSize);
-				NSNumber *fAlloc = @(forkPhysicalSize);
-				[forks addObject:[NSDictionary dictionaryWithObjectsAndKeys:fName, @"forkname", fSize, @"forksize", fAlloc, @"forkallocation", nil]];
+				[forks addObject:@{@"forkname": fName, @"forksize": @(forkSize), @"forkallocation": @(forkPhysicalSize)}];
 			}
 			else if(error != errFSNoMoreItems)
 			{
@@ -225,7 +223,7 @@
 	if(resourceType)
 	{
 		// check if we have image in cache already
-		icon = [[self _icons] objectForKey:resourceType];		// valueForKey: raises when the resourceType begins with '@' (e.g. the @GN4 owner resource from Gene!)
+		icon = [self _icons][resourceType];		// valueForKey: raises when the resourceType begins with '@' (e.g. the @GN4 owner resource from Gene!)
 		
 		if(!icon)
 		{
@@ -279,7 +277,7 @@
 			
 			// save the newly retrieved icon in the cache
 			if(icon)
-				[[self _icons] setObject:icon forKey:resourceType];
+				[self _icons][resourceType] = icon;
 		}
 	}
 	else

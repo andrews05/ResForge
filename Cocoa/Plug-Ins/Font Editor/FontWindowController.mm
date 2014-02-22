@@ -154,7 +154,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	// add table index
 	for(int i = 0; i < numTables; i++)
 	{
-		NSMutableDictionary *table = [headerTable objectAtIndex:i];
+		NSMutableDictionary *table = headerTable[i];
 		NSData *tableData = [table valueForKey:@"data"];
 		UInt32 length = [tableData length];
 		UInt32 checksum = TableChecksum((UInt32 *)[tableData bytes], length);
@@ -175,7 +175,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	for(int i = 0; i < numTables; i++)
 	{
 		// note that this doesn't output in the order thet they were read, nor align on long boundries
-		[data appendData:[[headerTable objectAtIndex:i] valueForKey:@"data"]];
+		[data appendData:[headerTable[i] valueForKey:@"data"]];
 		if([data length] % 4)	// pads the last table too... oh well
 			[data appendBytes:&align length:4-([data length]%4)];
 	}
@@ -226,7 +226,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 		return;
 	}
 	
-	[self openTable:[headerTable objectAtIndex:[sender clickedRow]] inEditor:YES];
+	[self openTable:headerTable[[sender clickedRow]] inEditor:YES];
 }
 
 - (void)openTable:(NSDictionary *)table inEditor:(BOOL)editor

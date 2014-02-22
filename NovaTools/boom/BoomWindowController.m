@@ -22,7 +22,7 @@
 	silent = (boomRec->SoundIndex == -1);
 	image = [[NSNumber alloc] initWithShort:boomRec->GraphicIndex + kMinBoomSpinID];
 	sound = [[NSNumber alloc] initWithShort:(silent? kMinBoomSoundID : boomRec->SoundIndex + kMinBoomSoundID)];
-	frameRate = [[NSNumber alloc] initWithShort:boomRec->FrameAdvance];
+	frameRate = @(boomRec->FrameAdvance);
 	
 	return self;
 }
@@ -99,7 +99,7 @@
 	else if( sender == frameRateField )
 	{
 		id old = frameRate;
-		frameRate = [[NSNumber alloc] initWithInt:[sender intValue]];
+		frameRate = @([sender intValue]);
 		if( ![frameRate isEqualToNumber:old] ) [resource touch];
 	}
 	
@@ -142,11 +142,11 @@
 	
 	// verify values are valid
 	if( boomRec->GraphicIndex < 0 || boomRec->GraphicIndex > 63 )
-		[errorValues setObject:@"must match a spin resource with ID between 400 and 463." forKey:@"Graphics"];
+		errorValues[@"Graphics"] = @"must match a spin resource with ID between 400 and 463.";
 	if( boomRec->SoundIndex < -1 || boomRec->SoundIndex > 63 )
-		[errorValues setObject:@"must match a sound resource with ID between 300 and 363." forKey:@"Sound"];
+		errorValues[@"Sound"] = @"must match a sound resource with ID between 300 and 363.";
 	if( boomRec->FrameAdvance < 1 || boomRec->FrameAdvance > 1000 )
-		[errorValues setObject:@"cannot be below 0% or above 1000%." forKey:@"Frame Advance"];
+		errorValues[@"Frame Advance"] = @"cannot be below 0% or above 1000%.";
 	
 	// all values fell within acceptable range
 	return errorValues;

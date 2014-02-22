@@ -247,9 +247,9 @@
 - (id)outlineView:(NSOutlineView*)outlineView child:(int)index ofItem:(id)item
 {
 	if((item == nil) && (outlineView == displayList))
-		return [templateStructure objectAtIndex:index];
+		return templateStructure[index];
 	else if((item == nil) && (outlineView == dataList))
-		return [resourceStructure objectAtIndex:index];
+		return resourceStructure[index];
 	else return [item subElementAtIndex:index];
 }
 
@@ -397,7 +397,7 @@ static NSString *RKTEDisplayTMPLIdentifier	= @"com.nickshanks.resknife.templatee
 	[item setImage:[NSImage imageNamed:@"DisplayTMPL"]];
 	[item setTarget:tmplDrawer];
 	[item setAction:@selector(toggle:)];
-	[toolbarItems setObject:item forKey:RKTEDisplayTMPLIdentifier];
+	toolbarItems[RKTEDisplayTMPLIdentifier] = item;
 	
 	NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:RKTEToolbarIdentifier];
 	
@@ -415,17 +415,17 @@ static NSString *RKTEDisplayTMPLIdentifier	= @"com.nickshanks.resknife.templatee
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
-	return [toolbarItems objectForKey:itemIdentifier];
+	return toolbarItems[itemIdentifier];
 }
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObjects:RKTEDisplayTMPLIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarPrintItemIdentifier, nil];
+    return @[RKTEDisplayTMPLIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarPrintItemIdentifier];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObjects:RKTEDisplayTMPLIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
+    return @[RKTEDisplayTMPLIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier];
 }
 
 @end

@@ -124,7 +124,7 @@
 	}
 	
 	// create element class
-	Class class = [[self fieldRegistry] objectForKey:type];
+	Class class = [self fieldRegistry][type];
 	if(class)
 	{
 		Element *element = (Element *) [class elementForType:type withLabel:label];
@@ -189,102 +189,102 @@
 		registry = [[NSMutableDictionary alloc] init];
 		
 	// integers
-		[registry setObject:[ElementDBYT class] forKey:@"DBYT"];	// signed ints
-		[registry setObject:[ElementDWRD class] forKey:@"DWRD"];
-		[registry setObject:[ElementDLNG class] forKey:@"DLNG"];
-		[registry setObject:[ElementDLLG class] forKey:@"DLLG"];
-		[registry setObject:[ElementUBYT class] forKey:@"UBYT"];	// unsigned ints
-		[registry setObject:[ElementUWRD class] forKey:@"UWRD"];
-		[registry setObject:[ElementULNG class] forKey:@"ULNG"];
-		[registry setObject:[ElementULLG class] forKey:@"ULLG"];
-		[registry setObject:[ElementFBYT class] forKey:@"FBYT"];	// filler ints
-		[registry setObject:[ElementFBYT class] forKey:@"FWRD"];
-		[registry setObject:[ElementFBYT class] forKey:@"FLNG"];
-		[registry setObject:[ElementFBYT class] forKey:@"FLLG"];
+		registry[@"DBYT"] = [ElementDBYT class];	// signed ints
+		registry[@"DWRD"] = [ElementDWRD class];
+		registry[@"DLNG"] = [ElementDLNG class];
+		registry[@"DLLG"] = [ElementDLLG class];
+		registry[@"UBYT"] = [ElementUBYT class];	// unsigned ints
+		registry[@"UWRD"] = [ElementUWRD class];
+		registry[@"ULNG"] = [ElementULNG class];
+		registry[@"ULLG"] = [ElementULLG class];
+		registry[@"FBYT"] = [ElementFBYT class];	// filler ints
+		registry[@"FWRD"] = [ElementFBYT class];
+		registry[@"FLNG"] = [ElementFBYT class];
+		registry[@"FLLG"] = [ElementFBYT class];
 		
 	// fractions
-		[registry setObject:[ElementFIXD class] forKey:@"FIXD"];	// 16.16 fixed fraction
-		[registry setObject:[ElementFRAC class] forKey:@"FRAC"];	// 2.30 fixed fraction
+		registry[@"FIXD"] = [ElementFIXD class];	// 16.16 fixed fraction
+		registry[@"FRAC"] = [ElementFRAC class];	// 2.30 fixed fraction
 		
 	// strings
-		[registry setObject:[ElementPSTR class] forKey:@"PSTR"];
-		[registry setObject:[ElementPSTR class] forKey:@"BSTR"];
-		[registry setObject:[ElementPSTR class] forKey:@"WSTR"];
-		[registry setObject:[ElementPSTR class] forKey:@"LSTR"];
-		[registry setObject:[ElementPSTR class] forKey:@"OSTR"];
-		[registry setObject:[ElementPSTR class] forKey:@"ESTR"];
-		[registry setObject:[ElementPSTR class] forKey:@"CSTR"];
-		[registry setObject:[ElementPSTR class] forKey:@"OCST"];
-		[registry setObject:[ElementPSTR class] forKey:@"ECST"];
-		[registry setObject:[ElementPSTR class] forKey:@"CHAR"];
-		[registry setObject:[ElementPSTR class] forKey:@"TNAM"];
+		registry[@"PSTR"] = [ElementPSTR class];
+		registry[@"BSTR"] = [ElementPSTR class];
+		registry[@"WSTR"] = [ElementPSTR class];
+		registry[@"LSTR"] = [ElementPSTR class];
+		registry[@"OSTR"] = [ElementPSTR class];
+		registry[@"ESTR"] = [ElementPSTR class];
+		registry[@"CSTR"] = [ElementPSTR class];
+		registry[@"OCST"] = [ElementPSTR class];
+		registry[@"ECST"] = [ElementPSTR class];
+		registry[@"CHAR"] = [ElementPSTR class];
+		registry[@"TNAM"] = [ElementPSTR class];
 		
 	// hex dumps
-		[registry setObject:[ElementHEXD class] forKey:@"HEXD"];
+		registry[@"HEXD"] = [ElementHEXD class];
 		
 	// list counters
-		[registry setObject:[ElementOCNT class] forKey:@"OCNT"];
-		[registry setObject:[ElementOCNT class] forKey:@"ZCNT"];
-		[registry setObject:[ElementOCNT class] forKey:@"BCNT"];
-		[registry setObject:[ElementOCNT class] forKey:@"BZCT"];
-		[registry setObject:[ElementOCNT class] forKey:@"WCNT"];
-		[registry setObject:[ElementOCNT class] forKey:@"WZCT"];
-		[registry setObject:[ElementOCNT class] forKey:@"LCNT"];
-		[registry setObject:[ElementOCNT class] forKey:@"LZCT"];
+		registry[@"OCNT"] = [ElementOCNT class];
+		registry[@"ZCNT"] = [ElementOCNT class];
+		registry[@"BCNT"] = [ElementOCNT class];
+		registry[@"BZCT"] = [ElementOCNT class];
+		registry[@"WCNT"] = [ElementOCNT class];
+		registry[@"WZCT"] = [ElementOCNT class];
+		registry[@"LCNT"] = [ElementOCNT class];
+		registry[@"LZCT"] = [ElementOCNT class];
 	// list begin/end
-		[registry setObject:[ElementLSTC class] forKey:@"LSTC"];
-		[registry setObject:[ElementLSTB class] forKey:@"LSTB"];
-		[registry setObject:[ElementLSTB class] forKey:@"LSTZ"];
-		[registry setObject:[ElementLSTE class] forKey:@"LSTE"];
+		registry[@"LSTC"] = [ElementLSTC class];
+		registry[@"LSTB"] = [ElementLSTB class];
+		registry[@"LSTZ"] = [ElementLSTB class];
+		registry[@"LSTE"] = [ElementLSTE class];
 	// key begin/end
-		[registry setObject:[ElementKEYB class] forKey:@"KEYB"];
-		[registry setObject:[ElementKEYE class] forKey:@"KEYE"];
+		registry[@"KEYB"] = [ElementKEYB class];
+		registry[@"KEYE"] = [ElementKEYE class];
 		
 	// dates
-		[registry setObject:[ElementDATE class] forKey:@"DATE"];	// 4-byte date (seconds since 1 Jan 1904)
-		[registry setObject:[ElementDATE class] forKey:@"MDAT"];
+		registry[@"DATE"] = [ElementDATE class];	// 4-byte date (seconds since 1 Jan 1904)
+		registry[@"MDAT"] = [ElementDATE class];
 		
 	// and some faked ones just to increase compatibility (these are marked 'x' in the docs)
-		[registry setObject:[ElementUBYT class] forKey:@"HBYT"];	// hex byte/word/long
-		[registry setObject:[ElementUWRD class] forKey:@"HWRD"];
-		[registry setObject:[ElementULNG class] forKey:@"HLNG"];
-		[registry setObject:[ElementULLG class] forKey:@"HLLG"];
-		[registry setObject:[ElementKBYT class] forKey:@"KBYT"];	// signed keys
-		[registry setObject:[ElementKWRD class] forKey:@"KWRD"];
-		[registry setObject:[ElementKLNG class] forKey:@"KLNG"];
-		[registry setObject:[ElementDLLG class] forKey:@"KLLG"];
-		[registry setObject:[ElementUBYT class] forKey:@"KUBT"];	// unsigned keys
-		[registry setObject:[ElementUWRD class] forKey:@"KUWD"];
-		[registry setObject:[ElementULNG class] forKey:@"KULG"];
-		[registry setObject:[ElementULLG class] forKey:@"KULL"];
-		[registry setObject:[ElementUBYT class] forKey:@"KHBT"];	// hex keys
-		[registry setObject:[ElementUWRD class] forKey:@"KHWD"];
-		[registry setObject:[ElementULNG class] forKey:@"KHLG"];
-		[registry setObject:[ElementULLG class] forKey:@"KHLL"];
-		[registry setObject:[ElementPSTR class] forKey:@"KCHR"];	// keyed MacRoman values
-		[registry setObject:[ElementPSTR class] forKey:@"KTYP"];
-		[registry setObject:[ElementFBYT class] forKey:@"KRID"];	// key on ID of the resource
-		[registry setObject:[ElementUWRD class] forKey:@"BOOL"];	// true = 256; false = 0
-		[registry setObject:[ElementUBYT class] forKey:@"BFLG"];	// binary flag the size of a byte/word/long
-		[registry setObject:[ElementUWRD class] forKey:@"WFLG"];
-		[registry setObject:[ElementULNG class] forKey:@"LFLG"];
-		[registry setObject:[ElementDWRD class] forKey:@"RSID"];	// resouce id (signed word)
-		[registry setObject:[ElementULNG class] forKey:@"REAL"];	// single precision float
-		[registry setObject:[ElementULLG class] forKey:@"DOUB"];	// double precision float
-		[registry setObject:[ElementUWRD class] forKey:@"SFRC"];	// 0.16 fixed fraction
-		[registry setObject:[ElementUWRD class] forKey:@"FXYZ"];	// 1.15 fixed fraction
-		[registry setObject:[ElementUWRD class] forKey:@"FWID"];	// 4.12 fixed fraction
-		[registry setObject:[ElementFBYT class] forKey:@"CASE"];
-		[registry setObject:[ElementFBYT class] forKey:@"TITL"];	// resource title (e.g. utxt would have "Unicode Text"; must be first element of template, and not anywhere else)
-		[registry setObject:[ElementFBYT class] forKey:@"CMNT"];
-		[registry setObject:[ElementFBYT class] forKey:@"DVDR"];
-		[registry setObject:[ElementULLG class] forKey:@"LLDT"];	// 8-byte date (LongDateTime; seconds since 1 Jan 1904)
-		[registry setObject:[ElementDBYT class] forKey:@"STYL"];	// QuickDraw font style
-		[registry setObject:[ElementULNG class] forKey:@"PNT "];	// QuickDraw point
-		[registry setObject:[ElementULLG class] forKey:@"RECT"];	// QuickDraw rect
-		[registry setObject:[ElementDWRD class] forKey:@"SCPC"];	// MacOS script code (ScriptCode)
-		[registry setObject:[ElementDWRD class] forKey:@"LNGC"];	// MacOS language code (LangCode)
-		[registry setObject:[ElementDWRD class] forKey:@"RGNC"];	// MacOS region code (RegionCode)
+		registry[@"HBYT"] = [ElementUBYT class];	// hex byte/word/long
+		registry[@"HWRD"] = [ElementUWRD class];
+		registry[@"HLNG"] = [ElementULNG class];
+		registry[@"HLLG"] = [ElementULLG class];
+		registry[@"KBYT"] = [ElementKBYT class];	// signed keys
+		registry[@"KWRD"] = [ElementKWRD class];
+		registry[@"KLNG"] = [ElementKLNG class];
+		registry[@"KLLG"] = [ElementDLLG class];
+		registry[@"KUBT"] = [ElementUBYT class];	// unsigned keys
+		registry[@"KUWD"] = [ElementUWRD class];
+		registry[@"KULG"] = [ElementULNG class];
+		registry[@"KULL"] = [ElementULLG class];
+		registry[@"KHBT"] = [ElementUBYT class];	// hex keys
+		registry[@"KHWD"] = [ElementUWRD class];
+		registry[@"KHLG"] = [ElementULNG class];
+		registry[@"KHLL"] = [ElementULLG class];
+		registry[@"KCHR"] = [ElementPSTR class];	// keyed MacRoman values
+		registry[@"KTYP"] = [ElementPSTR class];
+		registry[@"KRID"] = [ElementFBYT class];	// key on ID of the resource
+		registry[@"BOOL"] = [ElementUWRD class];	// true = 256; false = 0
+		registry[@"BFLG"] = [ElementUBYT class];	// binary flag the size of a byte/word/long
+		registry[@"WFLG"] = [ElementUWRD class];
+		registry[@"LFLG"] = [ElementULNG class];
+		registry[@"RSID"] = [ElementDWRD class];	// resouce id (signed word)
+		registry[@"REAL"] = [ElementULNG class];	// single precision float
+		registry[@"DOUB"] = [ElementULLG class];	// double precision float
+		registry[@"SFRC"] = [ElementUWRD class];	// 0.16 fixed fraction
+		registry[@"FXYZ"] = [ElementUWRD class];	// 1.15 fixed fraction
+		registry[@"FWID"] = [ElementUWRD class];	// 4.12 fixed fraction
+		registry[@"CASE"] = [ElementFBYT class];
+		registry[@"TITL"] = [ElementFBYT class];	// resource title (e.g. utxt would have "Unicode Text"; must be first element of template, and not anywhere else)
+		registry[@"CMNT"] = [ElementFBYT class];
+		registry[@"DVDR"] = [ElementFBYT class];
+		registry[@"LLDT"] = [ElementULLG class];	// 8-byte date (LongDateTime; seconds since 1 Jan 1904)
+		registry[@"STYL"] = [ElementDBYT class];	// QuickDraw font style
+		registry[@"PNT "] = [ElementULNG class];	// QuickDraw point
+		registry[@"RECT"] = [ElementULLG class];	// QuickDraw rect
+		registry[@"SCPC"] = [ElementDWRD class];	// MacOS script code (ScriptCode)
+		registry[@"LNGC"] = [ElementDWRD class];	// MacOS language code (LangCode)
+		registry[@"RGNC"] = [ElementDWRD class];	// MacOS region code (RegionCode)
 		
 	// unhandled types at present, see file:///Users/nicholas/Sites/resknife.sf.net/resorcerer_comparison.html
 		// BBIT, BBnn, FBIT, FBnn, WBIT, WBnn

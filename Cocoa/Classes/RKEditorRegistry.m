@@ -107,7 +107,7 @@
 	NSString		*userPath = [NSHomeDirectory() stringByAppendingPathComponent:appSupport];
 	NSString		*sysPath = [@"/" stringByAppendingPathComponent:appSupport];
 //	NSArray			*paths = NSSearchPathForDirectoriesInDomains(NSAllLibrariesDirectory, NSAllDomainsMask, YES);
-	NSEnumerator	*pathEnumerator = [[NSArray arrayWithObjects:appPath, userPath, sysPath, nil] objectEnumerator];
+	NSEnumerator	*pathEnumerator = [@[appPath, userPath, sysPath] objectEnumerator];
 	NSString		*path;
 	
 	// release any existing registry to clear old values
@@ -137,7 +137,7 @@
 					// check principal class implements ResKnifePluginProtocol
 					if([pluginClass conformsToProtocol:@protocol(ResKnifePluginProtocol)])
 					{
-						NSArray *supportedTypes = [[plugin infoDictionary] objectForKey:@"RKSupportedTypes"];
+						NSArray *supportedTypes = [plugin infoDictionary][@"RKSupportedTypes"];
 						if(supportedTypes)
 						{
 							NSDictionary *typeEntry;
@@ -147,12 +147,12 @@
 							while(typeEntry = [typesEnumerator nextObject])
 							{
 								// get values for type entry
-								NSString *name = [typeEntry objectForKey:@"RKTypeName"];
+								NSString *name = typeEntry[@"RKTypeName"];
 //								NSString *role = [typeEntry objectForKey:@"RKTypeRole"];
 //								BOOL isDefault = [(NSString *)[typeEntry objectForKey:@"IsResKnifeDefaultForType"] boolValue];
 								
 								// register them
-								[typeRegistry setObject:pluginClass forKey:name];		// bug: very primative, doesn't use extra data
+								typeRegistry[name] = pluginClass;		// bug: very primative, doesn't use extra data
 //								NSLog(@"Plug-in class %@ registered as %@%@ for type %@.", NSStringFromClass(pluginClass), isDefault? @"default ":@"", role, name);
 							}
 						}
@@ -161,13 +161,13 @@
 							// try the old way of looking up types
 							NSString		*resType;
 							NSEnumerator	*enny;
-							supportedTypes = [[plugin infoDictionary] objectForKey:@"RKEditedTypes"];
+							supportedTypes = [plugin infoDictionary][@"RKEditedTypes"];
 							if(supportedTypes == nil)
-								supportedTypes = [NSArray arrayWithObject: [[plugin infoDictionary] objectForKey:@"RKEditedType"]];
+								supportedTypes = @[[plugin infoDictionary][@"RKEditedType"]];
 							
 							for(enny = [supportedTypes objectEnumerator]; resType = [enny nextObject];)
 							{
-								[typeRegistry setObject:pluginClass forKey:resType];
+								typeRegistry[resType] = pluginClass;
 //								NSLog(@"Registered for type %@.",resType);
 							}
 						}
@@ -199,7 +199,7 @@
 
 - (Class)editorForType:(NSString *)typeStr
 {
-	Class theClass = [typeRegistry objectForKey: typeStr];
+	Class theClass = typeRegistry[typeStr];
 	if(!theClass) return Nil;
 	else return theClass;
 }

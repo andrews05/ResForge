@@ -34,7 +34,7 @@
 	if([[self label] isEqualToString: [[stream key] stringValue]])
 	{
 		for(unsigned i = 0; i < [subElements count]; i++)
-			[[subElements objectAtIndex:i] readDataFrom:stream];
+			[subElements[i] readDataFrom:stream];
 	}
 }
 
@@ -69,7 +69,7 @@
 
 - (Element *)subElementAtIndex:(NSInteger)n
 {
-	return [subElements objectAtIndex:n];
+	return subElements[n];
 }
 
 - (NSString *)stringValue { return @""; }

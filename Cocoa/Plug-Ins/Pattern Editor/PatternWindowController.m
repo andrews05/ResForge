@@ -104,11 +104,11 @@
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-	return [images objectAtIndex:row];
+	return images[row];
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-	NSImage *image = [images objectAtIndex:[tableView selectedRow]];
+	NSImage *image = images[[tableView selectedRow]];
 	[imageView setImage:image];
 }
 

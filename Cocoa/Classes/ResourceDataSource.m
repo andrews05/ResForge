@@ -43,7 +43,7 @@ extern NSString *RKResourcePboardType;
 
 - (void)addResource:(Resource *)resource
 {
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self, @"DataSource", resource, @"Resource", nil];
+	NSDictionary *dictionary = @{@"DataSource": self, @"Resource": resource};
 	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceWillAddResourceNotification object:dictionary];
 	
 	// it seems very inefficient to reload the entire data source when just adding/removing one item
@@ -57,7 +57,7 @@ extern NSString *RKResourcePboardType;
 
 - (void)removeResource:(Resource *)resource
 {
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self, @"DataSource", resource, @"Resource", nil];
+	NSDictionary *dictionary = @{@"DataSource": self, @"Resource": resource};
 	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceWillRemoveResourceNotification object:dictionary];
 	
 	// see comments in addResource: about inefficiency of reloadData
@@ -79,7 +79,7 @@ extern NSString *RKResourcePboardType;
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	#pragma unused(outlineView, item)
-	return [resources objectAtIndex:index];
+	return resources[index];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
@@ -158,7 +158,7 @@ extern NSString *RKResourcePboardType;
 - (NSArray*)allResourceIDsOfType:(NSString *)type
 {
 	if(!type || [type isEqualToString:@""])
-		return [NSArray array];
+		return @[];
 	
 	Resource		*resource;
 	NSMutableArray  *array = [NSMutableArray array];
@@ -211,7 +211,7 @@ extern NSString *RKResourcePboardType;
 */
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pb
 {
-	[pb declareTypes:[NSArray arrayWithObject:RKResourcePboardType] owner:self];
+	[pb declareTypes:@[RKResourcePboardType] owner:self];
 	[pb setData:[NSArchiver archivedDataWithRootObject:items] forType:RKResourcePboardType];
 	return YES;
 }
@@ -237,7 +237,7 @@ extern NSString *RKResourcePboardType;
 - (BOOL)outlineView:(NSOutlineView *)oView acceptDrop:(id <NSDraggingInfo>)info item:(id)targetItem childIndex:(NSInteger)childIndex
 {
 	NSPasteboard *pb = [info draggingPasteboard];
-	if([pb availableTypeFromArray:[NSArray arrayWithObject:RKResourcePboardType]])
+	if([pb availableTypeFromArray:@[RKResourcePboardType]])
 		[document pasteResources:[NSUnarchiver unarchiveObjectWithData:[pb dataForType:RKResourcePboardType]]];
 	return YES;
 }

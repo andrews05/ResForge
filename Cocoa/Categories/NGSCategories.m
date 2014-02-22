@@ -8,8 +8,8 @@
 	NSUInteger *buffer = (NSUInteger *)calloc(count, sizeof(NSUInteger));
 	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:count];
 	[indicies getIndexes:buffer maxCount:count inIndexRange:&range];
-	for(unsigned int i = 0; i < count; i++)
-		[newArray addObject:[self objectAtIndex:*(buffer+i)]];
+	for (unsigned int i = 0; i < count; i++)
+		[newArray addObject:self[*(buffer+i)]];
 
 	free(buffer);
 	
@@ -22,13 +22,15 @@
 {
 	return [[self valueForKey:key] indexOfObject:value];
 }
+
 - (id)firstObjectReturningValue:(id)value forKey:(id)key
 {
 	NSUInteger index = [[self valueForKey:key] indexOfObject:value];
 	if(index != NSNotFound)
-		return [self objectAtIndex:index];
+		return self[index];
 	else return nil;
 }
+
 - (NSArray *)objectsReturningValue:(id)value forKey:(id)key
 {
 	id object;
@@ -39,6 +41,7 @@
 			[array addObject:object];
 	return [NSArray arrayWithArray:array];
 }
+
 - (NSArray *)arrayByMakingObjectsPerformSelector:(SEL)selector withObject:(id)inObject
 {
 	id object;

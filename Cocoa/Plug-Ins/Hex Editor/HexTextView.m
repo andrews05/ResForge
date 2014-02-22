@@ -34,7 +34,7 @@
 	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
-	[pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:self];
+	[pb declareTypes:@[NSStringPboardType] owner:self];
 	[pb setData:[[(HexWindowController *)[[self window] windowController] data] subdataWithRange:selection] forType:NSStringPboardType];
 }
 
@@ -54,7 +54,7 @@
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
 	// pastes data as it is on the clipboard
-	if([pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]])
+	if([pb availableTypeFromArray:@[NSStringPboardType]])
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:[pb dataForType:NSStringPboardType]];
 }
 
@@ -64,7 +64,7 @@
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
 	// converts whatever string encoding is on the clipboard to the default C string encoding, then pastes
-	if([pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]])
+	if([pb availableTypeFromArray:@[NSStringPboardType]])
 	{
 		NSData *asciiData = [[pb stringForType:NSStringPboardType] dataUsingEncoding:[NSString defaultCStringEncoding] allowLossyConversion:YES];
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:asciiData];
@@ -77,7 +77,7 @@
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
 	// converts whatever string encoding is on the clipboard to Unicode, strips off the byte order mark, then pastes
-	if([pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]])
+	if([pb availableTypeFromArray:@[NSStringPboardType]])
 	{
 		NSMutableData *unicodeData = [[[pb stringForType:NSStringPboardType] dataUsingEncoding:NSUnicodeStringEncoding] mutableCopy];
 		if(*((unsigned short *)[unicodeData mutableBytes]) == 0xFEFF || *((unsigned short *)[unicodeData mutableBytes]) == 0xFFFE)
@@ -92,7 +92,7 @@
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
 	// converts whatever data is on the clipboard to a hex representation of that data, then pastes
-	if([pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]])
+	if([pb availableTypeFromArray:@[NSStringPboardType]])
 	{
 		NSData *hexData = [[[pb dataForType:NSStringPboardType] hexRepresentation] dataUsingEncoding:[NSString defaultCStringEncoding] allowLossyConversion:YES];
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:hexData];
@@ -105,7 +105,7 @@
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	
 	// converts hex data present on the clipboard to the bytes they represent, then pastes
-	if([pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]])
+	if([pb availableTypeFromArray:@[NSStringPboardType]])
 	{
 		NSData *binaryData = [[pb stringForType:NSStringPboardType] dataFromHex];
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:binaryData];

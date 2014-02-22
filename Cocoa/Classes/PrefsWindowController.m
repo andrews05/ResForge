@@ -80,12 +80,12 @@
 {
 	// reset prefs window widgets to values stored in defaults.plist file
 	NSDictionary *defaultsPlist	= [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"defaults" ofType:@"plist"]];
-	BOOL preserveBackups		= [[defaultsPlist objectForKey:@"PreserveBackups"] intValue]? YES:NO;	// bug: this always evaluates to NO, even if the object in the dictionary is YES
-	BOOL autosave				= [[defaultsPlist objectForKey:@"Autosave"] intValue]? YES:NO;
-	int autosaveInterval		= [[defaultsPlist objectForKey:@"AutosaveInterval"] intValue];
-	BOOL deleteResourceWarning	= [[defaultsPlist objectForKey:@"DeleteResourceWarning"] intValue]? YES:NO;
-	BOOL createNewDocument		= [[defaultsPlist objectForKey:@"LaunchAction"] isEqualToString:@"OpenUntitledFile"];
-	BOOL displayOpenPanel		= [[defaultsPlist objectForKey:@"LaunchAction"] isEqualToString:@"DisplayOpenPanel"];
+	BOOL preserveBackups		= [defaultsPlist[@"PreserveBackups"] intValue]? YES:NO;	// bug: this always evaluates to NO, even if the object in the dictionary is YES
+	BOOL autosave				= [defaultsPlist[@"Autosave"] intValue]? YES:NO;
+	int autosaveInterval		= [defaultsPlist[@"AutosaveInterval"] intValue];
+	BOOL deleteResourceWarning	= [defaultsPlist[@"DeleteResourceWarning"] intValue]? YES:NO;
+	BOOL createNewDocument		= [defaultsPlist[@"LaunchAction"] isEqualToString:@"OpenUntitledFile"];
+	BOOL displayOpenPanel		= [defaultsPlist[@"LaunchAction"] isEqualToString:@"DisplayOpenPanel"];
 	int launchAction			= createNewDocument? 1:(displayOpenPanel? 2:0);
 	
 	// note that this function does not modify the user defaults - the user still has to accept or cancel the panel

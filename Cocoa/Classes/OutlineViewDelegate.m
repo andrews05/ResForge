@@ -205,11 +205,11 @@
 	else if(selector == @selector(insertTab:))
 	{
 		int newColumn = ([self editedColumn] +1) % [self numberOfColumns];
-		NSString *newColIdentifier = [[[self tableColumns] objectAtIndex:newColumn] identifier];
+		NSString *newColIdentifier = [[self tableColumns][newColumn] identifier];
 		if([newColIdentifier isEqualToString:@"size"] || [newColIdentifier isEqualToString:@"attributes"])
 		{
 			newColumn = (newColumn +1) % [self numberOfColumns];
-			newColIdentifier = [[[self tableColumns] objectAtIndex:newColumn] identifier];
+			newColIdentifier = [[self tableColumns][newColumn] identifier];
 			if([newColIdentifier isEqualToString:@"size"] || [newColIdentifier isEqualToString:@"attributes"])
 				newColumn = (newColumn +1) % [self numberOfColumns];
 		}
@@ -222,11 +222,11 @@
 	else if(selector == @selector(insertBacktab:))
 	{
 		int newColumn = ([self editedColumn] + [self numberOfColumns] -1) % [self numberOfColumns];
-		NSString *newColIdentifier = [[[self tableColumns] objectAtIndex:newColumn] identifier];
+		NSString *newColIdentifier = [[self tableColumns][newColumn] identifier];
 		if([newColIdentifier isEqualToString:@"size"] || [newColIdentifier isEqualToString:@"attributes"])
 		{
 			newColumn = (newColumn + [self numberOfColumns] -1) % [self numberOfColumns];
-			newColIdentifier = [[[self tableColumns] objectAtIndex:newColumn] identifier];
+			newColIdentifier = [[self tableColumns][newColumn] identifier];
 			if([newColIdentifier isEqualToString:@"size"] || [newColIdentifier isEqualToString:@"attributes"])
 				newColumn = (newColumn + [self numberOfColumns] -1) % [self numberOfColumns];
 		}

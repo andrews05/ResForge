@@ -67,35 +67,35 @@
 	
 	// use resource values to create NS objects
 	principalChar = charRec->Flags & 0x0001;
-	ship = [[NSNumber alloc] initWithShort:charRec->startShipType];	// resID
-	cash = [[NSNumber alloc] initWithLong:charRec->startCash];
-	kills = [[NSNumber alloc] initWithShort:charRec->startKills];
+	ship = @(charRec->startShipType);	// resID
+	cash = @(charRec->startCash);
+	kills = @(charRec->startKills);
 	date = [[NSCalendarDate alloc] initWithYear:charRec->startYear month:charRec->startMonth day:charRec->startDay hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
 	tempPrefix = [[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Prefix length:16] encoding:NSMacOSRomanStringEncoding];
 	prefix = [[NSString alloc] initWithString:tempPrefix];
 	tempSuffix = [[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Suffix length:16] encoding:NSMacOSRomanStringEncoding];
 	suffix = [[NSString alloc] initWithString:tempSuffix];
-	start1 = [[NSNumber alloc] initWithShort:charRec->startSystem[0]];
-	start2 = [[NSNumber alloc] initWithShort:charRec->startSystem[1]];
-	start3 = [[NSNumber alloc] initWithShort:charRec->startSystem[2]];
-	start4 = [[NSNumber alloc] initWithShort:charRec->startSystem[3]];
-	status1 = [[NSNumber alloc] initWithShort:charRec->startStatus[0]];
-	status2 = [[NSNumber alloc] initWithShort:charRec->startStatus[1]];
-	status3 = [[NSNumber alloc] initWithShort:charRec->startStatus[2]];
-	status4 = [[NSNumber alloc] initWithShort:charRec->startStatus[3]];
-	government1 = [[NSNumber alloc] initWithShort:charRec->startGovt[0]];
-	government2 = [[NSNumber alloc] initWithShort:charRec->startGovt[1]];
-	government3 = [[NSNumber alloc] initWithShort:charRec->startGovt[2]];
-	government4 = [[NSNumber alloc] initWithShort:charRec->startGovt[3]];
-	introText = [[NSNumber alloc] initWithShort:charRec->introTextID];
-	introPict1 = [[NSNumber alloc] initWithShort:charRec->introPictID[0]];
-	introPict2 = [[NSNumber alloc] initWithShort:charRec->introPictID[1]];
-	introPict3 = [[NSNumber alloc] initWithShort:charRec->introPictID[2]];
-	introPict4 = [[NSNumber alloc] initWithShort:charRec->introPictID[3]];
-	introDelay1 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[0]];
-	introDelay2 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[1]];
-	introDelay3 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[2]];
-	introDelay4 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[3]];
+	start1 = @(charRec->startSystem[0]);
+	start2 = @(charRec->startSystem[1]);
+	start3 = @(charRec->startSystem[2]);
+	start4 = @(charRec->startSystem[3]);
+	status1 = @(charRec->startStatus[0]);
+	status2 = @(charRec->startStatus[1]);
+	status3 = @(charRec->startStatus[2]);
+	status4 = @(charRec->startStatus[3]);
+	government1 = @(charRec->startGovt[0]);
+	government2 = @(charRec->startGovt[1]);
+	government3 = @(charRec->startGovt[2]);
+	government4 = @(charRec->startGovt[3]);
+	introText = @(charRec->introTextID);
+	introPict1 = @(charRec->introPictID[0]);
+	introPict2 = @(charRec->introPictID[1]);
+	introPict3 = @(charRec->introPictID[2]);
+	introPict4 = @(charRec->introPictID[3]);
+	introDelay1 = @(charRec->introPictDelay[0]);
+	introDelay2 = @(charRec->introPictDelay[1]);
+	introDelay3 = @(charRec->introPictDelay[2]);
+	introDelay4 = @(charRec->introPictDelay[3]);
 	tempStart = [[NSString alloc] initWithData:[NSData dataWithBytes:charRec->OnStart length:256] encoding:NSMacOSRomanStringEncoding];
 	onStart = [[NSString alloc] initWithString:tempStart];
 	
@@ -320,13 +320,13 @@
 	else if( sender == cashField )
 	{
 		id old = cash;
-		cash = [[NSNumber alloc] initWithInt:[sender intValue]];
+		cash = @([sender intValue]);
 		if( ![cash isEqualToNumber:old] ) [resource touch];
 	}
 	else if( sender == killsField )
 	{
 		id old = kills;
-		kills = [[NSNumber alloc] initWithInt:[sender intValue]];
+		kills = @([sender intValue]);
 		if( ![kills isEqualToNumber:old] ) [resource touch];
 	}
 	
@@ -392,25 +392,25 @@
 	else if( sender == statusField1 )
 	{
 		id old = status1;
-		status1 = [[NSNumber alloc] initWithInt:[sender intValue]];
+		status1 = @([sender intValue]);
 		if( ![status1 isEqualToNumber:old] ) [resource touch];
 	}
 	else if( sender == statusField2 )
 	{
 		id old = status2;
-		status2 = [[NSNumber alloc] initWithInt:[sender intValue]];
+		status2 = @([sender intValue]);
 		if( ![status2 isEqualToNumber:old] ) [resource touch];
 	}
 	else if( sender == statusField3 )
 	{
 		id old = status3;
-		status3 = [[NSNumber alloc] initWithInt:[sender intValue]];
+		status3 = @([sender intValue]);
 		if( ![status3 isEqualToNumber:old] ) [resource touch];
 	}
 	else if( sender == statusField4 )
 	{
 		id old = status4;
-		status4 = [[NSNumber alloc] initWithInt:[sender intValue]];
+		status4 = @([sender intValue]);
 		if( ![status4 isEqualToNumber:old] ) [resource touch];
 	}
 	
@@ -482,25 +482,25 @@
 	else if( sender == introDelayField1 )
 	{
 		id old = introDelay1;
-		introDelay1 = [[NSNumber alloc] initWithInt:[sender intValue]];
+		introDelay1 = @([sender intValue]);
 		if( ![introDelay1 isEqualToNumber:old] ) [resource touch];
 	}
 	else if( sender == introDelayField2 )
 	{
 		id old = introDelay2;
-		introDelay2 = [[NSNumber alloc] initWithInt:[sender intValue]];
+		introDelay2 = @([sender intValue]);
 		if( ![introDelay2 isEqualToNumber:old] ) [resource touch];
 	}
 	else if( sender == introDelayField3 )
 	{
 		id old = introDelay3;
-		introDelay3 = [[NSNumber alloc] initWithInt:[sender intValue]];
+		introDelay3 = @([sender intValue]);
 		if( ![introDelay3 isEqualToNumber:old] ) [resource touch];
 	}
 	else if( sender == introDelayField4 )
 	{
 		id old = introDelay4;
-		introDelay4 = [[NSNumber alloc] initWithInt:[sender intValue]];
+		introDelay4 = @([sender intValue]);
 		if( ![introDelay4 isEqualToNumber:old] ) [resource touch];
 	}
 	
@@ -561,16 +561,16 @@
 	
 	// verify values are valid
 	if(charRec->startDay < 1 || charRec->startDay > 31 )
-		[errorValues setObject:@"must be between 1 and 31." forKey:@"Start Day"];
+		errorValues[@"Start Day"] = @"must be between 1 and 31.";
 	if( charRec->startMonth < 1 || charRec->startMonth > 12 )
-		[errorValues setObject:@"must be between 1 and 12." forKey:@"Start Month"];
+		errorValues[@"Start Month"] = @"must be between 1 and 12.";
 	if( charRec->startYear < 1 )
-		[errorValues setObject:@"must be above zero." forKey:@"Start Year"];
+		errorValues[@"Start Year"] = @"must be above zero.";
 	if(((charRec->introPictDelay[0] < 1 || charRec->introPictDelay[0] > 300) && (charRec->introPictDelay[0] != -1))
 	|| ((charRec->introPictDelay[1] < 1 || charRec->introPictDelay[1] > 300) && (charRec->introPictDelay[1] != -1))
 	|| ((charRec->introPictDelay[2] < 1 || charRec->introPictDelay[2] > 300) && (charRec->introPictDelay[2] != -1))
 	|| ((charRec->introPictDelay[3] < 1 || charRec->introPictDelay[3] > 300) && (charRec->introPictDelay[3] != -1)))
-		[errorValues setObject:@"valid delays are 1 to 300 seconds, or -1 for unused values." forKey:@"Intro Picture Delays"];
+		errorValues[@"Intro Picture Delays"] = @"valid delays are 1 to 300 seconds, or -1 for unused values.";
 	
 	// all values fell within acceptable range
 	return errorValues;

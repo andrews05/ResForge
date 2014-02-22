@@ -90,19 +90,19 @@
 				break;
 			
 			case 1:
-				NSBeginAlertSheet( @"Invalid values, changes cannot be saved.", @"Cancel", @"Discard Changes", nil, sender, self, @selector(invalidValuesSheetDidClose:returnCode:contextInfo:), nil, nil, @"An invalid value has been given for one of the resource's items. The following field has it's value set incorrectly:\n\n%@: %@", [fields objectAtIndex:0], [descriptions objectAtIndex:0] );
+				NSBeginAlertSheet( @"Invalid values, changes cannot be saved.", @"Cancel", @"Discard Changes", nil, sender, self, @selector(invalidValuesSheetDidClose:returnCode:contextInfo:), nil, nil, @"An invalid value has been given for one of the resource's items. The following field has it's value set incorrectly:\n\n%@: %@", fields[0], descriptions[0] );
 				break;
 			
 			case 2:
-				NSBeginAlertSheet( @"Invalid values, changes cannot be saved.", @"Cancel", @"Discard Changes", nil, sender, self, @selector(invalidValuesSheetDidClose:returnCode:contextInfo:), nil, nil, @"There are invalid values given for a couple of the resource's items. The following fields have their values set incorrectly:\n\n%@: %@\n%@: %@", [fields objectAtIndex:0], [descriptions objectAtIndex:0], [fields objectAtIndex:1], [descriptions objectAtIndex:1] );
+				NSBeginAlertSheet( @"Invalid values, changes cannot be saved.", @"Cancel", @"Discard Changes", nil, sender, self, @selector(invalidValuesSheetDidClose:returnCode:contextInfo:), nil, nil, @"There are invalid values given for a couple of the resource's items. The following fields have their values set incorrectly:\n\n%@: %@\n%@: %@", fields[0], descriptions[0], fields[1], descriptions[1] );
 				break;
 			
 			case 3:
-				NSBeginAlertSheet( @"Invalid values, changes cannot be saved.", @"Cancel", @"Discard Changes", nil, sender, self, @selector(invalidValuesSheetDidClose:returnCode:contextInfo:), nil, nil, @"There are invalid values given for three of the resource's items. The following fields have their values set incorrectly:\n\n%@: %@\n%@: %@\n%@: %@", [fields objectAtIndex:0], [descriptions objectAtIndex:0], [fields objectAtIndex:1], [descriptions objectAtIndex:1], [fields objectAtIndex:2], [descriptions objectAtIndex:2] );
+				NSBeginAlertSheet( @"Invalid values, changes cannot be saved.", @"Cancel", @"Discard Changes", nil, sender, self, @selector(invalidValuesSheetDidClose:returnCode:contextInfo:), nil, nil, @"There are invalid values given for three of the resource's items. The following fields have their values set incorrectly:\n\n%@: %@\n%@: %@\n%@: %@", fields[0], descriptions[0], fields[1], descriptions[1], fields[2], descriptions[2] );
 				break;
 			
 			default:
-				NSBeginAlertSheet( @"Invalid values, changes cannot be saved.", @"Cancel", @"Discard Changes", nil, sender, self, @selector(invalidValuesSheetDidClose:returnCode:contextInfo:), nil, nil, @"There are invalid values given for many of the resource's items. The following fields have their values set incorrectly:\n\n%@: %@\n%@: %@\n%@: %@\nplus others.", [fields objectAtIndex:0], [descriptions objectAtIndex:0], [fields objectAtIndex:1], [descriptions objectAtIndex:1], [fields objectAtIndex:2], [descriptions objectAtIndex:2] );
+				NSBeginAlertSheet( @"Invalid values, changes cannot be saved.", @"Cancel", @"Discard Changes", nil, sender, self, @selector(invalidValuesSheetDidClose:returnCode:contextInfo:), nil, nil, @"There are invalid values given for many of the resource's items. The following fields have their values set incorrectly:\n\n%@: %@\n%@: %@\n%@: %@\nplus others.", fields[0], descriptions[0], fields[1], descriptions[1], fields[2], descriptions[2] );
 				break;
 		}
 		return NO;

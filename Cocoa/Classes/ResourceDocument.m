@@ -84,7 +84,7 @@ extern NSString *RKResourcePboardType;
 	{
 		// get selected fork from open panel, 10.3+
 		int row = [[openPanelDelegate forkTableView] selectedRow];
-		NSString *selectedFork = [(NSDictionary *)[[openPanelDelegate forks] objectAtIndex:row] objectForKey:@"forkname"];
+		NSString *selectedFork = ((NSDictionary *)[openPanelDelegate forks][row])[@"forkname"];
 		fork = (HFSUniStr255 *) NewPtrClear(sizeof(HFSUniStr255));
 		fork->length = ([selectedFork length] < 255) ? (UInt16)[selectedFork length] : 255;
 		if(fork->length > 0)
@@ -127,13 +127,13 @@ extern NSString *RKResourcePboardType;
 			if(error || !fileRefNum)
 			{
 				// bug: should check fork the user selected is empty before trying data fork
-				NSNumber *fAlloc = [[forks firstObjectReturningValue:[NSString stringWithCharacters:fork->unicode length:fork->length] forKey:@"forkname"] objectForKey:@"forkallocation"];
+				NSNumber *fAlloc = [forks firstObjectReturningValue:[NSString stringWithCharacters:fork->unicode length:fork->length] forKey:@"forkname"][@"forkallocation"];
 				if([fAlloc unsignedLongLongValue] > 0)
 				{
 					// data fork is not empty, check resource fork
 					error = FSGetResourceForkName(fork);
 					if(error) return NO;
-					fAlloc = [[forks firstObjectReturningValue:[NSString stringWithCharacters:fork->unicode length:fork->length] forKey:@"forkname"] objectForKey:@"forkallocation"];
+					fAlloc = [forks firstObjectReturningValue:[NSString stringWithCharacters:fork->unicode length:fork->length] forKey:@"forkname"][@"forkallocation"];
 					if([fAlloc unsignedLongLongValue] > 0)
 					{
 						// resource fork is not empty either, give up (ask user for a fork?)
@@ -175,7 +175,7 @@ extern NSString *RKResourcePboardType;
 	NSString *forkName;
 	NSEnumerator *forkEnumerator = [forks objectEnumerator];
 	NSString *selectedFork = [NSString stringWithCharacters:fork->unicode length:fork->length];
-	while((forkName = [[forkEnumerator nextObject] objectForKey:@"forkname"]))
+	while((forkName = [forkEnumerator nextObject][@"forkname"]))
 	{
 		// check current fork is not the fork we're going to parse
 		if(![forkName isEqualToString:selectedFork])
@@ -214,7 +214,7 @@ extern NSString *RKResourcePboardType;
 	else uniForkName.unicode[0] = 0;
 	
 	// get fork length and create empty buffer, bug: only sizeof(size_t) bytes long
-	ByteCount forkLength = (ByteCount) [[[[(ApplicationDelegate *)[NSApp delegate] forksForFile:fileRef] firstObjectReturningValue:forkName forKey:@"forkname"] objectForKey:@"forksize"] unsignedLongValue];
+	ByteCount forkLength = (ByteCount) [[[(ApplicationDelegate *)[NSApp delegate] forksForFile:fileRef] firstObjectReturningValue:forkName forKey:@"forkname"][@"forksize"] unsignedLongValue];
 	void *buffer = malloc(forkLength);
 	if(!buffer) return NO;
 	
@@ -555,8 +555,8 @@ extern NSString *RKResourcePboardType;
 	
 	// basic overrides for file name extensions (assume no plug-ins installed)
 	NSString *newExtension;
-	NSDictionary *adjustments = [NSDictionary dictionaryWithObjectsAndKeys: @"ttf", @"sfnt", nil];
-	if((newExtension = [adjustments objectForKey:extension]))
+	NSDictionary *adjustments = @{@"sfnt": @"ttf"};
+	if((newExtension = adjustments[extension]))
 		extension = newExtension;
 	
 	// ask for data
@@ -592,7 +592,7 @@ extern NSString *RKResourcePboardType;
 		unsigned int i = 1;
 		Resource *resource;
 		NSString *filename, *extension;
-		NSDictionary *adjustments = [NSDictionary dictionaryWithObjectsAndKeys: @"ttf", @"sfnt", @"png", @"PNGf", nil];
+		NSDictionary *adjustments = @{@"sfnt": @"ttf", @"PNGf": @"png"};
 		NSEnumerator *enumerator = [[outlineView selectedItems] objectEnumerator];
 		while(resource = [enumerator nextObject])
 		{
@@ -601,8 +601,8 @@ extern NSString *RKResourcePboardType;
 			extension = [[[resource type] lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			
 			// basic overrides for file name extensions (assume no plug-ins installed)
-			if([adjustments objectForKey:[resource type]])
-				extension = [adjustments objectForKey:[resource type]];
+			if(adjustments[[resource type]])
+				extension = adjustments[[resource type]];
 			
 			// ask for data
 			if([editorClass respondsToSelector:@selector(dataForFileExport:)])
@@ -668,7 +668,7 @@ extern NSString *RKResourcePboardType;
 	[outlineView setTarget:self];
 	[outlineView setDoubleAction:@selector(openResources:)];
 	[outlineView setVerticalMotionCanBeginDrag:YES];
-	[outlineView registerForDraggedTypes:[NSArray arrayWithObjects:RKResourcePboardType, NSStringPboardType, NSFilenamesPboardType, nil]];
+	[outlineView registerForDraggedTypes:@[RKResourcePboardType, NSStringPboardType, NSFilenamesPboardType]];
 	
 	// register for resource will change notifications (for undo management)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameWillChange:) name:ResourceNameWillChangeNotification object:nil];
@@ -752,7 +752,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[item setImage:[NSImage imageNamed:@"Create"]];
 	[item setTarget:self];
 	[item setAction:@selector(showCreateResourceSheet:)];
-	[toolbarItems setObject:item forKey:RKCreateItemIdentifier];
+	toolbarItems[RKCreateItemIdentifier] = item;
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKDeleteItemIdentifier];
 	[item setLabel:NSLocalizedString(@"Delete", nil)];
@@ -761,7 +761,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[item setImage:[NSImage imageNamed:@"Delete"]];
 	[item setTarget:self];
 	[item setAction:@selector(clear:)];
-	[toolbarItems setObject:item forKey:RKDeleteItemIdentifier];
+	toolbarItems[RKDeleteItemIdentifier] = item;
 	
 	NSImage *image;
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKEditItemIdentifier];
@@ -773,7 +773,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	else [item setImage:[NSImage imageNamed:@"Edit"]];
 	[item setTarget:self];
 	[item setAction:@selector(openResources:)];
-	[toolbarItems setObject:item forKey:RKEditItemIdentifier];
+	toolbarItems[RKEditItemIdentifier] = item;
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKEditHexItemIdentifier];
 	[item setLabel:NSLocalizedString(@"Edit Hex", nil)];
@@ -784,7 +784,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	else [item setImage:[NSImage imageNamed:@"Edit Hex"]];
 	[item setTarget:self];
 	[item setAction:@selector(openResourcesAsHex:)];
-	[toolbarItems setObject:item forKey:RKEditHexItemIdentifier];
+	toolbarItems[RKEditHexItemIdentifier] = item;
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKSaveItemIdentifier];
 	[item setLabel:NSLocalizedString(@"Save", nil)];
@@ -793,7 +793,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[item setImage:[NSImage imageNamed:@"Save"]];
 	[item setTarget:self];
 	[item setAction:@selector(saveDocument:)];
-	[toolbarItems setObject:item forKey:RKSaveItemIdentifier];
+	toolbarItems[RKSaveItemIdentifier] = item;
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKShowInfoItemIdentifier];
 	[item setLabel:NSLocalizedString(@"Show Info", nil)];
@@ -802,7 +802,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[item setImage:[NSImage imageNamed:NSImageNameInfo]];
 	[item setTarget:[NSApp delegate]];
 	[item setAction:@selector(showInfo:)];
-	[toolbarItems setObject:item forKey:RKShowInfoItemIdentifier];
+	toolbarItems[RKShowInfoItemIdentifier] = item;
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKExportItemIdentifier];
 	[item setLabel:NSLocalizedString(@"Export Data", nil)];
@@ -811,7 +811,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[item setImage:[NSImage imageNamed:@"Export"]];
 	[item setTarget:self];
 	[item setAction:@selector(exportResources:)];
-	[toolbarItems setObject:item forKey:RKExportItemIdentifier];
+	toolbarItems[RKExportItemIdentifier] = item;
 
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKViewItemIdentifier];
 	[item setLabel:NSLocalizedString(@"View", nil)];
@@ -819,7 +819,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[item setToolTip:NSLocalizedString(@"View as a list or previews", nil)];
 	[item setView:self.viewToolbarView];
 	[item setTarget:self];
-	[toolbarItems setObject:item forKey:RKViewItemIdentifier];
+	toolbarItems[RKViewItemIdentifier] = item;
 	
 	if([windowController window] == mainWindow)
 	{
@@ -839,18 +839,18 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
-	return [toolbarItems objectForKey:itemIdentifier];
+	return toolbarItems[itemIdentifier];
 }
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
 	NSString *separatorIdentifier = NSAppKitVersionNumber < NSAppKitVersionNumber10_7 ? NSToolbarSeparatorItemIdentifier : NSToolbarSpaceItemIdentifier;
-    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKShowInfoItemIdentifier, RKDeleteItemIdentifier, RKViewItemIdentifier, separatorIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, separatorIdentifier, RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, nil];
+    return @[RKCreateItemIdentifier, RKShowInfoItemIdentifier, RKDeleteItemIdentifier, RKViewItemIdentifier, separatorIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, separatorIdentifier, RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObjects:RKCreateItemIdentifier, RKDeleteItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, RKSaveItemIdentifier, RKExportItemIdentifier, RKShowInfoItemIdentifier, RKViewItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
+    return @[RKCreateItemIdentifier, RKDeleteItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, RKSaveItemIdentifier, RKExportItemIdentifier, RKShowInfoItemIdentifier, RKViewItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier];
 }
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)item
@@ -1163,7 +1163,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	#pragma unused(sender)
 	NSArray *selectedItems = [outlineView selectedItems];
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
-	[pb declareTypes:[NSArray arrayWithObject:RKResourcePboardType] owner:self];
+	[pb declareTypes:@[RKResourcePboardType] owner:self];
 	[pb setData:[NSArchiver archivedDataWithRootObject:selectedItems] forType:RKResourcePboardType];
 }
 
@@ -1171,7 +1171,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	#pragma unused(sender)
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
-	if([pb availableTypeFromArray:[NSArray arrayWithObject:RKResourcePboardType]])
+	if([pb availableTypeFromArray:@[RKResourcePboardType]])
 		[self pasteResources:[NSUnarchiver unarchiveObjectWithData:[pb dataForType:RKResourcePboardType]]];
 }
 
@@ -1201,7 +1201,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (void)overwritePasteSheetDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
 	NSMutableArray *remainingResources = [NSMutableArray arrayWithArray:(NSArray *)CFBridgingRelease(contextInfo)];
-	Resource *resource = [remainingResources objectAtIndex:0];
+	Resource *resource = remainingResources[0];
 	if(returnCode == NSAlertDefaultReturn)	// unique ID
 	{
 		Resource *newResource = [Resource resourceOfType:[resource type] andID:[dataSource uniqueIDForType:[resource type]] withName:[resource name] andAttributes:[resource attributes] data:[resource data]];
@@ -1333,12 +1333,11 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	if(![newCreator isEqualToData:creator])
 	{
-		id old = creator;
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:[NSDictionary dictionaryWithObjectsAndKeys:self, @"NSDocument", newCreator, @"creator", nil]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:@{@"NSDocument": self, @"creator": newCreator}];
 		[[self undoManager] registerUndoWithTarget:self selector:@selector(setCreator:) object:creator];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change Creator Code", nil)];
 		creator = [newCreator copy];
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:[NSDictionary dictionaryWithObjectsAndKeys:self, @"NSDocument", creator, @"creator", nil]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:@{@"NSDocument": self, @"creator": creator}];
 		return YES;
 	}
 	else return NO;
@@ -1348,12 +1347,11 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	if(![newType isEqualToData:type])
 	{
-		id old = type;
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:[NSDictionary dictionaryWithObjectsAndKeys:self, @"NSDocument", newType, @"type", nil]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:@{@"NSDocument": self, @"type": newType}];
 		[[self undoManager] registerUndoWithTarget:self selector:@selector(setType:) object:type];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change File Type", nil)];
 		type = [newType copy];
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:[NSDictionary dictionaryWithObjectsAndKeys:self, @"NSDocument", type, @"type", nil]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:@{@"NSDocument": self, @"type": type}];
 		return YES;
 	}
 	else return NO;

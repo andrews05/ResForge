@@ -31,7 +31,7 @@
 	unsigned count = [[groupElementTemplate subElements] count];
 	for(unsigned i = 0; i < count; i++)
 	{
-		Element *subToClone = [[groupElementTemplate subElements] objectAtIndex:i];
+		Element *subToClone = [groupElementTemplate subElements][i];
 		if([subToClone class] == [ElementLSTB class] ||
 		   [subToClone class] == [ElementLSTC class])
 		{
@@ -76,7 +76,7 @@
 	ElementOCNT *counter = nil;
 	for(unsigned i = 0; i < [subElements count]; i++)
 	{
-		Element *element = [subElements objectAtIndex:i];
+		Element *element = subElements[i];
 		
 		// set up the counter tracking
 		if([element class] == [ElementOCNT class])	counter = (ElementOCNT *) element;
@@ -190,7 +190,7 @@
 
 - (Element *)subElementAtIndex:(NSInteger)n
 {
-	return [subElements objectAtIndex:n];
+	return subElements[n];
 }
 
 - (IBAction)createListEntry:(id)sender
