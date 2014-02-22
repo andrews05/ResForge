@@ -4,11 +4,7 @@
 {
 	Fixed value;
 }
-
-- (void)setValue:(Fixed)v;
-- (Fixed)value;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
+@property Fixed value;
+@property (assign) NSString *stringValue;
 
 @end

@@ -2,26 +2,106 @@
 
 // implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, CHAR, TNAM
 @implementation ElementPSTR
+@synthesize stringValue = value;
+@synthesize alignment = _alignment;
+@synthesize lengthBytes = _lengthBytes;
+@synthesize maxLength = _maxLength;
+@synthesize minLength = _minLength;
+@synthesize pad = _pad;
+@synthesize terminatingByte = _terminatingByte;
 
 - (id)initForType:(NSString *)t withLabel:(NSString *)l
 {
-	self = [super initForType:t withLabel:l];
-	if(!self) return nil;
-	value = [@"" retain];
-	if     ([t isEqualToString:@"PSTR"] ||
-			[t isEqualToString:@"BSTR"])	{ _lengthBytes = 1; _maxLength = UINT8_MAX;  _minLength = 0; _terminatingByte = NO; _pad = kNoPadding; _alignment = 0; }
-	else if([t isEqualToString:@"WSTR"])	{ _lengthBytes = 2; _maxLength = UINT16_MAX; _minLength = 0; _terminatingByte = NO; _pad = kNoPadding; _alignment = 0; }
-	else if([t isEqualToString:@"LSTR"])	{ _lengthBytes = 4; _maxLength = UINT32_MAX; _minLength = 0; _terminatingByte = NO; _pad = kNoPadding; _alignment = 0; }
-	else if([t isEqualToString:@"OSTR"])	{ _lengthBytes = 1; _maxLength = UINT8_MAX-1; _minLength = 0; _terminatingByte = NO; _pad = kPadToOddLength;  _alignment = 0; }
-	else if([t isEqualToString:@"ESTR"])	{ _lengthBytes = 1; _maxLength = UINT8_MAX;   _minLength = 0; _terminatingByte = NO; _pad = kPadToEvenLength; _alignment = 0; }
-	else if([t isEqualToString:@"CSTR"])	{ _lengthBytes = 0; _maxLength = 0; _minLength = 0; _terminatingByte = YES; _pad = kNoPadding; _alignment = 0; }
-	else if([t isEqualToString:@"OCST"])	{ _lengthBytes = 0; _maxLength = 0; _minLength = 0; _terminatingByte = YES; _pad = kPadToOddLength;  _alignment = 0; }
-	else if([t isEqualToString:@"ECST"])	{ _lengthBytes = 0; _maxLength = 0; _minLength = 0; _terminatingByte = YES; _pad = kPadToEvenLength; _alignment = 0; }
-	else if([t isEqualToString:@"CHAR"])	{ _lengthBytes = 0; _maxLength = 1; _minLength = 1; _terminatingByte = NO; _pad = kNoPadding; _alignment = 0; }
-	else if([t isEqualToString:@"TNAM"])	{ _lengthBytes = 0; _maxLength = 4; _minLength = 4; _terminatingByte = NO; _pad = kNoPadding; _alignment = 0; }
-	// temp until keyed values are implemented
-	else if([t isEqualToString:@"KCHR"])	{ _lengthBytes = 0; _maxLength = 1; _minLength = 1; _terminatingByte = NO; _pad = kNoPadding; _alignment = 0; }
-	else if([t isEqualToString:@"KTYP"])	{ _lengthBytes = 0; _maxLength = 4; _minLength = 4; _terminatingByte = NO; _pad = kNoPadding; _alignment = 0; }
+	if (self = [super initForType:t withLabel:l]) {
+		value = [@"" retain];
+		if ([t isEqualToString:@"PSTR"] || [t isEqualToString:@"BSTR"])	{
+			_lengthBytes = 1;
+			_maxLength = UINT8_MAX;
+			_minLength = 0;
+			_terminatingByte = NO;
+			_pad = kNoPadding;
+			_alignment = 0;
+		} else if([t isEqualToString:@"WSTR"]) {
+			_lengthBytes = 2;
+			_maxLength = UINT16_MAX;
+			_minLength = 0;
+			_terminatingByte = NO;
+			_pad = kNoPadding;
+			_alignment = 0;
+		} else if ([t isEqualToString:@"LSTR"]) {
+			_lengthBytes = 4;
+			_maxLength = UINT32_MAX;
+			_minLength = 0;
+			_terminatingByte = NO;
+			_pad = kNoPadding;
+			_alignment = 0;
+		} else if ([t isEqualToString:@"OSTR"]) {
+			_lengthBytes = 1;
+			_maxLength = UINT8_MAX - 1;
+			_minLength = 0;
+			_terminatingByte = NO;
+			_pad = kPadToOddLength;
+			_alignment = 0;
+		} else if ([t isEqualToString:@"ESTR"]) {
+			_lengthBytes = 1;
+			_maxLength = UINT8_MAX;
+			_minLength = 0;
+			_terminatingByte = NO;
+			_pad = kPadToEvenLength;
+			_alignment = 0;
+		} else if ([t isEqualToString:@"CSTR"]) {
+			_lengthBytes = 0;
+			_maxLength = 0;
+			_minLength = 0;
+			_terminatingByte = YES;
+			_pad = kNoPadding;
+			_alignment = 0;
+		} else if ([t isEqualToString:@"OCST"]) {
+			_lengthBytes = 0;
+			_maxLength = 0;
+			_minLength = 0;
+			_terminatingByte = YES;
+			_pad = kPadToOddLength;
+			_alignment = 0;
+		} else if ([t isEqualToString:@"ECST"]) {
+			_lengthBytes = 0;
+			_maxLength = 0;
+			_minLength = 0;
+			_terminatingByte = YES;
+			_pad = kPadToEvenLength;
+			_alignment = 0;
+		} else if ([t isEqualToString:@"CHAR"]) {
+			_lengthBytes = 0;
+			_maxLength = 1;
+			_minLength = 1;
+			_terminatingByte = NO;
+			_pad = kNoPadding;
+			_alignment = 0;
+		} else if ([t isEqualToString:@"TNAM"]) {
+			_lengthBytes = 0;
+			_maxLength = 4;
+			_minLength = 4;
+			_terminatingByte = NO;
+			_pad = kNoPadding;
+			_alignment = 0;
+		}
+		// temp until keyed values are implemented
+		else if ([t isEqualToString:@"KCHR"]) {
+			_lengthBytes = 0;
+			_maxLength = 1;
+			_minLength = 1;
+			_terminatingByte = NO;
+			_pad = kNoPadding;
+			_alignment = 0;
+		} else if ([t isEqualToString:@"KTYP"]) {
+			_lengthBytes = 0;
+			_maxLength = 4;
+			_minLength = 4;
+			_terminatingByte = NO;
+			_pad = kNoPadding;
+			_alignment = 0;
+		}
+	}
 	return self;
 }
 
@@ -88,11 +168,15 @@
 - (unsigned int)sizeOnDisk
 {
 	UInt32 length = [value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
-	if(_maxLength && length > _maxLength) length = _maxLength;
-	if(length < _minLength) length = _minLength;
-	length += _lengthBytes + (_terminatingByte? 1:0);
-	if(_pad == kPadToOddLength && length % 2 == 0)	length++;
-	if(_pad == kPadToEvenLength && length % 2 == 1)	length++;
+	if(_maxLength && length > _maxLength)
+		length = _maxLength;
+	if(length < _minLength)
+		length = _minLength;
+	length += _lengthBytes + (_terminatingByte? 1 : 0);
+	if(_pad == kPadToOddLength && length % 2 == 0)
+		length++;
+	if(_pad == kPadToEvenLength && length % 2 == 1)
+		length++;
 	// don't know how to deal with alignment here
 	return length;
 }
@@ -140,28 +224,12 @@
 			padAmount -= 4;
 		}
 	}
-	if(_terminatingByte) [stream advanceAmount:1 pad:YES];
-	if(_pad == kPadToOddLength && (length + _lengthBytes + (_terminatingByte? 1:0)) % 2 == 0)	[stream advanceAmount:1 pad:YES];
-	if(_pad == kPadToEvenLength && (length + _lengthBytes + (_terminatingByte? 1:0)) % 2 == 1)	[stream advanceAmount:1 pad:YES];
+	if(_terminatingByte)
+		[stream advanceAmount:1 pad:YES];
+	if(_pad == kPadToOddLength && (length + _lengthBytes + (_terminatingByte? 1:0)) % 2 == 0)
+		[stream advanceAmount:1 pad:YES];
+	if(_pad == kPadToEvenLength && (length + _lengthBytes + (_terminatingByte? 1:0)) % 2 == 1)
+		[stream advanceAmount:1 pad:YES];
 }
-
-- (NSString *)stringValue
-{
-	return value;
-}
-
-- (void)setStringValue:(NSString *)str
-{
-	id old = value;
-	value = [str copy];
-	[old release];
-}
-
-- (void)setMaxLength:(UInt32)v { _maxLength = v; }
-- (void)setMinLength:(UInt32)v { _minLength = v; }
-- (void)setPad:(enum StringPadding)v { _pad = v; }
-- (void)setTerminatingByte:(BOOL)v { _terminatingByte = v; }
-- (void)setLengthBytes:(int)v { _lengthBytes = v; }
-- (void)setAlignment:(int)v { _alignment = v; }
 
 @end

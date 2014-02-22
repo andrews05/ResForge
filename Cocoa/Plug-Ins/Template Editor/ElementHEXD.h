@@ -4,10 +4,7 @@
 {
 	NSData *value;
 }
-- (void)setValue:(NSData *)d;
-- (NSData *)value;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
+@property (copy) NSData *value;
+@property (assign) NSString *stringValue;
 
 @end

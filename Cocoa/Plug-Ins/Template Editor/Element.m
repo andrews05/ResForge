@@ -85,7 +85,7 @@
 	return 0;
 }
 
-- (Element *)subElementAtIndex:(int)n
+- (Element *)subElementAtIndex:(NSInteger)n
 {
 	// default implementation suitable for most element types
 	return nil;

@@ -5,8 +5,7 @@
 	// seconds since 1 Jan 1904
 	UInt32 value;
 }
-- (UInt32)value;
-- (void)setValue:(UInt32)v;
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
+@property UInt32 value;
+@property (assign) NSString *stringValue;
+
 @end

@@ -3,11 +3,13 @@
 #define SIZE_ON_DISK (8)
 
 @implementation ElementDLLG
+@synthesize value;
+@dynamic stringValue;
 
 - (id)copyWithZone:(NSZone*)zone
 {
 	ElementDLLG *element = [super copyWithZone:zone];
-	[element setValue:value];
+	element.value = value;
 	return element;
 }
 
@@ -27,16 +29,6 @@
 {
 	SInt64 tmp = CFSwapInt64HostToBig(value);
 	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
-}
-
-- (void)setValue:(SInt64)v
-{
-	value = v;
-}
-
-- (SInt64)value
-{
-	return value;
 }
 
 - (NSString *)stringValue

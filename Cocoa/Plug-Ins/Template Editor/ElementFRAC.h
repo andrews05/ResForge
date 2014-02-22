@@ -4,11 +4,7 @@
 {
 	Fract value;
 }
-
-- (void)setValue:(Fract)v;
-- (Fract)value;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
+@property Fract value;
+@property (assign) NSString *stringValue;
 
 @end

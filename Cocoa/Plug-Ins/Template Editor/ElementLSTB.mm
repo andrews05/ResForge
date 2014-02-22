@@ -5,6 +5,10 @@
 
 // implements LSTB, LSTZ
 @implementation ElementLSTB
+@dynamic stringValue;
+@synthesize countElement;
+@synthesize groupElementTemplate;
+@synthesize subElements;
 
 - (id)initForType:(NSString *)t withLabel:(NSString *)l
 {
@@ -184,48 +188,14 @@
 
 #pragma mark -
 
-- (void)setSubElements:(NSMutableArray *)a
-{
-	id old = subElements;
-	subElements = [a retain];
-	[old release];
-}
-
-- (NSMutableArray *)subElements
-{
-	return subElements;
-}
-
 - (int)subElementCount
 {
 	return [subElements count];
 }
 
-- (Element *)subElementAtIndex:(int)n
+- (Element *)subElementAtIndex:(NSInteger)n
 {
 	return [subElements objectAtIndex:n];
-}
-
-- (void)setGroupElementTemplate:(ElementLSTB *)e
-{
-	// do not retain, -init sets this to 'self' initially!
-	groupElementTemplate = e;
-}
-
-- (ElementLSTB *)groupElementTemplate
-{
-	return groupElementTemplate;
-}
-
-- (void)setCountElement:(ElementOCNT *)e
-{
-	// do not retain sibling element
-	countElement = e;
-}
-
-- (ElementOCNT *)countElement
-{
-	return countElement;
 }
 
 - (IBAction)createListEntry:(id)sender

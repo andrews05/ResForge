@@ -2,18 +2,14 @@
 
 @interface ElementOCNT : Element
 {
-	unsigned long value;
+	UInt32 value;
 }
+@property UInt32 value;
+@property (assign) NSString *stringValue;
 
 - (BOOL)countFromZero;
 
-- (void)setValue:(unsigned long)v;
-- (unsigned long)value;
-
 - (void)increment;
 - (void)decrement;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
 
 @end

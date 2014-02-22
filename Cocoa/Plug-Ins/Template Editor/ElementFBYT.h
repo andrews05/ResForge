@@ -2,13 +2,9 @@
 
 @interface ElementFBYT : Element
 {
-	unsigned long length;
+	NSUInteger length;
 }
-
-- (void)setLength:(unsigned long)l;
-- (unsigned long)length;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
+@property NSUInteger length;
+@property (assign) NSString *stringValue;
 
 @end

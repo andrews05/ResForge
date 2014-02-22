@@ -2,16 +2,23 @@
 
 // implements FBYT, FWRD, FLNG, FLLG
 @implementation ElementFBYT
+@synthesize length;
+@dynamic stringValue;
 
 - (id)initForType:(NSString *)t withLabel:(NSString *)l
 {
-	self = [super initForType:t withLabel:l];
-	if(!self) return nil;
-	if     ([t isEqualToString:@"FBYT"])	length = 1;
-	else if([t isEqualToString:@"FWRD"])	length = 2;
-	else if([t isEqualToString:@"FLNG"])	length = 4;
-	else if([t isEqualToString:@"FLLG"])	length = 8;
-	else									length = 0;
+	if (self = [super initForType:t withLabel:l]) {
+		if ([t isEqualToString:@"FBYT"])
+			length = 1;
+		else if ([t isEqualToString:@"FWRD"])
+			length = 2;
+		else if ([t isEqualToString:@"FLNG"])
+			length = 4;
+		else if ([t isEqualToString:@"FLLG"])
+			length = 8;
+		else
+			length = 0;
+	}
 	return self;
 }
 
@@ -35,16 +42,6 @@
 - (void)writeDataTo:(TemplateStream *)stream
 {
 	[stream advanceAmount:length pad:YES];
-}
-
-- (void)setLength:(unsigned long)l
-{
-	length = l;
-}
-
-- (unsigned long)length
-{
-	return length;
 }
 
 - (NSString *)stringValue

@@ -44,7 +44,7 @@
 
 // Items that have sub-items (like LSTB, LSTZ, LSTC and other lists) should implement these:
 - (int)subElementCount;
-- (Element *)subElementAtIndex:(int)n;
+- (Element *)subElementAtIndex:(NSInteger)n;
 - (void)readSubElementsFrom:(TemplateStream *)stream;
 
 // This is called on an item of your class when displaying resource data using a template that uses your field:

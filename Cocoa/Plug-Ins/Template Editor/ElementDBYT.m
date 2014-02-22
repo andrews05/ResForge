@@ -3,11 +3,13 @@
 #define SIZE_ON_DISK (1)
 
 @implementation ElementDBYT
+@synthesize value;
+@dynamic stringValue;
 
 - (id)copyWithZone:(NSZone *)zone
 {
 	ElementDBYT *element = [super copyWithZone:zone];
-	[element setValue:value];
+	element.value = value;
 	return element;
 }
 
@@ -24,16 +26,6 @@
 - (void)writeDataTo:(TemplateStream *)stream
 {
 	[stream writeAmount:SIZE_ON_DISK fromBuffer:&value];
-}
-
-- (void)setValue:(SInt8)v
-{
-	value = v;
-}
-
-- (SInt8)value
-{
-	return value;
 }
 
 - (NSString *)stringValue

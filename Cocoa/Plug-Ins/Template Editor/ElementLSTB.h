@@ -10,17 +10,12 @@
 	ElementLSTB *groupElementTemplate;	// TMPL equivalent of self, for cloning
 	ElementOCNT *countElement;			// Our "list counter" element.
 }
+@property (assign) NSString *stringValue;
+@property (retain) NSMutableArray *subElements;
+@property (assign) ElementLSTB *groupElementTemplate;
+@property (assign) ElementOCNT *countElement;
 
 - (void)readDataForElements:(TemplateStream *)stream;
 - (IBAction)createListEntry:(id)sender;
-
-- (void)setSubElements:(NSMutableArray *)a;
-- (NSMutableArray *)subElements;
-
-- (void)setGroupElementTemplate:(ElementLSTB *)e;
-- (ElementLSTB *)groupElementTemplate;
-
-- (void)setCountElement:(ElementOCNT *)e;
-- (ElementOCNT *)countElement;
 
 @end

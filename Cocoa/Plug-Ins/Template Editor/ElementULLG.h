@@ -4,11 +4,7 @@
 {
 	UInt64 value;
 }
-
-- (void)setValue:(UInt64)v;
-- (UInt64)value;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
+@property UInt64 value;
+@property (assign) NSString *stringValue;
 
 @end

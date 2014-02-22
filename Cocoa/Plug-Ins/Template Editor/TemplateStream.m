@@ -24,6 +24,7 @@
 #import "ElementKEYB.h"
 
 @implementation TemplateStream
+@synthesize bytesToGo;
 
 + (id)streamWithBytes:(char *)d length:(unsigned int)l
 {
@@ -40,7 +41,7 @@
 	self = [super init];
 	if(!self) return nil;
 	data = d;
-	bytesToGo = l;
+	self.bytesToGo = l;
 	counterStack = [[NSMutableArray alloc] init];
 	keyStack = [[NSMutableArray alloc] init];
 	return self;
@@ -61,16 +62,6 @@
 - (char *)data
 {
 	return data;
-}
-
-- (unsigned int)bytesToGo
-{
-	return bytesToGo;
-}
-
-- (void)setBytesToGo:(unsigned int)b
-{
-	bytesToGo = b;
 }
 
 - (unsigned int)bytesToNull

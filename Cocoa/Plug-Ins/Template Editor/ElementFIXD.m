@@ -1,17 +1,21 @@
 #import "ElementFIXD.h"
 
 @implementation ElementFIXD
+@synthesize value;
+@dynamic stringValue;
 
 - (id)copyWithZone:(NSZone *)zone
 {
 	ElementFIXD *element = [super copyWithZone:zone];
-	[element setValue:value];
+	element.value = value;
 	return element;
 }
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	[stream readAmount:sizeof(value) toBuffer:&value];
+	Fixed tmp = 0;
+	[stream readAmount:sizeof(value) toBuffer:&tmp];
+	value = CFSwapInt32BigToHost(tmp);
 }
 
 - (unsigned int)sizeOnDisk
@@ -21,17 +25,8 @@
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	[stream writeAmount:sizeof(value) fromBuffer:&value];
-}
-
-- (void)setValue:(Fixed)v
-{
-	value = v;
-}
-
-- (Fixed)value
-{
-	return value;
+	Fixed tmp = CFSwapInt32HostToBig(value);
+	[stream writeAmount:sizeof(value) fromBuffer:&tmp];
 }
 
 - (NSString *)stringValue

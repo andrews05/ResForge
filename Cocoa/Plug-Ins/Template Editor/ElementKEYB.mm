@@ -1,6 +1,8 @@
 #import "ElementKEYB.h"
 
 @implementation ElementKEYB
+@dynamic stringValue;
+@synthesize subElements;
 
 - (id)initForType:(NSString *)t withLabel:(NSString *)l
 {
@@ -65,24 +67,12 @@
 	}
 }
 
-- (void)setSubElements:(NSMutableArray *)a
-{
-	id old = subElements;
-	subElements = [a retain];
-	[old release];
-}
-
-- (NSMutableArray *)subElements
-{
-	return subElements;
-}
-
 - (int)subElementCount
 {
 	return [subElements count];
 }
 
-- (Element *)subElementAtIndex:(int)n
+- (Element *)subElementAtIndex:(NSInteger)n
 {
 	return [subElements objectAtIndex:n];
 }

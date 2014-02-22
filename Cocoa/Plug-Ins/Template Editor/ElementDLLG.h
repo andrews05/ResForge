@@ -4,11 +4,7 @@
 {
 	SInt64 value;
 }
-
-- (void)setValue:(SInt64)v;
-- (SInt64)value;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
+@property SInt64 value;
+@property (assign) NSString *stringValue;
 
 @end

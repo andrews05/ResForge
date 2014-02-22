@@ -3,6 +3,10 @@
 #import "ElementOCNT.h"
 
 @implementation ElementLSTE
+@synthesize writesZeroByte;
+@synthesize groupElementTemplate;
+@synthesize countElement;
+@dynamic stringValue;
 
 - (id)copyWithZone:(NSZone *)zone
 {
@@ -17,29 +21,6 @@
 {
 	[groupElementTemplate release];
 	[super dealloc];
-}
-
-- (void)setGroupElementTemplate:(ElementLSTB *)e
-{
-	id old = groupElementTemplate;
-	groupElementTemplate = [e retain];
-	[old release];
-}
-
-- (ElementLSTB *)groupElementTemplate
-{
-	return groupElementTemplate;
-}
-
-- (void)setCountElement:(ElementOCNT *)e
-{
-	// do not retain sibling element
-	countElement = e;
-}
-
-- (ElementOCNT *)countElement
-{
-	return countElement;
 }
 
 - (void)readSubElementsFrom:(TemplateStream *)stream

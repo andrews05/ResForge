@@ -1,17 +1,20 @@
 #import "ElementDATE.h"
 
 @implementation ElementDATE
+@synthesize value;
+@dynamic stringValue;
 
 - (id)copyWithZone:(NSZone *)zone
 {
 	ElementDATE *element = [super copyWithZone:zone];
-	[element setValue:value];
+	element.value = value;
 	return element;
 }
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	[stream readAmount:sizeof(value) toBuffer:&value];
+	UInt32 tmp = CFSwapInt32HostToBig(value);
+	[stream readAmount:sizeof(value) toBuffer:&tmp];
 }
 
 - (unsigned int)sizeOnDisk
@@ -21,17 +24,9 @@
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	[stream writeAmount:sizeof(value) fromBuffer:&value];
-}
-
-- (UInt32)value
-{
-	return value;
-}
-
-- (void)setValue:(UInt32)v
-{
-	value = v;
+	UInt32 tmp;
+	[stream writeAmount:sizeof(value) fromBuffer:&tmp];
+	value = CFSwapInt32BigToHost(tmp);
 }
 
 - (NSString *)stringValue

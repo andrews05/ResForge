@@ -4,12 +4,8 @@
 {
 	SInt8 value;
 }
-
-- (void)setValue:(SInt8)v;
-- (SInt8)value;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
+@property SInt8 value;
+@property (assign) NSString *stringValue;
 
 @end
 

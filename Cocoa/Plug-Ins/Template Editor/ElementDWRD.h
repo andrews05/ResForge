@@ -4,12 +4,8 @@
 {
 	SInt16 value;
 }
-
-- (void)setValue:(SInt16)v;
-- (SInt16)value;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
+@property SInt16 value;
+@property (assign) NSString *stringValue;
 
 @end
 

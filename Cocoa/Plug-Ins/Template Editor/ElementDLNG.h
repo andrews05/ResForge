@@ -4,12 +4,8 @@
 {
 	SInt32 value;
 }
-
-- (void)setValue:(SInt32)v;
-- (SInt32)value;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)str;
+@property SInt32 value;
+@property (assign) NSString *stringValue;
 
 @end
 

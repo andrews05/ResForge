@@ -5,9 +5,8 @@
 {
 	NSMutableArray *subElements;
 }
-
-- (void)setSubElements:(NSMutableArray *)a;
-- (NSMutableArray *)subElements;
+@property (assign) NSString *stringValue;
+@property (retain) NSMutableArray *subElements;
 
 @end
 
