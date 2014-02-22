@@ -22,7 +22,6 @@ extern NSString *RKResourcePboardType;
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[super dealloc];
 }
 
 - (NSWindow *)window
@@ -37,9 +36,7 @@ extern NSString *RKResourcePboardType;
 
 - (void)setResources:(NSMutableArray *)newResources
 {
-	id old = resources;
-	resources = [newResources retain];
-	[old release];
+	resources = newResources;
 	[resources sortUsingDescriptors:[outlineView sortDescriptors]];
 	[outlineView reloadData];
 }

@@ -5,6 +5,6 @@
 	NSData *value;
 }
 @property (copy) NSData *value;
-@property (assign) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 @end

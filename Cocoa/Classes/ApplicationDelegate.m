@@ -26,7 +26,7 @@
 {
 	// instanciate my own subclass of NSDocumentController so I can override the open dialog
 	// autorelease to fix an analyzer warning; the application already holds onto the document controller
-	[[[RKDocumentController alloc] init] autorelease];
+	[[RKDocumentController alloc] init];
 	[RKSupportResourceRegistry scanForSupportResources];
 }
 
@@ -49,11 +49,6 @@
     [self initUserDefaults];
 }
 
-- (void)dealloc
-{
-	[_icons release];
-	[super dealloc];
-}
 
 /*!
 @method			precacheIcons:
@@ -249,7 +244,7 @@
 				{
 					iconPath = [[NSBundle bundleForClass:editor] pathForResource:resourceType ofType:nil inDirectory:@"Resource Type Icons"];
 					if(iconPath)
-						icon = [[[NSImage alloc] initWithContentsOfFile:iconPath] autorelease];
+						icon = [[NSImage alloc] initWithContentsOfFile:iconPath];
 				}
 			}
 			
@@ -258,7 +253,7 @@
 			{
 				iconPath = [[NSBundle mainBundle] pathForResource:resourceType ofType:nil inDirectory:@"Resource Type Icons"];
 				if(iconPath)
-					icon = [[[NSImage alloc] initWithContentsOfFile:iconPath] autorelease];
+					icon = [[NSImage alloc] initWithContentsOfFile:iconPath];
 			}
 			
 			// try to retrieve from file system using our resource type to file name extension/bundle identifier code

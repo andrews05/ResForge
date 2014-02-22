@@ -5,6 +5,6 @@
 	SInt64 value;
 }
 @property SInt64 value;
-@property (assign) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 @end

@@ -5,6 +5,6 @@
 	Fixed value;
 }
 @property Fixed value;
-@property (assign) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 @end

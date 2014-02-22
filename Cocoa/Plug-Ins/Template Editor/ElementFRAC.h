@@ -5,6 +5,6 @@
 	Fract value;
 }
 @property Fract value;
-@property (assign) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 @end

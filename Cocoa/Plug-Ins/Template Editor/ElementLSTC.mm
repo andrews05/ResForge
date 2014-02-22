@@ -36,7 +36,7 @@
 		while(itemsToGo--)
 		{
 			// Actually read the item:
-			Element *nextItem = [[groupElementTemplate copy] autorelease];	// Make another list item just like this one.
+			Element *nextItem = [groupElementTemplate copy];	// Make another list item just like this one.
 			[nextItem setParentArray:nil];			// Make sure it doesn't get into this "if" clause.
 			[parentArray addObject:nextItem];		// Add it below ourselves.
 			[nextItem readDataFrom:stream];			// Read it the same way we were.

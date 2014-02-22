@@ -31,13 +31,13 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	liveEdit = NO;
 	if(liveEdit)
 	{
-		resource = [newResource retain];	// resource to work on and monitor for external changes
+		resource = newResource;	// resource to work on and monitor for external changes
 		backup = [newResource copy];		// for reverting only
 	}
 	else
 	{
 		resource = [newResource copy];		// resource to work on
-		backup = [newResource retain];		// actual resource to change when saving data and monitor for external changes
+		backup = newResource;		// actual resource to change when saving data and monitor for external changes
 	}
 	bytesPerRow = 16;
 	
@@ -49,10 +49,6 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[undoManager release];
-	[(id)resource release];
-	[sheetController release];
-	[super dealloc];
 }
 
 - (void)windowDidLoad
@@ -70,8 +66,8 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	else			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceWasSaved:) name:ResourceDataDidChangeNotification object:backup];
 
 
-	HFLineCountingRepresenter *lineCountingRepresenter = [[[HFLineCountingRepresenter alloc] init] autorelease];
-	HFStatusBarRepresenter *statusBarRepresenter = [[[HFStatusBarRepresenter alloc] init] autorelease];
+	HFLineCountingRepresenter *lineCountingRepresenter = [[HFLineCountingRepresenter alloc] init];
+	HFStatusBarRepresenter *statusBarRepresenter = [[HFStatusBarRepresenter alloc] init];
 	
 	[[textView layoutRepresenter] addRepresenter:lineCountingRepresenter];
 	[[textView layoutRepresenter] addRepresenter:statusBarRepresenter];
@@ -185,12 +181,12 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 - (void)saveResource:(id)sender
 {
-	[backup setData:[[[resource data] copy] autorelease]];
+	[backup setData:[[resource data] copy]];
 }
 
 - (void)revertResource:(id)sender
 {
-	[resource setData:[[[backup data] copy] autorelease]];
+	[resource setData:[[backup data] copy]];
 }
 
 - (void)showFind:(id)sender
@@ -226,7 +222,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	else
 	{
 		// this should refresh the view automatically
-		[resource setData:[[[object data] copy] autorelease]];
+		[resource setData:[[object data] copy]];
 		[self setDocumentEdited:NO];
 	}
 }

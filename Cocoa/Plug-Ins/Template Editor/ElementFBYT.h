@@ -5,6 +5,6 @@
 	NSUInteger length;
 }
 @property NSUInteger length;
-@property (assign) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 @end

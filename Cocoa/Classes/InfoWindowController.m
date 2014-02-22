@@ -54,11 +54,9 @@ FSGetCatalogInfo:
 	return ( result );
 }
 
-
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[super dealloc];
 }
 
 - (void)windowDidLoad
@@ -69,8 +67,8 @@ FSGetCatalogInfo:
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
 	
 	// retain views for swapping in and out
-	[[documentView retain] removeFromSuperview];
-	[[resourceView retain] removeFromSuperview];
+	[documentView removeFromSuperview];
+	[resourceView removeFromSuperview];
 	
 	[self setMainWindow:[NSApp mainWindow]];
 	[self updateInfoWindow];
@@ -142,8 +140,8 @@ FSGetCatalogInfo:
 		creator = CFSwapInt32BigToHost(creator);
 		type = CFSwapInt32BigToHost(type);
 
-		[[filePropertyForm cellAtIndex:0] setStringValue:[[[NSString alloc] initWithBytes:&creator length:sizeof(creator) encoding:NSMacOSRomanStringEncoding] autorelease]];
-		[[filePropertyForm cellAtIndex:1] setStringValue:[[[NSString alloc] initWithBytes:&type length:sizeof(type) encoding:NSMacOSRomanStringEncoding] autorelease]];
+		[[filePropertyForm cellAtIndex:0] setStringValue:[[NSString alloc] initWithBytes:&creator length:sizeof(creator) encoding:NSMacOSRomanStringEncoding]];
+		[[filePropertyForm cellAtIndex:1] setStringValue:[[NSString alloc] initWithBytes:&type length:sizeof(type) encoding:NSMacOSRomanStringEncoding]];
 //		[[filePropertyForm cellAtIndex:2] setObjectValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
 //		[[filePropertyForm cellAtIndex:3] setObjectValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
 		[[filePropertyForm cellAtIndex:2] setStringValue:[@(dataLogicalSize) description]];
@@ -215,7 +213,7 @@ FSGetCatalogInfo:
 {
 	static InfoWindowController *sharedInfoWindowController = nil;
 	if(!sharedInfoWindowController)
-		sharedInfoWindowController = [[InfoWindowController allocWithZone:[self zone]] initWithWindowNibName:@"InfoWindow"];
+		sharedInfoWindowController = [[InfoWindowController allocWithZone:nil] initWithWindowNibName:@"InfoWindow"];
 	return sharedInfoWindowController;
 }
 

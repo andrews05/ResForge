@@ -20,18 +20,17 @@
 
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
 {
-	id oldSelf = self;
+	//id oldSelf = self;
 	NSData *classData = [[(id <ResKnifeResourceProtocol>)newResource type] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-	NSString *className = [[[[[NSString alloc] initWithData:classData encoding:NSASCIIStringEncoding] autorelease] capitalizedString] stringByAppendingString:@"WindowController"];
+	NSString *className = [[[[NSString alloc] initWithData:classData encoding:NSASCIIStringEncoding] capitalizedString] stringByAppendingString:@"WindowController"];
 	if( [className isEqualToString:@"Yea(R)WindowController"] ) className = @"YearWindowController"; // lossy conversion turns ¨ into (R), so i have to special-case Ø‘Š¨
 	self = [[NSClassFromString(className) alloc] initWithResource:newResource];
-	[oldSelf release];
 	if (!self)
 		return nil;
 	
 	// do global stuff here
-	resource = [(id)newResource retain];
-	self.undoManager = [[[NSUndoManager alloc] init] autorelease];
+	resource = newResource;
+	self.undoManager = [[NSUndoManager alloc] init];
 	//localCenter = [[NSNotificationCenter alloc] init];
 	plugBundle = [NSBundle bundleForClass:[self class]];
 	//plugBundle = [NSBundle bundleWithIdentifier:@"au.com.sutherland-studios.resknife.novatools"];
@@ -45,7 +44,6 @@
 
 - (id)initWithResources:(id <ResKnifeResourceProtocol>)newResource, ...
 {
-	[self autorelease];
 	return nil;
 }
 
@@ -53,17 +51,6 @@
 {
 	//[localCenter release];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	self.resource = nil;
-	self.undoManager = nil;
-	self.descriptionDataSource = nil;
-	self.governmentDataSource = nil;
-	self.pictureDataSource = nil;
-	self.planetDataSource = nil;
-	self.shipDataSource = nil;
-	self.soundDataSource = nil;
-	self.spinDataSource = nil;
-
-	[super dealloc];
 }
 
 - (void)windowDidLoad

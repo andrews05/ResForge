@@ -13,12 +13,11 @@
 @protocol ResKnifeResourceProtocol;
 
 @interface PatternWindowController : NSWindowController <ResKnifePluginProtocol, NSTableViewDataSource, NSTableViewDelegate> {
-	NSTableView						*tableView;
 	IBOutlet NSImageView			*imageView;
 	id <ResKnifeResourceProtocol>	resource;
 	NSMutableArray					*images;
 }
 
-@property (assign) IBOutlet NSTableView *tableView;
+@property (weak) IBOutlet NSTableView *tableView;
 
 @end

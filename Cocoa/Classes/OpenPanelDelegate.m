@@ -22,12 +22,6 @@
 	[removeForkButton setEnabled:NO];
 }
 
-- (void)dealloc
-{
-	[forks release];
-	[super dealloc];
-}
-
 // open panel delegate method
 - (void)panelSelectionDidChange:(id)sender
 {

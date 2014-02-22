@@ -13,7 +13,7 @@
 - (id)initForType:(NSString *)t withLabel:(NSString *)l
 {
 	if (self = [super initForType:t withLabel:l]) {
-		value = [@"" retain];
+		value = @"";
 		if ([t isEqualToString:@"PSTR"] || [t isEqualToString:@"BSTR"])	{
 			_lengthBytes = 1;
 			_maxLength = UINT8_MAX;
@@ -105,11 +105,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[value release];
-	[super dealloc];
-}
 
 - (id)copyWithZone:(NSZone*)zone
 {
@@ -151,10 +146,10 @@
 	if(_minLength) memset(buffer, 0, _minLength);
 	[stream readAmount:length toBuffer:buffer];
 	if([NSString instancesRespondToSelector:@selector(initWithBytesNoCopy:length:encoding:freeWhenDone:)])	// 10.3
-		[self setStringValue:[[[NSString alloc] initWithBytesNoCopy:buffer length:length encoding:NSMacOSRomanStringEncoding freeWhenDone:YES] autorelease]];
+		[self setStringValue:[[NSString alloc] initWithBytesNoCopy:buffer length:length encoding:NSMacOSRomanStringEncoding freeWhenDone:YES]];
 	else
 	{
-		[self setStringValue:[[[NSString alloc] initWithBytes:buffer length:length encoding:NSMacOSRomanStringEncoding] autorelease]];
+		[self setStringValue:[[NSString alloc] initWithBytes:buffer length:length encoding:NSMacOSRomanStringEncoding]];
 		free(buffer);
 	}
 	

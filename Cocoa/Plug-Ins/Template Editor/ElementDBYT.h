@@ -5,7 +5,7 @@
 	SInt8 value;
 }
 @property SInt8 value;
-@property (assign) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 @end
 

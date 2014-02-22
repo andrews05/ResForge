@@ -5,6 +5,6 @@
 	UInt8 value;
 }
 @property UInt8 value;
-@property (assign) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 @end

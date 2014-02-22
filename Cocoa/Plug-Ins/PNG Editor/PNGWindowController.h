@@ -12,11 +12,10 @@
 
 
 @interface PNGWindowController : NSWindowController <ResKnifePluginProtocol> {
-	NSImageView						*imageView;
 	NSImage							*image;
 	id <ResKnifeResourceProtocol>	resource;
 }
 
-@property (assign) IBOutlet NSImageView *imageView;
+@property (weak) IBOutlet NSImageView *imageView;
 
 @end

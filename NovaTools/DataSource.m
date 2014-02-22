@@ -11,14 +11,12 @@
 
 - (id)init
 {
-	[self autorelease];
 	return nil;
 }
 
 - (id)initForType:(NSString *)typeString
 {
-	self = [super init];
-	if (self) {
+	if (self = [super init]) {
 		type = [typeString copy];
 		data = [[NSMutableDictionary alloc] init];
 		NSArray *resources = [NSClassFromString(@"Resource") allResourcesOfType:type inDocument:nil];	// nil document will search in ANY open document for the correct resource
@@ -27,14 +25,6 @@
 		parsed = [[NSMutableArray alloc] initWithArray:[data allValues]];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[type release];
-	self.data1 = nil;
-	[parsed release];
-	[super dealloc];
 }
 
 - (NSDictionary *)data
@@ -107,7 +97,7 @@
 	if( span.location != NSNotFound )	range.length = span.location - range.location;
 	else return @(-1);
 	@try {
-		return [[[NSNumber alloc] initWithInt:[[string substringWithRange:range] intValue]] autorelease];
+		return [[NSNumber alloc] initWithInt:[[string substringWithRange:range] intValue]];
 	} @catch (NSException *localException) {
 		return @(1);
 	}

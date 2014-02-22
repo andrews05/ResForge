@@ -59,7 +59,7 @@
 - (NSAttributedString *)attributedStringForObjectValue:(id)obj withDefaultAttributes:(NSDictionary *)attrs
 {
 	NSString *string = [self stringForObjectValue:obj];
-	return [[[NSAttributedString alloc] initWithString:string attributes:attrs] autorelease];
+	return [[NSAttributedString alloc] initWithString:string attributes:attrs];
 }
 
 - (NSString *)editingStringForObjectValue:(id)obj

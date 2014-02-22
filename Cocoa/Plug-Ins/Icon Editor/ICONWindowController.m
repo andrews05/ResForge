@@ -43,7 +43,7 @@
 	self = [self initWithWindowNibName:@"ICONWindow"];
 	if( !self ) return nil;
 	
-	resource = [newResource retain];
+	resource = newResource;
 	resData = nil;
 	resImage = nil;
 	
@@ -59,11 +59,7 @@
 
 -(void) dealloc
 {
-	[resImage autorelease];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[(id)resource autorelease];
-	[resData release];
-	[super dealloc];
 }
 
 
@@ -78,7 +74,6 @@
 	NSBitmapImageRep*		bir;
 	NSString*				resType = [resource type];
 	
-	[resImage autorelease];
 	resImage = [[NSImage alloc] init];
 	
 	// -mutableCopy the data instead of retaining, so we don't get inverted pixels on reopening the resource
@@ -123,9 +118,9 @@
 	for (NSUInteger i = 0; i < plane0length; ++i)
 		planes[0][i] ^= 0xff;
 	
-	bir = [[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:planes pixelsWide:pixelsWide pixelsHigh:pixelsHigh
+	bir = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:planes pixelsWide:pixelsWide pixelsHigh:pixelsHigh
 												bitsPerSample:1 samplesPerPixel:samplesPerPixel hasAlpha:hasAlpha isPlanar:isPlanar colorSpaceName:NSCalibratedWhiteColorSpace
-												  bytesPerRow:bytesPerRow bitsPerPixel:1] autorelease];
+												  bytesPerRow:bytesPerRow bitsPerPixel:1];
 
 		
 	[resImage addRepresentation:bir];

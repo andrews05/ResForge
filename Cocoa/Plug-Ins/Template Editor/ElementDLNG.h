@@ -5,7 +5,7 @@
 	SInt32 value;
 }
 @property SInt32 value;
-@property (assign) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 @end
 

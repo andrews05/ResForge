@@ -27,7 +27,7 @@
 		buffer[currentByte*3 +2] = 0x20;
 	}
 	
-	return [[[NSString alloc] initWithBytes:buffer length:(dataLength*3 -1) encoding:NSASCIIStringEncoding] autorelease];
+	return [[NSString alloc] initWithBytes:buffer length:(dataLength*3 -1) encoding:NSASCIIStringEncoding];
 }
 
 - (NSString *)asciiRepresentation
@@ -44,7 +44,7 @@
 		else buffer[currentByte] = 0x2E;	// full stop								
 	}
 	
-	return [[[NSString alloc] initWithBytes:buffer length:dataLength encoding:NSASCIIStringEncoding] autorelease];
+	return [[NSString alloc] initWithBytes:buffer length:dataLength encoding:NSASCIIStringEncoding];
 }
 
 - (NSString *)nonLossyAsciiRepresentation
@@ -63,7 +63,7 @@
 		else buffer[currentByte] = 0x2E;	// full stop								
 	}
 	
-	return [[[NSString alloc] initWithBytes:buffer length:dataLength encoding:NSASCIIStringEncoding] autorelease];
+	return [[NSString alloc] initWithBytes:buffer length:dataLength encoding:NSASCIIStringEncoding];
 }
 
 @end

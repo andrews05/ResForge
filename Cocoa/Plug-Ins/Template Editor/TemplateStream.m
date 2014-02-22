@@ -28,12 +28,12 @@
 
 + (id)streamWithBytes:(char *)d length:(unsigned int)l
 {
-	return [[[self alloc] initStreamWithBytes:d length:l] autorelease];
+	return [[self alloc] initStreamWithBytes:d length:l];
 }
 
 + (id)substreamWithStream:(TemplateStream *)s length:(unsigned int)l
 {
-	return [[[self alloc] initWithStream:s length:l] autorelease];
+	return [[self alloc] initWithStream:s length:l];
 }
 
 - (id)initStreamWithBytes:(char *)d length:(unsigned int)l
@@ -50,13 +50,6 @@
 - (id)initWithStream:(TemplateStream *)s length:(unsigned int)l
 {
 	return [self initStreamWithBytes:[s data] length:MIN(l, [s bytesToGo])];
-}
-
-- (void)dealloc
-{
-	[counterStack release];
-	[keyStack release];
-	[super dealloc];
 }
 
 - (char *)data
@@ -118,9 +111,9 @@
 	if(*data + 5 <= bytesToGo)
 	{
 		bytesToGo -= *data + 5;
-		label = [[[NSString alloc] initWithBytes:data+1 length:*data encoding:NSMacOSRomanStringEncoding] autorelease];
+		label = [[NSString alloc] initWithBytes:data+1 length:*data encoding:NSMacOSRomanStringEncoding];
 		data += *data +1;
-		type = [[[NSString alloc] initWithBytes:data length:4 encoding:NSMacOSRomanStringEncoding] autorelease];
+		type = [[NSString alloc] initWithBytes:data length:4 encoding:NSMacOSRomanStringEncoding];
 		data += 4;
 	}
 	else

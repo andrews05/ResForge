@@ -53,7 +53,7 @@
 - (void)setStringValue:(NSString *)str
 {
 //	UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[[NSCalendarDate dateWithString:str] timeIntervalSinceReferenceDate], &value);
-	NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 	[formatter setDateStyle:NSDateFormatterShortStyle];
 	[formatter setTimeStyle:NSDateFormatterShortStyle];
 	NSDate *date = [formatter dateFromString:str];

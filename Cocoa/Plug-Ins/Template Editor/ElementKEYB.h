@@ -5,8 +5,8 @@
 {
 	NSMutableArray *subElements;
 }
-@property (assign) NSString *stringValue;
-@property (retain) NSMutableArray *subElements;
+@property (weak) NSString *stringValue;
+@property (strong) NSMutableArray *subElements;
 
 @end
 

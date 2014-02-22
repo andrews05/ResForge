@@ -12,11 +12,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[subElements release];
-	[super dealloc];
-}
 
 - (id)copyWithZone:(NSZone *)zone
 {

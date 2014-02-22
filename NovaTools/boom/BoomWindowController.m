@@ -66,7 +66,7 @@
 	[playButton setEnabled:!silent];
 	
 	// image well
-	[imageWell setImage:[[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:[plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"] andID:image inDocument:nil] data]] autorelease]];
+	[imageWell setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:[plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"] andID:image inDocument:nil] data]] ];
 }
 
 - (void)comboBoxWillPopUp:(NSNotification *)notification
@@ -87,23 +87,20 @@
 	if( sender == graphicsField && [sender stringValue] )
 	{
 		id old = image;
-		image = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		image = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![image isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == soundField && [sender stringValue]  )
 	{
 		id old = sound;
-		sound = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		sound = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![sound isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == frameRateField )
 	{
 		id old = frameRate;
 		frameRate = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![frameRate isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	
 	// hack to simply & easily parse combo boxes
@@ -127,7 +124,7 @@
 	{
 		//SndListPtr sndPtr = (SndListPtr) [data bytes];
 		//SndPlay( nil, &sndPtr, false );
-		NSSound *nssound = [[[NSSound alloc] initWithData:data] autorelease];
+		NSSound *nssound = [[NSSound alloc] initWithData:data];
 		[nssound play];
 	}
 	else NSBeep();

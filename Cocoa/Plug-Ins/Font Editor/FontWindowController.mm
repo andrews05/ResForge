@@ -18,7 +18,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	self = [self initWithWindowNibName:@"FontDocument"];
 	if(!self) return nil;
 	
-	resource = [(id)inResource retain];
+	resource = inResource;
 	headerTable = [[NSMutableArray alloc] init];
 	[self loadFontFromResource];
 	
@@ -51,7 +51,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 			UInt32 offset = *pos++;
 			UInt32 length = *pos++;
 			[headerTable addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-				[[[NSString alloc] initWithBytes:&name length:4 encoding:NSMacOSRomanStringEncoding] autorelease], @"name",
+				[[NSString alloc] initWithBytes:&name length:4 encoding:NSMacOSRomanStringEncoding], @"name",
 				@(checksum), @"checksum",
 				@(offset), @"offset",
 				@(length), @"length",
@@ -68,9 +68,6 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[(id)resource release];
-	[headerTable release];
-	[super dealloc];
 }
 
 - (void)windowDidLoad
@@ -263,7 +260,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 		return;
 	}
 	
-	id undoResource = [[tableResource copy] autorelease];
+	id undoResource = [tableResource copy];
 	[undoResource setData:[table valueForKey:@"data"]];
 	[[[resource document] undoManager] registerUndoWithTarget:resource selector:@selector(setTableData:) object:undoResource];
 	[[[resource document] undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Edit of table '%@'", nil), [tableResource type]]];

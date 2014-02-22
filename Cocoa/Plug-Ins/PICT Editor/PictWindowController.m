@@ -9,7 +9,7 @@
 	self = [self initWithWindowNibName:@"PictWindow"];
 	if( !self ) return nil;
 	
-	resource = [newResource retain];
+	resource = newResource;
 	
 	// load the window from the nib
 	[self window];
@@ -24,8 +24,6 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[(id)resource autorelease];
-	[super dealloc];
 }
 
 - (void)windowDidLoad
@@ -36,7 +34,7 @@
 		[[self window] setTitle:[resource defaultWindowTitle]];
 		//SetWindowAlternateTitle( (WindowRef) [[self window] windowRef], (CFStringRef) [NSString stringWithFormat:@"%@ %@: Ò%@Ó", [resource type], [resource resID], [resource name]] );
 	
-	NSImage *image = [[[NSImage alloc] initWithData:[resource data]] autorelease];
+	NSImage *image = [[NSImage alloc] initWithData:[resource data]];
 	if( image )
 	{
 		// resize the window to the size of the image
@@ -64,7 +62,7 @@
 	if( [notification object] == (id)resource )
 	{
 		// refresh image
-		NSImage *image = [[[NSImage alloc] initWithData:[resource data]] autorelease];
+		NSImage *image = [[NSImage alloc] initWithData:[resource data]];
 		if( image )
 		{
 			// resize the window to the size of the image

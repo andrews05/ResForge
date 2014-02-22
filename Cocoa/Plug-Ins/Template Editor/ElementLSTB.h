@@ -7,13 +7,13 @@
 @interface ElementLSTB : Element
 {
 	NSMutableArray *subElements;
-	ElementLSTB *groupElementTemplate;	// TMPL equivalent of self, for cloning
-	ElementOCNT *countElement;			// Our "list counter" element.
+	ElementLSTB *__weak groupElementTemplate;	// TMPL equivalent of self, for cloning
+	ElementOCNT *__weak countElement;			// Our "list counter" element.
 }
-@property (assign) NSString *stringValue;
-@property (retain) NSMutableArray *subElements;
-@property (assign) ElementLSTB *groupElementTemplate;
-@property (assign) ElementOCNT *countElement;
+@property (weak) NSString *stringValue;
+@property (strong) NSMutableArray *subElements;
+@property (weak) ElementLSTB *groupElementTemplate;
+@property (weak) ElementOCNT *countElement;
 
 - (void)readDataForElements:(TemplateStream *)stream;
 - (IBAction)createListEntry:(id)sender;

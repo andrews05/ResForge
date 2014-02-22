@@ -111,7 +111,6 @@
 	NSString		*path;
 	
 	// release any existing registry to clear old values
-	if(typeRegistry) [typeRegistry release];
 	typeRegistry = [[NSMutableDictionary alloc] init];
 	
 	// scan all paths

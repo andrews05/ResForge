@@ -22,7 +22,7 @@ NSString *DocumentInfoDidChangeNotification = @"DocumentInfoDidChangeNotificatio
 extern NSString *RKResourcePboardType;
 
 @interface ResourceDocument ()
-@property (retain) IBOutlet NSView *viewToolbarView;
+@property (strong) IBOutlet NSView *viewToolbarView;
 @end
 
 @implementation ResourceDocument
@@ -35,8 +35,8 @@ extern NSString *RKResourcePboardType;
 	toolbarItems = [[NSMutableDictionary alloc] init];
 	resources = [[NSMutableArray alloc] init];
 	fork = nil;
-	creator = [[@"ResK" dataUsingEncoding:NSMacOSRomanStringEncoding] retain];	// should I be calling -setCreator & -setType here instead?
-	type = [[@"rsrc" dataUsingEncoding:NSMacOSRomanStringEncoding] retain];
+	creator = [@"ResK" dataUsingEncoding:NSMacOSRomanStringEncoding];	// should I be calling -setCreator & -setType here instead?
+	type = [@"rsrc" dataUsingEncoding:NSMacOSRomanStringEncoding];
 	return self;
 }
 
@@ -44,13 +44,7 @@ extern NSString *RKResourcePboardType;
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	if (fork)
-		DisposePtr((Ptr) fork);
-	[resources release];
-	[toolbarItems release];
-	[type release];
-	[creator release];
-	[sheetController release];
-	[super dealloc];
+		DisposePtr((Ptr)fork);
 }
 
 #pragma mark -
@@ -303,8 +297,6 @@ extern NSString *RKResourcePboardType;
 			[resources addObject:resource];		// array retains resource
 			if (badSize != 0)
 				NSLog(@"GetResourceSizeOnDisk() reported incorrect size for %@ resource %@ in %@: %li should be %li", resType, resID, [self displayName], badSize, sizeLong);
-			[name release];
-			[resType release];
 			
 			HUnlock(resourceHandle);
 			ReleaseResource(resourceHandle);
@@ -581,14 +573,13 @@ extern NSString *RKResourcePboardType;
 	[panel setNameFieldStringValue:filename];
 	//[panel beginSheetForDirectory:nil file:filename modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(exportPanelDidEnd:returnCode:contextInfo:) contextInfo:[exportData retain]];
 	[panel beginSheetModalForWindow:mainWindow completionHandler:^(NSInteger result) {
-		[self exportPanelDidEnd:panel returnCode:result contextInfo:exportData];
+		[self exportPanelDidEnd:panel returnCode:result contextInfo:CFBridgingRetain(exportData)];
 	}];
 }
 
 - (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	NSData *data = (NSData *) contextInfo;
-	[data autorelease];
+	NSData *data = CFBridgingRelease(contextInfo);
 	
 	if(returnCode == NSOKButton)
 		[data writeToURL:[sheet URL] atomically:YES];
@@ -666,7 +657,7 @@ extern NSString *RKResourcePboardType;
 	[self setupToolbar:controller];
 	
 	{	// set up first column in outline view to display images as well as text
-		ResourceNameCell *resourceNameCell = [[[ResourceNameCell alloc] init] autorelease];
+		ResourceNameCell *resourceNameCell = [[ResourceNameCell alloc] init];
 		[resourceNameCell setEditable:YES];
 		[[outlineView tableColumnWithIdentifier:@"name"] setDataCell:resourceNameCell];
 //		NSLog(@"Changed data cell");
@@ -755,7 +746,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[toolbarItems removeAllObjects];	// just in case this method is called more than once per document (which it shouldn't be!)
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKCreateItemIdentifier];
-	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Create", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Create", nil)];
 	[item setToolTip:NSLocalizedString(@"Create New Resource", nil)];
@@ -765,7 +755,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[toolbarItems setObject:item forKey:RKCreateItemIdentifier];
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKDeleteItemIdentifier];
-	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Delete", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Delete", nil)];
 	[item setToolTip:NSLocalizedString(@"Delete Selected Resource", nil)];
@@ -776,7 +765,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	
 	NSImage *image;
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKEditItemIdentifier];
-	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Edit", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Edit", nil)];
 	[item setToolTip:NSLocalizedString(@"Edit Resource In Default Editor", nil)];
@@ -788,7 +776,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[toolbarItems setObject:item forKey:RKEditItemIdentifier];
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKEditHexItemIdentifier];
-	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Edit Hex", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Edit Hex", nil)];
 	[item setToolTip:NSLocalizedString(@"Edit Resource As Hexadecimal", nil)];
@@ -800,7 +787,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[toolbarItems setObject:item forKey:RKEditHexItemIdentifier];
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKSaveItemIdentifier];
-	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Save", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Save", nil)];
 	[item setToolTip:[NSString stringWithFormat:NSLocalizedString(@"Save To %@ Fork", nil), !fork? NSLocalizedString(@"Data", nil) : NSLocalizedString(@"Resource", nil)]];
@@ -810,7 +796,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[toolbarItems setObject:item forKey:RKSaveItemIdentifier];
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKShowInfoItemIdentifier];
-	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Show Info", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Show Info", nil)];
 	[item setToolTip:NSLocalizedString(@"Show Resource Information Window", nil)];
@@ -820,7 +805,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[toolbarItems setObject:item forKey:RKShowInfoItemIdentifier];
 	
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKExportItemIdentifier];
-	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Export Data", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Export Resource Data", nil)];
 	[item setToolTip:NSLocalizedString(@"Export the resource's data to a file", nil)];
@@ -830,7 +814,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[toolbarItems setObject:item forKey:RKExportItemIdentifier];
 
 	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKViewItemIdentifier];
-	[item autorelease];
 	[item setLabel:NSLocalizedString(@"View", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"View", nil)];
 	[item setToolTip:NSLocalizedString(@"View as a list or previews", nil)];
@@ -840,7 +823,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	
 	if([windowController window] == mainWindow)
 	{
-		NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:RKToolbarIdentifier] autorelease];
+		NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:RKToolbarIdentifier];
 		
 		// set toolbar properties
 		[toolbar setVisible:YES];
@@ -983,7 +966,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 		id<ResKnifePluginProtocol> plug = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
 		if (plug)
-			return [plug autorelease];
+			return plug;
 	}
 	
 	// if no editor exists, or the editor is broken, open using template
@@ -1019,7 +1002,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 		id<ResKnifeTemplatePluginProtocol> plug = [(id <ResKnifeTemplatePluginProtocol>)[editorClass alloc] initWithResources:resource, tmpl, nil];
 		if (plug)
-			return [plug autorelease];
+			return plug;
 	}
 	
 	// if no template exists, or template editor is broken, open as hex
@@ -1043,7 +1026,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	// update: doug says window controllers automatically release themselves when their window is closed.
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 	id <ResKnifePluginProtocol> plugController = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
-	return [plugController autorelease];
+	return plugController;
 }
 
 
@@ -1079,7 +1062,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		});
 		xpc_connection_resume(connection);
 		xpc_connection_send_message(connection, dict);
-		xpc_release(dict);
 	}
 	else NSBeep();
 }
@@ -1096,17 +1078,17 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (void)playSoundThreadController:(NSData *)data
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	if(data && [data length] != 0)
-	{
-		// plays sound synchronously, thread exits when sound is done playing
+	@autoreleasepool {
+		if(data && [data length] != 0)
+		{
+			// plays sound synchronously, thread exits when sound is done playing
 #if !__LP64__
-		SndListPtr sndPtr = (SndListPtr) [data bytes];
-		SndPlay(nil, &sndPtr, false);
+			SndListPtr sndPtr = (SndListPtr) [data bytes];
+			SndPlay(nil, &sndPtr, false);
 #endif
+		}
+		else NSBeep();
 	}
-	else NSBeep();
-	[pool release];
 }
 
 /*!
@@ -1121,7 +1103,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished
 {
 	// unused because I can't get NSSound to play snd resources, so I use Carbon's SndPlay(), above
-	if(finished) [sound release];
 	NSLog(@"sound released");
 }
 
@@ -1129,7 +1110,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	// this saves the current resource's name so we can undo the change
 	Resource *resource = (Resource *) [notification object];
-	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setName:) object:[[[resource name] copy] autorelease]];
+	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setName:) object:[[resource name] copy]];
 	[[self undoManager] setActionName:NSLocalizedString(@"Name Change", nil)];
 }
 
@@ -1137,7 +1118,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	// this saves the current resource's ID number so we can undo the change
 	Resource *resource = (Resource *) [notification object];
-	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setResID:) object:[[[resource resID] copy] autorelease]];
+	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setResID:) object:[[resource resID] copy]];
 	if([[resource name] length] == 0)
 		[[self undoManager] setActionName:NSLocalizedString(@"ID Change", nil)];
 	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"ID Change for '%@'", nil), [resource name]]];
@@ -1147,7 +1128,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	// this saves the current resource's type so we can undo the change
 	Resource *resource = (Resource *) [notification object];
-	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setType:) object:[[[resource type] copy] autorelease]];
+	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setType:) object:[[resource type] copy]];
 	if([[resource name] length] == 0)
 		[[self undoManager] setActionName:NSLocalizedString(@"Type Change", nil)];
 	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Type Change for '%@'", nil), [resource name]]];
@@ -1157,7 +1138,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	// this saves the current state of the resource's attributes so we can undo the change
 	Resource *resource = (Resource *) [notification object];
-	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setAttributes:) object:[[[resource attributes] copy] autorelease]];
+	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setAttributes:) object:[[resource attributes] copy]];
 	if([[resource name] length] == 0)
 		[[self undoManager] setActionName:NSLocalizedString(@"Attributes Change", nil)];
 	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Attributes Change for '%@'", nil), [resource name]]];
@@ -1212,14 +1193,14 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 			NSMutableArray *remainingResources = [[NSMutableArray alloc] initWithCapacity:1];
 			[remainingResources addObject:resource];
 			[remainingResources addObjectsFromArray:[enumerator allObjects]];
-			NSBeginAlertSheet(@"Paste Error", @"Unique ID", @"Skip", @"Overwrite", mainWindow, self, NULL, @selector(overwritePasteSheetDidDismiss:returnCode:contextInfo:), remainingResources, @"There already exists a resource of type %@ with ID %@. Do you wish to assign the pasted resource a unique ID, overwrite the existing resource, or skip pasting of this resource?", [resource type], [resource resID]);
+			NSBeginAlertSheet(@"Paste Error", @"Unique ID", @"Skip", @"Overwrite", mainWindow, self, NULL, @selector(overwritePasteSheetDidDismiss:returnCode:contextInfo:), CFBridgingRetain(remainingResources), @"There already exists a resource of type %@ with ID %@. Do you wish to assign the pasted resource a unique ID, overwrite the existing resource, or skip pasting of this resource?", [resource type], [resource resID]);
 		}
 	}
 }
 
 - (void)overwritePasteSheetDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	NSMutableArray *remainingResources = [NSMutableArray arrayWithArray:[(NSArray *)contextInfo autorelease]];
+	NSMutableArray *remainingResources = [NSMutableArray arrayWithArray:(NSArray *)CFBridgingRelease(contextInfo)];
 	Resource *resource = [remainingResources objectAtIndex:0];
 	if(returnCode == NSAlertDefaultReturn)	// unique ID
 	{
@@ -1357,7 +1338,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		[[self undoManager] registerUndoWithTarget:self selector:@selector(setCreator:) object:creator];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change Creator Code", nil)];
 		creator = [newCreator copy];
-		[old release];
 		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:[NSDictionary dictionaryWithObjectsAndKeys:self, @"NSDocument", creator, @"creator", nil]];
 		return YES;
 	}
@@ -1373,7 +1353,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		[[self undoManager] registerUndoWithTarget:self selector:@selector(setType:) object:type];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change File Type", nil)];
 		type = [newType copy];
-		[old release];
 		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:[NSDictionary dictionaryWithObjectsAndKeys:self, @"NSDocument", type, @"type", nil]];
 		return YES;
 	}

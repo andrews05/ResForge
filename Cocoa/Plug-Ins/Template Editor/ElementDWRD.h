@@ -5,7 +5,7 @@
 	SInt16 value;
 }
 @property SInt16 value;
-@property (assign) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 @end
 

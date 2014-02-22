@@ -42,7 +42,7 @@
 	
 	NSImage *newImage = [[NSImage alloc] init];
 	[newImage addRepresentation:rep];
-	return [newImage autorelease];
+	return newImage;
 }
 
 - (void)loadPAT:(id <ResKnifeResourceProtocol>)inResource {
@@ -82,7 +82,7 @@
 
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)inResource {
 	if (self = [self initWithWindowNibName:@"PatternWindowController"]) {
-		resource = [inResource retain];
+		resource = inResource;
 		if ([[resource type] isEqualToString:@"PAT "]) // single 8x8 B&W pattern
 			[self loadPAT:resource];
 		else if ([[resource type] isEqualToString:@"PAT#"]) // list of 8x8 B&W patterns
@@ -93,11 +93,6 @@
 	return self;
 }
 
-- (void)dealloc {
-	[resource release];
-	[images release];
-	[super dealloc];
-}
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {

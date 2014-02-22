@@ -14,7 +14,7 @@
 	static PasteboardWindowController *sharedPasteboardWindowController = nil;
 	if( !sharedPasteboardWindowController )
 	{
-		sharedPasteboardWindowController = [[PasteboardWindowController allocWithZone:[self zone]] init];
+		sharedPasteboardWindowController = [[PasteboardWindowController allocWithZone:nil] init];
 	}
 	return sharedPasteboardWindowController;
 }

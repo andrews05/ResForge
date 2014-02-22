@@ -48,15 +48,9 @@
 	return [resource defaultWindowTitle];
 }
 
-- (void)dealloc {
-	[image release];
-	[resource release];
-	[super dealloc];
-}
-
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)inResource {
 	if (self = [self initWithWindowNibName:@"PNGWindowController"]) {
-		resource = [inResource retain];
+		resource = inResource;
 		[self window];
 	}
 	
@@ -65,7 +59,6 @@
 
 - (void)resourceDataDidChange:(NSNotification *)note {
 	NSData *data = [resource data];
-	[image release];
 	image = [[NSImage alloc] initWithData:data];
 	[imageView setImage:image];
 }

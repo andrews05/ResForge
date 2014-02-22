@@ -83,7 +83,6 @@
 		if(*((unsigned short *)[unicodeData mutableBytes]) == 0xFEFF || *((unsigned short *)[unicodeData mutableBytes]) == 0xFFFE)
 			[unicodeData replaceBytesInRange:NSMakeRange(0,2) withBytes:NULL length:0];
 		[self editData:[[[self window] windowController] data] replaceBytesInRange:selection withData:unicodeData];
-		[unicodeData release];
 	}
 }
 
@@ -176,7 +175,7 @@ static NSRange draggedRange;
 	
 	// convert hex string to data
 	if([sender draggingSource] == [(HexEditorDelegate *)[self delegate] hex])
-		pastedData = [[[[NSString alloc] initWithData:pastedData encoding:[NSString defaultCStringEncoding]] autorelease] dataFromHex];
+		pastedData = [[[NSString alloc] initWithData:pastedData encoding:[NSString defaultCStringEncoding]] dataFromHex];
 	
 	if([sender draggingSource] == [(HexEditorDelegate *)[self delegate] hex] || [sender draggingSource] == [(HexEditorDelegate *)[self delegate] ascii])
 //	if(operation == NSDragOperationMove)
@@ -220,7 +219,7 @@ static NSRange draggedRange;
 - (void)insertText:(NSString *)string
 {
 	NSRange selection = [(HexEditorDelegate *)[self delegate] rangeForUserTextChange];
-	NSMutableData *data = [[[[[self window] windowController] data] mutableCopy] autorelease];
+	NSMutableData *data = [[[[self window] windowController] data] mutableCopy];
 	NSData *replaceData = [string dataUsingEncoding:NSASCIIStringEncoding];
 	
 	if(self == (id) [(HexEditorDelegate *)[self delegate] hex])
@@ -282,7 +281,6 @@ static NSRange draggedRange;
 	
 	// replace bytes (updates views implicitly)
 	[self editData:data replaceBytesInRange:selection withData:[NSData data]];
-	[data release];
 	
 	// set the new selection (insertion point)
 	if(selection.length == 0 && selection.location > 0)
@@ -304,7 +302,6 @@ static NSRange draggedRange;
 	
 	// replace bytes (updates views implicitly)
 	[self editData:data replaceBytesInRange:selection withData:[NSData data]];
-	[data release];
 	
 	// set the new selection/insertion point
 	selection = [self rangeForUserTextChange];
@@ -342,7 +339,7 @@ static NSRange draggedRange;
 	// save data we're about to replace so we can restore it in an undo
 	NSRange newRange = NSMakeRange(range.location, [newBytes length]);
 	NSMutableData *newData = [NSMutableData dataWithData:data];
-	NSData *oldBytes = [[data subdataWithRange:range] retain];	// bug: memory leak, need to release somewhere (call -[NSInvocation retainArguments] instead?)
+	NSData *oldBytes = [data subdataWithRange:range];	// bug: memory leak, need to release somewhere (call -[NSInvocation retainArguments] instead?)
 	
 	// manipulate undo stack to concatenate multiple undos
 	BOOL closeUndoGroup = NO;
@@ -363,7 +360,6 @@ static NSRange draggedRange;
 	
 	// record undo with new data object
 	[[[[self window] undoManager] prepareWithInvocationTarget:self] editData:newData replaceBytesInRange:newRange withData:oldBytes];
-	[oldBytes release];
 	[[[self window] undoManager] setActionName:NSLocalizedString(@"Typing", nil)];
 	if(closeUndoGroup)
 		[[[self window] undoManager] endUndoGrouping];

@@ -16,9 +16,11 @@
 	IBOutlet NSButton	*matchEntireWordsBox;
 	IBOutlet NSMatrix	*searchASCIIOrHexRadios;
 	
-	NSString *findString;
-	NSString *replaceString;
 }
+
+@property (copy) NSString *findString;
+@property (copy) NSString *replaceString;
+
 
 - (void)updateStrings;
 

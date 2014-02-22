@@ -2,6 +2,8 @@
 #import "HexWindowController.h"
 
 @implementation FindSheetController
+@synthesize findString;
+@synthesize replaceString;
 
 /* FORM DELEGATION METHOD */
 
@@ -12,11 +14,8 @@
 
 - (void)updateStrings
 {
-	[findString autorelease];
-	[replaceString autorelease];
-	
-	findString = [[[findReplaceForm cellAtIndex:0] stringValue] copy];
-	replaceString = [[[findReplaceForm cellAtIndex:1] stringValue] copy];
+	self.findString = [[findReplaceForm cellAtIndex:0] stringValue];
+	self.replaceString = [[findReplaceForm cellAtIndex:1] stringValue];
 }
 
 /* HIDE AND SHOW SHEET */
@@ -58,8 +57,7 @@
 
 - (IBAction)findWithSelection:(id)sender
 {
-	[findString autorelease];
-	findString = [[NSString string] retain];
+	findString = [NSString string];
 	NSLog( @"Finding \"%@\"", findString );
 }
 

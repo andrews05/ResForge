@@ -10,7 +10,6 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[super dealloc];
 }
 
 - (void)awakeFromNib
@@ -101,7 +100,7 @@
 {
 	static PrefsWindowController *sharedPrefsWindowController = nil;
 	if( !sharedPrefsWindowController )
-		sharedPrefsWindowController = [[PrefsWindowController allocWithZone:[self zone]] init];
+		sharedPrefsWindowController = [[PrefsWindowController allocWithZone:nil] init];
 	return sharedPrefsWindowController;
 }
 

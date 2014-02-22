@@ -5,6 +5,6 @@
 	UInt32 value;
 }
 @property UInt32 value;
-@property (assign) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 @end

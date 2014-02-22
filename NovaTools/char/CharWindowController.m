@@ -71,9 +71,9 @@
 	cash = [[NSNumber alloc] initWithLong:charRec->startCash];
 	kills = [[NSNumber alloc] initWithShort:charRec->startKills];
 	date = [[NSCalendarDate alloc] initWithYear:charRec->startYear month:charRec->startMonth day:charRec->startDay hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-	tempPrefix = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Prefix length:16] encoding:NSMacOSRomanStringEncoding] autorelease];
+	tempPrefix = [[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Prefix length:16] encoding:NSMacOSRomanStringEncoding];
 	prefix = [[NSString alloc] initWithString:tempPrefix];
-	tempSuffix = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Suffix length:16] encoding:NSMacOSRomanStringEncoding] autorelease];
+	tempSuffix = [[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Suffix length:16] encoding:NSMacOSRomanStringEncoding];
 	suffix = [[NSString alloc] initWithString:tempSuffix];
 	start1 = [[NSNumber alloc] initWithShort:charRec->startSystem[0]];
 	start2 = [[NSNumber alloc] initWithShort:charRec->startSystem[1]];
@@ -96,19 +96,13 @@
 	introDelay2 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[1]];
 	introDelay3 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[2]];
 	introDelay4 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[3]];
-	tempStart = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->OnStart length:256] encoding:NSMacOSRomanStringEncoding] autorelease];
+	tempStart = [[NSString alloc] initWithData:[NSData dataWithBytes:charRec->OnStart length:256] encoding:NSMacOSRomanStringEncoding];
 	onStart = [[NSString alloc] initWithString:tempStart];
 	
 	// rotating image
 	currentPict = 0;
 	
 	return self;
-}
-
-- (void)dealloc
-{
-	// bug: release everything
-	[super dealloc];
 }
 
 - (void)windowDidLoad
@@ -217,7 +211,7 @@
 	stringData = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"desc" value:@"" table:@"Resource Types"] andID:introText inDocument:nil] data];
 	if( stringData != nil )
 	{
-		[introTextView setString:[[[NSString alloc] initWithData:stringData encoding:NSMacOSRomanStringEncoding] autorelease]];
+		[introTextView setString:[[NSString alloc] initWithData:stringData encoding:NSMacOSRomanStringEncoding]];
 //		[introTextView scrollToTop];	// bug: made up method - needs implementing
 	}
 	// ncbs
@@ -226,17 +220,13 @@
 
 - (IBAction)editDate:(id)sender
 {
-	id old = date;
 	date = [[NSCalendarDate alloc] initWithYear:[yearField intValue] month:[monthField intValue] day:[dayField intValue] hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-	[old release];
 	[self update];
 }
 
 - (IBAction)stepDate:(id)sender
 {
-	id old = date;
 	date = [[NSCalendarDate alloc] initWithYear:[yearStepper intValue] month:[monthStepper intValue] day:[dayStepper intValue] hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-	[old release];
 	[self update];
 }
 
@@ -268,28 +258,28 @@
 			// install new timer
 			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)[introDelay1 doubleValue] target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict1 inDocument:nil] data]] autorelease]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict1 inDocument:nil] data]]];
 			break;
 	
 		case 2:
 			// install new timer
 			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)[introDelay2 doubleValue] target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict2 inDocument:nil] data]] autorelease]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict2 inDocument:nil] data]]];
 			break;
 	
 		case 3:
 			// install new timer
 			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)[introDelay3 doubleValue] target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict3 inDocument:nil] data]] autorelease]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict3 inDocument:nil] data]]];
 			break;
 	
 		case 4:
 			// install new timer
 			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)[introDelay4 doubleValue] target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict4 inDocument:nil] data]] autorelease]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict4 inDocument:nil] data]]];
 			break;
 	
 	}
@@ -324,23 +314,20 @@
 	if( sender == shipField && [sender stringValue] )
 	{
 		id old = ship;
-		ship = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		ship = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![ship isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == cashField )
 	{
 		id old = cash;
 		cash = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![cash isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == killsField )
 	{
 		id old = kills;
 		kills = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![kills isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	
 	/* start date */
@@ -349,65 +336,56 @@
 		id old = date;
 		date = [[NSCalendarDate alloc] initWithYear:[old yearOfCommonEra] month:[old monthOfYear] day:[sender intValue] hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];;
 		if( ![date isEqualToDate:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == monthField || sender == monthStepper )
 	{
 		id old = date;
 		date = [[NSCalendarDate alloc] initWithYear:[old yearOfCommonEra] month:[sender intValue] day:[old dayOfMonth] hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];;
 		if( ![date isEqualToDate:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == yearField || sender == yearStepper )
 	{
 		id old = date;
 		date = [[NSCalendarDate alloc] initWithYear:[sender intValue] month:[old monthOfYear] day:[old dayOfMonth] hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];;
 		if( ![date isEqualToDate:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == prefixField && [sender stringValue] )
 	{
 		id old = prefix;
-		prefix = [[sender stringValue] retain];
+		prefix = [sender stringValue];
 		if( ![prefix isEqualToString:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == suffixField && [sender stringValue] )
 	{
 		id old = suffix;
-		suffix = [[sender stringValue] retain];
+		suffix = [sender stringValue];
 		if( ![suffix isEqualToString:old] ) [resource touch];
-		[old release];
 	}
 	
 	/* planet combo boxes */
 	else if( sender == startField1 && [sender stringValue] )
 	{
 		id old = start1;
-		start1 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		start1 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![start1 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == startField2 && [sender stringValue] )
 	{
 		id old = start2;
-		start2 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		start2 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![start2 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == startField3 && [sender stringValue] )
 	{
 		id old = start3;
-		start3 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		start3 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![start3 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == startField4 && [sender stringValue] )
 	{
 		id old = start4;
-		start4 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		start4 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![start4 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 
 	/* starting government status */
@@ -416,101 +394,88 @@
 		id old = status1;
 		status1 = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![status1 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == statusField2 )
 	{
 		id old = status2;
 		status2 = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![status2 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == statusField3 )
 	{
 		id old = status3;
 		status3 = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![status3 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == statusField4 )
 	{
 		id old = status4;
 		status4 = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![status4 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	
 	/* government combo boxes */
 	else if( sender == governmentField1 && [sender stringValue] )
 	{
 		id old = government1;
-		government1 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		government1 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![government1 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == governmentField2 && [sender stringValue] )
 	{
 		id old = government2;
-		government2 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		government2 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![government2 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == governmentField3 && [sender stringValue] )
 	{
 		id old = government3;
-		government3 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		government3 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![government3 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == governmentField4 && [sender stringValue] )
 	{
 		id old = government4;
-		government4 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		government4 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![government4 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	
 	/* intro text combo box */
 	else if( sender == introTextField && [sender stringValue] )
 	{
 		id old = introText;
-		introText = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		introText = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![introText isEqualToNumber:old] )
 		{
 			[resource touch];
 			[self update];		// to draw text in text box
 		}
-		[old release];
 	}
 	
 	/* intro picture combo boxes */
 	else if( sender == introPictField1 && [sender stringValue] )
 	{
 		id old = introPict1;
-		introPict1 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		introPict1 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![introPict1 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == introPictField2 && [sender stringValue] )
 	{
 		id old = introPict2;
-		introPict2 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		introPict2 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![introPict2 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == introPictField3 && [sender stringValue] )
 	{
 		id old = introPict3;
-		introPict3 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		introPict3 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![introPict3 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == introPictField4 && [sender stringValue] )
 	{
 		id old = introPict4;
-		introPict4 = [[DataSource resIDFromStringValue:[sender stringValue]] retain];
+		introPict4 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if( ![introPict4 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	
 	/* intro picture delays */
@@ -519,37 +484,32 @@
 		id old = introDelay1;
 		introDelay1 = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![introDelay1 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == introDelayField2 )
 	{
 		id old = introDelay2;
 		introDelay2 = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![introDelay2 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == introDelayField3 )
 	{
 		id old = introDelay3;
 		introDelay3 = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![introDelay3 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	else if( sender == introDelayField4 )
 	{
 		id old = introDelay4;
 		introDelay4 = [[NSNumber alloc] initWithInt:[sender intValue]];
 		if( ![introDelay4 isEqualToNumber:old] ) [resource touch];
-		[old release];
 	}
 	
 	/* on start field */
 	else if( sender == onStartField && [sender stringValue] )
 	{
 		id old = onStart;
-		onStart = [[sender stringValue] retain];
+		onStart = [sender stringValue];
 		if( ![onStart isEqualToString:old] ) [resource touch];
-		[old release];
 	}
 	
 	// hack to simply & easily parse combo boxes
