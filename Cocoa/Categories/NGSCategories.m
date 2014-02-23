@@ -18,7 +18,7 @@
 @end
 
 @implementation NSArray (NGSKeyValueExtensions)
-- (int)indexOfFirstObjectReturningValue:(id)value forKey:(id)key
+- (NSInteger)indexOfFirstObjectReturningValue:(id)value forKey:(id)key
 {
 	return [[self valueForKey:key] indexOfObject:value];
 }

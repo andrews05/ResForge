@@ -215,7 +215,6 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeWillChangeNotification object:self];
 		
-		id old = type;
 		type = [newType copy];
 		
 		// bug: this line is causing crashes!
@@ -236,7 +235,6 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDWillChangeNotification object:self];
 		
-		id old = resID;
 		resID = [newResID copy];
 		
 		// bug: this line is causing crashes!
@@ -257,7 +255,6 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesWillChangeNotification object:self];
 		
-		id old = attributes;
 		attributes = [newAttributes copy];
 		
 		// bug: this line is causing crashes!
