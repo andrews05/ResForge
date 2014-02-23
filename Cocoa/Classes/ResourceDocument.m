@@ -692,7 +692,7 @@ extern NSString *RKResourcePboardType;
 - (void)printShowingPrintPanel:(BOOL)flag
 {
 	NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:[mainWindow contentView]];
-	[printOperation runOperationModalForWindow:mainWindow delegate:self didRunSelector:@selector(printOperationDidRun:success:contextInfo:) contextInfo:nil];
+	[printOperation runOperationModalForWindow:mainWindow delegate:self didRunSelector:@selector(printOperationDidRun:success:contextInfo:) contextInfo:NULL];
 }
 
 - (void)printOperationDidRun:(NSPrintOperation *)printOperation success:(BOOL)success contextInfo:(void *)contextInfo
@@ -702,7 +702,7 @@ extern NSString *RKResourcePboardType;
 
 - (BOOL)keepBackupFile
 {
-	return [[NSUserDefaults standardUserDefaults] boolForKey:@"PreserveBackups"];
+	return [[NSUserDefaults standardUserDefaults] boolForKey:kPreserveBackups];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
@@ -1241,7 +1241,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)clear:(id)sender
 {
 	#pragma unused(sender)
-	if([prefs boolForKey:@"DeleteResourceWarning"])
+	if([[NSUserDefaults standardUserDefaults] boolForKey:kDeleteResourceWarning])
 	{
 		NSBeginCriticalAlertSheet(@"Delete Resource", @"Delete", @"Cancel", nil, [self mainWindow], self, @selector(deleteResourcesSheetDidEnd:returnCode:contextInfo:), NULL, nil, @"Please confirm you wish to delete the selected resources.");
 	}

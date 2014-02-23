@@ -3,7 +3,9 @@
 
 /*!
 @protocol	ResKnifePluginProtocol
-@abstract	Your plug-in's principal class must implement initWithResource: or initWithResources:, all other methods are optional, and thus declared in ResKnifeInformalPluginProtocol.
+@abstract	Your plug-in's principal class must implement initWithResource: or initWithResources:, all other methods are optional.
+@updated	2005-10-03 NGS: Added UTI, MIME Type and OSType methods, renamed extensionForFileExport: to filenameExtensionForFileExport:
+@updated	2014-2-23 MTS: Made it part of the ResKnifePluginProtocol as optional methods, as allowed in the Objective C 2.0 runtime.
 */
 @protocol ResKnifePluginProtocol <NSObject>
 
@@ -28,16 +30,7 @@
 */
 - (id)initWithResources:(id <ResKnifeResourceProtocol>)inResource, ...;
 
-@end
-
-
-/*!
-@protocol	ResKnifeInformalPluginProtocol
-@abstract	Optional methods your plugin may implement to provide additional functionality.
-@author		Uli Kusterer
-@updated	2005-10-03 NGS: Added UTI, MIME Type and OSType methods, renamed extensionForFileExport: to filenameExtensionForFileExport:
-*/
-@interface ResKnifeInformalPluginProtocol
+@optional
 
 /*!
 @method		dataForFileExport:

@@ -120,10 +120,10 @@
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
 #pragma unused(sender)
-	NSString *launchAction = [[NSUserDefaults standardUserDefaults] stringForKey:@"LaunchAction"];
-	if([launchAction isEqualToString:@"OpenUntitledFile"])
+	NSString *launchAction = [[NSUserDefaults standardUserDefaults] stringForKey:kLaunchAction];
+	if([launchAction isEqualToString:kOpenUntitledFile])
 		return YES;
-	else if([launchAction isEqualToString:@"DisplayOpenPanel"])
+	else if([launchAction isEqualToString:kDisplayOpenPanel])
 	{
 		[[NSDocumentController sharedDocumentController] openDocument:sender];
 		return NO;
