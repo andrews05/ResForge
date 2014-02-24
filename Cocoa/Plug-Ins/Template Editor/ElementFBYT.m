@@ -31,17 +31,17 @@
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	[stream advanceAmount:length pad:NO];
+	[stream advanceAmount:(UInt32)length pad:NO];
 }
 
 - (unsigned int)sizeOnDisk
 {
-	return length;
+	return (unsigned int)length;
 }
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	[stream advanceAmount:length pad:YES];
+	[stream advanceAmount:(UInt32)length pad:YES];
 }
 
 - (NSString *)stringValue

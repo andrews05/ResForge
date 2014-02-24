@@ -181,9 +181,9 @@
 	[dayField setObjectValue:date];
 	[monthField setObjectValue:date];
 	[yearField setObjectValue:date];
-	[dayStepper setIntValue:[date dayOfMonth]];
-	[monthStepper setIntValue:[date monthOfYear]];
-	[yearStepper setIntValue:[date yearOfCommonEra]];
+	[dayStepper setIntegerValue:[date dayOfMonth]];
+	[monthStepper setIntegerValue:[date monthOfYear]];
+	[yearStepper setIntegerValue:[date yearOfCommonEra]];
 	[prefixField setStringValue:prefix];
 	[suffixField setStringValue:suffix];
 	
@@ -565,7 +565,7 @@
 	charRec->Flags = 0x0000;
 	charRec->Flags |= principalChar? 0x0001:0;
 	charRec->startShipType = [ship shortValue];
-	charRec->startCash = [cash longValue];
+	charRec->startCash = [cash intValue];
 	charRec->startKills = [kills shortValue];
 	charRec->startDay = (short)[date dayOfMonth];
 	charRec->startMonth = (short)[date monthOfYear];

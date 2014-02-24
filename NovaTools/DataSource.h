@@ -19,8 +19,4 @@
 + (NSNumber *)resIDFromStringValue:(NSString *)string;
 + (NSString *)resNameFromStringValue:(NSString *)string;
 
-// NSComboBoxDataSource informal protocol
-- (id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(int)index;
-- (int)numberOfItemsInComboBox:(NSComboBox *)comboBox;
-
 @end

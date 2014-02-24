@@ -34,7 +34,7 @@ extern NSString *RKResourcePboardType;
 	if(!self) return nil;
 	toolbarItems = [[NSMutableDictionary alloc] init];
 	resources = [[NSMutableArray alloc] init];
-	fork = nil;
+	memset(&fork, 0, sizeof(fork));
 	creator = [[@"ResK" dataUsingEncoding:NSMacOSRomanStringEncoding] retain];	// should I be calling -setCreator & -setType here instead?
 	type = [[@"rsrc" dataUsingEncoding:NSMacOSRomanStringEncoding] retain];
 	return self;
@@ -43,8 +43,6 @@ extern NSString *RKResourcePboardType;
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (fork)
-		DisposePtr((Ptr) fork);
 	[resources release];
 	[toolbarItems release];
 	[type release];
@@ -82,20 +80,19 @@ extern NSString *RKResourcePboardType;
 		// display second dialog to ask user to select a fork, pre-10.3 or if open command did not come via the open dialog
 		
 		// bug:	unimplemented - always tells app to try resource fork first
-		fork = (HFSUniStr255 *) NewPtrClear(sizeof(HFSUniStr255));
-		error = FSGetResourceForkName(fork);
+		error = FSGetResourceForkName(&fork);
 		if(error) return NO;
 	}
 	else
 	{
 		// get selected fork from open panel, 10.3+
-		int row = [[openPanelDelegate forkTableView] selectedRow];
+		NSInteger row = [[openPanelDelegate forkTableView] selectedRow];
 		NSString *selectedFork = [(NSDictionary *)[[openPanelDelegate forks] objectAtIndex:row] objectForKey:@"forkname"];
-		fork = (HFSUniStr255 *) NewPtrClear(sizeof(HFSUniStr255));
-		fork->length = ([selectedFork length] < 255) ? (UInt16)[selectedFork length] : 255;
-		if(fork->length > 0)
-			[selectedFork getCharacters:fork->unicode range:NSMakeRange(0,fork->length)];
-		else fork->unicode[0] = 0;
+		fork.length = ([selectedFork length] < 255) ? (UInt16)[selectedFork length] : 255;
+		if(fork.length > 0)
+			[selectedFork getCharacters:fork.unicode range:NSMakeRange(0, fork.length)];
+		else
+			fork.unicode[0] = 0;
 		
 		// clear so next document doesn't get confused
 		[openPanelDelegate setReadOpenPanelForFork:NO];
@@ -105,11 +102,11 @@ extern NSString *RKResourcePboardType;
 	
 	// attempt to open fork user selected as a resource map
 	SetResLoad(false);		// don't load "preload" resources
-	error = FSOpenResourceFile(fileRef, fork->length, (UniChar *) &fork->unicode, fsRdPerm, &fileRefNum);
+	error = FSOpenResourceFile(fileRef, fork.length, (UniChar *)fork.unicode, fsRdPerm, &fileRefNum);
 	if(error || !fileRefNum)
 	{
 		// if opening the user-selected fork fails, try to open resource fork instead
-		error = FSGetResourceForkName(fork);
+		error = FSGetResourceForkName(&fork);
 		if(error) return NO;
 /*		HFSUniStr255 *rfork;
 		error = FSGetResourceForkName(rfork);
@@ -123,23 +120,23 @@ extern NSString *RKResourcePboardType;
 			else fork = rfork;
 		}
 		if(checkFork)
-*/			error = FSOpenResourceFile(fileRef, fork->length, (UniChar *) &fork->unicode, fsRdPerm, &fileRefNum);
+*/			error = FSOpenResourceFile(fileRef, fork.length, (UniChar *)fork.unicode, fsRdPerm, &fileRefNum);
 		if(error || !fileRefNum)
 		{
 			// if opening the resource fork fails, try to open data fork instead
-			error = FSGetDataForkName(fork);
+			error = FSGetDataForkName(&fork);
 			if(error) return NO;
-			error = FSOpenResourceFile(fileRef, fork->length, (UniChar *) &fork->unicode, fsRdPerm, &fileRefNum);
+			error = FSOpenResourceFile(fileRef, fork.length, (UniChar *)fork.unicode, fsRdPerm, &fileRefNum);
 			if(error || !fileRefNum)
 			{
 				// bug: should check fork the user selected is empty before trying data fork
-				NSNumber *fAlloc = [[forks firstObjectReturningValue:[NSString stringWithCharacters:fork->unicode length:fork->length] forKey:@"forkname"] objectForKey:@"forkallocation"];
+				NSNumber *fAlloc = [[forks firstObjectReturningValue:[NSString stringWithCharacters:fork.unicode length:fork.length] forKey:@"forkname"] objectForKey:@"forkallocation"];
 				if([fAlloc unsignedLongLongValue] > 0)
 				{
 					// data fork is not empty, check resource fork
-					error = FSGetResourceForkName(fork);
+					error = FSGetResourceForkName(&fork);
 					if(error) return NO;
-					fAlloc = [[forks firstObjectReturningValue:[NSString stringWithCharacters:fork->unicode length:fork->length] forKey:@"forkname"] objectForKey:@"forkallocation"];
+					fAlloc = [[forks firstObjectReturningValue:[NSString stringWithCharacters:fork.unicode length:fork.length] forKey:@"forkname"] objectForKey:@"forkallocation"];
 					if([fAlloc unsignedLongLongValue] > 0)
 					{
 						// resource fork is not empty either, give up (ask user for a fork?)
@@ -180,7 +177,7 @@ extern NSString *RKResourcePboardType;
 	// now read all other forks as streams
 	NSString *forkName;
 	NSEnumerator *forkEnumerator = [forks objectEnumerator];
-	NSString *selectedFork = [NSString stringWithCharacters:fork->unicode length:fork->length];
+	NSString *selectedFork = [NSString stringWithCharacters:fork.unicode length:fork.length];
 	while((forkName = [[forkEnumerator nextObject] objectForKey:@"forkname"]))
 	{
 		// check current fork is not the fork we're going to parse
@@ -337,9 +334,7 @@ extern NSString *RKResourcePboardType;
 	if (error != noErr)
 		NSLog(@"FSPathMakeRef got error %d", (int)error);
 	
-	if(fork)
-		error = FSCreateResourceFile(parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, NULL, fork->length, (UniChar *) &fork->unicode, fileRef, NULL);
-	else error = FSCreateResourceFile(parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, NULL, 0, NULL, fileRef, NULL);
+	error = FSCreateResourceFile(parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, NULL, fork.length, (UniChar *)fork.unicode, fileRef, NULL);
 	
 	// write any data streams to file
 	BOOL succeeded = [self writeForkStreamsToFile:fileName];
@@ -359,11 +354,9 @@ extern NSString *RKResourcePboardType;
 		[NSTimer scheduledTimerWithTimeInterval:0.0 target:self selector:@selector(setTypeCreatorAfterSave:) userInfo:nil repeats:NO];
 		
 		// open fork as resource map
-		if(fork)
-			error = FSOpenResourceFile(fileRef, fork->length, (UniChar *) &fork->unicode, fsWrPerm, &fileRefNum);
-		else error = FSOpenResourceFile(fileRef, 0, NULL, fsWrPerm, &fileRefNum);
+		error = FSOpenResourceFile(fileRef, fork.length, (UniChar *)fork.unicode, fsWrPerm, &fileRefNum);
 	}
-//	else NSLog(@"error creating resource fork. (error=%d, spec=%d, ref=%d, parent=%d)", error, fileSpec, fileRef, parentRef);
+	//else NSLog(@"error creating resource fork. (error=%d, spec=%d, ref=%d, parent=%d)", error, fileSpec, fileRef, parentRef);
 	else NSLog(@"error creating resource fork. (error=%d, ref=%p)", (int)error, fileRef);
 	
 	// write resource array to file
@@ -585,7 +578,7 @@ extern NSString *RKResourcePboardType;
 	}];
 }
 
-- (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+- (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	NSData *data = (NSData *) contextInfo;
 	[data autorelease];
@@ -594,7 +587,7 @@ extern NSString *RKResourcePboardType;
 		[data writeToURL:[sheet URL] atomically:YES];
 }
 
-- (void)folderChoosePanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+- (void)folderChoosePanelDidEnd:(NSSavePanel *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	if(returnCode == NSOKButton)
 	{
@@ -707,7 +700,7 @@ extern NSString *RKResourcePboardType;
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
-	int selectedRows = [outlineView numberOfSelectedRows];
+	NSInteger selectedRows = [outlineView numberOfSelectedRows];
 	Resource *resource = (Resource *) [outlineView selectedItem];
 	
 	// file menu
@@ -803,7 +796,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[item autorelease];
 	[item setLabel:NSLocalizedString(@"Save", nil)];
 	[item setPaletteLabel:NSLocalizedString(@"Save", nil)];
-	[item setToolTip:[NSString stringWithFormat:NSLocalizedString(@"Save To %@ Fork", nil), !fork? NSLocalizedString(@"Data", nil) : NSLocalizedString(@"Resource", nil)]];
+	[item setToolTip:[NSString stringWithFormat:NSLocalizedString(@"Save To %@ Fork", nil), fork.length == 0? NSLocalizedString(@"Data", nil) : NSLocalizedString(@"Resource", nil)]];
 	[item setImage:[NSImage imageNamed:@"Save"]];
 	[item setTarget:self];
 	[item setAction:@selector(saveDocument:)];
@@ -873,7 +866,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (BOOL)validateToolbarItem:(NSToolbarItem *)item
 {
 	BOOL valid = NO;
-	int selectedRows = [outlineView numberOfSelectedRows];
+	NSInteger selectedRows = [outlineView numberOfSelectedRows];
 	NSString *identifier = [item itemIdentifier];
 	
 	if([identifier isEqualToString:RKCreateItemIdentifier])
@@ -1316,7 +1309,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (IBAction)creatorChanged:(id)sender
 {
-	unsigned long newCreator = 0x00;	// creator is nil by default
+	OSType newCreator = 0x00;	// creator is nil by default
 	NSData *creatorData = [[sender stringValue] dataUsingEncoding:NSMacOSRomanStringEncoding];
 //	NSLog(@"creatorChanged: [sender stringValue] = '%@'; creatorData = '%@'", [sender stringValue], creatorData);
 	if(creatorData && [creatorData length] > 0)
@@ -1333,7 +1326,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (IBAction)typeChanged:(id)sender
 {
-	unsigned long newType = 0x00;
+	OSType newType = 0x00;
 	NSData *typeData = [[sender stringValue] dataUsingEncoding:NSMacOSRomanStringEncoding];
 //	NSLog(@"typeChanged: [sender stringValue] = '%@'; typeData = '%@'", [sender stringValue], typeData);
 	if(typeData && [typeData length] > 0)

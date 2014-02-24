@@ -61,14 +61,11 @@
 
 - (void)parseForString:(NSString *)string withinRange:(NSRange)resIDRange sorted:(BOOL)sort
 {
-	NSNumber *resID;
 	NSString *trimmedString = [DataSource resNameFromStringValue:string];
-	NSEnumerator *enumerator = [[data allKeys] objectEnumerator];
 	[parsed removeAllObjects];
 	if( trimmedString == nil ) trimmedString = @"";
-	while( resID = [enumerator nextObject] )
-	{
-		NSString *value = [data objectForKey:resID];
+	for (NSNumber *resID in data) {
+				NSString *value = [data objectForKey:resID];
 		NSRange range = [value rangeOfString:trimmedString options:NSCaseInsensitiveSearch];
 		if( ((range.location != NSNotFound && range.length != 0) || [trimmedString isEqualToString:@""]) && [resID isBoundedByRange:resIDRange] )
 			[parsed addObject:[self stringValueForResID:resID]];
@@ -126,12 +123,12 @@
 
 /* NSComboBox Informal Prototype Implementation */
 
-- (id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(int)index
+- (id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(NSInteger)index
 {
 	return [parsed objectAtIndex:index];
 }
 
-- (int)numberOfItemsInComboBox:(NSComboBox *)comboBox
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)comboBox
 {
 	return [parsed count];
 }

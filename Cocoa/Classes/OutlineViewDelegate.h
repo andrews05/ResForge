@@ -17,4 +17,5 @@
 @end
 
 @interface RKOutlineView : NSOutlineView
+
 @end

@@ -8,7 +8,7 @@
 	NSUInteger *buffer = (NSUInteger *)calloc(count, sizeof(NSUInteger));
 	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:count];
 	[indicies getIndexes:buffer maxCount:count inIndexRange:&range];
-	for(unsigned int i = 0; i < count; i++)
+	for(NSUInteger i = 0; i < count; i++)
 		[newArray addObject:[self objectAtIndex:*(buffer+i)]];
 
 	free(buffer);
@@ -18,34 +18,34 @@
 @end
 
 @implementation NSArray (NGSKeyValueExtensions)
-- (int)indexOfFirstObjectReturningValue:(id)value forKey:(id)key
+- (NSInteger)indexOfFirstObjectReturningValue:(id)value forKey:(id)key
 {
 	return [[self valueForKey:key] indexOfObject:value];
 }
 - (id)firstObjectReturningValue:(id)value forKey:(id)key
 {
 	NSUInteger index = [[self valueForKey:key] indexOfObject:value];
-	if(index != NSNotFound)
+	if (index != NSNotFound)
 		return [self objectAtIndex:index];
-	else return nil;
+	else
+		return nil;
 }
 - (NSArray *)objectsReturningValue:(id)value forKey:(id)key
 {
-	id object;
 	NSMutableArray *array = [NSMutableArray array];
-	NSEnumerator *enumerator = [self objectEnumerator];
-	while(object = [enumerator nextObject])
-		if([[object valueForKey:key] isEqual:value])
+	for (id object in self) {
+		if([[object valueForKey:key] isEqual:value]) {
 			[array addObject:object];
+		}
+	}
 	return [NSArray arrayWithArray:array];
 }
 - (NSArray *)arrayByMakingObjectsPerformSelector:(SEL)selector withObject:(id)inObject
 {
-	id object;
 	NSMutableArray *array = [NSMutableArray array];
-	NSEnumerator *enumerator = [self objectEnumerator];
-	while(object = [enumerator nextObject])
+	for (id object in self) {
 		[array addObject:[object performSelector:selector withObject:inObject]];
+	}
 	return [NSArray arrayWithArray:array];
 }
 @end
@@ -139,24 +139,25 @@
 	if(error != noErr) fsRef = NULL;
 	return fsRef;
 }
+
 - (FSSpec *)createFSSpec
 {
+#ifdef __LP64__
+	return NULL;
+#else
 	// caller is responsible for disposing of the FSSpec (method is a 'create' method)
-	FSRef *fsRef = (FSRef *) NewPtrClear(sizeof(FSRef));
-	FSSpec *fsSpec = (FSSpec *) NewPtrClear(sizeof(FSSpec));
-	OSStatus error = FSPathMakeRef((const UInt8 *)[self fileSystemRepresentation], fsRef, NULL);
-	if(error == noErr)
-	{
-		error = FSGetCatalogInfo(fsRef, kFSCatInfoNone, NULL, NULL, fsSpec, NULL);
-		if(error == noErr)
-		{
-			DisposePtr((Ptr)fsRef);
+	FSRef fsRef = {{0}};
+	FSSpec *fsSpec = (FSSpec *)NewPtrClear(sizeof(FSSpec));
+	OSStatus error = FSPathMakeRef((const UInt8 *)[self fileSystemRepresentation], &fsRef, NULL);
+	if (error == noErr) {
+		error = FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, fsSpec, NULL);
+		if(error == noErr) {
 			return fsSpec;
 		}
 	}
-	DisposePtr((Ptr)fsRef);
 	DisposePtr((Ptr)fsSpec);
 	return NULL;
+#endif
 }
 @end
 
@@ -215,8 +216,7 @@
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_3
 	NSIndexSet *indicies = [self selectedRowIndexes];
     NSUInteger rowIndex = [indicies firstIndex];
-    while (rowIndex != NSNotFound)
-	{
+    while (rowIndex != NSNotFound) {
         [items addObject:[self itemAtRow:rowIndex]];
         rowIndex = [indicies indexGreaterThanIndex:rowIndex];
     }
@@ -244,6 +244,7 @@
 		[NSColor colorWithCalibratedWhite: 0.92 alpha: 1.0], 1.0, nil];
 	return [gradient autorelease];
 }
+
 + (NSGradient *)aquaGradientWithAlpha:(CGFloat)alpha
 {
 	NSGradient *gradient = [[NSGradient alloc] initWithColorsAndLocations:
@@ -253,6 +254,7 @@
 		[NSColor colorWithCalibratedWhite: 0.92 alpha: alpha], 1.0, nil];
 	return [gradient autorelease];
 }
+
 - (NSGradient *)gradientWithAlpha:(CGFloat)alpha
 {
 	NSColor *colour;

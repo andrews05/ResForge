@@ -183,7 +183,7 @@
 
 - (void)keyDown:(NSEvent *)event
 {
-	int selectedRow = [self selectedRow];
+	NSInteger selectedRow = [self selectedRow];
 	if(selectedRow != -1 && [[event characters] isEqualToString:@"\r"])
 		[self editColumn:0 row:selectedRow withEvent:nil select:YES];
 	else if(selectedRow != -1 && [[event characters] isEqualToString:@"\x7F"])
@@ -204,7 +204,7 @@
 	// pressed tab, move to next editable field
 	else if(selector == @selector(insertTab:))
 	{
-		int newColumn = ([self editedColumn] +1) % [self numberOfColumns];
+		NSInteger newColumn = ([self editedColumn] +1) % [self numberOfColumns];
 		NSString *newColIdentifier = [[[self tableColumns] objectAtIndex:newColumn] identifier];
 		if([newColIdentifier isEqualToString:@"size"] || [newColIdentifier isEqualToString:@"attributes"])
 		{
@@ -221,7 +221,7 @@
 	// pressed shift-tab, move to previous editable field
 	else if(selector == @selector(insertBacktab:))
 	{
-		int newColumn = ([self editedColumn] + [self numberOfColumns] -1) % [self numberOfColumns];
+		NSInteger newColumn = ([self editedColumn] + [self numberOfColumns] -1) % [self numberOfColumns];
 		NSString *newColIdentifier = [[[self tableColumns] objectAtIndex:newColumn] identifier];
 		if([newColIdentifier isEqualToString:@"size"] || [newColIdentifier isEqualToString:@"attributes"])
 		{

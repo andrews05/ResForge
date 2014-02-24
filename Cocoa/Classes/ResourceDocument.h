@@ -16,7 +16,7 @@
 	
 	NSMutableDictionary	*toolbarItems;
 	NSMutableArray	*resources;
-	HFSUniStr255	*fork;		// name of fork to save to, usually empty string (data fork) or 'RESOURCE_FORK' as returned from FSGetResourceForkName()
+	HFSUniStr255	fork;		// name of fork to save to, usually empty string (data fork) or 'RESOURCE_FORK' as returned from FSGetResourceForkName()
 	NSData			*creator;
 	NSData			*type;
 	BOOL			_createFork;	// file had no existing resource map when opened
@@ -29,7 +29,7 @@
 
 - (IBAction)exportResources:(id)sender;
 - (void)exportResource:(Resource *)resource;
-- (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 
 - (void)setupToolbar:(NSWindowController *)windowController;
 

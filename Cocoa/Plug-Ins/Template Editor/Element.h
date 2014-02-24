@@ -43,7 +43,7 @@
 - (BOOL)editable;
 
 // Items that have sub-items (like LSTB, LSTZ, LSTC and other lists) should implement these:
-- (int)subElementCount;
+- (NSInteger)subElementCount;
 - (Element *)subElementAtIndex:(NSInteger)n;
 - (void)readSubElementsFrom:(TemplateStream *)stream;
 

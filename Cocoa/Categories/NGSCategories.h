@@ -31,7 +31,7 @@
 @discussion		Calls <tt>valueForKey:</tt> on each object in the array, returning the index of the first one encountered which itself returned the value passed in, according to <tt>isEqual:</tt>, or returns <tt>NSNotFound</tt> if no object matched for the given key/value pair. Mostly useful just for increasing code readability, as the methd is only one line long, but one that's not easy to understand at first glance.
 @updated		2005-02-23 NGS: Removed unnecessary code, <tt>indexOfObject:</tt> already returns <tt>NSNotFound</tt> for me.
 */
-- (int)indexOfFirstObjectReturningValue:(id)value forKey:(id)key;
+- (NSInteger)indexOfFirstObjectReturningValue:(id)value forKey:(id)key;
 /*!
 @method			firstObjectReturningValue:forKey:
 @updated		January 2003

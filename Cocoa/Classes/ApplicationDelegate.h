@@ -11,7 +11,7 @@
 */
 @class OpenPanelDelegate;
 
-@interface ApplicationDelegate : NSObject
+@interface ApplicationDelegate : NSObject <NSApplicationDelegate>
 {
 /*!	@var openPanelDelegate		Delegate for <tt>NSOpenPanels</tt>. */
 	IBOutlet OpenPanelDelegate  *openPanelDelegate;
@@ -60,12 +60,6 @@
 @abstract		Displays the preferences panel stored in <b>PrefsWindow.nib</b>
 */
 - (IBAction)showPrefs:(id)sender;
-
-/*!
-@method			initUserDefaults
-@abstract		Initalises any unset user preferences to default values as read in from <b>defaults.plist</b>.
-*/
-- (void)initUserDefaults;
 
 /* accessors */
 

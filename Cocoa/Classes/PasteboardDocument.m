@@ -7,8 +7,7 @@ extern NSString *RKResourcePboardType;
 
 - (id)init
 {
-	self = [super init];
-	if( self )
+	if (self = [super init])
 	{
 		[self readPasteboard:NSGeneralPboard];
 	}
