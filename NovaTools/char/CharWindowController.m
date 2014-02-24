@@ -2,6 +2,56 @@
 #import "Resource.h"
 
 @implementation CharWindowController
+#ifndef __LP64__
+@synthesize principalChar;
+
+// Initial Goodies
+@synthesize ship;
+@synthesize cash;
+@synthesize kills;
+
+// Beginning Of Time
+@synthesize date;
+@synthesize prefix;
+@synthesize suffix;
+
+// Starting Location
+@synthesize start1;
+@synthesize start2;
+@synthesize start3;
+@synthesize start4;
+
+// Governments
+@synthesize status1;
+@synthesize status2;
+@synthesize status3;
+@synthesize status4;
+@synthesize government1;
+@synthesize government2;
+@synthesize government3;
+@synthesize government4;
+
+// Introduction
+@synthesize introText;
+@synthesize introPict1;
+@synthesize introPict2;
+@synthesize introPict3;
+@synthesize introPict4;
+@synthesize introDelay1;
+@synthesize introDelay2;
+@synthesize introDelay3;
+@synthesize introDelay4;
+@synthesize introPictTimer;
+@synthesize currentPict;
+
+// Nova Control Bits
+@synthesize onStart;
+#endif
+
+static void BSwapCharRec(CharRec* toSwap)
+{
+	
+}
 
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
 {
@@ -15,6 +65,7 @@
 	// load data from resource
 	charRec = (CharRec *) calloc( 1, sizeof(CharRec) );
 	[[newResource data] getBytes:charRec];
+	BSwapCharRec(charRec);
 	
 	// fill in default values if necessary
 	if( charRec->startYear == 0 || charRec->startMonth == 0 || charRec->startDay == 0 )
@@ -66,41 +117,41 @@
 		charRec->introPictDelay[3] = -1;
 	
 	// use resource values to create NS objects
-	principalChar = charRec->Flags & 0x0001;
-	ship = [[NSNumber alloc] initWithShort:charRec->startShipType];	// resID
-	cash = [[NSNumber alloc] initWithLong:charRec->startCash];
-	kills = [[NSNumber alloc] initWithShort:charRec->startKills];
-	date = [[NSCalendarDate alloc] initWithYear:charRec->startYear month:charRec->startMonth day:charRec->startDay hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+	self.principalChar = charRec->Flags & 0x0001;
+	self.ship = charRec->startShipType;	// resID
+	self.cash = charRec->startCash;
+	self.kills = charRec->startKills;
+	self.date = [[[NSCalendarDate alloc] initWithYear:charRec->startYear month:charRec->startMonth day:charRec->startDay hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]] autorelease];
 	tempPrefix = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Prefix length:16] encoding:NSMacOSRomanStringEncoding] autorelease];
-	prefix = [[NSString alloc] initWithString:tempPrefix];
+	self.prefix = tempPrefix;
 	tempSuffix = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->Suffix length:16] encoding:NSMacOSRomanStringEncoding] autorelease];
-	suffix = [[NSString alloc] initWithString:tempSuffix];
-	start1 = [[NSNumber alloc] initWithShort:charRec->startSystem[0]];
-	start2 = [[NSNumber alloc] initWithShort:charRec->startSystem[1]];
-	start3 = [[NSNumber alloc] initWithShort:charRec->startSystem[2]];
-	start4 = [[NSNumber alloc] initWithShort:charRec->startSystem[3]];
-	status1 = [[NSNumber alloc] initWithShort:charRec->startStatus[0]];
-	status2 = [[NSNumber alloc] initWithShort:charRec->startStatus[1]];
-	status3 = [[NSNumber alloc] initWithShort:charRec->startStatus[2]];
-	status4 = [[NSNumber alloc] initWithShort:charRec->startStatus[3]];
-	government1 = [[NSNumber alloc] initWithShort:charRec->startGovt[0]];
-	government2 = [[NSNumber alloc] initWithShort:charRec->startGovt[1]];
-	government3 = [[NSNumber alloc] initWithShort:charRec->startGovt[2]];
-	government4 = [[NSNumber alloc] initWithShort:charRec->startGovt[3]];
-	introText = [[NSNumber alloc] initWithShort:charRec->introTextID];
-	introPict1 = [[NSNumber alloc] initWithShort:charRec->introPictID[0]];
-	introPict2 = [[NSNumber alloc] initWithShort:charRec->introPictID[1]];
-	introPict3 = [[NSNumber alloc] initWithShort:charRec->introPictID[2]];
-	introPict4 = [[NSNumber alloc] initWithShort:charRec->introPictID[3]];
-	introDelay1 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[0]];
-	introDelay2 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[1]];
-	introDelay3 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[2]];
-	introDelay4 = [[NSNumber alloc] initWithShort:charRec->introPictDelay[3]];
+	self.suffix = tempSuffix;
+	self.start1 = charRec->startSystem[0];
+	self.start2 = charRec->startSystem[1];
+	self.start3 = charRec->startSystem[2];
+	self.start4 = charRec->startSystem[3];
+	self.status1 = charRec->startStatus[0];
+	self.status2 = charRec->startStatus[1];
+	self.status3 = charRec->startStatus[2];
+	self.status4 = charRec->startStatus[3];
+	self.government1 = charRec->startGovt[0];
+	self.government2 = charRec->startGovt[1];
+	self.government3 = charRec->startGovt[2];
+	self.government4 = charRec->startGovt[3];
+	self.introText = charRec->introTextID;
+	self.introPict1 = charRec->introPictID[0];
+	self.introPict2 = charRec->introPictID[1];
+	self.introPict3 = charRec->introPictID[2];
+	self.introPict4 = charRec->introPictID[3];
+	self.introDelay1 = charRec->introPictDelay[0];
+	self.introDelay2 = charRec->introPictDelay[1];
+	self.introDelay3 = charRec->introPictDelay[2];
+	self.introDelay4 = charRec->introPictDelay[3];
 	tempStart = [[[NSString alloc] initWithData:[NSData dataWithBytes:charRec->OnStart length:256] encoding:NSMacOSRomanStringEncoding] autorelease];
-	onStart = [[NSString alloc] initWithString:tempStart];
+	self.onStart = tempStart;
 	
 	// rotating image
-	currentPict = 0;
+	self.currentPict = 0;
 	
 	return self;
 }
@@ -170,10 +221,10 @@
 	NSData *stringData;
 	
 	// principal character
-	[principalCharButton setState:principalChar];
+	[principalCharButton setState:self.principalChar];
 	
 	// initial goodies
-	[shipField setObjectValue:[shipDataSource stringValueForResID:ship]];
+	[shipField setObjectValue:[shipDataSource stringValueForResID:_ship]];
 	[cashField setObjectValue:cash];
 	[killsField setObjectValue:kills];
 	
@@ -218,7 +269,7 @@
 	if( stringData != nil )
 	{
 		[introTextView setString:[[[NSString alloc] initWithData:stringData encoding:NSMacOSRomanStringEncoding] autorelease]];
-//		[introTextView scrollToTop];	// bug: made up method - needs implementing
+		// [introTextView scrollToTop];	// bug: made up method - needs implementing
 	}
 	// ncbs
 	[onStartField setStringValue:onStart];
@@ -255,8 +306,8 @@
 - (void)rotateIntroPict:(NSTimer *)timer
 {
 	// identify next frame
-	currentPict++;
-	if( currentPict == 2 && [introPict2 intValue] == -1 )		currentPict = 1;
+	self.currentPict++;
+	if( self.currentPict == 2 && self.introPict2 == -1 )		currentPict = 1;
 	else if( currentPict == 3 && [introPict3 intValue] == -1 )	currentPict = 1;
 	else if( currentPict == 4 && [introPict4 intValue] == -1 )	currentPict = 1;
 	else if( currentPict > 4 )									currentPict = 1;
@@ -619,7 +670,9 @@
 - (void)saveResource
 {
 	// save new data into resource structure (should have already been validated, and charRec filled out correctly)
-	[resource setData:[NSData dataWithBytes:charRec length:sizeof(CharRec)]];
+	NSMutableData *saveData = [NSMutableData dataWithBytes:charRec length:sizeof(CharRec)];
+	BSwapCharRec([saveData mutableBytes]);
+	[resource setData:saveData];
 }
 
 @end

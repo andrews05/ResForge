@@ -21,7 +21,7 @@
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
 {
 	id oldSelf = self;
-	NSData *classData = [[(id <ResKnifeResourceProtocol>)newResource type] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+	NSData *classData = [GetNSStringFromOSType([(id <ResKnifeResourceProtocol>)newResource type]) dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 	NSString *className = [[[[[NSString alloc] initWithData:classData encoding:NSASCIIStringEncoding] autorelease] capitalizedString] stringByAppendingString:@"WindowController"];
 	if( [className isEqualToString:@"Yea(R)WindowController"] ) className = @"YearWindowController"; // lossy conversion turns ¨ into (R), so i have to special-case Ø‘Š¨
 	self = [[NSClassFromString(className) alloc] initWithResource:newResource];
@@ -126,7 +126,7 @@
 - (IBAction)toggleResID:(id)sender
 {
 	// toggles between resource IDs and index numbers
-	NSLog( @"%@", [resource type] );
+	NSLog( @"%@", GetNSStringFromOSType([resource type]));
 }
 
 - (void)resourceNameDidChange:(NSNotification *)notification

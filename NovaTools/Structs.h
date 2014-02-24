@@ -2,14 +2,11 @@
 
 #import <Carbon/Carbon.h>
 
-//#pragma options align=mac68k
-#pragma options align=packed		// TODO: This doesn't compile in PB (but it does in xCode).
-// see http://developer.apple.com/techpubs/macosx/DeveloperTools/MachORuntime/2rt_powerpc_abi/PowerPC_Data_Alignment.html
-// align=reset is at the bottom of the file.
+#pragma pack (push, 2)
 
 typedef struct NovaControlBits
 {
-	// 10,000 bits for ncbs, could be made faster by aligning to word boundries? (using longs) but would require padding
+	// 10,000 bits for ncbs, could be made faster by aligning to word boundries? (using ints) but would require padding
 	char bits[1250];			// access bit 777 thus:	bits[777/8] >> (777 % 8)) & 0x01
 								//					or:	bits[777/8] & (0x01 << (777 % 8))
 } NovaControlBits;
@@ -23,7 +20,7 @@ typedef struct BoomRec
 
 typedef struct CharRec
 {
-	long startCash;
+	int startCash;
 	short startShipType;
 	short startSystem[4];
 	short startGovt[4];
@@ -44,20 +41,20 @@ typedef struct CharRec
 
 typedef struct ColrRec
 {
-	long ButtonUp;
-	long ButtonDown;
-	long ButtonGrey;
+	int ButtonUp;
+	int ButtonDown;
+	int ButtonGrey;
 	char MenuFont[64];
 	short MenuFontSize;
-	long MenuColor1;
-	long MenuColor2;
-	long GridBright;
-	long GridDim;
+	int MenuColor1;
+	int MenuColor2;
+	int GridBright;
+	int GridDim;
 	//	p2c: Structs.p, line 696: Warning: Symbol 'RECT' is not defined [221]
 	Rect ProgArea;
-	long ProgBright;
-	long ProgDim;
-	long ProgOutline;
+	int ProgBright;
+	int ProgDim;
+	int ProgOutline;
 
 	short Button1x;
 	short Button1y;
@@ -72,11 +69,11 @@ typedef struct ColrRec
 	short Button6x;
 	short Button6y;
 
-	long FloatingMap;
-	long ListText;
-	long ListBkgnd;
-	long ListHilite;
-	long EscortHilite;
+	int FloatingMap;
+	int ListText;
+	int ListBkgnd;
+	int ListHilite;
+	int EscortHilite;
 
 	char ButtonFont[64];
 	short ButtonFontSz;
@@ -114,10 +111,10 @@ typedef struct CronRec
 	// OnStart: packed array[0..254] of char;
 	// OnEnd: packed array[0..255] of char;
 	char cdata[766];
-	long Contributes0;
-	long Contributes1;
-	long Require0;
-	long Require1;
+	int Contributes0;
+	int Contributes1;
+	int Require0;
+	int Require1;
 	short NewsGovt[4];
 	short GovtNewsString[4];
 } CronRec;
@@ -166,18 +163,18 @@ typedef struct FletRec
 
 typedef struct IntfRec
 {
-	long BrightText;
-	long DimText;
+	int BrightText;
+	int DimText;
 	Rect RadarArea;
-	long BrightRadar;
-	long DimRadar;
+	int BrightRadar;
+	int DimRadar;
 	Rect ShieldArea;
-	long Shield;
+	int Shield;
 	Rect ArmorArea;
-	long Armor;
+	int Armor;
 	Rect FuelArea;
-	long FuelFull;
-	long FuelPartial;
+	int FuelFull;
+	int FuelPartial;
 	Rect NavArea;
 	Rect WeapArea;
 	Rect TargArea;
@@ -223,12 +220,12 @@ typedef struct GovtRec
 	short ScanMask;
 	char CommName[16];
 	char TargetCode[16];
-	long Require0;
-	long Require1;
+	int Require0;
+	int Require1;
 	short InhJam[4];
 	char MediumName[64];
-	long color;
-	long ShipColor;
+	int color;
+	int ShipColor;
 	short intf;
 	short NewsPict;
 	short UnusedA[8];
@@ -251,7 +248,7 @@ typedef struct MisnRec
 	short DropoffMode;
 	short ScanGovt;
 	short Unused2;
-	long PayVal;
+	int PayVal;
 	short ShipCount;
 	short ShipSyst;
 	short ShipDude;
@@ -291,8 +288,8 @@ typedef struct MisnRec
 
 	char cdata[1530];
 
-	long Require0;
-	long Require1;
+	int Require0;
+	int Require1;
 	short DatePostInc;
 	// OnShipDone: packed array[0..254] of char;
 	// AcceptButton: packed array[0..31] of char;
@@ -335,17 +332,17 @@ typedef struct OutfRec
 	short ModVal;
 	short Max;
 	short Flags;
-	long Cost;
+	int Cost;
 	short ModType2;
 	short ModVal2;
 	short ModType3;
 	short ModVal3;
 	short ModType4;
 	short ModVal4;
-	long Contributes0;
-	long Contributes1;
-	long Require0;
-	long Require1;
+	int Contributes0;
+	int Contributes1;
+	int Require0;
+	int Require1;
 	// Availability: packed array[0..254] of char;
 	// OnPurchase: packed array[0..254] of char;
 	// OnSell: packed array[0..254] of char;
@@ -371,7 +368,7 @@ typedef struct PersRec
 	short WeapType[4];
 	short WeapCount[4];
 	short AmmoLoad[4];
-	long Credits;
+	int Credits;
 	short ShieldMod;
 	short HailPict;
 	short CommQuote;
@@ -383,7 +380,7 @@ typedef struct PersRec
 	short GrantCount;
 	short GrantProb;
 	char SubTitle[64];
-	long ShipColor;
+	int ShipColor;
 	short Flags2;
 	short UnusedA[8];
 } PersRec;
@@ -393,10 +390,10 @@ typedef struct RankRec
 	short Weight;
 	short Govt;
 	short PriceMod;
-	long Salary;
-	long SalaryCap;
-	long Contributes0;
-	long Contributes1;
+	int Salary;
+	int SalaryCap;
+	int Contributes0;
+	int Contributes1;
 	short flags;
 	// ConvName: packed array[0..63] of char;
 	// ShortName: packed array[0..63] of char;
@@ -411,7 +408,7 @@ typedef struct RoidRec
 	short yieldType;
 	short yieldQty;
 	short partCount;
-	long partColor;
+	int partColor;
 	short fragType[2];
 	short fragCount;
 	short ExplodeType;
@@ -521,7 +518,7 @@ typedef struct ShipRec
 	short MaxGun;
 	short MaxTur;
 	short TechLevel;
-	long Cost;
+	int Cost;
 	short DeathDelay;
 	short ArmorRech;
 	short Explode1;
@@ -540,8 +537,8 @@ typedef struct ShipRec
 	short FuelRegen;
 	short SkillVar;
 	short Flags2;
-	long Contributes0;
-	long Contributes1;
+	int Contributes0;
+	int Contributes1;
 	// Availability: packed array[0..254] of char;
 	// AppearOn: packed array[0..254] of char;
 	// OnPurchase: packed array[0..255] of char;
@@ -553,8 +550,8 @@ typedef struct ShipRec
 	short KeyCarried;
 	short DefaultItems2[4];
 	short ItemCount2[4];
-	long Require0;
-	long Require1;
+	int Require0;
+	int Require1;
 
 	short BuyRandom;
 	short HireRandom;
@@ -565,7 +562,7 @@ typedef struct ShipRec
 	// OnRetire: packed array[0..254] of char;
 	// ShortName: packed array[0..63] of char;
 	// CommName: packed array[0..31] of char;
-	// LongName: packed array[0..127] of char;
+	// intName: packed array[0..127] of char;
 	// MovieFile: packed array[0..31] of char;
 
 	char cdata2[766];
@@ -578,8 +575,8 @@ typedef struct ShipRec
 	char cdata3[64];
 	short Flags3;
 	short UpgradeTo;
-	long EscUpgrdCost;
-	long EscSellValue;
+	int EscUpgrdCost;
+	int EscSellValue;
 	short EscortType;
 	short UnusedA[8];
 } ShipRec;
@@ -599,7 +596,7 @@ typedef struct SpobRec
 	short xPos;
 	short yPos;
 	short spobType;
-	long Flags;
+	int Flags;
 	short Tribute;
 	short TechLevel;
 	short SpecialTech1;
@@ -618,10 +615,10 @@ typedef struct SpobRec
 	// OnDominate: packed array[0..254] of char;
 	// OnRelease: packed array[0..254] of char;
 	char cdata[510];
-	long Fee;
+	int Fee;
 	short Gravity;
 	short Weapon;
-	long Strength;
+	int Strength;
 	short DeadType;
 	short DeadTime;
 	short ExplodType;
@@ -651,7 +648,7 @@ typedef struct SystRec
 	short Interference;
 	short Person[8];
 	short PersonProb[8];
-	long BkgndColor;
+	int BkgndColor;
 	short Murk;
 	short AstTypes;
 	char Visiblility[256];
@@ -685,12 +682,12 @@ typedef struct WeapRec
 	short PartVel;
 	short PartLifeMin;
 	short PartLifeMax;
-	long PartColor;
+	int PartColor;
 	short BeamLength;
 	short BeamWidth;
 	short Falloff;
-	long BeamColor;
-	long CoronaColor;
+	int BeamColor;
+	int CoronaColor;
 	short SubCount;
 	short SubType;
 	short SubTheta;
@@ -701,7 +698,7 @@ typedef struct WeapRec
 	short HitParticles;
 	short HitPartLife;
 	short HitPartVel;
-	long HitPartColor;
+	int HitPartColor;
 	short Recoil;
 	short ExitType;
 	short BurstCount;
@@ -716,7 +713,7 @@ typedef struct WeapRec
 	short MaxAmmo;
 	short LiDensity;
 	short LiAmplitude;
-	long IonizeColor;
+	int IonizeColor;
 	short UnusedA[8];
 } WeapRec;
 
@@ -729,4 +726,4 @@ typedef struct YearRec
 	char Suffix[15];
 } YearRec;
 
-#pragma options align=reset
+#pragma pack (pop)

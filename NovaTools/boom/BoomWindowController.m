@@ -1,6 +1,18 @@
 #import "BoomWindowController.h"
 
 @implementation BoomWindowController
+#ifndef __LP64__
+@synthesize image;
+@synthesize sound;
+@synthesize frameRate;
+@synthesize silent;
+#endif
+@synthesize imageWell;
+@synthesize graphicsField;
+@synthesize soundField;
+@synthesize frameRateField;
+@synthesize soundButton;
+@synthesize playButton;
 
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
 {
@@ -19,10 +31,10 @@
 		boomRec->FrameAdvance = 100;
 	
 	// use resource values to create NS objects
-	silent = (boomRec->SoundIndex == -1);
-	image = [[NSNumber alloc] initWithShort:boomRec->GraphicIndex + kMinBoomSpinID];
-	sound = [[NSNumber alloc] initWithShort:(silent? kMinBoomSoundID : boomRec->SoundIndex + kMinBoomSoundID)];
-	frameRate = [[NSNumber alloc] initWithShort:boomRec->FrameAdvance];
+	self.silent = (boomRec->SoundIndex == -1);
+	self.image = boomRec->GraphicIndex + kMinBoomSpinID;
+	self.sound = (self.silent? kMinBoomSoundID : boomRec->SoundIndex + kMinBoomSoundID);
+	self.frameRate = [[NSNumber alloc] initWithShort:boomRec->FrameAdvance];
 	
 	return self;
 }
@@ -66,7 +78,7 @@
 	[playButton setEnabled:!silent];
 	
 	// image well
-	[imageWell setImage:[[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:[plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"] andID:image inDocument:nil] data]] autorelease]];
+	[imageWell setImage:[[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:[plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"] andID:self.image inDocument:nil] data]] autorelease]];
 }
 
 - (void)comboBoxWillPopUp:(NSNotification *)notification

@@ -66,12 +66,13 @@
 	
 	// ======
 	
+#ifndef __LP64__
 	// char
 	BOOL principalChar;
 	
 	// Initial Goodies
-	NSNumber *ship;
-	NSNumber *cash;
+	short ship;
+	int cash;
 	NSNumber *kills;
 	
 	// Beginning Of Time
@@ -80,37 +81,83 @@
 	NSString *suffix;
 	
 	// Starting Location
-	NSNumber *start1;
-	NSNumber *start2;
-	NSNumber *start3;
-	NSNumber *start4;
+	short start1;
+	short start2;
+	short start3;
+	short start4;
 	
 	// Governments
-	NSNumber *status1;
-	NSNumber *status2;
-	NSNumber *status3;
-	NSNumber *status4;
-	NSNumber *government1;
-	NSNumber *government2;
-	NSNumber *government3;
-	NSNumber *government4;
+	short status1;
+	short status2;
+	short status3;
+	short status4;
+	short government1;
+	short government2;
+	short government3;
+	short government4;
 	
 	// Introduction
-	NSNumber *introText;
-	NSNumber *introPict1;
-	NSNumber *introPict2;
-	NSNumber *introPict3;
-	NSNumber *introPict4;
-	NSNumber *introDelay1;
-	NSNumber *introDelay2;
-	NSNumber *introDelay3;
-	NSNumber *introDelay4;
+	short introText;
+	short introPict1;
+	short introPict2;
+	short introPict3;
+	short introPict4;
+	short introDelay1;
+	short introDelay2;
+	short introDelay3;
+	short introDelay4;
 	NSTimer *introPictTimer;
 	short currentPict;
 	
 	// Nova Control Bits
 	NSString *onStart;
+#endif
 }
+
+@property (getter = isPrincipalChar) BOOL principalChar;
+
+// Initial Goodies
+@property short ship;
+@property int cash;
+@property short kills;
+
+// Beginning Of Time
+@property (retain) NSCalendarDate *date;
+@property (retain) NSString *prefix;
+@property (retain) NSString *suffix;
+
+// Starting Location
+@property short start1;
+@property short start2;
+@property short start3;
+@property short start4;
+
+// Governments
+@property short status1;
+@property short status2;
+@property short status3;
+@property short status4;
+@property short government1;
+@property short government2;
+@property short government3;
+@property short government4;
+
+// Introduction
+@property short introText;
+@property short introPict1;
+@property short introPict2;
+@property short introPict3;
+@property short introPict4;
+@property short introDelay1;
+@property short introDelay2;
+@property short introDelay3;
+@property short introDelay4;
+@property (retain) NSTimer *introPictTimer;
+@property short currentPict;
+
+// Nova Control Bits
+@property (retain) NSString *onStart;
+
 
 - (void)update;
 - (IBAction)editDate:(id)sender;
