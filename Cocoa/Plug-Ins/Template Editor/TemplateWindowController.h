@@ -23,7 +23,7 @@
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"
 
-@interface TemplateWindowController : NSWindowController <ResKnifeTemplatePluginProtocol, NSToolbarDelegate>
+@interface TemplateWindowController : NSWindowController <ResKnifeTemplatePluginProtocol, NSToolbarDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
 	IBOutlet NSOutlineView *displayList;	// template display (debug only).
 	IBOutlet NSOutlineView *dataList;		// Data display.

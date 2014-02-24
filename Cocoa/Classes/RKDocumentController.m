@@ -17,7 +17,7 @@
 	[openPanelAccessoryView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
 	
 	// run panel
-	int button = [super runModalOpenPanel:openPanel forTypes:extensions];
+	NSInteger button = [super runModalOpenPanel:openPanel forTypes:extensions];
 	if(button == NSOKButton)
 		[openPanelDelegate setReadOpenPanelForFork:YES];
 	return button;

@@ -109,7 +109,7 @@
 - (void)loadResource
 {
 	// create new stream
-	TemplateStream *stream = [TemplateStream streamWithBytes:(char *)[[resource data] bytes] length:[[resource data] length]];
+	TemplateStream *stream = [TemplateStream streamWithBytes:(char *)[[resource data] bytes] length:(UInt32)[[resource data] length]];
 	
 	// loop through template cloning its elements
 	Element *element;
@@ -141,7 +141,7 @@
 	// reload the view
 	id item;
 	[dataList reloadData];
-	int row = [dataList numberOfRows];
+	NSInteger row = [dataList numberOfRows];
 	while((item = [dataList itemAtRow: --row]))
 	{
 		if([dataList isExpandable: item] && ![dataList isItemExpanded: item])
@@ -225,8 +225,8 @@
 - (void)readTemplate:(id<ResKnifeResourceProtocol>)tmplRes
 {
 	char *data = (char*) [[tmplRes data] bytes];
-	unsigned long bytesToGo = [[tmplRes data] length];
-	TemplateStream *stream = [TemplateStream streamWithBytes:data length:bytesToGo];
+	NSUInteger bytesToGo = [[tmplRes data] length];
+	TemplateStream *stream = [TemplateStream streamWithBytes:data length:(unsigned int)bytesToGo];
 	
 	// read new fields from the template and add them to our list
 	while([stream bytesToGo] > 0)
@@ -250,7 +250,7 @@
 #pragma mark -
 #pragma mark Table Management
 
-- (id)outlineView:(NSOutlineView*)outlineView child:(int)index ofItem:(id)item
+- (id)outlineView:(NSOutlineView*)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if((item == nil) && (outlineView == displayList))
 		return [templateStructure objectAtIndex:index];
@@ -264,7 +264,7 @@
 	return ([item subElementCount] > 0);
 }
 
-- (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	if((item == nil) && (outlineView == displayList))
 		return [templateStructure count];
@@ -443,7 +443,7 @@ static NSString *RKTEDisplayTMPLIdentifier	= @"com.nickshanks.resknife.templatee
 - (void)keyDown:(NSEvent *)event
 {
 	Element *selectedItem = nil;
-	int selectedRow = [self selectedRow];
+	NSInteger selectedRow = [self selectedRow];
 	if(selectedRow != -1)
 		selectedItem = [self selectedItem];
 	

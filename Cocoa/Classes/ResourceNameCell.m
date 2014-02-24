@@ -1,6 +1,8 @@
 #import "ResourceNameCell.h"
 
 @implementation ResourceNameCell
+@synthesize image;
+@synthesize drawImage;
 
 - (id)init
 {
@@ -19,24 +21,11 @@
 
 - copyWithZone:(NSZone *)zone
 {
-	ResourceNameCell *cell = (ResourceNameCell *)[super copyWithZone:zone];
-	(* cell).image = [image retain];
+	ResourceNameCell *cell = nil;
+	if ((cell = [super copyWithZone:zone])) {
+		cell.image = image;
+	}
 	return cell;
-}
-
-- (BOOL)drawsImage
-{
-	return drawImage;
-}
-
-- (void)setDrawsImage:(BOOL)flag
-{
-	drawImage = flag;
-}
-
-- (NSImage *)image
-{
-	return image;
 }
 
 - (void)setImage:(NSImage *)newImage

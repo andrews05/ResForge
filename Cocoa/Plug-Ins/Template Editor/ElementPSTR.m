@@ -167,7 +167,7 @@
 
 - (unsigned int)sizeOnDisk
 {
-	UInt32 length = [value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
+	UInt32 length = (UInt32)[value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
 	if(_maxLength && length > _maxLength)
 		length = _maxLength;
 	if(length < _minLength)
@@ -184,7 +184,7 @@
 - (void)writeDataTo:(TemplateStream *)stream
 {
 	// write string
-	UInt32 length = [value length], writeLength;
+	UInt32 length = (UInt32)[value length], writeLength;
 	if(_maxLength && length > _maxLength) length = _maxLength;
 #if __BIG_ENDIAN__
 	writeLength = length << ((4 - _lengthBytes) << 3);

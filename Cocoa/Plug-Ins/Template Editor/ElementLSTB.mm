@@ -33,8 +33,8 @@
 	ElementOCNT *counter = nil;
 	NSMutableArray *array = [element subElements];			// get empty array created by -initWithType:label:
 	[element setGroupElementTemplate:groupElementTemplate];	// override group template (init sets this to self)
-	unsigned count = [[groupElementTemplate subElements] count];
-	for(unsigned i = 0; i < count; i++)
+	NSUInteger count = [[groupElementTemplate subElements] count];
+	for(NSUInteger i = 0; i < count; i++)
 	{
 		Element *subToClone = [[groupElementTemplate subElements] objectAtIndex:i];
 		if([subToClone class] == [ElementLSTB class] ||
@@ -92,7 +92,7 @@
 		// if we get to the end of the list and need more items, create them
 		if([element class] == [ElementLSTE class] && counterValue > 0)
 		{
-			int index = [subElements indexOfObject:element];
+			NSInteger index = [subElements indexOfObject:element];
 			while(counterValue--)
 			{
 				// create subarray for new data
@@ -172,23 +172,23 @@
 - (unsigned int)sizeOnDisk
 {
 	unsigned int size = 0;
-	NSEnumerator *enumerator = [subElements objectEnumerator];
-	while(Element *element = [enumerator nextObject])
+	for (Element *element in subElements) {
 		size += [element sizeOnDisk];
+	}
 	return size;
 }
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
 	// Writes out the data of all our sub-elements here:
-	NSEnumerator *enumerator = [subElements objectEnumerator];
-	while(Element *element = [enumerator nextObject])
+	for (Element *element in subElements) {
 		[element writeDataTo:stream];
+	}
 }
 
 #pragma mark -
 
-- (int)subElementCount
+- (NSInteger)subElementCount
 {
 	return [subElements count];
 }
