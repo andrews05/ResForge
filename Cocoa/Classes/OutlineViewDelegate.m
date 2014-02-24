@@ -158,14 +158,6 @@
 		}
 	}
 	
-	// draw alternating blue/white backgrounds (if pre-10.3)
-	if(NSAppKitVersionNumber < 700.0)
-	{
-		int row = [oView rowForItem:item];
-		if(row % 2)	[cell setBackgroundColor:[NSColor colorWithCalibratedRed:0.93 green:0.95 blue:1.0 alpha:1.0]];
-		else		[cell setBackgroundColor:[NSColor whiteColor]];
-					[cell setDrawsBackground:YES];
-	}
 }
 
 @end

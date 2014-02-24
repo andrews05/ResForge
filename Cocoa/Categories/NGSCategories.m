@@ -3,7 +3,7 @@
 @implementation NSArray (NGSIndexExtensions)
 - (NSArray *)subarrayWithIndicies:(NSIndexSet *)indicies
 {
-	NSRange range = {0,[self count]};
+	NSRange range = NSMakeRange(0, [self count]);
 	NSUInteger count = [indicies count];
 	NSUInteger *buffer = (NSUInteger *)calloc(count, sizeof(NSUInteger));
 	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:count];
@@ -53,19 +53,6 @@
 #pragma mark -
 
 @implementation NSCharacterSet (NGSCharacterSetExtensions)
-#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
-+ (NSCharacterSet *)newlineCharacterSet
-{
-	unsigned char bitmapRep[8192];
-	bitmapRep[0x0A >> 3] |= (((unsigned int)1) << (0x0A & 7));
-	bitmapRep[0x0B >> 3] |= (((unsigned int)1) << (0x0B & 7));
-	bitmapRep[0x0C >> 3] |= (((unsigned int)1) << (0x0C & 7));
-	bitmapRep[0x0D >> 3] |= (((unsigned int)1) << (0x0D & 7));
-	bitmapRep[0x85 >> 3] |= (((unsigned int)1) << (0x85 & 7));
-	NSData *data = [NSData dataWithBytesNoCopy:bitmapRep length:8192 freeWhenDone:NO];
-	return [NSCharacterSet characterSetWithBitmapRepresentation:data];
-}
-#endif
 + (NSCharacterSet *)tabCharacterSet
 {
 	unsigned char bitmapRep[8192] = { 0 };
@@ -74,38 +61,6 @@
 	NSData *data = [NSData dataWithBytesNoCopy:bitmapRep length:8192 freeWhenDone:NO];
 	return [NSCharacterSet characterSetWithBitmapRepresentation:data];
 }
-@end
-
-#pragma mark -
-
-@implementation NSIndexSet (NGSIndicies)
-+ (id)indexSetWithIndiciesInRange:(NSRange)range
-{	return [NSIndexSet indexSetWithIndexesInRange:range]; }
-- (id)initWithIndiciesInRange:(NSRange)range
-{	return [self initWithIndexesInRange:range]; }
-- (NSUInteger)getIndicies:(NSUInteger *)indexBuffer maxCount:(NSUInteger)bufferSize inIndexRange:(NSRangePointer)range
-{	return [self getIndexes:indexBuffer maxCount:bufferSize inIndexRange:range]; }
-- (BOOL)containsIndiciesInRange:(NSRange)range
-{	return [self containsIndexesInRange:range]; }
-- (BOOL)containsIndicies:(NSIndexSet *)indexSet
-{	return [self containsIndexes:indexSet]; }
-- (BOOL)intersectsIndiciesInRange:(NSRange)range
-{	return [self intersectsIndexesInRange:range]; }
-@end
-
-@implementation NSMutableIndexSet (NGSIndicies)
-- (void)addIndicies:(NSIndexSet *)indexSet
-{	[self addIndexes:indexSet]; }
-- (void)removeIndicies:(NSIndexSet *)indexSet
-{	[self removeIndexes:indexSet]; }
-- (void)removeAllIndicies
-{	[self removeAllIndexes]; }
-- (void)addIndiciesInRange:(NSRange)range
-{	[self addIndexesInRange:range]; }
-- (void)removeIndiciesInRange:(NSRange)range
-{	[self removeIndexesInRange:range]; }
-- (void)shiftIndiciesStartingAtIndex:(unsigned int)index by:(int)delta
-{	[self shiftIndexesStartingAtIndex:index by:delta]; }   
 @end
 
 #pragma mark -
@@ -162,12 +117,6 @@
 @end
 
 @implementation NSString (NGSBooleanExtensions)
-#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
-- (BOOL)boolValue
-{
-	return ![self isEqualToString:@"NO"];
-}
-#endif
 + (NSString *)stringWithBool:(BOOL)boolean
 {
 	return boolean? @"YES" : @"NO";
@@ -175,34 +124,6 @@
 @end
 
 #pragma mark -
-
-#if MAC_OS_X_VERSION_10_3 <= MAC_OS_X_VERSION_MAX_ALLOWED
-/*
-@implementation NSMatrix (NGSSelectionIndicies)
-- (NSIndexSet *)selectedRows
-{
-	int numRows, numCols;
-	NSMutableIndexSet *rows = [[NSMutableIndexSet alloc] init];
-	[self getNumberOfRows:&numRows columns:&numCols];
-	for(int r = 0; r < numRows; r++)
-	{
-		for(int c = 0; c < numCols; c++)
-		{
-			if()
-			{
-				c = numCols;
-				continue;
-			}
-		}
-	}
-}
-- (NSIndexSet *)selectedColumns
-{
-	NSMutableIndexSet *columns = [[NSMutableIndexSet alloc] init];
-}
-@end
-*/
-#endif
 
 @implementation NSOutlineView (NGSSelectedItemExtensions)
 - (id)selectedItem
@@ -213,19 +134,12 @@
 - (NSArray *)selectedItems;
 {
 	NSMutableArray *items = [NSMutableArray array];
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_3
 	NSIndexSet *indicies = [self selectedRowIndexes];
     NSUInteger rowIndex = [indicies firstIndex];
     while (rowIndex != NSNotFound) {
         [items addObject:[self itemAtRow:rowIndex]];
         rowIndex = [indicies indexGreaterThanIndex:rowIndex];
     }
-#else
-	NSNumber *row;
-	NSEnumerator *enumerator = [self selectedRowEnumerator];
-	while(row = [enumerator nextObject])
-		[items addObject:[self itemAtRow:[row intValue]]];
-#endif
 	return items;
 }
 @end

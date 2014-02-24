@@ -50,39 +50,12 @@
 @end
 
 @interface NSCharacterSet (NGSNewlineExtensions)
-#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
-/*!
-@method			newlineCharacterSet
-@updated		March 2005
-@abstract		Returns a character set containing only the newline and nextline characters (U+000A–U+000D, U+0085).
-@availability	In 10.4 and above, this method is available from the OS.
-*/
-+ (NSCharacterSet *)newlineCharacterSet;
-#endif
 /*!
 @method			tabCharacterSet
 @updated		March 2005
 @abstract		Returns a character set containing only the horizontal and vertical tab characters (U+0009, U+000B).
 */
 + (NSCharacterSet *)tabCharacterSet;
-@end
-
-@interface NSIndexSet (NGSIndicies)
-+ (id)indexSetWithIndiciesInRange:(NSRange)range;
-- (id)initWithIndiciesInRange:(NSRange)range;
-- (NSUInteger)getIndicies:(NSUInteger *)indexBuffer maxCount:(NSUInteger)bufferSize inIndexRange:(NSRangePointer)range;
-- (BOOL)containsIndiciesInRange:(NSRange)range;
-- (BOOL)containsIndicies:(NSIndexSet *)indexSet;
-- (BOOL)intersectsIndiciesInRange:(NSRange)range;
-@end
-
-@interface NSMutableIndexSet (NGSIndicies)
-- (void)addIndicies:(NSIndexSet *)indexSet;
-- (void)removeIndicies:(NSIndexSet *)indexSet;
-- (void)removeAllIndicies;
-- (void)addIndiciesInRange:(NSRange)range;
-- (void)removeIndiciesInRange:(NSRange)range;
-- (void)shiftIndiciesStartingAtIndex:(unsigned int)index by:(int)delta;   
 @end
 
 @interface NSNumber (NGSRangeExtensions)

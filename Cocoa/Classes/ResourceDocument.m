@@ -9,7 +9,6 @@
 #import "PrefsWindowController.h"
 #import "CreateResourceSheetController.h"
 #import "../Categories/NGSCategories.h"
-#import "../Categories/NSString-FSSpec.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
 #import <Carbon/Carbon.h>
 
