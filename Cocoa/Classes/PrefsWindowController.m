@@ -11,6 +11,12 @@ NSString * const kNoLaunchOption = @"None";
 
 @implementation PrefsWindowController
 
++ (void)initialize
+{
+	NSDictionary * prefDict = [NSDictionary dictionaryWithObjectsAndKeys:@YES, kPreserveBackups, @NO, kAutosave, @5, kAutosaveInterval, @YES, kDeleteResourceWarning, kOpenUntitledFile, kLaunchAction, nil];
+	[[NSUserDefaults standardUserDefaults] registerDefaults:prefDict];
+}
+
 - (id)init
 {
 	return self = [self initWithWindowNibName:@"PrefsWindow"];

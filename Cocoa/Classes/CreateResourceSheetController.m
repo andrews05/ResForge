@@ -15,17 +15,15 @@
 
 - (void)controlTextDidChange:(NSNotification *)notification
 {
-	BOOL		enableButton = NO;
-	NSString	*type = [typeView stringValue];
-	NSNumber	*resID = @([resIDView intValue]);
+	BOOL	enableButton = NO;
+	OSType	type = GetOSTypeFromNSString([typeView stringValue]);
+	short	resID = (short)[resIDView intValue];
 	
-	if([type length] == 4)
-	{
-		// I could use +[Resource getResourceOfType:andID:inDocument:] != nil, but that would be much slower
-		Resource *resource = [[document dataSource] resourceOfType:type andID:resID];
-		if(resource == nil)   // No resource with that type and ID yet?
-			enableButton = YES;
-	}
+	// I could use +[Resource getResourceOfType:andID:inDocument:] != nil, but that would be much slower
+	Resource *resource = [[document dataSource] resourceOfType:type andID:resID];
+	if(resource == nil)   // No resource with that type and ID yet?
+		enableButton = YES;
+	
 	[createButton setEnabled:enableButton];
 }
 
@@ -41,7 +39,7 @@
 	// bug: didEndSelector could be better employed than using the button's targets from interface builder
 	document = sheetDoc;
 	[NSApp beginSheet:[self window] modalForWindow:[document mainWindow] modalDelegate:self didEndSelector:NULL contextInfo:nil];
-	[resIDView setObjectValue:[[document dataSource] uniqueIDForType:[typeView stringValue]]];
+	[resIDView setObjectValue:@([[document dataSource] uniqueIDForType:GetOSTypeFromNSString([typeView stringValue])])];
 	
 	// put current popup value in text field and updates state of "create" button.
 	[self typePopupSelection:typePopup];
@@ -61,7 +59,7 @@
 		attributes ^= [[attributesMatrix cellAtRow:0 column:1] intValue]? resSysHeap:0;
 		attributes ^= [[attributesMatrix cellAtRow:1 column:1] intValue]? resProtected:0;
 		
-		Resource *resource = [Resource resourceOfType:[typeView stringValue] andID:@((short) [resIDView intValue]) withName:[nameView stringValue] andAttributes:@(attributes)];
+		Resource *resource = [Resource resourceOfType:GetOSTypeFromNSString([typeView stringValue]) andID:(short)[resIDView intValue] withName:[nameView stringValue] andAttributes:attributes];
 		[resource setDocumentName:[document displayName]];
 		[[document undoManager] beginUndoGrouping];
 		[[document dataSource] addResource:resource];

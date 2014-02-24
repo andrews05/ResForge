@@ -237,7 +237,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	NSData *data = [table valueForKey:@"data"];
 	if (data)
 	{
-		id tableResource = [NSClassFromString(@"Resource") resourceOfType:[table valueForKey:@"name"] andID:@(0) withName:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] andAttributes:@(0) data:[table valueForKey:@"data"]];
+		id tableResource = [NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([table valueForKey:@"name"]) andID:0 withName:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] andAttributes:0 data:[table valueForKey:@"data"]];
 		if (!tableResource)
 		{
 			NSLog(@"Couldn't create Resource with data for table '%@'.", [table valueForKey:@"name"]);
@@ -256,10 +256,10 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 - (void)setTableData:(id <ResKnifeResourceProtocol>)tableResource
 {
-	NSDictionary *table = [headerTable firstObjectReturningValue:[tableResource type] forKey:@"name"];
+	NSDictionary *table = [headerTable firstObjectReturningValue:GetNSStringFromOSType([tableResource type]) forKey:@"name"];
 	if(!table)
 	{
-		NSLog(@"Couldn't retrieve table with name '%@'.", [tableResource type]);
+		NSLog(@"Couldn't retrieve table with name '%@'.", GetNSStringFromOSType([tableResource type]));
 		return;
 	}
 	
@@ -273,8 +273,8 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 + (NSString *)filenameExtensionForFileExport:(id <ResKnifeResourceProtocol>)resource
 {
-	if([[resource type] isEqualToString:@"sfnt"]) return @"ttf";
-	else return [resource type];
+	if([resource type] == 'sfnt') return @"ttf";
+	else return GetNSStringFromOSType([resource type]);
 }
 
 @end

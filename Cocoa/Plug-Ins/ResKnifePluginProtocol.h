@@ -61,7 +61,7 @@
 @abstract   If your data has a classical Macintosh OSType code, you can return that here.
 */
 
-+ (NSString *)OSTypeForFileExport:(id <ResKnifeResourceProtocol>)resource;
++ (OSType)OSTypeForFileExport:(id <ResKnifeResourceProtocol>)resource;
 
 /*!
 @method		filenameExtensionForFileExport:
@@ -75,6 +75,6 @@
 @@method		iconForResourceType:
 @abstract		Returns the icon to be used throughout the UI for any given resource type.
 */
-- (NSImage *)iconForResourceType:(NSString *)resourceType;
+- (NSImage *)iconForResourceType:(OSType)resourceType;
 
 @end

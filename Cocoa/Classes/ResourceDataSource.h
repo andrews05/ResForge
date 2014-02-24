@@ -44,31 +44,31 @@
 /*!
 @method		uniqueIDForType:
 */
-- (NSNumber *)uniqueIDForType:(NSString *)type;
+- (short)uniqueIDForType:(OSType)type;
 
 /*!
 @method		defaultIDForType:
 */
-- (NSNumber *)defaultIDForType:(NSString *)type;
+- (short)defaultIDForType:(OSType)type;
 
 /*!
 @method		resourceOfType:andID:
 */
-- (Resource *)resourceOfType:(NSString *)type andID:(NSNumber *)resID;
+- (Resource *)resourceOfType:(OSType)type andID:(short)resID;
 
 /*!
 @method		resourceOfType:withName:
 */
-- (Resource *)resourceOfType:(NSString *)type withName:(NSString *)name;
+- (Resource *)resourceOfType:(OSType)type withName:(NSString *)name;
 
 /*!
 @method		allResourcesOfType:
 */
-- (NSArray *)allResourcesOfType:(NSString *)type;
+- (NSArray *)allResourcesOfType:(OSType)type;
 
 /*!
 @method		allResourceIDsOfType:
 */
-- (NSArray *)allResourceIDsOfType:(NSString *)type;
+- (NSArray *)allResourceIDsOfType:(OSType)type;
 
 @end

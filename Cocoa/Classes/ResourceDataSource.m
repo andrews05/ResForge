@@ -115,38 +115,29 @@ extern NSString *RKResourcePboardType;
 #pragma mark -
 /* ACCESSORS */
 
-- (Resource *)resourceOfType:(NSString *)type andID:(NSNumber *)resID
+- (Resource *)resourceOfType:(OSType)type andID:(short)resID
 {
-	Resource *resource;
-	NSEnumerator *enumerator = [resources objectEnumerator];
-	while(resource = [enumerator nextObject])
-	{
-		if(resID && [[resource resID] isEqualToNumber:resID] && type && [[resource type] isEqualToString:type])
+	for (Resource *resource in resources) {
+		if(resID && resource.resID == resID && type && resource.type == type)
 			return resource;
 	}
 	return nil;
 }
 
-- (Resource *)resourceOfType:(NSString *)type withName:(NSString *)name
+- (Resource *)resourceOfType:(OSType)type withName:(NSString *)name
 {
-	Resource *resource;
-	NSEnumerator *enumerator = [resources objectEnumerator];
-	while(resource = [enumerator nextObject])
-	{
-		if([[resource name] isEqualToString:name] && [[resource type] isEqualToString:type])
+	for (Resource *resource in resources) {
+		if([resource.name isEqualToString:name] && resource.type == type)
 			return resource;
 	}
 	return nil;
 }
 
-- (NSArray *)allResourcesOfType:(NSString *)type
+- (NSArray *)allResourcesOfType:(OSType)type
 {
-	Resource		*resource;
 	NSMutableArray  *array = [NSMutableArray array];
-	NSEnumerator	*enumerator = [resources objectEnumerator];
-	while(resource = [enumerator nextObject])
-	{
-		if([[resource type] isEqualToString:type])
+	for (Resource *resource in resources) {
+		if([resource type] == type)
 			[array addObject:resource];
 	}
 	return [NSArray arrayWithArray:array];
@@ -158,18 +149,15 @@ extern NSString *RKResourcePboardType;
 @updated	2003-08-01  UK  Created based on allResourcesOfType:
 */
 
-- (NSArray*)allResourceIDsOfType:(NSString *)type
+- (NSArray*)allResourceIDsOfType:(OSType)type
 {
-	if(!type || [type isEqualToString:@""])
+	if(!type)
 		return [NSArray array];
 	
-	Resource		*resource;
 	NSMutableArray  *array = [NSMutableArray array];
-	NSEnumerator	*enumerator = [resources objectEnumerator];
-	while(resource = [enumerator nextObject])
-	{
-		if([[resource type] isEqualToString:type])
-			[array addObject:[resource resID]];
+	for (Resource *resource in resources) {
+		if([resource type] == type)
+			[array addObject:@(resource.resID)];
 	}
 	return [NSArray arrayWithArray:array];
 }
@@ -181,9 +169,9 @@ extern NSString *RKResourcePboardType;
 @updated	2003-10-21  NGS:  Changed to obtain initial ID from -[resource defaultIDForType:], so we can vary it on a pre-resource-type basis (like Resourcerer can)
 */
 
-- (NSNumber *)uniqueIDForType:(NSString *)type
+- (short)uniqueIDForType:(OSType)type
 {
-	short   theID = [[self defaultIDForType:type] shortValue];
+	short   theID = [self defaultIDForType:type];
 	NSArray *array = [self allResourceIDsOfType:type];
 	
 	if([array count] <= USHRT_MAX)
@@ -192,7 +180,7 @@ extern NSString *RKResourcePboardType;
 			theID++;
 	}
 	
-	return @(theID);
+	return theID;
 }
 
 /*!
@@ -200,10 +188,10 @@ extern NSString *RKResourcePboardType;
 @pending	Method should look for resources specifying what the initial ID is for this resource type (e.g. 'vers' resources start at 0)
 */
 
-- (NSNumber *)defaultIDForType:(NSString *)type
+- (short)defaultIDForType:(OSType)type
 {
 	short defaultID = 128;
-	return @(defaultID);
+	return defaultID;
 }
 
 #pragma mark -

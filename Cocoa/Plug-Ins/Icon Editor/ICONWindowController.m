@@ -76,7 +76,7 @@
 {
 	unsigned char*			planes[2] = { 0, 0 };
 	NSBitmapImageRep*		bir;
-	NSString*				resType = [resource type];
+	OSType					resType = [resource type];
 	
 	[resImage autorelease];
 	resImage = [[NSImage alloc] init];
@@ -93,26 +93,30 @@
 	NSUInteger bytesPerRow = 0;
 	NSUInteger samplesPerPixel = 2;
 	
-	if( [resType isEqualToString: @"ICN#"] )
-	{
-		bytesPerRow = 4;
-	}
-	else if( [resType isEqualToString: @"ics#"] || [resType isEqualToString: @"CURS"] )
-	{
-		bytesPerRow = 2;
-		pixelsWide = pixelsHigh = 16;
-	}
-	else if( [resType isEqualToString: @"icm#"] )
-	{
-		bytesPerRow = 2;
-		pixelsWide = 16;
-		pixelsHigh = 12;
-	}
-	else {
-		bytesPerRow = 4;
-		hasAlpha = NO;
-		isPlanar = NO;
-		samplesPerPixel = 1;
+	switch (resType) {
+		case 'ICN#':
+			bytesPerRow = 4;
+			break;
+			
+		case 'ics#':
+		case 'CURS':
+			bytesPerRow = 2;
+			pixelsWide = pixelsHigh = 16;
+			break;
+			
+		case 'icm#':
+			bytesPerRow = 2;
+			pixelsWide = 16;
+			pixelsHigh = 12;
+			break;
+			
+		default:
+			bytesPerRow = 4;
+			hasAlpha = NO;
+			isPlanar = NO;
+			samplesPerPixel = 1;
+			
+			break;
 	}
 	
 	plane0length = bytesPerRow * pixelsHigh;
@@ -124,10 +128,11 @@
 		planes[0][i] ^= 0xff;
 	
 	bir = [[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:planes pixelsWide:pixelsWide pixelsHigh:pixelsHigh
-												bitsPerSample:1 samplesPerPixel:samplesPerPixel hasAlpha:hasAlpha isPlanar:isPlanar colorSpaceName:NSCalibratedWhiteColorSpace
+												bitsPerSample:1 samplesPerPixel:samplesPerPixel hasAlpha:hasAlpha
+													 isPlanar:isPlanar colorSpaceName:NSCalibratedWhiteColorSpace
 												  bytesPerRow:bytesPerRow bitsPerPixel:1] autorelease];
-
-		
+	
+	
 	[resImage addRepresentation:bir];
 	[imageView setImage: resImage];
 	
