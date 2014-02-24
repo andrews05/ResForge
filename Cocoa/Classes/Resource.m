@@ -4,57 +4,74 @@
 
 NSString *RKResourcePboardType = @"RKResourcePboardType";
 
+#define kRSRCName @"ResourceName"
+#define kRSRCData @"ResourceData"
+#define kRSRCID @"ResourceID"
+#define kRSRCType @"ResourceType"
+#define kRSRCAttrib @"ResourceAttribute"
+
+@interface Resource ()
+@property (copy) NSString *_name;
+@property (retain) NSData *_data;
+@end
+
 @implementation Resource
+@synthesize _name = name;
+@synthesize dirty;
+@synthesize _data = data;
+@synthesize representedFork;
 
 - (id)init
 {
-	return self = [self initWithType:@"NULL" andID:@(128)];
+	return self = [self initWithType:'NULL' andID:128 withName:@"" andAttributes:0 data:[NSData data]];
 }
 
-- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue
+- (id)initWithType:(OSType)typeValue andID:(short)resIDValue
 {
-	return [self initWithType:typeValue andID:resIDValue withName:@"" andAttributes:@(0)];
+	return self = [self initWithType:typeValue andID:resIDValue withName:@"" andAttributes:0 data:[NSData data]];
 }
 
-- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue
+- (id)initWithType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue
 {
 	return [self initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:[NSData data]];
 }
 
-- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue
+- (id)initWithType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue data:(NSData *)dataValue
 {
 	// sets values directly for speed reasons (less messaging overhead)
-	self = [super init];
-	dirty = NO;
-	representedFork = nil;
-	name = [nameValue copy];
-	type = [typeValue copy];
-	resID = [resIDValue copy];
-	attributes = [attributesValue copy];
-	data = dataValue;
+	if (self = [super init])
+	{
+		dirty = NO;
+		representedFork = nil;
+		self._name = nameValue;
+		type = typeValue;
+		resID = resIDValue;
+		attributes = attributesValue;
+		self._data = dataValue;
+	}
 	return self;
 }
 
 
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue
++ (id)resourceOfType:(OSType)typeValue andID:(short)resIDValue
 {
 	Resource *resource = [[Resource allocWithZone:nil] initWithType:typeValue andID:resIDValue];
 	return resource;
 }
 
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue
++ (id)resourceOfType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue
 {
 	Resource *resource = [[Resource allocWithZone:nil] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue];
 	return resource;
 }
 
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue
++ (id)resourceOfType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue data:(NSData *)dataValue
 {
 	Resource *resource = [[Resource allocWithZone:nil] initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:dataValue];
 	return resource;
 }
 
-+ (Resource *)getResourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)searchDoc
++ (Resource *)getResourceOfType:(OSType)typeValue andID:(short)resIDValue inDocument:(NSDocument *)searchDoc
 {
 	for (NSDocument *doc in [[NSDocumentController sharedDocumentController] documents])
 	{
@@ -70,7 +87,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 
 /* ResKnifeResourceProtocol implementation */
 
-+ (NSArray *)allResourcesOfType:(NSString *)typeValue inDocument:(NSDocument *)searchDoc
++ (NSArray *)allResourcesOfType:(OSType)typeValue inDocument:(NSDocument *)searchDoc
 {
 	NSMutableArray *array = [NSMutableArray array];
 	for (NSDocument *doc in [[NSDocumentController sharedDocumentController] documents])
@@ -82,7 +99,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	return [NSArray arrayWithArray:array];
 }
 
-+ (Resource *)resourceOfType:(NSString *)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)searchDoc
++ (Resource *)resourceOfType:(OSType)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)searchDoc
 {
 	for (NSDocument *doc in [[NSDocumentController sharedDocumentController] documents])
 	{
@@ -96,7 +113,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	return nil;
 }
 
-+ (Resource *)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)searchDoc
++ (Resource *)resourceOfType:(OSType)typeValue andID:(short)resIDValue inDocument:(NSDocument *)searchDoc
 {
 	for (NSDocument *doc in [[NSDocumentController sharedDocumentController] documents])
 	{
@@ -137,7 +154,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 
 - (void)touch
 {
-	[self setDirty:YES];
+	self.dirty = YES;
 }
 
 - (BOOL)isDirty
@@ -161,16 +178,6 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	_docName = [docName copy];
 }
 
-- (NSString *)representedFork
-{
-	return representedFork;
-}
-
-- (void)setRepresentedFork:(NSString *)forkName
-{
-	representedFork = [forkName copy];
-}
-
 - (NSString *)name
 {
 	return name;
@@ -179,7 +186,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 // shouldn't need this - it's used by forks to give them alternate names - should use name formatter replacement instead
 - (void)_setName:(NSString *)newName
 {
-	name = [newName copy];
+	self._name = newName;
 }
 
 - (void)setName:(NSString *)newName
@@ -189,11 +196,11 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameWillChangeNotification object:self];
 		
-		name = [newName copy];
+		self._name = newName;
 		
 		// bug: this line is causing crashes!
-//		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameDidChangeNotification object:self];
-		[self setDirty:YES];
+		//[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameDidChangeNotification object:self];
+		self.dirty = YES;
 	}
 }
 
@@ -203,63 +210,63 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	else					return [NSString stringWithFormat: NSLocalizedString(@"%@: %@ %@", @"default window title format without resource name"), _docName, type, resID];
 }
 
-- (NSString *)type
+- (OSType)type
 {
 	return type;
 }
 
-- (void)setType:(NSString *)newType
+- (void)setType:(OSType)newType
 {
-	if(![type isEqualToString:newType])
+	if(type != newType)
 	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeWillChangeNotification object:self];
 		
-		type = [newType copy];
+		type = newType;
 		
 		// bug: this line is causing crashes!
-//		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeDidChangeNotification object:self];
-		[self setDirty:YES];
+		//[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeDidChangeNotification object:self];
+		self.dirty = YES;
 	}
 }
 
-- (NSNumber *)resID
+- (short)resID
 {
 	return resID;
 }
 
-- (void)setResID:(NSNumber *)newResID
+- (void)setResID:(short)newResID
 {
-	if(![resID isEqualToNumber:newResID])
+	if(resID != newResID)
 	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDWillChangeNotification object:self];
 		
-		resID = [newResID copy];
+		resID = newResID;
 		
 		// bug: this line is causing crashes!
-//		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDDidChangeNotification object:self];
-		[self setDirty:YES];
+		//[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDDidChangeNotification object:self];
+		self.dirty = YES;
 	}
 }
 
-- (NSNumber *)attributes
+- (unsigned short)attributes
 {
 	return attributes;
 }
 
-- (void)setAttributes:(NSNumber *)newAttributes
+- (void)setAttributes:(unsigned short)newAttributes
 {
-	if(![attributes isEqualToNumber:newAttributes])
+	if(attributes != newAttributes)
 	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesWillChangeNotification object:self];
 		
-		attributes = [newAttributes copy];
+		attributes = newAttributes;
 		
 		// bug: this line is causing crashes!
-//		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesDidChangeNotification object:self];
-		[self setDirty:YES];
+		//[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesDidChangeNotification object:self];
+		self.dirty = YES;
 	}
 }
 
@@ -281,10 +288,10 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataWillChangeNotification object:self];
 		
 		// note: this function retains, rather than copies, the supplied data
-		data = newData;
+		self._data = newData;
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:self];
-		[self setDirty:YES];
+		self.dirty = YES;
 	}
 }
 
@@ -295,29 +302,39 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	self = [super init];
 	if (self) {
 		dirty = YES;
-		name = [decoder decodeObject];
-		type = [decoder decodeObject];
-		resID = [decoder decodeObject];
-		attributes = [decoder decodeObject];
-		data = [decoder decodeDataObject];
+		if ([decoder allowsKeyedCoding]) {
+			self._name = [decoder decodeObjectForKey:kRSRCName];
+			type = [decoder decodeInt32ForKey:kRSRCType];
+			resID = (short)[decoder decodeInt32ForKey:kRSRCID];
+			attributes = (UInt16)[decoder decodeInt32ForKey:kRSRCAttrib];
+			self._data = [decoder decodeObjectForKey:kRSRCData];
+
+		} else {
+			self._name = [decoder decodeObject];
+			type = [(NSNumber*)[decoder decodeObject] unsignedIntValue];
+			resID = [(NSNumber*)[decoder decodeObject] shortValue];
+			attributes = [(NSNumber*)[decoder decodeObject] unsignedShortValue];
+			self._data = [decoder decodeDataObject];
+		}
 	}
 	return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
-	[encoder encodeObject:name];
-	[encoder encodeObject:type];
-	[encoder encodeObject:resID];
-	[encoder encodeObject:attributes];
-	[encoder encodeDataObject:data];
+	NSAssert([encoder allowsKeyedCoding], @"Keyed Coding is not available");
+	[encoder encodeObject:name forKey:kRSRCName];
+	[encoder encodeInt32:resID forKey:kRSRCID];
+	[encoder encodeInt32:attributes forKey:kRSRCAttrib];
+	[encoder encodeInt32:type forKey:kRSRCType];
+	[encoder encodeObject:data forKey:kRSRCData];
 }
 
 /* description */
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"\n%@\nName: %@\nType: %@  ID: %@\nSize: %ld  Modified: %@", [super description], name, type, resID, (unsigned long)[data length], dirty? @"YES":@"NO"];
+	return [NSString stringWithFormat:@"\n%@\nName: %@\nType: %@  ID: %hd\nSize: %ld  Modified: %@", [super description], name, GetNSStringFromOSType(type), resID, (unsigned long)[data length], dirty? @"YES":@"NO"];
 }
 
 @end

@@ -2,7 +2,6 @@
 	PreserveBackups = YES;
 	Autosave = NO;
 	AutosaveInterval = 5;
-	DeleteResourceWarning = YES;
-	
+	"DeleteResourceWarning" = YES;
 	LaunchAction = OpenUntitledFile;
 }

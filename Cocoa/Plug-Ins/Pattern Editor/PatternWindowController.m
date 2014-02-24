@@ -83,10 +83,18 @@
 - (id)initWithResource:(id <ResKnifeResourceProtocol>)inResource {
 	if (self = [self initWithWindowNibName:@"PatternWindowController"]) {
 		resource = inResource;
-		if ([[resource type] isEqualToString:@"PAT "]) // single 8x8 B&W pattern
-			[self loadPAT:resource];
-		else if ([[resource type] isEqualToString:@"PAT#"]) // list of 8x8 B&W patterns
-			[self loadPATList:resource];
+		switch (resource.type) {
+			case 'PAT ':// single 8x8 B&W pattern
+				[self loadPAT:resource];
+				break;
+				
+			case 'PAT#': // list of 8x8 B&W patterns
+				[self loadPATList:resource];
+				break;
+				
+			default:
+				break;
+		}
 		[self window];
 	}
 	

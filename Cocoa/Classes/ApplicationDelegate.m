@@ -61,14 +61,14 @@
 - (void)precacheIcons:(NSTimer *)timer
 {
 	// pre-cache a number of common icons (ignores return value, relies on iconForResourceType: to do the actual caching)
-	[self iconForResourceType:@"    "];
-	[self iconForResourceType:@"????"];
-	[self iconForResourceType:@"CODE"];
-	[self iconForResourceType:@"icns"];
-	[self iconForResourceType:@"PICT"];
-	[self iconForResourceType:@"plst"];
-	[self iconForResourceType:@"snd "];
-	[self iconForResourceType:@"TEXT"];
+	[self iconForResourceType:'    '];
+	[self iconForResourceType:0x3f3f3f3f];
+	[self iconForResourceType:'CODE'];
+	[self iconForResourceType:'icns'];
+	[self iconForResourceType:'PICT'];
+	[self iconForResourceType:'plst'];
+	[self iconForResourceType:'snd '];
+	[self iconForResourceType:'TEXT'];
 }
 
 - (NSArray *)forksForFile:(FSRef *)fileRef
@@ -113,10 +113,10 @@
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
 #pragma unused(sender)
-	NSString *launchAction = [[NSUserDefaults standardUserDefaults] stringForKey:@"LaunchAction"];
-	if([launchAction isEqualToString:@"OpenUntitledFile"])
+	NSString *launchAction = [[NSUserDefaults standardUserDefaults] stringForKey:kLaunchAction];
+	if([launchAction isEqualToString:kOpenUntitledFile])
 		return YES;
-	else if([launchAction isEqualToString:@"DisplayOpenPanel"])
+	else if([launchAction isEqualToString:kDisplayOpenPanel])
 	{
 		[[NSDocumentController sharedDocumentController] openDocument:sender];
 		return NO;
@@ -214,23 +214,21 @@
 @pending		I don't like the name I chose here for the resource type icons directory. Can anyone think of something better?
 */
 
-- (NSImage *)iconForResourceType:(NSString *)resourceType
+- (NSImage *)iconForResourceType:(OSType)resourceType
 {
 	NSImage *icon = nil;
-	if([resourceType isEqualToString:@""])
-		resourceType = nil;
 	
 	if(resourceType)
 	{
 		// check if we have image in cache already
-		icon = [self _icons][resourceType];		// valueForKey: raises when the resourceType begins with '@' (e.g. the @GN4 owner resource from Gene!)
+		icon = [self _icons][GetNSStringFromOSType(resourceType)];		// valueForKey: raises when the resourceType begins with '@' (e.g. the @GN4 owner resource from Gene!)
 		
 		if(!icon)
 		{
 			NSString *iconPath = nil;
 			
 			// try to load icon from the default editor for that type
-			Class editor = [[RKEditorRegistry defaultRegistry] editorForType:resourceType];
+			Class editor = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType(resourceType)];
 			if(editor)
 			{
 				// ask politly for icon
@@ -240,7 +238,7 @@
 				// try getting it myself
 				if(!icon)
 				{
-					iconPath = [[NSBundle bundleForClass:editor] pathForResource:resourceType ofType:nil inDirectory:@"Resource Type Icons"];
+					iconPath = [[NSBundle bundleForClass:editor] pathForResource:GetNSStringFromOSType(resourceType) ofType:nil inDirectory:@"Resource Type Icons"];
 					if(iconPath)
 						icon = [[NSImage alloc] initWithContentsOfFile:iconPath];
 				}
@@ -249,7 +247,7 @@
 			// try to load icon from the ResKnife app bundle itself
 			if(!icon)
 			{
-				iconPath = [[NSBundle mainBundle] pathForResource:resourceType ofType:nil inDirectory:@"Resource Type Icons"];
+				iconPath = [[NSBundle mainBundle] pathForResource:GetNSStringFromOSType(resourceType) ofType:nil inDirectory:@"Resource Type Icons"];
 				if(iconPath)
 					icon = [[NSImage alloc] initWithContentsOfFile:iconPath];
 			}
@@ -257,7 +255,7 @@
 			// try to retrieve from file system using our resource type to file name extension/bundle identifier code
 			if(!icon)
 			{
-				NSString *fileType = [[NSBundle mainBundle] localizedStringForKey:resourceType value:@"" table:@"Resource Type Mappings"];
+				NSString *fileType = [[NSBundle mainBundle] localizedStringForKey:GetNSStringFromOSType(resourceType) value:@"" table:@"Resource Type Mappings"];
 				NSRange range = [fileType rangeOfString:@"."];
 				if(range.location == NSNotFound)
 					icon = [[NSWorkspace sharedWorkspace] iconForFileType:fileType];
@@ -273,11 +271,11 @@
 			
 			// try to retrieve from file system as an OSType code
 			if(!icon)
-				icon = [[NSWorkspace sharedWorkspace] iconForFileType:[NSString stringWithFormat:@"'%@'", resourceType]];
+				icon = [[NSWorkspace sharedWorkspace] iconForFileType:[NSString stringWithFormat:@"'%@'", GetNSStringFromOSType(resourceType)]];
 			
 			// save the newly retrieved icon in the cache
 			if(icon)
-				[self _icons][resourceType] = icon;
+				[self _icons][GetNSStringFromOSType(resourceType)] = icon;
 		}
 	}
 	else

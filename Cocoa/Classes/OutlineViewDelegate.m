@@ -11,12 +11,9 @@
 {
 	self = [super init];
 	if(!self) return nil;
-	if(NSAppKitVersionNumber >= 700.0)		// darwin 7.0 == Mac OS 10.3, needed for -setPlaceholderString:
-	{
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceholder:) name:ResourceNameDidChangeNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceholder:) name:ResourceTypeDidChangeNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceholder:) name:ResourceIDDidChangeNotification object:nil];
-	}
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceholder:) name:ResourceNameDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceholder:) name:ResourceTypeDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceholder:) name:ResourceIDDidChangeNotification object:nil];
 	return self;
 }
 
@@ -26,7 +23,7 @@
 	ResourceNameCell *cell = (ResourceNameCell *) [[outlineView tableColumnWithIdentifier:@"name"] dataCellForRow:[outlineView rowForItem:resource]];
 	if([[resource name] isEqualToString:@""])
 	{
-		if([[resource resID] shortValue] == -16455)
+		if([resource resID] == -16455)
 			[cell setPlaceholderString:NSLocalizedString(@"Custom Icon", nil)];
 		else [cell setPlaceholderString:NSLocalizedString(@"Untitled Resource", nil)];
 	}
@@ -113,58 +110,61 @@
 	{
 		if(![resource representedFork])
 			[(ResourceNameCell *)cell setImage:[(ApplicationDelegate *)[NSApp delegate] iconForResourceType:[resource type]]];
-		else [(ResourceNameCell *)cell setImage:[(ApplicationDelegate *)[NSApp delegate] iconForResourceType:nil]];
+		else [(ResourceNameCell *)cell setImage:[(ApplicationDelegate *)[NSApp delegate] iconForResourceType:0]];
 		
 		if([[resource name] isEqualToString:@""])
 		{
-			if([cell respondsToSelector:@selector(setPlaceholderString:)])	// 10.3+
-			{
-				// 10.3+ uses placeholder strings
-				if([[resource resID] shortValue] == -16455)	// don't bother checking type since there are too many icon types
-					[cell setPlaceholderString:NSLocalizedString(@"Custom Icon", nil)];
-				else if([[resource type] isEqualToString:@"carb"] && [[resource resID] shortValue] == 0)
-					[cell setPlaceholderString:NSLocalizedString(@"Carbon Identifier", nil)];
-				else if([[resource type] isEqualToString:@"pnot"] && [[resource resID] shortValue] == 0)
-					[cell setPlaceholderString:NSLocalizedString(@"File Preview", nil)];
-				else if([[resource type] isEqualToString:@"STR "] && [[resource resID] shortValue] == -16396)
-					[cell setPlaceholderString:NSLocalizedString(@"Creator Information", nil)];
-				else if([[resource type] isEqualToString:@"vers"] && [[resource resID] shortValue] == 1)
-					[cell setPlaceholderString:NSLocalizedString(@"File Version", nil)];
-				else if([[resource type] isEqualToString:@"vers"] && [[resource resID] shortValue] == 2)
-					[cell setPlaceholderString:NSLocalizedString(@"Package Version", nil)];
-				else [cell setPlaceholderString:NSLocalizedString(@"Untitled Resource", nil)];
-			}
-			else
-			{
-				// pre-10.3, set text colour to grey and set title accordingly
-				if([[resource resID] shortValue] == -16455)
-					[cell setTitle:NSLocalizedString(@"Custom Icon", nil)];
-				else if([[resource type] isEqualToString:@"carb"] && [[resource resID] shortValue] == 0)
-					[cell setTitle:NSLocalizedString(@"Carbon Identifier", nil)];
-				else if([[resource type] isEqualToString:@"pnot"] && [[resource resID] shortValue] == 0)
-					[cell setTitle:NSLocalizedString(@"File Preview", nil)];
-				else if([[resource type] isEqualToString:@"STR "] && [[resource resID] shortValue] == -16396)
-					[cell setTitle:NSLocalizedString(@"Creator Information", nil)];
-				else if([[resource type] isEqualToString:@"vers"] && [[resource resID] shortValue] == 1)
-					[cell setTitle:NSLocalizedString(@"File Version", nil)];
-				else if([[resource type] isEqualToString:@"vers"] && [[resource resID] shortValue] == 2)
-					[cell setTitle:NSLocalizedString(@"Package Version", nil)];
-				else [cell setTitle:NSLocalizedString(@"Untitled Resource", nil)];
-				
-//				if([[outlineView selectedItems] containsObject:resource])
-//					[cell setTextColor:[NSColor whiteColor]];
-//				else [cell setTextColor:[NSColor grayColor]];
+			// 10.3+ uses placeholder strings
+			if([resource resID] == -16455)	// don't bother checking type since there are too many icon types
+				[cell setPlaceholderString:NSLocalizedString(@"Custom Icon", nil)];
+			else {
+				switch (resource.type) {
+					case 'carb':
+						if (resource.resID == 0) {
+							[cell setPlaceholderString:NSLocalizedString(@"Carbon Identifier", nil)];
+						} else
+							goto notEnum;
+						break;
+						
+					case 'pnot':
+						if (resource.resID == 0) {
+							[cell setPlaceholderString:NSLocalizedString(@"File Preview", nil)];
+						} else
+							goto notEnum;
+						break;
+						
+					case 'STR ':
+						if (resource.resID == -16396) {
+							[cell setPlaceholderString:NSLocalizedString(@"Creator Information", nil)];
+						} else
+							goto notEnum;
+						break;
+						
+					case 'vers':
+						switch (resource.resID) {
+							case 1:
+								[cell setPlaceholderString:NSLocalizedString(@"File Version", nil)];
+								break;
+								
+							case 2:
+								[cell setPlaceholderString:NSLocalizedString(@"Package Version", nil)];
+								
+								break;
+								
+							default:
+								goto notEnum;
+								break;
+						}
+						
+						break;
+						
+					default:
+					notEnum:
+						[cell setPlaceholderString:NSLocalizedString(@"Untitled Resource", nil)];
+						break;
+				}
 			}
 		}
-	}
-	
-	// draw alternating blue/white backgrounds (if pre-10.3)
-	if(NSAppKitVersionNumber < 700.0)
-	{
-		int row = [oView rowForItem:item];
-		if(row % 2)	[cell setBackgroundColor:[NSColor colorWithCalibratedRed:0.93 green:0.95 blue:1.0 alpha:1.0]];
-		else		[cell setBackgroundColor:[NSColor whiteColor]];
-					[cell setDrawsBackground:YES];
 	}
 }
 

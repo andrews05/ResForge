@@ -18,9 +18,9 @@
 - (void)readDataFrom:(TemplateStream *)stream
 {
 	value = 0;
-	if ([type isEqualToString:@"LCNT"] || [type isEqualToString:@"LZCT"])
+	if ([self.type isEqualToString:@"LCNT"] || [self.type isEqualToString:@"LZCT"])
 		[stream readAmount:4 toBuffer:&value];
-	else if ([type isEqualToString:@"BCNT"] || [type isEqualToString:@"BZCT"])
+	else if ([self.type isEqualToString:@"BCNT"] || [self.type isEqualToString:@"BZCT"])
 		[stream readAmount:1 toBuffer:(char *)(&value)+3];
 	else
 		[stream readAmount:2 toBuffer:(short *)(&value)+1];
@@ -32,9 +32,9 @@
 
 - (unsigned int)sizeOnDisk
 {
-	if ([type isEqualToString:@"LCNT"] || [type isEqualToString:@"LZCT"])
+	if ([self.type isEqualToString:@"LCNT"] || [self.type isEqualToString:@"LZCT"])
 		return 4;
-	else if ([type isEqualToString:@"BCNT"] || [type isEqualToString:@"BZCT"])
+	else if ([self.type isEqualToString:@"BCNT"] || [self.type isEqualToString:@"BZCT"])
 		return 1;
 	else
 		return 2;
@@ -45,9 +45,9 @@
 	if ([self countFromZero])
 		value -= 1;
 	UInt32 tmp = CFSwapInt32HostToBig(value);
-	if     ([type isEqualToString:@"LCNT"] || [type isEqualToString:@"LZCT"])
+	if ([self.type isEqualToString:@"LCNT"] || [self.type isEqualToString:@"LZCT"])
 		[stream writeAmount:4 fromBuffer:&tmp];
-	else if ([type isEqualToString:@"BCNT"] || [type isEqualToString:@"BZCT"])
+	else if ([self.type isEqualToString:@"BCNT"] || [self.type isEqualToString:@"BZCT"])
 		[stream writeAmount:1 fromBuffer:(char *)(&tmp)+3];
 	else
 		[stream writeAmount:2 fromBuffer:(short *)(&tmp)+1];
@@ -57,10 +57,10 @@
 
 - (BOOL)countFromZero
 {
-	return [type isEqualToString:@"ZCNT"] ||
-	       [type isEqualToString:@"BZCT"] ||
-		   [type isEqualToString:@"WZCT"] ||
-		   [type isEqualToString:@"LZCT"];
+	return [self.type isEqualToString:@"ZCNT"] ||
+	       [self.type isEqualToString:@"BZCT"] ||
+		   [self.type isEqualToString:@"WZCT"] ||
+		   [self.type isEqualToString:@"LZCT"];
 }
 
 - (void)increment

@@ -1,6 +1,10 @@
 #import "Element.h"
 
 @implementation Element
+@synthesize type;
+@synthesize label;
+@synthesize isTMPL = _isTMPL;
+@synthesize parentArray;
 
 + (id)elementForType:(NSString *)t withLabel:(NSString *)l
 {
@@ -25,49 +29,6 @@
 }
 
 #pragma mark -
-
-- (void)setIsTMPL:(BOOL)t
-{
-	_isTMPL = t;
-}
-
-- (BOOL)isTMPL
-{
-	return _isTMPL;
-}
-
-- (void)setType:(NSString *)t
-{
-	id old = type;
-	type = [t copy];
-}
-
-- (NSString *)type
-{
-	return type;
-}
-
-- (void)setLabel:(NSString *)l
-{
-	id old = label;
-	label = [l copy];
-}
-
-- (NSString *)label
-{
-	return label;
-}
-
-- (void)setParentArray:(NSMutableArray *)array
-{
-	// do not retain parent object
-	parentArray = array;
-}
-
-- (NSMutableArray *)parentArray
-{
-	return parentArray;
-}
 
 /*** METHODS SUBCLASSES SHOULD OVERRIDE ***/
 

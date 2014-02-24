@@ -17,9 +17,9 @@
 	
 	// resource information
 	NSString		*name;
-	NSString		*type;
-	NSNumber		*resID;			// signed short
-	NSNumber		*attributes;	// unsigned short
+	OSType			type;
+	short			resID;			// signed short
+	UInt16			attributes;		// unsigned short
 	
 	// the actual data
 	NSData			*data;
@@ -29,22 +29,21 @@
 }
 
 // accessor methods not part of the protocol
+@property (getter = isDirty) BOOL dirty;
+@property (copy) NSString *representedFork;
 - (void)_setName:(NSString *)newName;
-- (void)setDirty:(BOOL)newValue;
-- (NSString *)representedFork;
-- (void)setRepresentedFork:(NSString *)forkName;
 - (void)setDocumentName:(NSString *)docName;
 
 // init methods
-- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue;
-- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue;
-- (id)initWithType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue;
+- (instancetype)initWithType:(OSType)typeValue andID:(short)resIDValue;
+- (instancetype)initWithType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue;
+- (instancetype)initWithType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue data:(NSData *)dataValue;
 
 // autoreleased resource methods
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue;
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue;
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue withName:(NSString *)nameValue andAttributes:(NSNumber *)attributesValue data:(NSData *)dataValue;
++ (instancetype)resourceOfType:(OSType)typeValue andID:(short)resIDValue;
++ (instancetype)resourceOfType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue;
++ (instancetype)resourceOfType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue data:(NSData *)dataValue;
 
-+ (Resource *)getResourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)searchDoc;
++ (Resource *)getResourceOfType:(OSType)typeValue andID:(short)resIDValue inDocument:(NSDocument *)searchDoc;
 
 @end

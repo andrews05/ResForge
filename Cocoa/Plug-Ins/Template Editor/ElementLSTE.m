@@ -52,8 +52,8 @@
 - (IBAction)createListEntry:(id)sender
 {
 	ElementLSTB *list = [groupElementTemplate copy];
-	[parentArray insertObject:list atIndex:[parentArray indexOfObject:self]];
-	[list setParentArray:parentArray];
+	[self.parentArray insertObject:list atIndex:[self.parentArray indexOfObject:self]];
+	[list setParentArray:self.parentArray];
 	[list setCountElement:countElement];
 	[countElement increment];
 }

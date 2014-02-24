@@ -13,31 +13,17 @@
 */
 
 @interface Element : NSObject <NSCopying>
-{
-	BOOL _isTMPL;	// for debugging
-	NSString *type;					// Type code of this item (4 chars if from TMPL resource, but we may support longer types later).
-	NSString *label;				// Label ("name") of this field.
-	NSMutableArray *parentArray;	// The NSMutableArray* of the template field containing us, or the template window's list.
-}
+// Accessors:
+@property (copy) NSString *type; // Type code of this item (4 chars if from TMPL resource, but we may support longer types later).
+@property (copy) NSString *label; // Label ("name") of this field.
+@property (weak) NSMutableArray *parentArray; // The NSMutableArray* of the template field containing us, or the template window's list.
+@property BOOL isTMPL;// for debugging
 
 + (id)elementForType:(NSString *)type withLabel:(NSString *)label;
 - (id)initForType:(NSString *)type withLabel:(NSString *)label;
 
 // This is used to instantiate copies of the item from the template for storing data of the resource. A copy created with this is then sent readDataFrom:.
 - (id)copyWithZone:(NSZone *)zone;
-
-// Accessors:
-- (void)setIsTMPL:(BOOL)t;
-- (BOOL)isTMPL;
-
-- (void)setType:(NSString *)t;
-- (NSString *)type;
-
-- (void)setLabel:(NSString *)l;
-- (NSString *)label;
-
-- (void)setParentArray:(NSMutableArray *)array;
-- (NSMutableArray *)parentArray;
 
 - (NSString *)stringValue; // Used to display your data in the list.
 - (BOOL)editable;

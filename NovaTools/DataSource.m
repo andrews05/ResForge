@@ -14,14 +14,15 @@
 	return nil;
 }
 
-- (id)initForType:(NSString *)typeString
+- (id)initForType:(OSType)typeString
 {
-	if (self = [super init]) {
-		type = [typeString copy];
+	self = [super init];
+	if (self) {
+		type = typeString;
 		data = [[NSMutableDictionary alloc] init];
 		NSArray *resources = [NSClassFromString(@"Resource") allResourcesOfType:type inDocument:nil];	// nil document will search in ANY open document for the correct resource
 		for(id <ResKnifeResourceProtocol> resource in resources )
-			data[[resource resID]] = [resource name];
+			[data setObject:[resource name] forKey:@([resource resID])];
 		parsed = [[NSMutableArray alloc] initWithArray:[data allValues]];
 	}
 	return self;
@@ -51,16 +52,14 @@
 
 - (void)parseForString:(NSString *)string withinRange:(NSRange)resIDRange sorted:(BOOL)sort
 {
-	NSNumber *resID;
 	NSString *trimmedString = [DataSource resNameFromStringValue:string];
-	NSEnumerator *enumerator = [[data allKeys] objectEnumerator];
 	[parsed removeAllObjects];
 	if( trimmedString == nil ) trimmedString = @"";
-	while( resID = [enumerator nextObject] )
-	{
-		NSString *value = data[resID];
+	for (NSNumber *NumID in data) {
+		short resID = [NumID shortValue];
+		NSString *value = [data objectForKey:NumID];
 		NSRange range = [value rangeOfString:trimmedString options:NSCaseInsensitiveSearch];
-		if( ((range.location != NSNotFound && range.length != 0) || [trimmedString isEqualToString:@""]) && [resID isBoundedByRange:resIDRange] )
+		if( ((range.location != NSNotFound && range.length != 0) || [trimmedString isEqualToString:@""]) && [NumID isBoundedByRange:resIDRange] )
 			[parsed addObject:[self stringValueForResID:resID]];
 	}
 	
@@ -71,35 +70,35 @@
 	if( sort ) [parsed sortUsingSelector:@selector(caseInsensitiveCompare:)];
 }
 
-- (id)objectValueForResID:(NSNumber *)resID
+- (id)objectValueForResID:(short)resID
 {
-	return data[resID];
+	return [data objectForKey:@(resID)];
 }
 
-- (NSString *)stringValueForResID:(NSNumber *)resID
+- (NSString *)stringValueForResID:(short)resID
 {
-	if( resID && data[resID] )
-		return [NSString stringWithFormat:@"%@ {%@}", data[resID], resID];
-	else if( [resID shortValue] == -1 )
+	if( resID && [data objectForKey:@(resID)] )
+		return [NSString stringWithFormat:@"%@ {%@}", [data objectForKey:@(resID)], @(resID)];
+	else if( resID == -1 )
 		return @"";
 	else if( resID )
-		return [NSString stringWithFormat:@"{%@}", resID];
+		return [NSString stringWithFormat:@"{%@}", @(resID)];
 	return nil;
 }
 
-+ (NSNumber *)resIDFromStringValue:(NSString *)string
++ (short)resIDFromStringValue:(NSString *)string
 {
 	NSRange span, range = NSMakeRange(0,0);
 	span = [string rangeOfString:@"{" options:NSBackwardsSearch];
 	if( span.location != NSNotFound )	range.location = span.location +1;
-	else return @(-1);
+	else return -1;
 	span = [string rangeOfString:@"}" options:NSBackwardsSearch];
 	if( span.location != NSNotFound )	range.length = span.location - range.location;
-	else return @(-1);
+	else return -1;
 	@try {
-		return @([[string substringWithRange:range] intValue]);
+		return [[[NSNumber alloc] initWithInt:[[string substringWithRange:range] intValue]] shortValue];
 	} @catch (NSException *localException) {
-		return @(1);
+		return 1;
 	}
 }
 
@@ -116,12 +115,12 @@
 
 /* NSComboBox Informal Prototype Implementation */
 
-- (id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(int)index
+- (id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(NSInteger)index
 {
 	return parsed[index];
 }
 
-- (int)numberOfItemsInComboBox:(NSComboBox *)comboBox
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)comboBox
 {
 	return [parsed count];
 }
@@ -137,7 +136,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"\nType: %@\nData: %@\nParsed Data: %@\n", type, [data description], [parsed description]];
+	return [NSString stringWithFormat:@"\nType: %@\nData: %@\nParsed Data: %@\n", GetNSStringFromOSType(type), [data description], [parsed description]];
 }
 
 @end

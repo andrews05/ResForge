@@ -97,12 +97,12 @@ FSGetCatalogInfo:
 		[[self window] setTitle:NSLocalizedString(@"Resource Info",nil)];
 		[nameView setStringValue:[selectedResource name]];
 		[iconView setImage:[(ApplicationDelegate *)[NSApp delegate] iconForResourceType:[selectedResource type]]];
-		[[attributesMatrix cellAtRow:changedBox column:0]	setState:[[selectedResource attributes] shortValue] & resChanged];
-		[[attributesMatrix cellAtRow:preloadBox column:0]	setState:[[selectedResource attributes] shortValue] & resPreload];
-		[[attributesMatrix cellAtRow:protectedBox column:0]	setState:[[selectedResource attributes] shortValue] & resProtected];
-		[[attributesMatrix cellAtRow:lockedBox column:0]	setState:[[selectedResource attributes] shortValue] & resLocked];
-		[[attributesMatrix cellAtRow:purgableBox column:0]	setState:[[selectedResource attributes] shortValue] & resPurgeable];
-		[[attributesMatrix cellAtRow:systemHeapBox column:0] setState:[[selectedResource attributes] shortValue] & resSysHeap];
+		[[attributesMatrix cellAtRow:changedBox column:0]		setState:[selectedResource attributes] & resChanged];
+		[[attributesMatrix cellAtRow:preloadBox column:0]		setState:[selectedResource attributes] & resPreload];
+		[[attributesMatrix cellAtRow:protectedBox column:0]		setState:[selectedResource attributes] & resProtected];
+		[[attributesMatrix cellAtRow:lockedBox column:0]		setState:[selectedResource attributes] & resLocked];
+		[[attributesMatrix cellAtRow:purgableBox column:0]		setState:[selectedResource attributes] & resPurgeable];
+		[[attributesMatrix cellAtRow:systemHeapBox column:0]	setState:[selectedResource attributes] & resSysHeap];
 		
 		// swap box
 		[placeholderView setContentView:resourceView];
@@ -195,8 +195,8 @@ FSGetCatalogInfo:
 - (IBAction)attributesChanged:(id)sender
 {
 	short attr = (short)(0x0001 << ([sender selectedRow]+1));
-	short number = ([[selectedResource attributes] shortValue] ^ attr);
-	[selectedResource setAttributes:@(number)];
+	short number = ([selectedResource attributes] ^ attr);
+	[selectedResource setAttributes:number];
 }
 
 - (IBAction)nameDidChange:(id)sender

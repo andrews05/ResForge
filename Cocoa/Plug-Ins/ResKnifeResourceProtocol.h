@@ -30,12 +30,12 @@
 
 - (NSString *)name;
 - (void)setName:(NSString *)newName;
-- (NSString *)type;
-- (void)setType:(NSString *)newType;
-- (NSNumber *)resID;
-- (void)setResID:(NSNumber *)newResID;
-- (NSNumber *)attributes;
-- (void)setAttributes:(NSNumber *)newAttributes;
+- (OSType)type;
+- (void)setType:(OSType)newType;
+- (short)resID;
+- (void)setResID:(short)newResID;
+- (unsigned short)attributes;
+- (void)setAttributes:(unsigned short)newAttributes;
 - (NSNumber *)size;
 - (NSData *)data;
 - (void)setData:(NSData *)newData;
@@ -52,13 +52,22 @@
 //	All returned objects are auoreleased. Retain if you want to keep them.
 
 //	This method may return an empty array
-+ (NSArray *)allResourcesOfType:(NSString *)typeValue inDocument:(NSDocument *)searchDocument;
++ (NSArray *)allResourcesOfType:(OSType)typeValue inDocument:(NSDocument *)searchDocument;
 //	The next two return the first matching resource found, or nil.
-+ (id)resourceOfType:(NSString *)typeValue andID:(NSNumber *)resIDValue inDocument:(NSDocument *)searchDocument;
-+ (id)resourceOfType:(NSString *)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)searchDocument;
++ (id)resourceOfType:(OSType)typeValue andID:(short)resIDValue inDocument:(NSDocument *)searchDocument;
++ (id)resourceOfType:(OSType)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)searchDocument;
 
 @end
 
+static inline NSString *GetNSStringFromOSType(OSType theType)
+{
+	return CFBridgingRelease(UTCreateStringForOSType(theType));
+}
+
+static inline OSType GetOSTypeFromNSString(NSString *theString)
+{
+	return UTGetOSTypeFromString((__bridge CFStringRef)theString);
+}
 
 // See note in Notifications.m about usage of these
 extern NSString *ResourceWillChangeNotification;

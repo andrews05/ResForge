@@ -41,7 +41,7 @@ extern NSString *RKResourcePboardType;
 		else
 		{
 			// create the faux resource & add it to the array
-			Resource *resource = [Resource resourceOfType:nil andID:nil withName:pbType andAttributes:nil data:[pb dataForType:pbType]];
+			Resource *resource = [Resource resourceOfType:0 andID:0 withName:pbType andAttributes:0 data:[pb dataForType:pbType]];
 			[resources addObject:resource];		// array retains resource
 		}
 	}

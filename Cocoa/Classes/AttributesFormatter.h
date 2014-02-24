@@ -1,9 +1,6 @@
 #import <Foundation/Foundation.h>
 
 @interface AttributesFormatter : NSFormatter
-{
-}
-
 - (NSString *)stringForObjectValue:(id)obj;
 - (NSAttributedString *)attributedStringForObjectValue:(id)obj withDefaultAttributes:(NSDictionary *)attrs;
 - (NSString *)editingStringForObjectValue:(id)obj;
