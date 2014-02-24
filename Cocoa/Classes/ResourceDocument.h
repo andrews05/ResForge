@@ -29,7 +29,7 @@
 
 - (IBAction)exportResources:(id)sender;
 - (void)exportResource:(Resource *)resource;
-- (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 
 - (void)setupToolbar:(NSWindowController *)windowController;
 

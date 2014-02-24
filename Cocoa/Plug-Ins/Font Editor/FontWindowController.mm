@@ -149,14 +149,14 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	[data appendBytes:&searchRange length:2];
 	[data appendBytes:&entrySelector length:2];
 	[data appendBytes:&rangeShift length:2];
-	UInt32 offset = 12 + ([headerTable count] << 4);
+	NSInteger offset = 12 + ([headerTable count] << 4);
 	
 	// add table index
 	for(int i = 0; i < numTables; i++)
 	{
 		NSMutableDictionary *table = headerTable[i];
 		NSData *tableData = [table valueForKey:@"data"];
-		UInt32 length = [tableData length];
+		UInt32 length = (UInt32)[tableData length];
 		UInt32 checksum = TableChecksum((UInt32 *)[tableData bytes], length);
 		[table setValue:@(checksum) forKey:@"checksum"];
 		[table setValue:@(offset) forKey:@"offset"];
@@ -187,7 +187,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 		UInt32 fontChecksum = 0;
 		NSRange csRange = NSMakeRange([[head valueForKey:@"offset"] unsignedLongValue]+8,4);
 		[data replaceBytesInRange:csRange withBytes:&fontChecksum length:4];
-		fontChecksum = TableChecksum((UInt32 *)[data bytes], [data length]);
+		fontChecksum = TableChecksum((UInt32 *)[data bytes], (UInt32)[data length]);
 		[data replaceBytesInRange:csRange withBytes:&fontChecksum length:4];
 	}
 //	[[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:backup];

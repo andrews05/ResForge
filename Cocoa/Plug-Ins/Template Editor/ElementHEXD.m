@@ -29,12 +29,12 @@
 
 - (unsigned int)sizeOnDisk
 {
-	return [value length];
+	return (UInt32)[value length];
 }
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	[stream writeAmount:[value length] fromBuffer:[value bytes]];
+	[stream writeAmount:(UInt32)[value length] fromBuffer:[value bytes]];
 }
 
 - (NSString *)stringValue

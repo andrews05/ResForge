@@ -23,7 +23,7 @@
 
 #import "RKEditorRegistry.h"
 #import "RKSupportResourceRegistry.h"
-#import "NSString-FSSpec.h"		// for ResKnifeBoolExtensions (in wrong file)
+#import "NGSCategories.h"		// for ResKnifeBoolExtensions (in wrong file)
 
 /*!
 @class			RKEditorRegistry

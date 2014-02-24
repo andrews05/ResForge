@@ -41,7 +41,7 @@
 	char cstr[256];
 	char *endPtr = cstr + 255;
 	strncpy(cstr, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], 255);
-	value = strtoul(cstr, &endPtr, 10);
+	value = (UInt32)strtoul(cstr, &endPtr, 10);
 }
 
 @end

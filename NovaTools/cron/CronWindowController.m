@@ -40,16 +40,16 @@
 	[startDayField		setObjectValue:startDate];
 	[startMonthField	setObjectValue:startDate];
 	[startYearField		setObjectValue:startDate];
-	[startDayStepper	setIntValue:[startDate dayOfMonth]];
-	[startMonthStepper	setIntValue:[startDate monthOfYear]];
-	[startYearStepper	setIntValue:[startDate yearOfCommonEra]];
+	[startDayStepper	setIntegerValue:[startDate dayOfMonth]];
+	[startMonthStepper	setIntegerValue:[startDate monthOfYear]];
+	[startYearStepper	setIntegerValue:[startDate yearOfCommonEra]];
 	
 	[endDayField		setObjectValue:startDate];
 	[endMonthField		setObjectValue:startDate];
 	[endYearField		setObjectValue:startDate];
-	[endDayStepper		setIntValue:[endDate dayOfMonth]];
-	[endMonthStepper	setIntValue:[endDate monthOfYear]];
-	[endYearStepper		setIntValue:[endDate yearOfCommonEra]];
+	[endDayStepper		setIntegerValue:[endDate dayOfMonth]];
+	[endMonthStepper	setIntegerValue:[endDate monthOfYear]];
+	[endYearStepper		setIntegerValue:[endDate yearOfCommonEra]];
 	
 	[startField			setObjectValue:startDate];
 	[endField			setObjectValue:startDate];

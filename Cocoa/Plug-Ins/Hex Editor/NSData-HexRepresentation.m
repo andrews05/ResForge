@@ -4,7 +4,7 @@
 
 - (NSString *)hexRepresentation
 {
-	int currentByte = 0, dataLength = [self length];
+	NSInteger currentByte = 0, dataLength = [self length];
 	char buffer[dataLength*3 -1], hex1, hex2;
 	char *bytes = (char *) [self bytes];
 	
@@ -32,7 +32,7 @@
 
 - (NSString *)asciiRepresentation
 {
-	int currentByte = 0, dataLength = [self length];
+	NSInteger currentByte = 0, dataLength = [self length];
 	char buffer[dataLength];
 	char *bytes = (char *) [self bytes];
 	
@@ -49,7 +49,7 @@
 
 - (NSString *)nonLossyAsciiRepresentation
 {
-	int currentByte = 0, dataLength = [self length];
+	NSInteger currentByte = 0, dataLength = [self length];
 	char buffer[dataLength];
 	char *bytes = (char *) [self bytes];
 	
@@ -58,8 +58,8 @@
 	{
 		if(bytes[currentByte] > 0x20)		// doesn't check for < 0x7F
 			buffer[currentByte] = bytes[currentByte];
-//		else if(bytes[currentByte] == 0x20)
-//			buffer[currentByte] = 0xCA;	// nbsp to stop maligned wraps - doesn't work :(
+		//else if(bytes[currentByte] == 0x20)
+		//	buffer[currentByte] = 0xCA;	// nbsp to stop maligned wraps - doesn't work :(
 		else buffer[currentByte] = 0x2E;	// full stop								
 	}
 	

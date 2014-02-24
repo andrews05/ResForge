@@ -62,7 +62,7 @@
 	}
 }
 
-- (int)subElementCount
+- (NSInteger)subElementCount
 {
 	return [subElements count];
 }

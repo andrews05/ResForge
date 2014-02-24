@@ -32,7 +32,7 @@
 
 /*** METHODS SUBCLASSES SHOULD OVERRIDE ***/
 
-- (int)subElementCount
+- (NSInteger)subElementCount
 {
 	// default implementation suitable for most element types
 	return 0;

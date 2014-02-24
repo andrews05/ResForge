@@ -1,6 +1,6 @@
 #import "OpenPanelDelegate.h"
 #import "ApplicationDelegate.h"
-#import "../Categories/NSString-FSSpec.h"
+#import "../Categories/NGSCategories.h"
 
 @implementation OpenPanelDelegate
 @synthesize forkTableView;

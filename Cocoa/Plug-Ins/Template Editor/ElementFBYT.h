@@ -2,9 +2,9 @@
 
 @interface ElementFBYT : Element
 {
-	NSUInteger length;
+	UInt32 length;
 }
-@property NSUInteger length;
-@property (weak) NSString *stringValue;
+@property UInt32 length;
+@property (unsafe_unretained) NSString *stringValue;
 
 @end

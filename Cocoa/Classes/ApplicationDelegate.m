@@ -15,6 +15,13 @@
 
 @implementation ApplicationDelegate
 
++ (void)initialize
+{
+	// set default preferences
+	NSDictionary * prefDict = [NSDictionary dictionaryWithObjectsAndKeys:@YES, kPreserveBackups, @NO, kAutosave, @5, kAutosaveInterval, @YES, kDeleteResourceWarning, kOpenUntitledFile, kLaunchAction, nil];
+	[[NSUserDefaults standardUserDefaults] registerDefaults:prefDict];
+}
+
 - (id)init
 {
 	self = [super init];
@@ -38,15 +45,12 @@
 - (void)awakeFromNib
 {
 	// Part of my EvilPlanª to find out how many people use ResKnife and how often!
-	int launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"LaunchCount"];
+	NSInteger launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"LaunchCount"];
 	[[NSUserDefaults standardUserDefaults] setInteger:launchCount + 1 forKey:@"LaunchCount"];
 	
 	// initalise an empty icon cache and create timer used to pre-cache a number of common icons
 	_icons = [[NSMutableDictionary alloc] init];
 	[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(precacheIcons:) userInfo:nil repeats:NO];
-	
-	// set default preferences
-    [self initUserDefaults];
 }
 
 
@@ -178,26 +182,6 @@
 - (IBAction)showPrefs:(id)sender
 {
 	[[PrefsWindowController sharedPrefsWindowController] showWindow:sender];
-}
-
-- (void)initUserDefaults
-{
-	// This should probably be added to NSUserDefaults as a category,
-	//	since its universally useful.  It loads a defaults.plist file
-	//	from the app wrapper, and then sets the defaults if they don't
-	//	already exist.
-	
-	// this isn't required, but saves us a few method calls
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	// load the defaults.plist from the app wrapper.  This makes it
-	//	easy to add new defaults just using a text editor instead of
-	//	hard-coding them into the application
-	NSDictionary *defaultsPlist = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"defaults" ofType:@"plist"]];
-	[defaults registerDefaults:defaultsPlist];
-	
-	// force the defaults to save to the disk
-	[defaults synchronize];
 }
 
 - (OpenPanelDelegate *)openPanelDelegate

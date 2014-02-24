@@ -7,7 +7,7 @@
 	
 }
 */
-- (float)splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedCoord ofSubviewAt:(int)offset
+- (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedCoord ofSubviewAt:(NSInteger)offset
 {
 	return proposedCoord < 20.0? 20.0 : proposedCoord;
 }
