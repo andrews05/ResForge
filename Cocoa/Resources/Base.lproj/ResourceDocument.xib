@@ -184,7 +184,7 @@
         <button verticalHuggingPriority="750" id="170">
             <rect key="frame" x="0.0" y="0.0" width="35" height="25"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Edit Hex" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="171">
+            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Edit Hex" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="171">
                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                 <font key="font" metaFont="system"/>
             </buttonCell>
