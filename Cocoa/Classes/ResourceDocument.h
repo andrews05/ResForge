@@ -15,11 +15,11 @@
 	
 	NSMutableArray	*resources;
 	HFSUniStr255	fork;		// name of fork to save to, usually empty string (data fork) or 'RESOURCE_FORK' as returned from FSGetResourceForkName()
-	NSData			*creator;
-	NSData			*type;
 	BOOL			_createFork;	// file had no existing resource map when opened
 }
 
+@property OSType creator;
+@property OSType type;
 @property (weak) IBOutlet NSView *viewToolbarView;
 
 - (BOOL)readFork:(NSString *)forkName asStreamFromFile:(FSRef *)fileRef;
@@ -58,12 +58,8 @@
 - (NSOutlineView *)outlineView;
 - (NSArray *)resources;		// return the array as non-mutable
 
-- (NSData *)creator;
-- (NSData *)type;
 - (IBAction)creatorChanged:(id)sender;
 - (IBAction)typeChanged:(id)sender;
-- (BOOL)setCreator:(NSData *)newCreator;
-- (BOOL)setType:(NSData *)newType;
-- (BOOL)setCreator:(NSData *)newCreator andType:(NSData *)newType;
+- (BOOL)setCreator:(OSType)newCreator andType:(OSType)newType;
 
 @end

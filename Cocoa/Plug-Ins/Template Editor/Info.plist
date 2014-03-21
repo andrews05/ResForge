@@ -22,7 +22,7 @@
 	<array>
 		<dict>
 			<key>IsResKnifeDefaultForType</key>
-			<string>YES</string>
+			<true/>
 			<key>RKTypeName</key>
 			<string>Template Editor</string>
 			<key>RKTypeRole</key>

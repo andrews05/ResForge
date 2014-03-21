@@ -200,7 +200,7 @@
 
 - (NSImage *)iconForResourceType:(OSType)resourceType
 {
-	NSImage *icon = nil;
+	NSImage *icon;
 	
 	if(resourceType)
 	{

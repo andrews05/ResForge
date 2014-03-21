@@ -22,6 +22,8 @@ extern NSString *RKResourcePboardType;
 
 @implementation ResourceDocument
 @synthesize viewToolbarView;
+@synthesize creator;
+@synthesize type;
 
 - (id)init
 {
@@ -29,8 +31,8 @@ extern NSString *RKResourcePboardType;
 	if (!self)
 		return nil;
 	resources = [[NSMutableArray alloc] init];
-	creator = [@"ResK" dataUsingEncoding:NSMacOSRomanStringEncoding];	// should I be calling -setCreator & -setType here instead?
-	type = [@"rsrc" dataUsingEncoding:NSMacOSRomanStringEncoding];
+	creator = 'ResK';	// should I be calling -setCreator & -setType here instead?
+	type = 'rsrc';
 	return self;
 }
 
@@ -153,8 +155,8 @@ extern NSString *RKResourcePboardType;
 		error = FSGetCatalogInfo(fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
 		if(!error)
 		{
-			[self setType:[NSData dataWithBytes:&((FileInfo *)info.finderInfo)->fileType length:4]];
-			[self setCreator:[NSData dataWithBytes:&((FileInfo *)info.finderInfo)->fileCreator length:4]];
+			self.type = CFSwapInt32BigToHost(((FileInfo *)info.finderInfo)->fileType);
+			self.creator = CFSwapInt32BigToHost(((FileInfo *)info.finderInfo)->fileCreator);
 		}
 		
 		// restore undos
@@ -166,15 +168,15 @@ extern NSString *RKResourcePboardType;
 	NSString *forkName;
 	NSEnumerator *forkEnumerator = [forks objectEnumerator];
 	NSString *selectedFork = [NSString stringWithCharacters:fork.unicode length:fork.length];
-	while((forkName = [forkEnumerator nextObject][@"forkname"]))
-	{
+	while((forkName = [forkEnumerator nextObject][@"forkname"])) {
 		// check current fork is not the fork we're going to parse
 		if(![forkName isEqualToString:selectedFork])
 			[self readFork:forkName asStreamFromFile:fileRef];
 	}
 	
 	// tidy up loose ends
-	if(fileRefNum) FSCloseFork(fileRefNum);
+	if(fileRefNum)
+		FSCloseFork(fileRefNum);
 	//DisposePtr((Ptr) fileRef);
 	return succeeded;
 }
@@ -242,7 +244,7 @@ extern NSString *RKResourcePboardType;
 	ResFileRefNum oldResFile = CurResFile();
 	UseResFile(fileRefNum);
 	
-	for(unsigned short i = 1; i <= Count1Types(); i++)
+	for(ResourceCount i = 1; i <= Count1Types(); i++)
 	{
 		ResType resTypeCode;
 		Get1IndType(&resTypeCode, i);
@@ -277,12 +279,11 @@ extern NSString *RKResourcePboardType;
 			// cool: "The advantage of obtaining a methodÕs implementation and calling it as a function is that you can invoke the implementation multiple times within a loop, or similar C construct, without the overhead of Objective-C messaging."
 			
 			// create the resource & add it to the array
-			ResType		logicalType = EndianS32_NtoB(resTypeCode);	// swapped type for use as string (types are treated as numbers by the resource manager and swapped on Intel).
 			NSString	*name = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, nameStr, kCFStringEncodingMacRoman));
-			NSString	*resType	= GetNSStringFromOSType(logicalType);
+			NSString	*resType	= GetNSStringFromOSType(resTypeCode);
 			NSNumber	*resID		= @(resIDShort);
 			NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
-			Resource	*resource	= [Resource resourceOfType:logicalType andID:resIDShort withName:name andAttributes:attrsShort data:data];
+			Resource	*resource	= [Resource resourceOfType:resTypeCode andID:resIDShort withName:name andAttributes:attrsShort data:data];
 			[resource setDocumentName:[self displayName]];
 			[resources addObject:resource];		// array retains resource
 			if (badSize != 0)
@@ -493,8 +494,9 @@ extern NSString *RKResourcePboardType;
 		if(!error)
 		{
 			FInfo *finderInfo = (FInfo *)(info.finderInfo);
-			[[self type] getBytes:&finderInfo->fdType length:4];
-			[[self creator] getBytes:&finderInfo->fdCreator length:4];
+			OSType theType = self.type, theCreator = self.creator;
+			finderInfo->fdType = CFSwapInt32HostToBig(theType);
+			finderInfo->fdCreator = CFSwapInt32HostToBig(theCreator);
 			//				NSLog(@"setting finder info to type: %X; creator: %X", finderInfo.fdType, finderInfo.fdCreator);
 			FSSetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &info);
 			//				NSLog(@"finder info got set to type: %X; creator: %X", finderInfo.fdType, finderInfo.fdCreator);
@@ -1165,12 +1167,12 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	return resources;
 }
 
-- (NSData *)creator
+- (OSType)creator
 {
 	return creator;
 }
 
-- (NSData *)type
+- (OSType)type
 {
 	return type;
 }
@@ -1188,7 +1190,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	
 	newCreator = CFSwapInt32HostToBig(newCreator);
 	
-	[self setCreator:[NSData dataWithBytes:&newCreator length:4]];
+	[self setCreator:newCreator];
 //	NSLog(@"Creator changed to '%@'", [[[NSString alloc] initWithBytes:&newCreator length:4 encoding:NSMacOSRomanStringEncoding] autorelease]);
 }
 
@@ -1205,44 +1207,40 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	
 	newType = CFSwapInt32HostToBig(newType);
 	
-	[self setType:[NSData dataWithBytes:&newType length:4]];
+	[self setType:newType];
 //	NSLog(@"Type changed to '%@'", [[[NSString alloc] initWithBytes:&newType length:4 encoding:NSMacOSRomanStringEncoding] autorelease]);
 }
 
-- (BOOL)setCreator:(NSData *)newCreator
+- (void)setCreator:(OSType)newCreator
 {
-	if(![newCreator isEqualToData:creator])
-	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:@{@"NSDocument": self, @"creator": newCreator}];
-		[[self undoManager] registerUndoWithTarget:self selector:@selector(setCreator:) object:creator];
+	if (newCreator != creator) {
+		NSString *oldCreatorStr = GetNSStringFromOSType(newCreator);
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:@{@"NSDocument": self, @"creator": oldCreatorStr}];
+		[[self undoManager] registerUndoWithTarget:self selector:@selector(setCreator:) object:GetNSStringFromOSType(creator)];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change Creator Code", nil)];
-		creator = [newCreator copy];
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:@{@"NSDocument": self, @"creator": creator}];
-		return YES;
+		creator = newCreator;
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:@{@"NSDocument": self, @"creator": oldCreatorStr}];
 	}
-	else return NO;
 }
 
-- (BOOL)setType:(NSData *)newType
+- (void)setType:(OSType)newType
 {
-	if(![newType isEqualToData:type])
-	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:@{@"NSDocument": self, @"type": newType}];
-		[[self undoManager] registerUndoWithTarget:self selector:@selector(setType:) object:type];
+	if (newType != type) {
+		NSString *oldTypeStr = GetNSStringFromOSType(newType);
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:@{@"NSDocument": self, @"type": oldTypeStr}];
+		[[self undoManager] registerUndoWithTarget:self selector:@selector(setType:) object:GetNSStringFromOSType(type)];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change File Type", nil)];
-		type = [newType copy];
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:@{@"NSDocument": self, @"type": type}];
-		return YES;
+		type = newType;
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:@{@"NSDocument": self, @"type": oldTypeStr}];
 	}
-	else return NO;
 }
 
-- (BOOL)setCreator:(NSData *)newCreator andType:(NSData *)newType
+- (BOOL)setCreator:(OSType)newCreator andType:(OSType)newType
 {
-	BOOL creatorChanged, typeChanged;
+	BOOL creatorChanged = (creator != newCreator), typeChanged = (type != newType);
 	[[self undoManager] beginUndoGrouping];
-	creatorChanged = [self setCreator:newCreator];
-	typeChanged = [self setType:newType];
+	[self setCreator:newCreator];
+	[self setType:newType];
 	[[self undoManager] endUndoGrouping];
 	if(creatorChanged && typeChanged)
 		[[self undoManager] setActionName:NSLocalizedString(@"Change Creator & Type", nil)];

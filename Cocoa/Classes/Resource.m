@@ -39,8 +39,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 - (id)initWithType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue data:(NSData *)dataValue
 {
 	// sets values directly for speed reasons (less messaging overhead)
-	if (self = [super init])
-	{
+	if (self = [super init]) {
 		dirty = NO;
 		representedFork = nil;
 		self._name = nameValue;

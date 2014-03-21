@@ -132,20 +132,15 @@ FSGetCatalogInfo:
 			[nameView setStringValue:[currentDocument displayName]];
 		}
 		
-		FourCharCode creator;
-		[[currentDocument creator] getBytes:&creator length:sizeof(creator)];
-		FourCharCode type;
-		[[currentDocument type] getBytes:&type length:sizeof(type)];
+		FourCharCode creator = currentDocument.creator;
+		FourCharCode type = currentDocument.type;
 		
-		creator = CFSwapInt32BigToHost(creator);
-		type = CFSwapInt32BigToHost(type);
-
 		[[filePropertyForm cellAtIndex:0] setStringValue:[[NSString alloc] initWithBytes:&creator length:sizeof(creator) encoding:NSMacOSRomanStringEncoding]];
 		[[filePropertyForm cellAtIndex:1] setStringValue:[[NSString alloc] initWithBytes:&type length:sizeof(type) encoding:NSMacOSRomanStringEncoding]];
-//		[[filePropertyForm cellAtIndex:2] setObjectValue:[NSNumber numberWithUnsignedLongLong:dataLogicalSize]];
-//		[[filePropertyForm cellAtIndex:3] setObjectValue:[NSNumber numberWithUnsignedLongLong:rsrcLogicalSize]];
-		[[filePropertyForm cellAtIndex:2] setStringValue:[@(dataLogicalSize) description]];
-		[[filePropertyForm cellAtIndex:3] setStringValue:[@(rsrcLogicalSize) description]];
+		[[filePropertyForm cellAtIndex:2] setIntegerValue:dataLogicalSize];
+		[[filePropertyForm cellAtIndex:3] setIntegerValue:rsrcLogicalSize];
+		//[[filePropertyForm cellAtIndex:2] setStringValue:[@(dataLogicalSize) description]];
+		//[[filePropertyForm cellAtIndex:3] setStringValue:[@(rsrcLogicalSize) description]];
 		
 		// swap box
 		[placeholderView setContentView:documentView];

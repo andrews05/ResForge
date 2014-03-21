@@ -21,15 +21,15 @@
 
 + (void)scanForSupportResourcesInFolder:(NSString *)path
 {
-//	NSLog(@"Looking for resources in %@", path);
+	// NSLog(@"Looking for resources in %@", path);
 	NSString *name;
 	NSEnumerator *enumerator = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] objectEnumerator];
 	while(name = [enumerator nextObject])
 	{
-//		NSLog(@"Examining %@", name);
+		// NSLog(@"Examining %@", name);
 		if([[name pathExtension] isEqualToString:@"rsrc"])
-			// FIXME: this method was deprecated in 10.4 in favour of - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError;
-			[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:[path stringByAppendingPathComponent:name]] display:YES];
+			// FIXME: this method was deprecated in 10.7 in favour of - (void)openDocumentWithContentsOfURL:(NSURL *)url display:(BOOL)displayDocument completionHandler:(void (^)(NSDocument *document, BOOL documentWasAlreadyOpen, NSError *error))completionHandler;
+			[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:[path stringByAppendingPathComponent:name]] display:YES error:NULL];
 	}
 }
 
