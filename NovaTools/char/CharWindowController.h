@@ -63,55 +63,6 @@
 	
 	// ncbs
 	IBOutlet NSForm *ncbForm;
-	
-	// ======
-	
-#ifndef __LP64__
-	// char
-	BOOL principalChar;
-	
-	// Initial Goodies
-	short ship;
-	int cash;
-	NSNumber *kills;
-	
-	// Beginning Of Time
-	NSCalendarDate *date;
-	NSString *prefix;
-	NSString *suffix;
-	
-	// Starting Location
-	short start1;
-	short start2;
-	short start3;
-	short start4;
-	
-	// Governments
-	short status1;
-	short status2;
-	short status3;
-	short status4;
-	short government1;
-	short government2;
-	short government3;
-	short government4;
-	
-	// Introduction
-	short introText;
-	short introPict1;
-	short introPict2;
-	short introPict3;
-	short introPict4;
-	short introDelay1;
-	short introDelay2;
-	short introDelay3;
-	short introDelay4;
-	NSTimer *introPictTimer;
-	short currentPict;
-	
-	// Nova Control Bits
-	NSString *onStart;
-#endif
 }
 
 @property (getter = isPrincipalChar) BOOL principalChar;
@@ -152,11 +103,11 @@
 @property short introDelay2;
 @property short introDelay3;
 @property short introDelay4;
-@property (retain) NSTimer *introPictTimer;
+@property (strong) NSTimer *introPictTimer;
 @property short currentPict;
 
 // Nova Control Bits
-@property (retain) NSString *onStart;
+@property (strong) NSString *onStart;
 
 
 - (void)update;

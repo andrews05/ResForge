@@ -1,12 +1,10 @@
 #import "BoomWindowController.h"
 
 @implementation BoomWindowController
-#ifndef __LP64__
 @synthesize image;
 @synthesize sound;
 @synthesize frameRate;
 @synthesize silent;
-#endif
 @synthesize imageWell;
 @synthesize graphicsField;
 @synthesize soundField;
@@ -78,7 +76,7 @@
 	[playButton setEnabled:!silent];
 	
 	// image well
-	[imageWell setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:[plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"] andID:self.image inDocument:nil] data]]];
+	[imageWell setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"]) andID:self.image inDocument:nil] data]]];
 }
 
 - (void)comboBoxWillPopUp:(NSNotification *)notification
@@ -98,15 +96,17 @@
 	id sender = [notification object];
 	if( sender == graphicsField && [sender stringValue] )
 	{
-		id old = image;
+		short old = image;
 		image = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![image isEqualToNumber:old] ) [resource touch];
+		if (image != old)
+			[resource touch];
 	}
 	else if( sender == soundField && [sender stringValue]  )
 	{
-		id old = sound;
+		short old = sound;
 		sound = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![sound isEqualToNumber:old] ) [resource touch];
+		if (sound != old)
+			[resource touch];
 	}
 	else if( sender == frameRateField )
 	{
@@ -131,7 +131,7 @@
 
 - (IBAction)playSound:(id)sender
 {
-	NSData *data = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:[plugBundle localizedStringForKey:@"snd" value:@"" table:@"Resource Types"] andID:sound inDocument:nil] data];
+	NSData *data = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"snd" value:@"" table:@"Resource Types"]) andID:sound inDocument:nil] data];
 	if( data && [data length] != 0 )
 	{
 		//SndListPtr sndPtr = (SndListPtr) [data bytes];
@@ -147,8 +147,8 @@
 	NSMutableDictionary *errorValues = [NSMutableDictionary dictionary];
 	
 	// put current values into boomRec
-	boomRec->GraphicIndex = [image shortValue] - kMinBoomSpinID;
-	boomRec->SoundIndex = [sound shortValue] - kMinBoomSoundID;
+	boomRec->GraphicIndex = image - kMinBoomSpinID;
+	boomRec->SoundIndex = sound - kMinBoomSoundID;
 	boomRec->FrameAdvance = [frameRate shortValue];
 	if( silent ) boomRec->SoundIndex = -1;
 	

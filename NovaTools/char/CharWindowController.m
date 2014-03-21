@@ -2,7 +2,6 @@
 #import "Resource.h"
 
 @implementation CharWindowController
-#ifndef __LP64__
 @synthesize principalChar;
 
 // Initial Goodies
@@ -46,7 +45,6 @@
 
 // Nova Control Bits
 @synthesize onStart;
-#endif
 
 static void BSwapCharRec(CharRec* toSwap)
 {
@@ -218,9 +216,9 @@ static void BSwapCharRec(CharRec* toSwap)
 	[principalCharButton setState:self.principalChar];
 	
 	// initial goodies
-	[shipField setObjectValue:[shipDataSource stringValueForResID:_ship]];
-	[cashField setObjectValue:cash];
-	[killsField setObjectValue:kills];
+	[shipField setObjectValue:[shipDataSource stringValueForResID:ship]];
+	[cashField setIntegerValue:cash];
+	[killsField setIntegerValue:kills];
 	
 	// beginning of time
 	[dayField setObjectValue:date];
@@ -239,27 +237,27 @@ static void BSwapCharRec(CharRec* toSwap)
 	[startField4 setObjectValue:[planetDataSource stringValueForResID:start4]];
 	
 	// governments
-	[statusField1 setObjectValue:status1];
-	[statusField2 setObjectValue:status2];
-	[statusField3 setObjectValue:status3];
-	[statusField4 setObjectValue:status4];
+	[statusField1 setIntegerValue:status1];
+	[statusField2 setIntegerValue:status2];
+	[statusField3 setIntegerValue:status3];
+	[statusField4 setIntegerValue:status4];
 	[governmentField1 setObjectValue:[governmentDataSource stringValueForResID:government1]];
 	[governmentField2 setObjectValue:[governmentDataSource stringValueForResID:government2]];
 	[governmentField3 setObjectValue:[governmentDataSource stringValueForResID:government3]];
 	[governmentField4 setObjectValue:[governmentDataSource stringValueForResID:government4]];
 	
 	// intro text & pics
-	[introDelayField1 setObjectValue:introDelay1];
-	[introDelayField2 setObjectValue:introDelay2];
-	[introDelayField3 setObjectValue:introDelay3];
-	[introDelayField4 setObjectValue:introDelay4];
+	[introDelayField1 setIntValue:introDelay1];
+	[introDelayField2 setIntValue:introDelay2];
+	[introDelayField3 setIntValue:introDelay3];
+	[introDelayField4 setIntValue:introDelay4];
 	[introPictField1 setObjectValue:[pictureDataSource stringValueForResID:introPict1]];
 	[introPictField2 setObjectValue:[pictureDataSource stringValueForResID:introPict2]];
 	[introPictField3 setObjectValue:[pictureDataSource stringValueForResID:introPict3]];
 	[introPictField4 setObjectValue:[pictureDataSource stringValueForResID:introPict4]];
 	[introTextField setObjectValue:[descriptionDataSource stringValueForResID:introText]];
 	
-	stringData = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"desc" value:@"" table:@"Resource Types"] andID:introText inDocument:nil] data];
+	stringData = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"desc" value:@"" table:@"Resource Types"]) andID:introText inDocument:nil] data];
 	if( stringData != nil )
 	{
 		[introTextView setString:[[NSString alloc] initWithData:stringData encoding:NSMacOSRomanStringEncoding]];
@@ -298,8 +296,8 @@ static void BSwapCharRec(CharRec* toSwap)
 	// identify next frame
 	self.currentPict++;
 	if( self.currentPict == 2 && self.introPict2 == -1 )		currentPict = 1;
-	else if( currentPict == 3 && [introPict3 intValue] == -1 )	currentPict = 1;
-	else if( currentPict == 4 && [introPict4 intValue] == -1 )	currentPict = 1;
+	else if( currentPict == 3 && introPict3 == -1 )	currentPict = 1;
+	else if( currentPict == 4 && introPict4 == -1 )	currentPict = 1;
 	else if( currentPict > 4 )									currentPict = 1;
 	
 	// install new timer
@@ -307,30 +305,30 @@ static void BSwapCharRec(CharRec* toSwap)
 	{
 		case 1:
 			// install new timer
-			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)[introDelay1 doubleValue] target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
+			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:introDelay1 target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict1 inDocument:nil] data]]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict1 inDocument:nil] data]]];
 			break;
 	
 		case 2:
 			// install new timer
-			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)[introDelay2 doubleValue] target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
+			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:introDelay2 target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict2 inDocument:nil] data]]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict2 inDocument:nil] data]]];
 			break;
 	
 		case 3:
 			// install new timer
-			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)[introDelay3 doubleValue] target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
+			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:introDelay3 target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict3 inDocument:nil] data]]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict3 inDocument:nil] data]]];
 			break;
 	
 		case 4:
 			// install new timer
-			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)[introDelay4 doubleValue] target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
+			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:introDelay4 target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"] andID:introPict4 inDocument:nil] data]]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict4 inDocument:nil] data]]];
 			break;
 	
 	}
@@ -364,21 +362,24 @@ static void BSwapCharRec(CharRec* toSwap)
 	/* ship, cash, kills */
 	if( sender == shipField && [sender stringValue] )
 	{
-		id old = ship;
+		short old = ship;
 		ship = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![ship isEqualToNumber:old] ) [resource touch];
+		if (ship != old)
+			[resource touch];
 	}
 	else if( sender == cashField )
 	{
-		id old = cash;
-		cash = @([sender intValue]);
-		if( ![cash isEqualToNumber:old] ) [resource touch];
+		int old = cash;
+		cash = [sender intValue];
+		if (cash != old)
+			[resource touch];
 	}
 	else if( sender == killsField )
 	{
-		id old = kills;
-		kills = @([sender intValue]);
-		if( ![kills isEqualToNumber:old] ) [resource touch];
+		short old = kills;
+		kills = (short)[sender intValue];
+		if (kills != old)
+			[resource touch];
 	}
 	
 	/* start date */
@@ -416,88 +417,99 @@ static void BSwapCharRec(CharRec* toSwap)
 	/* planet combo boxes */
 	else if( sender == startField1 && [sender stringValue] )
 	{
-		id old = start1;
+		short old = start1;
 		start1 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![start1 isEqualToNumber:old] ) [resource touch];
+		if (start1 !=old)
+			[resource touch];
 	}
 	else if( sender == startField2 && [sender stringValue] )
 	{
-		id old = start2;
+		short old = start2;
 		start2 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![start2 isEqualToNumber:old] ) [resource touch];
+		if (start2 != old)
+			[resource touch];
 	}
 	else if( sender == startField3 && [sender stringValue] )
 	{
-		id old = start3;
+		short old = start3;
 		start3 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![start3 isEqualToNumber:old] ) [resource touch];
+		if (start3 != old)
+			[resource touch];
 	}
 	else if( sender == startField4 && [sender stringValue] )
 	{
-		id old = start4;
+		short old = start4;
 		start4 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![start4 isEqualToNumber:old] ) [resource touch];
+		if (start4 != old)
+			[resource touch];
 	}
 
 	/* starting government status */
 	else if( sender == statusField1 )
 	{
-		id old = status1;
-		status1 = @([sender intValue]);
-		if( ![status1 isEqualToNumber:old] ) [resource touch];
+		short old = status1;
+		status1 = (short)[sender intValue];
+		if (status1 != old)
+			[resource touch];
 	}
 	else if( sender == statusField2 )
 	{
-		id old = status2;
-		status2 = @([sender intValue]);
-		if( ![status2 isEqualToNumber:old] ) [resource touch];
+		short old = status2;
+		status2 = (short)([sender intValue]);
+		if (status2 != old)
+			[resource touch];
 	}
 	else if( sender == statusField3 )
 	{
-		id old = status3;
-		status3 = @([sender intValue]);
-		if( ![status3 isEqualToNumber:old] ) [resource touch];
+		short old = status3;
+		status3 = (short)([sender intValue]);
+		if (status3 != old)
+			[resource touch];
 	}
 	else if( sender == statusField4 )
 	{
-		id old = status4;
-		status4 = @([sender intValue]);
-		if( ![status4 isEqualToNumber:old] ) [resource touch];
+		short old = status4;
+		status4 = (short)([sender intValue]);
+		if (status4 != old)
+			[resource touch];
 	}
 	
 	/* government combo boxes */
 	else if( sender == governmentField1 && [sender stringValue] )
 	{
-		id old = government1;
+		short old = government1;
 		government1 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![government1 isEqualToNumber:old] ) [resource touch];
+		if (government1 != old)
+			[resource touch];
 	}
 	else if( sender == governmentField2 && [sender stringValue] )
 	{
-		id old = government2;
+		short old = government2;
 		government2 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![government2 isEqualToNumber:old] ) [resource touch];
+		if (government2 != old)
+			[resource touch];
 	}
 	else if( sender == governmentField3 && [sender stringValue] )
 	{
-		id old = government3;
+		short old = government3;
 		government3 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![government3 isEqualToNumber:old] ) [resource touch];
+		if (government3 != old)
+			[resource touch];
 	}
 	else if( sender == governmentField4 && [sender stringValue] )
 	{
-		id old = government4;
+		short old = government4;
 		government4 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![government4 isEqualToNumber:old] ) [resource touch];
+		if (government4 != old)
+			[resource touch];
 	}
 	
 	/* intro text combo box */
 	else if( sender == introTextField && [sender stringValue] )
 	{
-		id old = introText;
+		short old = introText;
 		introText = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![introText isEqualToNumber:old] )
-		{
+		if (introText != old) {
 			[resource touch];
 			[self update];		// to draw text in text box
 		}
@@ -506,53 +518,61 @@ static void BSwapCharRec(CharRec* toSwap)
 	/* intro picture combo boxes */
 	else if( sender == introPictField1 && [sender stringValue] )
 	{
-		id old = introPict1;
+		short old = introPict1;
 		introPict1 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![introPict1 isEqualToNumber:old] ) [resource touch];
+		if (introPict1 != old)
+			[resource touch];
 	}
 	else if( sender == introPictField2 && [sender stringValue] )
 	{
-		id old = introPict2;
+		short old = introPict2;
 		introPict2 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![introPict2 isEqualToNumber:old] ) [resource touch];
+		if (introPict2 != old)
+			[resource touch];
 	}
 	else if( sender == introPictField3 && [sender stringValue] )
 	{
-		id old = introPict3;
+		short old = introPict3;
 		introPict3 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![introPict3 isEqualToNumber:old] ) [resource touch];
+		if (introPict3 != old)
+			[resource touch];
 	}
 	else if( sender == introPictField4 && [sender stringValue] )
 	{
-		id old = introPict4;
+		short old = introPict4;
 		introPict4 = [DataSource resIDFromStringValue:[sender stringValue]];
-		if( ![introPict4 isEqualToNumber:old] ) [resource touch];
+		if (introPict4 != old)
+			[resource touch];
 	}
 	
 	/* intro picture delays */
 	else if( sender == introDelayField1 )
 	{
-		id old = introDelay1;
-		introDelay1 = @([sender intValue]);
-		if( ![introDelay1 isEqualToNumber:old] ) [resource touch];
+		int old = introDelay1;
+		introDelay1 = (short)[sender intValue];
+		if (introDelay1 != old)
+			[resource touch];
 	}
 	else if( sender == introDelayField2 )
 	{
-		id old = introDelay2;
-		introDelay2 = @([sender intValue]);
-		if( ![introDelay2 isEqualToNumber:old] ) [resource touch];
+		int old = introDelay2;
+		introDelay2 = (short)[sender intValue];
+		if (introDelay2 != old)
+			[resource touch];
 	}
 	else if( sender == introDelayField3 )
 	{
-		id old = introDelay3;
-		introDelay3 = @([sender intValue]);
-		if( ![introDelay3 isEqualToNumber:old] ) [resource touch];
+		int old = introDelay3;
+		introDelay3 = (short)[sender intValue];
+		if (introDelay3 != old)
+			[resource touch];
 	}
 	else if( sender == introDelayField4 )
 	{
-		id old = introDelay4;
-		introDelay4 = @([sender intValue]);
-		if( ![introDelay4 isEqualToNumber:old] ) [resource touch];
+		int old = introDelay4;
+		introDelay4 = (short)[sender intValue];
+		if (introDelay4 != old)
+			[resource touch];
 	}
 	
 	/* on start field */
@@ -575,9 +595,9 @@ static void BSwapCharRec(CharRec* toSwap)
 	// put current values into boomRec
 	charRec->Flags = 0x0000;
 	charRec->Flags |= principalChar? 0x0001:0;
-	charRec->startShipType = [ship shortValue];
-	charRec->startCash = [cash intValue];
-	charRec->startKills = [kills shortValue];
+	charRec->startShipType = ship;
+	charRec->startCash = cash;
+	charRec->startKills = kills;
 	charRec->startDay = (short)[date dayOfMonth];
 	charRec->startMonth = (short)[date monthOfYear];
 	charRec->startYear = (short)[date yearOfCommonEra];
@@ -585,27 +605,27 @@ static void BSwapCharRec(CharRec* toSwap)
 	memmove( charRec->Prefix, [prefix cStringUsingEncoding:NSMacOSRomanStringEncoding], [prefix lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding] <= 15? [prefix lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]+1:16 );
 	bzero( charRec->Suffix, 16 );
 	memmove( charRec->Suffix, [suffix cStringUsingEncoding:NSMacOSRomanStringEncoding], [suffix lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding] <= 15? [suffix lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]+1:16 );
-	charRec->startSystem[0] = [start1 shortValue];
-	charRec->startSystem[1] = [start2 shortValue];
-	charRec->startSystem[2] = [start3 shortValue];
-	charRec->startSystem[3] = [start4 shortValue];
-	charRec->startGovt[0] = [government1 shortValue];
-	charRec->startGovt[1] = [government2 shortValue];
-	charRec->startGovt[2] = [government3 shortValue];
-	charRec->startGovt[3] = [government4 shortValue];
-	charRec->startStatus[0] = [status1 shortValue];
-	charRec->startStatus[1] = [status2 shortValue];
-	charRec->startStatus[2] = [status3 shortValue];
-	charRec->startStatus[3] = [status4 shortValue];
-	charRec->introTextID = [introText shortValue];
-	charRec->introPictID[0] = [introPict1 shortValue];
-	charRec->introPictID[1] = [introPict2 shortValue];
-	charRec->introPictID[2] = [introPict3 shortValue];
-	charRec->introPictID[3] = [introPict4 shortValue];
-	charRec->introPictDelay[0] = [introDelay1 shortValue];
-	charRec->introPictDelay[1] = [introDelay2 shortValue];
-	charRec->introPictDelay[2] = [introDelay3 shortValue];
-	charRec->introPictDelay[3] = [introDelay4 shortValue];
+	charRec->startSystem[0] = start1;
+	charRec->startSystem[1] = start2;
+	charRec->startSystem[2] = start3;
+	charRec->startSystem[3] = start4;
+	charRec->startGovt[0] = government1;
+	charRec->startGovt[1] = government2;
+	charRec->startGovt[2] = government3;
+	charRec->startGovt[3] = government4;
+	charRec->startStatus[0] = status1;
+	charRec->startStatus[1] = status2;
+	charRec->startStatus[2] = status3;
+	charRec->startStatus[3] = status4;
+	charRec->introTextID = introText;
+	charRec->introPictID[0] = introPict1;
+	charRec->introPictID[1] = introPict2;
+	charRec->introPictID[2] = introPict3;
+	charRec->introPictID[3] = introPict4;
+	charRec->introPictDelay[0] = introDelay1;
+	charRec->introPictDelay[1] = introDelay2;
+	charRec->introPictDelay[2] = introDelay3;
+	charRec->introPictDelay[3] = introDelay4;
 	bzero( charRec->OnStart, 256 );
 	memmove( charRec->OnStart, [onStart cStringUsingEncoding:NSMacOSRomanStringEncoding], [onStart lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding] <= 255? [onStart lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding]+1:256 );
 	bzero( charRec->UnusedA, 8*sizeof(short) );

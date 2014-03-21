@@ -57,13 +57,13 @@
 	[super windowDidLoad];
 	
 	// create the data sources (here because this is called just before they are applied to the combo boxes)
-	descriptionDataSource = [[DataSource alloc] initForType:[plugBundle localizedStringForKey:@"desc" value:@"" table:@"Resource Types"]];
-	governmentDataSource = [[DataSource alloc] initForType:[plugBundle localizedStringForKey:@"govt" value:@"" table:@"Resource Types"]];
-	pictureDataSource = [[DataSource alloc] initForType:[plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"]];
-	planetDataSource = [[DataSource alloc] initForType:[plugBundle localizedStringForKey:@"spob" value:@"" table:@"Resource Types"]];
-	shipDataSource = [[DataSource alloc] initForType:[plugBundle localizedStringForKey:@"ship" value:@"" table:@"Resource Types"]];
-	soundDataSource = [[DataSource alloc] initForType:[plugBundle localizedStringForKey:@"snd" value:@"" table:@"Resource Types"]];
-	spinDataSource = [[DataSource alloc] initForType:[plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"]];
+	descriptionDataSource = [[DataSource alloc] initForType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"desc" value:@"" table:@"Resource Types"])];
+	governmentDataSource = [[DataSource alloc] initForType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"govt" value:@"" table:@"Resource Types"])];
+	pictureDataSource = [[DataSource alloc] initForType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"PICT" value:@"" table:@"Resource Types"])];
+	planetDataSource = [[DataSource alloc] initForType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"spob" value:@"" table:@"Resource Types"])];
+	shipDataSource = [[DataSource alloc] initForType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"ship" value:@"" table:@"Resource Types"])];
+	soundDataSource = [[DataSource alloc] initForType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"snd" value:@"" table:@"Resource Types"])];
+	spinDataSource = [[DataSource alloc] initForType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"])];
 	
 	// we don't want this notification until we have a window!
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameDidChange:) name:ResourceNameDidChangeNotification object:resource];
