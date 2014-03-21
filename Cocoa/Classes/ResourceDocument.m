@@ -20,20 +20,15 @@ NSString *DocumentInfoWillChangeNotification = @"DocumentInfoWillChangeNotificat
 NSString *DocumentInfoDidChangeNotification = @"DocumentInfoDidChangeNotification";
 extern NSString *RKResourcePboardType;
 
-@interface ResourceDocument ()
-@property (strong) IBOutlet NSView *viewToolbarView;
-@end
-
 @implementation ResourceDocument
 @synthesize viewToolbarView;
 
 - (id)init
 {
 	self = [super init];
-	if(!self) return nil;
-	toolbarItems = [[NSMutableDictionary alloc] init];
+	if (!self)
+		return nil;
 	resources = [[NSMutableArray alloc] init];
-	memset(&fork, 0, sizeof(fork));
 	creator = [@"ResK" dataUsingEncoding:NSMacOSRomanStringEncoding];	// should I be calling -setCreator & -setType here instead?
 	type = [@"rsrc" dataUsingEncoding:NSMacOSRomanStringEncoding];
 	return self;
@@ -571,16 +566,9 @@ extern NSString *RKResourcePboardType;
 	[panel setNameFieldStringValue:filename];
 	//[panel beginSheetForDirectory:nil file:filename modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(exportPanelDidEnd:returnCode:contextInfo:) contextInfo:[exportData retain]];
 	[panel beginSheetModalForWindow:mainWindow completionHandler:^(NSInteger result) {
-		[self exportPanelDidEnd:panel returnCode:result contextInfo:CFBridgingRetain(exportData)];
+		if(result == NSOKButton)
+			[exportData writeToURL:[panel URL] atomically:YES];
 	}];
-}
-
-- (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	NSData *data = CFBridgingRelease(contextInfo);
-	
-	if(returnCode == NSOKButton)
-		[data writeToURL:[sheet URL] atomically:YES];
 }
 
 - (void)folderChoosePanelDidEnd:(NSSavePanel *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
@@ -651,13 +639,12 @@ extern NSString *RKResourcePboardType;
 - (void)windowControllerDidLoadNib:(NSWindowController *)controller
 {
 	[super windowControllerDidLoadNib:controller];
-	[self setupToolbar:controller];
 	
 	{	// set up first column in outline view to display images as well as text
 		ResourceNameCell *resourceNameCell = [[ResourceNameCell alloc] init];
 		[resourceNameCell setEditable:YES];
 		[[outlineView tableColumnWithIdentifier:@"name"] setDataCell:resourceNameCell];
-//		NSLog(@"Changed data cell");
+		// NSLog(@"Changed data cell");
 	}
 	
 	// set outline view's inter-cell spacing to zero to avoid getting gaps between blue bits
@@ -735,119 +722,14 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.export";
 static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view";
 
-- (void)setupToolbar:(NSWindowController *)windowController
-{
-	/* This routine should become invalid once toolbars are integrated into nib files */
-	
-	NSToolbarItem *item;
-	[toolbarItems removeAllObjects];	// just in case this method is called more than once per document (which it shouldn't be!)
-	
-	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKCreateItemIdentifier];
-	[item setLabel:NSLocalizedString(@"Create", nil)];
-	[item setPaletteLabel:NSLocalizedString(@"Create", nil)];
-	[item setToolTip:NSLocalizedString(@"Create New Resource", nil)];
-	[item setImage:[NSImage imageNamed:@"Create"]];
-	[item setTarget:self];
-	[item setAction:@selector(showCreateResourceSheet:)];
-	toolbarItems[RKCreateItemIdentifier] = item;
-	
-	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKDeleteItemIdentifier];
-	[item setLabel:NSLocalizedString(@"Delete", nil)];
-	[item setPaletteLabel:NSLocalizedString(@"Delete", nil)];
-	[item setToolTip:NSLocalizedString(@"Delete Selected Resource", nil)];
-	[item setImage:[NSImage imageNamed:@"Delete"]];
-	[item setTarget:self];
-	[item setAction:@selector(clear:)];
-	toolbarItems[RKDeleteItemIdentifier] = item;
-	
-	NSImage *image;
-	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKEditItemIdentifier];
-	[item setLabel:NSLocalizedString(@"Edit", nil)];
-	[item setPaletteLabel:NSLocalizedString(@"Edit", nil)];
-	[item setToolTip:NSLocalizedString(@"Edit Resource In Default Editor", nil)];
-	if((image = [[NSWorkspace sharedWorkspace] iconForFileType:@"rtf"]))
-	     [item setImage:image];
-	else [item setImage:[NSImage imageNamed:@"Edit"]];
-	[item setTarget:self];
-	[item setAction:@selector(openResources:)];
-	toolbarItems[RKEditItemIdentifier] = item;
-	
-	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKEditHexItemIdentifier];
-	[item setLabel:NSLocalizedString(@"Edit Hex", nil)];
-	[item setPaletteLabel:NSLocalizedString(@"Edit Hex", nil)];
-	[item setToolTip:NSLocalizedString(@"Edit Resource As Hexadecimal", nil)];
-	if((image = [[NSWorkspace sharedWorkspace] iconForFileType:@"txt"]))
-	     [item setImage:image];
-	else [item setImage:[NSImage imageNamed:@"Edit Hex"]];
-	[item setTarget:self];
-	[item setAction:@selector(openResourcesAsHex:)];
-	toolbarItems[RKEditHexItemIdentifier] = item;
-	
-	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKSaveItemIdentifier];
-	[item setLabel:NSLocalizedString(@"Save", nil)];
-	[item setPaletteLabel:NSLocalizedString(@"Save", nil)];
-	[item setToolTip:[NSString stringWithFormat:NSLocalizedString(@"Save To %@ Fork", nil), fork.length == 0? NSLocalizedString(@"Data", nil) : NSLocalizedString(@"Resource", nil)]];
-	[item setImage:[NSImage imageNamed:@"Save"]];
-	[item setTarget:self];
-	[item setAction:@selector(saveDocument:)];
-	toolbarItems[RKSaveItemIdentifier] = item;
-	
-	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKShowInfoItemIdentifier];
-	[item setLabel:NSLocalizedString(@"Show Info", nil)];
-	[item setPaletteLabel:NSLocalizedString(@"Show Info", nil)];
-	[item setToolTip:NSLocalizedString(@"Show Resource Information Window", nil)];
-	[item setImage:[NSImage imageNamed:NSImageNameInfo]];
-	[item setTarget:[NSApp delegate]];
-	[item setAction:@selector(showInfo:)];
-	toolbarItems[RKShowInfoItemIdentifier] = item;
-	
-	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKExportItemIdentifier];
-	[item setLabel:NSLocalizedString(@"Export Data", nil)];
-	[item setPaletteLabel:NSLocalizedString(@"Export Resource Data", nil)];
-	[item setToolTip:NSLocalizedString(@"Export the resource's data to a file", nil)];
-	[item setImage:[NSImage imageNamed:@"Export"]];
-	[item setTarget:self];
-	[item setAction:@selector(exportResources:)];
-	toolbarItems[RKExportItemIdentifier] = item;
-
-	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKViewItemIdentifier];
-	[item setLabel:NSLocalizedString(@"View", nil)];
-	[item setPaletteLabel:NSLocalizedString(@"View", nil)];
-	[item setToolTip:NSLocalizedString(@"View as a list or previews", nil)];
-	[item setView:self.viewToolbarView];
-	[item setTarget:self];
-	toolbarItems[RKViewItemIdentifier] = item;
-	
-	if([windowController window] == mainWindow)
-	{
-		NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:RKToolbarIdentifier];
-		
-		// set toolbar properties
-		[toolbar setVisible:YES];
-		[toolbar setAutosavesConfiguration:YES];
-		[toolbar setAllowsUserCustomization:YES];
-		[toolbar setDisplayMode:NSToolbarDisplayModeDefault];
-		
-		// attach toolbar to window
-		[toolbar setDelegate:self];
-		[mainWindow setToolbar:toolbar];
-	}
-}
-
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
-{
-	return toolbarItems[itemIdentifier];
-}
-
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
-	NSString *separatorIdentifier = NSAppKitVersionNumber < NSAppKitVersionNumber10_7 ? NSToolbarSeparatorItemIdentifier : NSToolbarSpaceItemIdentifier;
-    return @[RKCreateItemIdentifier, RKShowInfoItemIdentifier, RKDeleteItemIdentifier, RKViewItemIdentifier, separatorIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, separatorIdentifier, RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier];
+    return @[RKCreateItemIdentifier, RKShowInfoItemIdentifier, RKDeleteItemIdentifier, RKViewItemIdentifier, NSToolbarSpaceItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, NSToolbarSpaceItemIdentifier, RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 {
-    return @[RKCreateItemIdentifier, RKDeleteItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, RKSaveItemIdentifier, RKExportItemIdentifier, RKShowInfoItemIdentifier, RKViewItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier];
+    return @[RKCreateItemIdentifier, RKDeleteItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, RKSaveItemIdentifier, RKExportItemIdentifier, RKShowInfoItemIdentifier, RKViewItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier];
 }
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)item
@@ -1189,35 +1071,37 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 			NSMutableArray *remainingResources = [[NSMutableArray alloc] initWithCapacity:1];
 			[remainingResources addObject:resource];
 			[remainingResources addObjectsFromArray:[enumerator allObjects]];
-			NSBeginAlertSheet(@"Paste Error", @"Unique ID", @"Skip", @"Overwrite", mainWindow, self, NULL, @selector(overwritePasteSheetDidDismiss:returnCode:contextInfo:), CFBridgingRetain(remainingResources), @"There already exists a resource of type %@ with ID %hd. Do you wish to assign the pasted resource a unique ID, overwrite the existing resource, or skip pasting of this resource?", GetNSStringFromOSType([resource type]), [resource resID]);
+			NSAlert *alert = [[NSAlert alloc] init];
+			alert.messageText = @"Paste Error";
+			alert.informativeText = [NSString stringWithFormat:@"There already exists a resource of type %@ with ID %hd. Do you wish to assign the pasted resource a unique ID, overwrite the existing resource, or skip pasting of this resource?", GetNSStringFromOSType([resource type]), [resource resID]];
+			[alert addButtonWithTitle:@"Unique ID"];
+			[alert addButtonWithTitle:@"Overwrite"];
+			[alert addButtonWithTitle:@"Skip"];
+			[alert beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse returnCode) {
+				Resource *resource = remainingResources[0];
+				if(returnCode == NSAlertFirstButtonReturn)	// unique ID
+				{
+					Resource *newResource = [Resource resourceOfType:[resource type] andID:[dataSource uniqueIDForType:[resource type]] withName:[resource name] andAttributes:[resource attributes] data:[resource data]];
+					[dataSource addResource:newResource];
+				}
+				else if(returnCode == NSAlertSecondButtonReturn)				// overwrite
+				{
+					[dataSource removeResource:[dataSource resourceOfType:[resource type] andID:[resource resID]]];
+					[dataSource addResource:resource];
+				}
+				//else if(NSAlertAlternateReturn)			// skip
+				
+				// remove top resource and continue paste
+				[remainingResources removeObjectAtIndex:0];
+				[self pasteResources:remainingResources];
+			}];
 		}
 	}
 }
 
-- (void)overwritePasteSheetDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	NSMutableArray *remainingResources = [NSMutableArray arrayWithArray:(NSArray *)CFBridgingRelease(contextInfo)];
-	Resource *resource = remainingResources[0];
-	if(returnCode == NSAlertDefaultReturn)	// unique ID
-	{
-		Resource *newResource = [Resource resourceOfType:[resource type] andID:[dataSource uniqueIDForType:[resource type]] withName:[resource name] andAttributes:[resource attributes] data:[resource data]];
-		[dataSource addResource:newResource];
-	}
-	else if(NSAlertOtherReturn)				// overwrite
-	{
-		[dataSource removeResource:[dataSource resourceOfType:[resource type] andID:[resource resID]]];
-		[dataSource addResource:resource];
-	}
-//	else if(NSAlertAlternateReturn)			// skip
-	
-	// remove top resource and continue paste
-	[remainingResources removeObjectAtIndex:0];
-	[self pasteResources:remainingResources];
-}
-
 - (IBAction)clear:(id)sender
 {
-	#pragma unused(sender)
+#pragma unused(sender)
 	if([[NSUserDefaults standardUserDefaults] boolForKey:kDeleteResourceWarning])
 	{
 		NSBeginCriticalAlertSheet(@"Delete Resource", @"Delete", @"Cancel", nil, [self mainWindow], self, @selector(deleteResourcesSheetDidEnd:returnCode:contextInfo:), NULL, nil, @"Please confirm you wish to delete the selected resources.");
@@ -1227,7 +1111,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (void)deleteResourcesSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	#pragma unused(contextInfo)
+#pragma unused(contextInfo)
 	if(returnCode == NSOKButton)
 		[self deleteSelectedResources];
 }

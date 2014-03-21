@@ -11,6 +11,8 @@
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; };
+		5542DCE918DCEB9500AC9626 /* ResourceTypeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5542DCE718DCEB9500AC9626 /* ResourceTypeFormatter.h */; };
+		5542DCEA18DCEB9500AC9626 /* ResourceTypeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5542DCE818DCEB9500AC9626 /* ResourceTypeFormatter.m */; };
 		559DE9B4189D665000D55D3A /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Icons.xcassets */; };
 		55FEF5A5189D758E00888898 /* NovaTools.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5A3189D758E00888898 /* NovaTools.xib */; };
 		55FEF5A8189D759F00888898 /* boom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5A6189D759F00888898 /* boom.xib */; };
@@ -455,11 +457,15 @@
 		550B905C189A036F005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Application.strings; sourceTree = "<group>"; };
 		550B905F189A0421005AC38D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Application.strings; sourceTree = "<group>"; };
 		550B9060189A0876005AC38D /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Application.strings; sourceTree = "<group>"; };
-		550B9061189A0886005AC38D /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		550B9062189A08A4005AC38D /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Localizable.strings; sourceTree = "<group>"; };
 		550B9064189A187D005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HexWindow.strings; sourceTree = "<group>"; };
 		550B9066189A1882005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FindSheet.strings; sourceTree = "<group>"; };
 		550B9068189A1AA9005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
+		5542DCE718DCEB9500AC9626 /* ResourceTypeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceTypeFormatter.h; sourceTree = "<group>"; };
+		5542DCE818DCEB9500AC9626 /* ResourceTypeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceTypeFormatter.m; sourceTree = "<group>"; };
+		5542DCEC18DCF19C00AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5542DCED18DCF1AC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5542DCEF18DCF1D300AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5542DCF018DCF1DC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		559DE9B6189D6B1B00D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrefsWindow.strings; sourceTree = "<group>"; };
 		559DE9B8189D6B2000D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoWindow.strings; sourceTree = "<group>"; };
@@ -554,7 +560,7 @@
 		E18BF94B06A00F8E00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF9D706A01A2200F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BFA3606A20B7A00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E196FEE10551AF9600FE7E58 /* Resource Type Mappings.strings */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; path = "Resource Type Mappings.strings"; sourceTree = "<group>"; };
+		E196FEE10551AF9600FE7E58 /* Resource Type Mappings.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Resource Type Mappings.strings"; sourceTree = "<group>"; };
 		E19FB514054E918800A80202 /* MisnWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MisnWindowController.h; path = misn/MisnWindowController.h; sourceTree = "<group>"; };
 		E19FB515054E918800A80202 /* MisnWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MisnWindowController.m; path = misn/MisnWindowController.m; sourceTree = "<group>"; };
 		E19FB518054E919200A80202 /* ShipWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ShipWindowController.h; path = ship/ShipWindowController.h; sourceTree = "<group>"; };
@@ -641,8 +647,6 @@
 		F5B588300156D40B01000001 /* ResourceDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDataSource.m; sourceTree = "<group>"; };
 		F5B588310156D40B01000001 /* ResourceDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceDocument.h; sourceTree = "<group>"; };
 		F5B588320156D40B01000001 /* ResourceDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDocument.m; sourceTree = "<group>"; };
-		F5B588430156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F5B588450156D40B01000001 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F5B5884A0156D40B01000001 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		F5B5884B0156D40B01000001 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		F5B5884C0156D40B01000001 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -1134,6 +1138,8 @@
 				3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */,
 				3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */,
 				3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */,
+				5542DCE718DCEB9500AC9626 /* ResourceTypeFormatter.h */,
+				5542DCE818DCEB9500AC9626 /* ResourceTypeFormatter.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1271,6 +1277,7 @@
 				E18BF54F069FEA1300F076B8 /* RKDocumentController.h in Headers */,
 				E18BF550069FEA1300F076B8 /* OpenPanelDelegate.h in Headers */,
 				E18BF551069FEA1300F076B8 /* RKEditorRegistry.h in Headers */,
+				5542DCE918DCEB9500AC9626 /* ResourceTypeFormatter.h in Headers */,
 				E18BF552069FEA1300F076B8 /* RKSupportResourceRegistry.h in Headers */,
 				0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */,
 			);
@@ -1913,6 +1920,7 @@
 				E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */,
 				E18BF580069FEA1300F076B8 /* PasteboardWindowController.m in Sources */,
 				E18BF581069FEA1300F076B8 /* RKDocumentController.m in Sources */,
+				5542DCEA18DCEB9500AC9626 /* ResourceTypeFormatter.m in Sources */,
 				E18BF582069FEA1300F076B8 /* OpenPanelDelegate.m in Sources */,
 				E18BF583069FEA1300F076B8 /* main.m in Sources */,
 				E18BF584069FEA1300F076B8 /* RKEditorRegistry.m in Sources */,
@@ -2358,8 +2366,8 @@
 		F5B588420156D40B01000001 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F5B588430156D40B01000001 /* English */,
-				550B9061189A0886005AC38D /* cy */,
+				5542DCEF18DCF1D300AC9626 /* en */,
+				5542DCF018DCF1DC00AC9626 /* cy */,
 			);
 			name = InfoPlist.strings;
 			path = Cocoa;
@@ -2368,8 +2376,8 @@
 		F5B588440156D40B01000001 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F5B588450156D40B01000001 /* English */,
-				550B9062189A08A4005AC38D /* cy */,
+				5542DCEC18DCF19C00AC9626 /* en */,
+				5542DCED18DCF1AC00AC9626 /* cy */,
 			);
 			name = Localizable.strings;
 			path = Cocoa;

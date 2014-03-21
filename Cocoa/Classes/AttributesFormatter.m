@@ -6,8 +6,8 @@
 - (NSString *)stringForObjectValue:(id)obj
 {
 	BOOL addComma = NO;
-	short attributes = [obj shortValue];
-	NSMutableString *string = [NSMutableString string];
+	ResAttributes attributes = (short)[obj intValue];
+	NSMutableString *string = [[NSMutableString alloc] init];
 	
 	// there's probably a smarter, bitwise, way to do this
 	short attributeCount = 0;
@@ -53,7 +53,7 @@
 		else						[string appendString:@"SysHeap"];
 		/* addComma = YES; */
 	}
-	return string;
+	return [NSString stringWithString:string];
 }
 
 - (NSAttributedString *)attributedStringForObjectValue:(id)obj withDefaultAttributes:(NSDictionary *)attrs

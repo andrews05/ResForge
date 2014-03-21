@@ -206,8 +206,8 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 
 - (NSString *)defaultWindowTitle
 {
-	if([name length] > 0)	return [NSString stringWithFormat: NSLocalizedString(@"%@: %@ %@ '%@'", @"default window title format with resource name"), _docName, type, resID, name];
-	else					return [NSString stringWithFormat: NSLocalizedString(@"%@: %@ %@", @"default window title format without resource name"), _docName, type, resID];
+	if([name length] > 0)	return [NSString stringWithFormat: NSLocalizedString(@"%@: %@ %i '%@'", @"default window title format with resource name"), _docName, GetNSStringFromOSType(type), resID, name];
+	else					return [NSString stringWithFormat: NSLocalizedString(@"%@: %@ %i", @"default window title format without resource name"), _docName, GetNSStringFromOSType(type), resID];
 }
 
 - (OSType)type
@@ -308,7 +308,6 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 			resID = (short)[decoder decodeInt32ForKey:kRSRCID];
 			attributes = (UInt16)[decoder decodeInt32ForKey:kRSRCAttrib];
 			self._data = [decoder decodeObjectForKey:kRSRCData];
-
 		} else {
 			self._name = [decoder decodeObject];
 			type = [(NSNumber*)[decoder decodeObject] unsignedIntValue];

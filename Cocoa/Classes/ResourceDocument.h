@@ -1,5 +1,5 @@
 #import <Cocoa/Cocoa.h>
-#import <Carbon/Carbon.h>	// Actually I only need CarbonCore.framework
+#include <CoreServices/CoreServices.h>
 
 @class CreateResourceSheetController, ResourceWindowController, ResourceDataSource, Resource;
 
@@ -10,17 +10,17 @@
 	IBOutlet ResourceDataSource		*dataSource;
 	IBOutlet NSWindow				*mainWindow;
 	IBOutlet NSOutlineView			*outlineView;
-	IBOutlet NSView					*viewToolbarView;
 
 	CreateResourceSheetController	*sheetController;
 	
-	NSMutableDictionary	*toolbarItems;
 	NSMutableArray	*resources;
 	HFSUniStr255	fork;		// name of fork to save to, usually empty string (data fork) or 'RESOURCE_FORK' as returned from FSGetResourceForkName()
 	NSData			*creator;
 	NSData			*type;
 	BOOL			_createFork;	// file had no existing resource map when opened
 }
+
+@property (weak) IBOutlet NSView *viewToolbarView;
 
 - (BOOL)readFork:(NSString *)forkName asStreamFromFile:(FSRef *)fileRef;
 - (BOOL)readResourceMap:(ResFileRefNum)fileRefNum;
@@ -29,9 +29,6 @@
 
 - (IBAction)exportResources:(id)sender;
 - (void)exportResource:(Resource *)resource;
-- (void)exportPanelDidEnd:(NSSavePanel *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
-
-- (void)setupToolbar:(NSWindowController *)windowController;
 
 - (IBAction)showCreateResourceSheet:(id)sender;
 - (IBAction)showSelectTemplateSheet:(id)sender;
@@ -47,7 +44,6 @@
 - (IBAction)copy:(id)sender;
 - (IBAction)paste:(id)sender;
 - (void)pasteResources:(NSArray *)pastedResources;
-- (void)overwritePasteSheetDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (IBAction)clear:(id)sender;
 - (void)deleteResourcesSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)deleteSelectedResources;
