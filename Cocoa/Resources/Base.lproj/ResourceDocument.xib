@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
@@ -27,21 +27,21 @@
                 <rect key="frame" x="0.0" y="0.0" width="540" height="400"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" findBarPosition="aboveHorizontalRuler" translatesAutoresizingMaskIntoConstraints="NO" id="146">
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" findBarPosition="aboveHorizontalRuler" translatesAutoresizingMaskIntoConstraints="NO" id="146">
                         <rect key="frame" x="-1" y="-1" width="542" height="402"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="wBO-8u-DWd">
-                            <rect key="frame" x="1" y="17" width="525" height="369"/>
+                            <rect key="frame" x="1" y="17" width="540" height="384"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" autosaveName="Resource List" headerView="164" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="147" id="145" customClass="RKOutlineView">
-                                    <rect key="frame" x="0.0" y="0.0" width="525" height="369"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="540" height="384"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="name" editable="NO" width="203" minWidth="16" maxWidth="1000" id="147">
+                                        <tableColumn identifier="name" editable="NO" width="208" minWidth="16" maxWidth="1000" id="147">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -83,7 +83,7 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="resID"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="size" editable="NO" width="74" minWidth="60" maxWidth="80" id="150">
+                                        <tableColumn identifier="size" editable="NO" width="79" minWidth="60" maxWidth="80" id="150">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Size">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -97,7 +97,7 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="size"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="attributes" editable="NO" width="113" minWidth="60" maxWidth="1000" id="151">
+                                        <tableColumn identifier="attributes" editable="NO" width="118" minWidth="60" maxWidth="1000" id="151">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Attributes">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -120,16 +120,16 @@
                             </subviews>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="163">
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="163">
                             <rect key="frame" x="1" y="386" width="525" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="165">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="165">
                             <rect key="frame" x="526" y="17" width="15" height="369"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="164">
-                            <rect key="frame" x="0.0" y="0.0" width="525" height="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="540" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
@@ -184,14 +184,14 @@
         <button verticalHuggingPriority="750" id="170">
             <rect key="frame" x="0.0" y="0.0" width="35" height="25"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="EditHexTemplate" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="171">
+            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Edit Hex" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="171">
                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                 <font key="font" metaFont="system"/>
             </buttonCell>
         </button>
     </objects>
     <resources>
-        <image name="EditHexTemplate" width="128" height="128"/>
+        <image name="Edit Hex" width="32" height="32"/>
         <image name="NSAddTemplate" width="8" height="8"/>
         <image name="NSIconViewTemplate" width="11" height="10"/>
         <image name="NSListViewTemplate" width="11" height="10"/>

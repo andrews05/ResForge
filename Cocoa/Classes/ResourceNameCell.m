@@ -6,10 +6,11 @@
 
 - (id)init
 {
-	self = [super init];
-	if(!self) return nil;
-	[self setWraps:NO];
-	drawImage = YES;
+	if (self = [super init]) {
+		self.wraps = NO;
+		drawImage = YES;
+		image = nil;
+	}
 	return self;
 }
 
