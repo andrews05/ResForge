@@ -80,7 +80,7 @@ extern NSString *RKResourcePboardType;
 	{
 		// get selected fork from open panel, 10.3+
 		NSInteger row = [[openPanelDelegate forkTableView] selectedRow];
-		NSString *selectedFork = [(NSDictionary *)[[openPanelDelegate forks] objectAtIndex:row] objectForKey:@"forkname"];
+		NSString *selectedFork = ((NSDictionary *)[openPanelDelegate forks][row])[@"forkname"];
 		fork.length = ([selectedFork length] < 255) ? (UInt16)[selectedFork length] : 255;
 		if(fork.length > 0)
 			[selectedFork getCharacters:fork.unicode range:NSMakeRange(0, fork.length)];

@@ -11,6 +11,10 @@ NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResourc
 extern NSString *RKResourcePboardType;
 
 @implementation ResourceDataSource
+@synthesize document;
+@synthesize outlineView;
+@synthesize window;
+@synthesize resources;
 
 - (id)init
 {
@@ -22,11 +26,6 @@ extern NSString *RKResourcePboardType;
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (NSWindow *)window
-{
-	return window;
 }
 
 - (NSArray *)resources

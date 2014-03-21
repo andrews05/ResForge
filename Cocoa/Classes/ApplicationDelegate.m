@@ -18,14 +18,15 @@
 + (void)initialize
 {
 	// set default preferences
-	NSDictionary * prefDict = [NSDictionary dictionaryWithObjectsAndKeys:@YES, kPreserveBackups, @NO, kAutosave, @5, kAutosaveInterval, @YES, kDeleteResourceWarning, kOpenUntitledFile, kLaunchAction, nil];
+	NSDictionary * prefDict = @{kPreserveBackups: @YES, kAutosave: @NO, kAutosaveInterval: @5, kDeleteResourceWarning: @YES, kLaunchAction: kOpenUntitledFile};
 	[[NSUserDefaults standardUserDefaults] registerDefaults:prefDict];
 }
 
 - (id)init
 {
-	self = [super init];
-	[NSApp registerServicesMenuSendTypes:@[NSStringPboardType] returnTypes:@[NSStringPboardType]];
+	if (self = [super init]) {
+		[NSApp registerServicesMenuSendTypes:@[NSStringPboardType] returnTypes:@[NSStringPboardType]];
+	}
 	return self;
 }
 
@@ -33,7 +34,6 @@
 {
 	// instanciate my own subclass of NSDocumentController so I can override the open dialog
 	// autorelease to fix an analyzer warning; the application already holds onto the document controller
-	[[RKDocumentController alloc] init];
 	[RKSupportResourceRegistry scanForSupportResources];
 }
 

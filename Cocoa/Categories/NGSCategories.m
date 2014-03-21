@@ -9,7 +9,7 @@
 	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:count];
 	[indicies getIndexes:buffer maxCount:count inIndexRange:&range];
 	for(NSUInteger i = 0; i < count; i++)
-		[newArray addObject:[self objectAtIndex:*(buffer+i)]];
+		[newArray addObject:self[*(buffer+i)]];
 
 	free(buffer);
 	

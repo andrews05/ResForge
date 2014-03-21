@@ -8,14 +8,10 @@
 */
 
 @interface ResourceDataSource : NSObject <NSOutlineViewDataSource>
-{
-	IBOutlet NSOutlineView		*outlineView;
-	IBOutlet NSWindow			*window;
-	IBOutlet ResourceDocument	*document;
-	
-	NSMutableArray	*resources;
-}
-
+@property (strong) NSMutableArray *resources;
+@property (weak) IBOutlet NSOutlineView		*outlineView;
+@property (weak) IBOutlet NSWindow			*window;
+@property (weak) IBOutlet ResourceDocument	*document;
 /*!
 @method		window
 */

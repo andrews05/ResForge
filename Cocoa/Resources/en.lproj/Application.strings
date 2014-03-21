@@ -44,7 +44,7 @@
 /* Class = "NSMenuItem"; title = "About ResKnife"; ObjectID = "352"; */
 "352.title" = "About ResKnife";
 
-/* Class = "NSMenuItem"; title = "Preferences..."; ObjectID = "353"; */
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "353"; */
 "353.title" = "Preferences…";
 
 /* Class = "NSMenuItem"; title = "Services"; ObjectID = "354"; */
@@ -71,7 +71,7 @@
 /* Class = "NSMenu"; title = "File"; ObjectID = "364"; */
 "364.title" = "File";
 
-/* Class = "NSMenuItem"; title = "Open..."; ObjectID = "365"; */
+/* Class = "NSMenuItem"; title = "Open…"; ObjectID = "365"; */
 "365.title" = "Open…";
 
 /* Class = "NSMenuItem"; title = "Close"; ObjectID = "366"; */
@@ -80,13 +80,13 @@
 /* Class = "NSMenuItem"; title = "Save"; ObjectID = "368"; */
 "368.title" = "Save";
 
-/* Class = "NSMenuItem"; title = "Page Setup..."; ObjectID = "369"; */
+/* Class = "NSMenuItem"; title = "Page Setup…"; ObjectID = "369"; */
 "369.title" = "Page Setup…";
 
-/* Class = "NSMenuItem"; title = "Print..."; ObjectID = "370"; */
+/* Class = "NSMenuItem"; title = "Print…"; ObjectID = "370"; */
 "370.title" = "Print…";
 
-/* Class = "NSMenuItem"; title = "Save As..."; ObjectID = "372"; */
+/* Class = "NSMenuItem"; title = "Save As…"; ObjectID = "372"; */
 "372.title" = "Save As…";
 
 /* Class = "NSMenuItem"; title = "New"; ObjectID = "373"; */
@@ -152,7 +152,7 @@
 /* Class = "NSMenu"; title = "Find"; ObjectID = "396"; */
 "396.title" = "Find";
 
-/* Class = "NSMenuItem"; title = "Find..."; ObjectID = "397"; */
+/* Class = "NSMenuItem"; title = "Find…"; ObjectID = "397"; */
 "397.title" = "Find…";
 
 /* Class = "NSMenuItem"; title = "Scroll to Selection"; ObjectID = "398"; */
@@ -182,7 +182,7 @@
 /* Class = "NSMenu"; title = "Spelling"; ObjectID = "407"; */
 "407.title" = "Spelling";
 
-/* Class = "NSMenuItem"; title = "Spelling..."; ObjectID = "408"; */
+/* Class = "NSMenuItem"; title = "Spelling…"; ObjectID = "408"; */
 "408.title" = "Spelling…";
 
 /* Class = "NSMenuItem"; title = "Check Spelling"; ObjectID = "409"; */
@@ -247,9 +247,3 @@
 
 /* Class = "NSTableColumn"; headerCell.title = "Fork Name"; ObjectID = "440"; */
 "440.headerCell.title" = "Fork Name";
-
-/* Class = "NSButtonCell"; title = "-"; ObjectID = "445"; */
-"445.title" = "-";
-
-/* Class = "NSButtonCell"; title = "+"; ObjectID = "447"; */
-"447.title" = "+";

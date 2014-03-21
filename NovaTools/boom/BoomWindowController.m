@@ -32,7 +32,7 @@
 	self.silent = (boomRec->SoundIndex == -1);
 	self.image = boomRec->GraphicIndex + kMinBoomSpinID;
 	self.sound = (self.silent? kMinBoomSoundID : boomRec->SoundIndex + kMinBoomSoundID);
-	self.frameRate = [[NSNumber alloc] initWithShort:boomRec->FrameAdvance];
+	self.frameRate = @(boomRec->FrameAdvance);
 	
 	return self;
 }

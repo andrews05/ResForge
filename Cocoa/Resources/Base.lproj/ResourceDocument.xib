@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ResourceDocument">
@@ -16,7 +16,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <window title="Untitled Resource File" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" frameAutosaveName="Resource Document" animationBehavior="default" id="5" userLabel="Window">
+        <window title="Untitled Resource File" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="Resource Document" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -28,20 +28,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" findBarPosition="aboveHorizontalRuler" translatesAutoresizingMaskIntoConstraints="NO" id="146">
-                        <rect key="frame" x="-1" y="-1" width="542" height="402"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="wBO-8u-DWd">
-                            <rect key="frame" x="1" y="17" width="540" height="384"/>
+                            <rect key="frame" x="1" y="17" width="538" height="382"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" autosaveName="Resource List" headerView="164" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="147" id="145" customClass="RKOutlineView">
-                                    <rect key="frame" x="0.0" y="0.0" width="540" height="384"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="538" height="382"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="name" editable="NO" width="208" minWidth="16" maxWidth="1000" id="147">
+                                        <tableColumn identifier="name" editable="NO" width="206" minWidth="16" maxWidth="1000" id="147">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -129,16 +129,16 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="164">
-                            <rect key="frame" x="0.0" y="0.0" width="540" height="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="538" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="146" secondAttribute="trailing" constant="-1" id="1qY-41-TMN"/>
-                    <constraint firstAttribute="bottom" secondItem="146" secondAttribute="bottom" constant="-1" id="5UJ-JU-Tbb"/>
-                    <constraint firstItem="146" firstAttribute="top" secondItem="6" secondAttribute="top" constant="-1" id="MqA-rd-R9q"/>
-                    <constraint firstItem="146" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="-1" id="MxN-4f-aNi"/>
+                    <constraint firstAttribute="trailing" secondItem="146" secondAttribute="trailing" id="1qY-41-TMN"/>
+                    <constraint firstAttribute="bottom" secondItem="146" secondAttribute="bottom" id="5UJ-JU-Tbb"/>
+                    <constraint firstItem="146" firstAttribute="top" secondItem="6" secondAttribute="top" id="MqA-rd-R9q"/>
+                    <constraint firstItem="146" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="MxN-4f-aNi"/>
                 </constraints>
             </view>
             <connections>
@@ -184,7 +184,7 @@
         <button verticalHuggingPriority="750" id="170">
             <rect key="frame" x="0.0" y="0.0" width="35" height="25"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Edit Hex" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="171">
+            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Edit Hex" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="171">
                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                 <font key="font" metaFont="system"/>
             </buttonCell>

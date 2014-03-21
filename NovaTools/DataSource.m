@@ -22,7 +22,7 @@
 		data = [[NSMutableDictionary alloc] init];
 		NSArray *resources = [NSClassFromString(@"Resource") allResourcesOfType:type inDocument:nil];	// nil document will search in ANY open document for the correct resource
 		for(id <ResKnifeResourceProtocol> resource in resources )
-			[data setObject:[resource name] forKey:@([resource resID])];
+			data[@([resource resID])] = [resource name];
 		parsed = [[NSMutableArray alloc] initWithArray:[data allValues]];
 	}
 	return self;
@@ -57,7 +57,7 @@
 	if( trimmedString == nil ) trimmedString = @"";
 	for (NSNumber *NumID in data) {
 		short resID = [NumID shortValue];
-		NSString *value = [data objectForKey:NumID];
+		NSString *value = data[NumID];
 		NSRange range = [value rangeOfString:trimmedString options:NSCaseInsensitiveSearch];
 		if( ((range.location != NSNotFound && range.length != 0) || [trimmedString isEqualToString:@""]) && [NumID isBoundedByRange:resIDRange] )
 			[parsed addObject:[self stringValueForResID:resID]];
@@ -72,13 +72,13 @@
 
 - (id)objectValueForResID:(short)resID
 {
-	return [data objectForKey:@(resID)];
+	return data[@(resID)];
 }
 
 - (NSString *)stringValueForResID:(short)resID
 {
-	if( resID && [data objectForKey:@(resID)] )
-		return [NSString stringWithFormat:@"%@ {%@}", [data objectForKey:@(resID)], @(resID)];
+	if( resID && data[@(resID)] )
+		return [NSString stringWithFormat:@"%@ {%@}", data[@(resID)], @(resID)];
 	else if( resID == -1 )
 		return @"";
 	else if( resID )
@@ -96,7 +96,7 @@
 	if( span.location != NSNotFound )	range.length = span.location - range.location;
 	else return -1;
 	@try {
-		return [[[NSNumber alloc] initWithInt:[[string substringWithRange:range] intValue]] shortValue];
+		return [@([[string substringWithRange:range] intValue]) shortValue];
 	} @catch (NSException *localException) {
 		return 1;
 	}

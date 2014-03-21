@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <deployment defaultVersion="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CreateResourceSheetController">
@@ -19,7 +19,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <window title="Create Resource" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="20" userLabel="CreateResourceSheet" customClass="NSPanel">
+        <window title="Create Resource" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="20" userLabel="CreateResourceSheet" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="528" y="151" width="300" height="252"/>
@@ -84,12 +84,12 @@
                     <popUpButton toolTip="Not Implemented Yet" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9">
                         <rect key="frame" x="121" y="124" width="81" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="BNDL" bezelStyle="rounded" alignment="left" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="71">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="clipping" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="71">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
+                            <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="10">
                                 <items>
-                                    <menuItem title="BNDL" state="on" id="26"/>
+                                    <menuItem title="BNDL" id="26"/>
                                     <menuItem title="vers" id="30"/>
                                     <menuItem isSeparatorItem="YES" id="22">
                                         <modifierMask key="keyEquivalentModifierMask" command="YES"/>
@@ -160,7 +160,7 @@
                         </cells>
                     </matrix>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="21">
-                        <rect key="frame" x="205" y="13" width="81" height="32"/>
+                        <rect key="frame" x="204" y="13" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                         <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" inset="2" id="75">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -174,7 +174,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="18">
-                        <rect key="frame" x="123" y="13" width="82" height="32"/>
+                        <rect key="frame" x="122" y="13" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="73">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -209,6 +209,7 @@ Gw
                     <constraint firstAttribute="centerX" secondItem="12" secondAttribute="centerX" id="dXm-Kp-WlO"/>
                     <constraint firstItem="7" firstAttribute="leading" secondItem="23" secondAttribute="leading" id="drM-5D-jdC"/>
                     <constraint firstItem="12" firstAttribute="top" secondItem="9" secondAttribute="bottom" constant="8" symbolic="YES" id="e2d-bM-BPQ"/>
+                    <constraint firstItem="21" firstAttribute="width" secondItem="18" secondAttribute="width" id="o2K-mT-PWG"/>
                     <constraint firstItem="7" firstAttribute="baseline" secondItem="11" secondAttribute="baseline" id="qp2-e2-RHp"/>
                     <constraint firstItem="7" firstAttribute="trailing" secondItem="23" secondAttribute="trailing" id="r5F-MD-WBa"/>
                     <constraint firstItem="19" firstAttribute="top" secondItem="27" secondAttribute="bottom" constant="8" symbolic="YES" id="rjh-Pm-rtj"/>
