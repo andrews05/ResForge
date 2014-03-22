@@ -244,13 +244,11 @@ extern NSString *RKResourcePboardType;
 	ResFileRefNum oldResFile = CurResFile();
 	UseResFile(fileRefNum);
 	
-	for(ResourceCount i = 1; i <= Count1Types(); i++)
-	{
+	for (ResourceCount i = 1; i <= Count1Types(); i++) {
 		ResType resTypeCode;
 		Get1IndType(&resTypeCode, i);
 		unsigned short n = Count1Resources(resTypeCode);
-		for(unsigned short j = 1; j <= n; j++)
-		{
+		for (unsigned short j = 1; j <= n; j++) {
 			Handle resourceHandle = Get1IndResource(resTypeCode, j);
 			error = ResError();
 			if(error != noErr)
