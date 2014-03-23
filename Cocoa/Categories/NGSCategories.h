@@ -46,7 +46,6 @@
 @discussion		Calls <tt>valueForKey:</tt> on each object in the array, returning a new array containing all objects which themselves returned the value passed in, according to <tt>isEqual:</tt>. If no objects matched, this method returns an empty array.
 */
 - (NSArray *)objectsReturningValue:(id)value forKey:(id)key;
-- (NSArray *)arrayByMakingObjectsPerformSelector:(SEL)selector withObject:(id)inObject;
 @end
 
 @interface NSCharacterSet (NGSNewlineExtensions)

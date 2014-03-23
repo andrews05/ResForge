@@ -36,18 +36,9 @@
 {
 	NSMutableArray *array = [NSMutableArray array];
 	for (id object in self) {
-		if([[object valueForKey:key] isEqual:value]) {
+		if ([[object valueForKey:key] isEqual:value]) {
 			[array addObject:object];
 		}
-	}
-	return [NSArray arrayWithArray:array];
-}
-
-- (NSArray *)arrayByMakingObjectsPerformSelector:(SEL)selector withObject:(id)inObject
-{
-	NSMutableArray *array = [NSMutableArray array];
-	for (id object in self) {
-		[array addObject:[object performSelector:selector withObject:inObject]];
 	}
 	return [NSArray arrayWithArray:array];
 }

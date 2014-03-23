@@ -6,17 +6,17 @@
 + (void)scanForSupportResources
 {
 	[RKSupportResourceRegistry scanForSupportResourcesInFolder:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Support Resources"]];
-#if MAC_OS_X_VERSION_10_4 <= MAC_OS_X_VERSION_MAX_ALLOWED
 	NSArray *dirsArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSAllDomainsMask, YES);
-	dirsArray = [dirsArray arrayByMakingObjectsPerformSelector:@selector(stringByAppendingPathComponent:) withObject:@"ResKnife/Support Resources"];
+	{
+		NSMutableArray *tmparray = [[NSMutableArray alloc] initWithCapacity:[dirsArray count]];
+		for (NSString *dir in dirsArray) {
+			[tmparray addObject:[dir stringByAppendingPathComponent:@"ResKnife/Support Resources"]];
+		}
+		dirsArray = [[NSArray alloc] initWithArray:tmparray];
+	}
 	// FIXME: log content of dirsArray and merge with the following:
 	for (NSString *dir in dirsArray)
 		[RKSupportResourceRegistry scanForSupportResourcesInFolder:dir];
-#else
-	[RKSupportResourceRegistry scanForSupportResourcesInFolder:[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Application Support/ResKnife/Support Resources"]];
-	[RKSupportResourceRegistry scanForSupportResourcesInFolder:@"/Library/Application Support/ResKnife/Support Resources"];
-	[RKSupportResourceRegistry scanForSupportResourcesInFolder:@"/Network/Library/Application Support/ResKnife/Support Resources"];
-#endif
 }
 
 + (void)scanForSupportResourcesInFolder:(NSString *)path

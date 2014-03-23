@@ -1,12 +1,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface ResourceNameCell : NSTextFieldCell
-#ifndef __LP64__
-{
-	BOOL	drawImage;
-	NSImage	*image;
-}
-#endif
 @property BOOL drawImage;
 @property (retain, nonatomic) NSImage *image;
 

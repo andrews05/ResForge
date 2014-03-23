@@ -928,8 +928,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	// bug: can only cope with one selected item
 	NSData *data = [(Resource *)[outlineView itemAtRow:[outlineView selectedRow]] data];
-	if(data && [data length] != 0)
-	{		
+	if(data && [data length] != 0) {
 		xpc_connection_t connection = xpc_connection_create("org.derailer.ResKnife.System7SoundPlayer", NULL);
 		xpc_object_t dict = xpc_dictionary_create(NULL, NULL, 0);
 		xpc_dictionary_set_data(dict, "soundData", [data bytes], [data length]);

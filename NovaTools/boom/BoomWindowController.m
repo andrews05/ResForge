@@ -131,7 +131,7 @@
 
 - (IBAction)playSound:(id)sender
 {
-	NSData *data = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"snd" value:@"" table:@"Resource Types"]) andID:sound inDocument:nil] data];
+	NSData *data = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:'snd ' andID:sound inDocument:nil] data];
 	if( data && [data length] != 0 )
 	{
 		//SndListPtr sndPtr = (SndListPtr) [data bytes];
