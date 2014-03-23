@@ -21,7 +21,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="14" y="561" width="643" height="430"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
             <value key="minSize" type="size" width="250" height="200"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
@@ -151,7 +151,6 @@
             <toolbar key="toolbar" implicitIdentifier="B3C6127F-9A31-48F1-B6EE-BCD5859A0867" explicitIdentifier="com.nickshanks.resknife.toolbar" displayMode="iconAndLabel" sizeMode="regular" id="db5-WX-ACy">
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="G5U-0D-21l"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="hCM-bK-ptu"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="I27-Yh-n0W"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="V9k-cj-SC7"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="oCs-hl-fHE"/>
@@ -181,7 +180,11 @@
                             <action selector="saveDocument:" target="-2" id="jBw-oK-x0x"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C9D46A15-FE45-4063-9AEC-2A07700C1732" explicitItemIdentifier="com.nickshanks.resknife.toolbar.showinfo" label="Info" paletteLabel="Show Info" toolTip="Show Resource Information Window" tag="-1" image="NSInfo" id="teQ-0f-KZt"/>
+                    <toolbarItem implicitItemIdentifier="C9D46A15-FE45-4063-9AEC-2A07700C1732" explicitItemIdentifier="com.nickshanks.resknife.toolbar.showinfo" label="Info" paletteLabel="Show Info" toolTip="Show Resource Information Window" tag="-1" image="NSInfo" id="teQ-0f-KZt">
+                        <connections>
+                            <action selector="showInfo:" target="-1" id="X6t-hj-5Sp"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="24B1C28A-7E2A-4364-AF5F-7808A5575F17" explicitItemIdentifier="com.nickshanks.resknife.toolbar.export" label="Export" paletteLabel="Export Resource Data" toolTip="Export the resource's data to a file" tag="-1" image="Export" id="r66-gl-m0a">
                         <connections>
                             <action selector="exportResources:" target="-2" id="aKk-lF-jVU"/>
@@ -206,6 +209,9 @@
                                 </segments>
                             </segmentedCell>
                         </segmentedControl>
+                        <connections>
+                            <action selector="changeView:" target="-2" id="FTu-DO-Ciw"/>
+                        </connections>
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>

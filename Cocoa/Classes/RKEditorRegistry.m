@@ -25,19 +25,6 @@
 #import "RKSupportResourceRegistry.h"
 #import "NGSCategories.h"		// for ResKnifeBoolExtensions (in wrong file)
 
-/*!
-@class			RKEditorRegistry
-@author			Uli Kusterer
-@created		2003-07-31
-@description	This is a registry where all our resource-editor plugins are looked
-				up and entered in a list, so you can ask for the editor for a specific
-				resource type and it is returned immediately. This registry reads the
-				types a plugin handles from their info.plist. This is better than
-				encoding the type in the plugin file name, as file names are not
-				guaranteed to be on a case-sensitive file system on Mac, and this also
-				allows an editor to register for several resource types.
-*/
-
 @implementation RKEditorRegistry
 
 /*!
@@ -84,9 +71,9 @@
 				class and its bundle when reloading the plugin list by simply
 				relying on NSMutableDictionary to release it.
 
-@description	This scans the application's internal Plugins folder,
-				<tt>~/Library/Application Support/ResKnife/Plugins/</tt> and
-				<tt>/Library/Application Support/ResKnife/Plugins/</tt> for
+@description	<p>This scans the application's internal Plugins folder,
+				<code>~/Library/Application Support/ResKnife/Plugins/</code> and
+				<code>/Library/Application Support/ResKnife/Plugins/</code> for
 				plugins that have the extension ".plugin" and implement
 				<tt>initWithResource:</tt> (which means this won't get into
 				the way if you want to support other kinds of plugins).</p>
@@ -98,7 +85,7 @@
 				If several plugins register for the same type, the last one
 				loaded wins.</p>
 				
-				<p>To instantiate an object from a plugin, see <tt>editorForType:</tt>
+				<p>To instantiate an object from a plugin, see <code>editorForType:</code>
 */
 - (IBAction)scanForPlugins:(id)sender
 {

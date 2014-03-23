@@ -45,7 +45,7 @@ enum Attributes
 
 @interface NSWindowController (InfoWindowAdditions)
 
-/*!	@function	resource
+/*!	@method	resource
 	@discussion	Your plug-in should override this method to return the primary resource it's editing. Default implementation returns nil.
 */
 - (Resource *)resource;

@@ -923,7 +923,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 @description	This method is called from a menu item which is validated against there being only one selected resource (of type 'snd '), so shouldn't have to deal with playing multiple sounds, though this may of course change in future.
 @param	sender	ignored
 */
-
 - (IBAction)playSound:(id)sender
 {
 	// bug: can only cope with one selected item
@@ -942,45 +941,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		xpc_connection_send_message(connection, dict);
 	}
 	else NSBeep();
-}
-
-/*!
-@method			playSoundThreadController:
-@abstract		Plays a carbon 'snd ' resource.
-@author			Nicholas Shanks
-@created		2003-10-22
-@pending		should really be moved to a 'snd ' editor, but first we'd need to extend the plugin protocol to call the class so it can add such menu items. Of course, we could just make the 'snd ' editor have a button in its window that plays the sound.
-@description	This method was added to prevent having to use AsynchSoundHelper to play them asynchronously in the main thread and all the associated idle checking, which since we have no event loop, would have to have been called from a timer. I'm not sure if the autorelease pool is necessary, as no cocoa objects are created, but an NSData is passed in and messages sent to it, and NSBeep() might need one.
-@param	data	An NSData object containing the snd resource data to be played.
-*/
-
-- (void)playSoundThreadController:(NSData *)data
-{
-	@autoreleasepool {
-		if(data && [data length] != 0) {
-			// plays sound synchronously, thread exits when sound is done playing
-#if !__LP64__
-			SndListPtr sndPtr = (SndListPtr) [data bytes];
-			SndPlay(nil, &sndPtr, false);
-#endif
-		}
-		else NSBeep();
-	}
-}
-
-/*!
-@method		sound:didFinishPlaying:
-@abstract	Called frequently when playing a sound via NSSound. Unused, here for reference and possible future use.
-@author		Nicholas Shanks
-@pending	should really be moved to a 'snd ' editor, but first we'd need to extend the plugin protocol to call the class so it can add such menu items. Of course, we could just make the 'snd ' editor have a button in its window that plays the sound.
-@param		sound		The NSSound that is playing.
-@param		finished	Flag to indicate if it has just finished and that we should clean up.
-*/
-
-- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished
-{
-	// unused because I can't get NSSound to play snd resources, so I use Carbon's SndPlay(), above
-	NSLog(@"sound released");
 }
 
 - (void)resourceNameWillChange:(NSNotification *)notification
@@ -1242,6 +1202,11 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	if(creatorChanged && typeChanged)
 		[[self undoManager] setActionName:NSLocalizedString(@"Change Creator & Type", nil)];
 	return (creatorChanged || typeChanged);
+}
+
+- (IBAction)changeView:(id)sender
+{
+	
 }
 
 @end

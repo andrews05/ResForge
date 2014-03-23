@@ -39,7 +39,6 @@
 - (id <ResKnifePluginProtocol>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName;
 - (id <ResKnifePluginProtocol>)openResourceAsHex:(Resource *)resource;
 - (IBAction)playSound:(id)sender;
-- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished;
 
 - (IBAction)copy:(id)sender;
 - (IBAction)paste:(id)sender;
@@ -61,5 +60,6 @@
 - (IBAction)creatorChanged:(id)sender;
 - (IBAction)typeChanged:(id)sender;
 - (BOOL)setCreator:(OSType)newCreator andType:(OSType)newType;
+- (IBAction)changeView:(id)sender;
 
 @end
