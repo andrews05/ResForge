@@ -468,6 +468,7 @@
 		5542DCED18DCF1AC00AC9627 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5542DCEF18DCF1D300AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5542DCF018DCF1DC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		557238941970F72800748CF6 /* gd */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/Application.strings; sourceTree = "<group>"; };
 		557B66B91970C0DD004A7BD5 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		559DE9B6189D6B1B00D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrefsWindow.strings; sourceTree = "<group>"; };
@@ -2193,6 +2194,7 @@
 				550B905C189A036F005AC38D /* en */,
 				550B905F189A0421005AC38D /* ja */,
 				550B9060189A0876005AC38D /* cy */,
+				557238941970F72800748CF6 /* gd */,
 			);
 			name = Application.xib;
 			sourceTree = "<group>";
@@ -2715,6 +2717,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
@@ -2742,7 +2745,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PLIST_FILE_OUTPUT_FORMAT = binary;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;

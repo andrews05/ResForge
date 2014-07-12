@@ -1,0 +1,249 @@
+
+/* Class = "NSMenu"; title = "Application"; ObjectID = "335"; */
+"335.title" = "Application";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "336"; */
+"336.title" = "Window";
+
+/* Class = "NSMenu"; title = "Uinneag"; ObjectID = "337"; */
+"337.title" = "Uinneag";
+
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "338"; */
+"338.title" = "Bring All to Front";
+
+/* Class = "NSMenuItem"; title = "Minimize Uinneag"; ObjectID = "339"; */
+"339.title" = "Minimize Uinneag";
+
+/* Class = "NSMenuItem"; title = "Customize Crann-Innealan…"; ObjectID = "341"; */
+"341.title" = "Customize Crann-Innealan…";
+
+/* Class = "NSMenuItem"; title = "Nochd Crann-Innealan"; ObjectID = "343"; */
+"343.title" = "Nochd Crann-Innealan";
+
+/* Class = "NSMenuItem"; title = "Zoom Uinneag"; ObjectID = "344"; */
+"344.title" = "Zoom Uinneag";
+
+/* Class = "NSMenuItem"; title = "Move to Back"; ObjectID = "345"; */
+"345.title" = "Move to Back";
+
+/* Class = "NSMenuItem"; title = "List View"; ObjectID = "347"; */
+"347.title" = "List View";
+
+/* Class = "NSMenuItem"; title = "Aithghearradh View"; ObjectID = "348"; */
+"348.title" = "Aithghearradh View";
+
+/* Class = "NSMenuItem"; title = "Cycle Through Uinneagan"; ObjectID = "349"; */
+"349.title" = "Cycle Through Uinneagan";
+
+/* Class = "NSMenuItem"; title = "ResKnife"; ObjectID = "350"; */
+"350.title" = "ResKnife";
+
+/* Class = "NSMenu"; title = "ResKnife"; ObjectID = "351"; */
+"351.title" = "ResKnife";
+
+/* Class = "NSMenuItem"; title = "Mion-Fhiosrachadh mu ResKnife"; ObjectID = "352"; */
+"352.title" = "Mion-Fhiosrachadh mu ResKnife";
+
+/* Class = "NSMenuItem"; title = "Roghainnean..."; ObjectID = "353"; */
+"353.title" = "Roghainnean...";
+
+/* Class = "NSMenuItem"; title = "Seirbheisean"; ObjectID = "354"; */
+"354.title" = "Seirbheisean";
+
+/* Class = "NSMenu"; title = "Seirbheisean"; ObjectID = "355"; */
+"355.title" = "Seirbheisean";
+
+/* Class = "NSMenuItem"; title = "Ceil ResKnife"; ObjectID = "356"; */
+"356.title" = "Ceil ResKnife";
+
+/* Class = "NSMenuItem"; title = "Fàg ResKnife"; ObjectID = "357"; */
+"357.title" = "Fàg ResKnife";
+
+/* Class = "NSMenuItem"; title = "Ceil Càch"; ObjectID = "360"; */
+"360.title" = "Ceil Càch";
+
+/* Class = "NSMenuItem"; title = "Nochd a h-Uile"; ObjectID = "362"; */
+"362.title" = "Nochd a h-Uile";
+
+/* Class = "NSMenuItem"; title = "Faidhle"; ObjectID = "363"; */
+"363.title" = "Faidhle";
+
+/* Class = "NSMenu"; title = "Faidhle"; ObjectID = "364"; */
+"364.title" = "Faidhle";
+
+/* Class = "NSMenuItem"; title = "Fosgail…"; ObjectID = "365"; */
+"365.title" = "Fosgail…";
+
+/* Class = "NSMenuItem"; title = "Dùin"; ObjectID = "366"; */
+"366.title" = "Dùin";
+
+/* Class = "NSMenuItem"; title = "Sàbhail"; ObjectID = "368"; */
+"368.title" = "Sàbhail";
+
+/* Class = "NSMenuItem"; title = "Roghainnean Duilleige…"; ObjectID = "369"; */
+"369.title" = "Roghainnean Duilleige…";
+
+/* Class = "NSMenuItem"; title = "Clò-bhuail…"; ObjectID = "370"; */
+"370.title" = "Clò-bhuail…";
+
+/* Class = "NSMenuItem"; title = "Sàbhail mar…"; ObjectID = "372"; */
+"372.title" = "Sàbhail mar…";
+
+/* Class = "NSMenuItem"; title = "Ùr"; ObjectID = "373"; */
+"373.title" = "Ùr";
+
+/* Class = "NSMenuItem"; title = "Ath-leasaich"; ObjectID = "374"; */
+"374.title" = "Ath-leasaich";
+
+/* Class = "NSMenuItem"; title = "Fosgail Nuadh"; ObjectID = "375"; */
+"375.title" = "Fosgail Nuadh";
+
+/* Class = "NSMenu"; title = "Fosgail Nuadh"; ObjectID = "376"; */
+"376.title" = "Fosgail Nuadh";
+
+/* Class = "NSMenuItem"; title = "Sguab às Menu"; ObjectID = "377"; */
+"377.title" = "Sguab às Menu";
+
+/* Class = "NSMenuItem"; title = "Nochd Fios…"; ObjectID = "379"; */
+"379.title" = "Nochd Fios…";
+
+/* Class = "NSMenuItem"; title = "Dùin a h-Uile"; ObjectID = "380"; */
+"380.title" = "Dùin a h-Uile";
+
+/* Class = "NSMenuItem"; title = "Gliocasan"; ObjectID = "381"; */
+"381.title" = "Gliocasan";
+
+/* Class = "NSMenu"; title = "Gliocasan"; ObjectID = "382"; */
+"382.title" = "Gliocasan";
+
+/* Class = "NSMenuItem"; title = "Gliocasan ResKnife"; ObjectID = "383"; */
+"383.title" = "Gliocasan ResKnife";
+
+/* Class = "NSMenuItem"; title = "Rach gu Source Repository…"; ObjectID = "385"; */
+"385.title" = "Rach gu Source Repository…";
+
+/* Class = "NSMenuItem"; title = "Rach gu Official Website…"; ObjectID = "386"; */
+"386.title" = "Rach gu Official Website…";
+
+/* Class = "NSMenuItem"; title = "Email Developer…"; ObjectID = "387"; */
+"387.title" = "Email Developer…";
+
+/* Class = "NSMenuItem"; title = "Deasaich"; ObjectID = "388"; */
+"388.title" = "Deasaich";
+
+/* Class = "NSMenu"; title = "Deasaich"; ObjectID = "389"; */
+"389.title" = "Deasaich";
+
+/* Class = "NSMenuItem"; title = "Cuimhnich"; ObjectID = "391"; */
+"391.title" = "Cuimhnich";
+
+/* Class = "NSMenuItem"; title = "Mar a Bha"; ObjectID = "392"; */
+"392.title" = "Mar a Bha";
+
+/* Class = "NSMenuItem"; title = "Geàrr"; ObjectID = "393"; */
+"393.title" = "Geàrr";
+
+/* Class = "NSMenuItem"; title = "Sguab às"; ObjectID = "394"; */
+"394.title" = "Sguab às";
+
+/* Class = "NSMenuItem"; title = "Faigh"; ObjectID = "395"; */
+"395.title" = "Faigh";
+
+/* Class = "NSMenu"; title = "Faigh"; ObjectID = "396"; */
+"396.title" = "Faigh";
+
+/* Class = "NSMenuItem"; title = "Faigh..."; ObjectID = "397"; */
+"397.title" = "Faigh...";
+
+/* Class = "NSMenuItem"; title = "Scroll to Selection"; ObjectID = "398"; */
+"398.title" = "Scroll to Selection";
+
+/* Class = "NSMenuItem"; title = "Use Selection for Find"; ObjectID = "399"; */
+"399.title" = "Use Selection for Find";
+
+/* Class = "NSMenuItem"; title = "Roimh Faigh"; ObjectID = "400"; */
+"400.title" = "Roimh Faigh";
+
+/* Class = "NSMenuItem"; title = "Ath Faigh"; ObjectID = "401"; */
+"401.title" = "Ath Faigh";
+
+/* Class = "NSMenuItem"; title = "Cuir an-Seo"; ObjectID = "402"; */
+"402.title" = "Cuir an-Seo";
+
+/* Class = "NSMenuItem"; title = "Tagh na h-Uile"; ObjectID = "403"; */
+"403.title" = "Tagh na h-Uile";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "404"; */
+"404.title" = "Redo";
+
+/* Class = "NSMenuItem"; title = "Spelling"; ObjectID = "406"; */
+"406.title" = "Spelling";
+
+/* Class = "NSMenu"; title = "Spelling"; ObjectID = "407"; */
+"407.title" = "Spelling";
+
+/* Class = "NSMenuItem"; title = "Spelling..."; ObjectID = "408"; */
+"408.title" = "Spelling...";
+
+/* Class = "NSMenuItem"; title = "Check Spelling"; ObjectID = "409"; */
+"409.title" = "Check Spelling";
+
+/* Class = "NSMenuItem"; title = "Check Spelling As You Type"; ObjectID = "410"; */
+"410.title" = "Check Spelling As You Type";
+
+/* Class = "NSMenuItem"; title = "Tagh Neoini"; ObjectID = "411"; */
+"411.title" = "Tagh Neoini";
+
+/* Class = "NSMenuItem"; title = "Nochd Cuimhne"; ObjectID = "413"; */
+"413.title" = "Nochd Cuimhne";
+
+/* Class = "NSMenuItem"; title = "Speech"; ObjectID = "414"; */
+"414.title" = "Speech";
+
+/* Class = "NSMenu"; title = "Speech"; ObjectID = "415"; */
+"415.title" = "Speech";
+
+/* Class = "NSMenuItem"; title = "Start Speaking"; ObjectID = "416"; */
+"416.title" = "Start Speaking";
+
+/* Class = "NSMenuItem"; title = "Stop Speaking"; ObjectID = "417"; */
+"417.title" = "Stop Speaking";
+
+/* Class = "NSMenuItem"; title = "Stòras"; ObjectID = "418"; */
+"418.title" = "Stòras";
+
+/* Class = "NSMenu"; title = "Stòras"; ObjectID = "419"; */
+"419.title" = "Stòras";
+
+/* Class = "NSMenuItem"; title = "Cruthaich Stòras Ùr…"; ObjectID = "420"; */
+"420.title" = "Cruthaich Stòras Ùr…";
+
+/* Class = "NSMenuItem"; title = "Deasaich in Default Editor"; ObjectID = "422"; */
+"422.title" = "Deasaich in Default Editor";
+
+/* Class = "NSMenuItem"; title = "Deasaich with Default Template"; ObjectID = "423"; */
+"423.title" = "Deasaich with Default Template";
+
+/* Class = "NSMenuItem"; title = "Deasaich with Specific Template…"; ObjectID = "424"; */
+"424.title" = "Deasaich with Specific Template…";
+
+/* Class = "NSMenuItem"; title = "Ath-leasaich Stòras…"; ObjectID = "426"; */
+"426.title" = "Ath-leasaich Stòras…";
+
+/* Class = "NSMenuItem"; title = "Seinn an Claistinne"; ObjectID = "427"; */
+"427.title" = "Seinn an Claistinne";
+
+/* Class = "NSMenuItem"; title = "Deasaich as Hexadecimal"; ObjectID = "428"; */
+"428.title" = "Deasaich as Hexadecimal";
+
+/* Class = "NSMenuItem"; title = "Sàbhail Stòras"; ObjectID = "429"; */
+"429.title" = "Sàbhail Stòras";
+
+/* Class = "NSTextFieldCell"; title = "Select a fork to open:"; ObjectID = "434"; */
+"434.title" = "Select a fork to open:";
+
+/* Class = "NSTableColumn"; headerCell.title = "Fork Size"; ObjectID = "437"; */
+"437.headerCell.title" = "Fork Size";
+
+/* Class = "NSTableColumn"; headerCell.title = "Fork Name"; ObjectID = "440"; */
+"440.headerCell.title" = "Fork Name";
