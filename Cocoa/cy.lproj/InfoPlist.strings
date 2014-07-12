@@ -2,5 +2,5 @@
 
 CFBundleName = "ResKnife";
 CFBundleShortVersionString = "0.6 svn";
-CFBundleGetInfoString = "ResKnife 0.6 b4, Hawlfraint © Nicolas Siancs, 2001-2010.";
+CFBundleGetInfoString = "ResKnife 0.6 svn, Hawlfraint © Nicolas Siancs, 2001-2010.";
 NSHumanReadableCopyright = "© Nicolas Siancs, 2001-2010.";

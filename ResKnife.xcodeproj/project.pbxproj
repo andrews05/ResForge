@@ -42,7 +42,7 @@
 		B234337F16AB59D0007134B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884D0156D40B01000001 /* Foundation.framework */; };
 		B234338516AB59D0007134B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B234338316AB59D0007134B9 /* InfoPlist.strings */; };
 		B234338816AB59D0007134B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B234338716AB59D0007134B9 /* main.m */; };
-		B234338E16AB5D5D007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */; };
+		B234338E16AB5D5D007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */; };
 		B234339916AB6143007134B9 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
 		B23433DB16AB69AE007134B9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B24925E215A6776600C22060 /* PictWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* PictWindow.xib */; };
@@ -331,14 +331,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B234338D16AB5D4A007134B9 /* CopyFiles */ = {
+		B234338D16AB5D4A007134B9 /* Copy XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = Contents/XPCServices;
-			dstSubfolderSpec = 1;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
 			files = (
-				B234338E16AB5D5D007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc in CopyFiles */,
+				B234338E16AB5D5D007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc in Copy XPC Services */,
 			);
+			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B24FA09A15D303C900622683 /* CopyFiles */ = {
@@ -464,8 +465,10 @@
 		5542DCE818DCEB9500AC9626 /* ResourceTypeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceTypeFormatter.m; sourceTree = "<group>"; };
 		5542DCEC18DCF19C00AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5542DCED18DCF1AC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5542DCED18DCF1AC00AC9627 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5542DCEF18DCF1D300AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5542DCF018DCF1DC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		557B66B91970C0DD004A7BD5 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		559DE9B6189D6B1B00D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrefsWindow.strings; sourceTree = "<group>"; };
 		559DE9B8189D6B2000D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoWindow.strings; sourceTree = "<group>"; };
@@ -1475,7 +1478,7 @@
 				E18BF586069FEA1300F076B8 /* Frameworks */,
 				E18BF589069FEA1300F076B8 /* Rez */,
 				B24FA09A15D303C900622683 /* CopyFiles */,
-				B234338D16AB5D4A007134B9 /* CopyFiles */,
+				B234338D16AB5D4A007134B9 /* Copy XPC Services */,
 			);
 			buildRules = (
 			);
@@ -2368,6 +2371,7 @@
 			children = (
 				5542DCEF18DCF1D300AC9626 /* en */,
 				5542DCF018DCF1DC00AC9626 /* cy */,
+				557B66B91970C0DD004A7BD5 /* gd */,
 			);
 			name = InfoPlist.strings;
 			path = Cocoa;
@@ -2378,6 +2382,7 @@
 			children = (
 				5542DCEC18DCF19C00AC9626 /* en */,
 				5542DCED18DCF1AC00AC9626 /* cy */,
+				5542DCED18DCF1AC00AC9627 /* gd */,
 			);
 			name = Localizable.strings;
 			path = Cocoa;
@@ -2514,7 +2519,6 @@
 		E13F7ED308F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEBUGGING_SYMBOLS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"/**",

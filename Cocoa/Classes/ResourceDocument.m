@@ -561,7 +561,7 @@ extern NSString *RKResourcePboardType;
 		extension = [editorClass filenameExtensionForFileExport:resource];
 	
 	NSSavePanel *panel = [NSSavePanel savePanel];
-	NSString *filename = [resource name] ? [resource name] : NSLocalizedString(@"Untitled Resource",nil);
+	NSString *filename = ([resource name] && ![[resource name] isEqualToString:@""]) ? [resource name] : NSLocalizedString(@"Untitled Resource",nil);
 	filename = [filename stringByAppendingPathExtension:extension];
 	[panel setNameFieldStringValue:filename];
 	//[panel beginSheetForDirectory:nil file:filename modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(exportPanelDidEnd:returnCode:contextInfo:) contextInfo:[exportData retain]];
@@ -722,6 +722,7 @@ static NSString *RKShowInfoItemIdentifier	= @"com.nickshanks.resknife.toolbar.sh
 static NSString *RKExportItemIdentifier		= @"com.nickshanks.resknife.toolbar.export";
 static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view";
 
+#if 0
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
     return @[RKCreateItemIdentifier, RKShowInfoItemIdentifier, RKDeleteItemIdentifier, RKViewItemIdentifier, NSToolbarSpaceItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, NSToolbarSpaceItemIdentifier, RKSaveItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier];
@@ -731,6 +732,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
     return @[RKCreateItemIdentifier, RKDeleteItemIdentifier, RKEditItemIdentifier, RKEditHexItemIdentifier, RKSaveItemIdentifier, RKExportItemIdentifier, RKShowInfoItemIdentifier, RKViewItemIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier];
 }
+#endif
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)item
 {
@@ -909,7 +911,8 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 }
 
 
-- (void)saveSoundAsMovie:(NSData *)sndData {
+- (void)saveSoundAsMovie:(NSData *)sndData
+{
 
 }
 

@@ -10,15 +10,7 @@
 #include <Cocoa/Cocoa.h>
 #include <Carbon/Carbon.h>
 
-static void playSoundData(const char *data) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations" // We have to use the deprecated function SndPlay
-	SndListPtr sndPtr = (SndListPtr)data;
-	SndPlay(nil, &sndPtr, false);
-#pragma clang diagnostic pop
-}
-
-static void System7SoundPlayer_peer_event_handler(xpc_connection_t peer, xpc_object_t event) 
+static void System7SoundPlayer_peer_event_handler(xpc_connection_t peer, xpc_object_t event)
 {
 	xpc_type_t type = xpc_get_type(event);
 	if (type == XPC_TYPE_ERROR) {
@@ -37,11 +29,13 @@ static void System7SoundPlayer_peer_event_handler(xpc_connection_t peer, xpc_obj
 		NSLog(@"got dict");
 		size_t length = 0;
 		const char *data = xpc_dictionary_get_data(event, "soundData", &length);
-		NSLog(@"data length: %lu", length);
-		SndListPtr sndPtr = (SndListPtr)data;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations" // We have to use the deprecated function SndPlay
+		SndListPtr sndPtr = (SndListPtr)NewPtr(length);
+		memcpy(sndPtr, data, length);
+		NSLog(@"data length: %lu", length);
 		SndPlay(NULL, &sndPtr, false);
+		DisposePtr((Ptr)sndPtr);
 #pragma clang diagnostic pop
 	}
 }
