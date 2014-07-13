@@ -4,7 +4,7 @@
 	
 	PURPOSE:	This is the main class of our template editor. Every
 				resource editor's main class implements the
-				ResKnifePluginProtocol. Every editor should implement
+				ResKnifePlugin. Every editor should implement
 				initWithResource:. Only implement initWithResources:if you feel
 				like writing a template editor.
 				
@@ -31,13 +31,13 @@
 	NSMutableDictionary	*toolbarItems;
 	NSMutableArray *templateStructure;		// Pre-parsed form of our template.
 	NSMutableArray *resourceStructure;		// Parsed form of our resource.
-	id <ResKnifeResourceProtocol> resource;	// The resource we operate on.
-	id <ResKnifeResourceProtocol> backup;	// The original resource.
+	id <ResKnifeResource> resource;	// The resource we operate on.
+	id <ResKnifeResource> backup;	// The original resource.
 	BOOL liveEdit;
 }
 
 - (void)setupToolbar;
-- (void)readTemplate:(id <ResKnifeResourceProtocol>)tmplRes;
+- (void)readTemplate:(id <ResKnifeResource>)tmplRes;
 - (void)loadResource;
 - (IBAction)saveResource:(id)sender;
 - (IBAction)revertResource:(id)sender;

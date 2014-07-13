@@ -8,10 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface RKPatternView : NSImageView {
-	CGFloat scale;
-}
+@interface RKPatternView : NSImageView
 
-@property (assign)	CGFloat	scale;
+@property CGFloat scale;
 
 @end

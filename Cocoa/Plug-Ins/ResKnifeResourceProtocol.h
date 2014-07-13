@@ -1,6 +1,6 @@
 /* =============================================================================
 	PROJECT:	ResKnife
-	FILE:		ResKnifeResourceProtocol.h
+	FILE:		ResKnifeResource.h
 	
 	PURPOSE:	This protocol wraps up whatever implementation the host
 				application (i.e. ResKnife) uses for resources in a way that
@@ -23,7 +23,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@protocol ResKnifeResourceProtocol <NSObject>
+@protocol ResKnifeResource <NSObject>
 
 - (void)touch;
 - (BOOL)isDirty;

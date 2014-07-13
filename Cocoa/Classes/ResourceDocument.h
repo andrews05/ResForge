@@ -3,7 +3,7 @@
 
 @class CreateResourceSheetController, ResourceWindowController, ResourceDataSource, Resource;
 
-@protocol ResKnifePluginProtocol;
+@protocol ResKnifePlugin;
 
 @interface ResourceDocument : NSDocument <NSToolbarDelegate>
 {
@@ -35,9 +35,9 @@
 - (IBAction)openResources:(id)sender;
 - (IBAction)openResourcesInTemplate:(id)sender;
 - (IBAction)openResourcesAsHex:(id)sender;
-- (id <ResKnifePluginProtocol>)openResourceUsingEditor:(Resource *)resource;
-- (id <ResKnifePluginProtocol>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName;
-- (id <ResKnifePluginProtocol>)openResourceAsHex:(Resource *)resource;
+- (id <ResKnifePlugin>)openResourceUsingEditor:(Resource *)resource;
+- (id <ResKnifePlugin>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName;
+- (id <ResKnifePlugin>)openResourceAsHex:(Resource *)resource;
 - (IBAction)playSound:(id)sender;
 
 - (IBAction)copy:(id)sender;

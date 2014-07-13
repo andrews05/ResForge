@@ -18,9 +18,9 @@
 @synthesize soundDataSource;
 @synthesize spinDataSource;
 
-- (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
+- (id)initWithResource:(id <ResKnifeResource>)newResource
 {
-	NSData *classData = [GetNSStringFromOSType([(id <ResKnifeResourceProtocol>)newResource type]) dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+	NSData *classData = [GetNSStringFromOSType([(id <ResKnifeResource>)newResource type]) dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 	NSString *className = [[[[NSString alloc] initWithData:classData encoding:NSASCIIStringEncoding] capitalizedString] stringByAppendingString:@"WindowController"];
 	if( [className isEqualToString:@"Yea(R)WindowController"] ) className = @"YearWindowController"; // lossy conversion turns ¨ into (R), so i have to special-case Ø‘Š¨
 	self = [[NSClassFromString(className) alloc] initWithResource:newResource];
@@ -41,7 +41,7 @@
 	return self;
 }
 
-- (id)initWithResources:(id <ResKnifeResourceProtocol>)newResource, ...
+- (id)initWithResources:(id <ResKnifeResource>)newResource, ...
 {
 	return nil;
 }
@@ -121,8 +121,8 @@
 	NSScanner *scanner = [NSScanner scannerWithString:[[self window] title]];
 	if( ![scanner scanUpToString:@":" intoString:&prefix] )
 		prefix = [[self window] title];
-	if (![[(id <ResKnifeResourceProtocol>)[notification object] name] isEqualToString:@""]) {
-		[[self window] setTitle:[NSString stringWithFormat:@"%@: %@", prefix, [(id <ResKnifeResourceProtocol>)[notification object] name]]];
+	if (![[(id <ResKnifeResource>)[notification object] name] isEqualToString:@""]) {
+		[[self window] setTitle:[NSString stringWithFormat:@"%@: %@", prefix, [(id <ResKnifeResource>)[notification object] name]]];
 	} else {
 		[[self window] setTitle:prefix];
 	}

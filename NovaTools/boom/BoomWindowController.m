@@ -12,7 +12,7 @@
 @synthesize soundButton;
 @synthesize playButton;
 
-- (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
+- (id)initWithResource:(id <ResKnifeResource>)newResource
 {
 	self = [self initWithWindowNibName:@"boom"];
 	if( !self ) return nil;
@@ -76,7 +76,7 @@
 	[playButton setEnabled:!silent];
 	
 	// image well
-	[imageWell setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"]) andID:self.image inDocument:nil] data]]];
+	[imageWell setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResource>)[NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"]) andID:self.image inDocument:nil] data]]];
 }
 
 - (void)comboBoxWillPopUp:(NSNotification *)notification
@@ -131,7 +131,7 @@
 
 - (IBAction)playSound:(id)sender
 {
-	NSData *data = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") resourceOfType:'snd ' andID:sound inDocument:nil] data];
+	NSData *data = [(id <ResKnifeResource>)[NSClassFromString(@"Resource") resourceOfType:'snd ' andID:sound inDocument:nil] data];
 	if( data && [data length] != 0 )
 	{
 		//SndListPtr sndPtr = (SndListPtr) [data bytes];

@@ -6,9 +6,10 @@
 //
 //
 
-#include <xpc/xpc.h>
-#include <Cocoa/Cocoa.h>
-#include <Carbon/Carbon.h>
+@import XPC;
+@import Foundation;
+@import CoreServices.CarbonCore;
+@import Carbon.CarbonSound;
 
 static void System7SoundPlayer_peer_event_handler(xpc_connection_t peer, xpc_object_t event)
 {
@@ -56,7 +57,6 @@ static void System7SoundPlayer_event_handler(xpc_connection_t peer)
 
 int main(int argc, const char *argv[])
 {
-	
 	xpc_main(System7SoundPlayer_event_handler);
 	return 0;
 }

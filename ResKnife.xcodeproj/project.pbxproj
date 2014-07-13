@@ -423,14 +423,14 @@
 		3D0933F604DFE80500DD74B1 /* ElementLSTE.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementLSTE.h; sourceTree = "<group>"; };
 		3D0933F704DFE80500DD74B1 /* ElementLSTE.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementLSTE.m; sourceTree = "<group>"; };
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
-		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TemplateWindowController.h; sourceTree = "<group>"; };
+		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TemplateWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TemplateWindowController.m; sourceTree = "<group>"; };
 		3D2EE5E204E5C56F00515930 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKEditorRegistry.h; sourceTree = "<group>"; };
-		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RKEditorRegistry.m; sourceTree = "<group>"; };
-		3D3B99B804DC16A30056861E /* ICONWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ICONWindowController.m; sourceTree = "<group>"; };
-		3D3B99B904DC16A30056861E /* ICONWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ICONWindowController.h; sourceTree = "<group>"; };
+		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RKEditorRegistry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RKEditorRegistry.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3D3B99B804DC16A30056861E /* ICONWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ICONWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3D3B99B904DC16A30056861E /* ICONWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ICONWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D4737B304E872DB00AF65FE /* ElementDLNG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDLNG.m; sourceTree = "<group>"; };
 		3D4737B404E872DB00AF65FE /* ElementDLNG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDLNG.h; sourceTree = "<group>"; };
 		3D4737B704E873F300AF65FE /* ElementDBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDBYT.m; sourceTree = "<group>"; };
@@ -492,7 +492,7 @@
 		55FEF5C6189D769A00888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/misn.strings; sourceTree = "<group>"; };
 		55FEF5C8189D769F00888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ship.strings; sourceTree = "<group>"; };
 		55FEF5CC189D77CF00888898 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
-		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PNGWindowController.h; path = "PNG Editor/PNGWindowController.h"; sourceTree = "<group>"; };
+		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PNGWindowController.h; path = "PNG Editor/PNGWindowController.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PNGWindowController.m; path = "PNG Editor/PNGWindowController.m"; sourceTree = "<group>"; };
 		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PNGWindowController.xib; path = "PNG Editor/PNGWindowController.xib"; sourceTree = "<group>"; };
 		B229EECA15A4B8720032C12C /* PNG Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PNG Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -506,7 +506,7 @@
 		B234338616AB59D0007134B9 /* System7SoundPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "System7SoundPlayer-Prefix.pch"; sourceTree = "<group>"; };
 		B234338716AB59D0007134B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
-		B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatternWindowController.h; path = "Pattern Editor/PatternWindowController.h"; sourceTree = "<group>"; };
+		B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PatternWindowController.h; path = "Pattern Editor/PatternWindowController.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PatternWindowController.m; path = "Pattern Editor/PatternWindowController.m"; sourceTree = "<group>"; };
 		B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PatternWindowController.xib; path = "Pattern Editor/PatternWindowController.xib"; sourceTree = "<group>"; };
 		B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pattern Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -517,7 +517,7 @@
 		B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPatternImageCell.m; path = "Pattern Editor/RKPatternImageCell.m"; sourceTree = "<group>"; };
 		B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPatternView.h; path = "Pattern Editor/RKPatternView.h"; sourceTree = "<group>"; };
 		B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPatternView.m; path = "Pattern Editor/RKPatternView.m"; sourceTree = "<group>"; };
-		B2FCA77F15A669C800696598 /* PictWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictWindowController.h; sourceTree = "<group>"; };
+		B2FCA77F15A669C800696598 /* PictWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PictWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B2FCA78015A669C800696598 /* PictWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictWindowController.m; sourceTree = "<group>"; };
 		B2FCA78115A669C800696598 /* SupportedTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedTypes.plist; sourceTree = "<group>"; };
 		B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PICT Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -559,7 +559,7 @@
 		E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF78B069FF23700F076B8 /* Font Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Font Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF78C069FF23800F076B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E18BF7D1069FFC7600F076B8 /* FontWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FontWindowController.h; sourceTree = "<group>"; };
+		E18BF7D1069FFC7600F076B8 /* FontWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FontWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E18BF7D2069FFC7600F076B8 /* FontWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = FontWindowController.mm; sourceTree = "<group>"; };
 		E18BF94B06A00F8E00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF9D706A01A2200F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -609,7 +609,7 @@
 		F54626490291750201A8010C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		F54E6220021B6A0801A80001 /* FindSheetController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FindSheetController.h; sourceTree = "<group>"; };
 		F54E6221021B6A0801A80001 /* FindSheetController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FindSheetController.m; sourceTree = "<group>"; };
-		F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnifePluginProtocol.h; sourceTree = "<group>"; };
+		F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResKnifePluginProtocol.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F5730B930159528A01000001 /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist; path = defaults.plist; sourceTree = "<group>"; };
 		F577A900021215C801A80001 /* ResourceNameCell.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceNameCell.h; sourceTree = "<group>"; };
 		F577A901021215C801A80001 /* ResourceNameCell.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceNameCell.m; sourceTree = "<group>"; };
@@ -617,7 +617,7 @@
 		F58A18410278355D01A8010C /* DescSplitViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescSplitViewDelegate.h; path = desc/DescSplitViewDelegate.h; sourceTree = "<group>"; };
 		F58F6B7E025BC3A501A8010C /* BoomWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = BoomWindowController.h; path = boom/BoomWindowController.h; sourceTree = "<group>"; };
 		F58F6B7F025BC3A501A8010C /* BoomWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = BoomWindowController.m; path = boom/BoomWindowController.m; sourceTree = "<group>"; };
-		F58F6B82025BC73001A8010C /* NovaWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NovaWindowController.h; sourceTree = "<group>"; };
+		F58F6B82025BC73001A8010C /* NovaWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NovaWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F58F6B83025BC73001A8010C /* NovaWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NovaWindowController.m; sourceTree = "<group>"; };
 		F58F6B86025BC76D01A8010C /* CharWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CharWindowController.h; path = char/CharWindowController.h; sourceTree = "<group>"; };
 		F58F6B87025BC76D01A8010C /* CharWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = CharWindowController.m; path = char/CharWindowController.m; sourceTree = "<group>"; };
@@ -634,7 +634,7 @@
 		F59D5DE8032106D201A8010C /* NSNumber-Range.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSNumber-Range.h"; sourceTree = "<group>"; };
 		F59D5DE9032106D201A8010C /* NSNumber-Range.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSNumber-Range.m"; sourceTree = "<group>"; };
 		F5B5881D0156D40B01000001 /* ApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ApplicationDelegate.h; sourceTree = "<group>"; };
-		F5B5881E0156D40B01000001 /* ApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ApplicationDelegate.m; sourceTree = "<group>"; };
+		F5B5881E0156D40B01000001 /* ApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ApplicationDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5B5881F0156D40B01000001 /* AttributesFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AttributesFormatter.h; sourceTree = "<group>"; };
 		F5B588200156D40B01000001 /* AttributesFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AttributesFormatter.m; sourceTree = "<group>"; };
 		F5B588210156D40B01000001 /* CreateResourceSheetController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CreateResourceSheetController.h; sourceTree = "<group>"; };
@@ -649,8 +649,8 @@
 		F5B5882E0156D40B01000001 /* Resource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Resource.m; sourceTree = "<group>"; };
 		F5B5882F0156D40B01000001 /* ResourceDataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceDataSource.h; sourceTree = "<group>"; };
 		F5B588300156D40B01000001 /* ResourceDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDataSource.m; sourceTree = "<group>"; };
-		F5B588310156D40B01000001 /* ResourceDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceDocument.h; sourceTree = "<group>"; };
-		F5B588320156D40B01000001 /* ResourceDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ResourceDocument.m; sourceTree = "<group>"; };
+		F5B588310156D40B01000001 /* ResourceDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResourceDocument.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		F5B588320156D40B01000001 /* ResourceDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ResourceDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5B5884A0156D40B01000001 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		F5B5884B0156D40B01000001 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		F5B5884C0156D40B01000001 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -666,7 +666,7 @@
 		F5EF83A1020C08E601A80001 /* HexEditorDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HexEditorDelegate.m; sourceTree = "<group>"; };
 		F5EF83A2020C08E601A80001 /* HexTextView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HexTextView.h; sourceTree = "<group>"; };
 		F5EF83A3020C08E601A80001 /* HexTextView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HexTextView.m; sourceTree = "<group>"; };
-		F5EF83A7020C08E601A80001 /* HexWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HexWindowController.h; sourceTree = "<group>"; };
+		F5EF83A7020C08E601A80001 /* HexWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HexWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F5EF83A8020C08E601A80001 /* HexWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = HexWindowController.mm; sourceTree = "<group>"; };
 		F5F1071603CCC61E01A8010A /* PasteboardDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardDocument.h; sourceTree = "<group>"; };
 		F5F1071703CCC61E01A8010A /* PasteboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = PasteboardDocument.m; sourceTree = "<group>"; };

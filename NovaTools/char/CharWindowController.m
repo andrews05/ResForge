@@ -51,7 +51,7 @@ static void BSwapCharRec(CharRec* toSwap)
 	
 }
 
-- (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
+- (id)initWithResource:(id <ResKnifeResource>)newResource
 {
 	NSString *tempPrefix;
 	NSString *tempSuffix;
@@ -257,7 +257,7 @@ static void BSwapCharRec(CharRec* toSwap)
 	[introPictField4 setObjectValue:[pictureDataSource stringValueForResID:introPict4]];
 	[introTextField setObjectValue:[descriptionDataSource stringValueForResID:introText]];
 	
-	stringData = [(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"desc" value:@"" table:@"Resource Types"]) andID:introText inDocument:nil] data];
+	stringData = [(id <ResKnifeResource>)[NSClassFromString(@"Resource") getResourceOfType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"desc" value:@"" table:@"Resource Types"]) andID:introText inDocument:nil] data];
 	if( stringData != nil )
 	{
 		[introTextView setString:[[NSString alloc] initWithData:stringData encoding:NSMacOSRomanStringEncoding]];
@@ -307,28 +307,28 @@ static void BSwapCharRec(CharRec* toSwap)
 			// install new timer
 			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:introDelay1 target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict1 inDocument:nil] data]]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResource>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict1 inDocument:nil] data]]];
 			break;
 	
 		case 2:
 			// install new timer
 			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:introDelay2 target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict2 inDocument:nil] data]]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResource>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict2 inDocument:nil] data]]];
 			break;
 	
 		case 3:
 			// install new timer
 			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:introDelay3 target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict3 inDocument:nil] data]]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResource>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict3 inDocument:nil] data]]];
 			break;
 	
 		case 4:
 			// install new timer
 			introPictTimer = [NSTimer scheduledTimerWithTimeInterval:introDelay4 target:self selector:@selector(rotateIntroPict:) userInfo:nil repeats:NO];
 			// set next picture
-			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResourceProtocol>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict4 inDocument:nil] data]]];
+			[introImageView setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResource>)[NSClassFromString(@"Resource") getResourceOfType:'PICT' andID:introPict4 inDocument:nil] data]]];
 			break;
 	
 	}

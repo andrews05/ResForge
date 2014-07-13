@@ -4,7 +4,7 @@
 	
 	PURPOSE:	This is the main class of our bitmap resource editor. Every
 				resource editor's main class implements the
-				ResKnifePluginProtocol. Every editor should implement
+				ResKnifePlugin. Every editor should implement
 				initWithResource:. Only implement initWithResources: if you feel
 				like writing a template editor.
 				

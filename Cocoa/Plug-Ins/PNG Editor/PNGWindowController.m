@@ -48,7 +48,7 @@
 	return [resource defaultWindowTitle];
 }
 
-- (id)initWithResource:(id <ResKnifeResourceProtocol>)inResource {
+- (id)initWithResource:(id <ResKnifeResource>)inResource {
 	if (self = [self initWithWindowNibName:@"PNGWindowController"]) {
 		resource = inResource;
 		[self window];

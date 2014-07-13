@@ -110,7 +110,7 @@
 		while(pluginName = [fileEnumerator nextObject])
 		{
 			NSString *pluginPath = [path stringByAppendingPathComponent:pluginName];
-//			NSLog(@"Examining %@", pluginPath);
+			//NSLog(@"Examining %@", pluginPath);
 			
 			// verify file is a plugin
 			if([[pluginName pathExtension] isEqualToString:@"plugin"])
@@ -119,10 +119,10 @@
 				Class pluginClass = [plugin principalClass];
 				if(plugin && pluginClass)
 				{
-//					NSLog(@"Principal class %@ %@ to ResKnifePluginProtocol", NSStringFromClass(pluginClass), [pluginClass conformsToProtocol:@protocol(ResKnifePluginProtocol)]? @"conforms":@"does not conform");
+					//NSLog(@"Principal class %@ %@ to ResKnifePlugin", NSStringFromClass(pluginClass), [pluginClass conformsToProtocol:@protocol(ResKnifePlugin)]? @"conforms":@"does not conform");
 					
-					// check principal class implements ResKnifePluginProtocol
-					if([pluginClass conformsToProtocol:@protocol(ResKnifePluginProtocol)])
+					// check principal class implements ResKnifePlugin
+					if([pluginClass conformsToProtocol:@protocol(ResKnifePlugin)])
 					{
 						NSArray *supportedTypes = [plugin infoDictionary][@"RKSupportedTypes"];
 						if(supportedTypes)
@@ -135,12 +135,12 @@
 							{
 								// get values for type entry
 								NSString *name = typeEntry[@"RKTypeName"];
-//								NSString *role = [typeEntry objectForKey:@"RKTypeRole"];
-//								BOOL isDefault = [(NSString *)[typeEntry objectForKey:@"IsResKnifeDefaultForType"] boolValue];
+								//NSString *role = [typeEntry objectForKey:@"RKTypeRole"];
+								//BOOL isDefault = [(NSString *)[typeEntry objectForKey:@"IsResKnifeDefaultForType"] boolValue];
 								
 								// register them
 								typeRegistry[name] = pluginClass;		// bug: very primative, doesn't use extra data
-//								NSLog(@"Plug-in class %@ registered as %@%@ for type %@.", NSStringFromClass(pluginClass), isDefault? @"default ":@"", role, name);
+								//NSLog(@"Plug-in class %@ registered as %@%@ for type %@.", NSStringFromClass(pluginClass), isDefault? @"default ":@"", role, name);
 							}
 						}
 						else
@@ -155,7 +155,7 @@
 							for(enny = [supportedTypes objectEnumerator]; resType = [enny nextObject];)
 							{
 								typeRegistry[resType] = pluginClass;
-//								NSLog(@"Registered for type %@.",resType);
+								//NSLog(@"Registered for type %@.",resType);
 							}
 						}
 						

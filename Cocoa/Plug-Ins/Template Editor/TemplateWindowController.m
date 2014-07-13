@@ -12,12 +12,12 @@
 
 @implementation TemplateWindowController
 
-- (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
+- (id)initWithResource:(id <ResKnifeResource>)newResource
 {
 	return [self initWithResources:newResource, nil];
 }
 
-- (id)initWithResources:(id <ResKnifeResourceProtocol>)newResource, ...
+- (id)initWithResources:(id <ResKnifeResource>)newResource, ...
 {
 	id tmplResource;
 	va_list resourceList;
@@ -216,7 +216,7 @@
 	[resource setData:[[backup data] copy]];
 }
 
-- (void)readTemplate:(id<ResKnifeResourceProtocol>)tmplRes
+- (void)readTemplate:(id<ResKnifeResource>)tmplRes
 {
 	char *data = (char*) [[tmplRes data] bytes];
 	NSUInteger bytesToGo = [[tmplRes data] length];

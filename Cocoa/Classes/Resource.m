@@ -84,8 +84,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	return nil;
 }
 
-/* ResKnifeResourceProtocol implementation */
-
+/* ResKnifeResource implementation */
 + (NSArray *)allResourcesOfType:(OSType)typeValue inDocument:(NSDocument *)searchDoc
 {
 	NSMutableArray *array = [NSMutableArray array];

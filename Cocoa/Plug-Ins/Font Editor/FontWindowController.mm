@@ -13,7 +13,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 @implementation FontWindowController
 
-- (id)initWithResource:(id <ResKnifeResourceProtocol>)inResource
+- (id)initWithResource:(id <ResKnifeResource>)inResource
 {
 	self = [self initWithWindowNibName:@"FontDocument"];
 	if(!self) return nil;
@@ -251,7 +251,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	[self setTableData:[notification object]];
 }
 
-- (void)setTableData:(id <ResKnifeResourceProtocol>)tableResource
+- (void)setTableData:(id <ResKnifeResource>)tableResource
 {
 	NSDictionary *table = [headerTable firstObjectReturningValue:GetNSStringFromOSType([tableResource type]) forKey:@"name"];
 	if(!table)
@@ -268,7 +268,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	[self setDocumentEdited:YES];
 }
 
-+ (NSString *)filenameExtensionForFileExport:(id <ResKnifeResourceProtocol>)resource
++ (NSString *)filenameExtensionForFileExport:(id <ResKnifeResource>)resource
 {
 	if([resource type] == 'sfnt') return @"ttf";
 	else return GetNSStringFromOSType([resource type]);

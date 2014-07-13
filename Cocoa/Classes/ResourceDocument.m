@@ -835,7 +835,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 /* Method name should be changed to:  -(void)openResource:(Resource *)resource usingEditor:(Class)overrideEditor <nil == default editor>   */
 
-- (id <ResKnifePluginProtocol>)openResourceUsingEditor:(Resource *)resource
+- (id <ResKnifePlugin>)openResourceUsingEditor:(Resource *)resource
 {
 	Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType([resource type])];
 	
@@ -845,7 +845,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 		// update: doug says window controllers automatically release themselves when their window is closed. All default plugs have a window controller as their principal class, but 3rd party ones might not
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-		id<ResKnifePluginProtocol> plug = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
+		id<ResKnifePlugin> plug = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
 		if (plug)
 			return plug;
 	}
@@ -868,7 +868,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		2012-07-07	NW	Changed to return the used plugin.
    -------------------------------------------------------------------------- */
 
-- (id <ResKnifePluginProtocol>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
+- (id <ResKnifePlugin>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
 {
 	// opens resource in template using TMPL resource with name templateName
 	Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:@"Template Editor"];
@@ -900,13 +900,13 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 @param			resource	Resource to edit
 */
 
-- (id <ResKnifePluginProtocol>)openResourceAsHex:(Resource *)resource
+- (id <ResKnifePlugin>)openResourceAsHex:(Resource *)resource
 {
 	Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType: @"Hexadecimal Editor"];
 	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 	// update: doug says window controllers automatically release themselves when their window is closed.
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	id <ResKnifePluginProtocol> plugController = [(id <ResKnifePluginProtocol>)[editorClass alloc] initWithResource:resource];
+	id <ResKnifePlugin> plugController = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
 	return plugController;
 }
 

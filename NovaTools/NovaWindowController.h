@@ -8,9 +8,9 @@
 
 #define localCenter		[NSNotificationCenter defaultCenter]
 
-@interface NovaWindowController : NSWindowController <ResKnifePluginProtocol>
+@interface NovaWindowController : NSWindowController <ResKnifePlugin>
 {
-	id <ResKnifeResourceProtocol>	resource;
+	id <ResKnifeResource>	resource;
 	NSUndoManager					*undoManager;
 	//NSNotificationCenter			*localCenter;
 	NSBundle						*plugBundle;
@@ -23,7 +23,7 @@
 	DataSource *soundDataSource;
 	DataSource *spinDataSource;
 }
-@property (retain) id<ResKnifeResourceProtocol> resource;
+@property (retain) id<ResKnifeResource> resource;
 @property (retain) NSUndoManager *undoManager;
 @property (retain) DataSource *descriptionDataSource;
 @property (retain) DataSource *governmentDataSource;

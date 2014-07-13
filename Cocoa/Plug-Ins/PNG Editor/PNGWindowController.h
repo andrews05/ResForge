@@ -11,9 +11,9 @@
 #import "ResKnifeResourceProtocol.h"
 
 
-@interface PNGWindowController : NSWindowController <ResKnifePluginProtocol> {
-	NSImage							*image;
-	id <ResKnifeResourceProtocol>	resource;
+@interface PNGWindowController : NSWindowController <ResKnifePlugin> {
+	NSImage					*image;
+	id<ResKnifeResource>	resource;
 }
 
 @property (weak) IBOutlet NSImageView *imageView;

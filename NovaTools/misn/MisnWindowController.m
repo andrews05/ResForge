@@ -2,7 +2,7 @@
 
 @implementation MisnWindowController
 
-- (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
+- (id)initWithResource:(id <ResKnifeResource>)newResource
 {
 	if (self = [self initWithWindowNibName:@"misn"]) {
 		

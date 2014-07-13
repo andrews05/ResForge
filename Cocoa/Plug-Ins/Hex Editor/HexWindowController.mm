@@ -199,7 +199,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 - (void)resourceNameDidChange:(NSNotification *)notification
 {
-	[[self window] setTitle:[(id <ResKnifeResourceProtocol>)[notification object] defaultWindowTitle]];
+	[[self window] setTitle:[(id <ResKnifeResource>)[notification object] defaultWindowTitle]];
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
@@ -214,7 +214,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 - (void)resourceWasSaved:(NSNotification *)notification
 {
-	id <ResKnifeResourceProtocol> object = [notification object];
+	id <ResKnifeResource> object = [notification object];
 	if(liveEdit)
 	{
 		// haven't worked out what to do here yet

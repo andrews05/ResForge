@@ -10,14 +10,14 @@
 #import "ResKnifePluginProtocol.h"
 
 @class Resource;
-@protocol ResKnifeResourceProtocol;
+@protocol ResKnifeResource;
 
-@interface PatternWindowController : NSWindowController <ResKnifePluginProtocol, NSTableViewDataSource, NSTableViewDelegate> {
-	IBOutlet NSImageView			*imageView;
-	id <ResKnifeResourceProtocol>	resource;
-	NSMutableArray					*images;
+@interface PatternWindowController : NSWindowController <ResKnifePlugin, NSTableViewDataSource, NSTableViewDelegate> {
+	id<ResKnifeResource>	resource;
+	NSMutableArray			*images;
 }
 
 @property (weak) IBOutlet NSTableView *tableView;
+@property (weak) IBOutlet NSImageView *imageView;
 
 @end

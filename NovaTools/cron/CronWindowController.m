@@ -2,7 +2,7 @@
 
 @implementation CronWindowController
 
-- (id)initWithResource:(id <ResKnifeResourceProtocol>)newResource
+- (id)initWithResource:(id <ResKnifeResource>)newResource
 {
 	self = [self initWithWindowNibName:@"cron"];
 	if( !self ) return nil;

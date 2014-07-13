@@ -20,7 +20,7 @@
 
 @class FindSheetController;
 
-@interface HexWindowController : NSWindowController <ResKnifePluginProtocol>
+@interface HexWindowController : NSWindowController <ResKnifePlugin>
 {
 	IBOutlet HexEditorDelegate	*hexDelegate;
 	IBOutlet NSTextView			*offset;		// these four should be phased out whenever possible
@@ -32,8 +32,8 @@
 	
 	FindSheetController			*sheetController;
 	
-	id <ResKnifeResourceProtocol>	resource;
-	id <ResKnifeResourceProtocol>	backup;
+	id <ResKnifeResource>	resource;
+	id <ResKnifeResource>	backup;
 	
 	BOOL			liveEdit;
 	int				bytesPerRow;
@@ -43,7 +43,7 @@
 	HFController			*textViewController;
 }
 
-// conform to the ResKnifePluginProtocol with the inclusion of these methods
+// conform to the ResKnifePlugin with the inclusion of these methods
 - (id)initWithResource:(id)newResource;
 
 // show find sheet

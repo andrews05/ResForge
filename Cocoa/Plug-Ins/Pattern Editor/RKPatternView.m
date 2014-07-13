@@ -9,6 +9,7 @@
 #import "RKPatternView.h"
 
 @implementation RKPatternView
+@synthesize scale;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -26,11 +27,13 @@
 	[super drawRect:dirtyRect];
 }
 
-- (CGFloat)scale {
+- (CGFloat)scale
+{
 	return scale;
 }
 
-- (void)setScale:(CGFloat)newScale {
+- (void)setScale:(CGFloat)newScale
+{
 	scale = newScale;
 	[self setNeedsDisplay:YES];
 }

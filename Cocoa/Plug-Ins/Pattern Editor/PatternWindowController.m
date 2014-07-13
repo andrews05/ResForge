@@ -15,6 +15,7 @@
 
 @implementation PatternWindowController
 @synthesize tableView;
+@synthesize imageView;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -45,12 +46,12 @@
 	return newImage;
 }
 
-- (void)loadPAT:(id <ResKnifeResourceProtocol>)inResource {
+- (void)loadPAT:(id <ResKnifeResource>)inResource {
 	NSData *data = [inResource data];
 	[images addObject:[self imageWithPATData:data]];
 }
 
-- (void)loadPATList:(id <ResKnifeResourceProtocol>)inResource {
+- (void)loadPATList:(id <ResKnifeResource>)inResource {
 	NSData *data = [inResource data];
 	
 	uint16_t numberOfPatterns;
@@ -80,7 +81,8 @@
 	[self showWindow:self];
 }
 
-- (id)initWithResource:(id <ResKnifeResourceProtocol>)inResource {
+- (id)initWithResource:(id <ResKnifeResource>)inResource
+{
 	if (self = [self initWithWindowNibName:@"PatternWindowController"]) {
 		resource = inResource;
 		switch (resource.type) {
@@ -107,15 +109,18 @@
 	return [resource defaultWindowTitle];
 }
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
 	return [images count];
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
 	return images[row];
 }
 
-- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+- (void)tableViewSelectionDidChange:(NSNotification *)notification
+{
 	NSImage *image = images[[tableView selectedRow]];
 	[imageView setImage:image];
 }

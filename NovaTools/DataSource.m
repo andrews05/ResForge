@@ -21,7 +21,7 @@
 		type = typeString;
 		data = [[NSMutableDictionary alloc] init];
 		NSArray *resources = [NSClassFromString(@"Resource") allResourcesOfType:type inDocument:nil];	// nil document will search in ANY open document for the correct resource
-		for(id <ResKnifeResourceProtocol> resource in resources )
+		for(id <ResKnifeResource> resource in resources )
 			data[@([resource resID])] = [resource name];
 		parsed = [[NSMutableArray alloc] initWithArray:[data allValues]];
 	}

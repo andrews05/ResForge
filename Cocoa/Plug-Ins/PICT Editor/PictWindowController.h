@@ -3,11 +3,11 @@
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"
 
-@interface PictWindowController : NSWindowController <ResKnifePluginProtocol>
+@interface PictWindowController : NSWindowController <ResKnifePlugin>
 {
 	IBOutlet NSImageView	*imageView;
 	
-	id <ResKnifeResourceProtocol>	resource;
+	id <ResKnifeResource>	resource;
 }
 
 @end

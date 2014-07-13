@@ -4,9 +4,9 @@
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"
 
-@interface FontWindowController : NSWindowController <ResKnifePluginProtocol>
+@interface FontWindowController : NSWindowController <ResKnifePlugin>
 {
-	id <ResKnifeResourceProtocol>	resource;
+	id <ResKnifeResource>	resource;
 	
 	OSType arch;
 	UInt16 numTables;
@@ -17,7 +17,7 @@
 }
 - (void)loadFontFromResource;
 - (IBAction)saveResource:(id)sender;
-- (void)setTableData:(id <ResKnifeResourceProtocol>)tableResource;
+- (void)setTableData:(id <ResKnifeResource>)tableResource;
 - (void)openTable:(NSDictionary *)table inEditor:(BOOL)editor;
 @end
 
