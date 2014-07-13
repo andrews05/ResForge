@@ -1,10 +1,7 @@
 #import "Element.h"
 
 @interface ElementFRAC : Element
-{
-	Fract value;
-}
 @property Fract value;
-@property (weak) NSString *stringValue;
+@property (unsafe_unretained) NSString *stringValue;
 
 @end

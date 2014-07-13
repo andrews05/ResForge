@@ -12,12 +12,12 @@
 
 @implementation TemplateWindowController
 
-- (id)initWithResource:(id <ResKnifeResource>)newResource
+- (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
 	return [self initWithResources:newResource, nil];
 }
 
-- (id)initWithResources:(id <ResKnifeResource>)newResource, ...
+- (instancetype)initWithResources:(id <ResKnifeResource>)newResource, ...
 {
 	id tmplResource;
 	va_list resourceList;

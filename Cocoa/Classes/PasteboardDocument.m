@@ -5,7 +5,7 @@ extern NSString *RKResourcePboardType;
 
 @implementation PasteboardDocument
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init])
 	{

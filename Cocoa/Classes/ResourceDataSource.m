@@ -16,7 +16,7 @@ extern NSString *RKResourcePboardType;
 @synthesize window;
 @synthesize resources;
 
-- (id)init
+- (instancetype)init
 {
 	self = [super init];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDidChange:) name:ResourceDidChangeNotification object:nil];

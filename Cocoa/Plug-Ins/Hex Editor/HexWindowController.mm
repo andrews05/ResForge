@@ -21,7 +21,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 @implementation HexWindowController
 
-- (id)initWithResource:(id)newResource
+- (instancetype)initWithResource:(id)newResource
 {
 	self = [self initWithWindowNibName:@"HexWindow"];
 	if(!self) return nil;

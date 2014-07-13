@@ -17,7 +17,7 @@ NSString * const kNoLaunchOption = @"None";
 	[[NSUserDefaults standardUserDefaults] registerDefaults:prefDict];
 }
 
-- (id)init
+- (instancetype)init
 {
 	return self = [self initWithWindowNibName:@"PrefsWindow"];
 }

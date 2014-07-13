@@ -15,7 +15,7 @@
 @implementation PNGWindowController
 @synthesize imageView;
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
@@ -48,7 +48,8 @@
 	return [resource defaultWindowTitle];
 }
 
-- (id)initWithResource:(id <ResKnifeResource>)inResource {
+- (instancetype)initWithResource:(id <ResKnifeResource>)inResource
+{
 	if (self = [self initWithWindowNibName:@"PNGWindowController"]) {
 		resource = inResource;
 		[self window];
@@ -57,7 +58,8 @@
 	return self;
 }
 
-- (void)resourceDataDidChange:(NSNotification *)note {
+- (void)resourceDataDidChange:(NSNotification *)note
+{
 	NSData *data = [resource data];
 	image = [[NSImage alloc] initWithData:data];
 	[imageView setImage:image];

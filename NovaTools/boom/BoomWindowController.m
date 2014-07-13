@@ -12,7 +12,7 @@
 @synthesize soundButton;
 @synthesize playButton;
 
-- (id)initWithResource:(id <ResKnifeResource>)newResource
+- (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
 	self = [self initWithWindowNibName:@"boom"];
 	if( !self ) return nil;

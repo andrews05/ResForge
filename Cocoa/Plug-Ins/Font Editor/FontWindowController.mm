@@ -4,7 +4,7 @@
 #import "Resource.h"
 #import <stdarg.h>
 
-UInt32 TableChecksum(UInt32 *table, UInt32 length)
+static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 {
 	UInt32 sum = 0, nLongs = (length+3) >> 2;
 	while(nLongs-- > 0) sum += *table++;
@@ -13,7 +13,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 @implementation FontWindowController
 
-- (id)initWithResource:(id <ResKnifeResource>)inResource
+- (instancetype)initWithResource:(id <ResKnifeResource>)inResource
 {
 	self = [self initWithWindowNibName:@"FontDocument"];
 	if(!self) return nil;

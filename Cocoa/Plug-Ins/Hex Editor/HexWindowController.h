@@ -44,7 +44,7 @@
 }
 
 // conform to the ResKnifePlugin with the inclusion of these methods
-- (id)initWithResource:(id)newResource;
+- (instancetype)initWithResource:(id)newResource;
 
 // show find sheet
 - (IBAction)showFind:(id)sender;

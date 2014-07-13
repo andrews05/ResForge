@@ -1,11 +1,8 @@
 #import "Element.h"
 
 @interface ElementDLNG : Element
-{
-	SInt32 value;
-}
 @property SInt32 value;
-@property (weak) NSString *stringValue;
+@property (unsafe_unretained) NSString *stringValue;
 
 @end
 

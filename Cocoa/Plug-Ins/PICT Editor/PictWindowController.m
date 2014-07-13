@@ -4,7 +4,7 @@
 
 @implementation PictWindowController
 
-- (id)initWithResource:(id)newResource
+- (instancetype)initWithResource:(id)newResource
 {
 	self = [self initWithWindowNibName:@"PictWindow"];
 	if( !self ) return nil;
@@ -16,7 +16,7 @@
 	return self;
 }
 
-- (id)initWithResources:(id)newResource, ...
+- (instancetype)initWithResources:(id)newResource, ...
 {
 	return nil;
 }

@@ -1,11 +1,8 @@
 #import "Element.h"
 
 @interface ElementDWRD : Element
-{
-	SInt16 value;
-}
 @property SInt16 value;
-@property (weak) NSString *stringValue;
+@property (unsafe_unretained) NSString *stringValue;
 
 @end
 

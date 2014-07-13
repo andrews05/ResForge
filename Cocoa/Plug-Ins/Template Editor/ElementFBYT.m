@@ -5,7 +5,7 @@
 @synthesize length;
 @dynamic stringValue;
 
-- (id)initForType:(NSString *)t withLabel:(NSString *)l
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
 	if (self = [super initForType:t withLabel:l]) {
 		if ([t isEqualToString:@"FBYT"])

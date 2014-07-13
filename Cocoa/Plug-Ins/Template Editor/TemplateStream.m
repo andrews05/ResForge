@@ -36,7 +36,7 @@
 	return [[self alloc] initWithStream:s length:l];
 }
 
-- (id)initStreamWithBytes:(char *)d length:(unsigned int)l
+- (instancetype)initStreamWithBytes:(char *)d length:(unsigned int)l
 {
 	self = [super init];
 	if(!self) return nil;
@@ -47,7 +47,7 @@
 	return self;
 }
 
-- (id)initWithStream:(TemplateStream *)s length:(unsigned int)l
+- (instancetype)initWithStream:(TemplateStream *)s length:(unsigned int)l
 {
 	return [self initStreamWithBytes:[s data] length:MIN(l, [s bytesToGo])];
 }

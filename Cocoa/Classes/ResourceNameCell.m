@@ -4,7 +4,7 @@
 @synthesize image;
 @synthesize drawImage;
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		self.wraps = NO;

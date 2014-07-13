@@ -21,22 +21,22 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 @synthesize _data = data;
 @synthesize representedFork;
 
-- (id)init
+- (instancetype)init
 {
 	return self = [self initWithType:'NULL' andID:128 withName:@"" andAttributes:0 data:[NSData data]];
 }
 
-- (id)initWithType:(OSType)typeValue andID:(short)resIDValue
+- (instancetype)initWithType:(OSType)typeValue andID:(short)resIDValue
 {
 	return self = [self initWithType:typeValue andID:resIDValue withName:@"" andAttributes:0 data:[NSData data]];
 }
 
-- (id)initWithType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue
+- (instancetype)initWithType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue
 {
 	return [self initWithType:typeValue andID:resIDValue withName:nameValue andAttributes:attributesValue data:[NSData data]];
 }
 
-- (id)initWithType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue data:(NSData *)dataValue
+- (instancetype)initWithType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue data:(NSData *)dataValue
 {
 	// sets values directly for speed reasons (less messaging overhead)
 	if (self = [super init]) {
@@ -295,7 +295,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 
 /* encoding */
 
-- (id)initWithCoder:(NSCoder *)decoder
+- (instancetype)initWithCoder:(NSCoder *)decoder
 {
 	self = [super init];
 	if (self) {

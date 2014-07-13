@@ -10,7 +10,7 @@
 @synthesize pad = _pad;
 @synthesize terminatingByte = _terminatingByte;
 
-- (id)initForType:(NSString *)t withLabel:(NSString *)l
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
 	if (self = [super initForType:t withLabel:l]) {
 		value = @"";

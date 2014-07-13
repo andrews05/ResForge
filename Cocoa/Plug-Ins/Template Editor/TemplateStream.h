@@ -14,8 +14,8 @@
 + (id)streamWithBytes:(char *)d length:(unsigned int)l;
 + (id)substreamWithStream:(TemplateStream *)s length:(unsigned int)l;
 
-- (id)initStreamWithBytes:(char *)d length:(unsigned int)l;
-- (id)initWithStream:(TemplateStream *)s length:(unsigned int)l;
+- (instancetype)initStreamWithBytes:(char *)d length:(unsigned int)l;
+- (instancetype)initWithStream:(TemplateStream *)s length:(unsigned int)l;
 
 - (char *)data;
 - (ElementOCNT *)counter;

@@ -10,12 +10,13 @@
 @synthesize groupElementTemplate;
 @synthesize subElements;
 
-- (id)initForType:(NSString *)t withLabel:(NSString *)l
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
 	self = [super initForType:t withLabel:l];
-	if(!self) return nil;
-	subElements = [[NSMutableArray alloc] init];
-	groupElementTemplate = self;
+	if (self) {
+		subElements = [[NSMutableArray alloc] init];
+		groupElementTemplate = self;
+	}
 	return self;
 }
 

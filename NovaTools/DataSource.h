@@ -7,7 +7,7 @@
 	NSMutableArray *parsed;		// a subset of data, parsed to contain the typed string
 }
 
-- (id)initForType:(OSType)typeString;
+- (instancetype)initForType:(OSType)typeString;
 
 - (NSDictionary *)data;
 - (void)setData:(NSMutableDictionary *)newData;

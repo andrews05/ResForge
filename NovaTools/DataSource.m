@@ -9,12 +9,12 @@
 @implementation DataSource
 @synthesize data1 = data;
 
-- (id)init
+- (instancetype)init
 {
 	return nil;
 }
 
-- (id)initForType:(OSType)typeString
+- (instancetype)initForType:(OSType)typeString
 {
 	self = [super init];
 	if (self) {

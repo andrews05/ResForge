@@ -25,7 +25,7 @@ extern NSString *RKResourcePboardType;
 @synthesize creator;
 @synthesize type;
 
-- (id)init
+- (instancetype)init
 {
 	self = [super init];
 	if (!self)

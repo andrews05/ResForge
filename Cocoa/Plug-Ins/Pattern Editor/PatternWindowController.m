@@ -17,7 +17,7 @@
 @synthesize tableView;
 @synthesize imageView;
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
@@ -81,7 +81,7 @@
 	[self showWindow:self];
 }
 
-- (id)initWithResource:(id <ResKnifeResource>)inResource
+- (instancetype)initWithResource:(id <ResKnifeResource>)inResource
 {
 	if (self = [self initWithWindowNibName:@"PatternWindowController"]) {
 		resource = inResource;

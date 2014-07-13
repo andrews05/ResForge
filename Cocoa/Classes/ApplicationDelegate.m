@@ -22,7 +22,7 @@
 	[[NSUserDefaults standardUserDefaults] registerDefaults:prefDict];
 }
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		[NSApp registerServicesMenuSendTypes:@[NSStringPboardType] returnTypes:@[NSStringPboardType]];

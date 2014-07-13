@@ -6,7 +6,7 @@
 @synthesize forkTableView;
 @synthesize readOpenPanelForFork;
 
-- (id)init
+- (instancetype)init
 {
 	if(self = [super init])
 	{

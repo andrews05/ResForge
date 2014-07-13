@@ -2,7 +2,7 @@
 
 @implementation DescWindowController
 
-- (id)initWithResource:(id <ResKnifeResource>)newResource
+- (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
 	self = [self initWithWindowNibName:@"desc"];
 	if( !self ) return nil;

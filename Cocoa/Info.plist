@@ -12,6 +12,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>rsrc</string>
+				<string>rsr</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>Resource file</string>
@@ -107,6 +108,7 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>rsrc</string>
+					<string>rsr</string>
 				</array>
 			</dict>
 		</dict>

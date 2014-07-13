@@ -13,7 +13,7 @@
 @method		initWithResource:
 @abstract	Your plug-in is inited with this call. This allows immediate access to the resource you are about to edit, and with this information you can set up different windows, etc.
 */
-- (id)initWithResource:(id <ResKnifeResource>)inResource;
+- (instancetype)initWithResource:(id <ResKnifeResource>)inResource;
 
 @end
 
@@ -28,7 +28,7 @@
 @method		initWithResource:
 @abstract	Your template editor is inited with this call. The first argument is the resource to edit, the second is the TMPL resource that defines the data structure.
 */
-- (id)initWithResources:(id <ResKnifeResource>)inResource, ...;
+- (instancetype)initWithResources:(id <ResKnifeResource>)inResource, ...;
 
 @optional
 

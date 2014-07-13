@@ -11,7 +11,7 @@
 	return [[self alloc]initForType:t withLabel:l];
 }
 
-- (id)initForType:(NSString *)t withLabel:(NSString *)l
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
 	self = [super init];
 	if(!self) return nil;

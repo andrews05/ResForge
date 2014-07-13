@@ -2,10 +2,7 @@
 #import "Element.h"
 
 @interface ElementKEYB : Element
-{
-	NSMutableArray *subElements;
-}
-@property (weak) NSString *stringValue;
+@property (unsafe_unretained) NSString *stringValue;
 @property (strong) NSMutableArray *subElements;
 
 @end

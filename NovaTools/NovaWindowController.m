@@ -18,7 +18,7 @@
 @synthesize soundDataSource;
 @synthesize spinDataSource;
 
-- (id)initWithResource:(id <ResKnifeResource>)newResource
+- (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
 	NSData *classData = [GetNSStringFromOSType([(id <ResKnifeResource>)newResource type]) dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 	NSString *className = [[[[NSString alloc] initWithData:classData encoding:NSASCIIStringEncoding] capitalizedString] stringByAppendingString:@"WindowController"];
@@ -41,7 +41,7 @@
 	return self;
 }
 
-- (id)initWithResources:(id <ResKnifeResource>)newResource, ...
+- (instancetype)initWithResources:(id <ResKnifeResource>)newResource, ...
 {
 	return nil;
 }

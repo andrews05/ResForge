@@ -1,10 +1,7 @@
 #import "Element.h"
 
 @interface ElementUWRD : Element
-{
-	UInt16 value;
-}
 @property UInt16 value;
-@property (weak) NSString *stringValue;
+@property (unsafe_unretained) NSString *stringValue;
 
 @end

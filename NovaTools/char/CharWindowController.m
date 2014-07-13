@@ -51,7 +51,7 @@ static void BSwapCharRec(CharRec* toSwap)
 	
 }
 
-- (id)initWithResource:(id <ResKnifeResource>)newResource
+- (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
 	NSString *tempPrefix;
 	NSString *tempSuffix;
