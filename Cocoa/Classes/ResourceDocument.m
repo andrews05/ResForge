@@ -10,7 +10,7 @@
 #import "CreateResourceSheetController.h"
 #import "../Categories/NGSCategories.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
-#import <Carbon/Carbon.h>
+@import Carbon;
 
 #import "../Plug-Ins/ResKnifePluginProtocol.h"
 #import "RKEditorRegistry.h"
@@ -881,7 +881,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	if(tmpl && editorClass)
 	{
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-		id<ResKnifeTemplatePluginProtocol> plug = [(id <ResKnifeTemplatePluginProtocol>)[editorClass alloc] initWithResources:resource, tmpl, nil];
+		id<ResKnifeTemplatePlugin> plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResources:resource, tmpl, nil];
 		if (plug)
 			return plug;
 	}

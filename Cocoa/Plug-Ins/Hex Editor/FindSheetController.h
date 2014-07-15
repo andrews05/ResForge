@@ -1,22 +1,18 @@
 #import <Cocoa/Cocoa.h>
 
 @interface FindSheetController : NSWindowController
-{
-	IBOutlet NSButton	*cancelButton;
-	IBOutlet NSButton	*findNextButton;
-	IBOutlet NSForm		*findReplaceForm;
-	IBOutlet NSButton	*replaceAllButton;
-//	IBOutlet NSButton	*replaceFindNextButton;
-	
-	IBOutlet NSButton	*startAtTopBox;
-	IBOutlet NSButton	*wrapAroundBox;
-	IBOutlet NSButton	*searchBackwardsBox;
-	IBOutlet NSButton	*searchSelectionOnlyBox;
-	IBOutlet NSButton	*caseSensitiveBox;
-	IBOutlet NSButton	*matchEntireWordsBox;
-	IBOutlet NSMatrix	*searchASCIIOrHexRadios;
-	
-}
+@property (weak) IBOutlet NSButton	*cancelButton;
+@property (weak) IBOutlet NSButton	*findNextButton;
+@property (weak) IBOutlet NSForm	*findReplaceForm;
+@property (weak) IBOutlet NSButton	*replaceAllButton;
+
+@property (weak) IBOutlet NSButton	*startAtTopBox;
+@property (weak) IBOutlet NSButton	*wrapAroundBox;
+@property (weak) IBOutlet NSButton	*searchBackwardsBox;
+@property (weak) IBOutlet NSButton	*searchSelectionOnlyBox;
+@property (weak) IBOutlet NSButton	*caseSensitiveBox;
+@property (weak) IBOutlet NSButton	*matchEntireWordsBox;
+@property (weak) IBOutlet NSMatrix	*searchASCIIOrHexRadios;
 
 @property (copy) NSString *findString;
 @property (copy) NSString *replaceString;

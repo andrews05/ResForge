@@ -1,6 +1,6 @@
 /* Nova Resource structures */
 
-#import <Carbon/Carbon.h>
+#include <Carbon/Carbon.h>
 
 #pragma pack (push, 2)
 

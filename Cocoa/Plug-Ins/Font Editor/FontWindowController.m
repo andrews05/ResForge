@@ -1,8 +1,10 @@
 #import "FontWindowController.h"
 #import "NGSCategories.h"
-#import <stdarg.h>
+#import "ResourceDocument.h"
+#import "Resource.h"
+@import Darwin.C.stdarg;
 
-UInt32 TableChecksum(UInt32 *table, UInt32 length)
+static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 {
 	UInt32 sum = 0, nLongs = (length+3) >> 2;
 	while(nLongs-- > 0) sum += *table++;
@@ -11,12 +13,12 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 @implementation FontWindowController
 
-- (id)initWithResource:(id <ResKnifeResourceProtocol>)inResource
+- (instancetype)initWithResource:(id <ResKnifeResource>)inResource
 {
 	self = [self initWithWindowNibName:@"FontDocument"];
 	if(!self) return nil;
 	
-	resource = [(id)inResource retain];
+	resource = inResource;
 	headerTable = [[NSMutableArray alloc] init];
 	[self loadFontFromResource];
 	
@@ -28,40 +30,46 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 - (void)loadFontFromResource
 {
 	char *start = (char *)[[resource data] bytes];
-	arch = *(OSType*)start;
-	numTables = *(UInt16*)(start+4);
-	searchRange = *(UInt16*)(start+6);
-	entrySelector = *(UInt16*)(start+8);
-	rangeShift = *(UInt16*)(start+10);
-	UInt32 *pos = (UInt32 *)(start+12);
-/*	printf("%s\n", [[self displayName] cString]);
-	printf("  architecture: %#lx '%.4s'\n", arch, &arch);
-	printf("  number of tables: %hu\n", numTables);
-	printf("  searchRange: %hu\n", searchRange);
-	printf("  entrySelector: %hu\n", entrySelector);
-	printf("  rangeShift: %hu\n\n", rangeShift);
-*/	for(int i = 0; i < numTables; i++)
+	if (start != 0x0)
 	{
-		OSType name = *pos++;
-		UInt32 checksum = *pos++;
-		UInt32 offset = *pos++;
-		UInt32 length = *pos++;
-		[headerTable addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-			[[[NSString alloc] initWithBytes:&name length:4 encoding:NSMacOSRomanStringEncoding] autorelease], @"name",
-			[NSNumber numberWithUnsignedLong: checksum], @"checksum",
-			[NSNumber numberWithUnsignedLong: offset], @"offset",
-			[NSNumber numberWithUnsignedLong: length], @"length",
-			[NSData dataWithBytes:start+offset length:length], @"data",
-			nil]];
+		arch = *(OSType*)start;
+		numTables = *(UInt16*)(start+4);
+		searchRange = *(UInt16*)(start+6);
+		entrySelector = *(UInt16*)(start+8);
+		rangeShift = *(UInt16*)(start+10);
+		UInt32 *pos = (UInt32 *)(start+12);
+#if 0
+		printf("%s\n", [[self displayName] cString]);
+		printf("  architecture: %#lx '%.4s'\n", arch, &arch);
+		printf("  number of tables: %hu\n", numTables);
+		printf("  searchRange: %hu\n", searchRange);
+		printf("  entrySelector: %hu\n", entrySelector);
+		printf("  rangeShift: %hu\n\n", rangeShift);
+#endif
+		for(int i = 0; i < numTables; i++)
+		{
+			OSType name = *pos++;
+			UInt32 checksum = *pos++;
+			UInt32 offset = *pos++;
+			UInt32 length = *pos++;
+			[headerTable addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
+				[[NSString alloc] initWithBytes:&name length:4 encoding:NSMacOSRomanStringEncoding], @"name",
+				@(checksum), @"checksum",
+				@(offset), @"offset",
+				@(length), @"length",
+				[NSData dataWithBytes:start+offset length:length], @"data",
+				nil]];
+		}
+	}
+	else
+	{
+		NSLog(@"Invalid sfnt, aborting parse.");
 	}
 }
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[(id)resource release];
-	[headerTable release];
-	[super dealloc];
 }
 
 - (void)windowDidLoad
@@ -72,7 +80,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	if(![[resource name] isEqualToString:@""])
 	{
 		[[self window] setTitle:[resource name]];
-		SetWindowAlternateTitle((WindowRef) [[self window] windowRef], (CFStringRef) [NSString stringWithFormat:@"%@ %@: Ò%@Ó", [resource type], [resource resID], [resource name]]);
+		//SetWindowAlternateTitle((WindowRef) [[self window] windowRef], (CFStringRef) [NSString stringWithFormat:NSLocalizedString(@"%@ %@: '%@'", nil), [resource type], [resource resID], [resource name]]);
 	}
 	
 	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
@@ -110,7 +118,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 {
 	if([[self window] isDocumentEdited])
 	{
-		NSBeginAlertSheet(@"Do you want to keep the changes you made to this font?", @"Keep", @"DonÕt Keep", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes cannot be saved later if you don't keep them.");
+		NSBeginAlertSheet(@"Do you want to keep the changes you made to this font?", @"Keep", @"Don't Keep", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes cannot be saved later if you don't keep them.");
 		return NO;
 	}
 	else return YES;
@@ -143,18 +151,18 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	[data appendBytes:&searchRange length:2];
 	[data appendBytes:&entrySelector length:2];
 	[data appendBytes:&rangeShift length:2];
-	UInt32 offset = 12 + ([headerTable count] << 4);
+	NSInteger offset = 12 + ([headerTable count] << 4);
 	
 	// add table index
 	for(int i = 0; i < numTables; i++)
 	{
-		NSMutableDictionary *table = [headerTable objectAtIndex:i];
+		NSMutableDictionary *table = headerTable[i];
 		NSData *tableData = [table valueForKey:@"data"];
-		UInt32 length = [tableData length];
+		UInt32 length = (UInt32)[tableData length];
 		UInt32 checksum = TableChecksum((UInt32 *)[tableData bytes], length);
-		[table setValue:[NSNumber numberWithUnsignedLong:checksum] forKey:@"checksum"];
-		[table setValue:[NSNumber numberWithUnsignedLong:offset] forKey:@"offset"];
-		[table setValue:[NSNumber numberWithUnsignedLong:length] forKey:@"length"];
+		[table setValue:@(checksum) forKey:@"checksum"];
+		[table setValue:@(offset) forKey:@"offset"];
+		[table setValue:@(length) forKey:@"length"];
 		[data appendBytes:[[table valueForKey:@"name"] cStringUsingEncoding:NSMacOSRomanStringEncoding] length:4];
 		[data appendBytes:&checksum length:4];
 		[data appendBytes:&offset length:4];
@@ -169,7 +177,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	for(int i = 0; i < numTables; i++)
 	{
 		// note that this doesn't output in the order thet they were read, nor align on long boundries
-		[data appendData:[[headerTable objectAtIndex:i] valueForKey:@"data"]];
+		[data appendData:[headerTable[i] valueForKey:@"data"]];
 		if([data length] % 4)	// pads the last table too... oh well
 			[data appendBytes:&align length:4-([data length]%4)];
 	}
@@ -181,7 +189,7 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 		UInt32 fontChecksum = 0;
 		NSRange csRange = NSMakeRange([[head valueForKey:@"offset"] unsignedLongValue]+8,4);
 		[data replaceBytesInRange:csRange withBytes:&fontChecksum length:4];
-		fontChecksum = TableChecksum((UInt32 *)[data bytes], [data length]);
+		fontChecksum = TableChecksum((UInt32 *)[data bytes], (UInt32)[data length]);
 		[data replaceBytesInRange:csRange withBytes:&fontChecksum length:4];
 	}
 //	[[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:backup];
@@ -200,12 +208,12 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 {
 	NSMutableDictionary *table = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 						name, @"name",
-						[NSNumber numberWithUnsignedLong: 0], @"checksum",
-						[NSNumber numberWithUnsignedLong: 0], @"offset",
-						[NSNumber numberWithUnsignedLong: 0], @"length",
+						@(0), @"checksum",
+						@(0), @"offset",
+						@(0), @"length",
 						[NSData data], @"data", nil];
 	[headerTable addObject:table];
-	numTables = [headerTable count];
+	numTables = (UInt16)[headerTable count];
 	[self openTable:table inEditor:YES];
 	[self setDocumentEdited:YES];
 }
@@ -220,23 +228,23 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 		return;
 	}
 	
-	[self openTable:[headerTable objectAtIndex:[sender clickedRow]] inEditor:YES];
+	[self openTable:headerTable[[sender clickedRow]] inEditor:YES];
 }
 
 - (void)openTable:(NSDictionary *)table inEditor:(BOOL)editor
 {
 	NSData *data = [table valueForKey:@"data"];
-	if(data)
+	if (data)
 	{
-		id tableResource = [NSClassFromString(@"Resource") resourceOfType:[table valueForKey:@"name"] andID:[NSNumber numberWithInt:0] withName:[NSString stringWithFormat:@"%@ È %@", [resource name], [table valueForKey:@"name"]] andAttributes:[NSNumber numberWithUnsignedShort:0] data:[table valueForKey:@"data"]];
-		if(!tableResource)
+		id tableResource = [NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([table valueForKey:@"name"]) andID:0 withName:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] andAttributes:0 data:[table valueForKey:@"data"]];
+		if (!tableResource)
 		{
 			NSLog(@"Couldn't create Resource with data for table '%@'.", [table valueForKey:@"name"]);
 			return;
 		}
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableDataDidChange:) name:ResourceDataDidChangeNotification object:tableResource];
-		if(editor)	[[resource document] openResourceUsingEditor:tableResource];
-		else		[[resource document] openResource:tableResource usingTemplate:[NSString stringWithFormat:@"sfnt subtable '%@'", [table valueForKey:@"name"]]];
+		if (editor)	[(id)[resource document] openResourceUsingEditor:tableResource];
+		else		[(id)[resource document] openResource:tableResource usingTemplate:[NSString stringWithFormat:@"sfnt subtable '%@'", [table valueForKey:@"name"]]];
 	}
 }
 
@@ -245,19 +253,19 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	[self setTableData:[notification object]];
 }
 
-- (void)setTableData:(id)tableResource
+- (void)setTableData:(id <ResKnifeResource>)tableResource
 {
-	NSDictionary *table = [headerTable firstObjectReturningValue:[tableResource type] forKey:@"name"];
+	NSDictionary *table = [headerTable firstObjectReturningValue:GetNSStringFromOSType([tableResource type]) forKey:@"name"];
 	if(!table)
 	{
-		NSLog(@"Couldn't retrieve table with name '%@'.", [tableResource type]);
+		NSLog(@"Couldn't retrieve table with name '%@'.", GetNSStringFromOSType([tableResource type]));
 		return;
 	}
 	
-	id undoResource = [[tableResource copy] autorelease];
+	id undoResource = [tableResource copy];
 	[undoResource setData:[table valueForKey:@"data"]];
 	[[[resource document] undoManager] registerUndoWithTarget:resource selector:@selector(setTableData:) object:undoResource];
-	[[[resource document] undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Edit of table Ò%@Ó", nil), [tableResource type]]];
+	[[[resource document] undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Edit of table '%@'", nil), [tableResource type]]];
 	[table setValue:[tableResource data] forKey:@"data"];
 	[self setDocumentEdited:YES];
 }
@@ -267,10 +275,10 @@ UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	return [NSArray arrayWithObject:@"ttf"];
 }
 
-+ (NSString *)filenameExtensionForFileExport:(id <ResKnifeResourceProtocol>)resource
++ (NSString *)filenameExtensionForFileExport:(id <ResKnifeResource>)resource
 {
-	if([[resource type] isEqualToString:@"sfnt"]) return @"ttf";
-	else return [resource type];
+	if([resource type] == 'sfnt') return @"ttf";
+	else return GetNSStringFromOSType([resource type]);
 }
 
 @end

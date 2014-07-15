@@ -150,7 +150,7 @@
 		E18BF596069FEA1400F076B8 /* NSData-HexRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = E1C5E08B055D98790001A04A /* NSData-HexRepresentation.h */; };
 		E18BF59B069FEA1400F076B8 /* HexEditorDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A1020C08E601A80001 /* HexEditorDelegate.m */; };
 		E18BF59C069FEA1400F076B8 /* HexTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A3020C08E601A80001 /* HexTextView.m */; };
-		E18BF59D069FEA1400F076B8 /* HexWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A8020C08E601A80001 /* HexWindowController.mm */; };
+		E18BF59D069FEA1400F076B8 /* HexWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A8020C08E601A80001 /* HexWindowController.m */; };
 		E18BF59E069FEA1400F076B8 /* FindSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54E6221021B6A0801A80001 /* FindSheetController.m */; };
 		E18BF59F069FEA1400F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF5A0069FEA1400F076B8 /* NSData-HexRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5E08F055D98D50001A04A /* NSData-HexRepresentation.m */; };
@@ -241,7 +241,7 @@
 		E18BF6C1069FEA1800F076B8 /* ElementLSTC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047304EF122000F3B64D /* ElementLSTC.mm */; };
 		E18BF6C3069FEA1800F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E18BF7D1069FFC7600F076B8 /* FontWindowController.h */; };
-		E18BF7D5069FFC7600F076B8 /* FontWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E18BF7D2069FFC7600F076B8 /* FontWindowController.mm */; };
+		E18BF7D5069FFC7600F076B8 /* FontWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18BF7D2069FFC7600F076B8 /* FontWindowController.m */; };
 		E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF8D206A0016D00F076B8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
 		E18BF8EB06A0027700F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
@@ -560,7 +560,7 @@
 		E18BF78B069FF23700F076B8 /* Font Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Font Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF78C069FF23800F076B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF7D1069FFC7600F076B8 /* FontWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FontWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		E18BF7D2069FFC7600F076B8 /* FontWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = FontWindowController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		E18BF7D2069FFC7600F076B8 /* FontWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FontWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E18BF94B06A00F8E00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF9D706A01A2200F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BFA3606A20B7A00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -667,7 +667,7 @@
 		F5EF83A2020C08E601A80001 /* HexTextView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HexTextView.h; sourceTree = "<group>"; };
 		F5EF83A3020C08E601A80001 /* HexTextView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HexTextView.m; sourceTree = "<group>"; };
 		F5EF83A7020C08E601A80001 /* HexWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HexWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		F5EF83A8020C08E601A80001 /* HexWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = HexWindowController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		F5EF83A8020C08E601A80001 /* HexWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HexWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F5F1071603CCC61E01A8010A /* PasteboardDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardDocument.h; sourceTree = "<group>"; };
 		F5F1071703CCC61E01A8010A /* PasteboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PasteboardDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardWindowController.h; sourceTree = "<group>"; };
@@ -939,7 +939,7 @@
 			isa = PBXGroup;
 			children = (
 				E18BF7D1069FFC7600F076B8 /* FontWindowController.h */,
-				E18BF7D2069FFC7600F076B8 /* FontWindowController.mm */,
+				E18BF7D2069FFC7600F076B8 /* FontWindowController.m */,
 				B2FCA79E15A6704900696598 /* FontDocument.xib */,
 				B2FCA7A015A6704900696598 /* FontWindow.xib */,
 				E15CFDA009999637004929B6 /* Support Resources */,
@@ -1238,7 +1238,7 @@
 				F5EF83A2020C08E601A80001 /* HexTextView.h */,
 				F5EF83A3020C08E601A80001 /* HexTextView.m */,
 				F5EF83A7020C08E601A80001 /* HexWindowController.h */,
-				F5EF83A8020C08E601A80001 /* HexWindowController.mm */,
+				F5EF83A8020C08E601A80001 /* HexWindowController.m */,
 				E1C5E08B055D98790001A04A /* NSData-HexRepresentation.h */,
 				E1C5E08F055D98D50001A04A /* NSData-HexRepresentation.m */,
 				B27A65D215A678260029141B /* FindSheet.xib */,
@@ -1939,7 +1939,7 @@
 			files = (
 				E18BF59B069FEA1400F076B8 /* HexEditorDelegate.m in Sources */,
 				E18BF59C069FEA1400F076B8 /* HexTextView.m in Sources */,
-				E18BF59D069FEA1400F076B8 /* HexWindowController.mm in Sources */,
+				E18BF59D069FEA1400F076B8 /* HexWindowController.m in Sources */,
 				E18BF59E069FEA1400F076B8 /* FindSheetController.m in Sources */,
 				E18BF59F069FEA1400F076B8 /* Notifications.m in Sources */,
 				E18BF5A0069FEA1400F076B8 /* NSData-HexRepresentation.m in Sources */,
@@ -2034,7 +2034,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF7D5069FFC7600F076B8 /* FontWindowController.mm in Sources */,
+				E18BF7D5069FFC7600F076B8 /* FontWindowController.m in Sources */,
 				E18BF8EB06A0027700F076B8 /* Notifications.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

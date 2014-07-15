@@ -2,9 +2,7 @@
 #import "NovaWindowController.h"
 
 @interface DescWindowController : NovaWindowController
-{
-	IBOutlet NSView *graphicsView;
-}
+@property (weak) IBOutlet NSView *graphicsView;
 
 - (IBAction)chooseMovieFile:(id)sender;
 

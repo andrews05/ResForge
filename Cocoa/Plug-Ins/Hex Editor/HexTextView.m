@@ -476,7 +476,7 @@ static NSRange draggedRange;
 		
 		// selecting backwards
 		else if(oldRange.location != newRange.location && oldRange.length != newRange.length)
-//		else if(affinity == NSSelectionAffinityDownstream)
+			//else if(affinity == NSSelectionAffinityDownstream)
 		{
 			// selecting first byte
 			if(newRange.location % 3 == 2 && newRange.length == 1)			{	newRange.location -= 2;

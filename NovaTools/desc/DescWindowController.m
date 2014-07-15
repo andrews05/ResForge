@@ -1,6 +1,7 @@
 #import "DescWindowController.h"
 
 @implementation DescWindowController
+@synthesize graphicsView;
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {

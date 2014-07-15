@@ -34,12 +34,12 @@
 
 @interface ICONWindowController : NSWindowController <ResKnifePlugin>
 {
-	IBOutlet NSImageView			*imageView;
 	NSData							*resData;
 	NSImage							*resImage;
 	id <ResKnifeResource>	resource;
 }
+@property (weak) IBOutlet NSImageView *imageView;
 
--(IBAction)		imageViewChanged: (id)sender;
+-(IBAction) imageViewChanged: (id)sender;
 
 @end

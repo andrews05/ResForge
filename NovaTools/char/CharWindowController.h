@@ -73,9 +73,9 @@
 @property short kills;
 
 // Beginning Of Time
-@property (retain) NSCalendarDate *date;
-@property (retain) NSString *prefix;
-@property (retain) NSString *suffix;
+@property (strong) NSCalendarDate *date;
+@property (strong) NSString *prefix;
+@property (strong) NSString *suffix;
 
 // Starting Location
 @property short start1;

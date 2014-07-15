@@ -1,5 +1,5 @@
 #import "InfoWindowController.h"
-#import <Carbon/Carbon.h>	// Actually I only need CarbonCore.framework, but <Carbon/CarbonCore.h> and <CarbonCore/CarbonCore.h> don't work, so I don't know what else to do
+@import CoreServices.CarbonCore;
 #import "ResourceDocument.h"
 #import "Resource.h"
 #import "ApplicationDelegate.h"
@@ -9,8 +9,7 @@
 @implementation InfoWindowController
 
 static OSErr
-FSGetForkSizes(
-			   const FSRef *ref,
+FSGetForkSizes(const FSRef *ref,
 			   UInt64 *dataLogicalSize,	/* can be NULL */
 			   UInt64 *rsrcLogicalSize)	/* can be NULL */
 {

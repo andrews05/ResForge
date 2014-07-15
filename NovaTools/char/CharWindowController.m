@@ -48,7 +48,29 @@
 
 static void BSwapCharRec(CharRec* toSwap)
 {
-	
+	toSwap->startCash = CFSwapInt32BigToHost(toSwap->startCash);
+	toSwap->startShipType = CFSwapInt16BigToHost(toSwap->startShipType);
+	dispatch_apply(4, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		toSwap->startSystem[i] = CFSwapInt16BigToHost(toSwap->startSystem[i]);
+	});
+	dispatch_apply(4, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		toSwap->startGovt[i] = CFSwapInt16BigToHost(toSwap->startGovt[i]);
+	});
+	dispatch_apply(4, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		toSwap->startStatus[i] = CFSwapInt16BigToHost(toSwap->startStatus[i]);
+	});
+	toSwap->startKills = CFSwapInt16BigToHost(toSwap->startKills);
+	dispatch_apply(4, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		toSwap->introPictID[i] = CFSwapInt16BigToHost(toSwap->introPictID[i]);
+	});
+	dispatch_apply(4, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		toSwap->introPictDelay[i] = CFSwapInt16BigToHost(toSwap->introPictDelay[i]);
+	});
+	toSwap->introTextID = CFSwapInt16BigToHost(toSwap->introTextID);
+	toSwap->Flags = CFSwapInt16BigToHost(toSwap->Flags);
+	toSwap->startDay = CFSwapInt16BigToHost(toSwap->startDay);
+	toSwap->startMonth = CFSwapInt16BigToHost(toSwap->startMonth);
+	toSwap->startYear = CFSwapInt16BigToHost(toSwap->startYear);
 }
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)newResource
@@ -194,9 +216,9 @@ static void BSwapCharRec(CharRec* toSwap)
 	[localCenter addObserver:self selector:@selector(controlTextDidChange:) name:NSControlTextDidChangeNotification object:nil];
 	
 	// mark window changed if initial values were invalid
-	if( ![[resource data] isEqualToData:[NSData dataWithBytes:charRec length:sizeof(CharRec)]] )
+	if( ![[self.resource data] isEqualToData:[NSData dataWithBytes:charRec length:sizeof(CharRec)]] )
 	{
-		[resource touch];
+		[self.resource touch];
 		[self setDocumentEdited:YES];
 	}
 	
@@ -281,8 +303,8 @@ static void BSwapCharRec(CharRec* toSwap)
 
 - (IBAction)togglePrincipalChar:(id)sender
 {
-	principalChar = [principalCharButton state] ? YES : NO;
-	[resource touch];
+	self.principalChar = [principalCharButton state] ? YES : NO;
+	[self.resource touch];
 	[self setDocumentEdited:YES];
 }
 
@@ -365,21 +387,21 @@ static void BSwapCharRec(CharRec* toSwap)
 		short old = ship;
 		ship = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (ship != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == cashField )
 	{
 		int old = cash;
 		cash = [sender intValue];
 		if (cash != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == killsField )
 	{
 		short old = kills;
 		kills = (short)[sender intValue];
 		if (kills != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	
 	/* start date */
@@ -387,31 +409,31 @@ static void BSwapCharRec(CharRec* toSwap)
 	{
 		id old = date;
 		date = [[NSCalendarDate alloc] initWithYear:[old yearOfCommonEra] month:[old monthOfYear] day:[sender intValue] hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];;
-		if( ![date isEqualToDate:old] ) [resource touch];
+		if( ![date isEqualToDate:old] ) [self.resource touch];
 	}
 	else if( sender == monthField || sender == monthStepper )
 	{
 		id old = date;
 		date = [[NSCalendarDate alloc] initWithYear:[old yearOfCommonEra] month:[sender intValue] day:[old dayOfMonth] hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];;
-		if( ![date isEqualToDate:old] ) [resource touch];
+		if( ![date isEqualToDate:old] ) [self.resource touch];
 	}
 	else if( sender == yearField || sender == yearStepper )
 	{
 		id old = date;
 		date = [[NSCalendarDate alloc] initWithYear:[sender intValue] month:[old monthOfYear] day:[old dayOfMonth] hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];;
-		if( ![date isEqualToDate:old] ) [resource touch];
+		if( ![date isEqualToDate:old] ) [self.resource touch];
 	}
 	else if( sender == prefixField && [sender stringValue] )
 	{
 		id old = prefix;
 		prefix = [sender stringValue];
-		if( ![prefix isEqualToString:old] ) [resource touch];
+		if( ![prefix isEqualToString:old] ) [self.resource touch];
 	}
 	else if( sender == suffixField && [sender stringValue] )
 	{
 		id old = suffix;
 		suffix = [sender stringValue];
-		if( ![suffix isEqualToString:old] ) [resource touch];
+		if( ![suffix isEqualToString:old] ) [self.resource touch];
 	}
 	
 	/* planet combo boxes */
@@ -420,28 +442,28 @@ static void BSwapCharRec(CharRec* toSwap)
 		short old = start1;
 		start1 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (start1 !=old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == startField2 && [sender stringValue] )
 	{
 		short old = start2;
 		start2 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (start2 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == startField3 && [sender stringValue] )
 	{
 		short old = start3;
 		start3 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (start3 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == startField4 && [sender stringValue] )
 	{
 		short old = start4;
 		start4 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (start4 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 
 	/* starting government status */
@@ -450,28 +472,28 @@ static void BSwapCharRec(CharRec* toSwap)
 		short old = status1;
 		status1 = (short)[sender intValue];
 		if (status1 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == statusField2 )
 	{
 		short old = status2;
 		status2 = (short)([sender intValue]);
 		if (status2 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == statusField3 )
 	{
 		short old = status3;
 		status3 = (short)([sender intValue]);
 		if (status3 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == statusField4 )
 	{
 		short old = status4;
 		status4 = (short)([sender intValue]);
 		if (status4 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	
 	/* government combo boxes */
@@ -480,28 +502,28 @@ static void BSwapCharRec(CharRec* toSwap)
 		short old = government1;
 		government1 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (government1 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == governmentField2 && [sender stringValue] )
 	{
 		short old = government2;
 		government2 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (government2 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == governmentField3 && [sender stringValue] )
 	{
 		short old = government3;
 		government3 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (government3 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == governmentField4 && [sender stringValue] )
 	{
 		short old = government4;
 		government4 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (government4 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	
 	/* intro text combo box */
@@ -510,7 +532,7 @@ static void BSwapCharRec(CharRec* toSwap)
 		short old = introText;
 		introText = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (introText != old) {
-			[resource touch];
+			[self.resource touch];
 			[self update];		// to draw text in text box
 		}
 	}
@@ -521,28 +543,28 @@ static void BSwapCharRec(CharRec* toSwap)
 		short old = introPict1;
 		introPict1 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (introPict1 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == introPictField2 && [sender stringValue] )
 	{
 		short old = introPict2;
 		introPict2 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (introPict2 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == introPictField3 && [sender stringValue] )
 	{
 		short old = introPict3;
 		introPict3 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (introPict3 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == introPictField4 && [sender stringValue] )
 	{
 		short old = introPict4;
 		introPict4 = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (introPict4 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	
 	/* intro picture delays */
@@ -551,28 +573,28 @@ static void BSwapCharRec(CharRec* toSwap)
 		int old = introDelay1;
 		introDelay1 = (short)[sender intValue];
 		if (introDelay1 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == introDelayField2 )
 	{
 		int old = introDelay2;
 		introDelay2 = (short)[sender intValue];
 		if (introDelay2 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == introDelayField3 )
 	{
 		int old = introDelay3;
 		introDelay3 = (short)[sender intValue];
 		if (introDelay3 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == introDelayField4 )
 	{
 		int old = introDelay4;
 		introDelay4 = (short)[sender intValue];
 		if (introDelay4 != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	
 	/* on start field */
@@ -580,12 +602,12 @@ static void BSwapCharRec(CharRec* toSwap)
 	{
 		id old = onStart;
 		onStart = [sender stringValue];
-		if( ![onStart isEqualToString:old] ) [resource touch];
+		if( ![onStart isEqualToString:old] ) [self.resource touch];
 	}
 	
 	// hack to simply & easily parse combo boxes
 	[self comboBoxWillPopUp:notification];
-	[self setDocumentEdited:[resource isDirty]];
+	[self setDocumentEdited:[self.resource isDirty]];
 }
 
 - (NSDictionary *)validateValues
@@ -652,7 +674,7 @@ static void BSwapCharRec(CharRec* toSwap)
 	// save new data into resource structure (should have already been validated, and charRec filled out correctly)
 	NSMutableData *saveData = [NSMutableData dataWithBytes:charRec length:sizeof(CharRec)];
 	BSwapCharRec([saveData mutableBytes]);
-	[resource setData:saveData];
+	[self.resource setData:saveData];
 }
 
 @end

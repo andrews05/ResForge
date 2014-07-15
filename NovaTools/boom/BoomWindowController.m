@@ -4,13 +4,20 @@
 @synthesize image;
 @synthesize sound;
 @synthesize frameRate;
-@synthesize silent;
 @synthesize imageWell;
 @synthesize graphicsField;
 @synthesize soundField;
 @synthesize frameRateField;
 @synthesize soundButton;
 @synthesize playButton;
+
+static void byteswapBoomRec(BoomRec *toSwap)
+{
+	toSwap->FrameAdvance = CFSwapInt16BigToHost(toSwap->FrameAdvance);
+	toSwap->SoundIndex = CFSwapInt16BigToHost(toSwap->SoundIndex);
+	toSwap->GraphicIndex = CFSwapInt16BigToHost(toSwap->GraphicIndex);
+
+}
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
@@ -19,6 +26,7 @@
 	
 	boomRec = (BoomRec *) calloc( 1, sizeof(BoomRec) );
 	[[newResource data] getBytes:boomRec];
+	byteswapBoomRec(boomRec);
 	
 	// fill in default values if necessary
 	if( boomRec->GraphicIndex < 0 || boomRec->GraphicIndex > 63 )
@@ -53,9 +61,9 @@
 	[localCenter addObserver:self selector:@selector(controlTextDidChange:) name:NSControlTextDidChangeNotification object:nil];
 	
 	// mark window changed if initial values were invalid
-	if( ![[resource data] isEqualToData:[NSData dataWithBytes:boomRec length:sizeof(BoomRec)]] )
+	if( ![[self.resource data] isEqualToData:[NSData dataWithBytes:boomRec length:sizeof(BoomRec)]] )
 	{
-		[resource touch];
+		[self.resource touch];
 		[self setDocumentEdited:YES];
 	}
 	
@@ -68,12 +76,6 @@
 	// graphics
 	[graphicsField setObjectValue:[spinDataSource stringValueForResID:image]];
 	[frameRateField setObjectValue:frameRate];
-	
-	// sound
-	[soundField setObjectValue:[soundDataSource stringValueForResID:sound]];
-	[soundButton setState:!silent];
-	[soundField setEnabled:!silent];
-	[playButton setEnabled:!silent];
 	
 	// image well
 	[imageWell setImage:[[NSImage alloc] initWithData:[(id <ResKnifeResource>)[NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([plugBundle localizedStringForKey:@"spin" value:@"" table:@"Resource Types"]) andID:self.image inDocument:nil] data]]];
@@ -99,33 +101,30 @@
 		short old = image;
 		image = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (image != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == soundField && [sender stringValue]  )
 	{
 		short old = sound;
 		sound = [DataSource resIDFromStringValue:[sender stringValue]];
 		if (sound != old)
-			[resource touch];
+			[self.resource touch];
 	}
 	else if( sender == frameRateField )
 	{
 		id old = frameRate;
 		frameRate = @([sender intValue]);
-		if( ![frameRate isEqualToNumber:old] ) [resource touch];
+		if( ![frameRate isEqualToNumber:old] ) [self.resource touch];
 	}
 	
 	// hack to simply & easily parse combo boxes
 	[self comboBoxWillPopUp:notification];
-	[self setDocumentEdited:[resource isDirty]];
+	[self setDocumentEdited:[self.resource isDirty]];
 }
 
 - (IBAction)toggleSilence:(id)sender
 {
-	silent = ![soundButton state];
-	[soundField setEnabled:!silent];
-	[playButton setEnabled:!silent];
-	[resource touch];
+	[self.resource touch];
 	[self setDocumentEdited:YES];
 }
 
@@ -150,7 +149,7 @@
 	boomRec->GraphicIndex = image - kMinBoomSpinID;
 	boomRec->SoundIndex = sound - kMinBoomSoundID;
 	boomRec->FrameAdvance = [frameRate shortValue];
-	if( silent ) boomRec->SoundIndex = -1;
+	if( self.silent ) boomRec->SoundIndex = -1;
 	
 	// verify values are valid
 	if( boomRec->GraphicIndex < 0 || boomRec->GraphicIndex > 63 )
@@ -167,7 +166,9 @@
 - (void)saveResource
 {
 	// save new data into resource structure (should have already been validated, and boomRec filled out correctly)
-	[resource setData:[NSData dataWithBytes:boomRec length:sizeof(BoomRec)]];
+	NSMutableData *saveData = [NSMutableData dataWithBytes:boomRec length:sizeof(BoomRec)];
+	byteswapBoomRec([saveData mutableBytes]);
+	[self.resource setData:saveData];
 }
 
 @end

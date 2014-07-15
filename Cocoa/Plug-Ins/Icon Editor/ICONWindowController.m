@@ -28,6 +28,7 @@
 
 
 @implementation ICONWindowController
+@synthesize imageView;
 
 
 /* -----------------------------------------------------------------------------
@@ -38,7 +39,7 @@
 		resource.
    -------------------------------------------------------------------------- */
 
--(id)   initWithResource: (id)newResource
+- (instancetype)initWithResource:(id<ResKnifeResource>)newResource
 {
 	self = [self initWithWindowNibName:@"ICONWindow"];
 	if( !self ) return nil;
@@ -57,7 +58,7 @@
 	* DESTRUCTOR
    -------------------------------------------------------------------------- */
 
--(void) dealloc
+- (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -179,9 +180,9 @@
 		format and stash it in our resource.
    -------------------------------------------------------------------------- */
 
--(IBAction)		imageViewChanged: (id)sender
+- (IBAction)imageViewChanged: (id)sender
 {
-	NSArray*	reps = [resImage representations];
+	NSArray* reps = [resImage representations];
 	
 	NSLog( @"# %lu", (unsigned long)[reps count] );
 	

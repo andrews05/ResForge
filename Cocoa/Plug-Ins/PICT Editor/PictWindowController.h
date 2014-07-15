@@ -4,10 +4,6 @@
 #import "ResKnifeResourceProtocol.h"
 
 @interface PictWindowController : NSWindowController <ResKnifePlugin>
-{
-	IBOutlet NSImageView	*imageView;
-	
-	id <ResKnifeResource>	resource;
-}
+@property (weak) IBOutlet NSImageView *imageView;
 
 @end

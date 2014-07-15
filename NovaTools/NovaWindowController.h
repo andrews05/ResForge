@@ -10,8 +10,6 @@
 
 @interface NovaWindowController : NSWindowController <ResKnifePlugin>
 {
-	id <ResKnifeResource>	resource;
-	NSUndoManager					*undoManager;
 	//NSNotificationCenter			*localCenter;
 	NSBundle						*plugBundle;
 	
@@ -23,15 +21,15 @@
 	DataSource *soundDataSource;
 	DataSource *spinDataSource;
 }
-@property (retain) id<ResKnifeResource> resource;
-@property (retain) NSUndoManager *undoManager;
-@property (retain) DataSource *descriptionDataSource;
-@property (retain) DataSource *governmentDataSource;
-@property (retain) DataSource *pictureDataSource;
-@property (retain) DataSource *planetDataSource;
-@property (retain) DataSource *shipDataSource;
-@property (retain) DataSource *soundDataSource;
-@property (retain) DataSource *spinDataSource;
+@property (strong) id<ResKnifeResource> resource;
+@property (strong) NSUndoManager *undoManager;
+@property (strong) DataSource *descriptionDataSource;
+@property (strong) DataSource *governmentDataSource;
+@property (strong) DataSource *pictureDataSource;
+@property (strong) DataSource *planetDataSource;
+@property (strong) DataSource *shipDataSource;
+@property (strong) DataSource *soundDataSource;
+@property (strong) DataSource *spinDataSource;
 
 - (IBAction)toggleResID:(id)sender;
 

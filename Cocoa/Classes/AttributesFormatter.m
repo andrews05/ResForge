@@ -1,5 +1,5 @@
 #import "AttributesFormatter.h"
-#import <Carbon/Carbon.h>
+@import CoreServices.CarbonCore.Resources;
 
 @implementation AttributesFormatter
 

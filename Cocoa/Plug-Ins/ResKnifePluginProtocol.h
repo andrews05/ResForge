@@ -19,10 +19,10 @@
 
 
 /*!
-@protocol	ResKnifeTemplatePluginProtocol
+@protocol	ResKnifeTemplatePlugin
 @abstract	If you're implementing a template editor, you should implement this extended protocol instead of the regular plugin protocol.
 */
-@protocol ResKnifeTemplatePluginProtocol <ResKnifePlugin>
+@protocol ResKnifeTemplatePlugin <ResKnifePlugin>
 
 /*!
 @method		initWithResource:

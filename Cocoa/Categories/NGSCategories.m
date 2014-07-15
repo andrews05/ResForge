@@ -189,11 +189,6 @@
 @implementation NSOpenGLContext (CGLContextAccess)
 - (CGLContextObj)cglContext
 {
-#if !__LP64__
-	if(NSAppKitVersionNumber < 700.0)
-		return _contextAuxiliary;
-	else
-#endif
-		return (CGLContextObj) [self CGLContextObj];
+	return (CGLContextObj) [self CGLContextObj];
 }
 @end

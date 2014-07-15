@@ -3,13 +3,18 @@
 #import "HexTextView.h"
 
 @implementation HexEditorDelegate
+@synthesize controller;
+@synthesize offset;
+@synthesize hex;
+@synthesize ascii;
+@synthesize message;
 
 - (instancetype)init
 {
 	self = [super init];
 	if(!self) return nil;
 	
-	editedLow = NO;
+	self.editedLow = NO;
 	return self;
 }
 
@@ -23,20 +28,7 @@
 //	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidScroll:) name:NSViewBoundsDidChangeNotification object:[[ascii enclosingScrollView] contentView]];
 }
 
-/* REMOVE THESE WHEN I.B. IS FIXED */
-- (void)setHex:(id)newView
-{
-	hex = newView;
-}
-
-- (void)setAscii:(id)newView
-{
-	ascii = newView;
-}
-/* END REMOVE MARKER */
-
 /* data re-representation methods */
-
 - (NSString *)offsetRepresentation:(NSData *)data
 {
 	NSInteger dataLength = [data length], bytesPerRow = [controller bytesPerRow];
@@ -105,33 +97,9 @@
 	return newSelectedCharRange;
 }
 
-- (HexWindowController *)controller
-{
-	return controller;
-}
-
-- (NSTextView *)hex
-{
-	return hex;
-}
-
-- (NSTextView *)ascii
-{
-	return ascii;
-}
-
-- (BOOL)editedLow
-{
-	return editedLow;
-}
-
-- (void)setEditedLow:(BOOL)flag
-{
-	editedLow = flag;
-}
-
 - (NSRange)rangeForUserTextChange
 {
+	NSRange rangeForUserTextChange;
 	// if editing hex, convert hex selection to byte selection
 	if( [[controller window] firstResponder] == hex )
 		rangeForUserTextChange = [HexWindowController byteRangeFromHexRange:[hex rangeForUserTextChange]];

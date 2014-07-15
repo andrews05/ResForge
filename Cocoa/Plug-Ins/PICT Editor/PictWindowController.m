@@ -2,7 +2,13 @@
 //#import "Element.h"
 #import <stdarg.h>
 
+@interface PictWindowController ()
+@property (strong) id<ResKnifeResource> resource;
+@end
+
 @implementation PictWindowController
+@synthesize imageView;
+@synthesize resource;
 
 - (instancetype)initWithResource:(id)newResource
 {

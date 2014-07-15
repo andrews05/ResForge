@@ -21,7 +21,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 @implementation HexWindowController
 
-- (id)initWithResource:(id)newResource
+- (instancetype)initWithResource:(id)newResource
 {
 	self = [self initWithWindowNibName:@"HexWindow"];
 	if(!self) return nil;
@@ -31,13 +31,13 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	liveEdit = NO;
 	if(liveEdit)
 	{
-		resource = [newResource retain];	// resource to work on and monitor for external changes
+		resource = newResource;	// resource to work on and monitor for external changes
 		backup = [newResource copy];		// for reverting only
 	}
 	else
 	{
 		resource = [newResource copy];		// resource to work on
-		backup = [newResource retain];		// actual resource to change when saving data and monitor for external changes
+		backup = newResource;		// actual resource to change when saving data and monitor for external changes
 	}
 	bytesPerRow = 16;
 	
@@ -49,9 +49,6 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[undoManager release];
-	[(id)resource release];
-	[super dealloc];
 }
 
 - (void)windowDidLoad
@@ -78,8 +75,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	}
 	
 	// insert the resources' data into the text fields
-	[self refreshData:[resource data]];
-	[[self window] setResizeIncrements:NSMakeSize(kWindowStepWidthPerChar * kWindowStepCharsPerStep * [[self window] userSpaceScaleFactor], 1)];
+	[[self window] setResizeIncrements:NSMakeSize(kWindowStepWidthPerChar * kWindowStepCharsPerStep, 1)];
 	// min 346, step 224, norm 570, step 224, max 794
 	
 	// here because we don't want these notifications until we have a window! (Only register for notifications on the resource we're editing)
@@ -91,11 +87,17 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	// finally, set the window title & show the window
 	[[self window] setTitle:[resource defaultWindowTitle]];
 	[self showWindow:self];
+	[[textView layoutRepresenter] performLayout];
+}
+
+- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
+{
+	return [resource defaultWindowTitle];
 }
 
 - (void)windowDidResize:(NSNotification *)notification
 {
-	float width = [[(NSWindow *)[notification object] contentView] frame].size.width;
+	CGFloat width = [[(NSWindow *)[notification object] contentView] frame].size.width;
 	int oldBytesPerRow = bytesPerRow;
 	bytesPerRow = (((width - (kWindowStepWidthPerChar * kWindowStepCharsPerStep) - 122) / (kWindowStepWidthPerChar * kWindowStepCharsPerStep)) + 1) * kWindowStepCharsPerStep;
 	if(bytesPerRow != oldBytesPerRow)
@@ -149,26 +151,37 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 {
 	if([[self window] isDocumentEdited])
 	{
-		NSBeginAlertSheet(@"Do you want to keep the changes you made to this resource?", @"Keep", @"Don’t Keep", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes cannot be saved later if you don't keep them.");
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+		NSAlert *alert = [[NSAlert alloc] init];
+		[alert setMessageText:NSLocalizedStringFromTableInBundle(@"KeepChangesDialogTitle", nil, bundle, nil)];
+		[alert setInformativeText:NSLocalizedStringFromTableInBundle(@"KeepChangesDialogMessage", nil, bundle, nil)];
+		[alert addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"KeepChangesButton", nil, bundle, nil)];
+		[alert addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"CancelButton", nil, bundle, nil)];
+		NSButton *button = [alert addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"DiscardChangesButton", nil, bundle, nil)];
+		[button setKeyEquivalent:@"d"];
+		[button setKeyEquivalentModifierMask:NSCommandKeyMask];
+		[alert beginSheetModalForWindow:sender modalDelegate:self didEndSelector:@selector(saveSheetDidClose:returnCode:contextInfo:) contextInfo:NULL];
+		//[alert release];
 		return NO;
 	}
 	else return YES;
 }
 
-- (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+- (void)saveSheetDidClose:(NSAlert *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	switch(returnCode)
 	{
-		case NSAlertDefaultReturn:		// keep
+		case NSAlertFirstButtonReturn:		// keep
 			[self saveResource:nil];
 			[[self window] close];
 			break;
 		
-		case NSAlertAlternateReturn:	// don't keep
-			[[self window] close];
+		case NSAlertSecondButtonReturn:	// cancel
 			break;
 		
-		case NSAlertOtherReturn:		// cancel
+		case NSAlertThirdButtonReturn:		// don't keep
+			[[sheet window] orderOut:nil];
+			[[self window] close];
 			break;
 	}
 }
@@ -186,13 +199,14 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 - (void)showFind:(id)sender
 {
 	// bug: HexWindowController allocs a sheet controller, but it's never disposed of
-	FindSheetController *sheetController = [[FindSheetController alloc] initWithWindowNibName:@"FindSheet"];
+	if (!sheetController)
+		sheetController = [[FindSheetController alloc] initWithWindowNibName:@"FindSheet"];
 	[sheetController showFindSheet:self];
 }
 
 - (void)resourceNameDidChange:(NSNotification *)notification
 {
-	[[self window] setTitle:[(id <ResKnifeResourceProtocol>)[notification object] defaultWindowTitle]];
+	[[self window] setTitle:[(id <ResKnifeResource>)[notification object] defaultWindowTitle]];
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
@@ -201,14 +215,13 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	// bug: if liveEdit is false and another editor changes backup, if we are dirty we need to ask the user whether to accept the changes from the other editor and discard our changes, or vice versa.
 	if([notification object] == (id)resource)
 	{
-		[self refreshData:[resource data]];
 		[self setDocumentEdited:YES];
 	}
 }
 
 - (void)resourceWasSaved:(NSNotification *)notification
 {
-	id <ResKnifeResourceProtocol> object = [notification object];
+	id <ResKnifeResource> object = [notification object];
 	if(liveEdit)
 	{
 		// haven't worked out what to do here yet
@@ -266,6 +279,10 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 - (NSData *)data
 {
 	return [resource data];
+}
+
+- (void)setData:(NSData *)data {
+	[resource setData:data];
 }
 
 - (int)bytesPerRow

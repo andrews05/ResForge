@@ -12,7 +12,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 
 @interface Resource ()
 @property (copy) NSString *_name;
-@property (retain) NSData *_data;
+@property (copy) NSData *_data;
 @end
 
 @implementation Resource

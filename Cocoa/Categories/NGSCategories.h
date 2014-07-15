@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#include <CoreServices/CoreServices.h>
 
 /*******************************/
 /*****       WARNING       *****/

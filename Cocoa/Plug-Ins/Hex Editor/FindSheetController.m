@@ -5,6 +5,19 @@
 @synthesize findString;
 @synthesize replaceString;
 
+@synthesize cancelButton;
+@synthesize findNextButton;
+@synthesize findReplaceForm;
+@synthesize replaceAllButton;
+
+@synthesize startAtTopBox;
+@synthesize wrapAroundBox;
+@synthesize searchBackwardsBox;
+@synthesize searchSelectionOnlyBox;
+@synthesize caseSensitiveBox;
+@synthesize matchEntireWordsBox;
+@synthesize searchASCIIOrHexRadios;
+
 /* FORM DELEGATION METHOD */
 
 - (void)controlTextDidEndEditing:(NSNotification *)notification

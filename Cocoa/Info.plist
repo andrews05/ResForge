@@ -5,7 +5,7 @@
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en_US</string>
+	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -64,7 +64,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>A resource editor for Mac OS X.</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.nickshanks.resknife</string>
+	<string>com.nickshanks.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

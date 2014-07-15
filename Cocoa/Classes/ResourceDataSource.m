@@ -1,7 +1,7 @@
 #import "ResourceDataSource.h"
 #import "ResourceDocument.h"
 #import "Resource.h"
-#import <limits.h>
+@import Darwin.C.limits;
 
 NSString *DataSourceWillAddResourceNotification = @"DataSourceWillAddResource";
 NSString *DataSourceDidAddResourceNotification = @"DataSourceDidAddResource";
