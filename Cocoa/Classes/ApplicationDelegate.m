@@ -18,7 +18,11 @@
 + (void)initialize
 {
 	// set default preferences
-	NSDictionary * prefDict = @{kPreserveBackups: @YES, kAutosave: @NO, kAutosaveInterval: @5, kDeleteResourceWarning: @YES, kLaunchAction: kOpenUntitledFile};
+	NSDictionary * prefDict = @{kPreserveBackups: @YES,
+								kAutosave: @NO,
+								kAutosaveInterval: @5,
+								kDeleteResourceWarning: @YES,
+								kLaunchAction: kOpenUntitledFile};
 	[[NSUserDefaults standardUserDefaults] registerDefaults:prefDict];
 }
 

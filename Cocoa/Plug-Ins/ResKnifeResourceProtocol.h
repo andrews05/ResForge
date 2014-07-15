@@ -23,22 +23,16 @@
 
 #import <Cocoa/Cocoa.h>
 
-@protocol ResKnifeResource <NSObject>
+@protocol ResKnifeResource <NSObject, NSCopying>
+@property NSString *name;
+@property OSType type;
+@property short resID;
+@property unsigned short attributes;
+@property NSData *data;
+@property (readonly) NSUInteger size;
+@property (readonly, getter = isDirty) BOOL dirty;
 
 - (void)touch;
-- (BOOL)isDirty;
-
-- (NSString *)name;
-- (void)setName:(NSString *)newName;
-- (OSType)type;
-- (void)setType:(OSType)newType;
-- (short)resID;
-- (void)setResID:(short)newResID;
-- (unsigned short)attributes;
-- (void)setAttributes:(unsigned short)newAttributes;
-- (NSNumber *)size;
-- (NSData *)data;
-- (void)setData:(NSData *)newData;
 
 // Prevent a warning
 - (id)copy;

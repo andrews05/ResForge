@@ -20,6 +20,11 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 @synthesize dirty;
 @synthesize _data = data;
 @synthesize representedFork;
+@synthesize attributes;
+@synthesize type;
+@dynamic name;
+@dynamic data;
+@synthesize documentName = _docName;
 
 - (instancetype)init
 {
@@ -171,11 +176,6 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	return [Resource documentForResource:self];
 }
 
-- (void)setDocumentName:(NSString *)docName
-{
-	_docName = [docName copy];
-}
-
 - (NSString *)name
 {
 	return name;
@@ -268,9 +268,9 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	}
 }
 
-- (NSNumber *)size
+- (NSUInteger)size
 {
-	return @([data length]);
+	return [data length];
 }
 
 - (NSData *)data

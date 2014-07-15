@@ -23,16 +23,14 @@
 	
 	// the actual data
 	NSData			*data;
-	
-	// the document name for display to the user; updating this is the responsibility of the document itself
-	NSString		*_docName;
 }
 
 // accessor methods not part of the protocol
 @property (getter = isDirty) BOOL dirty;
 @property (copy) NSString *representedFork;
+	// the document name for display to the user; updating this is the responsibility of the document itself
+@property (copy) NSString* documentName;
 - (void)_setName:(NSString *)newName;
-- (void)setDocumentName:(NSString *)docName;
 
 // init methods
 - (instancetype)initWithType:(OSType)typeValue andID:(short)resIDValue;

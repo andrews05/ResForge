@@ -169,8 +169,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 - (void)saveSheetDidClose:(NSAlert *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	switch(returnCode)
-	{
+	switch (returnCode) {
 		case NSAlertFirstButtonReturn:		// keep
 			[self saveResource:nil];
 			[[self window] close];
@@ -180,6 +179,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 			break;
 		
 		case NSAlertThirdButtonReturn:		// don't keep
+		default:
 			[[sheet window] orderOut:nil];
 			[[self window] close];
 			break;
@@ -278,11 +278,12 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 - (NSData *)data
 {
-	return [resource data];
+	return resource.data;
 }
 
-- (void)setData:(NSData *)data {
-	[resource setData:data];
+- (void)setData:(NSData *)data
+{
+	resource.data = data;
 }
 
 - (int)bytesPerRow

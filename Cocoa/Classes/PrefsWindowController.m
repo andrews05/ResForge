@@ -11,12 +11,6 @@ NSString * const kNoLaunchOption = @"None";
 
 @implementation PrefsWindowController
 
-+ (void)initialize
-{
-	NSDictionary * prefDict = @{kPreserveBackups: @YES, kAutosave: @NO, kAutosaveInterval: @5, kDeleteResourceWarning: @YES, kLaunchAction: kOpenUntitledFile};
-	[[NSUserDefaults standardUserDefaults] registerDefaults:prefDict];
-}
-
 - (instancetype)init
 {
 	return self = [self initWithWindowNibName:@"PrefsWindow"];
@@ -43,16 +37,16 @@ NSString * const kNoLaunchOption = @"None";
 	NSUserDefaults *defaults	= [NSUserDefaults standardUserDefaults];
 	BOOL preserveBackups		= [defaults boolForKey:kPreserveBackups];
 	BOOL autosave				= [defaults boolForKey:kAutosave];
-	NSInteger autosaveInterval		= [defaults integerForKey:kAutosaveInterval];
+	NSInteger autosaveInterval	= [defaults integerForKey:kAutosaveInterval];
 	BOOL deleteResourceWarning	= [defaults boolForKey:kDeleteResourceWarning];
 	BOOL createNewDocument		= [[defaults stringForKey:kLaunchAction] isEqualToString:kOpenUntitledFile];
 	BOOL displayOpenPanel		= [[defaults stringForKey:kLaunchAction] isEqualToString:kDisplayOpenPanel];
-	int launchAction			= createNewDocument? 1:(displayOpenPanel? 2:0);
+	int launchAction			= createNewDocument ? 1 : (displayOpenPanel ? 2 : 0);
 	
 	// Éand set widgets accordingly
 	[[dataProtectionMatrix cellAtRow:preserveBackupsBox column:0] setState:preserveBackups];
 	[[dataProtectionMatrix cellAtRow:autosaveBox column:0] setState:autosave];
-	[autosaveIntervalField setStringValue:[NSString stringWithFormat:@"%ld", (long)autosaveInterval]];
+	[autosaveIntervalField setIntegerValue:autosaveInterval];
 	[[dataProtectionMatrix cellAtRow:deleteResourceWarningBox column:0] setState:deleteResourceWarning];
 	[launchActionMatrix selectCellAtRow:launchAction column:0];
 }

@@ -231,14 +231,14 @@
 		E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF6B6069FEA1800F076B8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* Element.m */; };
 		E18BF6B8069FEA1800F076B8 /* TemplateStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* TemplateStream.m */; };
-		E18BF6B9069FEA1800F076B8 /* ElementLSTB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* ElementLSTB.mm */; };
+		E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */; };
 		E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933E804DF317D00DD74B1 /* ElementPSTR.m */; };
 		E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933EE04DF381900DD74B1 /* ElementDWRD.m */; };
 		E18BF6BD069FEA1800F076B8 /* ElementLSTE.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933F704DFE80500DD74B1 /* ElementLSTE.m */; };
 		E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B304E872DB00AF65FE /* ElementDLNG.m */; };
 		E18BF6BF069FEA1800F076B8 /* ElementDBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B704E873F300AF65FE /* ElementDBYT.m */; };
 		E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047004EF040900F3B64D /* ElementOCNT.m */; };
-		E18BF6C1069FEA1800F076B8 /* ElementLSTC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047304EF122000F3B64D /* ElementLSTC.mm */; };
+		E18BF6C1069FEA1800F076B8 /* ElementLSTC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047304EF122000F3B64D /* ElementLSTC.m */; };
 		E18BF6C3069FEA1800F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E18BF7D1069FFC7600F076B8 /* FontWindowController.h */; };
 		E18BF7D5069FFC7600F076B8 /* FontWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18BF7D2069FFC7600F076B8 /* FontWindowController.m */; };
@@ -248,7 +248,7 @@
 		E18BFA3706A20B7A00F076B8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E18BFA3606A20B7A00F076B8 /* Info.plist */; };
 		E1A984FE099C309400A70612 /* DisplayTMPL.png in Resources */ = {isa = PBXBuildFile; fileRef = E1A984FD099C309300A70612 /* DisplayTMPL.png */; };
 		E1D0DB520A109A4F0011739C /* ElementKEYB.h in Headers */ = {isa = PBXBuildFile; fileRef = E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */; };
-		E1D0DB530A109A4F0011739C /* ElementKEYB.mm in Sources */ = {isa = PBXBuildFile; fileRef = E1D0DB4F0A109A4E0011739C /* ElementKEYB.mm */; };
+		E1D0DB530A109A4F0011739C /* ElementKEYB.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */; };
 		E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */; };
 		E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */; };
 /* End PBXBuildFile section */
@@ -414,7 +414,7 @@
 		3D0933BE04DF151C00DD74B1 /* TemplateStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TemplateStream.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0933BF04DF151C00DD74B1 /* TemplateStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TemplateStream.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementLSTB.h; sourceTree = "<group>"; };
-		3D0933C504DF1C0800DD74B1 /* ElementLSTB.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = ElementLSTB.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementLSTB.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0933E704DF317D00DD74B1 /* ElementPSTR.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementPSTR.h; sourceTree = "<group>"; };
 		3D0933E804DF317D00DD74B1 /* ElementPSTR.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementPSTR.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3D0933EE04DF381900DD74B1 /* ElementDWRD.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDWRD.m; sourceTree = "<group>"; };
@@ -437,7 +437,7 @@
 		3D4737B804E873F300AF65FE /* ElementDBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDBYT.h; sourceTree = "<group>"; };
 		3D50046F04EF040900F3B64D /* ElementOCNT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementOCNT.h; sourceTree = "<group>"; };
 		3D50047004EF040900F3B64D /* ElementOCNT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementOCNT.m; sourceTree = "<group>"; };
-		3D50047304EF122000F3B64D /* ElementLSTC.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = ElementLSTC.mm; sourceTree = "<group>"; };
+		3D50047304EF122000F3B64D /* ElementLSTC.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementLSTC.m; sourceTree = "<group>"; };
 		3D50047404EF122000F3B64D /* ElementLSTC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementLSTC.h; sourceTree = "<group>"; };
 		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
 		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
@@ -575,7 +575,7 @@
 		E1C5E08B055D98790001A04A /* NSData-HexRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData-HexRepresentation.h"; sourceTree = "<group>"; };
 		E1C5E08F055D98D50001A04A /* NSData-HexRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData-HexRepresentation.m"; sourceTree = "<group>"; };
 		E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementKEYB.h; sourceTree = "<group>"; };
-		E1D0DB4F0A109A4E0011739C /* ElementKEYB.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = ElementKEYB.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementKEYB.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F5041736036BD60801A8010A /* ResKnife.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ResKnife.scriptSuite; sourceTree = "<group>"; };
 		F50DFE17036C203F01A8010A /* English */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = English; path = Cocoa/English.lproj/ResKnife.scriptTerminology; sourceTree = SOURCE_ROOT; };
 		F50DFE22036C258201A8010A /* BoolTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = BoolTemplateField.cpp; sourceTree = "<group>"; };
@@ -817,13 +817,13 @@
 				3D50046F04EF040900F3B64D /* ElementOCNT.h */,
 				3D50047004EF040900F3B64D /* ElementOCNT.m */,
 				3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */,
-				3D0933C504DF1C0800DD74B1 /* ElementLSTB.mm */,
+				3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */,
 				3D50047404EF122000F3B64D /* ElementLSTC.h */,
-				3D50047304EF122000F3B64D /* ElementLSTC.mm */,
+				3D50047304EF122000F3B64D /* ElementLSTC.m */,
 				3D0933F604DFE80500DD74B1 /* ElementLSTE.h */,
 				3D0933F704DFE80500DD74B1 /* ElementLSTE.m */,
 				E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */,
-				E1D0DB4F0A109A4E0011739C /* ElementKEYB.mm */,
+				E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */,
 			);
 			name = "Field Types";
 			sourceTree = "<group>";
@@ -2012,14 +2012,14 @@
 				E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */,
 				E18BF6B6069FEA1800F076B8 /* Element.m in Sources */,
 				E18BF6B8069FEA1800F076B8 /* TemplateStream.m in Sources */,
-				E18BF6B9069FEA1800F076B8 /* ElementLSTB.mm in Sources */,
+				E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */,
 				E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */,
 				E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */,
 				E18BF6BD069FEA1800F076B8 /* ElementLSTE.m in Sources */,
 				E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */,
 				E18BF6BF069FEA1800F076B8 /* ElementDBYT.m in Sources */,
 				E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */,
-				E18BF6C1069FEA1800F076B8 /* ElementLSTC.mm in Sources */,
+				E18BF6C1069FEA1800F076B8 /* ElementLSTC.m in Sources */,
 				E14AC2770996BF1700D293E5 /* ElementDLLG.m in Sources */,
 				E14AC454099702F400D293E5 /* ElementFBYT.m in Sources */,
 				E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */,
@@ -2030,7 +2030,7 @@
 				E119379409987CC400A3A6EA /* ElementULLG.m in Sources */,
 				E119388E0999296B00A3A6EA /* ElementHEXD.m in Sources */,
 				E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */,
-				E1D0DB530A109A4F0011739C /* ElementKEYB.mm in Sources */,
+				E1D0DB530A109A4F0011739C /* ElementKEYB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
