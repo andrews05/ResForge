@@ -13,6 +13,10 @@
 //"Package Version" = "Package Version";	// vers 2
 //"Carbon Identifier" = "Carbon Identifier";	// carb 0
 
+/* Default window titles */
+"%@: %@ %i '%@'" = "%@: %@ %i “%@”";
+"%@: %@ %i" = "%@: %@ %i";
+
 /* Toolbar names and tooltips */
 "Create" = "Creu";
 "Create New Resource" = "Creu Adnodd Newydd";

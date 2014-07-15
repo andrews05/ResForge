@@ -2,5 +2,6 @@
 
 CFBundleName = "ResKnife";
 CFBundleShortVersionString = "0.6 svn";
-CFBundleGetInfoString = "ResKnife 0.6 svn, Dlighe-sgrìobhaidh © Nicolas Sauncs, 2001-2007.";
-NSHumanReadableCopyright = "© Nicolas Sauncs, 2001-2007.";
+CFBundleGetInfoString = "ResKnife 0.6 svn, Dlighe-sgrìobhaidh © Nicolas Sauncs, 2001-2010.";
+NSHumanReadableCopyright = "© Nicolas Sauncs, 2001-2010.";
+ResourceMap = "Stòras Faidhle";

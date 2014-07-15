@@ -18,28 +18,28 @@
 "151.headerCell.title" = "Attributes";
 
 /* Class = "NSToolbarItem"; label = "Save"; ObjectID = "Q1a-zo-NRF"; */
-"Q1a-zo-NRF.label" = "Save";
+"Q1a-zo-NRF.label" = "Sàbhail";
 
 /* Class = "NSToolbarItem"; paletteLabel = "Save"; ObjectID = "Q1a-zo-NRF"; */
-"Q1a-zo-NRF.paletteLabel" = "Save";
+"Q1a-zo-NRF.paletteLabel" = "Sàbhail";
 
 /* Class = "NSToolbarItem"; label = "Delete"; ObjectID = "Tjh-mn-644"; */
-"Tjh-mn-644.label" = "Delete";
+"Tjh-mn-644.label" = "Sguab às";
 
 /* Class = "NSToolbarItem"; paletteLabel = "Delete"; ObjectID = "Tjh-mn-644"; */
-"Tjh-mn-644.paletteLabel" = "Delete";
+"Tjh-mn-644.paletteLabel" = "Sguab às";
 
 /* Class = "NSToolbarItem"; toolTip = "Delete Selected Resource"; ObjectID = "Tjh-mn-644"; */
-"Tjh-mn-644.toolTip" = "Delete Selected Resource";
+"Tjh-mn-644.toolTip" = "Sguab às Stòras Tagh";
 
 /* Class = "NSToolbarItem"; label = "Create"; ObjectID = "UqK-ij-uir"; */
-"UqK-ij-uir.label" = "Create";
+"UqK-ij-uir.label" = "Cruthaith";
 
 /* Class = "NSToolbarItem"; paletteLabel = "Create"; ObjectID = "UqK-ij-uir"; */
-"UqK-ij-uir.paletteLabel" = "Create";
+"UqK-ij-uir.paletteLabel" = "Cruthaith";
 
 /* Class = "NSToolbarItem"; toolTip = "Create New Resource"; ObjectID = "UqK-ij-uir"; */
-"UqK-ij-uir.toolTip" = "Create New Resource";
+"UqK-ij-uir.toolTip" = "Cruthaich Stòras Ùr";
 
 /* Class = "NSToolbarItem"; label = "View"; ObjectID = "j1D-Lf-7fv"; */
 "j1D-Lf-7fv.label" = "View";
@@ -48,36 +48,36 @@
 "j1D-Lf-7fv.paletteLabel" = "View";
 
 /* Class = "NSToolbarItem"; label = "Edit Hex"; ObjectID = "ll8-0X-0nN"; */
-"ll8-0X-0nN.label" = "Edit Hex";
+"ll8-0X-0nN.label" = "Deasaich Hex";
 
 /* Class = "NSToolbarItem"; paletteLabel = "Edit Hex"; ObjectID = "ll8-0X-0nN"; */
-"ll8-0X-0nN.paletteLabel" = "Edit Hex";
+"ll8-0X-0nN.paletteLabel" = "Deasaich Hex";
 
-"ll8-0X-0nN.toolTip" = "Edit Resource As Hexadecimal";
+"ll8-0X-0nN.toolTip" = "Deasaich Stòras As Hexadecimal";
 
 /* Class = "NSToolbarItem"; label = "Edit"; ObjectID = "mq4-BA-coh"; */
-"mq4-BA-coh.label" = "Edit";
+"mq4-BA-coh.label" = "Deasaich";
 
 /* Class = "NSToolbarItem"; paletteLabel = "Edit"; ObjectID = "mq4-BA-coh"; */
-"mq4-BA-coh.paletteLabel" = "Edit";
+"mq4-BA-coh.paletteLabel" = "Deasaich";
 
 /* Class = "NSToolbarItem"; toolTip = "Edit Resource in Default Editor"; ObjectID = "mq4-BA-coh"; */
-"mq4-BA-coh.toolTip" = "Edit Resource in Default Editor";
+"mq4-BA-coh.toolTip" = "Deasaich Stòras In Default Editor";
 
 /* Class = "NSToolbarItem"; label = "Export"; ObjectID = "r66-gl-m0a"; */
 "r66-gl-m0a.label" = "Export";
 
 /* Class = "NSToolbarItem"; paletteLabel = "Export Resource"; ObjectID = "r66-gl-m0a"; */
-"r66-gl-m0a.paletteLabel" = "Export Resource";
+"r66-gl-m0a.paletteLabel" = "Export Stòras";
 
 /* Class = "NSToolbarItem"; toolTip = "Export the resource's data to a file."; ObjectID = "r66-gl-m0a"; */
-"r66-gl-m0a.toolTip" = "Export the resource's data to a file.";
+"r66-gl-m0a.toolTip" = "Export the stòras's dàta to a faidhle";
 
 /* Class = "NSToolbarItem"; label = "Info"; ObjectID = "teQ-0f-KZt"; */
 "teQ-0f-KZt.label" = "Info";
 
 /* Class = "NSToolbarItem"; paletteLabel = "Show Info"; ObjectID = "teQ-0f-KZt"; */
-"teQ-0f-KZt.paletteLabel" = "Show Info";
+"teQ-0f-KZt.paletteLabel" = "Nochd Fios";
 
 /* Class = "NSToolbarItem"; toolTip = "Show Resource Information Window"; ObjectID = "teQ-0f-KZt"; */
-"teQ-0f-KZt.toolTip" = "Show Resource Information Window";
+"teQ-0f-KZt.toolTip" = "Nochd Stòras Fiosrachaidh Uinneag";

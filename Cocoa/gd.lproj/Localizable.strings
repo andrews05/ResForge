@@ -36,6 +36,11 @@
 //"%.1f MB" = "%.1f MB";
 //"%.1f GB" = "%.1f GB";
 
+/* Default window titles */
+"%@: %@ %i '%@'" = "%@: %@ %i “%@”";
+"%@: %@ %i" = "%@: %@ %i";
+
+
 /* Toolbar names and tooltips */
 "Create" = "Cruthaith";
 "Create New Resource" = "Cruthaich Stòras Ùr";
