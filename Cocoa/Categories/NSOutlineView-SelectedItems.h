@@ -2,7 +2,7 @@
 
 @interface NSOutlineView (NGSSelectedItems)
 
-- (id)selectedItem;
-- (NSArray *)selectedItems;
+- (nullable id)selectedItem;
+- (nonnull NSArray *)selectedItems;
 
 @end

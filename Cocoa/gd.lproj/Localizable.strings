@@ -21,7 +21,7 @@
 
 
 /* Document window default (grey) resource names */
-//"Data Fork" = "Dàta Fork";
+"Data Fork" = "Dàta Fork";
 //"Resource Fork" = "Resource Fork";
 //"Custom Fork “%@”" = "Custom Fork “%@”";
 "Untitled Resource" = "Stòras gun ainm";
@@ -45,13 +45,13 @@
 "Create" = "Cruthaith";
 "Create New Resource" = "Cruthaich Stòras Ùr";
 "Delete" = "Sguab às";
-//"Delete Selected Resource" = "Sguab às Stòras Tagh";
+"Delete Selected Resource" = "Sguab às Stòras Tagh";
 "Edit" = "Deasaich";
-//"Edit Resource In Default Editor" = "Deasaich Stòras In Default Editor";
+"Edit Resource In Default Editor" = "Deasaich Stòras In Default Editor";
 "Edit Hex" = "Deasaich Hex";
-//"Edit Resource As Hexadecimal" = "Deasaich Stòras As Hexadecimal";
+"Edit Resource As Hexadecimal" = "Deasaich Stòras As Hexadecimal";
 "Save" = "Sàbhail";
-//"Save To %@ Fork" = "Sàbhail To %@ Fork";
+"Save To %@ Fork" = "Sàbhail To %@ Fork";
 "Data" = "Dàta";
 "Resource" = "Stòras";
 "Show Info" = "Nochd Fios";
@@ -69,15 +69,16 @@
 "Create Resource “%@”" = "Cruthaich Stòras “%@”";
 "Delete Resource" = "Sguab às Stòras";
 "Delete Resource “%@”" = "Sguab às Stòras “%@”";
-//"Name Change" = "Ainm Change";
-//"ID Change" = "Uimhir Change";
-//"ID Change for “%@”" = "Uimhir Change for “%@”";
-//"Type Change" = "Seòrsa Change";
-//"Type Change for “%@”" = "Seòrsa Change for “%@”";
-//"Attributes Change" = "Buadhan Change";
-//"Attributes Change for “%@”" = "Buadhan Change for “%@”";
+"Name Change" = "Ainm Change";
+"ID Change" = "Uimhir Change";
+"ID Change for '%@'" = "Uimhir Change for “%@”";
+"Type Change" = "Seòrsa Change";
+"Type Change for '%@'" = "Seòrsa Change for “%@”";
+"Attributes Change" = "Buadhan Change";
+"Attributes Change for '%@'" = "Buadhan Change for “%@”";
 "Edit Resource" = "Deasaich Stòras";
 //"Edit of “%@”" = "Deasaich of “%@”";
+"Edit of table '%@'" = "Deasaich of “%@”";
 
 /* Resource menu item titles */
 "Create New Resource..." = "Cruthaich Stòras Ùr…";

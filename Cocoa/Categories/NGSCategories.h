@@ -22,7 +22,7 @@
 @updated		January 2004
 @abstract		Returns an immutable array of the objects at the given indicies.
 */
-- (NSArray *)subarrayWithIndicies:(NSIndexSet *)indicies;
+- (nonnull NSArray *)subarrayWithIndicies:(nonnull NSIndexSet *)indicies;
 @end
 
 @interface NSArray (NGSKeyValueExtensions)
@@ -32,21 +32,21 @@
 @discussion		Calls <tt>valueForKey:</tt> on each object in the array, returning the index of the first one encountered which itself returned the value passed in, according to <tt>isEqual:</tt>, or returns <tt>NSNotFound</tt> if no object matched for the given key/value pair. Mostly useful just for increasing code readability, as the methd is only one line long, but one that's not easy to understand at first glance.
 @updated		2005-02-23 NGS: Removed unnecessary code, <tt>indexOfObject:</tt> already returns <tt>NSNotFound</tt> for me.
 */
-- (NSInteger)indexOfFirstObjectReturningValue:(id)value forKey:(id)key;
+- (NSInteger)indexOfFirstObjectReturningValue:(nonnull id)value forKey:(nonnull id)key;
 /*!
 @method			firstObjectReturningValue:forKey:
 @updated		January 2003
 @discussion		Calls <tt>valueForKey:</tt> on each object in the array, returning the first one encountered which itself returned the value passed in, according to <tt>isEqual:</tt>. Returns <tt>nil</tt> if no matching object is found.
 @updated		2005-02-23 NGS: Removed message to <tt>indexOfFirstObjectReturningValue:forKey:</tt>, incorperated that method's code into this one.
 */
-- (id)firstObjectReturningValue:(id)value forKey:(id)key;
+- (nullable id)firstObjectReturningValue:(nonnull id)value forKey:(nonnull id)key;
 /*!
 @method			objectsReturningValue:forKey:
 @updated		January 2003
 @abstract		Returns an array containing all objects in the receiver which have <tt>value</tt> set for key <tt>key</tt>.
 @discussion		Calls <tt>valueForKey:</tt> on each object in the array, returning a new array containing all objects which themselves returned the value passed in, according to <tt>isEqual:</tt>. If no objects matched, this method returns an empty array.
 */
-- (NSArray *)objectsReturningValue:(id)value forKey:(id)key;
+- (nonnull NSArray *)objectsReturningValue:(nonnull id)value forKey:(nonnull id)key;
 @end
 
 @interface NSCharacterSet (NGSNewlineExtensions)
@@ -55,7 +55,7 @@
 @updated		March 2005
 @abstract		Returns a character set containing only the horizontal and vertical tab characters (U+0009, U+000B).
 */
-+ (NSCharacterSet *)tabCharacterSet;
++ (nonnull NSCharacterSet *)tabCharacterSet;
 @end
 
 @interface NSNumber (NGSRangeExtensions)
@@ -80,15 +80,21 @@
 /*!
 @method			createFSRef
 @updated		November 2002
-@abstract		Returns an <tt>FSRef</tt> for the absolute path represented by the receiver. The caller is responsible for disposing of the <tt>FSRef</tt>.
+@abstract		Returns an <tt>FSRef</tt> for the absolute path represented by the receiver. The caller is responsible for disposing of the <tt>FSRef</tt> via <tt>DisposePtr</tt>.
 */
-- (FSRef *)createFSRef;
+- (nullable FSRef *)createFSRef;
+/*!
+@method			createFSRef
+@updated		November 2002
+@abstract		Returns an <tt>FSRef</tt> for the absolute path represented by the receiver. The caller is responsible for disposing of the <tt>FSRef</tt> via <tt>DisposePtr</tt>.
+*/
+- (nullable FSRef *)createFSRefIsDirectory:(nullable BOOL*)directory;
 /*!
 @method			createFSSpec
 @updated		November 2002
-@abstract		Returns an <tt>FSSpec</tt> for the absolute path represented by the receiver. The caller is responsible for disposing of the <tt>FSSpec</tt>.
+@abstract		Returns an <tt>FSSpec</tt> for the absolute path represented by the receiver. The caller is responsible for disposing of the <tt>FSSpec</tt> via <tt>DisposePtr</tt>.
 */
-- (FSSpec *)createFSSpec;
+- (nullable FSSpec *)createFSSpec;
 @end
 
 @interface NSString (NGSBooleanExtensions)
@@ -104,7 +110,7 @@
 @method			stringWithBool:
 @updated		March 2001
 */
-+ (NSString *)stringWithBool:(BOOL)boolean;
++ (nonnull NSString *)stringWithBool:(BOOL)boolean;
 @end
 
 #pragma mark -
@@ -124,12 +130,12 @@
 @method			selectedItem
 @updated		September 2001
 */
-- (id)selectedItem;
+- (nullable id)selectedItem;
 /*!
 @method			selectedItems
 @updated		September 2001
 */
-- (NSArray *)selectedItems;
+- (nonnull NSArray *)selectedItems;
 @end
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
@@ -141,16 +147,9 @@
 @method			gradientWithAlpha:
 @updated		May 2007
 */
-+ (NSGradient *)aquaGradient;
-+ (NSGradient *)aquaGradientWithAlpha:(CGFloat)alpha;
-- (NSGradient *)gradientWithAlpha:(CGFloat)alpha;
++ (nonnull NSGradient *)aquaGradient;
++ (nonnull NSGradient *)aquaGradientWithAlpha:(CGFloat)alpha;
+- (nonnull NSGradient *)gradientWithAlpha:(CGFloat)alpha;
 @end
 
 #endif
-
-#pragma mark -
-#import <OpenGL/OpenGL.h>
-
-@interface NSOpenGLContext (CGLContextAccess)
-- (CGLContextObj)cglContext;
-@end

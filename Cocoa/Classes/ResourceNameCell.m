@@ -29,7 +29,6 @@
 	{
 		// save image and set to 16x16 pixels
 		image = newImage;
-		[image setScalesWhenResized:YES];
 		[image setSize:NSMakeSize(16,16)];
 	}
 }

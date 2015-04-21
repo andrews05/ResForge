@@ -80,13 +80,22 @@
 #pragma mark -
 
 @implementation NSString (NGSFSSpecExtensions)
-- (FSRef *)createFSRef
+- (FSRef *)createFSRefIsDirectory:(BOOL*)directory;
 {
 	// caller is responsible for disposing of the FSRef (method is a 'create' method)
+	Boolean isDir;
 	FSRef *fsRef = (FSRef *) NewPtrClear(sizeof(FSRef));
-	OSStatus error = FSPathMakeRef((const UInt8 *)[self fileSystemRepresentation], fsRef, NULL);
+	OSStatus error = FSPathMakeRef((const UInt8 *)[self fileSystemRepresentation], fsRef, &isDir);
 	if(error != noErr) fsRef = NULL;
+	if (directory) {
+		*directory = isDir;
+	}
 	return fsRef;
+}
+
+-(FSRef *)createFSRef
+{
+	return [self createFSRefIsDirectory:NULL];
 }
 
 - (FSSpec *)createFSSpec
@@ -134,7 +143,7 @@
         [items addObject:[self itemAtRow:rowIndex]];
         rowIndex = [indicies indexGreaterThanIndex:rowIndex];
     }
-	return items;
+	return [items copy];
 }
 @end
 
@@ -182,13 +191,3 @@
 @end
 
 #endif
-
-#pragma mark -
-
-/* CGLContext access for pre-10.3 */
-@implementation NSOpenGLContext (CGLContextAccess)
-- (CGLContextObj)cglContext
-{
-	return (CGLContextObj) [self CGLContextObj];
-}
-@end

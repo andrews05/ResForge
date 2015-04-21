@@ -53,7 +53,8 @@
 "Attributes Change" = "Attributes Change";
 "Attributes Change for '%@'" = "Attributes Change for “%@”";
 "Edit Resource" = "Edit Resource";
-"Edit of '%@'" = "Edit of “%@”";
+//"Edit of '%@'" = "Edit of “%@”";
+"Edit of table '%@'" = "Edit of “%@”";
 
 /* Resource menu item titles */
 "Create New Resource..." = "Create New Resource…";

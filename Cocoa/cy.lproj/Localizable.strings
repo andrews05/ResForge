@@ -47,15 +47,16 @@
 "Create Resource “%@”" = "Creu Adnodd “%@”";
 "Delete Resource" = "Dileu Adnodd";
 "Delete Resource “%@”" = "Dileu Adnodd “%@”";
-//"Name Change" = "Name Change";
+"Name Change" = "Name Change";
 //"ID Change" = "ID Change";
-//"ID Change for “%@”" = "ID Change for “%@”";
+//"ID Change for '%@'" = "ID Change for “%@”";
 //"Type Change" = "Type Change";
-//"Type Change for “%@”" = "Type Change for “%@”";
+//"Type Change for '%@'" = "Type Change for “%@”";
 //"Attributes Change" = "Attributes Change";
-//"Attributes Change for “%@”" = "Attributes Change for “%@”";
+//"Attributes Change for '%@'" = "Attributes Change for “%@”";
 "Edit Resource" = "Golygu Adnodd";
-"Edit of “%@”" = "Golygu y “%@”";
+//"Edit of “%@”" = "Golygu y “%@”";
+"Edit of table '%@'" = "Golygu y “%@”";
 
 /* Resource menu item titles */
 "Create New Resource..." = "Creu Adnodd Newydd…";
