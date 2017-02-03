@@ -28,6 +28,7 @@ extern NSString *RKResourcePboardType;
 {
 	if (self = [super init]) {
 		resources = [[NSMutableArray alloc] init];
+        resourcesByType = [[NSMutableDictionary alloc] init];
 		creator = 'ResK';	// should I be calling -setCreator & -setType here instead?
 		type = 'rsrc';
 	}
@@ -233,6 +234,7 @@ extern NSString *RKResourcePboardType;
 	
 	[resource setRepresentedFork:forkName];
 	[resources addObject:resource];
+	
 	return YES;
 }
 
@@ -771,9 +773,11 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	else {
 		NSArray *selected = [outlineView selectedItems];
 		for (Resource *resource in selected) {
-			id usedPlug = [self openResourceUsingEditor:resource];
-			if ([usedPlug isKindOfClass:[NSWindowController class]])
-				[self addWindowController:usedPlug];
+            if( [resource isKindOfClass: [Resource class]] ) {
+                id usedPlug = [self openResourceUsingEditor:resource];
+                if ([usedPlug isKindOfClass:[NSWindowController class]])
+                    [self addWindowController:usedPlug];
+            }
 		}
 	}
 }
@@ -783,9 +787,11 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	// opens the resource in its default template
 	NSArray *selected = [outlineView selectedItems];
 	for (Resource *resource in selected) {
-		id usedPlug = [self openResource:resource usingTemplate:GetNSStringFromOSType([resource type])];
-		if ([usedPlug isKindOfClass:[NSWindowController class]])
-			[self addWindowController:usedPlug];
+        if( [resource isKindOfClass: [Resource class]] ) {
+            id usedPlug = [self openResource:resource usingTemplate:GetNSStringFromOSType([resource type])];
+            if ([usedPlug isKindOfClass:[NSWindowController class]])
+                [self addWindowController:usedPlug];
+        }
 	}
 }
 
@@ -793,9 +799,11 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	NSArray *selected = [outlineView selectedItems];
 	for (Resource *resource in selected) {
-		id usedPlug = [self openResourceAsHex:resource];
-		if ([usedPlug isKindOfClass:[NSWindowController class]])
-			[self addWindowController:usedPlug];
+        if( [resource isKindOfClass: [Resource class]] ) {
+            id usedPlug = [self openResourceAsHex:resource];
+            if ([usedPlug isKindOfClass:[NSWindowController class]])
+                [self addWindowController:usedPlug];
+        }
 	}
 }
 

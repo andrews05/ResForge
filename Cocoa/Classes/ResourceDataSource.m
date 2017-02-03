@@ -15,11 +15,15 @@ extern NSString *RKResourcePboardType;
 @synthesize outlineView;
 @synthesize window;
 @synthesize resources;
+@synthesize resourcesByType;
 
 - (instancetype)init
 {
 	self = [super init];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDidChange:) name:ResourceDidChangeNotification object:nil];
+    
+    resourcesByType = [[NSMutableDictionary alloc] init];
+    
 	return self;
 }
 
@@ -36,7 +40,13 @@ extern NSString *RKResourcePboardType;
 - (void)setResources:(NSMutableArray *)newResources
 {
 	resources = newResources;
-	[resources sortUsingDescriptors:[outlineView sortDescriptors]];
+	//[resources sortUsingDescriptors:[outlineView sortDescriptors]];
+	
+	[resourcesByType removeAllObjects];
+	for( Resource* res in newResources )
+	{
+		[self addResourceToTypedList: res];
+	}
 	[outlineView reloadData];
 }
 
@@ -48,6 +58,7 @@ extern NSString *RKResourcePboardType;
 	// it seems very inefficient to reload the entire data source when just adding/removing one item
 	//	for large resource files, the data source gets reloaded hundreds of times upon load
 	[resources addObject:resource];
+	[self addResourceToTypedList: resource];
 	[outlineView reloadData];
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceDidAddResourceNotification object:dictionary];
@@ -61,6 +72,7 @@ extern NSString *RKResourcePboardType;
 	
 	// see comments in addResource: about inefficiency of reloadData
 	[resources removeObjectIdenticalTo:resource];
+	[self removeResourceFromTypedList: resource];
 	[outlineView reloadData];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceDidRemoveResourceNotification object:dictionary];
@@ -77,35 +89,51 @@ extern NSString *RKResourcePboardType;
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
-	#pragma unused(outlineView, item)
-	return resources[index];
+	#pragma unused(outlineView)
+	if( item == nil )
+		return [resourcesByType.allKeys objectAtIndex: index];
+	else
+		return [resourcesByType[item] objectAtIndex:index];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
-	#pragma unused(outlineView, item)
-	return NO;
+	#pragma unused(outlineView)
+	return( ![item isKindOfClass: [Resource class]] );
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	#pragma unused(outlineView, item)
-	return [resources count];
+	if( item == nil )
+		return resourcesByType.allKeys.count;
+	else if( [item isKindOfClass: [Resource class]] )
+		return 0;
+	else
+		return resourcesByType[item].count;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
 	#pragma unused(outlineView)
-	return [item valueForKey:[tableColumn identifier]];
+	if( [item isKindOfClass: [Resource class]] )
+		return [item valueForKey:[tableColumn identifier]];
+	else if( [tableColumn.identifier isEqualToString: @"name"] )
+		return item;
+	else
+		return @"";
 }
 
 - (void)outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
 	#pragma unused(outlineView)
-	NSString *identifier = [tableColumn identifier];
-	if([identifier isEqualToString:@"resID"])
-		[item setValue:@([object intValue]) forKey:identifier];
-	else [item setValue:object forKey:identifier];
+	if( [item isKindOfClass: [Resource class]] )
+	{
+		NSString *identifier = [tableColumn identifier];
+		if([identifier isEqualToString:@"resID"])
+			[item setValue:@([object intValue]) forKey:identifier];
+		else [item setValue:object forKey:identifier];
+	}
 }
 
 #pragma mark -
@@ -229,10 +257,32 @@ extern NSString *RKResourcePboardType;
 	return YES;
 }
 
-- (void)outlineView:(NSOutlineView *)oView sortDescriptorsDidChange:(NSArray *)oldDescriptors {	
-	[resources sortUsingDescriptors:[oView sortDescriptors]];
-	[oView reloadData];
+- (void)outlineView:(NSOutlineView *)oView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
+//    [resources sortUsingDescriptors:[oView sortDescriptors]];
+//    [oView reloadData];
 }
 
+
+-(void) addResourceToTypedList: (Resource*)inResource
+{
+    NSString* resType = GetNSStringFromOSType(inResource.type);
+	NSMutableArray* listsForType = resourcesByType[resType];
+	if( !listsForType )
+	{
+		listsForType = [NSMutableArray arrayWithObject: inResource];
+		resourcesByType[resType] = listsForType;
+	}
+	else
+	{
+		[listsForType addObject: inResource];
+	}
+}
+
+
+-(void)	removeResourceFromTypedList: (Resource*)inResource
+{
+	NSMutableArray* listsForType = resourcesByType[GetNSStringFromOSType(inResource.type)];
+	[listsForType removeObject: inResource];
+}
 
 @end

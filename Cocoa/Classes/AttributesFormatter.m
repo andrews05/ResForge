@@ -5,6 +5,9 @@
 
 - (NSString *)stringForObjectValue:(id)obj
 {
+	if( [obj isKindOfClass: [NSString class]] )
+		return obj;
+	
 	BOOL addComma = NO;
 	ResAttributes attributes = (short)[obj intValue];
 	NSMutableString *string = [[NSMutableString alloc] init];
@@ -58,7 +61,7 @@
 
 - (NSAttributedString *)attributedStringForObjectValue:(id)obj withDefaultAttributes:(NSDictionary *)attrs
 {
-	NSString *string = [self stringForObjectValue:obj];
+	NSString *string = [obj isKindOfClass: [NSString class]] ? obj : [self stringForObjectValue: obj];
 	return [[NSAttributedString alloc] initWithString:string attributes:attrs];
 }
 

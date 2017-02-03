@@ -8,7 +8,8 @@
 */
 
 @interface ResourceDataSource : NSObject <NSOutlineViewDataSource>
-@property (strong) NSMutableArray *resources;
+@property (strong) NSMutableArray<Resource*> *resources;
+@property (strong) NSMutableDictionary<NSString*,NSMutableArray<Resource*>*> *resourcesByType;
 @property (weak) IBOutlet NSOutlineView		*outlineView;
 @property (weak) IBOutlet NSWindow			*window;
 @property (weak) IBOutlet ResourceDocument	*document;
@@ -25,7 +26,7 @@
 /*!
 @method		setResources:
 */
-- (void)setResources:(NSMutableArray *)newResources;
+- (void)setResources:(NSMutableArray<Resource*> *)newResources;
 
 /*!
 @method		addResource:

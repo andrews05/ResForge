@@ -98,6 +98,9 @@
 
 - (void)outlineView:(NSOutlineView *)oView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
+	if( ![item isKindOfClass: [Resource class]] )
+		return;
+	
 	Resource *resource = (Resource *)item;
 	NSString *identifier = [tableColumn identifier];
 	
