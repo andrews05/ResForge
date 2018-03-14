@@ -11,8 +11,8 @@
 
 @property unsigned int bytesToGo;
 
-+ (id)streamWithBytes:(char *)d length:(unsigned int)l;
-+ (id)substreamWithStream:(TemplateStream *)s length:(unsigned int)l;
++ (instancetype)streamWithBytes:(char *)d length:(unsigned int)l;
++ (instancetype)substreamWithStream:(TemplateStream *)s length:(unsigned int)l;
 
 - (instancetype)initStreamWithBytes:(char *)d length:(unsigned int)l;
 - (instancetype)initWithStream:(TemplateStream *)s length:(unsigned int)l;

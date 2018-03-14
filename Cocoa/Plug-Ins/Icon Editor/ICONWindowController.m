@@ -187,7 +187,7 @@
 	NSLog( @"# %lu", (unsigned long)[reps count] );
 	
 	[resImage lockFocusOnRepresentation: reps[0]];
-	[[imageView image] dissolveToPoint: NSMakePoint(0,0) fraction:1];
+	[[imageView image] drawAtPoint: NSZeroPoint fromRect: NSZeroRect operation:NSCompositingOperationCopy fraction:1];
 	[resImage unlockFocus];
 	
 	[imageView setImage: resImage];

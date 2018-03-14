@@ -13,6 +13,7 @@
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5542DCE918DCEB9500AC9626 /* ResourceTypeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5542DCE718DCEB9500AC9626 /* ResourceTypeFormatter.h */; };
 		5542DCEA18DCEB9500AC9626 /* ResourceTypeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5542DCE818DCEB9500AC9626 /* ResourceTypeFormatter.m */; };
+		555DFD972059BCE700E1B774 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 555DFD992059BCE700E1B774 /* Credits.rtf */; };
 		559DE9B4189D665000D55D3A /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Icons.xcassets */; };
 		55FEF5A5189D758E00888898 /* NovaTools.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5A3189D758E00888898 /* NovaTools.xib */; };
 		55FEF5A8189D759F00888898 /* boom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5A6189D759F00888898 /* boom.xib */; };
@@ -425,7 +426,7 @@
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TemplateWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TemplateWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3D2EE5E204E5C56F00515930 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3D2EE5E204E5C56F00515930 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RKEditorRegistry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RKEditorRegistry.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -468,6 +469,7 @@
 		5542DCED18DCF1AC00AC9627 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5542DCEF18DCF1D300AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5542DCF018DCF1DC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		555DFD982059BCE700E1B774 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		557238941970F72800748CF6 /* gd */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/Application.strings; sourceTree = "<group>"; };
 		557B66B91970C0DD004A7BD5 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		559C9EF41975B16D00444C6A /* gd */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
@@ -494,39 +496,39 @@
 		55FEF5C6189D769A00888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/misn.strings; sourceTree = "<group>"; };
 		55FEF5C8189D769F00888898 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ship.strings; sourceTree = "<group>"; };
 		55FEF5CC189D77CF00888898 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
-		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PNGWindowController.h; path = "PNG Editor/PNGWindowController.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PNGWindowController.m; path = "PNG Editor/PNGWindowController.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PNGWindowController.xib; path = "PNG Editor/PNGWindowController.xib"; sourceTree = "<group>"; };
+		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PNGWindowController.h; path = "Cocoa/Plug-Ins/PNG Editor/PNGWindowController.h"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PNGWindowController.m; path = "Cocoa/Plug-Ins/PNG Editor/PNGWindowController.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PNGWindowController.xib; path = "Cocoa/Plug-Ins/PNG Editor/PNGWindowController.xib"; sourceTree = SOURCE_ROOT; };
 		B229EECA15A4B8720032C12C /* PNG Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PNG Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B229EECE15A4B8720032C12C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		B229EED215A4B8720032C12C /* PNG Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PNG Editor-Info.plist"; path = "../../PNG Editor/PNG Editor-Info.plist"; sourceTree = "<group>"; };
+		B229EED215A4B8720032C12C /* PNG Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PNG Editor-Info.plist"; sourceTree = "<group>"; };
 		B229EED415A4B8720032C12C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B229EED615A4B8720032C12C /* PNG Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PNG Editor-Prefix.pch"; path = "../../PNG Editor/PNG Editor-Prefix.pch"; sourceTree = "<group>"; };
+		B229EED615A4B8720032C12C /* PNG Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PNG Editor-Prefix.pch"; sourceTree = "<group>"; };
 		B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = org.derailer.ResKnife.System7SoundPlayer.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		B234338216AB59D0007134B9 /* System7SoundPlayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "System7SoundPlayer-Info.plist"; sourceTree = "<group>"; };
 		B234338416AB59D0007134B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B234338616AB59D0007134B9 /* System7SoundPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "System7SoundPlayer-Prefix.pch"; sourceTree = "<group>"; };
 		B234338716AB59D0007134B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
-		B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PatternWindowController.h; path = "Pattern Editor/PatternWindowController.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PatternWindowController.m; path = "Pattern Editor/PatternWindowController.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PatternWindowController.xib; path = "Pattern Editor/PatternWindowController.xib"; sourceTree = "<group>"; };
+		B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PatternWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PatternWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PatternWindowController.xib; sourceTree = "<group>"; };
 		B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pattern Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2B2C40B15A9464400D6F61C /* Pattern Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Pattern Editor-Info.plist"; path = "../../Pattern Editor/Pattern Editor-Info.plist"; sourceTree = "<group>"; };
+		B2B2C40B15A9464400D6F61C /* Pattern Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pattern Editor-Info.plist"; sourceTree = "<group>"; };
 		B2B2C40D15A9464400D6F61C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B2B2C40F15A9464400D6F61C /* Pattern Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Pattern Editor-Prefix.pch"; path = "../../Pattern Editor/Pattern Editor-Prefix.pch"; sourceTree = "<group>"; };
-		B2B2C41D15A9EEE100D6F61C /* RKPatternImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPatternImageCell.h; path = "Pattern Editor/RKPatternImageCell.h"; sourceTree = "<group>"; };
-		B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPatternImageCell.m; path = "Pattern Editor/RKPatternImageCell.m"; sourceTree = "<group>"; };
-		B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPatternView.h; path = "Pattern Editor/RKPatternView.h"; sourceTree = "<group>"; };
-		B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = RKPatternView.m; path = "Pattern Editor/RKPatternView.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B2B2C40F15A9464400D6F61C /* Pattern Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pattern Editor-Prefix.pch"; sourceTree = "<group>"; };
+		B2B2C41D15A9EEE100D6F61C /* RKPatternImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPatternImageCell.h; sourceTree = "<group>"; };
+		B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKPatternImageCell.m; sourceTree = "<group>"; };
+		B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPatternView.h; sourceTree = "<group>"; };
+		B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RKPatternView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B2FCA77F15A669C800696598 /* PictWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PictWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B2FCA78015A669C800696598 /* PictWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PictWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B2FCA78115A669C800696598 /* SupportedTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedTypes.plist; sourceTree = "<group>"; };
 		B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PICT Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2FCA78E15A66ACF00696598 /* PICT Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PICT Editor-Info.plist"; path = "../../../PICT Editor/PICT Editor-Info.plist"; sourceTree = "<group>"; };
+		B2FCA78E15A66ACF00696598 /* PICT Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PICT Editor-Info.plist"; sourceTree = "<group>"; };
 		B2FCA79015A66ACF00696598 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B2FCA79215A66ACF00696598 /* PICT Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PICT Editor-Prefix.pch"; path = "../../../PICT Editor/PICT Editor-Prefix.pch"; sourceTree = "<group>"; };
-		E11936620998551200A3A6EA /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B2FCA79215A66ACF00696598 /* PICT Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PICT Editor-Prefix.pch"; sourceTree = "<group>"; };
+		E11936620998551200A3A6EA /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E119367D099864AD00A3A6EA /* ElementUBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementUBYT.h; sourceTree = "<group>"; };
 		E119367E099864AD00A3A6EA /* ElementUBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementUBYT.m; sourceTree = "<group>"; };
 		E119367F099864AD00A3A6EA /* ElementULNG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementULNG.h; sourceTree = "<group>"; };
@@ -542,7 +544,7 @@
 		E119383D09991C5100A3A6EA /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		E119388B0999296B00A3A6EA /* ElementHEXD.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementHEXD.h; sourceTree = "<group>"; };
 		E119388C0999296B00A3A6EA /* ElementHEXD.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementHEXD.m; sourceTree = "<group>"; };
-		E1193948099940FD00A3A6EA /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E1193948099940FD00A3A6EA /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E13F7F9808F05B5C00E2A5CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E13F846908F18FBE00E2A5CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E14AC2740996BF1700D293E5 /* ElementDLLG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDLLG.h; sourceTree = "<group>"; };
@@ -577,7 +579,7 @@
 		E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementKEYB.h; sourceTree = "<group>"; };
 		E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementKEYB.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F5041736036BD60801A8010A /* ResKnife.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ResKnife.scriptSuite; sourceTree = "<group>"; };
-		F50DFE17036C203F01A8010A /* English */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = English; path = Cocoa/English.lproj/ResKnife.scriptTerminology; sourceTree = SOURCE_ROOT; };
+		F50DFE17036C203F01A8010A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = en.lproj/ResKnife.scriptTerminology; sourceTree = "<group>"; };
 		F50DFE22036C258201A8010A /* BoolTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = BoolTemplateField.cpp; sourceTree = "<group>"; };
 		F50DFE23036C258201A8010A /* BoolTemplateField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BoolTemplateField.h; sourceTree = "<group>"; };
 		F50DFE56036C258301A8010A /* DividerTemplateField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DividerTemplateField.cpp; sourceTree = "<group>"; };
@@ -606,7 +608,7 @@
 		F535444E0226B5F501A80001 /* NGSElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NGSElement.m; sourceTree = "<group>"; };
 		F543AFDB027B2A5001A8010C /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataSource.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F543AFDC027B2A5001A8010C /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F543AFF0027C716E01A8010C /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = "English.lproj/Resource Types.strings"; sourceTree = "<group>"; };
+		F543AFF0027C716E01A8010C /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = "en.lproj/Resource Types.strings"; sourceTree = "<group>"; };
 		F54625C6029174F601A8010C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		F54626490291750201A8010C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		F54E6220021B6A0801A80001 /* FindSheetController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FindSheetController.h; sourceTree = "<group>"; };
@@ -868,7 +870,7 @@
 				B229EED315A4B8720032C12C /* InfoPlist.strings */,
 				B229EED615A4B8720032C12C /* PNG Editor-Prefix.pch */,
 			);
-			name = "PNG Editor";
+			path = "PNG Editor";
 			sourceTree = "<group>";
 		};
 		B234338016AB59D0007134B9 /* System7SoundPlayer */ = {
@@ -904,7 +906,7 @@
 				B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */,
 				B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */,
 			);
-			name = "Pattern Editor";
+			path = "Pattern Editor";
 			sourceTree = "<group>";
 		};
 		B2FCA77C15A669C800696598 /* PICT Editor */ = {
@@ -1153,6 +1155,7 @@
 		F5B588350156D40B01000001 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				555DFD992059BCE700E1B774 /* Credits.rtf */,
 				B229EEE815A4FB6F0032C12C /* AboutPanel.xib */,
 				B229EEEA15A4FB6F0032C12C /* Application.xib */,
 				B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */,
@@ -1656,13 +1659,11 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				Base,
 				en,
 				ja,
-				Base,
+				fr,
+				de,
 				gd,
 				cy,
 			);
@@ -1737,6 +1738,7 @@
 				B229EEF515A4FB6F0032C12C /* Application.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */,
 				559DE9B4189D665000D55D3A /* Icons.xcassets in Resources */,
+				555DFD972059BCE700E1B774 /* Credits.rtf in Resources */,
 				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,
 				B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */,
 				B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */,
@@ -2097,9 +2099,17 @@
 		0EF7153F122BD0D0005DF94E /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3D2EE5E204E5C56F00515930 /* English */,
+				3D2EE5E204E5C56F00515930 /* en */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		555DFD992059BCE700E1B774 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				555DFD982059BCE700E1B774 /* en */,
+			);
+			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
 		55FEF5A3189D758E00888898 /* NovaTools.xib */ = {
@@ -2179,7 +2189,6 @@
 				B229EED415A4B8720032C12C /* en */,
 			);
 			name = InfoPlist.strings;
-			path = "../../PNG Editor";
 			sourceTree = "<group>";
 		};
 		B229EEE815A4FB6F0032C12C /* AboutPanel.xib */ = {
@@ -2297,7 +2306,6 @@
 				B2B2C40D15A9464400D6F61C /* en */,
 			);
 			name = InfoPlist.strings;
-			path = "../../Pattern Editor";
 			sourceTree = "<group>";
 		};
 		B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */ = {
@@ -2315,7 +2323,6 @@
 				B2FCA79015A66ACF00696598 /* en */,
 			);
 			name = InfoPlist.strings;
-			path = "../../../PICT Editor";
 			sourceTree = "<group>";
 		};
 		B2FCA79E15A6704900696598 /* FontDocument.xib */ = {
@@ -2337,7 +2344,7 @@
 		E11936650998552900A3A6EA /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E11936620998551200A3A6EA /* English */,
+				E11936620998551200A3A6EA /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2345,7 +2352,7 @@
 		E1193947099940FD00A3A6EA /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E1193948099940FD00A3A6EA /* English */,
+				E1193948099940FD00A3A6EA /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2353,7 +2360,7 @@
 		F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F50DFE17036C203F01A8010A /* English */,
+				F50DFE17036C203F01A8010A /* en */,
 			);
 			name = ResKnife.scriptTerminology;
 			sourceTree = "<group>";
@@ -2369,7 +2376,7 @@
 		F543AFEF027C716E01A8010C /* Resource Types.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F543AFF0027C716E01A8010C /* English */,
+				F543AFF0027C716E01A8010C /* en */,
 			);
 			name = "Resource Types.strings";
 			sourceTree = "<group>";
@@ -2382,8 +2389,7 @@
 				557B66B91970C0DD004A7BD5 /* gd */,
 			);
 			name = InfoPlist.strings;
-			path = Cocoa;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		F5B588440156D40B01000001 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -2393,8 +2399,7 @@
 				5542DCED18DCF1AC00AC9627 /* gd */,
 			);
 			name = Localizable.strings;
-			path = Cocoa;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
@@ -2404,8 +2409,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PNG Editor/PNG Editor-Prefix.pch";
-				INFOPLIST_FILE = "PNG Editor/PNG Editor-Info.plist";
+				GCC_PREFIX_HEADER = "Cocoa/Plug-Ins/PNG Editor/PNG Editor-Prefix.pch";
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/PNG Editor/PNG Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2418,8 +2423,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PNG Editor/PNG Editor-Prefix.pch";
-				INFOPLIST_FILE = "PNG Editor/PNG Editor-Info.plist";
+				GCC_PREFIX_HEADER = "Cocoa/Plug-Ins/PNG Editor/PNG Editor-Prefix.pch";
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/PNG Editor/PNG Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2467,8 +2472,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Pattern Editor/Pattern Editor-Prefix.pch";
-				INFOPLIST_FILE = "Pattern Editor/Pattern Editor-Info.plist";
+				GCC_PREFIX_HEADER = "Cocoa/Plug-Ins/Pattern Editor/Pattern Editor-Prefix.pch";
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Pattern Editor/Pattern Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2481,8 +2486,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Pattern Editor/Pattern Editor-Prefix.pch";
-				INFOPLIST_FILE = "Pattern Editor/Pattern Editor-Info.plist";
+				GCC_PREFIX_HEADER = "Cocoa/Plug-Ins/Pattern Editor/Pattern Editor-Prefix.pch";
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Pattern Editor/Pattern Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2495,8 +2500,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PICT Editor/PICT Editor-Prefix.pch";
-				INFOPLIST_FILE = "PICT Editor/PICT Editor-Info.plist";
+				GCC_PREFIX_HEADER = "Cocoa/Plug-Ins/PICT Editor/PICT Editor-Prefix.pch";
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/PICT Editor/PICT Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2509,8 +2514,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PICT Editor/PICT Editor-Prefix.pch";
-				INFOPLIST_FILE = "PICT Editor/PICT Editor-Info.plist";
+				GCC_PREFIX_HEADER = "Cocoa/Plug-Ins/PICT Editor/PICT Editor-Prefix.pch";
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/PICT Editor/PICT Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";

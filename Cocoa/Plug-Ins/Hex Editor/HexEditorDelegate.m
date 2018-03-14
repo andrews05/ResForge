@@ -99,7 +99,7 @@
 
 - (NSRange)rangeForUserTextChange
 {
-	NSRange rangeForUserTextChange;
+	NSRange rangeForUserTextChange = NSMakeRange(0, 0);
 	// if editing hex, convert hex selection to byte selection
 	if( [[controller window] firstResponder] == hex )
 		rangeForUserTextChange = [HexWindowController byteRangeFromHexRange:[hex rangeForUserTextChange]];

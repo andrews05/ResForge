@@ -99,7 +99,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 {
 	CGFloat width = [[(NSWindow *)[notification object] contentView] frame].size.width;
 	int oldBytesPerRow = bytesPerRow;
-	bytesPerRow = (((width - (kWindowStepWidthPerChar * kWindowStepCharsPerStep) - 122) / (kWindowStepWidthPerChar * kWindowStepCharsPerStep)) + 1) * kWindowStepCharsPerStep;
+	bytesPerRow = (int)((((width - (kWindowStepWidthPerChar * kWindowStepCharsPerStep) - 122) / (kWindowStepWidthPerChar * kWindowStepCharsPerStep)) + 1) * kWindowStepCharsPerStep);
 	if(bytesPerRow != oldBytesPerRow)
 		[offset	setString:[hexDelegate offsetRepresentation:[resource data]]];
 	[[hex enclosingScrollView] setFrameSize:NSMakeSize((bytesPerRow * 21) + 5, [[hex enclosingScrollView] frame].size.height)];

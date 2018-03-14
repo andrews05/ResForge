@@ -31,10 +31,10 @@ FSGetForkSizes(const FSRef *ref,
 	
 	/* get nodeFlags and catalog info */
 	result = FSGetCatalogInfo(ref, whichInfo, &catalogInfo, NULL, NULL,NULL);
-	require_noerr(result, FSGetCatalogInfo);
+	__Require_noErr(result, FSGetCatalogInfo);
 	
 	/* make sure FSRef was to a file */
-	require_action(0 == (catalogInfo.nodeFlags & kFSNodeIsDirectoryMask), FSRefNotFile, result = notAFileErr);
+	__Require_Action(0 == (catalogInfo.nodeFlags & kFSNodeIsDirectoryMask), FSRefNotFile, result = notAFileErr);
 	
 	if ( NULL != dataLogicalSize )
 	{

@@ -19,7 +19,7 @@
 @property (weak) NSMutableArray *parentArray; // The NSMutableArray* of the template field containing us, or the template window's list.
 @property BOOL isTMPL;// for debugging
 
-+ (id)elementForType:(NSString *)type withLabel:(NSString *)label;
++ (instancetype)elementForType:(NSString *)type withLabel:(NSString *)label;
 - (instancetype)initForType:(NSString *)type withLabel:(NSString *)label;
 
 // This is used to instantiate copies of the item from the template for storing data of the resource. A copy created with this is then sent readDataFrom:.
