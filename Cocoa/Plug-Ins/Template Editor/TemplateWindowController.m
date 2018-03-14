@@ -9,12 +9,47 @@
 #import "ElementDLNG.h"
 
 #import "NSOutlineView-SelectedItems.h"
+#import "CreateResourceSheetController.h"
 
 @implementation TemplateWindowController
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
-	return [self initWithResources:newResource, nil];
+	return [self initWithResource:newResource template:nil];
+}
+
+- (instancetype)initWithResource:(id <ResKnifeResource>)newResource template:(id <ResKnifeResource>)tmplResource
+{
+	self = [self initWithWindowNibName:@"TemplateWindow"];
+	if(!self)
+	{
+		return nil;
+	}
+	
+	toolbarItems = [[NSMutableDictionary alloc] init];
+	//undoManager = [[NSUndoManager alloc] init];
+	liveEdit = NO;
+	if(liveEdit)
+	{
+		resource = newResource;	// resource to work on
+		backup = [resource copy];	// for reverting only
+	}
+	else
+	{
+		backup = newResource;		// actual resource to change when saving data
+		resource = [backup copy];	// resource to work on
+	}
+	templateStructure = [[NSMutableArray alloc] init];
+	resourceStructure = [[NSMutableArray alloc] init];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:ResourceDataDidChangeNotification object:tmplResource];
+	[self readTemplate:tmplResource];	// reads (but doesn't retain) the template for this resource (TMPL resource with name equal to the passed resource's type)
+	
+	// load the window from the nib
+	[self setShouldCascadeWindows:YES];
+	[self window];
+	return self;
+
 }
 
 - (instancetype)initWithResources:(id <ResKnifeResource>)newResource, ...

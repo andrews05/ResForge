@@ -228,6 +228,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	}
 }
 
+@synthesize resID;
 - (short)resID
 {
 	return resID;
@@ -248,12 +249,12 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 	}
 }
 
-- (unsigned short)attributes
+- (RKResAttribute)attributes
 {
 	return attributes;
 }
 
-- (void)setAttributes:(unsigned short)newAttributes
+- (void)setAttributes:(RKResAttribute)newAttributes
 {
 	if(attributes != newAttributes)
 	{

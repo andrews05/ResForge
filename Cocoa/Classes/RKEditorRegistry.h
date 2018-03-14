@@ -48,6 +48,7 @@
 }
 
 + (RKEditorRegistry *)defaultRegistry;		// There's usually only one object, and this returns or creates it.
+@property (class, readonly, retain) RKEditorRegistry *defaultRegistry;
 - (IBAction)scanForPlugins:(id)sender;		// Called automatically by mainRegistry.
 - (Class)editorForType:(NSString *)typeStr;	// You probably want to call this.
 

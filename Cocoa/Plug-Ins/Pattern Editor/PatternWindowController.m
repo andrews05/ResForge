@@ -9,6 +9,11 @@
 #import "PatternWindowController.h"
 #import "ResKnifeResourceProtocol.h"
 
+@protocol WhereIsIt
+- (void)resourceDataDidChange:(NSNotification *)notification;
+
+@end
+
 @interface PatternWindowController ()
 
 @end

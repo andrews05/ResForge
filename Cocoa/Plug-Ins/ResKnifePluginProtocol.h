@@ -24,11 +24,16 @@
 */
 @protocol ResKnifeTemplatePlugin <ResKnifePlugin>
 
+@optional
 /*!
 @method		initWithResource:
 @abstract	Your template editor is inited with this call. The first argument is the resource to edit, the second is the TMPL resource that defines the data structure.
 */
-- (instancetype)initWithResources:(id <ResKnifeResource>)inResource, ...;
+- (instancetype)initWithResources:(id <ResKnifeResource>)inResource, ... DEPRECATED_ATTRIBUTE;
+
+@required
+- (instancetype)initWithResource:(id <ResKnifeResource>)inResource template:(id <ResKnifeResource>)tmpl;
+
 
 @optional
 

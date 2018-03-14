@@ -18,8 +18,8 @@
 	// resource information
 	NSString		*name;
 	OSType			type;
-	short			resID;			// signed short
-	UInt16			attributes;		// unsigned short
+	ResID			resID;			// signed short
+	RKResAttribute	attributes;		// unsigned short
 	
 	// the actual data
 	NSData			*data;
@@ -41,6 +41,8 @@
 + (instancetype)resourceOfType:(OSType)typeValue andID:(short)resIDValue;
 + (instancetype)resourceOfType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue;
 + (instancetype)resourceOfType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue data:(NSData *)dataValue;
+
++ (instancetype)resourceOfType:(OSType)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)searchDocument;
 
 + (Resource *)getResourceOfType:(OSType)typeValue andID:(short)resIDValue inDocument:(NSDocument *)searchDoc;
 

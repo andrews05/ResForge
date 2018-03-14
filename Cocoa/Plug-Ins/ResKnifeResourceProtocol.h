@@ -23,12 +23,29 @@
 
 #import <Cocoa/Cocoa.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+typedef NS_OPTIONS(unsigned short, RKResAttribute) {
+	//! System or application heap?
+	RKResAttributeSystemHeap = resSysHeap,
+	//! Purgeable resource?
+	RKResAttributePurgeable = resPurgeable,
+	//! Load it in locked?
+	RKResAttributeLocked = resLocked,
+	//! Protected?
+	RKResAttributeProtected = resProtected,
+	//! Load in on OpenResFile?
+	RKResAttributePreload = resPreload,
+	//! Resource changed?
+	RKResAttributeChanged = resChanged,
+};
+
 @protocol ResKnifeResource <NSObject, NSCopying>
-@property NSString *name;
+@property (nullable) NSString *name;
 @property OSType type;
-@property short resID;
-@property unsigned short attributes;
-@property NSData *data;
+@property ResID resID;
+@property RKResAttribute attributes;
+@property (nullable) NSData *data;
 @property (readonly) NSUInteger size;
 @property (readonly, getter = isDirty) BOOL dirty;
 
@@ -46,10 +63,10 @@
 //	All returned objects are auoreleased. Retain if you want to keep them.
 
 //	This method may return an empty array
-+ (NSArray *)allResourcesOfType:(OSType)typeValue inDocument:(NSDocument *)searchDocument;
++ (NSArray<id<ResKnifeResource>> *)allResourcesOfType:(OSType)typeValue inDocument:(nullable NSDocument *)searchDocument;
 //	The next two return the first matching resource found, or nil.
-+ (id)resourceOfType:(OSType)typeValue andID:(short)resIDValue inDocument:(NSDocument *)searchDocument;
-+ (id)resourceOfType:(OSType)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)searchDocument;
++ (nullable instancetype)resourceOfType:(OSType)typeValue andID:(ResID)resIDValue inDocument:(nullable NSDocument *)searchDocument;
++ (nullable instancetype)resourceOfType:(OSType)typeValue withName:(NSString *)nameValue inDocument:(nullable NSDocument *)searchDocument;
 
 @end
 
@@ -79,3 +96,5 @@ extern NSString *ResourceAttributesDidChangeNotification;
 extern NSString *ResourceDataDidChangeNotification;
 extern NSString *ResourceDidChangeNotification;
 extern NSString *ResourceWasSavedNotification;
+
+NS_ASSUME_NONNULL_END
