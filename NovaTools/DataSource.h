@@ -11,11 +11,11 @@
 
 - (NSDictionary *)data;
 - (void)setData:(NSMutableDictionary *)newData;
-- (void)setString:(NSString *)newData forResID:(int)resID;
+- (void)setString:(NSString *)newData forResID:(ResID)resID;
 - (void)parseForString:(NSString *)string sorted:(BOOL)sort;
 - (void)parseForString:(NSString *)string withinRange:(NSRange)resIDRange sorted:(BOOL)sort;
-- (id)objectValueForResID:(short)resID;
-- (NSString *)stringValueForResID:(short)resID;
+- (id)objectValueForResID:(ResID)resID;
+- (NSString *)stringValueForResID:(ResID)resID;
 + (short)resIDFromStringValue:(NSString *)string;
 + (NSString *)resNameFromStringValue:(NSString *)string;
 

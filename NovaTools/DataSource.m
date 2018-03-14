@@ -39,7 +39,7 @@
 	[self parseForString:@"" sorted:YES];
 }
 
-- (void)setString:(NSString *)string forResID:(int)resID
+- (void)setString:(NSString *)string forResID:(ResID)resID
 {
 	data[@(resID)] = string;
 }
@@ -70,12 +70,12 @@
 	if( sort ) [parsed sortUsingSelector:@selector(caseInsensitiveCompare:)];
 }
 
-- (id)objectValueForResID:(short)resID
+- (id)objectValueForResID:(ResID)resID
 {
 	return data[@(resID)];
 }
 
-- (NSString *)stringValueForResID:(short)resID
+- (NSString *)stringValueForResID:(ResID)resID
 {
 	if( resID && data[@(resID)] )
 		return [NSString stringWithFormat:@"%@ {%@}", data[@(resID)], @(resID)];
