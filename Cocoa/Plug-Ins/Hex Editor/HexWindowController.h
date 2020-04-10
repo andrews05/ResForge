@@ -1,6 +1,4 @@
 #import <Cocoa/Cocoa.h>
-#import "HexEditorDelegate.h"
-#import "HexTextView.h"
 #import <HexFiend/HexFiend.h>
 
 #import "ResKnifePluginProtocol.h"
@@ -22,26 +20,15 @@
 
 @interface HexWindowController : NSWindowController <ResKnifePlugin>
 {
-	IBOutlet HexEditorDelegate	*hexDelegate;
-	IBOutlet NSTextView			*offset;		// these four should be phased out whenever possible
-	IBOutlet HexTextView		*hex;			// these four should be phased out whenever possible
-	IBOutlet AsciiTextView		*ascii;			// these four should be phased out whenever possible
-	IBOutlet NSTextField		*message;		// these four should be phased out whenever possible
-	IBOutlet NSMenu				*copySubmenu;
-	IBOutlet NSMenu				*pasteSubmenu;
-	
 	FindSheetController			*sheetController;
 	
 	id <ResKnifeResource>	resource;
 	id <ResKnifeResource>	backup;
 	
 	BOOL			liveEdit;
-	int				bytesPerRow;
 	NSUndoManager   *undoManager;
-
-	IBOutlet HFTextView		*textView;
-	HFController			*textViewController;
 }
+@property (weak) IBOutlet HFTextView *textView;
 
 // conform to the ResKnifePlugin with the inclusion of these methods
 - (instancetype)initWithResource:(id)newResource;
@@ -62,14 +49,5 @@
 // accessors
 - (id)resource;
 - (NSData *)data;
-- (int)bytesPerRow;
-- (NSMenu *)copySubmenu;
-- (NSMenu *)pasteSubmenu;
-
-// bug: these should be functions not class member methods
-+ (NSRange)byteRangeFromHexRange:(NSRange)hexRange;
-+ (NSRange)hexRangeFromByteRange:(NSRange)byteRange;
-+ (NSRange)byteRangeFromAsciiRange:(NSRange)asciiRange;
-+ (NSRange)asciiRangeFromByteRange:(NSRange)byteRange;
 
 @end
