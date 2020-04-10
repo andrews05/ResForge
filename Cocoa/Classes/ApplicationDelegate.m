@@ -54,7 +54,7 @@
 	
 	// initalise an empty icon cache and create timer used to pre-cache a number of common icons
 	_icons = [[NSMutableDictionary alloc] init];
-	[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(precacheIcons:) userInfo:nil repeats:NO];
+    [self precacheIcons: nil];
 }
 
 
