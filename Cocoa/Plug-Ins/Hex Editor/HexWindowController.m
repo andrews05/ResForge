@@ -1,7 +1,5 @@
 #import "HexWindowController.h"
-#import "HexTextView.h"
 #import "FindSheetController.h"
-#import "NSData-HexRepresentation.h"
 
 /*
 OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
