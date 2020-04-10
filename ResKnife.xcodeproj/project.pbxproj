@@ -144,13 +144,9 @@
 		E18BF588069FEA1300F076B8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
 		E18BF590069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
 		E18BF591069FEA1400F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
-		E18BF592069FEA1400F076B8 /* HexEditorDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A0020C08E601A80001 /* HexEditorDelegate.h */; };
-		E18BF593069FEA1400F076B8 /* HexTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A2020C08E601A80001 /* HexTextView.h */; };
 		E18BF594069FEA1400F076B8 /* HexWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A7020C08E601A80001 /* HexWindowController.h */; };
 		E18BF595069FEA1400F076B8 /* FindSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = F54E6220021B6A0801A80001 /* FindSheetController.h */; };
 		E18BF596069FEA1400F076B8 /* NSData-HexRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = E1C5E08B055D98790001A04A /* NSData-HexRepresentation.h */; };
-		E18BF59B069FEA1400F076B8 /* HexEditorDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A1020C08E601A80001 /* HexEditorDelegate.m */; };
-		E18BF59C069FEA1400F076B8 /* HexTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A3020C08E601A80001 /* HexTextView.m */; };
 		E18BF59D069FEA1400F076B8 /* HexWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A8020C08E601A80001 /* HexWindowController.m */; };
 		E18BF59E069FEA1400F076B8 /* FindSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54E6221021B6A0801A80001 /* FindSheetController.m */; };
 		E18BF59F069FEA1400F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
@@ -1298,8 +1294,6 @@
 			files = (
 				E18BF590069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */,
 				E18BF591069FEA1400F076B8 /* ResKnifePluginProtocol.h in Headers */,
-				E18BF592069FEA1400F076B8 /* HexEditorDelegate.h in Headers */,
-				E18BF593069FEA1400F076B8 /* HexTextView.h in Headers */,
 				E18BF594069FEA1400F076B8 /* HexWindowController.h in Headers */,
 				E18BF595069FEA1400F076B8 /* FindSheetController.h in Headers */,
 				E18BF596069FEA1400F076B8 /* NSData-HexRepresentation.h in Headers */,
@@ -1943,8 +1937,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF59B069FEA1400F076B8 /* HexEditorDelegate.m in Sources */,
-				E18BF59C069FEA1400F076B8 /* HexTextView.m in Sources */,
 				E18BF59D069FEA1400F076B8 /* HexWindowController.m in Sources */,
 				E18BF59E069FEA1400F076B8 /* FindSheetController.m in Sources */,
 				E18BF59F069FEA1400F076B8 /* Notifications.m in Sources */,

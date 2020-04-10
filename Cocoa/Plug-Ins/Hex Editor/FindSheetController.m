@@ -39,7 +39,7 @@
 	[self window];
 	
 	// enable/disable boxes
-	[searchSelectionOnlyBox setEnabled:([(NSTextView *)[[sender window] firstResponder] rangeForUserTextChange].length != 0)];
+	[searchSelectionOnlyBox setEnabled:([[[[(HexWindowController *)sender textView] controller] selectedContentsRanges][0] HFRange].length != 0)];
 	
 	// set inital values
 	if( ![searchSelectionOnlyBox isEnabled] )	[searchSelectionOnlyBox setIntValue:0];
