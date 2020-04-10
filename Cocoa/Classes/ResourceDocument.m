@@ -424,7 +424,6 @@ extern NSString *RKResourcePboardType;
 	{
 		Str255	nameStr;
 		ResType	resTypeCode;
-		char	resTypeStr[5];		// includes null char for getCString:
 		short	resIDShort;
 		short	attrsShort;
 		long	sizeLong;
@@ -434,6 +433,7 @@ extern NSString *RKResourcePboardType;
 		if([resource representedFork] != nil) continue;
 		
 		sizeLong = [[resource data] length];
+        resTypeCode = [resource type];
 		resIDShort	= [resource resID];
 		attrsShort	= [resource attributes];
 		resourceHandle = NewHandleClear(sizeLong);
@@ -441,11 +441,6 @@ extern NSString *RKResourcePboardType;
 		// convert unicode name to pascal string
 		nameStr[0] = (unsigned char)[[resource name] lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
 		memmove(&nameStr[1], [[resource name] cStringUsingEncoding:NSMacOSRomanStringEncoding], nameStr[0]);
-		
-		// convert type string to ResType
-		OSType resType = resource.type;
-		memcpy(resTypeStr, &resType, 4);
-		resTypeCode = CFSwapInt32HostToBig(*(ResType *)resTypeStr);
 		
 		// convert NSData to resource handle
 		HLockHi(resourceHandle);
