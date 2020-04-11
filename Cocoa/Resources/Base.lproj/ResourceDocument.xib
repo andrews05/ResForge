@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ResourceDocument">
@@ -10,7 +11,6 @@
                 <outlet property="dataSource" destination="32" id="120"/>
                 <outlet property="mainWindow" destination="5" id="122"/>
                 <outlet property="outlineView" destination="145" id="155"/>
-                <outlet property="viewToolbarView" destination="166" id="172"/>
                 <outlet property="window" destination="5" id="8"/>
             </connections>
         </customObject>
@@ -21,7 +21,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="14" y="561" width="643" height="430"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2069" height="1183"/>
             <value key="minSize" type="size" width="250" height="200"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
@@ -30,11 +30,11 @@
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" findBarPosition="aboveHorizontalRuler" translatesAutoresizingMaskIntoConstraints="NO" id="146">
                         <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
                         <clipView key="contentView" id="wBO-8u-DWd">
-                            <rect key="frame" x="1" y="17" width="641" height="412"/>
+                            <rect key="frame" x="1" y="0.0" width="641" height="429"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" autosaveName="Resource List" headerView="164" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="147" id="145" customClass="RKOutlineView">
-                                    <rect key="frame" x="0.0" y="0.0" width="641" height="19"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="641" height="406"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -124,7 +124,6 @@
                                     </connections>
                                 </outlineView>
                             </subviews>
-                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="163">
                             <rect key="frame" x="1" y="386" width="525" height="15"/>
@@ -135,7 +134,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="164">
-                            <rect key="frame" x="0.0" y="0.0" width="641" height="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="641" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
@@ -151,11 +150,83 @@
                     <constraint firstAttribute="trailing" secondItem="146" secondAttribute="trailing" id="rZT-XY-e8g"/>
                 </constraints>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="BAC334F2-D895-447E-9E05-C55DD8F8276C" autosavesConfiguration="NO" prefersToBeShown="NO" displayMode="iconAndLabel" sizeMode="regular" id="XPc-uC-N93">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="62E6010F-6BE5-4A94-8B94-B0C107F77886" explicitItemIdentifier="com.nickshanks.resknife.toolbar.create" label="Create" paletteLabel="Create" toolTip="Create New Resource" tag="-1" image="Create" id="sSv-8g-zJC">
+                        <connections>
+                            <action selector="showCreateResourceSheet:" target="-2" id="gq7-IF-tYu"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="10C49397-14E8-4F96-A3B3-CCAA26CAE75A" explicitItemIdentifier="com.nickshanks.resknife.toolbar.delete" label="Delete" paletteLabel="Delete" toolTip="Delete Selected Resource" tag="-1" image="Delete" id="eac-Nk-mK5">
+                        <connections>
+                            <action selector="clear:" target="-2" id="PpP-oq-Bzh"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="E0F82655-77E2-4D6D-A81A-78F81B2E270F" explicitItemIdentifier="com.nickshanks.resknife.toolbar.edit" label="Edit" paletteLabel="Edit" toolTip="Edit Resource In Default Editor" tag="-1" image="Edit" id="b2X-5T-bCc">
+                        <connections>
+                            <action selector="openResources:" target="-2" id="rq1-kE-JHG"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="C8D85356-0403-4F88-87BC-5158DF9CEAC6" explicitItemIdentifier="com.nickshanks.resknife.toolbar.edithex" label="Edit Hex" paletteLabel="Edit Hex" toolTip="Edit Resource As Hexadecimal" tag="-1" image="Edit Hex" id="3yx-yF-8WS">
+                        <connections>
+                            <action selector="openResourcesAsHex:" target="-2" id="MEe-qg-LIz"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="1689B81D-68E3-47E8-862B-0736F9744A81" explicitItemIdentifier="com.nickshanks.resknife.toolbar.save" label="Save" paletteLabel="Save" tag="-1" image="Save" id="tCj-q7-1oo">
+                        <connections>
+                            <action selector="saveDocument:" target="-2" id="OrU-De-J57"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="3E6A357F-BD46-4830-9A93-5FE5A0096463" explicitItemIdentifier="com.nickshanks.resknife.toolbar.export" label="Export" paletteLabel="Export Resource Data" toolTip="Export the resource's data to a file" tag="-1" image="Export" id="UYC-Qk-qUw">
+                        <connections>
+                            <action selector="exportResources:" target="-2" id="Q36-jz-RBx"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="8CB4AAD6-A5F3-4E60-A4D9-BDE7CFC1FA2C" explicitItemIdentifier="com.nickshanks.resknife.toolbar.showinfo" label="Show Info" paletteLabel="Show Info" toolTip="Show Resource Information Window" tag="-1" image="NSInfo" id="7us-Ml-nAe">
+                        <connections>
+                            <action selector="showInfo:" target="tNB-Az-cgs" id="3dr-hh-Zxf"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="2984972A-01F9-4E9E-AC42-3C7C5649D6B7" explicitItemIdentifier="com.nickshanks.resknife.toolbar.view" label="View" paletteLabel="View" toolTip="View as a list or previews" id="aSH-4w-Wwd">
+                        <size key="minSize" width="38" height="24"/>
+                        <size key="maxSize" width="71" height="24"/>
+                        <segmentedControl key="view" verticalHuggingPriority="750" id="EwK-Up-8Wk">
+                            <rect key="frame" x="0.0" y="14" width="71" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="hbI-uC-T9v">
+                                <font key="font" metaFont="system"/>
+                                <segments>
+                                    <segment image="NSListViewTemplate" width="32" selected="YES"/>
+                                    <segment image="NSIconViewTemplate" width="32" tag="1"/>
+                                </segments>
+                            </segmentedCell>
+                        </segmentedControl>
+                        <connections>
+                            <action selector="changeView:" target="-2" id="4Pl-t2-6nT"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="Apn-Pj-HMi"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="d1R-hr-pl4"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="ATF-mj-yUD"/>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="sSv-8g-zJC"/>
+                    <toolbarItem reference="7us-Ml-nAe"/>
+                    <toolbarItem reference="eac-Nk-mK5"/>
+                    <toolbarItem reference="d1R-hr-pl4"/>
+                    <toolbarItem reference="b2X-5T-bCc"/>
+                    <toolbarItem reference="3yx-yF-8WS"/>
+                    <toolbarItem reference="d1R-hr-pl4"/>
+                    <toolbarItem reference="tCj-q7-1oo"/>
+                    <toolbarItem reference="Apn-Pj-HMi"/>
+                </defaultToolbarItems>
+            </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="9"/>
                 <outlet property="initialFirstResponder" destination="145" id="156"/>
             </connections>
         </window>
+        <customObject id="tNB-Az-cgs" customClass="ApplicationDelegate"/>
         <customObject id="24" userLabel="OutlineViewDelegate" customClass="OutlineViewDelegate">
             <connections>
                 <outlet property="attributesFormatter" destination="48" id="49"/>
@@ -171,41 +242,19 @@
             </connections>
         </customObject>
         <byteCountFormatter countStyle="memory" allowsNonnumericFormatting="NO" includesUnit="NO" id="CPK-3m-O3g">
-            <byteCountFormatterUnits key="allowedUnits" default="YES" bytes="YES"/>
+            <byteCountFormatterUnits key="allowedUnits" bytes="YES"/>
         </byteCountFormatter>
         <customObject id="48" userLabel="AttributesFormatter" customClass="AttributesFormatter"/>
-        <segmentedControl verticalHuggingPriority="750" id="166">
-            <rect key="frame" x="0.0" y="0.0" width="69" height="25"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <segmentedCell key="cell" alignment="left" style="texturedSquare" trackingMode="selectOne" id="167">
-                <font key="font" metaFont="system"/>
-                <segments>
-                    <segment image="NSListViewTemplate" width="33" selected="YES"/>
-                    <segment image="NSIconViewTemplate" width="33" tag="1"/>
-                </segments>
-            </segmentedCell>
-        </segmentedControl>
-        <button verticalHuggingPriority="750" id="168">
-            <rect key="frame" x="0.0" y="0.0" width="35" height="25"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSAddTemplate" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="169">
-                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                <font key="font" metaFont="system"/>
-            </buttonCell>
-        </button>
-        <button verticalHuggingPriority="750" id="170">
-            <rect key="frame" x="0.0" y="0.0" width="35" height="25"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Edit Hex" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="171">
-                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                <font key="font" metaFont="system"/>
-            </buttonCell>
-        </button>
     </objects>
     <resources>
+        <image name="Create" width="32" height="32"/>
+        <image name="Delete" width="32" height="32"/>
+        <image name="Edit" width="32" height="32"/>
         <image name="Edit Hex" width="32" height="32"/>
-        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="Export" width="32" height="32"/>
         <image name="NSIconViewTemplate" width="10" height="10"/>
+        <image name="NSInfo" width="32" height="32"/>
         <image name="NSListViewTemplate" width="14" height="10"/>
+        <image name="Save" width="32" height="32"/>
     </resources>
 </document>

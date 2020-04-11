@@ -21,7 +21,6 @@
 
 @property OSType creator;
 @property OSType type;
-@property (weak) IBOutlet NSView *viewToolbarView;
 
 - (BOOL)readFork:(NSString *)forkName asStreamFromFile:(FSRef *)fileRef;
 - (BOOL)readResourceMap:(ResFileRefNum)fileRefNum;
