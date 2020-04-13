@@ -246,7 +246,7 @@
 				NSString *fileType = [[NSBundle mainBundle] localizedStringForKey:GetNSStringFromOSType(resourceType) value:@"" table:@"Resource Type Mappings"];
 				NSRange range = [fileType rangeOfString:@"."];
 				if(range.location == NSNotFound)
-					icon = [[NSWorkspace sharedWorkspace] iconForFileType:fileType];
+					icon = [[NSWorkspace sharedWorkspace] iconForFileType:[fileType lowercaseString]];
 				else	// a '.' character in a file type means ResKnife should look for a bundle icon with fileType as the bundle's identifier
 				{
 					NSString *bundlePath = [[NSBundle bundleWithIdentifier:fileType] bundlePath];

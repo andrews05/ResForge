@@ -196,8 +196,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 		
 		self._name = newName;
 		
-		// bug: this line is causing crashes!
-		//[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameDidChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameDidChangeNotification object:self];
 		self.dirty = YES;
 	}
 }
@@ -222,8 +221,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 		
 		type = newType;
 		
-		// bug: this line is causing crashes!
-		//[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeDidChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeDidChangeNotification object:self];
 		self.dirty = YES;
 	}
 }
@@ -243,8 +241,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 		
 		resID = newResID;
 		
-		// bug: this line is causing crashes!
-		//[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDDidChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDDidChangeNotification object:self];
 		self.dirty = YES;
 	}
 }
@@ -263,8 +260,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 		
 		attributes = newAttributes;
 		
-		// bug: this line is causing crashes!
-		//[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesDidChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceAttributesDidChangeNotification object:self];
 		self.dirty = YES;
 	}
 }

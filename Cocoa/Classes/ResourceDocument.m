@@ -27,8 +27,7 @@ extern NSString *RKResourcePboardType;
 - (instancetype)init
 {
 	if (self = [super init]) {
-		resources = [[NSMutableArray alloc] init];
-        resourcesByType = [[NSMutableDictionary alloc] init];
+        resources = [[NSMutableArray alloc] init];
 		creator = 'ResK';	// should I be calling -setCreator & -setType here instead?
 		type = 'rsrc';
 	}
@@ -199,6 +198,7 @@ extern NSString *RKResourcePboardType;
 	
 	
 	// translate NSString into HFSUniStr255 -- in 10.4 this can be done with FSGetHFSUniStrFromString
+    OSErr error = noErr;
 	HFSUniStr255 uniForkName = { 0 };
 	uniForkName.length = ([forkName length] < 255)? (UInt16)[forkName length]:255;
 	if(uniForkName.length > 0)
@@ -212,7 +212,8 @@ extern NSString *RKResourcePboardType;
 	
 	// read fork contents into buffer, bug: assumes no errors
 	FSIORefNum forkRefNum;
-	FSOpenFork(fileRef, uniForkName.length, uniForkName.unicode, fsRdPerm, &forkRefNum);
+	error = FSOpenFork(fileRef, uniForkName.length, uniForkName.unicode, fsRdPerm, &forkRefNum);
+    if (error) return NO;
 	FSReadFork(forkRefNum, fsFromStart, 0, forkLength, buffer, &forkLength);
 	FSCloseFork(forkRefNum);
 	
@@ -226,7 +227,7 @@ extern NSString *RKResourcePboardType;
 	
 	// customise fork name for default data & resource forks - bug: this should really be in resource data source!!
 	HFSUniStr255 resourceForkName;
-	OSErr error = FSGetResourceForkName(&resourceForkName);
+	error = FSGetResourceForkName(&resourceForkName);
 	if(!error && [[resource name] isEqualToString:@""])			// bug: should use FSGetDataForkName()
 		[resource _setName:NSLocalizedString(@"Data Fork", nil)];
 	else if(!error && [[resource name] isEqualToString:[NSString stringWithCharacters:resourceForkName.unicode length:resourceForkName.length]])
@@ -419,10 +420,7 @@ extern NSString *RKResourcePboardType;
 	UseResFile(fileRefNum);
 	
 	// loop over all our resources
-	Resource *resource;
-	NSEnumerator *enumerator = [resources objectEnumerator];
-	while(resource = [enumerator nextObject])
-	{
+    for (Resource* resource in [dataSource resources]) {
 		Str255	nameStr;
 		ResType	resTypeCode;
 		short	resIDShort;
@@ -573,7 +571,7 @@ extern NSString *RKResourcePboardType;
 		unsigned int i = 1;
 		NSString *filename, *extension;
 		NSDictionary *adjustments = @{@"sfnt": @"ttf", @"PNGf": @"png"};
-		for (Resource *resource in [outlineView selectedItems]) {
+		for (Resource *resource in [dataSource allResourcesForItems:[outlineView selectedItems]]) {
 			NSString *NSResType = GetNSStringFromOSType([resource type]);
 
 			Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType([resource type])];
@@ -656,7 +654,7 @@ extern NSString *RKResourcePboardType;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesWillChange:) name:ResourceAttributesWillChangeNotification object:nil];
 	
 //	[[controller window] setResizeIncrements:NSMakeSize(1,18)];
-	[dataSource setResources:resources];
+    [dataSource addResources:resources];
 }
 
 - (void)printShowingPrintPanel:(BOOL)flag
@@ -678,7 +676,10 @@ extern NSString *RKResourcePboardType;
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
 	NSInteger selectedRows = [outlineView numberOfSelectedRows];
-	Resource *resource = (Resource *) [outlineView selectedItem];
+    Resource *resource = nil;
+    if ([[outlineView selectedItem] isKindOfClass:[Resource class]]) {
+        resource = (Resource *)[outlineView selectedItem];
+    }
 	
 	// file menu
 	if([item action] == @selector(saveDocument:))			return [self isDocumentEdited];
@@ -771,7 +772,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	if ([event type] == NSLeftMouseUp && (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) & NSAlternateKeyMask) != 0)
 		[self openResourcesAsHex:sender];
 	else {
-		NSArray *selected = [outlineView selectedItems];
+        NSArray *selected = [dataSource allResourcesForItems:[outlineView selectedItems]];
 		for (Resource *resource in selected) {
             if( [resource isKindOfClass: [Resource class]] ) {
                 id usedPlug = [self openResourceUsingEditor:resource];
@@ -785,7 +786,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)openResourcesInTemplate:(id)sender
 {
 	// opens the resource in its default template
-	NSArray *selected = [outlineView selectedItems];
+	NSArray *selected = [dataSource allResourcesForItems:[outlineView selectedItems]];
 	for (Resource *resource in selected) {
         if( [resource isKindOfClass: [Resource class]] ) {
             id usedPlug = [self openResource:resource usingTemplate:GetNSStringFromOSType([resource type])];
@@ -797,7 +798,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (IBAction)openResourcesAsHex:(id)sender
 {
-	NSArray *selected = [outlineView selectedItems];
+	NSArray *selected = [dataSource allResourcesForItems:[outlineView selectedItems]];
 	for (Resource *resource in selected) {
         if( [resource isKindOfClass: [Resource class]] ) {
             id usedPlug = [self openResourceAsHex:resource];
@@ -989,10 +990,10 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)copy:(id)sender
 {
 	#pragma unused(sender)
-	NSArray *selectedItems = [outlineView selectedItems];
+	NSArray *selectedItems = [dataSource allResourcesForItems:[outlineView selectedItems]];
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	[pb declareTypes:@[RKResourcePboardType] owner:self];
-	[pb setData:[NSArchiver archivedDataWithRootObject:selectedItems] forType:RKResourcePboardType];
+	[pb setData:[NSKeyedArchiver archivedDataWithRootObject:selectedItems] forType:RKResourcePboardType];
 }
 
 - (IBAction)paste:(id)sender
@@ -1000,7 +1001,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	#pragma unused(sender)
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	if([pb availableTypeFromArray:@[RKResourcePboardType]])
-		[self pasteResources:[NSUnarchiver unarchiveObjectWithData:[pb dataForType:RKResourcePboardType]]];
+		[self pasteResources:[NSKeyedUnarchiver unarchiveObjectWithData:[pb dataForType:RKResourcePboardType]]];
 }
 
 - (void)pasteResources:(NSArray *)pastedResources
@@ -1070,11 +1071,11 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	Resource *resource;
 	NSEnumerator *enumerator;
-	NSArray *selectedItems = [outlineView selectedItems];
+    NSArray *selected = [dataSource allResourcesForItems:[outlineView selectedItems]];
 	
 	// enumerate through array and delete resources
 	[[self undoManager] beginUndoGrouping];
-	enumerator = [selectedItems reverseObjectEnumerator];		// reverse so an undo will replace items in original order
+	enumerator = [selected reverseObjectEnumerator];		// reverse so an undo will replace items in original order
 	while(resource = [enumerator nextObject])
 	{
 		[dataSource removeResource:resource];
@@ -1085,7 +1086,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[[self undoManager] endUndoGrouping];
 	
 	// generalise undo name if more than one was deleted
-	if([outlineView numberOfSelectedRows] > 1)
+	if([selected count] > 1)
 		[[self undoManager] setActionName:NSLocalizedString(@"Delete Resources", nil)];
 	
 	// deselect resources (otherwise other resources move into selected rows!)
@@ -1112,7 +1113,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (NSArray *)resources
 {
-	return resources;
+	return [dataSource resources];
 }
 
 - (OSType)creator

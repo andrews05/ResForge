@@ -29,58 +29,6 @@
 	}
 }
 
-///*!
-//@method		tableView:didClickTableColumn:
-//@pending	not needed in 10.3+, use existing sort functionality
-//*/
-//
-//- (void)tableView:(NSTableView*)tableView didClickTableColumn:(NSTableColumn *)tableColumn
-//{
-//	NSArray *newResources;
-//	NSArray *oldResources = [(ResourceDataSource *)[tableView dataSource] resources];
-//	
-//	// sort the array
-//	NSImage *indicator = [tableView indicatorImageInTableColumn:tableColumn];
-//	NSImage *upArrow = [NSTableView _defaultTableHeaderSortImage];
-//	if(indicator == upArrow)
-//		newResources = [oldResources sortedArrayUsingFunction:compareResourcesAscending context:[tableColumn identifier]];
-//	else newResources = [oldResources sortedArrayUsingFunction:compareResourcesDescending context:[tableColumn identifier]];
-//	
-//	// swap new array for old one
-//	[(ResourceDataSource *)[tableView dataSource] setResources:[NSMutableArray arrayWithArray:newResources]];
-//	[tableView reloadData];
-//}
-//
-///*!
-//@function	compareResourcesAscending
-//@updated	2003-10-25 NGS: now uses KVC methods to obtain the strings to compare
-//*/
-//
-//int compareResourcesAscending(Resource *r1, Resource *r2, void *context)
-//{
-//	NSString *key = (NSString *)context;
-//	// compare two NSStrings (case-insensitive)
-//	if([key isEqualToString:@"name"] || [key isEqualToString:@"type"])
-//		return [(NSString *)[r1 valueForKey:key] caseInsensitiveCompare:(NSString *)[r2 valueForKey:key]];
-//	// compare two NSNumbers (or any other class)
-//	else return [(NSNumber *)[r1 valueForKey:key] compare:(NSNumber *)[r2 valueForKey:key]];
-//}
-//
-///*!
-//@function	compareResourcesDescending
-//@updated	2003-10-25 NGS: now uses KVC methods to obtain the strings to compare
-//*/
-//
-//int compareResourcesDescending(Resource *r1, Resource *r2, void *context)
-//{
-//	NSString *key = (NSString *)context;
-//	// compare two NSStrings (case-insensitive)
-//	if([key isEqualToString:@"name"] || [key isEqualToString:@"type"])
-//		return -1 * [(NSString *)[r1 valueForKey:key] caseInsensitiveCompare: (NSString *)[r2 valueForKey:key]];
-//	// compare two NSNumbers (or any other class)
-//	else return -1 * [(NSNumber *)[r1 valueForKey:key] compare: (NSNumber *)[r2 valueForKey:key]];
-//}
-
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	if([[tableColumn identifier] isEqualToString:@"size"] || [[tableColumn identifier] isEqualToString:@"attributes"])
@@ -98,8 +46,10 @@
 
 - (void)outlineView:(NSOutlineView *)oView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-	if( ![item isKindOfClass: [Resource class]] )
+    if( ![item isKindOfClass: [Resource class]] ) {
+        [(ResourceNameCell *)cell setImage:nil];
 		return;
+    }
 	
 	Resource *resource = (Resource *)item;
 	NSString *identifier = [tableColumn identifier];
@@ -187,9 +137,12 @@
 - (void)keyDown:(NSEvent *)event
 {
 	NSInteger selectedRow = [self selectedRow];
-	if(selectedRow != -1 && [[event characters] isEqualToString:@"\r"])
-		[self editColumn:0 row:selectedRow withEvent:nil select:YES];
-	else if(selectedRow != -1 && [[event characters] isEqualToString:@"\x7F"])
+    if(selectedRow != -1 && [[event characters] isEqualToString:@"\r"]) {
+        Resource* resource = [self itemAtRow:selectedRow];
+        if ([resource isKindOfClass:[Resource class]] && [resource representedFork] == nil)
+            [self editColumn:0 row:selectedRow withEvent:nil select:YES];
+    }
+    else if(selectedRow != -1 && [[event characters] isEqualToString:@"\x7F"])
 		[(ResourceDocument *)[[[self window] windowController] document] deleteSelectedResources];
 	else [super keyDown:event];
 }

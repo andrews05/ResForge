@@ -90,7 +90,7 @@ FSGetCatalogInfo:
 	[nameView setEditable:(selectedResource != nil)];
 	[nameView setDrawsBackground:(selectedResource != nil)];
 	
-	if(selectedResource)
+	if(selectedResource && [selectedResource isKindOfClass:[Resource class]])
 	{
 		// set UI values
 		[[self window] setTitle:NSLocalizedString(@"Resource Info",nil)];
@@ -160,10 +160,21 @@ FSGetCatalogInfo:
 		currentDocument = [controller document];
 	else currentDocument = nil;
 	
-	if(currentDocument)
-		selectedResource = [[currentDocument outlineView] selectedItem];
-	else selectedResource = [controller resource];
-	[self updateInfoWindow];
+    if (currentDocument) {
+        [self setSelectedResource:[[currentDocument outlineView] selectedItem]];
+    } else {
+        [self setSelectedResource:[controller resource]];
+    }
+}
+
+- (void)setSelectedResource:(Resource *)resource
+{
+    if ([resource isKindOfClass:[Resource class]] && [resource representedFork] == nil) {
+        selectedResource = resource;
+    } else {
+        selectedResource = nil;
+    }
+    [self updateInfoWindow];
 }
 
 - (void)mainWindowChanged:(NSNotification *)notification
@@ -175,8 +186,7 @@ FSGetCatalogInfo:
 {
 	if(![[nameView stringValue] isEqualToString:[selectedResource name]])
 		[self nameDidChange:nameView];
-	selectedResource = (Resource *) [[notification object] selectedItem];
-	[self updateInfoWindow];
+	[self setSelectedResource:[[notification object] selectedItem]];
 }
 
 - (void)documentInfoDidChange:(NSNotification *)notification

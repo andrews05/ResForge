@@ -60,13 +60,15 @@
 		attributes ^= [[attributesMatrix cellAtRow:1 column:1] intValue]? resProtected:0;
 		
 		Resource *resource = [Resource resourceOfType:GetOSTypeFromNSString([typeView stringValue]) andID:(short)[resIDView intValue] withName:[nameView stringValue] andAttributes:attributes];
-		[resource setDocumentName:[document displayName]];
 		[[document undoManager] beginUndoGrouping];
 		[[document dataSource] addResource:resource];
 		if([[nameView stringValue] length] == 0)
 			[[document undoManager] setActionName:NSLocalizedString(@"Create Resource", nil)];
 		else [[document undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Create Resource '%@'", nil), [nameView stringValue]]];
 		[[document undoManager] endUndoGrouping];
+        NSInteger rowIndex = [[document outlineView] rowForItem:resource];
+        [[document outlineView] selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
+        [document openResources:nil];
 	}
 	[[self window] orderOut:nil];
 	[NSApp endSheet:[self window]];
