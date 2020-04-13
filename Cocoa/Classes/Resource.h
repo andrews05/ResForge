@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "ResourceDataSource.h"
 #import "../Plug-Ins/ResKnifeResourceProtocol.h"
 
 /*!
@@ -45,5 +46,6 @@
 + (instancetype)resourceOfType:(OSType)typeValue withName:(NSString *)nameValue inDocument:(NSDocument *)searchDocument;
 
 + (Resource *)getResourceOfType:(OSType)typeValue andID:(short)resIDValue inDocument:(NSDocument *)searchDoc;
++ (ResourceDataSource *)supportDataSource;
 
 @end

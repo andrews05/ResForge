@@ -1,4 +1,6 @@
 #import "RKSupportResourceRegistry.h"
+#import "Resource.h"
+#import "ResourceDocument.h"
 #import "../Categories/NGSCategories.h"
 
 @implementation RKSupportResourceRegistry
@@ -28,9 +30,34 @@
 	{
 		// NSLog(@"Examining %@", name);
 		if([[name pathExtension] isEqualToString:@"rsrc"])
-			// FIXME: this method was deprecated in 10.7 in favour of - (void)openDocumentWithContentsOfURL:(NSURL *)url display:(BOOL)displayDocument completionHandler:(void (^)(NSDocument *document, BOOL documentWasAlreadyOpen, NSError *error))completionHandler;
-			[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:[path stringByAppendingPathComponent:name]] display:YES error:NULL];
+            [RKSupportResourceRegistry openSupportResourceFile:[path stringByAppendingPathComponent:name]];
 	}
+}
+
++ (BOOL)openSupportResourceFile:(NSString *)fileName
+{
+    OSStatus        error = noErr;
+    FSRef           *fileRef = (FSRef *) NewPtrClear(sizeof(FSRef));
+    ResFileRefNum   fileRefNum = 0;
+    HFSUniStr255    fork;
+    
+    error = FSPathMakeRef((const UInt8 *)[fileName fileSystemRepresentation], fileRef, nil);
+    if (error) return NO;
+    
+    // Try to open resource fork
+    error = FSGetResourceForkName(&fork);
+    if (error) return NO;
+    error = FSOpenResourceFile(fileRef, fork.length, (UniChar *)fork.unicode, fsRdPerm, &fileRefNum);
+    if (error || !fileRefNum) {
+        // if opening the resource fork fails, try to open data fork instead
+        error = FSGetDataForkName(&fork);
+        if (error) return NO;
+        error = FSOpenResourceFile(fileRef, fork.length, (UniChar *)fork.unicode, fsRdPerm, &fileRefNum);
+        if (error || !fileRefNum) return NO;
+    }
+    [[Resource supportDataSource] addResources:[ResourceDocument readResourceMap:fileRefNum]];
+    FSCloseFork(fileRefNum);
+    return YES;
 }
 
 @end

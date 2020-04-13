@@ -23,7 +23,7 @@
 @property OSType type;
 
 - (BOOL)readFork:(NSString *)forkName asStreamFromFile:(FSRef *)fileRef;
-- (BOOL)readResourceMap:(ResFileRefNum)fileRefNum;
++ (NSMutableArray *)readResourceMap:(ResFileRefNum)fileRefNum;
 - (BOOL)writeResourceMap:(ResFileRefNum)fileRefNum;
 - (BOOL)writeForkStreamsToFile:(NSString *)fileName;
 

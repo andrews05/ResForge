@@ -27,7 +27,6 @@ extern NSString *RKResourcePboardType;
 - (instancetype)init
 {
 	if (self = [super init]) {
-        resources = [[NSMutableArray alloc] init];
 		creator = 'ResK';	// should I be calling -setCreator & -setType here instead?
 		type = 'rsrc';
 	}
@@ -146,7 +145,15 @@ extern NSString *RKResourcePboardType;
 		[[self undoManager] disableUndoRegistration];
 		
 		// then read resources from the selected fork
-		succeeded = [self readResourceMap:fileRefNum];
+		resources = [ResourceDocument readResourceMap:fileRefNum];
+        if (resources) {
+            succeeded = YES;
+            for (Resource* resource in resources) {
+                [resource setDocumentName:[self displayName]];
+            }
+        } else {
+            succeeded = NO;
+        }
 		
 		// get creator and type
 		FSCatalogInfo info;
@@ -239,9 +246,10 @@ extern NSString *RKResourcePboardType;
 	return YES;
 }
 
--(BOOL)readResourceMap:(ResFileRefNum)fileRefNum
++(NSMutableArray *)readResourceMap:(ResFileRefNum)fileRefNum
 {
 	OSStatus error = noErr;
+    NSMutableArray* resources = [[NSMutableArray alloc] init];
 	ResFileRefNum oldResFile = CurResFile();
 	UseResFile(fileRefNum);
 	
@@ -256,7 +264,7 @@ extern NSString *RKResourcePboardType;
 			{
 				NSLog(@"Error %d reading resource map...", (int)error);
 				UseResFile(oldResFile);
-				return NO;
+				return nil;
 			}
 			
 			Str255 nameStr;
@@ -283,10 +291,9 @@ extern NSString *RKResourcePboardType;
 			NSNumber	*resID		= @(resIDShort);
 			NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
 			Resource	*resource	= [Resource resourceOfType:resTypeCode andID:resIDShort withName:name andAttributes:attrsShort data:data];
-			[resource setDocumentName:[self displayName]];
 			[resources addObject:resource];		// array retains resource
 			if (badSize != 0)
-				NSLog(@"GetResourceSizeOnDisk() reported incorrect size for %@ resource %@ in %@: %li should be %li", resType, resID, [self displayName], badSize, sizeLong);
+				NSLog(@"GetResourceSizeOnDisk() reported incorrect size for %@ resource %@: %li should be %li", resType, resID, badSize, sizeLong);
 			
 			HUnlock(resourceHandle);
 			ReleaseResource(resourceHandle);
@@ -295,7 +302,7 @@ extern NSString *RKResourcePboardType;
 	
 	// save resource map and clean up
 	UseResFile(oldResFile);
-	return YES;
+	return resources;
 }
 
 /*!

@@ -25,6 +25,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 @dynamic name;
 @dynamic data;
 @synthesize documentName = _docName;
+static ResourceDataSource* supportDataSource;
 
 - (instancetype)init
 {
@@ -86,6 +87,8 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 			if(resource) return resource;
 		}
 	}
+    Resource *resource = [supportDataSource resourceOfType:typeValue andID:resIDValue];
+    if(resource) return resource;
 	return nil;
 }
 
@@ -113,6 +116,8 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 			if(resource) return resource;
 		}
 	}
+    Resource *resource = [supportDataSource resourceOfType:typeValue withName:nameValue];
+    if(resource) return resource;
 	return nil;
 }
 
@@ -127,6 +132,8 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 			if(resource) return resource;
 		}
 	}
+    Resource *resource = [supportDataSource resourceOfType:typeValue andID:resIDValue];
+    if(resource) return resource;
 	return nil;
 }
 
@@ -144,6 +151,14 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 		}
 	}
 	return nil;
+}
+
++ (ResourceDataSource *)supportDataSource
+{
+    if (!supportDataSource) {
+        supportDataSource = [[ResourceDataSource alloc] init];
+    }
+    return supportDataSource;
 }
 
 - (id)copyWithZone:(NSZone *)zone
