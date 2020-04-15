@@ -20,6 +20,7 @@ extern NSString *RKResourcePboardType;
 - (instancetype)init
 {
 	self = [super init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeWillChange:) name:ResourceTypeWillChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeDidChange:) name:ResourceTypeDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDidChange:) name:ResourceDidChangeNotification object:nil];
     
@@ -62,7 +63,7 @@ extern NSString *RKResourcePboardType;
 	// it seems very inefficient to reload the entire data source when just adding/removing one item
 	//	for large resource files, the data source gets reloaded hundreds of times upon load
 	[self addResourceToTypedList: resource];
-    [resource setDocumentName:[document displayName]];
+    [resource setDocument:document];
     [resourcesByType[@(resource.type)] sortUsingDescriptors:[outlineView sortDescriptors]];
 	[outlineView reloadData];
     [outlineView expandItem:@(resource.type)];
@@ -84,28 +85,47 @@ extern NSString *RKResourcePboardType;
 	[[document undoManager] registerUndoWithTarget:self selector:@selector(addResource:) object:resource];	// NB: I hope the undo manager retains the resource, because it just got deleted :)  -  undo action name set by calling function
 }
 
+-(void)addResourceToTypedList:(Resource*)inResource
+{
+    NSMutableArray* listsForType = resourcesByType[@(inResource.type)];
+    if( !listsForType )
+    {
+        listsForType = [NSMutableArray arrayWithObject: inResource];
+        resourcesByType[@(inResource.type)] = listsForType;
+        [allTypes addObject:GetNSStringFromOSType(inResource.type)];
+        [allTypes sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    }
+    else
+    {
+        [listsForType addObject: inResource];
+    }
+}
+
+-(void)removeResourceFromTypedList:(Resource*)inResource
+{
+    NSMutableArray* listsForType = resourcesByType[@(inResource.type)];
+    [listsForType removeObject: inResource];
+    if ([listsForType count] == 0) {
+        [resourcesByType removeObjectForKey:@(inResource.type)];
+        [allTypes removeObject:GetNSStringFromOSType(inResource.type)];
+    }
+}
+
+- (void)resourceTypeWillChange:(NSNotification *)notification
+{
+    Resource* resource = [notification object];
+    if ([resource document] == document)
+        [self removeResourceFromTypedList:resource];
+}
+
 - (void)resourceTypeDidChange:(NSNotification *)notification
 {
-    NSMutableArray* listsForType;
-    NSUInteger index;
     Resource* resource = [notification object];
-    // Search for resource - don't want to update if resource is not in this document
-    for (NSNumber* key in resourcesByType) {
-        listsForType = [resourcesByType objectForKey:key];
-        index = [listsForType indexOfObject:resource];
-        if (index != NSNotFound) {
-            [listsForType removeObjectAtIndex:index];
-            if ([listsForType count] == 0) {
-                [resourcesByType removeObjectForKey:key];
-                [allTypes removeObject:GetNSStringFromOSType([key intValue])];
-            }
-            [self addResourceToTypedList:resource];
-            [outlineView reloadData];
-            [outlineView expandItem:@(resource.type)];
-            NSInteger rowIndex = [outlineView rowForItem:resource];
-            [outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
-            break;
-        }
+    if ([resource document] == document) {
+        [self addResourceToTypedList:resource];
+        [resourcesByType[@(resource.type)] sortUsingDescriptors:[outlineView sortDescriptors]];
+        [outlineView reloadData];
+        [self selectResources:@[resource]];
     }
 }
 
@@ -130,6 +150,16 @@ extern NSString *RKResourcePboardType;
         }
     }
     return resources;
+}
+
+- (void)selectResources:(NSArray *)resources
+{
+    NSMutableIndexSet* indexes = [[NSMutableIndexSet alloc] init];
+    for (Resource* resource in resources) {
+        [outlineView expandItem:@(resource.type)];
+        [indexes addIndex:[outlineView rowForItem:resource]];
+    }
+    [outlineView selectRowIndexes:indexes byExtendingSelection:NO];
 }
 
 /* Data source protocol implementation */
@@ -312,34 +342,6 @@ extern NSString *RKResourcePboardType;
         [[resourcesByType objectForKey:key] sortUsingDescriptors:[outlineView sortDescriptors]];
     }
     [outlineView reloadData];
-}
-
-
--(void) addResourceToTypedList: (Resource*)inResource
-{
-	NSMutableArray* listsForType = resourcesByType[@(inResource.type)];
-	if( !listsForType )
-	{
-		listsForType = [NSMutableArray arrayWithObject: inResource];
-		resourcesByType[@(inResource.type)] = listsForType;
-        [allTypes addObject:GetNSStringFromOSType(inResource.type)];
-        [allTypes sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-	}
-	else
-	{
-		[listsForType addObject: inResource];
-	}
-}
-
-
--(void)	removeResourceFromTypedList: (Resource*)inResource
-{
-	NSMutableArray* listsForType = resourcesByType[@(inResource.type)];
-	[listsForType removeObject: inResource];
-    if ([listsForType count] == 0) {
-        [resourcesByType removeObjectForKey:@(inResource.type)];
-        [allTypes removeObject:GetNSStringFromOSType(inResource.type)];
-    }
 }
 
 @end

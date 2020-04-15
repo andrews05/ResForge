@@ -66,8 +66,7 @@
 			[[document undoManager] setActionName:NSLocalizedString(@"Create Resource", nil)];
 		else [[document undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Create Resource '%@'", nil), [nameView stringValue]]];
 		[[document undoManager] endUndoGrouping];
-        NSInteger rowIndex = [[document outlineView] rowForItem:resource];
-        [[document outlineView] selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
+        [[document dataSource] selectResources:@[resource]];
         [document openResources:nil];
 	}
 	[[self window] orderOut:nil];

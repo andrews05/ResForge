@@ -44,6 +44,11 @@
 - (NSArray *)allResourcesForItems:(NSArray *)items;
 
 /*!
+ @method    selectResources:
+ */
+- (void)selectResources:(NSArray *)resources;
+
+/*!
 @method		uniqueIDForType:
 */
 - (short)uniqueIDForType:(OSType)type;

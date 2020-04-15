@@ -24,7 +24,7 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 @synthesize type;
 @dynamic name;
 @dynamic data;
-@synthesize documentName = _docName;
+@synthesize document;
 static ResourceDataSource* supportDataSource;
 
 - (instancetype)init
@@ -137,22 +137,6 @@ static ResourceDataSource* supportDataSource;
 	return nil;
 }
 
-// should probably be in resource document, not resource, but it fits in with the above methods quite well
-+ (NSDocument *)documentForResource:(Resource *)resource
-{
-	for (NSDocument *doc in [[NSDocumentController sharedDocumentController] documents])
-	{
-		Resource *res;
-		NSEnumerator *enumerator2 = [[(ResourceDocument *)doc resources] objectEnumerator];
-		while(res = [enumerator2 nextObject])
-		{
-			if([res isEqual:resource])
-				return doc;
-		}
-	}
-	return nil;
-}
-
 + (ResourceDataSource *)supportDataSource
 {
     if (!supportDataSource) {
@@ -164,7 +148,7 @@ static ResourceDataSource* supportDataSource;
 - (id)copyWithZone:(NSZone *)zone
 {
 	Resource *copy = [[Resource alloc] initWithType:type andID:resID withName:name andAttributes:attributes data:[data copy]];
-	[copy setDocumentName:_docName];
+	[copy setDocument:document];
 	return copy;
 }
 
@@ -184,11 +168,6 @@ static ResourceDataSource* supportDataSource;
 {
 	dirty = newValue;
 	[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDidChangeNotification object:self];
-}
-
-- (NSDocument *)document
-{
-	return [Resource documentForResource:self];
 }
 
 - (NSString *)name
@@ -218,8 +197,8 @@ static ResourceDataSource* supportDataSource;
 
 - (NSString *)defaultWindowTitle
 {
-	if([name length] > 0)	return [NSString stringWithFormat: NSLocalizedString(@"%@: %@ %i '%@'", @"default window title format with resource name"), _docName, GetNSStringFromOSType(type), resID, name];
-	else					return [NSString stringWithFormat: NSLocalizedString(@"%@: %@ %i", @"default window title format without resource name"), _docName, GetNSStringFromOSType(type), resID];
+	if([name length] > 0)	return [NSString stringWithFormat: NSLocalizedString(@"%@: %@ %i '%@'", @"default window title format with resource name"), [document displayName], GetNSStringFromOSType(type), resID, name];
+	else					return [NSString stringWithFormat: NSLocalizedString(@"%@: %@ %i", @"default window title format without resource name"), [document displayName], GetNSStringFromOSType(type), resID];
 }
 
 - (OSType)type

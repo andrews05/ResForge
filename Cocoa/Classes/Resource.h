@@ -29,8 +29,7 @@
 // accessor methods not part of the protocol
 @property (getter = isDirty) BOOL dirty;
 @property (copy) NSString *representedFork;
-	// the document name for display to the user; updating this is the responsibility of the document itself
-@property (copy) NSString* documentName;
+@property (weak) NSDocument *document;
 - (void)_setName:(NSString *)newName;
 
 // init methods

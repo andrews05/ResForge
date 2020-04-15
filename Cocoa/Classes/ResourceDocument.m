@@ -149,7 +149,7 @@ extern NSString *RKResourcePboardType;
         if (resources) {
             succeeded = YES;
             for (Resource* resource in resources) {
-                [resource setDocumentName:[self displayName]];
+                [resource setDocument:self];
             }
         } else {
             succeeded = NO;
@@ -946,28 +946,34 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	// this saves the current resource's name so we can undo the change
 	Resource *resource = (Resource *) [notification object];
-	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setName:) object:[[resource name] copy]];
-	[[self undoManager] setActionName:NSLocalizedString(@"Name Change", nil)];
+    if ([resource document] == self) {
+        [[self undoManager] registerUndoWithTarget:resource selector:@selector(setName:) object:[[resource name] copy]];
+        [[self undoManager] setActionName:NSLocalizedString(@"Name Change", nil)];
+    }
 }
 
 - (void)resourceIDWillChange:(NSNotification *)notification
 {
 	// this saves the current resource's ID number so we can undo the change
 	Resource *resource = (Resource *) [notification object];
-	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setResID:) object:[@([resource resID]) copy]];
-	if([[resource name] length] == 0)
-		[[self undoManager] setActionName:NSLocalizedString(@"ID Change", nil)];
-	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"ID Change for '%@'", nil), [resource name]]];
+    if ([resource document] == self) {
+        [[[self undoManager] prepareWithInvocationTarget:resource] setResID:[resource resID]];
+        if([[resource name] length] == 0)
+            [[self undoManager] setActionName:NSLocalizedString(@"ID Change", nil)];
+        else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"ID Change for '%@'", nil), [resource name]]];
+    }
 }
 
 - (void)resourceTypeWillChange:(NSNotification *)notification
 {
 	// this saves the current resource's type so we can undo the change
 	Resource *resource = (Resource *) [notification object];
-	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setType:) object:[GetNSStringFromOSType([resource type]) copy]];
-	if([[resource name] length] == 0)
-		[[self undoManager] setActionName:NSLocalizedString(@"Type Change", nil)];
-	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Type Change for '%@'", nil), [resource name]]];
+    if ([resource document] == self) {
+        [(Resource*)[[self undoManager] prepareWithInvocationTarget:resource] setType:[resource type]];
+        if([[resource name] length] == 0)
+            [[self undoManager] setActionName:NSLocalizedString(@"Type Change", nil)];
+        else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Type Change for '%@'", nil), [resource name]]];
+    }
 }
 
 - (void)resourceAttributesWillChange:(NSNotification *)notification
@@ -1026,9 +1032,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		else
 		{
 			// resource slot is ocupied, ask user what to do
-			NSMutableArray *remainingResources = [[NSMutableArray alloc] initWithCapacity:1];
-			[remainingResources addObject:resource];
-			[remainingResources addObjectsFromArray:[enumerator allObjects]];
+			NSArray *remainingResources = [enumerator allObjects];
 			NSAlert *alert = [[NSAlert alloc] init];
 			alert.messageText = @"Paste Error";
 			alert.informativeText = [NSString stringWithFormat:@"There already exists a resource of type %@ with ID %hd. Do you wish to assign the pasted resource a unique ID, overwrite the existing resource, or skip pasting of this resource?", GetNSStringFromOSType([resource type]), [resource resID]];
@@ -1036,7 +1040,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 			[alert addButtonWithTitle:@"Overwrite"];
 			[alert addButtonWithTitle:@"Skip"];
 			[alert beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse returnCode) {
-				Resource *resource = remainingResources[0];
 				if(returnCode == NSAlertFirstButtonReturn)	// unique ID
 				{
 					Resource *newResource = [Resource resourceOfType:[resource type] andID:[dataSource uniqueIDForType:[resource type]] withName:[resource name] andAttributes:[resource attributes] data:[resource data]];
@@ -1049,8 +1052,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 				}
 				//else if(NSAlertAlternateReturn)			// skip
 				
-				// remove top resource and continue paste
-				[remainingResources removeObjectAtIndex:0];
+				// continue paste
 				[self pasteResources:remainingResources];
 			}];
 		}
