@@ -9,6 +9,6 @@
 @property (strong) ElementLSTB *groupElementTemplate;	// The item of which we're to create a copy.
 @property (weak) ElementOCNT *countElement;				// The "counter" element if we're the end of an LSTC list.
 
-- (IBAction)createListEntry:(id)sender;
+- (BOOL)createListEntry;
 
 @end

@@ -3,7 +3,16 @@
 // implements ZCNT, OCNT, BCNT, BZCT, WCNT, WZCT, LCNT, LZCT
 @implementation ElementOCNT
 @synthesize value;
+@synthesize entries;
 @dynamic stringValue;
+
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
+{
+    if (self = [super initForType:t withLabel:l]) {
+        entries = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
 
 - (id)copyWithZone:(NSZone *)zone
 {
@@ -12,6 +21,7 @@
 	
 	// always reset counter on copy
 	element.value = 0;
+    [element.entries removeAllObjects];
 	return element;
 }
 
@@ -63,15 +73,20 @@
 		   [self.type isEqualToString:@"LZCT"];
 }
 
-- (void)increment
+- (void)addEntry:(Element *)entry after:(Element *)after
 {
-	self.value++;// using -setValue for KVO
+    if (after == nil) {
+        [entries addObject:entry];
+    } else {
+        [entries insertObject:entry atIndex:[entries indexOfObject:after]];
+    }
+    value++;
 }
 
-- (void)decrement
+- (void)removeEntry:(Element *)entry
 {
-	if(value > 0)
-		self.value--;
+    [entries removeObject:entry];
+    value--;
 }
 
 - (NSString *)stringValue

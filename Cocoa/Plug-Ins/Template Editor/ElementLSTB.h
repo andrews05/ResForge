@@ -11,6 +11,7 @@
 @property (weak) ElementOCNT *countElement;			// Our "list counter" element.
 
 - (void)readDataForElements:(TemplateStream *)stream;
-- (IBAction)createListEntry:(id)sender;
+- (BOOL)createListEntry;
+- (BOOL)removeListEntry;
 
 @end

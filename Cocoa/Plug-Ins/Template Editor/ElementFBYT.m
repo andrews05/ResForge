@@ -16,8 +16,11 @@
 			length = 4;
 		else if ([t isEqualToString:@"FLLG"])
 			length = 8;
-		else
-			length = 0;
+        else {
+            // Fnnn
+            NSScanner *scanner = [NSScanner scannerWithString:[t substringFromIndex:1]];
+            [scanner scanHexInt:&length];
+        }
 	}
 	return self;
 }

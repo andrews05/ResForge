@@ -15,7 +15,7 @@
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	UInt64 tmp;
+	UInt64 tmp = 0;
 	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
 	value = CFSwapInt64BigToHost(tmp);
 }

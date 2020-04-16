@@ -11,6 +11,8 @@
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		49882A092447F45700D439BC /* ElementFCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A072447F45700D439BC /* ElementFCNT.h */; };
+		49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A082447F45700D439BC /* ElementFCNT.m */; };
 		5542DCE918DCEB9500AC9626 /* ResourceTypeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5542DCE718DCEB9500AC9626 /* ResourceTypeFormatter.h */; };
 		5542DCEA18DCEB9500AC9626 /* ResourceTypeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5542DCE818DCEB9500AC9626 /* ResourceTypeFormatter.m */; };
 		555DFD972059BCE700E1B774 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 555DFD992059BCE700E1B774 /* Credits.rtf */; };
@@ -409,6 +411,8 @@
 		3D50047404EF122000F3B64D /* ElementLSTC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementLSTC.h; sourceTree = "<group>"; };
 		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
 		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
+		49882A072447F45700D439BC /* ElementFCNT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementFCNT.h; sourceTree = "<group>"; };
+		49882A082447F45700D439BC /* ElementFCNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementFCNT.m; sourceTree = "<group>"; };
 		49F1C23C24404D2000D46B35 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		550B9045189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AboutPanel.xib; sourceTree = "<group>"; };
 		550B9046189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Application.xib; sourceTree = "<group>"; };
@@ -738,6 +742,8 @@
 				3D0933F704DFE80500DD74B1 /* ElementLSTE.m */,
 				E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */,
 				E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */,
+				49882A072447F45700D439BC /* ElementFCNT.h */,
+				49882A082447F45700D439BC /* ElementFCNT.m */,
 			);
 			name = "Field Types";
 			sourceTree = "<group>";
@@ -1195,6 +1201,7 @@
 				E14AC453099702F400D293E5 /* ElementFBYT.h in Headers */,
 				E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */,
 				E1193685099864AD00A3A6EA /* ElementULNG.h in Headers */,
+				49882A092447F45700D439BC /* ElementFCNT.h in Headers */,
 				E1193687099864AD00A3A6EA /* ElementUWRD.h in Headers */,
 				E119371B09986D8300A3A6EA /* ElementFIXD.h in Headers */,
 				E119376E0998768600A3A6EA /* ElementFRAC.h in Headers */,
@@ -1725,6 +1732,7 @@
 				E18BF6B6069FEA1800F076B8 /* Element.m in Sources */,
 				E18BF6B8069FEA1800F076B8 /* TemplateStream.m in Sources */,
 				E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */,
+				49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */,
 				E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */,
 				E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */,
 				E18BF6BD069FEA1800F076B8 /* ElementLSTE.m in Sources */,

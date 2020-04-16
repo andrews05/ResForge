@@ -19,6 +19,7 @@
 - (void)readDataFrom:(TemplateStream *)stream
 {
 	[self setCountElement:[stream counter]];
+    [[self.countElement entries] addObject:self];
 	unsigned int itemsToGo = [self.countElement value];
 	unsigned int itemsToGoAtStart = itemsToGo;
 	
@@ -43,18 +44,26 @@
 			[nextItem setParentArray:self.parentArray];	// Set parentArray *after* -readDataFrom: so it doesn't pass the if(parentArray) check above.
 		}
 		
-		// now add a terminating 'LSTE' item, using this item's label
-		ElementLSTE *end = [ElementLSTE elementForType:@"LSTE" withLabel:self.label];
-		[self.parentArray addObject:end];
-		[end setParentArray:self.parentArray];
-		[end setGroupElementTemplate:self.groupElementTemplate];
-		[end setCountElement:self.countElement];
+        if (![[self.countElement type] isEqualToString:@"FCNT"]) {
+            // now add a terminating 'LSTE' item, using this item's label
+            ElementLSTE *end = [ElementLSTE elementForType:@"LSTE" withLabel:super.label];
+            [self.parentArray addObject:end];
+            [end setParentArray:self.parentArray];
+            [end setGroupElementTemplate:self.groupElementTemplate];
+            [end setCountElement:self.countElement];
+        }
 		[stream popCounter];
 		
 		// if it's an empty list delete this LSTC so we only have the empty LSTE.
 		if(itemsToGoAtStart == 0)
 			[self.parentArray removeObject:self];
 	}
+}
+
+- (NSString *)label
+{
+    NSUInteger index = [[self.countElement entries] indexOfObject:self]+1;
+    return [NSString stringWithFormat:@"%ld) %@", index, super.label];
 }
 
 @end

@@ -13,7 +13,7 @@
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	SInt32 tmp;
+	SInt32 tmp = 0;
 	[stream readAmount:sizeof(value) toBuffer:&tmp];
 	value = CFSwapInt32BigToHost(tmp);
 }

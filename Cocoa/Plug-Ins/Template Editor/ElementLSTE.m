@@ -49,13 +49,17 @@
 	return writesZeroByte;
 }
 
-- (IBAction)createListEntry:(id)sender
+- (BOOL)createListEntry
 {
+    if ([countElement.type isEqualToString:@"FCNT"])
+        return NO;
+    
 	ElementLSTB *list = [groupElementTemplate copy];
 	[self.parentArray insertObject:list atIndex:[self.parentArray indexOfObject:self]];
 	[list setParentArray:self.parentArray];
 	[list setCountElement:countElement];
-	[countElement increment];
+	[countElement addEntry:list after:nil];
+    return YES;
 }
 
 - (NSString *)stringValue
@@ -70,6 +74,13 @@
 - (BOOL)editable
 {
 	return NO;
+}
+
+- (NSString *)label
+{
+    if (self.countElement == nil) return super.label;
+    NSUInteger index = [[self.countElement entries] count]+1;
+    return [NSString stringWithFormat:@"%ld) %@", index, super.label];
 }
 
 @end

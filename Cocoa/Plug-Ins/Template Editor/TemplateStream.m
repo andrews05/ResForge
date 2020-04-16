@@ -18,6 +18,7 @@
 //#import "ElementHEXD.h"
 #import "ElementDATE.h"
 //#import "ElementOCNT.h"
+#import "ElementFCNT.h"
 #import "ElementLSTB.h"
 #import "ElementLSTC.h"
 #import "ElementLSTE.h"
@@ -125,8 +126,8 @@
 	
 	// create element class
 	Class class = [self fieldRegistry][type];
-    // check for Xnnn type
-    if(!class && [type rangeOfString:@"[A-Z][A-F0-9]{3}" options:NSRegularExpressionSearch].location != NSNotFound)
+    // check for Xnnn type - currently using resorcerer's nmm restriction to prevent false matches
+    if(!class && [type rangeOfString:@"[A-Z][0-9][0-9A-F]{2}" options:NSRegularExpressionSearch].location != NSNotFound)
     {
         class = [self fieldRegistry][[type substringToIndex:1]];
     }
@@ -206,6 +207,7 @@
 		registry[@"FWRD"] = [ElementFBYT class];
 		registry[@"FLNG"] = [ElementFBYT class];
 		registry[@"FLLG"] = [ElementFBYT class];
+        registry[@"F"]    = [ElementFBYT class];    // Fnnn
 		
 	// fractions
 		registry[@"FIXD"] = [ElementFIXD class];	// 16.16 fixed fraction
@@ -227,7 +229,14 @@
         registry[@"C"]    = [ElementPSTR class];    // Cnnn
 		
 	// hex dumps
+        registry[@"BHEX"] = [ElementHEXD class];
+        registry[@"WHEX"] = [ElementHEXD class];
+        registry[@"LHEX"] = [ElementHEXD class];
+        registry[@"BSHX"] = [ElementHEXD class];
+        registry[@"WSHX"] = [ElementHEXD class];
+        registry[@"LSHX"] = [ElementHEXD class];
 		registry[@"HEXD"] = [ElementHEXD class];
+        registry[@"H"]    = [ElementHEXD class];    // Hnnn
 		
 	// list counters
 		registry[@"OCNT"] = [ElementOCNT class];
@@ -238,6 +247,7 @@
 		registry[@"WZCT"] = [ElementOCNT class];
 		registry[@"LCNT"] = [ElementOCNT class];
 		registry[@"LZCT"] = [ElementOCNT class];
+        registry[@"FCNT"] = [ElementFCNT class];
 	// list begin/end
 		registry[@"LSTC"] = [ElementLSTC class];
 		registry[@"LSTB"] = [ElementLSTB class];

@@ -148,8 +148,7 @@
 {
 	// get string length
 	UInt32 length = 0;
-	if(_lengthBytes > 0)
-	{
+	if (_lengthBytes > 0) {
 		[stream readAmount:_lengthBytes toBuffer:&length];
         length = CFSwapInt32BigToHost(length);
 		length >>= (4 - _lengthBytes) << 3;
@@ -204,12 +203,13 @@
 - (void)writeDataTo:(TemplateStream *)stream
 {
 	// write string
-	UInt32 length = (UInt32)[value length], writeLength;
-	if(_maxLength && length > _maxLength) length = _maxLength;
-    writeLength = length << ((4 - _lengthBytes) << 3);
-    writeLength = CFSwapInt32HostToBig(writeLength);
-	if(_lengthBytes)
+	UInt32 length = (UInt32)[value length];
+	if (_maxLength && length > _maxLength) length = _maxLength;
+	if (_lengthBytes > 0) {
+        UInt32 writeLength = length << ((4 - _lengthBytes) << 3);
+        writeLength = CFSwapInt32HostToBig(writeLength);
 		[stream writeAmount:_lengthBytes fromBuffer:&writeLength];
+    }
 	
 	if ([value canBeConvertedToEncoding:NSMacOSRomanStringEncoding])
 	{

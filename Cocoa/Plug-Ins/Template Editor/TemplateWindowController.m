@@ -2,6 +2,8 @@
 #import "TemplateStream.h"
 #import "Element.h"
 #import "ElementOCNT.h"
+#import "ElementFCNT.h"
+#import "ElementLSTB.h"
 #import "ElementLSTE.h"
 // and ones for keyed fields
 #import "ElementDBYT.h"
@@ -154,7 +156,8 @@
 		
 		BOOL pushedCounter = NO;
 		//BOOL pushedKey = NO;
-		if(cc == [ElementOCNT class])
+		if(cc == [ElementOCNT class] ||
+           cc == [ElementFCNT class] )
 		{	[stream pushCounter:(ElementOCNT *)clone]; pushedCounter = YES; }
 		if(cc == [ElementKBYT class] ||
 		   cc == [ElementKWRD class] ||
@@ -342,9 +345,8 @@
 {
 	// This works by selecting an item that serves as a template (another LSTB), or knows how to create an item (LSTE) and passing the message on to it.
 	id element = [dataList selectedItem];
-	if([element respondsToSelector:@selector(createListEntry:)])
+	if([element respondsToSelector:@selector(createListEntry)] && [element createListEntry])
 	{
-		[element createListEntry:sender];
 		[dataList reloadData];
 		[dataList expandItem:[dataList selectedItem] expandChildren:YES];
 		if(!liveEdit) [self setDocumentEdited:YES];
@@ -373,20 +375,22 @@
 
 - (IBAction)clear:(id)sender;
 {
-	[[dataList selectedItem] clear:sender];
-	[dataList reloadData];
-	if(!liveEdit) [self setDocumentEdited:YES];
+    id element = [dataList selectedItem];
+    if ([element respondsToSelector:@selector(removeListEntry)] && [element removeListEntry]) {
+        [dataList reloadData];
+        if(!liveEdit) [self setDocumentEdited:YES];
+    }
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem*)item
 {
 	Element *element = (Element*) [dataList selectedItem];
-	if([item action] == @selector(createListEntry:))	return(element && [element respondsToSelector:@selector(createListEntry:)]);
+	if([item action] == @selector(createListEntry:))	return(element && [element respondsToSelector:@selector(createListEntry)]);
 	else if([item action] == @selector(cut:))			return(element && [element respondsToSelector:@selector(cut:)]);
 	else if([item action] == @selector(copy:))			return(element && [element respondsToSelector:@selector(copy:)]);
 	else if([item action] == @selector(paste:) &&              element && [element respondsToSelector:@selector(validateMenuItem:)])
 														return([element validateMenuItem:item]);
-	else if([item action] == @selector(clear:))			return(element && [element respondsToSelector:@selector(clear:)]);
+	else if([item action] == @selector(clear:))			return(element && [element respondsToSelector:@selector(removeListEntry)]);
 	else if([item action] == @selector(saveDocument:))	return YES;
 	else return NO;
 }
@@ -478,7 +482,7 @@ static NSString *RKTEDisplayTMPLIdentifier	= @"com.nickshanks.resknife.templatee
 	
 	if(selectedItem && [selectedItem editable] && ([[event characters] isEqualToString:@"\r"] || [[event characters] isEqualToString:@"\t"]))
 		[self editColumn:1 row:selectedRow withEvent:nil select:YES];
-	else if(selectedItem && [selectedItem respondsToSelector:@selector(clear:)] && [[event characters] isEqualToString:@"\x7F"])
+	else if(selectedItem && [selectedItem respondsToSelector:@selector(removeListEntry)] && [[event characters] isEqualToString:@"\x7F"])
 		[[[self window] windowController] clear:nil];
 	else [super keyDown:event];
 }

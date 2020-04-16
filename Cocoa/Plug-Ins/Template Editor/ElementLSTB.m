@@ -194,19 +194,27 @@
 	return subElements[n];
 }
 
-- (IBAction)createListEntry:(id)sender
+- (BOOL)createListEntry
 {
-	ElementLSTB *list = [groupElementTemplate copy];
-	[self.parentArray insertObject:list atIndex:[self.parentArray indexOfObject:self]];
-	[list setParentArray:self.parentArray];
-	[list setCountElement:countElement];
-	[countElement increment];
+    if ([countElement.type isEqualToString:@"FCNT"])
+        return NO;
+    
+    ElementLSTB *list = [groupElementTemplate copy];
+    [self.parentArray insertObject:list atIndex:[self.parentArray indexOfObject:self]];
+    [list setParentArray:self.parentArray];
+    [list setCountElement:countElement];
+    [countElement addEntry:list after:self];
+    return YES;
 }
 
-- (IBAction)clear:(id)sender
+- (BOOL)removeListEntry
 {
-	[countElement decrement];
+    if ([countElement.type isEqualToString:@"FCNT"])
+        return NO;
+    
 	[self.parentArray removeObject:self];
+    [countElement removeEntry:self];
+    return YES;
 }
 
 - (NSString *)stringValue { return @""; }
