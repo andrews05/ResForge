@@ -20,7 +20,7 @@
 	value = CFSwapInt32BigToHost(tmp);
 }
 
-- (unsigned int)sizeOnDisk
+- (UInt32)sizeOnDisk:(UInt32)currentSize
 {
 	return SIZE_ON_DISK;
 }

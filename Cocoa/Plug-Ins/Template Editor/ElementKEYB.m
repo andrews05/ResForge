@@ -41,14 +41,14 @@
 // Before writeDataTo:is called, this is called to calculate the final resource size:
 //	This returns the sizes of all our sub-elements. If you subclass, add to that the size
 //	of this element itself.
-- (unsigned int)sizeOnDisk
+- (UInt32)sizeOnDisk:(UInt32)currentSize
 {
 //	if(![[self label] isEqualToString: [[stream key] stringValue]])
 //		return 0;
 	
-	unsigned int size = 0;
+	UInt32 size = 0;
 	for (Element *element in subElements)
-		size += [element sizeOnDisk];
+        size += [element sizeOnDisk:(currentSize + size)];
 	return size;
 }
 

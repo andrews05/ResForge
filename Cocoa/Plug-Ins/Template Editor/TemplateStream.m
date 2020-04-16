@@ -13,6 +13,7 @@
 #import "ElementULLG.h"
 #import "ElementFIXD.h"
 #import "ElementFRAC.h"
+#import "ElementAWRD.h"
 #import "ElementFBYT.h"
 #import "ElementPSTR.h"
 //#import "ElementHEXD.h"
@@ -25,30 +26,32 @@
 #import "ElementKEYB.h"
 
 @implementation TemplateStream
+@synthesize length;
 @synthesize bytesToGo;
 
-+ (id)streamWithBytes:(char *)d length:(unsigned int)l
++ (id)streamWithBytes:(char *)d length:(UInt32)l
 {
 	return [[self alloc] initStreamWithBytes:d length:l];
 }
 
-+ (id)substreamWithStream:(TemplateStream *)s length:(unsigned int)l
++ (id)substreamWithStream:(TemplateStream *)s length:(UInt32)l
 {
 	return [[self alloc] initWithStream:s length:l];
 }
 
-- (instancetype)initStreamWithBytes:(char *)d length:(unsigned int)l
+- (instancetype)initStreamWithBytes:(char *)d length:(UInt32)l
 {
 	self = [super init];
 	if(!self) return nil;
 	data = d;
-	self.bytesToGo = l;
+    length = l;
+	bytesToGo = l;
 	counterStack = [[NSMutableArray alloc] init];
 	keyStack = [[NSMutableArray alloc] init];
 	return self;
 }
 
-- (instancetype)initWithStream:(TemplateStream *)s length:(unsigned int)l
+- (instancetype)initWithStream:(TemplateStream *)s length:(UInt32)l
 {
 	return [self initStreamWithBytes:[s data] length:MIN(l, [s bytesToGo])];
 }
@@ -58,9 +61,9 @@
 	return data;
 }
 
-- (unsigned int)bytesToNull
+- (UInt32)bytesToNull
 {
-	unsigned int dist = 0;
+	UInt32 dist = 0;
 	while(dist < bytesToGo)
 	{
 		if(*(char *)(data+dist) == 0x00)
@@ -145,7 +148,7 @@
 	}
 }
 
-- (void)advanceAmount:(unsigned int)l pad:(BOOL)pad
+- (void)advanceAmount:(UInt32)l pad:(BOOL)pad
 {
 	if(l > bytesToGo) l = bytesToGo;
 	if(l > 0)
@@ -156,13 +159,13 @@
 	}
 }
 
-- (void)peekAmount:(unsigned int)l toBuffer:(void *)buffer
+- (void)peekAmount:(UInt32)l toBuffer:(void *)buffer
 {
 	if(l > bytesToGo) l = bytesToGo;
 	if(l > 0) memmove(buffer, data, l);
 }
 
-- (void)readAmount:(unsigned int)l toBuffer:(void *)buffer
+- (void)readAmount:(UInt32)l toBuffer:(void *)buffer
 {
 	if(l > bytesToGo) l = bytesToGo;
 	if(l > 0)
@@ -173,7 +176,7 @@
 	}
 }
 
-- (void)writeAmount:(unsigned int)l fromBuffer:(const void *)buffer
+- (void)writeAmount:(UInt32)l fromBuffer:(const void *)buffer
 {
 	if(l > bytesToGo) l = bytesToGo;
 	if(l > 0)
@@ -203,6 +206,11 @@
 		registry[@"UWRD"] = [ElementUWRD class];
 		registry[@"ULNG"] = [ElementULNG class];
 		registry[@"ULLG"] = [ElementULLG class];
+        registry[@"AWRD"] = [ElementAWRD class];    // alignment ints
+        registry[@"ALNG"] = [ElementAWRD class];
+        registry[@"AL08"] = [ElementAWRD class];
+        registry[@"AL16"] = [ElementAWRD class];
+        registry[@"A"]    = [ElementAWRD class];    // Annn
 		registry[@"FBYT"] = [ElementFBYT class];	// filler ints
 		registry[@"FWRD"] = [ElementFBYT class];
 		registry[@"FLNG"] = [ElementFBYT class];

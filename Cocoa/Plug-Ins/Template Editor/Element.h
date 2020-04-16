@@ -37,7 +37,7 @@
 - (void)readDataFrom:(TemplateStream *)stream;
 
 // The following are used to write resource data back out:
-- (unsigned int)sizeOnDisk;
+- (UInt32)sizeOnDisk:(UInt32)currentSize;
 - (void)writeDataTo:(TemplateStream *)stream;
 
 /* Apart from these messages, a Element may also implement the IBActions for

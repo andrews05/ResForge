@@ -183,7 +183,7 @@
 	// alignment unhandled here
 }
 
-- (unsigned int)sizeOnDisk
+- (UInt32)sizeOnDisk:(UInt32)currentSize
 {
     if (_pad > 0) return _pad;
 	UInt32 length = (UInt32)[value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];

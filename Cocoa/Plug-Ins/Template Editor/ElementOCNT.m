@@ -40,7 +40,7 @@
 		value += 1;
 }
 
-- (unsigned int)sizeOnDisk
+- (UInt32)sizeOnDisk:(UInt32)currentSize
 {
 	if ([self.type isEqualToString:@"LCNT"] || [self.type isEqualToString:@"LZCT"])
 		return 4;

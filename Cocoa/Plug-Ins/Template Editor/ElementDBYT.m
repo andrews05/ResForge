@@ -18,7 +18,7 @@
 	[stream readAmount:SIZE_ON_DISK toBuffer:&value];
 }
 
-- (unsigned int)sizeOnDisk
+- (UInt32)sizeOnDisk:(UInt32)currentSize
 {
 	return SIZE_ON_DISK;
 }

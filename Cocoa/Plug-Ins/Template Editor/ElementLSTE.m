@@ -28,7 +28,7 @@
 		[stream advanceAmount:1 pad:NO];
 }
 
-- (unsigned int)sizeOnDisk
+- (UInt32)sizeOnDisk:(UInt32)currentSize
 {
 	return writesZeroByte? 1:0;
 }

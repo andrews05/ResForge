@@ -37,7 +37,7 @@
 {
 }
 
-- (unsigned int)sizeOnDisk
+- (UInt32)sizeOnDisk:(UInt32)currentSize
 {
     return 0;
 }

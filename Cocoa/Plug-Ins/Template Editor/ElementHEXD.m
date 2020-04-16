@@ -80,7 +80,7 @@
     [stream advanceAmount:length pad:NO];
 }
 
-- (unsigned int)sizeOnDisk
+- (UInt32)sizeOnDisk:(UInt32)currentSize
 {
 	return length + _lengthBytes;
 }

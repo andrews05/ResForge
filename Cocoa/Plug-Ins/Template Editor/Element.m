@@ -58,7 +58,7 @@
 
 // Before writeDataTo:is called, this is called to calculate the final resource size:
 //	Items with sub-elements should return the sum of the sizes of all their sub-elements here as well.
-- (unsigned int)sizeOnDisk
+- (UInt32)sizeOnDisk:(UInt32)currentSize
 {
 	// default implementation suitable for dimentionless element types
 	return 0;

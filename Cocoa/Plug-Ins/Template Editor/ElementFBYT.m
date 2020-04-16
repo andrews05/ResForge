@@ -3,7 +3,6 @@
 // implements FBYT, FWRD, FLNG, FLLG
 @implementation ElementFBYT
 @synthesize length;
-@dynamic stringValue;
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
@@ -37,9 +36,9 @@
 	[stream advanceAmount:(UInt32)length pad:NO];
 }
 
-- (unsigned int)sizeOnDisk
+- (UInt32)sizeOnDisk:(UInt32)currentSize
 {
-	return (unsigned int)length;
+	return length;
 }
 
 - (void)writeDataTo:(TemplateStream *)stream

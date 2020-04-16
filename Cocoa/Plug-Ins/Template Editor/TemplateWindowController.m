@@ -217,10 +217,10 @@
 {
 	// get size of resource by summing size of all fields
 	Element *element;
-	unsigned int size = 0;
+	UInt32 size = 0;
 	NSEnumerator *enumerator = [resourceStructure objectEnumerator];
 	while(element = [enumerator nextObject])
-		size += [element sizeOnDisk];
+        size += [element sizeOnDisk:size];
 	
 	// create data and stream
 	NSMutableData *newData = [NSMutableData dataWithLength:size];
