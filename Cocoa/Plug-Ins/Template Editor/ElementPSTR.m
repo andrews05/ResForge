@@ -37,7 +37,7 @@
 			_alignment = 0;
 		} else if ([t isEqualToString:@"OSTR"]) {
 			_lengthBytes = 1;
-			_maxLength = UINT8_MAX - 1;
+			_maxLength = UINT8_MAX;
 			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kPadToOddLength;
@@ -101,6 +101,31 @@
 			_pad = kNoPadding;
 			_alignment = 0;
 		}
+        else {
+            // assume Xnnn for anything else
+            UInt32 nnn;
+            NSScanner *scanner = [NSScanner scannerWithString:[t substringFromIndex:1]];
+            [scanner scanHexInt:&nnn];
+            switch ([t characterAtIndex:0]) {
+                case 'P':
+                    // use resorcerer's more consistent n = datalength rather than resedit's n = stringlength
+                    _lengthBytes = 1;
+                    _maxLength = MIN(nnn-1, UINT8_MAX);
+                    _minLength = 0;
+                    _terminatingByte = NO;
+                    _pad = nnn;
+                    _alignment = 0;
+                    break;
+                case 'C':
+                    _lengthBytes = 0;
+                    _maxLength = MIN(nnn-1, UINT8_MAX);
+                    _minLength = 0;
+                    _terminatingByte = YES;
+                    _pad = nnn;
+                    _alignment = 0;
+                    break;
+            }
+        }
 	}
 	return self;
 }
@@ -126,11 +151,8 @@
 	if(_lengthBytes > 0)
 	{
 		[stream readAmount:_lengthBytes toBuffer:&length];
-#if __BIG_ENDIAN__
+        length = CFSwapInt32BigToHost(length);
 		length >>= (4 - _lengthBytes) << 3;
-#else
-		#warning FIXME: This probably doesn't work for WSTR and LSTR on intel machines
-#endif
 	}
 	if(_terminatingByte)
 		length += [stream bytesToNull];
@@ -139,29 +161,32 @@
 	
 	// read string
 	
-	if (length == 0)
-		return;
-	
-	void *buffer = malloc(length);
-	if(_minLength) memset(buffer, 0, _minLength);
-	[stream readAmount:length toBuffer:buffer];
-	if([NSString instancesRespondToSelector:@selector(initWithBytesNoCopy:length:encoding:freeWhenDone:)])	// 10.3
-		[self setStringValue:[[NSString alloc] initWithBytesNoCopy:buffer length:length encoding:NSMacOSRomanStringEncoding freeWhenDone:YES]];
-	else
-	{
-		[self setStringValue:[[NSString alloc] initWithBytes:buffer length:length encoding:NSMacOSRomanStringEncoding]];
-		free(buffer);
-	}
+    if (length != 0) {
+        void *buffer = malloc(length);
+        if(_minLength) memset(buffer, 0, _minLength);
+        [stream readAmount:length toBuffer:buffer];
+        [self setStringValue:[[NSString alloc] initWithBytesNoCopy:buffer length:length encoding:NSMacOSRomanStringEncoding freeWhenDone:YES]];
+    }
 	
 	// skip over empty bytes
-	if(_terminatingByte) [stream advanceAmount:1 pad:NO];
-	if(_pad == kPadToOddLength && (length + _terminatingByte ? 1:0) % 2 == 0)	[stream advanceAmount:1 pad:NO];
-	if(_pad == kPadToEvenLength && (length + _terminatingByte ? 1:0) % 2 == 1)	[stream advanceAmount:1 pad:NO];
+    if (_terminatingByte) {
+        [stream advanceAmount:1 pad:NO];
+        length++;
+    }
+    length += _lengthBytes;
+    if (_pad == kPadToOddLength) {
+        if (length % 2 == 0) [stream advanceAmount:1 pad:NO];
+    } else if (_pad == kPadToEvenLength) {
+        if (length % 2 == 1) [stream advanceAmount:1 pad:NO];
+    } else if (_pad > 0) {
+        if (length < _pad)   [stream advanceAmount:_pad-length pad:NO];
+    }
 	// alignment unhandled here
 }
 
 - (unsigned int)sizeOnDisk
 {
+    if (_pad > 0) return _pad;
 	UInt32 length = (UInt32)[value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
 	if(_maxLength && length > _maxLength)
 		length = _maxLength;
@@ -181,11 +206,8 @@
 	// write string
 	UInt32 length = (UInt32)[value length], writeLength;
 	if(_maxLength && length > _maxLength) length = _maxLength;
-#if __BIG_ENDIAN__
-	writeLength = length << ((4 - _lengthBytes) << 3);
-#else
-	#warning FIXME: This probably doesn't work for WSTR and LSTR on intel machines
-#endif
+    writeLength = length << ((4 - _lengthBytes) << 3);
+    writeLength = CFSwapInt32HostToBig(writeLength);
 	if(_lengthBytes)
 		[stream writeAmount:_lengthBytes fromBuffer:&writeLength];
 	
@@ -219,12 +241,18 @@
 			padAmount -= 4;
 		}
 	}
-	if(_terminatingByte)
+    if (_terminatingByte) {
 		[stream advanceAmount:1 pad:YES];
-	if(_pad == kPadToOddLength && (length + _lengthBytes + (_terminatingByte? 1:0)) % 2 == 0)
-		[stream advanceAmount:1 pad:YES];
-	if(_pad == kPadToEvenLength && (length + _lengthBytes + (_terminatingByte? 1:0)) % 2 == 1)
-		[stream advanceAmount:1 pad:YES];
+        length++;
+    }
+    length += _lengthBytes;
+    if (_pad == kPadToOddLength) {
+		if (length % 2 == 0) [stream advanceAmount:1 pad:YES];
+    } else if (_pad == kPadToEvenLength) {
+		if (length % 2 == 1) [stream advanceAmount:1 pad:YES];
+    } else if (_pad > 0) {
+        if (length < _pad)   [stream advanceAmount:_pad-length pad:YES];
+    }
 }
 
 @end

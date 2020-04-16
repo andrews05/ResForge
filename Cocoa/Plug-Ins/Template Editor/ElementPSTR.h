@@ -3,8 +3,8 @@
 typedef enum StringPadding
 {
 	kNoPadding = 0,
-	kPadToOddLength,
-	kPadToEvenLength
+	kPadToOddLength = -1,
+	kPadToEvenLength = -2
 } MacStringPadding;
 
 @interface ElementPSTR : Element

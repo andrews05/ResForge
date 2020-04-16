@@ -125,13 +125,18 @@
 	
 	// create element class
 	Class class = [self fieldRegistry][type];
+    // check for Xnnn type
+    if(!class && [type rangeOfString:@"[A-Z][A-F0-9]{3}" options:NSRegularExpressionSearch].location != NSNotFound)
+    {
+        class = [self fieldRegistry][[type substringToIndex:1]];
+    }
 	if(class)
 	{
 		Element *element = (Element *) [class elementForType:type withLabel:label];
 		[element readSubElementsFrom:self];
 		return element;
-	}
-	else
+    }
+    else
 	{
 		bytesToGo = 0;
 		NSLog(@"Class not found for template element type '%@'. Dumping remaining resource as hex.", type);
@@ -218,6 +223,8 @@
 		registry[@"ECST"] = [ElementPSTR class];
 		registry[@"CHAR"] = [ElementPSTR class];
 		registry[@"TNAM"] = [ElementPSTR class];
+        registry[@"P"]    = [ElementPSTR class];    // Pnnn
+        registry[@"C"]    = [ElementPSTR class];    // Cnnn
 		
 	// hex dumps
 		registry[@"HEXD"] = [ElementHEXD class];
