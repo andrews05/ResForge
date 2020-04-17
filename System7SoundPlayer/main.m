@@ -27,14 +27,15 @@ static void System7SoundPlayer_peer_event_handler(xpc_connection_t peer, xpc_obj
 	} else {
 		assert(type == XPC_TYPE_DICTIONARY);
 		// Handle the message.
-		NSLog(@"got dict");
 		size_t length = 0;
 		const char *data = xpc_dictionary_get_data(event, "soundData", &length);
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations" // We have to use the deprecated function SndPlay
 		SndListPtr sndPtr = (SndListPtr)NewPtr(length);
 		memcpy(sndPtr, data, length);
-		NSLog(@"data length: %lu", length);
+#if __LITTLE_ENDIAN__
+        CoreEndianFlipData(kCoreEndianResourceManagerDomain, 'snd ', 128, sndPtr, length, false);
+#endif
 		SndPlay(NULL, &sndPtr, false);
 		DisposePtr((Ptr)sndPtr);
 #pragma clang diagnostic pop
