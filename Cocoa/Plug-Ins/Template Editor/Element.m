@@ -1,3 +1,4 @@
+#import "TemplateWindowController.h"
 #import "Element.h"
 
 @implementation Element
@@ -28,9 +29,27 @@
 	return element;
 }
 
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
+{
+    // Notify the controller if the value has changed
+    if (![control.stringValue isEqualToString:self.stringValue]) {
+        [(TemplateWindowController*)[[control window] windowController] itemValueUpdated:control];
+    }
+    return YES;
+}
+
 #pragma mark -
 
 /*** METHODS SUBCLASSES SHOULD OVERRIDE ***/
+
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
+{
+    NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+    view.textField.editable = self.editable;
+    view.textField.delegate = self;
+    [view.textField bind:@"value" toObject:self withKeyPath:@"stringValue" options:nil];
+    return view;
+}
 
 - (NSInteger)subElementCount
 {

@@ -11,6 +11,12 @@
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C3244C2B5000E1EAE4 /* ElementBFLG.h */; };
+		493229C6244C2B5000E1EAE4 /* ElementBFLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229C4244C2B5000E1EAE4 /* ElementBFLG.m */; };
+		493229C9244C3A0800E1EAE4 /* ElementWFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C7244C3A0800E1EAE4 /* ElementWFLG.h */; };
+		493229CA244C3A0800E1EAE4 /* ElementWFLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229C8244C3A0800E1EAE4 /* ElementWFLG.m */; };
+		493229CD244C3C2000E1EAE4 /* ElementLFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229CB244C3C2000E1EAE4 /* ElementLFLG.h */; };
+		493229CE244C3C2000E1EAE4 /* ElementLFLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229CC244C3C2000E1EAE4 /* ElementLFLG.m */; };
 		49882A092447F45700D439BC /* ElementFCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A072447F45700D439BC /* ElementFCNT.h */; };
 		49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A082447F45700D439BC /* ElementFCNT.m */; };
 		49882A0D2448EF0E00D439BC /* ElementAWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A0B2448EF0E00D439BC /* ElementAWRD.h */; };
@@ -413,6 +419,12 @@
 		3D50047404EF122000F3B64D /* ElementLSTC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementLSTC.h; sourceTree = "<group>"; };
 		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
 		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
+		493229C3244C2B5000E1EAE4 /* ElementBFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBFLG.h; sourceTree = "<group>"; };
+		493229C4244C2B5000E1EAE4 /* ElementBFLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBFLG.m; sourceTree = "<group>"; };
+		493229C7244C3A0800E1EAE4 /* ElementWFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementWFLG.h; sourceTree = "<group>"; };
+		493229C8244C3A0800E1EAE4 /* ElementWFLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementWFLG.m; sourceTree = "<group>"; };
+		493229CB244C3C2000E1EAE4 /* ElementLFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementLFLG.h; sourceTree = "<group>"; };
+		493229CC244C3C2000E1EAE4 /* ElementLFLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementLFLG.m; sourceTree = "<group>"; };
 		49882A072447F45700D439BC /* ElementFCNT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementFCNT.h; sourceTree = "<group>"; };
 		49882A082447F45700D439BC /* ElementFCNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementFCNT.m; sourceTree = "<group>"; };
 		49882A0B2448EF0E00D439BC /* ElementAWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementAWRD.h; sourceTree = "<group>"; };
@@ -750,6 +762,12 @@
 				49882A082447F45700D439BC /* ElementFCNT.m */,
 				49882A0B2448EF0E00D439BC /* ElementAWRD.h */,
 				49882A0C2448EF0E00D439BC /* ElementAWRD.m */,
+				493229C3244C2B5000E1EAE4 /* ElementBFLG.h */,
+				493229C4244C2B5000E1EAE4 /* ElementBFLG.m */,
+				493229C7244C3A0800E1EAE4 /* ElementWFLG.h */,
+				493229C8244C3A0800E1EAE4 /* ElementWFLG.m */,
+				493229CB244C3C2000E1EAE4 /* ElementLFLG.h */,
+				493229CC244C3C2000E1EAE4 /* ElementLFLG.m */,
 			);
 			name = "Field Types";
 			sourceTree = "<group>";
@@ -1197,7 +1215,9 @@
 				E18BF6A5069FEA1800F076B8 /* TemplateStream.h in Headers */,
 				E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */,
 				E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */,
+				493229CD244C3C2000E1EAE4 /* ElementLFLG.h in Headers */,
 				E18BF6A9069FEA1800F076B8 /* ElementDWRD.h in Headers */,
+				493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */,
 				E18BF6AA069FEA1800F076B8 /* ElementLSTE.h in Headers */,
 				E18BF6AB069FEA1800F076B8 /* ElementDLNG.h in Headers */,
 				E18BF6AC069FEA1800F076B8 /* ElementDBYT.h in Headers */,
@@ -1206,6 +1226,7 @@
 				E14AC2760996BF1700D293E5 /* ElementDLLG.h in Headers */,
 				E14AC453099702F400D293E5 /* ElementFBYT.h in Headers */,
 				E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */,
+				493229C9244C3A0800E1EAE4 /* ElementWFLG.h in Headers */,
 				E1193685099864AD00A3A6EA /* ElementULNG.h in Headers */,
 				49882A092447F45700D439BC /* ElementFCNT.h in Headers */,
 				E1193687099864AD00A3A6EA /* ElementUWRD.h in Headers */,
@@ -1748,13 +1769,16 @@
 				E18BF6BF069FEA1800F076B8 /* ElementDBYT.m in Sources */,
 				E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */,
 				E18BF6C1069FEA1800F076B8 /* ElementLSTC.m in Sources */,
+				493229CA244C3A0800E1EAE4 /* ElementWFLG.m in Sources */,
 				E14AC2770996BF1700D293E5 /* ElementDLLG.m in Sources */,
 				E14AC454099702F400D293E5 /* ElementFBYT.m in Sources */,
 				E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */,
 				E1193686099864AD00A3A6EA /* ElementULNG.m in Sources */,
+				493229CE244C3C2000E1EAE4 /* ElementLFLG.m in Sources */,
 				E1193688099864AD00A3A6EA /* ElementUWRD.m in Sources */,
 				E119371C09986D8300A3A6EA /* ElementFIXD.m in Sources */,
 				E119376F0998768600A3A6EA /* ElementFRAC.m in Sources */,
+				493229C6244C2B5000E1EAE4 /* ElementBFLG.m in Sources */,
 				E119379409987CC400A3A6EA /* ElementULLG.m in Sources */,
 				E119388E0999296B00A3A6EA /* ElementHEXD.m in Sources */,
 				E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */,

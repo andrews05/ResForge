@@ -282,6 +282,18 @@
 #pragma mark -
 #pragma mark Table Management
 
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+    Element *element = (Element *)item;
+    if ([[tableColumn identifier] isEqualToString: @"label"]) {
+        NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+        view.textField.stringValue = [element label];
+        return view;
+    } else {
+        return [element outlineView:outlineView viewForTableColumn:tableColumn];
+    }
+}
+
 - (id)outlineView:(NSOutlineView*)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if((item == nil) && (outlineView == displayList))
@@ -305,33 +317,6 @@
 	else return [item subElementCount];
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
-{
-	return [item valueForKey:[tableColumn identifier]];
-}
-
-- (void)outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
-{
-	id old = [item valueForKey:[tableColumn identifier]];
-	if([(Element *)item editable] && ![old isEqual:object])
-	{
-//		[[self undoManager] registerUndoWithTarget:item selector:@selector(setStringValue:) object:old];
-//		[[self undoManager] setActionName:NSLocalizedString(@"Changes", nil)];
-		[item setValue:object forKey:[tableColumn identifier]];
-		if(!liveEdit) [self setDocumentEdited:YES];
-		
-		// remove self to avoid reloading the resource
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
-		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:resource];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	}
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
-{
-	return [(Element *)item editable];
-}
-
 /*- (float)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
 	return [item rowHeight];
@@ -339,6 +324,27 @@
 
 #pragma mark -
 #pragma mark Menu Management
+
+- (IBAction)dataClicked:(id)sender
+{
+    // Edit the text field clicked on
+    if ([dataList clickedRow] == -1 || [dataList clickedColumn] != 1)
+        return;
+    NSTableCellView *view = [dataList viewAtColumn:1 row:[dataList clickedRow] makeIfNecessary:NO];
+    if ([view isKindOfClass:[NSTableCellView class]] && view.textField.isEditable) {
+        [[self window] makeFirstResponder:view.textField];
+    }
+}
+
+- (IBAction)itemValueUpdated:(id)sender
+{
+    if(!liveEdit) [self setDocumentEdited:YES];
+    
+    // remove self to avoid reloading the resource
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:resource];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+}
 
 // these next five methods are a crude hack - the items ought to be in the responder chain themselves
 - (IBAction)createListEntry:(id)sender;
@@ -467,34 +473,4 @@ static NSString *RKTEDisplayTMPLIdentifier	= @"com.nickshanks.resknife.templatee
     return @[RKTEDisplayTMPLIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier];
 }
 
-@end
-
-#pragma mark -
-#pragma mark Table Event Handling
-
-@implementation NTOutlineView
-- (void)keyDown:(NSEvent *)event
-{
-	Element *selectedItem = nil;
-	NSInteger selectedRow = [self selectedRow];
-	if(selectedRow != -1)
-		selectedItem = [self selectedItem];
-	
-	if(selectedItem && [selectedItem editable] && ([[event characters] isEqualToString:@"\r"] || [[event characters] isEqualToString:@"\t"]))
-		[self editColumn:1 row:selectedRow withEvent:nil select:YES];
-	else if(selectedItem && [selectedItem respondsToSelector:@selector(removeListEntry)] && [[event characters] isEqualToString:@"\x7F"])
-		[[[self window] windowController] clear:nil];
-	else [super keyDown:event];
-}
-- (BOOL)textView:(NSTextView *)textView doCommandBySelector:(SEL)selector
-{
-	// pressed return, end editing
-	if(selector == @selector(insertNewline:))
-	{
-		[[self window] makeFirstResponder:self];
-		[self abortEditing];
-		return YES;
-	}
-	return [super textView:textView doCommandBySelector:selector];
-}
 @end

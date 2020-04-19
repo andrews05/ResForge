@@ -1,3 +1,4 @@
+#import <Cocoa/Cocoa.h>
 #import <Foundation/Foundation.h>
 #import "TemplateStream.h"
 
@@ -12,7 +13,7 @@
 	effective and the object in question isn't mutable).
 */
 
-@interface Element : NSObject <NSCopying>
+@interface Element : NSObject <NSCopying, NSTextFieldDelegate>
 // Accessors:
 @property (copy) NSString *type; // Type code of this item (4 chars if from TMPL resource, but we may support longer types later).
 @property (copy) NSString *label; // Label ("name") of this field.
@@ -24,6 +25,8 @@
 
 // This is used to instantiate copies of the item from the template for storing data of the resource. A copy created with this is then sent readDataFrom:.
 - (id)copyWithZone:(NSZone *)zone;
+
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn;
 
 - (NSString *)stringValue; // Used to display your data in the list.
 - (BOOL)editable;

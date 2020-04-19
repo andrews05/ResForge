@@ -39,6 +39,8 @@
 - (void)setupToolbar;
 - (void)readTemplate:(id <ResKnifeResource>)tmplRes;
 - (void)loadResource;
+- (IBAction)dataClicked:(id)sender;
+- (IBAction)itemValueUpdated:(id)sender;
 - (IBAction)saveResource:(id)sender;
 - (IBAction)revertResource:(id)sender;
 - (IBAction)createListEntry:(id)sender;
@@ -47,7 +49,4 @@
 - (IBAction)paste:(id)sender;
 - (IBAction)clear:(id)sender;
 
-@end
-
-@interface NTOutlineView : NSOutlineView
 @end

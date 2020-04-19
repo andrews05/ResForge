@@ -16,6 +16,9 @@
 #import "ElementAWRD.h"
 #import "ElementFBYT.h"
 #import "ElementPSTR.h"
+#import "ElementBFLG.h"
+#import "ElementWFLG.h"
+#import "ElementLFLG.h"
 //#import "ElementHEXD.h"
 #import "ElementDATE.h"
 //#import "ElementOCNT.h"
@@ -235,6 +238,11 @@
 		registry[@"TNAM"] = [ElementPSTR class];
         registry[@"P"]    = [ElementPSTR class];    // Pnnn
         registry[@"C"]    = [ElementPSTR class];    // Cnnn
+        
+    // checkboxes
+        registry[@"BFLG"] = [ElementBFLG class];    // binary flag the size of a byte/word/long
+        registry[@"WFLG"] = [ElementWFLG class];
+        registry[@"LFLG"] = [ElementLFLG class];
 		
 	// hex dumps
         registry[@"BHEX"] = [ElementHEXD class];
@@ -290,9 +298,6 @@
 		registry[@"KTYP"] = [ElementPSTR class];
 		registry[@"KRID"] = [ElementFBYT class];	// key on ID of the resource
 		registry[@"BOOL"] = [ElementUWRD class];	// true = 256; false = 0
-		registry[@"BFLG"] = [ElementUBYT class];	// binary flag the size of a byte/word/long
-		registry[@"WFLG"] = [ElementUWRD class];
-		registry[@"LFLG"] = [ElementULNG class];
 		registry[@"RSID"] = [ElementDWRD class];	// resouce id (signed word)
 		registry[@"REAL"] = [ElementULNG class];	// single precision float
 		registry[@"DOUB"] = [ElementULLG class];	// double precision float
