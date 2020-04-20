@@ -1,17 +1,7 @@
-#import "TemplateWindowController.h"
 #import "ElementBOOL.h"
-
-#define SIZE_ON_DISK (2)
+#import "TemplateWindowController.h"
 
 @implementation ElementBOOL
-@synthesize value;
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    ElementBOOL *element = [super copyWithZone:zone];
-    element.value = value;
-    return element;
-}
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
@@ -39,30 +29,12 @@
 
 - (BOOL)boolValue
 {
-    return value >= 256;
+    return self.value >= 256;
 }
 
 - (void)setBoolValue:(BOOL)boolValue
 {
-    value = boolValue ? 256 : 0;
-}
-
-- (void)readDataFrom:(TemplateStream *)stream
-{
-    UInt16 tmp = 0;
-    [stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
-    value = CFSwapInt16BigToHost(tmp);
-}
-
-- (UInt32)sizeOnDisk:(UInt32)currentSize
-{
-    return SIZE_ON_DISK;
-}
-
-- (void)writeDataTo:(TemplateStream *)stream
-{
-    UInt16 tmp = CFSwapInt16HostToBig(value);
-    [stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
+    self.value = boolValue ? 256 : 0;
 }
 
 @end

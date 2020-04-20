@@ -97,7 +97,7 @@
 - (Element *)key
 {
 	NSLog(@"Getting last key of stack: %@", keyStack);
-	return [counterStack lastObject];
+	return [keyStack lastObject];
 }
 
 - (void)pushKey:(Element *)k

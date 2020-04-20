@@ -15,6 +15,13 @@
 			length = 4;
 		else if ([t isEqualToString:@"FLLG"])
 			length = 8;
+        // temp faked types
+        else if ([t isEqualToString:@"KRID"] ||
+                 [t isEqualToString:@"CASE"] ||
+                 [t isEqualToString:@"TITL"] ||
+                 [t isEqualToString:@"CMNT"] ||
+                 [t isEqualToString:@"DVDR"])
+            length = 0;
         else {
             // Fnnn
             NSScanner *scanner = [NSScanner scannerWithString:[t substringFromIndex:1]];
@@ -33,7 +40,7 @@
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	[stream advanceAmount:(UInt32)length pad:NO];
+	[stream advanceAmount:length pad:NO];
 }
 
 - (UInt32)sizeOnDisk:(UInt32)currentSize
@@ -43,27 +50,13 @@
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	[stream advanceAmount:(UInt32)length pad:YES];
-}
-
-- (NSString *)stringValue
-{
-	return @"";
-}
-
-- (void)setStringValue:(NSString *)str
-{
+	[stream advanceAmount:length pad:YES];
 }
 
 - (NSString *)label
 {
-	if(length) return @"";
+	if (length) return @"";
 	return [super label];
-}
-
-- (BOOL)editable
-{
-	return NO;
 }
 
 @end

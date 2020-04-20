@@ -1,26 +1,19 @@
 #import "ElementLFLG.h"
-
-#define SIZE_ON_DISK (4)
+#import "TemplateWindowController.h"
 
 @implementation ElementLFLG
-@synthesize value;
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
-    UInt32 tmp = 0;
-    [stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
-    value = CFSwapInt32BigToHost(tmp);
-}
-
-- (UInt32)sizeOnDisk:(UInt32)currentSize
-{
-    return SIZE_ON_DISK;
-}
-
-- (void)writeDataTo:(TemplateStream *)stream
-{
-    UInt32 tmp = CFSwapInt32HostToBig(value);
-    [stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
+    NSRect frame = NSMakeRect(0, 0, 18, 18);
+    NSView *view = [[NSView alloc] initWithFrame:frame];
+    NSButton *checkbox = [[NSButton alloc] initWithFrame:frame];
+    checkbox.buttonType = NSSwitchButton;
+    checkbox.title = @"";
+    checkbox.action = @selector(itemValueUpdated:);
+    [checkbox bind:@"value" toObject:self withKeyPath:@"value" options:nil];
+    [view addSubview:checkbox];
+    return view;
 }
 
 @end

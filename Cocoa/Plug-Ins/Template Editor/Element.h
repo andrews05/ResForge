@@ -28,8 +28,7 @@
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn;
 
-- (NSString *)stringValue; // Used to display your data in the list.
-- (BOOL)editable;
++ (NSFormatter *)formatter; // Used to display your data in the list.
 
 // Items that have sub-items (like LSTB, LSTZ, LSTC and other lists) should implement these:
 - (NSInteger)subElementCount;

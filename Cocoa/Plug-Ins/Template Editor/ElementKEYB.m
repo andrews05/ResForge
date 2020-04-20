@@ -1,7 +1,6 @@
 #import "ElementKEYB.h"
 
 @implementation ElementKEYB
-@dynamic stringValue;
 @synthesize subElements;
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
@@ -15,7 +14,10 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	return nil;
+    ElementKEYB *element = [super copyWithZone:zone];
+    if(!element) return nil;
+    element.subElements = [subElements copyWithZone:zone];
+    return element;
 }
 
 - (void)readSubElementsFrom:(TemplateStream *)stream
@@ -31,7 +33,7 @@
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	if([[self label] isEqualToString: [[stream key] stringValue]])
+	if([self labelMatches:[stream key]])
 	{
 		for(unsigned i = 0; i < [subElements count]; i++)
 			[subElements[i] readDataFrom:stream];
@@ -43,7 +45,7 @@
 //	of this element itself.
 - (UInt32)sizeOnDisk:(UInt32)currentSize
 {
-//	if(![[self label] isEqualToString: [[stream key] stringValue]])
+//	if(![self labelMatches:[stream key]])
 //		return 0;
 	
 	UInt32 size = 0;
@@ -54,7 +56,7 @@
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	if([[self label] isEqualToString: [[stream key] stringValue]])
+    if([self labelMatches:[stream key]])
 	{
 		// writes out the data of all our sub-elements here:
 		for (Element *element in subElements)
@@ -72,9 +74,12 @@
 	return subElements[n];
 }
 
-- (NSString *)stringValue { return @""; }
-- (void)setStringValue:(NSString *)str {}
-- (BOOL)editable { return NO; }
+- (BOOL)labelMatches:(Element *)element
+{
+    NSString *value = [[[element class] formatter] stringForObjectValue:[element valueForKey:@"value"]];
+    return [[self label] isEqualToString:value];
+}
+
 @end
 
 #pragma mark -
@@ -82,7 +87,5 @@
 @implementation ElementKEYE
 - (void)readDataFrom:(TemplateStream *)stream {}
 - (void)writeDataTo:(TemplateStream *)stream {}
-- (NSString *)stringValue { return @""; }
-- (void)setStringValue:(NSString *)str {}
 - (BOOL)editable { return NO; }
 @end

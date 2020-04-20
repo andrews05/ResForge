@@ -4,7 +4,6 @@
 
 @implementation ElementDLLG
 @synthesize value;
-@dynamic stringValue;
 
 - (id)copyWithZone:(NSZone*)zone
 {
@@ -31,17 +30,16 @@
 	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
-- (NSString *)stringValue
++ (NSFormatter *)formatter
 {
-	return [NSString stringWithFormat:@"%lld", value];
-}
-
-- (void)setStringValue:(NSString *)str
-{
-	char cstr[256];
-	char *endPtr = cstr + 255;
-	strncpy(cstr, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], 255);
-	value = strtoll(cstr, &endPtr, 10);
+    static NSNumberFormatter *formatter = nil;
+    if (!formatter) {
+        formatter = [[NSNumberFormatter alloc] init];
+        formatter.hasThousandSeparators = NO;
+        formatter.minimum = @(INT64_MIN);
+        formatter.maximum = @(INT64_MAX);
+    }
+    return formatter;
 }
 
 @end

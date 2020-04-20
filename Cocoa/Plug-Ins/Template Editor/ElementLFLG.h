@@ -1,6 +1,5 @@
-#import "ElementBFLG.h"
+#import "ElementULNG.h"
 
-@interface ElementLFLG : ElementBFLG
-@property UInt32 value;
+@interface ElementLFLG : ElementULNG
 
 @end

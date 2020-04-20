@@ -1,4 +1,5 @@
 #import "ElementRECT.h"
+#import "ElementDWRD.h"
 
 @implementation ElementRECT
 @synthesize top;
@@ -18,11 +19,6 @@
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    formatter.hasThousandSeparators = NO;
-    formatter.minimum = @(INT16_MIN);
-    formatter.maximum = @(INT16_MAX);
-    
     NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
     NSTextField *top = view.textField;
     NSRect frame = top.frame;
@@ -31,7 +27,7 @@
     top.autoresizingMask ^= NSViewWidthSizable;
     top.editable = YES;
     top.delegate = self;
-    top.formatter = formatter;
+    top.formatter = [ElementDWRD formatter];
     NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:top];
     [top bind:@"value" toObject:self withKeyPath:@"top" options:nil];
     

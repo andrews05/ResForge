@@ -2,7 +2,6 @@
 
 @interface ElementOCNT : Element
 @property UInt32 value;
-@property (unsafe_unretained) NSString *stringValue;
 @property (strong) NSMutableArray *entries;
 
 - (BOOL)countFromZero;

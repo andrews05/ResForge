@@ -42,23 +42,9 @@
     [stream advanceAmount:[self sizeOnDisk:pos] pad:YES];
 }
 
-- (NSString *)stringValue
-{
-    return @"";
-}
-
-- (void)setStringValue:(NSString *)str
-{
-}
-
 - (NSString *)label
 {
     return @"";
-}
-
-- (BOOL)editable
-{
-    return NO;
 }
 
 @end

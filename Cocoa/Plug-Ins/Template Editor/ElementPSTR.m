@@ -1,9 +1,8 @@
 #import "ElementPSTR.h"
 
-// implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, CHAR, TNAM
+// implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, CHAR, TNAM, Pnnn, Cnnn
 @implementation ElementPSTR
-@synthesize stringValue = value;
-@synthesize alignment = _alignment;
+@synthesize value;
 @synthesize lengthBytes = _lengthBytes;
 @synthesize maxLength = _maxLength;
 @synthesize minLength = _minLength;
@@ -13,77 +12,66 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
 	if (self = [super initForType:t withLabel:l]) {
-		value = @"";
 		if ([t isEqualToString:@"PSTR"] || [t isEqualToString:@"BSTR"])	{
 			_lengthBytes = 1;
 			_maxLength = UINT8_MAX;
 			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kNoPadding;
-			_alignment = 0;
 		} else if([t isEqualToString:@"WSTR"]) {
 			_lengthBytes = 2;
 			_maxLength = UINT16_MAX;
 			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kNoPadding;
-			_alignment = 0;
 		} else if ([t isEqualToString:@"LSTR"]) {
 			_lengthBytes = 4;
 			_maxLength = UINT32_MAX;
 			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kNoPadding;
-			_alignment = 0;
 		} else if ([t isEqualToString:@"OSTR"]) {
 			_lengthBytes = 1;
 			_maxLength = UINT8_MAX;
 			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kPadToOddLength;
-			_alignment = 0;
 		} else if ([t isEqualToString:@"ESTR"]) {
 			_lengthBytes = 1;
 			_maxLength = UINT8_MAX;
 			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kPadToEvenLength;
-			_alignment = 0;
 		} else if ([t isEqualToString:@"CSTR"]) {
 			_lengthBytes = 0;
 			_maxLength = 0;
 			_minLength = 0;
 			_terminatingByte = YES;
 			_pad = kNoPadding;
-			_alignment = 0;
 		} else if ([t isEqualToString:@"OCST"]) {
 			_lengthBytes = 0;
 			_maxLength = 0;
 			_minLength = 0;
 			_terminatingByte = YES;
 			_pad = kPadToOddLength;
-			_alignment = 0;
 		} else if ([t isEqualToString:@"ECST"]) {
 			_lengthBytes = 0;
 			_maxLength = 0;
 			_minLength = 0;
 			_terminatingByte = YES;
 			_pad = kPadToEvenLength;
-			_alignment = 0;
 		} else if ([t isEqualToString:@"CHAR"]) {
 			_lengthBytes = 0;
 			_maxLength = 1;
 			_minLength = 1;
 			_terminatingByte = NO;
 			_pad = kNoPadding;
-			_alignment = 0;
 		} else if ([t isEqualToString:@"TNAM"]) {
 			_lengthBytes = 0;
 			_maxLength = 4;
 			_minLength = 4;
 			_terminatingByte = NO;
 			_pad = kNoPadding;
-			_alignment = 0;
 		}
 		// temp until keyed values are implemented
 		else if ([t isEqualToString:@"KCHR"]) {
@@ -92,14 +80,12 @@
 			_minLength = 1;
 			_terminatingByte = NO;
 			_pad = kNoPadding;
-			_alignment = 0;
 		} else if ([t isEqualToString:@"KTYP"]) {
 			_lengthBytes = 0;
 			_maxLength = 4;
 			_minLength = 4;
 			_terminatingByte = NO;
 			_pad = kNoPadding;
-			_alignment = 0;
 		}
         else {
             // assume Xnnn for anything else
@@ -114,7 +100,6 @@
                     _minLength = 0;
                     _terminatingByte = NO;
                     _pad = nnn;
-                    _alignment = 0;
                     break;
                 case 'C':
                     _lengthBytes = 0;
@@ -122,7 +107,6 @@
                     _minLength = 0;
                     _terminatingByte = YES;
                     _pad = nnn;
-                    _alignment = 0;
                     break;
             }
         }
@@ -134,13 +118,12 @@
 - (id)copyWithZone:(NSZone*)zone
 {
 	ElementPSTR *element = [super copyWithZone:zone];
-	[element setStringValue:value];
+	[element setValue:value];
 	[element setMaxLength:_maxLength];
 	[element setMinLength:_minLength];
 	[element setPad:_pad];
 	[element setTerminatingByte:_terminatingByte];
 	[element setLengthBytes:_lengthBytes];
-	[element setAlignment:_alignment];
 	return element;
 }
 
@@ -160,11 +143,13 @@
 	
 	// read string
 	
-    if (length != 0) {
+    if (length == 0) {
+        value = @"";
+    } else {
         void *buffer = malloc(length);
         if(_minLength) memset(buffer, 0, _minLength);
         [stream readAmount:length toBuffer:buffer];
-        [self setStringValue:[[NSString alloc] initWithBytesNoCopy:buffer length:length encoding:NSMacOSRomanStringEncoding freeWhenDone:YES]];
+        [self setValue:[[NSString alloc] initWithBytesNoCopy:buffer length:length encoding:NSMacOSRomanStringEncoding freeWhenDone:YES]];
     }
 	
 	// skip over empty bytes
@@ -180,7 +165,6 @@
     } else if (_pad > 0) {
         if (length < _pad)   [stream advanceAmount:_pad-length pad:NO];
     }
-	// alignment unhandled here
 }
 
 - (UInt32)sizeOnDisk:(UInt32)currentSize
@@ -196,7 +180,6 @@
 		length++;
 	if(_pad == kPadToEvenLength && length % 2 == 1)
 		length++;
-	// don't know how to deal with alignment here
 	return length;
 }
 

@@ -1,10 +1,10 @@
 #import "ElementOCNT.h"
+#import "ElementULNG.h"
 
 // implements ZCNT, OCNT, BCNT, BZCT, WCNT, WZCT, LCNT, LZCT
 @implementation ElementOCNT
 @synthesize value;
 @synthesize entries;
-@dynamic stringValue;
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
@@ -21,23 +21,31 @@
 	
 	// always reset counter on copy
 	element.value = 0;
-    [element.entries removeAllObjects];
 	return element;
+}
+
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
+{
+    NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+    view.textField.formatter = [ElementULNG formatter];
+    [view.textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
+    return view;
 }
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	value = 0;
+	UInt32 tmp = 0;
 	if ([self.type isEqualToString:@"LCNT"] || [self.type isEqualToString:@"LZCT"])
-		[stream readAmount:4 toBuffer:&value];
+		[stream readAmount:4 toBuffer:&tmp];
 	else if ([self.type isEqualToString:@"BCNT"] || [self.type isEqualToString:@"BZCT"])
-		[stream readAmount:1 toBuffer:(char *)(&value)+3];
+		[stream readAmount:1 toBuffer:(char *)(&tmp)+3];
 	else
-		[stream readAmount:2 toBuffer:(short *)(&value)+1];
+		[stream readAmount:2 toBuffer:(short *)(&tmp)+1];
 	
-	value = CFSwapInt32BigToHost(value);
+	tmp = CFSwapInt32BigToHost(tmp);
 	if ([self countFromZero])
-		value += 1;
+		tmp += 1;
+    value = tmp;
 }
 
 - (UInt32)sizeOnDisk:(UInt32)currentSize
@@ -52,17 +60,16 @@
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
+    UInt32 tmp = value;
 	if ([self countFromZero])
-		value -= 1;
-	UInt32 tmp = CFSwapInt32HostToBig(value);
+		tmp -= 1;
+	tmp = CFSwapInt32HostToBig(tmp);
 	if ([self.type isEqualToString:@"LCNT"] || [self.type isEqualToString:@"LZCT"])
 		[stream writeAmount:4 fromBuffer:&tmp];
 	else if ([self.type isEqualToString:@"BCNT"] || [self.type isEqualToString:@"BZCT"])
 		[stream writeAmount:1 fromBuffer:(char *)(&tmp)+3];
 	else
 		[stream writeAmount:2 fromBuffer:(short *)(&tmp)+1];
-	if ([self countFromZero])
-		value += 1;
 }
 
 - (BOOL)countFromZero
@@ -87,20 +94,6 @@
 {
     [entries removeObject:entry];
     value--;
-}
-
-- (NSString *)stringValue
-{
-	return [NSString stringWithFormat:@"%ld", (unsigned long)value];
-}
-
-- (void)setStringValue:(NSString *)str
-{
-}
-
-- (BOOL)editable
-{
-	return NO;
 }
 
 @end

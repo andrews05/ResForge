@@ -19,13 +19,13 @@
 - (void)readDataFrom:(TemplateStream *)stream
 {
 	[self setCountElement:[stream counter]];
-    [[self.countElement entries] addObject:self];
 	unsigned int itemsToGo = [self.countElement value];
 	unsigned int itemsToGoAtStart = itemsToGo;
 	
 	// Read a first item:
 	if(itemsToGo > 0)
 	{
+        [[self.countElement entries] addObject:self];
 		[self readDataForElements:stream];
 		itemsToGo--;
 	}

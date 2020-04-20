@@ -1,7 +1,6 @@
-#import "Element.h"
+#import "ElementUWRD.h"
 
-@interface ElementBOOL : Element
-@property UInt16 value;
+@interface ElementBOOL : ElementUWRD
 @property (unsafe_unretained) BOOL boolValue;
 
 @end

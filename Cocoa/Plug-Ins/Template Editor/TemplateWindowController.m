@@ -354,7 +354,9 @@
 	id element = [dataList selectedItem];
 	if([element respondsToSelector:@selector(createListEntry)] && [element createListEntry])
 	{
+        NSInteger row = [dataList selectedRow];
 		[dataList reloadData];
+        [dataList selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 		[dataList expandItem:[dataList selectedItem] expandChildren:YES];
 		if(!liveEdit) [self setDocumentEdited:YES];
 	}

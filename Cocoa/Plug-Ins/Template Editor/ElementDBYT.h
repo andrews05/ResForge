@@ -2,7 +2,6 @@
 
 @interface ElementDBYT : Element
 @property SInt8 value;
-@property (unsafe_unretained) NSString *stringValue;
 
 @end
 

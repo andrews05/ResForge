@@ -1,64 +1,58 @@
 #import "ElementDATE.h"
 
+#define SIZE_ON_DISK (4)
+
 @implementation ElementDATE
-@synthesize value;
-@dynamic stringValue;
+@synthesize seconds;
 
 - (id)copyWithZone:(NSZone *)zone
 {
 	ElementDATE *element = [super copyWithZone:zone];
-	element.value = value;
+	element.seconds = seconds;
 	return element;
 }
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	UInt32 tmp = CFSwapInt32HostToBig(value);
-	[stream readAmount:sizeof(value) toBuffer:&tmp];
+    UInt32 tmp = 0;
+	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
+    seconds = CFSwapInt32BigToHost(tmp);
 }
 
 - (UInt32)sizeOnDisk:(UInt32)currentSize
 {
-	return sizeof(value);
+	return SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	UInt32 tmp;
-	[stream writeAmount:sizeof(value) fromBuffer:&tmp];
-	value = CFSwapInt32BigToHost(tmp);
+    UInt32 tmp = CFSwapInt32HostToBig(seconds);
+	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
-- (NSString *)stringValue
+- (NSDate *)value
 {
-	CFAbsoluteTime cfTime;
-	OSStatus error = UCConvertSecondsToCFAbsoluteTime(value, &cfTime);
-	if(error) return nil;
-//	return [[NSCalendarDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] descriptionWithLocale:[NSLocale currentLocale]];
-	return [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
-	//return [[NSCalendarDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] descriptionWithLocale:[NSDictionary dictionaryWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:NSShortTimeDateFormatString] forKey:@"NSTimeDateFormatString"]];
-//	return [[NSCalendarDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] descriptionWithLocale:[NSDictionary dictionaryWithObjectsAndKeys:
-//		[[NSUserDefaults standardUserDefaults] objectForKey:NSShortTimeDateFormatString], @"NSTimeDateFormatString",
-//		[[NSUserDefaults standardUserDefaults] objectForKey:NSAMPMDesignation], @"NSAMPMDesignation",
-//		[[NSUserDefaults standardUserDefaults] objectForKey:NSMonthNameArray], @"NSMonthNameArray",
-//		[[NSUserDefaults standardUserDefaults] objectForKey:NSShortMonthNameArray], @"NSShortMonthNameArray",
-//		[[NSUserDefaults standardUserDefaults] objectForKey:NSWeekDayNameArray], @"NSWeekDayNameArray",
-//		[[NSUserDefaults standardUserDefaults] objectForKey:NSShortWeekDayNameArray], @"NSShortWeekDayNameArray",
-//		nil]];
-//	return [[NSCalendarDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] descriptionWithLocale:[NSDictionary dictionaryWithObject:[[NSCalendar currentCalendar] calendarIdentifier] forKey:@"NSLocaleCalendar"]];
-//	return [[NSCalendarDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime] descriptionWithCalendarFormat:[NSCalendar currentCalendar]];// timeZone:[NSTimeZone localTimeZone] locale:[NSDictionary dictionaryWithObject:[NSCalendar currentCalendar] forKey:@"NSLocaleCalendar"]];
+    CFAbsoluteTime cfTime;
+    OSStatus error = UCConvertSecondsToCFAbsoluteTime(seconds, &cfTime);
+    if(error) return nil;
+    return [NSDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime];
 
 }
 
-- (void)setStringValue:(NSString *)str
+- (void)setValue:(NSDate *)value
 {
-//	UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[[NSCalendarDate dateWithString:str] timeIntervalSinceReferenceDate], &value);
-	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	[formatter setDateStyle:NSDateFormatterShortStyle];
-	[formatter setTimeStyle:NSDateFormatterShortStyle];
-	NSDate *date = [formatter dateFromString:str];
-	UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[date timeIntervalSinceReferenceDate], &value);
-//	UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[[NSCalendarDate dateWithNaturalLanguageString:str locale:[NSDictionary dictionaryWithObject:[NSLocale currentLocale] forKey:@"NSLocale"]] timeIntervalSinceReferenceDate], &value);
+    UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[value timeIntervalSinceReferenceDate], &seconds);
+}
+
++ (NSFormatter *)formatter
+{
+    static NSDateFormatter *formatter = nil;
+    if (!formatter) {
+        formatter = [[NSDateFormatter alloc] init];
+        formatter.dateStyle = NSDateFormatterMediumStyle;
+        formatter.timeStyle = NSDateFormatterMediumStyle;
+    }
+    return formatter;
 }
 
 @end

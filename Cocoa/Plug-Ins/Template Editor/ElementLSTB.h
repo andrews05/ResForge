@@ -5,7 +5,6 @@
 @class ElementOCNT;
 
 @interface ElementLSTB : Element
-@property (unsafe_unretained) NSString *stringValue;
 @property (strong) NSMutableArray *subElements;
 @property (weak) ElementLSTB *groupElementTemplate;	// TMPL equivalent of self, for cloning
 @property (weak) ElementOCNT *countElement;			// Our "list counter" element.

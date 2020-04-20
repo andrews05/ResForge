@@ -1,45 +1,57 @@
 #import "ElementFIXD.h"
 
+#define SIZE_ON_DISK (4)
+
 @implementation ElementFIXD
-@synthesize value;
-@dynamic stringValue;
+@synthesize fixedValue;
 
 - (id)copyWithZone:(NSZone *)zone
 {
 	ElementFIXD *element = [super copyWithZone:zone];
-	element.value = value;
+	element.fixedValue = fixedValue;
 	return element;
 }
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
 	Fixed tmp = 0;
-	[stream readAmount:sizeof(value) toBuffer:&tmp];
-	value = CFSwapInt32BigToHost(tmp);
+	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
+	fixedValue = CFSwapInt32BigToHost(tmp);
 }
 
 - (UInt32)sizeOnDisk:(UInt32)currentSize
 {
-	return sizeof(value);
+	return SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	Fixed tmp = CFSwapInt32HostToBig(value);
-	[stream writeAmount:sizeof(value) fromBuffer:&tmp];
+	Fixed tmp = CFSwapInt32HostToBig(fixedValue);
+	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
-- (NSString *)stringValue
+- (float)value
 {
-	return [NSString stringWithFormat:@"%.3lf", FixedToFloat(value)];
+	return FixedToFloat(fixedValue);
 }
 
-- (void)setStringValue:(NSString *)str
+- (void)setValue:(float)value
 {
-	char cstr[256];
-	char *endPtr = cstr + 255;
-	strncpy(cstr, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], 255);
-	value = FloatToFixed(strtof(cstr, &endPtr));
+	fixedValue = FloatToFixed(value);
+}
+
++ (NSFormatter *)formatter
+{
+    static NSNumberFormatter *formatter = nil;
+    if (!formatter) {
+        formatter = [[NSNumberFormatter alloc] init];
+        formatter.hasThousandSeparators = NO;
+        formatter.numberStyle = NSNumberFormatterDecimalStyle;
+        formatter.maximumFractionDigits = 6;
+        formatter.minimum = @(-32768);
+        formatter.maximum = @(32768);
+    }
+    return formatter;
 }
 
 @end

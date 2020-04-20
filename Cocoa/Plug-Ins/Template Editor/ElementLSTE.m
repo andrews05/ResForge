@@ -6,7 +6,6 @@
 @synthesize writesZeroByte;
 @synthesize groupElementTemplate;
 @synthesize countElement;
-@dynamic stringValue;
 
 - (id)copyWithZone:(NSZone *)zone
 {
@@ -39,16 +38,6 @@
 		[stream advanceAmount:1 pad:YES];
 }
 
-- (void)setWritesZeroByte:(BOOL)n
-{
-	writesZeroByte = n;
-}
-
-- (BOOL)writesZeroByte
-{
-	return writesZeroByte;
-}
-
 - (BOOL)createListEntry
 {
     if ([countElement.type isEqualToString:@"FCNT"])
@@ -60,20 +49,6 @@
 	[list setCountElement:countElement];
 	[countElement addEntry:list after:nil];
     return YES;
-}
-
-- (NSString *)stringValue
-{
-	return @"";
-}
-
-- (void)setStringValue:(NSString *)str
-{
-}
-
-- (BOOL)editable
-{
-	return NO;
 }
 
 - (NSString *)label

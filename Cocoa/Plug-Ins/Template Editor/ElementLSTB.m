@@ -5,7 +5,6 @@
 
 // implements LSTB, LSTZ
 @implementation ElementLSTB
-@dynamic stringValue;
 @synthesize countElement;
 @synthesize groupElementTemplate;
 @synthesize subElements;
@@ -217,7 +216,4 @@
     return YES;
 }
 
-- (NSString *)stringValue { return @""; }
-- (void)setStringValue:(NSString *)str {}
-- (BOOL)editable { return NO; }
 @end

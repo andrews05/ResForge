@@ -1,5 +1,5 @@
-#import "TemplateWindowController.h"
 #import "Element.h"
+#import "TemplateWindowController.h"
 
 @implementation Element
 @synthesize type;
@@ -42,11 +42,19 @@
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
+    if (![self respondsToSelector:@selector(value)])
+        return nil;
     NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
-    view.textField.editable = self.editable;
+    view.textField.editable = YES;
     view.textField.delegate = self;
-    [view.textField bind:@"value" toObject:self withKeyPath:@"stringValue" options:nil];
+    view.textField.formatter = [[self class] formatter];
+    [view.textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
     return view;
+}
+
++ (NSFormatter *)formatter
+{
+    return nil;
 }
 
 - (NSInteger)subElementCount
@@ -84,24 +92,6 @@
 - (void)writeDataTo:(TemplateStream *)stream
 {
 	NSLog(@"-writeDataTo:called on non-concrete class Element");
-}
-
-- (NSString *)stringValue
-{
-	NSLog(@"-stringValue called on non-concrete class Element");
-	return @"<unknown>";
-}
-
-- (void)setStringValue:(NSString *)value
-{
-	// we need this method, otherwise KVC throws an exception which screws up the table
-	NSLog(@"-setStringValue:@\"%@\" called on non-concrete class Element", value);
-}
-
-- (BOOL)editable
-{
-	// override this for non-editable field types
-	return YES;
 }
 
 - (float)rowHeight

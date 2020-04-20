@@ -1,6 +1,5 @@
-#import "ElementBFLG.h"
+#import "ElementUWRD.h"
 
-@interface ElementWFLG : ElementBFLG
-@property UInt16 value;
+@interface ElementWFLG : ElementUWRD
 
 @end

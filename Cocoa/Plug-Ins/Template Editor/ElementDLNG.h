@@ -2,7 +2,6 @@
 
 @interface ElementDLNG : Element
 @property SInt32 value;
-@property (unsafe_unretained) NSString *stringValue;
 
 @end
 

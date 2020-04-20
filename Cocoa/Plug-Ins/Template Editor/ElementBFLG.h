@@ -1,6 +1,5 @@
-#import "Element.h"
+#import "ElementUBYT.h"
 
-@interface ElementBFLG : Element
-@property UInt8 value;
+@interface ElementBFLG : ElementUBYT
 
 @end

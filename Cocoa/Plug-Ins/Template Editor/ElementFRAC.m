@@ -1,45 +1,57 @@
 #import "ElementFRAC.h"
 
+#define SIZE_ON_DISK (4)
+
 @implementation ElementFRAC
-@synthesize value;
-@dynamic stringValue;
+@synthesize fractValue;
 
 - (id)copyWithZone:(NSZone *)zone
 {
 	ElementFRAC *element = [super copyWithZone:zone];
-	element.value = value;
+	element.fractValue = fractValue;
 	return element;
 }
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	SInt32 tmp = 0;
-	[stream readAmount:sizeof(value) toBuffer:&tmp];
-	value = CFSwapInt32BigToHost(tmp);
+	Fract tmp = 0;
+	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
+	fractValue = CFSwapInt32BigToHost(tmp);
 }
 
 - (UInt32)sizeOnDisk:(UInt32)currentSize
 {
-	return sizeof(value);
+	return SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	SInt32 tmp = CFSwapInt32HostToBig(value);
-	[stream writeAmount:sizeof(value) fromBuffer:&tmp];
+	Fract tmp = CFSwapInt32HostToBig(fractValue);
+	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
-- (NSString *)stringValue
+- (float)value
 {
-	return [NSString stringWithFormat:@"%.10lg", FractToFloat(value)];
+	return FractToFloat(fractValue);
 }
 
-- (void)setStringValue:(NSString *)str
+- (void)setValue:(float)value
 {
-	char cstr[256];
-	char *endPtr = cstr + 255;
-	strncpy(cstr, [str cStringUsingEncoding:NSMacOSRomanStringEncoding], 255);
-	value = FloatToFract(strtof(cstr, &endPtr));
+	fractValue = FloatToFract(value);
+}
+
++ (NSFormatter *)formatter
+{
+    static NSNumberFormatter *formatter = nil;
+    if (!formatter) {
+        formatter = [[NSNumberFormatter alloc] init];
+        formatter.hasThousandSeparators = NO;
+        formatter.numberStyle = NSNumberFormatterDecimalStyle;
+        formatter.maximumFractionDigits = 10;
+        formatter.minimum = @(-2);
+        formatter.maximum = @(2);
+    }
+    return formatter;
 }
 
 @end

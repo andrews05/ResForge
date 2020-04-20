@@ -1,8 +1,7 @@
 #import "ElementHEXD.h"
 
 @implementation ElementHEXD
-@synthesize value;
-@dynamic stringValue;
+@synthesize data;
 @synthesize length;
 @synthesize lengthBytes = _lengthBytes;
 @synthesize skipLengthBytes = _skipLengthBytes;
@@ -10,7 +9,7 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
-        value = nil;
+        data = nil;
         length = 0;
         if ([t isEqualToString:@"BHEX"])    {
             _lengthBytes = 1;
@@ -48,7 +47,7 @@
 - (id)copyWithZone:(NSZone *)zone
 {
 	ElementHEXD *element = [super copyWithZone:zone];
-	element.value = value;
+	element.data = data;
     element.length = length;
     element.lengthBytes = _lengthBytes;
     element.skipLengthBytes = _skipLengthBytes;
@@ -76,7 +75,8 @@
     } else if ([self.type isEqualToString:@"HEXD"]) {
         length = [stream bytesToGo];
     }
-	[self setValue:[NSData dataWithBytes:[stream data] length:length]];
+    // FIXME: This will fail if there's not enough data in the stream (i.e. new resource)
+	[self setData:[NSData dataWithBytes:[stream data] length:length]];
     [stream advanceAmount:length pad:NO];
 }
 
@@ -94,15 +94,15 @@
         writeLength = CFSwapInt32HostToBig(writeLength);
         [stream writeAmount:_lengthBytes fromBuffer:&writeLength];
     }
-	[stream writeAmount:length fromBuffer:[value bytes]];
+	[stream writeAmount:length fromBuffer:[data bytes]];
 }
 
-- (NSString *)stringValue
+- (NSString *)value
 {
-	return [value description];
+	return [data description];
 }
 
-- (void)setStringValue:(NSString *)str
+- (void)setValue:(NSString *)str
 {
 }
 
