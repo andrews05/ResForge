@@ -692,7 +692,7 @@ extern NSString *RKResourcePboardType;
 	if([item action] == @selector(saveDocument:))			return [self isDocumentEdited];
 	
 	// edit menu
-	else if([item action] == @selector(clear:))				return selectedRows > 0;
+	else if([item action] == @selector(delete:))				return selectedRows > 0;
 	else if([item action] == @selector(selectAll:))			return [outlineView numberOfRows] > 0;
 	else if([item action] == @selector(deselectAll:))		return selectedRows > 0;
 	
@@ -997,7 +997,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)cut:(id)sender
 {
 	[self copy:sender];
-	[self clear:sender];
+	[self delete:sender];
 }
 
 - (IBAction)copy:(id)sender
@@ -1059,12 +1059,12 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	}
 }
 
-- (IBAction)clear:(id)sender
+- (IBAction)delete:(id)sender
 {
 #pragma unused(sender)
 	if([[NSUserDefaults standardUserDefaults] boolForKey:kDeleteResourceWarning])
 	{
-		NSBeginCriticalAlertSheet(@"Delete Resource", @"Delete", @"Cancel", nil, [self mainWindow], self, @selector(deleteResourcesSheetDidEnd:returnCode:contextInfo:), NULL, nil, @"Please confirm you wish to delete the selected resources.");
+		NSBeginCriticalAlertSheet(@"Delete Resource", @"Delete", @"Cancel", nil, [self mainWindow], self, @selector(deleteResourcesSheetDidEnd:returnCode:contextInfo:), NULL, nil, @"Are you sure you want to delete the selected resources?");
 	}
 	else [self deleteSelectedResources];
 }

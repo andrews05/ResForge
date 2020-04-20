@@ -15,8 +15,7 @@
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
-    NSRect frame;
-    frame.size.width = frame.size.height = 18;
+    NSRect frame = NSMakeRect(0, 0, 18, 18);
     NSView *view = [[NSView alloc] initWithFrame:frame];
     NSButton *checkbox = [[NSButton alloc] initWithFrame:frame];
     checkbox.buttonType = NSSwitchButton;

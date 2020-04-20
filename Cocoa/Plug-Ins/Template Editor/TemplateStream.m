@@ -19,6 +19,9 @@
 #import "ElementBFLG.h"
 #import "ElementWFLG.h"
 #import "ElementLFLG.h"
+#import "ElementBOOL.h"
+#import "ElementRECT.h"
+#import "ElementPNT.h"
 //#import "ElementHEXD.h"
 #import "ElementDATE.h"
 //#import "ElementOCNT.h"
@@ -209,11 +212,16 @@
 		registry[@"UWRD"] = [ElementUWRD class];
 		registry[@"ULNG"] = [ElementULNG class];
 		registry[@"ULLG"] = [ElementULLG class];
+        
+    // multiple fields
+        registry[@"RECT"] = [ElementRECT class];    // QuickDraw rect
+        registry[@"PNT "] = [ElementPNT  class];    // QuickDraw point
+        
+    // align & fill
         registry[@"AWRD"] = [ElementAWRD class];    // alignment ints
         registry[@"ALNG"] = [ElementAWRD class];
         registry[@"AL08"] = [ElementAWRD class];
         registry[@"AL16"] = [ElementAWRD class];
-        registry[@"A"]    = [ElementAWRD class];    // Annn
 		registry[@"FBYT"] = [ElementFBYT class];	// filler ints
 		registry[@"FWRD"] = [ElementFBYT class];
 		registry[@"FLNG"] = [ElementFBYT class];
@@ -243,6 +251,7 @@
         registry[@"BFLG"] = [ElementBFLG class];    // binary flag the size of a byte/word/long
         registry[@"WFLG"] = [ElementWFLG class];
         registry[@"LFLG"] = [ElementLFLG class];
+        registry[@"BOOL"] = [ElementBOOL class];    // true = 256; false = 0
 		
 	// hex dumps
         registry[@"BHEX"] = [ElementHEXD class];
@@ -297,7 +306,6 @@
 		registry[@"KCHR"] = [ElementPSTR class];	// keyed MacRoman values
 		registry[@"KTYP"] = [ElementPSTR class];
 		registry[@"KRID"] = [ElementFBYT class];	// key on ID of the resource
-		registry[@"BOOL"] = [ElementUWRD class];	// true = 256; false = 0
 		registry[@"RSID"] = [ElementDWRD class];	// resouce id (signed word)
 		registry[@"REAL"] = [ElementULNG class];	// single precision float
 		registry[@"DOUB"] = [ElementULLG class];	// double precision float
@@ -310,16 +318,12 @@
 		registry[@"DVDR"] = [ElementFBYT class];
 		registry[@"LLDT"] = [ElementULLG class];	// 8-byte date (LongDateTime; seconds since 1 Jan 1904)
 		registry[@"STYL"] = [ElementDBYT class];	// QuickDraw font style
-		registry[@"PNT "] = [ElementULNG class];	// QuickDraw point
-		registry[@"RECT"] = [ElementULLG class];	// QuickDraw rect
 		registry[@"SCPC"] = [ElementDWRD class];	// MacOS script code (ScriptCode)
 		registry[@"LNGC"] = [ElementDWRD class];	// MacOS language code (LangCode)
 		registry[@"RGNC"] = [ElementDWRD class];	// MacOS region code (RegionCode)
 		
 	// unhandled types at present, see file:///Users/nicholas/Sites/resknife.sf.net/resorcerer_comparison.html
 		// BBIT, BBnn, FBIT, FBnn, WBIT, WBnn
-		// Pnnn, Cnnn, Hnnn, Fnnn, HEXD
-		// AWRD, ALNG (not so easy, element needs to know how much data preceeds it in the stream)
 	}
 	return registry;
 }

@@ -82,7 +82,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="data" width="224" minWidth="48" maxWidth="1000" id="34">
+                                        <tableColumn identifier="stringValue" width="224" minWidth="48" maxWidth="1000" id="34">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Data">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -117,8 +117,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <action trigger="doubleAction" selector="dataClicked:" target="-2" id="tyx-KI-klJ"/>
-                                        <action selector="dataClicked:" target="-2" id="wbA-DS-ksi"/>
+                                        <action selector="dataClicked:" target="-2" id="iDO-E6-okf"/>
                                         <outlet property="dataSource" destination="-2" id="41"/>
                                         <outlet property="delegate" destination="-2" id="42"/>
                                     </connections>

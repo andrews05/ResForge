@@ -21,7 +21,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="14" y="561" width="643" height="430"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2069" height="1183"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2155" height="1240"/>
             <value key="minSize" type="size" width="250" height="200"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
@@ -158,7 +158,7 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="10C49397-14E8-4F96-A3B3-CCAA26CAE75A" explicitItemIdentifier="com.nickshanks.resknife.toolbar.delete" label="Delete" paletteLabel="Delete" toolTip="Delete Selected Resource" tag="-1" image="Delete" id="eac-Nk-mK5">
                         <connections>
-                            <action selector="clear:" target="-2" id="PpP-oq-Bzh"/>
+                            <action selector="delete:" target="-2" id="oG6-U3-wN0"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="E0F82655-77E2-4D6D-A81A-78F81B2E270F" explicitItemIdentifier="com.nickshanks.resknife.toolbar.edit" label="Edit" paletteLabel="Edit" toolTip="Edit Resource In Default Editor" tag="-1" image="Edit" id="b2X-5T-bCc">

@@ -328,6 +328,7 @@
 - (IBAction)dataClicked:(id)sender
 {
     // Edit the text field clicked on
+    // TODO: This doesn't work so nicely for additional fields in RECT/PNT
     if ([dataList clickedRow] == -1 || [dataList clickedColumn] != 1)
         return;
     NSTableCellView *view = [dataList viewAtColumn:1 row:[dataList clickedRow] makeIfNecessary:NO];
@@ -379,7 +380,7 @@
 	if(!liveEdit) [self setDocumentEdited:YES];
 }
 
-- (IBAction)clear:(id)sender;
+- (IBAction)delete:(id)sender;
 {
     id element = [dataList selectedItem];
     if ([element respondsToSelector:@selector(removeListEntry)] && [element removeListEntry]) {
@@ -396,7 +397,7 @@
 	else if([item action] == @selector(copy:))			return(element && [element respondsToSelector:@selector(copy:)]);
 	else if([item action] == @selector(paste:) &&              element && [element respondsToSelector:@selector(validateMenuItem:)])
 														return([element validateMenuItem:item]);
-	else if([item action] == @selector(clear:))			return(element && [element respondsToSelector:@selector(removeListEntry)]);
+	else if([item action] == @selector(delete:))			return(element && [element respondsToSelector:@selector(removeListEntry)]);
 	else if([item action] == @selector(saveDocument:))	return YES;
 	else return NO;
 }

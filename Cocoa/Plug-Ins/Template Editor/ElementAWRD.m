@@ -14,11 +14,6 @@
             alignment = 8;
         else if ([t isEqualToString:@"AL16"])
             alignment = 16;
-        else {
-            // Annn
-            NSScanner *scanner = [NSScanner scannerWithString:[t substringFromIndex:1]];
-            [scanner scanHexInt:&alignment];
-        }
     }
     return self;
 }

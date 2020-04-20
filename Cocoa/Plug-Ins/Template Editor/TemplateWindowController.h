@@ -47,6 +47,6 @@
 - (IBAction)cut:(id)sender;
 - (IBAction)copy:(id)sender;
 - (IBAction)paste:(id)sender;
-- (IBAction)clear:(id)sender;
+- (IBAction)delete:(id)sender;
 
 @end

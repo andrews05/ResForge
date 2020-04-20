@@ -143,8 +143,8 @@
 /* Class = "NSMenuItem"; title = "Cut"; ObjectID = "393"; */
 "393.title" = "Cut";
 
-/* Class = "NSMenuItem"; title = "Clear"; ObjectID = "394"; */
-"394.title" = "Clear";
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "394"; */
+"394.title" = "Delete";
 
 /* Class = "NSMenuItem"; title = "Find"; ObjectID = "395"; */
 "395.title" = "Find";

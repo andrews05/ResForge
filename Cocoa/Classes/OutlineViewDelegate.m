@@ -142,8 +142,6 @@
         if ([resource isKindOfClass:[Resource class]] && [resource representedFork] == nil)
             [self editColumn:0 row:selectedRow withEvent:nil select:YES];
     }
-    else if(selectedRow != -1 && [[event characters] isEqualToString:@"\x7F"])
-		[(ResourceDocument *)[[[self window] windowController] document] deleteSelectedResources];
 	else [super keyDown:event];
 }
 

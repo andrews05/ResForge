@@ -29,12 +29,10 @@
 	return element;
 }
 
+// Notify the controller when a field has been edited
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
-    // Notify the controller if the value has changed
-    if (![control.stringValue isEqualToString:self.stringValue]) {
-        [(TemplateWindowController*)[[control window] windowController] itemValueUpdated:control];
-    }
+    [(TemplateWindowController*)[[control window] windowController] itemValueUpdated:control];
     return YES;
 }
 
