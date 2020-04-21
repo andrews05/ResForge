@@ -27,8 +27,7 @@
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
     NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
-    view.textField.formatter = [ElementULNG formatter];
-    [view.textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
+    view.textField.intValue = self.value;
     return view;
 }
 

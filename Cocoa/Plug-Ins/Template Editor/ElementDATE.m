@@ -5,13 +5,6 @@
 @implementation ElementDATE
 @synthesize seconds;
 
-- (id)copyWithZone:(NSZone *)zone
-{
-	ElementDATE *element = [super copyWithZone:zone];
-	element.seconds = seconds;
-	return element;
-}
-
 - (void)readDataFrom:(TemplateStream *)stream
 {
     UInt32 tmp = 0;
@@ -44,7 +37,7 @@
     UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[value timeIntervalSinceReferenceDate], &seconds);
 }
 
-+ (NSFormatter *)formatter
++ (NSFormatter *)sharedFormatter
 {
     static NSDateFormatter *formatter = nil;
     if (!formatter) {

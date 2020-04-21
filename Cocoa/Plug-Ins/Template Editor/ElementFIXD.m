@@ -5,13 +5,6 @@
 @implementation ElementFIXD
 @synthesize fixedValue;
 
-- (id)copyWithZone:(NSZone *)zone
-{
-	ElementFIXD *element = [super copyWithZone:zone];
-	element.fixedValue = fixedValue;
-	return element;
-}
-
 - (void)readDataFrom:(TemplateStream *)stream
 {
 	Fixed tmp = 0;
@@ -40,7 +33,7 @@
 	fixedValue = FloatToFixed(value);
 }
 
-+ (NSFormatter *)formatter
++ (NSFormatter *)sharedFormatter
 {
     static NSNumberFormatter *formatter = nil;
     if (!formatter) {

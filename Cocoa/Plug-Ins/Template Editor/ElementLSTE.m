@@ -7,20 +7,6 @@
 @synthesize groupElementTemplate;
 @synthesize countElement;
 
-- (id)copyWithZone:(NSZone *)zone
-{
-	ElementLSTE *element = [super copyWithZone:zone];
-	[element setGroupElementTemplate:groupElementTemplate];
-	[element setWritesZeroByte:writesZeroByte];
-	[element setCountElement:countElement];
-	return element;
-}
-
-
-- (void)readSubElementsFrom:(TemplateStream *)stream
-{
-}
-
 - (void)readDataFrom:(TemplateStream *)stream
 {
 	if(writesZeroByte)

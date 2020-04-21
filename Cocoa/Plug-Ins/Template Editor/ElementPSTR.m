@@ -1,4 +1,5 @@
 #import "ElementPSTR.h"
+#import "TemplateWindowController.h"
 
 // implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, CHAR, TNAM, Pnnn, Cnnn
 @implementation ElementPSTR
@@ -44,19 +45,19 @@
 			_pad = kPadToEvenLength;
 		} else if ([t isEqualToString:@"CSTR"]) {
 			_lengthBytes = 0;
-			_maxLength = 0;
+			_maxLength = UINT32_MAX;
 			_minLength = 0;
 			_terminatingByte = YES;
 			_pad = kNoPadding;
 		} else if ([t isEqualToString:@"OCST"]) {
 			_lengthBytes = 0;
-			_maxLength = 0;
+			_maxLength = UINT32_MAX;
 			_minLength = 0;
 			_terminatingByte = YES;
 			_pad = kPadToOddLength;
 		} else if ([t isEqualToString:@"ECST"]) {
 			_lengthBytes = 0;
-			_maxLength = 0;
+			_maxLength = UINT32_MAX;
 			_minLength = 0;
 			_terminatingByte = YES;
 			_pad = kPadToEvenLength;
@@ -114,17 +115,40 @@
 	return self;
 }
 
-
-- (id)copyWithZone:(NSZone*)zone
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
-	ElementPSTR *element = [super copyWithZone:zone];
-	[element setValue:value];
-	[element setMaxLength:_maxLength];
-	[element setMinLength:_minLength];
-	[element setPad:_pad];
-	[element setTerminatingByte:_terminatingByte];
-	[element setLengthBytes:_lengthBytes];
-	return element;
+    NSTableCellView *view = (NSTableCellView *)[super outlineView:outlineView viewForTableColumn:tableColumn];
+    [self performSelector:@selector(autoRowHeight:) withObject:view.textField afterDelay:0];
+    return view;
+}
+
+- (void)controlTextDidChange:(NSNotification *)obj
+{
+    NSTextField *field = (NSTextField *)[[obj.userInfo objectForKey:@"NSFieldEditor"] delegate];
+    [self autoRowHeight:field];
+}
+
+// Automatically adjust the row height to fit the text
+- (void)autoRowHeight:(NSTextField *)field
+{
+    if (_minLength)
+        return;
+    NSRect bounds = field.bounds;
+    bounds.size.height = CGFLOAT_MAX;
+    double height = [field.cell cellSizeForBounds:bounds].height;
+    if (height == self.rowHeight)
+        return;
+    self.rowHeight = height;
+    // Find the outline view to notify it
+    NSView *view = field;
+    while ((view = view.superview)) {
+        if ([view isKindOfClass:[NSOutlineView class]]) {
+            NSOutlineView *outlineView = (NSOutlineView *)view;
+            NSUInteger index = [outlineView rowForItem:self];
+            [outlineView noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:index]];
+            break;
+        }
+    }
 }
 
 - (void)readDataFrom:(TemplateStream *)stream
@@ -136,20 +160,19 @@
         length = CFSwapInt32BigToHost(length);
 		length >>= (4 - _lengthBytes) << 3;
 	}
-	if(_terminatingByte)
-		length += [stream bytesToNull];
-	if(_maxLength && length > _maxLength) length = _maxLength;
-	if(length < _minLength) length = _minLength;
+	if (_terminatingByte)
+		length = [stream bytesToNull];
+	if (length > _maxLength) length = _maxLength;
+	if (length < _minLength) length = _minLength;
+    if (length > [stream bytesToGo]) length = [stream bytesToGo];
 	
 	// read string
-	
     if (length == 0) {
         value = @"";
     } else {
         void *buffer = malloc(length);
-        if(_minLength) memset(buffer, 0, _minLength);
         [stream readAmount:length toBuffer:buffer];
-        [self setValue:[[NSString alloc] initWithBytesNoCopy:buffer length:length encoding:NSMacOSRomanStringEncoding freeWhenDone:YES]];
+        value = [[NSString alloc] initWithBytesNoCopy:buffer length:length encoding:NSMacOSRomanStringEncoding freeWhenDone:YES];
     }
 	
 	// skip over empty bytes
@@ -171,14 +194,12 @@
 {
     if (_pad > 0) return _pad;
 	UInt32 length = (UInt32)[value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
-	if(_maxLength && length > _maxLength)
-		length = _maxLength;
-	if(length < _minLength)
-		length = _minLength;
+	if (length > _maxLength) length = _maxLength;
+	if (length < _minLength) length = _minLength;
 	length += _lengthBytes + (_terminatingByte? 1 : 0);
-	if(_pad == kPadToOddLength && length % 2 == 0)
+	if (_pad == kPadToOddLength && length % 2 == 0)
 		length++;
-	if(_pad == kPadToEvenLength && length % 2 == 1)
+	if (_pad == kPadToEvenLength && length % 2 == 1)
 		length++;
 	return length;
 }
@@ -187,37 +208,23 @@
 {
 	// write string
 	UInt32 length = (UInt32)[value length];
-	if (_maxLength && length > _maxLength) length = _maxLength;
+	if (length > _maxLength) length = _maxLength;
 	if (_lengthBytes > 0) {
         UInt32 writeLength = length << ((4 - _lengthBytes) << 3);
         writeLength = CFSwapInt32HostToBig(writeLength);
 		[stream writeAmount:_lengthBytes fromBuffer:&writeLength];
     }
 	
-	if ([value canBeConvertedToEncoding:NSMacOSRomanStringEncoding])
-	{
-		const void *buffer = NULL;
-		if([value respondsToSelector:@selector(cStringUsingEncoding:)])	// 10.4
-			buffer = [value cStringUsingEncoding:NSMacOSRomanStringEncoding];
-		else
-		{
-			NSData *data = [value dataUsingEncoding:NSMacOSRomanStringEncoding];
-			buffer = [data bytes];
-		}
-		if(buffer) [stream writeAmount:length fromBuffer:buffer];
-		else [stream advanceAmount:length pad:YES];
-	}
-	else
-	{
-		#warning FIXME: This code should display a warning saying that the string in the PSTR is not MacOSRoman
-	}
+    const void *buffer = [value cStringUsingEncoding:NSMacOSRomanStringEncoding];
+    if (buffer)
+        [stream writeAmount:length fromBuffer:buffer];
+    else
+        [stream advanceAmount:length pad:YES];
 	
 	// pad to minimum length with spaces
-	if(length < _minLength)
-	{
+	if (length < _minLength) {
 		SInt32 padAmount = _minLength - length;
-		while(padAmount > 0)
-		{
+		while (padAmount > 0) {
 			UInt32 spaces = '    ';
 			[stream writeAmount:(padAmount < 4)? padAmount:4 fromBuffer:&spaces];
 			length += (padAmount < 4)? padAmount:4;
@@ -236,6 +243,69 @@
     } else if (_pad > 0) {
         if (length < _pad)   [stream advanceAmount:_pad-length pad:YES];
     }
+}
+
+- (NSFormatter *)formatter
+{
+    MacRomanFormatter *formatter = [[MacRomanFormatter alloc] init];
+    formatter.stringLength = _maxLength;
+    formatter.exactLengthRequired = _minLength == _maxLength;
+    return formatter;
+}
+
+@end
+
+
+@implementation MacRomanFormatter
+@synthesize stringLength;
+@synthesize exactLengthRequired;
+
+- (NSString *)stringForObjectValue:(id)object {
+    return object;
+}
+
+- (BOOL)getObjectValue:(id *)object forString:(NSString *)string errorDescription:(NSString **)error {
+    if (exactLengthRequired && [string length] != stringLength) {
+        if (error) {
+            if (stringLength == 1)
+                *error = @"The value must be exactly 1 character.";
+            else
+                *error = [NSString stringWithFormat:@"The value must be exactly %d characters.", stringLength];
+        }
+        return NO;
+    }
+    if (![string canBeConvertedToEncoding:NSMacOSRomanStringEncoding]) {
+        if (error)
+            *error = @"The value contains characters that are invalid for Mac OS Roman encoding.";
+        return NO;
+    }
+    *object = string;
+    return YES;
+}
+
+- (BOOL)isPartialStringValid:(NSString **)partialStringPtr
+       proposedSelectedRange:(NSRangePointer)proposedSelRangePtr
+              originalString:(NSString *)origString
+       originalSelectedRange:(NSRange)origSelRange
+            errorDescription:(NSString **)error
+{
+    if ([*partialStringPtr length] > stringLength) {
+        // If a range is selected then characters in that range will be removed so adjust the insert length accordingly
+        NSInteger insertLength = stringLength - origString.length + origSelRange.length;
+
+        // Assemble the string
+        NSString *prefix = [origString substringToIndex:origSelRange.location];
+        NSString *insert = [*partialStringPtr substringWithRange:NSMakeRange(origSelRange.location, insertLength)];
+        NSString *suffix = [origString substringFromIndex:origSelRange.location + origSelRange.length];
+        *partialStringPtr = [[prefix stringByAppendingString:insert] stringByAppendingString:suffix];
+
+        // Fix-up the proposed selection range
+        proposedSelRangePtr->location = origSelRange.location + insertLength;
+        proposedSelRangePtr->length = 0;
+        return NO;
+    }
+
+    return YES;
 }
 
 @end

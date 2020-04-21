@@ -44,14 +44,11 @@
     return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
-	ElementHEXD *element = [super copyWithZone:zone];
-	element.data = data;
-    element.length = length;
-    element.lengthBytes = _lengthBytes;
-    element.skipLengthBytes = _skipLengthBytes;
-	return element;
+    NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+    view.textField.stringValue = [data description];
+    return view;
 }
 
 - (void)readSubElementsFrom:(TemplateStream *)stream
@@ -71,12 +68,12 @@
         [stream readAmount:_lengthBytes toBuffer:&length];
         length = CFSwapInt32BigToHost(length);
         length >>= (4 - _lengthBytes) << 3;
-        if (_skipLengthBytes) length -= _lengthBytes;
+        if (_skipLengthBytes && length > 0) length -= _lengthBytes;
     } else if ([self.type isEqualToString:@"HEXD"]) {
         length = [stream bytesToGo];
     }
-    // FIXME: This will fail if there's not enough data in the stream (i.e. new resource)
-	[self setData:[NSData dataWithBytes:[stream data] length:length]];
+    // FIXME: This will fail if there's not enough data in the stream (i.e. new resource with Hnnn field)
+	data = [NSData dataWithBytes:[stream data] length:length];
     [stream advanceAmount:length pad:NO];
 }
 
@@ -95,20 +92,6 @@
         [stream writeAmount:_lengthBytes fromBuffer:&writeLength];
     }
 	[stream writeAmount:length fromBuffer:[data bytes]];
-}
-
-- (NSString *)value
-{
-	return [data description];
-}
-
-- (void)setValue:(NSString *)str
-{
-}
-
-- (BOOL)editable
-{
-	return NO;
 }
 
 @end

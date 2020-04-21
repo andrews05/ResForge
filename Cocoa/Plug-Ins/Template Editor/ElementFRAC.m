@@ -5,13 +5,6 @@
 @implementation ElementFRAC
 @synthesize fractValue;
 
-- (id)copyWithZone:(NSZone *)zone
-{
-	ElementFRAC *element = [super copyWithZone:zone];
-	element.fractValue = fractValue;
-	return element;
-}
-
 - (void)readDataFrom:(TemplateStream *)stream
 {
 	Fract tmp = 0;
@@ -40,7 +33,7 @@
 	fractValue = FloatToFract(value);
 }
 
-+ (NSFormatter *)formatter
++ (NSFormatter *)sharedFormatter
 {
     static NSNumberFormatter *formatter = nil;
     if (!formatter) {

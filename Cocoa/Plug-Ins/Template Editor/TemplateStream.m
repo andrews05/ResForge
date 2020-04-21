@@ -312,10 +312,10 @@
 		registry[@"SFRC"] = [ElementUWRD class];	// 0.16 fixed fraction
 		registry[@"FXYZ"] = [ElementUWRD class];	// 1.15 fixed fraction
 		registry[@"FWID"] = [ElementUWRD class];	// 4.12 fixed fraction
-		registry[@"CASE"] = [ElementFBYT class];
-		registry[@"TITL"] = [ElementFBYT class];	// resource title (e.g. utxt would have "Unicode Text"; must be first element of template, and not anywhere else)
-		registry[@"CMNT"] = [ElementFBYT class];
-		registry[@"DVDR"] = [ElementFBYT class];
+		registry[@"CASE"] = [Element     class];
+		registry[@"TITL"] = [Element     class];	// resource title (e.g. utxt would have "Unicode Text"; must be first element of template, and not anywhere else)
+		registry[@"CMNT"] = [Element     class];
+		registry[@"DVDR"] = [Element     class];
 		registry[@"LLDT"] = [ElementULLG class];	// 8-byte date (LongDateTime; seconds since 1 Jan 1904)
 		registry[@"STYL"] = [ElementDBYT class];	// QuickDraw font style
 		registry[@"SCPC"] = [ElementDWRD class];	// MacOS script code (ScriptCode)

@@ -18,13 +18,6 @@
     return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone
-{
-    ElementAWRD *element = [super copyWithZone:zone];
-    [element setAlignment:alignment];
-    return element;
-}
-
 - (void)readDataFrom:(TemplateStream *)stream
 {
     UInt32 pos = [stream length] - [stream bytesToGo];

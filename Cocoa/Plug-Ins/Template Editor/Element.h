@@ -18,6 +18,7 @@
 @property (copy) NSString *type; // Type code of this item (4 chars if from TMPL resource, but we may support longer types later).
 @property (copy) NSString *label; // Label ("name") of this field.
 @property (weak) NSMutableArray *parentArray; // The NSMutableArray* of the template field containing us, or the template window's list.
+@property double rowHeight;
 @property BOOL isTMPL;// for debugging
 
 + (instancetype)elementForType:(NSString *)type withLabel:(NSString *)label;
@@ -26,9 +27,14 @@
 // This is used to instantiate copies of the item from the template for storing data of the resource. A copy created with this is then sent readDataFrom:.
 - (id)copyWithZone:(NSZone *)zone;
 
+// Configure the view to display this element in the list
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn;
 
-+ (NSFormatter *)formatter; // Used to display your data in the list.
+// Create a shared (static) formatter for displaying your data in the list
++ (NSFormatter *)sharedFormatter;
+
+// Override this if the formatter should not be shared
+- (NSFormatter *)formatter;
 
 // Items that have sub-items (like LSTB, LSTZ, LSTC and other lists) should implement these:
 - (NSInteger)subElementCount;

@@ -7,51 +7,29 @@
 @synthesize bottom;
 @synthesize right;
 
-- (id)copyWithZone:(NSZone*)zone
-{
-    ElementRECT *element = [super copyWithZone:zone];
-    element.top = top;
-    element.left = left;
-    element.bottom = bottom;
-    element.right = right;
-    return element;
-}
-
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
-    NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
-    NSTextField *top = view.textField;
-    NSRect frame = top.frame;
-    frame.size.width = 56;
-    top.frame = frame;
-    top.autoresizingMask ^= NSViewWidthSizable;
-    top.editable = YES;
-    top.delegate = self;
-    top.formatter = [ElementDWRD formatter];
-    NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:top];
-    [top bind:@"value" toObject:self withKeyPath:@"top" options:nil];
-    
-    NSTextField *left = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-    frame.origin.x += frame.size.width+4;
-    left.frame = frame;
-    left.delegate = self;
-    [left bind:@"value" toObject:self withKeyPath:@"left" options:nil];
-    [view addSubview:left];
-    
-    NSTextField *bottom = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-    frame.origin.x += frame.size.width+4;
-    bottom.frame = frame;
-    bottom.delegate = self;
-    [bottom bind:@"value" toObject:self withKeyPath:@"bottom" options:nil];
-    [view addSubview:bottom];
-    
-    NSTextField *right = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-    frame.origin.x += frame.size.width+4;
-    right.frame = frame;
-    right.delegate = self;
-    [right bind:@"value" toObject:self withKeyPath:@"right" options:nil];
-    [view addSubview:right];
-    
+    return [ElementRECT configureFields:@[@"top", @"left", @"bottom", @"right"] forElement:self];
+}
+
++ (NSView *)configureFields:(NSArray *)fields forElement:(Element *)element
+{
+    NSRect frame = NSMakeRect(0, 0, 56, 18);
+    NSTableCellView *view = [[NSTableCellView alloc] initWithFrame:frame];
+    NSFont *font = [NSFont systemFontOfSize:13];
+    for (NSString *key in fields) {
+        NSTextField *field = [[NSTextField alloc] initWithFrame:frame];
+        field.bordered = NO;
+        field.drawsBackground = NO;
+        field.editable = YES;
+        field.formatter = [ElementDWRD sharedFormatter];
+        field.delegate = element;
+        field.font = font;
+        [field bind:@"value" toObject:element withKeyPath:key options:nil];
+        [view addSubview:field];
+        frame.origin.x += 60;
+    }
+    view.textField = view.subviews[0];
     return view;
 }
 

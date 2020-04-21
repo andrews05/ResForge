@@ -15,13 +15,6 @@
 			length = 4;
 		else if ([t isEqualToString:@"FLLG"])
 			length = 8;
-        // temp faked types
-        else if ([t isEqualToString:@"KRID"] ||
-                 [t isEqualToString:@"CASE"] ||
-                 [t isEqualToString:@"TITL"] ||
-                 [t isEqualToString:@"CMNT"] ||
-                 [t isEqualToString:@"DVDR"])
-            length = 0;
         else {
             // Fnnn
             NSScanner *scanner = [NSScanner scannerWithString:[t substringFromIndex:1]];
@@ -29,13 +22,6 @@
         }
 	}
 	return self;
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-	ElementFBYT *element = [super copyWithZone:zone];
-	[element setLength:length];
-	return element;
 }
 
 - (void)readDataFrom:(TemplateStream *)stream
@@ -55,8 +41,7 @@
 
 - (NSString *)label
 {
-	if (length) return @"";
-	return [super label];
+	return @"";
 }
 
 @end

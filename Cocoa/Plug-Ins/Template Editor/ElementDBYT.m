@@ -5,13 +5,6 @@
 @implementation ElementDBYT
 @synthesize value;
 
-- (id)copyWithZone:(NSZone *)zone
-{
-	ElementDBYT *element = [super copyWithZone:zone];
-	element.value = value;
-	return element;
-}
-
 - (void)readDataFrom:(TemplateStream *)stream
 {
 	[stream readAmount:SIZE_ON_DISK toBuffer:&value];
@@ -27,7 +20,7 @@
 	[stream writeAmount:SIZE_ON_DISK fromBuffer:&value];
 }
 
-+ (NSFormatter *)formatter
++ (NSFormatter *)sharedFormatter
 {
     static NSNumberFormatter *formatter = nil;
     if (!formatter) {

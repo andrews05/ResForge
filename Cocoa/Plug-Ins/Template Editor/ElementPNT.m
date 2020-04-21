@@ -1,40 +1,13 @@
 #import "ElementPNT.h"
-#import "ElementDWRD.h"
+#import "ElementRECT.h"
 
 @implementation ElementPNT
 @synthesize top;
 @synthesize left;
 
-- (id)copyWithZone:(NSZone*)zone
-{
-    ElementPNT *element = [super copyWithZone:zone];
-    element.top = top;
-    element.left = left;
-    return element;
-}
-
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
-    NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
-    NSTextField *top = view.textField;
-    NSRect frame = top.frame;
-    frame.size.width = 56;
-    top.frame = frame;
-    top.autoresizingMask ^= NSViewWidthSizable;
-    top.editable = YES;
-    top.delegate = self;
-    top.formatter = [ElementDWRD formatter];
-    NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:top];
-    [top bind:@"value" toObject:self withKeyPath:@"top" options:nil];
-    
-    NSTextField *left = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-    frame.origin.x += frame.size.width+4;
-    left.frame = frame;
-    left.delegate = self;
-    [left bind:@"value" toObject:self withKeyPath:@"left" options:nil];
-    [view addSubview:left];
-    
-    return view;
+    return [ElementRECT configureFields:@[@"top", @"left"] forElement:self];
 }
 
 - (void)readDataFrom:(TemplateStream *)stream

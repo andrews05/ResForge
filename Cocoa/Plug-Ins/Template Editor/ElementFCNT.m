@@ -28,7 +28,7 @@
     ElementOCNT *element = [super copyWithZone:zone];
     if(!element) return nil;
     
-    // always reset counter on copy
+    // preserve counter on copy
     element.value = self.value;
     return element;
 }

@@ -5,13 +5,6 @@
 @implementation ElementULLG
 @synthesize value;
 
-- (id)copyWithZone:(NSZone*)zone
-{
-	ElementULLG *element = [super copyWithZone:zone];
-	element.value = value;
-	return element;
-}
-
 - (void)readDataFrom:(TemplateStream *)stream
 {
 	UInt64 tmp = 0;
@@ -30,7 +23,7 @@
 	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
-+ (NSFormatter *)formatter
++ (NSFormatter *)sharedFormatter
 {
     static NSNumberFormatter *formatter = nil;
     if (!formatter) {

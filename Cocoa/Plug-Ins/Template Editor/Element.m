@@ -6,6 +6,7 @@
 @synthesize label;
 @synthesize isTMPL = _isTMPL;
 @synthesize parentArray;
+@synthesize rowHeight;
 
 + (id)elementForType:(NSString *)t withLabel:(NSString *)l
 {
@@ -18,6 +19,7 @@
 	if(!self) return nil;
 	label = [l copy];
 	type = [t copy];
+    rowHeight = 17;
 	return self;
 }
 
@@ -27,6 +29,11 @@
 	Element *element = [[[self class] allocWithZone:zone] initForType:type withLabel:label];
 	[element setParentArray:parentArray];
 	return element;
+}
+
+- (NSFormatter *)formatter
+{
+    return [[self class] sharedFormatter];
 }
 
 // Notify the controller when a field has been edited
@@ -47,12 +54,12 @@
     NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
     view.textField.editable = YES;
     view.textField.delegate = self;
-    view.textField.formatter = [[self class] formatter];
+    view.textField.formatter = [self formatter];
     [view.textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
     return view;
 }
 
-+ (NSFormatter *)formatter
++ (NSFormatter *)sharedFormatter
 {
     return nil;
 }
@@ -92,11 +99,6 @@
 - (void)writeDataTo:(TemplateStream *)stream
 {
 	NSLog(@"-writeDataTo:called on non-concrete class Element");
-}
-
-- (float)rowHeight
-{
-	return 18.0;
 }
 
 @end

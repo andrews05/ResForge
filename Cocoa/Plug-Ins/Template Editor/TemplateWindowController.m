@@ -317,10 +317,10 @@
 	else return [item subElementCount];
 }
 
-/*- (float)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+- (double)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
-	return [item rowHeight];
-}*/
+    return [item rowHeight];
+}
 
 #pragma mark -
 #pragma mark Menu Management
@@ -333,7 +333,7 @@
         return;
     NSTableCellView *view = [dataList viewAtColumn:1 row:[dataList clickedRow] makeIfNecessary:NO];
     if ([view isKindOfClass:[NSTableCellView class]] && view.textField.isEditable) {
-        [[self window] makeFirstResponder:view.textField];
+        [view.textField becomeFirstResponder];
     }
 }
 

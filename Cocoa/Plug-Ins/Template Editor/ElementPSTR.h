@@ -16,3 +16,10 @@ typedef enum StringPadding
 @property int lengthBytes;		// for Pascal strings
 
 @end
+
+
+@interface MacRomanFormatter : NSFormatter
+@property UInt32 stringLength;
+@property BOOL exactLengthRequired;
+
+@end

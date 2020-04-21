@@ -27,20 +27,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" findBarPosition="aboveHorizontalRuler" translatesAutoresizingMaskIntoConstraints="NO" id="146">
+                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" findBarPosition="aboveHorizontalRuler" translatesAutoresizingMaskIntoConstraints="NO" id="146">
                         <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
                         <clipView key="contentView" id="wBO-8u-DWd">
-                            <rect key="frame" x="1" y="0.0" width="641" height="429"/>
+                            <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" autosaveName="Resource List" headerView="164" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="147" id="145" customClass="RKOutlineView">
-                                    <rect key="frame" x="0.0" y="0.0" width="641" height="406"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="643" height="407"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="name" editable="NO" width="265" minWidth="16" maxWidth="1000" id="147">
+                                        <tableColumn identifier="name" editable="NO" width="266" minWidth="16" maxWidth="1000" id="147">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -82,7 +82,7 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="resID"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="size" editable="NO" width="70" minWidth="60" maxWidth="80" id="150">
+                                        <tableColumn identifier="size" editable="NO" width="71" minWidth="60" maxWidth="80" id="150">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Size">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -133,7 +133,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="164">
-                            <rect key="frame" x="0.0" y="0.0" width="641" height="23"/>
+                            <rect key="frame" x="0.0" y="0.0" width="643" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
@@ -158,7 +158,7 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="10C49397-14E8-4F96-A3B3-CCAA26CAE75A" explicitItemIdentifier="com.nickshanks.resknife.toolbar.delete" label="Delete" paletteLabel="Delete" toolTip="Delete Selected Resource" tag="-1" image="Delete" id="eac-Nk-mK5">
                         <connections>
-                            <action selector="delete:" target="-2" id="oG6-U3-wN0"/>
+                            <action selector="clear:" target="-2" id="PpP-oq-Bzh"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="E0F82655-77E2-4D6D-A81A-78F81B2E270F" explicitItemIdentifier="com.nickshanks.resknife.toolbar.edit" label="Edit" paletteLabel="Edit" toolTip="Edit Resource In Default Editor" tag="-1" image="Edit" id="b2X-5T-bCc">

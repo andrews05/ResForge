@@ -6,4 +6,6 @@
 @property SInt16 bottom;
 @property SInt16 right;
 
++ (NSView *)configureFields:(NSArray *)fields forElement:(Element *)element;
+
 @end
