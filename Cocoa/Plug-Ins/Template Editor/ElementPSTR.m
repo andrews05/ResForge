@@ -250,6 +250,7 @@
         // Fix-up the proposed selection range
         proposedSelRangePtr->location = origSelRange.location + insertLength;
         proposedSelRangePtr->length = 0;
+        NSBeep();
         return NO;
     }
 

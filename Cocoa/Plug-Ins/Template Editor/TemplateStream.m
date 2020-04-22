@@ -11,6 +11,10 @@
 #import "ElementUWRD.h"
 #import "ElementULNG.h"
 #import "ElementULLG.h"
+#import "ElementHBYT.h"
+#import "ElementHWRD.h"
+#import "ElementHLNG.h"
+#import "ElementHLLG.h"
 #import "ElementREAL.h"
 #import "ElementDOUB.h"
 #import "ElementFIXD.h"
@@ -216,6 +220,10 @@
 		registry[@"UWRD"] = [ElementUWRD class];
 		registry[@"ULNG"] = [ElementULNG class];
 		registry[@"ULLG"] = [ElementULLG class];
+        registry[@"HBYT"] = [ElementHBYT class];    // hex byte/word/long
+        registry[@"HWRD"] = [ElementHWRD class];
+        registry[@"HLNG"] = [ElementHLNG class];
+        registry[@"HLLG"] = [ElementHLLG class];
         
     // multiple fields
         registry[@"RECT"] = [ElementRECT class];    // QuickDraw rect
@@ -293,10 +301,6 @@
 		registry[@"MDAT"] = [ElementDATE class];
 		
 	// and some faked ones just to increase compatibility (these are marked 'x' in the docs)
-		registry[@"HBYT"] = [ElementUBYT class];	// hex byte/word/long
-		registry[@"HWRD"] = [ElementUWRD class];
-		registry[@"HLNG"] = [ElementULNG class];
-		registry[@"HLLG"] = [ElementULLG class];
 		registry[@"KBYT"] = [ElementKBYT class];	// signed keys
 		registry[@"KWRD"] = [ElementKWRD class];
 		registry[@"KLNG"] = [ElementKLNG class];

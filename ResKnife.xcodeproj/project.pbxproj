@@ -31,6 +31,14 @@
 		49322A66244FD17800E1EAE4 /* ElementREAL.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A64244FD17800E1EAE4 /* ElementREAL.m */; };
 		49322A69244FD18700E1EAE4 /* ElementDOUB.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A67244FD18700E1EAE4 /* ElementDOUB.h */; };
 		49322A6A244FD18700E1EAE4 /* ElementDOUB.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A68244FD18700E1EAE4 /* ElementDOUB.m */; };
+		49322A6D244FE71200E1EAE4 /* ElementHBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A6B244FE71200E1EAE4 /* ElementHBYT.h */; };
+		49322A6E244FE71200E1EAE4 /* ElementHBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A6C244FE71200E1EAE4 /* ElementHBYT.m */; };
+		49322A71244FF5F600E1EAE4 /* ElementHWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A6F244FF5F600E1EAE4 /* ElementHWRD.h */; };
+		49322A72244FF5F600E1EAE4 /* ElementHWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A70244FF5F600E1EAE4 /* ElementHWRD.m */; };
+		49322A75244FF63000E1EAE4 /* ElementHLNG.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A73244FF63000E1EAE4 /* ElementHLNG.h */; };
+		49322A76244FF63000E1EAE4 /* ElementHLNG.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A74244FF63000E1EAE4 /* ElementHLNG.m */; };
+		49322A79244FF65A00E1EAE4 /* ElementHLLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A77244FF65A00E1EAE4 /* ElementHLLG.h */; };
+		49322A7A244FF65A00E1EAE4 /* ElementHLLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A78244FF65A00E1EAE4 /* ElementHLLG.m */; };
 		49882A092447F45700D439BC /* ElementFCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A072447F45700D439BC /* ElementFCNT.h */; };
 		49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A082447F45700D439BC /* ElementFCNT.m */; };
 		49882A0D2448EF0E00D439BC /* ElementAWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A0B2448EF0E00D439BC /* ElementAWRD.h */; };
@@ -453,6 +461,14 @@
 		49322A64244FD17800E1EAE4 /* ElementREAL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementREAL.m; sourceTree = "<group>"; };
 		49322A67244FD18700E1EAE4 /* ElementDOUB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementDOUB.h; sourceTree = "<group>"; };
 		49322A68244FD18700E1EAE4 /* ElementDOUB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementDOUB.m; sourceTree = "<group>"; };
+		49322A6B244FE71200E1EAE4 /* ElementHBYT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementHBYT.h; sourceTree = "<group>"; };
+		49322A6C244FE71200E1EAE4 /* ElementHBYT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHBYT.m; sourceTree = "<group>"; };
+		49322A6F244FF5F600E1EAE4 /* ElementHWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementHWRD.h; sourceTree = "<group>"; };
+		49322A70244FF5F600E1EAE4 /* ElementHWRD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHWRD.m; sourceTree = "<group>"; };
+		49322A73244FF63000E1EAE4 /* ElementHLNG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementHLNG.h; sourceTree = "<group>"; };
+		49322A74244FF63000E1EAE4 /* ElementHLNG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHLNG.m; sourceTree = "<group>"; };
+		49322A77244FF65A00E1EAE4 /* ElementHLLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementHLLG.h; sourceTree = "<group>"; };
+		49322A78244FF65A00E1EAE4 /* ElementHLLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHLLG.m; sourceTree = "<group>"; };
 		49882A072447F45700D439BC /* ElementFCNT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementFCNT.h; sourceTree = "<group>"; };
 		49882A082447F45700D439BC /* ElementFCNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementFCNT.m; sourceTree = "<group>"; };
 		49882A0B2448EF0E00D439BC /* ElementAWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementAWRD.h; sourceTree = "<group>"; };
@@ -764,6 +780,14 @@
 				E1193680099864AD00A3A6EA /* ElementULNG.m */,
 				E119379109987CC400A3A6EA /* ElementULLG.h */,
 				E119379209987CC400A3A6EA /* ElementULLG.m */,
+				49322A6B244FE71200E1EAE4 /* ElementHBYT.h */,
+				49322A6C244FE71200E1EAE4 /* ElementHBYT.m */,
+				49322A6F244FF5F600E1EAE4 /* ElementHWRD.h */,
+				49322A70244FF5F600E1EAE4 /* ElementHWRD.m */,
+				49322A73244FF63000E1EAE4 /* ElementHLNG.h */,
+				49322A74244FF63000E1EAE4 /* ElementHLNG.m */,
+				49322A77244FF65A00E1EAE4 /* ElementHLLG.h */,
+				49322A78244FF65A00E1EAE4 /* ElementHLLG.m */,
 				49322A63244FD17800E1EAE4 /* ElementREAL.h */,
 				49322A64244FD17800E1EAE4 /* ElementREAL.m */,
 				49322A67244FD18700E1EAE4 /* ElementDOUB.h */,
@@ -1264,10 +1288,13 @@
 				49322A69244FD18700E1EAE4 /* ElementDOUB.h in Headers */,
 				E18BF6AA069FEA1800F076B8 /* ElementLSTE.h in Headers */,
 				E18BF6AB069FEA1800F076B8 /* ElementDLNG.h in Headers */,
+				49322A75244FF63000E1EAE4 /* ElementHLNG.h in Headers */,
+				49322A71244FF5F600E1EAE4 /* ElementHWRD.h in Headers */,
 				E18BF6AC069FEA1800F076B8 /* ElementDBYT.h in Headers */,
 				E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */,
 				E18BF6AE069FEA1800F076B8 /* ElementLSTC.h in Headers */,
 				E14AC2760996BF1700D293E5 /* ElementDLLG.h in Headers */,
+				49322A79244FF65A00E1EAE4 /* ElementHLLG.h in Headers */,
 				E14AC453099702F400D293E5 /* ElementFBYT.h in Headers */,
 				E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */,
 				493229C9244C3A0800E1EAE4 /* ElementWFLG.h in Headers */,
@@ -1281,6 +1308,7 @@
 				493229D5244D19CF00E1EAE4 /* ElementPNT.h in Headers */,
 				E119379309987CC400A3A6EA /* ElementULLG.h in Headers */,
 				49322A61244FBF4E00E1EAE4 /* ElementTNAM.h in Headers */,
+				49322A6D244FE71200E1EAE4 /* ElementHBYT.h in Headers */,
 				49322A65244FD17800E1EAE4 /* ElementREAL.h in Headers */,
 				E119388D0999296B00A3A6EA /* ElementHEXD.h in Headers */,
 				E15CFF82099BECAF004929B6 /* ElementDATE.h in Headers */,
@@ -1833,12 +1861,16 @@
 				E119376F0998768600A3A6EA /* ElementFRAC.m in Sources */,
 				493229C6244C2B5000E1EAE4 /* ElementBFLG.m in Sources */,
 				49322A66244FD17800E1EAE4 /* ElementREAL.m in Sources */,
+				49322A6E244FE71200E1EAE4 /* ElementHBYT.m in Sources */,
 				E119379409987CC400A3A6EA /* ElementULLG.m in Sources */,
+				49322A72244FF5F600E1EAE4 /* ElementHWRD.m in Sources */,
 				49322A6A244FD18700E1EAE4 /* ElementDOUB.m in Sources */,
 				E119388E0999296B00A3A6EA /* ElementHEXD.m in Sources */,
 				E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */,
+				49322A7A244FF65A00E1EAE4 /* ElementHLLG.m in Sources */,
 				493229DA244D1DAB00E1EAE4 /* ElementBOOL.m in Sources */,
 				E1D0DB530A109A4F0011739C /* ElementKEYB.m in Sources */,
+				49322A76244FF63000E1EAE4 /* ElementHLNG.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
