@@ -11,6 +11,8 @@
 #import "ElementUWRD.h"
 #import "ElementULNG.h"
 #import "ElementULLG.h"
+#import "ElementREAL.h"
+#import "ElementDOUB.h"
 #import "ElementFIXD.h"
 #import "ElementFRAC.h"
 #import "ElementAWRD.h"
@@ -231,6 +233,8 @@
         registry[@"F"]    = [ElementFBYT class];    // Fnnn
 		
 	// fractions
+        registry[@"REAL"] = [ElementREAL class];    // single precision float
+        registry[@"DOUB"] = [ElementDOUB class];    // double precision float
 		registry[@"FIXD"] = [ElementFIXD class];	// 16.16 fixed fraction
 		registry[@"FRAC"] = [ElementFRAC class];	// 2.30 fixed fraction
 		
@@ -309,8 +313,6 @@
 		registry[@"KTYP"] = [ElementTNAM class];
 		registry[@"KRID"] = [ElementFBYT class];	// key on ID of the resource
 		registry[@"RSID"] = [ElementDWRD class];	// resouce id (signed word)
-		registry[@"REAL"] = [ElementULNG class];	// single precision float
-		registry[@"DOUB"] = [ElementULLG class];	// double precision float
 		registry[@"SFRC"] = [ElementUWRD class];	// 0.16 fixed fraction
 		registry[@"FXYZ"] = [ElementUWRD class];	// 1.15 fixed fraction
 		registry[@"FWID"] = [ElementUWRD class];	// 4.12 fixed fraction

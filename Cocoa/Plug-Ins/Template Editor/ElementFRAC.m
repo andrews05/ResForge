@@ -40,7 +40,7 @@
         formatter = [[NSNumberFormatter alloc] init];
         formatter.hasThousandSeparators = NO;
         formatter.numberStyle = NSNumberFormatterDecimalStyle;
-        formatter.maximumFractionDigits = 10;
+        formatter.maximumFractionDigits = 9;
         formatter.minimum = @(-2);
         formatter.maximum = @(2);
         formatter.nilSymbol = @"\0";
