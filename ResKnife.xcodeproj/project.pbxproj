@@ -23,6 +23,10 @@
 		493229D6244D19CF00E1EAE4 /* ElementPNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229D4244D19CF00E1EAE4 /* ElementPNT.m */; };
 		493229D9244D1DAB00E1EAE4 /* ElementBOOL.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229D7244D1DAB00E1EAE4 /* ElementBOOL.h */; };
 		493229DA244D1DAB00E1EAE4 /* ElementBOOL.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229D8244D1DAB00E1EAE4 /* ElementBOOL.m */; };
+		49322A5D244FAADA00E1EAE4 /* ElementCHAR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A5B244FAADA00E1EAE4 /* ElementCHAR.h */; };
+		49322A5E244FAADA00E1EAE4 /* ElementCHAR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A5C244FAADA00E1EAE4 /* ElementCHAR.m */; };
+		49322A61244FBF4E00E1EAE4 /* ElementTNAM.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A5F244FBF4E00E1EAE4 /* ElementTNAM.h */; };
+		49322A62244FBF4E00E1EAE4 /* ElementTNAM.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A60244FBF4E00E1EAE4 /* ElementTNAM.m */; };
 		49882A092447F45700D439BC /* ElementFCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A072447F45700D439BC /* ElementFCNT.h */; };
 		49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A082447F45700D439BC /* ElementFCNT.m */; };
 		49882A0D2448EF0E00D439BC /* ElementAWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A0B2448EF0E00D439BC /* ElementAWRD.h */; };
@@ -437,6 +441,10 @@
 		493229D4244D19CF00E1EAE4 /* ElementPNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementPNT.m; sourceTree = "<group>"; };
 		493229D7244D1DAB00E1EAE4 /* ElementBOOL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBOOL.h; sourceTree = "<group>"; };
 		493229D8244D1DAB00E1EAE4 /* ElementBOOL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBOOL.m; sourceTree = "<group>"; };
+		49322A5B244FAADA00E1EAE4 /* ElementCHAR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCHAR.h; sourceTree = "<group>"; };
+		49322A5C244FAADA00E1EAE4 /* ElementCHAR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCHAR.m; sourceTree = "<group>"; };
+		49322A5F244FBF4E00E1EAE4 /* ElementTNAM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementTNAM.h; sourceTree = "<group>"; };
+		49322A60244FBF4E00E1EAE4 /* ElementTNAM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementTNAM.m; sourceTree = "<group>"; };
 		49882A072447F45700D439BC /* ElementFCNT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementFCNT.h; sourceTree = "<group>"; };
 		49882A082447F45700D439BC /* ElementFCNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementFCNT.m; sourceTree = "<group>"; };
 		49882A0B2448EF0E00D439BC /* ElementAWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementAWRD.h; sourceTree = "<group>"; };
@@ -786,6 +794,10 @@
 				493229D0244C7B1200E1EAE4 /* ElementRECT.m */,
 				493229D3244D19CF00E1EAE4 /* ElementPNT.h */,
 				493229D4244D19CF00E1EAE4 /* ElementPNT.m */,
+				49322A5B244FAADA00E1EAE4 /* ElementCHAR.h */,
+				49322A5C244FAADA00E1EAE4 /* ElementCHAR.m */,
+				49322A5F244FBF4E00E1EAE4 /* ElementTNAM.h */,
+				49322A60244FBF4E00E1EAE4 /* ElementTNAM.m */,
 			);
 			name = "Field Types";
 			sourceTree = "<group>";
@@ -1231,6 +1243,7 @@
 				E18BF6A2069FEA1800F076B8 /* ResKnifeResourceProtocol.h in Headers */,
 				E18BF6A3069FEA1800F076B8 /* Element.h in Headers */,
 				E18BF6A5069FEA1800F076B8 /* TemplateStream.h in Headers */,
+				49322A5D244FAADA00E1EAE4 /* ElementCHAR.h in Headers */,
 				E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */,
 				E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */,
 				493229CD244C3C2000E1EAE4 /* ElementLFLG.h in Headers */,
@@ -1254,6 +1267,7 @@
 				493229D9244D1DAB00E1EAE4 /* ElementBOOL.h in Headers */,
 				493229D5244D19CF00E1EAE4 /* ElementPNT.h in Headers */,
 				E119379309987CC400A3A6EA /* ElementULLG.h in Headers */,
+				49322A61244FBF4E00E1EAE4 /* ElementTNAM.h in Headers */,
 				E119388D0999296B00A3A6EA /* ElementHEXD.h in Headers */,
 				E15CFF82099BECAF004929B6 /* ElementDATE.h in Headers */,
 				E1D0DB520A109A4F0011739C /* ElementKEYB.h in Headers */,
@@ -1778,6 +1792,7 @@
 			files = (
 				E18BF6B4069FEA1800F076B8 /* TemplateWindowController.m in Sources */,
 				49882A0E2448EF0E00D439BC /* ElementAWRD.m in Sources */,
+				49322A62244FBF4E00E1EAE4 /* ElementTNAM.m in Sources */,
 				E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */,
 				E18BF6B6069FEA1800F076B8 /* Element.m in Sources */,
 				E18BF6B8069FEA1800F076B8 /* TemplateStream.m in Sources */,
@@ -1792,6 +1807,7 @@
 				E18BF6C1069FEA1800F076B8 /* ElementLSTC.m in Sources */,
 				493229CA244C3A0800E1EAE4 /* ElementWFLG.m in Sources */,
 				E14AC2770996BF1700D293E5 /* ElementDLLG.m in Sources */,
+				49322A5E244FAADA00E1EAE4 /* ElementCHAR.m in Sources */,
 				E14AC454099702F400D293E5 /* ElementFBYT.m in Sources */,
 				E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */,
 				493229D2244C7B1200E1EAE4 /* ElementRECT.m in Sources */,

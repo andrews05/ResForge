@@ -54,6 +54,7 @@
     NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
     view.textField.editable = YES;
     view.textField.delegate = self;
+    view.textField.placeholderString = type;
     view.textField.formatter = [self formatter];
     [view.textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
     return view;

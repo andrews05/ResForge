@@ -69,10 +69,17 @@
         length = CFSwapInt32BigToHost(length);
         length >>= (4 - _lengthBytes) << 3;
         if (_skipLengthBytes && length > 0) length -= _lengthBytes;
+        if (length > [stream bytesToGo]) length = [stream bytesToGo];
     } else if ([self.type isEqualToString:@"HEXD"]) {
         length = [stream bytesToGo];
+    } else if (length > [stream bytesToGo]) {
+        // Hnnn requires an exact length so we need to allocate it if the stream is too short
+        void *buffer = malloc(length);
+        memset(buffer, 0, length);
+        [stream readAmount:length toBuffer:buffer];
+        data = [NSData dataWithBytesNoCopy:buffer length:length freeWhenDone:YES];
+        return;
     }
-    // FIXME: This will fail if there's not enough data in the stream (i.e. new resource with Hnnn field)
 	data = [NSData dataWithBytes:[stream data] length:length];
     [stream advanceAmount:length pad:NO];
 }

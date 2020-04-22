@@ -158,7 +158,7 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="10C49397-14E8-4F96-A3B3-CCAA26CAE75A" explicitItemIdentifier="com.nickshanks.resknife.toolbar.delete" label="Delete" paletteLabel="Delete" toolTip="Delete Selected Resource" tag="-1" image="Delete" id="eac-Nk-mK5">
                         <connections>
-                            <action selector="clear:" target="-2" id="PpP-oq-Bzh"/>
+                            <action selector="delete:" target="-2" id="U63-n1-fUs"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="E0F82655-77E2-4D6D-A81A-78F81B2E270F" explicitItemIdentifier="com.nickshanks.resknife.toolbar.edit" label="Edit" paletteLabel="Edit" toolTip="Edit Resource In Default Editor" tag="-1" image="Edit" id="b2X-5T-bCc">

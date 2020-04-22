@@ -28,6 +28,7 @@
         formatter.hasThousandSeparators = NO;
         formatter.minimum = @(INT8_MIN);
         formatter.maximum = @(INT8_MAX);
+        formatter.nilSymbol = @"\0";
     }
     return formatter;
 }

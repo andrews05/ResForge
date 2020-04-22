@@ -31,6 +31,7 @@
         formatter.hasThousandSeparators = NO;
         formatter.minimum = @(INT16_MIN);
         formatter.maximum = @(INT16_MAX);
+        formatter.nilSymbol = @"\0"; // Not sure why this is necessary but it prevents crash on blank value
     }
     return formatter;
 }

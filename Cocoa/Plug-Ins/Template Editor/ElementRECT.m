@@ -22,6 +22,7 @@
         field.bordered = NO;
         field.drawsBackground = NO;
         field.editable = YES;
+        field.placeholderString = @"DWRD";
         field.formatter = [ElementDWRD sharedFormatter];
         field.delegate = element;
         field.font = font;

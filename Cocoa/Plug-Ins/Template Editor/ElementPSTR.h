@@ -10,7 +10,6 @@ typedef enum StringPadding
 @interface ElementPSTR : Element
 @property (copy) NSString *value;
 @property UInt32 maxLength;		// for restricted strings
-@property UInt32 minLength;
 @property MacStringPadding pad;	// for odd- and even-padded strings
 @property BOOL terminatingByte;	// for C strings
 @property int lengthBytes;		// for Pascal strings

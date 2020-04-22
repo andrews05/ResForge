@@ -43,6 +43,7 @@
         formatter.maximumFractionDigits = 6;
         formatter.minimum = @(-32768);
         formatter.maximum = @(32768);
+        formatter.nilSymbol = @"\0";
     }
     return formatter;
 }

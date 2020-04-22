@@ -76,7 +76,7 @@
 
 - (BOOL)labelMatches:(Element *)element
 {
-    NSString *value = [[[element class] formatter] stringForObjectValue:[element valueForKey:@"value"]];
+    NSString *value = [[element formatter] stringForObjectValue:[element valueForKey:@"value"]];
     return [[self label] isEqualToString:value];
 }
 

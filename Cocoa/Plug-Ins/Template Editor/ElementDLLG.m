@@ -31,6 +31,7 @@
         formatter.hasThousandSeparators = NO;
         formatter.minimum = @(INT64_MIN);
         formatter.maximum = @(INT64_MAX);
+        formatter.nilSymbol = @"\0";
     }
     return formatter;
 }

@@ -16,6 +16,8 @@
 #import "ElementAWRD.h"
 #import "ElementFBYT.h"
 #import "ElementPSTR.h"
+#import "ElementCHAR.h"
+#import "ElementTNAM.h"
 #import "ElementBFLG.h"
 #import "ElementWFLG.h"
 #import "ElementLFLG.h"
@@ -242,10 +244,10 @@
 		registry[@"CSTR"] = [ElementPSTR class];
 		registry[@"OCST"] = [ElementPSTR class];
 		registry[@"ECST"] = [ElementPSTR class];
-		registry[@"CHAR"] = [ElementPSTR class];
-		registry[@"TNAM"] = [ElementPSTR class];
         registry[@"P"]    = [ElementPSTR class];    // Pnnn
         registry[@"C"]    = [ElementPSTR class];    // Cnnn
+        registry[@"CHAR"] = [ElementCHAR class];
+        registry[@"TNAM"] = [ElementTNAM class];
         
     // checkboxes
         registry[@"BFLG"] = [ElementBFLG class];    // binary flag the size of a byte/word/long
@@ -303,8 +305,8 @@
 		registry[@"KHWD"] = [ElementUWRD class];
 		registry[@"KHLG"] = [ElementULNG class];
 		registry[@"KHLL"] = [ElementULLG class];
-		registry[@"KCHR"] = [ElementPSTR class];	// keyed MacRoman values
-		registry[@"KTYP"] = [ElementPSTR class];
+		registry[@"KCHR"] = [ElementCHAR class];	// keyed MacRoman values
+		registry[@"KTYP"] = [ElementTNAM class];
 		registry[@"KRID"] = [ElementFBYT class];	// key on ID of the resource
 		registry[@"RSID"] = [ElementDWRD class];	// resouce id (signed word)
 		registry[@"REAL"] = [ElementULNG class];	// single precision float

@@ -1,12 +1,11 @@
 #import "ElementPSTR.h"
 #import "TemplateWindowController.h"
 
-// implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, CHAR, TNAM, Pnnn, Cnnn
+// implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, Pnnn, Cnnn
 @implementation ElementPSTR
 @synthesize value;
 @synthesize lengthBytes = _lengthBytes;
 @synthesize maxLength = _maxLength;
-@synthesize minLength = _minLength;
 @synthesize pad = _pad;
 @synthesize terminatingByte = _terminatingByte;
 
@@ -16,77 +15,43 @@
 		if ([t isEqualToString:@"PSTR"] || [t isEqualToString:@"BSTR"])	{
 			_lengthBytes = 1;
 			_maxLength = UINT8_MAX;
-			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kNoPadding;
 		} else if([t isEqualToString:@"WSTR"]) {
 			_lengthBytes = 2;
 			_maxLength = UINT16_MAX;
-			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kNoPadding;
 		} else if ([t isEqualToString:@"LSTR"]) {
 			_lengthBytes = 4;
 			_maxLength = UINT32_MAX;
-			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kNoPadding;
 		} else if ([t isEqualToString:@"OSTR"]) {
 			_lengthBytes = 1;
 			_maxLength = UINT8_MAX;
-			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kPadToOddLength;
 		} else if ([t isEqualToString:@"ESTR"]) {
 			_lengthBytes = 1;
 			_maxLength = UINT8_MAX;
-			_minLength = 0;
 			_terminatingByte = NO;
 			_pad = kPadToEvenLength;
 		} else if ([t isEqualToString:@"CSTR"]) {
 			_lengthBytes = 0;
 			_maxLength = UINT32_MAX;
-			_minLength = 0;
 			_terminatingByte = YES;
 			_pad = kNoPadding;
 		} else if ([t isEqualToString:@"OCST"]) {
 			_lengthBytes = 0;
 			_maxLength = UINT32_MAX;
-			_minLength = 0;
 			_terminatingByte = YES;
 			_pad = kPadToOddLength;
 		} else if ([t isEqualToString:@"ECST"]) {
 			_lengthBytes = 0;
 			_maxLength = UINT32_MAX;
-			_minLength = 0;
 			_terminatingByte = YES;
 			_pad = kPadToEvenLength;
-		} else if ([t isEqualToString:@"CHAR"]) {
-			_lengthBytes = 0;
-			_maxLength = 1;
-			_minLength = 1;
-			_terminatingByte = NO;
-			_pad = kNoPadding;
-		} else if ([t isEqualToString:@"TNAM"]) {
-			_lengthBytes = 0;
-			_maxLength = 4;
-			_minLength = 4;
-			_terminatingByte = NO;
-			_pad = kNoPadding;
-		}
-		// temp until keyed values are implemented
-		else if ([t isEqualToString:@"KCHR"]) {
-			_lengthBytes = 0;
-			_maxLength = 1;
-			_minLength = 1;
-			_terminatingByte = NO;
-			_pad = kNoPadding;
-		} else if ([t isEqualToString:@"KTYP"]) {
-			_lengthBytes = 0;
-			_maxLength = 4;
-			_minLength = 4;
-			_terminatingByte = NO;
-			_pad = kNoPadding;
 		}
         else {
             // assume Xnnn for anything else
@@ -98,14 +63,12 @@
                     // use resorcerer's more consistent n = datalength rather than resedit's n = stringlength
                     _lengthBytes = 1;
                     _maxLength = MIN(nnn-1, UINT8_MAX);
-                    _minLength = 0;
                     _terminatingByte = NO;
                     _pad = nnn;
                     break;
                 case 'C':
                     _lengthBytes = 0;
                     _maxLength = MIN(nnn-1, UINT8_MAX);
-                    _minLength = 0;
                     _terminatingByte = YES;
                     _pad = nnn;
                     break;
@@ -118,6 +81,8 @@
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
     NSTableCellView *view = (NSTableCellView *)[super outlineView:outlineView viewForTableColumn:tableColumn];
+    if (_maxLength < UINT32_MAX)
+        view.textField.placeholderString = [self.type stringByAppendingFormat:@" (%u characters)", _maxLength];
     [self performSelector:@selector(autoRowHeight:) withObject:view.textField afterDelay:0];
     return view;
 }
@@ -129,10 +94,9 @@
 }
 
 // Automatically adjust the row height to fit the text
+// TODO: Find a better way to do this?
 - (void)autoRowHeight:(NSTextField *)field
 {
-    if (_minLength)
-        return;
     NSRect bounds = field.bounds;
     bounds.size.height = CGFLOAT_MAX;
     double height = [field.cell cellSizeForBounds:bounds].height;
@@ -163,7 +127,6 @@
 	if (_terminatingByte)
 		length = [stream bytesToNull];
 	if (length > _maxLength) length = _maxLength;
-	if (length < _minLength) length = _minLength;
     if (length > [stream bytesToGo]) length = [stream bytesToGo];
 	
 	// read string
@@ -195,7 +158,6 @@
     if (_pad > 0) return _pad;
 	UInt32 length = (UInt32)[value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
 	if (length > _maxLength) length = _maxLength;
-	if (length < _minLength) length = _minLength;
 	length += _lengthBytes + (_terminatingByte? 1 : 0);
 	if (_pad == kPadToOddLength && length % 2 == 0)
 		length++;
@@ -221,16 +183,6 @@
     else
         [stream advanceAmount:length pad:YES];
 	
-	// pad to minimum length with spaces
-	if (length < _minLength) {
-		SInt32 padAmount = _minLength - length;
-		while (padAmount > 0) {
-			UInt32 spaces = '    ';
-			[stream writeAmount:(padAmount < 4)? padAmount:4 fromBuffer:&spaces];
-			length += (padAmount < 4)? padAmount:4;
-			padAmount -= 4;
-		}
-	}
     if (_terminatingByte) {
 		[stream advanceAmount:1 pad:YES];
         length++;
@@ -249,7 +201,6 @@
 {
     MacRomanFormatter *formatter = [[MacRomanFormatter alloc] init];
     formatter.stringLength = _maxLength;
-    formatter.exactLengthRequired = _minLength == _maxLength;
     return formatter;
 }
 
@@ -267,16 +218,13 @@
 - (BOOL)getObjectValue:(id *)object forString:(NSString *)string errorDescription:(NSString **)error {
     if (exactLengthRequired && [string length] != stringLength) {
         if (error) {
-            if (stringLength == 1)
-                *error = @"The value must be exactly 1 character.";
-            else
-                *error = [NSString stringWithFormat:@"The value must be exactly %d characters.", stringLength];
+            *error = [NSString stringWithFormat:@"The value must be exactly %d characters.", stringLength];
         }
         return NO;
     }
     if (![string canBeConvertedToEncoding:NSMacOSRomanStringEncoding]) {
         if (error)
-            *error = @"The value contains characters that are invalid for Mac OS Roman encoding.";
+            *error = @"The value contains invalid characters for Mac OS Roman encoding.";
         return NO;
     }
     *object = string;
