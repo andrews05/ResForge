@@ -35,8 +35,6 @@
 //#import "ElementOCNT.h"
 #import "ElementFCNT.h"
 #import "ElementLSTB.h"
-#import "ElementLSTC.h"
-#import "ElementLSTE.h"
 #import "ElementKEYB.h"
 
 @implementation TemplateStream
@@ -87,19 +85,16 @@
 	return bytesToGo;
 }
 
-- (ElementOCNT *)counter
-{
-	return (ElementOCNT *) [counterStack lastObject];
-}
-
 - (void)pushCounter:(ElementOCNT *)c
 {
 	[counterStack addObject:c];
 }
 
-- (void)popCounter
+- (ElementOCNT *)popCounter
 {
+    ElementOCNT *counter = counterStack.lastObject;
 	[counterStack removeLastObject];
+    return counter;
 }
 
 - (Element *)key
@@ -143,10 +138,15 @@
 	
 	// create element class
 	Class class = [self fieldRegistry][type];
-    // check for Xnnn type - currently using resorcerer's nmm restriction to prevent false matches
+    // check for Xnnn type - currently using resorcerer's nmm restriction to reserve all alpha types for potential future use
     if(!class && [type rangeOfString:@"[A-Z][0-9][0-9A-F]{2}" options:NSRegularExpressionSearch].location != NSNotFound)
     {
         class = [self fieldRegistry][[type substringToIndex:1]];
+    }
+    // check for XXnn type
+    if(!class && [type rangeOfString:@"[A-Z]{2}[0-9]{2}" options:NSRegularExpressionSearch].location != NSNotFound)
+    {
+        class = [self fieldRegistry][[type substringToIndex:2]];
     }
 	if(class)
 	{
@@ -288,10 +288,10 @@
 		registry[@"LZCT"] = [ElementOCNT class];
         registry[@"FCNT"] = [ElementFCNT class];
 	// list begin/end
-		registry[@"LSTC"] = [ElementLSTC class];
 		registry[@"LSTB"] = [ElementLSTB class];
 		registry[@"LSTZ"] = [ElementLSTB class];
-		registry[@"LSTE"] = [ElementLSTE class];
+        registry[@"LSTC"] = [ElementLSTB class];
+		registry[@"LSTE"] = [Element     class];
 	// key begin/end
 		registry[@"KEYB"] = [ElementKEYB class];
 		registry[@"KEYE"] = [ElementKEYE class];

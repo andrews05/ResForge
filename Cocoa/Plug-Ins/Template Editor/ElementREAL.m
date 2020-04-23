@@ -30,7 +30,7 @@
         formatter = [[NSNumberFormatter alloc] init];
         formatter.hasThousandSeparators = NO;
         formatter.numberStyle = NSNumberFormatterScientificStyle;
-        formatter.maximumSignificantDigits = 9;
+        formatter.maximumSignificantDigits = 7;
         formatter.minimum = 0;
         formatter.maximum = @(FLT_MAX);
         formatter.nilSymbol = @"\0";

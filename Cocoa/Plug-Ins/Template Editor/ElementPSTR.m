@@ -4,10 +4,6 @@
 // implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, Pnnn, Cnnn
 @implementation ElementPSTR
 @synthesize value;
-@synthesize lengthBytes = _lengthBytes;
-@synthesize maxLength = _maxLength;
-@synthesize pad = _pad;
-@synthesize terminatingByte = _terminatingByte;
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {

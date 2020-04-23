@@ -18,9 +18,8 @@
 - (instancetype)initWithStream:(TemplateStream *)s length:(UInt32)l;
 
 - (char *)data;
-- (ElementOCNT *)counter;
 - (void)pushCounter:(ElementOCNT *)c;
-- (void)popCounter;
+- (ElementOCNT *)popCounter;
 - (Element *)key;
 - (void)pushKey:(Element *)k;
 - (void)popKey;

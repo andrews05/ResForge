@@ -2,21 +2,21 @@
 #import "ElementRECT.h"
 
 @implementation ElementPNT
-@synthesize top;
-@synthesize left;
+@synthesize h;
+@synthesize v;
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
-    return [ElementRECT configureFields:@[@"top", @"left"] forElement:self];
+    return [ElementRECT configureFields:@[@"h", @"v"] forElement:self];
 }
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
     SInt16 tmp = 0;
     [stream readAmount:2 toBuffer:&tmp];
-    top = CFSwapInt16BigToHost(tmp);
+    h = CFSwapInt16BigToHost(tmp);
     [stream readAmount:2 toBuffer:&tmp];
-    left = CFSwapInt16BigToHost(tmp);
+    v = CFSwapInt16BigToHost(tmp);
 }
 
 - (UInt32)sizeOnDisk:(UInt32)currentSize
@@ -26,9 +26,9 @@
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-    SInt16 tmp = CFSwapInt16HostToBig(top);
+    SInt16 tmp = CFSwapInt16HostToBig(h);
     [stream writeAmount:2 fromBuffer:&tmp];
-    tmp = CFSwapInt16HostToBig(left);
+    tmp = CFSwapInt16HostToBig(v);
     [stream writeAmount:2 fromBuffer:&tmp];
 }
 

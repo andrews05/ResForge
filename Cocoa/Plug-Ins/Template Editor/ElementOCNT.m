@@ -4,25 +4,6 @@
 // implements ZCNT, OCNT, BCNT, BZCT, WCNT, WZCT, LCNT, LZCT
 @implementation ElementOCNT
 @synthesize value;
-@synthesize entries;
-
-- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
-{
-    if (self = [super initForType:t withLabel:l]) {
-        entries = [[NSMutableArray alloc] init];
-    }
-    return self;
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-	ElementOCNT *element = [super copyWithZone:zone];
-	if(!element) return nil;
-	
-	// always reset counter on copy
-	element.value = 0;
-	return element;
-}
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
@@ -77,22 +58,6 @@
 	       [self.type isEqualToString:@"BZCT"] ||
 		   [self.type isEqualToString:@"WZCT"] ||
 		   [self.type isEqualToString:@"LZCT"];
-}
-
-- (void)addEntry:(Element *)entry after:(Element *)after
-{
-    if (after == nil) {
-        [entries addObject:entry];
-    } else {
-        [entries insertObject:entry atIndex:[entries indexOfObject:after]];
-    }
-    value++;
-}
-
-- (void)removeEntry:(Element *)entry
-{
-    [entries removeObject:entry];
-    value--;
 }
 
 @end

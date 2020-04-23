@@ -1,5 +1,7 @@
 #import "ElementFCNT.h"
 
+// bug: FCNT doesn't work correctly when adding a new list entry to an outer list containing
+// an FCNT list, as its entries are only created when readDataFrom: is called on its LSTB
 @implementation ElementFCNT
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
@@ -15,22 +17,8 @@
             [scanner scanInt:(SInt32*)&value];
         }
         self.value = value;
-        self.entries = [NSMutableArray arrayWithCapacity:value];
-        // remove count and leading spaces from label
-        self.label = [[scanner string] substringFromIndex: [scanner scanLocation]];
-        self.label = [self.label stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     }
     return self;
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    ElementOCNT *element = [super copyWithZone:zone];
-    if(!element) return nil;
-    
-    // preserve counter on copy
-    element.value = self.value;
-    return element;
 }
 
 - (void)readDataFrom:(TemplateStream *)stream

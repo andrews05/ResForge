@@ -1,15 +1,14 @@
-#import <Cocoa/Cocoa.h>
 #import "Element.h"
 
-@class ElementLSTE;
 @class ElementOCNT;
 
 @interface ElementLSTB : Element
 @property (strong) NSMutableArray *subElements;
-@property (weak) ElementLSTB *groupElementTemplate;	// TMPL equivalent of self, for cloning
-@property (weak) ElementOCNT *countElement;			// Our "list counter" element.
+@property (strong) NSMutableArray *entries;
+@property (weak) ElementOCNT *countElement;		// Our "list counter" element.
+@property (weak) ElementLSTB *tail;
+@property BOOL zeroTerminated;
 
-- (void)readDataForElements:(TemplateStream *)stream;
 - (BOOL)createListEntry;
 - (BOOL)removeListEntry;
 

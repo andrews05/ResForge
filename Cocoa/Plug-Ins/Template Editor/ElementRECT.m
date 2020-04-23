@@ -12,17 +12,17 @@
     return [ElementRECT configureFields:@[@"top", @"left", @"bottom", @"right"] forElement:self];
 }
 
-+ (NSView *)configureFields:(NSArray *)fields forElement:(Element *)element
++ (NSTableCellView *)configureFields:(NSArray *)fields forElement:(Element *)element
 {
     NSRect frame = NSMakeRect(0, 0, 56, 18);
     NSTableCellView *view = [[NSTableCellView alloc] initWithFrame:frame];
-    NSFont *font = [NSFont systemFontOfSize:13];
+    NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
     for (NSString *key in fields) {
         NSTextField *field = [[NSTextField alloc] initWithFrame:frame];
         field.bordered = NO;
         field.drawsBackground = NO;
         field.editable = YES;
-        field.placeholderString = @"DWRD";
+        field.placeholderString = key;
         field.formatter = [ElementDWRD sharedFormatter];
         field.delegate = element;
         field.font = font;

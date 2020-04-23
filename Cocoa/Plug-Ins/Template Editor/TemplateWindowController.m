@@ -2,9 +2,8 @@
 #import "TemplateStream.h"
 #import "Element.h"
 #import "ElementOCNT.h"
-#import "ElementFCNT.h"
 #import "ElementLSTB.h"
-#import "ElementLSTE.h"
+#import "ElementBBIT.h"
 // and ones for keyed fields
 #import "ElementDBYT.h"
 #import "ElementDWRD.h"
@@ -143,31 +142,32 @@
 	TemplateStream *stream = [TemplateStream streamWithBytes:(char *)[[resource data] bytes] length:(UInt32)[[resource data] length]];
 	
 	// loop through template cloning its elements
-	Element *element;
+	Element *prevElement;
 	[resourceStructure removeAllObjects];
-	NSEnumerator *enumerator = [templateStructure objectEnumerator];
-	while(element = [enumerator nextObject])
-	{
+	for (Element *element in templateStructure) {
 		Element *clone = [element copy];	// copy the template object.
-		//NSLog(@"clone = %@; resourceStructure = %@", clone, resourceStructure);
 		[resourceStructure addObject:clone];			// add it to our parsed resource data list. Do this right away so the element can append other items should it desire to.
 		[clone setParentArray:resourceStructure];		// the parent for these is the root level resourceStructure object
 		Class cc = [clone class];
 		
 		BOOL pushedCounter = NO;
 		//BOOL pushedKey = NO;
-		if(cc == [ElementOCNT class] ||
-           cc == [ElementFCNT class] )
-		{	[stream pushCounter:(ElementOCNT *)clone]; pushedCounter = YES; }
-		if(cc == [ElementKBYT class] ||
-		   cc == [ElementKWRD class] ||
-		   cc == [ElementKLNG class] )
-		{	[stream pushKey:clone]; /* pushedKey = YES; */ }
+		if ([clone isKindOfClass:[ElementOCNT class]]) {
+            [stream pushCounter:(ElementOCNT*)clone];
+            pushedCounter = YES;
+        } else if (cc == [ElementKBYT class] ||
+                   cc == [ElementKWRD class] ||
+                   cc == [ElementKLNG class]) {
+            [stream pushKey:clone];
+            // pushedKey = YES;
+        } else if (cc == [ElementBBIT class] &&
+                   [prevElement class] == [ElementBBIT class]) {
+            [(ElementBBIT*)prevElement addChild:(ElementBBIT*)clone];
+        }
 		[clone readDataFrom:stream];				// fill it with resource data.
-		if(cc == [ElementLSTE class] && pushedCounter)
-			[stream popCounter];
-//		if(cc == [ElementKEYE class] && pushedKey)
+//		if (cc == [ElementKEYE class] && pushedKey)
 //			[stream popKey];
+        prevElement = clone;
 	}
 	
 	// reload the view

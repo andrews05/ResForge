@@ -1,7 +1,7 @@
 #import "Element.h"
 
 @interface ElementPNT : Element
-@property SInt16 top;
-@property SInt16 left;
+@property SInt16 h;
+@property SInt16 v;
 
 @end

@@ -39,6 +39,8 @@
 		49322A76244FF63000E1EAE4 /* ElementHLNG.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A74244FF63000E1EAE4 /* ElementHLNG.m */; };
 		49322A79244FF65A00E1EAE4 /* ElementHLLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A77244FF65A00E1EAE4 /* ElementHLLG.h */; };
 		49322A7A244FF65A00E1EAE4 /* ElementHLLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A78244FF65A00E1EAE4 /* ElementHLLG.m */; };
+		49322A7D2450E87000E1EAE4 /* ElementBBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A7B2450E87000E1EAE4 /* ElementBBIT.h */; };
+		49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A7C2450E87000E1EAE4 /* ElementBBIT.m */; };
 		49882A092447F45700D439BC /* ElementFCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A072447F45700D439BC /* ElementFCNT.h */; };
 		49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A082447F45700D439BC /* ElementFCNT.m */; };
 		49882A0D2448EF0E00D439BC /* ElementAWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A0B2448EF0E00D439BC /* ElementAWRD.h */; };
@@ -223,11 +225,9 @@
 		E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */; };
 		E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933E704DF317D00DD74B1 /* ElementPSTR.h */; };
 		E18BF6A9069FEA1800F076B8 /* ElementDWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933EF04DF381900DD74B1 /* ElementDWRD.h */; };
-		E18BF6AA069FEA1800F076B8 /* ElementLSTE.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933F604DFE80500DD74B1 /* ElementLSTE.h */; };
 		E18BF6AB069FEA1800F076B8 /* ElementDLNG.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B404E872DB00AF65FE /* ElementDLNG.h */; };
 		E18BF6AC069FEA1800F076B8 /* ElementDBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B804E873F300AF65FE /* ElementDBYT.h */; };
 		E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50046F04EF040900F3B64D /* ElementOCNT.h */; };
-		E18BF6AE069FEA1800F076B8 /* ElementLSTC.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50047404EF122000F3B64D /* ElementLSTC.h */; };
 		E18BF6B4069FEA1800F076B8 /* TemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */; };
 		E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF6B6069FEA1800F076B8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* Element.m */; };
@@ -235,11 +235,9 @@
 		E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */; };
 		E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933E804DF317D00DD74B1 /* ElementPSTR.m */; };
 		E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933EE04DF381900DD74B1 /* ElementDWRD.m */; };
-		E18BF6BD069FEA1800F076B8 /* ElementLSTE.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933F704DFE80500DD74B1 /* ElementLSTE.m */; };
 		E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B304E872DB00AF65FE /* ElementDLNG.m */; };
 		E18BF6BF069FEA1800F076B8 /* ElementDBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B704E873F300AF65FE /* ElementDBYT.m */; };
 		E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047004EF040900F3B64D /* ElementOCNT.m */; };
-		E18BF6C1069FEA1800F076B8 /* ElementLSTC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047304EF122000F3B64D /* ElementLSTC.m */; };
 		E18BF6C3069FEA1800F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E18BF7D1069FFC7600F076B8 /* FontWindowController.h */; };
 		E18BF7D5069FFC7600F076B8 /* FontWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18BF7D2069FFC7600F076B8 /* FontWindowController.m */; };
@@ -420,8 +418,6 @@
 		3D0933EE04DF381900DD74B1 /* ElementDWRD.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDWRD.m; sourceTree = "<group>"; };
 		3D0933EF04DF381900DD74B1 /* ElementDWRD.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDWRD.h; sourceTree = "<group>"; };
 		3D0933F404DFD7CF00DD74B1 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = SOURCE_ROOT; };
-		3D0933F604DFE80500DD74B1 /* ElementLSTE.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementLSTE.h; sourceTree = "<group>"; };
-		3D0933F704DFE80500DD74B1 /* ElementLSTE.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementLSTE.m; sourceTree = "<group>"; };
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TemplateWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TemplateWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -437,8 +433,6 @@
 		3D4737B804E873F300AF65FE /* ElementDBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDBYT.h; sourceTree = "<group>"; };
 		3D50046F04EF040900F3B64D /* ElementOCNT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementOCNT.h; sourceTree = "<group>"; };
 		3D50047004EF040900F3B64D /* ElementOCNT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementOCNT.m; sourceTree = "<group>"; };
-		3D50047304EF122000F3B64D /* ElementLSTC.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementLSTC.m; sourceTree = "<group>"; };
-		3D50047404EF122000F3B64D /* ElementLSTC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementLSTC.h; sourceTree = "<group>"; };
 		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
 		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
 		493229C3244C2B5000E1EAE4 /* ElementBFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBFLG.h; sourceTree = "<group>"; };
@@ -469,6 +463,8 @@
 		49322A74244FF63000E1EAE4 /* ElementHLNG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHLNG.m; sourceTree = "<group>"; };
 		49322A77244FF65A00E1EAE4 /* ElementHLLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementHLLG.h; sourceTree = "<group>"; };
 		49322A78244FF65A00E1EAE4 /* ElementHLLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHLLG.m; sourceTree = "<group>"; };
+		49322A7B2450E87000E1EAE4 /* ElementBBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBBIT.h; sourceTree = "<group>"; };
+		49322A7C2450E87000E1EAE4 /* ElementBBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBBIT.m; sourceTree = "<group>"; };
 		49882A072447F45700D439BC /* ElementFCNT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementFCNT.h; sourceTree = "<group>"; };
 		49882A082447F45700D439BC /* ElementFCNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementFCNT.m; sourceTree = "<group>"; };
 		49882A0B2448EF0E00D439BC /* ElementAWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementAWRD.h; sourceTree = "<group>"; };
@@ -814,10 +810,6 @@
 				49882A082447F45700D439BC /* ElementFCNT.m */,
 				3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */,
 				3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */,
-				3D50047404EF122000F3B64D /* ElementLSTC.h */,
-				3D50047304EF122000F3B64D /* ElementLSTC.m */,
-				3D0933F604DFE80500DD74B1 /* ElementLSTE.h */,
-				3D0933F704DFE80500DD74B1 /* ElementLSTE.m */,
 				E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */,
 				E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */,
 				49882A0B2448EF0E00D439BC /* ElementAWRD.h */,
@@ -834,6 +826,8 @@
 				493229D0244C7B1200E1EAE4 /* ElementRECT.m */,
 				493229D3244D19CF00E1EAE4 /* ElementPNT.h */,
 				493229D4244D19CF00E1EAE4 /* ElementPNT.m */,
+				49322A7B2450E87000E1EAE4 /* ElementBBIT.h */,
+				49322A7C2450E87000E1EAE4 /* ElementBBIT.m */,
 			);
 			name = "Field Types";
 			sourceTree = "<group>";
@@ -1286,13 +1280,12 @@
 				E18BF6A9069FEA1800F076B8 /* ElementDWRD.h in Headers */,
 				493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */,
 				49322A69244FD18700E1EAE4 /* ElementDOUB.h in Headers */,
-				E18BF6AA069FEA1800F076B8 /* ElementLSTE.h in Headers */,
 				E18BF6AB069FEA1800F076B8 /* ElementDLNG.h in Headers */,
 				49322A75244FF63000E1EAE4 /* ElementHLNG.h in Headers */,
+				49322A7D2450E87000E1EAE4 /* ElementBBIT.h in Headers */,
 				49322A71244FF5F600E1EAE4 /* ElementHWRD.h in Headers */,
 				E18BF6AC069FEA1800F076B8 /* ElementDBYT.h in Headers */,
 				E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */,
-				E18BF6AE069FEA1800F076B8 /* ElementLSTC.h in Headers */,
 				E14AC2760996BF1700D293E5 /* ElementDLLG.h in Headers */,
 				49322A79244FF65A00E1EAE4 /* ElementHLLG.h in Headers */,
 				E14AC453099702F400D293E5 /* ElementFBYT.h in Headers */,
@@ -1842,15 +1835,14 @@
 				49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */,
 				E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */,
 				E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */,
-				E18BF6BD069FEA1800F076B8 /* ElementLSTE.m in Sources */,
 				E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */,
 				E18BF6BF069FEA1800F076B8 /* ElementDBYT.m in Sources */,
 				E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */,
-				E18BF6C1069FEA1800F076B8 /* ElementLSTC.m in Sources */,
 				493229CA244C3A0800E1EAE4 /* ElementWFLG.m in Sources */,
 				E14AC2770996BF1700D293E5 /* ElementDLLG.m in Sources */,
 				49322A5E244FAADA00E1EAE4 /* ElementCHAR.m in Sources */,
 				E14AC454099702F400D293E5 /* ElementFBYT.m in Sources */,
+				49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */,
 				E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */,
 				493229D2244C7B1200E1EAE4 /* ElementRECT.m in Sources */,
 				E1193686099864AD00A3A6EA /* ElementULNG.m in Sources */,

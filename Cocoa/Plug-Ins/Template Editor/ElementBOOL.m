@@ -11,6 +11,7 @@
     frame.size.width = 60;
     NSButton *on = [[NSButton alloc] initWithFrame:frame];
     on.buttonType = NSRadioButton;
+    on.bezelStyle = NSBezelStyleRegularSquare;
     on.title = @"True";
     on.action = @selector(itemValueUpdated:);
     [on bind:@"value" toObject:self withKeyPath:@"boolValue" options:nil];
@@ -19,6 +20,7 @@
     frame.origin.x += frame.size.width;
     NSButton *off = [[NSButton alloc] initWithFrame:frame];
     off.buttonType = NSRadioButton;
+    off.bezelStyle = NSBezelStyleRegularSquare;
     off.title = @"False";
     off.action = @selector(itemValueUpdated:);
     [off bind:@"value" toObject:self withKeyPath:@"boolValue" options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];

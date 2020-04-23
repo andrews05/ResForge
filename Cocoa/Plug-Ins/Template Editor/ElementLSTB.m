@@ -1,20 +1,16 @@
 #import "ElementLSTB.h"
-#import "ElementLSTC.h"
-#import "ElementLSTE.h"
 #import "ElementOCNT.h"
 
-// implements LSTB, LSTZ
+// implements LSTB, LSTZ, LSTC
 @implementation ElementLSTB
-@synthesize countElement;
-@synthesize groupElementTemplate;
-@synthesize subElements;
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
 	self = [super initForType:t withLabel:l];
 	if (self) {
-		subElements = [[NSMutableArray alloc] init];
-		groupElementTemplate = self;
+		_subElements = [NSMutableArray new];
+        _tail = self;
+        _zeroTerminated = [t isEqualToString:@"LSTZ"];
 	}
 	return self;
 }
@@ -23,196 +19,149 @@
 - (id)copyWithZone:(NSZone *)zone
 {
 	ElementLSTB *element = [super copyWithZone:zone];
-	if(!element) return nil;
+	if (!element) return nil;
 	
 	ElementOCNT *counter = nil;
-	NSMutableArray *array = [element subElements];			// get empty array created by -initWithType:label:
-	[element setGroupElementTemplate:groupElementTemplate];	// override group template (init sets this to self)
-	NSUInteger count = [[groupElementTemplate subElements] count];
-	for(NSUInteger i = 0; i < count; i++)
-	{
-		Element *subToClone = [groupElementTemplate subElements][i];
-		if([subToClone class] == [ElementLSTB class] ||
-		   [subToClone class] == [ElementLSTC class])
-		{
-			// instead create a terminating 'LSTE' item, using LSTB/C item's label
-			ElementLSTE *end = [ElementLSTE elementForType:@"LSTE" withLabel:[subToClone label]];
-			[array addObject:end];
-			[end setParentArray:array];
-			[end setGroupElementTemplate:[(id)subToClone groupElementTemplate]];
-			[end setCountElement:counter];
-			if([[subToClone type] isEqualToString:@"LSTZ"])
-				[end setWritesZeroByte:YES];
-		}
-		else
-		{
-			Element *clone = [subToClone copy];
-			if([clone class] == [ElementOCNT class])
-				counter = (ElementOCNT *)clone;
-			[array addObject:clone];
-		}
+	for (Element *subToClone in self.subElements) {
+        Element *clone = [subToClone copy];
+        [element.subElements addObject:clone];
+        clone.parentArray = element.subElements;
+		if ([clone isKindOfClass:ElementOCNT.class]) {
+            // Keep track of counter element
+			counter = (ElementOCNT *)clone;
+        } else if ([clone.type isEqualToString:@"LSTC"]) {
+            // Beginning a counted sub-list, set the counter
+            [(ElementLSTB *)clone setCountElement:counter];
+            counter = nil;
+        }
 	}
 	return element;
 }
 
 - (void)readSubElementsFrom:(TemplateStream *)stream
 {
-	while([stream bytesToGo] > 0)
-	{
+	while ([stream bytesToGo] > 0) {
 		Element *element = [stream readOneElement];
-		if([[element type] isEqualToString:@"LSTE"])
-		{
-			if([self.type isEqualToString:@"LSTZ"])
-				[(ElementLSTE *)element setWritesZeroByte:YES];
+        if ([element.type isEqualToString:@"LSTE"]) {
 			break;
 		}
-		[subElements addObject:element];
+		[self.subElements addObject:element];
 	}
 }
 
-- (void)readDataForElements:(TemplateStream *)stream
+- (void)readNextItem:(TemplateStream *)stream toIndex:(NSUInteger)index
 {
-	int counterValue = 0;
-	ElementOCNT *counter = nil;
-	for(unsigned i = 0; i < [subElements count]; i++)
-	{
-		Element *element = subElements[i];
-		
-		// set up the counter tracking
-		if([element class] == [ElementOCNT class])	counter = (ElementOCNT *) element;
-		
-		// decrement the counter if we have list items
-		if([element class] == [ElementLSTC class])	counterValue--;
-		
-		// if we get to the end of the list and need more items, create them
-		if([element class] == [ElementLSTE class] && counterValue > 0)
-		{
-			NSInteger index = [subElements indexOfObject:element];
-			while(counterValue--)
-			{
-				// create subarray for new data
-				ElementLSTB *list = [[(ElementLSTE *)element groupElementTemplate] copy];
-				[subElements insertObject:list atIndex:index++];
-				[list setParentArray:subElements];
-				[list setCountElement:counter];
-				
-				// read data into it and increment loop
-				[list readDataForElements:stream]; i++;
-			}
-		}
-		
-		// actually read the data for this item
+    ElementLSTB *nextItem = [self.tail copy]; // Make another list item just like this one.
+    [self.parentArray insertObject:nextItem atIndex:index];   // Add it before ourselves.
+    [self.entries addObject:nextItem];
+    nextItem.parentArray = self.parentArray;
+    nextItem.tail = self;
+    nextItem.countElement = self.countElement;
+    // Copy to avoid possible problems with mutation
+	for (Element *element in [nextItem.subElements copy]) {
 		[element readDataFrom:stream];
-		
-		// now that we've read the (possibly counter) data, save it to the local variable
-		if(counter) counterValue = [counter value];
 	}
 }
 
 - (void)readDataFrom:(TemplateStream *)stream
 {
-	BOOL isZeroTerminated = [self.type isEqualToString:@"LSTZ"];
-	unsigned int bytesToGoAtStart = [stream bytesToGo];
-	if(isZeroTerminated)
-	{
-		char termByte = 0;
-		[stream peekAmount:1 toBuffer:&termByte];
-		if(termByte)
-			[self readDataForElements:stream];
-	}
-	else [self readDataForElements:stream];
-	
-	/* Read additional elements until we have enough items,
-		except if we're not the first item in our list. */
-	if(self.parentArray)
-	{
-		while([stream bytesToGo] > 0)
-		{
-			if(isZeroTerminated)
-			{
-				char termByte = 0;
-				[stream peekAmount:1 toBuffer:&termByte];
-				if(termByte == 0) break;
-			}
-			
-			// actually read the item
-			Element *nextItem = [groupElementTemplate copy];
-			[nextItem setParentArray:nil];			// Make sure it doesn't get into this "if" clause.
-			[self.parentArray addObject:nextItem];		// Add it below ourselves.
-			[nextItem readDataFrom:stream];			// Read it the same way we were.
-			[nextItem setParentArray:self.parentArray];	// Set parentArray *after* -readDataFrom: so it doesn't pass the if(parentArray) check above.
-		}
-		
-		// now add a terminating 'LSTE' item, using this item's label
-		ElementLSTE *end = [ElementLSTE elementForType:@"LSTE" withLabel:self.label];
-		[self.parentArray addObject:end];
-		[end setParentArray:self.parentArray];
-		[end setGroupElementTemplate:groupElementTemplate];
-		[end setCountElement:countElement];
-		if(isZeroTerminated)
-		{
-			[end setWritesZeroByte:YES];
-			[end readDataFrom:stream];
-		}
-		
-		// if it's an empty list delete this LSTB so we only have the empty LSTE.
-		if(bytesToGoAtStart == 0)
-			[self.parentArray removeObject:self];
-	}
+    // This item will be the tail
+    NSUInteger index = [self.parentArray indexOfObject:self];
+    self.entries = [NSMutableArray new];
+    
+    if ([self.type isEqualToString:@"LSTC"]) {
+        if (!self.countElement) self.countElement = [stream popCounter];
+        for (unsigned int i = 0; i < self.countElement.value; i++) {
+            [self readNextItem:stream toIndex:index++];
+        }
+        if ([self.countElement.type isEqualToString:@"FCNT"]) {
+            // FCNT should not show the tail
+            [self.parentArray removeObjectAtIndex:index];
+        }
+    } else {
+        while ([stream bytesToGo] > 0) {
+            if (_zeroTerminated) {
+                char termByte = 0;
+                [stream peekAmount:1 toBuffer:&termByte];
+                if (termByte == 0) {
+                    [stream advanceAmount:1 pad:NO];
+                    break;
+                }
+            }
+            [self readNextItem:stream toIndex:index++];
+        }
+    }
+    
+    [self.entries addObject:self];
 }
 
-// Before writeDataTo:is called, this is called to calculate the final resource size:
-//	This returns the sizes of all our sub-elements. If you subclass, add to that the size
-//	of this element itself.
 - (UInt32)sizeOnDisk:(UInt32)currentSize
 {
-	UInt32 size = 0;
-	for (Element *element in subElements) {
-        size += [element sizeOnDisk:(currentSize + size)];
-	}
+    UInt32 size = 0;
+    if (self != self.tail) {
+        for (Element *element in self.subElements) {
+            size += [element sizeOnDisk:(currentSize + size)];
+        }
+    } else if (_zeroTerminated) {
+        size = 1;
+    }
 	return size;
 }
 
 - (void)writeDataTo:(TemplateStream *)stream
 {
-	// Writes out the data of all our sub-elements here:
-	for (Element *element in subElements) {
-		[element writeDataTo:stream];
-	}
+    if (self != self.tail) {
+        // Writes out the data of all our sub-elements here:
+        for (Element *element in self.subElements) {
+            [element writeDataTo:stream];
+        }
+    } else if (_zeroTerminated) {
+        [stream advanceAmount:1 pad:YES];
+    }
+}
+
+- (NSString *)label
+{
+    // Prefix with item number
+    NSUInteger index = [self.tail.entries indexOfObject:self];
+    return [NSString stringWithFormat:@"%ld) %@", index+1, super.label];
 }
 
 #pragma mark -
 
 - (NSInteger)subElementCount
 {
-	return [subElements count];
+    return self == self.tail ? 0 : self.subElements.count;
 }
 
 - (Element *)subElementAtIndex:(NSInteger)n
 {
-	return subElements[n];
+	return self.subElements[n];
 }
 
 - (BOOL)createListEntry
 {
-    if ([countElement.type isEqualToString:@"FCNT"])
+    if ([self.countElement.type isEqualToString:@"FCNT"])
         return NO;
     
-    ElementLSTB *list = [groupElementTemplate copy];
+    ElementLSTB *list = [self.tail copy];
     [self.parentArray insertObject:list atIndex:[self.parentArray indexOfObject:self]];
-    [list setParentArray:self.parentArray];
-    [list setCountElement:countElement];
-    [countElement addEntry:list after:self];
+    [self.tail.entries insertObject:list atIndex:[self.tail.entries indexOfObject:self]];
+    list.parentArray = self.parentArray;
+    list.tail = self.tail;
+    list.countElement = self.countElement;
+    self.countElement.value++;
     return YES;
 }
 
 - (BOOL)removeListEntry
 {
-    if ([countElement.type isEqualToString:@"FCNT"])
+    if ([self.countElement.type isEqualToString:@"FCNT"])
         return NO;
     
 	[self.parentArray removeObject:self];
-    [countElement removeEntry:self];
+    [self.tail.entries removeObject:self];
+    self.countElement.value--;
     return YES;
 }
 

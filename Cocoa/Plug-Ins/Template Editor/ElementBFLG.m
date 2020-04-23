@@ -14,6 +14,7 @@
     NSView *view = [[NSView alloc] initWithFrame:frame];
     NSButton *checkbox = [[NSButton alloc] initWithFrame:frame];
     checkbox.buttonType = NSSwitchButton;
+    checkbox.bezelStyle = NSBezelStyleRegularSquare;
     checkbox.title = @"";
     checkbox.action = @selector(itemValueUpdated:);
     [checkbox bind:@"value" toObject:element withKeyPath:@"value" options:nil];
