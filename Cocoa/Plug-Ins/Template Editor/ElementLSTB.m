@@ -1,5 +1,4 @@
 #import "ElementLSTB.h"
-#import "ElementOCNT.h"
 
 // implements LSTB, LSTZ, LSTC
 @implementation ElementLSTB
@@ -8,7 +7,6 @@
 {
 	self = [super initForType:t withLabel:l];
 	if (self) {
-		_subElements = [NSMutableArray new];
         _tail = self;
         _zeroTerminated = [t isEqualToString:@"LSTZ"];
 	}
@@ -20,63 +18,46 @@
 {
 	ElementLSTB *element = [super copyWithZone:zone];
 	if (!element) return nil;
-	
-	ElementOCNT *counter = nil;
-	for (Element *subToClone in self.subElements) {
-        Element *clone = [subToClone copy];
-        [element.subElements addObject:clone];
-        clone.parentArray = element.subElements;
-		if ([clone isKindOfClass:ElementOCNT.class]) {
-            // Keep track of counter element
-			counter = (ElementOCNT *)clone;
-        } else if ([clone.type isEqualToString:@"LSTC"]) {
-            // Beginning a counted sub-list, set the counter
-            [(ElementLSTB *)clone setCountElement:counter];
-            counter = nil;
-        }
-	}
+    element.subElements = [self.subElements copyWithZone:zone];
 	return element;
 }
 
-- (void)readSubElementsFrom:(TemplateStream *)stream
-{
-	while ([stream bytesToGo] > 0) {
-		Element *element = [stream readOneElement];
-        if ([element.type isEqualToString:@"LSTE"]) {
-			break;
-		}
-		[self.subElements addObject:element];
-	}
-}
-
-- (void)readNextItem:(TemplateStream *)stream toIndex:(NSUInteger)index
-{
-    ElementLSTB *nextItem = [self.tail copy]; // Make another list item just like this one.
-    [self.parentArray insertObject:nextItem atIndex:index];   // Add it before ourselves.
-    [self.entries addObject:nextItem];
-    nextItem.parentArray = self.parentArray;
-    nextItem.tail = self;
-    nextItem.countElement = self.countElement;
-    // Copy to avoid possible problems with mutation
-	for (Element *element in [nextItem.subElements copy]) {
-		[element readDataFrom:stream];
-	}
-}
-
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readSubElements
 {
     // This item will be the tail
-    NSUInteger index = [self.parentArray indexOfObject:self];
     self.entries = [NSMutableArray new];
+    self.subElements = [self.parentList subListUntil:@"LSTE"];
+    if ([self.countElement.type isEqualToString:@"FCNT"]) {
+        // Fixed count list, create all the entries now
+        self.tail = nil;
+        for (unsigned int i = 1; i < self.countElement.value; i++) {
+            [self createNextItem];
+        }
+        [self.entries addObject:self];
+    }
+}
+
+- (ElementLSTB *)createNextItem
+{
+    // Create a new list entry at the current index (just before self)
+    ElementLSTB *list = [self copy];
+    [self.parentList insertElement:list];
+    [self.entries addObject:list];
+    list.tail = self.tail;
+    list.entries = self.entries;
+    return list;
+}
+
+- (void)readDataFrom:(ResourceStream *)stream
+{
+    if (!self.tail) {
+        [self.subElements readDataFrom:stream];
+        return;
+    }
     
     if ([self.type isEqualToString:@"LSTC"]) {
-        if (!self.countElement) self.countElement = [stream popCounter];
         for (unsigned int i = 0; i < self.countElement.value; i++) {
-            [self readNextItem:stream toIndex:index++];
-        }
-        if ([self.countElement.type isEqualToString:@"FCNT"]) {
-            // FCNT should not show the tail
-            [self.parentArray removeObjectAtIndex:index];
+            [[self createNextItem].subElements readDataFrom:stream];
         }
     } else {
         while ([stream bytesToGo] > 0) {
@@ -88,33 +69,28 @@
                     break;
                 }
             }
-            [self readNextItem:stream toIndex:index++];
+            ;
+            [[self createNextItem].subElements readDataFrom:stream];
         }
     }
-    
     [self.entries addObject:self];
 }
 
 - (UInt32)sizeOnDisk:(UInt32)currentSize
 {
-    UInt32 size = 0;
     if (self != self.tail) {
-        for (Element *element in self.subElements) {
-            size += [element sizeOnDisk:(currentSize + size)];
-        }
+        return [self.subElements sizeOnDisk:currentSize];
     } else if (_zeroTerminated) {
-        size = 1;
+        return 1;
     }
-	return size;
+	return 0;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
     if (self != self.tail) {
         // Writes out the data of all our sub-elements here:
-        for (Element *element in self.subElements) {
-            [element writeDataTo:stream];
-        }
+        [self.subElements writeDataTo:stream];
     } else if (_zeroTerminated) {
         [stream advanceAmount:1 pad:YES];
     }
@@ -123,7 +99,7 @@
 - (NSString *)label
 {
     // Prefix with item number
-    NSUInteger index = [self.tail.entries indexOfObject:self];
+    NSUInteger index = [self.entries indexOfObject:self];
     return [NSString stringWithFormat:@"%ld) %@", index+1, super.label];
 }
 
@@ -136,32 +112,29 @@
 
 - (Element *)subElementAtIndex:(NSInteger)n
 {
-	return self.subElements[n];
+    return [self.subElements elementAtIndex:n];
 }
 
 - (BOOL)createListEntry
 {
-    if ([self.countElement.type isEqualToString:@"FCNT"])
-        return NO;
+    if (!self.tail) return NO;
     
     ElementLSTB *list = [self.tail copy];
-    [self.parentArray insertObject:list atIndex:[self.parentArray indexOfObject:self]];
-    [self.tail.entries insertObject:list atIndex:[self.tail.entries indexOfObject:self]];
-    list.parentArray = self.parentArray;
+    [self.parentList insertElement:list before:self];
+    [self.entries insertObject:list atIndex:[self.entries indexOfObject:self]];
+    self.tail.countElement.value++;
     list.tail = self.tail;
-    list.countElement = self.countElement;
-    self.countElement.value++;
+    list.entries = self.entries;
     return YES;
 }
 
 - (BOOL)removeListEntry
 {
-    if ([self.countElement.type isEqualToString:@"FCNT"])
-        return NO;
+    if (!self.tail) return NO;
     
-	[self.parentArray removeObject:self];
-    [self.tail.entries removeObject:self];
-    self.countElement.value--;
+	[self.parentList removeElement:self];
+    [self.entries removeObject:self];
+    self.tail.countElement.value--;
     return YES;
 }
 

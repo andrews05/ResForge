@@ -1,10 +1,7 @@
-#import <Cocoa/Cocoa.h>
 #import "Element.h"
 
 @interface ElementKEYB : Element
-@property (strong) NSMutableArray *subElements;
+@property (strong) ElementList *subElements;
+@property (weak) Element *keyElement;
 
-@end
-
-@interface ElementKEYE : Element
 @end

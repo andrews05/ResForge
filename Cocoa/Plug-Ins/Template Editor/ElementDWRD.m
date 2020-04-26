@@ -5,7 +5,7 @@
 @implementation ElementDWRD
 @synthesize value;
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
 	SInt16 tmp = 0;
 	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
@@ -17,7 +17,7 @@
 	return SIZE_ON_DISK;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
 	SInt16 tmp = CFSwapInt16HostToBig(value);
 	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];

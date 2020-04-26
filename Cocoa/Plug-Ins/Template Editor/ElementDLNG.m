@@ -5,7 +5,7 @@
 @implementation ElementDLNG
 @synthesize value;
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
 	SInt32 tmp = 0;
 	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
@@ -17,7 +17,7 @@
 	return SIZE_ON_DISK;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
 	SInt32 tmp = CFSwapInt32HostToBig(value);
 	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];

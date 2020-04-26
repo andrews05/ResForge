@@ -1,9 +1,15 @@
 #import "ElementOCNT.h"
-#import "ElementULNG.h"
+#import "ElementLSTB.h"
 
 // implements ZCNT, OCNT, BCNT, BZCT, WCNT, WZCT, LCNT, LZCT
 @implementation ElementOCNT
 @synthesize value;
+
+- (void)readSubElements
+{
+    ElementLSTB *lstc = (ElementLSTB *)[self.parentList nextOfType:@"LSTC"];
+    lstc.countElement = self;
+}
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
@@ -12,7 +18,7 @@
     return view;
 }
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
 	UInt32 tmp = 0;
 	if ([self.type isEqualToString:@"LCNT"] || [self.type isEqualToString:@"LZCT"])
@@ -38,7 +44,7 @@
 		return 2;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
     UInt32 tmp = value;
 	if ([self countFromZero])

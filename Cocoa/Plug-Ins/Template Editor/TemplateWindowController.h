@@ -22,6 +22,7 @@
 #import <Cocoa/Cocoa.h>
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"
+#import "ElementList.h"
 
 @interface TemplateWindowController : NSWindowController <ResKnifeTemplatePlugin, NSToolbarDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
@@ -29,8 +30,7 @@
 	IBOutlet NSOutlineView *dataList;		// Data display.
 	IBOutlet NSDrawer *tmplDrawer;
 	NSMutableDictionary	*toolbarItems;
-	NSMutableArray *templateStructure;		// Pre-parsed form of our template.
-	NSMutableArray *resourceStructure;		// Parsed form of our resource.
+	ElementList *resourceStructure;		// Parsed form of our resource.
 	id <ResKnifeResource> resource;	// The resource we operate on.
 	id <ResKnifeResource> backup;	// The original resource.
 	BOOL liveEdit;

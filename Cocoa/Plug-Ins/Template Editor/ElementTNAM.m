@@ -7,7 +7,7 @@
 @implementation ElementTNAM
 @synthesize tnam;
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
     UInt32 tmp = 0;
     [stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
@@ -19,7 +19,7 @@
     return SIZE_ON_DISK;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
     UInt32 tmp = CFSwapInt32HostToBig(tnam);
     [stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];

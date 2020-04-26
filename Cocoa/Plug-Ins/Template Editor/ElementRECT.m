@@ -34,7 +34,7 @@
     return view;
 }
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
     SInt16 tmp = 0;
     [stream readAmount:2 toBuffer:&tmp];
@@ -52,7 +52,7 @@
     return 8;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
     SInt16 tmp = CFSwapInt16HostToBig(top);
     [stream writeAmount:2 fromBuffer:&tmp];

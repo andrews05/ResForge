@@ -6,7 +6,7 @@
 @implementation ElementCHAR
 @synthesize charCode;
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
     [stream readAmount:SIZE_ON_DISK toBuffer:&charCode];
 }
@@ -16,7 +16,7 @@
     return SIZE_ON_DISK;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
     [stream writeAmount:SIZE_ON_DISK fromBuffer:&charCode];
 }

@@ -5,7 +5,7 @@
 @implementation ElementREAL
 @synthesize value;
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
     CFSwappedFloat32 tmp;
     [stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
@@ -17,7 +17,7 @@
     return SIZE_ON_DISK;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
     CFSwappedFloat32 tmp = CFConvertFloatHostToSwapped(value);
     [stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];

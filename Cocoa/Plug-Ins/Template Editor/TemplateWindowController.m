@@ -1,5 +1,5 @@
 #import "TemplateWindowController.h"
-#import "TemplateStream.h"
+#import "ResourceStream.h"
 #import "Element.h"
 #import "ElementOCNT.h"
 #import "ElementLSTB.h"
@@ -22,26 +22,21 @@
 - (instancetype)initWithResource:(id <ResKnifeResource>)newResource template:(id <ResKnifeResource>)tmplResource
 {
 	self = [self initWithWindowNibName:@"TemplateWindow"];
-	if(!self)
-	{
+	if (!self) {
 		return nil;
 	}
 	
 	toolbarItems = [[NSMutableDictionary alloc] init];
 	//undoManager = [[NSUndoManager alloc] init];
 	liveEdit = NO;
-	if(liveEdit)
-	{
+	if (liveEdit) {
 		resource = newResource;	// resource to work on
 		backup = [resource copy];	// for reverting only
-	}
-	else
-	{
+	} else {
 		backup = newResource;		// actual resource to change when saving data
 		resource = [backup copy];	// resource to work on
 	}
-	templateStructure = [[NSMutableArray alloc] init];
-	resourceStructure = [[NSMutableArray alloc] init];
+    resourceStructure = nil;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:ResourceDataDidChangeNotification object:tmplResource];
 	[self readTemplate:tmplResource];	// reads (but doesn't retain) the template for this resource (TMPL resource with name equal to the passed resource's type)
@@ -60,8 +55,7 @@
 	
 	va_start(resourceList, newResource);
 	self = [self initWithWindowNibName:@"TemplateWindow"];
-	if(!self)
-	{
+	if (!self) {
 		va_end(resourceList);
 		return nil;
 	}
@@ -69,18 +63,14 @@
 	toolbarItems = [[NSMutableDictionary alloc] init];
 	//undoManager = [[NSUndoManager alloc] init];
 	liveEdit = NO;
-	if(liveEdit)
-	{
+	if (liveEdit) {
 		resource = newResource;	// resource to work on
 		backup = [resource copy];	// for reverting only
-	}
-	else
-	{
+	} else {
 		backup = newResource;		// actual resource to change when saving data
 		resource = [backup copy];	// resource to work on
 	}
-	templateStructure = [[NSMutableArray alloc] init];
-	resourceStructure = [[NSMutableArray alloc] init];
+    resourceStructure = nil;
 	
 	tmplResource = va_arg(resourceList, id);
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:ResourceDataDidChangeNotification object:tmplResource];
@@ -122,7 +112,6 @@
 
 - (void)templateDataDidChange:(NSNotification *)notification
 {
-	[templateStructure removeAllObjects];
 	[self readTemplate:[notification object]];
 	if([self isWindowLoaded])
 		[self loadResource];
@@ -139,36 +128,10 @@
 - (void)loadResource
 {
 	// create new stream
-	TemplateStream *stream = [TemplateStream streamWithBytes:(char *)[[resource data] bytes] length:(UInt32)[[resource data] length]];
+	ResourceStream *stream = [ResourceStream streamWithBytes:(char *)[[resource data] bytes] length:(UInt32)[[resource data] length]];
 	
 	// loop through template cloning its elements
-	Element *prevElement;
-	[resourceStructure removeAllObjects];
-	for (Element *element in templateStructure) {
-		Element *clone = [element copy];	// copy the template object.
-		[resourceStructure addObject:clone];			// add it to our parsed resource data list. Do this right away so the element can append other items should it desire to.
-		[clone setParentArray:resourceStructure];		// the parent for these is the root level resourceStructure object
-		Class cc = [clone class];
-		
-		BOOL pushedCounter = NO;
-		//BOOL pushedKey = NO;
-		if ([clone isKindOfClass:[ElementOCNT class]]) {
-            [stream pushCounter:(ElementOCNT*)clone];
-            pushedCounter = YES;
-        } else if (cc == [ElementKBYT class] ||
-                   cc == [ElementKWRD class] ||
-                   cc == [ElementKLNG class]) {
-            [stream pushKey:clone];
-            // pushedKey = YES;
-        } else if (cc == [ElementBBIT class] &&
-                   [prevElement class] == [ElementBBIT class]) {
-            [(ElementBBIT*)prevElement addChild:(ElementBBIT*)clone];
-        }
-		[clone readDataFrom:stream];				// fill it with resource data.
-//		if (cc == [ElementKEYE class] && pushedKey)
-//			[stream popKey];
-        prevElement = clone;
-	}
+    [resourceStructure readDataFrom:stream];
 	
 	// reload the view
 	id item;
@@ -216,31 +179,22 @@
 - (void)saveResource:(id)sender
 {
 	// get size of resource by summing size of all fields
-	Element *element;
-	UInt32 size = 0;
-	NSEnumerator *enumerator = [resourceStructure objectEnumerator];
-	while(element = [enumerator nextObject])
-        size += [element sizeOnDisk:size];
+	UInt32 size = [resourceStructure sizeOnDisk:0];
 	
 	// create data and stream
 	NSMutableData *newData = [NSMutableData dataWithLength:size];
-	TemplateStream *stream = [TemplateStream streamWithBytes:(char *)[newData bytes] length:size];
+	ResourceStream *stream = [ResourceStream streamWithBytes:(char *)[newData bytes] length:size];
 	
 	// write bytes into new data object
-	enumerator = [resourceStructure objectEnumerator];
-	while(element = [enumerator nextObject])
-		[element writeDataTo:stream];
+    [resourceStructure writeDataTo:stream];
 	
 	// send the new resource data to ResKnife
-	if(liveEdit)
-	{
+	if (liveEdit) {
 		[[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
 		[resource setData:newData];
 		[backup setData:[newData copy]];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	}
-	else
-	{
+	} else {
 		[[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:backup];
 		[resource setData:newData];
 		[backup setData:[newData copy]];
@@ -256,26 +210,8 @@
 
 - (void)readTemplate:(id<ResKnifeResource>)tmplRes
 {
-	char *data = (char*) [[tmplRes data] bytes];
-	NSUInteger bytesToGo = [[tmplRes data] length];
-	TemplateStream *stream = [TemplateStream streamWithBytes:data length:(unsigned int)bytesToGo];
-	
-	// read new fields from the template and add them to our list
-	while([stream bytesToGo] > 0)
-	{
-		Element *element = [stream readOneElement];
-		if(element)
-		{
-			[element setIsTMPL:YES];	// for debugging
-			[templateStructure addObject:element];
-		}
-		else
-		{
-			NSLog(@"Error reading template stream, aborting.");
-			break;
-		}
-	}
-	
+    NSInputStream *stream = [[NSInputStream alloc] initWithData:[tmplRes data]];
+    resourceStructure = [ElementList listFromStream:stream];
 	[displayList reloadData];
 }
 
@@ -296,11 +232,10 @@
 
 - (id)outlineView:(NSOutlineView*)outlineView child:(NSInteger)index ofItem:(id)item
 {
-	if((item == nil) && (outlineView == displayList))
-		return templateStructure[index];
-	else if((item == nil) && (outlineView == dataList))
-		return resourceStructure[index];
-	else return [item subElementAtIndex:index];
+	if (item == nil)
+		return [resourceStructure elementAtIndex:index];
+	else
+        return [item subElementAtIndex:index];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
@@ -310,11 +245,10 @@
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
-	if((item == nil) && (outlineView == displayList))
-		return [templateStructure count];
-	else if((item == nil) && (outlineView == dataList))
+	if (item == nil)
 		return [resourceStructure count];
-	else return [item subElementCount];
+	else
+        return [item subElementCount];
 }
 
 - (double)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
@@ -339,12 +273,14 @@
 
 - (IBAction)itemValueUpdated:(id)sender
 {
-    if(!liveEdit) [self setDocumentEdited:YES];
-    
-    // remove self to avoid reloading the resource
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
-    [[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:resource];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+    if (liveEdit) {
+        // remove self to avoid reloading the resource
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:resource];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+    } else {
+        [self setDocumentEdited:YES];
+    }
 }
 
 // these next five methods are a crude hack - the items ought to be in the responder chain themselves

@@ -10,7 +10,7 @@
     return [ElementRECT configureFields:@[@"h", @"v"] forElement:self];
 }
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
     SInt16 tmp = 0;
     [stream readAmount:2 toBuffer:&tmp];
@@ -24,7 +24,7 @@
     return 4;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
     SInt16 tmp = CFSwapInt16HostToBig(h);
     [stream writeAmount:2 fromBuffer:&tmp];

@@ -41,6 +41,8 @@
 		49322A7A244FF65A00E1EAE4 /* ElementHLLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A78244FF65A00E1EAE4 /* ElementHLLG.m */; };
 		49322A7D2450E87000E1EAE4 /* ElementBBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A7B2450E87000E1EAE4 /* ElementBBIT.h */; };
 		49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A7C2450E87000E1EAE4 /* ElementBBIT.m */; };
+		4962B274245535280065590E /* ElementList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B272245535270065590E /* ElementList.h */; };
+		4962B275245535280065590E /* ElementList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B273245535270065590E /* ElementList.m */; };
 		49882A092447F45700D439BC /* ElementFCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A072447F45700D439BC /* ElementFCNT.h */; };
 		49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A082447F45700D439BC /* ElementFCNT.m */; };
 		49882A0D2448EF0E00D439BC /* ElementAWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A0B2448EF0E00D439BC /* ElementAWRD.h */; };
@@ -221,7 +223,7 @@
 		E18BF6A1069FEA1800F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
 		E18BF6A2069FEA1800F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
 		E18BF6A3069FEA1800F076B8 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933A604DEFEE600DD74B1 /* Element.h */; };
-		E18BF6A5069FEA1800F076B8 /* TemplateStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BE04DF151C00DD74B1 /* TemplateStream.h */; };
+		E18BF6A5069FEA1800F076B8 /* ResourceStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BE04DF151C00DD74B1 /* ResourceStream.h */; };
 		E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */; };
 		E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933E704DF317D00DD74B1 /* ElementPSTR.h */; };
 		E18BF6A9069FEA1800F076B8 /* ElementDWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933EF04DF381900DD74B1 /* ElementDWRD.h */; };
@@ -231,7 +233,7 @@
 		E18BF6B4069FEA1800F076B8 /* TemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */; };
 		E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF6B6069FEA1800F076B8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* Element.m */; };
-		E18BF6B8069FEA1800F076B8 /* TemplateStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* TemplateStream.m */; };
+		E18BF6B8069FEA1800F076B8 /* ResourceStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* ResourceStream.m */; };
 		E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */; };
 		E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933E804DF317D00DD74B1 /* ElementPSTR.m */; };
 		E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933EE04DF381900DD74B1 /* ElementDWRD.m */; };
@@ -409,8 +411,8 @@
 		0EBA866B122D0B4300FEC1AC /* NSEvent-ModifierKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent-ModifierKeys.m"; sourceTree = "<group>"; };
 		3D0933A604DEFEE600DD74B1 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Element.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0933A704DEFEE600DD74B1 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Element.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3D0933BE04DF151C00DD74B1 /* TemplateStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TemplateStream.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3D0933BF04DF151C00DD74B1 /* TemplateStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TemplateStream.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3D0933BE04DF151C00DD74B1 /* ResourceStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResourceStream.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3D0933BF04DF151C00DD74B1 /* ResourceStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ResourceStream.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementLSTB.h; sourceTree = "<group>"; };
 		3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementLSTB.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0933E704DF317D00DD74B1 /* ElementPSTR.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementPSTR.h; sourceTree = "<group>"; };
@@ -465,6 +467,8 @@
 		49322A78244FF65A00E1EAE4 /* ElementHLLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHLLG.m; sourceTree = "<group>"; };
 		49322A7B2450E87000E1EAE4 /* ElementBBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBBIT.h; sourceTree = "<group>"; };
 		49322A7C2450E87000E1EAE4 /* ElementBBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBBIT.m; sourceTree = "<group>"; };
+		4962B272245535270065590E /* ElementList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementList.h; sourceTree = "<group>"; };
+		4962B273245535270065590E /* ElementList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementList.m; sourceTree = "<group>"; };
 		49882A072447F45700D439BC /* ElementFCNT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementFCNT.h; sourceTree = "<group>"; };
 		49882A082447F45700D439BC /* ElementFCNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementFCNT.m; sourceTree = "<group>"; };
 		49882A0B2448EF0E00D439BC /* ElementAWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementAWRD.h; sourceTree = "<group>"; };
@@ -838,8 +842,10 @@
 				B27A65CE15A677F00029141B /* TemplateWindow.xib */,
 				3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */,
 				3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */,
-				3D0933BE04DF151C00DD74B1 /* TemplateStream.h */,
-				3D0933BF04DF151C00DD74B1 /* TemplateStream.m */,
+				3D0933BE04DF151C00DD74B1 /* ResourceStream.h */,
+				3D0933BF04DF151C00DD74B1 /* ResourceStream.m */,
+				4962B272245535270065590E /* ElementList.h */,
+				4962B273245535270065590E /* ElementList.m */,
 				3D0933A604DEFEE600DD74B1 /* Element.h */,
 				3D0933A704DEFEE600DD74B1 /* Element.m */,
 				3D0933EB04DF319F00DD74B1 /* Field Types */,
@@ -1272,7 +1278,7 @@
 				E18BF6A1069FEA1800F076B8 /* ResKnifePluginProtocol.h in Headers */,
 				E18BF6A2069FEA1800F076B8 /* ResKnifeResourceProtocol.h in Headers */,
 				E18BF6A3069FEA1800F076B8 /* Element.h in Headers */,
-				E18BF6A5069FEA1800F076B8 /* TemplateStream.h in Headers */,
+				E18BF6A5069FEA1800F076B8 /* ResourceStream.h in Headers */,
 				49322A5D244FAADA00E1EAE4 /* ElementCHAR.h in Headers */,
 				E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */,
 				E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */,
@@ -1301,6 +1307,7 @@
 				493229D5244D19CF00E1EAE4 /* ElementPNT.h in Headers */,
 				E119379309987CC400A3A6EA /* ElementULLG.h in Headers */,
 				49322A61244FBF4E00E1EAE4 /* ElementTNAM.h in Headers */,
+				4962B274245535280065590E /* ElementList.h in Headers */,
 				49322A6D244FE71200E1EAE4 /* ElementHBYT.h in Headers */,
 				49322A65244FD17800E1EAE4 /* ElementREAL.h in Headers */,
 				E119388D0999296B00A3A6EA /* ElementHEXD.h in Headers */,
@@ -1830,12 +1837,13 @@
 				49322A62244FBF4E00E1EAE4 /* ElementTNAM.m in Sources */,
 				E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */,
 				E18BF6B6069FEA1800F076B8 /* Element.m in Sources */,
-				E18BF6B8069FEA1800F076B8 /* TemplateStream.m in Sources */,
+				E18BF6B8069FEA1800F076B8 /* ResourceStream.m in Sources */,
 				E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */,
 				49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */,
 				E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */,
 				E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */,
 				E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */,
+				4962B275245535280065590E /* ElementList.m in Sources */,
 				E18BF6BF069FEA1800F076B8 /* ElementDBYT.m in Sources */,
 				E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */,
 				493229CA244C3A0800E1EAE4 /* ElementWFLG.m in Sources */,

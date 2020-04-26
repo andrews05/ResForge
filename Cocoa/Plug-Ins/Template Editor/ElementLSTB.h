@@ -1,9 +1,8 @@
 #import "Element.h"
-
-@class ElementOCNT;
+#import "ElementOCNT.h"
 
 @interface ElementLSTB : Element
-@property (strong) NSMutableArray *subElements;
+@property (strong) ElementList *subElements;
 @property (strong) NSMutableArray *entries;
 @property (weak) ElementOCNT *countElement;		// Our "list counter" element.
 @property (weak) ElementLSTB *tail;

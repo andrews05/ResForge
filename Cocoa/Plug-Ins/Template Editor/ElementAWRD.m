@@ -18,7 +18,7 @@
     return self;
 }
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
     UInt32 pos = [stream length] - [stream bytesToGo];
     [stream advanceAmount:[self sizeOnDisk:pos] pad:NO];
@@ -29,7 +29,7 @@
     return -currentSize % alignment;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
     UInt32 pos = [stream length] - [stream bytesToGo];
     [stream advanceAmount:[self sizeOnDisk:pos] pad:YES];

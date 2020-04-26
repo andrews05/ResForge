@@ -1,7 +1,5 @@
 #import "ElementFCNT.h"
 
-// bug: FCNT doesn't work correctly when adding a new list entry to an outer list containing
-// an FCNT list, as its entries are only created when readDataFrom: is called on its LSTB
 @implementation ElementFCNT
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
@@ -21,7 +19,7 @@
     return self;
 }
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
 }
 
@@ -30,7 +28,7 @@
     return 0;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
 }
 

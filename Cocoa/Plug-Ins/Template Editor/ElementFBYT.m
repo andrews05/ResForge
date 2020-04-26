@@ -24,7 +24,7 @@
 	return self;
 }
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
 	[stream advanceAmount:length pad:NO];
 }
@@ -34,7 +34,7 @@
 	return length;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
 	[stream advanceAmount:length pad:YES];
 }

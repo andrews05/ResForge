@@ -4,8 +4,7 @@
 @implementation Element
 @synthesize type;
 @synthesize label;
-@synthesize isTMPL = _isTMPL;
-@synthesize parentArray;
+@synthesize parentList;
 @synthesize rowHeight;
 
 + (id)elementForType:(NSString *)t withLabel:(NSString *)l
@@ -16,7 +15,7 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
 	self = [super init];
-	if(!self) return nil;
+	if (!self) return nil;
 	label = [l copy];
 	type = [t copy];
     rowHeight = 17;
@@ -27,7 +26,7 @@
 - (id)copyWithZone:(NSZone *)zone
 {
 	Element *element = [[[self class] allocWithZone:zone] initForType:type withLabel:label];
-	[element setParentArray:parentArray];
+    if (!element) return nil;
 	return element;
 }
 
@@ -77,14 +76,14 @@
 	return nil;
 }
 
-- (void)readSubElementsFrom:(TemplateStream *)stream
+- (void)readSubElements
 {
 	// by default, items don't read any sub-elements.
 }
 
 // You should read whatever kind of data your template field stands for from "stream"
 //	and store it in an instance variable.
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
 	NSLog(@"-readDataFrom:called on non-concrete class Element");
 }
@@ -97,7 +96,7 @@
 	return 0;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
 	NSLog(@"-writeDataTo:called on non-concrete class Element");
 }

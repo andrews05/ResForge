@@ -111,7 +111,7 @@
     }
 }
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
 	// get string length
 	UInt32 length = 0;
@@ -162,7 +162,7 @@
 	return length;
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
 	// write string
 	UInt32 length = (UInt32)[value length];

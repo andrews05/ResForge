@@ -1,42 +1,24 @@
 #import "ElementKEYB.h"
 
 @implementation ElementKEYB
-@synthesize subElements;
-
-- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
-{
-	self = [super initForType:t withLabel:l];
-	if(!self) return nil;
-	subElements = [[NSMutableArray alloc] init];
-	return self;
-}
-
 
 - (id)copyWithZone:(NSZone *)zone
 {
     ElementKEYB *element = [super copyWithZone:zone];
-    if(!element) return nil;
-    element.subElements = [subElements copyWithZone:zone];
+    if (!element) return nil;
+    element.subElements = [self.subElements copyWithZone:zone];
     return element;
 }
 
-- (void)readSubElementsFrom:(TemplateStream *)stream
+- (void)readSubElements
 {
-	while([stream bytesToGo] > 0)
-	{
-		Element *element = [stream readOneElement];
-		if([[element type] isEqualToString:@"KEYE"])
-			break;
-		[subElements addObject:element];
-	}
+    self.subElements = [self.parentList subListUntil:@"KEYE"];
 }
 
-- (void)readDataFrom:(TemplateStream *)stream
+- (void)readDataFrom:(ResourceStream *)stream
 {
-	if([self labelMatches:[stream key]])
-	{
-		for(unsigned i = 0; i < [subElements count]; i++)
-			[subElements[i] readDataFrom:stream];
+	if ([self matchesKey]) {
+        [self.subElements readDataFrom:stream];
 	}
 }
 
@@ -45,47 +27,33 @@
 //	of this element itself.
 - (UInt32)sizeOnDisk:(UInt32)currentSize
 {
-//	if(![self labelMatches:[stream key]])
-//		return 0;
-	
-	UInt32 size = 0;
-	for (Element *element in subElements)
-        size += [element sizeOnDisk:(currentSize + size)];
-	return size;
+	if (![self matchesKey])
+		return 0;
+    return [self.subElements sizeOnDisk:currentSize];
 }
 
-- (void)writeDataTo:(TemplateStream *)stream
+- (void)writeDataTo:(ResourceStream *)stream
 {
-    if([self labelMatches:[stream key]])
-	{
+    if ([self matchesKey]) {
 		// writes out the data of all our sub-elements here:
-		for (Element *element in subElements)
-			[element writeDataTo:stream];
+		[self.subElements writeDataTo:stream];
 	}
 }
 
 - (NSInteger)subElementCount
 {
-	return [subElements count];
+	return self.subElements.count;
 }
 
 - (Element *)subElementAtIndex:(NSInteger)n
 {
-	return subElements[n];
+	return [self.subElements elementAtIndex:n];
 }
 
-- (BOOL)labelMatches:(Element *)element
+- (BOOL)matchesKey
 {
-    NSString *value = [[element formatter] stringForObjectValue:[element valueForKey:@"value"]];
-    return [[self label] isEqualToString:value];
+    NSString *value = [[self.keyElement formatter] stringForObjectValue:[self.keyElement valueForKey:@"value"]];
+    return [self.label isEqualToString:value];
 }
 
-@end
-
-#pragma mark -
-
-@implementation ElementKEYE
-- (void)readDataFrom:(TemplateStream *)stream {}
-- (void)writeDataTo:(TemplateStream *)stream {}
-- (BOOL)editable { return NO; }
 @end
