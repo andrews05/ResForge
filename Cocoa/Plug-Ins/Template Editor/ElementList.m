@@ -25,6 +25,7 @@
 #import "ElementWFLG.h"
 #import "ElementLFLG.h"
 #import "ElementBOOL.h"
+#import "ElementBBIT.h"
 #import "ElementRECT.h"
 #import "ElementPNT.h"
 #import "ElementHEXD.h"
@@ -275,6 +276,8 @@
         registry[@"WFLG"] = [ElementWFLG class];
         registry[@"LFLG"] = [ElementLFLG class];
         registry[@"BOOL"] = [ElementBOOL class];    // true = 256; false = 0
+        registry[@"BBIT"] = [ElementBBIT class];
+        registry[@"BB"]   = [ElementBBIT class];
         
         // hex dumps
         registry[@"BHEX"] = [ElementHEXD class];
@@ -340,7 +343,7 @@
         registry[@"RGNC"] = [ElementDWRD class];    // MacOS region code (RegionCode)
         
         // unhandled types at present, see file:///Users/nicholas/Sites/resknife.sf.net/resorcerer_comparison.html
-        // BBIT, BBnn, FBIT, FBnn, WBIT, WBnn
+        // FBIT, FBnn, WBIT, WBnn
     }
     return registry;
 }
