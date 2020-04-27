@@ -26,7 +26,6 @@
 		return nil;
 	}
 	
-	toolbarItems = [[NSMutableDictionary alloc] init];
 	//undoManager = [[NSUndoManager alloc] init];
 	liveEdit = NO;
 	if (liveEdit) {
@@ -46,66 +45,20 @@
 	[self window];
 	return self;
 
-}
-
-- (instancetype)initWithResources:(id <ResKnifeResource>)newResource, ...
-{
-	id tmplResource;
-	va_list resourceList;
-	
-	va_start(resourceList, newResource);
-	self = [self initWithWindowNibName:@"TemplateWindow"];
-	if (!self) {
-		va_end(resourceList);
-		return nil;
-	}
-	
-	toolbarItems = [[NSMutableDictionary alloc] init];
-	//undoManager = [[NSUndoManager alloc] init];
-	liveEdit = NO;
-	if (liveEdit) {
-		resource = newResource;	// resource to work on
-		backup = [resource copy];	// for reverting only
-	} else {
-		backup = newResource;		// actual resource to change when saving data
-		resource = [backup copy];	// resource to work on
-	}
-    resourceStructure = nil;
-	
-	tmplResource = va_arg(resourceList, id);
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:ResourceDataDidChangeNotification object:tmplResource];
-	[self readTemplate:tmplResource];	// reads (but doesn't retain) the template for this resource (TMPL resource with name equal to the passed resource's type)
-	
-	while((tmplResource = va_arg(resourceList, id)))
-		NSLog(@"Too many params passed to -initWithResources:%@", [tmplResource description]);
-	va_end(resourceList);
-	
-	// load the window from the nib
-	[self setShouldCascadeWindows:YES];
-	[self window];
-	return self;
 }
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-/*
-- (void)windowControllerDidLoadNib:(NSWindowController *)controller
-{
-	[super windowControllerDidLoadNib:controller];
-	[self setupToolbar:controller];
-}
-*/
+
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
-	[self setupToolbar];
 	[self loadResource];
 	if(liveEdit)	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 	else			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:backup];
 	[[self window] setTitle:[resource defaultWindowTitle]];
-	[[[dataList tableColumnWithIdentifier:@"label"] dataCell] setFont:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]];
 	[self showWindow:self];
 	[displayList reloadData];
 }
@@ -130,7 +83,7 @@
 	// create new stream
 	ResourceStream *stream = [ResourceStream streamWithBytes:(char *)[[resource data] bytes] length:(UInt32)[[resource data] length]];
 	
-	// loop through template cloning its elements
+	// read the data into the template
     [resourceStructure readDataFrom:stream];
 	
 	// reload the view
@@ -335,7 +288,7 @@
 	else if([item action] == @selector(copy:))			return(element && [element respondsToSelector:@selector(copy:)]);
 	else if([item action] == @selector(paste:) &&              element && [element respondsToSelector:@selector(validateMenuItem:)])
 														return([element validateMenuItem:item]);
-	else if([item action] == @selector(delete:))			return(element && [element respondsToSelector:@selector(removeListEntry)]);
+	else if([item action] == @selector(delete:))		return(element && [element respondsToSelector:@selector(removeListEntry)]);
 	else if([item action] == @selector(saveDocument:))	return YES;
 	else return NO;
 }
@@ -359,57 +312,6 @@
 	NSMenuItem *createItem = [resourceMenu itemAtIndex:[resourceMenu indexOfItemWithTarget:nil andAction:@selector(createListEntry:)]];
 	[createItem setTitle:NSLocalizedString(@"Create New Resource...", nil)];
 	[createItem setAction:@selector(showCreateResourceSheet:)];
-}
-
-#pragma mark -
-#pragma mark Toolbar Management
-
-static NSString *RKTEToolbarIdentifier		= @"com.nickshanks.resknife.templateeditor.toolbar";
-static NSString *RKTEDisplayTMPLIdentifier	= @"com.nickshanks.resknife.templateeditor.toolbar.tmpl";
-
-- (void)setupToolbar
-{
-	/* This routine should become invalid once toolbars are integrated into nib files */
-	
-	NSToolbarItem *item;
-	[toolbarItems removeAllObjects];	// just in case this method is called more than once per document (which it shouldn't be!)
-	
-	item = [[NSToolbarItem alloc] initWithItemIdentifier:RKTEDisplayTMPLIdentifier];
-	[item setLabel:NSLocalizedString(@"Parsed TMPL", nil)];
-	[item setPaletteLabel:NSLocalizedString(@"Display Parsed TMPL", nil)];
-	[item setToolTip:NSLocalizedString(@"Display Parsed TMPL", nil)];
-	[item setImage:[NSImage imageNamed:@"DisplayTMPL"]];
-	[item setTarget:tmplDrawer];
-	[item setAction:@selector(toggle:)];
-	toolbarItems[RKTEDisplayTMPLIdentifier] = item;
-	
-	NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:RKTEToolbarIdentifier];
-	
-	// set toolbar properties
-	[toolbar setVisible:NO];
-	[toolbar setAutosavesConfiguration:YES];
-	[toolbar setAllowsUserCustomization:YES];
-	[toolbar setDisplayMode:NSToolbarDisplayModeLabelOnly];
-	[toolbar setSizeMode:NSToolbarSizeModeSmall];
-	
-	// attach toolbar to window
-	[toolbar setDelegate:self];
-	[[self window] setToolbar:toolbar];
-}
-
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
-{
-	return toolbarItems[itemIdentifier];
-}
-
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
-{
-    return @[RKTEDisplayTMPLIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarPrintItemIdentifier];
-}
-
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
-{
-    return @[RKTEDisplayTMPLIdentifier, NSToolbarPrintItemIdentifier, NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier];
 }
 
 @end

@@ -22,11 +22,6 @@
 	return self;
 }
 
-- (instancetype)initWithResources:(id)newResource, ...
-{
-	return nil;
-}
-
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];

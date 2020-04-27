@@ -877,7 +877,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	if(tmpl && editorClass)
 	{
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-		id<ResKnifeTemplatePlugin> plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResources:resource, tmpl, nil];
+        id<ResKnifeTemplatePlugin> plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResource:resource template:tmpl];
 		if (plug)
 			return plug;
 	}

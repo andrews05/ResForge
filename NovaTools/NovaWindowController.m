@@ -41,11 +41,6 @@
 	return self;
 }
 
-- (instancetype)initWithResources:(id <ResKnifeResource>)newResource, ...
-{
-	return nil;
-}
-
 - (void)dealloc
 {
 	//[localCenter release];

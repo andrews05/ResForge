@@ -26,6 +26,8 @@
 #import "ElementLFLG.h"
 #import "ElementBOOL.h"
 #import "ElementBBIT.h"
+#import "ElementWBIT.h"
+#import "ElementLBIT.h"
 #import "ElementRECT.h"
 #import "ElementPNT.h"
 #import "ElementHEXD.h"
@@ -133,16 +135,16 @@
 {
     ElementList *list = [ElementList new];
     list.elements = [NSMutableArray new];
-    Class nestingClass = self.elements[_currentIndex].class;
+    Element *startElement = self.elements[_currentIndex];
     NSUInteger nesting = 0;
     Element *element;
     while (true) {
         element = [self pop];
         if (!element) {
-            NSLog(@"Element type '%@' not found in template.", endType);
+            NSLog(@"Closing element '%@' for opening '%@' not found in template.", endType, startElement.type);
             break;
         }
-        if ([element isKindOfClass:nestingClass]) {
+        if ([element isKindOfClass:startElement.class]) {
             nesting++;
         } else if ([element.type isEqualToString:endType]) {
             if (!nesting) break;
@@ -278,6 +280,10 @@
         registry[@"BOOL"] = [ElementBOOL class];    // true = 256; false = 0
         registry[@"BBIT"] = [ElementBBIT class];
         registry[@"BB"]   = [ElementBBIT class];
+        registry[@"WBIT"] = [ElementWBIT class];
+        registry[@"WB"]   = [ElementWBIT class];
+        registry[@"LBIT"] = [ElementLBIT class];
+        registry[@"LB"]   = [ElementLBIT class];
         
         // hex dumps
         registry[@"BHEX"] = [ElementHEXD class];
@@ -341,9 +347,6 @@
         registry[@"SCPC"] = [ElementDWRD class];    // MacOS script code (ScriptCode)
         registry[@"LNGC"] = [ElementDWRD class];    // MacOS language code (LangCode)
         registry[@"RGNC"] = [ElementDWRD class];    // MacOS region code (RegionCode)
-        
-        // unhandled types at present, see file:///Users/nicholas/Sites/resknife.sf.net/resorcerer_comparison.html
-        // FBIT, FBnn, WBIT, WBnn
     }
     return registry;
 }

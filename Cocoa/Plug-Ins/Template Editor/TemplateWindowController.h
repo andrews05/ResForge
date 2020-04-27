@@ -24,19 +24,16 @@
 #import "ResKnifeResourceProtocol.h"
 #import "ElementList.h"
 
-@interface TemplateWindowController : NSWindowController <ResKnifeTemplatePlugin, NSToolbarDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface TemplateWindowController : NSWindowController <ResKnifeTemplatePlugin, NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
 	IBOutlet NSOutlineView *displayList;	// template display (debug only).
 	IBOutlet NSOutlineView *dataList;		// Data display.
-	IBOutlet NSDrawer *tmplDrawer;
-	NSMutableDictionary	*toolbarItems;
 	ElementList *resourceStructure;		// Parsed form of our resource.
 	id <ResKnifeResource> resource;	// The resource we operate on.
 	id <ResKnifeResource> backup;	// The original resource.
 	BOOL liveEdit;
 }
 
-- (void)setupToolbar;
 - (void)readTemplate:(id <ResKnifeResource>)tmplRes;
 - (void)loadResource;
 - (IBAction)dataClicked:(id)sender;

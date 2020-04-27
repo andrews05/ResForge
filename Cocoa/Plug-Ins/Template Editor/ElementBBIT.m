@@ -9,12 +9,12 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
-        _position = 8;
+        self.position = 8;
         if ([t isEqualToString:@"BBIT"]) {
-            _bits = 1;
+            self.bits = 1;
         } else {
             // BBnn
-            _bits = (UInt8)[[t substringFromIndex:2] intValue];
+            self.bits = [[t substringFromIndex:2] intValue];
         }
     }
     return self;
@@ -30,12 +30,33 @@
     return view;
 }
 
+- (void)readSubElements
+{
+    self.bitList = [NSMutableArray arrayWithObject:self];
+    unsigned int pos = _position -= _bits;
+    while (pos > 0) {
+        ElementBBIT *element = (ElementBBIT *)[self.parentList elementAtIndex:self.parentList.currentIndex+1];
+        if (element.class != self.class) {
+            NSLog(@"Not enough bits in bit field.");
+            break;
+        }
+        if (element.bits > pos) {
+            NSLog(@"'%@' element creates too many bits to complete bit field.", element.type);
+            break;
+        }
+        element.position = pos -= element.bits;
+        [self.bitList addObject:element];
+        self.parentList.currentIndex++; // Skip this element so it doesn't call readSubElements
+    }
+}
+
 - (void)readDataFrom:(ResourceStream *)stream
 {
     if (!self.bitList) return;
-    [stream readAmount:SIZE_ON_DISK toBuffer:&_completeValue];
+    UInt8 completeValue = 0;
+    [stream readAmount:SIZE_ON_DISK toBuffer:&completeValue];
     for (ElementBBIT* element in self.bitList) {
-        element.value = (_completeValue >> element.position) & ((1 << element.bits) - 1);
+        element.value = (completeValue >> element.position) & ((1 << element.bits) - 1);
     }
 }
 
@@ -48,28 +69,11 @@
 - (void)writeDataTo:(ResourceStream *)stream
 {
     if (!self.bitList) return;
-    _completeValue = 0;
+    UInt8 completeValue = 0;
     for (ElementBBIT* element in self.bitList) {
-        _completeValue |= element.value << element.position;
+        completeValue |= element.value << element.position;
     }
-    [stream writeAmount:SIZE_ON_DISK fromBuffer:&_completeValue];
-}
-
-- (void)readSubElements
-{
-    if (_position != 8) return;
-    self.bitList = [NSMutableArray arrayWithObject:self];
-    NSUInteger index = self.parentList.currentIndex+1;
-    UInt8 pos = _position -= _bits;
-    while (pos > 0) {
-        ElementBBIT *element = (ElementBBIT *)[self.parentList elementAtIndex:index++];
-        if (element.class != self.class) {
-            NSLog(@"Not enough BBITs found to complete a byte.");
-            return;
-        }
-        element.position = pos -= element.bits;
-        [self.bitList addObject:element];
-    }
+    [stream writeAmount:SIZE_ON_DISK fromBuffer:&completeValue];
 }
 
 - (NSFormatter *)formatter

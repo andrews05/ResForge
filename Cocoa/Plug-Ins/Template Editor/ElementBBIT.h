@@ -1,10 +1,9 @@
 #import "Element.h"
 
 @interface ElementBBIT : Element
-@property UInt8 completeValue;
-@property UInt8 position;
-@property UInt8 bits;
-@property UInt8 value;
+@property UInt32 value;
+@property unsigned int bits;
+@property unsigned int position;
 @property NSMutableArray<ElementBBIT *> *bitList;
 
 @end

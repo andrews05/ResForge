@@ -4,7 +4,7 @@
 @interface ElementList : NSObject <NSCopying>
 @property (strong) NSMutableArray<Element *> *elements;
 @property (readonly) NSUInteger count;
-@property (readonly) NSUInteger currentIndex;
+@property NSUInteger currentIndex;
 
 + (instancetype)listFromStream:(NSInputStream *)stream;
 
