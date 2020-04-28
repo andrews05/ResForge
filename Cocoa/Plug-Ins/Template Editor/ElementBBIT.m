@@ -9,11 +9,11 @@
 {
     if (self = [super initForType:t withLabel:l]) {
         self.position = 8;
-        self.compact = YES;
+        self.first = YES;
         if ([[t substringFromIndex:1] isEqualToString:@"BIT"]) {
             self.bits = 1;
         } else {
-            // BBnn
+            // XXnn - bit field or fill bits
             self.bits = [[t substringFromIndex:2] intValue];
             self.visible = [t characterAtIndex:1] != 'F'; // Hide fill bits
         }
@@ -23,12 +23,11 @@
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
-    if (self.compact) {
-        // Render multiple checkboxes in one row
+    if ([self.type isEqualToString:@"BB08"]) {
+        // Display as checkboxes
         NSRect frame = NSMakeRect(0, 0, 240, 18);
         NSView *view = [[NSView alloc] initWithFrame:frame];
         for (ElementBBIT *element in self.bitList) {
-            if ([element.type characterAtIndex:1] == 'F') continue; // Skip fill bits (self.visible may not work here)
             NSButton *subview = [ElementBFLG configureCheckboxForElement:element offset:frame.origin.x];
             [view addSubview:subview];
             frame.origin.x += 30;
@@ -45,36 +44,32 @@
 
 - (void)readSubElements
 {
-    if (!self.compact) return; // While parsing, compact will indicate the first element in the bit field
-    self.bitList = [NSMutableArray arrayWithObject:self];
-    // If all elements in a bit field have the same label and are either single bits or fillers, compact the checkboxes into one row
-    self.compact = self.bits == 1 || !self.visible;
-    BOOL hasVisible = self.visible;
-    unsigned int pos = _position -= _bits;
+    if (!self.first) return;
+    self.bitList = [NSMutableArray new];
     ElementBBIT *element;
-    while (pos > 0) {
-        element = (ElementBBIT *)[self.parentList peek:self.bitList.count];
-        if (element.class != self.class) {
-            NSLog(@"Not enough bits in bit field.");
-            break;
+    if ([self.type isEqualToString:@"BB08"]) {
+        // Special treatment for BB08 (otherwise equivalent to UBYT): display as row of 8 checkboxes
+        for (unsigned int pos = 8; pos > 0; pos--) {
+            element = [ElementBBIT elementForType:@"BBIT" withLabel:nil];
+            element.position = pos - 1;
+            [self.bitList addObject:element];
         }
-        if (element.bits > pos) {
-            NSLog(@"'%@' element creates too many bits to complete bit field.", element.type);
-            break;
-        }
-        element.position = pos -= element.bits;
-        element.compact = NO;
-        [self.bitList addObject:element];
-        if (![element.label isEqualToString:self.label] || (element.bits != 1 && element.visible))
-            self.compact = NO;
-        if (element.visible)
-            hasVisible = YES;
-    }
-    if (self.compact && hasVisible) {
-        self.visible = YES; // This element is the main row so it must be visible even if it's a filler
-        // Remove the others from the list
-        for (int i = 1; i < self.bitList.count; i++) {
-            [self.parentList pop];
+    } else {
+        [self.bitList addObject:self];
+        unsigned int pos = _position -= _bits;
+        while (pos > 0) {
+            element = (ElementBBIT *)[self.parentList peek:self.bitList.count];
+            if (element.class != self.class) {
+                NSLog(@"Not enough bits in bit field.");
+                break;
+            }
+            if (element.bits > pos) {
+                NSLog(@"'%@' element creates too many bits to complete bit field.", element.type);
+                break;
+            }
+            element.position = pos -= element.bits;
+            element.first = NO;
+            [self.bitList addObject:element];
         }
     }
 }

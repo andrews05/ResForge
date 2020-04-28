@@ -5,6 +5,6 @@
 @property unsigned int bits;
 @property unsigned int position;
 @property NSMutableArray<ElementBBIT *> *bitList;
-@property BOOL compact;
+@property BOOL first;
 
 @end
