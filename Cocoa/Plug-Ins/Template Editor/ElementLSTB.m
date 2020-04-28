@@ -9,6 +9,7 @@
 	if (self) {
         _tail = self;
         _zeroTerminated = [t isEqualToString:@"LSTZ"];
+        self.editable = NO;
 	}
 	return self;
 }

@@ -7,14 +7,7 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
-        self.compact = YES;
         self.position = 16;
-        if ([t isEqualToString:@"WBIT"]) {
-            self.bits = 1;
-        } else {
-            // WBnn
-            self.bits = [[t substringFromIndex:2] intValue];
-        }
     }
     return self;
 }

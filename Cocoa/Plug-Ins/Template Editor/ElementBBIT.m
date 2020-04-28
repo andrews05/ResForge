@@ -1,6 +1,5 @@
 #import "ElementBBIT.h"
 #import "ElementBFLG.h"
-#import "ElementRECT.h"
 
 #define SIZE_ON_DISK (1)
 
@@ -9,9 +8,9 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
-        self.compact = YES;
         self.position = 8;
-        if ([t isEqualToString:@"BBIT"]) {
+        self.compact = YES;
+        if ([[t substringFromIndex:1] isEqualToString:@"BIT"]) {
             self.bits = 1;
         } else {
             // BBnn
@@ -38,9 +37,8 @@
     } else if (_bits == 1) {
         return [ElementBFLG configureCheckboxForElement:self];
     } else {
-        NSTableCellView *view = [ElementRECT configureFields:@[@"value"] forElement:self];
+        NSTableCellView *view = (NSTableCellView *)[super outlineView:outlineView viewForTableColumn:tableColumn];
         view.textField.placeholderString = [NSString stringWithFormat:@"%d bits", _bits];
-        view.textField.formatter = [self formatter];
         return view;
     }
 }

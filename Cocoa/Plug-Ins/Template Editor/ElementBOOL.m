@@ -5,7 +5,7 @@
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
 {
-    NSRect frame = NSMakeRect(0, 0, [tableColumn width], 18);
+    NSRect frame = NSMakeRect(0, 0, 120, 18);
     NSView *view = [[NSView alloc] initWithFrame:frame];
     
     frame.size.width = 60;
@@ -17,7 +17,7 @@
     [on bind:@"value" toObject:self withKeyPath:@"boolValue" options:nil];
     [view addSubview:on];
     
-    frame.origin.x += frame.size.width;
+    frame.origin.x += 60;
     NSButton *off = [[NSButton alloc] initWithFrame:frame];
     off.buttonType = NSRadioButton;
     off.bezelStyle = NSBezelStyleRegularSquare;

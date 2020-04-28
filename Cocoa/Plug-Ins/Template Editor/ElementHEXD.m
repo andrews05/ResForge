@@ -41,11 +41,14 @@
     return self;
 }
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
+- (BOOL)editable
 {
-    NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
-    view.textField.stringValue = [data description];
-    return view;
+    return NO;
+}
+
+- (NSString *)value
+{
+    return [data description];
 }
 
 - (void)readSubElements

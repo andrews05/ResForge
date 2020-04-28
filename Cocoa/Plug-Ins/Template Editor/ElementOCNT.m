@@ -5,17 +5,15 @@
 @implementation ElementOCNT
 @synthesize value;
 
+- (BOOL)editable
+{
+    return NO;
+}
+
 - (void)readSubElements
 {
     ElementLSTB *lstc = (ElementLSTB *)[self.parentList nextOfType:@"LSTC"];
     lstc.countElement = self;
-}
-
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
-{
-    NSTableCellView *view = (NSTableCellView *)[super outlineView:outlineView viewForTableColumn:tableColumn];
-    view.textField.editable = NO;
-    return view;
 }
 
 - (void)readDataFrom:(ResourceStream *)stream

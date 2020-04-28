@@ -20,6 +20,7 @@
 @property (weak) ElementList *parentList; // The ElementList* of the template field containing us, or the template window's list.
 @property double rowHeight;
 @property BOOL visible;
+@property BOOL editable;
 
 + (instancetype)elementForType:(NSString *)type withLabel:(NSString *)label;
 - (instancetype)initForType:(NSString *)type withLabel:(NSString *)label;

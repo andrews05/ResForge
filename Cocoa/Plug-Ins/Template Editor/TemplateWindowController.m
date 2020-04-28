@@ -174,12 +174,12 @@
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
     Element *element = (Element *)item;
-    if ([[tableColumn identifier] isEqualToString: @"label"]) {
-        NSTableCellView *view = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:self];
-        view.textField.stringValue = [element label];
-        return view;
-    } else {
+    if ([tableColumn.identifier isEqualToString: @"data"]) {
         return [element outlineView:outlineView viewForTableColumn:tableColumn];
+    } else {
+        NSTableCellView *view = [outlineView makeViewWithIdentifier:(tableColumn ? tableColumn.identifier : @"normalLabel") owner:self];
+        view.textField.stringValue = element.label;
+        return view;
     }
 }
 
@@ -209,6 +209,11 @@
     return [item rowHeight];
 }
 
+- (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(id)item
+{
+    return [[(Element *)item type] isEqualToString:@"DVDR"];
+}
+
 #pragma mark -
 #pragma mark Menu Management
 
@@ -216,10 +221,10 @@
 {
     // Edit the text field clicked on
     // TODO: This doesn't work so nicely for additional fields in RECT/PNT
-    if ([dataList clickedRow] == -1 || [dataList clickedColumn] != 1)
+    if (dataList.clickedRow == -1 || dataList.clickedColumn != 1)
         return;
-    NSTableCellView *view = [dataList viewAtColumn:1 row:[dataList clickedRow] makeIfNecessary:NO];
-    if ([view isKindOfClass:[NSTableCellView class]] && view.textField.isEditable) {
+    NSTableCellView *view = [dataList viewAtColumn:1 row:dataList.clickedRow makeIfNecessary:NO];
+    if ([view isKindOfClass:NSTableCellView.class] && view.textField.isEditable) {
         [view.textField becomeFirstResponder];
     }
 }
