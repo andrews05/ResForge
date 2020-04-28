@@ -10,16 +10,21 @@
 
 + (NSView *)configureCheckboxForElement:(Element *)element
 {
-    NSRect frame = NSMakeRect(0, 0, 18, 18);
-    NSView *view = [[NSView alloc] initWithFrame:frame];
-    NSButton *checkbox = [[NSButton alloc] initWithFrame:frame];
+    NSView *view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 18, 18)];
+    NSButton *checkbox = [ElementBFLG configureCheckboxForElement:element offset:0];
+    [view addSubview:checkbox];
+    return view;
+}
+
++ (NSButton *)configureCheckboxForElement:(Element *)element offset:(CGFloat)offset
+{
+    NSButton *checkbox = [[NSButton alloc] initWithFrame:NSMakeRect(offset, 0, 18, 18)];
     checkbox.buttonType = NSSwitchButton;
     checkbox.bezelStyle = NSBezelStyleRegularSquare;
     checkbox.title = @"";
     checkbox.action = @selector(itemValueUpdated:);
     [checkbox bind:@"value" toObject:element withKeyPath:@"value" options:nil];
-    [view addSubview:checkbox];
-    return view;
+    return checkbox;
 }
 
 @end

@@ -125,12 +125,13 @@
 
 // The following methods may be used by elements while reading their sub elements
 
-// Peek at the next element in the list without removing it
-- (Element *)peek
+// Peek at an element in the list without removing it
+- (Element *)peek:(NSUInteger)n
 {
-    if (_currentIndex+1 >= self.elements.count)
+    n += _currentIndex;
+    if (n >= self.elements.count)
         return nil;
-    return self.elements[_currentIndex+1];
+    return self.elements[n];
 }
 
 // Pop the next element out of the list
@@ -309,10 +310,13 @@
         registry[@"LFLG"] = [ElementLFLG class];
         registry[@"BBIT"] = [ElementBBIT class];    // bit within a byte
         registry[@"BB"]   = [ElementBBIT class];    // BBnn bit field
+        registry[@"BF"]   = [ElementBBIT class];    // BFnn fill bits
         registry[@"WBIT"] = [ElementWBIT class];
         registry[@"WB"]   = [ElementWBIT class];    // WBnn
+        registry[@"WF"]   = [ElementWBIT class];    // WFnn
         registry[@"LBIT"] = [ElementLBIT class];
         registry[@"LB"]   = [ElementLBIT class];    // LBnn
+        registry[@"LF"]   = [ElementLBIT class];    // LFnn
         
         // hex dumps
         registry[@"BHEX"] = [ElementHEXD class];

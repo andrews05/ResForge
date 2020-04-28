@@ -7,6 +7,7 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
+        self.compact = YES;
         self.position = 32;
         if ([t isEqualToString:@"LBIT"]) {
             self.bits = 1;

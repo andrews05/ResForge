@@ -18,7 +18,7 @@
 - (void)removeElement:(Element *)element;
 
 // For use by during readSubElements
-- (Element *)peek;
+- (Element *)peek:(NSUInteger)n;
 - (Element *)pop;
 - (Element *)nextOfType:(NSString *)type;
 - (ElementList *)subListUntil:(NSString *)endType;
