@@ -7,6 +7,7 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
 	if (self = [super initForType:t withLabel:l]) {
+        self.visible = NO;
 		if ([t isEqualToString:@"FBYT"])
 			length = 1;
 		else if ([t isEqualToString:@"FWRD"])

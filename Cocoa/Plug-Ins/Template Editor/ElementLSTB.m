@@ -33,6 +33,7 @@
         for (unsigned int i = 1; i < self.countElement.value; i++) {
             [self createNextItem];
         }
+        [self.subElements parseElements];
         [self.entries addObject:self];
     }
 }

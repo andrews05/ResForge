@@ -35,7 +35,7 @@
     self.bitList = [NSMutableArray arrayWithObject:self];
     unsigned int pos = _position -= _bits;
     while (pos > 0) {
-        ElementBBIT *element = (ElementBBIT *)[self.parentList elementAtIndex:self.parentList.currentIndex+1];
+        ElementBBIT *element = (ElementBBIT *)[self.parentList peek];
         if (element.class != self.class) {
             NSLog(@"Not enough bits in bit field.");
             break;

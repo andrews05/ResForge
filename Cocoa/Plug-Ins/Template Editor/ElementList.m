@@ -21,10 +21,10 @@
 #import "ElementPSTR.h"
 #import "ElementCHAR.h"
 #import "ElementTNAM.h"
+#import "ElementBOOL.h"
 #import "ElementBFLG.h"
 #import "ElementWFLG.h"
 #import "ElementLFLG.h"
-#import "ElementBOOL.h"
 #import "ElementBBIT.h"
 #import "ElementWBIT.h"
 #import "ElementLBIT.h"
@@ -52,7 +52,8 @@
         [list.elements addObject:element];
     }
     [stream close];
-    [list initElements];
+    list.parsed = NO;
+    [list parseElements];
     return list;
 }
 
@@ -60,53 +61,79 @@
 {
     ElementList *list = [[ElementList allocWithZone:zone] init];
     list.elements = [[NSMutableArray allocWithZone:zone] initWithArray:self.elements copyItems:YES];
-    [list initElements];
+    list.parsed = NO;
+    [list parseElements];
     return list;
 }
 
-- (void)initElements
+- (void)parseElements
 {
     _currentIndex = 0;
+    self.visibleElements = [NSMutableArray new];
     Element *element;
     while (_currentIndex < self.elements.count) {
         element = self.elements[_currentIndex];
         element.parentList = self;
         [element readSubElements];
         _currentIndex++;
+        if (element.visible)
+            [self.visibleElements addObject:element];
     }
+    self.parsed = YES;
 }
 
 #pragma mark -
 
 - (NSUInteger)count
 {
-    return self.elements.count;
+    return self.visibleElements.count;
 }
 
 - (Element *)elementAtIndex:(NSUInteger)index
 {
-    return index < self.elements.count ? self.elements[index] : nil;
+    return self.visibleElements[index];
 }
 
+// Insert a new element at the current position. May be used during template parsing (e.g. fixed count list) or reading data (e.g. other lists).
 - (void)insertElement:(Element *)element
 {
     [self.elements insertObject:element atIndex:_currentIndex++];
     element.parentList = self;
+    if (self.parsed) {
+        NSUInteger visIndex = [self.visibleElements indexOfObject:self.elements[_currentIndex]];
+        [self.visibleElements insertObject:element atIndex:visIndex];
+    } else {
+        [self.visibleElements addObject:element];
+    }
 }
 
+// Insert a new element before a given element
 - (void)insertElement:(Element *)element before:(Element *)before
 {
     [self.elements insertObject:element atIndex:[self.elements indexOfObject:before]];
     element.parentList = self;
+    [self.visibleElements insertObject:element atIndex:[self.visibleElements indexOfObject:before]];
 }
 
 - (void)removeElement:(Element *)element
 {
     [self.elements removeObject:element];
+    [self.visibleElements removeObject:element];
 }
 
 #pragma mark -
 
+// The following methods may be used by elements while reading their sub elements
+
+// Peek at the next element in the list without removing it
+- (Element *)peek
+{
+    if (_currentIndex+1 >= self.elements.count)
+        return nil;
+    return self.elements[_currentIndex+1];
+}
+
+// Pop the next element out of the list
 - (Element *)pop
 {
     if (_currentIndex+1 >= self.elements.count)
@@ -116,6 +143,7 @@
     return element;
 }
 
+// Search for an element of a given type following the current one
 - (Element *)nextOfType:(NSString *)type
 {
     Element *element;
@@ -131,6 +159,7 @@
     return nil;
 }
 
+// Create a new ElementList by extracting all elements following the current one up until a given type
 - (ElementList *)subListUntil:(NSString *)endType
 {
     ElementList *list = [ElementList new];
@@ -141,7 +170,7 @@
     while (true) {
         element = [self pop];
         if (!element) {
-            NSLog(@"Closing element '%@' for opening '%@' not found in template.", endType, startElement.type);
+            NSLog(@"Closing element '%@' not found for opening '%@'.", endType, startElement.type);
             break;
         }
         if ([element isKindOfClass:startElement.class]) {
@@ -274,16 +303,16 @@
         registry[@"TNAM"] = [ElementTNAM class];
         
         // checkboxes
+        registry[@"BOOL"] = [ElementBOOL class];    // true = 256; false = 0
         registry[@"BFLG"] = [ElementBFLG class];    // binary flag the size of a byte/word/long
         registry[@"WFLG"] = [ElementWFLG class];
         registry[@"LFLG"] = [ElementLFLG class];
-        registry[@"BOOL"] = [ElementBOOL class];    // true = 256; false = 0
-        registry[@"BBIT"] = [ElementBBIT class];
-        registry[@"BB"]   = [ElementBBIT class];
+        registry[@"BBIT"] = [ElementBBIT class];    // bit within a byte
+        registry[@"BB"]   = [ElementBBIT class];    // BBnn bit field
         registry[@"WBIT"] = [ElementWBIT class];
-        registry[@"WB"]   = [ElementWBIT class];
+        registry[@"WB"]   = [ElementWBIT class];    // WBnn
         registry[@"LBIT"] = [ElementLBIT class];
-        registry[@"LB"]   = [ElementLBIT class];
+        registry[@"LB"]   = [ElementLBIT class];    // LBnn
         
         // hex dumps
         registry[@"BHEX"] = [ElementHEXD class];
@@ -304,7 +333,7 @@
         registry[@"WZCT"] = [ElementOCNT class];
         registry[@"LCNT"] = [ElementOCNT class];
         registry[@"LZCT"] = [ElementOCNT class];
-        registry[@"FCNT"] = [ElementFCNT class];
+        registry[@"FCNT"] = [ElementFCNT class];    // fixed count with count in label (why not Lnnn?)
         // list begin/end
         registry[@"LSTB"] = [ElementLSTB class];
         registry[@"LSTZ"] = [ElementLSTB class];
@@ -327,13 +356,13 @@
         registry[@"KUWD"] = [ElementUWRD class];
         registry[@"KULG"] = [ElementULNG class];
         registry[@"KULL"] = [ElementULLG class];
-        registry[@"KHBT"] = [ElementUBYT class];    // hex keys
-        registry[@"KHWD"] = [ElementUWRD class];
-        registry[@"KHLG"] = [ElementULNG class];
-        registry[@"KHLL"] = [ElementULLG class];
+        registry[@"KHBT"] = [ElementHBYT class];    // hex keys
+        registry[@"KHWD"] = [ElementHWRD class];
+        registry[@"KHLG"] = [ElementHLNG class];
+        registry[@"KHLL"] = [ElementHLLG class];
         registry[@"KCHR"] = [ElementCHAR class];    // keyed MacRoman values
         registry[@"KTYP"] = [ElementTNAM class];
-        registry[@"KRID"] = [ElementFBYT class];    // key on ID of the resource
+        registry[@"KRID"] = [Element     class];    // key on ID of the resource
         registry[@"RSID"] = [ElementDWRD class];    // resouce id (signed word)
         registry[@"SFRC"] = [ElementUWRD class];    // 0.16 fixed fraction
         registry[@"FXYZ"] = [ElementUWRD class];    // 1.15 fixed fraction

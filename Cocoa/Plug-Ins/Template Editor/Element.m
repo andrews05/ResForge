@@ -6,6 +6,7 @@
 @synthesize label;
 @synthesize parentList;
 @synthesize rowHeight;
+@synthesize visible;
 
 + (id)elementForType:(NSString *)t withLabel:(NSString *)l
 {
@@ -19,6 +20,7 @@
 	label = [l copy];
 	type = [t copy];
     rowHeight = 17;
+    visible = YES;
 	return self;
 }
 

@@ -19,6 +19,7 @@
 @property (copy) NSString *label; // Label ("name") of this field.
 @property (weak) ElementList *parentList; // The ElementList* of the template field containing us, or the template window's list.
 @property double rowHeight;
+@property BOOL visible;
 
 + (instancetype)elementForType:(NSString *)type withLabel:(NSString *)label;
 - (instancetype)initForType:(NSString *)type withLabel:(NSString *)label;
