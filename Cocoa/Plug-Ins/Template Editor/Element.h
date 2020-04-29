@@ -13,11 +13,13 @@
  effective and the object in question isn't mutable).
  */
 
-@interface Element : NSObject <NSCopying, NSTextFieldDelegate>
+@interface Element : NSValueTransformer <NSCopying, NSComboBoxDelegate>
 // Accessors:
 @property (copy) NSString *type; // Type code of this item (4 chars if from TMPL resource, but we may support longer types later).
 @property (copy) NSString *label; // Label ("name") of this field.
 @property (weak) ElementList *parentList; // The ElementList* of the template field containing us, or the template window's list.
+@property (strong) NSMutableArray *cases;
+@property (strong) NSMutableDictionary *caseMap;
 @property double rowHeight;
 @property BOOL visible;
 @property BOOL editable;
@@ -29,7 +31,7 @@
 - (id)copyWithZone:(NSZone *)zone;
 
 // Configure the view to display this element in the list
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn;
+- (NSView *)dataView:(NSOutlineView *)outlineView;
 
 // Create a shared (static) formatter for displaying your data in the list
 + (NSFormatter *)sharedFormatter;

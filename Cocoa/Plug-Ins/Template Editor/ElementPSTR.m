@@ -74,25 +74,25 @@
 	return self;
 }
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
+- (NSView *)dataView:(NSOutlineView *)outlineView
 {
-    NSTableCellView *view = (NSTableCellView *)[super outlineView:outlineView viewForTableColumn:tableColumn];
+    NSTextField *textField = (NSTextField *)[super dataView:outlineView];
     if (_maxLength < UINT32_MAX)
-        view.textField.placeholderString = [self.type stringByAppendingFormat:@" (%u characters)", _maxLength];
-    [self performSelector:@selector(autoRowHeight:) withObject:view.textField afterDelay:0];
-    return view;
+        textField.placeholderString = [self.type stringByAppendingFormat:@" (%u characters)", _maxLength];
+    [self performSelector:@selector(autoRowHeight:) withObject:textField afterDelay:0];
+    return textField;
 }
 
 - (void)controlTextDidChange:(NSNotification *)obj
 {
-    NSTextField *field = (NSTextField *)[[obj.userInfo objectForKey:@"NSFieldEditor"] delegate];
-    [self autoRowHeight:field];
+    [self autoRowHeight:obj.object];
 }
 
 // Automatically adjust the row height to fit the text
 // TODO: Find a better way to do this?
 - (void)autoRowHeight:(NSTextField *)field
 {
+    if (self.cases) return;
     NSRect bounds = field.bounds;
     bounds.size.height = CGFLOAT_MAX;
     double height = [field.cell cellSizeForBounds:bounds].height;

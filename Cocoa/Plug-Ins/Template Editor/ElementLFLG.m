@@ -3,7 +3,7 @@
 
 @implementation ElementLFLG
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
+- (NSView *)dataView:(NSOutlineView *)outlineView
 {
     return [ElementBFLG configureCheckboxForElement:self];
 }

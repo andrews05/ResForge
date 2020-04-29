@@ -21,7 +21,7 @@
     return self;
 }
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
+- (NSView *)dataView:(NSOutlineView *)outlineView
 {
     if ([self.type isEqualToString:@"BB08"]) {
         // Display as checkboxes
@@ -36,9 +36,9 @@
     } else if (_bits == 1) {
         return [ElementBFLG configureCheckboxForElement:self];
     } else {
-        NSTableCellView *view = (NSTableCellView *)[super outlineView:outlineView viewForTableColumn:tableColumn];
-        view.textField.placeholderString = [NSString stringWithFormat:@"%d bits", _bits];
-        return view;
+        NSTextField *textField = (NSTextField *)[super dataView:outlineView];
+        textField.placeholderString = [NSString stringWithFormat:@"%d bits", _bits];
+        return textField;
     }
 }
 

@@ -4,10 +4,6 @@
 @implementation Element
 @synthesize type;
 @synthesize label;
-@synthesize parentList;
-@synthesize rowHeight;
-@synthesize visible;
-@synthesize editable;
 
 + (id)elementForType:(NSString *)t withLabel:(NSString *)l
 {
@@ -20,18 +16,18 @@
 	if (!self) return nil;
 	label = [l copy];
 	type = [t copy];
-    rowHeight = 17;
-    visible = YES;
-    editable = self.class != Element.class;
+    self.rowHeight = 17;
+    self.visible = YES;
+    self.editable = self.class != Element.class;
+    self.cases = nil;
+    self.caseMap = nil;
 	return self;
 }
 
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	Element *element = [[self.class allocWithZone:zone] initForType:type withLabel:label];
-    if (!element) return nil;
-	return element;
+	return [[self.class allocWithZone:zone] initForType:type withLabel:label];
 }
 
 - (NSFormatter *)formatter
@@ -40,6 +36,7 @@
 }
 
 // Notify the controller when a field has been edited
+// Use control:textShouldEndEditing: rather than controlTextDidEndEditing: as it more accurately reflects when the value has actually changed
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
     [(TemplateWindowController *)[control.window windowController] itemValueUpdated:control];
@@ -50,17 +47,25 @@
 
 /*** METHODS SUBCLASSES SHOULD OVERRIDE ***/
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
+- (NSView *)dataView:(NSOutlineView *)outlineView
 {
     if (![self respondsToSelector:@selector(value)])
         return nil;
-    NSTableCellView *view = [outlineView makeViewWithIdentifier:tableColumn.identifier owner:self];
-    view.textField.editable = self.editable;
-    view.textField.delegate = self;
-    view.textField.placeholderString = type;
-    view.textField.formatter = [self formatter];
-    [view.textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
-    return view;
+    NSTextField *textField = [outlineView makeViewWithIdentifier:(self.cases ? @"comboData" : @"textData") owner:self];
+    textField.editable = self.editable;
+    textField.delegate = self;
+    textField.placeholderString = self.type;
+    if (self.cases) {
+        [textField bind:@"contentValues" toObject:self withKeyPath:@"cases" options:nil];
+        // The formatter isn't directly compatible with the values displayed by the combo box
+        // Use a combination of value transformation with immediate validation to run the formatter manually
+        [textField bind:@"value" toObject:self withKeyPath:@"value" options:@{NSValueTransformerBindingOption:self,
+                                                                              NSValidatesImmediatelyBindingOption:@(self.formatter != nil)}];
+    } else {
+        textField.formatter = self.formatter;
+        [textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
+    }
+    return textField;
 }
 
 + (NSFormatter *)sharedFormatter
@@ -82,7 +87,13 @@
 
 - (void)readSubElements
 {
-	// by default, items don't read any sub-elements.
+    // default implementation reads CASE elements
+    if (!self.visible || !self.editable) return;
+    Element *element = [self.parentList peek:1];
+    while ([element.type isEqualToString:@"CASE"]) {
+        [self addCase:[self.parentList pop]];
+        element = [self.parentList peek:1];
+    }
 }
 
 // You should read whatever kind of data your template field stands for from "stream"
@@ -101,6 +112,60 @@
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
+}
+
+#pragma mark -
+#pragma mark CASE Handling
+
+- (void)addCase:(Element *)element
+{
+    if ([element.label containsString:@"="]) {
+        if (!self.cases) {
+            self.cases = [NSMutableArray new];
+            self.caseMap = [NSMutableDictionary new];
+        }
+        NSArray *components = [element.label componentsSeparatedByString:@"="];
+        NSString *display = [NSString stringWithFormat:@"%@ = %@", components.lastObject, components.firstObject];
+        [self.cases addObject:display]; // Keep an ordered list of the cases for combo box content
+        [self.caseMap setObject:display forKey:components.lastObject];
+    } else {
+        NSLog(@"Invalid CASE element, skipping.");
+    }
+}
+
+- (id)transformedValue:(id)value
+{
+    // Run the value through the formatter before looking it up in the map
+    if (self.formatter)
+        value = [self.formatter stringForObjectValue:value];
+    return [self.caseMap objectForKey:value] ?: value;
+}
+
+- (id)reverseTransformedValue:(id)value
+{
+    // Don't use the formatter here as we can't handle the error
+    return [[value componentsSeparatedByString:@" = "] firstObject] ?: value;
+}
+
+- (BOOL)validateValue:(id *)value error:(NSError **)error
+{
+    // Here we validate the value with the formatter and can raise an error
+    NSString *errorString = nil;
+    [self.formatter getObjectValue:value forString:*value errorDescription:&errorString];
+    if (errorString) {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                     code:NSKeyValueValidationError
+                                 userInfo:@{NSLocalizedDescriptionKey:errorString}];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)comboBoxSelectionDidChange:(NSNotification *)notification
+{
+    // Notify the controller that the value changed
+    NSControl *control = notification.object;
+    [(TemplateWindowController *)[control.window windowController] itemValueUpdated:control];
 }
 
 @end

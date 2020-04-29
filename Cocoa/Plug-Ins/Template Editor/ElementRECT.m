@@ -7,7 +7,7 @@
 @synthesize bottom;
 @synthesize right;
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
+- (NSView *)dataView:(NSOutlineView *)outlineView
 {
     return [ElementRECT configureFields:@[@"top", @"left", @"bottom", @"right"] forElement:self];
 }

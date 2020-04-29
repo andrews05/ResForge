@@ -5,7 +5,7 @@
 @synthesize h;
 @synthesize v;
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
+- (NSView *)dataView:(NSOutlineView *)outlineView
 {
     return [ElementRECT configureFields:@[@"h", @"v"] forElement:self];
 }

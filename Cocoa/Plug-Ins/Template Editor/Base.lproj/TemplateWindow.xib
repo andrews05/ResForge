@@ -79,7 +79,7 @@
                                                         <outlet property="textField" destination="FUM-Fz-dnU" id="1TB-9j-8jy"/>
                                                     </connections>
                                                 </tableCellView>
-                                                <tableCellView identifier="normalLabel" id="uza-Bn-5y5" userLabel="Group">
+                                                <tableCellView identifier="regularLabel" id="uza-Bn-5y5" userLabel="Group">
                                                     <rect key="frame" x="1" y="20" width="120" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -112,24 +112,24 @@
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView id="Y7b-pH-1Db" userLabel="Data">
+                                                <textField identifier="textData" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="tYf-H1-fZ4">
                                                     <rect key="frame" x="124" y="1" width="239" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <subviews>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tYf-H1-fZ4">
-                                                            <rect key="frame" x="0.0" y="0.0" width="239" height="17"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Data" id="OsW-00-7e3">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                    </subviews>
-                                                    <connections>
-                                                        <outlet property="textField" destination="tYf-H1-fZ4" id="cIk-v6-2MM"/>
-                                                    </connections>
-                                                </tableCellView>
+                                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Data" id="OsW-00-7e3">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <comboBox identifier="comboData" verticalHuggingPriority="750" id="3Yc-Lh-peU">
+                                                    <rect key="frame" x="124" y="20" width="239" height="26"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Combo Data" buttonBordered="NO" completes="NO" numberOfVisibleItems="5" id="6IN-hH-qAf">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </comboBoxCell>
+                                                </comboBox>
                                             </prototypeCellViews>
                                         </tableColumn>
                                     </tableColumns>

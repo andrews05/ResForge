@@ -3,7 +3,7 @@
 
 @implementation ElementBOOL
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn
+- (NSView *)dataView:(NSOutlineView *)outlineView
 {
     NSRect frame = NSMakeRect(0, 0, 120, 18);
     NSView *view = [[NSView alloc] initWithFrame:frame];

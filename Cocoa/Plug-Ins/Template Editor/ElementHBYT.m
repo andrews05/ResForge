@@ -45,6 +45,8 @@
 }
 
 - (BOOL)getObjectValue:(id *)object forString:(NSString *)string errorDescription:(NSString **)error {
+    if (string.length && [string characterAtIndex:0] == '$')
+        string = [string substringFromIndex:1];
     if (string.length < byteCount*2)
         string = [string stringByPaddingToLength:byteCount*2 withString:@"0" startingAtIndex:0];
     UInt64 value = 0;

@@ -174,10 +174,10 @@
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
     Element *element = (Element *)item;
-    if ([tableColumn.identifier isEqualToString: @"data"]) {
-        return [element outlineView:outlineView viewForTableColumn:tableColumn];
+    if ([tableColumn.identifier isEqualToString:@"data"]) {
+        return [element dataView:outlineView];
     } else {
-        NSTableCellView *view = [outlineView makeViewWithIdentifier:(tableColumn ? tableColumn.identifier : @"normalLabel") owner:self];
+        NSTableCellView *view = [outlineView makeViewWithIdentifier:(tableColumn ? tableColumn.identifier : @"regularLabel") owner:self];
         view.textField.stringValue = element.label;
         return view;
     }
@@ -223,10 +223,10 @@
     // TODO: This doesn't work so nicely for additional fields in RECT/PNT
     if (dataList.clickedRow == -1 || dataList.clickedColumn != 1)
         return;
-    NSTableCellView *view = [dataList viewAtColumn:1 row:dataList.clickedRow makeIfNecessary:NO];
-    if ([view isKindOfClass:NSTableCellView.class] && view.textField.isEditable) {
-        [view.textField becomeFirstResponder];
-    }
+    NSControl *control = [dataList viewAtColumn:1 row:dataList.clickedRow makeIfNecessary:NO];
+    if (![control isKindOfClass:NSControl.class])
+        control = control.subviews[0];
+    [control becomeFirstResponder];
 }
 
 - (IBAction)itemValueUpdated:(id)sender
