@@ -18,6 +18,7 @@
 @property (copy) NSString *type; // Type code of this item (4 chars if from TMPL resource, but we may support longer types later).
 @property (copy) NSString *label; // Label ("name") of this field.
 @property (weak) ElementList *parentList; // The ElementList* of the template field containing us, or the template window's list.
+@property NSString *endType; // Type code of an ending element if this element marks the start of a section.
 @property (strong) NSMutableArray *cases;
 @property (strong) NSMutableDictionary *caseMap;
 @property double rowHeight;
@@ -48,7 +49,7 @@
 - (void)readDataFrom:(ResourceStream *)stream;
 
 // The following are used to write resource data back out:
-- (UInt32)sizeOnDisk:(UInt32)currentSize;
+- (void)sizeOnDisk:(UInt32 *)size;
 - (void)writeDataTo:(ResourceStream *)stream;
 
 /* Apart from these messages, a Element may also implement the IBActions for

@@ -1,20 +1,19 @@
 #import "ElementAWRD.h"
 
 @implementation ElementAWRD
-@synthesize alignment;
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
         self.visible = NO;
         if ([t isEqualToString:@"AWRD"])
-            alignment = 2;
+            _alignment = 2;
         else if ([t isEqualToString:@"ALNG"])
-            alignment = 4;
+            _alignment = 4;
         else if ([t isEqualToString:@"AL08"])
-            alignment = 8;
+            _alignment = 8;
         else if ([t isEqualToString:@"AL16"])
-            alignment = 16;
+            _alignment = 16;
     }
     return self;
 }
@@ -22,18 +21,18 @@
 - (void)readDataFrom:(ResourceStream *)stream
 {
     UInt32 pos = [stream length] - [stream bytesToGo];
-    [stream advanceAmount:[self sizeOnDisk:pos] pad:NO];
+    [stream advanceAmount:(-pos % _alignment) pad:NO];
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-    return -currentSize % alignment;
+    *size += -*size % _alignment;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
     UInt32 pos = [stream length] - [stream bytesToGo];
-    [stream advanceAmount:[self sizeOnDisk:pos] pad:YES];
+    [stream advanceAmount:(-pos % _alignment) pad:YES];
 }
 
 - (NSString *)label

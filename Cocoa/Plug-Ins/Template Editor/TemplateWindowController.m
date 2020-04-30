@@ -13,6 +13,7 @@
 #import "CreateResourceSheetController.h"
 
 @implementation TemplateWindowController
+@synthesize dataList;
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
@@ -80,20 +81,17 @@
 
 - (void)loadResource
 {
-	// create new stream
-	ResourceStream *stream = [ResourceStream streamWithBytes:(char *)[[resource data] bytes] length:(UInt32)[[resource data] length]];
-	
-	// read the data into the template
+    // create new stream
+    ResourceStream *stream = [ResourceStream streamWithData:resource.data];
+    // read the data into the template
     [resourceStructure readDataFrom:stream];
 	
 	// reload the view
 	id item;
 	[dataList reloadData];
 	NSInteger row = [dataList numberOfRows];
-	while((item = [dataList itemAtRow: --row]))
-	{
-		if([dataList isExpandable: item] && ![dataList isItemExpanded: item])
-			[dataList expandItem: item expandChildren: YES];
+	while ((item = [dataList itemAtRow:--row])) {
+		[dataList expandItem:item expandChildren:YES];
 	}
 }
 
@@ -132,11 +130,12 @@
 - (void)saveResource:(id)sender
 {
 	// get size of resource by summing size of all fields
-	UInt32 size = [resourceStructure sizeOnDisk:0];
+    UInt32 size = 0;
+    [resourceStructure sizeOnDisk:&size];
 	
 	// create data and stream
 	NSMutableData *newData = [NSMutableData dataWithLength:size];
-	ResourceStream *stream = [ResourceStream streamWithBytes:(char *)[newData bytes] length:size];
+    ResourceStream *stream = [ResourceStream streamWithData:newData];
 	
 	// write bytes into new data object
     [resourceStructure writeDataTo:stream];
@@ -165,6 +164,7 @@
 {
     NSInputStream *stream = [[NSInputStream alloc] initWithData:[tmplRes data]];
     resourceStructure = [ElementList listFromStream:stream];
+    [resourceStructure parseElements];
 	[displayList reloadData];
 }
 

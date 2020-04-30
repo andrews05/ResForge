@@ -4,32 +4,35 @@
 #define SIZE_ON_DISK (1)
 
 @implementation ElementCHAR
-@synthesize charCode;
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-    [stream readAmount:SIZE_ON_DISK toBuffer:&charCode];
+    char tmp;
+    [stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
+    self.charCode = tmp;
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-    return SIZE_ON_DISK;
+    *size += SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-    [stream writeAmount:SIZE_ON_DISK fromBuffer:&charCode];
+    char tmp = self.charCode;
+    [stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
 - (NSString *)value
 {
-    return [NSString stringWithCString:&charCode encoding:NSMacOSRomanStringEncoding];
+    char tmp = self.charCode;
+    return [NSString stringWithCString:&tmp encoding:NSMacOSRomanStringEncoding];
 }
 
 - (void)setValue:(NSString *)value
 {
     // CHAR is allowed to be null
-    charCode = value.length ? [value cStringUsingEncoding:NSMacOSRomanStringEncoding][0] : 0;
+    self.charCode = value.length ? [value cStringUsingEncoding:NSMacOSRomanStringEncoding][0] : 0;
 }
 
 + (NSFormatter *)sharedFormatter

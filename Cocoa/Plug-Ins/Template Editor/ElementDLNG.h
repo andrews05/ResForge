@@ -1,9 +1,6 @@
-#import "Element.h"
+#import "ElementKey.h"
 
-@interface ElementDLNG : Element
+@interface ElementDLNG : ElementKey
 @property SInt32 value;
 
-@end
-
-@interface ElementKLNG : ElementDLNG
 @end

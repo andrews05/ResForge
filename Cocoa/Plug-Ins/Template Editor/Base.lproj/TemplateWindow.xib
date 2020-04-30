@@ -130,6 +130,19 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </comboBoxCell>
                                                 </comboBox>
+                                                <popUpButton identifier="keyData" id="zkH-ie-3aU">
+                                                    <rect key="frame" x="124" y="48" width="239" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                    <popUpButtonCell key="cell" type="bevel" title="Key Data" bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="nBu-lM-Oc3" id="V5w-Pj-b2e">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="menu"/>
+                                                        <menu key="menu" id="zG4-gD-Jyp">
+                                                            <items>
+                                                                <menuItem title="Key Data" state="on" id="nBu-lM-Oc3"/>
+                                                            </items>
+                                                        </menu>
+                                                    </popUpButtonCell>
+                                                </popUpButton>
                                             </prototypeCellViews>
                                         </tableColumn>
                                     </tableColumns>

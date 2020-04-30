@@ -2,8 +2,6 @@
 #import "ElementRECT.h"
 
 @implementation ElementPNT
-@synthesize h;
-@synthesize v;
 
 - (NSView *)dataView:(NSOutlineView *)outlineView
 {
@@ -14,21 +12,21 @@
 {
     SInt16 tmp = 0;
     [stream readAmount:2 toBuffer:&tmp];
-    h = CFSwapInt16BigToHost(tmp);
+    self.h = CFSwapInt16BigToHost(tmp);
     [stream readAmount:2 toBuffer:&tmp];
-    v = CFSwapInt16BigToHost(tmp);
+    self.v = CFSwapInt16BigToHost(tmp);
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-    return 4;
+    *size += 4;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-    SInt16 tmp = CFSwapInt16HostToBig(h);
+    SInt16 tmp = CFSwapInt16HostToBig(self.h);
     [stream writeAmount:2 fromBuffer:&tmp];
-    tmp = CFSwapInt16HostToBig(v);
+    tmp = CFSwapInt16HostToBig(self.v);
     [stream writeAmount:2 fromBuffer:&tmp];
 }
 

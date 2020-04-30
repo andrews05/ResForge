@@ -1,4 +1,5 @@
 #import "Element.h"
+#import "ElementCASE.h"
 #import "TemplateWindowController.h"
 
 @implementation Element
@@ -16,6 +17,7 @@
 	if (!self) return nil;
 	label = [l copy];
 	type = [t copy];
+    self.endType = nil;
     self.rowHeight = 17;
     self.visible = YES;
     self.editable = self.class != Element.class;
@@ -89,9 +91,16 @@
 {
     // default implementation reads CASE elements
     if (!self.visible || !self.editable) return;
-    Element *element = [self.parentList peek:1];
-    while ([element.type isEqualToString:@"CASE"]) {
-        [self addCase:[self.parentList pop]];
+    __kindof Element *element = [self.parentList peek:1];
+    while (element.class == ElementCASE.class) {
+        [self.parentList pop];
+        if (!self.cases) {
+            self.cases = [NSMutableArray new];
+            self.caseMap = [NSMutableDictionary new];
+        }
+        NSString *display = [NSString stringWithFormat:@"%@ = %@", [element value], [element symbol]];
+        [self.cases addObject:display]; // Keep an ordered list of the cases for combo box content
+        [self.caseMap setObject:display forKey:[element value]]; // Allows us to lookup a case by value
         element = [self.parentList peek:1];
     }
 }
@@ -104,10 +113,8 @@
 
 // Before writeDataTo:is called, this is called to calculate the final resource size:
 //	Items with sub-elements should return the sum of the sizes of all their sub-elements here as well.
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-	// default implementation suitable for dimentionless element types
-	return 0;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
@@ -116,22 +123,6 @@
 
 #pragma mark -
 #pragma mark CASE Handling
-
-- (void)addCase:(Element *)element
-{
-    if ([element.label containsString:@"="]) {
-        if (!self.cases) {
-            self.cases = [NSMutableArray new];
-            self.caseMap = [NSMutableDictionary new];
-        }
-        NSArray *components = [element.label componentsSeparatedByString:@"="];
-        NSString *display = [NSString stringWithFormat:@"%@ = %@", components.lastObject, components.firstObject];
-        [self.cases addObject:display]; // Keep an ordered list of the cases for combo box content
-        [self.caseMap setObject:display forKey:components.lastObject];
-    } else {
-        NSLog(@"Invalid CASE element, skipping.");
-    }
-}
 
 - (id)transformedValue:(id)value
 {

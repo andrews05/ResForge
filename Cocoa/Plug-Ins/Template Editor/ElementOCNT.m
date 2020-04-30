@@ -3,7 +3,6 @@
 
 // implements ZCNT, OCNT, BCNT, BZCT, WCNT, WZCT, LCNT, LZCT
 @implementation ElementOCNT
-@synthesize value;
 
 - (BOOL)editable
 {
@@ -29,22 +28,22 @@
 	tmp = CFSwapInt32BigToHost(tmp);
 	if ([self countFromZero])
 		tmp += 1;
-    value = tmp;
+    self.value = tmp;
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
 	if ([self.type isEqualToString:@"LCNT"] || [self.type isEqualToString:@"LZCT"])
-		return 4;
+		*size += 4;
 	else if ([self.type isEqualToString:@"BCNT"] || [self.type isEqualToString:@"BZCT"])
-		return 1;
+		*size += 1;
 	else
-		return 2;
+		*size += 2;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-    UInt32 tmp = value;
+    UInt32 tmp = self.value;
 	if ([self countFromZero])
 		tmp -= 1;
 	tmp = CFSwapInt32HostToBig(tmp);

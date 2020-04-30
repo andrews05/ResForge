@@ -1,9 +1,6 @@
-#import "Element.h"
+#import "ElementKey.h"
 
-@interface ElementDWRD : Element
+@interface ElementDWRD : ElementKey
 @property SInt16 value;
 
-@end
-
-@interface ElementKWRD : ElementDWRD
 @end

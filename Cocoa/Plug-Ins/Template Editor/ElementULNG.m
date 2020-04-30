@@ -3,23 +3,22 @@
 #define SIZE_ON_DISK (4)
 
 @implementation ElementULNG
-@synthesize value;
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
 	UInt32 tmp = 0;
 	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
-	value = CFSwapInt32BigToHost(tmp);
+	self.value = CFSwapInt32BigToHost(tmp);
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-	return SIZE_ON_DISK;
+    *size += SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-	UInt32 tmp = CFSwapInt32HostToBig(value);
+	UInt32 tmp = CFSwapInt32HostToBig(self.value);
 	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 

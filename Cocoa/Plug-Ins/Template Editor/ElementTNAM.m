@@ -5,34 +5,33 @@
 #define SIZE_ON_DISK (4)
 
 @implementation ElementTNAM
-@synthesize tnam;
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-    UInt32 tmp = 0;
+    UInt32 tmp;
     [stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
-    tnam = CFSwapInt32BigToHost(tmp);
+    self.tnam = CFSwapInt32BigToHost(tmp);
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-    return SIZE_ON_DISK;
+    *size += SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-    UInt32 tmp = CFSwapInt32HostToBig(tnam);
+    UInt32 tmp = CFSwapInt32HostToBig(self.tnam);
     [stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
 - (NSString *)value
 {
-    return GetNSStringFromOSType(tnam);
+    return GetNSStringFromOSType(self.tnam);
 }
 
 - (void)setValue:(NSString *)value
 {
-    tnam = GetOSTypeFromNSString(value);
+    self.tnam = GetOSTypeFromNSString(value);
 }
 
 + (NSFormatter *)sharedFormatter

@@ -2,6 +2,14 @@
 
 @implementation ElementKEYB
 
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
+{
+    if (self = [super initForType:t withLabel:l]) {
+        self.endType = @"KEYE";
+    }
+    return self;
+}
+
 - (id)copyWithZone:(NSZone *)zone
 {
     ElementKEYB *element = [super copyWithZone:zone];
@@ -12,32 +20,23 @@
 
 - (void)readSubElements
 {
-    self.subElements = [self.parentList subListUntil:@"KEYE"];
+    self.subElements = [self.parentList subListFrom:self];
+    [self.subElements parseElements];
 }
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-	if ([self matchesKey]) {
-        [self.subElements readDataFrom:stream];
-	}
+    [self.subElements readDataFrom:stream];
 }
 
-// Before writeDataTo:is called, this is called to calculate the final resource size:
-//	This returns the sizes of all our sub-elements. If you subclass, add to that the size
-//	of this element itself.
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-	if (![self matchesKey])
-		return 0;
-    return [self.subElements sizeOnDisk:currentSize];
+    [self.subElements sizeOnDisk:size];
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-    if ([self matchesKey]) {
-		// writes out the data of all our sub-elements here:
-		[self.subElements writeDataTo:stream];
-	}
+    [self.subElements writeDataTo:stream];
 }
 
 - (NSInteger)subElementCount
@@ -48,12 +47,6 @@
 - (Element *)subElementAtIndex:(NSInteger)n
 {
 	return [self.subElements elementAtIndex:n];
-}
-
-- (BOOL)matchesKey
-{
-    NSString *value = [[self.keyElement formatter] stringForObjectValue:[self.keyElement valueForKey:@"value"]];
-    return [self.label isEqualToString:value];
 }
 
 @end

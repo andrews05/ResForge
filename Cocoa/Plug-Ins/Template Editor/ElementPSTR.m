@@ -3,7 +3,6 @@
 
 // implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, Pnnn, Cnnn
 @implementation ElementPSTR
-@synthesize value;
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
@@ -127,11 +126,11 @@
 	
 	// read string
     if (length == 0) {
-        value = @"";
+        self.value = @"";
     } else {
         void *buffer = malloc(length);
         [stream readAmount:length toBuffer:buffer];
-        value = [[NSString alloc] initWithBytesNoCopy:buffer length:length encoding:NSMacOSRomanStringEncoding freeWhenDone:YES];
+        self.value = [[NSString alloc] initWithBytesNoCopy:buffer length:length encoding:NSMacOSRomanStringEncoding freeWhenDone:YES];
     }
 	
 	// skip over empty bytes
@@ -149,23 +148,26 @@
     }
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-    if (_pad > 0) return _pad;
-	UInt32 length = (UInt32)[value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
+    if (_pad > 0) {
+        *size += _pad;
+        return;
+    }
+	UInt32 length = (UInt32)[self.value lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
 	if (length > _maxLength) length = _maxLength;
 	length += _lengthBytes + (_terminatingByte? 1 : 0);
 	if (_pad == kPadToOddLength && length % 2 == 0)
 		length++;
 	if (_pad == kPadToEvenLength && length % 2 == 1)
 		length++;
-	return length;
+	*size += length;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
 	// write string
-	UInt32 length = (UInt32)[value length];
+	UInt32 length = (UInt32)[self.value length];
 	if (length > _maxLength) length = _maxLength;
 	if (_lengthBytes > 0) {
         UInt32 writeLength = length << ((4 - _lengthBytes) << 3);
@@ -173,7 +175,7 @@
 		[stream writeAmount:_lengthBytes fromBuffer:&writeLength];
     }
 	
-    const void *buffer = [value cStringUsingEncoding:NSMacOSRomanStringEncoding];
+    const void *buffer = [self.value cStringUsingEncoding:NSMacOSRomanStringEncoding];
     if (buffer)
         [stream writeAmount:length fromBuffer:buffer];
     else

@@ -3,23 +3,22 @@
 #define SIZE_ON_DISK (4)
 
 @implementation ElementDLNG
-@synthesize value;
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-	SInt32 tmp = 0;
+	SInt32 tmp;
 	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
-	value = CFSwapInt32BigToHost(tmp);
+	self.value = CFSwapInt32BigToHost(tmp);
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-	return SIZE_ON_DISK;
+	*size += SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-	SInt32 tmp = CFSwapInt32HostToBig(value);
+	SInt32 tmp = CFSwapInt32HostToBig(self.value);
 	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
@@ -36,7 +35,4 @@
     return formatter;
 }
 
-@end
-
-@implementation ElementKLNG
 @end

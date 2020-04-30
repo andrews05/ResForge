@@ -2,24 +2,23 @@
 
 // implements FBYT, FWRD, FLNG, FLLG
 @implementation ElementFBYT
-@synthesize length;
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
 	if (self = [super initForType:t withLabel:l]) {
         self.visible = NO;
 		if ([t isEqualToString:@"FBYT"])
-			length = 1;
+			_length = 1;
 		else if ([t isEqualToString:@"FWRD"])
-			length = 2;
+			_length = 2;
 		else if ([t isEqualToString:@"FLNG"])
-			length = 4;
+			_length = 4;
 		else if ([t isEqualToString:@"FLLG"])
-			length = 8;
+			_length = 8;
         else {
             // Fnnn
             NSScanner *scanner = [NSScanner scannerWithString:[t substringFromIndex:1]];
-            [scanner scanHexInt:&length];
+            [scanner scanHexInt:&_length];
         }
 	}
 	return self;
@@ -27,17 +26,17 @@
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-	[stream advanceAmount:length pad:NO];
+	[stream advanceAmount:_length pad:NO];
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-	return length;
+    *size += _length;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-	[stream advanceAmount:length pad:YES];
+	[stream advanceAmount:_length pad:YES];
 }
 
 - (NSString *)label

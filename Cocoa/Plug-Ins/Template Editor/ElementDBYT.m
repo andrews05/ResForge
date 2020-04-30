@@ -3,21 +3,23 @@
 #define SIZE_ON_DISK (1)
 
 @implementation ElementDBYT
-@synthesize value;
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-	[stream readAmount:SIZE_ON_DISK toBuffer:&value];
+    SInt8 tmp;
+	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
+    self.value = tmp;
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-	return SIZE_ON_DISK;
+	*size += SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-	[stream writeAmount:SIZE_ON_DISK fromBuffer:&value];
+    SInt8 tmp = self.value;
+	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 
 + (NSFormatter *)sharedFormatter
@@ -33,7 +35,4 @@
     return formatter;
 }
 
-@end
-
-@implementation ElementKBYT
 @end

@@ -1,6 +1,6 @@
-#import "Element.h"
+#import "ElementKey.h"
 
-@interface ElementTNAM : Element
+@interface ElementTNAM : ElementKey
 @property OSType tnam;
 @property NSString *value;
 

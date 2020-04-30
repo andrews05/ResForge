@@ -3,23 +3,22 @@
 #define SIZE_ON_DISK (2)
 
 @implementation ElementUWRD
-@synthesize value;
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-	UInt16 tmp = 0;
+	UInt16 tmp;
 	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
-	value = CFSwapInt16BigToHost(tmp);
+	self.value = CFSwapInt16BigToHost(tmp);
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-	return SIZE_ON_DISK;
+    *size += SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-	UInt16 tmp = CFSwapInt16HostToBig(value);
+	UInt16 tmp = CFSwapInt16HostToBig(self.value);
 	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 

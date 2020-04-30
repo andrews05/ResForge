@@ -3,23 +3,22 @@
 #define SIZE_ON_DISK (8)
 
 @implementation ElementDOUB
-@synthesize value;
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
     CFSwappedFloat64 tmp;
     [stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
-    value = CFConvertDoubleSwappedToHost(tmp);
+    self.value = CFConvertDoubleSwappedToHost(tmp);
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-    return SIZE_ON_DISK;
+    *size += SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-    CFSwappedFloat64 tmp = CFConvertDoubleHostToSwapped(value);
+    CFSwappedFloat64 tmp = CFConvertDoubleHostToSwapped(self.value);
     [stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
 }
 

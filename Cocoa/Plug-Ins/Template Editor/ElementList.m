@@ -36,48 +36,54 @@
 #import "ElementFCNT.h"
 #import "ElementLSTB.h"
 #import "ElementKEYB.h"
+#import "ElementCASE.h"
 
 @implementation ElementList
 
 + (instancetype)listFromStream:(NSInputStream *)stream
 {
-    ElementList *list = [super new];
-    if (!list) return nil;
-    list.elements = [NSMutableArray new];
+    return [[self alloc] initFromStream:stream];
+}
+
+- (instancetype)initFromStream:(NSInputStream *)stream
+{
+    self = [super init];
+    if (!self) return nil;
+    self.parsed = NO;
+    self.elements = [NSMutableArray new];
     [stream open];
     Element *element;
     while ([stream hasBytesAvailable]) {
-        element = [list readElementFromStream:stream];
+        element = [self readElementFromStream:stream];
         if (!element) break;
-        [list.elements addObject:element];
+        [self.elements addObject:element];
     }
     [stream close];
-    list.parsed = NO;
-    [list parseElements];
-    return list;
+    return self;
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
     ElementList *list = [[ElementList allocWithZone:zone] init];
-    list.elements = [[NSMutableArray allocWithZone:zone] initWithArray:self.elements copyItems:YES];
     list.parsed = NO;
+    list.elements = [[NSMutableArray allocWithZone:zone] initWithArray:self.elements copyItems:YES];
     [list parseElements];
     return list;
 }
 
 - (void)parseElements
 {
+    if (self.parsed) return;
     _currentIndex = 0;
     self.visibleElements = [NSMutableArray new];
     Element *element;
     while (_currentIndex < self.elements.count) {
         element = self.elements[_currentIndex];
         element.parentList = self;
-        [element readSubElements];
-        _currentIndex++;
         if (element.visible)
             [self.visibleElements addObject:element];
+        [element readSubElements];
+        _currentIndex++;
     }
     self.parsed = YES;
 }
@@ -94,25 +100,35 @@
     return self.visibleElements[index];
 }
 
-// Insert a new element at the current position. May be used during template parsing (e.g. fixed count list) or reading data (e.g. other lists).
+// Insert a new element at the current position
 - (void)insertElement:(Element *)element
 {
-    [self.elements insertObject:element atIndex:_currentIndex++];
     element.parentList = self;
-    if (self.parsed) {
+    if (!self.parsed) {
+        // Insert after current element during parsing (e.g. fixed count list, keyed section)
+        [self.elements insertObject:element atIndex:++_currentIndex];
+        [self.visibleElements addObject:element];
+    } else {
+        // Insert after current element during reading data (e.g. other lists)
+        [self.elements insertObject:element atIndex:_currentIndex++];
         NSUInteger visIndex = [self.visibleElements indexOfObject:self.elements[_currentIndex]];
         [self.visibleElements insertObject:element atIndex:visIndex];
-    } else {
-        [self.visibleElements addObject:element];
     }
 }
 
-// Insert a new element before a given element
+// Insert a new element before/after a given element
 - (void)insertElement:(Element *)element before:(Element *)before
 {
     [self.elements insertObject:element atIndex:[self.elements indexOfObject:before]];
     element.parentList = self;
     [self.visibleElements insertObject:element atIndex:[self.visibleElements indexOfObject:before]];
+}
+
+- (void)insertElement:(Element *)element after:(Element *)after
+{
+    [self.elements insertObject:element atIndex:[self.elements indexOfObject:after]+1];
+    element.parentList = self;
+    [self.visibleElements insertObject:element atIndex:[self.visibleElements indexOfObject:after]+1];
 }
 
 - (void)removeElement:(Element *)element
@@ -161,22 +177,21 @@
 }
 
 // Create a new ElementList by extracting all elements following the current one up until a given type
-- (ElementList *)subListUntil:(NSString *)endType
+- (ElementList *)subListFrom:(Element *)startElement
 {
     ElementList *list = [ElementList new];
     list.elements = [NSMutableArray new];
-    Element *startElement = self.elements[_currentIndex];
     NSUInteger nesting = 0;
     Element *element;
     while (true) {
         element = [self pop];
         if (!element) {
-            NSLog(@"Closing element '%@' not found for opening '%@'.", endType, startElement.type);
+            NSLog(@"Closing '%@' element not found for opening '%@'.", startElement.endType, startElement.type);
             break;
         }
-        if ([element isKindOfClass:startElement.class]) {
+        if ([element.endType isEqualToString:startElement.endType]) {
             nesting++;
-        } else if ([element.type isEqualToString:endType]) {
+        } else if ([element.type isEqualToString:startElement.endType]) {
             if (!nesting) break;
             nesting--;
         }
@@ -192,18 +207,17 @@
     _currentIndex = 0;
     // Don't use fast enumeration here as the list may be modified while reading
     while (_currentIndex < self.elements.count) {
+        if (![stream bytesToGo]) return;
         [self.elements[_currentIndex] readDataFrom:stream];
         _currentIndex++;
     }
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-    UInt32 size = 0;
     for (Element *element in self.elements) {
-        size += [element sizeOnDisk:(currentSize + size)];
+        [element sizeOnDisk:size];
     }
-    return size;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
@@ -343,18 +357,12 @@
         registry[@"LSTZ"] = [ElementLSTB class];
         registry[@"LSTC"] = [ElementLSTB class];
         registry[@"LSTE"] = [Element     class];
-        // key begin/end
-        registry[@"KEYB"] = [ElementKEYB class];
-        registry[@"KEYE"] = [Element     class];
         
-        // dates
-        registry[@"DATE"] = [ElementDATE class];    // 4-byte date (seconds since 1 Jan 1904)
-        registry[@"MDAT"] = [ElementDATE class];
-        
-        // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
-        registry[@"KBYT"] = [ElementKBYT class];    // signed keys
-        registry[@"KWRD"] = [ElementKWRD class];
-        registry[@"KLNG"] = [ElementKLNG class];
+        // key selection
+        registry[@"CASE"] = [ElementCASE class];    // selection options
+        registry[@"KBYT"] = [ElementDBYT class];    // signed keys
+        registry[@"KWRD"] = [ElementDWRD class];
+        registry[@"KLNG"] = [ElementDLNG class];
         registry[@"KLLG"] = [ElementDLLG class];
         registry[@"KUBT"] = [ElementUBYT class];    // unsigned keys
         registry[@"KUWD"] = [ElementUWRD class];
@@ -366,15 +374,24 @@
         registry[@"KHLL"] = [ElementHLLG class];
         registry[@"KCHR"] = [ElementCHAR class];    // keyed MacRoman values
         registry[@"KTYP"] = [ElementTNAM class];
+        // keyed section begin/end
+        registry[@"KEYB"] = [ElementKEYB class];
+        registry[@"KEYE"] = [Element     class];
+        
+        // dates
+        registry[@"DATE"] = [ElementDATE class];    // 4-byte date (seconds since 1 Jan 1904)
+        registry[@"MDAT"] = [ElementDATE class];
+        
+        registry[@"DVDR"] = [Element     class];
+        
+        // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
         registry[@"KRID"] = [Element     class];    // key on ID of the resource
         registry[@"RSID"] = [ElementDWRD class];    // resouce id (signed word)
         registry[@"SFRC"] = [ElementUWRD class];    // 0.16 fixed fraction
         registry[@"FXYZ"] = [ElementUWRD class];    // 1.15 fixed fraction
         registry[@"FWID"] = [ElementUWRD class];    // 4.12 fixed fraction
-        registry[@"CASE"] = [Element     class];
         registry[@"TITL"] = [Element     class];    // resource title (e.g. utxt would have "Unicode Text"; must be first element of template, and not anywhere else)
         registry[@"CMNT"] = [Element     class];
-        registry[@"DVDR"] = [Element     class];
         registry[@"LLDT"] = [ElementULLG class];    // 8-byte date (LongDateTime; seconds since 1 Jan 1904)
         registry[@"STYL"] = [ElementDBYT class];    // QuickDraw font style
         registry[@"SCPC"] = [ElementDWRD class];    // MacOS script code (ScriptCode)

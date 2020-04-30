@@ -1,12 +1,10 @@
 #import "ElementHEXD.h"
 
 @implementation ElementHEXD
-@synthesize data;
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
-        data = nil;
         _length = 0;
         if ([t isEqualToString:@"BHEX"])    {
             _lengthBytes = 1;
@@ -48,7 +46,7 @@
 
 - (NSString *)value
 {
-    return [data description];
+    return [self.data description];
 }
 
 - (void)readSubElements
@@ -72,20 +70,14 @@
         if (_length > [stream bytesToGo]) _length = [stream bytesToGo];
     } else if ([self.type isEqualToString:@"HEXD"]) {
         _length = [stream bytesToGo];
-    } else if (_length > [stream bytesToGo]) {
-        // Hnnn requires an exact length so we need to allocate it if the stream is too short
-        char *buffer = malloc(_length);
-        [stream readAmount:_length toBuffer:buffer];
-        data = [NSData dataWithBytesNoCopy:buffer length:_length freeWhenDone:YES];
-        return;
     }
-	data = [NSData dataWithBytes:[stream data] length:_length];
+    self.data = [NSData dataWithBytes:[stream data] length:_length];
     [stream advanceAmount:_length pad:NO];
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-	return _length + _lengthBytes;
+    *size += _length + _lengthBytes;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
@@ -97,7 +89,10 @@
         writeLength = CFSwapInt32HostToBig(writeLength);
         [stream writeAmount:_lengthBytes fromBuffer:&writeLength];
     }
-	[stream writeAmount:_length fromBuffer:[data bytes]];
+    if (self.data)
+        [stream writeAmount:_length fromBuffer:[self.data bytes]];
+    else
+        [stream advanceAmount:_length pad:YES];
 }
 
 @end

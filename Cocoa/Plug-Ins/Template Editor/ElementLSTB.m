@@ -10,6 +10,7 @@
         _tail = self;
         _zeroTerminated = [t isEqualToString:@"LSTZ"];
         self.editable = NO;
+        self.endType = @"LSTE";
 	}
 	return self;
 }
@@ -26,16 +27,15 @@
 - (void)readSubElements
 {
     // This item will be the tail
-    self.entries = [NSMutableArray new];
-    self.subElements = [self.parentList subListUntil:@"LSTE"];
+    self.entries = [NSMutableArray arrayWithObject:self];
+    self.subElements = [self.parentList subListFrom:self];
     if ([self.countElement.type isEqualToString:@"FCNT"]) {
         // Fixed count list, create all the entries now
         self.tail = nil;
+        [self.subElements parseElements];
         for (unsigned int i = 1; i < self.countElement.value; i++) {
             [self createNextItem];
         }
-        [self.subElements parseElements];
-        [self.entries addObject:self];
     }
 }
 
@@ -57,6 +57,7 @@
         return;
     }
     
+    [self.entries removeAllObjects];
     if ([self.type isEqualToString:@"LSTC"]) {
         for (unsigned int i = 0; i < self.countElement.value; i++) {
             [[self createNextItem].subElements readDataFrom:stream];
@@ -78,14 +79,13 @@
     [self.entries addObject:self];
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
     if (self != self.tail) {
-        return [self.subElements sizeOnDisk:currentSize];
+        [self.subElements sizeOnDisk:size];
     } else if (_zeroTerminated) {
-        return 1;
+        *size += 1;
     }
-	return 0;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream

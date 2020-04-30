@@ -84,10 +84,10 @@
     }
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-    if (!self.bitList) return 0;
-    return SIZE_ON_DISK;
+    if (!self.bitList) return;
+    *size += SIZE_ON_DISK;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream

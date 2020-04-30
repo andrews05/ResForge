@@ -1,9 +1,6 @@
-#import "Element.h"
+#import "ElementKey.h"
 
-@interface ElementDBYT : Element
+@interface ElementDBYT : ElementKey
 @property SInt8 value;
 
-@end
-
-@interface ElementKBYT : ElementDBYT
 @end

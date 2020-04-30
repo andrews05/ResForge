@@ -23,9 +23,8 @@
 {
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-    return 0;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream

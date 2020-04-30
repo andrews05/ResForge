@@ -2,10 +2,6 @@
 #import "ElementDWRD.h"
 
 @implementation ElementRECT
-@synthesize top;
-@synthesize left;
-@synthesize bottom;
-@synthesize right;
 
 - (NSView *)dataView:(NSOutlineView *)outlineView
 {
@@ -38,29 +34,29 @@
 {
     SInt16 tmp = 0;
     [stream readAmount:2 toBuffer:&tmp];
-    top = CFSwapInt16BigToHost(tmp);
+    self.top = CFSwapInt16BigToHost(tmp);
     [stream readAmount:2 toBuffer:&tmp];
-    left = CFSwapInt16BigToHost(tmp);
+    self.left = CFSwapInt16BigToHost(tmp);
     [stream readAmount:2 toBuffer:&tmp];
-    bottom = CFSwapInt16BigToHost(tmp);
+    self.bottom = CFSwapInt16BigToHost(tmp);
     [stream readAmount:2 toBuffer:&tmp];
-    right = CFSwapInt16BigToHost(tmp);
+    self.right = CFSwapInt16BigToHost(tmp);
 }
 
-- (UInt32)sizeOnDisk:(UInt32)currentSize
+- (void)sizeOnDisk:(UInt32 *)size
 {
-    return 8;
+    *size += 8;
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-    SInt16 tmp = CFSwapInt16HostToBig(top);
+    SInt16 tmp = CFSwapInt16HostToBig(self.top);
     [stream writeAmount:2 fromBuffer:&tmp];
-    tmp = CFSwapInt16HostToBig(left);
+    tmp = CFSwapInt16HostToBig(self.left);
     [stream writeAmount:2 fromBuffer:&tmp];
-    tmp = CFSwapInt16HostToBig(bottom);
+    tmp = CFSwapInt16HostToBig(self.bottom);
     [stream writeAmount:2 fromBuffer:&tmp];
-    tmp = CFSwapInt16HostToBig(right);
+    tmp = CFSwapInt16HostToBig(self.right);
     [stream writeAmount:2 fromBuffer:&tmp];
 }
 
