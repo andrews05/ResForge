@@ -41,7 +41,7 @@
 // Use control:textShouldEndEditing: rather than controlTextDidEndEditing: as it more accurately reflects when the value has actually changed
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
-    [(TemplateWindowController *)[control.window windowController] itemValueUpdated:control];
+    [(TemplateWindowController *)control.window.windowController itemValueUpdated:control];
     return YES;
 }
 
@@ -156,7 +156,7 @@
 {
     // Notify the controller that the value changed
     NSControl *control = notification.object;
-    [(TemplateWindowController *)[control.window windowController] itemValueUpdated:control];
+    [(TemplateWindowController *)control.window.windowController itemValueUpdated:control];
 }
 
 @end

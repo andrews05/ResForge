@@ -14,6 +14,8 @@
 
 @implementation TemplateWindowController
 @synthesize dataList;
+@synthesize resource;
+@synthesize backup;
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
@@ -61,7 +63,6 @@
 	else			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:backup];
 	[[self window] setTitle:[resource defaultWindowTitle]];
 	[self showWindow:self];
-	[displayList reloadData];
 }
 
 - (void)templateDataDidChange:(NSNotification *)notification
@@ -77,6 +78,14 @@
 		// bug: should display alert asking if you want to replace data in this editor or reassert this data, revoking the other editor's changes
 		[resource setData:[[backup data] copy]];
 	[self loadResource];
+}
+
+- (void)readTemplate:(id<ResKnifeResource>)tmplRes
+{
+    NSInputStream *stream = [[NSInputStream alloc] initWithData:[tmplRes data]];
+    resourceStructure = [ElementList listFromStream:stream];
+    resourceStructure.controller = self;
+    [resourceStructure parseElements];
 }
 
 - (void)loadResource
@@ -158,14 +167,6 @@
 - (void)revertResource:(id)sender
 {
 	[resource setData:[[backup data] copy]];
-}
-
-- (void)readTemplate:(id<ResKnifeResource>)tmplRes
-{
-    NSInputStream *stream = [[NSInputStream alloc] initWithData:[tmplRes data]];
-    resourceStructure = [ElementList listFromStream:stream];
-    [resourceStructure parseElements];
-	[displayList reloadData];
 }
 
 #pragma mark -

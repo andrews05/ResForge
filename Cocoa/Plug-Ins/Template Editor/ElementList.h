@@ -1,11 +1,14 @@
 #import <Foundation/Foundation.h>
 #import "ResourceStream.h"
 
+@class TemplateWindowController;
+
 @interface ElementList : NSObject <NSCopying>
 @property (strong) NSMutableArray<Element *> *elements;
 @property (strong) NSMutableArray<Element *> *visibleElements;
 @property (readonly) NSUInteger count;
-@property NSUInteger currentIndex;
+@property (readonly) NSUInteger currentIndex;
+@property (weak) TemplateWindowController *controller;
 @property BOOL parsed;
 
 + (instancetype)listFromStream:(NSInputStream *)stream;
@@ -13,16 +16,16 @@
 
 - (void)parseElements;
 
-- (Element *)elementAtIndex:(NSUInteger)index;
+- (__kindof Element *)elementAtIndex:(NSUInteger)index;
 - (void)insertElement:(Element *)element;
 - (void)insertElement:(Element *)element before:(Element *)before;
 - (void)insertElement:(Element *)element after:(Element *)after;
 - (void)removeElement:(Element *)element;
 
 // For use by during readSubElements
-- (Element *)peek:(NSUInteger)n;
-- (Element *)pop;
-- (Element *)nextOfType:(NSString *)type;
+- (__kindof Element *)peek:(NSUInteger)n;
+- (__kindof Element *)pop;
+- (__kindof Element *)nextOfType:(NSString *)type;
 - (ElementList *)subListFrom:(Element *)startElement;
 
 - (void)readDataFrom:(ResourceStream *)stream;

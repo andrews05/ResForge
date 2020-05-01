@@ -37,6 +37,7 @@
 #import "ElementLSTB.h"
 #import "ElementKEYB.h"
 #import "ElementCASE.h"
+#import "ElementKRID.h"
 
 @implementation ElementList
 
@@ -374,6 +375,7 @@
         registry[@"KHLL"] = [ElementHLLG class];
         registry[@"KCHR"] = [ElementCHAR class];    // keyed MacRoman values
         registry[@"KTYP"] = [ElementTNAM class];
+        registry[@"KRID"] = [ElementKRID class];    // key on ID of the resource
         // keyed section begin/end
         registry[@"KEYB"] = [ElementKEYB class];
         registry[@"KEYE"] = [Element     class];
@@ -385,7 +387,6 @@
         registry[@"DVDR"] = [Element     class];
         
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
-        registry[@"KRID"] = [Element     class];    // key on ID of the resource
         registry[@"RSID"] = [ElementDWRD class];    // resouce id (signed word)
         registry[@"SFRC"] = [ElementUWRD class];    // 0.16 fixed fraction
         registry[@"FXYZ"] = [ElementUWRD class];    // 1.15 fixed fraction

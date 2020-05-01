@@ -7,4 +7,6 @@
 @property (strong) NSMutableDictionary *keyedSections;
 @property (strong) ElementKEYB *currentSection;
 
+- (void)readCases;
+
 @end

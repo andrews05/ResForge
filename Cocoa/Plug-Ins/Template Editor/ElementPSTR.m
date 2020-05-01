@@ -98,16 +98,10 @@
     if (height == self.rowHeight)
         return;
     self.rowHeight = height;
-    // Find the outline view to notify it
-    NSView *view = field;
-    while ((view = view.superview)) {
-        if ([view isKindOfClass:[NSOutlineView class]]) {
-            NSOutlineView *outlineView = (NSOutlineView *)view;
-            NSUInteger index = [outlineView rowForItem:self];
-            [outlineView noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:index]];
-            break;
-        }
-    }
+    // Notify the outline view
+    NSOutlineView *outlineView = [(TemplateWindowController *)field.window.windowController dataList];
+    NSUInteger index = [outlineView rowForItem:self];
+    [outlineView noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:index]];
 }
 
 - (void)readDataFrom:(ResourceStream *)stream

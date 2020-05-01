@@ -9,7 +9,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TemplateWindowController">
             <connections>
                 <outlet property="dataList" destination="36" id="44"/>
-                <outlet property="displayList" destination="28" id="43"/>
                 <outlet property="window" destination="21" id="33"/>
             </connections>
         </customObject>

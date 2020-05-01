@@ -32,7 +32,7 @@
 - (IBAction)keyChanged:(NSPopUpButton *)sender
 {
     [self setCase:self.cases[sender.indexOfSelectedItem]];
-    TemplateWindowController *controller = [sender.window windowController];
+    TemplateWindowController *controller = sender.window.windowController;
     [controller.dataList reloadData];
     [controller.dataList expandItem:self.currentSection expandChildren:YES];
     [controller itemValueUpdated:sender];
@@ -64,13 +64,8 @@
     self.currentSection.label = element.symbol; // Replace label with the case symbol
 }
 
-- (void)readSubElements
+- (void)readCases
 {
-    if (!self.isKey) {
-        [super readSubElements];
-        return;
-    }
-    
     self.cases = [NSMutableArray new];
     self.caseMap = [NSMutableDictionary new];
     self.keyedSections = [NSMutableDictionary new];
@@ -99,6 +94,16 @@
         }
         element = [self.parentList peek:1];
     }
+}
+
+- (void)readSubElements
+{
+    if (!self.isKey) {
+        [super readSubElements];
+        return;
+    }
+    
+    [self readCases];
     
     if (self.keyedSections.count) {
         if (self.keyedSections.count != self.cases.count) {
@@ -106,12 +111,13 @@
         }
     
         // Set initial value to first case
-        id value = [self.cases[0] value];
+        ElementCASE *element = self.cases[0];
+        id value = element.value;
         self.currentSection = self.keyedSections[value];
         [self validateValue:&value forKey:@"value" error:nil];
         [self setValue:value forKey:@"value"];
         [self.parentList insertElement:self.currentSection];
-        self.currentSection.label = [self.cases[0] symbol]; // Replace label with the case symbol
+        self.currentSection.label = element.symbol; // Replace label with the case symbol
         
         // Use KVO to observe value change when data is first read
         // This saves us adding any key logic to the concrete element subclasses
