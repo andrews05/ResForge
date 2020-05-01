@@ -38,6 +38,7 @@
 #import "ElementKEYB.h"
 #import "ElementCASE.h"
 #import "ElementKRID.h"
+#import "ElementRSID.h"
 
 @implementation ElementList
 
@@ -67,6 +68,7 @@
 {
     ElementList *list = [[ElementList allocWithZone:zone] init];
     list.parsed = NO;
+    list.controller = self.controller;
     list.elements = [[NSMutableArray allocWithZone:zone] initWithArray:self.elements copyItems:YES];
     [list parseElements];
     return list;
@@ -181,6 +183,7 @@
 - (ElementList *)subListFrom:(Element *)startElement
 {
     ElementList *list = [ElementList new];
+    list.controller = self.controller;
     list.elements = [NSMutableArray new];
     NSUInteger nesting = 0;
     Element *element;
@@ -318,7 +321,7 @@
         registry[@"CHAR"] = [ElementCHAR class];
         registry[@"TNAM"] = [ElementTNAM class];
         
-        // checkboxes
+        // bits
         registry[@"BOOL"] = [ElementBOOL class];    // true = 256; false = 0
         registry[@"BFLG"] = [ElementBFLG class];    // binary flag the size of a byte/word/long
         registry[@"WFLG"] = [ElementWFLG class];
@@ -359,8 +362,11 @@
         registry[@"LSTC"] = [ElementLSTB class];
         registry[@"LSTE"] = [Element     class];
         
+        // option lists
+        registry[@"CASE"] = [ElementCASE class];    // single option for preceding element
+        registry[@"RSID"] = [ElementRSID class];    // resouce id (signed word) - type and offset in label
+        
         // key selection
-        registry[@"CASE"] = [ElementCASE class];    // selection options
         registry[@"KBYT"] = [ElementDBYT class];    // signed keys
         registry[@"KWRD"] = [ElementDWRD class];
         registry[@"KLNG"] = [ElementDLNG class];
@@ -384,10 +390,9 @@
         registry[@"DATE"] = [ElementDATE class];    // 4-byte date (seconds since 1 Jan 1904)
         registry[@"MDAT"] = [ElementDATE class];
         
-        registry[@"DVDR"] = [Element     class];
+        registry[@"DVDR"] = [Element     class];    // divider
         
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
-        registry[@"RSID"] = [ElementDWRD class];    // resouce id (signed word)
         registry[@"SFRC"] = [ElementUWRD class];    // 0.16 fixed fraction
         registry[@"FXYZ"] = [ElementUWRD class];    // 1.15 fixed fraction
         registry[@"FWID"] = [ElementUWRD class];    // 4.12 fixed fraction

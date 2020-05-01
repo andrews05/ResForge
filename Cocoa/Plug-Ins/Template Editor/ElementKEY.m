@@ -1,8 +1,8 @@
-#import "ElementKey.h"
+#import "ElementKEY.h"
 #import "ElementCASE.h"
 #import "TemplateWindowController.h"
 
-@implementation ElementKey
+@implementation ElementKEY
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {

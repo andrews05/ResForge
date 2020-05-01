@@ -1,6 +1,6 @@
-#import "ElementKey.h"
+#import "ElementKEY.h"
 
-@interface ElementKRID : ElementKey
+@interface ElementKRID : ElementKEY
 @property NSString *value;
 
 @end

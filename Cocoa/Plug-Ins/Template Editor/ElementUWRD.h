@@ -1,6 +1,6 @@
-#import "ElementKey.h"
+#import "ElementKEY.h"
 
-@interface ElementUWRD : ElementKey
+@interface ElementUWRD : ElementKEY
 @property UInt16 value;
 
 @end

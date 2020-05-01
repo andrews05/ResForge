@@ -61,18 +61,24 @@
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
+    if ([self.type isEqualToString:@"HEXD"]) {
+        // consume all remaining data
+        _length = stream.bytesToGo;
+        self.data = [NSData dataWithBytes:[stream data] length:_length];
+        stream.bytesToGo = 0;
+        return;
+    }
     // get data length
     if (_lengthBytes > 0) {
         [stream readAmount:_lengthBytes toBuffer:&_length];
         _length = CFSwapInt32BigToHost(_length);
         _length >>= (4 - _lengthBytes) << 3;
         if (_skipLengthBytes && _length > 0) _length -= _lengthBytes;
-        if (_length > [stream bytesToGo]) _length = [stream bytesToGo];
-    } else if ([self.type isEqualToString:@"HEXD"]) {
-        _length = [stream bytesToGo];
+        if (_length > stream.bytesToGo) _length = stream.bytesToGo;
     }
-    self.data = [NSData dataWithBytes:[stream data] length:_length];
-    [stream advanceAmount:_length pad:NO];
+    char *buffer = malloc(_length);
+    [stream readAmount:_length toBuffer:buffer];
+    self.data = [NSData dataWithBytesNoCopy:buffer length:_length freeWhenDone:YES];
 }
 
 - (void)sizeOnDisk:(UInt32 *)size

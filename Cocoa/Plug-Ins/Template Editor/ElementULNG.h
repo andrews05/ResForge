@@ -1,6 +1,6 @@
-#import "ElementKey.h"
+#import "ElementKEY.h"
 
-@interface ElementULNG : ElementKey
+@interface ElementULNG : ElementKEY
 @property UInt32 value;
 
 @end

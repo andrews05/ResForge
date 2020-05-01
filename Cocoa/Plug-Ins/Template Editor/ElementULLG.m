@@ -6,7 +6,7 @@
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-	UInt64 tmp = 0;
+	UInt64 tmp;
 	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
 	self.value = CFSwapInt64BigToHost(tmp);
 }

@@ -1,7 +1,7 @@
 #import "Element.h"
 #import "ElementKEYB.h"
 
-@interface ElementKey : Element
+@interface ElementKEY : Element
 @property BOOL isKey;
 @property BOOL observing;
 @property (strong) NSMutableDictionary *keyedSections;

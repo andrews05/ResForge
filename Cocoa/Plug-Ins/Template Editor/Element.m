@@ -98,9 +98,12 @@
             self.cases = [NSMutableArray new];
             self.caseMap = [NSMutableDictionary new];
         }
+        // Cases will show as "name = value" in the options list to allow searching by name
+        // Text field will display as "value = name" for consistency when there's no matching case
+        NSString *option = [NSString stringWithFormat:@"%@ = %@", [element symbol], [element value]];
         NSString *display = [NSString stringWithFormat:@"%@ = %@", [element value], [element symbol]];
-        [self.cases addObject:display]; // Keep an ordered list of the cases for combo box content
-        [self.caseMap setObject:display forKey:[element value]]; // Allows us to lookup a case by value
+        [self.cases addObject:option];
+        [self.caseMap setObject:display forKey:[element value]];
         element = [self.parentList peek:1];
     }
 }
@@ -135,7 +138,7 @@
 - (id)reverseTransformedValue:(id)value
 {
     // Don't use the formatter here as we can't handle the error
-    return [[value componentsSeparatedByString:@" = "] firstObject] ?: value;
+    return [[value componentsSeparatedByString:@" = "] lastObject] ?: value ?: @"";
 }
 
 - (BOOL)validateValue:(id *)value error:(NSError **)error
