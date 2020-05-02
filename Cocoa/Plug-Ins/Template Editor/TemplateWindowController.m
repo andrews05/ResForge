@@ -220,14 +220,10 @@
 
 - (IBAction)dataClicked:(id)sender
 {
-    // Edit the text field clicked on
+    // Edit the item clicked on
     // TODO: This doesn't work so nicely for additional fields in RECT/PNT
-    if (dataList.clickedRow == -1 || dataList.clickedColumn != 1)
-        return;
-    NSControl *control = [dataList viewAtColumn:1 row:dataList.clickedRow makeIfNecessary:NO];
-    if (![control isKindOfClass:NSControl.class])
-        control = control.subviews[0];
-    [control becomeFirstResponder];
+    if (dataList.clickedColumn == 1 && dataList.clickedRow != -1)
+        [dataList editColumn:1 row:dataList.clickedRow withEvent:nil select:YES];
 }
 
 - (IBAction)itemValueUpdated:(id)sender

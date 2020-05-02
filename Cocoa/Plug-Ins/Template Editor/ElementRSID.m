@@ -17,7 +17,7 @@
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@".*[‘'](.{4})['’](.*?(-?[0-9]+) *[+])?" options:0 error:nil];
         NSTextCheckingResult *result = [regex firstMatchInString:l options:0 range:NSMakeRange(0, l.length)];
         if (!result) {
-            // TODO: Look for preceding TNAM element to determine resource type
+            // TODO: Support dynamic resource type based on a preceding TNAM element
             NSLog(@"Could not determine resource type for RSID.");
         } else {
             self.resType = GetOSTypeFromNSString([l substringWithRange:[result rangeAtIndex:1]]);

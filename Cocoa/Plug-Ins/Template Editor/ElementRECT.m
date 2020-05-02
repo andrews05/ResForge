@@ -26,7 +26,6 @@
         [view addSubview:field];
         frame.origin.x += 60;
     }
-    view.textField = view.subviews[0];
     return view;
 }
 

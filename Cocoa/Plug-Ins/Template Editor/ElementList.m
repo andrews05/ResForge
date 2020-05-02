@@ -39,6 +39,7 @@
 #import "ElementCASE.h"
 #import "ElementKRID.h"
 #import "ElementRSID.h"
+#import "ElementCOLR.h"
 
 @implementation ElementList
 
@@ -390,6 +391,11 @@
         registry[@"DATE"] = [ElementDATE class];    // 4-byte date (seconds since 1 Jan 1904)
         registry[@"MDAT"] = [ElementDATE class];
         
+        // colours
+        registry[@"COLR"] = [ElementCOLR class];    // 6-byte QuickDraw colour
+        registry[@"WCOL"] = [ElementCOLR class];    // 2-byte (15-bit) colour (Rezilla) - These appear to be EV Nova-specific additions
+        registry[@"LCOL"] = [ElementCOLR class];    // 4-byte (24-bit) colour (Rezilla)
+        
         registry[@"DVDR"] = [Element     class];    // divider
         
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
@@ -403,6 +409,9 @@
         registry[@"SCPC"] = [ElementDWRD class];    // MacOS script code (ScriptCode)
         registry[@"LNGC"] = [ElementDWRD class];    // MacOS language code (LangCode)
         registry[@"RGNC"] = [ElementDWRD class];    // MacOS region code (RegionCode)
+        registry[@"BORV"] = [ElementHBYT class];    // Multiple select OR-value byte/word/long (Rezilla)
+        registry[@"WORV"] = [ElementHWRD class];
+        registry[@"LORV"] = [ElementHLNG class];
     }
     return registry;
 }
