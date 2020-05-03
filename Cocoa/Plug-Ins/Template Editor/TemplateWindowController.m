@@ -223,7 +223,7 @@
     // Edit the item clicked on
     // TODO: This doesn't work so nicely for additional fields in RECT/PNT
     if (dataList.clickedColumn == 1 && dataList.clickedRow != -1)
-        [dataList editColumn:1 row:dataList.clickedRow withEvent:nil select:YES];
+        [dataList editColumn:1 row:dataList.clickedRow withEvent:nil select:NO];
 }
 
 - (IBAction)itemValueUpdated:(id)sender

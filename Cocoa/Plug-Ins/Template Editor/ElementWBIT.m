@@ -4,12 +4,8 @@
 
 @implementation ElementWBIT
 
-- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
-{
-    if (self = [super initForType:t withLabel:l]) {
-        self.position = 16;
-    }
-    return self;
++ (unsigned int)length {
+    return 16;
 }
 
 - (void)readDataFrom:(ResourceStream *)stream

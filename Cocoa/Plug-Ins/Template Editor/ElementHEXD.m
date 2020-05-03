@@ -5,6 +5,7 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
+        self.editable = NO;
         _length = 0;
         if ([t isEqualToString:@"BHEX"])    {
             _lengthBytes = 1;
@@ -37,11 +38,6 @@
         }
     }
     return self;
-}
-
-- (BOOL)editable
-{
-    return NO;
 }
 
 - (NSString *)value

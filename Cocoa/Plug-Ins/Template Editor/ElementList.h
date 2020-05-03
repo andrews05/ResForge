@@ -26,7 +26,7 @@
 - (__kindof Element *)peek:(NSUInteger)n;
 - (__kindof Element *)pop;
 - (__kindof Element *)nextOfType:(NSString *)type;
-- (ElementList *)subListFrom:(Element *)startElement;
+- (ElementList *)subListFor:(Element *)startElement;
 
 - (void)readDataFrom:(ResourceStream *)stream;
 - (void)sizeOnDisk:(UInt32 *)size;

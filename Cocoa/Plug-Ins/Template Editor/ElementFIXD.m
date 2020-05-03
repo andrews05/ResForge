@@ -7,7 +7,7 @@
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-	Fixed tmp = 0;
+	Fixed tmp;
 	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
 	fixedValue = CFSwapInt32BigToHost(tmp);
 }

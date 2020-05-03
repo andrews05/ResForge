@@ -181,7 +181,7 @@
 }
 
 // Create a new ElementList by extracting all elements following the current one up until a given type
-- (ElementList *)subListFrom:(Element *)startElement
+- (ElementList *)subListFor:(Element *)startElement
 {
     ElementList *list = [ElementList new];
     list.controller = self.controller;
@@ -251,19 +251,22 @@
     
     // create element class
     Class class = [self fieldRegistry][type];
-    // check for Xnnn type - currently using resorcerer's nmm restriction to reserve all alpha types for potential future use
-    if (!class && [type rangeOfString:@"[A-Z][0-9][0-9A-F]{2}" options:NSRegularExpressionSearch].location != NSNotFound) {
+    // check for Xnnn type - currently using resorcerer's nmm restriction to reserve all alpha types (e.g. FACE) for potential future use
+    if (!class && [type rangeOfString:@"[A-Z](?!000)[0-9][0-9A-F]{2}" options:NSRegularExpressionSearch].location != NSNotFound) {
         class = [self fieldRegistry][[type substringToIndex:1]];
     }
     // check for XXnn type
-    if (!class && [type rangeOfString:@"[A-Z]{2}[0-9]{2}" options:NSRegularExpressionSearch].location != NSNotFound) {
+    if (!class && [type rangeOfString:@"[A-Z]{2}(?!00)[0-9]{2}" options:NSRegularExpressionSearch].location != NSNotFound) {
         class = [self fieldRegistry][[type substringToIndex:2]];
     }
-    if (!class) {
-        NSLog(@"Unrecognized template element type '%@'.", type);
-        return nil;
+    Element *element = nil;
+    if (class) {
+        element = [class elementForType:type withLabel:label];
     }
-    return (Element *)[class elementForType:type withLabel:label];
+    if (!element) {
+        NSLog(@"Unrecognized template element type '%@'.", type);
+    }
+    return element;
 }
 
 - (NSMutableDictionary *)fieldRegistry

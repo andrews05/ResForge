@@ -45,6 +45,40 @@
     return YES;
 }
 
+// Allow tabbing between rows
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
+{
+    NSOutlineView *outlineView = self.parentList.controller.dataList;
+    BOOL singleView = control.superview.class == NSTableRowView.class;
+    // Move to the next/previous editable row if this is last/first control for this row
+    if (commandSelector == @selector(insertTab:) && (singleView || [control.superview.subviews lastObject] == control)) {
+        NSInteger nextRow = [outlineView rowForItem:self] + 1;
+        while (nextRow < outlineView.numberOfRows && ![[outlineView itemAtRow:nextRow] editable]) {
+            nextRow++;
+        }
+        if (nextRow < outlineView.numberOfRows) {
+            [outlineView editColumn:1 row:nextRow withEvent:nil select:NO];
+            return YES;
+        }
+    } else if (commandSelector == @selector(insertBacktab:) && (singleView || [control.superview.subviews firstObject] == control)) {
+        NSInteger nextRow = [outlineView rowForItem:self] - 1;
+        while (nextRow >= 0 && ![[outlineView itemAtRow:nextRow] editable]) {
+            nextRow--;
+        }
+        if (nextRow >= 0) {
+            NSView *view = [outlineView viewAtColumn:1 row:nextRow makeIfNecessary:NO];
+            // If there are multiple subviews for this element's view, make sure we edit the last one rather than the first
+            if (view.subviews.count > 1) {
+                [[view.subviews lastObject] becomeFirstResponder];
+            } else {
+                [outlineView editColumn:1 row:nextRow withEvent:nil select:NO];
+            }
+            return YES;
+        }
+    }
+    return NO;
+}
+
 #pragma mark -
 
 /*** METHODS SUBCLASSES SHOULD OVERRIDE ***/

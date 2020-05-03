@@ -15,7 +15,6 @@
 	return self;
 }
 
-
 - (id)copyWithZone:(NSZone *)zone
 {
 	ElementLSTB *element = [super copyWithZone:zone];
@@ -28,7 +27,7 @@
 {
     // This item will be the tail
     self.entries = [NSMutableArray arrayWithObject:self];
-    self.subElements = [self.parentList subListFrom:self];
+    self.subElements = [self.parentList subListFor:self];
     if ([self.countElement.type isEqualToString:@"FCNT"]) {
         // Fixed count list, create all the entries now
         self.tail = nil;

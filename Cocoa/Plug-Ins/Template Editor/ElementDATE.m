@@ -7,7 +7,7 @@
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-    UInt32 tmp = 0;
+    UInt32 tmp;
 	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
     seconds = CFSwapInt32BigToHost(tmp);
 }

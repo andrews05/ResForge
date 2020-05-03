@@ -5,6 +5,7 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
+        self.editable = NO;
         self.endType = @"KEYE";
     }
     return self;
@@ -20,7 +21,7 @@
 
 - (void)readSubElements
 {
-    self.subElements = [self.parentList subListFrom:self];
+    self.subElements = [self.parentList subListFor:self];
     [self.subElements parseElements];
 }
 

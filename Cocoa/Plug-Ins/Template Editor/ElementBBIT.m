@@ -5,16 +5,20 @@
 
 @implementation ElementBBIT
 
++ (unsigned int)length {
+    return 8;
+}
+
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
-        self.position = 8;
         self.first = YES;
         if ([[t substringFromIndex:1] isEqualToString:@"BIT"]) {
             self.bits = 1;
         } else {
             // XXnn - bit field or fill bits
             self.bits = [[t substringFromIndex:2] intValue];
+            if (self.bits > self.class.length) return nil; // Too big
             self.visible = [t characterAtIndex:1] != 'F'; // Hide fill bits
         }
     }

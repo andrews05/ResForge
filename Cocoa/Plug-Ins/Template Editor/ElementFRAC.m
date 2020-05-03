@@ -7,7 +7,7 @@
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-	Fract tmp = 0;
+	Fract tmp;
 	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
 	fractValue = CFSwapInt32BigToHost(tmp);
 }

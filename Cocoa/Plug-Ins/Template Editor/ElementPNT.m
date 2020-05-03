@@ -10,7 +10,7 @@
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
-    SInt16 tmp = 0;
+    SInt16 tmp;
     [stream readAmount:2 toBuffer:&tmp];
     self.h = CFSwapInt16BigToHost(tmp);
     [stream readAmount:2 toBuffer:&tmp];
