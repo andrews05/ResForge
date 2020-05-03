@@ -69,6 +69,7 @@
 {
     ElementList *list = [[ElementList allocWithZone:zone] init];
     list.parsed = NO;
+    list.parentList = self.parentList;
     list.controller = self.controller;
     list.elements = [[NSMutableArray allocWithZone:zone] initWithArray:self.elements copyItems:YES];
     [list parseElements];
@@ -170,12 +171,23 @@
     Element *element;
     for (NSUInteger i = _currentIndex+1; i < self.elements.count; i++) {
         element = self.elements[i];
-        if (!element) {
-            NSLog(@"Element of type '%@' not found in template.", type);
-            break;
-        }
         if ([element.type isEqualToString:type])
             return element;
+    }
+    return nil;
+}
+
+// Search for an element of a given type preceding the current one, travsersing up the hierarchy if necessary
+- (Element *)previousOfType:(NSString *)type
+{
+    Element *element;
+    for (NSUInteger i = _currentIndex; i > 0; i--) {
+        element = self.elements[i-1];
+        if ([element.type isEqualToString:type])
+            return element;
+    }
+    if (self.parentList) {
+        return [self.parentList previousOfType:type];
     }
     return nil;
 }
@@ -184,6 +196,7 @@
 - (ElementList *)subListFor:(Element *)startElement
 {
     ElementList *list = [ElementList new];
+    list.parentList = self;
     list.controller = self.controller;
     list.elements = [NSMutableArray new];
     NSUInteger nesting = 0;

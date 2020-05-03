@@ -10,7 +10,7 @@
 
 + (NSTableCellView *)configureFields:(NSArray *)fields forElement:(Element *)element
 {
-    NSRect frame = NSMakeRect(0, 0, 56, 18);
+    NSRect frame = NSMakeRect(0, 0, 56, element.rowHeight);
     NSTableCellView *view = [[NSTableCellView alloc] initWithFrame:frame];
     NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
     for (NSString *key in fields) {

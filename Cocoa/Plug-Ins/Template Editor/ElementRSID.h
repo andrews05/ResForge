@@ -1,7 +1,8 @@
 #import "ElementDWRD.h"
 
 @interface ElementRSID : ElementDWRD
-@property ResType resType;
+@property OSType resType;
 @property ResID offset;
+@property NSMutableArray *fixedCases;
 
 @end

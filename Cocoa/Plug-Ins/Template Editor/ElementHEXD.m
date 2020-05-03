@@ -47,11 +47,8 @@
 
 - (void)readSubElements
 {
-	// override to tell stream to stop reading any more TMPL fields
-    if ([self.type isEqualToString:@"HEXD"]) {
-        while ([self.parentList pop]) {
-            NSLog(@"Warning: Template has fields following hex dump, ignoring them.");
-        }
+    if ([self.type isEqualToString:@"HEXD"] && [self.parentList peek:1]) {
+        NSLog(@"Template has fields following hex dump.");
     }
 }
 

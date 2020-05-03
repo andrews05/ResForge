@@ -26,8 +26,9 @@
 
 - (NSView *)dataView:(NSOutlineView *)outlineView
 {
-    NSTableCellView *view = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, 240, 17)];
-    NSColorWell *well = [[NSColorWell alloc] initWithFrame:NSMakeRect(0, 0, 40, 17)];
+    NSRect frame = NSMakeRect(0, 0, 40, self.rowHeight);
+    NSTableCellView *view = [[NSTableCellView alloc] initWithFrame:frame];
+    NSColorWell *well = [[NSColorWell alloc] initWithFrame:frame];
     well.action = @selector(itemValueUpdated:);
     [well bind:@"value" toObject:self withKeyPath:@"value" options:nil];
     [view addSubview:well];

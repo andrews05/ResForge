@@ -6,6 +6,7 @@
 @interface ElementList : NSObject <NSCopying>
 @property (strong) NSMutableArray<Element *> *elements;
 @property (strong) NSMutableArray<Element *> *visibleElements;
+@property (strong) ElementList *parentList;
 @property (readonly) NSUInteger count;
 @property (readonly) NSUInteger currentIndex;
 @property (weak) TemplateWindowController *controller;
@@ -26,6 +27,7 @@
 - (__kindof Element *)peek:(NSUInteger)n;
 - (__kindof Element *)pop;
 - (__kindof Element *)nextOfType:(NSString *)type;
+- (__kindof Element *)previousOfType:(NSString *)type;
 - (ElementList *)subListFor:(Element *)startElement;
 
 - (void)readDataFrom:(ResourceStream *)stream;

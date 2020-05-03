@@ -1,6 +1,5 @@
-#import "ElementUWRD.h"
+#import "ElementBFLG.h"
 
-@interface ElementBOOL : ElementUWRD
-@property BOOL boolValue;
+@interface ElementBOOL : ElementBFLG
 
 @end

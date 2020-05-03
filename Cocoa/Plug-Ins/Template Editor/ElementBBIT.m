@@ -29,10 +29,12 @@
 {
     if ([self.type isEqualToString:@"BB08"]) {
         // Display as checkboxes
-        NSRect frame = NSMakeRect(0, 0, 240, 18);
+        NSRect frame = NSMakeRect(0, 0, 240, self.rowHeight);
         NSView *view = [[NSView alloc] initWithFrame:frame];
+        frame.size.width = 18;
         for (ElementBBIT *element in self.bitList) {
-            NSButton *subview = [ElementBFLG configureCheckboxForElement:element offset:frame.origin.x];
+            NSButton *subview = [ElementBFLG configureCheckboxForElement:element].subviews[0];
+            subview.frame = frame;
             [view addSubview:subview];
             frame.origin.x += 30;
         }

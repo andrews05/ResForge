@@ -12,6 +12,9 @@
 - (void)readSubElements
 {
     ElementLSTB *lstc = (ElementLSTB *)[self.parentList nextOfType:@"LSTC"];
+    if (!lstc) {
+        NSLog(@"'LSTC' for '%@' not found.", self.type);
+    }
     lstc.countElement = self;
 }
 
