@@ -2,21 +2,21 @@
 
 @implementation ElementFCNT
 
-- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
+- (void)readSubElements
 {
-    if (self = [super initForType:t withLabel:l]) {
-        // read count from label - hex value denoted by leading '$'
-        NSScanner *scanner = [NSScanner scannerWithString:l];
-        UInt32 value = 0;
-        if ([l characterAtIndex:0] == '$') {
-            [scanner setScanLocation:1];
-            [scanner scanHexInt:&value];
-        } else {
-            [scanner scanInt:(SInt32*)&value];
-        }
-        self.value = value;
+    [super readSubElements];
+    // Read count from label - hex value denoted by leading '$'
+    NSScanner *scanner = [NSScanner scannerWithString:self.label];
+    UInt32 value = 0;
+    if ([self.label characterAtIndex:0] == '$') {
+        [scanner setScanLocation:1];
+        [scanner scanHexInt:&value];
+    } else {
+        [scanner scanInt:(SInt32*)&value];
     }
-    return self;
+    // Remove count from label
+    self.label = [[self.label substringFromIndex:scanner.scanLocation] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    self.value = value;
 }
 
 - (void)readDataFrom:(ResourceStream *)stream

@@ -20,7 +20,17 @@
 	ElementLSTB *element = [super copyWithZone:zone];
 	if (!element) return nil;
     element.subElements = [self.subElements copyWithZone:zone];
+    if (element.subElements.count == 1) {
+        element.singleItem = [element.subElements elementAtIndex:0];
+    }
 	return element;
+}
+
+// If the list entry contains only a single visible element, show that element here while hiding the sub section
+// (this also greatly improves performance with large lists)
+- (NSView *)dataView:(NSOutlineView *)outlineView
+{
+    return [self.singleItem dataView:outlineView];
 }
 
 - (void)readSubElements
@@ -31,9 +41,12 @@
     if ([self.countElement.type isEqualToString:@"FCNT"]) {
         // Fixed count list, create all the entries now
         self.tail = nil;
-        [self.subElements parseElements];
         for (unsigned int i = 1; i < self.countElement.value; i++) {
             [self createNextItem];
+        }
+        [self.subElements parseElements];
+        if (self.subElements.count == 1) {
+            self.singleItem = [self.subElements elementAtIndex:0];
         }
     }
 }
@@ -71,7 +84,6 @@
                     break;
                 }
             }
-            ;
             [[self createNextItem].subElements readDataFrom:stream];
         }
     }
@@ -101,14 +113,14 @@
 {
     // Prefix with item number
     NSUInteger index = [self.entries indexOfObject:self];
-    return [NSString stringWithFormat:@"%ld) %@", index+1, super.label];
+    return [NSString stringWithFormat:@"%ld) %@", index+1, [self.singleItem label] ?: super.label];
 }
 
 #pragma mark -
 
 - (NSInteger)subElementCount
 {
-    return self == self.tail ? 0 : self.subElements.count;
+    return (self == self.tail || self.singleItem) ? 0 : self.subElements.count;
 }
 
 - (Element *)subElementAtIndex:(NSInteger)n
@@ -131,7 +143,7 @@
 
 - (BOOL)removeListEntry
 {
-    if (!self.tail) return NO;
+    if (!self.tail || self == self.tail) return NO;
     
 	[self.parentList removeElement:self];
     [self.entries removeObject:self];

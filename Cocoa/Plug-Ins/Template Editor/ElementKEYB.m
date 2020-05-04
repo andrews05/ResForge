@@ -5,6 +5,7 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
+        self.visible = NO;
         self.editable = NO;
         self.endType = @"KEYE";
     }

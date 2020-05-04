@@ -172,19 +172,18 @@
 #pragma mark -
 #pragma mark Table Management
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(Element *)item
 {
-    Element *element = (Element *)item;
     if ([tableColumn.identifier isEqualToString:@"data"]) {
-        return [element dataView:outlineView];
+        return [item dataView:outlineView];
     } else {
         NSTableCellView *view = [outlineView makeViewWithIdentifier:(tableColumn ? tableColumn.identifier : @"regularLabel") owner:self];
-        view.textField.stringValue = element.label;
+        view.textField.stringValue = item.label;
         return view;
     }
 }
 
-- (id)outlineView:(NSOutlineView*)outlineView child:(NSInteger)index ofItem:(id)item
+- (id)outlineView:(NSOutlineView*)outlineView child:(NSInteger)index ofItem:(Element *)item
 {
 	if (item == nil)
 		return [resourceStructure elementAtIndex:index];
@@ -192,27 +191,27 @@
         return [item subElementAtIndex:index];
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(Element *)item
 {
-	return ([item subElementCount] > 0);
+	return (item.subElementCount > 0);
 }
 
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(Element *)item
 {
 	if (item == nil)
-		return [resourceStructure count];
+		return resourceStructure.count;
 	else
-        return [item subElementCount];
+        return item.subElementCount;
 }
 
-- (double)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+- (double)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(Element *)item
 {
-    return [item rowHeight];
+    return item.rowHeight;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(id)item
+- (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(Element *)item
 {
-    return [[(Element *)item type] isEqualToString:@"DVDR"];
+    return [item.type isEqualToString:@"DVDR"];
 }
 
 #pragma mark -
@@ -314,6 +313,53 @@
 	NSMenuItem *createItem = [resourceMenu itemAtIndex:[resourceMenu indexOfItemWithTarget:nil andAction:@selector(createListEntry:)]];
 	[createItem setTitle:NSLocalizedString(@"Create New Resource...", nil)];
 	[createItem setAction:@selector(showCreateResourceSheet:)];
+}
+
+@end
+
+#pragma mark -
+#pragma mark Table Event Handling
+
+// Allow tabbing between rows
+@implementation NTOutlineView
+
+-(void)selectNextKeyView:(id)sender
+{
+    NSView *view = (NSView *)self.window.firstResponder;
+    if (view.nextValidKeyView) {
+        [self.window selectNextKeyView:view];
+        return;
+    }
+    NSInteger nextRow = [self rowForView:view]+1;
+    while (nextRow < self.numberOfRows) {
+        // Going forward we can ask the row for its nextValidKeyView
+        view = [self rowViewAtRow:nextRow makeIfNecessary:NO].nextValidKeyView;
+        if (view) {
+            [self.window makeFirstResponder:view];
+            return;
+        }
+        nextRow++;
+    }
+}
+
+-(void)selectPreviousKeyView:(id)sender
+{
+    NSView *view = (NSView *)self.window.firstResponder;
+    if (view.previousValidKeyView && view.previousValidKeyView != self) {
+        [self.window selectPreviousKeyView:view];
+        return;
+    }
+    NSInteger nextRow = [self rowForView:view]-1;
+    while (nextRow >= 0) {
+        // Going backward we need to look at the column view and see if it's valid
+        view = [self viewAtColumn:1 row:nextRow makeIfNecessary:NO];
+        if (![view canBecomeKeyView]) view = [view.subviews lastObject];
+        if ([view canBecomeKeyView]) {
+            [self.window makeFirstResponder:view];
+            return;
+        }
+        nextRow--;
+    }
 }
 
 @end

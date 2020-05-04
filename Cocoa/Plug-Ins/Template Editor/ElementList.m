@@ -112,12 +112,15 @@
     if (!self.parsed) {
         // Insert after current element during parsing (e.g. fixed count list, keyed section)
         [self.elements insertObject:element atIndex:++_currentIndex];
-        [self.visibleElements addObject:element];
+        if (element.visible)
+            [self.visibleElements addObject:element];
     } else {
         // Insert after current element during reading data (e.g. other lists)
         [self.elements insertObject:element atIndex:_currentIndex++];
-        NSUInteger visIndex = [self.visibleElements indexOfObject:self.elements[_currentIndex]];
-        [self.visibleElements insertObject:element atIndex:visIndex];
+        if (element.visible) {
+            NSUInteger visIndex = [self.visibleElements indexOfObject:self.elements[_currentIndex]];
+            [self.visibleElements insertObject:element atIndex:visIndex];
+        }
     }
 }
 
@@ -126,14 +129,16 @@
 {
     [self.elements insertObject:element atIndex:[self.elements indexOfObject:before]];
     element.parentList = self;
-    [self.visibleElements insertObject:element atIndex:[self.visibleElements indexOfObject:before]];
+    if (element.visible)
+        [self.visibleElements insertObject:element atIndex:[self.visibleElements indexOfObject:before]];
 }
 
 - (void)insertElement:(Element *)element after:(Element *)after
 {
     [self.elements insertObject:element atIndex:[self.elements indexOfObject:after]+1];
     element.parentList = self;
-    [self.visibleElements insertObject:element atIndex:[self.visibleElements indexOfObject:after]+1];
+    if (element.visible)
+        [self.visibleElements insertObject:element atIndex:[self.visibleElements indexOfObject:after]+1];
 }
 
 - (void)removeElement:(Element *)element
@@ -292,15 +297,15 @@
         registry[@"DBYT"] = [ElementDBYT class];    // signed ints
         registry[@"DWRD"] = [ElementDWRD class];
         registry[@"DLNG"] = [ElementDLNG class];
-        registry[@"DLLG"] = [ElementDLLG class];
+        registry[@"DLLG"] = [ElementDLLG class];    // (ResKnife)
         registry[@"UBYT"] = [ElementUBYT class];    // unsigned ints
         registry[@"UWRD"] = [ElementUWRD class];
         registry[@"ULNG"] = [ElementULNG class];
-        registry[@"ULLG"] = [ElementULLG class];
+        registry[@"ULLG"] = [ElementULLG class];    // (ResKnife)
         registry[@"HBYT"] = [ElementHBYT class];    // hex byte/word/long
         registry[@"HWRD"] = [ElementHWRD class];
         registry[@"HLNG"] = [ElementHLNG class];
-        registry[@"HLLG"] = [ElementHLLG class];
+        registry[@"HLLG"] = [ElementHLLG class];    // (ResKnife)
         
         // multiple fields
         registry[@"RECT"] = [ElementRECT class];    // QuickDraw rect
@@ -345,13 +350,13 @@
         registry[@"LFLG"] = [ElementLFLG class];
         registry[@"BBIT"] = [ElementBBIT class];    // bit within a byte
         registry[@"BB"]   = [ElementBBIT class];    // BBnn bit field
-        registry[@"BF"]   = [ElementBBIT class];    // BFnn fill bits
+        registry[@"BF"]   = [ElementBBIT class];    // BFnn fill bits (ResKnife)
         registry[@"WBIT"] = [ElementWBIT class];
         registry[@"WB"]   = [ElementWBIT class];    // WBnn
-        registry[@"WF"]   = [ElementWBIT class];    // WFnn
+        registry[@"WF"]   = [ElementWBIT class];    // WFnn (ResKnife)
         registry[@"LBIT"] = [ElementLBIT class];
         registry[@"LB"]   = [ElementLBIT class];    // LBnn
-        registry[@"LF"]   = [ElementLBIT class];    // LFnn
+        registry[@"LF"]   = [ElementLBIT class];    // LFnn (ResKnife)
         
         // hex dumps
         registry[@"BHEX"] = [ElementHEXD class];
@@ -367,12 +372,12 @@
         registry[@"OCNT"] = [ElementOCNT class];
         registry[@"ZCNT"] = [ElementOCNT class];
         registry[@"BCNT"] = [ElementOCNT class];
-        registry[@"BZCT"] = [ElementOCNT class];
+        registry[@"BZCT"] = [ElementOCNT class];    // (ResKnife)
         registry[@"WCNT"] = [ElementOCNT class];
-        registry[@"WZCT"] = [ElementOCNT class];
+        registry[@"WZCT"] = [ElementOCNT class];    // (ResKnife)
         registry[@"LCNT"] = [ElementOCNT class];
         registry[@"LZCT"] = [ElementOCNT class];
-        registry[@"FCNT"] = [ElementFCNT class];    // fixed count with count in label (why not Lnnn?)
+        registry[@"FCNT"] = [ElementFCNT class];    // fixed count with count in label (why didn't they choose Lnnn?)
         // list begin/end
         registry[@"LSTB"] = [ElementLSTB class];
         registry[@"LSTZ"] = [ElementLSTB class];
@@ -387,15 +392,15 @@
         registry[@"KBYT"] = [ElementDBYT class];    // signed keys
         registry[@"KWRD"] = [ElementDWRD class];
         registry[@"KLNG"] = [ElementDLNG class];
-        registry[@"KLLG"] = [ElementDLLG class];
+        registry[@"KLLG"] = [ElementDLLG class];    // (ResKnife)
         registry[@"KUBT"] = [ElementUBYT class];    // unsigned keys
         registry[@"KUWD"] = [ElementUWRD class];
         registry[@"KULG"] = [ElementULNG class];
-        registry[@"KULL"] = [ElementULLG class];
+        registry[@"KULL"] = [ElementULLG class];    // (ResKnife)
         registry[@"KHBT"] = [ElementHBYT class];    // hex keys
         registry[@"KHWD"] = [ElementHWRD class];
         registry[@"KHLG"] = [ElementHLNG class];
-        registry[@"KHLL"] = [ElementHLLG class];
+        registry[@"KHLL"] = [ElementHLLG class];    // (ResKnife)
         registry[@"KCHR"] = [ElementCHAR class];    // keyed MacRoman values
         registry[@"KTYP"] = [ElementTNAM class];
         registry[@"KRID"] = [ElementKRID class];    // key on ID of the resource
@@ -409,7 +414,7 @@
         
         // colours
         registry[@"COLR"] = [ElementCOLR class];    // 6-byte QuickDraw colour
-        registry[@"WCOL"] = [ElementCOLR class];    // 2-byte (15-bit) colour (Rezilla) - These appear to be EV Nova-specific additions
+        registry[@"WCOL"] = [ElementCOLR class];    // 2-byte (15-bit) colour (Rezilla)
         registry[@"LCOL"] = [ElementCOLR class];    // 4-byte (24-bit) colour (Rezilla)
         
         registry[@"DVDR"] = [Element     class];    // divider
@@ -418,10 +423,8 @@
         registry[@"SFRC"] = [ElementUWRD class];    // 0.16 fixed fraction
         registry[@"FXYZ"] = [ElementUWRD class];    // 1.15 fixed fraction
         registry[@"FWID"] = [ElementUWRD class];    // 4.12 fixed fraction
-        registry[@"TITL"] = [Element     class];    // resource title (e.g. utxt would have "Unicode Text"; must be first element of template, and not anywhere else)
-        registry[@"CMNT"] = [Element     class];
-        registry[@"LLDT"] = [ElementULLG class];    // 8-byte date (LongDateTime; seconds since 1 Jan 1904)
-        registry[@"STYL"] = [ElementDBYT class];    // QuickDraw font style
+        registry[@"LLDT"] = [ElementULLG class];    // 8-byte date (seconds since 1 Jan 1904) (ResKnife)
+        registry[@"STYL"] = [ElementDBYT class];    // QuickDraw font style (ResKnife)
         registry[@"SCPC"] = [ElementDWRD class];    // MacOS script code (ScriptCode)
         registry[@"LNGC"] = [ElementDWRD class];    // MacOS language code (LangCode)
         registry[@"RGNC"] = [ElementDWRD class];    // MacOS region code (RegionCode)

@@ -35,7 +35,6 @@
     [self setCase:self.cases[sender.indexOfSelectedItem]];
     TemplateWindowController *controller = sender.window.windowController;
     [controller.dataList reloadData];
-    [controller.dataList expandItem:self.currentSection expandChildren:YES];
     [controller itemValueUpdated:sender];
 }
 
@@ -62,7 +61,6 @@
         self.currentSection = newSection;
         [self.parentList insertElement:self.currentSection after:self];
     }
-    self.currentSection.label = element.symbol; // Replace label with the case symbol
 }
 
 - (void)readCases
@@ -118,13 +116,22 @@
         [self validateValue:&value forKey:@"value" error:nil];
         [self setValue:value forKey:@"value"];
         [self.parentList insertElement:self.currentSection];
-        self.currentSection.label = element.symbol; // Replace label with the case symbol
         
         // Use KVO to observe value change when data is first read
         // This saves us adding any key logic to the concrete element subclasses
         [self addObserver:self forKeyPath:@"value" options:0 context:nil];
         self.observing = YES;
     }
+}
+
+- (NSInteger)subElementCount
+{
+    return [self.currentSection subElementCount];
+}
+
+- (Element *)subElementAtIndex:(NSInteger)n
+{
+    return [self.currentSection subElementAtIndex:n];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath

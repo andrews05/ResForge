@@ -18,7 +18,7 @@
 	label = [l copy];
 	type = [t copy];
     self.endType = nil;
-    self.rowHeight = 17;
+    self.rowHeight = 18;
     self.visible = YES;
     self.editable = self.class != Element.class;
     self.cases = nil;
@@ -49,32 +49,12 @@
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
     NSOutlineView *outlineView = self.parentList.controller.dataList;
-    BOOL singleView = control.superview.class == NSTableRowView.class;
-    // Move to the next/previous editable row if this is last/first control for this row
-    if (commandSelector == @selector(insertTab:) && (singleView || [control.superview.subviews lastObject] == control)) {
-        NSInteger nextRow = [outlineView rowForItem:self] + 1;
-        while (nextRow < outlineView.numberOfRows && ![[outlineView itemAtRow:nextRow] editable]) {
-            nextRow++;
-        }
-        if (nextRow < outlineView.numberOfRows) {
-            [outlineView editColumn:1 row:nextRow withEvent:nil select:NO];
-            return YES;
-        }
-    } else if (commandSelector == @selector(insertBacktab:) && (singleView || [control.superview.subviews firstObject] == control)) {
-        NSInteger nextRow = [outlineView rowForItem:self] - 1;
-        while (nextRow >= 0 && ![[outlineView itemAtRow:nextRow] editable]) {
-            nextRow--;
-        }
-        if (nextRow >= 0) {
-            NSView *view = [outlineView viewAtColumn:1 row:nextRow makeIfNecessary:NO];
-            // If there are multiple subviews for this element's view, make sure we edit the last one rather than the first
-            if (view.subviews.count > 1) {
-                [[view.subviews lastObject] becomeFirstResponder];
-            } else {
-                [outlineView editColumn:1 row:nextRow withEvent:nil select:NO];
-            }
-            return YES;
-        }
+    if (commandSelector == @selector(insertTab:) && !control.nextValidKeyView) {
+        [outlineView performSelector:@selector(selectNextKeyView:) withObject:control];
+        return YES;
+    } else if (commandSelector == @selector(insertBacktab:) && (!control.previousValidKeyView || control.previousValidKeyView == outlineView)) {
+        [outlineView performSelector:@selector(selectPreviousKeyView:) withObject:control];
+        return YES;
     }
     return NO;
 }
@@ -87,11 +67,20 @@
 {
     if (![self respondsToSelector:@selector(value)])
         return nil;
-    NSTextField *textField = [outlineView makeViewWithIdentifier:(self.cases ? @"comboData" : @"textData") owner:self];
-    textField.editable = self.editable;
+    if (!self.editable) {
+        // This guarantees that the text field won't be editable even as the outline view reuses other cell's views
+        NSView *view = [outlineView makeViewWithIdentifier:@"regularLabel" owner:self];
+        [view.subviews[0] bind:@"value" toObject:self withKeyPath:@"value" options:nil];
+        return view;
+    }
+    NSView *view = [outlineView makeViewWithIdentifier:(self.cases ? @"comboData" : @"textData") owner:self];
+    NSTextField *textField = view.subviews[0];
     textField.delegate = self;
     textField.placeholderString = self.type;
     if (self.cases) {
+        NSRect frame = textField.frame;
+        frame.size.height = 20;
+        textField.frame = frame;
         [textField bind:@"contentValues" toObject:self withKeyPath:@"cases" options:nil];
         // The formatter isn't directly compatible with the values displayed by the combo box
         // Use a combination of value transformation with immediate validation to run the formatter manually
@@ -101,7 +90,7 @@
         textField.formatter = self.formatter;
         [textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
     }
-    return textField;
+    return view;
 }
 
 + (NSFormatter *)sharedFormatter

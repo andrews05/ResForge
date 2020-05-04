@@ -47,3 +47,6 @@
 - (IBAction)delete:(id)sender;
 
 @end
+
+@interface NTOutlineView : NSOutlineView
+@end

@@ -4,9 +4,13 @@
 // implements ZCNT, OCNT, BCNT, BZCT, WCNT, WZCT, LCNT, LZCT
 @implementation ElementOCNT
 
-- (BOOL)editable
+
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
-    return NO;
+    if (self = [super initForType:t withLabel:l]) {
+        self.editable = NO;
+    }
+    return self;
 }
 
 - (void)readSubElements
