@@ -13,7 +13,7 @@
     return self;
 }
 
-- (void)readSubElements
+- (void)configure
 {
     ElementLSTB *lstc = (ElementLSTB *)[self.parentList nextOfType:@"LSTC"];
     if (!lstc) {

@@ -3,8 +3,6 @@
 #import "TemplateWindowController.h"
 
 @implementation Element
-@synthesize type;
-@synthesize label;
 
 + (id)elementForType:(NSString *)t withLabel:(NSString *)l
 {
@@ -15,8 +13,8 @@
 {
 	self = [super init];
 	if (!self) return nil;
-	label = [l copy];
-	type = [t copy];
+	_label = l;
+	_type = t;
     self.endType = nil;
     self.rowHeight = 18;
     self.visible = YES;
@@ -29,7 +27,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	return [[self.class allocWithZone:zone] initForType:type withLabel:label];
+	return [[self.class allocWithZone:zone] initForType:_type withLabel:_label];
 }
 
 - (NSFormatter *)formatter
@@ -49,11 +47,11 @@
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
     NSOutlineView *outlineView = self.parentList.controller.dataList;
-    if (commandSelector == @selector(insertTab:) && !control.nextValidKeyView) {
-        [outlineView performSelector:@selector(selectNextKeyView:) withObject:control];
-        return YES;
-    } else if (commandSelector == @selector(insertBacktab:) && (!control.previousValidKeyView || control.previousValidKeyView == outlineView)) {
+    if (commandSelector == @selector(insertBacktab:) && (!control.previousValidKeyView || control.previousValidKeyView == outlineView)) {
         [outlineView performSelector:@selector(selectPreviousKeyView:) withObject:control];
+        return YES;
+    } else if (commandSelector == @selector(insertTab:) && !control.nextValidKeyView) {
+        [outlineView performSelector:@selector(selectNextKeyView:) withObject:control];
         return YES;
     }
     return NO;
@@ -70,7 +68,9 @@
     if (!self.editable) {
         // This guarantees that the text field won't be editable even as the outline view reuses other cell's views
         NSView *view = [outlineView makeViewWithIdentifier:@"regularLabel" owner:self];
-        [view.subviews[0] bind:@"value" toObject:self withKeyPath:@"value" options:nil];
+        NSTextField *textField = view.subviews[0];
+        [textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
+        textField.selectable = YES;
         return view;
     }
     NSView *view = [outlineView makeViewWithIdentifier:(self.cases ? @"comboData" : @"textData") owner:self];
@@ -79,6 +79,7 @@
     textField.placeholderString = self.type;
     if (self.cases) {
         NSRect frame = textField.frame;
+        frame.origin.y = -2;
         frame.size.height = 20;
         textField.frame = frame;
         [textField bind:@"contentValues" toObject:self withKeyPath:@"cases" options:nil];
@@ -110,7 +111,7 @@
 	return nil;
 }
 
-- (void)readSubElements
+- (void)configure
 {
     // default implementation reads CASE elements
     if (!self.visible || !self.editable) return;

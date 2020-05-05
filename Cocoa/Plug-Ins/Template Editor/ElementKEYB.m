@@ -20,10 +20,10 @@
     return element;
 }
 
-- (void)readSubElements
+- (void)configure
 {
     self.subElements = [self.parentList subListFor:self];
-    [self.subElements parseElements];
+    [self.subElements configureElements];
 }
 
 - (void)readDataFrom:(ResourceStream *)stream

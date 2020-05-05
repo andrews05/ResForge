@@ -52,7 +52,7 @@
 {
     self = [super init];
     if (!self) return nil;
-    self.parsed = NO;
+    self.configured = NO;
     self.elements = [NSMutableArray new];
     [stream open];
     Element *element;
@@ -68,17 +68,17 @@
 - (id)copyWithZone:(NSZone *)zone
 {
     ElementList *list = [[ElementList allocWithZone:zone] init];
-    list.parsed = NO;
+    list.configured = NO;
     list.parentList = self.parentList;
     list.controller = self.controller;
     list.elements = [[NSMutableArray allocWithZone:zone] initWithArray:self.elements copyItems:YES];
-    [list parseElements];
+    [list configureElements];
     return list;
 }
 
-- (void)parseElements
+- (void)configureElements
 {
-    if (self.parsed) return;
+    if (self.configured) return;
     _currentIndex = 0;
     self.visibleElements = [NSMutableArray new];
     Element *element;
@@ -87,10 +87,10 @@
         element.parentList = self;
         if (element.visible)
             [self.visibleElements addObject:element];
-        [element readSubElements];
+        [element configure];
         _currentIndex++;
     }
-    self.parsed = YES;
+    self.configured = YES;
 }
 
 #pragma mark -
@@ -109,13 +109,13 @@
 - (void)insertElement:(Element *)element
 {
     element.parentList = self;
-    if (!self.parsed) {
-        // Insert after current element during parsing (e.g. fixed count list, keyed section)
+    if (!self.configured) {
+        // Insert after current element during configure (e.g. fixed count list, keyed section)
         [self.elements insertObject:element atIndex:++_currentIndex];
         if (element.visible)
             [self.visibleElements addObject:element];
     } else {
-        // Insert after current element during reading data (e.g. other lists)
+        // Insert before current element during read (e.g. other lists)
         [self.elements insertObject:element atIndex:_currentIndex++];
         if (element.visible) {
             NSUInteger visIndex = [self.visibleElements indexOfObject:self.elements[_currentIndex]];

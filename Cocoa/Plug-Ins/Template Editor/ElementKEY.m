@@ -80,7 +80,7 @@
     while (element.class == ElementKEYB.class) {
         [self.parentList pop];
         element.parentList = self.parentList;
-        [element readSubElements];
+        [element configure];
         // Allow one KEYB to be used for multiple cases
         NSArray *vals = [element.label componentsSeparatedByString:@","];
         for (NSString *value in vals) {
@@ -95,10 +95,10 @@
     }
 }
 
-- (void)readSubElements
+- (void)configure
 {
     if (!self.isKey) {
-        [super readSubElements];
+        [super configure];
         return;
     }
     

@@ -7,7 +7,6 @@
 {
 	self = [super initForType:t withLabel:l];
 	if (self) {
-        _tail = self;
         _zeroTerminated = [t isEqualToString:@"LSTZ"];
         self.editable = NO;
         self.endType = @"LSTE";
@@ -21,8 +20,10 @@
 	if (!element) return nil;
     element.subElements = [self.subElements copyWithZone:zone];
     if (element.subElements.count == 1) {
-        element.singleItem = [element.subElements elementAtIndex:0];
+        element.singleElement = [element.subElements elementAtIndex:0];
     }
+    element.tail = self.tail;
+    element.entries = self.entries;
 	return element;
 }
 
@@ -30,24 +31,25 @@
 // (this also greatly improves performance with large lists)
 - (NSView *)dataView:(NSOutlineView *)outlineView
 {
-    return [self.singleItem dataView:outlineView];
+    return [self.singleElement dataView:outlineView];
 }
 
-- (void)readSubElements
+- (void)configure
 {
-    // This item will be the tail
     self.entries = [NSMutableArray arrayWithObject:self];
     self.subElements = [self.parentList subListFor:self];
     if ([self.countElement.type isEqualToString:@"FCNT"]) {
         // Fixed count list, create all the entries now
-        self.tail = nil;
         for (unsigned int i = 1; i < self.countElement.value; i++) {
             [self createNextItem];
         }
-        [self.subElements parseElements];
+        [self.subElements configureElements];
         if (self.subElements.count == 1) {
-            self.singleItem = [self.subElements elementAtIndex:0];
+            self.singleElement = [self.subElements elementAtIndex:0];
         }
+    } else {
+        // This item will be the tail
+        self.tail = self;
     }
 }
 
@@ -57,8 +59,6 @@
     ElementLSTB *list = [self copy];
     [self.parentList insertElement:list];
     [self.entries addObject:list];
-    list.tail = self.tail;
-    list.entries = self.entries;
     return list;
 }
 
@@ -113,14 +113,14 @@
 {
     // Prefix with item number
     NSUInteger index = [self.entries indexOfObject:self];
-    return [NSString stringWithFormat:@"%ld) %@", index+1, [self.singleItem label] ?: super.label];
+    return [NSString stringWithFormat:@"%ld) %@", index+1, [self.singleElement label] ?: super.label];
 }
 
 #pragma mark -
 
 - (NSInteger)subElementCount
 {
-    return (self == self.tail || self.singleItem) ? 0 : self.subElements.count;
+    return (self == self.tail || self.singleElement) ? 0 : self.subElements.count;
 }
 
 - (Element *)subElementAtIndex:(NSInteger)n
@@ -128,27 +128,29 @@
     return [self.subElements elementAtIndex:n];
 }
 
-- (BOOL)createListEntry
+- (BOOL)allowsCreateListEntry
 {
-    if (!self.tail) return NO;
-    
+    return self.tail != nil;
+}
+
+- (BOOL)allowsRemoveListEntry
+{
+    return self.tail != nil && self.tail != self;
+}
+
+- (void)createListEntry
+{
     ElementLSTB *list = [self.tail copy];
     [self.parentList insertElement:list before:self];
     [self.entries insertObject:list atIndex:[self.entries indexOfObject:self]];
     self.tail.countElement.value++;
-    list.tail = self.tail;
-    list.entries = self.entries;
-    return YES;
 }
 
-- (BOOL)removeListEntry
+- (void)removeListEntry
 {
-    if (!self.tail || self == self.tail) return NO;
-    
 	[self.parentList removeElement:self];
     [self.entries removeObject:self];
     self.tail.countElement.value--;
-    return YES;
 }
 
 @end

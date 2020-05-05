@@ -45,7 +45,7 @@
     return [self.data description];
 }
 
-- (void)readSubElements
+- (void)configure
 {
     if ([self.type isEqualToString:@"HEXD"] && [self.parentList peek:1]) {
         NSLog(@"Template has fields following hex dump.");

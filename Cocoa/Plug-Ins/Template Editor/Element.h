@@ -40,10 +40,12 @@
 // Override this if the formatter should not be shared
 - (NSFormatter *)formatter;
 
+// Perform any configuration that may depend on other elements
+- (void)configure;
+
 // Items that have sub-items (like LSTB, LSTZ, LSTC and other lists) should implement these:
 - (NSInteger)subElementCount;
 - (Element *)subElementAtIndex:(NSInteger)n;
-- (void)readSubElements;
 
 // This is called on an item of your class when displaying resource data using a template that uses your field:
 - (void)readDataFrom:(ResourceStream *)stream;

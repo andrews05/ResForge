@@ -7,9 +7,11 @@
 @property (weak) ElementOCNT *countElement;		// Our "list counter" element.
 @property (weak) ElementLSTB *tail;
 @property BOOL zeroTerminated;
-@property (strong) Element *singleItem;
+@property (strong) Element *singleElement;
 
-- (BOOL)createListEntry;
-- (BOOL)removeListEntry;
+- (BOOL)allowsCreateListEntry;
+- (BOOL)allowsRemoveListEntry;
+- (void)createListEntry;
+- (void)removeListEntry;
 
 @end

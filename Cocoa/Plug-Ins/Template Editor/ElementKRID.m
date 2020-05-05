@@ -13,7 +13,7 @@
     return textField;
 }
 
-- (void)readSubElements
+- (void)configure
 {
     [self readCases];
     // Get the current resource id

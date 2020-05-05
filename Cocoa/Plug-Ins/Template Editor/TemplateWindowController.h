@@ -36,7 +36,6 @@
 
 - (void)readTemplate:(id <ResKnifeResource>)tmplRes;
 - (void)loadResource;
-- (IBAction)dataClicked:(id)sender;
 - (IBAction)itemValueUpdated:(id)sender;
 - (IBAction)saveResource:(id)sender;
 - (IBAction)revertResource:(id)sender;
@@ -49,4 +48,7 @@
 @end
 
 @interface NTOutlineView : NSOutlineView
+@end
+
+@interface NTFocusView : NSTableCellView
 @end

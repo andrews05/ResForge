@@ -42,14 +42,14 @@
     [self loadCases];
 }
 
-- (void)readSubElements
+- (void)configure
 {
     if (!self.resType) {
         // See if we can bind to a preceding TNAM field
         Element *tnam = [self.parentList previousOfType:@"TNAM"];
         if (!tnam) {
             NSLog(@"Could not determine resource type for RSID.");
-            [super readSubElements];
+            [super configure];
             return;
         }
         [self bind:@"resType" toObject:tnam withKeyPath:@"tnam" options:nil];

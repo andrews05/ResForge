@@ -48,7 +48,7 @@
     }
 }
 
-- (void)readSubElements
+- (void)configure
 {
     if (!self.first) return;
     self.bitList = [NSMutableArray new];

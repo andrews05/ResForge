@@ -1,13 +1,7 @@
 #import "TemplateWindowController.h"
 #import "ResourceStream.h"
 #import "Element.h"
-#import "ElementOCNT.h"
 #import "ElementLSTB.h"
-#import "ElementBBIT.h"
-// and ones for keyed fields
-#import "ElementDBYT.h"
-#import "ElementDWRD.h"
-#import "ElementDLNG.h"
 
 #import "NSOutlineView-SelectedItems.h"
 #import "CreateResourceSheetController.h"
@@ -85,7 +79,7 @@
     NSInputStream *stream = [[NSInputStream alloc] initWithData:[tmplRes data]];
     resourceStructure = [ElementList listFromStream:stream];
     resourceStructure.controller = self;
-    [resourceStructure parseElements];
+    [resourceStructure configureElements];
 }
 
 - (void)loadResource
@@ -172,15 +166,17 @@
 #pragma mark -
 #pragma mark Table Management
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(Element *)item
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
     if ([tableColumn.identifier isEqualToString:@"data"]) {
         return [item dataView:outlineView];
-    } else {
-        NSTableCellView *view = [outlineView makeViewWithIdentifier:(tableColumn ? tableColumn.identifier : @"regularLabel") owner:self];
-        view.textField.stringValue = item.label;
-        return view;
     }
+    NSString *identifier = tableColumn ? tableColumn.identifier : @"regularLabel";
+    if ([item class] == ElementLSTB.class && [item allowsCreateListEntry])
+        identifier = @"listLabel";
+    NSTableCellView *view = [outlineView makeViewWithIdentifier:identifier owner:self];
+    view.textField.stringValue = [item label];
+    return view;
 }
 
 - (id)outlineView:(NSOutlineView*)outlineView child:(NSInteger)index ofItem:(Element *)item
@@ -217,14 +213,6 @@
 #pragma mark -
 #pragma mark Menu Management
 
-- (IBAction)dataClicked:(id)sender
-{
-    // Edit the item clicked on
-    // TODO: This doesn't work so nicely for additional fields in RECT/PNT
-    if (dataList.clickedColumn == 1 && dataList.clickedRow != -1)
-        [dataList editColumn:1 row:dataList.clickedRow withEvent:nil select:NO];
-}
-
 - (IBAction)itemValueUpdated:(id)sender
 {
     if (liveEdit) {
@@ -240,58 +228,53 @@
 // these next five methods are a crude hack - the items ought to be in the responder chain themselves
 - (IBAction)createListEntry:(id)sender;
 {
-	// This works by selecting an item that serves as a template (another LSTB), or knows how to create an item (LSTE) and passing the message on to it.
-	id element = [dataList selectedItem];
-	if([element respondsToSelector:@selector(createListEntry)] && [element createListEntry])
-	{
-        NSInteger row = [dataList selectedRow];
+	// This works by selecting a list element (LSTB) and passing the message on to it
+    NSInteger row = [dataList rowForView:(NSView *)self.window.firstResponder];
+    id element = [dataList itemAtRow:row];
+	if ([element class] == ElementLSTB.class && [element allowsCreateListEntry]) {
+        [element createListEntry];
 		[dataList reloadData];
-        [dataList selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
-		[dataList expandItem:[dataList selectedItem] expandChildren:YES];
-		if(!liveEdit) [self setDocumentEdited:YES];
+        [self.window makeFirstResponder:[dataList viewAtColumn:0 row:row makeIfNecessary:YES]];
+		[dataList expandItem:[dataList itemAtRow:row] expandChildren:YES];
+		if (!liveEdit) [self setDocumentEdited:YES];
 	}
-}
-
-- (IBAction)cut:(id)sender;
-{
-	[[dataList selectedItem] cut:sender];
-	[dataList reloadData];
-	if(!liveEdit) [self setDocumentEdited:YES];
-}
-
-- (IBAction)copy:(id)sender;
-{
-	[[dataList selectedItem] copy:sender];
-	[dataList reloadData];
-}
-
-- (IBAction)paste:(id)sender;
-{
-	[[dataList selectedItem] paste:sender];
-	[dataList reloadData];
-	if(!liveEdit) [self setDocumentEdited:YES];
 }
 
 - (IBAction)delete:(id)sender;
 {
-    id element = [dataList selectedItem];
-    if ([element respondsToSelector:@selector(removeListEntry)] && [element removeListEntry]) {
+    NSInteger row = [dataList rowForView:(NSView *)self.window.firstResponder];
+    id element = [dataList itemAtRow:row];
+    if ([element class] == ElementLSTB.class && [element allowsRemoveListEntry]) {
+        [element removeListEntry];
         [dataList reloadData];
-        if(!liveEdit) [self setDocumentEdited:YES];
+        [self.window makeFirstResponder:[dataList viewAtColumn:0 row:row makeIfNecessary:YES]];
+        if (!liveEdit) [self setDocumentEdited:YES];
     }
 }
 
-- (BOOL)validateMenuItem:(NSMenuItem*)item
+- (IBAction)cut:(id)sender;
 {
-	Element *element = (Element*) [dataList selectedItem];
-	if([item action] == @selector(createListEntry:))	return(element && [element respondsToSelector:@selector(createListEntry)]);
-	else if([item action] == @selector(cut:))			return(element && [element respondsToSelector:@selector(cut:)]);
-	else if([item action] == @selector(copy:))			return(element && [element respondsToSelector:@selector(copy:)]);
-	else if([item action] == @selector(paste:) &&              element && [element respondsToSelector:@selector(validateMenuItem:)])
-														return([element validateMenuItem:item]);
-	else if([item action] == @selector(delete:))		return(element && [element respondsToSelector:@selector(removeListEntry)]);
-	else if([item action] == @selector(saveDocument:))	return YES;
-	else return NO;
+}
+
+- (IBAction)copy:(id)sender;
+{
+}
+
+- (IBAction)paste:(id)sender;
+{
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)item
+{
+    id element = [dataList itemAtRow:[dataList rowForView:(NSView *)self.window.firstResponder]];
+	if (item.action == @selector(createListEntry:))
+        return [element class] == ElementLSTB.class && [element allowsCreateListEntry];
+	else if (item.action == @selector(delete:))
+        return [element class] == ElementLSTB.class && [element allowsRemoveListEntry];
+	else if (item.action == @selector(saveDocument:))
+        return YES;
+	else
+        return NO;
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
@@ -320,29 +303,10 @@
 #pragma mark -
 #pragma mark Table Event Handling
 
-// Allow tabbing between rows
 @implementation NTOutlineView
 
--(void)selectNextKeyView:(id)sender
-{
-    NSView *view = (NSView *)self.window.firstResponder;
-    if (view.nextValidKeyView) {
-        [self.window selectNextKeyView:view];
-        return;
-    }
-    NSInteger nextRow = [self rowForView:view]+1;
-    while (nextRow < self.numberOfRows) {
-        // Going forward we can ask the row for its nextValidKeyView
-        view = [self rowViewAtRow:nextRow makeIfNecessary:NO].nextValidKeyView;
-        if (view) {
-            [self.window makeFirstResponder:view];
-            return;
-        }
-        nextRow++;
-    }
-}
-
--(void)selectPreviousKeyView:(id)sender
+// Allow tabbing between rows
+- (void)selectPreviousKeyView:(id)sender
 {
     NSView *view = (NSView *)self.window.firstResponder;
     if (view.previousValidKeyView && view.previousValidKeyView != self) {
@@ -356,10 +320,59 @@
         if (![view canBecomeKeyView]) view = [view.subviews lastObject];
         if ([view canBecomeKeyView]) {
             [self.window makeFirstResponder:view];
+            [view scrollRectToVisible:view.superview.bounds];
             return;
         }
         nextRow--;
     }
+}
+
+- (void)selectNextKeyView:(id)sender
+{
+    NSView *view = (NSView *)self.window.firstResponder;
+    if (view.nextValidKeyView) {
+        [self.window selectNextKeyView:view];
+        return;
+    }
+    NSInteger nextRow = [self rowForView:view]+1;
+    while (nextRow < self.numberOfRows) {
+        // Going forward we can ask the row for its nextValidKeyView
+        view = [self rowViewAtRow:nextRow makeIfNecessary:NO].nextValidKeyView;
+        if (view) {
+            [self.window makeFirstResponder:view];
+            [view scrollRectToVisible:view.superview.bounds];
+            return;
+        }
+        nextRow++;
+    }
+}
+
+@end
+
+#pragma mark -
+#pragma mark List Header Handling
+
+// This view allows focusing on an LSTB label so we can add/remove list entries
+@implementation NTFocusView
+
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+
+- (void)mouseDown:(NSEvent *)event
+{
+    [self.window makeFirstResponder:self];
+}
+
+- (NSRect)focusRingMaskBounds
+{
+    return self.bounds;
+}
+
+- (void)drawFocusRingMask
+{
+    NSRectFill(self.bounds);
 }
 
 @end

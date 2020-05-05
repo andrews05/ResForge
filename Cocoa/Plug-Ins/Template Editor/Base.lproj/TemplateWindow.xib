@@ -40,7 +40,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="365" height="301"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="59" viewBased="YES" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="37" id="36" customClass="NTOutlineView">
+                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="59" viewBased="YES" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="37" id="36" customClass="NTOutlineView">
                                     <rect key="frame" x="0.0" y="0.0" width="365" height="278"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -96,6 +96,24 @@
                                                         <outlet property="textField" destination="83u-X1-Ic9" id="9NL-37-XZs"/>
                                                     </connections>
                                                 </tableCellView>
+                                                <tableCellView identifier="listLabel" id="hgb-pb-eOm" customClass="NTFocusView">
+                                                    <rect key="frame" x="1" y="39" width="120" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3bN-4y-Fu0">
+                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="List Label" id="i8r-wt-zIr">
+                                                                <font key="font" metaFont="systemBold"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                    </subviews>
+                                                    <connections>
+                                                        <outlet property="textField" destination="3bN-4y-Fu0" id="War-Ee-myD"/>
+                                                    </connections>
+                                                </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
                                         <tableColumn identifier="data" width="239" minWidth="48" maxWidth="1000" id="34">
@@ -149,11 +167,11 @@
                                                     </subviews>
                                                 </customView>
                                                 <customView identifier="comboData" id="58l-zC-uwd">
-                                                    <rect key="frame" x="124" y="41" width="239" height="26"/>
+                                                    <rect key="frame" x="124" y="41" width="239" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <comboBox identifier="comboData" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Yc-Lh-peU">
-                                                            <rect key="frame" x="0.0" y="6" width="239" height="26"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="239" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Combo Data" buttonBordered="NO" numberOfVisibleItems="10" id="6IN-hH-qAf">
                                                                 <font key="font" metaFont="system"/>
@@ -167,7 +185,6 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <action selector="dataClicked:" target="-2" id="G6S-FF-gt9"/>
                                         <outlet property="dataSource" destination="-2" id="41"/>
                                         <outlet property="delegate" destination="-2" id="42"/>
                                     </connections>

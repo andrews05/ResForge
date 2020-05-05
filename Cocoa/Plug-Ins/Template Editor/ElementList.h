@@ -10,12 +10,12 @@
 @property (readonly) NSUInteger count;
 @property (readonly) NSUInteger currentIndex;
 @property (weak) TemplateWindowController *controller;
-@property BOOL parsed;
+@property BOOL configured;
 
 + (instancetype)listFromStream:(NSInputStream *)stream;
 - (instancetype)initFromStream:(NSInputStream *)stream;
 
-- (void)parseElements;
+- (void)configureElements;
 
 - (__kindof Element *)elementAtIndex:(NSUInteger)index;
 - (void)insertElement:(Element *)element;
@@ -23,7 +23,7 @@
 - (void)insertElement:(Element *)element after:(Element *)after;
 - (void)removeElement:(Element *)element;
 
-// For use by during readSubElements
+// For use during configure
 - (__kindof Element *)peek:(NSUInteger)n;
 - (__kindof Element *)pop;
 - (__kindof Element *)nextOfType:(NSString *)type;
