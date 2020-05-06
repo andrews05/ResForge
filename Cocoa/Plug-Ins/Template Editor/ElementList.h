@@ -28,6 +28,7 @@
 - (__kindof Element *)pop;
 - (__kindof Element *)nextOfType:(NSString *)type;
 - (__kindof Element *)previousOfType:(NSString *)type;
+- (__kindof Element *)nextWithLabel:(NSString *)label;
 - (ElementList *)subListFor:(Element *)startElement;
 
 - (void)readDataFrom:(ResourceStream *)stream;

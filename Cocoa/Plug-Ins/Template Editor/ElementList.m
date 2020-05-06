@@ -40,6 +40,7 @@
 #import "ElementKRID.h"
 #import "ElementRSID.h"
 #import "ElementCOLR.h"
+#import "ElementPACK.h"
 
 @implementation ElementList
 
@@ -193,6 +194,17 @@
     }
     if (self.parentList) {
         return [self.parentList previousOfType:type];
+    }
+    return nil;
+}
+
+- (__kindof Element *)nextWithLabel:(NSString *)label
+{
+    Element *element;
+    for (NSUInteger i = _currentIndex+1; i < self.elements.count; i++) {
+        element = self.elements[i];
+        if ([element.label isEqualToString:label])
+            return element;
     }
     return nil;
 }
@@ -418,6 +430,9 @@
         registry[@"LCOL"] = [ElementCOLR class];    // 4-byte (24-bit) colour (Rezilla)
         
         registry[@"DVDR"] = [Element     class];    // divider
+        
+        // experimental
+        registry[@"PACK"] = [ElementPACK class];    // Layout control element - pack other named elements into one view
         
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
         registry[@"SFRC"] = [ElementUWRD class];    // 0.16 fixed fraction
