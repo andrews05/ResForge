@@ -17,9 +17,8 @@
 	_type = t;
     self.endType = nil;
     self.visible = YES;
-    self.editable = self.class != Element.class;
-    self.rowHeight = self.editable ? 22 : 17;
-    self.width = 60;
+    self.rowHeight = 22;
+    self.width = 60; // Default for many types
     self.cases = nil;
     self.caseMap = nil;
 	return self;
@@ -58,33 +57,22 @@
     return NO;
 }
 
-- (NSView *)labelView:(NSOutlineView *)outlineView
+- (NSString *)displayLabel
 {
-    NSString *identifier = self.class == Element.class ? @"groupView" : @"labelView";
-    NSTableCellView *view = [outlineView makeViewWithIdentifier:identifier owner:self];
-    view.textField.stringValue = self.label;
-    return view;
+    return [[self.label componentsSeparatedByString:@"="] firstObject] ?: @"";
 }
 
 #pragma mark -
 
 /*** METHODS SUBCLASSES SHOULD OVERRIDE ***/
 
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (NSView *)configureView:(NSView *)view
 {
     if (![self respondsToSelector:@selector(value)])
         return nil;
-    if (!self.editable) {
-        NSView *view = [outlineView makeViewWithIdentifier:@"groupView" owner:self];
-        NSTextField *textField = view.subviews[0];
-        textField.selectable = YES;
-        [textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
-        return view;
-    }
-    NSRect frame = NSMakeRect(0, 0, 240, self.rowHeight);
-    NSView *view = [[NSView alloc] initWithFrame:frame];
+    NSRect frame = view.frame;
+    frame.size.width = self.width-4;
     if (self.cases) {
-        frame.size.width = 240-4;
         frame.size.height = 26;
         frame.origin.y = -2;
         NSComboBox *combo = [[NSComboBox alloc] initWithFrame:frame];
@@ -99,7 +87,6 @@
                                                                               NSValidatesImmediatelyBindingOption:@(self.formatter != nil)}];
         [view addSubview:combo];
     } else {
-        frame.size.width = self.width-4;
         NSTextField *textField = [[NSTextField alloc] initWithFrame:frame];
         textField.formatter = self.formatter;
         textField.delegate = self;
@@ -132,20 +119,21 @@
 - (void)configure
 {
     // default implementation reads CASE elements
-    if (!self.visible || !self.editable) return;
-    __kindof Element *element = [self.parentList peek:1];
+    if (!self.visible) return;
+    ElementCASE *element = [self.parentList peek:1];
     while (element.class == ElementCASE.class) {
         [self.parentList pop];
         if (!self.cases) {
             self.cases = [NSMutableArray new];
             self.caseMap = [NSMutableDictionary new];
+            self.width = 240;
         }
         // Cases will show as "name = value" in the options list to allow searching by name
         // Text field will display as "value = name" for consistency when there's no matching case
-        NSString *option = [NSString stringWithFormat:@"%@ = %@", [element symbol], [element value]];
-        NSString *display = [NSString stringWithFormat:@"%@ = %@", [element value], [element symbol]];
+        NSString *option = [NSString stringWithFormat:@"%@ = %@", element.displayLabel, element.value];
+        NSString *display = [NSString stringWithFormat:@"%@ = %@", element.value, element.displayLabel];
         [self.cases addObject:option];
-        [self.caseMap setObject:display forKey:[element value]];
+        [self.caseMap setObject:display forKey:element.value];
         element = [self.parentList peek:1];
     }
 }

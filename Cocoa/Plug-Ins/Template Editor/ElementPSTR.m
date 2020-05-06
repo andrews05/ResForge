@@ -73,28 +73,34 @@
 	return self;
 }
 
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (void)configure
 {
-    NSView *view = [super dataView:outlineView];
-    if (self.cases) return view;
+    [super configure];
+    self.width = (!self.cases && _maxLength > 32) ? 0 : 240;
+}
+
+- (NSView *)configureView:(NSView *)view
+{
+    view = [super configureView:view];
     NSTextField *textField = view.subviews[0];
-    textField.lineBreakMode = NSLineBreakByWordWrapping;
     if (_maxLength < UINT32_MAX)
         textField.placeholderString = [self.type stringByAppendingFormat:@" (%u characters)", _maxLength];
+    if (self.width != 0) return view;
+    textField.lineBreakMode = NSLineBreakByWordWrapping;
     [self performSelector:@selector(autoRowHeight:) withObject:textField afterDelay:0];
     return textField;
 }
 
 - (void)controlTextDidChange:(NSNotification *)obj
 {
-    [self autoRowHeight:obj.object];
+    if (self.width == 0)
+        [self autoRowHeight:obj.object];
 }
 
 // Automatically adjust the row height to fit the text
 // TODO: Find a better way to do this?
 - (void)autoRowHeight:(NSTextField *)field
 {
-    if (self.cases) return;
     NSOutlineView *outlineView = self.parentList.controller.dataList;
     NSUInteger index = [outlineView rowForView:field];
     Element *element = [outlineView itemAtRow:index];

@@ -1,4 +1,5 @@
 #import "ElementLSTB.h"
+#import "ElementDVDR.h"
 
 // implements LSTB, LSTZ, LSTC
 @implementation ElementLSTB
@@ -7,7 +8,6 @@
 {
 	if (self = [super initForType:t withLabel:l]) {
         _zeroTerminated = [t isEqualToString:@"LSTZ"];
-        self.editable = NO;
         self.rowHeight = 17;
         self.endType = @"LSTE";
 	}
@@ -28,20 +28,17 @@
 	return element;
 }
 
-- (NSView *)labelView:(NSOutlineView *)outlineView
+- (NSString *)displayLabel
 {
-    NSString *identifier = self.allowsCreateListEntry ? @"listLabel" : @"labelView";
-    NSTableCellView *view = [outlineView makeViewWithIdentifier:identifier owner:self];
     NSUInteger index = [self.entries indexOfObject:self];
-    view.textField.stringValue = [NSString stringWithFormat:@"%ld) %@", index+1, [self.singleElement label] ?: super.label];
-    return view;
+    return [NSString stringWithFormat:@"%ld) %@", index+1, [self.singleElement displayLabel] ?: super.displayLabel];
 }
 
 // If the list entry contains only a single visible element, show that element here while hiding the sub section
 // (this also greatly improves performance with large lists)
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (NSView *)configureView:(NSView *)view
 {
-    return [self.singleElement dataView:outlineView];
+    return [self.singleElement configureView:view];
 }
 
 - (void)configure

@@ -8,17 +8,17 @@
 {
     if (self = [super initForType:t withLabel:l]) {
         self.isKey = [t characterAtIndex:0] == 'K';
+        if (self.isKey) self.width = 240;
     }
     return self;
 }
 
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (NSView *)configureView:(NSView *)view
 {
     if (!self.isKey)
-        return [super dataView:outlineView];
-    NSRect frame = NSMakeRect(0, 0, 300, self.rowHeight);
-    NSView *view = [[NSView alloc] initWithFrame:frame];
-    frame.size.width = 240-4;
+        return [super configureView:view];
+    NSRect frame = view.frame;
+    frame.size.width = self.width-4;
     NSPopUpButton *keySelect = [[NSPopUpButton alloc] initWithFrame:frame];
     if (self.keyedSections.count) {
         keySelect.target = self;

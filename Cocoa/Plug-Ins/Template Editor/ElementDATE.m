@@ -3,10 +3,9 @@
 
 @implementation ElementDATE
 
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (NSView *)configureView:(NSView *)view
 {
-    NSRect frame = NSMakeRect(0, 0, 300, self.rowHeight);
-    NSView *view = [[NSView alloc] initWithFrame:frame];
+    NSRect frame = view.frame;
     frame.size.width = 240-4;
     NSDatePicker *picker = [[NSDatePicker alloc] initWithFrame:frame];
     picker.action = @selector(itemValueUpdated:);

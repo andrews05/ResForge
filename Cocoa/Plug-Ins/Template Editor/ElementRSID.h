@@ -2,7 +2,8 @@
 
 @interface ElementRSID : ElementDWRD
 @property OSType resType;
-@property ResID offset;
+@property int offset;
+@property int max;
 @property NSMutableArray *fixedCases;
 
 @end

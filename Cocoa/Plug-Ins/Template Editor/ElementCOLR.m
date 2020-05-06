@@ -24,10 +24,9 @@
     return self;
 }
 
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (NSView *)configureView:(NSView *)view
 {
-    NSRect frame = NSMakeRect(0, 0, 240, self.rowHeight);
-    NSView *view = [[NSView alloc] initWithFrame:frame];
+    NSRect frame = view.frame;
     frame.size.width = self.width-4;
     NSColorWell *well = [[NSColorWell alloc] initWithFrame:frame];
     well.action = @selector(itemValueUpdated:);

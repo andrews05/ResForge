@@ -3,23 +3,24 @@
 
 @implementation ElementBFLG
 
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (NSView *)configureView:(NSView *)view
 {
-    return [ElementBFLG configureCheckboxForElement:self];
+    [view addSubview:[ElementBFLG createCheckboxWithFrame:view.frame forElement:self]];
+    return view;
 }
 
-+ (NSView *)configureCheckboxForElement:(Element *)element
++ (NSButton *)createCheckboxWithFrame:(NSRect)frame forElement:(Element *)element
 {
-    NSRect frame = NSMakeRect(0, 0, 18, element.rowHeight);
-    NSView *view = [[NSView alloc] initWithFrame:frame];
     NSButton *checkbox = [[NSButton alloc] initWithFrame:frame];
     checkbox.buttonType = NSSwitchButton;
     checkbox.bezelStyle = NSBezelStyleRegularSquare;
-    checkbox.title = @"";
+    // Use the second part of the label as the checkbox title
+    NSArray *labelComponents = [element.label componentsSeparatedByString:@"="];
+    checkbox.title = labelComponents.count > 1 ? labelComponents[1] : @"\0";
     checkbox.action = @selector(itemValueUpdated:);
     [checkbox bind:@"value" toObject:element withKeyPath:@"value" options:nil];
-    [view addSubview:checkbox];
-    return view;
+    checkbox.autoresizingMask = NSViewWidthSizable;
+    return checkbox;
 }
 
 @end

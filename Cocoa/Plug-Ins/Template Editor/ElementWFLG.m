@@ -3,9 +3,10 @@
 
 @implementation ElementWFLG
 
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (NSView *)configureView:(NSView *)view
 {
-    return [ElementBFLG configureCheckboxForElement:self];
+    [view addSubview:[ElementBFLG createCheckboxWithFrame:view.frame forElement:self]];
+    return view;
 }
 
 @end

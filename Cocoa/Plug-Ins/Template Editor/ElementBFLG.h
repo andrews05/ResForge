@@ -2,6 +2,6 @@
 
 @interface ElementBFLG : ElementUBYT
 
-+ (NSView *)configureCheckboxForElement:(Element *)element;
++ (NSButton *)createCheckboxWithFrame:(NSRect)frame forElement:(Element *)element;
 
 @end

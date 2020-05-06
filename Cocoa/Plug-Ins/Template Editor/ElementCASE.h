@@ -1,7 +1,7 @@
 #import "Element.h"
 
 @interface ElementCASE : Element
-@property NSString *symbol;
+@property NSString *displayLabel;
 @property NSString *value;
 
 @end

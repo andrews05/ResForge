@@ -28,6 +28,9 @@
 #import "ElementBBIT.h"
 #import "ElementWBIT.h"
 #import "ElementLBIT.h"
+#import "ElementBORV.h"
+#import "ElementWORV.h"
+#import "ElementLORV.h"
 #import "ElementRECT.h"
 #import "ElementPNT.h"
 #import "ElementHEXD.h"
@@ -40,6 +43,7 @@
 #import "ElementKRID.h"
 #import "ElementRSID.h"
 #import "ElementCOLR.h"
+#import "ElementDVDR.h"
 #import "ElementPACK.h"
 
 @implementation ElementList
@@ -369,6 +373,9 @@
         registry[@"LBIT"] = [ElementLBIT class];
         registry[@"LB"]   = [ElementLBIT class];    // LBnn
         registry[@"LF"]   = [ElementLBIT class];    // LFnn (ResKnife)
+        registry[@"BORV"] = [ElementBORV class];    // byte/word/long OR-value (Rezilla)
+        registry[@"WORV"] = [ElementWORV class];
+        registry[@"LORV"] = [ElementLORV class];
         
         // hex dumps
         registry[@"BHEX"] = [ElementHEXD class];
@@ -429,10 +436,9 @@
         registry[@"WCOL"] = [ElementCOLR class];    // 2-byte (15-bit) colour (Rezilla)
         registry[@"LCOL"] = [ElementCOLR class];    // 4-byte (24-bit) colour (Rezilla)
         
-        registry[@"DVDR"] = [Element     class];    // divider
-        
-        // experimental
-        registry[@"PACK"] = [ElementPACK class];    // Layout control element - pack other named elements into one view
+        // layout
+        registry[@"DVDR"] = [ElementDVDR class];    // divider
+        registry[@"PACK"] = [ElementPACK class];    // Experimental layout control element - pack other named elements into one view
         
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
         registry[@"SFRC"] = [ElementUWRD class];    // 0.16 fixed fraction
@@ -443,9 +449,6 @@
         registry[@"SCPC"] = [ElementDWRD class];    // MacOS script code (ScriptCode)
         registry[@"LNGC"] = [ElementDWRD class];    // MacOS language code (LangCode)
         registry[@"RGNC"] = [ElementDWRD class];    // MacOS region code (RegionCode)
-        registry[@"BORV"] = [ElementHBYT class];    // Multiple select OR-value byte/word/long (Rezilla)
-        registry[@"WORV"] = [ElementHWRD class];
-        registry[@"LORV"] = [ElementHLNG class];
     }
     return registry;
 }

@@ -5,7 +5,6 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
-        self.editable = NO;
         _length = 0;
         if ([t isEqualToString:@"BHEX"])    {
             _lengthBytes = 1;
@@ -40,9 +39,15 @@
     return self;
 }
 
-- (NSString *)value
+- (NSView *)configureView:(NSView *)view
 {
-    return [self.data description];
+    NSTextField *textField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 3, view.frame.size.width, 17)];
+    textField.bezeled = NO;
+    textField.selectable = YES;
+    textField.stringValue = [self.data description];
+    textField.autoresizingMask = NSViewWidthSizable;
+    [view addSubview:textField];
+    return view;
 }
 
 - (void)configure

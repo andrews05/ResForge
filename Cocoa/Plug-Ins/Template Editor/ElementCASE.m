@@ -6,9 +6,8 @@
 {
     if (self = [super initForType:t withLabel:l]) {
         self.visible = NO;
-        self.editable = NO;
         NSArray *components = [l componentsSeparatedByString:@"="];
-        self.symbol = [components firstObject];
+        self.displayLabel = [components firstObject];
         self.value = [components lastObject];
     }
     return self;
@@ -16,7 +15,7 @@
 
 - (NSString *)description
 {
-    return self.symbol;
+    return self.displayLabel;
 }
 
 @end

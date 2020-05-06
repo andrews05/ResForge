@@ -23,7 +23,6 @@
 @property (strong) NSMutableDictionary *caseMap;
 @property double rowHeight;
 @property BOOL visible;
-@property BOOL editable;
 @property CGFloat width;
 
 + (instancetype)elementForType:(NSString *)type withLabel:(NSString *)label;
@@ -33,10 +32,10 @@
 - (id)copyWithZone:(NSZone *)zone;
 
 // Configure the view to display this element in the list
-- (NSView *)dataView:(NSOutlineView *)outlineView;
+- (NSView *)configureView:(NSView *)view;
 
-// Configure the label view to display this element in the list
-- (NSView *)labelView:(NSOutlineView *)outlineView;
+// The label to display, if different from the template label
+- (NSString *)displayLabel;
 
 // Create a shared (static) formatter for displaying your data in the list
 + (NSFormatter *)sharedFormatter;

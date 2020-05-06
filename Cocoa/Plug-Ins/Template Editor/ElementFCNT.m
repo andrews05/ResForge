@@ -23,11 +23,6 @@
     return self;
 }
 
-- (NSString *)label
-{
-    return self.displayLabel;
-}
-
 - (void)readDataFrom:(ResourceStream *)stream
 {
 }

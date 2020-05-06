@@ -25,26 +25,24 @@
     return self;
 }
 
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (NSView *)configureView:(NSView *)view
 {
     if ([self.type isEqualToString:@"BB08"]) {
         // Display as checkboxes
-        NSRect frame = NSMakeRect(0, 0, 240, self.rowHeight);
-        NSView *view = [[NSView alloc] initWithFrame:frame];
-        frame.size.width = 18;
+        NSRect frame = view.frame;
+        frame.size.width = 20;
         for (ElementBBIT *element in self.bitList) {
-            NSButton *subview = [ElementBFLG configureCheckboxForElement:element].subviews[0];
-            subview.frame = frame;
-            [view addSubview:subview];
+            [view addSubview:[ElementBFLG createCheckboxWithFrame:frame forElement:element]];
             frame.origin.x += 30;
         }
         return view;
     } else if (_bits == 1) {
-        return [ElementBFLG configureCheckboxForElement:self];
+        [view addSubview:[ElementBFLG createCheckboxWithFrame:view.frame forElement:self]];
+        return view;
     } else {
-        NSTextField *textField = (NSTextField *)[super dataView:outlineView];
-        textField.placeholderString = [NSString stringWithFormat:@"%d bits", _bits];
-        return textField;
+        view = [super configureView:view];
+        [view.subviews[0] setPlaceholderString:[NSString stringWithFormat:@"%d bits", _bits]];
+        return view;
     }
 }
 
@@ -62,7 +60,7 @@
         }
     } else {
         [self.bitList addObject:self];
-        unsigned int pos = _position -= _bits;
+        unsigned int pos = _position = self.class.length - _bits;
         while (pos > 0) {
             element = (ElementBBIT *)[self.parentList peek:self.bitList.count];
             if (element.class != self.class) {

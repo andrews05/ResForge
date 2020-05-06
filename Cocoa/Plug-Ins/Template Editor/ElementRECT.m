@@ -3,15 +3,16 @@
 
 @implementation ElementRECT
 
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (NSView *)configureView:(NSView *)view
 {
-    return [ElementRECT configureFields:@[@"top", @"left", @"bottom", @"right"] forElement:self];
+    [ElementRECT configureFields:@[@"top", @"left", @"bottom", @"right"] inView:view forElement:self];
+    return view;
 }
 
-+ (NSTableCellView *)configureFields:(NSArray *)fields forElement:(Element *)element
++ (void)configureFields:(NSArray *)fields inView:(NSView *)view forElement:(Element *)element
 {
-    NSRect frame = NSMakeRect(0, 0, element.width-4, element.rowHeight);
-    NSTableCellView *view = [[NSTableCellView alloc] initWithFrame:frame];
+    NSRect frame = view.frame;
+    frame.size.width = element.width-4;
     for (NSString *key in fields) {
         NSTextField *field = [[NSTextField alloc] initWithFrame:frame];
         field.placeholderString = key;
@@ -21,7 +22,6 @@
         [view addSubview:field];
         frame.origin.x += element.width;
     }
-    return view;
 }
 
 - (void)readDataFrom:(ResourceStream *)stream

@@ -1,5 +1,6 @@
 #import "ElementBOOL.h"
 
+// BOOL is equivalent to BFLG+FBYT
 @implementation ElementBOOL
 
 - (void)readDataFrom:(ResourceStream *)stream

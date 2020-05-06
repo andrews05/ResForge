@@ -4,7 +4,7 @@
 
 @implementation ElementKRID
 
-- (NSView *)dataView:(NSOutlineView *)outlineView
+- (NSView *)configureView:(NSOutlineView *)outlineView
 {
     NSTextField *textField = [outlineView makeViewWithIdentifier:@"textData" owner:self];
     textField.editable = NO;

@@ -15,9 +15,10 @@
          * Determine resource type and offset from label
          * Resource type is a 4-char code enclosed in single (or smart) quotes
          * Offset is a number followed by a +
-         * E.g. "Extension scope info 'scop' -27136 +"
+         * Range is a number immediately following the +
+         * E.g. "Extension scope info 'scop' -27136 +63"
          */
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(?:.*[‘'](.{4})['’])?(?:.*?(-?[0-9]+) *[+])?" options:0 error:nil];
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(?:.*[‘'](.{4})['’])?(?:.*?(-?[0-9]+) *[+]([0-9]+)?)?" options:0 error:nil];
         NSTextCheckingResult *result = [regex firstMatchInString:l options:0 range:NSMakeRange(0, l.length)];
         NSRange r = [result rangeAtIndex:1];
         if (r.location != NSNotFound) {
@@ -25,7 +26,11 @@
         }
         r = [result rangeAtIndex:2];
         if (r.location != NSNotFound) {
-            _offset = (short)[[l substringWithRange:r] intValue];
+            _offset = [[l substringWithRange:r] intValue];
+            r = [result rangeAtIndex:3];
+            if (r.location != NSNotFound) {
+                _max = _offset + [[l substringWithRange:r] intValue];
+            }
         }
     }
     return self;
@@ -54,6 +59,7 @@
         }
         [self bind:@"resType" toObject:tnam withKeyPath:@"tnam" options:nil];
     }
+    self.width = 240;
     self.fixedCases = [NSMutableArray new];
     Element *element = [self.parentList peek:1];
     while (element.class == ElementCASE.class) {
@@ -69,8 +75,8 @@
     NSMutableArray *cases = [NSMutableArray new];
     [self.caseMap removeAllObjects];
     for (ElementCASE *element in self.fixedCases) {
-        NSString *option = [NSString stringWithFormat:@"%@ = %@", element.symbol, element.value];
-        NSString *display = [NSString stringWithFormat:@"%@ = %@", element.value, element.symbol];
+        NSString *option = [NSString stringWithFormat:@"%@ = %@", element.displayLabel, element.value];
+        NSString *display = [NSString stringWithFormat:@"%@ = %@", element.value, element.displayLabel];
         [cases addObject:option];
         [self.caseMap setObject:display forKey:element.value];
     }
@@ -81,6 +87,7 @@
             NSArray *resources = [[(ResourceDocument *)doc dataSource] allResourcesOfType:self.resType];
             for (id <ResKnifeResource> resource in resources) {
                 if (!resource.name.length) continue; // No point showing resources with no name
+                if (self.max && (resource.resID < self.offset || resource.resID > self.max)) continue;
                 NSString *resID = [@(resource.resID-self.offset) stringValue];
                 if (![self.caseMap valueForKey:resID]) {
                     NSString *idDisplay = [self resIDDisplay:resID];

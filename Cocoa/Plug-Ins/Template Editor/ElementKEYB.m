@@ -6,7 +6,6 @@
 {
     if (self = [super initForType:t withLabel:l]) {
         self.visible = NO;
-        self.editable = NO;
         self.endType = @"KEYE";
     }
     return self;

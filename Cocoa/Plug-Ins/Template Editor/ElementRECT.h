@@ -6,6 +6,6 @@
 @property SInt16 bottom;
 @property SInt16 right;
 
-+ (NSTableCellView *)configureFields:(NSArray *)fields forElement:(Element *)element;
++ (void)configureFields:(NSArray *)fields inView:(NSView *)view forElement:(Element *)element;
 
 @end

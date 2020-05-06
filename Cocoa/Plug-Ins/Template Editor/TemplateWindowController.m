@@ -169,9 +169,19 @@
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(__kindof Element *)item
 {
     if ([tableColumn.identifier isEqualToString:@"data"]) {
-        return [item dataView:outlineView];
+        NSView *view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, tableColumn.width, item.rowHeight)];
+        return [item configureView:view];
+    } else if (tableColumn) {
+        NSString *identifier = tableColumn.identifier;
+        if (item.class == ElementLSTB.class && [item allowsCreateListEntry])
+            identifier = @"listLabel";
+        NSTableCellView *view = [outlineView makeViewWithIdentifier:identifier owner:self];
+        view.textField.stringValue = [item displayLabel];
+        return view;
     } else {
-        return [item labelView:outlineView];
+        NSTableCellView *view = [outlineView makeViewWithIdentifier:@"groupView" owner:self];
+        [item configureGroupView:view];
+        return view;
     }
 }
 
@@ -203,7 +213,7 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(Element *)item
 {
-    return item.class == Element.class || item.class == ElementOCNT.class;
+    return [item respondsToSelector:@selector(configureGroupView:)];
 }
 
 #pragma mark -
@@ -373,12 +383,12 @@
 
 - (NSRect)focusRingMaskBounds
 {
-    return self.subviews[0].frame;
+    return self.textField.frame;
 }
 
 - (void)drawFocusRingMask
 {
-    NSRectFill(self.subviews[0].frame);
+    NSRectFill(self.textField.frame);
 }
 
 @end
