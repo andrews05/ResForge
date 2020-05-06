@@ -10,21 +10,16 @@
 
 + (NSTableCellView *)configureFields:(NSArray *)fields forElement:(Element *)element
 {
-    NSRect frame = NSMakeRect(0, 0, 56, element.rowHeight);
+    NSRect frame = NSMakeRect(0, 0, element.width-4, element.rowHeight);
     NSTableCellView *view = [[NSTableCellView alloc] initWithFrame:frame];
-    NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
     for (NSString *key in fields) {
         NSTextField *field = [[NSTextField alloc] initWithFrame:frame];
-        field.bordered = NO;
-        field.drawsBackground = NO;
-        field.editable = YES;
         field.placeholderString = key;
         field.formatter = [ElementDWRD sharedFormatter];
         field.delegate = element;
-        field.font = font;
         [field bind:@"value" toObject:element withKeyPath:key options:nil];
         [view addSubview:field];
-        frame.origin.x += 60;
+        frame.origin.x += element.width;
     }
     return view;
 }

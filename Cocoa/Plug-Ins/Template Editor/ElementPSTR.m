@@ -75,25 +75,14 @@
 
 - (NSView *)dataView:(NSOutlineView *)outlineView
 {
-    NSView *view;
-    NSTextField *field;
-    if (self.cases) {
-        NSView *view = [super dataView:outlineView];
-        field = (NSTextField *)view.subviews[0];
-    } else {
-        view = field = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 240, 17)];
-        field.bordered = NO;
-        field.drawsBackground = NO;
-        field.editable = YES;
-        field.formatter = [self formatter];
-        field.delegate = self;
-        field.font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-        [field bind:@"value" toObject:self withKeyPath:@"value" options:nil];
-    }
+    NSView *view = [super dataView:outlineView];
+    if (self.cases) return view;
+    NSTextField *textField = view.subviews[0];
+    textField.lineBreakMode = NSLineBreakByWordWrapping;
     if (_maxLength < UINT32_MAX)
-        field.placeholderString = [self.type stringByAppendingFormat:@" (%u characters)", _maxLength];
-    [self performSelector:@selector(autoRowHeight:) withObject:field afterDelay:0];
-    return view;
+        textField.placeholderString = [self.type stringByAppendingFormat:@" (%u characters)", _maxLength];
+    [self performSelector:@selector(autoRowHeight:) withObject:textField afterDelay:0];
+    return textField;
 }
 
 - (void)controlTextDidChange:(NSNotification *)obj
@@ -112,7 +101,7 @@
     NSRect bounds = field.bounds;
     bounds.size.height = CGFLOAT_MAX;
     double height = [field.cell cellSizeForBounds:bounds].height;
-    if (height < 18) height = 18;
+    if (height < 22) height = 22;
     if (height == element.rowHeight)
         return;
     element.rowHeight = height;

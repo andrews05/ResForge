@@ -1,51 +1,34 @@
 #import "ElementDATE.h"
-
-#define SIZE_ON_DISK (4)
+#import "TemplateWindowController.h"
 
 @implementation ElementDATE
-@synthesize seconds;
 
-- (void)readDataFrom:(ResourceStream *)stream
+- (NSView *)dataView:(NSOutlineView *)outlineView
 {
-    UInt32 tmp;
-	[stream readAmount:SIZE_ON_DISK toBuffer:&tmp];
-    seconds = CFSwapInt32BigToHost(tmp);
+    NSRect frame = NSMakeRect(0, 0, 300, self.rowHeight);
+    NSView *view = [[NSView alloc] initWithFrame:frame];
+    frame.size.width = 240-4;
+    NSDatePicker *picker = [[NSDatePicker alloc] initWithFrame:frame];
+    picker.action = @selector(itemValueUpdated:);
+    [picker bind:@"value" toObject:self withKeyPath:@"value" options:@{NSValueTransformerBindingOption:self}];
+    picker.drawsBackground = YES;
+    [view addSubview:picker];
+    return view;
 }
 
-- (void)sizeOnDisk:(UInt32 *)size
-{
-    *size += SIZE_ON_DISK;
-}
-
-- (void)writeDataTo:(ResourceStream *)stream
-{
-    UInt32 tmp = CFSwapInt32HostToBig(seconds);
-	[stream writeAmount:SIZE_ON_DISK fromBuffer:&tmp];
-}
-
-- (NSDate *)value
+- (id)transformedValue:(id)value
 {
     CFAbsoluteTime cfTime;
-    OSStatus error = UCConvertSecondsToCFAbsoluteTime(seconds, &cfTime);
-    if(error) return nil;
+    OSStatus error = UCConvertSecondsToCFAbsoluteTime([value intValue], &cfTime);
+    if (error) return nil;
     return [NSDate dateWithTimeIntervalSinceReferenceDate:(NSTimeInterval)cfTime];
-
 }
 
-- (void)setValue:(NSDate *)value
+- (id)reverseTransformedValue:(id)value
 {
+    UInt32 seconds;
     UCConvertCFAbsoluteTimeToSeconds((CFAbsoluteTime)[value timeIntervalSinceReferenceDate], &seconds);
-}
-
-+ (NSFormatter *)sharedFormatter
-{
-    static NSDateFormatter *formatter = nil;
-    if (!formatter) {
-        formatter = [[NSDateFormatter alloc] init];
-        formatter.dateStyle = NSDateFormatterMediumStyle;
-        formatter.timeStyle = NSDateFormatterMediumStyle;
-    }
-    return formatter;
+    return @(seconds);
 }
 
 @end

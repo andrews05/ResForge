@@ -16,9 +16,10 @@
 	_label = l;
 	_type = t;
     self.endType = nil;
-    self.rowHeight = 18;
     self.visible = YES;
     self.editable = self.class != Element.class;
+    self.rowHeight = self.editable ? 22 : 17;
+    self.width = 60;
     self.cases = nil;
     self.caseMap = nil;
 	return self;
@@ -57,6 +58,14 @@
     return NO;
 }
 
+- (NSView *)labelView:(NSOutlineView *)outlineView
+{
+    NSString *identifier = self.class == Element.class ? @"groupView" : @"labelView";
+    NSTableCellView *view = [outlineView makeViewWithIdentifier:identifier owner:self];
+    view.textField.stringValue = self.label;
+    return view;
+}
+
 #pragma mark -
 
 /*** METHODS SUBCLASSES SHOULD OVERRIDE ***/
@@ -66,30 +75,39 @@
     if (![self respondsToSelector:@selector(value)])
         return nil;
     if (!self.editable) {
-        // This guarantees that the text field won't be editable even as the outline view reuses other cell's views
-        NSView *view = [outlineView makeViewWithIdentifier:@"regularLabel" owner:self];
+        NSView *view = [outlineView makeViewWithIdentifier:@"groupView" owner:self];
         NSTextField *textField = view.subviews[0];
-        [textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
         textField.selectable = YES;
+        [textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
         return view;
     }
-    NSView *view = [outlineView makeViewWithIdentifier:(self.cases ? @"comboData" : @"textData") owner:self];
-    NSTextField *textField = view.subviews[0];
-    textField.delegate = self;
-    textField.placeholderString = self.type;
+    NSRect frame = NSMakeRect(0, 0, 240, self.rowHeight);
+    NSView *view = [[NSView alloc] initWithFrame:frame];
     if (self.cases) {
-        NSRect frame = textField.frame;
+        frame.size.width = 240-4;
+        frame.size.height = 26;
         frame.origin.y = -2;
-        frame.size.height = 20;
-        textField.frame = frame;
-        [textField bind:@"contentValues" toObject:self withKeyPath:@"cases" options:nil];
+        NSComboBox *combo = [[NSComboBox alloc] initWithFrame:frame];
+        combo.completes = YES;
+        combo.numberOfVisibleItems = 10;
+        combo.delegate = self;
+        combo.placeholderString = self.type;
+        [combo bind:@"contentValues" toObject:self withKeyPath:@"cases" options:nil];
         // The formatter isn't directly compatible with the values displayed by the combo box
         // Use a combination of value transformation with immediate validation to run the formatter manually
-        [textField bind:@"value" toObject:self withKeyPath:@"value" options:@{NSValueTransformerBindingOption:self,
+        [combo bind:@"value" toObject:self withKeyPath:@"value" options:@{NSValueTransformerBindingOption:self,
                                                                               NSValidatesImmediatelyBindingOption:@(self.formatter != nil)}];
+        [view addSubview:combo];
     } else {
+        frame.size.width = self.width-4;
+        NSTextField *textField = [[NSTextField alloc] initWithFrame:frame];
         textField.formatter = self.formatter;
+        textField.delegate = self;
+        textField.placeholderString = self.type;
+        textField.lineBreakMode = NSLineBreakByTruncatingTail;
+        textField.allowsDefaultTighteningForTruncation = YES;
         [textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
+        [view addSubview:textField];
     }
     return view;
 }

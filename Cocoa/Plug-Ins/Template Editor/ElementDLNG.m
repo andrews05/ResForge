@@ -4,6 +4,14 @@
 
 @implementation ElementDLNG
 
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
+{
+    if (self = [super initForType:t withLabel:l]) {
+        self.width = 90;
+    }
+    return self;
+}
+
 - (void)readDataFrom:(ResourceStream *)stream
 {
 	SInt32 tmp;

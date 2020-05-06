@@ -4,7 +4,7 @@
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
-    if ([super initForType:t withLabel:l]) {
+    if (self = [super initForType:t withLabel:l]) {
         // Read count from label - hex value denoted by leading '$'
         NSScanner *scanner = [NSScanner scannerWithString:l];
         UInt32 value = 0;

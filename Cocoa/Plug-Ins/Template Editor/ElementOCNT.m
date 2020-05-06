@@ -4,13 +4,26 @@
 // implements ZCNT, OCNT, BCNT, BZCT, WCNT, WZCT, LCNT, LZCT
 @implementation ElementOCNT
 
-
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
         self.editable = NO;
+        self.rowHeight = 17;
     }
     return self;
+}
+
+- (NSView *)labelView:(NSOutlineView *)outlineView
+{
+    // Element will show as a group row - we need to combine the counter into the label
+    NSTableCellView *view = [outlineView makeViewWithIdentifier:@"groupView" owner:self];
+    [view.textField bind:@"value" toObject:self withKeyPath:@"value" options:@{NSValueTransformerBindingOption:self}];
+    return view;
+}
+
+- (id)transformedValue:(id)value
+{
+    return [NSString stringWithFormat:@"%@ = %d", self.label, self.value];
 }
 
 - (void)configure

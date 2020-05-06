@@ -24,6 +24,7 @@
 @property double rowHeight;
 @property BOOL visible;
 @property BOOL editable;
+@property CGFloat width;
 
 + (instancetype)elementForType:(NSString *)type withLabel:(NSString *)label;
 - (instancetype)initForType:(NSString *)type withLabel:(NSString *)label;
@@ -33,6 +34,9 @@
 
 // Configure the view to display this element in the list
 - (NSView *)dataView:(NSOutlineView *)outlineView;
+
+// Configure the label view to display this element in the list
+- (NSView *)labelView:(NSOutlineView *)outlineView;
 
 // Create a shared (static) formatter for displaying your data in the list
 + (NSFormatter *)sharedFormatter;

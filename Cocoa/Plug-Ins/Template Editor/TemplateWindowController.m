@@ -92,7 +92,7 @@
 	// reload the view
 	id item;
 	[dataList reloadData];
-	NSInteger row = [dataList numberOfRows];
+	NSInteger row = resourceStructure.count;
 	while ((item = [dataList itemAtRow:--row])) {
 		[dataList expandItem:item expandChildren:YES];
 	}
@@ -166,23 +166,19 @@
 #pragma mark -
 #pragma mark Table Management
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(__kindof Element *)item
 {
     if ([tableColumn.identifier isEqualToString:@"data"]) {
         return [item dataView:outlineView];
+    } else {
+        return [item labelView:outlineView];
     }
-    NSString *identifier = tableColumn ? tableColumn.identifier : @"regularLabel";
-    if ([item class] == ElementLSTB.class && [item allowsCreateListEntry])
-        identifier = @"listLabel";
-    NSTableCellView *view = [outlineView makeViewWithIdentifier:identifier owner:self];
-    view.textField.stringValue = [item label];
-    return view;
 }
 
 - (id)outlineView:(NSOutlineView*)outlineView child:(NSInteger)index ofItem:(Element *)item
 {
 	if (item == nil)
-		return [resourceStructure elementAtIndex:index];
+        return [resourceStructure elementAtIndex:index];
 	else
         return [item subElementAtIndex:index];
 }
@@ -207,7 +203,7 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(Element *)item
 {
-    return [item.type isEqualToString:@"DVDR"];
+    return item.class == Element.class || item.class == ElementOCNT.class;
 }
 
 #pragma mark -
@@ -303,9 +299,9 @@
 #pragma mark -
 #pragma mark Table Event Handling
 
+// Table views don't support tabbing between rows so we need to handle the key view loop manually
 @implementation NTOutlineView
 
-// Allow tabbing between rows
 - (void)selectPreviousKeyView:(id)sender
 {
     NSView *view = (NSView *)self.window.firstResponder;
@@ -313,17 +309,23 @@
         [self.window selectPreviousKeyView:view];
         return;
     }
-    NSInteger nextRow = [self rowForView:view]-1;
-    while (nextRow >= 0) {
+    NSInteger row = [self rowForView:view];
+    // Loop through all rows. Break if we come back to where we started without having found anything.
+    for (NSInteger i = row-1; i != row; i--) {
+        if (i == -1) continue;
+        if (i == -2) {
+            i = self.numberOfRows;
+            continue;
+        }
         // Going backward we need to look at the column view and see if it's valid
-        view = [self viewAtColumn:1 row:nextRow makeIfNecessary:NO];
+        view = [self viewAtColumn:1 row:i makeIfNecessary:YES];
         if (![view canBecomeKeyView]) view = [view.subviews lastObject];
+        if (![view canBecomeKeyView]) view = [self viewAtColumn:0 row:i makeIfNecessary:YES];
         if ([view canBecomeKeyView]) {
             [self.window makeFirstResponder:view];
             [view scrollRectToVisible:view.superview.bounds];
             return;
         }
-        nextRow--;
     }
 }
 
@@ -334,16 +336,20 @@
         [self.window selectNextKeyView:view];
         return;
     }
-    NSInteger nextRow = [self rowForView:view]+1;
-    while (nextRow < self.numberOfRows) {
+    NSInteger row = [self rowForView:view];
+    for (NSInteger i = row+1; i != row; i++) {
+        if (i == -1) continue;
+        if (i == self.numberOfRows) {
+            i = -2;
+            continue;
+        }
         // Going forward we can ask the row for its nextValidKeyView
-        view = [self rowViewAtRow:nextRow makeIfNecessary:NO].nextValidKeyView;
+        view = [self rowViewAtRow:i makeIfNecessary:YES].nextValidKeyView;
         if (view) {
             [self.window makeFirstResponder:view];
             [view scrollRectToVisible:view.superview.bounds];
             return;
         }
-        nextRow++;
     }
 }
 
@@ -367,12 +373,12 @@
 
 - (NSRect)focusRingMaskBounds
 {
-    return self.bounds;
+    return self.subviews[0].frame;
 }
 
 - (void)drawFocusRingMask
 {
-    NSRectFill(self.bounds);
+    NSRectFill(self.subviews[0].frame);
 }
 
 @end

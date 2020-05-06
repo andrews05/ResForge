@@ -5,10 +5,10 @@
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
-	self = [super initForType:t withLabel:l];
-	if (self) {
+	if (self = [super initForType:t withLabel:l]) {
         _zeroTerminated = [t isEqualToString:@"LSTZ"];
         self.editable = NO;
+        self.rowHeight = 17;
         self.endType = @"LSTE";
 	}
 	return self;
@@ -21,10 +21,20 @@
     element.subElements = [self.subElements copyWithZone:zone];
     if (element.subElements.count == 1) {
         element.singleElement = [element.subElements elementAtIndex:0];
+        element.rowHeight = 22;
     }
     element.tail = self.tail;
     element.entries = self.entries;
 	return element;
+}
+
+- (NSView *)labelView:(NSOutlineView *)outlineView
+{
+    NSString *identifier = self.allowsCreateListEntry ? @"listLabel" : @"labelView";
+    NSTableCellView *view = [outlineView makeViewWithIdentifier:identifier owner:self];
+    NSUInteger index = [self.entries indexOfObject:self];
+    view.textField.stringValue = [NSString stringWithFormat:@"%ld) %@", index+1, [self.singleElement label] ?: super.label];
+    return view;
 }
 
 // If the list entry contains only a single visible element, show that element here while hiding the sub section
@@ -46,6 +56,7 @@
         [self.subElements configureElements];
         if (self.subElements.count == 1) {
             self.singleElement = [self.subElements elementAtIndex:0];
+            self.rowHeight = 22;
         }
     } else {
         // This item will be the tail
@@ -107,13 +118,6 @@
     } else if (_zeroTerminated) {
         [stream advanceAmount:1 pad:YES];
     }
-}
-
-- (NSString *)label
-{
-    // Prefix with item number
-    NSUInteger index = [self.entries indexOfObject:self];
-    return [NSString stringWithFormat:@"%ld) %@", index+1, [self.singleElement label] ?: super.label];
 }
 
 #pragma mark -

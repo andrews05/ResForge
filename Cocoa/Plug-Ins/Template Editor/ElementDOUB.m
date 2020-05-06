@@ -4,6 +4,14 @@
 
 @implementation ElementDOUB
 
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
+{
+    if (self = [super initForType:t withLabel:l]) {
+        self.width = 180;
+    }
+    return self;
+}
+
 - (void)readDataFrom:(ResourceStream *)stream
 {
     CFSwappedFloat64 tmp;

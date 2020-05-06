@@ -16,8 +16,10 @@
 {
     if (!self.isKey)
         return [super dataView:outlineView];
-    NSView *view = [outlineView makeViewWithIdentifier:@"keyData" owner:self];
-    NSPopUpButton *keySelect = view.subviews[0];
+    NSRect frame = NSMakeRect(0, 0, 300, self.rowHeight);
+    NSView *view = [[NSView alloc] initWithFrame:frame];
+    frame.size.width = 240-4;
+    NSPopUpButton *keySelect = [[NSPopUpButton alloc] initWithFrame:frame];
     if (self.keyedSections.count) {
         keySelect.target = self;
         keySelect.action = @selector(keyChanged:);
@@ -27,6 +29,7 @@
     [keySelect bind:@"content" toObject:self withKeyPath:@"cases" options:nil];
     [keySelect bind:@"selectedObject" toObject:self withKeyPath:@"value" options:@{NSValueTransformerBindingOption:self,
                                                                                    NSValidatesImmediatelyBindingOption:@(self.formatter != nil)}];
+    [view addSubview:keySelect];
     return view;
 }
 

@@ -5,6 +5,14 @@
 @implementation ElementFRAC
 @synthesize fractValue;
 
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
+{
+    if (self = [super initForType:t withLabel:l]) {
+        self.width = 90;
+    }
+    return self;
+}
+
 - (void)readDataFrom:(ResourceStream *)stream
 {
 	Fract tmp;
