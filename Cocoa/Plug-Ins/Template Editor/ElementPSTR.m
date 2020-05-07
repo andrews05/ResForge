@@ -79,16 +79,17 @@
     self.width = (!self.cases && _maxLength > 32) ? 0 : 240;
 }
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
-    view = [super configureView:view];
+    [super configureView:view];
     NSTextField *textField = view.subviews[0];
     if (_maxLength < UINT32_MAX)
         textField.placeholderString = [self.type stringByAppendingFormat:@" (%u characters)", _maxLength];
-    if (self.width != 0) return view;
-    textField.lineBreakMode = NSLineBreakByWordWrapping;
-    [self performSelector:@selector(autoRowHeight:) withObject:textField afterDelay:0];
-    return textField;
+    if (self.width == 0) {
+        textField.lineBreakMode = NSLineBreakByWordWrapping;
+        textField.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+        [self performSelector:@selector(autoRowHeight:) withObject:textField afterDelay:0];
+    }
 }
 
 - (void)controlTextDidChange:(NSNotification *)obj
@@ -104,10 +105,8 @@
     NSOutlineView *outlineView = self.parentList.controller.dataList;
     NSUInteger index = [outlineView rowForView:field];
     Element *element = [outlineView itemAtRow:index];
-    NSRect bounds = field.bounds;
-    bounds.size.height = CGFLOAT_MAX;
-    double height = [field.cell cellSizeForBounds:bounds].height;
-    if (height < 22) height = 22;
+    NSRect bounds = NSMakeRect(0, 0, field.bounds.size.width-4, CGFLOAT_MAX);
+    double height = [field.cell cellSizeForBounds:bounds].height + 1;
     if (height == element.rowHeight)
         return;
     element.rowHeight = height;

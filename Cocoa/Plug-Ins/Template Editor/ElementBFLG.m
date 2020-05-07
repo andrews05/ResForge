@@ -3,10 +3,9 @@
 
 @implementation ElementBFLG
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
     [view addSubview:[ElementBFLG createCheckboxWithFrame:view.frame forElement:self]];
-    return view;
 }
 
 + (NSButton *)createCheckboxWithFrame:(NSRect)frame forElement:(Element *)element

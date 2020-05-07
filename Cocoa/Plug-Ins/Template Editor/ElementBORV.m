@@ -10,7 +10,7 @@
 // The main difference from BBITs is it allows a custom ordering of the bits (it also gives a slightly more compact display)
 @implementation ElementBORV
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
     NSRect frame = view.frame;
     frame.size.height = 20;
@@ -21,7 +21,6 @@
         checkbox.title = element.displayLabel;
         [view addSubview:checkbox];
     }
-    return view;
 }
 
 - (void)configure

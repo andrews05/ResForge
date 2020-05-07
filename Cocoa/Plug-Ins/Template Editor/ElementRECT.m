@@ -3,10 +3,9 @@
 
 @implementation ElementRECT
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
     [ElementRECT configureFields:@[@"top", @"left", @"bottom", @"right"] inView:view forElement:self];
-    return view;
 }
 
 + (void)configureFields:(NSArray *)fields inView:(NSView *)view forElement:(Element *)element

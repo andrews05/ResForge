@@ -32,7 +32,7 @@
 - (id)copyWithZone:(NSZone *)zone;
 
 // Configure the view to display this element in the list
-- (NSView *)configureView:(NSView *)view;
+- (void)configureView:(NSView *)view;
 
 // The label to display, if different from the template label
 - (NSString *)displayLabel;
@@ -70,3 +70,6 @@
 
 @end
 
+
+@interface NTInsensitiveComboBoxCell : NSComboBoxCell
+@end

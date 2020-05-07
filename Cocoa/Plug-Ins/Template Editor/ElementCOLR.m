@@ -24,7 +24,7 @@
     return self;
 }
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
     NSRect frame = view.frame;
     frame.size.width = self.width-4;
@@ -32,7 +32,6 @@
     well.action = @selector(itemValueUpdated:);
     [well bind:@"value" toObject:self withKeyPath:@"value" options:nil];
     [view addSubview:well];
-    return view;
 }
 
 - (NSColor *)value

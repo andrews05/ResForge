@@ -39,15 +39,15 @@
     return self;
 }
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
     NSTextField *textField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 3, view.frame.size.width, 17)];
     textField.bezeled = NO;
+    textField.editable = NO;
     textField.selectable = YES;
     textField.stringValue = [self.data description];
     textField.autoresizingMask = NSViewWidthSizable;
     [view addSubview:textField];
-    return view;
 }
 
 - (void)configure

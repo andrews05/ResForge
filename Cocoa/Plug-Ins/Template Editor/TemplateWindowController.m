@@ -170,7 +170,8 @@
 {
     if ([tableColumn.identifier isEqualToString:@"data"]) {
         NSView *view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, tableColumn.width, item.rowHeight)];
-        return [item configureView:view];
+        [item configureView:view];
+        return view;
     } else if (tableColumn) {
         NSString *identifier = tableColumn.identifier;
         if (item.class == ElementLSTB.class && [item allowsCreateListEntry])
@@ -363,6 +364,24 @@
     }
 }
 
+// Create a little more space for labels by removing the disclosure triangles
+- (NSRect)frameOfOutlineCellAtRow:(NSInteger)row
+{
+    return NSZeroRect;
+}
+
+- (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row {
+    NSRect superFrame = [super frameOfCellAtColumn:column row:row];
+    if (column == 0) {
+        superFrame.origin.x -= 16;
+        superFrame.size.width += 16;
+    } else if (column == -1) {
+        superFrame.origin.x -= 13;
+        superFrame.size.width += 13;
+    }
+    return superFrame;
+}
+
 @end
 
 #pragma mark -
@@ -388,7 +407,7 @@
 
 - (void)drawFocusRingMask
 {
-    NSRectFill(self.textField.frame);
+    NSRectFill(self.focusRingMaskBounds);
 }
 
 @end

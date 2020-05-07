@@ -66,16 +66,19 @@
 
 /*** METHODS SUBCLASSES SHOULD OVERRIDE ***/
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
-    if (![self respondsToSelector:@selector(value)])
-        return nil;
+    if (![self respondsToSelector:@selector(value)]) return;
     NSRect frame = view.frame;
-    frame.size.width = self.width-4;
+    if (self.width != 0) frame.size.width = self.width-4;
     if (self.cases) {
         frame.size.height = 26;
         frame.origin.y = -2;
         NSComboBox *combo = [[NSComboBox alloc] initWithFrame:frame];
+        // Use insensitive completion, except for TNAM
+        if (![self.type isEqualToString:@"TNAM"])
+            combo.cell = [[NTInsensitiveComboBoxCell alloc] init];
+        combo.editable = YES;
         combo.completes = YES;
         combo.numberOfVisibleItems = 10;
         combo.delegate = self;
@@ -96,7 +99,6 @@
         [textField bind:@"value" toObject:self withKeyPath:@"value" options:nil];
         [view addSubview:textField];
     }
-    return view;
 }
 
 + (NSFormatter *)sharedFormatter
@@ -190,6 +192,22 @@
     // Notify the controller that the value changed
     NSControl *control = notification.object;
     [(TemplateWindowController *)control.window.windowController itemValueUpdated:control];
+}
+
+@end
+
+
+// NSComboBoxCell subclass with case-insensitive completion
+@implementation NTInsensitiveComboBoxCell
+
+- (NSString *)completedString:(NSString *)string
+{
+    for (NSString *value in self.objectValues) {
+        if ([value commonPrefixWithString:string options:NSCaseInsensitiveSearch].length == string.length) {
+            return value;
+        }
+    }
+    return @"";
 }
 
 @end

@@ -25,24 +25,24 @@
     return self;
 }
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
-    if ([self.type isEqualToString:@"BB08"]) {
+    if (_bits == self.class.length) {
         // Display as checkboxes
-        NSRect frame = view.frame;
-        frame.size.width = 20;
-        for (ElementBBIT *element in self.bitList) {
-            [view addSubview:[ElementBFLG createCheckboxWithFrame:frame forElement:element]];
-            frame.origin.x += 30;
+        NSRect frame = NSMakeRect(0, self.rowHeight-1, 20, 20);
+        for (unsigned int i = 0; i < _bits; i++) {
+            if (i % 8 == 0) {
+                frame.origin.x = 0;
+                frame.origin.y -= 20;
+            }
+            [view addSubview:[ElementBFLG createCheckboxWithFrame:frame forElement:self.bitList[i]]];
+            frame.origin.x += 20;
         }
-        return view;
     } else if (_bits == 1) {
         [view addSubview:[ElementBFLG createCheckboxWithFrame:view.frame forElement:self]];
-        return view;
     } else {
-        view = [super configureView:view];
+        [super configureView:view];
         [view.subviews[0] setPlaceholderString:[NSString stringWithFormat:@"%d bits", _bits]];
-        return view;
     }
 }
 
@@ -51,13 +51,14 @@
     if (!self.first) return;
     self.bitList = [NSMutableArray new];
     ElementBBIT *element;
-    if ([self.type isEqualToString:@"BB08"]) {
-        // Special treatment for BB08 (otherwise equivalent to UBYT): display as row of 8 checkboxes
-        for (unsigned int pos = 8; pos > 0; pos--) {
+    // Special treatment for BB08/WB16/LB32 (otherwise equivalent to UBYT/UWRD/ULNG): display as rows of checkboxes
+    if (self.visible && _bits == self.class.length) {
+        for (unsigned int pos = self.class.length; pos > 0; pos--) {
             element = [ElementBBIT elementForType:@"BBIT" withLabel:nil];
             element.position = pos - 1;
             [self.bitList addObject:element];
         }
+        self.rowHeight = (_bits/8 * 20) + 2;
     } else {
         [self.bitList addObject:self];
         unsigned int pos = _position = self.class.length - _bits;

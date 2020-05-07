@@ -13,10 +13,12 @@
     return self;
 }
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
-    if (!self.isKey)
-        return [super configureView:view];
+    if (!self.isKey) {
+        [super configureView:view];
+        return;
+    }
     NSRect frame = view.frame;
     frame.size.width = self.width-4;
     NSPopUpButton *keySelect = [[NSPopUpButton alloc] initWithFrame:frame];
@@ -30,7 +32,6 @@
     [keySelect bind:@"selectedObject" toObject:self withKeyPath:@"value" options:@{NSValueTransformerBindingOption:self,
                                                                                    NSValidatesImmediatelyBindingOption:@(self.formatter != nil)}];
     [view addSubview:keySelect];
-    return view;
 }
 
 - (IBAction)keyChanged:(NSPopUpButton *)sender

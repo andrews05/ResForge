@@ -24,7 +24,7 @@
     }
 }
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
     for (Element *element in self.subElements) {
         if (element.cases) element.width = 180;
@@ -35,10 +35,9 @@
         NSRect subframe = subview.frame;
         subframe.origin.x = x;
         subview.frame = subframe;
-        subview.autoresizingMask = NSViewMaxXMargin;
+        subview.autoresizingMask |= NSViewMaxXMargin;
         x += subframe.size.width+4;
     }
-    return view;
 }
 
 @end

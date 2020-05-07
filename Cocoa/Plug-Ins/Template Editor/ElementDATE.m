@@ -3,7 +3,7 @@
 
 @implementation ElementDATE
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
     NSRect frame = view.frame;
     frame.size.width = 240-4;
@@ -12,7 +12,6 @@
     [picker bind:@"value" toObject:self withKeyPath:@"value" options:@{NSValueTransformerBindingOption:self}];
     picker.drawsBackground = YES;
     [view addSubview:picker];
-    return view;
 }
 
 - (id)transformedValue:(id)value

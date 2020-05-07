@@ -39,10 +39,10 @@
                             <rect key="frame" x="0.0" y="0.0" width="500" height="401"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="Template List" rowHeight="22" rowSizeStyle="automatic" headerView="59" viewBased="YES" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="37" id="36" customClass="NTOutlineView">
+                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="Template List" rowHeight="22" rowSizeStyle="automatic" headerView="59" viewBased="YES" indentationPerLevel="16" indentationMarkerFollowsCell="NO" autoresizesOutlineColumn="YES" outlineTableColumn="37" id="36" customClass="NTOutlineView">
                                     <rect key="frame" x="0.0" y="0.0" width="500" height="378"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <size key="intercellSpacing" width="3" height="4"/>
+                                    <size key="intercellSpacing" width="6" height="4"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
@@ -60,14 +60,14 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="xI4-fZ-IZP" userLabel="Label">
-                                                    <rect key="frame" x="1" y="2" width="150" height="22"/>
+                                                    <rect key="frame" x="3" y="2" width="150" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FUM-Fz-dnU">
-                                                            <rect key="frame" x="0.0" y="4" width="150" height="17"/>
+                                                            <rect key="frame" x="0.0" y="2" width="150" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="XAc-fn-92z">
-                                                                <font key="font" metaFont="systemBold"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="XAc-fn-92z">
+                                                                <font key="font" metaFont="systemBold" size="12"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
@@ -78,14 +78,14 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="listLabel" id="hgb-pb-eOm" customClass="NTFocusView">
-                                                    <rect key="frame" x="1" y="28" width="150" height="22"/>
+                                                    <rect key="frame" x="3" y="28" width="150" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3bN-4y-Fu0">
-                                                            <rect key="frame" x="0.0" y="4" width="150" height="17"/>
+                                                            <rect key="frame" x="0.0" y="2" width="150" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="List Label" id="i8r-wt-zIr">
-                                                                <font key="font" metaFont="systemBold"/>
+                                                                <font key="font" metaFont="systemBold" size="12"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
@@ -96,7 +96,7 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="groupView" id="emB-cD-7ej">
-                                                    <rect key="frame" x="1" y="54" width="150" height="17"/>
+                                                    <rect key="frame" x="3" y="54" width="150" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tXR-v5-Vmv">
@@ -115,7 +115,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="data" editable="NO" width="344" minWidth="48" maxWidth="1000" id="34">
+                                        <tableColumn identifier="data" editable="NO" width="338" minWidth="48" maxWidth="1000" id="34">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Data">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

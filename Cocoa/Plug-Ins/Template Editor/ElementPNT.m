@@ -3,10 +3,9 @@
 
 @implementation ElementPNT
 
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
     [ElementRECT configureFields:@[@"h", @"v"] inView:view forElement:self];
-    return view;
 }
 
 - (void)readDataFrom:(ResourceStream *)stream

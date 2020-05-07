@@ -36,9 +36,9 @@
 
 // If the list entry contains only a single visible element, show that element here while hiding the sub section
 // (this also greatly improves performance with large lists)
-- (NSView *)configureView:(NSView *)view
+- (void)configureView:(NSView *)view
 {
-    return [self.singleElement configureView:view];
+    [self.singleElement configureView:view];
 }
 
 - (void)configure
