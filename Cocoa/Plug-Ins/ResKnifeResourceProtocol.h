@@ -49,6 +49,8 @@ typedef NS_OPTIONS(unsigned short, RKResAttribute) {
 @property (readonly) NSUInteger size;
 @property (readonly, getter = isDirty) BOOL dirty;
 
+- (void)open;
+
 - (void)touch;
 
 // Prevent a warning

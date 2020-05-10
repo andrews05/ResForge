@@ -12,7 +12,7 @@
         return;
     }
     NSRect frame = view.frame;
-    if (self.width != 0) frame.size.width = self.width-4;
+    if (self.width != 0) frame.size.width = self.width-1;
     frame.size.height = 26;
     frame.origin.y = -2;
     NSComboBox *combo = [[NSComboBox alloc] initWithFrame:frame];
@@ -106,6 +106,14 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:NSComboBoxSelectionDidChangeNotification object:self.controlView];
+}
+
+// Right margin is set by RSID to allow space for link button
+- (NSRect)drawingRectForBounds:(NSRect)rect
+{
+    rect = [super drawingRectForBounds:rect];
+    rect.size.width -= self.rightMargin;
+    return rect;
 }
 
 @end

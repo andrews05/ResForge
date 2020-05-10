@@ -1,11 +1,11 @@
 #import "ElementWFLG.h"
-#import "ElementBFLG.h"
+#import "ElementBOOL.h"
 
 @implementation ElementWFLG
 
 - (void)configureView:(NSView *)view
 {
-    [view addSubview:[ElementBFLG createCheckboxWithFrame:view.frame forElement:self]];
+    [view addSubview:[ElementBOOL createCheckboxWithFrame:view.frame forElement:self]];
 }
 
 @end

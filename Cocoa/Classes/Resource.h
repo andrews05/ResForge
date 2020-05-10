@@ -32,6 +32,8 @@
 @property (weak) NSDocument *document;
 - (void)_setName:(NSString *)newName;
 
+- (void)open;
+
 // init methods
 - (instancetype)initWithType:(OSType)typeValue andID:(short)resIDValue;
 - (instancetype)initWithType:(OSType)typeValue andID:(short)resIDValue withName:(NSString *)nameValue andAttributes:(UInt16)attributesValue;

@@ -13,16 +13,22 @@
         [self loadValue];
     // Only show the select menu if there are multiple options
     if (self.cases.count > 1) {
+        NSRect orig = view.frame;
         NSRect frame = view.frame;
-        frame.size.width = 180-4;
+        frame.size.width = 180-1;
         NSPopUpButton *select = [[NSPopUpButton alloc] initWithFrame:frame];
         select.target = self;
         select.action = @selector(caseChanged:);
         [select bind:@"content" toObject:self withKeyPath:@"cases" options:nil];
         [select bind:@"selectedObject" toObject:self withKeyPath:@"currentCase" options:nil];
         [view addSubview:select];
+        frame.origin.x = 180;
+        view.frame = frame;
+        [self.currentCase configureView:view];
+        view.frame = orig;
+    } else {
+        [self.currentCase configureView:view];
     }
-    [self.currentCase configureView:view];
 }
 
 - (IBAction)caseChanged:(id)sender

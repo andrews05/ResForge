@@ -29,19 +29,16 @@
 
 - (void)configureView:(NSView *)view
 {
+    NSRect orig = view.frame;
+    NSRect frame = view.frame;
     for (__kindof Element *element in self.subElements) {
         if (self.subElements.count > 1 && [element isKindOfClass:ElementCaseable.class] && [element cases])
             element.width = 180;
         [element configureView:view];
+        frame.origin.x += element.width;
+        view.frame = frame;
     }
-    CGFloat x = 0;
-    for (NSView *subview in view.subviews) {
-        NSRect subframe = subview.frame;
-        subframe.origin.x = x;
-        subview.frame = subframe;
-        subview.autoresizingMask |= NSViewMaxXMargin;
-        x += subframe.size.width+4;
-    }
+    view.frame = orig;
 }
 
 @end

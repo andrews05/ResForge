@@ -1,6 +1,6 @@
 #import "ElementBORV.h"
 #import "ElementCASE.h"
-#import "ElementBFLG.h"
+#import "ElementBOOL.h"
 
 #define SIZE_ON_DISK (1)
 
@@ -17,7 +17,7 @@
     frame.origin.y = self.rowHeight-1;
     for (ElementCASE *element in self.cases) {
         frame.origin.y -= 20;
-        NSButton *checkbox = [ElementBFLG createCheckboxWithFrame:frame forElement:element];
+        NSButton *checkbox = [ElementBOOL createCheckboxWithFrame:frame forElement:element];
         checkbox.title = element.displayLabel;
         [view addSubview:checkbox];
     }

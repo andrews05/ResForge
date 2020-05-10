@@ -287,8 +287,8 @@
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	NSMenu *resourceMenu = [[[NSApp mainMenu] itemAtIndex:3] submenu];
-	NSMenuItem *createItem = [resourceMenu itemAtIndex:[resourceMenu indexOfItemWithTarget:nil andAction:@selector(showCreateResourceSheet:)]];
+	NSMenu *resourceMenu = [[[NSApp mainMenu] itemWithTag:3] submenu];
+	NSMenuItem *createItem = [resourceMenu itemWithTag:0];
 	[createItem setTitle:NSLocalizedString(@"Create List Entry", nil)];
 	[createItem setAction:@selector(createListEntry:)];
 }
@@ -300,8 +300,8 @@
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
-	NSMenu *resourceMenu = [[[NSApp mainMenu] itemAtIndex:3] submenu];
-	NSMenuItem *createItem = [resourceMenu itemAtIndex:[resourceMenu indexOfItemWithTarget:nil andAction:@selector(createListEntry:)]];
+	NSMenu *resourceMenu = [[[NSApp mainMenu] itemWithTag:3] submenu];
+	NSMenuItem *createItem = [resourceMenu itemWithTag:0];
 	[createItem setTitle:NSLocalizedString(@"Create New Resource...", nil)];
 	[createItem setAction:@selector(showCreateResourceSheet:)];
 }

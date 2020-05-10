@@ -118,6 +118,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <action trigger="doubleAction" selector="openResources:" target="-2" id="d4H-KE-K8v"/>
                                         <outlet property="dataSource" destination="32" id="152"/>
                                         <outlet property="delegate" destination="24" id="153"/>
                                     </connections>

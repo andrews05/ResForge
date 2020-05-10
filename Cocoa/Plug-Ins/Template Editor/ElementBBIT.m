@@ -1,5 +1,5 @@
 #import "ElementBBIT.h"
-#import "ElementBFLG.h"
+#import "ElementBOOL.h"
 
 #define SIZE_ON_DISK (1)
 
@@ -35,11 +35,11 @@
                 frame.origin.x = 0;
                 frame.origin.y -= 20;
             }
-            [view addSubview:[ElementBFLG createCheckboxWithFrame:frame forElement:self.bitList[i]]];
+            [view addSubview:[ElementBOOL createCheckboxWithFrame:frame forElement:self.bitList[i]]];
             frame.origin.x += 20;
         }
     } else if (_bits == 1) {
-        [view addSubview:[ElementBFLG createCheckboxWithFrame:view.frame forElement:self]];
+        [view addSubview:[ElementBOOL createCheckboxWithFrame:view.frame forElement:self]];
     } else {
         [super configureView:view];
         [view.subviews[0] setPlaceholderString:[NSString stringWithFormat:@"%d bits", _bits]];

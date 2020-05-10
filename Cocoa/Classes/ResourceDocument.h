@@ -5,7 +5,7 @@
 
 @protocol ResKnifePlugin;
 
-@interface ResourceDocument : NSDocument <NSToolbarDelegate>
+@interface ResourceDocument : NSDocument
 {
 	IBOutlet ResourceDataSource		*dataSource;
 	IBOutlet NSWindow				*mainWindow;

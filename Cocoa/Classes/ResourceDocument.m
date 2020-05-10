@@ -62,9 +62,9 @@ extern NSString *RKResourcePboardType;
 	if(error) return NO;
 	
 	// find out which fork to parse
-	if(NSAppKitVersionNumber < 700.0 || ![openPanelDelegate readOpenPanelForFork])
+	if(![openPanelDelegate readOpenPanelForFork])
 	{
-		// display second dialog to ask user to select a fork, pre-10.3 or if open command did not come via the open dialog
+		// display second dialog to ask user to select a fork if open command did not come via the open dialog
 		
 		// bug:	unimplemented - always tells app to try resource fork first
 		error = FSGetResourceForkName(&fork);
@@ -647,10 +647,6 @@ extern NSString *RKResourcePboardType;
 		// NSLog(@"Changed data cell");
 	}
 	
-	// set outline view's inter-cell spacing to zero to avoid getting gaps between blue bits
-	[outlineView setIntercellSpacing:NSMakeSize(0,0)];
-	[outlineView setTarget:self];
-	[outlineView setDoubleAction:@selector(openResources:)];
 	[outlineView setVerticalMotionCanBeginDrag:YES];
 	[outlineView registerForDraggedTypes:@[RKResourcePboardType, NSStringPboardType, NSFilenamesPboardType]];
 	
@@ -660,7 +656,6 @@ extern NSString *RKResourcePboardType;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeWillChange:) name:ResourceTypeWillChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesWillChange:) name:ResourceAttributesWillChangeNotification object:nil];
 	
-//	[[controller window] setResizeIncrements:NSMakeSize(1,18)];
     [dataSource addResources:resources];
 }
 
@@ -779,12 +774,11 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	if ([event type] == NSLeftMouseUp && (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) & NSAlternateKeyMask) != 0)
 		[self openResourcesAsHex:sender];
 	else {
-        NSArray *selected = [dataSource allResourcesForItems:[outlineView selectedItems]];
-		for (Resource *resource in selected) {
+		for (Resource *resource in [outlineView selectedItems]) {
             if( [resource isKindOfClass: [Resource class]] ) {
-                id usedPlug = [self openResourceUsingEditor:resource];
-                if ([usedPlug isKindOfClass:[NSWindowController class]])
-                    [self addWindowController:usedPlug];
+                [self openResourceUsingEditor:resource];
+            } else {
+                [outlineView expandItem:resource];
             }
 		}
 	}
@@ -793,24 +787,18 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)openResourcesInTemplate:(id)sender
 {
 	// opens the resource in its default template
-	NSArray *selected = [dataSource allResourcesForItems:[outlineView selectedItems]];
-	for (Resource *resource in selected) {
+	for (Resource *resource in [outlineView selectedItems]) {
         if( [resource isKindOfClass: [Resource class]] ) {
-            id usedPlug = [self openResource:resource usingTemplate:GetNSStringFromOSType([resource type])];
-            if ([usedPlug isKindOfClass:[NSWindowController class]])
-                [self addWindowController:usedPlug];
+            [self openResource:resource usingTemplate:GetNSStringFromOSType([resource type])];
         }
 	}
 }
 
 - (IBAction)openResourcesAsHex:(id)sender
 {
-	NSArray *selected = [dataSource allResourcesForItems:[outlineView selectedItems]];
-	for (Resource *resource in selected) {
+	for (Resource *resource in [outlineView selectedItems]) {
         if( [resource isKindOfClass: [Resource class]] ) {
-            id usedPlug = [self openResourceAsHex:resource];
-            if ([usedPlug isKindOfClass:[NSWindowController class]])
-                [self addWindowController:usedPlug];
+            [self openResourceAsHex:resource];
         }
 	}
 }
@@ -841,9 +829,12 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 		// update: doug says window controllers automatically release themselves when their window is closed. All default plugs have a window controller as their principal class, but 3rd party ones might not
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-		id<ResKnifePlugin> plug = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
-		if (plug)
+		id plug = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
+        if (plug) {
+            if ([plug isKindOfClass:[NSWindowController class]])
+                [self addWindowController:plug];
 			return plug;
+        }
 	}
 	
 	// if no editor exists, or the editor is broken, open using template
@@ -877,9 +868,11 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	if(tmpl && editorClass)
 	{
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-        id<ResKnifeTemplatePlugin> plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResource:resource template:tmpl];
-		if (plug)
+        id plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResource:resource template:tmpl];
+        if (plug) {
+            [self addWindowController:plug];
 			return plug;
+        }
 	}
 	
 	// if no template exists, or template editor is broken, open as hex
@@ -902,8 +895,9 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
 	// update: doug says window controllers automatically release themselves when their window is closed.
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	id <ResKnifePlugin> plugController = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
-	return plugController;
+	id plug = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
+    [self addWindowController:plug];
+	return plug;
 }
 
 

@@ -3,6 +3,14 @@
 
 @implementation ElementRECT
 
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
+{
+    if (self = [super initForType:t withLabel:l]) {
+        self.width = 240;
+    }
+    return self;
+}
+
 - (void)configureView:(NSView *)view
 {
     [ElementRECT configureFields:@[@"top", @"left", @"bottom", @"right"] inView:view forElement:self];
@@ -11,7 +19,7 @@
 + (void)configureFields:(NSArray *)fields inView:(NSView *)view forElement:(Element *)element
 {
     NSRect frame = view.frame;
-    frame.size.width = element.width-4;
+    frame.size.width = 60-4;
     for (NSString *key in fields) {
         NSTextField *field = [[NSTextField alloc] initWithFrame:frame];
         field.placeholderString = key;
@@ -19,7 +27,7 @@
         field.delegate = element;
         [field bind:@"value" toObject:element withKeyPath:key options:nil];
         [view addSubview:field];
-        frame.origin.x += element.width;
+        frame.origin.x += 60;
     }
 }
 

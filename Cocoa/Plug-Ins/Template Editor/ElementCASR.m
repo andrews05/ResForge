@@ -1,7 +1,7 @@
 #import "ElementCASR.h"
+#import "ElementRSID.h"
 #import "ElementRangeable.h"
-#import "ResourceDocument.h"
-#import "ResourceDataSource.h"
+#import "TemplateWindowController.h"
 #import "ResKnifeResourceProtocol.h"
 
 /*
@@ -77,14 +77,12 @@
 - (void)configureView:(NSView *)view
 {
     if (self.min == self.max) return;
-    [self loadCases];
-    [super configureView:view];
-    // Reposition the control if the select menu exists
-    if (self.parentElement.cases.count > 1) {
-        NSView *subview = [view.subviews lastObject];
-        NSRect frame = subview.frame;
-        frame.origin.x = view.subviews[0].frame.size.width + 4;
-        subview.frame = frame;
+    if (self.resType) {
+        [self loadCases];
+        [super configureView:view];
+        [ElementRSID configureLinkButton:[view.subviews lastObject] forElement:self];
+    } else {
+        [super configureView:view];
     }
 }
 
@@ -100,29 +98,33 @@
 
 - (void)loadCases
 {
-    if (!self.resType || self.cases) return;
+    if (self.cases) return;
     // If a resType has been given this will become a combo box for resource selection
     self.width = self.parentElement.cases.count > 1 ? 180 : 240;
     self.cases = [NSMutableArray new];
     self.caseMap = [NSMutableDictionary new];
-    // Find resources in all documents
-    NSMutableArray *allResources = [NSMutableArray new];
-    for (NSDocument *doc in [[NSDocumentController sharedDocumentController] documents]) {
-        NSArray *resources = [[(ResourceDocument *)doc dataSource] allResourcesOfType:self.resType];
-        for (id <ResKnifeResource> resource in resources) {
-            if (!resource.name.length) continue; // No point showing resources with no name
-            if (resource.resID < self.min || resource.resID > self.max) continue;
-            NSString *resID = @(resource.resID).stringValue;
-            if (![self.caseMap objectForKey:resID]) {
-                [allResources addObject:resource];
-                [self.caseMap setObject:[NSString stringWithFormat:@"%@ = %@", resID, resource.name] forKey:resID];
-            }
+    // Find resources in all documents and sort by id
+    NSArray *resources = [self.parentList.controller.resource.class allResourcesOfType:self.resType inDocument:nil];
+    resources = [resources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"resID" ascending:YES]]];
+    for (id <ResKnifeResource> resource in resources) {
+        if (!resource.name.length) continue; // No point showing resources with no name
+        if (resource.resID < self.min || resource.resID > self.max) continue;
+        NSString *resID = @(resource.resID).stringValue;
+        if (![self.caseMap objectForKey:resID]) {
+            [self.cases addObject:[NSString stringWithFormat:@"%@ = %d", resource.name, resource.resID]];
+            [self.caseMap setObject:[NSString stringWithFormat:@"%@ = %@", resID, resource.name] forKey:resID];
         }
     }
-    // Sort the resources by id
-    NSArray *resources = [allResources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"resID" ascending:YES]]];
-    for (id <ResKnifeResource> resource in resources) {
-        [self.cases addObject:[NSString stringWithFormat:@"%@ = %d", resource.name, resource.resID]];
+}
+
+- (IBAction)openResource:(id)sender
+{
+    Class resourceProtocol = self.parentList.controller.resource.class;
+    id <ResKnifeResource> resource = [resourceProtocol resourceOfType:self.resType andID:(ResID)self.value inDocument:nil];
+    if (resource) {
+        [resource open];
+    } else {
+        NSBeep();
     }
 }
 

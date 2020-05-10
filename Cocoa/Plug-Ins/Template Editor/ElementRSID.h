@@ -6,4 +6,6 @@
 @property int max;
 @property NSMutableArray *fixedCases;
 
++ (void)configureLinkButton:(NSComboBox *)comboBox forElement:(Element *)element;
+
 @end

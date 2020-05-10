@@ -8,4 +8,6 @@
 
 
 @interface NTInsensitiveComboBoxCell : NSComboBoxCell
+@property CGFloat rightMargin;
+
 @end

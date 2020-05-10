@@ -66,8 +66,7 @@
 			[[document undoManager] setActionName:NSLocalizedString(@"Create Resource", nil)];
 		else [[document undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Create Resource '%@'", nil), [nameView stringValue]]];
 		[[document undoManager] endUndoGrouping];
-        [[document dataSource] selectResources:@[resource]];
-        [document openResources:nil];
+        [document openResourceUsingEditor:resource];
 	}
 	[[self window] orderOut:nil];
 	[NSApp endSheet:[self window]];

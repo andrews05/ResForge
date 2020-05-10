@@ -10,20 +10,13 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
 #define kRSRCType @"ResourceType"
 #define kRSRCAttrib @"ResourceAttribute"
 
-@interface Resource ()
-@property (copy) NSString *_name;
-@property (copy) NSData *_data;
-@end
-
 @implementation Resource
-@synthesize _name = name;
+@synthesize name;
 @synthesize dirty;
-@synthesize _data = data;
+@synthesize data;
 @synthesize representedFork;
 @synthesize attributes;
 @synthesize type;
-@dynamic name;
-@dynamic data;
 @synthesize document;
 static ResourceDataSource* supportDataSource;
 
@@ -48,11 +41,11 @@ static ResourceDataSource* supportDataSource;
 	if (self = [super init]) {
 		dirty = NO;
 		representedFork = nil;
-		self._name = nameValue;
+		name = nameValue;
 		type = typeValue;
 		resID = resIDValue;
 		attributes = attributesValue;
-		self._data = dataValue;
+		data = dataValue;
 	}
 	return self;
 }
@@ -154,6 +147,11 @@ static ResourceDataSource* supportDataSource;
 
 /* accessors */
 
+- (void)open
+{
+    [(ResourceDocument *)self.document openResourceUsingEditor:self];
+}
+
 - (void)touch
 {
 	self.dirty = YES;
@@ -178,7 +176,7 @@ static ResourceDataSource* supportDataSource;
 // shouldn't need this - it's used by forks to give them alternate names - should use name formatter replacement instead
 - (void)_setName:(NSString *)newName
 {
-	self._name = newName;
+	name = newName;
 }
 
 - (void)setName:(NSString *)newName
@@ -188,7 +186,7 @@ static ResourceDataSource* supportDataSource;
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameWillChangeNotification object:self];
 		
-		self._name = newName;
+		name = newName;
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceNameDidChangeNotification object:self];
 		self.dirty = YES;
@@ -277,7 +275,7 @@ static ResourceDataSource* supportDataSource;
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataWillChangeNotification object:self];
 		
 		// note: this function retains, rather than copies, the supplied data
-		self._data = newData;
+		data = newData;
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:self];
 		self.dirty = YES;
@@ -292,17 +290,17 @@ static ResourceDataSource* supportDataSource;
 	if (self) {
 		dirty = YES;
 		if ([decoder allowsKeyedCoding]) {
-			self._name = [decoder decodeObjectForKey:kRSRCName];
+			name = [decoder decodeObjectForKey:kRSRCName];
 			type = [decoder decodeInt32ForKey:kRSRCType];
 			resID = (short)[decoder decodeInt32ForKey:kRSRCID];
 			attributes = (UInt16)[decoder decodeInt32ForKey:kRSRCAttrib];
-			self._data = [decoder decodeObjectForKey:kRSRCData];
+			data = [decoder decodeObjectForKey:kRSRCData];
 		} else {
-			self._name = [decoder decodeObject];
+			name = [decoder decodeObject];
 			type = [(NSNumber*)[decoder decodeObject] unsignedIntValue];
 			resID = [(NSNumber*)[decoder decodeObject] shortValue];
 			attributes = [(NSNumber*)[decoder decodeObject] unsignedShortValue];
-			self._data = [decoder decodeDataObject];
+			data = [decoder decodeDataObject];
 		}
 	}
 	return self;

@@ -3,6 +3,14 @@
 
 @implementation ElementPNT
 
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
+{
+    if (self = [super initForType:t withLabel:l]) {
+        self.width = 120;
+    }
+    return self;
+}
+
 - (void)configureView:(NSView *)view
 {
     [ElementRECT configureFields:@[@"h", @"v"] inView:view forElement:self];
