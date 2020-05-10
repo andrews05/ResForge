@@ -40,6 +40,7 @@
 #import "ElementLSTB.h"
 #import "ElementKEYB.h"
 #import "ElementCASE.h"
+#import "ElementCASR.h"
 #import "ElementKRID.h"
 #import "ElementRSID.h"
 #import "ElementCOLR.h"
@@ -405,6 +406,7 @@
         
         // option lists
         registry[@"CASE"] = [ElementCASE class];    // single option for preceding element
+        registry[@"CASR"] = [ElementCASR class];    // option range for preceding element (ResKnife)
         registry[@"RSID"] = [ElementRSID class];    // resouce id (signed word) - type and offset in label
         
         // key selection
@@ -438,7 +440,7 @@
         
         // layout
         registry[@"DVDR"] = [ElementDVDR class];    // divider
-        registry[@"PACK"] = [ElementPACK class];    // Experimental layout control element - pack other named elements into one view
+        registry[@"PACK"] = [ElementPACK class];    // pack other elements together (ResKnife)
         
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
         registry[@"SFRC"] = [ElementUWRD class];    // 0.16 fixed fraction

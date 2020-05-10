@@ -48,6 +48,8 @@
 
 - (void)configure
 {
+    if (self.bits > 1 && self.bits < self.class.length)
+        [super configure]; // Allow bitfields to configure cases
     if (!self.first) return;
     self.bitList = [NSMutableArray new];
     ElementBBIT *element;

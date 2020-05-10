@@ -1,33 +1,30 @@
-#import "ElementKEY.h"
+#import "ElementKeyable.h"
 #import "ElementCASE.h"
 #import "TemplateWindowController.h"
 
-@implementation ElementKEY
+// Abstract Element subclass that handles keyed sections
+@implementation ElementKeyable
 
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
-        self.isKey = [t characterAtIndex:0] == 'K';
-        if (self.isKey) self.width = 240;
+        self.isKeyed = [t characterAtIndex:0] == 'K';
+        if (self.isKeyed) self.width = 240;
     }
     return self;
 }
 
 - (void)configureView:(NSView *)view
 {
-    if (!self.isKey) {
+    if (!self.isKeyed) {
         [super configureView:view];
         return;
     }
     NSRect frame = view.frame;
     frame.size.width = self.width-4;
     NSPopUpButton *keySelect = [[NSPopUpButton alloc] initWithFrame:frame];
-    if (self.keyedSections.count) {
-        keySelect.target = self;
-        keySelect.action = @selector(keyChanged:);
-    } else {
-        keySelect.action = @selector(itemValueUpdated:);
-    }
+    keySelect.target = self;
+    keySelect.action = @selector(keyChanged:);
     [keySelect bind:@"content" toObject:self withKeyPath:@"cases" options:nil];
     [keySelect bind:@"selectedObject" toObject:self withKeyPath:@"value" options:@{NSValueTransformerBindingOption:self,
                                                                                    NSValidatesImmediatelyBindingOption:@(self.formatter != nil)}];
@@ -36,17 +33,18 @@
 
 - (IBAction)keyChanged:(NSPopUpButton *)sender
 {
-    [self setCase:self.cases[sender.indexOfSelectedItem]];
-    TemplateWindowController *controller = sender.window.windowController;
-    [controller.dataList reloadData];
-    [controller itemValueUpdated:sender];
+    if (self.keyedSections.count) {
+        [self setCase:self.cases[sender.indexOfSelectedItem] copyData:YES];
+        [self.parentList.controller.dataList reloadData];
+    }
+    [self.parentList.controller itemValueUpdated:sender];
 }
 
-- (void)setCase:(ElementCASE *)element
+- (void)setCase:(ElementCASE *)element copyData:(BOOL)copyData
 {
     ElementKEYB *newSection = self.keyedSections[element.value];
     if (newSection != self.currentSection) {
-        if (!self.observing) {
+        if (copyData) {
             // Check if the section sizes match and attempt to copy the data
             UInt32 currentSize = 0;
             [self.currentSection.subElements sizeOnDisk:&currentSize];
@@ -101,7 +99,7 @@
 
 - (void)configure
 {
-    if (!self.isKey) {
+    if (!self.isKeyed) {
         [super configure];
         return;
     }
@@ -114,8 +112,7 @@
         }
     
         // Set initial value to first case
-        ElementCASE *element = self.cases[0];
-        id value = element.value;
+        id value = [self.cases[0] value];
         self.currentSection = self.keyedSections[value];
         [self validateValue:&value forKey:@"value" error:nil];
         [self setValue:value forKey:@"value"];
@@ -124,7 +121,6 @@
         // Use KVO to observe value change when data is first read
         // This saves us adding any key logic to the concrete element subclasses
         [self addObserver:self forKeyPath:@"value" options:0 context:nil];
-        self.observing = YES;
     }
 }
 
@@ -143,20 +139,16 @@
                         change:(NSDictionary<NSKeyValueChangeKey,id> *)change
                        context:(void *)context
 {
-    // In theory this will only run when the data is first read - update the displayed section to match the data
-    [self setCase:[super transformedValue:[self valueForKey:@"value"]]];
+    // In theory this will only run when the key is first read from the resource
+    // Make sure we load the correct section here so that we continue reading the resource into that section
+    [self setCase:[super transformedValue:[self valueForKey:@"value"]] copyData:NO];
     [self removeObserver:self forKeyPath:@"value"];
-    self.observing = NO;
 }
 
 - (id)reverseTransformedValue:(id)value
 {
-    if (!self.isKey)
+    if (!self.isKeyed)
         return [super reverseTransformedValue:value];
-    if (self.observing) {
-        [self removeObserver:self forKeyPath:@"value"];
-        self.observing = NO;
-    }
     // Value is a CASE element - get the string value
     return [value value];
 }

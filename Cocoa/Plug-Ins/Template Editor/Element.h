@@ -19,8 +19,6 @@
 @property (copy) NSString *label; // Label ("name") of this field.
 @property (weak) ElementList *parentList; // The ElementList* of the template field containing us, or the template window's list.
 @property NSString *endType; // Type code of an ending element if this element marks the start of a section.
-@property (strong) NSMutableArray *cases;
-@property (strong) NSMutableDictionary *caseMap;
 @property double rowHeight;
 @property BOOL visible;
 @property CGFloat width;
@@ -68,8 +66,4 @@
  purposes ("Create New Resource..." is renamed to "Create List Entry" while the
  template editor is key). */
 
-@end
-
-
-@interface NTInsensitiveComboBoxCell : NSComboBoxCell
 @end

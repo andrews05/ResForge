@@ -3,14 +3,27 @@
 
 @implementation ElementDATE
 
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
+{
+    if (self = [super initForType:t withLabel:l]) {
+        self.width = 240;
+        // Set the default value to the current time
+        UInt32 seconds;
+        UCConvertCFAbsoluteTimeToSeconds(CFAbsoluteTimeGetCurrent(), &seconds);
+        self.value = seconds;
+    }
+    return self;
+}
+
 - (void)configureView:(NSView *)view
 {
     NSRect frame = view.frame;
-    frame.size.width = 240-4;
+    frame.size.width = self.width-4;
     NSDatePicker *picker = [[NSDatePicker alloc] initWithFrame:frame];
+    picker.font = [NSFont systemFontOfSize:12];
+    picker.drawsBackground = YES;
     picker.action = @selector(itemValueUpdated:);
     [picker bind:@"value" toObject:self withKeyPath:@"value" options:@{NSValueTransformerBindingOption:self}];
-    picker.drawsBackground = YES;
     [view addSubview:picker];
 }
 

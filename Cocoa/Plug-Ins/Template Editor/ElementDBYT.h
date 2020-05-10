@@ -1,6 +1,6 @@
-#import "ElementKEY.h"
+#import "ElementRangeable.h"
 
-@interface ElementDBYT : ElementKEY
+@interface ElementDBYT : ElementRangeable
 @property SInt8 value;
 
 @end

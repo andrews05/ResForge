@@ -1,6 +1,6 @@
-#import "ElementKEY.h"
+#import "ElementKeyable.h"
 
-@interface ElementUBYT : ElementKEY
+@interface ElementUBYT : ElementKeyable
 @property UInt8 value;
 
 @end

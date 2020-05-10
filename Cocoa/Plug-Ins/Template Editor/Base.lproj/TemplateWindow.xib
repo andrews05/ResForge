@@ -34,13 +34,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="401"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="400"/>
                         <clipView key="contentView" id="ZgB-a4-tUl">
-                            <rect key="frame" x="0.0" y="0.0" width="500" height="401"/>
+                            <rect key="frame" x="0.0" y="0.0" width="500" height="400"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="Template List" rowHeight="22" rowSizeStyle="automatic" headerView="59" viewBased="YES" indentationPerLevel="16" indentationMarkerFollowsCell="NO" autoresizesOutlineColumn="YES" outlineTableColumn="37" id="36" customClass="NTOutlineView">
-                                    <rect key="frame" x="0.0" y="0.0" width="500" height="378"/>
+                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="16" indentationMarkerFollowsCell="NO" autoresizesOutlineColumn="YES" outlineTableColumn="37" id="36" customClass="NTOutlineView">
+                                    <rect key="frame" x="0.0" y="0.0" width="500" height="395"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="6" height="4"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -136,6 +136,8 @@
                                 </outlineView>
                             </subviews>
                         </clipView>
+                        <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="5"/>
+                        <edgeInsets key="scrollerInsets" left="0.0" right="0.0" top="0.0" bottom="-5"/>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="58">
                             <rect key="frame" x="0.0" y="286" width="350" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
@@ -144,17 +146,13 @@
                             <rect key="frame" x="350" y="23" width="15" height="263"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <tableHeaderView key="headerView" id="59">
-                            <rect key="frame" x="0.0" y="0.0" width="500" height="23"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </tableHeaderView>
                     </scrollView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="35" secondAttribute="trailing" id="OaR-58-2u9"/>
                     <constraint firstAttribute="bottom" secondItem="35" secondAttribute="bottom" id="cEh-km-xCk"/>
                     <constraint firstItem="35" firstAttribute="leading" secondItem="22" secondAttribute="leading" id="kzo-Kj-s8J"/>
-                    <constraint firstItem="35" firstAttribute="top" secondItem="22" secondAttribute="top" constant="-1" id="zAl-3h-jo3"/>
+                    <constraint firstItem="35" firstAttribute="top" secondItem="22" secondAttribute="top" id="zAl-3h-jo3"/>
                 </constraints>
             </view>
             <connections>

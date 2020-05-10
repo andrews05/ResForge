@@ -1,6 +1,6 @@
-#import "Element.h"
+#import "ElementCaseable.h"
 
-@interface ElementREAL : Element
+@interface ElementREAL : ElementCaseable
 @property float value;
 
 @end

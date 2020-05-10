@@ -1,9 +1,8 @@
-#import "Element.h"
+#import "ElementCaseable.h"
 #import "ElementKEYB.h"
 
-@interface ElementKEY : Element
-@property BOOL isKey;
-@property BOOL observing;
+@interface ElementKeyable : ElementCaseable
+@property BOOL isKeyed;
 @property (strong) NSMutableDictionary *keyedSections;
 @property (strong) ElementKEYB *currentSection;
 

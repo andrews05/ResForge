@@ -1,6 +1,6 @@
-#import "ElementKEY.h"
+#import "ElementKeyable.h"
 
-@interface ElementDLLG : ElementKEY
+@interface ElementDLLG : ElementKeyable
 @property SInt64 value;
 
 @end

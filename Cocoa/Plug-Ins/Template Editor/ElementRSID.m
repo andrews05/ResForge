@@ -14,9 +14,10 @@
         /*
          * Determine resource type and offset from label
          * Resource type is a 4-char code enclosed in single (or smart) quotes
-         * Offset is a number followed by a +
-         * Range is a number immediately following the +
-         * E.g. "Extension scope info 'scop' -27136 +63"
+         * Offset is a number followed by a + (a value of zero refers to this id)
+         * Limit is a number immediately following the +
+         * If limit is specified the list will only show resources between offset and offset+limit
+         * E.g. "Extension scope info 'scop' -27136 +2" will show 'scop' resources between -27136 and -27134
          */
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(?:.*[‘'](.{4})['’])?(?:.*?(-?[0-9]+) *[+]([0-9]+)?)?" options:0 error:nil];
         NSTextCheckingResult *result = [regex firstMatchInString:l options:0 range:NSMakeRange(0, l.length)];

@@ -1,6 +1,6 @@
-#import "ElementKEY.h"
+#import "ElementRangeable.h"
 
-@interface ElementDWRD : ElementKEY
+@interface ElementDWRD : ElementRangeable
 @property SInt16 value;
 
 @end

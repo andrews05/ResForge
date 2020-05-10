@@ -1,6 +1,6 @@
-#import "Element.h"
+#import "ElementCaseable.h"
 
-@interface ElementBORV : Element
+@interface ElementBORV : ElementCaseable
 @property NSMutableArray *values;
 
 @end

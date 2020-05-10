@@ -1,4 +1,4 @@
-#import "Element.h"
+#import "ElementCaseable.h"
 
 typedef enum StringPadding
 {
@@ -7,7 +7,7 @@ typedef enum StringPadding
 	kPadToEvenLength = -2
 } MacStringPadding;
 
-@interface ElementPSTR : Element
+@interface ElementPSTR : ElementCaseable
 @property (copy) NSString *value;
 @property UInt32 maxLength;		// for restricted strings
 @property MacStringPadding pad;	// for odd- and even-padded strings

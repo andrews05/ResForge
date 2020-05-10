@@ -1,6 +1,6 @@
-#import "Element.h"
+#import "ElementRangeable.h"
 
-@interface ElementBBIT : Element
+@interface ElementBBIT : ElementRangeable
 @property UInt32 value;
 @property unsigned int bits;
 @property unsigned int position;

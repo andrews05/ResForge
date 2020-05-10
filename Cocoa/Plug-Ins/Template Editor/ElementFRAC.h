@@ -1,6 +1,6 @@
-#import "Element.h"
+#import "ElementCaseable.h"
 
-@interface ElementFRAC : Element
+@interface ElementFRAC : ElementCaseable
 @property Fract fractValue;
 @property float value;
 

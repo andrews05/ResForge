@@ -1,10 +1,13 @@
 #import "ElementPACK.h"
+#import "ElementCaseable.h"
 #import "ResKnifeResourceProtocol.h"
 
-// The PACK element is an experimental layout control element
-// It allows packing multiple subsequent elements, identified by label, into a single row
-// This can be helpful for grouping related elements, especially if they may otherwise not be consecutive
-// The PACK label format looks like "Display Label=element1Label,element2Label"
+/*
+ * The PACK element is an experimental layout control element
+ * It allows packing multiple subsequent elements, identified by label, into a single row
+ * This can be helpful for grouping related elements, especially if they may otherwise not be consecutive
+ * The PACK label format looks like "Display Label=element1Label,element2Label"
+ */
 @implementation ElementPACK
 
 - (void)configure
@@ -26,8 +29,9 @@
 
 - (void)configureView:(NSView *)view
 {
-    for (Element *element in self.subElements) {
-        if (element.cases) element.width = 180;
+    for (__kindof Element *element in self.subElements) {
+        if (self.subElements.count > 1 && [element isKindOfClass:ElementCaseable.class] && [element cases])
+            element.width = 180;
         [element configureView:view];
     }
     CGFloat x = 0;

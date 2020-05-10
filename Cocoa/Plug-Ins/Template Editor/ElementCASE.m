@@ -18,4 +18,9 @@
     return self.displayLabel;
 }
 
+- (void)configure
+{
+    NSLog(@"CASE element not associated to an element that supports cases.");
+}
+
 @end

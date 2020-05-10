@@ -1,6 +1,6 @@
-#import "Element.h"
+#import "ElementCaseable.h"
 
-@interface ElementDOUB : Element
+@interface ElementDOUB : ElementCaseable
 @property double value;
 
 @end

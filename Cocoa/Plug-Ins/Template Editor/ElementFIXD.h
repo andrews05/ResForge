@@ -1,6 +1,6 @@
-#import "Element.h"
+#import "ElementCaseable.h"
 
-@interface ElementFIXD : Element
+@interface ElementFIXD : ElementCaseable
 @property Fixed fixedValue;
 @property float value;
 

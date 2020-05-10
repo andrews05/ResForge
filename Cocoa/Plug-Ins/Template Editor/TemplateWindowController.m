@@ -36,6 +36,7 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:ResourceDataDidChangeNotification object:tmplResource];
 	[self readTemplate:tmplResource];	// reads (but doesn't retain) the template for this resource (TMPL resource with name equal to the passed resource's type)
+    [self loadResource];
 	
 	// load the window from the nib
 	[self setShouldCascadeWindows:YES];
@@ -52,31 +53,33 @@
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
-	[self loadResource];
-	if(liveEdit)	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	else			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:backup];
-	[[self window] setTitle:[resource defaultWindowTitle]];
+    [dataList expandItem:nil expandChildren:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(resourceDataDidChange:)
+                                                 name:ResourceDataDidChangeNotification
+                                               object:(liveEdit ? resource : backup)];
+	[self.window setTitle:resource.defaultWindowTitle];
 	[self showWindow:self];
 }
 
 - (void)templateDataDidChange:(NSNotification *)notification
 {
 	[self readTemplate:[notification object]];
-	if([self isWindowLoaded])
+	if ([self isWindowLoaded])
 		[self loadResource];
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
 {
-	if(!liveEdit)
+	if (!liveEdit)
 		// bug: should display alert asking if you want to replace data in this editor or reassert this data, revoking the other editor's changes
-		[resource setData:[[backup data] copy]];
+		[resource setData:[backup.data copy]];
 	[self loadResource];
 }
 
 - (void)readTemplate:(id<ResKnifeResource>)tmplRes
 {
-    NSInputStream *stream = [[NSInputStream alloc] initWithData:[tmplRes data]];
+    NSInputStream *stream = [[NSInputStream alloc] initWithData:tmplRes.data];
     resourceStructure = [ElementList listFromStream:stream];
     resourceStructure.controller = self;
     [resourceStructure configureElements];
@@ -89,24 +92,23 @@
     // read the data into the template
     [resourceStructure readDataFrom:stream];
 	
-	// reload the view
-	id item;
-	[dataList reloadData];
-	NSInteger row = resourceStructure.count;
-	while ((item = [dataList itemAtRow:--row])) {
-		[dataList expandItem:item expandChildren:YES];
-	}
+	// expand all
+	[dataList expandItem:nil expandChildren:YES];
 }
 
 - (BOOL)windowShouldClose:(id)sender
 {
-	[[self window] makeFirstResponder:dataList];
+	[self.window makeFirstResponder:dataList];
 	[dataList abortEditing];
 	
-	if([[self window] isDocumentEdited])
-	{
-		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-		NSBeginAlertSheet(NSLocalizedStringFromTableInBundle(@"KeepChangesDialogTitle", nil, bundle, nil), NSLocalizedStringFromTableInBundle(@"KeepChangesButton", nil, bundle, nil), NSLocalizedStringFromTableInBundle(@"DiscardChangesButton", nil, bundle, nil), NSLocalizedStringFromTableInBundle(@"CancelButton", nil, bundle, nil), sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, NSLocalizedStringFromTableInBundle(@"KeepChangesDialogMessage", nil, bundle, nil));
+	if (self.window.documentEdited) {
+		NSBundle *bundle = [NSBundle bundleForClass:self.class];
+		NSBeginAlertSheet(NSLocalizedStringFromTableInBundle(@"KeepChangesDialogTitle", nil, bundle, nil),
+                          NSLocalizedStringFromTableInBundle(@"KeepChangesButton", nil, bundle, nil),
+                          NSLocalizedStringFromTableInBundle(@"DiscardChangesButton", nil, bundle, nil),
+                          NSLocalizedStringFromTableInBundle(@"CancelButton", nil, bundle, nil),
+                          sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil,
+                          NSLocalizedStringFromTableInBundle(@"KeepChangesDialogMessage", nil, bundle, nil));
 		return NO;
 	}
 	else return YES;
@@ -114,15 +116,14 @@
 
 - (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	switch(returnCode)
-	{
+	switch (returnCode) {
 		case NSAlertDefaultReturn:		// keep
 			[self saveResource:nil];
-			[[self window] close];
+			[self.window close];
 			break;
 		
 		case NSAlertAlternateReturn:	// don't keep
-			[[self window] close];
+			[self.window close];
 			break;
 		
 		case NSAlertOtherReturn:		// cancel
@@ -160,7 +161,7 @@
 
 - (void)revertResource:(id)sender
 {
-	[resource setData:[[backup data] copy]];
+	[resource setData:[backup.data copy]];
 }
 
 #pragma mark -
@@ -228,7 +229,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:resource];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
     } else {
-        [self setDocumentEdited:YES];
+        self.documentEdited = YES;
     }
 }
 
@@ -243,7 +244,7 @@
 		[dataList reloadData];
         [self.window makeFirstResponder:[dataList viewAtColumn:0 row:row makeIfNecessary:YES]];
 		[dataList expandItem:[dataList itemAtRow:row] expandChildren:YES];
-		if (!liveEdit) [self setDocumentEdited:YES];
+		if (!liveEdit) self.documentEdited = YES;
 	}
 }
 
@@ -255,7 +256,7 @@
         [element removeListEntry];
         [dataList reloadData];
         [self.window makeFirstResponder:[dataList viewAtColumn:0 row:row makeIfNecessary:YES]];
-        if (!liveEdit) [self setDocumentEdited:YES];
+        if (!liveEdit) self.documentEdited = YES;
     }
 }
 
