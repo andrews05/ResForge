@@ -32,14 +32,18 @@
             } else {
                 _min = INT32_MIN;
             }
+            scanner.charactersToBeSkipped = nil;
             if ([scanner scanString:@"," intoString:nil]) {
                 if ([scanner scanInt:&_max]) {
                     valid = YES;
                 } else {
                     _max = INT32_MAX;
                 }
+                scanner.charactersToBeSkipped = [NSCharacterSet whitespaceAndNewlineCharacterSet];
                 int normal;
                 if ([scanner scanInt:&normal]) {
+                    // If specified minimum is negative and no max was specified, assume inverted (from minimum down)
+                    if (_min < 0 && _max == INT32_MAX) _max = -_max;
                     _invert = _min > _max;
                     _offset = (_invert ? -_min : _min) - normal;
                     _min = normal;
@@ -130,11 +134,11 @@
 
 - (NSFormatter *)formatter
 {
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    formatter.hasThousandSeparators = NO;
-    formatter.minimum = @(self.min);
-    formatter.maximum = @(self.max);
-    formatter.nilSymbol = @"\0";
+    NSNumberFormatter *formatter = [self.parentElement.formatter copy];
+    if (formatter.minimum.intValue < self.min)
+        formatter.minimum = @(self.min);
+    if (formatter.maximum.intValue > self.max)
+        formatter.maximum = @(self.max);
     return formatter;
 }
 

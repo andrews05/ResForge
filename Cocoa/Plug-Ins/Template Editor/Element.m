@@ -12,7 +12,14 @@
 {
 	self = [super init];
 	if (!self) return nil;
-	_label = l;
+    // Any extra lines in the label will be used as a tooltip
+    NSArray *components = [l componentsSeparatedByString:@"\n"];
+    if (components.count > 1) {
+        _label = components[0];
+        _tooltip = [[components subarrayWithRange:NSMakeRange(1, components.count-1)] componentsJoinedByString:@"\n"];
+    } else {
+        _label = l;
+    }
 	_type = t;
     self.visible = YES;
     self.rowHeight = 22;
@@ -23,7 +30,9 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	return [[self.class allocWithZone:zone] initForType:_type withLabel:_label];
+	Element *element = [[self.class allocWithZone:zone] initForType:_type withLabel:_label];
+    element.tooltip = _tooltip;
+    return element;
 }
 
 - (NSFormatter *)formatter
@@ -81,6 +90,12 @@
 + (NSFormatter *)sharedFormatter
 {
     return nil;
+}
+
+- (BOOL)hasSubElements
+{
+    // default implementation suitable for most element types
+    return NO;
 }
 
 - (NSInteger)subElementCount

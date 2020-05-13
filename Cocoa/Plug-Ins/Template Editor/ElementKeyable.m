@@ -33,36 +33,39 @@
 
 - (IBAction)keyChanged:(NSPopUpButton *)sender
 {
-    if (self.keyedSections.count) {
-        [self setCase:self.cases[sender.indexOfSelectedItem] copyData:YES];
-        [self.parentList.controller.dataList reloadData];
+    ElementKEYB *oldSection = [self setCase:self.cases[sender.indexOfSelectedItem]];
+    if (oldSection) {
+        // Check if the section sizes match and attempt to copy the data
+        UInt32 currentSize = 0;
+        [oldSection.subElements sizeOnDisk:&currentSize];
+        UInt32 newSize = 0;
+        [self.currentSection.subElements sizeOnDisk:&newSize];
+        if (currentSize == newSize && currentSize > 0) {
+            NSMutableData *data = [NSMutableData dataWithLength:currentSize];
+            ResourceStream *stream = [ResourceStream streamWithData:data];
+            [oldSection writeDataTo:stream];
+            stream = [ResourceStream streamWithData:data];
+            [self.currentSection readDataFrom:stream];
+            
+        }
+        NSOutlineView *outlineView = self.parentList.controller.dataList;
+        // Item isn't necessarily self
+        [outlineView reloadItem:[outlineView itemAtRow:[outlineView rowForView:sender]] reloadChildren:YES];
     }
     [self.parentList.controller itemValueUpdated:sender];
 }
 
-- (void)setCase:(ElementCASE *)element copyData:(BOOL)copyData
+- (ElementKEYB *)setCase:(ElementCASE *)element
 {
-    ElementKEYB *newSection = self.keyedSections[element.value];
-    if (newSection != self.currentSection) {
-        if (copyData) {
-            // Check if the section sizes match and attempt to copy the data
-            UInt32 currentSize = 0;
-            [self.currentSection.subElements sizeOnDisk:&currentSize];
-            UInt32 newSize = 0;
-            [newSection.subElements sizeOnDisk:&newSize];
-            if (currentSize == newSize && currentSize > 0) {
-                NSMutableData *data = [NSMutableData dataWithLength:currentSize];
-                ResourceStream *stream = [ResourceStream streamWithData:data];
-                [self.currentSection writeDataTo:stream];
-                stream = [ResourceStream streamWithData:data];
-                [newSection readDataFrom:stream];
-                
-            }
-        }
-        [self.parentList removeElement:self.currentSection];
-        self.currentSection = newSection;
-        [self.parentList insertElement:self.currentSection after:self];
-    }
+    ElementKEYB *newSection = element.class == ElementCASE.class ? self.keyedSections[element.value] : nil;
+    if (newSection == self.currentSection)
+        return nil;
+    ElementKEYB *oldSection = self.currentSection;
+    [self.parentList removeElement:oldSection];
+    self.currentSection = newSection;
+    if (newSection)
+        [self.parentList insertElement:newSection after:self];
+    return oldSection;
 }
 
 - (void)readCases
@@ -95,6 +98,9 @@
         }
         element = [self.parentList peek:1];
     }
+    if (self.keyedSections.count != self.cases.count) {
+        NSLog(@"Not all CASEs have corresponding KEYB sections.");
+    }
 }
 
 - (void)configure
@@ -105,28 +111,27 @@
     }
     
     [self readCases];
+
+    // Set initial value to first case
+    id value = [self.cases[0] value];
+    self.currentSection = self.keyedSections[value];
+    [self validateValue:&value forKey:@"value" error:nil];
+    [self setValue:value forKey:@"value"];
+    [self.parentList insertElement:self.currentSection];
     
-    if (self.keyedSections.count) {
-        if (self.keyedSections.count != self.cases.count) {
-            NSLog(@"Not all CASEs have corresponding KEYB sections.");
-        }
-    
-        // Set initial value to first case
-        id value = [self.cases[0] value];
-        self.currentSection = self.keyedSections[value];
-        [self validateValue:&value forKey:@"value" error:nil];
-        [self setValue:value forKey:@"value"];
-        [self.parentList insertElement:self.currentSection];
-        
-        // Use KVO to observe value change when data is first read
-        // This saves us adding any key logic to the concrete element subclasses
-        [self addObserver:self forKeyPath:@"value" options:0 context:nil];
-    }
+    // Use KVO to observe value change when data is first read
+    // This saves us adding any key logic to the concrete element subclasses
+    [self addObserver:self forKeyPath:@"value" options:0 context:nil];
+}
+
+- (BOOL)hasSubElements
+{
+    return YES;
 }
 
 - (NSInteger)subElementCount
 {
-    return [self.currentSection subElementCount];
+    return self.currentSection.subElementCount;
 }
 
 - (Element *)subElementAtIndex:(NSInteger)n
@@ -141,7 +146,7 @@
 {
     // In theory this will only run when the key is first read from the resource
     // Make sure we load the correct section here so that we continue reading the resource into that section
-    [self setCase:[super transformedValue:[self valueForKey:@"value"]] copyData:NO];
+    [self setCase:[self transformedValue:[self valueForKey:@"value"]]];
     [self removeObserver:self forKeyPath:@"value"];
 }
 

@@ -15,14 +15,14 @@
     if (self.cases.count > 1) {
         NSRect orig = view.frame;
         NSRect frame = view.frame;
-        frame.size.width = 180-1;
+        frame.size.width = self.width-1;
         NSPopUpButton *select = [[NSPopUpButton alloc] initWithFrame:frame];
         select.target = self;
         select.action = @selector(caseChanged:);
         [select bind:@"content" toObject:self withKeyPath:@"cases" options:nil];
         [select bind:@"selectedObject" toObject:self withKeyPath:@"currentCase" options:nil];
         [view addSubview:select];
-        frame.origin.x = 180;
+        frame.origin.x += self.width;
         view.frame = frame;
         [self.currentCase configureView:view];
         view.frame = orig;
@@ -40,7 +40,9 @@
     } else {
         self.displayValue = self.displayValue; // Still need to trigger the transformer
     }
-    [self.parentList.controller.dataList reloadItem:self];
+    NSOutlineView *outlineView = self.parentList.controller.dataList;
+    // Item isn't necessarily self
+    [outlineView reloadItem:[outlineView itemAtRow:[outlineView rowForView:sender]]];
     [self.parentList.controller itemValueUpdated:sender];
 }
 
@@ -49,6 +51,7 @@
     // Read CASR elements
     ElementCASR *element = [self.parentList peek:1];
     if (element.class == ElementCASR.class) {
+        CGFloat width = 240;
         self.isRanged = YES;
         self.cases = [NSMutableArray new];
         while (element.class == ElementCASR.class) {
@@ -56,8 +59,11 @@
             element.parentList = self.parentList; // Required for the element to trigger itemValueUpdated
             element.parentElement = self;
             element.width = self.width;
+            if (element.min != element.max)
+                width = 180; // Shrink pop-up menu if any CASR needs a field
             element = [self.parentList peek:1];
         }
+        self.width = width;
     } else {
         [super configure];
     }
@@ -65,7 +71,6 @@
 
 - (void)loadValue
 {
-    self.currentCase = self.cases[0]; // Default in case no match found
     NSNumber *value = [self valueForKey:@"value"];
     for (ElementCASR *element in self.cases) {
         if ([element matchesValue:value]) {
@@ -73,7 +78,14 @@
             break;
         }
     }
-    self.displayValue = [[self.currentCase normalise:value] intValue];
+    if (self.currentCase) {
+        self.displayValue = [[self.currentCase normalise:value] intValue];
+    } else {
+        // Force value to min of first case
+        self.currentCase = self.cases[0];
+        self.displayValue = self.currentCase.min;
+        [self setValue:[self.currentCase deNormalise:@(self.displayValue)] forKey:@"value"];
+    }
     [self bind:@"value" toObject:self withKeyPath:@"displayValue" options:@{NSValueTransformerBindingOption:self}];
     
 }

@@ -17,6 +17,7 @@
 // Accessors:
 @property (copy) NSString *type; // Type code of this item (4 chars if from TMPL resource, but we may support longer types later).
 @property (copy) NSString *label; // Label ("name") of this field.
+@property (copy) NSString *tooltip;
 @property (weak) ElementList *parentList; // The ElementList* of the template field containing us, or the template window's list.
 @property NSString *endType; // Type code of an ending element if this element marks the start of a section.
 @property double rowHeight;
@@ -45,6 +46,7 @@
 - (void)configure;
 
 // Items that have sub-items (like LSTB, LSTZ, LSTC and other lists) should implement these:
+- (BOOL)hasSubElements;
 - (NSInteger)subElementCount;
 - (Element *)subElementAtIndex:(NSInteger)n;
 

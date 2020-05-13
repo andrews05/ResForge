@@ -42,7 +42,9 @@
         [view addSubview:[ElementBOOL createCheckboxWithFrame:view.frame forElement:self]];
     } else {
         [super configureView:view];
-        [view.subviews[0] setPlaceholderString:[NSString stringWithFormat:@"%d bits", _bits]];
+        NSTextField *field = view.subviews[0];
+        if (field.class == NSTextField.class)
+            [field setPlaceholderString:[NSString stringWithFormat:@"%d bits", _bits]];
     }
 }
 
@@ -54,7 +56,7 @@
     self.bitList = [NSMutableArray new];
     ElementBBIT *element;
     // Special treatment for BB08/WB16/LB32 (otherwise equivalent to UBYT/UWRD/ULNG): display as rows of checkboxes
-    if (self.visible && _bits == self.class.length) {
+    if (_bits == self.class.length) {
         for (unsigned int pos = self.class.length; pos > 0; pos--) {
             element = [ElementBBIT elementForType:@"BBIT" withLabel:nil];
             element.position = pos - 1;

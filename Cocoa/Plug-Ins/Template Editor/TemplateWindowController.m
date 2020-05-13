@@ -172,13 +172,15 @@
     if ([tableColumn.identifier isEqualToString:@"data"]) {
         NSView *view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, tableColumn.width, item.rowHeight)];
         [item configureView:view];
+        view.toolTip = item.tooltip;
         return view;
     } else if (tableColumn) {
         NSString *identifier = tableColumn.identifier;
         if (item.class == ElementLSTB.class && [item allowsCreateListEntry])
             identifier = @"listLabel";
         NSTableCellView *view = [outlineView makeViewWithIdentifier:identifier owner:self];
-        view.textField.stringValue = [item displayLabel];
+        view.textField.stringValue = item.displayLabel;
+        view.toolTip = item.tooltip;
         return view;
     } else {
         NSTableCellView *view = [outlineView makeViewWithIdentifier:@"groupView" owner:self];
@@ -197,7 +199,7 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(Element *)item
 {
-	return (item.subElementCount > 0);
+    return item.hasSubElements;
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(Element *)item
@@ -242,9 +244,14 @@
 	if ([element class] == ElementLSTB.class && [element allowsCreateListEntry]) {
         [element createListEntry];
 		[dataList reloadData];
-        [self.window makeFirstResponder:[dataList viewAtColumn:0 row:row makeIfNecessary:YES]];
+        NSView *newHeader = [dataList viewAtColumn:0 row:row makeIfNecessary:YES];
+        [self.window makeFirstResponder:newHeader];
+        if (!liveEdit) self.documentEdited = YES;
+        // Expand the item and scroll the new content into view
 		[dataList expandItem:[dataList itemAtRow:row] expandChildren:YES];
-		if (!liveEdit) self.documentEdited = YES;
+        NSView *lastChild = [dataList rowViewAtRow:[dataList rowForItem:element] makeIfNecessary:YES];
+        [lastChild scrollRectToVisible:lastChild.bounds];
+        [newHeader scrollRectToVisible:newHeader.superview.bounds];
 	}
 }
 

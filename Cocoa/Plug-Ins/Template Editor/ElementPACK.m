@@ -27,6 +27,15 @@
     }
 }
 
+- (CGFloat)rowHeight
+{
+    CGFloat rowHeight = super.rowHeight;
+    for (Element *element in self.subElements) {
+        if (element.rowHeight > rowHeight) rowHeight = element.rowHeight;
+    }
+    return rowHeight;
+}
+
 - (void)configureView:(NSView *)view
 {
     NSRect orig = view.frame;

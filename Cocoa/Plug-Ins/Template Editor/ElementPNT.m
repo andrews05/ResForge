@@ -13,16 +13,16 @@
 
 - (void)configureView:(NSView *)view
 {
-    [ElementRECT configureFields:@[@"h", @"v"] inView:view forElement:self];
+    [ElementRECT configureFields:@[@"x", @"y"] inView:view forElement:self];
 }
 
 - (void)readDataFrom:(ResourceStream *)stream
 {
     SInt16 tmp;
     [stream readAmount:2 toBuffer:&tmp];
-    self.h = CFSwapInt16BigToHost(tmp);
+    self.x = CFSwapInt16BigToHost(tmp);
     [stream readAmount:2 toBuffer:&tmp];
-    self.v = CFSwapInt16BigToHost(tmp);
+    self.y = CFSwapInt16BigToHost(tmp);
 }
 
 - (void)sizeOnDisk:(UInt32 *)size
@@ -32,9 +32,9 @@
 
 - (void)writeDataTo:(ResourceStream *)stream
 {
-    SInt16 tmp = CFSwapInt16HostToBig(self.h);
+    SInt16 tmp = CFSwapInt16HostToBig(self.x);
     [stream writeAmount:2 fromBuffer:&tmp];
-    tmp = CFSwapInt16HostToBig(self.v);
+    tmp = CFSwapInt16HostToBig(self.y);
     [stream writeAmount:2 fromBuffer:&tmp];
 }
 

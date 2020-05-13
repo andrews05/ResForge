@@ -6,9 +6,7 @@
 {
     if (self = [super initForType:t withLabel:l]) {
         self.visible = NO;
-        NSArray *components = [l componentsSeparatedByString:@"="];
-        self.displayLabel = [components firstObject];
-        self.value = [components lastObject];
+        self.value = [[l componentsSeparatedByString:@"="] lastObject];
     }
     return self;
 }

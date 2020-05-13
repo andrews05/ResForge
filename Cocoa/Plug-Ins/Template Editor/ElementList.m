@@ -208,7 +208,7 @@
     Element *element;
     for (NSUInteger i = _currentIndex+1; i < self.elements.count; i++) {
         element = self.elements[i];
-        if ([element.label isEqualToString:label])
+        if ([element.displayLabel isEqualToString:label])
             return element;
     }
     return nil;

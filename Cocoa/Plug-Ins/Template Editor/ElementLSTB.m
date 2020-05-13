@@ -8,7 +8,7 @@
 {
 	if (self = [super initForType:t withLabel:l]) {
         _zeroTerminated = [t isEqualToString:@"LSTZ"];
-        self.rowHeight = 17;
+        self.rowHeight = 18;
         self.endType = @"LSTE";
 	}
 	return self;
@@ -19,10 +19,7 @@
 	ElementLSTB *element = [super copyWithZone:zone];
 	if (!element) return nil;
     element.subElements = [self.subElements copyWithZone:zone];
-    if (element.subElements.count == 1) {
-        element.singleElement = [element.subElements elementAtIndex:0];
-        element.rowHeight = 22;
-    }
+    [element checkSingleElement];
     element.tail = self.tail;
     element.entries = self.entries;
 	return element;
@@ -31,7 +28,12 @@
 - (NSString *)displayLabel
 {
     NSUInteger index = [self.entries indexOfObject:self];
-    return [NSString stringWithFormat:@"%ld) %@", index+1, [self.singleElement displayLabel] ?: super.displayLabel];
+    return [NSString stringWithFormat:@"%ld) %@", index+1, self.singleElement.displayLabel ?: super.displayLabel];
+}
+
+- (NSString *)tooltip
+{
+    return self.singleElement.tooltip ?: super.tooltip;
 }
 
 // If the list entry contains only a single visible element, show that element here while hiding the sub section
@@ -51,13 +53,18 @@
             [self createNextItem];
         }
         [self.subElements configureElements];
-        if (self.subElements.count == 1) {
-            self.singleElement = [self.subElements elementAtIndex:0];
-            self.rowHeight = 22;
-        }
+        [self checkSingleElement];
     } else {
         // This item will be the tail
         self.tail = self;
+    }
+}
+
+- (void)checkSingleElement
+{
+    if (self.subElements.count == 1) {
+        self.singleElement = [self.subElements elementAtIndex:0];
+        self.rowHeight = 22;
     }
 }
 
@@ -119,13 +126,24 @@
 
 #pragma mark -
 
+- (BOOL)hasSubElements
+{
+    if (self.singleElement)
+        return self.singleElement.hasSubElements;
+    return self != self.tail;
+}
+
 - (NSInteger)subElementCount
 {
-    return (self == self.tail || self.singleElement) ? 0 : self.subElements.count;
+    if (self.singleElement)
+        return self.singleElement.subElementCount;
+    return self == self.tail ? 0 : self.subElements.count;
 }
 
 - (Element *)subElementAtIndex:(NSInteger)n
 {
+    if (self.singleElement)
+        return [self.singleElement subElementAtIndex:n];
     return [self.subElements elementAtIndex:n];
 }
 

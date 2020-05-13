@@ -45,7 +45,7 @@
     textField.bezeled = NO;
     textField.editable = NO;
     textField.selectable = YES;
-    textField.stringValue = [self.data description];
+    textField.stringValue = [self.data description] ?: @"<>";
     textField.autoresizingMask = NSViewWidthSizable;
     [view addSubview:textField];
 }
