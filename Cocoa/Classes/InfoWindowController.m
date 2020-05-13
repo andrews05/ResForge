@@ -131,11 +131,8 @@ FSGetCatalogInfo:
 			[nameView setStringValue:[currentDocument displayName]];
 		}
 		
-		FourCharCode creator = currentDocument.creator;
-		FourCharCode type = currentDocument.type;
-		
-		[[filePropertyForm cellAtIndex:0] setStringValue:[[NSString alloc] initWithBytes:&creator length:sizeof(creator) encoding:NSMacOSRomanStringEncoding]];
-		[[filePropertyForm cellAtIndex:1] setStringValue:[[NSString alloc] initWithBytes:&type length:sizeof(type) encoding:NSMacOSRomanStringEncoding]];
+		[[filePropertyForm cellAtIndex:0] setStringValue:GetNSStringFromOSType(currentDocument.creator)];
+		[[filePropertyForm cellAtIndex:1] setStringValue:GetNSStringFromOSType(currentDocument.type)];
 		[[filePropertyForm cellAtIndex:2] setIntegerValue:dataLogicalSize];
 		[[filePropertyForm cellAtIndex:3] setIntegerValue:rsrcLogicalSize];
 		//[[filePropertyForm cellAtIndex:2] setStringValue:[@(dataLogicalSize) description]];

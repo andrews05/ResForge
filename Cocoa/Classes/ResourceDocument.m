@@ -160,8 +160,8 @@ extern NSString *RKResourcePboardType;
 		error = FSGetCatalogInfo(fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
 		if(!error)
 		{
-			self.type = CFSwapInt32BigToHost(((FileInfo *)info.finderInfo)->fileType);
-			self.creator = CFSwapInt32BigToHost(((FileInfo *)info.finderInfo)->fileCreator);
+			self.type = ((FileInfo *)info.finderInfo)->fileType;
+			self.creator = ((FileInfo *)info.finderInfo)->fileCreator;
 		}
 		
 		// restore undos
@@ -204,13 +204,10 @@ extern NSString *RKResourcePboardType;
 	It is perfectly legal in ResKnife to read in forks of these names when accessing a shared NTFS drive via SMB. The server does not need to be running SFM since the file requests will appear to be coming from a PC. If the files are accessed via AFP on a server running SFM, SFM will automatically convert the files (and truncate the name to 31 chars). */
 	
 	
-	// translate NSString into HFSUniStr255 -- in 10.4 this can be done with FSGetHFSUniStrFromString
+	// translate NSString into HFSUniStr255
     OSErr error = noErr;
 	HFSUniStr255 uniForkName = { 0 };
-	uniForkName.length = ([forkName length] < 255)? (UInt16)[forkName length]:255;
-	if(uniForkName.length > 0)
-		[forkName getCharacters:uniForkName.unicode range:NSMakeRange(0, uniForkName.length)];
-	else uniForkName.unicode[0] = 0;
+    FSGetHFSUniStrFromString((__bridge CFStringRef)(forkName), &uniForkName);
 	
 	// get fork length and create empty buffer, bug: only sizeof(size_t) bytes long
 	ByteCount forkLength = (ByteCount) [[[(ApplicationDelegate *)[NSApp delegate] forksForFile:fileRef] firstObjectReturningValue:forkName forKey:@"forkname"][@"forksize"] unsignedLongValue];
@@ -307,49 +304,47 @@ extern NSString *RKResourcePboardType;
 
 /*!
 @pending	Uli has changed this routine - see what I had and unify the two
-@pending	Doesn't write correct type/creator info - always ResKnife's!
 */
 
 - (BOOL)writeToFile:(NSString *)fileName ofType:(NSString *)type
 {
 	OSStatus error = noErr;
 	ResFileRefNum fileRefNum = 0;
-	FSRef *parentRef	= (FSRef *) NewPtrClear(sizeof(FSRef));
-	FSRef *fileRef		= (FSRef *) NewPtrClear(sizeof(FSRef));
+	FSRef parentRef = {{0}};
+	FSRef fileRef = {{0}};
 	
 	// create and open file for writing
 	// bug: doesn't set the cat info to the same as the old file
-	unichar *uniname = (unichar *) NewPtrClear(sizeof(unichar) *256);
-	[[fileName lastPathComponent] getCharacters:uniname];
-	error = FSPathMakeRef((const UInt8 *)[[fileName stringByDeletingLastPathComponent] UTF8String], parentRef, nil);
+    HFSUniStr255 uniname = {0};
+    FSGetHFSUniStrFromString((__bridge CFStringRef)(fileName.lastPathComponent), &uniname);
+	error = FSPathMakeRef((const UInt8 *)[[fileName stringByDeletingLastPathComponent] fileSystemRepresentation], &parentRef, nil);
 	
 	if (error != noErr)
 		NSLog(@"FSPathMakeRef got error %d", (int)error);
 	
-	error = FSCreateResourceFile(parentRef, [[fileName lastPathComponent] length], (UniChar *) uniname, kFSCatInfoNone, NULL, fork.length, (UniChar *)fork.unicode, fileRef, NULL);
+	error = FSCreateResourceFile(&parentRef, uniname.length, uniname.unicode, kFSCatInfoNone, NULL, fork.length, fork.unicode, &fileRef, NULL);
 	
 	// write any data streams to file
 	BOOL succeeded = [self writeForkStreamsToFile:fileName];
-//	FSRef *fileRef		= [fileName createFSRef];
-	
-/*	error = FSPathMakeRef((const UInt8 *)[fileName UTF8String], fileRef, nil);
-	if(_createFork)
-	{
-		error = FSCreateResourceFork(fileRef, fork->length, (UniChar *) &fork->unicode, 0);
-		_createFork = NO;
-	}
-*/	
+    
 	if(!error)
 	{
 		// set creator & type
-		// bug: due to a bug in AppKit, the temporary file that we are writing to (in /var/tmp, managed by NSDocument) does not get it's creator code copied over to the new document (it sets the new document's to nil). this timer sets the creator code after we have returned to the main loop and the buggy Apple code has been bypassed.
-		[NSTimer scheduledTimerWithTimeInterval:0.0 target:self selector:@selector(setTypeCreatorAfterSave:) userInfo:nil repeats:NO];
+        FSCatalogInfo info;
+        error = FSGetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
+        if(!error)
+        {
+            FInfo *finderInfo = (FInfo *)(info.finderInfo);
+            finderInfo->fdType = self.type;
+            finderInfo->fdCreator = self.creator;
+            FSSetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &info);
+        }
+        else NSLog(@"error getting Finder info. (error=%d, valid ref=%@)", (int)error, FSIsFSRefValid(&fileRef) ? @"Yes" : @"No");
 		
 		// open fork as resource map
-		error = FSOpenResourceFile(fileRef, fork.length, (UniChar *)fork.unicode, fsWrPerm, &fileRefNum);
+		error = FSOpenResourceFile(&fileRef, fork.length, (UniChar *)fork.unicode, fsWrPerm, &fileRefNum);
 	}
-	//else NSLog(@"error creating resource fork. (error=%d, spec=%d, ref=%d, parent=%d)", error, fileSpec, fileRef, parentRef);
-	else NSLog(@"error creating resource fork. (error=%d, ref=%p)", (int)error, fileRef);
+	else NSLog(@"error creating resource fork. (error=%d, ref=%p)", (int)error, &fileRef);
 	
 	// write resource array to file
 	if(fileRefNum && !error)
@@ -357,7 +352,6 @@ extern NSString *RKResourcePboardType;
 	
 	// tidy up loose ends
 	if(fileRefNum) FSCloseFork(fileRefNum);
-	DisposePtr((Ptr) fileRef);
 	
 	// update info window
 	[[InfoWindowController sharedInfoWindowController] updateInfoWindow];
@@ -369,40 +363,21 @@ extern NSString *RKResourcePboardType;
 {
 	// try and get an FSRef
 	OSStatus error;
-	FSRef *fileRef = [fileName createFSRef], parentRef = {{0}};
-	if(!fileRef)
-	{
-		fileRef   = (FSRef *) NewPtrClear(sizeof(FSRef));
-		unichar *uniname = (unichar *) calloc(sizeof(unichar), 256);
-		[[fileName lastPathComponent] getCharacters:uniname];
-		error = FSPathMakeRef((const UInt8 *)[[fileName stringByDeletingLastPathComponent] fileSystemRepresentation], &parentRef, nil);
-		if(error) {
-			DisposePtr((Ptr)fileRef);
-			free(uniname);
-			return NO;
-		}
-		error = FSCreateFileUnicode(&parentRef, 0, NULL, kFSCatInfoNone, NULL, fileRef, NULL);
-		if(error || !fileRef) {
-			DisposePtr((Ptr)fileRef);
-			free(uniname);
-			return NO;
-		}
-		free(uniname);
-	}
+	FSRef *fileRef = [fileName createFSRef];
 	
 	for (Resource *resource in resources) {
 		// if the resource object represents an actual resource, skip it
-		if([resource representedFork] == nil) continue;
-		unichar *uniname = (unichar*)calloc(sizeof(unichar), 256);
-		[[resource representedFork] getCharacters:uniname];
+		if (!resource.representedFork || !resource.data.length) continue;
+        HFSUniStr255 uniname = {0};
+        FSGetHFSUniStrFromString((__bridge CFStringRef)(resource.representedFork), &uniname);
 		FSIORefNum forkRefNum = 0;
-		error = FSOpenFork(fileRef, [[resource representedFork] length], (UniChar*)uniname, fsWrPerm, &forkRefNum);
+		error = FSOpenFork(fileRef, uniname.length, uniname.unicode, fsWrPerm, &forkRefNum);
 		
 		if (error != noErr)
 			NSLog(@"FSOpenFork got error %d", (int)error);
 		
 		if(!error && forkRefNum)
-			error = FSWriteFork(forkRefNum, fsFromStart, 0, [[resource data] length], [[resource data] bytes], NULL);
+			error = FSWriteFork(forkRefNum, fsFromStart, 0, resource.data.length, resource.data.bytes, NULL);
 		
 		if (error != noErr)
 			NSLog(@"FSWriteFork got error %d", (int)error);
@@ -410,7 +385,6 @@ extern NSString *RKResourcePboardType;
 		if(forkRefNum)
 			FSCloseFork(forkRefNum);
 	}
-	DisposePtr((Ptr) fileRef);
 	return YES;
 }
 
@@ -436,7 +410,7 @@ extern NSString *RKResourcePboardType;
 		Handle	resourceHandle;
 
 		// if the resource represents another fork in the file, skip it
-		if([resource representedFork] != nil) continue;
+		if (resource.representedFork) continue;
 		
 		sizeLong = [[resource data] length];
         resTypeCode = [resource type];
@@ -445,13 +419,14 @@ extern NSString *RKResourcePboardType;
 		resourceHandle = NewHandleClear(sizeLong);
 		
 		// convert unicode name to pascal string
-		nameStr[0] = (unsigned char)[[resource name] lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding];
-		memmove(&nameStr[1], [[resource name] cStringUsingEncoding:NSMacOSRomanStringEncoding], nameStr[0]);
+        CFStringGetPascalString((__bridge CFStringRef)(resource.name), (StringPtr)&nameStr, sizeof(nameStr), kCFStringEncodingMacRoman);
 		
 		// convert NSData to resource handle
 		HLockHi(resourceHandle);
 		[[resource data] getBytes:*resourceHandle];
 #if __LITTLE_ENDIAN__
+        // the resource manager performs automatic flipping of standard resource types but we want the raw data so need to flip it back
+        // (alternatively could install dummy flippers for each type to override the automatic flipping)
 		CoreEndianFlipData(kCoreEndianResourceManagerDomain, resTypeCode, resIDShort, *resourceHandle, sizeLong, false);
 #endif
 		HUnlock(resourceHandle);
@@ -479,29 +454,6 @@ extern NSString *RKResourcePboardType;
 	// restore original resource file
 	UseResFile(oldResFile);
 	return error? NO:YES;
-}
-
-- (void)setTypeCreatorAfterSave:(id)userInfo
-{
-	FSRef fileRef = {{0}};
-	OSStatus error = FSPathMakeRef((const UInt8 *)[[[self fileURL] path] fileSystemRepresentation], &fileRef, nil);
-	if(!error)
-	{
-		FSCatalogInfo info;
-		error = FSGetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
-		if(!error)
-		{
-			FInfo *finderInfo = (FInfo *)(info.finderInfo);
-			OSType theType = self.type, theCreator = self.creator;
-			finderInfo->fdType = CFSwapInt32HostToBig(theType);
-			finderInfo->fdCreator = CFSwapInt32HostToBig(theCreator);
-			//				NSLog(@"setting finder info to type: %X; creator: %X", finderInfo.fdType, finderInfo.fdCreator);
-			FSSetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &info);
-			//				NSLog(@"finder info got set to type: %X; creator: %X", finderInfo.fdType, finderInfo.fdCreator);
-		}
-		else NSLog(@"error getting Finder info. (error=%d, valid ref=%@)", (int)error, FSIsFSRefValid(&fileRef) ? @"Yes" : @"No");
-	}
-	else NSLog(@"error making fsref from file path. (error=%d, valid ref=%@, path=%@)", (int)error, FSIsFSRefValid(&fileRef) ? @"Yes" : @"No", [[self fileURL] path]);
 }
 
 #pragma mark -
@@ -858,22 +810,24 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (id <ResKnifePlugin>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
 {
 	// opens resource in template using TMPL resource with name templateName
-	Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:@"Template Editor"];
-	
-	// TODO: this checks EVERY DOCUMENT for template resources (might not be desired)
-	// TODO: it doesn't, however, check the application's resource map for a matching template!
-	Resource *tmpl = [Resource resourceOfType:'TMPL' withName:GetNSStringFromOSType([resource type]) inDocument:nil];
-	
-	// open the resources, passing in the template to use
-	if(tmpl && editorClass)
-	{
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-        id plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResource:resource template:tmpl];
-        if (plug) {
-            [self addWindowController:plug];
-			return plug;
+    if (resource.type) {
+        Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:@"Template Editor"];
+        
+        // TODO: this checks EVERY DOCUMENT for template resources (might not be desired)
+        // TODO: it doesn't, however, check the application's resource map for a matching template!
+        Resource *tmpl = [Resource resourceOfType:'TMPL' withName:GetNSStringFromOSType([resource type]) inDocument:nil];
+        
+        // open the resources, passing in the template to use
+        if(tmpl && editorClass)
+        {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+            id plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResource:resource template:tmpl];
+            if (plug) {
+                [self addWindowController:plug];
+                return plug;
+            }
         }
-	}
+    }
 	
 	// if no template exists, or template editor is broken, open as hex
 	return [self openResourceAsHex:resource];
@@ -1131,36 +1085,14 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (IBAction)creatorChanged:(id)sender
 {
-	OSType newCreator = 0x00;	// creator is nil by default
-	NSData *creatorData = [[sender stringValue] dataUsingEncoding:NSMacOSRomanStringEncoding];
-//	NSLog(@"creatorChanged: [sender stringValue] = '%@'; creatorData = '%@'", [sender stringValue], creatorData);
-	if(creatorData && [creatorData length] > 0)
-	{
-		newCreator = '    ';			// pad with spaces if not nil
-		[creatorData getBytes:&newCreator length:([creatorData length] < 4? [creatorData length]:4)];
-	}
-	
-	newCreator = CFSwapInt32HostToBig(newCreator);
-	
+	OSType newCreator = GetOSTypeFromNSString([sender stringValue]);
 	[self setCreator:newCreator];
-//	NSLog(@"Creator changed to '%@'", [[[NSString alloc] initWithBytes:&newCreator length:4 encoding:NSMacOSRomanStringEncoding] autorelease]);
 }
 
 - (IBAction)typeChanged:(id)sender
 {
-	OSType newType = 0x00;
-	NSData *typeData = [[sender stringValue] dataUsingEncoding:NSMacOSRomanStringEncoding];
-//	NSLog(@"typeChanged: [sender stringValue] = '%@'; typeData = '%@'", [sender stringValue], typeData);
-	if(typeData && [typeData length] > 0)
-	{
-		newType = '    ';
-		[typeData getBytes:&newType length:([typeData length] < 4 ? [typeData length]:4)];
-	}
-	
-	newType = CFSwapInt32HostToBig(newType);
-	
+	OSType newType = GetOSTypeFromNSString([sender stringValue]);
 	[self setType:newType];
-//	NSLog(@"Type changed to '%@'", [[[NSString alloc] initWithBytes:&newType length:4 encoding:NSMacOSRomanStringEncoding] autorelease]);
 }
 
 - (void)setCreator:(OSType)newCreator

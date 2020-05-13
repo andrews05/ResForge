@@ -66,7 +66,7 @@ NSString * const kNoLaunchOption = @"None";
 	[[self window] orderOut:nil];
 	
 	// now save the data to the defaults file
-	[defaults setBool:preserveBackups forKey:kPreserveBackups];	// bug: this puts 1 or 0 into the defaults file rather than YES or NO
+	[defaults setBool:preserveBackups forKey:kPreserveBackups];
 	[defaults setBool:autosave forKey:kAutosave];
 	[defaults setInteger:autosaveInterval forKey:kAutosaveInterval];
 	[defaults setBool:deleteResourceWarning forKey:kDeleteResourceWarning];
@@ -89,10 +89,10 @@ NSString * const kNoLaunchOption = @"None";
 {
 	// reset prefs window widgets to values stored in defaults.plist file
 	NSDictionary *defaultsPlist	= [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"defaults" ofType:@"plist"]];
-	BOOL preserveBackups		= [defaultsPlist[kPreserveBackups] intValue]? YES:NO;	// bug: this always evaluates to NO, even if the object in the dictionary is YES
-	BOOL autosave				= [defaultsPlist[kAutosave] intValue]? YES:NO;
+	BOOL preserveBackups		= [defaultsPlist[kPreserveBackups] boolValue];
+	BOOL autosave				= [defaultsPlist[kAutosave] boolValue];
 	int autosaveInterval		= [defaultsPlist[kAutosaveInterval] intValue];
-	BOOL deleteResourceWarning	= [defaultsPlist[kDeleteResourceWarning] intValue]? YES:NO;
+	BOOL deleteResourceWarning	= [defaultsPlist[kDeleteResourceWarning] boolValue];
 	BOOL createNewDocument		= [defaultsPlist[kLaunchAction] isEqualToString:kOpenUntitledFile];
 	BOOL displayOpenPanel		= [defaultsPlist[kLaunchAction] isEqualToString:kDisplayOpenPanel];
 	int launchAction			= createNewDocument? 1:(displayOpenPanel? 2:0);
