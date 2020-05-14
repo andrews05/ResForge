@@ -21,17 +21,8 @@ NSString *DocumentInfoDidChangeNotification = @"DocumentInfoDidChangeNotificatio
 extern NSString *RKResourcePboardType;
 
 @implementation ResourceDocument
-@synthesize creator;
-@synthesize type;
-
-- (instancetype)init
-{
-	if (self = [super init]) {
-		creator = 'ResK';
-		type = 'rsrc';
-	}
-	return self;
-}
+@synthesize creator = _creator;
+@synthesize type = _type;
 
 - (void)dealloc
 {
@@ -123,8 +114,8 @@ extern NSString *RKResourcePboardType;
 		FSCatalogInfo info;
 		error = FSGetCatalogInfo(fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
 		if (!error) {
-			type = ((FileInfo *)info.finderInfo)->fileType;
-			creator = ((FileInfo *)info.finderInfo)->fileCreator;
+			_type = ((FileInfo *)info.finderInfo)->fileType;
+			_creator = ((FileInfo *)info.finderInfo)->fileCreator;
 		}
 		
 		// restore undos
@@ -249,41 +240,71 @@ extern NSString *RKResourcePboardType;
 	return resources;
 }
 
-/*!
-@pending	Uli has changed this routine - see what I had and unify the two
-*/
+- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
+{
+    if ([savePanel.nameFieldStringValue isEqualToString:self.defaultDraftName])
+        savePanel.nameFieldStringValue = [self.defaultDraftName stringByAppendingPathExtension:@"rsrc"];
+    return [super prepareSavePanel:savePanel];
+}
 
-- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError
+- (BOOL)writeToURL:(NSURL *)url
+            ofType:(NSString *)typeName
+  forSaveOperation:(NSSaveOperationType)saveOperation
+originalContentsURL:(NSURL *)absoluteOriginalContentsURL
+             error:(NSError **)outError
 {
 	OSStatus error = noErr;
 	ResFileRefNum fileRefNum = 0;
 	FSRef parentRef = {{0}};
 	FSRef fileRef = {{0}};
+    
+    if (saveOperation == NSSaveAsOperation) {
+        // set fork according to typeName
+        if ([typeName isEqualToString:@"ResourceMap"]) {
+            FSGetDataForkName(&fork);
+            // Clear type/creator for data fork (filename extension should suffice)
+            _type = 0;
+            _creator = 0;
+        } else if ([typeName isEqualToString:@"ResourceMapRF"]) {
+            FSGetResourceForkName(&fork);
+            // Set default type/creator for resource fork
+            if (!_type && !_creator) {
+                _type = 'rsrc';
+                _creator = 'ResK';
+            }
+        }
+        // Remove other forks on Save As (we may be saving to a different fork)
+        for (Resource *resource in [dataSource allResourcesOfType:0]) {
+            if (resource.representedFork) {
+                [dataSource removeResourceFromTypedList:resource];
+                [outlineView reloadData];
+            }
+        }
+    }
 	
 	// create and open file for writing
     HFSUniStr255 uniname = {0};
     error = FSGetHFSUniStrFromString((__bridge CFStringRef)(url.lastPathComponent), &uniname);
     if (!error)
         error = FSPathMakeRef((const UInt8 *)[[url URLByDeletingLastPathComponent] fileSystemRepresentation], &parentRef, nil);
-    if (!error)
-        error = FSCreateResourceFile(&parentRef, uniname.length, uniname.unicode, kFSCatInfoNone, NULL, fork.length, fork.unicode, &fileRef, NULL);
+    if (!error) {
+        FSCatalogInfoBitmap whichInfo = kFSCatInfoNone;
+        FSCatalogInfo info = {0};
+        // set creator & type
+        if (_type || _creator) {
+            // bug: doesn't copy the rest of the cat info from the old file
+            whichInfo = kFSCatInfoFinderInfo;
+            FInfo *finderInfo = (FInfo *)(info.finderInfo);
+            finderInfo->fdType = _type;
+            finderInfo->fdCreator = _creator;
+            
+        }
+        error = FSCreateResourceFile(&parentRef, uniname.length, uniname.unicode, whichInfo, &info, fork.length, fork.unicode, &fileRef, NULL);
+    }
     
     // write any data streams to file
     if (!error)
         error = [self writeForkStreamsToURL:url];
-    
-    // set creator & type
-    // bug: doesn't set the cat info to the same as the old file
-    if (!error) {
-        FSCatalogInfo info;
-        error = FSGetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
-        if (!error) {
-            FInfo *finderInfo = (FInfo *)(info.finderInfo);
-            finderInfo->fdType = self.type;
-            finderInfo->fdCreator = self.creator;
-            FSSetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &info);
-        }
-    }
     
     // write resources to file
     if (!error)
@@ -1013,12 +1034,12 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (OSType)creator
 {
-	return creator;
+	return _creator;
 }
 
 - (OSType)type
 {
-	return type;
+	return _type;
 }
 
 - (IBAction)creatorChanged:(id)sender
@@ -1035,38 +1056,26 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (void)setCreator:(OSType)newCreator
 {
-	if (newCreator != creator) {
+	if (newCreator != _creator) {
 		NSString *oldCreatorStr = GetNSStringFromOSType(newCreator);
 		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:@{@"NSDocument": self, @"creator": oldCreatorStr}];
-		[[self undoManager] registerUndoWithTarget:self selector:@selector(setCreator:) object:GetNSStringFromOSType(creator)];
+		[[self undoManager] registerUndoWithTarget:self selector:@selector(setCreator:) object:GetNSStringFromOSType(_creator)];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change Creator Code", nil)];
-		creator = newCreator;
+		_creator = newCreator;
 		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:@{@"NSDocument": self, @"creator": oldCreatorStr}];
 	}
 }
 
 - (void)setType:(OSType)newType
 {
-	if (newType != type) {
+	if (newType != _type) {
 		NSString *oldTypeStr = GetNSStringFromOSType(newType);
 		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:@{@"NSDocument": self, @"type": oldTypeStr}];
-		[[self undoManager] registerUndoWithTarget:self selector:@selector(setType:) object:GetNSStringFromOSType(type)];
+		[[self undoManager] registerUndoWithTarget:self selector:@selector(setType:) object:GetNSStringFromOSType(_type)];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change File Type", nil)];
-		type = newType;
+		_type = newType;
 		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:@{@"NSDocument": self, @"type": oldTypeStr}];
 	}
-}
-
-- (BOOL)setCreator:(OSType)newCreator andType:(OSType)newType
-{
-	BOOL creatorChanged = (creator != newCreator), typeChanged = (type != newType);
-	[[self undoManager] beginUndoGrouping];
-	[self setCreator:newCreator];
-	[self setType:newType];
-	[[self undoManager] endUndoGrouping];
-	if(creatorChanged && typeChanged)
-		[[self undoManager] setActionName:NSLocalizedString(@"Change Creator & Type", nil)];
-	return (creatorChanged || typeChanged);
 }
 
 - (IBAction)changeView:(id)sender

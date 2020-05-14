@@ -1,8 +1,9 @@
-﻿/* Localized versions of Info.plist keys */
+/* Localized versions of Info.plist keys */
 
 CFBundleName = "ResKnife";
 CFBundleShortVersionString = "0.6 svn";
 CFBundleGetInfoString = "ResKnife 0.6 svn\nCopyright © Nicholas Shanks, 2001-2010.";
 NSHumanReadableCopyright = "© Nicholas Shanks, 2001-2010.";
-ResourceMap = "Resource Manager file";
-"com.apple.resource-map" = "Resource Map";
+ResourceMap = "Resource Map (Data Fork)";
+ResourceMapRF = "Resource Map (Resource Fork)";
+"com.nickshanks.resource-map" = "Resource Map";

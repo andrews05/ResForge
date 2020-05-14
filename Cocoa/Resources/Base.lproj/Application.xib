@@ -442,11 +442,11 @@ CA
             </connections>
         </customObject>
         <customView id="432">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="60"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZz-d2-V4c">
-                    <rect key="frame" x="18" y="23" width="85" height="17"/>
+                    <rect key="frame" x="18" y="13" width="85" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fork to open:" id="q6V-9a-MRp">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -454,16 +454,16 @@ CA
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW9-Ng-yIh">
-                    <rect key="frame" x="107" y="17" width="185" height="26"/>
+                    <rect key="frame" x="107" y="7" width="185" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="xWq-2O-h1B"/>
                     </constraints>
-                    <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kwd-tA-MiD" id="k6W-79-SSl">
+                    <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kwd-tA-MiD" id="k6W-79-SSl">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" id="e1x-em-dsm">
                             <items>
-                                <menuItem title="Automatic" id="kwd-tA-MiD">
+                                <menuItem title="Automatic" state="on" id="kwd-tA-MiD">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                             </items>
@@ -477,10 +477,10 @@ CA
             <constraints>
                 <constraint firstItem="tZz-d2-V4c" firstAttribute="leading" secondItem="432" secondAttribute="leading" constant="20" id="9aR-9f-XGG"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NW9-Ng-yIh" secondAttribute="trailing" constant="20" id="Og2-yR-vYj"/>
-                <constraint firstAttribute="bottom" secondItem="tZz-d2-V4c" secondAttribute="bottom" constant="23" id="YSo-Ff-HWF"/>
+                <constraint firstAttribute="bottom" secondItem="tZz-d2-V4c" secondAttribute="bottom" constant="13" id="YSo-Ff-HWF"/>
                 <constraint firstItem="NW9-Ng-yIh" firstAttribute="leading" secondItem="tZz-d2-V4c" secondAttribute="trailing" constant="8" id="hyU-bs-Ii7"/>
                 <constraint firstItem="NW9-Ng-yIh" firstAttribute="baseline" secondItem="tZz-d2-V4c" secondAttribute="baseline" id="jto-Vc-Rfo"/>
-                <constraint firstItem="tZz-d2-V4c" firstAttribute="top" secondItem="432" secondAttribute="top" constant="20" id="t2S-dN-dC7"/>
+                <constraint firstItem="tZz-d2-V4c" firstAttribute="top" secondItem="432" secondAttribute="top" constant="10" id="t2S-dN-dC7"/>
             </constraints>
             <point key="canvasLocation" x="3" y="361"/>
         </customView>

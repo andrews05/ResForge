@@ -13,7 +13,6 @@ extern NSString *RKResourcePboardType;
 @implementation ResourceDataSource
 @synthesize document;
 @synthesize outlineView;
-@synthesize window;
 @synthesize resourcesByType;
 @synthesize allTypes;
 

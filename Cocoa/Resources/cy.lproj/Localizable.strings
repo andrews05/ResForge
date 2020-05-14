@@ -1,7 +1,7 @@
-﻿/* Localized versions of application-critical strings */
+/* Localized versions of application-critical strings */
 
 /* Resource file type as shown in Finder and Open/Save dialog */
-"com.apple.resource-map" = "Adnodd Ffeil";
+"com.nickshanks.resource-map" = "Adnodd Ffeil";
 
 /* Document window default (grey) resource names */
 //"Data Fork" = "Data Fork";

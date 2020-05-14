@@ -1,7 +1,7 @@
-﻿/* Localized versions of application-critical strings */
+/* Localized versions of application-critical strings */
 
 /* Resource file type as shown in Finder and Open/Save dialog */
-"com.apple.resource-map" = "Stòras Faidhle";
+"com.nickshanks.resource-map" = "Stòras Faidhle";
 
 /* Dialog buttons */
 "OK" = "Glan";

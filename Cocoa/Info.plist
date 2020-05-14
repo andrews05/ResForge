@@ -10,27 +10,31 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>rsrc</string>
-				<string>rsr</string>
-			</array>
+			<array/>
 			<key>CFBundleTypeIconFile</key>
 			<string>Resource file</string>
 			<key>CFBundleTypeName</key>
 			<string>ResourceMap</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>rsrc</string>
-				<string>RSRC</string>
-				<string>????</string>
-				<string>****</string>
-			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.apple.resource-map</string>
-			</array>
+			<array/>
+			<key>LSTypeIsPackage</key>
+			<integer>0</integer>
+			<key>NSDocumentClass</key>
+			<string>ResourceDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array/>
+			<key>CFBundleTypeIconFile</key>
+			<string>Resource file</string>
+			<key>CFBundleTypeName</key>
+			<string>ResourceMapRF</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array/>
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
@@ -38,23 +42,17 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>*</string>
-			</array>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>*/*</string>
-			</array>
+			<array/>
 			<key>CFBundleTypeName</key>
-			<string>Anything</string>
+			<string>Unknown document</string>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.data</string>
 			</array>
 			<key>LSTypeIsPackage</key>
-			<false/>
+			<integer>0</integer>
 			<key>NSDocumentClass</key>
 			<string>ResourceDocument</string>
 		</dict>
@@ -83,32 +81,28 @@
 	<string>Application</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>UTImportedTypeDeclarations</key>
+	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
-				<string>public.archive</string>
-				<string>public.composite-content</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Resource Map</string>
 			<key>UTTypeIconFile</key>
-			<string>Resource file.icns</string>
+			<string>Resource file</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.apple.resource-map</string>
+			<string>com.nickshanks.resource-map</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>
 				<array>
 					<string>rsrc</string>
-					<string>RSRC</string>
 				</array>
 				<key>public.filename-extension</key>
 				<array>
 					<string>rsrc</string>
-					<string>rsr</string>
 				</array>
 			</dict>
 		</dict>

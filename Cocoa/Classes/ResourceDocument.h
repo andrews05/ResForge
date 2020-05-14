@@ -57,7 +57,6 @@
 
 - (IBAction)creatorChanged:(id)sender;
 - (IBAction)typeChanged:(id)sender;
-- (BOOL)setCreator:(OSType)newCreator andType:(OSType)newType;
 - (IBAction)changeView:(id)sender;
 
 @end
