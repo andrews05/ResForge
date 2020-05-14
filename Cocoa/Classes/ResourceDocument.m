@@ -253,7 +253,7 @@ extern NSString *RKResourcePboardType;
 @pending	Uli has changed this routine - see what I had and unify the two
 */
 
-- (BOOL)writeToFile:(NSString *)fileName ofType:(NSString *)type
+- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError
 {
 	OSStatus error = noErr;
 	ResFileRefNum fileRefNum = 0;
@@ -261,78 +261,76 @@ extern NSString *RKResourcePboardType;
 	FSRef fileRef = {{0}};
 	
 	// create and open file for writing
-	// bug: doesn't set the cat info to the same as the old file
     HFSUniStr255 uniname = {0};
-    FSGetHFSUniStrFromString((__bridge CFStringRef)(fileName.lastPathComponent), &uniname);
-	error = FSPathMakeRef((const UInt8 *)[[fileName stringByDeletingLastPathComponent] fileSystemRepresentation], &parentRef, nil);
-	
-	if (error != noErr)
-		NSLog(@"FSPathMakeRef got error %d", (int)error);
-	
-	error = FSCreateResourceFile(&parentRef, uniname.length, uniname.unicode, kFSCatInfoNone, NULL, fork.length, fork.unicode, &fileRef, NULL);
-	
-	// write any data streams to file
-	BOOL succeeded = [self writeForkStreamsToFile:fileName];
+    error = FSGetHFSUniStrFromString((__bridge CFStringRef)(url.lastPathComponent), &uniname);
+    if (!error)
+        error = FSPathMakeRef((const UInt8 *)[[url URLByDeletingLastPathComponent] fileSystemRepresentation], &parentRef, nil);
+    if (!error)
+        error = FSCreateResourceFile(&parentRef, uniname.length, uniname.unicode, kFSCatInfoNone, NULL, fork.length, fork.unicode, &fileRef, NULL);
     
-	if(!error)
-	{
-		// set creator & type
+    // write any data streams to file
+    if (!error)
+        error = [self writeForkStreamsToURL:url];
+    
+    // set creator & type
+    // bug: doesn't set the cat info to the same as the old file
+    if (!error) {
         FSCatalogInfo info;
         error = FSGetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
-        if(!error)
-        {
+        if (!error) {
             FInfo *finderInfo = (FInfo *)(info.finderInfo);
             finderInfo->fdType = self.type;
             finderInfo->fdCreator = self.creator;
             FSSetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &info);
         }
-        else NSLog(@"error getting Finder info. (error=%d, valid ref=%@)", (int)error, FSIsFSRefValid(&fileRef) ? @"Yes" : @"No");
-		
-		// open fork as resource map
-		error = FSOpenResourceFile(&fileRef, fork.length, (UniChar *)fork.unicode, fsWrPerm, &fileRefNum);
-	}
-	else NSLog(@"error creating resource fork. (error=%d, ref=%p)", (int)error, &fileRef);
-	
-	// write resource array to file
-	if(fileRefNum && !error)
-		succeeded = [self writeResourceMap:fileRefNum];
+    }
+    
+    // write resources to file
+    if (!error)
+        error = FSOpenResourceFile(&fileRef, fork.length, (UniChar *)fork.unicode, fsWrPerm, &fileRefNum);
+    if (!error)
+        error = [self writeResourceMap:fileRefNum];
+    
+    if (error) {
+        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:error userInfo:nil];
+        return NO;
+    }
 	
 	// tidy up loose ends
-	if(fileRefNum) FSCloseFork(fileRefNum);
+	if (fileRefNum)
+        FSCloseFork(fileRefNum);
 	
 	// update info window
 	[[InfoWindowController sharedInfoWindowController] updateInfoWindow];
 	
-	return succeeded;
+	return YES;
 }
 
-- (BOOL)writeForkStreamsToFile:(NSString *)fileName
+- (OSStatus)writeForkStreamsToURL:(NSURL *)url
 {
 	// try and get an FSRef
-	OSStatus error;
-	FSRef *fileRef = [fileName createFSRef];
+	OSStatus error = noErr;
+	FSRef fileRef;
+    error = FSPathMakeRef((const UInt8 *)url.fileSystemRepresentation, &fileRef, nil);
+    if (error != noErr) return error;
 	
 	for (Resource *resource in resources) {
 		// if the resource object represents an actual resource, skip it
 		if (!resource.representedFork || !resource.data.length) continue;
         HFSUniStr255 uniname = {0};
-        FSGetHFSUniStrFromString((__bridge CFStringRef)(resource.representedFork), &uniname);
-		FSIORefNum forkRefNum = 0;
-		error = FSOpenFork(fileRef, uniname.length, uniname.unicode, fsWrPerm, &forkRefNum);
+        FSIORefNum forkRefNum = 0;
+        error = FSGetHFSUniStrFromString((__bridge CFStringRef)(resource.representedFork), &uniname);
+        if (error != noErr) return error;
+         
+		error = FSOpenFork(&fileRef, uniname.length, uniname.unicode, fsWrPerm, &forkRefNum);
+        if (error != noErr) return error;
 		
-		if (error != noErr)
-			NSLog(@"FSOpenFork got error %d", (int)error);
+        error = FSWriteFork(forkRefNum, fsFromStart, 0, resource.data.length, resource.data.bytes, NULL);
+        if (error != noErr) return error;
 		
-		if(!error && forkRefNum)
-			error = FSWriteFork(forkRefNum, fsFromStart, 0, resource.data.length, resource.data.bytes, NULL);
-		
-		if (error != noErr)
-			NSLog(@"FSWriteFork got error %d", (int)error);
-		
-		if(forkRefNum)
-			FSCloseFork(forkRefNum);
+        FSCloseFork(forkRefNum);
 	}
-	return YES;
+	return noErr;
 }
 
 /*!
@@ -340,11 +338,10 @@ extern NSString *RKResourcePboardType;
 @abstract   Writes all resources (except the ones representing other forks of the file) to the specified resource file.
 */
 
-- (BOOL)writeResourceMap:(ResFileRefNum)fileRefNum
+- (OSStatus)writeResourceMap:(ResFileRefNum)fileRefNum
 {
 	// make the resource file current
 	OSStatus error = noErr;
-	ResFileRefNum oldResFile = CurResFile();
 	UseResFile(fileRefNum);
 	
 	// loop over all our resources
@@ -380,27 +377,21 @@ extern NSString *RKResourcePboardType;
 		
 		// now that everything's converted, tell the resource manager we want to create this resource
 		AddResource(resourceHandle, resTypeCode, resIDShort, nameStr);
-		if(ResError() == addResFailed)
-		{
+        error = ResError();
+		if (error) {
 			NSLog(@"*Saving failed*; could not add resource ID %hd of type %@ to file.", [resource resID], GetNSStringFromOSType([resource type]));
 			DisposeHandle(resourceHandle);
-			error = addResFailed;
+            return error;
 		}
-		else
-		{
-//			NSLog(@"Added resource ID %@ of type %@ to file.", [resource resID], [resource type]);
-			SetResAttrs(resourceHandle, attrsShort);
-			ChangedResource(resourceHandle);
-			// the resourceHandle memory is disposed of when calling CloseResFile() for the file to which the resource has been added
-		}
+        
+        SetResAttrs(resourceHandle, attrsShort);
+        ChangedResource(resourceHandle);
+        // the resourceHandle memory is disposed of when calling CloseResFile() for the file to which the resource has been added
 	}
 	
 	// update the file on disk
 	UpdateResFile(fileRefNum);
-	
-	// restore original resource file
-	UseResFile(oldResFile);
-	return error? NO:YES;
+	return error;
 }
 
 #pragma mark -
