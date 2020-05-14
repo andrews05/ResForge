@@ -9,6 +9,7 @@
 	// set-up open panel (this happens every time, but no harm done)
 	ApplicationDelegate *appDelegate = [NSApp delegate];
 	OpenPanelDelegate *openPanelDelegate = [appDelegate openPanelDelegate];
+    openPanelDelegate.forkIndex = 0;
 	[openPanel setDelegate:openPanelDelegate];
 	[openPanel setAccessoryView:openPanelDelegate.openPanelAccessoryView];
 	[openPanel setAllowsOtherFileTypes:YES];
@@ -16,7 +17,7 @@
 	
 	// run panel
 	NSInteger button = [super runModalOpenPanel:openPanel forTypes:extensions];
-	if(button == NSOKButton)
+	if (button == NSOKButton)
 		[openPanelDelegate setReadOpenPanelForFork:YES];
 	return button;
 }

@@ -1,3 +1,4 @@
+#import "ForkInfo.h"
 #import <Cocoa/Cocoa.h>
 #include <CoreServices/CoreServices.h>
 
@@ -22,7 +23,7 @@
 @property OSType creator;
 @property OSType type;
 
-- (BOOL)readFork:(NSString *)forkName asStreamFromFile:(FSRef *)fileRef;
+- (BOOL)readFork:(ForkInfo *)forkName asStreamFromFile:(FSRef *)fileRef;
 + (NSMutableArray *)readResourceMap:(ResFileRefNum)fileRefNum;
 - (BOOL)writeResourceMap:(ResFileRefNum)fileRefNum;
 - (BOOL)writeForkStreamsToFile:(NSString *)fileName;

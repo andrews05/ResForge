@@ -442,135 +442,55 @@ CA
             </connections>
         </customObject>
         <customView id="432">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="133"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="446" userLabel="Add">
-                    <rect key="frame" x="451" y="105" width="22" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="19" id="hT8-mo-oDL"/>
-                        <constraint firstAttribute="width" constant="22" id="vh0-1a-8Lh"/>
-                    </constraints>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="447">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZz-d2-V4c">
+                    <rect key="frame" x="18" y="23" width="85" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fork to open:" id="q6V-9a-MRp">
                         <font key="font" metaFont="system"/>
-                        <string key="keyEquivalent">+</string>
-                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="addFork:" target="448" id="505"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="444" userLabel="minus">
-                    <rect key="frame" x="472" y="105" width="22" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="19" id="TTb-89-xG6"/>
-                        <constraint firstAttribute="width" constant="22" id="ctE-1k-uAM"/>
-                    </constraints>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="445">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                        <string key="keyEquivalent">-</string>
-                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="removeFork:" target="448" id="504"/>
-                    </connections>
-                </button>
-                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="435">
-                    <rect key="frame" x="6" y="8" width="488" height="98"/>
-                    <clipView key="contentView" id="R11-fe-Xxq">
-                        <rect key="frame" x="1" y="1" width="486" height="96"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="436">
-                                <rect key="frame" x="0.0" y="0.0" width="486" height="96"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                <tableColumns>
-                                    <tableColumn identifier="forkname" width="247" minWidth="160" maxWidth="1000" id="440">
-                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Fork Name">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
-                                        </tableHeaderCell>
-                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="441">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </textFieldCell>
-                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                    </tableColumn>
-                                    <tableColumn identifier="forksize" width="233" minWidth="80" maxWidth="1000" id="437">
-                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Fork Size">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
-                                        </tableHeaderCell>
-                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" id="438">
-                                            <byteCountFormatter key="formatter" id="jRX-F5-soW">
-                                                <byteCountFormatterUnits key="allowedUnits" bytes="YES"/>
-                                            </byteCountFormatter>
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </textFieldCell>
-                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                    </tableColumn>
-                                </tableColumns>
-                                <connections>
-                                    <outlet property="dataSource" destination="448" id="451"/>
-                                    <outlet property="delegate" destination="448" id="452"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" controlSize="small" horizontal="YES" id="442">
-                        <rect key="frame" x="-100" y="-100" width="323" height="15"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" controlSize="small" horizontal="NO" id="443">
-                        <rect key="frame" x="476" y="1" width="11" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="114" translatesAutoresizingMaskIntoConstraints="NO" id="433">
-                    <rect key="frame" x="4" y="111" width="117" height="14"/>
-                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="Select a fork to open:" id="434">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW9-Ng-yIh">
+                    <rect key="frame" x="107" y="17" width="185" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="xWq-2O-h1B"/>
+                    </constraints>
+                    <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kwd-tA-MiD" id="k6W-79-SSl">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="e1x-em-dsm">
+                            <items>
+                                <menuItem title="Automatic" id="kwd-tA-MiD">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="448" name="selectedIndex" keyPath="forkIndex" id="6lU-6W-FIt"/>
+                    </connections>
+                </popUpButton>
             </subviews>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="435" secondAttribute="centerX" id="7f8-2L-AJ4"/>
-                <constraint firstItem="446" firstAttribute="top" secondItem="432" secondAttribute="top" constant="8" id="Ffa-C8-GVF"/>
-                <constraint firstItem="435" firstAttribute="leading" secondItem="432" secondAttribute="leading" constant="6" id="GVG-eP-BXA"/>
-                <constraint firstItem="444" firstAttribute="leading" secondItem="446" secondAttribute="trailing" constant="-1" id="ORH-XE-rmt"/>
-                <constraint firstAttribute="bottom" secondItem="435" secondAttribute="bottom" constant="8" id="Tle-qK-5XR"/>
-                <constraint firstItem="435" firstAttribute="leading" secondItem="433" secondAttribute="leading" id="X40-u5-Wr3"/>
-                <constraint firstItem="444" firstAttribute="trailing" secondItem="435" secondAttribute="trailing" id="bas-sb-JlF"/>
-                <constraint firstItem="446" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="433" secondAttribute="trailing" constant="8" symbolic="YES" id="gNY-Br-MxD"/>
-                <constraint firstItem="433" firstAttribute="top" secondItem="432" secondAttribute="top" constant="8" id="ihg-mM-jpV"/>
-                <constraint firstItem="435" firstAttribute="top" secondItem="433" secondAttribute="bottom" constant="5" id="mPb-Sq-AgT"/>
-                <constraint firstItem="444" firstAttribute="top" secondItem="432" secondAttribute="top" constant="8" id="wuN-9s-j7M"/>
+                <constraint firstItem="tZz-d2-V4c" firstAttribute="leading" secondItem="432" secondAttribute="leading" constant="20" id="9aR-9f-XGG"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NW9-Ng-yIh" secondAttribute="trailing" constant="20" id="Og2-yR-vYj"/>
+                <constraint firstAttribute="bottom" secondItem="tZz-d2-V4c" secondAttribute="bottom" constant="23" id="YSo-Ff-HWF"/>
+                <constraint firstItem="NW9-Ng-yIh" firstAttribute="leading" secondItem="tZz-d2-V4c" secondAttribute="trailing" constant="8" id="hyU-bs-Ii7"/>
+                <constraint firstItem="NW9-Ng-yIh" firstAttribute="baseline" secondItem="tZz-d2-V4c" secondAttribute="baseline" id="jto-Vc-Rfo"/>
+                <constraint firstItem="tZz-d2-V4c" firstAttribute="top" secondItem="432" secondAttribute="top" constant="20" id="t2S-dN-dC7"/>
             </constraints>
+            <point key="canvasLocation" x="3" y="361"/>
         </customView>
         <customObject id="448" customClass="OpenPanelDelegate">
             <connections>
-                <outlet property="addForkButton" destination="446" id="453"/>
-                <outlet property="forkTableView" destination="436" id="454"/>
+                <outlet property="forkSelect" destination="NW9-Ng-yIh" id="FkP-Ya-ttz"/>
                 <outlet property="openPanelAccessoryView" destination="432" id="455"/>
-                <outlet property="removeForkButton" destination="444" id="456"/>
             </connections>
         </customObject>
         <customObject id="tca-TO-GWK" userLabel="Document Controller" customClass="RKDocumentController"/>
+        <userDefaultsController representsSharedInstance="YES" id="HMK-4J-LXK"/>
     </objects>
-    <resources>
-        <image name="NSAddTemplate" width="11" height="11"/>
-        <image name="NSRemoveTemplate" width="11" height="11"/>
-    </resources>
 </document>

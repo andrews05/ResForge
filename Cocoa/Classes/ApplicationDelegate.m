@@ -80,38 +80,6 @@
 	[self iconForResourceType:'TEXT'];
 }
 
-- (NSArray *)forksForFile:(FSRef *)fileRef
-{
-	if (!fileRef) return nil;
-	
-	FSCatalogInfo		catalogInfo;
-	FSCatalogInfoBitmap whichInfo = kFSCatInfoNodeFlags;
-	CatPositionRec		forkIterator = { 0 };
-	NSMutableArray *forks = [NSMutableArray array];
-	
-	// check we have a file, not a folder
-	OSErr error = FSGetCatalogInfo(fileRef, whichInfo, &catalogInfo, NULL, NULL, NULL);
-	if (!error && !(catalogInfo.nodeFlags & kFSNodeIsDirectoryMask)) {
-		// iterate over file and populate forks array
-		while(error == noErr) {
-			HFSUniStr255 forkName;
-			SInt64 forkSize;
-			UInt64 forkPhysicalSize;	// used if opening selected fork fails to find empty forks
-			
-			error = FSIterateForks(fileRef, &forkIterator, &forkName, &forkSize, &forkPhysicalSize);
-			if (!error) {
-				NSString *fName = [NSString stringWithCharacters:forkName.unicode length:forkName.length];
-				[forks addObject:@{@"forkname": fName, @"forksize": @(forkSize), @"forkallocation": @(forkPhysicalSize)}];
-			} else if (error != errFSNoMoreItems) {
-				NSLog(@"FSIterateForks() error: %d", error);
-			}
-		}
-	} else if (error) {
-		NSLog(@"FSGetCatalogInfo() error: %d", error);
-	}
-	return forks;
-}
-
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
 #pragma unused(sender)

@@ -87,8 +87,4 @@
 */
 - (NSDictionary *)icons;
 
-/* utility methods */
-
-- (NSArray *)forksForFile:(FSRef *)fileRef;
-
 @end

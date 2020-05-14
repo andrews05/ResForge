@@ -173,12 +173,6 @@ static ResourceDataSource* supportDataSource;
 	return name;
 }
 
-// shouldn't need this - it's used by forks to give them alternate names - should use name formatter replacement instead
-- (void)_setName:(NSString *)newName
-{
-	name = newName;
-}
-
 - (void)setName:(NSString *)newName
 {
 	if(![name isEqualToString:newName])

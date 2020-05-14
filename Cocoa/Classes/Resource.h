@@ -30,7 +30,6 @@
 @property (getter = isDirty) BOOL dirty;
 @property (copy) NSString *representedFork;
 @property (weak) NSDocument *document;
-- (void)_setName:(NSString *)newName;
 
 - (void)open;
 

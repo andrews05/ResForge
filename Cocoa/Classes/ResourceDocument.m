@@ -27,7 +27,7 @@ extern NSString *RKResourcePboardType;
 - (instancetype)init
 {
 	if (self = [super init]) {
-		creator = 'ResK';	// should I be calling -setCreator & -setType here instead?
+		creator = 'ResK';
 		type = 'rsrc';
 	}
 	return self;
@@ -49,7 +49,7 @@ extern NSString *RKResourcePboardType;
 @updated		2003-11-08 NGS:	Now handles opening user-selected forks.
 */
 
--(BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)fileKind
+- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError
 {
 	BOOL			succeeded = NO;
 	OSStatus		error = noErr;
@@ -57,92 +57,56 @@ extern NSString *RKResourcePboardType;
 	ResFileRefNum	fileRefNum = 0;
 	OpenPanelDelegate *openPanelDelegate = [(ApplicationDelegate *)[NSApp delegate] openPanelDelegate];
 	
-	// bug: need to handle error better here
-	error = FSPathMakeRef((const UInt8 *)[fileName fileSystemRepresentation], fileRef, nil);
-	if(error) return NO;
-	
+	error = FSPathMakeRef((const UInt8 *)[url fileSystemRepresentation], fileRef, nil);
+    if (error) {
+        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:error userInfo:nil];
+        return NO;
+    }
+    
+    SetResLoad(false); // don't load "preload" resources
 	// find out which fork to parse
-	if(![openPanelDelegate readOpenPanelForFork])
-	{
-		// display second dialog to ask user to select a fork if open command did not come via the open dialog
-		
-		// bug:	unimplemented - always tells app to try resource fork first
-		error = FSGetResourceForkName(&fork);
-		if(error) return NO;
-	}
-	else
-	{
-		// get selected fork from open panel, 10.3+
-		NSInteger row = [[openPanelDelegate forkTableView] selectedRow];
-		NSString *selectedFork = ((NSDictionary *)[openPanelDelegate forks][row])[@"forkname"];
-		fork.length = ([selectedFork length] < 255) ? (UInt16)[selectedFork length] : 255;
-		if(fork.length > 0)
-			[selectedFork getCharacters:fork.unicode range:NSMakeRange(0, fork.length)];
-		else
-			fork.unicode[0] = 0;
-		
-		// clear so next document doesn't get confused
-		[openPanelDelegate setReadOpenPanelForFork:NO];
-	}
-	
-	NSArray *forks = [(ApplicationDelegate *)[NSApp delegate] forksForFile:fileRef];
-	
-	// attempt to open fork user selected as a resource map
-	SetResLoad(false);		// don't load "preload" resources
-	error = FSOpenResourceFile(fileRef, fork.length, (UniChar *)fork.unicode, fsRdPerm, &fileRefNum);
-	if(error || !fileRefNum)
-	{
-		// if opening the user-selected fork fails, try to open resource fork instead
-		error = FSGetResourceForkName(&fork);
-		if(error) return NO;
-/*		HFSUniStr255 *rfork;
-		error = FSGetResourceForkName(rfork);
-		if(error) return NO;
-		
-		bool checkFork = true;
-		if(FSCreateStringFromHFSUniStr)	// 10.4 only
-		{
-			if(CFStringCompare(FSCreateStringFromHFSUniStr(NULL, fork), FSCreateStringFromHFSUniStr(NULL, rfork), 0) == NSOrderedSame)
-				checkFork = false;	// skip checking resource fork if it's the one the user chose
-			else fork = rfork;
-		}
-		if(checkFork)
-*/			error = FSOpenResourceFile(fileRef, fork.length, (UniChar *)fork.unicode, fsRdPerm, &fileRefNum);
-		if(error || !fileRefNum)
-		{
-			// if opening the resource fork fails, try to open data fork instead
-			error = FSGetDataForkName(&fork);
-			if(error) return NO;
-			error = FSOpenResourceFile(fileRef, fork.length, (UniChar *)fork.unicode, fsRdPerm, &fileRefNum);
-			if(error || !fileRefNum)
-			{
-				// bug: should check fork the user selected is empty before trying data fork
-				NSNumber *fAlloc = [forks firstObjectReturningValue:[NSString stringWithCharacters:fork.unicode length:fork.length] forKey:@"forkname"][@"forkallocation"];
-				if([fAlloc unsignedLongLongValue] > 0)
-				{
-					// data fork is not empty, check resource fork
-					error = FSGetResourceForkName(&fork);
-					if(error) return NO;
-					fAlloc = [forks firstObjectReturningValue:[NSString stringWithCharacters:fork.unicode length:fork.length] forKey:@"forkname"][@"forkallocation"];
-					if([fAlloc unsignedLongLongValue] > 0)
-					{
-						// resource fork is not empty either, give up (ask user for a fork?)
-						NSLog(@"Could not find existing map nor create a new map in either the data or resource forks! Aborting.");
-						return NO;
-					}
-				}
-				
-				// note that map needs initalising on first save
-				_createFork = YES;
-			}
-		}
-	}
-	SetResLoad(true);			// restore resource loading as soon as is possible
-	
-	if(!_createFork)
-	{
+    NSMutableArray *forks = [ForkInfo forksForFile:fileRef];
+    ForkInfo *selectedFork = [openPanelDelegate getSelectedFork];
+    if (selectedFork) {
+        // If fork was selected from open panel, try this fork only
+        error = FSOpenResourceFile(fileRef, selectedFork.uniName.length, (UniChar *)selectedFork.uniName.unicode, fsRdPerm, &fileRefNum);
+        if (!error && fileRefNum) {
+        } else if (!selectedFork.physicalSize) {
+            _createFork = YES;
+        } else {
+            selectedFork = nil;
+        }
+    } else {
+        // Try to open another fork
+        for (ForkInfo *forkInfo in forks) {
+            error = FSOpenResourceFile(fileRef, forkInfo.uniName.length, (UniChar *)forkInfo.uniName.unicode, fsRdPerm, &fileRefNum);
+            if (!error && fileRefNum) {
+                selectedFork = forkInfo;
+                break;
+            }
+        }
+        if (!selectedFork) {
+            // Try to find an empty fork
+            for (ForkInfo *forkInfo in forks) {
+                if (!forkInfo.physicalSize) {
+                    selectedFork = forkInfo;
+                    _createFork = YES;
+                    break;
+                }
+            }
+        }
+    }
+    SetResLoad(true); // restore resource loading as soon as is possible
+    
+    if (!selectedFork) {
+        *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:nil];
+        return NO;
+    }
+    
+    fork = selectedFork.uniName;
+	if (!_createFork) {
 		// disable undos during resource creation and setting of the creator and type
-		[[self undoManager] disableUndoRegistration];
+		[self.undoManager disableUndoRegistration];
 		
 		// then read resources from the selected fork
 		resources = [ResourceDocument readResourceMap:fileRefNum];
@@ -158,29 +122,26 @@ extern NSString *RKResourcePboardType;
 		// get creator and type
 		FSCatalogInfo info;
 		error = FSGetCatalogInfo(fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
-		if(!error)
-		{
-			self.type = ((FileInfo *)info.finderInfo)->fileType;
-			self.creator = ((FileInfo *)info.finderInfo)->fileCreator;
+		if (!error) {
+			type = ((FileInfo *)info.finderInfo)->fileType;
+			creator = ((FileInfo *)info.finderInfo)->fileCreator;
 		}
 		
 		// restore undos
-		[[self undoManager] enableUndoRegistration];
-	}
-	else succeeded = YES;
+		[self.undoManager enableUndoRegistration];
+    } else {
+        resources = [NSMutableArray new];
+        succeeded = YES;
+    }
 	
 	// now read all other forks as streams
-	NSString *forkName;
-	NSEnumerator *forkEnumerator = [forks objectEnumerator];
-	NSString *selectedFork = [NSString stringWithCharacters:fork.unicode length:fork.length];
-	while((forkName = [forkEnumerator nextObject][@"forkname"])) {
-		// check current fork is not the fork we're going to parse
-		if(![forkName isEqualToString:selectedFork])
-			[self readFork:forkName asStreamFromFile:fileRef];
-	}
+    for (ForkInfo *forkInfo in forks) {
+        if (![forkInfo.name isEqualToString:selectedFork.name])
+            [self readFork:forkInfo asStreamFromFile:fileRef];
+    }
 	
 	// tidy up loose ends
-	if(fileRefNum)
+	if (fileRefNum)
 		FSCloseFork(fileRefNum);
 	//DisposePtr((Ptr) fileRef);
 	return succeeded;
@@ -193,9 +154,9 @@ extern NSString *RKResourcePboardType;
 @description	Note: there is a 2 GB limit to the size of forks that can be read in due to <tt>FSReaadFork()</tt> taking a 32-bit buffer length value.
 */
 
-- (BOOL)readFork:(NSString *)forkName asStreamFromFile:(FSRef *)fileRef
+- (BOOL)readFork:(ForkInfo *)forkInfo asStreamFromFile:(FSRef *)fileRef
 {
-	if(!fileRef) return NO;
+	if (!fileRef) return NO;
 	
 	/* NTFS Note: When running SFM (Services for Macintosh) a Windows NT-based system (including 2000 & XP) serving NTFS-formatted drives stores Mac resource forks in a stream named "AFP_Resource". The finder info/attributes are stored in a stream called "AFP_AfpInfo". The default data fork stream is called "$DATA" and any of these can be accessed thus: "c:\filename.txt:forkname". Finder comments are stored in a stream called "Comments".
 	As a result, ResKnife prohibits creation of forks with the following names:	"" (empty string, Mac data fork name),
@@ -203,41 +164,27 @@ extern NSString *RKResourcePboardType;
 																				"AFP_Resource", "AFP_AfpInfo" and "Comments".
 	It is perfectly legal in ResKnife to read in forks of these names when accessing a shared NTFS drive via SMB. The server does not need to be running SFM since the file requests will appear to be coming from a PC. If the files are accessed via AFP on a server running SFM, SFM will automatically convert the files (and truncate the name to 31 chars). */
 	
-	
-	// translate NSString into HFSUniStr255
-    OSErr error = noErr;
-	HFSUniStr255 uniForkName = { 0 };
-    FSGetHFSUniStrFromString((__bridge CFStringRef)(forkName), &uniForkName);
-	
 	// get fork length and create empty buffer, bug: only sizeof(size_t) bytes long
-	ByteCount forkLength = (ByteCount) [[[(ApplicationDelegate *)[NSApp delegate] forksForFile:fileRef] firstObjectReturningValue:forkName forKey:@"forkname"][@"forksize"] unsignedLongValue];
+	ByteCount forkLength = (ByteCount)forkInfo.size;
 	void *buffer = malloc(forkLength);
-	if(!buffer) return NO;
+	if (!buffer) return NO;
 	
 	// read fork contents into buffer, bug: assumes no errors
 	FSIORefNum forkRefNum;
-	error = FSOpenFork(fileRef, uniForkName.length, uniForkName.unicode, fsRdPerm, &forkRefNum);
+	OSErr error = FSOpenFork(fileRef, forkInfo.uniName.length, forkInfo.uniName.unicode, fsRdPerm, &forkRefNum);
     if (error) return NO;
 	FSReadFork(forkRefNum, fsFromStart, 0, forkLength, buffer, &forkLength);
 	FSCloseFork(forkRefNum);
 	
 	// create data
 	NSData *data = [NSData dataWithBytesNoCopy:buffer length:forkLength freeWhenDone:YES];
-	if(!data) return NO;
+	if (!data) return NO;
 	
 	// create resource
-	Resource *resource = [Resource resourceOfType:0 andID:0 withName:forkName andAttributes:0 data:data];
-	if(!resource) return NO;
+	Resource *resource = [Resource resourceOfType:0 andID:0 withName:forkInfo.description andAttributes:0 data:data];
+	if (!resource) return NO;
 	
-	// customise fork name for default data & resource forks - bug: this should really be in resource data source!!
-	HFSUniStr255 resourceForkName;
-	error = FSGetResourceForkName(&resourceForkName);
-	if(!error && [[resource name] isEqualToString:@""])			// bug: should use FSGetDataForkName()
-		[resource _setName:NSLocalizedString(@"Data Fork", nil)];
-	else if(!error && [[resource name] isEqualToString:[NSString stringWithCharacters:resourceForkName.unicode length:resourceForkName.length]])
-		[resource _setName:NSLocalizedString(@"Resource Fork", nil)];
-	
-	[resource setRepresentedFork:forkName];
+	[resource setRepresentedFork:forkInfo.name];
 	[resources addObject:resource];
 	
 	return YES;
