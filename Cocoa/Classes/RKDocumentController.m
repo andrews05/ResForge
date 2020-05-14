@@ -9,12 +9,10 @@
 	// set-up open panel (this happens every time, but no harm done)
 	ApplicationDelegate *appDelegate = [NSApp delegate];
 	OpenPanelDelegate *openPanelDelegate = [appDelegate openPanelDelegate];
-	NSView *openPanelAccessoryView = [openPanelDelegate openPanelAccessoryView];
 	[openPanel setDelegate:openPanelDelegate];
-	[openPanel setAccessoryView:openPanelAccessoryView];
+	[openPanel setAccessoryView:openPanelDelegate.openPanelAccessoryView];
 	[openPanel setAllowsOtherFileTypes:YES];
 	[openPanel setTreatsFilePackagesAsDirectories:YES];
-	[openPanelAccessoryView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
 	
 	// run panel
 	NSInteger button = [super runModalOpenPanel:openPanel forTypes:extensions];

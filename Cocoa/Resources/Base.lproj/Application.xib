@@ -477,20 +477,20 @@ CA
                         <action selector="removeFork:" target="448" id="504"/>
                     </connections>
                 </button>
-                <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="435">
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="435">
                     <rect key="frame" x="6" y="8" width="488" height="98"/>
                     <clipView key="contentView" id="R11-fe-Xxq">
-                        <rect key="frame" x="1" y="1" width="475" height="96"/>
+                        <rect key="frame" x="1" y="1" width="486" height="96"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="436">
-                                <rect key="frame" x="0.0" y="0.0" width="475" height="96"/>
+                                <rect key="frame" x="0.0" y="0.0" width="486" height="96"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="forkname" width="241" minWidth="160" maxWidth="1000" id="440">
+                                    <tableColumn identifier="forkname" width="247" minWidth="160" maxWidth="1000" id="440">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Fork Name">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -503,7 +503,7 @@ CA
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="forksize" width="228" minWidth="80" maxWidth="1000" id="437">
+                                    <tableColumn identifier="forksize" width="233" minWidth="80" maxWidth="1000" id="437">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Fork Size">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -531,13 +531,13 @@ CA
                         <rect key="frame" x="-100" y="-100" width="323" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" verticalHuggingPriority="750" controlSize="small" horizontal="NO" id="443">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" controlSize="small" horizontal="NO" id="443">
                         <rect key="frame" x="476" y="1" width="11" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="114" translatesAutoresizingMaskIntoConstraints="NO" id="433">
-                    <rect key="frame" x="4" y="114" width="117" height="14"/>
+                    <rect key="frame" x="4" y="111" width="117" height="14"/>
                     <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="Select a fork to open:" id="434">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -554,8 +554,8 @@ CA
                 <constraint firstItem="435" firstAttribute="leading" secondItem="433" secondAttribute="leading" id="X40-u5-Wr3"/>
                 <constraint firstItem="444" firstAttribute="trailing" secondItem="435" secondAttribute="trailing" id="bas-sb-JlF"/>
                 <constraint firstItem="446" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="433" secondAttribute="trailing" constant="8" symbolic="YES" id="gNY-Br-MxD"/>
-                <constraint firstItem="433" firstAttribute="top" secondItem="432" secondAttribute="top" constant="5" id="ihg-mM-jpV"/>
-                <constraint firstItem="435" firstAttribute="top" secondItem="433" secondAttribute="bottom" constant="8" id="mPb-Sq-AgT"/>
+                <constraint firstItem="433" firstAttribute="top" secondItem="432" secondAttribute="top" constant="8" id="ihg-mM-jpV"/>
+                <constraint firstItem="435" firstAttribute="top" secondItem="433" secondAttribute="bottom" constant="5" id="mPb-Sq-AgT"/>
                 <constraint firstItem="444" firstAttribute="top" secondItem="432" secondAttribute="top" constant="8" id="wuN-9s-j7M"/>
             </constraints>
         </customView>

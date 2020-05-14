@@ -5,7 +5,8 @@
 - (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
 {
     if (self = [super initForType:t withLabel:l]) {
-        self.rowHeight = l.length ? 17 : 1;
+        self.label = l; // Use entire label without separating tooltip
+        self.rowHeight = [l componentsSeparatedByString:@"\n"].count * 17;
     }
     return self;
 }

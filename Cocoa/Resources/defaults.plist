@@ -1,7 +1,0 @@
-{
-	PreserveBackups = NO;
-	Autosave = NO;
-	AutosaveInterval = 5;
-	"DeleteResourceWarning" = YES;
-	LaunchAction = DisplayOpenPanel;
-}

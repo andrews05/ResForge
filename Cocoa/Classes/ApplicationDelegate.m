@@ -3,7 +3,7 @@
 #import "RKDocumentController.h"
 #import "InfoWindowController.h"
 #import "PasteboardWindowController.h"
-#import "PrefsWindowController.h"
+#import "PrefsController.h"
 #import "CreateResourceSheetController.h"
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
@@ -18,12 +18,13 @@
 + (void)initialize
 {
 	// set default preferences
-	NSDictionary * prefDict = @{kPreserveBackups: @YES,
+	NSDictionary * prefDict = @{kPreserveBackups: @NO,
 								kAutosave: @NO,
 								kAutosaveInterval: @5,
 								kDeleteResourceWarning: @YES,
-								kLaunchAction: kOpenUntitledFile};
+                                kLaunchAction: kDisplayOpenPanel};
 	[[NSUserDefaults standardUserDefaults] registerDefaults:prefDict];
+    [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:prefDict];
 }
 
 - (instancetype)init
@@ -81,7 +82,7 @@
 
 - (NSArray *)forksForFile:(FSRef *)fileRef
 {
-	if(!fileRef) return nil;
+	if (!fileRef) return nil;
 	
 	FSCatalogInfo		catalogInfo;
 	FSCatalogInfoBitmap whichInfo = kFSCatInfoNodeFlags;
@@ -90,29 +91,22 @@
 	
 	// check we have a file, not a folder
 	OSErr error = FSGetCatalogInfo(fileRef, whichInfo, &catalogInfo, NULL, NULL, NULL);
-	if(!error && !(catalogInfo.nodeFlags & kFSNodeIsDirectoryMask))
-	{
+	if (!error && !(catalogInfo.nodeFlags & kFSNodeIsDirectoryMask)) {
 		// iterate over file and populate forks array
-		while(error == noErr)
-		{
+		while(error == noErr) {
 			HFSUniStr255 forkName;
 			SInt64 forkSize;
 			UInt64 forkPhysicalSize;	// used if opening selected fork fails to find empty forks
 			
 			error = FSIterateForks(fileRef, &forkIterator, &forkName, &forkSize, &forkPhysicalSize);
-			if(!error)
-			{
+			if (!error) {
 				NSString *fName = [NSString stringWithCharacters:forkName.unicode length:forkName.length];
 				[forks addObject:@{@"forkname": fName, @"forksize": @(forkSize), @"forkallocation": @(forkPhysicalSize)}];
-			}
-			else if(error != errFSNoMoreItems)
-			{
+			} else if (error != errFSNoMoreItems) {
 				NSLog(@"FSIterateForks() error: %d", error);
 			}
 		}
-	}
-	else if(error)
-	{
+	} else if (error) {
 		NSLog(@"FSGetCatalogInfo() error: %d", error);
 	}
 	return forks;
@@ -122,22 +116,13 @@
 {
 #pragma unused(sender)
 	NSString *launchAction = [[NSUserDefaults standardUserDefaults] stringForKey:kLaunchAction];
-	if([launchAction isEqualToString:kOpenUntitledFile])
+    if ([launchAction isEqualToString:kOpenUntitledFile]) {
 		return YES;
-	else if([launchAction isEqualToString:kDisplayOpenPanel])
-	{
+    } else if([launchAction isEqualToString:kDisplayOpenPanel]) {
 		[[NSDocumentController sharedDocumentController] openDocument:sender];
 		return NO;
 	}
 	else return NO;	// should be @"None", but we shall return NO for any other value
-}
-
-- (BOOL)application:(NSApplication *)application openFile:(NSString *)file
-{
-#pragma unused(application)
-	// bug: check if application was an external editor (e.g. Iconographer) and update existing open file instead
-	[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfFile:file display:YES];
-	return YES;
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -185,12 +170,9 @@
 
 - (IBAction)showPrefs:(id)sender
 {
-	[[PrefsWindowController sharedPrefsWindowController] showWindow:sender];
-}
-
-- (OpenPanelDelegate *)openPanelDelegate
-{
-	return openPanelDelegate;
+    if (!self.prefsController)
+        self.prefsController = [[NSWindowController alloc] initWithWindowNibName:@"PrefsWindow"];
+	[self.prefsController showWindow:sender];
 }
 
 /*!

@@ -13,11 +13,11 @@
 
 @interface ApplicationDelegate : NSObject <NSApplicationDelegate>
 {
-/*!	@var openPanelDelegate		Delegate for <tt>NSOpenPanels</tt>. */
-	IBOutlet OpenPanelDelegate  *openPanelDelegate;
 /*!	@var icons					A dictionary within which to cache icons. Keys are four-character <tt>NSStrings</tt> representing <tt>ResTypes</tt>. */
 	NSMutableDictionary			*_icons;
 }
+@property IBOutlet OpenPanelDelegate *openPanelDelegate;
+@property NSWindowController *prefsController;
 
 /*!
 @method			showAbout:

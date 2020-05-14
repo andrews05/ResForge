@@ -6,7 +6,7 @@
 #import "OpenPanelDelegate.h"
 #import "OutlineViewDelegate.h"
 #import "InfoWindowController.h"
-#import "PrefsWindowController.h"
+#import "PrefsController.h"
 #import "CreateResourceSheetController.h"
 #import "../Categories/NGSCategories.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
