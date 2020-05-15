@@ -742,8 +742,10 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 		id plug = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
         if (plug) {
-            if ([plug isKindOfClass:[NSWindowController class]])
+            if ([plug isKindOfClass:[NSWindowController class]]) {
                 [self addWindowController:plug];
+                [plug setDocumentEdited:NO];
+            }
 			return plug;
         }
 	}
@@ -783,6 +785,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
             id plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResource:resource template:tmpl];
             if (plug) {
                 [self addWindowController:plug];
+                [plug setDocumentEdited:NO];
                 return plug;
             }
         }
@@ -810,6 +813,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
 	id plug = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
     [self addWindowController:plug];
+    [plug setDocumentEdited:NO];
 	return plug;
 }
 

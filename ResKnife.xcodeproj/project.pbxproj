@@ -277,7 +277,6 @@
 		E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF8D206A0016D00F076B8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
 		E18BF8EB06A0027700F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
-		E1A984FE099C309400A70612 /* DisplayTMPL.png in Resources */ = {isa = PBXBuildFile; fileRef = E1A984FD099C309300A70612 /* DisplayTMPL.png */; };
 		E1D0DB520A109A4F0011739C /* ElementKEYB.h in Headers */ = {isa = PBXBuildFile; fileRef = E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */; };
 		E1D0DB530A109A4F0011739C /* ElementKEYB.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */; };
 		E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -661,7 +660,6 @@
 		E19FB515054E918800A80202 /* MisnWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MisnWindowController.m; path = misn/MisnWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E19FB518054E919200A80202 /* ShipWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ShipWindowController.h; path = ship/ShipWindowController.h; sourceTree = "<group>"; };
 		E19FB519054E919200A80202 /* ShipWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ShipWindowController.m; path = ship/ShipWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E1A984FD099C309300A70612 /* DisplayTMPL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DisplayTMPL.png; path = Resources/DisplayTMPL.png; sourceTree = "<group>"; };
 		E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementKEYB.h; sourceTree = "<group>"; };
 		E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementKEYB.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F5041736036BD60801A8010A /* ResKnife.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ResKnife.scriptSuite; sourceTree = "<group>"; };
@@ -941,7 +939,6 @@
 				49F640562466099C00E7CE4D /* ElementRangeable.h */,
 				49F640572466099C00E7CE4D /* ElementRangeable.m */,
 				3D0933EB04DF319F00DD74B1 /* Field Types */,
-				E1A984F7099C2D7F00A70612 /* Resources */,
 				E11937F309991C1100A3A6EA /* Support Resources */,
 				E18BFA3606A20B7A00F076B8 /* Info.plist */,
 				0EF7153F122BD0D0005DF94E /* Localizable.strings */,
@@ -1048,14 +1045,6 @@
 				E11936650998552900A3A6EA /* Localizable.strings */,
 			);
 			path = "Font Editor";
-			sourceTree = "<group>";
-		};
-		E1A984F7099C2D7F00A70612 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				E1A984FD099C309300A70612 /* DisplayTMPL.png */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		F51FB38E0256057F01A80001 /* Resources */ = {
@@ -1775,7 +1764,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1A984FE099C309400A70612 /* DisplayTMPL.png in Resources */,
 				0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */,
 				B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */,
 			);

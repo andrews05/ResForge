@@ -99,7 +99,6 @@
 - (BOOL)windowShouldClose:(id)sender
 {
 	[self.window makeFirstResponder:dataList];
-	[dataList abortEditing];
 	
 	if (self.window.documentEdited) {
 		NSBundle *bundle = [NSBundle bundleForClass:self.class];
@@ -155,13 +154,15 @@
 		[resource setData:newData];
 		[backup setData:[newData copy]];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:backup];
-		[self setDocumentEdited:NO];
+		self.documentEdited = NO;
 	}
 }
 
 - (void)revertResource:(id)sender
 {
 	[resource setData:[backup.data copy]];
+    [self loadResource];
+    self.documentEdited = NO;
 }
 
 #pragma mark -
@@ -286,8 +287,8 @@
         return [element class] == ElementLSTB.class && [element allowsCreateListEntry];
 	else if (item.action == @selector(delete:))
         return [element class] == ElementLSTB.class && [element allowsRemoveListEntry];
-	else if (item.action == @selector(saveDocument:))
-        return YES;
+	else if (item.action == @selector(saveResource:) || item.action == @selector(revertResource:))
+        return self.window.documentEdited;
 	else
         return NO;
 }
