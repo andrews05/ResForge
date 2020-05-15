@@ -4,6 +4,14 @@
 
 @implementation ElementULLG
 
+- (instancetype)initForType:(NSString *)t withLabel:(NSString *)l
+{
+    if (self = [super initForType:t withLabel:l]) {
+        self.width = 120;
+    }
+    return self;
+}
+
 - (void)readDataFrom:(ResourceStream *)stream
 {
 	UInt64 tmp;

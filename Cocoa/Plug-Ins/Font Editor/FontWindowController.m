@@ -201,7 +201,7 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 - (IBAction)showAddFontTableSheet:(id)sender
 {
-
+    [self addFontTable:@"head"];
 }
 
 - (void)addFontTable:(NSString *)name
@@ -255,17 +255,18 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 - (void)setTableData:(id <ResKnifeResource>)tableResource
 {
-	NSDictionary *table = [headerTable firstObjectReturningValue:GetNSStringFromOSType([tableResource type]) forKey:@"name"];
+    NSString *type = GetNSStringFromOSType(tableResource.type);
+	NSDictionary *table = [headerTable firstObjectReturningValue:type forKey:@"name"];
 	if(!table)
 	{
-		NSLog(@"Couldn't retrieve table with name '%@'.", GetNSStringFromOSType([tableResource type]));
+		NSLog(@"Couldn't retrieve table with name '%@'.", type);
 		return;
 	}
 	
 	id undoResource = [tableResource copy];
 	[undoResource setData:[table valueForKey:@"data"]];
 	[[[resource document] undoManager] registerUndoWithTarget:resource selector:@selector(setTableData:) object:undoResource];
-	[[[resource document] undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Edit of table '%@'", nil), [tableResource type]]];
+	[[[resource document] undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Edit of table '%@'", nil), type]];
 	[table setValue:[tableResource data] forKey:@"data"];
 	[self setDocumentEdited:YES];
 }
