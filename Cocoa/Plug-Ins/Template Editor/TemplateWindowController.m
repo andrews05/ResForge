@@ -93,6 +93,7 @@
     [resourceStructure readDataFrom:stream];
 	
 	// expand all
+    [dataList reloadData];
 	[dataList expandItem:nil expandChildren:YES];
 }
 

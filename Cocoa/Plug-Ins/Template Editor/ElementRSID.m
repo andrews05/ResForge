@@ -108,7 +108,7 @@
     if (self.resType) {
         // Find resources in all documents and sort by id
         NSArray *resources = [self.parentList.controller.resource.class allResourcesOfType:self.resType inDocument:nil];
-        resources = [resources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"resID" ascending:YES]]];
+        resources = [resources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
         for (id <ResKnifeResource> resource in resources) {
             if (!resource.name.length) continue; // No point showing resources with no name
             if (self.max && (resource.resID < self.offset || resource.resID > self.max)) continue;

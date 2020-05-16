@@ -1,5 +1,5 @@
 #import "ElementPACK.h"
-#import "ElementCaseable.h"
+#import "ElementRangeable.h"
 #import "ResKnifeResourceProtocol.h"
 
 /*
@@ -41,8 +41,12 @@
     NSRect orig = view.frame;
     NSRect frame = view.frame;
     for (__kindof Element *element in self.subElements) {
-        if (self.subElements.count > 1 && [element isKindOfClass:ElementCaseable.class] && [element cases])
-            element.width = 180;
+        if (self.subElements.count > 1 && [element isKindOfClass:ElementCaseable.class] && [element cases]) {
+            if ([element isKindOfClass:ElementRangeable.class] && [element popupWidth] == 180)
+                [element setPopupWidth:120];
+            else
+                element.width = 180;
+        }
         [element configureView:view];
         frame.origin.x += element.width;
         view.frame = frame;

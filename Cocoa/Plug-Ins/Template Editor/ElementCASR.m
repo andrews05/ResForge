@@ -80,7 +80,10 @@
 
 - (void)configureView:(NSView *)view
 {
-    if (self.min == self.max) return;
+    if (self.min == self.max) {
+        self.width = 0;
+        return;
+    }
     if (self.resType) {
         [self loadCases];
         [super configureView:view];
@@ -109,7 +112,7 @@
     self.caseMap = [NSMutableDictionary new];
     // Find resources in all documents and sort by id
     NSArray *resources = [self.parentList.controller.resource.class allResourcesOfType:self.resType inDocument:nil];
-    resources = [resources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"resID" ascending:YES]]];
+    resources = [resources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
     for (id <ResKnifeResource> resource in resources) {
         if (!resource.name.length) continue; // No point showing resources with no name
         if (resource.resID < self.min || resource.resID > self.max) continue;

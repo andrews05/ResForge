@@ -6,5 +6,6 @@
 @property BOOL isRanged;
 @property int displayValue;
 @property ElementCASR *currentCase;
+@property CGFloat popupWidth;
 
 @end

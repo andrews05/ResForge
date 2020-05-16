@@ -15,19 +15,21 @@
     if (self.cases.count > 1) {
         NSRect orig = view.frame;
         NSRect frame = view.frame;
-        frame.size.width = self.width-1;
+        frame.size.width = self.popupWidth-1;
         NSPopUpButton *select = [[NSPopUpButton alloc] initWithFrame:frame];
         select.target = self;
         select.action = @selector(caseChanged:);
         [select bind:@"content" toObject:self withKeyPath:@"cases" options:nil];
         [select bind:@"selectedObject" toObject:self withKeyPath:@"currentCase" options:nil];
         [view addSubview:select];
-        frame.origin.x += self.width;
+        frame.origin.x += self.popupWidth;
         view.frame = frame;
         [self.currentCase configureView:view];
+        self.width = self.popupWidth+self.currentCase.width;
         view.frame = orig;
     } else {
         [self.currentCase configureView:view];
+        self.width = self.currentCase.width;
     }
 }
 
@@ -51,7 +53,7 @@
     // Read CASR elements
     ElementCASR *element = [self.parentList peek:1];
     if (element.class == ElementCASR.class) {
-        CGFloat width = 240;
+        self.popupWidth = 240;
         self.isRanged = YES;
         self.cases = [NSMutableArray new];
         while (element.class == ElementCASR.class) {
@@ -60,10 +62,9 @@
             element.parentElement = self;
             element.width = self.width;
             if (element.min != element.max)
-                width = 180; // Shrink pop-up menu if any CASR needs a field
+                self.popupWidth = 180; // Shrink pop-up menu if any CASR needs a field
             element = [self.parentList peek:1];
         }
-        self.width = width;
     } else {
         [super configure];
     }
