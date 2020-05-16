@@ -10,7 +10,6 @@
 	IBOutlet NSTextField	*nameView;
 	IBOutlet NSTextField	*resIDView;
 	IBOutlet NSTextField	*typeView;
-	IBOutlet NSPopUpButton	*typePopup;
 	
 	ResourceDocument		*document;
 }

@@ -40,9 +40,6 @@
 	document = sheetDoc;
 	[NSApp beginSheet:[self window] modalForWindow:[document mainWindow] modalDelegate:self didEndSelector:NULL contextInfo:nil];
 	[resIDView setObjectValue:@([[document dataSource] uniqueIDForType:GetOSTypeFromNSString([typeView stringValue])])];
-	
-	// put current popup value in text field and updates state of "create" button.
-	[self typePopupSelection:typePopup];
 }
 
 - (IBAction)hideCreateResourceSheet:(id)sender
@@ -79,8 +76,6 @@
 */
 - (IBAction)typePopupSelection:(id)sender
 {
-	[typeView setStringValue:[typePopup titleOfSelectedItem]];
-	[typeView selectText:sender];
 	[self controlTextDidChange: nil];   // Make sure "create" button is updated.
 }
 

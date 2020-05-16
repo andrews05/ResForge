@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CreateResourceSheetController">
@@ -12,8 +13,7 @@
                 <outlet property="createButton" destination="21" id="53"/>
                 <outlet property="nameView" destination="19" id="54"/>
                 <outlet property="resIDView" destination="6" id="62"/>
-                <outlet property="typePopup" destination="9" id="56"/>
-                <outlet property="typeView" destination="23" id="63"/>
+                <outlet property="typeView" destination="P1T-Pd-dZa" id="GPu-5z-PXm"/>
                 <outlet property="window" destination="20" id="58"/>
             </connections>
         </customObject>
@@ -22,15 +22,15 @@
         <window title="Create Resource" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="20" userLabel="CreateResourceSheet" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="528" y="151" width="300" height="250"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="contentRect" x="528" y="151" width="300" height="249"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2155" height="1240"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="16">
-                <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
+                <rect key="frame" x="0.0" y="0.0" width="300" height="249"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="27">
-                        <rect key="frame" x="18" y="213" width="107" height="17"/>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="103" translatesAutoresizingMaskIntoConstraints="NO" id="27">
+                        <rect key="frame" x="18" y="212" width="104" height="17"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Resource Name:" id="77">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -38,69 +38,34 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19">
-                        <rect key="frame" x="20" y="183" width="260" height="22"/>
+                        <rect key="frame" x="20" y="182" width="260" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="Untitled Resource" drawsBackground="YES" id="74">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <outlet property="nextKeyView" destination="23" id="36"/>
+                            <outlet property="nextKeyView" destination="P1T-Pd-dZa" id="AgZ-Rg-8Lq"/>
                         </connections>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="18" y="158" width="99" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="95" translatesAutoresizingMaskIntoConstraints="NO" id="7">
+                        <rect key="frame" x="18" y="157" width="98" height="17"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Resource Type:" id="70">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="23">
-                        <rect key="frame" x="20" y="128" width="95" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="76">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <outlet property="delegate" destination="-2" id="65"/>
-                            <outlet property="nextKeyView" destination="6" id="35"/>
-                        </connections>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="11">
-                        <rect key="frame" x="207" y="158" width="75" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="71" translatesAutoresizingMaskIntoConstraints="NO" id="11">
+                        <rect key="frame" x="152" y="157" width="73" height="17"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="ID Number:" id="72">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <popUpButton toolTip="Not Implemented Yet" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9">
-                        <rect key="frame" x="121" y="124" width="83" height="26"/>
-                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="clipping" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="71">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" id="10">
-                                <items>
-                                    <menuItem title="BNDL" id="26"/>
-                                    <menuItem title="vers" id="30"/>
-                                    <menuItem isSeparatorItem="YES" id="22">
-                                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                    </menuItem>
-                                    <menuItem title="STR " id="5"/>
-                                    <menuItem title="STR#" id="25"/>
-                                    <menuItem title="TEXT" id="24"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                        <connections>
-                            <action selector="typePopupSelection:" target="-2" id="61"/>
-                            <outlet property="menu" destination="10" id="34"/>
-                        </connections>
-                    </popUpButton>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6">
-                        <rect key="frame" x="209" y="128" width="71" height="22"/>
+                        <rect key="frame" x="154" y="127" width="69" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="69">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -152,7 +117,7 @@
                         </cells>
                     </matrix>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="21">
-                        <rect key="frame" x="203" y="13" width="83" height="32"/>
+                        <rect key="frame" x="204" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" inset="2" id="75">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -165,7 +130,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="18">
-                        <rect key="frame" x="120" y="13" width="83" height="32"/>
+                        <rect key="frame" x="122" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="73">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -177,32 +142,49 @@ Gw
                             <action selector="hideCreateResourceSheet:" target="-2" id="59"/>
                         </connections>
                     </button>
+                    <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P1T-Pd-dZa">
+                        <rect key="frame" x="20" y="125" width="97" height="26"/>
+                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="Qv2-X8-PHD">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <objectValues>
+                                <string>BNDL</string>
+                                <string>vers</string>
+                                <string>STR </string>
+                                <string>STR#</string>
+                                <string>TEXT</string>
+                            </objectValues>
+                        </comboBoxCell>
+                        <connections>
+                            <action selector="typePopupSelection:" target="-2" id="DlF-zH-UFW"/>
+                            <outlet property="delegate" destination="-2" id="k1Y-Lc-JW2"/>
+                            <outlet property="nextKeyView" destination="6" id="cmg-WH-A1U"/>
+                        </connections>
+                    </comboBox>
                 </subviews>
                 <constraints>
                     <constraint firstItem="21" firstAttribute="baseline" secondItem="18" secondAttribute="baseline" id="0WW-mC-HUc"/>
-                    <constraint firstItem="23" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="20" symbolic="YES" id="1Kc-Mf-PtB"/>
                     <constraint firstItem="27" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="20" symbolic="YES" id="1Qc-jH-lIe"/>
-                    <constraint firstItem="9" firstAttribute="baseline" secondItem="23" secondAttribute="baseline" id="2Qd-nc-Rni"/>
-                    <constraint firstAttribute="trailing" secondItem="11" secondAttribute="trailing" constant="20" symbolic="YES" id="5eR-J4-apu"/>
-                    <constraint firstItem="9" firstAttribute="leading" secondItem="23" secondAttribute="trailing" constant="8" symbolic="YES" id="Env-Po-QFo"/>
+                    <constraint firstItem="P1T-Pd-dZa" firstAttribute="leading" secondItem="7" secondAttribute="leading" id="1mh-BP-zYj"/>
+                    <constraint firstItem="P1T-Pd-dZa" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="20" id="9s1-vd-vqH"/>
+                    <constraint firstItem="11" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="154" id="Af6-By-h0h"/>
+                    <constraint firstItem="12" firstAttribute="top" secondItem="P1T-Pd-dZa" secondAttribute="bottom" constant="10" id="DwC-CA-6d9"/>
+                    <constraint firstItem="P1T-Pd-dZa" firstAttribute="trailing" secondItem="7" secondAttribute="trailing" id="EIk-UF-8G4"/>
+                    <constraint firstItem="6" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="154" id="HKC-S4-Vxy"/>
+                    <constraint firstItem="6" firstAttribute="trailing" secondItem="11" secondAttribute="trailing" id="Igh-US-lqq"/>
                     <constraint firstAttribute="bottom" secondItem="21" secondAttribute="bottom" constant="20" symbolic="YES" id="Ik4-EC-t5q"/>
                     <constraint firstItem="11" firstAttribute="top" secondItem="19" secondAttribute="bottom" constant="8" symbolic="YES" id="Ix2-Ty-JMb"/>
                     <constraint firstAttribute="trailing" secondItem="19" secondAttribute="trailing" constant="20" symbolic="YES" id="SKL-bo-cPK"/>
                     <constraint firstItem="7" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="20" symbolic="YES" id="SOf-pc-qpn"/>
-                    <constraint firstItem="6" firstAttribute="leading" secondItem="9" secondAttribute="trailing" constant="8" symbolic="YES" id="Sdc-kH-3Fx"/>
-                    <constraint firstAttribute="trailing" secondItem="6" secondAttribute="trailing" constant="20" symbolic="YES" id="TIR-xX-0b5"/>
                     <constraint firstAttribute="centerX" secondItem="19" secondAttribute="centerX" id="UKv-Pf-i4h"/>
                     <constraint firstAttribute="trailing" secondItem="21" secondAttribute="trailing" constant="20" symbolic="YES" id="V2D-ba-Nd6"/>
-                    <constraint firstItem="9" firstAttribute="baseline" secondItem="6" secondAttribute="baseline" id="VUn-Ta-R0W"/>
                     <constraint firstItem="27" firstAttribute="top" secondItem="16" secondAttribute="top" constant="20" symbolic="YES" id="cd0-Lc-cn6"/>
                     <constraint firstItem="21" firstAttribute="leading" secondItem="18" secondAttribute="trailing" constant="12" symbolic="YES" id="d9C-gb-hF3"/>
                     <constraint firstAttribute="centerX" secondItem="12" secondAttribute="centerX" id="dXm-Kp-WlO"/>
-                    <constraint firstItem="7" firstAttribute="leading" secondItem="23" secondAttribute="leading" id="drM-5D-jdC"/>
-                    <constraint firstItem="12" firstAttribute="top" secondItem="9" secondAttribute="bottom" constant="8" symbolic="YES" id="e2d-bM-BPQ"/>
                     <constraint firstItem="6" firstAttribute="top" secondItem="11" secondAttribute="bottom" constant="8" symbolic="YES" id="mLK-Se-wnr"/>
                     <constraint firstItem="21" firstAttribute="width" secondItem="18" secondAttribute="width" id="o2K-mT-PWG"/>
                     <constraint firstItem="7" firstAttribute="baseline" secondItem="11" secondAttribute="baseline" id="qp2-e2-RHp"/>
-                    <constraint firstItem="7" firstAttribute="trailing" secondItem="23" secondAttribute="trailing" id="r5F-MD-WBa"/>
                     <constraint firstItem="19" firstAttribute="top" secondItem="27" secondAttribute="bottom" constant="8" symbolic="YES" id="rjh-Pm-rtj"/>
                     <constraint firstItem="21" firstAttribute="top" secondItem="12" secondAttribute="bottom" constant="20" symbolic="YES" id="xnk-B5-1db"/>
                     <constraint firstItem="11" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="yAj-P6-8lx"/>
@@ -211,6 +193,7 @@ Gw
             <connections>
                 <outlet property="initialFirstResponder" destination="19" id="32"/>
             </connections>
+            <point key="canvasLocation" x="132" y="161.5"/>
         </window>
     </objects>
 </document>
