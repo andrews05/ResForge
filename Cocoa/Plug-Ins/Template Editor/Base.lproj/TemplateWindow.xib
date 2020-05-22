@@ -43,7 +43,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="460" height="395"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="6" height="4"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
                                         <tableColumn identifier="labelView" editable="NO" width="150" minWidth="48" maxWidth="1000" id="37">

@@ -44,6 +44,7 @@
     }
     NSOutlineView *outlineView = self.parentList.controller.dataList;
     // Item isn't necessarily self
+    // bug: This breaks the key view loop for the row. Reloading entire data is too inefficient.
     [outlineView reloadItem:[outlineView itemAtRow:[outlineView rowForView:sender]]];
     [self.parentList.controller itemValueUpdated:sender];
 }

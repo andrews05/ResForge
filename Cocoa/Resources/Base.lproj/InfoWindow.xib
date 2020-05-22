@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfoWindowController">
@@ -23,22 +25,20 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES" utility="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="572" y="561" width="255" height="230"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
-            <value key="minSize" type="size" width="250" height="230"/>
-            <value key="maxSize" type="size" width="400" height="230"/>
+            <rect key="contentRect" x="572" y="561" width="262" height="230"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2155" height="1240"/>
+            <value key="minSize" type="size" width="262" height="230"/>
+            <value key="maxSize" type="size" width="262" height="230"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="255" height="230"/>
+                <rect key="frame" x="0.0" y="0.0" width="262" height="230"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box title="Placeholder" boxType="oldStyle" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="8" y="8" width="239" height="159"/>
-                        <view key="contentView">
-                            <rect key="frame" x="0.0" y="0.0" width="239" height="159"/>
+                    <box boxType="oldStyle" borderType="none" title="Placeholder" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="7">
+                        <rect key="frame" x="9" y="8" width="245" height="159"/>
+                        <view key="contentView" id="vcz-GY-YYF">
+                            <rect key="frame" x="0.0" y="0.0" width="245" height="159"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="18">
@@ -49,8 +49,8 @@
                         </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="89"/>
                     </imageView>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="32">
-                        <rect key="frame" x="60" y="174" width="190" height="47"/>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="186" translatesAutoresizingMaskIntoConstraints="NO" id="32">
+                        <rect key="frame" x="60" y="174" width="197" height="47"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="90">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -76,7 +76,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="356" y="374" width="279" height="195"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2155" height="1240"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="36">
                 <rect key="frame" x="0.0" y="0.0" width="279" height="195"/>
@@ -84,7 +84,7 @@
                 <subviews>
                     <box title="Resource Attributes" translatesAutoresizingMaskIntoConstraints="NO" id="43">
                         <rect key="frame" x="17" y="16" width="245" height="159"/>
-                        <view key="contentView">
+                        <view key="contentView" id="5Kr-4A-5xw">
                             <rect key="frame" x="2" y="2" width="241" height="139"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -132,12 +132,10 @@
                             </subviews>
                         </view>
                         <constraints>
-                            <constraint firstItem="44" firstAttribute="leading" secondItem="43" secondAttribute="leading" constant="11" id="T8f-9n-YYr"/>
-                            <constraint firstAttribute="bottom" secondItem="44" secondAttribute="bottom" constant="10" id="cUv-Oj-bUu"/>
-                            <constraint firstItem="44" firstAttribute="top" secondItem="43" secondAttribute="top" constant="27" id="rSI-UF-smr"/>
+                            <constraint firstItem="44" firstAttribute="top" secondItem="43" secondAttribute="top" constant="27" id="iPR-dN-rQl"/>
+                            <constraint firstItem="44" firstAttribute="leading" secondItem="43" secondAttribute="leading" constant="11" id="iQE-8t-yYT"/>
+                            <constraint firstAttribute="bottom" secondItem="44" secondAttribute="bottom" constant="10" id="puT-1u-zrn"/>
                         </constraints>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                 </subviews>
@@ -153,7 +151,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="344" y="115" width="279" height="194"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2155" height="1240"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="56">
                 <rect key="frame" x="0.0" y="0.0" width="279" height="194"/>
@@ -161,7 +159,7 @@
                 <subviews>
                     <box title="File Properties" translatesAutoresizingMaskIntoConstraints="NO" id="53">
                         <rect key="frame" x="16" y="16" width="246" height="158"/>
-                        <view key="contentView">
+                        <view key="contentView" id="ky0-Tv-GbH">
                             <rect key="frame" x="2" y="2" width="242" height="138"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -210,26 +208,24 @@
                                         <outlet property="delegate" destination="-2" id="71"/>
                                     </connections>
                                 </form>
-                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="72">
-                                    <rect key="frame" x="47" y="8" width="148" height="13"/>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="144" translatesAutoresizingMaskIntoConstraints="NO" id="72">
+                                    <rect key="frame" x="48" y="8" width="147" height="13"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Fork sizes are as at last save" id="91">
                                         <font key="font" metaFont="label"/>
-                                        <color key="textColor" white="0.25" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                             </subviews>
                         </view>
                         <constraints>
-                            <constraint firstItem="57" firstAttribute="top" secondItem="53" secondAttribute="top" constant="29" id="2Uz-jx-4dI"/>
-                            <constraint firstAttribute="bottom" secondItem="72" secondAttribute="bottom" constant="6" id="5Ph-iu-qUv"/>
-                            <constraint firstItem="72" firstAttribute="top" secondItem="57" secondAttribute="bottom" constant="6" id="FQ5-yE-4d5"/>
-                            <constraint firstAttribute="centerX" secondItem="57" secondAttribute="centerX" id="YOG-pI-cr6"/>
-                            <constraint firstItem="57" firstAttribute="leading" secondItem="53" secondAttribute="leading" constant="11" id="aHM-Ys-JDH"/>
-                            <constraint firstAttribute="centerX" secondItem="72" secondAttribute="centerX" id="jcb-Lo-gsv"/>
+                            <constraint firstItem="57" firstAttribute="leading" secondItem="53" secondAttribute="leading" constant="11" id="D6X-cK-Bmk"/>
+                            <constraint firstAttribute="centerX" secondItem="57" secondAttribute="centerX" id="FVV-K9-DEF"/>
+                            <constraint firstItem="57" firstAttribute="top" secondItem="53" secondAttribute="top" constant="29" id="NOJ-l2-Rgm"/>
+                            <constraint firstAttribute="centerX" secondItem="72" secondAttribute="centerX" id="ORn-bW-reS"/>
+                            <constraint firstAttribute="bottom" secondItem="72" secondAttribute="bottom" constant="6" id="cQX-NI-4Z8"/>
+                            <constraint firstItem="72" firstAttribute="top" secondItem="57" secondAttribute="bottom" constant="6" id="nIL-zt-wkw"/>
                         </constraints>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                 </subviews>
