@@ -160,7 +160,7 @@
 						}
 						
 						// load any support resources in the plug-in
-						[RKSupportResourceRegistry scanForSupportResourcesInFolder:[[plugin resourcePath] stringByAppendingPathComponent:@"Support Resources"]];
+						[RKSupportResourceRegistry scanForSupportResourcesInBundle:plugin];
 					}
 				}
 			}

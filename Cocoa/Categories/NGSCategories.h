@@ -1,5 +1,4 @@
 #import <Foundation/Foundation.h>
-#include <CoreServices/CoreServices.h>
 
 /*******************************/
 /*****       WARNING       *****/
@@ -15,15 +14,6 @@
 @abstract		Numerous small category methods on Foundation and AppKit classes.
 @author			Nicholas Shanks
 */
-
-@interface NSArray (NGSIndexExtensions)
-/*!
-@method			subarrayWithIndicies:
-@updated		January 2004
-@abstract		Returns an immutable array of the objects at the given indicies.
-*/
-- (nonnull NSArray *)subarrayWithIndicies:(nonnull NSIndexSet *)indicies;
-@end
 
 @interface NSArray (NGSKeyValueExtensions)
 /*!
@@ -48,108 +38,3 @@
 */
 - (nonnull NSArray *)objectsReturningValue:(nonnull id)value forKey:(nonnull id)key;
 @end
-
-@interface NSCharacterSet (NGSNewlineExtensions)
-/*!
-@method			tabCharacterSet
-@updated		March 2005
-@abstract		Returns a character set containing only the horizontal and vertical tab characters (U+0009, U+000B).
-*/
-+ (nonnull NSCharacterSet *)tabCharacterSet;
-@end
-
-@interface NSNumber (NGSRangeExtensions)
-/*!
-@method			isWithinRange:
-@updated		February 2003
-*/
-- (BOOL)isWithinRange:(NSRange)range;				// location <= self <= location+length
-/*!
-@method			isExclusivelyWithinRange:
-@updated		February 2003
-*/
-- (BOOL)isExclusivelyWithinRange:(NSRange)range;	// location < self < location+length
-/*!
-@method			isBoundedByRange:
-@updated		February 2003
-*/
-- (BOOL)isBoundedByRange:(NSRange)range;			// location <= self < location+length
-@end
-
-@interface NSString (NGSFSSpecExtensions)
-/*!
-@method			createFSRef
-@updated		November 2002
-@abstract		Returns an <tt>FSRef</tt> for the absolute path represented by the receiver. The caller is responsible for disposing of the <tt>FSRef</tt> via <tt>DisposePtr</tt>.
-*/
-- (nullable FSRef *)createFSRef;
-/*!
-@method			createFSRef
-@updated		November 2002
-@abstract		Returns an <tt>FSRef</tt> for the absolute path represented by the receiver. The caller is responsible for disposing of the <tt>FSRef</tt> via <tt>DisposePtr</tt>.
-*/
-- (nullable FSRef *)createFSRefIsDirectory:(nullable BOOL*)directory;
-/*!
-@method			createFSSpec
-@updated		November 2002
-@abstract		Returns an <tt>FSSpec</tt> for the absolute path represented by the receiver. The caller is responsible for disposing of the <tt>FSSpec</tt> via <tt>DisposePtr</tt>.
-*/
-- (nullable FSSpec *)createFSSpec;
-@end
-
-@interface NSString (NGSBooleanExtensions)
-#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
-/*!
-@method			boolValue
-@updated		March 2001
-@availability	In 10.4 and above, this method is available from the OS.
-*/
-- (BOOL)boolValue;
-#endif
-/*!
-@method			stringWithBool:
-@updated		March 2001
-*/
-+ (nonnull NSString *)stringWithBool:(BOOL)boolean;
-@end
-
-#pragma mark -
-#import <AppKit/AppKit.h>
-
-#if MAC_OS_X_VERSION_10_3 <= MAC_OS_X_VERSION_MAX_ALLOWED
-/*
-@interface NSMatrix (NGSSelectionIndicies)
-- (NSIndexSet *)selectedRows;
-- (NSIndexSet *)selectedColumns;
-@end
-*/
-#endif
-
-@interface NSOutlineView (NGSSelectedItemExtensions)
-/*!
-@method			selectedItem
-@updated		September 2001
-*/
-- (nullable id)selectedItem;
-/*!
-@method			selectedItems
-@updated		September 2001
-*/
-- (nonnull NSArray *)selectedItems;
-@end
-
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
-
-@interface NSGradient (NGSGradientExtensions)
-/*!
-@method			aquaGradient
-@method			aquaGradientWithAlpha:
-@method			gradientWithAlpha:
-@updated		May 2007
-*/
-+ (nonnull NSGradient *)aquaGradient;
-+ (nonnull NSGradient *)aquaGradientWithAlpha:(CGFloat)alpha;
-- (nonnull NSGradient *)gradientWithAlpha:(CGFloat)alpha;
-@end
-
-#endif

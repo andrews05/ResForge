@@ -10,7 +10,9 @@
 #import "CreateResourceSheetController.h"
 #import "../Categories/NGSCategories.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
-#import <Carbon/Carbon.h>
+#include "libGraphite/rsrc/file.hpp"
+#include <fcntl.h>
+#include <copyfile.h>
 
 #import "../Plug-Ins/ResKnifePluginProtocol.h"
 #import "RKEditorRegistry.h"
@@ -21,6 +23,7 @@ NSString *DocumentInfoDidChangeNotification = @"DocumentInfoDidChangeNotificatio
 extern NSString *RKResourcePboardType;
 
 @implementation ResourceDocument
+@synthesize resources = _resources;
 @synthesize creator = _creator;
 @synthesize type = _type;
 
@@ -42,202 +45,84 @@ extern NSString *RKResourcePboardType;
 
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError
 {
-	BOOL			succeeded = NO;
-	OSStatus		error = noErr;
-	FSRef			*fileRef = (FSRef *) NewPtrClear(sizeof(FSRef));
-	ResFileRefNum	fileRefNum = 0;
-	OpenPanelDelegate *openPanelDelegate = [(ApplicationDelegate *)[NSApp delegate] openPanelDelegate];
-	
-	error = FSPathMakeRef((const UInt8 *)[url fileSystemRepresentation], fileRef, nil);
-    if (error) {
-        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:error userInfo:nil];
-        return NO;
-    }
+    NSDictionary *attrs;
+    NSNumber *totalSize;
+    BOOL hasData, hasRsrc;
+    NSURL *rsrcURL = [url URLByAppendingPathComponent:@"..namedfork/rsrc"];
+    OpenPanelDelegate *openPanelDelegate = [(ApplicationDelegate *)[NSApp delegate] openPanelDelegate];
     
-    SetResLoad(false); // don't load "preload" resources
-	// find out which fork to parse
-    NSMutableArray *forks = [ForkInfo forksForFile:fileRef];
-    ForkInfo *selectedFork = [openPanelDelegate getSelectedFork];
-    if (selectedFork) {
-        // If fork was selected from open panel, try this fork only
-        error = FSOpenResourceFile(fileRef, selectedFork.uniName.length, (UniChar *)selectedFork.uniName.unicode, fsRdPerm, &fileRefNum);
-        if (!error && fileRefNum) {
-        } else if (!selectedFork.physicalSize) {
-            _createFork = YES;
+    // Get the file info
+    attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:url.path error:outError];
+    if (*outError) return NO;
+    [url getResourceValue:&totalSize forKey:NSURLTotalFileSizeKey error:outError];
+    if (*outError) return NO;
+    
+    _type = (OSType)[attrs[NSFileHFSTypeCode] integerValue];
+    _creator = (OSType)[attrs[NSFileHFSCreatorCode] integerValue];
+    hasData = [attrs[NSFileSize] integerValue] > 0;
+    hasRsrc = [totalSize integerValue] - [attrs[NSFileSize] integerValue] > 0;
+    
+	// Find out which fork to parse
+    _fork = [openPanelDelegate getSelectedFork];
+    if (_fork) {
+        // If fork was sepcified in open panel, try this fork only
+        if ([_fork isEqualToString:@""] && hasData) {
+            _resources = [ResourceDocument readResourceMap:url];
+        } else if ([_fork isEqualToString:@"rsrc"] && hasRsrc) {
+            _resources = [ResourceDocument readResourceMap:rsrcURL];
         } else {
-            selectedFork = nil;
+            // Fork is empty
+            _resources = [NSMutableArray new];
         }
     } else {
-        // Try to open another fork
-        for (ForkInfo *forkInfo in forks) {
-            error = FSOpenResourceFile(fileRef, forkInfo.uniName.length, (UniChar *)forkInfo.uniName.unicode, fsRdPerm, &fileRefNum);
-            if (!error && fileRefNum) {
-                selectedFork = forkInfo;
-                break;
-            }
+        // Try to open data fork
+        if (hasData) {
+            _fork = @"";
+            _resources = [ResourceDocument readResourceMap:url];
         }
-        if (!selectedFork) {
-            // Try to find an empty fork
-            for (ForkInfo *forkInfo in forks) {
-                if (!forkInfo.physicalSize) {
-                    selectedFork = forkInfo;
-                    _createFork = YES;
-                    break;
-                }
-            }
+        // If failed, try resource fork
+        if (!_resources && hasRsrc) {
+            _fork = @"rsrc";
+            _resources = [ResourceDocument readResourceMap:rsrcURL];
+        }
+        // If still failed, find an empty fork
+        if (!_resources && !hasData) {
+            _fork = @"";
+            _resources = [NSMutableArray new];
+        } else if (!_resources && !hasRsrc) {
+            _fork = @"rsrc";
+            _resources = [NSMutableArray new];
         }
     }
-    SetResLoad(true); // restore resource loading as soon as is possible
     
-    if (!selectedFork) {
+    if (!_resources) {
         *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:nil];
         return NO;
     }
-    
-    fork = selectedFork.uniName;
-	if (!_createFork) {
-		// disable undos during resource creation and setting of the creator and type
-		[self.undoManager disableUndoRegistration];
-		
-		// then read resources from the selected fork
-		resources = [ResourceDocument readResourceMap:fileRefNum];
-        if (resources) {
-            succeeded = YES;
-            for (Resource* resource in resources) {
-                [resource setDocument:self];
-            }
-        } else {
-            succeeded = NO;
-        }
-		
-		// get creator and type
-		FSCatalogInfo info;
-		error = FSGetCatalogInfo(fileRef, kFSCatInfoFinderInfo, &info, NULL, NULL, NULL);
-		if (!error) {
-			_type = ((FileInfo *)info.finderInfo)->fileType;
-			_creator = ((FileInfo *)info.finderInfo)->fileCreator;
-		}
-		
-		// restore undos
-		[self.undoManager enableUndoRegistration];
-    } else {
-        resources = [NSMutableArray new];
-        succeeded = YES;
-    }
-	
-	// now read all other forks as streams
-    for (ForkInfo *forkInfo in forks) {
-        if (![forkInfo.name isEqualToString:selectedFork.name])
-            [self readFork:forkInfo asStreamFromFile:fileRef];
-    }
-	
-	// tidy up loose ends
-	if (fileRefNum)
-		FSCloseFork(fileRefNum);
-	//DisposePtr((Ptr) fileRef);
-	return succeeded;
-}
-
-/*!
-@method			readFork:asStreamFromFile:
-@author			Nicholas Shanks
-@updated		2003-11-08 NGS:	Now handles opening user-selected forks.
-@description	Note: there is a 2 GB limit to the size of forks that can be read in due to <tt>FSReaadFork()</tt> taking a 32-bit buffer length value.
-*/
-
-- (BOOL)readFork:(ForkInfo *)forkInfo asStreamFromFile:(FSRef *)fileRef
-{
-	if (!fileRef) return NO;
-	
-	/* NTFS Note: When running SFM (Services for Macintosh) a Windows NT-based system (including 2000 & XP) serving NTFS-formatted drives stores Mac resource forks in a stream named "AFP_Resource". The finder info/attributes are stored in a stream called "AFP_AfpInfo". The default data fork stream is called "$DATA" and any of these can be accessed thus: "c:\filename.txt:forkname". Finder comments are stored in a stream called "Comments".
-	As a result, ResKnife prohibits creation of forks with the following names:	"" (empty string, Mac data fork name),
-																				"$DATA" (NTFS data fork name),
-																				"AFP_Resource", "AFP_AfpInfo" and "Comments".
-	It is perfectly legal in ResKnife to read in forks of these names when accessing a shared NTFS drive via SMB. The server does not need to be running SFM since the file requests will appear to be coming from a PC. If the files are accessed via AFP on a server running SFM, SFM will automatically convert the files (and truncate the name to 31 chars). */
-	
-	// get fork length and create empty buffer, bug: only sizeof(size_t) bytes long
-	ByteCount forkLength = (ByteCount)forkInfo.size;
-	void *buffer = malloc(forkLength);
-	if (!buffer) return NO;
-	
-	// read fork contents into buffer, bug: assumes no errors
-	FSIORefNum forkRefNum;
-	OSErr error = FSOpenFork(fileRef, forkInfo.uniName.length, forkInfo.uniName.unicode, fsRdPerm, &forkRefNum);
-    if (error) return NO;
-	FSReadFork(forkRefNum, fsFromStart, 0, forkLength, buffer, &forkLength);
-	FSCloseFork(forkRefNum);
-	
-	// create data
-	NSData *data = [NSData dataWithBytesNoCopy:buffer length:forkLength freeWhenDone:YES];
-	if (!data) return NO;
-	
-	// create resource
-	Resource *resource = [Resource resourceOfType:0 andID:0 withName:forkInfo.description andAttributes:0 data:data];
-	if (!resource) return NO;
-	
-	[resource setRepresentedFork:forkInfo.name];
-	[resources addObject:resource];
 	
 	return YES;
 }
 
-+(NSMutableArray *)readResourceMap:(ResFileRefNum)fileRefNum
++ (NSMutableArray *)readResourceMap:(NSURL *)url
 {
-	OSStatus error = noErr;
-    NSMutableArray* resources = [[NSMutableArray alloc] init];
-	ResFileRefNum oldResFile = CurResFile();
-	UseResFile(fileRefNum);
-	
-	for (ResourceCount i = 1; i <= Count1Types(); i++) {
-		ResType resTypeCode;
-		Get1IndType(&resTypeCode, i);
-		unsigned short n = Count1Resources(resTypeCode);
-		for (unsigned short j = 1; j <= n; j++) {
-			Handle resourceHandle = Get1IndResource(resTypeCode, j);
-			error = ResError();
-			if(error != noErr)
-			{
-				NSLog(@"Error %d reading resource map...", (int)error);
-				UseResFile(oldResFile);
-				return nil;
-			}
-			
-			Str255 nameStr;
-			ResID resIDShort;
-			GetResInfo(resourceHandle, &resIDShort, &resTypeCode, nameStr);
-			long sizeLong = GetResourceSizeOnDisk(resourceHandle), badSize = 0;
-			if (sizeLong < 0 || sizeLong > 16777215)	// the max size of resource manager file is ~12 MB; I am rounding up to three bytes
-			{
-				// this only happens when opening ResEdit using the x86 binary (not under Rosetta, for example)
-				badSize = sizeLong;
-				sizeLong = EndianS32_BtoL(sizeLong);
-			}
-			short attrsShort = GetResAttrs(resourceHandle);
-			HLockHi(resourceHandle);
-#if __LITTLE_ENDIAN__
-			CoreEndianFlipData(kCoreEndianResourceManagerDomain, resTypeCode, resIDShort, *resourceHandle, sizeLong, true);
-#endif
-			
-			// cool: "The advantage of obtaining a methodÕs implementation and calling it as a function is that you can invoke the implementation multiple times within a loop, or similar C construct, without the overhead of Objective-C messaging."
-			
-			// create the resource & add it to the array
-			NSString	*name = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, nameStr, kCFStringEncodingMacRoman));
-			NSString	*resType	= GetNSStringFromOSType(resTypeCode);
-			NSNumber	*resID		= @(resIDShort);
-			NSData		*data		= [NSData dataWithBytes:*resourceHandle length:sizeLong];
-			Resource	*resource	= [Resource resourceOfType:resTypeCode andID:resIDShort withName:name andAttributes:attrsShort data:data];
-			[resources addObject:resource];		// array retains resource
-			if (badSize != 0)
-				NSLog(@"GetResourceSizeOnDisk() reported incorrect size for %@ resource %@: %li should be %li", resType, resID, badSize, sizeLong);
-			
-			HUnlock(resourceHandle);
-			ReleaseResource(resourceHandle);
-		}
-	}
-	
-	// save resource map and clean up
-	UseResFile(oldResFile);
-	return resources;
+    graphite::rsrc::file gFile;
+    try {
+        gFile = graphite::rsrc::file(url.fileSystemRepresentation);
+    } catch (const std::exception& e) {
+        return nil;
+    }
+    NSMutableArray* resources = [NSMutableArray new];
+    for (auto type : gFile.types()) {
+        for (auto resource : type->resources()) {
+            // create the resource & add it to the array
+            NSString    *name       = [NSString stringWithUTF8String:resource->name().c_str()];
+            NSString    *resType    = [NSString stringWithUTF8String:type->code().c_str()];
+            NSData      *data       = [NSData dataWithBytes:resource->data()->get()->data()+resource->data()->start() length:resource->data()->size()];
+            Resource *r = [Resource resourceOfType:GetOSTypeFromNSString(resType) andID:(SInt16)resource->id() withName:name andAttributes:0 data:data];
+            [resources addObject:r]; // array retains resource
+        }
+    }
+    return resources;
 }
 
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
@@ -253,73 +138,50 @@ extern NSString *RKResourcePboardType;
 originalContentsURL:(NSURL *)absoluteOriginalContentsURL
              error:(NSError **)outError
 {
-	OSStatus error = noErr;
-	ResFileRefNum fileRefNum = 0;
-	FSRef parentRef = {{0}};
-	FSRef fileRef = {{0}};
-    
     if (saveOperation == NSSaveAsOperation) {
         // set fork according to typeName
         if ([typeName isEqualToString:@"ResourceMap"]) {
-            FSGetDataForkName(&fork);
+            _fork = @"";
             // Clear type/creator for data fork (filename extension should suffice)
             _type = 0;
             _creator = 0;
         } else if ([typeName isEqualToString:@"ResourceMapRF"]) {
-            FSGetResourceForkName(&fork);
+            _fork = @"rsrc";
             // Set default type/creator for resource fork
             if (!_type && !_creator) {
                 _type = 'rsrc';
                 _creator = 'ResK';
             }
         }
-        // Remove other forks on Save As (we may be saving to a different fork)
-        for (Resource *resource in [dataSource allResourcesOfType:0]) {
-            if (resource.representedFork) {
-                [dataSource removeResourceFromTypedList:resource];
-                [outlineView reloadData];
-            }
-        }
     }
-	
-	// create and open file for writing
-    HFSUniStr255 uniname = {0};
-    error = FSGetHFSUniStrFromString((__bridge CFStringRef)(url.lastPathComponent), &uniname);
-    if (!error)
-        error = FSPathMakeRef((const UInt8 *)[[url URLByDeletingLastPathComponent] fileSystemRepresentation], &parentRef, nil);
-    if (!error) {
-        FSCatalogInfoBitmap whichInfo = kFSCatInfoNone;
-        FSCatalogInfo info = {0};
-        // set creator & type
-        if (_type || _creator) {
-            // bug: doesn't copy the rest of the cat info from the old file
-            whichInfo = kFSCatInfoFinderInfo;
-            FInfo *finderInfo = (FInfo *)(info.finderInfo);
-            finderInfo->fdType = _type;
-            finderInfo->fdCreator = _creator;
-            
-        }
-        error = FSCreateResourceFile(&parentRef, uniname.length, uniname.unicode, whichInfo, &info, fork.length, fork.unicode, &fileRef, NULL);
-    }
-    
-    // write any data streams to file
-    if (!error)
-        error = [self writeForkStreamsToURL:url];
     
     // write resources to file
-    if (!error)
-        error = FSOpenResourceFile(&fileRef, fork.length, (UniChar *)fork.unicode, fsWrPerm, &fileRefNum);
-    if (!error)
-        error = [self writeResourceMap:fileRefNum];
-    
-    if (error) {
-        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:error userInfo:nil];
+    NSURL *writeUrl = [_fork isEqualToString:@"rsrc"] ? [url URLByAppendingPathComponent:@"..namedfork/rsrc"] : url;
+    if (![self writeResourceMap:writeUrl])
         return NO;
+    
+    // set creator & type
+    if (_type || _creator) {
+        // bug: doesn't copy the remaining finderinfo from the old file
+        NSDictionary *attrs = @{NSFileHFSTypeCode: @(_type), NSFileHFSCreatorCode: @(_creator)};
+        [[NSFileManager defaultManager] setAttributes:attrs ofItemAtPath:url.path error:outError];
     }
-	
-	// tidy up loose ends
-	if (fileRefNum)
-        FSCloseFork(fileRefNum);
+    
+    // copy the other fork
+    if (saveOperation == NSSaveOperation) {
+        if ([_fork isEqualToString:@""]) {
+            url = [url URLByAppendingPathComponent:@"..namedfork/rsrc"];
+            absoluteOriginalContentsURL = [absoluteOriginalContentsURL URLByAppendingPathComponent:@"..namedfork/rsrc"];
+        }
+        int fin = open(absoluteOriginalContentsURL.fileSystemRepresentation, O_RDONLY);
+        if (fin != -1) {
+            int fout = open(url.fileSystemRepresentation, O_WRONLY|O_CREAT);
+            int err = copyfile(absoluteOriginalContentsURL.fileSystemRepresentation, url.fileSystemRepresentation, NULL, COPYFILE_DATA);
+            close(fout);
+            close(fin);
+            if (err) return NO;
+        }
+    }
 	
 	// update info window
 	[[InfoWindowController sharedInfoWindowController] updateInfoWindow];
@@ -327,92 +189,22 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	return YES;
 }
 
-- (OSStatus)writeForkStreamsToURL:(NSURL *)url
+- (BOOL)writeResourceMap:(NSURL *)url
 {
-	// try and get an FSRef
-	OSStatus error = noErr;
-	FSRef fileRef;
-    error = FSPathMakeRef((const UInt8 *)url.fileSystemRepresentation, &fileRef, nil);
-    if (error != noErr) return error;
-	
-	for (Resource *resource in resources) {
-		// if the resource object represents an actual resource, skip it
-		if (!resource.representedFork || !resource.data.length) continue;
-        HFSUniStr255 uniname = {0};
-        FSIORefNum forkRefNum = 0;
-        error = FSGetHFSUniStrFromString((__bridge CFStringRef)(resource.representedFork), &uniname);
-        if (error != noErr) return error;
-         
-		error = FSOpenFork(&fileRef, uniname.length, uniname.unicode, fsWrPerm, &forkRefNum);
-        if (error != noErr) return error;
-		
-        error = FSWriteFork(forkRefNum, fsFromStart, 0, resource.data.length, resource.data.bytes, NULL);
-        if (error != noErr) return error;
-		
-        FSCloseFork(forkRefNum);
-	}
-	return noErr;
-}
-
-/*!
-@method		writeResourceMap:
-@abstract   Writes all resources (except the ones representing other forks of the file) to the specified resource file.
-*/
-
-- (OSStatus)writeResourceMap:(ResFileRefNum)fileRefNum
-{
-	// make the resource file current
-	OSStatus error = noErr;
-	UseResFile(fileRefNum);
-	
-	// loop over all our resources
+    graphite::rsrc::file gFile = graphite::rsrc::file();
     for (Resource* resource in [dataSource resources]) {
-		Str255	nameStr;
-		ResType	resTypeCode;
-		short	resIDShort;
-		short	attrsShort;
-		long	sizeLong;
-		Handle	resourceHandle;
-
-		// if the resource represents another fork in the file, skip it
-		if (resource.representedFork) continue;
-		
-		sizeLong = [[resource data] length];
-        resTypeCode = [resource type];
-		resIDShort	= [resource resID];
-		attrsShort	= [resource attributes];
-		resourceHandle = NewHandleClear(sizeLong);
-		
-		// convert unicode name to pascal string
-        CFStringGetPascalString((__bridge CFStringRef)(resource.name), (StringPtr)&nameStr, sizeof(nameStr), kCFStringEncodingMacRoman);
-		
-		// convert NSData to resource handle
-		HLockHi(resourceHandle);
-		[[resource data] getBytes:*resourceHandle];
-#if __LITTLE_ENDIAN__
-        // the resource manager performs automatic flipping of standard resource types but we want the raw data so need to flip it back
-        // (alternatively could install dummy flippers for each type to override the automatic flipping)
-		CoreEndianFlipData(kCoreEndianResourceManagerDomain, resTypeCode, resIDShort, *resourceHandle, sizeLong, false);
-#endif
-		HUnlock(resourceHandle);
-		
-		// now that everything's converted, tell the resource manager we want to create this resource
-		AddResource(resourceHandle, resTypeCode, resIDShort, nameStr);
-        error = ResError();
-		if (error) {
-			NSLog(@"*Saving failed*; could not add resource ID %hd of type %@ to file.", [resource resID], GetNSStringFromOSType([resource type]));
-			DisposeHandle(resourceHandle);
-            return error;
-		}
-        
-        SetResAttrs(resourceHandle, attrsShort);
-        ChangedResource(resourceHandle);
-        // the resourceHandle memory is disposed of when calling CloseResFile() for the file to which the resource has been added
-	}
-	
-	// update the file on disk
-	UpdateResFile(fileRefNum);
-	return error;
+        std::string name([resource.name UTF8String]);
+        std::string resType([GetNSStringFromOSType(resource.type) UTF8String]);
+        std::vector<char> buffer((char *)resource.data.bytes, (char *)resource.data.bytes+resource.size);
+        graphite::data::data data(std::make_shared<std::vector<char>>(buffer), resource.size);
+        gFile.add_resource(resType, resource.resID, name, std::make_shared<graphite::data::data>(data));
+    }
+    try {
+        gFile.write(url.fileSystemRepresentation);
+    } catch (const std::exception& e) {
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark -
@@ -567,10 +359,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeWillChange:) name:ResourceTypeWillChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesWillChange:) name:ResourceAttributesWillChangeNotification object:nil];
 	
-    [dataSource addResources:resources];
+    [dataSource addResources:_resources];
 }
 
-- (void)printShowingPrintPanel:(BOOL)flag
+- (void)printDocumentWithSettings:(NSDictionary *)printSettings
+                   showPrintPanel:(BOOL)showPrintPanel
+                         delegate:(id)delegate
+                 didPrintSelector:(SEL)didPrintSelector
+                      contextInfo:(void *)contextInfo
 {
 	NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:[mainWindow contentView]];
 	[printOperation runOperationModalForWindow:mainWindow delegate:self didRunSelector:@selector(printOperationDidRun:success:contextInfo:) contextInfo:NULL];
@@ -598,23 +394,23 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if([item action] == @selector(saveDocument:))			return [self isDocumentEdited];
 	
 	// edit menu
-	else if([item action] == @selector(delete:))				return selectedRows > 0;
+	else if([item action] == @selector(delete:))			return selectedRows > 0;
 	else if([item action] == @selector(selectAll:))			return [outlineView numberOfRows] > 0;
 	else if([item action] == @selector(deselectAll:))		return selectedRows > 0;
 	
 	// resource menu
 	else if([item action] == @selector(openResources:))						return selectedRows > 0;
 	else if([item action] == @selector(openResourcesInTemplate:))			return selectedRows > 0;
-	else if([item action] == @selector(openResourcesWithOtherTemplate:))	return selectedRows > 0;
+	//else if([item action] == @selector(openResourcesWithOtherTemplate:))	return selectedRows > 0;
 	else if([item action] == @selector(openResourcesAsHex:))				return selectedRows > 0;
-	else if([item action] == @selector(exportResourceToImageFile:))
-	{
-		if(selectedRows < 1) return NO;
-		Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType([resource type])];
-		return [editorClass respondsToSelector:@selector(imageForImageFileExport:)];
-	}
+//    else if([item action] == @selector(exportResourceToImageFile:))
+//    {
+//        if(selectedRows < 1) return NO;
+//        Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType([resource type])];
+//        return [editorClass respondsToSelector:@selector(imageForImageFileExport:)];
+//    }
 	else if([item action] == @selector(playSound:))				return selectedRows == 1 && [resource type] == 'snd ';
-	else if([item action] == @selector(revertResourceToSaved:))	return selectedRows == 1 && [resource isDirty];
+	//else if([item action] == @selector(revertResourceToSaved:))	return selectedRows == 1 && [resource isDirty];
 	else return [super validateMenuItem:item];
 }
 
@@ -953,13 +749,13 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 			[alert beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse returnCode) {
 				if(returnCode == NSAlertFirstButtonReturn)	// unique ID
 				{
-					Resource *newResource = [Resource resourceOfType:[resource type] andID:[dataSource uniqueIDForType:[resource type]] withName:[resource name] andAttributes:[resource attributes] data:[resource data]];
-					[dataSource addResource:newResource];
+					Resource *newResource = [Resource resourceOfType:[resource type] andID:[self.dataSource uniqueIDForType:[resource type]] withName:[resource name] andAttributes:[resource attributes] data:[resource data]];
+					[self.dataSource addResource:newResource];
 				}
 				else if(returnCode == NSAlertSecondButtonReturn)				// overwrite
 				{
-					[dataSource removeResource:[dataSource resourceOfType:[resource type] andID:[resource resID]]];
-					[dataSource addResource:resource];
+					[self.dataSource removeResource:[self.dataSource resourceOfType:[resource type] andID:[resource resID]]];
+					[self.dataSource addResource:resource];
 				}
 				//else if(NSAlertAlternateReturn)			// skip
 				
@@ -1029,11 +825,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (NSOutlineView *)outlineView
 {
 	return outlineView;
-}
-
-- (NSArray *)resources
-{
-	return [dataSource resources];
 }
 
 - (OSType)creator

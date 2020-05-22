@@ -13,24 +13,29 @@
 // open panel delegate method
 - (void)panelSelectionDidChange:(id)sender
 {
-    NSInteger index = self.forkIndex;
-    self.forks = [ForkInfo forksForFile:[[sender filename] createFSRef]];
+    NSURL *url = [sender URL];
+    NSNumber *dSize, *tSize;
+    [url getResourceValue:&dSize forKey:NSURLFileSizeKey error:nil];
+    [url getResourceValue:&tSize forKey:NSURLTotalFileSizeKey error:nil];
+    NSInteger dataSize = dSize.integerValue;
+    NSInteger rsrcSize = tSize.integerValue - dataSize;
+    NSString *dString = dataSize ? [self.formatter stringFromByteCount:dataSize] : @"empty";
+    NSString *rString = rsrcSize ? [self.formatter stringFromByteCount:rsrcSize] : @"empty";
     [self.forkSelect removeAllItems];
     [self.forkSelect addItemWithTitle:NSLocalizedString(@"Automatic", nil)];
-    for (ForkInfo *fork in self.forks) {
-        NSString *size = fork.size ? [self.formatter stringFromByteCount:fork.size] : @"empty";
-        [self.forkSelect addItemWithTitle:[fork.description stringByAppendingFormat:@" (%@)", size]];
-    }
-    if (index < self.forkSelect.numberOfItems)
-        [self.forkSelect selectItemAtIndex:index];
+    [self.forkSelect addItemWithTitle:[NSLocalizedString(@"Data Fork", nil) stringByAppendingFormat:@" (%@)", dString]];
+    [self.forkSelect addItemWithTitle:[NSLocalizedString(@"Resource Fork", nil) stringByAppendingFormat:@" (%@)", rString]];
+    if (self.forkIndex < self.forkSelect.numberOfItems)
+        [self.forkSelect selectItemAtIndex:self.forkIndex];
 }
 
-- (ForkInfo *)getSelectedFork
+- (NSString *)getSelectedFork
 {
     if (!self.readOpenPanelForFork) return nil;
     self.readOpenPanelForFork = NO;
-    if (!self.forkIndex) return nil;
-    return self.forks[self.forkIndex-1];
+    if (self.forkIndex == 1) return @"";
+    if (self.forkIndex == 2) return @"rsrc";
+    return nil;
 }
 
 @end

@@ -1,57 +1,11 @@
 #import "InfoWindowController.h"
-@import CoreServices.CarbonCore;
+@import CoreServices.CarbonCore.Resources;
 #import "ResourceDocument.h"
 #import "Resource.h"
 #import "ApplicationDelegate.h"
 #import "NSOutlineView-SelectedItems.h"
-//#import "MoreFilesX.h"
 
 @implementation InfoWindowController
-
-static OSErr
-FSGetForkSizes(const FSRef *ref,
-			   UInt64 *dataLogicalSize,	/* can be NULL */
-			   UInt64 *rsrcLogicalSize)	/* can be NULL */
-{
-	OSErr				result;
-	FSCatalogInfoBitmap whichInfo;
-	FSCatalogInfo		catalogInfo;
-	
-	whichInfo = kFSCatInfoNodeFlags;
-	if ( NULL != dataLogicalSize )
-	{
-		/* get data fork size */
-		whichInfo |= kFSCatInfoDataSizes;
-	}
-	if ( NULL != rsrcLogicalSize )
-	{
-		/* get resource fork size */
-		whichInfo |= kFSCatInfoRsrcSizes;
-	}
-	
-	/* get nodeFlags and catalog info */
-	result = FSGetCatalogInfo(ref, whichInfo, &catalogInfo, NULL, NULL,NULL);
-	__Require_noErr(result, FSGetCatalogInfo);
-	
-	/* make sure FSRef was to a file */
-	__Require_Action(0 == (catalogInfo.nodeFlags & kFSNodeIsDirectoryMask), FSRefNotFile, result = notAFileErr);
-	
-	if ( NULL != dataLogicalSize )
-	{
-		/* return data fork size */
-		*dataLogicalSize = catalogInfo.dataLogicalSize;
-	}
-	if ( NULL != rsrcLogicalSize )
-	{
-		/* return resource fork size */
-		*rsrcLogicalSize = catalogInfo.rsrcLogicalSize;
-	}
-	
-FSRefNotFile:
-FSGetCatalogInfo:
-	
-	return ( result );
-}
 
 - (void)dealloc
 {
@@ -90,59 +44,47 @@ FSGetCatalogInfo:
 	[nameView setEditable:(selectedResource != nil)];
 	[nameView setDrawsBackground:(selectedResource != nil)];
 	
-	if(selectedResource && [selectedResource isKindOfClass:[Resource class]])
-	{
+	if (selectedResource && [selectedResource isKindOfClass:Resource.class]) {
 		// set UI values
-		[[self window] setTitle:NSLocalizedString(@"Resource Info",nil)];
-		[nameView setStringValue:[selectedResource name]];
-		[iconView setImage:[(ApplicationDelegate *)[NSApp delegate] iconForResourceType:[selectedResource type]]];
-		[[attributesMatrix cellAtRow:changedBox column:0]		setState:[selectedResource attributes] & resChanged];
-		[[attributesMatrix cellAtRow:preloadBox column:0]		setState:[selectedResource attributes] & resPreload];
-		[[attributesMatrix cellAtRow:protectedBox column:0]		setState:[selectedResource attributes] & resProtected];
-		[[attributesMatrix cellAtRow:lockedBox column:0]		setState:[selectedResource attributes] & resLocked];
-		[[attributesMatrix cellAtRow:purgableBox column:0]		setState:[selectedResource attributes] & resPurgeable];
-		[[attributesMatrix cellAtRow:systemHeapBox column:0]	setState:[selectedResource attributes] & resSysHeap];
+		[self.window setTitle:NSLocalizedString(@"Resource Info", nil)];
+		[nameView setStringValue:selectedResource.name];
+		[iconView setImage:[(ApplicationDelegate *)[NSApp delegate] iconForResourceType:selectedResource.type]];
+		[[attributesMatrix cellAtRow:changedBox column:0]		setState:selectedResource.attributes & resChanged];
+		[[attributesMatrix cellAtRow:preloadBox column:0]		setState:selectedResource.attributes & resPreload];
+		[[attributesMatrix cellAtRow:protectedBox column:0]		setState:selectedResource.attributes & resProtected];
+		[[attributesMatrix cellAtRow:lockedBox column:0]		setState:selectedResource.attributes & resLocked];
+		[[attributesMatrix cellAtRow:purgableBox column:0]		setState:selectedResource.attributes & resPurgeable];
+		[[attributesMatrix cellAtRow:systemHeapBox column:0]	setState:selectedResource.attributes & resSysHeap];
 		
 		// swap box
 		[placeholderView setContentView:resourceView];
-	}
-	else if(currentDocument != nil)
-	{
+	} else if (currentDocument != nil) {
 		// get sizes of forks as they are on disk
-		UInt64 dataLogicalSize = 0, rsrcLogicalSize = 0;
-		FSRef *fileRef = (FSRef *) NewPtrClear(sizeof(FSRef));
-		if(fileRef && [currentDocument fileURL])
-		{
-			OSStatus error = FSPathMakeRef((unsigned char *)[[[currentDocument fileURL] path] fileSystemRepresentation], fileRef, nil);
-			if(!error) FSGetForkSizes(fileRef, &dataLogicalSize, &rsrcLogicalSize);
-		}
-		if(fileRef) DisposePtr((Ptr) fileRef);
+		NSInteger dataLogicalSize = 0, rsrcLogicalSize = 0;
 		
 		// set info window elements to correct values
-		[[self window] setTitle:NSLocalizedString(@"Document Info",nil)];
-		if([currentDocument fileURL])	// document has been saved
-		{
-			[iconView setImage:[[NSWorkspace sharedWorkspace] iconForFile:[[currentDocument fileURL] path]]];
-			[nameView setStringValue:[[currentDocument fileURL] lastPathComponent]];
-		}
-		else								// new, untitled document
-		{
+		[self.window setTitle:NSLocalizedString(@"Document Info", nil)];
+		if (currentDocument.fileURL) {
+			[iconView setImage:[[NSWorkspace sharedWorkspace] iconForFile:currentDocument.fileURL.path]];
+			[nameView setStringValue:currentDocument.fileURL.lastPathComponent];
+            NSNumber *dataSize, *totalSize;
+            [currentDocument.fileURL getResourceValue:&dataSize forKey:NSURLFileSizeKey error:nil];
+            [currentDocument.fileURL getResourceValue:&totalSize forKey:NSURLTotalFileSizeKey error:nil];
+            dataLogicalSize = dataSize.integerValue;
+            rsrcLogicalSize = totalSize.integerValue - dataLogicalSize;
+		} else {
 			[iconView setImage:[NSImage imageNamed:@"Resource file"]];
-			[nameView setStringValue:[currentDocument displayName]];
+			[nameView setStringValue:currentDocument.displayName];
 		}
 		
 		[[filePropertyForm cellAtIndex:0] setStringValue:GetNSStringFromOSType(currentDocument.creator)];
 		[[filePropertyForm cellAtIndex:1] setStringValue:GetNSStringFromOSType(currentDocument.type)];
 		[[filePropertyForm cellAtIndex:2] setIntegerValue:dataLogicalSize];
 		[[filePropertyForm cellAtIndex:3] setIntegerValue:rsrcLogicalSize];
-		//[[filePropertyForm cellAtIndex:2] setStringValue:[@(dataLogicalSize) description]];
-		//[[filePropertyForm cellAtIndex:3] setStringValue:[@(rsrcLogicalSize) description]];
 		
 		// swap box
 		[placeholderView setContentView:documentView];
-	}
-	else
-	{
+	} else {
 		[iconView setImage:nil];
 		[nameView setStringValue:@""];
 		[placeholderView setContentView:nil];

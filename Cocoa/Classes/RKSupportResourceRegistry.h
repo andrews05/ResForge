@@ -10,8 +10,6 @@
 
 
 @interface RKSupportResourceRegistry : NSObject
-{
-}
 + (void)scanForSupportResources;
-+ (void)scanForSupportResourcesInFolder:(NSString *)path;
++ (void)scanForSupportResourcesInBundle:(NSBundle *)bundle;
 @end

@@ -125,15 +125,6 @@
 
 @implementation RKOutlineView
 
-/*!
-@method		draggingSourceOperationMaskForLocal:
-*/
-- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)local
-{
-    if(local) return NSDragOperationEvery;
-    else return NSDragOperationCopy;
-}
-
 - (void)keyDown:(NSEvent *)event
 {
 	NSInteger selectedRow = [self selectedRow];

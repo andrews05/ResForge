@@ -1,4 +1,3 @@
-#import "ForkInfo.h"
 #import <Cocoa/Cocoa.h>
 
 @interface OpenPanelDelegate : NSObject <NSOpenSavePanelDelegate>
@@ -10,6 +9,6 @@
 @property NSInteger forkIndex;
 @property NSByteCountFormatter *formatter;
 
-- (ForkInfo *)getSelectedFork;
+- (NSString *)getSelectedFork;
 
 @end

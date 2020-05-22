@@ -1,6 +1,5 @@
 #import "DataSource.h"
 #import "ResKnifeResourceProtocol.h"
-#import "NSNumber-Range.h"
 
 @interface DataSource ()
 @property (strong) NSMutableDictionary *data1;
@@ -59,7 +58,7 @@
 		short resID = [NumID shortValue];
 		NSString *value = data[NumID];
 		NSRange range = [value rangeOfString:trimmedString options:NSCaseInsensitiveSearch];
-		if( ((range.location != NSNotFound && range.length != 0) || [trimmedString isEqualToString:@""]) && [NumID isBoundedByRange:resIDRange] )
+		if( ((range.location != NSNotFound && range.length != 0) || [trimmedString isEqualToString:@""]) && NSLocationInRange(resID, resIDRange) )
 			[parsed addObject:[self stringValueForResID:resID]];
 	}
 	

@@ -12,7 +12,6 @@
     openPanelDelegate.forkIndex = 0;
 	openPanel.delegate = openPanelDelegate;
     openPanel.accessoryView = openPanelDelegate.openPanelAccessoryView;
-    openPanel.accessoryViewDisclosed = YES;
 	openPanel.treatsFilePackagesAsDirectories = YES;
 	
 	// run panel

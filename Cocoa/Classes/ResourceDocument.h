@@ -1,4 +1,3 @@
-#import "ForkInfo.h"
 #import <Cocoa/Cocoa.h>
 #include <CoreServices/CoreServices.h>
 
@@ -13,17 +12,13 @@
 	IBOutlet NSOutlineView			*outlineView;
 
 	CreateResourceSheetController	*sheetController;
-	
-	NSMutableDictionary	*toolbarItems;
-	NSMutableArray	*resources;
-	HFSUniStr255	fork;		// name of fork to save to, usually empty string (data fork) or 'RESOURCE_FORK' as returned from FSGetResourceForkName()
-	BOOL			_createFork;	// file had no existing resource map when opened
 }
-
+@property NSMutableArray *resources;
+@property NSString *fork; // name of fork to save to, usually empty string (data fork) or 'rsrc'
 @property OSType creator;
 @property OSType type;
 
-+ (NSMutableArray *)readResourceMap:(ResFileRefNum)fileRefNum;
++ (NSMutableArray *)readResourceMap:(NSURL *)url;
 
 - (IBAction)exportResources:(id)sender;
 - (void)exportResource:(Resource *)resource;
@@ -53,7 +48,6 @@
 - (NSWindow *)mainWindow;
 - (ResourceDataSource *)dataSource;
 - (NSOutlineView *)outlineView;
-- (NSArray *)resources;                // return the array as non-mutable
 
 - (IBAction)creatorChanged:(id)sender;
 - (IBAction)typeChanged:(id)sender;
