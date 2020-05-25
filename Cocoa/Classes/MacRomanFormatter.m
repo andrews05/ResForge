@@ -1,4 +1,5 @@
 #import "MacRomanFormatter.h"
+#import <AppKit/AppKit.h>
 
 @implementation MacRomanFormatter
 @synthesize stringLength;

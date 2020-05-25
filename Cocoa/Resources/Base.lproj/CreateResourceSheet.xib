@@ -171,10 +171,12 @@ Gw
                     <constraint firstItem="11" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="154" id="Af6-By-h0h"/>
                     <constraint firstItem="12" firstAttribute="top" secondItem="P1T-Pd-dZa" secondAttribute="bottom" constant="10" id="DwC-CA-6d9"/>
                     <constraint firstItem="P1T-Pd-dZa" firstAttribute="trailing" secondItem="7" secondAttribute="trailing" id="EIk-UF-8G4"/>
+                    <constraint firstItem="18" firstAttribute="leading" relation="lessThanOrEqual" secondItem="16" secondAttribute="leading" constant="128" id="Gso-8r-jb4"/>
                     <constraint firstItem="6" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="154" id="HKC-S4-Vxy"/>
                     <constraint firstItem="6" firstAttribute="trailing" secondItem="11" secondAttribute="trailing" id="Igh-US-lqq"/>
                     <constraint firstAttribute="bottom" secondItem="21" secondAttribute="bottom" constant="20" symbolic="YES" id="Ik4-EC-t5q"/>
                     <constraint firstItem="11" firstAttribute="top" secondItem="19" secondAttribute="bottom" constant="8" symbolic="YES" id="Ix2-Ty-JMb"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="27" secondAttribute="trailing" constant="20" symbolic="YES" id="PqX-Co-N6L"/>
                     <constraint firstAttribute="trailing" secondItem="19" secondAttribute="trailing" constant="20" symbolic="YES" id="SKL-bo-cPK"/>
                     <constraint firstItem="7" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="20" symbolic="YES" id="SOf-pc-qpn"/>
                     <constraint firstAttribute="centerX" secondItem="19" secondAttribute="centerX" id="UKv-Pf-i4h"/>
