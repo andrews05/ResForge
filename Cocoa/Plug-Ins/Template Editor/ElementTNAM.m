@@ -1,5 +1,5 @@
 #import "ElementTNAM.h"
-#import "ElementPSTR.h"
+#import "MacRomanFormatter.h"
 #import "ResKnifeResourceProtocol.h"
 
 #define SIZE_ON_DISK (4)

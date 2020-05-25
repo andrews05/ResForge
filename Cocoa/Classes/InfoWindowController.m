@@ -77,10 +77,10 @@
 			[nameView setStringValue:currentDocument.displayName];
 		}
 		
-		[[filePropertyForm cellAtIndex:0] setStringValue:GetNSStringFromOSType(currentDocument.creator)];
-		[[filePropertyForm cellAtIndex:1] setStringValue:GetNSStringFromOSType(currentDocument.type)];
-		[[filePropertyForm cellAtIndex:2] setIntegerValue:dataLogicalSize];
-		[[filePropertyForm cellAtIndex:3] setIntegerValue:rsrcLogicalSize];
+		[creator setStringValue:GetNSStringFromOSType(currentDocument.creator)];
+		[type setStringValue:GetNSStringFromOSType(currentDocument.type)];
+		[dataSize setIntegerValue:dataLogicalSize];
+		[rsrcSize setIntegerValue:rsrcLogicalSize];
 		
 		// swap box
 		[placeholderView setContentView:documentView];
@@ -130,7 +130,6 @@
 
 - (void)documentInfoDidChange:(NSNotification *)notification
 {
-#pragma unused(notification)
 	currentDocument = [notification object][@"NSDocument"];
 	[self updateInfoWindow];
 }

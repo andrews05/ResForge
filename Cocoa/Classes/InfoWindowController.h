@@ -25,7 +25,10 @@ enum Attributes
 	IBOutlet NSBox			*documentView;
 	
 	IBOutlet NSMatrix 		*attributesMatrix;
-	IBOutlet NSForm			*filePropertyForm;
+	IBOutlet NSTextField	*creator;
+    IBOutlet NSTextField    *type;
+    IBOutlet NSTextField    *dataSize;
+    IBOutlet NSTextField    *rsrcSize;
 	
 @private
 	ResourceDocument		*currentDocument;

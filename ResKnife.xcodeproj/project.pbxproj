@@ -97,6 +97,10 @@
 		49F640552466083800E7CE4D /* ElementCaseable.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F640532466083800E7CE4D /* ElementCaseable.m */; };
 		49F640582466099C00E7CE4D /* ElementRangeable.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F640562466099C00E7CE4D /* ElementRangeable.h */; };
 		49F640592466099C00E7CE4D /* ElementRangeable.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F640572466099C00E7CE4D /* ElementRangeable.m */; };
+		49F67EB4247B742B00553624 /* MacRomanFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F67EB2247B742B00553624 /* MacRomanFormatter.h */; };
+		49F67EB5247B742B00553624 /* MacRomanFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F67EB2247B742B00553624 /* MacRomanFormatter.h */; };
+		49F67EB6247B742B00553624 /* MacRomanFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F67EB3247B742B00553624 /* MacRomanFormatter.m */; };
+		49F67EB7247B742B00553624 /* MacRomanFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F67EB3247B742B00553624 /* MacRomanFormatter.m */; };
 		49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F9560C245D44D200D80C65 /* ElementCOLR.h */; };
 		49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9560D245D44D200D80C65 /* ElementCOLR.m */; };
 		5542DCE918DCEB9500AC9626 /* ResourceTypeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5542DCE718DCEB9500AC9626 /* ResourceTypeFormatter.h */; };
@@ -597,6 +601,8 @@
 		49F640532466083800E7CE4D /* ElementCaseable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCaseable.m; sourceTree = "<group>"; };
 		49F640562466099C00E7CE4D /* ElementRangeable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementRangeable.h; sourceTree = "<group>"; };
 		49F640572466099C00E7CE4D /* ElementRangeable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRangeable.m; sourceTree = "<group>"; };
+		49F67EB2247B742B00553624 /* MacRomanFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacRomanFormatter.h; sourceTree = "<group>"; };
+		49F67EB3247B742B00553624 /* MacRomanFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacRomanFormatter.m; sourceTree = "<group>"; };
 		49F9560C245D44D200D80C65 /* ElementCOLR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCOLR.h; sourceTree = "<group>"; };
 		49F9560D245D44D200D80C65 /* ElementCOLR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCOLR.m; sourceTree = "<group>"; };
 		550B9045189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AboutPanel.xib; sourceTree = "<group>"; };
@@ -1374,6 +1380,8 @@
 				3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */,
 				5542DCE718DCEB9500AC9626 /* ResourceTypeFormatter.h */,
 				5542DCE818DCEB9500AC9626 /* ResourceTypeFormatter.m */,
+				49F67EB2247B742B00553624 /* MacRomanFormatter.h */,
+				49F67EB3247B742B00553624 /* MacRomanFormatter.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1495,6 +1503,7 @@
 				4970443824720C0B0035C0FA /* file.hpp in Headers */,
 				E18BF54F069FEA1300F076B8 /* RKDocumentController.h in Headers */,
 				4970444024720C0B0035C0FA /* resource.hpp in Headers */,
+				49F67EB4247B742B00553624 /* MacRomanFormatter.h in Headers */,
 				E18BF550069FEA1300F076B8 /* OpenPanelDelegate.h in Headers */,
 				E18BF551069FEA1300F076B8 /* RKEditorRegistry.h in Headers */,
 				4970443424720C0B0035C0FA /* rez.hpp in Headers */,
@@ -1561,6 +1570,7 @@
 				49F640502464B96E00E7CE4D /* ElementCASR.h in Headers */,
 				494BEA73245BE256000EF1D0 /* ElementRSID.h in Headers */,
 				E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */,
+				49F67EB5247B742B00553624 /* MacRomanFormatter.h in Headers */,
 				493229CD244C3C2000E1EAE4 /* ElementLFLG.h in Headers */,
 				E18BF6A9069FEA1800F076B8 /* ElementDWRD.h in Headers */,
 				493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */,
@@ -2071,6 +2081,7 @@
 				4970443B24720C0B0035C0FA /* file.cpp in Sources */,
 				E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */,
 				4970443624720C0B0035C0FA /* resource.cpp in Sources */,
+				49F67EB6247B742B00553624 /* MacRomanFormatter.m in Sources */,
 				E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */,
 				E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */,
 				E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */,
@@ -2180,6 +2191,7 @@
 				49322A72244FF5F600E1EAE4 /* ElementHWRD.m in Sources */,
 				49322A6A244FD18700E1EAE4 /* ElementDOUB.m in Sources */,
 				E119388E0999296B00A3A6EA /* ElementHEXD.m in Sources */,
+				49F67EB7247B742B00553624 /* MacRomanFormatter.m in Sources */,
 				E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */,
 				49322A7A244FF65A00E1EAE4 /* ElementHLLG.m in Sources */,
 				493229DA244D1DAB00E1EAE4 /* ElementBOOL.m in Sources */,
