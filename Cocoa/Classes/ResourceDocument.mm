@@ -155,17 +155,18 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
         }
     }
     
+    // create file with attributes
+    // bug: doesn't copy the finderinfo from the old file
+    NSDictionary *attrs = nil;
+    if (_type || _creator) {
+        attrs = @{NSFileHFSTypeCode: @(_type), NSFileHFSCreatorCode: @(_creator)};
+    }
+    [[NSFileManager defaultManager] createFileAtPath:url.path contents:nil attributes:attrs];
+   
     // write resources to file
     NSURL *writeUrl = [_fork isEqualToString:@"rsrc"] ? [url URLByAppendingPathComponent:@"..namedfork/rsrc"] : url;
     if (![self writeResourceMap:writeUrl])
         return NO;
-    
-    // set creator & type
-    if (_type || _creator) {
-        // bug: doesn't copy the remaining finderinfo from the old file
-        NSDictionary *attrs = @{NSFileHFSTypeCode: @(_type), NSFileHFSCreatorCode: @(_creator)};
-        [[NSFileManager defaultManager] setAttributes:attrs ofItemAtPath:url.path error:outError];
-    }
     
     // copy the other fork
     if (saveOperation == NSSaveOperation) {
