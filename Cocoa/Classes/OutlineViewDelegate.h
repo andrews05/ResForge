@@ -1,18 +1,8 @@
 #import <Cocoa/Cocoa.h>
-#import "AttributesFormatter.h"
 
-@class Resource;
-
-@interface OutlineViewDelegate : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface OutlineViewDelegate : NSObject <NSOutlineViewDelegate>
 {
-	IBOutlet NSWindow				*window;
-	IBOutlet NSOutlineView			*outlineView;
-	IBOutlet NSFormatter			*sizeFormatter;
-	IBOutlet AttributesFormatter 	*attributesFormatter;
+	IBOutlet NSOutlineView *outlineView;
 }
-
-@end
-
-@interface RKOutlineView : NSOutlineView
 
 @end

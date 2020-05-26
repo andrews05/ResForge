@@ -166,29 +166,29 @@ extern NSString *RKResourcePboardType;
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	#pragma unused(outlineView)
-    if( item == nil ) {
-		NSNumber* resType = @(GetOSTypeFromNSString([allTypes objectAtIndex: index]));
-        if ( [resType isEqual:@0] )
-            return [resourcesByType[resType] objectAtIndex:0];
+    if (item == nil) {
+		NSNumber* resType = @(GetOSTypeFromNSString(allTypes[index]));
+        if ([resType isEqual:@0])
+            return resourcesByType[resType][0];
         else
             return resType;
+    } else {
+		return resourcesByType[item][index];
     }
-    else
-		return [resourcesByType[item] objectAtIndex:index];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
 	#pragma unused(outlineView)
-	return( ![item isKindOfClass: [Resource class]] );
+	return ![item isKindOfClass:Resource.class];
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	#pragma unused(outlineView, item)
-	if( item == nil )
+	if (item == nil)
 		return resourcesByType.allKeys.count;
-	else if( [item isKindOfClass: [Resource class]] )
+	else if ([item isKindOfClass:Resource.class])
 		return 0;
 	else
 		return resourcesByType[item].count;
@@ -197,26 +197,31 @@ extern NSString *RKResourcePboardType;
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
 	#pragma unused(outlineView)
-	if( [item isKindOfClass: [Resource class]] )
-		return [item valueForKey:[tableColumn identifier]];
-	else if( [tableColumn.identifier isEqualToString: @"name"] )
-		return GetNSStringFromOSType([item intValue]);
-    else if( [tableColumn.identifier isEqualToString: @"size"] )
-        return @(resourcesByType[item].count);
-	else
-		return @"";
+    if ([item isKindOfClass:Resource.class]) {
+        Resource *resource = (Resource *)item;
+        if ([tableColumn.identifier isEqualToString:@"type"])
+            return GetNSStringFromOSType(resource.type);
+		return [item valueForKey:tableColumn.identifier];
+    } else {
+        if ([tableColumn.identifier isEqualToString:@"name"])
+            return GetNSStringFromOSType([item intValue]);
+        else if ([tableColumn.identifier isEqualToString:@"size"])
+            return @(resourcesByType[item].count);
+        else
+            return @"";
+    }
 }
 
 - (void)outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
 	#pragma unused(outlineView)
-	if( [item isKindOfClass: [Resource class]] )
-	{
-		NSString *identifier = [tableColumn identifier];
-		if([identifier isEqualToString:@"resID"])
-			[item setValue:@([object intValue]) forKey:identifier];
-		else [item setValue:object forKey:identifier];
-	}
+    Resource *resource = (Resource *)item;
+    if ([tableColumn.identifier isEqualToString:@"name"])
+        resource.name = object;
+    else if ([tableColumn.identifier isEqualToString:@"resID"])
+        resource.resID = (ResID)[object intValue];
+    else if ([tableColumn.identifier isEqualToString:@"type"])
+        resource.type = GetOSTypeFromNSString(object);
 }
 
 #pragma mark -

@@ -33,20 +33,27 @@
                             <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" autosaveName="Resource List" headerView="164" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="147" id="145" customClass="RKOutlineView">
+                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" autosaveName="Resource List" headerView="164" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="147" id="145">
                                     <rect key="frame" x="0.0" y="0.0" width="643" height="407"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="name" editable="NO" width="266" minWidth="16" maxWidth="1000" id="147">
+                                        <tableColumn identifier="name" width="266" minWidth="16" maxWidth="1000" id="147">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="158">
+                                            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="158" customClass="ResourceNameCell">
+                                                <customFormatter key="formatter" id="OdU-x8-vVN" customClass="MacRomanFormatter">
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
+                                                            <integer key="value" value="255"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </customFormatter>
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -54,27 +61,39 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="localizedStandardCompare:" sortKey="name"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="type" editable="NO" width="60" minWidth="60" maxWidth="60" id="148">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Type">
+                                        <tableColumn identifier="type" width="60" minWidth="60" maxWidth="60" id="148">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Type">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" id="159">
-                                                <customFormatter key="formatter" id="0F4-tn-FwS" customClass="ResourceTypeFormatter"/>
+                                            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="159">
+                                                <customFormatter key="formatter" id="0F4-tn-FwS" customClass="MacRomanFormatter">
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
+                                                            <integer key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="exactLengthRequired" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="valueRequired" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </customFormatter>
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="resID" editable="NO" width="60" minWidth="60" maxWidth="60" id="149">
+                                        <tableColumn identifier="resID" width="60" minWidth="60" maxWidth="60" id="149">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="ID">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
                                             <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" id="160">
+                                                <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="Dif-X5-ki5">
+                                                    <real key="minimum" value="-32768"/>
+                                                    <real key="maximum" value="32767"/>
+                                                </numberFormatter>
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -92,9 +111,6 @@
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                <connections>
-                                                    <outlet property="formatter" destination="CPK-3m-O3g" id="wFU-RB-MPa"/>
-                                                </connections>
                                             </textFieldCell>
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="size"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
@@ -106,12 +122,10 @@
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
                                             <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="162">
+                                                <customFormatter key="formatter" id="tQd-3F-qvW" customClass="AttributesFormatter"/>
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                <connections>
-                                                    <outlet property="formatter" destination="48" id="vnk-xs-BEH"/>
-                                                </connections>
                                             </textFieldCell>
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="attributes"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
@@ -229,22 +243,15 @@
         <customObject id="tNB-Az-cgs" customClass="ApplicationDelegate"/>
         <customObject id="24" userLabel="OutlineViewDelegate" customClass="OutlineViewDelegate">
             <connections>
-                <outlet property="attributesFormatter" destination="48" id="49"/>
-                <outlet property="sizeFormatter" destination="CPK-3m-O3g" id="Js7-dY-bQT"/>
-                <outlet property="window" destination="5" id="31"/>
+                <outlet property="outlineView" destination="145" id="8H5-n5-hDR"/>
             </connections>
         </customObject>
         <customObject id="32" userLabel="ResourceDataSource" customClass="ResourceDataSource">
             <connections>
                 <outlet property="document" destination="-2" id="121"/>
                 <outlet property="outlineView" destination="145" id="154"/>
-                <outlet property="window" destination="5" id="46"/>
             </connections>
         </customObject>
-        <byteCountFormatter countStyle="memory" allowsNonnumericFormatting="NO" includesUnit="NO" id="CPK-3m-O3g">
-            <byteCountFormatterUnits key="allowedUnits" bytes="YES"/>
-        </byteCountFormatter>
-        <customObject id="48" userLabel="AttributesFormatter" customClass="AttributesFormatter"/>
     </objects>
     <resources>
         <image name="Create" width="32" height="32"/>

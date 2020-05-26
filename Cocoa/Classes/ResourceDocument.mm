@@ -344,13 +344,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 {
 	[super windowControllerDidLoadNib:controller];
 	
-	{	// set up first column in outline view to display images as well as text
-		ResourceNameCell *resourceNameCell = [[ResourceNameCell alloc] init];
-		[resourceNameCell setEditable:YES];
-		[[outlineView tableColumnWithIdentifier:@"name"] setDataCell:resourceNameCell];
-		// NSLog(@"Changed data cell");
-	}
-	
 	[outlineView setVerticalMotionCanBeginDrag:YES];
 	[outlineView registerForDraggedTypes:@[RKResourcePboardType, NSStringPboardType, NSFilenamesPboardType]];
 	

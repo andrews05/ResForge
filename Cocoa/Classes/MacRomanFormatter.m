@@ -3,6 +3,7 @@
 
 @implementation MacRomanFormatter
 @synthesize stringLength;
+@synthesize valueRequired;
 @synthesize exactLengthRequired;
 
 - (NSString *)stringForObjectValue:(id)object {
@@ -10,7 +11,13 @@
 }
 
 - (BOOL)getObjectValue:(id *)object forString:(NSString *)string errorDescription:(NSString **)error {
-    if (exactLengthRequired && string.length != stringLength && string.length != 0) {
+    if (valueRequired && string.length == 0) {
+        if (error) {
+            *error = @"The value must be not be blank.";
+        }
+        return NO;
+    }
+    if (exactLengthRequired && string.length != stringLength) {
         if (error) {
             *error = [NSString stringWithFormat:@"The value must be exactly %d characters.", stringLength];
         }

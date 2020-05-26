@@ -6,7 +6,6 @@
 @property (strong) NSMutableDictionary<NSNumber*,NSMutableArray<Resource*>*> *resourcesByType;
 @property (strong) NSMutableArray<NSString*> *allTypes;
 @property (weak) IBOutlet NSOutlineView		*outlineView;
-@property (weak) IBOutlet NSWindow          *window;
 @property (weak) IBOutlet ResourceDocument	*document;
 
 - (NSArray *)resources;

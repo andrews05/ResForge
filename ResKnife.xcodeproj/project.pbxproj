@@ -103,8 +103,6 @@
 		49F67EB7247B742B00553624 /* MacRomanFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F67EB3247B742B00553624 /* MacRomanFormatter.m */; };
 		49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F9560C245D44D200D80C65 /* ElementCOLR.h */; };
 		49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9560D245D44D200D80C65 /* ElementCOLR.m */; };
-		5542DCE918DCEB9500AC9626 /* ResourceTypeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5542DCE718DCEB9500AC9626 /* ResourceTypeFormatter.h */; };
-		5542DCEA18DCEB9500AC9626 /* ResourceTypeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5542DCE818DCEB9500AC9626 /* ResourceTypeFormatter.m */; };
 		555DFD972059BCE700E1B774 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 555DFD992059BCE700E1B774 /* Credits.rtf */; };
 		559DE9B4189D665000D55D3A /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Icons.xcassets */; };
 		55FEF5A5189D758E00888898 /* NovaTools.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5A3189D758E00888898 /* NovaTools.xib */; };
@@ -625,8 +623,6 @@
 		550B9064189A187D005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HexWindow.strings; sourceTree = "<group>"; };
 		550B9066189A1882005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FindSheet.strings; sourceTree = "<group>"; };
 		550B9068189A1AA9005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
-		5542DCE718DCEB9500AC9626 /* ResourceTypeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceTypeFormatter.h; sourceTree = "<group>"; };
-		5542DCE818DCEB9500AC9626 /* ResourceTypeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceTypeFormatter.m; sourceTree = "<group>"; };
 		5542DCEC18DCF19C00AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5542DCED18DCF1AC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5542DCED18DCF1AC00AC9627 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1378,8 +1374,6 @@
 				3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */,
 				3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */,
 				3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */,
-				5542DCE718DCEB9500AC9626 /* ResourceTypeFormatter.h */,
-				5542DCE818DCEB9500AC9626 /* ResourceTypeFormatter.m */,
 				49F67EB2247B742B00553624 /* MacRomanFormatter.h */,
 				49F67EB3247B742B00553624 /* MacRomanFormatter.m */,
 			);
@@ -1507,7 +1501,6 @@
 				E18BF550069FEA1300F076B8 /* OpenPanelDelegate.h in Headers */,
 				E18BF551069FEA1300F076B8 /* RKEditorRegistry.h in Headers */,
 				4970443424720C0B0035C0FA /* rez.hpp in Headers */,
-				5542DCE918DCEB9500AC9626 /* ResourceTypeFormatter.h in Headers */,
 				E18BF552069FEA1300F076B8 /* RKSupportResourceRegistry.h in Headers */,
 				0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */,
 				4970442E24720C060035C0FA /* writer.hpp in Headers */,
@@ -2088,7 +2081,6 @@
 				E18BF580069FEA1300F076B8 /* PasteboardWindowController.m in Sources */,
 				E18BF581069FEA1300F076B8 /* RKDocumentController.m in Sources */,
 				4970443E24720C0B0035C0FA /* rez.cpp in Sources */,
-				5542DCEA18DCEB9500AC9626 /* ResourceTypeFormatter.m in Sources */,
 				E18BF582069FEA1300F076B8 /* OpenPanelDelegate.m in Sources */,
 				E18BF583069FEA1300F076B8 /* main.m in Sources */,
 				4970443324720C070035C0FA /* writer.cpp in Sources */,
