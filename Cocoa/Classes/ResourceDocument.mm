@@ -99,6 +99,10 @@ extern NSString *RKResourcePboardType;
         *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:nil];
         return NO;
     }
+    
+    for (Resource *resource in _resources) {
+        resource.document = self;
+    }
 	
 	return YES;
 }
