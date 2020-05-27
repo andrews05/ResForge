@@ -214,14 +214,28 @@ extern NSString *RKResourcePboardType;
 
 - (void)outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-	#pragma unused(outlineView)
     Resource *resource = (Resource *)item;
-    if ([tableColumn.identifier isEqualToString:@"name"])
+    if ([tableColumn.identifier isEqualToString:@"name"]) {
         resource.name = object;
-    else if ([tableColumn.identifier isEqualToString:@"resID"])
-        resource.resID = (ResID)[object intValue];
-    else if ([tableColumn.identifier isEqualToString:@"type"])
-        resource.type = GetOSTypeFromNSString(object);
+    } else {
+        // If changing id or type we need to check whether a matching resource already exists
+        ResID rID = resource.resID;
+        OSType rType = resource.type;
+        if ([tableColumn.identifier isEqualToString:@"resID"]) {
+            rID = (ResID)[object intValue];
+        } else if ([tableColumn.identifier isEqualToString:@"type"]) {
+            rType = GetOSTypeFromNSString(object);
+        }
+        Resource *r = [Resource resourceOfType:rType andID:rID inDocument:resource.document];
+        if (!r || r == resource) {
+            resource.type = rType;
+            resource.resID = rID;
+        } else {
+            NSString *err = [NSString stringWithFormat:@"A resource of type '%@' with ID %d already exists.", GetNSStringFromOSType(rType), rID];
+            [resource.document presentError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSKeyValueValidationError userInfo:@{NSLocalizedDescriptionKey:err}]];
+            [outlineView reloadItem:item];
+        }
+    }
 }
 
 #pragma mark -
