@@ -67,9 +67,9 @@ extern NSString *RKResourcePboardType;
     if (_fork) {
         // If fork was sepcified in open panel, try this fork only
         if ([_fork isEqualToString:@""] && hasData) {
-            _resources = [ResourceDocument readResourceMap:url];
+            _resources = [ResourceDocument readResourceMap:url document:self];
         } else if ([_fork isEqualToString:@"rsrc"] && hasRsrc) {
-            _resources = [ResourceDocument readResourceMap:rsrcURL];
+            _resources = [ResourceDocument readResourceMap:rsrcURL document:self];
         } else {
             // Fork is empty
             _resources = [NSMutableArray new];
@@ -78,12 +78,12 @@ extern NSString *RKResourcePboardType;
         // Try to open data fork
         if (hasData) {
             _fork = @"";
-            _resources = [ResourceDocument readResourceMap:url];
+            _resources = [ResourceDocument readResourceMap:url document:self];
         }
         // If failed, try resource fork
         if (!_resources && hasRsrc) {
             _fork = @"rsrc";
-            _resources = [ResourceDocument readResourceMap:rsrcURL];
+            _resources = [ResourceDocument readResourceMap:rsrcURL document:self];
         }
         // If still failed, find an empty fork
         if (!_resources && !hasData) {
@@ -99,15 +99,11 @@ extern NSString *RKResourcePboardType;
         *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:nil];
         return NO;
     }
-    
-    for (Resource *resource in _resources) {
-        resource.document = self;
-    }
 	
 	return YES;
 }
 
-+ (NSMutableArray *)readResourceMap:(NSURL *)url
++ (NSMutableArray *)readResourceMap:(NSURL *)url document:(ResourceDocument *)document
 {
     graphite::rsrc::file gFile;
     try {
@@ -115,6 +111,7 @@ extern NSString *RKResourcePboardType;
     } catch (const std::exception& e) {
         return nil;
     }
+    if (document) document.format = (FileFormat)gFile.current_format();
     NSMutableArray* resources = [NSMutableArray new];
     for (auto type : gFile.types()) {
         for (auto resource : type->resources()) {
@@ -124,6 +121,7 @@ extern NSString *RKResourcePboardType;
             NSData      *data       = [NSData dataWithBytes:resource->data()->get()->data()+resource->data()->start() length:resource->data()->size()];
             Resource *r = [Resource resourceOfType:GetOSTypeFromNSString(resType) andID:(SInt16)resource->id() withName:name andAttributes:0 data:data];
             [resources addObject:r]; // array retains resource
+            r.document = document;
         }
     }
     return resources;
@@ -144,18 +142,20 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 {
     if (saveOperation == NSSaveAsOperation) {
         // set fork according to typeName
-        if ([typeName isEqualToString:@"ResourceMap"]) {
-            _fork = @"";
-            // Clear type/creator for data fork (filename extension should suffice)
-            _type = 0;
-            _creator = 0;
-        } else if ([typeName isEqualToString:@"ResourceMapRF"]) {
+        if ([typeName isEqualToString:@"ResourceMapRF"]) {
+            _format = kFormatClassic;
             _fork = @"rsrc";
             // Set default type/creator for resource fork
             if (!_type && !_creator) {
                 _type = 'rsrc';
                 _creator = 'ResK';
             }
+        } else {
+            _format = [typeName isEqualToString:@"ResourceMapExtended"] ? kFormatExtended : kFormatClassic;
+            _fork = @"";
+            // Clear type/creator for data fork (filename extension should suffice)
+            _type = 0;
+            _creator = 0;
         }
     }
     
@@ -169,8 +169,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
    
     // write resources to file
     NSURL *writeUrl = [_fork isEqualToString:@"rsrc"] ? [url URLByAppendingPathComponent:@"..namedfork/rsrc"] : url;
-    if (![self writeResourceMap:writeUrl])
+    NSString *writeError = [self writeResourceMap:writeUrl];
+    if (writeError) {
+        *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:@{NSLocalizedFailureReasonErrorKey:writeError}];
         return NO;
+    }
     
     // copy the other fork
     if (saveOperation == NSSaveOperation) {
@@ -194,7 +197,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	return YES;
 }
 
-- (BOOL)writeResourceMap:(NSURL *)url
+- (NSString *)writeResourceMap:(NSURL *)url
 {
     graphite::rsrc::file gFile = graphite::rsrc::file();
     for (Resource* resource in [dataSource resources]) {
@@ -205,11 +208,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
         gFile.add_resource(resType, resource.resID, name, std::make_shared<graphite::data::data>(data));
     }
     try {
-        gFile.write(url.fileSystemRepresentation);
+        gFile.write(url.fileSystemRepresentation, (graphite::rsrc::file::format)_format);
     } catch (const std::exception& e) {
-        return NO;
+        return [NSString stringWithUTF8String:e.what()];
     }
-    return YES;
+    return nil;
 }
 
 #pragma mark -

@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSRequiresAquaSystemAppearance</key>
-	<false/>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -14,7 +12,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array/>
 			<key>CFBundleTypeIconFile</key>
-			<string>Resource file</string>
+			<string></string>
 			<key>CFBundleTypeName</key>
 			<string>ResourceMap</string>
 			<key>CFBundleTypeRole</key>
@@ -30,7 +28,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array/>
 			<key>CFBundleTypeIconFile</key>
-			<string>Resource file</string>
+			<string></string>
 			<key>CFBundleTypeName</key>
 			<string>ResourceMapRF</string>
 			<key>CFBundleTypeRole</key>
@@ -53,6 +51,18 @@
 			<array>
 				<string>public.data</string>
 			</array>
+			<key>LSTypeIsPackage</key>
+			<integer>0</integer>
+			<key>NSDocumentClass</key>
+			<string>ResourceDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string></string>
+			<key>CFBundleTypeName</key>
+			<string>ResourceMapExtended</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>LSTypeIsPackage</key>
 			<integer>0</integer>
 			<key>NSDocumentClass</key>
@@ -81,6 +91,8 @@
 	<string>Application</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSRequiresAquaSystemAppearance</key>
+	<false/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

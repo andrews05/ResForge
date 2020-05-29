@@ -5,6 +5,12 @@
 
 @protocol ResKnifePlugin;
 
+typedef enum {
+    kFormatClassic,
+    kFormatExtended,
+    kFormatRez
+} FileFormat;
+
 @interface ResourceDocument : NSDocument
 {
 	IBOutlet ResourceDataSource		*dataSource;
@@ -15,10 +21,11 @@
 }
 @property NSMutableArray *resources;
 @property NSString *fork; // name of fork to save to, usually empty string (data fork) or 'rsrc'
+@property FileFormat format;
 @property OSType creator;
 @property OSType type;
 
-+ (NSMutableArray *)readResourceMap:(NSURL *)url;
++ (NSMutableArray *)readResourceMap:(NSURL *)url document:(ResourceDocument *)document;
 
 - (IBAction)exportResources:(id)sender;
 - (void)exportResource:(Resource *)resource;

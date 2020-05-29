@@ -27,7 +27,7 @@
 
 + (BOOL)openSupportResourceFile:(NSURL *)fileName
 {
-    [[Resource supportDataSource] addResources:[ResourceDocument readResourceMap:fileName]];
+    [[Resource supportDataSource] addResources:[ResourceDocument readResourceMap:fileName document:nil]];
     return YES;
 }
 
