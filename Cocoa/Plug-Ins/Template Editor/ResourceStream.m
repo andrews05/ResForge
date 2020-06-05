@@ -1,7 +1,4 @@
 #import "ResourceStream.h"
-#import "Element.h"
-#import "ElementOCNT.h"	// for tracking current counter
-#import "ElementHEXD.h"	// for errors
 
 @implementation ResourceStream
 @synthesize length;
@@ -39,6 +36,11 @@
 }
 
 #pragma mark -
+
+- (void)advanceAmount:(UInt32)l
+{
+    [self advanceAmount:l pad:NO];
+}
 
 - (void)advanceAmount:(UInt32)l pad:(BOOL)pad
 {

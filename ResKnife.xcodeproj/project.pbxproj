@@ -49,6 +49,14 @@
 		494BEA70245B90D1000EF1D0 /* ElementKRID.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA6E245B90D1000EF1D0 /* ElementKRID.m */; };
 		494BEA73245BE256000EF1D0 /* ElementRSID.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA71245BE256000EF1D0 /* ElementRSID.h */; };
 		494BEA74245BE256000EF1D0 /* ElementRSID.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA72245BE256000EF1D0 /* ElementRSID.m */; };
+		4953F599248874AA0002340F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
+		4953F5A32488757A0002340F /* SoundWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4953F5912488740F0002340F /* SoundWindowController.m */; };
+		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4953F5A92488795B0002340F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4953F5A82488795B0002340F /* AVKit.framework */; };
+		4953F5BA2489C5D20002340F /* SoundResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4953F5B92489C5D20002340F /* SoundResource.m */; };
+		4953F5CD2489EC840002340F /* BTBinaryStreamReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4953F5CA2489EC4E0002340F /* BTBinaryStreamReader.m */; };
+		4953F5CE2489F1C20002340F /* BTBinaryStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4953F5C82489EC4E0002340F /* BTBinaryStreamWriter.m */; };
 		4962B274245535280065590E /* ElementList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B272245535270065590E /* ElementList.h */; };
 		4962B275245535280065590E /* ElementList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B273245535270065590E /* ElementList.m */; };
 		4962B27824569EE50065590E /* ElementWBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B27624569EE50065590E /* ElementWBIT.h */; };
@@ -130,12 +138,6 @@
 		B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */; };
 		B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */; };
 		B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */; };
-		B234337F16AB59D0007134B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884D0156D40B01000001 /* Foundation.framework */; };
-		B234338516AB59D0007134B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B234338316AB59D0007134B9 /* InfoPlist.strings */; };
-		B234338816AB59D0007134B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B234338716AB59D0007134B9 /* main.m */; };
-		B234338E16AB5D5D007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		B234339916AB6143007134B9 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
-		B23433DB16AB69AE007134B9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B24925E215A6776600C22060 /* PictWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* PictWindow.xib */; };
 		B24925E615A6778C00C22060 /* ICONWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E415A6778C00C22060 /* ICONWindow.xib */; };
 		B24FA09915D303A800622683 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
@@ -322,6 +324,13 @@
 			remoteGlobalIDString = E18BF68E069FEA1800F076B8;
 			remoteInfo = "Bitmap Editor Cocoa";
 		};
+		4953F5A42488759E0002340F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4953F594248874AA0002340F;
+			remoteInfo = "Sound Editor";
+		};
 		55FEF5CA189D76FA00888898 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -335,13 +344,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B229EEC915A4B8720032C12C;
 			remoteInfo = "PNG Editor";
-		};
-		B234338F16AB5D77007134B9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B234337D16AB59D0007134B9;
-			remoteInfo = System7SoundPlayer;
 		};
 		B2B2C41315A9467100D6F61C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -387,7 +389,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				B234338E16AB5D5D007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc in Copy XPC Services */,
 			);
 			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -440,6 +441,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */,
 				55FEF5C9189D76F200888898 /* NovaTools.plugin in Copy Plugins */,
 				B2B2C41515A9468300D6F61C /* Pattern Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* PICT Editor.plugin in Copy Plugins */,
@@ -523,6 +525,23 @@
 		494BEA6E245B90D1000EF1D0 /* ElementKRID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKRID.m; sourceTree = "<group>"; };
 		494BEA71245BE256000EF1D0 /* ElementRSID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementRSID.h; sourceTree = "<group>"; };
 		494BEA72245BE256000EF1D0 /* ElementRSID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRSID.m; sourceTree = "<group>"; };
+		4953F5902488740F0002340F /* SoundWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundWindowController.h; sourceTree = "<group>"; };
+		4953F5912488740F0002340F /* SoundWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoundWindowController.m; sourceTree = "<group>"; };
+		4953F5922488740F0002340F /* SoundWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundWindow.xib; sourceTree = "<group>"; };
+		4953F593248874260002340F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4953F5A0248874AA0002340F /* Sound Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sound Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4953F5A82488795B0002340F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		4953F5B82489C5D20002340F /* SoundResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundResource.h; sourceTree = "<group>"; };
+		4953F5B92489C5D20002340F /* SoundResource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoundResource.m; sourceTree = "<group>"; };
+		4953F5C02489CFCE0002340F /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		4953F5C32489D1C30002340F /* Sound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sound.h; sourceTree = "<group>"; };
+		4953F5C62489EC4E0002340F /* BinaryTools-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BinaryTools-Prefix.pch"; sourceTree = "<group>"; };
+		4953F5C72489EC4E0002340F /* BTBinaryStreamReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTBinaryStreamReader.h; sourceTree = "<group>"; };
+		4953F5C82489EC4E0002340F /* BTBinaryStreamWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTBinaryStreamWriter.m; sourceTree = "<group>"; };
+		4953F5C92489EC4E0002340F /* BTBinaryTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTBinaryTools.h; sourceTree = "<group>"; };
+		4953F5CA2489EC4E0002340F /* BTBinaryStreamReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTBinaryStreamReader.m; sourceTree = "<group>"; };
+		4953F5CB2489EC4E0002340F /* BTBinaryStreamWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTBinaryStreamWriter.h; sourceTree = "<group>"; };
+		4953F5CC2489EC4E0002340F /* BTBinaryToolsErrors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTBinaryToolsErrors.h; sourceTree = "<group>"; };
 		4962B272245535270065590E /* ElementList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementList.h; sourceTree = "<group>"; };
 		4962B273245535270065590E /* ElementList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementList.m; sourceTree = "<group>"; };
 		4962B27624569EE50065590E /* ElementWBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementWBIT.h; sourceTree = "<group>"; };
@@ -662,7 +681,6 @@
 		B229EECE15A4B8720032C12C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		B229EED215A4B8720032C12C /* PNG Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PNG Editor-Info.plist"; sourceTree = "<group>"; };
 		B229EED415A4B8720032C12C /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = org.derailer.ResKnife.System7SoundPlayer.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		B234338216AB59D0007134B9 /* System7SoundPlayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "System7SoundPlayer-Info.plist"; sourceTree = "<group>"; };
 		B234338416AB59D0007134B9 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B234338616AB59D0007134B9 /* System7SoundPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "System7SoundPlayer-Prefix.pch"; sourceTree = "<group>"; };
@@ -793,21 +811,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4953F598248874AA0002340F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4953F5A92488795B0002340F /* AVKit.framework in Frameworks */,
+				4953F599248874AA0002340F /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B229EEC715A4B8720032C12C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				B229EECB15A4B8720032C12C /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B234337B16AB59D0007134B9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B234337F16AB59D0007134B9 /* Foundation.framework in Frameworks */,
-				B234339916AB6143007134B9 /* Carbon.framework in Frameworks */,
-				B23433DB16AB69AE007134B9 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,6 +1038,34 @@
 			path = "Icon Editor";
 			sourceTree = "<group>";
 		};
+		4953F58F248873DD0002340F /* Sound Editor */ = {
+			isa = PBXGroup;
+			children = (
+				4953F5902488740F0002340F /* SoundWindowController.h */,
+				4953F5912488740F0002340F /* SoundWindowController.m */,
+				4953F5B82489C5D20002340F /* SoundResource.h */,
+				4953F5B92489C5D20002340F /* SoundResource.m */,
+				4953F5C32489D1C30002340F /* Sound.h */,
+				4953F5922488740F0002340F /* SoundWindow.xib */,
+				4953F593248874260002340F /* Info.plist */,
+			);
+			path = "Sound Editor";
+			sourceTree = "<group>";
+		};
+		4953F5C52489EC4E0002340F /* BinaryTools */ = {
+			isa = PBXGroup;
+			children = (
+				4953F5C62489EC4E0002340F /* BinaryTools-Prefix.pch */,
+				4953F5C72489EC4E0002340F /* BTBinaryStreamReader.h */,
+				4953F5CA2489EC4E0002340F /* BTBinaryStreamReader.m */,
+				4953F5CB2489EC4E0002340F /* BTBinaryStreamWriter.h */,
+				4953F5C82489EC4E0002340F /* BTBinaryStreamWriter.m */,
+				4953F5C92489EC4E0002340F /* BTBinaryTools.h */,
+				4953F5CC2489EC4E0002340F /* BTBinaryToolsErrors.h */,
+			);
+			path = BinaryTools;
+			sourceTree = "<group>";
+		};
 		497043F32472064F0035C0FA /* Graphite */ = {
 			isa = PBXGroup;
 			children = (
@@ -1082,9 +1127,9 @@
 		4970440C2472064F0035C0FA /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				4970440F2472064F0035C0FA /* string.hpp */,
 				4970440D2472064F0035C0FA /* string.cpp */,
 				4970440E2472064F0035C0FA /* sound.hpp */,
-				4970440F2472064F0035C0FA /* string.hpp */,
 				497044102472064F0035C0FA /* sound.cpp */,
 			);
 			path = resources;
@@ -1269,10 +1314,12 @@
 			isa = PBXGroup;
 			children = (
 				49F1C23C24404D2000D46B35 /* README.txt */,
-				B2B2C3FC15A9451800D6F61C /* Pattern Editor */,
 				F5C9ECCE027F474A01A8010C /* Notifications.m */,
 				F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */,
 				F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */,
+				4953F5C52489EC4E0002340F /* BinaryTools */,
+				4953F58F248873DD0002340F /* Sound Editor */,
+				B2B2C3FC15A9451800D6F61C /* Pattern Editor */,
 				F5EF839F020C08E601A80001 /* Hex Editor */,
 				3D0B38A504DEF41E005AED5E /* Template Editor */,
 				E18BF7B8069FFA5200F076B8 /* Font Editor */,
@@ -1319,7 +1366,7 @@
 				B229EECA15A4B8720032C12C /* PNG Editor.plugin */,
 				B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */,
 				B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */,
-				B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */,
+				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1404,6 +1451,8 @@
 		F5B588490156D40B01000001 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4953F5C02489CFCE0002340F /* Carbon.framework */,
+				4953F5A82488795B0002340F /* AVKit.framework */,
 				55FEF5CC189D77CF00888898 /* QTKit.framework */,
 				B25C779815D2B0C500C005DE /* HexFiend.framework */,
 				F5B5884A0156D40B01000001 /* Carbon.framework */,
@@ -1622,6 +1671,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4953F594248874AA0002340F /* Sound Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4953F59D248874AA0002340F /* Build configuration list for PBXNativeTarget "Sound Editor" */;
+			buildPhases = (
+				4953F595248874AA0002340F /* Sources */,
+				4953F598248874AA0002340F /* Frameworks */,
+				4953F59A248874AA0002340F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Sound Editor";
+			productName = "PICT Editor";
+			productReference = 4953F5A0248874AA0002340F /* Sound Editor.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		B229EEC915A4B8720032C12C /* PNG Editor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B229EED715A4B8720032C12C /* Build configuration list for PBXNativeTarget "PNG Editor" */;
@@ -1638,23 +1704,6 @@
 			name = "PNG Editor";
 			productName = "PNG Editor";
 			productReference = B229EECA15A4B8720032C12C /* PNG Editor.plugin */;
-			productType = "com.apple.product-type.bundle";
-		};
-		B234337D16AB59D0007134B9 /* System7SoundPlayer */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B234338B16AB59D0007134B9 /* Build configuration list for PBXNativeTarget "System7SoundPlayer" */;
-			buildPhases = (
-				B234337A16AB59D0007134B9 /* Sources */,
-				B234337B16AB59D0007134B9 /* Frameworks */,
-				B234337C16AB59D0007134B9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = System7SoundPlayer;
-			productName = System7SoundPlayer;
-			productReference = B234337E16AB59D0007134B9 /* org.derailer.ResKnife.System7SoundPlayer.xpc */;
 			productType = "com.apple.product-type.bundle";
 		};
 		B2B2C40615A9464400D6F61C /* Pattern Editor */ = {
@@ -1708,6 +1757,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4953F5A52488759E0002340F /* PBXTargetDependency */,
 				55FEF5CB189D76FA00888898 /* PBXTargetDependency */,
 				B2FCA79B15A66B4A00696598 /* PBXTargetDependency */,
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
@@ -1716,7 +1766,6 @@
 				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
 				B229EEE315A4BB720032C12C /* PBXTargetDependency */,
 				B2B2C41415A9467100D6F61C /* PBXTargetDependency */,
-				B234339016AB5D77007134B9 /* PBXTargetDependency */,
 			);
 			name = ResKnife;
 			productInstallPath = "$(USER_APPS_DIR)";
@@ -1860,25 +1909,25 @@
 				B229EEC915A4B8720032C12C /* PNG Editor */,
 				B2FCA78915A66ACE00696598 /* PICT Editor */,
 				B2B2C40615A9464400D6F61C /* Pattern Editor */,
-				B234337D16AB59D0007134B9 /* System7SoundPlayer */,
+				4953F594248874AA0002340F /* Sound Editor */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4953F59A248874AA0002340F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4953F5A2248875610002340F /* SoundWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B229EEC815A4B8720032C12C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B234337C16AB59D0007134B9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B234338516AB59D0007134B9 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2016,6 +2065,17 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4953F595248874AA0002340F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4953F5A32488757A0002340F /* SoundWindowController.m in Sources */,
+				4953F5CE2489F1C20002340F /* BTBinaryStreamWriter.m in Sources */,
+				4953F5CD2489EC840002340F /* BTBinaryStreamReader.m in Sources */,
+				4953F5BA2489C5D20002340F /* SoundResource.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B229EEC615A4B8720032C12C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2023,14 +2083,6 @@
 				B229EEDB15A4B9420032C12C /* PNGWindowController.m in Sources */,
 				B229EEDC15A4B9420032C12C /* PNGWindowController.xib in Sources */,
 				B229EEDE15A4BABD0032C12C /* Notifications.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B234337A16AB59D0007134B9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B234338816AB59D0007134B9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2209,6 +2261,11 @@
 			target = E18BF68E069FEA1800F076B8 /* Bitmap Editor Cocoa */;
 			targetProxy = 0ED5B4B713BF0A7800A5DC6D /* PBXContainerItemProxy */;
 		};
+		4953F5A52488759E0002340F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4953F594248874AA0002340F /* Sound Editor */;
+			targetProxy = 4953F5A42488759E0002340F /* PBXContainerItemProxy */;
+		};
 		55FEF5CB189D76FA00888898 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E18BF5B7069FEA1400F076B8 /* NovaTools */;
@@ -2218,11 +2275,6 @@
 			isa = PBXTargetDependency;
 			target = B229EEC915A4B8720032C12C /* PNG Editor */;
 			targetProxy = B229EEE215A4BB720032C12C /* PBXContainerItemProxy */;
-		};
-		B234339016AB5D77007134B9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B234337D16AB59D0007134B9 /* System7SoundPlayer */;
-			targetProxy = B234338F16AB5D77007134B9 /* PBXContainerItemProxy */;
 		};
 		B2B2C41415A9467100D6F61C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2552,6 +2604,30 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4953F59E248874AA0002340F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = Graphite;
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Sound Editor/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.Sound-Editor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		4953F59F248874AA0002340F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = Graphite;
+				INFOPLIST_FILE = "Cocoa/Plug-Ins/Sound Editor/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.Sound-Editor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
 		B229EED815A4B8720032C12C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2571,41 +2647,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
-			};
-			name = Release;
-		};
-		B234338916AB59D0007134B9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "System7SoundPlayer/System7SoundPlayer-Prefix.pch";
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "System7SoundPlayer/System7SoundPlayer-Info.plist";
-				MACH_O_TYPE = mh_execute;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME}";
-				PRODUCT_NAME = "org.derailer.ResKnife.$(TARGET_NAME:rfc1034identifier)";
-				WRAPPER_EXTENSION = xpc;
-			};
-			name = Debug;
-		};
-		B234338A16AB59D0007134B9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "System7SoundPlayer/System7SoundPlayer-Prefix.pch";
-				INFOPLIST_FILE = "System7SoundPlayer/System7SoundPlayer-Info.plist";
-				MACH_O_TYPE = mh_execute;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME}";
-				PRODUCT_NAME = "org.derailer.ResKnife.$(TARGET_NAME:rfc1034identifier)";
-				WRAPPER_EXTENSION = xpc;
 			};
 			name = Release;
 		};
@@ -2909,20 +2950,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4953F59D248874AA0002340F /* Build configuration list for PBXNativeTarget "Sound Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4953F59E248874AA0002340F /* Debug */,
+				4953F59F248874AA0002340F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		B229EED715A4B8720032C12C /* Build configuration list for PBXNativeTarget "PNG Editor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B229EED815A4B8720032C12C /* Debug */,
 				B229EED915A4B8720032C12C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		B234338B16AB59D0007134B9 /* Build configuration list for PBXNativeTarget "System7SoundPlayer" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B234338916AB59D0007134B9 /* Debug */,
-				B234338A16AB59D0007134B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

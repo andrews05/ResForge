@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 
-@class	Element, ElementOCNT;
 @interface ResourceStream : NSObject
 {
 	char *data;

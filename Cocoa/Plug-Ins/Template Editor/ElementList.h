@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "ResourceStream.h"
 
-@class TemplateWindowController;
+@class TemplateWindowController, Element;
 
 @interface ElementList : NSObject <NSCopying>
 @property (strong) NSMutableArray<Element *> *elements;
