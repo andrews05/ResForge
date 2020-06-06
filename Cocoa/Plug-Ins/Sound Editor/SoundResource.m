@@ -4,6 +4,20 @@
 
 @implementation SoundResource
 
++ (NSDictionary *)supportedFormats {
+    static NSDictionary *formats = nil;
+    if (!formats) {
+        formats = @{
+            GetNSStringFromOSType(k8BitOffsetBinaryFormat): @"8 bit uncompressed",
+            GetNSStringFromOSType(k16BitBigEndianFormat): @"16 bit uncompressed",
+            GetNSStringFromOSType(kIMACompression): @"IMA 4:1",
+            GetNSStringFromOSType(kALawCompression): @"A-Law 2:1",
+            GetNSStringFromOSType(kULawCompression): @"µ-Law 2:1",
+        };
+    }
+    return formats;
+}
+
 - (instancetype)initWithResource:(id <ResKnifeResource>)resource {
     if (self = [super init]) {
         [self parse:resource.data];
@@ -88,7 +102,7 @@
         numChannels = header.length;
         numFrames = extHeader.numFrames;
         sampleSize = extHeader.sampleSize;
-        format = sampleSize == 8 ? k8BitOffsetBinaryFormat : k16BitLittleEndianFormat;
+        format = sampleSize == 8 ? k8BitOffsetBinaryFormat : k16BitBigEndianFormat;
     } else if (header.encode == cmpSH) {
         CmpSoundHeader cmpHeader = {
             .numFrames = [stream readInt32],
@@ -106,39 +120,43 @@
         numChannels = header.length;
         numFrames = cmpHeader.numFrames;
         sampleSize = cmpHeader.sampleSize;
-        if (cmpHeader.compressionID == threeToOne) {
-            format = kMACE3Compression;
-        } else if (cmpHeader.compressionID == sixToOne) {
-            format = kMACE6Compression;
-        } else {
-            format = cmpHeader.format;
-        }
+        format = cmpHeader.format;
     } else {
         return false;
     }
-    [stream.inputStream close];
     
-    // Create stream description
-    UInt32 sampleWidth = sampleSize / 8;
-    UInt32 byteSize = (UInt32)(data.length - stream.bytesRead);
+    // Construct stream description
     streamDesc.mSampleRate = FixedToFloat(header.sampleRate);
     streamDesc.mChannelsPerFrame = (UInt32)numChannels;
+    streamDesc.mFormatID = format;
     streamDesc.mFormatFlags = 0;
-    if (format == k8BitOffsetBinaryFormat || format == k16BitLittleEndianFormat) {
-        streamDesc.mBitsPerChannel = sampleSize;
-        streamDesc.mBytesPerPacket = (UInt32)(sampleWidth * numChannels);
-        streamDesc.mBytesPerFrame = (UInt32)(sampleWidth * numChannels);
-        streamDesc.mFormatID = kAudioFormatLinearPCM;
-        streamDesc.mFramesPerPacket = 1;
-    } else if (format == kIMACompression) {
+    if (format == kIMACompression) {
         streamDesc.mBitsPerChannel = 0;
-        streamDesc.mBytesPerPacket = 34;
         streamDesc.mBytesPerFrame = 0;
-        streamDesc.mFormatID = kAudioFormatAppleIMA4;
         streamDesc.mFramesPerPacket = 64;
+        streamDesc.mBytesPerPacket = 34;
+    } else {
+        if (format == k8BitOffsetBinaryFormat) {
+            streamDesc.mFormatID = kAudioFormatLinearPCM;
+        } else if (format == k16BitBigEndianFormat) {
+            streamDesc.mFormatID = kAudioFormatLinearPCM;
+            streamDesc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsBigEndian;
+        } else if (format == kALawCompression || format == kULawCompression) {
+            sampleSize /= 2;
+        } else {
+            // Legacy formats such as MACE are unsupported on current macOS
+            return false;
+        }
+        streamDesc.mBitsPerChannel = sampleSize;
+        streamDesc.mBytesPerFrame = (UInt32)((sampleSize/8) * numChannels);
+        streamDesc.mFramesPerPacket = 1;
+        streamDesc.mBytesPerPacket = streamDesc.mBytesPerFrame * streamDesc.mFramesPerPacket;
     }
 
     // Setup audio queue
+    UInt32 byteSize = (UInt32)(data.length - stream.bytesRead);
+    UInt32 expectedSize = (UInt32)(numFrames * streamDesc.mBytesPerPacket);
+    if (byteSize > expectedSize) byteSize = expectedSize;
     OSStatus err;
     err = AudioQueueNewOutput(&streamDesc, QueueNoop, NULL, NULL, NULL, 0, &queueRef);
     err = AudioQueueAllocateBuffer(queueRef, byteSize, &bufferRef);
@@ -148,6 +166,7 @@
 }
 
 - (void)play {
+    if (!queueRef) return;
     OSStatus err;
     err = AudioQueueReset(queueRef);
     err = AudioQueueEnqueueBuffer(queueRef, bufferRef, 0, NULL);
@@ -155,17 +174,38 @@
 }
 
 - (void)stop {
+    if (!queueRef) return;
     OSStatus err;
     err = AudioQueueReset(queueRef);
 }
 
 - (void)exportToURL:(NSURL *)url {
+    if (!bufferRef) return;
     OSStatus err;
     AudioFileID fRef;
     UInt32 bytes = bufferRef->mAudioDataByteSize;
-    err = AudioFileCreateWithURL((__bridge CFURLRef _Nonnull)(url), kAudioFileAIFCType, &streamDesc, kAudioFileFlags_EraseFile, &fRef);
+    AudioFormatID formatID = (streamDesc.mFormatFlags & kAudioFormatFlagIsBigEndian) ? kAudioFileAIFFType : kAudioFileAIFCType;
+    err = AudioFileCreateWithURL((__bridge CFURLRef _Nonnull)(url), formatID, &streamDesc, kAudioFileFlags_EraseFile, &fRef);
     err = AudioFileWriteBytes(fRef, false, 0, &bytes, bufferRef->mAudioData);
     err = AudioFileClose(fRef);
+}
+
+- (OSType)format {
+    if (streamDesc.mFormatFlags & kAudioFormatFlagIsBigEndian) {
+        return k16BitBigEndianFormat;
+    } else if (streamDesc.mFormatID == kAudioFormatLinearPCM) {
+        return k8BitOffsetBinaryFormat;
+    } else {
+        return streamDesc.mFormatID;
+    }
+}
+
+- (UInt32)channels {
+    return streamDesc.mChannelsPerFrame;
+}
+
+- (Float64)sampleRate {
+    return streamDesc.mSampleRate;
 }
 
 void QueueNoop(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer) {}
