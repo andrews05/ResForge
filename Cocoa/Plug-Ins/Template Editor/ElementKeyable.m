@@ -113,7 +113,7 @@
     [self readCases];
 
     // Set initial value to first case
-    id value = [self.cases[0] value];
+    id value = [(ElementCASE *)self.cases[0] value];
     self.currentSection = self.keyedSections[value];
     [self validateValue:&value forKey:@"value" error:nil];
     [self setValue:value forKey:@"value"];
@@ -155,7 +155,7 @@
     if (!self.isKeyed)
         return [super reverseTransformedValue:value];
     // Value is a CASE element - get the string value
-    return [value value];
+    return [(ElementCASE *)value value];
 }
 
 @end

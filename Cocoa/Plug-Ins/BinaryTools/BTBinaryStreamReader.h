@@ -3,6 +3,7 @@
 @interface BTBinaryStreamReader : NSObject
 
 @property (nonatomic, readonly, retain) NSInputStream* inputStream;
+@property (readonly) NSUInteger bytesRead;
 
 -(id)initWithStream:(NSInputStream*)inputStream andSourceByteOrder:(CFByteOrder)streamByteOrder;
 -(id)initWithData:(NSData*)data andSourceByteOrder:(CFByteOrder)streamByteOrder;

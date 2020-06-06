@@ -84,6 +84,10 @@
     { \
         self.error = [NSError errorWithDomain:BTBinaryStreamErrorDomain code:BTBinaryStreamReaderNotEnoughBytesRead userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat: @"Needed to read %zu bytes, but read only %lu.", (unsigned long)valueSize, readResult]}]; \
     } \
+    if (readResult > 0) \
+    { \
+        _bytesRead += readResult; \
+    } \
     \
     internalValue = convert_##internal_type(internalValue); \
     return_type* returnValue = (return_type*)&internalValue; \
@@ -118,12 +122,14 @@ GENERATE_METHOD(Double, double, uint64_t)
     if (numberOfByteRead == bytesToRead)
     {
         result = [NSData dataWithBytesNoCopy:readBuffer length:numberOfByteRead freeWhenDone:YES];
+        _bytesRead += numberOfByteRead;
     }
     else if (numberOfByteRead > 0)
     {
         result = [NSData dataWithBytes:readBuffer length:numberOfByteRead];
         self.error = [NSError errorWithDomain:BTBinaryStreamErrorDomain code:BTBinaryStreamReaderNotEnoughBytesRead userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat: @"Needed to read %lu bytes, but read only %ld.", (unsigned long)bytesToRead, (long)numberOfByteRead]}];
         free(readBuffer);
+        _bytesRead += numberOfByteRead;
     }
     else if (numberOfByteRead == 0)
     {

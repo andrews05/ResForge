@@ -2,10 +2,10 @@
 #import <AVKit/AVKit.h>
 
 #import "ResKnifePluginProtocol.h"
-#import "ResKnifeResourceProtocol.h"
+#import "SoundResource.h"
 
 @interface SoundWindowController : NSWindowController <ResKnifePlugin>
-@property id <ResKnifeResource> resource;
+@property SoundResource *sound;
 @property IBOutlet AVPlayerView *player;
 
 @end
