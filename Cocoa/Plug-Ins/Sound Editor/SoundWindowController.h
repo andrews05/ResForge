@@ -12,5 +12,6 @@
 @property IBOutlet NSTextField *format;
 @property IBOutlet NSTextField *channels;
 @property IBOutlet NSTextField *sampleRate;
+@property IBOutlet NSTextField *duration;
 
 @end

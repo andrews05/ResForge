@@ -19,7 +19,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NSPrincipalClass</key>
-	<string>SoundWindowController</string>
+	<string>${SWIFT_MODULE_NAME}.SoundWindowController</string>
 	<key>RKSupportedTypes</key>
 	<array>
 		<dict>

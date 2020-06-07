@@ -768,7 +768,7 @@ typedef Snd2ListResource *              Snd2ListPtr;
 typedef Snd2ListPtr *                   Snd2ListHandle;
 typedef Snd2ListHandle                  Snd2ListHndl;
 struct SoundHeader {
-  Ptr                 samplePtr;              /*if NIL then samples are in sampleArea*/
+  unsigned long       samplePtr;              /*if NIL then samples are in sampleArea*/
   unsigned long       length;                 /*length of sound in bytes*/
   UnsignedFixed       sampleRate;             /*sample rate for this sound*/
   unsigned long       loopStart;              /*start of looping portion*/
@@ -780,7 +780,7 @@ struct SoundHeader {
 typedef struct SoundHeader              SoundHeader;
 typedef SoundHeader *                   SoundHeaderPtr;
 struct CmpSoundHeader {
-  Ptr                 samplePtr;              /*if nil then samples are in sample area*/
+  unsigned long       samplePtr;              /*if nil then samples are in sample area*/
   unsigned long       numChannels;            /*number of channels i.e. mono = 1*/
   UnsignedFixed       sampleRate;             /*sample rate in Apples Fixed point representation*/
   unsigned long       loopStart;              /*loopStart of sound before compression*/
@@ -789,11 +789,11 @@ struct CmpSoundHeader {
   UInt8               baseFrequency;          /*same meaning as regular SoundHeader*/
   unsigned long       numFrames;              /*length in frames ( packetFrames or sampleFrames )*/
   extended80          AIFFSampleRate;         /*IEEE sample rate*/
-  Ptr                 markerChunk;            /*sync track*/
+  unsigned long       markerChunk;            /*sync track*/
   OSType              format;                 /*data format type, was futureUse1*/
   unsigned long       futureUse2;             /*reserved by Apple*/
-  StateBlockPtr       stateVars;              /*pointer to State Block*/
-  LeftOverBlockPtr    leftOverSamples;        /*used to save truncated samples between compression calls*/
+  unsigned long       stateVars;              /*pointer to State Block*/
+  unsigned long       leftOverSamples;        /*used to save truncated samples between compression calls*/
   short               compressionID;          /*0 means no compression, non zero means compressionID*/
   unsigned short      packetSize;             /*number of bits in compressed sample packet*/
   unsigned short      snthID;                 /*resource ID of Sound Manager snth that contains NRT C/E*/
@@ -803,7 +803,7 @@ struct CmpSoundHeader {
 typedef struct CmpSoundHeader           CmpSoundHeader;
 typedef CmpSoundHeader *                CmpSoundHeaderPtr;
 struct ExtSoundHeader {
-  Ptr                 samplePtr;              /*if nil then samples are in sample area*/
+  unsigned long       samplePtr;              /*if nil then samples are in sample area*/
   unsigned long       numChannels;            /*number of channels,  ie mono = 1*/
   UnsignedFixed       sampleRate;             /*sample rate in Apples Fixed point representation*/
   unsigned long       loopStart;              /*same meaning as regular SoundHeader*/
@@ -812,9 +812,9 @@ struct ExtSoundHeader {
   UInt8               baseFrequency;          /*same meaning as regular SoundHeader*/
   unsigned long       numFrames;              /*length in total number of frames*/
   extended80          AIFFSampleRate;         /*IEEE sample rate*/
-  Ptr                 markerChunk;            /*sync track*/
-  Ptr                 instrumentChunks;       /*AIFF instrument chunks*/
-  Ptr                 AESRecording;
+  unsigned long       markerChunk;            /*sync track*/
+  unsigned long       instrumentChunks;       /*AIFF instrument chunks*/
+  unsigned long       AESRecording;
   unsigned short      sampleSize;             /*number of bits in sample*/
   unsigned short      futureUse1;             /*reserved by Apple*/
   unsigned long       futureUse2;             /*reserved by Apple*/

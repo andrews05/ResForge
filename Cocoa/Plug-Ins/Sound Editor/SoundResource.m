@@ -20,9 +20,57 @@
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)resource {
     if (self = [super init]) {
-        [self parse:resource.data];
+        _valid = [self parse:resource.data];
     }
     return self;
+}
+
+- (instancetype)initWithURL:(NSURL *)url format:(OSType)format channels:(UInt32)channels sampleRate:(Float64)sampleRate {
+    if (self = [super init]) {
+        OSStatus err;
+        ExtAudioFileRef fRef;
+        UInt32 streamDescSize = sizeof(streamDesc);
+        err = ExtAudioFileOpenURL((__bridge CFURLRef _Nonnull)(url), &fRef);
+        err = ExtAudioFileGetProperty(fRef, kExtAudioFileProperty_FileDataFormat, &streamDescSize, &streamDesc);
+
+        [self setStreamDescriptionFormat:format channels:channels sampleRate:sampleRate];
+        err = ExtAudioFileSetProperty(fRef, kExtAudioFileProperty_ClientDataFormat, streamDescSize, &streamDesc);
+    }
+    return self;
+}
+
+- (BOOL)setStreamDescriptionFormat:(OSType)format channels:(UInt32)channels sampleRate:(Float64)sampleRate {
+    if (sampleRate > 0) {
+        streamDesc.mSampleRate = sampleRate;
+    }
+    if (channels > 0) {
+        streamDesc.mChannelsPerFrame = channels;
+    }
+    streamDesc.mFormatID = format;
+    streamDesc.mFormatFlags = 0;
+    if (format == kIMACompression) {
+        streamDesc.mBitsPerChannel = 0;
+        streamDesc.mBytesPerFrame = 0;
+        streamDesc.mFramesPerPacket = 64;
+        streamDesc.mBytesPerPacket = 34;
+    } else {
+        if (format == k8BitOffsetBinaryFormat) {
+            streamDesc.mBitsPerChannel = 8;
+            streamDesc.mFormatID = kAudioFormatLinearPCM;
+        } else if (format == k16BitBigEndianFormat) {
+            streamDesc.mBitsPerChannel = 16;
+            streamDesc.mFormatID = kAudioFormatLinearPCM;
+            streamDesc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsBigEndian;
+        } else if (format == kALawCompression || format == kULawCompression) {
+            streamDesc.mBitsPerChannel = 8;
+        } else {
+            return false;
+        }
+        streamDesc.mBytesPerFrame = (UInt32)((streamDesc.mBitsPerChannel/8) * streamDesc.mChannelsPerFrame);
+        streamDesc.mFramesPerPacket = 1;
+        streamDesc.mBytesPerPacket = streamDesc.mBytesPerFrame * streamDesc.mFramesPerPacket;
+    }
+    return true;
 }
 
 - (BOOL)parse:(NSData *)data {
@@ -126,32 +174,8 @@
     }
     
     // Construct stream description
-    streamDesc.mSampleRate = FixedToFloat(header.sampleRate);
-    streamDesc.mChannelsPerFrame = (UInt32)numChannels;
-    streamDesc.mFormatID = format;
-    streamDesc.mFormatFlags = 0;
-    if (format == kIMACompression) {
-        streamDesc.mBitsPerChannel = 0;
-        streamDesc.mBytesPerFrame = 0;
-        streamDesc.mFramesPerPacket = 64;
-        streamDesc.mBytesPerPacket = 34;
-    } else {
-        if (format == k8BitOffsetBinaryFormat) {
-            streamDesc.mFormatID = kAudioFormatLinearPCM;
-        } else if (format == k16BitBigEndianFormat) {
-            streamDesc.mFormatID = kAudioFormatLinearPCM;
-            streamDesc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsBigEndian;
-        } else if (format == kALawCompression || format == kULawCompression) {
-            sampleSize /= 2;
-        } else {
-            // Legacy formats such as MACE are unsupported on current macOS
-            return false;
-        }
-        streamDesc.mBitsPerChannel = sampleSize;
-        streamDesc.mBytesPerFrame = (UInt32)((sampleSize/8) * numChannels);
-        streamDesc.mFramesPerPacket = 1;
-        streamDesc.mBytesPerPacket = streamDesc.mBytesPerFrame * streamDesc.mFramesPerPacket;
-    }
+    BOOL valid = [self setStreamDescriptionFormat:format channels:(UInt32)numChannels sampleRate:FixedToFloat(header.sampleRate)];
+    if (!valid) return false;
 
     // Setup audio queue
     UInt32 byteSize = (UInt32)(data.length - stream.bytesRead);
@@ -206,6 +230,12 @@
 
 - (Float64)sampleRate {
     return streamDesc.mSampleRate;
+}
+
+- (Float64)duration {
+    if (!streamDesc.mBytesPerPacket) return 0;
+    UInt32 numFrames = (bufferRef->mAudioDataByteSize * streamDesc.mFramesPerPacket) / streamDesc.mBytesPerPacket;
+    return numFrames / streamDesc.mSampleRate;
 }
 
 void QueueNoop(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer) {}
