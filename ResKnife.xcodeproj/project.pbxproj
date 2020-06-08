@@ -13,6 +13,14 @@
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
+		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
+		4927A49D248E244500CD3E5A /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A492248E244500CD3E5A /* BinaryDataReader.swift */; };
+		4927A49F248E244500CD3E5A /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4927A494248E244500CD3E5A /* LICENSE */; };
+		4927A4A0248E244500CD3E5A /* BinaryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A495248E244500CD3E5A /* BinaryData.swift */; };
+		4927A4A1248E244500CD3E5A /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A496248E244500CD3E5A /* Common.swift */; };
+		4927A4A2248E244500CD3E5A /* IntegerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A497248E244500CD3E5A /* IntegerType.swift */; };
+		4927A4A5248E244500CD3E5A /* Tuple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A49A248E244500CD3E5A /* Tuple.swift */; };
+		4927A4A6248E244500CD3E5A /* BinaryDataErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A49B248E244500CD3E5A /* BinaryDataErrors.swift */; };
 		493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C3244C2B5000E1EAE4 /* ElementBFLG.h */; };
 		493229C6244C2B5000E1EAE4 /* ElementBFLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229C4244C2B5000E1EAE4 /* ElementBFLG.m */; };
 		493229C9244C3A0800E1EAE4 /* ElementWFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C7244C3A0800E1EAE4 /* ElementWFLG.h */; };
@@ -55,8 +63,6 @@
 		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
 		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4953F5A92488795B0002340F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4953F5A82488795B0002340F /* AVKit.framework */; };
-		4953F5CD2489EC840002340F /* BTBinaryStreamReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4953F5CA2489EC4E0002340F /* BTBinaryStreamReader.m */; };
-		4953F5CE2489F1C20002340F /* BTBinaryStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4953F5C82489EC4E0002340F /* BTBinaryStreamWriter.m */; };
 		4962B274245535280065590E /* ElementList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B272245535270065590E /* ElementList.h */; };
 		4962B275245535280065590E /* ElementList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B273245535270065590E /* ElementList.m */; };
 		4962B27824569EE50065590E /* ElementWBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B27624569EE50065590E /* ElementWBIT.h */; };
@@ -471,7 +477,6 @@
 		3D0933E804DF317D00DD74B1 /* ElementPSTR.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementPSTR.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3D0933EE04DF381900DD74B1 /* ElementDWRD.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDWRD.m; sourceTree = "<group>"; };
 		3D0933EF04DF381900DD74B1 /* ElementDWRD.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDWRD.h; sourceTree = "<group>"; };
-		3D0933F404DFD7CF00DD74B1 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = SOURCE_ROOT; };
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TemplateWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TemplateWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -493,6 +498,13 @@
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		4927A492248E244500CD3E5A /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
+		4927A494248E244500CD3E5A /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		4927A495248E244500CD3E5A /* BinaryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryData.swift; sourceTree = "<group>"; };
+		4927A496248E244500CD3E5A /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		4927A497248E244500CD3E5A /* IntegerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerType.swift; sourceTree = "<group>"; };
+		4927A49A248E244500CD3E5A /* Tuple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tuple.swift; sourceTree = "<group>"; };
+		4927A49B248E244500CD3E5A /* BinaryDataErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataErrors.swift; sourceTree = "<group>"; };
 		493229C3244C2B5000E1EAE4 /* ElementBFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBFLG.h; sourceTree = "<group>"; };
 		493229C4244C2B5000E1EAE4 /* ElementBFLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBFLG.m; sourceTree = "<group>"; };
 		493229C7244C3A0800E1EAE4 /* ElementWFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementWFLG.h; sourceTree = "<group>"; };
@@ -1040,6 +1052,21 @@
 			path = "Icon Editor";
 			sourceTree = "<group>";
 		};
+		4927A491248E244500CD3E5A /* BinarySwift */ = {
+			isa = PBXGroup;
+			children = (
+				4927A494248E244500CD3E5A /* LICENSE */,
+				4927A495248E244500CD3E5A /* BinaryData.swift */,
+				4927A49B248E244500CD3E5A /* BinaryDataErrors.swift */,
+				4927A492248E244500CD3E5A /* BinaryDataReader.swift */,
+				4927A496248E244500CD3E5A /* Common.swift */,
+				4927A497248E244500CD3E5A /* IntegerType.swift */,
+				4927A49A248E244500CD3E5A /* Tuple.swift */,
+			);
+			name = BinarySwift;
+			path = ../../../../Downloads/BinarySwift;
+			sourceTree = "<group>";
+		};
 		4953F58F248873DD0002340F /* Sound Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1304,6 +1331,7 @@
 				F5C9ECCE027F474A01A8010C /* Notifications.m */,
 				F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */,
 				F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */,
+				4927A491248E244500CD3E5A /* BinarySwift */,
 				4953F5C52489EC4E0002340F /* BinaryTools */,
 				4953F58F248873DD0002340F /* Sound Editor */,
 				B2B2C3FC15A9451800D6F61C /* Pattern Editor */,
@@ -1361,7 +1389,6 @@
 			isa = PBXGroup;
 			children = (
 				3D0ABFBC04E172F700C85300 /* README.txt */,
-				3D0933F404DFD7CF00DD74B1 /* TODO.txt */,
 				3D35755A04DAEB4300B8225B /* main.m */,
 				F5B5881C0156D40B01000001 /* Classes */,
 				F5594EE9021F3E2301A80001 /* Categories */,
@@ -1910,6 +1937,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4927A49F248E244500CD3E5A /* LICENSE in Resources */,
 				4953F5A2248875610002340F /* SoundWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2060,10 +2088,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4927A4A1248E244500CD3E5A /* Common.swift in Sources */,
+				4927A4A6248E244500CD3E5A /* BinaryDataErrors.swift in Sources */,
+				4927A4A2248E244500CD3E5A /* IntegerType.swift in Sources */,
+				4927A4A0248E244500CD3E5A /* BinaryData.swift in Sources */,
+				4927A48C248E162F00CD3E5A /* Sound.swift in Sources */,
+				4927A4A5248E244500CD3E5A /* Tuple.swift in Sources */,
 				4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */,
-				4953F5CE2489F1C20002340F /* BTBinaryStreamWriter.m in Sources */,
+				4927A49D248E244500CD3E5A /* BinaryDataReader.swift in Sources */,
 				4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */,
-				4953F5CD2489EC840002340F /* BTBinaryStreamReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2591,6 +2624,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Sound Editor/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -2608,6 +2645,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Sound Editor/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";

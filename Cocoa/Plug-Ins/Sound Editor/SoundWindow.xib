@@ -54,7 +54,7 @@ IA
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I6o-Jo-YiD">
-                        <rect key="frame" x="75" y="234" width="134" height="16"/>
+                        <rect key="frame" x="75" y="234" width="195" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="eqO-Cu-nL5">
                             <font key="font" metaFont="system"/>

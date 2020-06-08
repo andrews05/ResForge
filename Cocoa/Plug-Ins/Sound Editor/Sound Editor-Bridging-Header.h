@@ -4,5 +4,3 @@
 
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"
-#import "BTBinaryStreamReader.h"
-#include "Sound.h"

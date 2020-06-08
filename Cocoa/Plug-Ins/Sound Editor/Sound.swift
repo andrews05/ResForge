@@ -1,114 +1,79 @@
-enum SampleRate : UInt32 {
-    case rate48khz                      = 0xbb800000 /*48000.00000 in fixed-point*/
-    case rate44khz                      = 0xac440000 /*44100.00000 in fixed-point*/
-    case rate32khz                      = 0x7d000000 /*32000.00000 in fixed-point*/
-    case rate22050hz                    = 0x56220000 /*22050.00000 in fixed-point*/
-    case rate22khz                      = 0x56ee8ba3 /*22254.54545 in fixed-point*/
-    case rate16khz                      = 0x3e800000 /*16000.00000 in fixed-point*/
-    case rate11khz                      = 0x2b7745d1 /*11127.27273 in fixed-point*/
-    case rate11025hz                    = 0x2b110000 /*11025.00000 in fixed-point*/
-    case rate8khz                       = 0x1f400000 /* 8000.00000 in fixed-point*/
-}
+/*
+Sound Manager Interfaces
+Cconverted from CarbonSound/Sound.h
+*/
+
+let rate48khz                      = 0xbb800000 /*48000.00000 in fixed-point*/
+let rate44khz                      = 0xac440000 /*44100.00000 in fixed-point*/
+let rate32khz                      = 0x7d000000 /*32000.00000 in fixed-point*/
+let rate22050hz                    = 0x56220000 /*22050.00000 in fixed-point*/
+let rate22khz                      = 0x56ee8ba3 /*22254.54545 in fixed-point*/
+let rate16khz                      = 0x3e800000 /*16000.00000 in fixed-point*/
+let rate11khz                      = 0x2b7745d1 /*11127.27273 in fixed-point*/
+let rate11025hz                    = 0x2b110000 /*11025.00000 in fixed-point*/
+let rate8khz                       = 0x1f400000 /* 8000.00000 in fixed-point*/
 
 /*synthesizer numbers for SndNewChannel*/
-let sampledSynth                        = 5     /*sampled sound synthesizer*/
+let sampledSynth                   = 5     /*sampled sound synthesizer*/
 
-let kMiddleC                            = 60    /*MIDI note value for middle C*/
+let kMiddleC                       = 60    /*MIDI note value for middle C*/
 
-let dataOffsetFlag                      = 0x8000
+let dataOffsetFlag                 = 0x8000
 
-enum CompressionID : Int16 {
-    case notCompressed                  = 0    /*compression ID's*/
-    case fixedCompression               = -1   /*compression ID for fixed-sized compression*/
-    case variableCompression            = -2   /*compression ID for variable-sized compression*/
-    case twoToOne                       = 1
-    case eightToThree                   = 2
-    case threeToOne                     = 3
-    case sixToOne                       = 4
-    case sixToOnePacketSize             = 8
-    case threeToOnePacketSize           = 16
-}
+let notCompressed                  = 0    /*compression ID's*/
+let fixedCompression               = -1   /*compression ID for fixed-sized compression*/
+let variableCompression            = -2   /*compression ID for variable-sized compression*/
+let twoToOne                       = 1
+let eightToThree                   = 2
+let threeToOne                     = 3
+let sixToOne                       = 4
+let sixToOnePacketSize             = 8
+let threeToOnePacketSize           = 16
 
-enum SoundFormat : UInt16 {
-    case firstSoundFormat               = 0x0001 /*general sound format*/
-    case secondSoundFormat              = 0x0002 /*special sampled sound format (HyperCard)*/
-};
+let firstSoundFormat               = 0x0001 /*general sound format*/
+let secondSoundFormat              = 0x0002 /*special sampled sound format (HyperCard)*/
 
-enum SoundHeaderEncode : UInt8 {
-    case stdSH                          = 0x00  /*Standard sound header encode value*/
-    case extSH                          = 0xFF  /*Extended sound header encode value*/
-    case cmpSH                          = 0xFE  /*Compressed sound header encode value*/
-};
+let stdSH                          = 0x00  /*Standard sound header encode value*/
+let extSH                          = 0xFF  /*Extended sound header encode value*/
+let cmpSH                          = 0xFE  /*Compressed sound header encode value*/
 
 /*command numbers for SndDoCommand and SndDoImmediate*/
-enum SoundCommand : UInt16 {
-    case nullCmd                        = 0
-    case quietCmd                       = 3
-    case flushCmd                       = 4
-    case reInitCmd                      = 5
-    case waitCmd                        = 10
-    case pauseCmd                       = 11
-    case resumeCmd                      = 12
-    case callBackCmd                    = 13
-    case syncCmd                        = 14
-    case availableCmd                   = 24
-    case versionCmd                     = 25
-    case volumeCmd                      = 46   /*sound manager 3.0 or later only*/
-    case getVolumeCmd                   = 47   /*sound manager 3.0 or later only*/
-    case clockComponentCmd              = 50   /*sound manager 3.2.1 or later only*/
-    case getClockComponentCmd           = 51   /*sound manager 3.2.1 or later only*/
-    case scheduledSoundCmd              = 52   /*sound manager 3.3 or later only*/
-    case linkSoundComponentsCmd         = 53   /*sound manager 3.3 or later only*/
-    case soundCmd                       = 80
-    case bufferCmd                      = 81
-    case rateMultiplierCmd              = 86
-    case getRateMultiplierCmd           = 87
-};
+let nullCmd                        = 0
+let quietCmd                       = 3
+let flushCmd                       = 4
+let reInitCmd                      = 5
+let waitCmd                        = 10
+let pauseCmd                       = 11
+let resumeCmd                      = 12
+let callBackCmd                    = 13
+let syncCmd                        = 14
+let availableCmd                   = 24
+let versionCmd                     = 25
+let volumeCmd                      = 46   /*sound manager 3.0 or later only*/
+let getVolumeCmd                   = 47   /*sound manager 3.0 or later only*/
+let clockComponentCmd              = 50   /*sound manager 3.2.1 or later only*/
+let getClockComponentCmd           = 51   /*sound manager 3.2.1 or later only*/
+let scheduledSoundCmd              = 52   /*sound manager 3.3 or later only*/
+let linkSoundComponentsCmd         = 53   /*sound manager 3.3 or later only*/
+let soundCmd                       = 80
+let bufferCmd                      = 81
+let rateMultiplierCmd              = 86
+let getRateMultiplierCmd           = 87
 
-enum InitOptions : UInt16 {
-    case initChanLeft                   = 0x0002 /*left stereo channel*/
-    case initChanRight                  = 0x0003 /*right stereo channel*/
-    case initNoInterp                   = 0x0004 /*no linear interpolation*/
-    case initNoDrop                     = 0x0008 /*no drop-sample conversion*/
-    case initMono                       = 0x0080 /*monophonic channel*/
-    case initStereo                     = 0x00C0 /*stereo channel*/
-    case initMACE3                      = 0x0300 /*MACE 3:1*/
-    case initMACE6                      = 0x0400 /*MACE 6:1*/
-}
+let initChanLeft                   = 0x0002 /*left stereo channel*/
+let initChanRight                  = 0x0003 /*right stereo channel*/
+let initNoInterp                   = 0x0004 /*no linear interpolation*/
+let initNoDrop                     = 0x0008 /*no drop-sample conversion*/
+let initMono                       = 0x0080 /*monophonic channel*/
+let initStereo                     = 0x00C0 /*stereo channel*/
+let initMACE3                      = 0x0300 /*MACE 3:1*/
+let initMACE6                      = 0x0400 /*MACE 6:1*/
 
 /*Format Types*/
-enum Format {
-    case kSoundNotCompressed            = 'NONE', /*sound is not compressed*/
-    case k8BitOffsetBinaryFormat        = 'raw ', /*8-bit offset binary*/
-    case k16BitBigEndianFormat          = 'twos', /*16-bit big endian*/
-    case k16BitLittleEndianFormat       = 'sowt', /*16-bit little endian*/
-    case kFloat32Format                 = 'fl32', /*32-bit floating point*/
-    case kFloat64Format                 = 'fl64', /*64-bit floating point*/
-    case k24BitFormat                   = 'in24', /*24-bit integer*/
-    case k32BitFormat                   = 'in32', /*32-bit integer*/
-    case k32BitLittleEndianFormat       = '23ni', /*32-bit little endian integer */
-    case kMACE3Compression              = 'MAC3', /*MACE 3:1*/
-    case kMACE6Compression              = 'MAC6', /*MACE 6:1*/
-    case kCDXA4Compression              = 'cdx4', /*CD/XA 4:1*/
-    case kCDXA2Compression              = 'cdx2', /*CD/XA 2:1*/
-    case kIMACompression                = 'ima4', /*IMA 4:1*/
-    case kULawCompression               = 'ulaw', /*µLaw 2:1*/
-    case kALawCompression               = 'alaw', /*aLaw 2:1*/
-    case kMicrosoftADPCMFormat          = 0x6D730002, /*Microsoft ADPCM - ACM code 2*/
-    case kDVIIntelIMAFormat             = 0x6D730011, /*DVI/Intel IMA ADPCM - ACM code 17*/
-    case kMicrosoftGSMCompression       = 0x6D730031, /*Microsoft GSM 6.10 - ACM code 49*/
-    case kDVAudioFormat                 = 'dvca', /*DV Audio*/
-    case kQDesignCompression            = 'QDMC', /*QDesign music*/
-    case kQDesign2Compression           = 'QDM2', /*QDesign2 music*/
-    case kQUALCOMMCompression           = 'Qclp', /*QUALCOMM PureVoice*/
-    case kOffsetBinary                  = k8BitOffsetBinaryFormat, /*for compatibility*/
-    case kTwosComplement                = k16BitBigEndianFormat, /*for compatibility*/
-    case kLittleEndianFormat            = k16BitLittleEndianFormat, /*for compatibility*/
-    case kMPEGLayer3Format              = 0x6D730055, /*MPEG Layer 3, CBR only (pre QT4.1)*/
-    case kFullMPEGLay3Format            = '.mp3', /*MPEG Layer 3, CBR & VBR (QT4.1 and later)*/
-    case kVariableDurationDVAudioFormat = 'vdva', /*Variable Duration DV Audio*/
-    case kMPEG4AudioFormat              = 'mp4a'
-};
+let kSoundNotCompressed: UInt32         = 0x4E4F4E45 /*'NONE' sound is not compressed*/
+let k8BitOffsetBinaryFormat: UInt32     = 0x72617720 /*'raw ' 8-bit offset binary*/
+let k16BitBigEndianFormat: UInt32       = 0x74776F73 /*'twos' 16-bit big endian*/
+let k16BitLittleEndianFormat: UInt32    = 0x736F7774 /*'sowt' 16-bit little endian*/
 
 /*
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -116,102 +81,86 @@ enum Format {
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+typealias UnsignedFixed = UInt32
+let fixed1: UInt32 = 1<<16
+func FixedToDouble(_ x: UnsignedFixed) -> Double {
+    return Double(x) * 1.0/Double(fixed1)
+}
+
+struct extended80 {
+    var exp: Int16
+    var man: UInt64
+}
+
 struct SndCommand {
-  unsigned short      cmd;
-  short               param1;
-  long                param2;
-};
-typedef struct SndCommand               SndCommand;
+    var cmd: UInt16
+    var param1: Int16
+    var param2: Int32
+}
 
 struct ModRef {
-  unsigned short      modNumber;
-  long                modInit;
-};
-typedef struct ModRef                   ModRef;
+    var modNumber: UInt16
+    var modInit: Int32
+}
 struct SndListResource {
-  short               format;
-  short               numModifiers;
-  ModRef              modifierPart[1];
-  short               numCommands;
-  SndCommand          commandPart[1];
-  UInt8               dataPart[1];
-};
-typedef struct SndListResource          SndListResource;
-typedef SndListResource *               SndListPtr;
-typedef SndListPtr *                    SndListHandle;
-typedef SndListHandle                   SndListHndl;
+    var format: Int16
+    var numModifiers: Int16
+    var modifierPart: ModRef
+    var numCommands: Int16
+    var commandPart: SndCommand
+}
 /*HyperCard sound resource format*/
 struct Snd2ListResource {
-  short               format;
-  short               refCount;
-  short               numCommands;
-  SndCommand          commandPart[1];
-  UInt8               dataPart[1];
-};
-typedef struct Snd2ListResource         Snd2ListResource;
-typedef Snd2ListResource *              Snd2ListPtr;
-typedef Snd2ListPtr *                   Snd2ListHandle;
-typedef Snd2ListHandle                  Snd2ListHndl;
+    var format: Int16
+    var refCount: Int16
+    var numCommands: Int16
+    var commandPart: SndCommand
+}
 struct SoundHeader {
-  unsigned long       samplePtr;              /*if NIL then samples are in sampleArea*/
-  unsigned long       length;                 /*length of sound in bytes*/
-  UnsignedFixed       sampleRate;             /*sample rate for this sound*/
-  unsigned long       loopStart;              /*start of looping portion*/
-  unsigned long       loopEnd;                /*end of looping portion*/
-  UInt8               encode;                 /*header encoding*/
-  UInt8               baseFrequency;          /*baseFrequency value*/
-  UInt8               sampleArea[1];          /*space for when samples follow directly*/
-};
-typedef struct SoundHeader              SoundHeader;
-typedef SoundHeader *                   SoundHeaderPtr;
+    var samplePtr: UInt32              /*if NIL then samples are in sampleArea*/
+    var length: UInt32                 /*length of sound in bytes*/
+    var sampleRate: UnsignedFixed      /*sample rate for this sound*/
+    var loopStart: UInt32              /*start of looping portion*/
+    var loopEnd: UInt32                /*end of looping portion*/
+    var encode: UInt8                  /*header encoding*/
+    var baseFrequency: UInt8           /*baseFrequency value*/
+}
 struct CmpSoundHeader {
-  unsigned long       samplePtr;              /*if nil then samples are in sample area*/
-  unsigned long       numChannels;            /*number of channels i.e. mono = 1*/
-  UnsignedFixed       sampleRate;             /*sample rate in Apples Fixed point representation*/
-  unsigned long       loopStart;              /*loopStart of sound before compression*/
-  unsigned long       loopEnd;                /*loopEnd of sound before compression*/
-  UInt8               encode;                 /*data structure used , stdSH, extSH, or cmpSH*/
-  UInt8               baseFrequency;          /*same meaning as regular SoundHeader*/
-  unsigned long       numFrames;              /*length in frames ( packetFrames or sampleFrames )*/
-  Float80             AIFFSampleRate;         /*IEEE sample rate*/
-  unsigned long       markerChunk;            /*sync track*/
-  OSType              format;                 /*data format type, was futureUse1*/
-  unsigned long       futureUse2;             /*reserved by Apple*/
-  unsigned long       stateVars;              /*pointer to State Block*/
-  unsigned long       leftOverSamples;        /*used to save truncated samples between compression calls*/
-  short               compressionID;          /*0 means no compression, non zero means compressionID*/
-  unsigned short      packetSize;             /*number of bits in compressed sample packet*/
-  unsigned short      snthID;                 /*resource ID of Sound Manager snth that contains NRT C/E*/
-  unsigned short      sampleSize;             /*number of bits in non-compressed sample*/
-  UInt8               sampleArea[1];          /*space for when samples follow directly*/
-};
-typedef struct CmpSoundHeader           CmpSoundHeader;
-typedef CmpSoundHeader *                CmpSoundHeaderPtr;
+//    var samplePtr: UInt32              /*if nil then samples are in sample area*/
+//    var numChannels: UInt32            /*number of channels i.e. mono = 1*/
+//    var sampleRate: UnsignedFixed      /*sample rate in Apples Fixed point representation*/
+//    var loopStart: UInt32              /*loopStart of sound before compression*/
+//    var loopEnd: UInt32                /*loopEnd of sound before compression*/
+//    var encode: UInt8                  /*data structure used , stdSH, extSH, or cmpSH*/
+//    var baseFrequency: UInt8           /*same meaning as regular SoundHeader*/
+    var numFrames: UInt32              /*length in frames ( packetFrames or sampleFrames )*/
+    var AIFFSampleRate: extended80     /*IEEE sample rate*/
+    var markerChunk: UInt32            /*sync track*/
+    var format: OSType                 /*data format type, was futureUse1*/
+    var futureUse2: UInt32             /*reserved by Apple*/
+    var stateVars: UInt32              /*pointer to State Block*/
+    var leftOverSamples: UInt32        /*used to save truncated samples between compression calls*/
+    var compressionID: Int16           /*0 means no compression, non zero means compressionID*/
+    var packetSize: UInt16             /*number of bits in compressed sample packet*/
+    var snthID: UInt16                 /*resource ID of Sound Manager snth that contains NRT C/E*/
+    var sampleSize: UInt16             /*number of bits in non-compressed sample*/
+}
 struct ExtSoundHeader {
-  unsigned long       samplePtr;              /*if nil then samples are in sample area*/
-  unsigned long       numChannels;            /*number of channels,  ie mono = 1*/
-  UnsignedFixed       sampleRate;             /*sample rate in Apples Fixed point representation*/
-  unsigned long       loopStart;              /*same meaning as regular SoundHeader*/
-  unsigned long       loopEnd;                /*same meaning as regular SoundHeader*/
-  UInt8               encode;                 /*data structure used , stdSH, extSH, or cmpSH*/
-  UInt8               baseFrequency;          /*same meaning as regular SoundHeader*/
-  unsigned long       numFrames;              /*length in total number of frames*/
-  Float80             AIFFSampleRate;         /*IEEE sample rate*/
-  unsigned long       markerChunk;            /*sync track*/
-  unsigned long       instrumentChunks;       /*AIFF instrument chunks*/
-  unsigned long       AESRecording;
-  unsigned short      sampleSize;             /*number of bits in sample*/
-  unsigned short      futureUse1;             /*reserved by Apple*/
-  unsigned long       futureUse2;             /*reserved by Apple*/
-  unsigned long       futureUse3;             /*reserved by Apple*/
-  unsigned long       futureUse4;             /*reserved by Apple*/
-  UInt8               sampleArea[1];          /*space for when samples follow directly*/
-};
-typedef struct ExtSoundHeader           ExtSoundHeader;
-typedef ExtSoundHeader *                ExtSoundHeaderPtr;
-union SoundHeaderUnion {
-  SoundHeader         stdHeader;
-  CmpSoundHeader      cmpHeader;
-  ExtSoundHeader      extHeader;
-};
-typedef union SoundHeaderUnion          SoundHeaderUnion;
+//    var samplePtr: UInt32              /*if nil then samples are in sample area*/
+//    var numChannels: UInt32            /*number of channels i.e. mono = 1*/
+//    var sampleRate: UnsignedFixed      /*sample rate in Apples Fixed point representation*/
+//    var loopStart: UInt32              /*same meaning as regular SoundHeader*/
+//    var loopEnd: UInt32                /*same meaning as regular SoundHeader*/
+//    var encode: UInt8                  /*data structure used , stdSH, extSH, or cmpSH*/
+//    var baseFrequency: UInt8           /*same meaning as regular SoundHeader*/
+    var numFrames: UInt32              /*length in total number of frames*/
+    var AIFFSampleRate: extended80     /*IEEE sample rate*/
+    var markerChunk: UInt32            /*sync track*/
+    var instrumentChunks: UInt32       /*AIFF instrument chunks*/
+    var AESRecording: UInt32
+    var sampleSize: UInt16             /*number of bits in sample*/
+    var futureUse1: UInt16             /*reserved by Apple*/
+    var futureUse2: UInt32             /*reserved by Apple*/
+    var futureUse3: UInt32             /*reserved by Apple*/
+    var futureUse4: UInt32             /*reserved by Apple*/
+}

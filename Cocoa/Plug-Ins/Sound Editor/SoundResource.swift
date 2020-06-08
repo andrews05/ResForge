@@ -1,12 +1,5 @@
 import AudioToolbox
 
-typealias extended80 = Darwin.Float80
-typealias UnsignedFixed = UInt32
-let fixed1: UInt32 = 1<<16
-func FixedToDouble(_ x: UnsignedFixed) -> Double {
-    return Double(x) * 1.0/Double(fixed1)
-}
-
 class SoundResource {
     var valid = false
     var streamDesc = AudioStreamBasicDescription()
@@ -16,36 +9,52 @@ class SoundResource {
     static var supportedFormats = [
         k8BitOffsetBinaryFormat: "8 bit uncompressed",
         k16BitBigEndianFormat: "16 bit uncompressed",
-        kIMACompression: "IMA 4:1",
-        kALawCompression: "A-Law 2:1",
-        kULawCompression: "µ-Law 2:1"
+        kAudioFormatAppleIMA4: "IMA 4:1",
+        kAudioFormatALaw: "A-Law 2:1",
+        kAudioFormatULaw: "µ-Law 2:1"
     ]
 
     init(resource: ResKnifeResource) {
-        valid = parse(resource.data!)
+        do {
+            valid = try parse(resource.data!)
+        } catch {
+            valid = false
+        }
     }
     
-    init(url: URL, format: Int, channels: UInt, sampleRate: Double) {
+    init(url: URL, format: UInt32, channels: UInt32, sampleRate: Double) {
         var err: OSStatus
         var fRef: ExtAudioFileRef? = nil
-        var streamDescSize = UInt32(MemoryLayout.size(ofValue: streamDesc))
+        var inStreamDesc: AudioStreamBasicDescription? = nil
+        var streamDescSize = UInt32(MemoryLayout.size(ofValue: inStreamDesc))
+        var converter: AudioConverterRef? = nil
+        var outStreamDesc = getStreamDescription(format: format, channels: channels, sampleRate: sampleRate)
+        var packetSize = outStreamDesc.mBytesPerPacket
+        var bufferList = AudioBufferList()
+        var packetDesc = AudioStreamPacketDescription(mStartOffset: 0, mVariableFramesInPacket: 0, mDataByteSize: packetSize)
+        
         err = ExtAudioFileOpenURL(url as CFURL, &fRef)
-        err = ExtAudioFileGetProperty(fRef!, kExtAudioFileProperty_FileDataFormat, &streamDescSize, &streamDesc)
+        err = ExtAudioFileGetProperty(fRef!, kExtAudioFileProperty_FileDataFormat, &streamDescSize, &inStreamDesc)
 
-        _ = setStreamDescription(format: format, channels: channels, sampleRate: sampleRate)
-        err = ExtAudioFileSetProperty(fRef!, kExtAudioFileProperty_ClientDataFormat, streamDescSize, &streamDesc)
+//        err = AudioConverterNew(&inStreamDesc!, &outStreamDesc, &converter)
+//        err = AudioConverterFillComplexBuffer(converter!, { (inAudioConverter, ioNumberDataPackets, ioData, outDataPacketDescription, inUserData) -> OSStatus in
+//            return 0
+//        }, nil, &packetSize, &bufferList, &packetDesc)
+//
+//        err = ExtAudioFileSetProperty(fRef!, kExtAudioFileProperty_ClientDataFormat, streamDescSize, &outStreamDesc)
     }
     
-    func setStreamDescription(format: Int, channels: UInt, sampleRate: Double) -> Bool {
+    func getStreamDescription(format: UInt32, channels: UInt32, sampleRate: Double) -> AudioStreamBasicDescription {
+        var streamDesc = AudioStreamBasicDescription()
         if sampleRate > 0 {
             streamDesc.mSampleRate = sampleRate
         }
         if channels > 0 {
-            streamDesc.mChannelsPerFrame = UInt32(channels)
+            streamDesc.mChannelsPerFrame = channels
         }
-        streamDesc.mFormatID = AudioFormatID(format)
+        streamDesc.mFormatID = format
         streamDesc.mFormatFlags = 0
-        if format == kIMACompression {
+        if format == kAudioFormatAppleIMA4 {
             streamDesc.mBitsPerChannel = 0
             streamDesc.mBytesPerFrame = 0
             streamDesc.mFramesPerPacket = 64
@@ -58,37 +67,38 @@ class SoundResource {
                 streamDesc.mBitsPerChannel = 16
                 streamDesc.mFormatID = kAudioFormatLinearPCM
                 streamDesc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsBigEndian
-            } else if format == kALawCompression || format == kULawCompression {
-                streamDesc.mBitsPerChannel = 8;
+            } else if format == kAudioFormatALaw || format == kAudioFormatULaw {
+                streamDesc.mBitsPerChannel = 8
             } else {
-                return false;
+                // Legacy formats such as MACE are unsupported on current macOS
+                streamDesc.mBytesPerPacket = 0
+                return streamDesc
             }
-            streamDesc.mBytesPerFrame = UInt32((streamDesc.mBitsPerChannel/8) * streamDesc.mChannelsPerFrame);
-            streamDesc.mFramesPerPacket = 1;
-            streamDesc.mBytesPerPacket = streamDesc.mBytesPerFrame * streamDesc.mFramesPerPacket;
+            streamDesc.mBytesPerFrame = (streamDesc.mBitsPerChannel/8) * streamDesc.mChannelsPerFrame
+            streamDesc.mFramesPerPacket = 1
+            streamDesc.mBytesPerPacket = streamDesc.mBytesPerFrame * streamDesc.mFramesPerPacket
         }
-        return true
+        return streamDesc
     }
 
-    func parse(_ data: Data) -> Bool {
+    func parse(_ data: Data) throws -> Bool {
         // Read sound headers
-        let stream = BTBinaryStreamReader(data: data, andSourceByteOrder: CFByteOrder(CFByteOrderBigEndian.rawValue))!
-        let soundFormat = stream.readInt16()
+        let reader = BinaryDataReader(BinaryData(data: data, bigEndian: true))
+        let soundFormat: Int16 = try reader.read()
         if soundFormat == firstSoundFormat {
             let list = SndListResource(
                 format: soundFormat,
-                numModifiers: stream.readInt16(),
+                numModifiers: try reader.read(),
                 modifierPart: ModRef(
-                    modNumber: UInt16(stream.readInt16()),
-                    modInit: Int(stream.readInt32())
+                    modNumber: try reader.read(),
+                    modInit: try reader.read()
                 ),
-                numCommands: stream.readInt16(),
+                numCommands: try reader.read(),
                 commandPart: SndCommand(
-                    cmd: UInt16(bitPattern: stream.readInt16()),
-                    param1: stream.readInt16(),
-                    param2: Int(stream.readInt32())
-                ),
-                dataPart: 0
+                    cmd: try reader.read(),
+                    param1: try reader.read(),
+                    param2: try reader.read()
+                )
             )
             if list.numModifiers != 1 ||
                 list.modifierPart.modNumber != sampledSynth ||
@@ -99,14 +109,13 @@ class SoundResource {
         } else if soundFormat == secondSoundFormat {
             let list = Snd2ListResource(
                 format: soundFormat,
-                refCount: stream.readInt16(),
-                numCommands: stream.readInt16(),
+                refCount: try reader.read(),
+                numCommands: try reader.read(),
                 commandPart: SndCommand(
-                    cmd: UInt16(stream.readInt16()),
-                    param1: stream.readInt16(),
-                    param2: Int(stream.readInt32())
-                ),
-                dataPart: 0
+                    cmd: try reader.read(),
+                    param1: try reader.read(),
+                    param2: try reader.read()
+                )
             )
             if list.numCommands != 1 ||
                 list.commandPart.cmd != dataOffsetFlag+bufferCmd {
@@ -117,86 +126,59 @@ class SoundResource {
         }
         
         let header = SoundHeader(
-            samplePtr: UInt(stream.readInt32()),
-            length: UInt(stream.readInt32()),
-            sampleRate: UnsignedFixed(stream.readInt32()),
-            loopStart: UInt(stream.readInt32()),
-            loopEnd: UInt(stream.readInt32()),
-            encode: UInt8(bitPattern: stream.readInt8()),
-            baseFrequency: UInt8(stream.readInt8()),
-            sampleArea: 0
+            samplePtr: try reader.read(),
+            length: try reader.read(),
+            sampleRate: try reader.read(),
+            loopStart: try reader.read(),
+            loopEnd: try reader.read(),
+            encode: try reader.read(),
+            baseFrequency: try reader.read()
         )
         
-        let format: Int
-        let numChannels: UInt
-        let numFrames: UInt
+        let format: UInt32
+        let numChannels: UInt32
+        let numFrames: UInt32
         if header.encode == stdSH {
             numChannels = 1
             numFrames = header.length;
             format = k8BitOffsetBinaryFormat
         } else if (header.encode == extSH) {
             let extHeader = ExtSoundHeader(
-                samplePtr: header.samplePtr,
-                numChannels: header.length,
-                sampleRate: header.sampleRate,
-                loopStart: header.loopStart,
-                loopEnd: header.loopEnd,
-                encode: header.encode,
-                baseFrequency: header.baseFrequency,
-                numFrames: UInt(stream.readInt32()),
+                numFrames: try reader.read(),
                 AIFFSampleRate: extended80(
-                    exp: stream.readInt16(),
-                    man: (
-                        UInt16(stream.readInt16()),
-                        UInt16(stream.readInt16()),
-                        UInt16(stream.readInt16()),
-                        UInt16(stream.readInt16())
-                    )
+                    exp: try reader.read(),
+                    man: try reader.read()
                 ),
-                markerChunk: UInt(stream.readInt32()),
-                instrumentChunks: UInt(stream.readInt32()),
-                AESRecording: UInt(stream.readInt32()),
-                sampleSize: UInt16(stream.readInt16()),
-                futureUse1: UInt16(stream.readInt16()),
-                futureUse2: UInt(stream.readInt32()),
-                futureUse3: UInt(stream.readInt32()),
-                futureUse4: UInt(stream.readInt32()),
-                sampleArea: 0
+                markerChunk: try reader.read(),
+                instrumentChunks: try reader.read(),
+                AESRecording: try reader.read(),
+                sampleSize: try reader.read(),
+                futureUse1: try reader.read(),
+                futureUse2: try reader.read(),
+                futureUse3: try reader.read(),
+                futureUse4: try reader.read()
             )
             format = extHeader.sampleSize == 8 ? k8BitOffsetBinaryFormat : k16BitBigEndianFormat
             numChannels = header.length
             numFrames = extHeader.numFrames
         } else if (header.encode == cmpSH) {
             let cmpHeader = CmpSoundHeader(
-                samplePtr: header.samplePtr,
-                numChannels: header.length,
-                sampleRate: header.sampleRate,
-                loopStart: header.loopStart,
-                loopEnd: header.loopEnd,
-                encode: header.encode,
-                baseFrequency: header.baseFrequency,
-                numFrames: UInt(stream.readInt32()),
+                numFrames: try reader.read(),
                 AIFFSampleRate: extended80(
-                    exp: stream.readInt16(),
-                    man: (
-                        UInt16(bitPattern: stream.readInt16()),
-                        UInt16(bitPattern: stream.readInt16()),
-                        UInt16(bitPattern: stream.readInt16()),
-                        UInt16(bitPattern: stream.readInt16())
-                    )
+                    exp: try reader.read(),
+                    man: try reader.read()
                 ),
-                markerChunk: UInt(stream.readInt32()),
-                format: OSType(stream.readInt32()),
-                futureUse2: UInt(stream.readInt32()),
-                stateVars: UInt(stream.readInt32()),
-                leftOverSamples: UInt(stream.readInt32()),
-                compressionID: stream.readInt16(),
-                packetSize: UInt16(stream.readInt16()),
-                snthID: UInt16(stream.readInt16()),
-                sampleSize: UInt16(stream.readInt16()),
-                sampleArea: 0
+                markerChunk: try reader.read(),
+                format: try reader.read(),
+                futureUse2: try reader.read(),
+                stateVars: try reader.read(),
+                leftOverSamples: try reader.read(),
+                compressionID: try reader.read(),
+                packetSize: try reader.read(),
+                snthID: try reader.read(),
+                sampleSize: try reader.read()
             )
-            format = Int(cmpHeader.format)
+            format = cmpHeader.format
             numChannels = header.length
             numFrames = cmpHeader.numFrames
         } else {
@@ -204,14 +186,14 @@ class SoundResource {
         }
         
         // Construct stream description
-        let valid = setStreamDescription(format:format, channels:numChannels, sampleRate:FixedToDouble(header.sampleRate));
-        if (!valid) {
+        streamDesc = getStreamDescription(format:format, channels:numChannels, sampleRate:FixedToDouble(header.sampleRate));
+        if (streamDesc.mBytesPerPacket == 0) {
             return false
         }
         
         // Setup audio queue
-        var byteSize = UInt32(UInt(data.count) - stream.bytesRead)
-        let expectedSize = UInt32(numFrames * UInt(streamDesc.mBytesPerPacket))
+        var byteSize = UInt32(data.count - reader.readIndex)
+        let expectedSize = numFrames * streamDesc.mBytesPerPacket
         if byteSize > expectedSize {
             byteSize = expectedSize
         }
@@ -220,10 +202,10 @@ class SoundResource {
         err = AudioQueueAllocateBuffer(queueRef!, byteSize, &bufferRef)
         bufferRef!.pointee.mAudioDataByteSize = byteSize
 //        data.withUnsafeBytes({ rawBufferPointer in
-//            bufferRef!.pointee.mAudioData.copyMemory(from: rawBufferPointer.baseAddress!+Int(stream.bytesRead), byteCount: Int(byteSize))
+//            bufferRef!.pointee.mAudioData.copyMemory(from: rawBufferPointer.baseAddress!+reader.readIndex, byteCount: Int(byteSize))
 //        })
         let buff = bufferRef!.pointee.mAudioData.assumingMemoryBound(to: UInt8.self)
-        data.copyBytes(to: buff, from: Int(stream.bytesRead)..<(Int(stream.bytesRead)+Int(byteSize)))
+        data.copyBytes(to: buff, from: reader.readIndex..<(reader.readIndex+Int(byteSize)))
         return true
     }
     
@@ -256,13 +238,13 @@ class SoundResource {
     }
 
     
-    var format: Int {
+    var format: AudioFormatID {
         if streamDesc.mFormatFlags & kAudioFormatFlagIsBigEndian != 0 {
             return k16BitBigEndianFormat
         } else if streamDesc.mFormatID == kAudioFormatLinearPCM {
             return k8BitOffsetBinaryFormat
         } else {
-            return Int(streamDesc.mFormatID)
+            return streamDesc.mFormatID
         }
     }
 
@@ -281,5 +263,4 @@ class SoundResource {
         let numFrames = (bufferRef!.pointee.mAudioDataByteSize * streamDesc.mFramesPerPacket) / streamDesc.mBytesPerPacket
         return Double(numFrames) / streamDesc.mSampleRate
     }
-
 }
