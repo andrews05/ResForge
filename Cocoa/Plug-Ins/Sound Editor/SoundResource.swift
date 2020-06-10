@@ -25,33 +25,36 @@ class SoundResource {
     init(url: URL, format: UInt32, channels: UInt32, sampleRate: Double) {
         var err: OSStatus
         var fRef: ExtAudioFileRef? = nil
-        var inStreamDesc: AudioStreamBasicDescription? = nil
+        var inStreamDesc = AudioStreamBasicDescription()
         var streamDescSize = UInt32(MemoryLayout.size(ofValue: inStreamDesc))
-        var converter: AudioConverterRef? = nil
-        var outStreamDesc = getStreamDescription(format: format, channels: channels, sampleRate: sampleRate)
-        var packetSize = outStreamDesc.mBytesPerPacket
-        var bufferList = AudioBufferList()
-        var packetDesc = AudioStreamPacketDescription(mStartOffset: 0, mVariableFramesInPacket: 0, mDataByteSize: packetSize)
-        
+		var fileFrames: Int64 = 0
+		var propSize = UInt32(MemoryLayout.size(ofValue: fileFrames))
         err = ExtAudioFileOpenURL(url as CFURL, &fRef)
         err = ExtAudioFileGetProperty(fRef!, kExtAudioFileProperty_FileDataFormat, &streamDescSize, &inStreamDesc)
-
-//        err = AudioConverterNew(&inStreamDesc!, &outStreamDesc, &converter)
-//        err = AudioConverterFillComplexBuffer(converter!, { (inAudioConverter, ioNumberDataPackets, ioData, outDataPacketDescription, inUserData) -> OSStatus in
-//            return 0
-//        }, nil, &packetSize, &bufferList, &packetDesc)
-//
-//        err = ExtAudioFileSetProperty(fRef!, kExtAudioFileProperty_ClientDataFormat, streamDescSize, &outStreamDesc)
+        err = ExtAudioFileGetProperty(fRef!, kExtAudioFileProperty_FileLengthFrames, &propSize, &fileFrames)
+		
+		var outStreamDesc = getStreamDescription(format: format, channels: (channels == 0 ? inStreamDesc.mChannelsPerFrame : channels), sampleRate: (sampleRate == 0 ? inStreamDesc.mSampleRate : sampleRate))
+		let byteSize = (UInt32(fileFrames) * outStreamDesc.mBytesPerPacket) / outStreamDesc.mFramesPerPacket
+        err = AudioQueueNewOutput(&outStreamDesc, {_,_,_ in }, nil, nil, nil, 0, &queueRef)
+        err = AudioQueueAllocateBuffer(queueRef!, byteSize, &bufferRef)
+        bufferRef!.pointee.mAudioDataByteSize = byteSize
+		var bufferList = AudioBufferList(
+			mNumberBuffers: 1,
+			mBuffers: AudioBuffer(
+				mNumberChannels: outStreamDesc.mChannelsPerFrame,
+				mDataByteSize: byteSize,
+				mData: bufferRef!.pointee.mAudioData
+			)
+		)
+        err = ExtAudioFileSetProperty(fRef!, kExtAudioFileProperty_ClientDataFormat, streamDescSize, &outStreamDesc)
+		var framesRead = UInt32(fileFrames)
+		err = ExtAudioFileRead(fRef!, &framesRead, &bufferList)
     }
     
     func getStreamDescription(format: UInt32, channels: UInt32, sampleRate: Double) -> AudioStreamBasicDescription {
         var streamDesc = AudioStreamBasicDescription()
-        if sampleRate > 0 {
-            streamDesc.mSampleRate = sampleRate
-        }
-        if channels > 0 {
-            streamDesc.mChannelsPerFrame = channels
-        }
+		streamDesc.mSampleRate = sampleRate
+		streamDesc.mChannelsPerFrame = channels
         streamDesc.mFormatID = format
         streamDesc.mFormatFlags = 0
         if format == kAudioFormatAppleIMA4 {
@@ -215,6 +218,7 @@ class SoundResource {
             err = AudioQueueReset(queueRef)
             err = AudioQueueEnqueueBuffer(queueRef, bufferRef!, 0, nil)
             err = AudioQueueStart(queueRef, nil)
+			NSLog("%d", err)
         }
     }
     

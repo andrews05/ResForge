@@ -14,13 +14,6 @@
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
-		4927A49D248E244500CD3E5A /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A492248E244500CD3E5A /* BinaryDataReader.swift */; };
-		4927A49F248E244500CD3E5A /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4927A494248E244500CD3E5A /* LICENSE */; };
-		4927A4A0248E244500CD3E5A /* BinaryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A495248E244500CD3E5A /* BinaryData.swift */; };
-		4927A4A1248E244500CD3E5A /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A496248E244500CD3E5A /* Common.swift */; };
-		4927A4A2248E244500CD3E5A /* IntegerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A497248E244500CD3E5A /* IntegerType.swift */; };
-		4927A4A5248E244500CD3E5A /* Tuple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A49A248E244500CD3E5A /* Tuple.swift */; };
-		4927A4A6248E244500CD3E5A /* BinaryDataErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A49B248E244500CD3E5A /* BinaryDataErrors.swift */; };
 		493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C3244C2B5000E1EAE4 /* ElementBFLG.h */; };
 		493229C6244C2B5000E1EAE4 /* ElementBFLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229C4244C2B5000E1EAE4 /* ElementBFLG.m */; };
 		493229C9244C3A0800E1EAE4 /* ElementWFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C7244C3A0800E1EAE4 /* ElementWFLG.h */; };
@@ -95,6 +88,12 @@
 		49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A082447F45700D439BC /* ElementFCNT.m */; };
 		49882A0D2448EF0E00D439BC /* ElementAWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A0B2448EF0E00D439BC /* ElementAWRD.h */; };
 		49882A0E2448EF0E00D439BC /* ElementAWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A0C2448EF0E00D439BC /* ElementAWRD.m */; };
+		4996728224905D11009AEF99 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996727C24905D11009AEF99 /* BinaryDataReader.swift */; };
+		4996728324905D11009AEF99 /* BinaryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996727D24905D11009AEF99 /* BinaryData.swift */; };
+		4996728424905D11009AEF99 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996727E24905D11009AEF99 /* Common.swift */; };
+		4996728524905D11009AEF99 /* IntegerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996727F24905D11009AEF99 /* IntegerType.swift */; };
+		4996728624905D11009AEF99 /* Tuple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996728024905D11009AEF99 /* Tuple.swift */; };
+		4996728724905D11009AEF99 /* BinaryDataErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996728124905D11009AEF99 /* BinaryDataErrors.swift */; };
 		49F6403C2461199500E7CE4D /* ElementPACK.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403A2461199500E7CE4D /* ElementPACK.h */; };
 		49F6403D2461199500E7CE4D /* ElementPACK.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F6403B2461199500E7CE4D /* ElementPACK.m */; };
 		49F640402462C84B00E7CE4D /* ElementDVDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403E2462C84B00E7CE4D /* ElementDVDR.h */; };
@@ -498,13 +497,6 @@
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
-		4927A492248E244500CD3E5A /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
-		4927A494248E244500CD3E5A /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		4927A495248E244500CD3E5A /* BinaryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryData.swift; sourceTree = "<group>"; };
-		4927A496248E244500CD3E5A /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
-		4927A497248E244500CD3E5A /* IntegerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerType.swift; sourceTree = "<group>"; };
-		4927A49A248E244500CD3E5A /* Tuple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tuple.swift; sourceTree = "<group>"; };
-		4927A49B248E244500CD3E5A /* BinaryDataErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataErrors.swift; sourceTree = "<group>"; };
 		493229C3244C2B5000E1EAE4 /* ElementBFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBFLG.h; sourceTree = "<group>"; };
 		493229C4244C2B5000E1EAE4 /* ElementBFLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBFLG.m; sourceTree = "<group>"; };
 		493229C7244C3A0800E1EAE4 /* ElementWFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementWFLG.h; sourceTree = "<group>"; };
@@ -619,6 +611,12 @@
 		49882A082447F45700D439BC /* ElementFCNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementFCNT.m; sourceTree = "<group>"; };
 		49882A0B2448EF0E00D439BC /* ElementAWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementAWRD.h; sourceTree = "<group>"; };
 		49882A0C2448EF0E00D439BC /* ElementAWRD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementAWRD.m; sourceTree = "<group>"; };
+		4996727C24905D11009AEF99 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
+		4996727D24905D11009AEF99 /* BinaryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryData.swift; sourceTree = "<group>"; };
+		4996727E24905D11009AEF99 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		4996727F24905D11009AEF99 /* IntegerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerType.swift; sourceTree = "<group>"; };
+		4996728024905D11009AEF99 /* Tuple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tuple.swift; sourceTree = "<group>"; };
+		4996728124905D11009AEF99 /* BinaryDataErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataErrors.swift; sourceTree = "<group>"; };
 		49F1C23C24404D2000D46B35 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		49F6403A2461199500E7CE4D /* ElementPACK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementPACK.h; sourceTree = "<group>"; };
 		49F6403B2461199500E7CE4D /* ElementPACK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementPACK.m; sourceTree = "<group>"; };
@@ -1052,21 +1050,6 @@
 			path = "Icon Editor";
 			sourceTree = "<group>";
 		};
-		4927A491248E244500CD3E5A /* BinarySwift */ = {
-			isa = PBXGroup;
-			children = (
-				4927A494248E244500CD3E5A /* LICENSE */,
-				4927A495248E244500CD3E5A /* BinaryData.swift */,
-				4927A49B248E244500CD3E5A /* BinaryDataErrors.swift */,
-				4927A492248E244500CD3E5A /* BinaryDataReader.swift */,
-				4927A496248E244500CD3E5A /* Common.swift */,
-				4927A497248E244500CD3E5A /* IntegerType.swift */,
-				4927A49A248E244500CD3E5A /* Tuple.swift */,
-			);
-			name = BinarySwift;
-			path = ../../../../Downloads/BinarySwift;
-			sourceTree = "<group>";
-		};
 		4953F58F248873DD0002340F /* Sound Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1227,6 +1210,19 @@
 			path = GraphiteTest;
 			sourceTree = "<group>";
 		};
+		4996727B24905D11009AEF99 /* BinarySwift */ = {
+			isa = PBXGroup;
+			children = (
+				4996727C24905D11009AEF99 /* BinaryDataReader.swift */,
+				4996727D24905D11009AEF99 /* BinaryData.swift */,
+				4996727E24905D11009AEF99 /* Common.swift */,
+				4996727F24905D11009AEF99 /* IntegerType.swift */,
+				4996728024905D11009AEF99 /* Tuple.swift */,
+				4996728124905D11009AEF99 /* BinaryDataErrors.swift */,
+			);
+			path = BinarySwift;
+			sourceTree = "<group>";
+		};
 		B229EEBF15A4B6FE0032C12C /* PNG Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1331,7 +1327,7 @@
 				F5C9ECCE027F474A01A8010C /* Notifications.m */,
 				F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */,
 				F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */,
-				4927A491248E244500CD3E5A /* BinarySwift */,
+				4996727B24905D11009AEF99 /* BinarySwift */,
 				4953F5C52489EC4E0002340F /* BinaryTools */,
 				4953F58F248873DD0002340F /* Sound Editor */,
 				B2B2C3FC15A9451800D6F61C /* Pattern Editor */,
@@ -1937,7 +1933,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4927A49F248E244500CD3E5A /* LICENSE in Resources */,
 				4953F5A2248875610002340F /* SoundWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2088,14 +2083,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4927A4A1248E244500CD3E5A /* Common.swift in Sources */,
-				4927A4A6248E244500CD3E5A /* BinaryDataErrors.swift in Sources */,
-				4927A4A2248E244500CD3E5A /* IntegerType.swift in Sources */,
-				4927A4A0248E244500CD3E5A /* BinaryData.swift in Sources */,
+				4996728224905D11009AEF99 /* BinaryDataReader.swift in Sources */,
+				4996728424905D11009AEF99 /* Common.swift in Sources */,
 				4927A48C248E162F00CD3E5A /* Sound.swift in Sources */,
-				4927A4A5248E244500CD3E5A /* Tuple.swift in Sources */,
 				4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */,
-				4927A49D248E244500CD3E5A /* BinaryDataReader.swift in Sources */,
+				4996728524905D11009AEF99 /* IntegerType.swift in Sources */,
+				4996728324905D11009AEF99 /* BinaryData.swift in Sources */,
+				4996728624905D11009AEF99 /* Tuple.swift in Sources */,
+				4996728724905D11009AEF99 /* BinaryDataErrors.swift in Sources */,
 				4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
