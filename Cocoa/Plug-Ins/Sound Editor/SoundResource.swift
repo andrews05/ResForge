@@ -55,12 +55,16 @@ class SoundResource {
         var err: OSStatus
         var fRef: AudioFileID?
         var inStreamDesc = AudioStreamBasicDescription()
-        var streamDescSize = UInt32(MemoryLayout.size(ofValue: inStreamDesc))
         var filePackets: Int64 = 0
-        var propSize = UInt32(MemoryLayout.size(ofValue: filePackets))
+		var maxPacketSize: UInt32 = 0
+		var propSize: UInt32
         err = AudioFileOpenURL(url as CFURL, AudioFilePermissions.readPermission, 0, &fRef)
-        err = AudioFileGetProperty(fRef!, kAudioFilePropertyDataFormat, &streamDescSize, &inStreamDesc)
+		propSize = UInt32(MemoryLayout.size(ofValue: inStreamDesc))
+        err = AudioFileGetProperty(fRef!, kAudioFilePropertyDataFormat, &propSize, &inStreamDesc)
+		propSize = UInt32(MemoryLayout.size(ofValue: filePackets))
         err = AudioFileGetProperty(fRef!, kAudioFilePropertyAudioDataPacketCount, &propSize, &filePackets)
+		propSize = UInt32(MemoryLayout.size(ofValue: maxPacketSize))
+        err = AudioFileGetProperty(fRef!, kAudioFilePropertyMaximumPacketSize, &propSize, &maxPacketSize)
         
         let fileFrames = UInt32(filePackets) * inStreamDesc.mFramesPerPacket
         var outStreamDesc = getStreamDescription(format: format, channels: (channels == 0 ? inStreamDesc.mChannelsPerFrame : channels), sampleRate: (sampleRate == 0 ? inStreamDesc.mSampleRate : sampleRate))
@@ -77,19 +81,18 @@ class SoundResource {
             )
         )
         var converter: AudioConverterRef?
-        var numPackets = UInt32(filePackets)
-        var uData = (fRef!, UnsafeMutablePointer<Int64>.allocate(capacity: 1))
+		var numPackets = fileFrames / outStreamDesc.mFramesPerPacket
+        var uData = (fRef!, maxPacketSize, UnsafeMutablePointer<Int64>.allocate(capacity: 1))
         err = AudioConverterNew(&inStreamDesc, &outStreamDesc, &converter)
-        err = AudioConverterFillComplexBuffer(converter!, { inAudioConverter, ioNumberDataPackets, ioData, outDataPacketDescription, inUserData in
-            let uData = inUserData!.load(as: (AudioFileID, UnsafeMutablePointer<Int64>).self)
-            ioData.pointee.mBuffers.mDataByteSize = 1024
-            ioData.pointee.mBuffers.mData = UnsafeMutableRawPointer.allocate(byteCount: 1024, alignment: 1)
-            outDataPacketDescription?.pointee = UnsafeMutablePointer<AudioStreamPacketDescription>.allocate(capacity: Int(ioNumberDataPackets.pointee))
-            let err = AudioFileReadPacketData(uData.0, false, &ioData.pointee.mBuffers.mDataByteSize, outDataPacketDescription?.pointee, uData.1.pointee, ioNumberDataPackets, ioData.pointee.mBuffers.mData)
-            uData.1.pointee += Int64(ioNumberDataPackets.pointee)
+        err = AudioConverterFillComplexBuffer(converter!, { _, ioNumberDataPackets, ioData, outDataPacketDescription, inUserData in
+            let uData = inUserData!.load(as: (AudioFileID, UInt32, UnsafeMutablePointer<Int64>).self)
+			ioData.pointee.mBuffers.mDataByteSize = uData.1 * ioNumberDataPackets.pointee
+            ioData.pointee.mBuffers.mData = UnsafeMutableRawPointer.allocate(byteCount: Int(ioData.pointee.mBuffers.mDataByteSize), alignment: 1)
+            //outDataPacketDescription?.pointee = UnsafeMutablePointer<AudioStreamPacketDescription>.allocate(capacity: Int(ioNumberDataPackets.pointee))
+            let err = AudioFileReadPacketData(uData.0, false, &ioData.pointee.mBuffers.mDataByteSize, nil, uData.2.pointee, ioNumberDataPackets, ioData.pointee.mBuffers.mData)
+            uData.2.pointee += Int64(ioNumberDataPackets.pointee)
             return err
         }, &uData, &numPackets, &bufferList, nil)
-        return
     }
     
     func getStreamDescription(format: UInt32, channels: UInt32, sampleRate: Double) -> AudioStreamBasicDescription {
@@ -102,7 +105,7 @@ class SoundResource {
             streamDesc.mBitsPerChannel = 0
             streamDesc.mBytesPerFrame = 0
             streamDesc.mFramesPerPacket = 64
-            streamDesc.mBytesPerPacket = 34
+            streamDesc.mBytesPerPacket = 34 * streamDesc.mChannelsPerFrame
         } else {
             if format == k8BitOffsetBinaryFormat {
                 streamDesc.mBitsPerChannel = 8
