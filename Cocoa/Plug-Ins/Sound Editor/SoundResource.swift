@@ -22,77 +22,57 @@ class SoundResource {
         }
     }
     
-    func initxx(url: URL, format: UInt32, channels: UInt32, sampleRate: Double) {
-        var err: OSStatus
-        var fRef: ExtAudioFileRef? = nil
-        var inStreamDesc = AudioStreamBasicDescription()
-        var streamDescSize = UInt32(MemoryLayout.size(ofValue: inStreamDesc))
-		var fileFrames: Int64 = 0
-		var propSize = UInt32(MemoryLayout.size(ofValue: fileFrames))
-        err = ExtAudioFileOpenURL(url as CFURL, &fRef)
-        err = ExtAudioFileGetProperty(fRef!, kExtAudioFileProperty_FileDataFormat, &streamDescSize, &inStreamDesc)
-        err = ExtAudioFileGetProperty(fRef!, kExtAudioFileProperty_FileLengthFrames, &propSize, &fileFrames)
-		
-		var outStreamDesc = getStreamDescription(format: format, channels: (channels == 0 ? inStreamDesc.mChannelsPerFrame : channels), sampleRate: (sampleRate == 0 ? inStreamDesc.mSampleRate : sampleRate))
-		let byteSize = (UInt32(fileFrames) * outStreamDesc.mBytesPerPacket) / outStreamDesc.mFramesPerPacket
-        err = AudioQueueNewOutput(&outStreamDesc, {_,_,_ in }, nil, nil, nil, 0, &queueRef)
-        err = AudioQueueAllocateBuffer(queueRef!, byteSize, &bufferRef)
-        bufferRef!.pointee.mAudioDataByteSize = byteSize
-		var bufferList = AudioBufferList(
-			mNumberBuffers: 1,
-			mBuffers: AudioBuffer(
-				mNumberChannels: outStreamDesc.mChannelsPerFrame,
-				mDataByteSize: byteSize,
-				mData: bufferRef!.pointee.mAudioData
-			)
-		)
-        err = ExtAudioFileSetProperty(fRef!, kExtAudioFileProperty_ClientDataFormat, streamDescSize, &outStreamDesc)
-		var framesRead = UInt32(fileFrames)
-		err = ExtAudioFileRead(fRef!, &framesRead, &bufferList)
-    }
-    
     init(url: URL, format: UInt32, channels: UInt32, sampleRate: Double) {
         var err: OSStatus
-        var fRef: AudioFileID?
+        var fRef: ExtAudioFileRef?
+        var propSize: UInt32
+        var fileFrames: Int64 = 0
         var inStreamDesc = AudioStreamBasicDescription()
-        var filePackets: Int64 = 0
-		var maxPacketSize: UInt32 = 0
-		var propSize: UInt32
-        err = AudioFileOpenURL(url as CFURL, AudioFilePermissions.readPermission, 0, &fRef)
-		propSize = UInt32(MemoryLayout.size(ofValue: inStreamDesc))
-        err = AudioFileGetProperty(fRef!, kAudioFilePropertyDataFormat, &propSize, &inStreamDesc)
-		propSize = UInt32(MemoryLayout.size(ofValue: filePackets))
-        err = AudioFileGetProperty(fRef!, kAudioFilePropertyAudioDataPacketCount, &propSize, &filePackets)
-		propSize = UInt32(MemoryLayout.size(ofValue: maxPacketSize))
-        err = AudioFileGetProperty(fRef!, kAudioFilePropertyMaximumPacketSize, &propSize, &maxPacketSize)
         
-        let fileFrames = UInt32(filePackets) * inStreamDesc.mFramesPerPacket
-        var outStreamDesc = getStreamDescription(format: format, channels: (channels == 0 ? inStreamDesc.mChannelsPerFrame : channels), sampleRate: (sampleRate == 0 ? inStreamDesc.mSampleRate : sampleRate))
-        let byteSize = (fileFrames * outStreamDesc.mBytesPerPacket) / outStreamDesc.mFramesPerPacket
-        err = AudioQueueNewOutput(&outStreamDesc, {_,_,_ in }, nil, nil, nil, 0, &queueRef)
+        // Open file and get info
+        err = ExtAudioFileOpenURL(url as CFURL, &fRef)
+        propSize = UInt32(MemoryLayout.size(ofValue: fileFrames))
+        err = ExtAudioFileGetProperty(fRef!, kExtAudioFileProperty_FileLengthFrames, &propSize, &fileFrames)
+        propSize = UInt32(MemoryLayout.size(ofValue: inStreamDesc))
+        err = ExtAudioFileGetProperty(fRef!, kExtAudioFileProperty_FileDataFormat, &propSize, &inStreamDesc)
+		
+        // Configure output info and audio buffer
+		streamDesc = getStreamDescription(format: format, channels: (channels == 0 ? inStreamDesc.mChannelsPerFrame : channels), sampleRate: (sampleRate == 0 ? inStreamDesc.mSampleRate : sampleRate))
+        let byteSize = (UInt32(fileFrames) * streamDesc.mBytesPerPacket) / streamDesc.mFramesPerPacket
+        err = AudioQueueNewOutput(&streamDesc, {_,_,_ in }, nil, nil, nil, 0, &queueRef)
         err = AudioQueueAllocateBuffer(queueRef!, byteSize, &bufferRef)
         bufferRef!.pointee.mAudioDataByteSize = byteSize
         var bufferList = AudioBufferList(
             mNumberBuffers: 1,
             mBuffers: AudioBuffer(
-                mNumberChannels: outStreamDesc.mChannelsPerFrame,
+                mNumberChannels: streamDesc.mChannelsPerFrame,
                 mDataByteSize: byteSize,
                 mData: bufferRef!.pointee.mAudioData
             )
         )
-        var converter: AudioConverterRef?
-		var numPackets = fileFrames / outStreamDesc.mFramesPerPacket
-        var uData = (fRef!, maxPacketSize, UnsafeMutablePointer<Int64>.allocate(capacity: 1))
-        err = AudioConverterNew(&inStreamDesc, &outStreamDesc, &converter)
-        err = AudioConverterFillComplexBuffer(converter!, { _, ioNumberDataPackets, ioData, outDataPacketDescription, inUserData in
-            let uData = inUserData!.load(as: (AudioFileID, UInt32, UnsafeMutablePointer<Int64>).self)
-			ioData.pointee.mBuffers.mDataByteSize = uData.1 * ioNumberDataPackets.pointee
-            ioData.pointee.mBuffers.mData = UnsafeMutableRawPointer.allocate(byteCount: Int(ioData.pointee.mBuffers.mDataByteSize), alignment: 1)
-            //outDataPacketDescription?.pointee = UnsafeMutablePointer<AudioStreamPacketDescription>.allocate(capacity: Int(ioNumberDataPackets.pointee))
-            let err = AudioFileReadPacketData(uData.0, false, &ioData.pointee.mBuffers.mDataByteSize, nil, uData.2.pointee, ioNumberDataPackets, ioData.pointee.mBuffers.mData)
-            uData.2.pointee += Int64(ioNumberDataPackets.pointee)
-            return err
-        }, &uData, &numPackets, &bufferList, nil)
+        
+        if streamDesc.mFormatID == kAudioFormatLinearPCM  {
+            // If importing to a PCM format the ExtAudioFile can perform any necessary conversion
+           err = ExtAudioFileSetProperty(fRef!, kExtAudioFileProperty_ClientDataFormat, propSize, &streamDesc)
+           var numFrames = UInt32(fileFrames)
+           err = ExtAudioFileRead(fRef!, &numFrames, &bufferList)
+       } else {
+            // Otherwise we need to setup an AudioConverter
+            // The ExtAudioFile will convert to an intermediary PCM format which the AudioConverter will convert to our output format
+            var tempStreamDesc = getStreamDescription(format: k16BitBigEndianFormat, channels: streamDesc.mChannelsPerFrame, sampleRate: streamDesc.mSampleRate)
+            err = ExtAudioFileSetProperty(fRef!, kExtAudioFileProperty_ClientDataFormat, propSize, &tempStreamDesc)
+            var converter: AudioConverterRef?
+            var numPackets = UInt32(fileFrames) / tempStreamDesc.mFramesPerPacket
+            var uData = (fRef!, tempStreamDesc.mBytesPerPacket)
+            err = AudioConverterNew(&tempStreamDesc, &streamDesc, &converter)
+            err = AudioConverterFillComplexBuffer(converter!, { _, ioNumberDataPackets, ioData, _, inUserData in
+                let uData = inUserData!.load(as: (ExtAudioFileRef, UInt32).self)
+                ioData.pointee.mBuffers.mDataByteSize = uData.1 * ioNumberDataPackets.pointee
+                ioData.pointee.mBuffers.mData = UnsafeMutableRawPointer.allocate(byteCount: Int(ioData.pointee.mBuffers.mDataByteSize), alignment: 1)
+                return ExtAudioFileRead(uData.0, ioNumberDataPackets, ioData)
+            }, &uData, &numPackets, &bufferList, nil)
+        }
+        self.valid = true
     }
     
     func getStreamDescription(format: UInt32, channels: UInt32, sampleRate: Double) -> AudioStreamBasicDescription {
@@ -293,6 +273,14 @@ class SoundResource {
         } else {
             return streamDesc.mFormatID
         }
+    }
+
+    var formatString: String {
+        var formatString: Unmanaged<CFString>?
+        let specifierSize = UInt32(MemoryLayout.size(ofValue: streamDesc))
+        var propertySize = UInt32(MemoryLayout.size(ofValue: formatString))
+        let err = AudioFormatGetProperty(kAudioFormatProperty_FormatName, specifierSize, &streamDesc, &propertySize, &formatString)
+        return formatString!.takeRetainedValue() as String
     }
 
     var channels: UInt32 {

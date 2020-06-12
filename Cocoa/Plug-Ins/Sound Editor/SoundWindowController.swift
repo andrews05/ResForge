@@ -31,9 +31,19 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
     
     override func windowDidLoad() {
         super.windowDidLoad()
+        self.format.stringValue = ""
         self.channels.stringValue = ""
         self.sampleRate.stringValue = ""
         self.duration.stringValue = ""
+        if let sound = sound {
+            self.loadInfo()
+            if sound.valid {
+                sound.play()
+            }
+        }
+    }
+    
+    func loadInfo() {
         if let sound = sound {
             if sound.format != 0 {
                 if sound.valid {
@@ -41,7 +51,6 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
                     self.duration.stringValue = stringFromSeconds(sound.duration)
                     playButton.isEnabled = true
                     exportButton.isEnabled = true
-                    sound.play()
                 } else {
                     let format = NSFileTypeForHFSTypeCode(OSType(sound.format))!
                     self.format.stringValue = "\(format) (unsupported)"
@@ -95,7 +104,8 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
         panel.allowedFileTypes = ["public.audio"]
         panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
             if returnCode.rawValue == NSFileHandlingPanelOKButton {
-                self.sound = SoundResource(url: panel.url!, format: kAudioFormatAppleIMA4, channels: 0, sampleRate: 0)
+                self.sound = SoundResource(url: panel.url!, format: kAudioFormatAppleIMA4, channels: 1, sampleRate: 44100)
+                self.loadInfo()
             }
         })
     }
