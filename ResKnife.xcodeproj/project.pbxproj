@@ -14,6 +14,7 @@
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
+		4927A4A9249444BE00CD3E5A /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A4A82494407900CD3E5A /* BinaryDataWriter.swift */; };
 		493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C3244C2B5000E1EAE4 /* ElementBFLG.h */; };
 		493229C6244C2B5000E1EAE4 /* ElementBFLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229C4244C2B5000E1EAE4 /* ElementBFLG.m */; };
 		493229C9244C3A0800E1EAE4 /* ElementWFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C7244C3A0800E1EAE4 /* ElementWFLG.h */; };
@@ -497,6 +498,7 @@
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		4927A4A82494407900CD3E5A /* BinaryDataWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		493229C3244C2B5000E1EAE4 /* ElementBFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBFLG.h; sourceTree = "<group>"; };
 		493229C4244C2B5000E1EAE4 /* ElementBFLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBFLG.m; sourceTree = "<group>"; };
 		493229C7244C3A0800E1EAE4 /* ElementWFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementWFLG.h; sourceTree = "<group>"; };
@@ -1215,6 +1217,7 @@
 			children = (
 				4996727C24905D11009AEF99 /* BinaryDataReader.swift */,
 				4996727D24905D11009AEF99 /* BinaryData.swift */,
+				4927A4A82494407900CD3E5A /* BinaryDataWriter.swift */,
 				4996727E24905D11009AEF99 /* Common.swift */,
 				4996727F24905D11009AEF99 /* IntegerType.swift */,
 				4996728024905D11009AEF99 /* Tuple.swift */,
@@ -2088,6 +2091,7 @@
 				4927A48C248E162F00CD3E5A /* Sound.swift in Sources */,
 				4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */,
 				4996728524905D11009AEF99 /* IntegerType.swift in Sources */,
+				4927A4A9249444BE00CD3E5A /* BinaryDataWriter.swift in Sources */,
 				4996728324905D11009AEF99 /* BinaryData.swift in Sources */,
 				4996728624905D11009AEF99 /* Tuple.swift in Sources */,
 				4996728724905D11009AEF99 /* BinaryDataErrors.swift in Sources */,

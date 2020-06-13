@@ -3,71 +3,71 @@ Sound Manager Interfaces
 Cconverted from CarbonSound/Sound.h
 */
 
-let rate48khz                      = 0xbb800000 /*48000.00000 in fixed-point*/
-let rate44khz                      = 0xac440000 /*44100.00000 in fixed-point*/
-let rate32khz                      = 0x7d000000 /*32000.00000 in fixed-point*/
-let rate22050hz                    = 0x56220000 /*22050.00000 in fixed-point*/
-let rate22khz                      = 0x56ee8ba3 /*22254.54545 in fixed-point*/
-let rate16khz                      = 0x3e800000 /*16000.00000 in fixed-point*/
-let rate11khz                      = 0x2b7745d1 /*11127.27273 in fixed-point*/
-let rate11025hz                    = 0x2b110000 /*11025.00000 in fixed-point*/
-let rate8khz                       = 0x1f400000 /* 8000.00000 in fixed-point*/
+let rate48khz: UnsignedFixed            = 0xbb800000 /*48000.00000 in fixed-point*/
+let rate44khz: UnsignedFixed            = 0xac440000 /*44100.00000 in fixed-point*/
+let rate32khz: UnsignedFixed            = 0x7d000000 /*32000.00000 in fixed-point*/
+let rate22050hz: UnsignedFixed          = 0x56220000 /*22050.00000 in fixed-point*/
+let rate22khz: UnsignedFixed            = 0x56ee8ba3 /*22254.54545 in fixed-point*/
+let rate16khz: UnsignedFixed            = 0x3e800000 /*16000.00000 in fixed-point*/
+let rate11khz: UnsignedFixed            = 0x2b7745d1 /*11127.27273 in fixed-point*/
+let rate11025hz: UnsignedFixed          = 0x2b110000 /*11025.00000 in fixed-point*/
+let rate8khz: UnsignedFixed             = 0x1f400000 /* 8000.00000 in fixed-point*/
 
 /*synthesizer numbers for SndNewChannel*/
-let sampledSynth                   = 5     /*sampled sound synthesizer*/
+let sampledSynth: UInt16                = 5     /*sampled sound synthesizer*/
 
-let kMiddleC                       = 60    /*MIDI note value for middle C*/
+let kMiddleC: UInt8                     = 60    /*MIDI note value for middle C*/
 
-let dataOffsetFlag                 = 0x8000
+let dataOffsetFlag: UInt16              = 0x8000
 
-let notCompressed                  = 0    /*compression ID's*/
-let fixedCompression               = -1   /*compression ID for fixed-sized compression*/
-let variableCompression            = -2   /*compression ID for variable-sized compression*/
-let twoToOne                       = 1
-let eightToThree                   = 2
-let threeToOne                     = 3
-let sixToOne                       = 4
-let sixToOnePacketSize             = 8
-let threeToOnePacketSize           = 16
+let notCompressed: Int16                = 0    /*compression ID's*/
+let fixedCompression: Int16             = -1   /*compression ID for fixed-sized compression*/
+let variableCompression: Int16          = -2   /*compression ID for variable-sized compression*/
+let twoToOne: Int16                     = 1
+let eightToThree: Int16                 = 2
+let threeToOne: Int16                   = 3
+let sixToOne: Int16                     = 4
+let sixToOnePacketSize: Int16           = 8
+let threeToOnePacketSize: Int16         = 16
 
-let firstSoundFormat               = 0x0001 /*general sound format*/
-let secondSoundFormat              = 0x0002 /*special sampled sound format (HyperCard)*/
+let firstSoundFormat: Int16             = 0x0001 /*general sound format*/
+let secondSoundFormat: Int16            = 0x0002 /*special sampled sound format (HyperCard)*/
 
-let stdSH                          = 0x00  /*Standard sound header encode value*/
-let extSH                          = 0xFF  /*Extended sound header encode value*/
-let cmpSH                          = 0xFE  /*Compressed sound header encode value*/
+let stdSH: UInt8                        = 0x00  /*Standard sound header encode value*/
+let extSH: UInt8                        = 0xFF  /*Extended sound header encode value*/
+let cmpSH: UInt8                        = 0xFE  /*Compressed sound header encode value*/
 
 /*command numbers for SndDoCommand and SndDoImmediate*/
-let nullCmd                        = 0
-let quietCmd                       = 3
-let flushCmd                       = 4
-let reInitCmd                      = 5
-let waitCmd                        = 10
-let pauseCmd                       = 11
-let resumeCmd                      = 12
-let callBackCmd                    = 13
-let syncCmd                        = 14
-let availableCmd                   = 24
-let versionCmd                     = 25
-let volumeCmd                      = 46   /*sound manager 3.0 or later only*/
-let getVolumeCmd                   = 47   /*sound manager 3.0 or later only*/
-let clockComponentCmd              = 50   /*sound manager 3.2.1 or later only*/
-let getClockComponentCmd           = 51   /*sound manager 3.2.1 or later only*/
-let scheduledSoundCmd              = 52   /*sound manager 3.3 or later only*/
-let linkSoundComponentsCmd         = 53   /*sound manager 3.3 or later only*/
-let soundCmd                       = 80
-let bufferCmd                      = 81
-let rateMultiplierCmd              = 86
-let getRateMultiplierCmd           = 87
+let nullCmd: UInt16                     = 0
+let quietCmd: UInt16                    = 3
+let flushCmd: UInt16                    = 4
+let reInitCmd: UInt16                   = 5
+let waitCmd: UInt16                     = 10
+let pauseCmd: UInt16                    = 11
+let resumeCmd: UInt16                   = 12
+let callBackCmd: UInt16                 = 13
+let syncCmd: UInt16                     = 14
+let availableCmd: UInt16                = 24
+let versionCmd: UInt16                  = 25
+let volumeCmd: UInt16                   = 46   /*sound manager 3.0 or later only*/
+let getVolumeCmd: UInt16                = 47   /*sound manager 3.0 or later only*/
+let clockComponentCmd: UInt16           = 50   /*sound manager 3.2.1 or later only*/
+let getClockComponentCmd: UInt16        = 51   /*sound manager 3.2.1 or later only*/
+let scheduledSoundCmd: UInt16           = 52   /*sound manager 3.3 or later only*/
+let linkSoundComponentsCmd: UInt16      = 53   /*sound manager 3.3 or later only*/
+let soundCmd: UInt16                    = 80
+let bufferCmd: UInt16                   = 81
+let rateMultiplierCmd: UInt16           = 86
+let getRateMultiplierCmd: UInt16        = 87
 
-let initChanLeft                   = 0x0002 /*left stereo channel*/
-let initChanRight                  = 0x0003 /*right stereo channel*/
-let initNoInterp                   = 0x0004 /*no linear interpolation*/
-let initNoDrop                     = 0x0008 /*no drop-sample conversion*/
-let initMono                       = 0x0080 /*monophonic channel*/
-let initStereo                     = 0x00C0 /*stereo channel*/
-let initMACE3                      = 0x0300 /*MACE 3:1*/
-let initMACE6                      = 0x0400 /*MACE 6:1*/
+let initChanLeft: Int32                 = 0x0002 /*left stereo channel*/
+let initChanRight: Int32                = 0x0003 /*right stereo channel*/
+let initNoInterp: Int32                 = 0x0004 /*no linear interpolation*/
+let initNoDrop: Int32                   = 0x0008 /*no drop-sample conversion*/
+let initMono: Int32                     = 0x0080 /*monophonic channel*/
+let initStereo: Int32                   = 0x00C0 /*stereo channel*/
+let initMACE3: Int32                    = 0x0300 /*MACE 3:1*/
+let initMACE6: Int32                    = 0x0400 /*MACE 6:1*/
 
 /*Format Types*/
 let kSoundNotCompressed: UInt32         = 0x4E4F4E45 /*'NONE' sound is not compressed*/
@@ -85,6 +85,9 @@ typealias UnsignedFixed = UInt32
 let fixed1: UInt32 = 1<<16
 func FixedToDouble(_ x: UnsignedFixed) -> Double {
     return Double(x) * 1.0/Double(fixed1)
+}
+func DoubleToFixed(_ x: Double) -> UnsignedFixed {
+    UnsignedFixed(x * Double(fixed1))
 }
 
 struct extended80 {

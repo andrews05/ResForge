@@ -104,8 +104,13 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
         panel.allowedFileTypes = ["public.audio"]
         panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
             if returnCode.rawValue == NSFileHandlingPanelOKButton {
-                self.sound = SoundResource(url: panel.url!, format: kAudioFormatAppleIMA4, channels: 1, sampleRate: 44100)
+                self.sound = SoundResource(url: panel.url!, format: kAudioFormatAppleIMA4, channels: 2, sampleRate: 44100)
                 self.loadInfo()
+                do {
+                    self.resource.data = try self.sound!.data()
+                } catch {
+                    
+                }
             }
         })
     }
