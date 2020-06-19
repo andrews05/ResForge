@@ -10,12 +10,17 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
     @IBOutlet var channels: NSTextField!
     @IBOutlet var sampleRate: NSTextField!
     @IBOutlet var duration: NSTextField!
+	@IBOutlet var accessoryView: NSView!
+	@IBOutlet var selectFormat: NSPopUpButton!
+	@IBOutlet var selectChannels: NSPopUpButton!
+	@IBOutlet var selectSampleRate: NSPopUpButton!
 
     override var windowNibName: String! {
         return "SoundWindow"
     }
     
     required init(resource: ResKnifeResource) {
+		UserDefaults.standard.register(defaults: ["SndFormat":k16BitBigEndianFormat])
         self.resource = resource
         super.init(window: nil)
 
@@ -26,7 +31,7 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented. Use init()")
+        fatalError("not implemented")
     }
     
     override func windowDidLoad() {
@@ -102,15 +107,22 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
     @IBAction func importSound(_ sender: Any) {
         let panel = NSOpenPanel()
         panel.allowedFileTypes = ["public.audio"]
+		panel.accessoryView = self.accessoryView
+		panel.isAccessoryViewDisclosed = true
+		panel.prompt = "Import"
         panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
             if returnCode.rawValue == NSFileHandlingPanelOKButton {
-                self.sound = SoundResource(url: panel.url!, format: kAudioFormatAppleIMA4, channels: 2, sampleRate: 44100)
+				let format = self.selectFormat.selectedTag()
+				let channels = self.selectChannels.selectedTag()
+				let sampleRate = self.selectSampleRate.selectedTag()
+				self.sound = SoundResource(url: panel.url!, format: UInt32(format), channels: UInt32(channels), sampleRate: Double(sampleRate))
                 self.loadInfo()
                 do {
                     self.resource.data = try self.sound!.data()
                 } catch {
                     
                 }
+				self.setDocumentEdited(true)
             }
         })
     }

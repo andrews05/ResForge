@@ -8,12 +8,16 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SoundWindowController">
             <connections>
+                <outlet property="accessoryView" destination="rvG-Hf-IKA" id="fVU-dW-Fiy"/>
                 <outlet property="channels" destination="Hf7-Ot-l5h" id="uqZ-Yi-hwW"/>
                 <outlet property="duration" destination="jXH-lE-bUj" id="ZcO-aa-cxn"/>
                 <outlet property="exportButton" destination="8pV-Pu-93E" id="HOy-OR-pRO"/>
                 <outlet property="format" destination="I6o-Jo-YiD" id="0Ym-XO-rOX"/>
                 <outlet property="playButton" destination="xok-pm-faL" id="WSI-D9-ckF"/>
                 <outlet property="sampleRate" destination="mFp-c5-pFt" id="N2C-Ch-Gzd"/>
+                <outlet property="selectChannels" destination="3Th-ex-OQ1" id="yEr-oX-upI"/>
+                <outlet property="selectFormat" destination="WQk-2V-Qfn" id="FbT-eK-Vn6"/>
+                <outlet property="selectSampleRate" destination="vrB-Xd-Du4" id="ROo-R7-bx9"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -23,7 +27,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="480" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="480" height="270"/>
             <value key="maxSize" type="size" width="480" height="270"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
@@ -145,5 +149,101 @@ IA
             </connections>
             <point key="canvasLocation" x="139" y="147"/>
         </window>
+        <customView id="rvG-Hf-IKA">
+            <rect key="frame" x="0.0" y="0.0" width="299" height="109"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lwc-Y6-2wp">
+                    <rect key="frame" x="18" y="47" width="90" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Channels:" id="NXY-7j-P6T">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KAY-iv-6jI">
+                    <rect key="frame" x="18" y="16" width="90" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Sample Rate:" id="mO2-nO-55w">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WQk-2V-Qfn">
+                    <rect key="frame" x="114" y="72" width="168" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="8-bit uncompressed" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" tag="1918990112" imageScaling="proportionallyDown" inset="2" selectedItem="D8p-f2-RnD" id="6hI-Ob-cP4">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <menu key="menu" id="g8e-MY-cId">
+                            <items>
+                                <menuItem title="8-bit uncompressed" tag="1918990112" id="D8p-f2-RnD"/>
+                                <menuItem title="16-bit uncompressed" state="on" tag="1953984371" id="oFt-qv-8Fg"/>
+                                <menuItem title="IMA 4:1" tag="1768775988" id="pD9-ru-kri"/>
+                                <menuItem title="A-Law 2:1" tag="1634492791" id="ehN-zC-6nr"/>
+                                <menuItem title="µ-Law 2:1" tag="1970037111" id="Bu8-MK-SPg"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="V8I-kj-9KL" name="selectedTag" keyPath="values.SndFormat" id="TRR-tk-buI"/>
+                    </connections>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Th-ex-OQ1">
+                    <rect key="frame" x="114" y="41" width="168" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="Same as source" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="hlC-5i-ME5" id="kVY-S9-TYv">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <menu key="menu" id="X8K-3i-omx">
+                            <items>
+                                <menuItem title="Same as source" id="hlC-5i-ME5"/>
+                                <menuItem title="Mono" state="on" tag="1" id="Cke-1U-CEk"/>
+                                <menuItem title="Stereo" tag="2" id="G49-jk-9JV"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="V8I-kj-9KL" name="selectedTag" keyPath="values.SndChannels" id="tvO-Le-Vy9"/>
+                    </connections>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrB-Xd-Du4">
+                    <rect key="frame" x="114" y="10" width="168" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="Same as source" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="G23-Qp-69B" id="FYv-EU-c1U">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <menu key="menu" id="bXf-Om-Sqx">
+                            <items>
+                                <menuItem title="Same as source" state="on" id="G23-Qp-69B"/>
+                                <menuItem title="8000 Hz" tag="8000" id="sS7-K6-wic"/>
+                                <menuItem title="11025 Hz" tag="11025" id="D3Q-Zf-akL"/>
+                                <menuItem title="16000 Hz" tag="16000" id="PJz-Sy-Juy"/>
+                                <menuItem title="22050 Hz" tag="22050" id="XPd-ub-cSJ"/>
+                                <menuItem title="32000 Hz" tag="32000" id="MKU-nR-bBg"/>
+                                <menuItem title="44100 Hz" tag="44100" id="V42-EW-pYF"/>
+                                <menuItem title="44800 Hz" tag="48000" id="pSm-8j-0n4"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="V8I-kj-9KL" name="selectedTag" keyPath="values.SndSampleRate" id="xIT-VI-qtk"/>
+                    </connections>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZ2-lI-UHn">
+                    <rect key="frame" x="18" y="78" width="90" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Format:" id="2rw-pq-Pa6">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <point key="canvasLocation" x="-432.5" y="354.5"/>
+        </customView>
+        <userDefaultsController representsSharedInstance="YES" id="V8I-kj-9KL"/>
     </objects>
 </document>

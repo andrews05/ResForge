@@ -62,7 +62,7 @@ class SoundResource {
 
     func parse(_ data: Data) throws -> Bool {
         // Read sound headers
-        let reader = BinaryDataReader(BinaryData(data: data, bigEndian: true))
+        let reader = BinaryDataReader(data, bigEndian: true)
         let soundFormat: Int16 = try reader.read()
         if soundFormat == firstSoundFormat {
             let list = SndListResource(
@@ -171,7 +171,7 @@ class SoundResource {
         
         // Setup audio queue
         var byteSize = numPackets * streamDesc.mBytesPerPacket
-        let bytesRemaining = UInt32(data.count - reader.readIndex)
+        let bytesRemaining = UInt32(data.count - reader.position)
         if byteSize < bytesRemaining {
             byteSize = bytesRemaining
         }
@@ -179,7 +179,7 @@ class SoundResource {
         err = AudioQueueNewOutput(&streamDesc, {_,_,_ in }, nil, nil, nil, 0, &queueRef)
         err = AudioQueueAllocateBuffer(queueRef!, byteSize, &bufferRef)
         let buff = bufferRef!.pointee.mAudioData.assumingMemoryBound(to: UInt8.self)
-        data.copyBytes(to: buff, from: reader.readIndex..<(reader.readIndex+Int(byteSize)))
+        data.copyBytes(to: buff, from: reader.position..<(reader.position+Int(byteSize)))
         bufferRef!.pointee.mAudioDataByteSize = byteSize
         return true
     }
@@ -316,31 +316,34 @@ class SoundResource {
     }
     
     func play() {
-        if let queueRef = queueRef {
-            var err: OSStatus
-            err = AudioQueueReset(queueRef)
-            err = AudioQueueEnqueueBuffer(queueRef, bufferRef!, 0, nil)
-            err = AudioQueueStart(queueRef, nil)
-        }
+		guard let queueRef = queueRef else {
+			return
+		}
+		var err: OSStatus
+		err = AudioQueueReset(queueRef)
+		err = AudioQueueEnqueueBuffer(queueRef, bufferRef!, 0, nil)
+		err = AudioQueueStart(queueRef, nil)
     }
     
     func stop() {
-        if let queueRef = queueRef {
-            var err: OSStatus
-            err = AudioQueueReset(queueRef)
-        }
+		guard let queueRef = queueRef else {
+			return
+		}
+		var err: OSStatus
+		err = AudioQueueReset(queueRef)
     }
     
     func export(to url: URL) {
-        if let bufferRef = bufferRef {
-            var err: OSStatus
-            var fRef: AudioFileID?
-            var bytes = bufferRef.pointee.mAudioDataByteSize
-            let formatID = (streamDesc.mFormatFlags & kAudioFormatFlagIsBigEndian) != 0 ? kAudioFileAIFFType : kAudioFileAIFCType
-            err = AudioFileCreateWithURL(url as CFURL, formatID, &streamDesc, .eraseFile, &fRef)
-            err = AudioFileWriteBytes(fRef!, false, 0, &bytes, bufferRef.pointee.mAudioData)
-            err = AudioFileClose(fRef!)
-        }
+		guard let bufferRef = bufferRef else {
+			return
+		}
+		var err: OSStatus
+		var fRef: AudioFileID?
+		var bytes = bufferRef.pointee.mAudioDataByteSize
+		let formatID = (streamDesc.mFormatFlags & kAudioFormatFlagIsBigEndian) != 0 ? kAudioFileAIFFType : kAudioFileAIFCType
+		err = AudioFileCreateWithURL(url as CFURL, formatID, &streamDesc, .eraseFile, &fRef)
+		err = AudioFileWriteBytes(fRef!, false, 0, &bytes, bufferRef.pointee.mAudioData)
+		err = AudioFileClose(fRef!)
     }
 
     
