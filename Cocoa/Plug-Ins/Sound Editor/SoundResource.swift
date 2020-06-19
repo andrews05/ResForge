@@ -1,11 +1,17 @@
 import AudioToolbox
 
+extension Notification.Name {
+    static let SoundDidStartPlaying = Notification.Name("didStartPlaying")
+    static let SoundDidStopPlaying = Notification.Name("didStopPlaying")
+}
+
 class SoundResource {
-    var valid = false
-    var streamDesc = AudioStreamBasicDescription()
-    var queueRef: AudioQueueRef? = nil
-    var bufferRef: AudioQueueBufferRef? = nil
-    var numPackets: UInt32 = 0
+    private(set) var valid = false
+    private(set) var playing = false
+    private var streamDesc = AudioStreamBasicDescription()
+    private var queueRef: AudioQueueRef? = nil
+    private var bufferRef: AudioQueueBufferRef? = nil
+    private var numPackets: UInt32 = 0
     
     static var supportedFormats = [
         k8BitOffsetBinaryFormat: "8 bit uncompressed",
@@ -15,22 +21,18 @@ class SoundResource {
         kAudioFormatULaw: "µ-Law 2:1"
     ]
 
-    init(resource: ResKnifeResource) {
+    init(_ data: Data) {
         do {
-            valid = try parse(resource.data!)
+            valid = try parse(data)
         } catch {
             valid = false
         }
     }
     
-    init(url: URL, format: UInt32, channels: UInt32, sampleRate: Double) {
-        load(url: url, format: format, channels: channels, sampleRate: sampleRate)
-    }
-    
-    func getStreamDescription(format: UInt32, channels: UInt32, sampleRate: Double) -> AudioStreamBasicDescription {
+    private func getStreamDescription(format: UInt32, channels: UInt32, sampleRate: Double) -> AudioStreamBasicDescription {
         var streamDesc = AudioStreamBasicDescription()
-		streamDesc.mSampleRate = sampleRate
-		streamDesc.mChannelsPerFrame = channels
+        streamDesc.mSampleRate = sampleRate
+        streamDesc.mChannelsPerFrame = channels
         streamDesc.mFormatID = format
         streamDesc.mFormatFlags = 0
         if format == kAudioFormatAppleIMA4 {
@@ -60,7 +62,23 @@ class SoundResource {
         return streamDesc
     }
 
-    func parse(_ data: Data) throws -> Bool {
+    private func initAudioQueue(_ byteSize: UInt32) {
+        var err: OSStatus
+        err = AudioQueueNewOutput(&streamDesc, {_,_,_ in }, nil, nil, nil, 0, &queueRef)
+        err = AudioQueueAllocateBuffer(queueRef!, byteSize, &bufferRef)
+        err = AudioQueueAddPropertyListener(queueRef!, kAudioQueueProperty_IsRunning, { inUserData, inAQ, _ in
+            var isRunning: UInt32 = 0
+            var propSize = UInt32(MemoryLayout.size(ofValue: isRunning))
+            let err = AudioQueueGetProperty(inAQ, kAudioQueueProperty_IsRunning, &isRunning, &propSize)
+            if err == noErr {
+                let sr = Unmanaged<SoundResource>.fromOpaque(inUserData!).takeUnretainedValue()
+                sr.playing = isRunning != 0
+                NotificationCenter.default.post(name: sr.playing ? .SoundDidStartPlaying : .SoundDidStopPlaying, object: sr)
+            }
+        }, Unmanaged.passUnretained(self).toOpaque())
+    }
+
+    private func parse(_ data: Data) throws -> Bool {
         // Read sound headers
         let reader = BinaryDataReader(data, bigEndian: true)
         let soundFormat: Int16 = try reader.read()
@@ -175,9 +193,7 @@ class SoundResource {
         if byteSize < bytesRemaining {
             byteSize = bytesRemaining
         }
-        var err: OSStatus
-        err = AudioQueueNewOutput(&streamDesc, {_,_,_ in }, nil, nil, nil, 0, &queueRef)
-        err = AudioQueueAllocateBuffer(queueRef!, byteSize, &bufferRef)
+        initAudioQueue(byteSize)
         let buff = bufferRef!.pointee.mAudioData.assumingMemoryBound(to: UInt8.self)
         data.copyBytes(to: buff, from: reader.position..<(reader.position+Int(byteSize)))
         bufferRef!.pointee.mAudioDataByteSize = byteSize
@@ -191,6 +207,8 @@ class SoundResource {
         var fileFrames: Int64 = 0
         var inStreamDesc = AudioStreamBasicDescription()
         
+        self.stop()
+
         // Open file and get info
         err = ExtAudioFileOpenURL(url as CFURL, &fRef)
         propSize = UInt32(MemoryLayout.size(ofValue: fileFrames))
@@ -201,11 +219,10 @@ class SoundResource {
         // Configure output info and audio buffer
         streamDesc = getStreamDescription(format: format, channels: (channels == 0 ? inStreamDesc.mChannelsPerFrame : channels), sampleRate: (sampleRate == 0 ? inStreamDesc.mSampleRate : sampleRate))
         // Packets = frames / framesPerPacket, but we need to round up
-        // WARN: This doesn't account for change in sample rate
+        // FIXME: This doesn't account for change in sample rate
         numPackets = (UInt32(fileFrames) + streamDesc.mFramesPerPacket - 1) / streamDesc.mFramesPerPacket
         let byteSize = numPackets * streamDesc.mBytesPerPacket
-        err = AudioQueueNewOutput(&streamDesc, {_,_,_ in }, nil, nil, nil, 0, &queueRef)
-        err = AudioQueueAllocateBuffer(queueRef!, byteSize, &bufferRef)
+        initAudioQueue(byteSize)
         var bufferList = AudioBufferList(
             mNumberBuffers: 1,
             mBuffers: AudioBuffer(
@@ -316,34 +333,35 @@ class SoundResource {
     }
     
     func play() {
-		guard let queueRef = queueRef else {
-			return
-		}
-		var err: OSStatus
-		err = AudioQueueReset(queueRef)
-		err = AudioQueueEnqueueBuffer(queueRef, bufferRef!, 0, nil)
-		err = AudioQueueStart(queueRef, nil)
+        guard let queueRef = queueRef else {
+            return
+        }
+        var err: OSStatus
+        err = AudioQueueReset(queueRef)
+        err = AudioQueueEnqueueBuffer(queueRef, bufferRef!, 0, nil)
+        err = AudioQueueStart(queueRef, nil)
+        err = AudioQueueStop(queueRef, false);
     }
     
     func stop() {
-		guard let queueRef = queueRef else {
-			return
-		}
-		var err: OSStatus
-		err = AudioQueueReset(queueRef)
+        guard let queueRef = queueRef else {
+            return
+        }
+        var err: OSStatus
+        err = AudioQueueStop(queueRef, true)
     }
     
     func export(to url: URL) {
-		guard let bufferRef = bufferRef else {
-			return
-		}
-		var err: OSStatus
-		var fRef: AudioFileID?
-		var bytes = bufferRef.pointee.mAudioDataByteSize
-		let formatID = (streamDesc.mFormatFlags & kAudioFormatFlagIsBigEndian) != 0 ? kAudioFileAIFFType : kAudioFileAIFCType
-		err = AudioFileCreateWithURL(url as CFURL, formatID, &streamDesc, .eraseFile, &fRef)
-		err = AudioFileWriteBytes(fRef!, false, 0, &bytes, bufferRef.pointee.mAudioData)
-		err = AudioFileClose(fRef!)
+        guard let bufferRef = bufferRef else {
+            return
+        }
+        var err: OSStatus
+        var fRef: AudioFileID?
+        var bytes = bufferRef.pointee.mAudioDataByteSize
+        let formatID = (streamDesc.mFormatFlags & kAudioFormatFlagIsBigEndian) != 0 ? kAudioFileAIFFType : kAudioFileAIFCType
+        err = AudioFileCreateWithURL(url as CFURL, formatID, &streamDesc, .eraseFile, &fRef)
+        err = AudioFileWriteBytes(fRef!, false, 0, &bytes, bufferRef.pointee.mAudioData)
+        err = AudioFileClose(fRef!)
     }
 
     

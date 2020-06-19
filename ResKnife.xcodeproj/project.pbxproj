@@ -14,7 +14,6 @@
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
-		4927A4A9249444BE00CD3E5A /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A4A82494407900CD3E5A /* BinaryDataWriter.swift */; };
 		493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C3244C2B5000E1EAE4 /* ElementBFLG.h */; };
 		493229C6244C2B5000E1EAE4 /* ElementBFLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229C4244C2B5000E1EAE4 /* ElementBFLG.m */; };
 		493229C9244C3A0800E1EAE4 /* ElementWFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C7244C3A0800E1EAE4 /* ElementWFLG.h */; };
@@ -89,12 +88,6 @@
 		49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A082447F45700D439BC /* ElementFCNT.m */; };
 		49882A0D2448EF0E00D439BC /* ElementAWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A0B2448EF0E00D439BC /* ElementAWRD.h */; };
 		49882A0E2448EF0E00D439BC /* ElementAWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A0C2448EF0E00D439BC /* ElementAWRD.m */; };
-		4996728224905D11009AEF99 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996727C24905D11009AEF99 /* BinaryDataReader.swift */; };
-		4996728324905D11009AEF99 /* BinaryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996727D24905D11009AEF99 /* BinaryData.swift */; };
-		4996728424905D11009AEF99 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996727E24905D11009AEF99 /* Common.swift */; };
-		4996728524905D11009AEF99 /* IntegerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996727F24905D11009AEF99 /* IntegerType.swift */; };
-		4996728624905D11009AEF99 /* Tuple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996728024905D11009AEF99 /* Tuple.swift */; };
-		4996728724905D11009AEF99 /* BinaryDataErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996728124905D11009AEF99 /* BinaryDataErrors.swift */; };
 		49F6403C2461199500E7CE4D /* ElementPACK.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403A2461199500E7CE4D /* ElementPACK.h */; };
 		49F6403D2461199500E7CE4D /* ElementPACK.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F6403B2461199500E7CE4D /* ElementPACK.m */; };
 		49F640402462C84B00E7CE4D /* ElementDVDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403E2462C84B00E7CE4D /* ElementDVDR.h */; };
@@ -115,6 +108,8 @@
 		49F67EB5247B742B00553624 /* MacRomanFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F67EB2247B742B00553624 /* MacRomanFormatter.h */; };
 		49F67EB6247B742B00553624 /* MacRomanFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F67EB3247B742B00553624 /* MacRomanFormatter.m */; };
 		49F67EB7247B742B00553624 /* MacRomanFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F67EB3247B742B00553624 /* MacRomanFormatter.m */; };
+		49F6A2EB249C96D00086C0F4 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
+		49F6A2EC249C96D00086C0F4 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F9560C245D44D200D80C65 /* ElementCOLR.h */; };
 		49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9560D245D44D200D80C65 /* ElementCOLR.m */; };
 		555DFD972059BCE700E1B774 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 555DFD992059BCE700E1B774 /* Credits.rtf */; };
@@ -498,7 +493,6 @@
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
-		4927A4A82494407900CD3E5A /* BinaryDataWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		493229C3244C2B5000E1EAE4 /* ElementBFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBFLG.h; sourceTree = "<group>"; };
 		493229C4244C2B5000E1EAE4 /* ElementBFLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBFLG.m; sourceTree = "<group>"; };
 		493229C7244C3A0800E1EAE4 /* ElementWFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementWFLG.h; sourceTree = "<group>"; };
@@ -537,23 +531,11 @@
 		494BEA6E245B90D1000EF1D0 /* ElementKRID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKRID.m; sourceTree = "<group>"; };
 		494BEA71245BE256000EF1D0 /* ElementRSID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementRSID.h; sourceTree = "<group>"; };
 		494BEA72245BE256000EF1D0 /* ElementRSID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRSID.m; sourceTree = "<group>"; };
-		4953F5902488740F0002340F /* SoundWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundWindowController.h; sourceTree = "<group>"; };
-		4953F5912488740F0002340F /* SoundWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoundWindowController.m; sourceTree = "<group>"; };
 		4953F5922488740F0002340F /* SoundWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundWindow.xib; sourceTree = "<group>"; };
 		4953F593248874260002340F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4953F5A0248874AA0002340F /* Sound Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sound Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4953F5A82488795B0002340F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
-		4953F5B82489C5D20002340F /* SoundResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundResource.h; sourceTree = "<group>"; };
-		4953F5B92489C5D20002340F /* SoundResource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoundResource.m; sourceTree = "<group>"; };
 		4953F5C02489CFCE0002340F /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		4953F5C32489D1C30002340F /* Sound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sound.h; sourceTree = "<group>"; };
-		4953F5C62489EC4E0002340F /* BinaryTools-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BinaryTools-Prefix.pch"; sourceTree = "<group>"; };
-		4953F5C72489EC4E0002340F /* BTBinaryStreamReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTBinaryStreamReader.h; sourceTree = "<group>"; };
-		4953F5C82489EC4E0002340F /* BTBinaryStreamWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTBinaryStreamWriter.m; sourceTree = "<group>"; };
-		4953F5C92489EC4E0002340F /* BTBinaryTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTBinaryTools.h; sourceTree = "<group>"; };
-		4953F5CA2489EC4E0002340F /* BTBinaryStreamReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTBinaryStreamReader.m; sourceTree = "<group>"; };
-		4953F5CB2489EC4E0002340F /* BTBinaryStreamWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTBinaryStreamWriter.h; sourceTree = "<group>"; };
-		4953F5CC2489EC4E0002340F /* BTBinaryToolsErrors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTBinaryToolsErrors.h; sourceTree = "<group>"; };
 		4962B272245535270065590E /* ElementList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementList.h; sourceTree = "<group>"; };
 		4962B273245535270065590E /* ElementList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementList.m; sourceTree = "<group>"; };
 		4962B27624569EE50065590E /* ElementWBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementWBIT.h; sourceTree = "<group>"; };
@@ -613,12 +595,6 @@
 		49882A082447F45700D439BC /* ElementFCNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementFCNT.m; sourceTree = "<group>"; };
 		49882A0B2448EF0E00D439BC /* ElementAWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementAWRD.h; sourceTree = "<group>"; };
 		49882A0C2448EF0E00D439BC /* ElementAWRD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementAWRD.m; sourceTree = "<group>"; };
-		4996727C24905D11009AEF99 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
-		4996727D24905D11009AEF99 /* BinaryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryData.swift; sourceTree = "<group>"; };
-		4996727E24905D11009AEF99 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
-		4996727F24905D11009AEF99 /* IntegerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerType.swift; sourceTree = "<group>"; };
-		4996728024905D11009AEF99 /* Tuple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tuple.swift; sourceTree = "<group>"; };
-		4996728124905D11009AEF99 /* BinaryDataErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataErrors.swift; sourceTree = "<group>"; };
 		49F1C23C24404D2000D46B35 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		49F6403A2461199500E7CE4D /* ElementPACK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementPACK.h; sourceTree = "<group>"; };
 		49F6403B2461199500E7CE4D /* ElementPACK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementPACK.m; sourceTree = "<group>"; };
@@ -638,6 +614,8 @@
 		49F640572466099C00E7CE4D /* ElementRangeable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRangeable.m; sourceTree = "<group>"; };
 		49F67EB2247B742B00553624 /* MacRomanFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacRomanFormatter.h; sourceTree = "<group>"; };
 		49F67EB3247B742B00553624 /* MacRomanFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacRomanFormatter.m; sourceTree = "<group>"; };
+		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
+		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		49F9560C245D44D200D80C65 /* ElementCOLR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCOLR.h; sourceTree = "<group>"; };
 		49F9560D245D44D200D80C65 /* ElementCOLR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCOLR.m; sourceTree = "<group>"; };
 		550B9045189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AboutPanel.xib; sourceTree = "<group>"; };
@@ -1055,11 +1033,6 @@
 		4953F58F248873DD0002340F /* Sound Editor */ = {
 			isa = PBXGroup;
 			children = (
-				4953F5902488740F0002340F /* SoundWindowController.h */,
-				4953F5912488740F0002340F /* SoundWindowController.m */,
-				4953F5B82489C5D20002340F /* SoundResource.h */,
-				4953F5B92489C5D20002340F /* SoundResource.m */,
-				4953F5C32489D1C30002340F /* Sound.h */,
 				4953F5922488740F0002340F /* SoundWindow.xib */,
 				4953F593248874260002340F /* Info.plist */,
 				4927A484248C7A9100CD3E5A /* Sound Editor-Bridging-Header.h */,
@@ -1068,20 +1041,6 @@
 				4927A489248C9DBD00CD3E5A /* Sound.swift */,
 			);
 			path = "Sound Editor";
-			sourceTree = "<group>";
-		};
-		4953F5C52489EC4E0002340F /* BinaryTools */ = {
-			isa = PBXGroup;
-			children = (
-				4953F5C62489EC4E0002340F /* BinaryTools-Prefix.pch */,
-				4953F5C72489EC4E0002340F /* BTBinaryStreamReader.h */,
-				4953F5CA2489EC4E0002340F /* BTBinaryStreamReader.m */,
-				4953F5CB2489EC4E0002340F /* BTBinaryStreamWriter.h */,
-				4953F5C82489EC4E0002340F /* BTBinaryStreamWriter.m */,
-				4953F5C92489EC4E0002340F /* BTBinaryTools.h */,
-				4953F5CC2489EC4E0002340F /* BTBinaryToolsErrors.h */,
-			);
-			path = BinaryTools;
 			sourceTree = "<group>";
 		};
 		497043F32472064F0035C0FA /* Graphite */ = {
@@ -1212,18 +1171,13 @@
 			path = GraphiteTest;
 			sourceTree = "<group>";
 		};
-		4996727B24905D11009AEF99 /* BinarySwift */ = {
+		49F6A2E8249C96D00086C0F4 /* BinaryData */ = {
 			isa = PBXGroup;
 			children = (
-				4996727C24905D11009AEF99 /* BinaryDataReader.swift */,
-				4996727D24905D11009AEF99 /* BinaryData.swift */,
-				4927A4A82494407900CD3E5A /* BinaryDataWriter.swift */,
-				4996727E24905D11009AEF99 /* Common.swift */,
-				4996727F24905D11009AEF99 /* IntegerType.swift */,
-				4996728024905D11009AEF99 /* Tuple.swift */,
-				4996728124905D11009AEF99 /* BinaryDataErrors.swift */,
+				49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */,
+				49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */,
 			);
-			path = BinarySwift;
+			path = BinaryData;
 			sourceTree = "<group>";
 		};
 		B229EEBF15A4B6FE0032C12C /* PNG Editor */ = {
@@ -1330,8 +1284,7 @@
 				F5C9ECCE027F474A01A8010C /* Notifications.m */,
 				F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */,
 				F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */,
-				4996727B24905D11009AEF99 /* BinarySwift */,
-				4953F5C52489EC4E0002340F /* BinaryTools */,
+				49F6A2E8249C96D00086C0F4 /* BinaryData */,
 				4953F58F248873DD0002340F /* Sound Editor */,
 				B2B2C3FC15A9451800D6F61C /* Pattern Editor */,
 				F5EF839F020C08E601A80001 /* Hex Editor */,
@@ -2086,15 +2039,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4996728224905D11009AEF99 /* BinaryDataReader.swift in Sources */,
-				4996728424905D11009AEF99 /* Common.swift in Sources */,
 				4927A48C248E162F00CD3E5A /* Sound.swift in Sources */,
 				4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */,
-				4996728524905D11009AEF99 /* IntegerType.swift in Sources */,
-				4927A4A9249444BE00CD3E5A /* BinaryDataWriter.swift in Sources */,
-				4996728324905D11009AEF99 /* BinaryData.swift in Sources */,
-				4996728624905D11009AEF99 /* Tuple.swift in Sources */,
-				4996728724905D11009AEF99 /* BinaryDataErrors.swift in Sources */,
+				49F6A2EC249C96D00086C0F4 /* BinaryDataWriter.swift in Sources */,
+				49F6A2EB249C96D00086C0F4 /* BinaryDataReader.swift in Sources */,
 				4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2631,6 +2579,7 @@
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Sound Editor/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cocoa/Plug-Ins/Sound Editor/Sound Editor-Bridging-Header.h";
@@ -2652,6 +2601,7 @@
 				INFOPLIST_FILE = "Cocoa/Plug-Ins/Sound Editor/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cocoa/Plug-Ins/Sound Editor/Sound Editor-Bridging-Header.h";
