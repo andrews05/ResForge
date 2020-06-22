@@ -310,11 +310,4 @@ static ResourceDataSource* supportDataSource;
 	[encoder encodeObject:data forKey:kRSRCData];
 }
 
-/* description */
-
-- (NSString *)description
-{
-	return [NSString stringWithFormat:@"\n%@\nName: %@\nType: %@  ID: %hd\nSize: %ld  Modified: %@", [super description], name, GetNSStringFromOSType(type), resID, (unsigned long)[data length], dirty? @"YES":@"NO"];
-}
-
 @end

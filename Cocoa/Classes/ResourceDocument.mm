@@ -27,9 +27,28 @@ extern NSString *RKResourcePboardType;
 @synthesize creator = _creator;
 @synthesize type = _type;
 
+- (instancetype)init
+{
+    if (self = [super init])
+        self.editorWindows = [NSMutableDictionary new];
+    return self;
+}
+
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(void *)contextInfo
+{
+    for (NSWindowController *controller in self.editorWindows.allValues) {
+        if ([controller respondsToSelector:@selector(windowShouldClose:)] && [controller performSelector:@selector(windowShouldClose:) withObject:controller.window]) {
+            [controller close];
+        } else {
+            return;
+        }
+    }
+    [super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
 }
 
 #pragma mark -
@@ -359,6 +378,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceIDWillChange:) name:ResourceIDWillChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeWillChange:) name:ResourceTypeWillChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesWillChange:) name:ResourceAttributesWillChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:nil];
 	
     [dataSource addResources:_resources];
 }
@@ -404,13 +424,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	else if([item action] == @selector(openResourcesInTemplate:))			return selectedRows > 0;
 	//else if([item action] == @selector(openResourcesWithOtherTemplate:))	return selectedRows > 0;
 	else if([item action] == @selector(openResourcesAsHex:))				return selectedRows > 0;
-//    else if([item action] == @selector(exportResourceToImageFile:))
-//    {
-//        if(selectedRows < 1) return NO;
-//        Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType([resource type])];
-//        return [editorClass respondsToSelector:@selector(imageForImageFileExport:)];
-//    }
-	else if([item action] == @selector(playSound:))				return selectedRows == 1 && [resource type] == 'snd ';
 	//else if([item action] == @selector(revertResourceToSaved:))	return selectedRows == 1 && [resource isDirty];
 	else return [super validateMenuItem:item];
 }
@@ -474,16 +487,15 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)openResources:(id)sender
 {
 	// ignore double-clicks in table header
-	if(sender == outlineView && [outlineView clickedRow] == -1)
+    if (sender == outlineView && outlineView.clickedRow == -1)
 		return;
 	
-	
-	NSEvent *event = [NSApp currentEvent];
-	if ([event type] == NSLeftMouseUp && (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) & NSAlternateKeyMask) != 0)
+    NSEvent *event = NSApp.currentEvent;
+    if (event.type == NSLeftMouseUp && (event.modifierFlags & NSDeviceIndependentModifierFlagsMask & NSAlternateKeyMask) != 0) {
 		[self openResourcesAsHex:sender];
-	else {
-		for (Resource *resource in [outlineView selectedItems]) {
-            if( [resource isKindOfClass: [Resource class]] ) {
+    } else {
+        for (Resource *resource in outlineView.selectedItems) {
+            if ([resource isKindOfClass: Resource.class] ) {
                 [self openResourceUsingEditor:resource];
             } else {
                 [outlineView expandItem:resource];
@@ -495,160 +507,87 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)openResourcesInTemplate:(id)sender
 {
 	// opens the resource in its default template
-	for (Resource *resource in [outlineView selectedItems]) {
-        if( [resource isKindOfClass: [Resource class]] ) {
-            [self openResource:resource usingTemplate:GetNSStringFromOSType([resource type])];
+	for (Resource *resource in outlineView.selectedItems) {
+        if ([resource isKindOfClass: Resource.class]) {
+            [self openResource:resource usingTemplate:GetNSStringFromOSType(resource.type)];
         }
 	}
 }
 
 - (IBAction)openResourcesAsHex:(id)sender
 {
-	for (Resource *resource in [outlineView selectedItems]) {
-        if( [resource isKindOfClass: [Resource class]] ) {
+	for (Resource *resource in outlineView.selectedItems) {
+        if ([resource isKindOfClass: Resource.class]) {
             [self openResourceAsHex:resource];
         }
 	}
 }
 
 
-/* -----------------------------------------------------------------------------
-	openResourceUsingEditor:
-		Open an editor for the specified Resource instance. This looks up
-		the editor to use in the plugin registry and then instantiates an
-		editor object, handing it the resource. If there is no editor for this
-		type registered, it falls back to the template editor, which in turn
-		uses the hex editor as a fallback.
-	
-	REVISIONS:
-		2003-07-31  UK  Changed to use plugin registry instead of file name.
-		2012-07-07	NW	Changed to return the used plugin.
-   -------------------------------------------------------------------------- */
-
-/* Method name should be changed to:  -(void)openResource:(Resource *)resource usingEditor:(Class)overrideEditor <nil == default editor>   */
-
 - (id <ResKnifePlugin>)openResourceUsingEditor:(Resource *)resource
 {
-	Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType([resource type])];
-	
-	// open the resources, passing in the template to use
-	if(editorClass)
-	{
-		// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
-		// update: doug says window controllers automatically release themselves when their window is closed. All default plugs have a window controller as their principal class, but 3rd party ones might not
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-		id plug = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
-        if (plug) {
-            if ([plug isKindOfClass:[NSWindowController class]]) {
-                [self addWindowController:plug];
-                [plug setDocumentEdited:NO];
-            }
-			return plug;
-        }
-	}
-	
+    NSString *type = GetNSStringFromOSType(resource.type);
+    Class editorClass = [RKEditorRegistry.defaultRegistry editorForType:type];
+    if (editorClass) {
+        return [self openResource:resource usingEditor:editorClass template:nil];
+    }
+    
 	// if no editor exists, or the editor is broken, open using template
-	return [self openResource:resource usingTemplate:GetNSStringFromOSType([resource type])];
+	return [self openResource:resource usingTemplate:type];
 }
-
-
-/* -----------------------------------------------------------------------------
-	openResource:usingTemplate:
-		Open a template editor for the specified Resource instance. This looks
-		up the template editor in the plugin registry and then instantiates an
-		editor object, handing it the resource and the template resource to use.
-		If there is no template editor registered, or there is no template for
-		this resource type, it falls back to the hex editor.
-	
-	REVISIONS:
-		2003-07-31  UK  Changed to use plugin registry instead of file name.
-		2012-07-07	NW	Changed to return the used plugin.
-   -------------------------------------------------------------------------- */
 
 - (id <ResKnifePlugin>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
 {
 	// opens resource in template using TMPL resource with name templateName
-    if (resource.type) {
-        Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:@"Template Editor"];
-        
-        // TODO: this checks EVERY DOCUMENT for template resources (might not be desired)
-        // TODO: it doesn't, however, check the application's resource map for a matching template!
-        Resource *tmpl = [Resource resourceOfType:'TMPL' withName:GetNSStringFromOSType([resource type]) inDocument:nil];
-        
-        // open the resources, passing in the template to use
-        if(tmpl && editorClass)
-        {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-            id plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResource:resource template:tmpl];
-            if (plug) {
-                [self addWindowController:plug];
-                [plug setDocumentEdited:NO];
-                return plug;
-            }
-        }
+    Class editorClass = [RKEditorRegistry.defaultRegistry editorForType:@"Template Editor"];
+    Resource *tmpl = [Resource resourceOfType:'TMPL' withName:templateName inDocument:nil];
+    // open the resources, passing in the template to use
+    if (tmpl && editorClass) {
+        return [self openResource:resource usingEditor:editorClass template:tmpl];
     }
 	
 	// if no template exists, or template editor is broken, open as hex
 	return [self openResourceAsHex:resource];
 }
 
-/*!
-@method			openResourceAsHex:
-@author			Nicholas Shanks
-@created		2001
-@updated		2003-07-31 UK:	Changed to use plugin registry instead of file name.
-				2012-07-07 NW:	Changed to return the used plugin.
-@description	Open a hex editor for the specified Resource instance. This looks up the hexadecimal editor in the plugin registry and then instantiates an editor object, handing it the resource.
-@param			resource	Resource to edit
-*/
-
 - (id <ResKnifePlugin>)openResourceAsHex:(Resource *)resource
 {
-	Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType: @"Hexadecimal Editor"];
-	// bug: I alloc a plug instance here, but have no idea where I should dealloc it, perhaps the plug ought to call [self autorelease] when it's last window is closed?
-	// update: doug says window controllers automatically release themselves when their window is closed.
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	id plug = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
-    [self addWindowController:plug];
-    [plug setDocumentEdited:NO];
-	return plug;
+    Class editorClass = [RKEditorRegistry.defaultRegistry editorForType: @"Hexadecimal Editor"];
+    return [self openResource:resource usingEditor:editorClass template:nil];
 }
 
 
-- (void)saveSoundAsMovie:(NSData *)sndData
+- (id <ResKnifePlugin>)openResource:(Resource *)resource usingEditor:(Class)editorClass template:(Resource *)tmpl
 {
-
+    // Keep track of opened resources so we don't open them multiple times
+    // TODO: Allow opening in multiple different editors? I.e. template and hex at the same time.
+    NSString *key = resource.description;
+    id <ResKnifePlugin> plug = self.editorWindows[key];
+    if (plug) {
+        [[(NSWindowController *)plug window] makeKeyAndOrderFront:nil];
+        return plug;
+    }
+    
+    if (tmpl) {
+        plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResource:resource template:tmpl];
+    } else {
+        plug = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
+    }
+    self.editorWindows[key] = plug;
+    NSWindow *window = [(NSWindowController *)plug window];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(editorClosed:) name:NSWindowWillCloseNotification object:window];
+    return plug;
 }
 
-/*!
-@method			playSound:
-@abstract		Plays the selected carbon 'snd ' resource.
-@author			Nicholas Shanks
-@created		2001
-@updated		2003-10-22 NGS: Moved playing into seperate thread to avoid locking up main thread.
-@pending		should really be moved to a 'snd ' editor, but first we'd need to extend the plugin protocol to call the class so it can add such menu items. Of course, we could just make the 'snd ' editor have a button in its window that plays the sound.
-@description	This method is called from a menu item which is validated against there being only one selected resource (of type 'snd '), so shouldn't have to deal with playing multiple sounds, though this may of course change in future.
-@param	sender	ignored
-*/
-- (IBAction)playSound:(id)sender
+- (void)editorClosed:(NSNotification *)notification
 {
-	// bug: can only cope with one selected item
-	NSData *data = [(Resource *)[outlineView itemAtRow:[outlineView selectedRow]] data];
-	if(data && [data length] != 0) {
-		xpc_connection_t connection = xpc_connection_create("org.derailer.ResKnife.System7SoundPlayer", NULL);
-		xpc_object_t dict = xpc_dictionary_create(NULL, NULL, 0);
-		xpc_dictionary_set_data(dict, "soundData", [data bytes], [data length]);
-		xpc_connection_set_event_handler(connection, ^(xpc_object_t object) {
-			if (xpc_get_type(object) == XPC_TYPE_ERROR) {
-				if (object == XPC_ERROR_CONNECTION_INVALID)
-					NSLog(@"invalid connection");
-			}
-		});
-		xpc_connection_resume(connection);
-		xpc_connection_send_message(connection, dict);
-	}
-	else NSBeep();
+    NSWindow *window = (NSWindow *)[notification object];
+    for (id key in [self.editorWindows allKeysForObject:window.windowController]) {
+        [self.editorWindows removeObjectForKey:key];
+    }
+    [NSNotificationCenter.defaultCenter removeObserver:self name:nil object:notification.object];
 }
+
 
 - (void)resourceNameWillChange:(NSNotification *)notification
 {
@@ -688,15 +627,20 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	// this saves the current state of the resource's attributes so we can undo the change
 	Resource *resource = (Resource *) [notification object];
-	[[self undoManager] registerUndoWithTarget:resource selector:@selector(setAttributes:) object:[@([resource attributes]) copy]];
-	if([[resource name] length] == 0)
-		[[self undoManager] setActionName:NSLocalizedString(@"Attributes Change", nil)];
-	else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Attributes Change for '%@'", nil), [resource name]]];
+    if ([resource document] == self) {
+        [[self undoManager] registerUndoWithTarget:resource selector:@selector(setAttributes:) object:[@([resource attributes]) copy]];
+        if([[resource name] length] == 0)
+            [[self undoManager] setActionName:NSLocalizedString(@"Attributes Change", nil)];
+        else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Attributes Change for '%@'", nil), [resource name]]];
+    }
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
 {
-	[self updateChangeCount:NSChangeDone];
+    Resource *resource = (Resource *) [notification object];
+    if ([resource document] == self) {
+        [self updateChangeCount:NSChangeDone];
+    }
 }
 
 #pragma mark -

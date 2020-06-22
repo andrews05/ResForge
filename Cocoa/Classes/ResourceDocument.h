@@ -20,6 +20,7 @@ typedef enum {
 	CreateResourceSheetController	*sheetController;
 }
 @property NSMutableArray *resources;
+@property NSMutableDictionary *editorWindows;
 @property NSString *fork; // name of fork to save to, usually empty string (data fork) or 'rsrc'
 @property FileFormat format;
 @property OSType creator;
@@ -38,7 +39,6 @@ typedef enum {
 - (id <ResKnifePlugin>)openResourceUsingEditor:(Resource *)resource;
 - (id <ResKnifePlugin>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName;
 - (id <ResKnifePlugin>)openResourceAsHex:(Resource *)resource;
-- (IBAction)playSound:(id)sender;
 
 - (IBAction)copy:(id)sender;
 - (IBAction)paste:(id)sender;

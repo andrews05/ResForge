@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -327,15 +327,6 @@ CA
                                     <action selector="revertResource:" target="-1" id="494"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" tag="9" id="430">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Play Sound" tag="10" keyEquivalent="p" id="427">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
-                                <connections>
-                                    <action selector="playSound:" target="-1" id="495"/>
-                                </connections>
-                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -435,6 +426,7 @@ CA
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="140" y="154"/>
         </menu>
         <customObject id="431" customClass="ApplicationDelegate">
             <connections>
@@ -442,11 +434,11 @@ CA
             </connections>
         </customObject>
         <customView id="432">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="40"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="39"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZz-d2-V4c">
-                    <rect key="frame" x="18" y="13" width="85" height="17"/>
+                    <rect key="frame" x="18" y="13" width="85" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fork to open:" id="q6V-9a-MRp">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -454,13 +446,13 @@ CA
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW9-Ng-yIh">
-                    <rect key="frame" x="107" y="7" width="185" height="26"/>
+                    <rect key="frame" x="107" y="7" width="185" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="xWq-2O-h1B"/>
                     </constraints>
                     <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kwd-tA-MiD" id="k6W-79-SSl">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
+                        <font key="font" metaFont="system"/>
                         <menu key="menu" id="e1x-em-dsm">
                             <items>
                                 <menuItem title="Automatic" state="on" id="kwd-tA-MiD">
