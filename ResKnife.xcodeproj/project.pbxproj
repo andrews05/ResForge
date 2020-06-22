@@ -110,6 +110,7 @@
 		49F67EB7247B742B00553624 /* MacRomanFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F67EB3247B742B00553624 /* MacRomanFormatter.m */; };
 		49F6A2EB249C96D00086C0F4 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49F6A2EC249C96D00086C0F4 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
+		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F9560C245D44D200D80C65 /* ElementCOLR.h */; };
 		49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9560D245D44D200D80C65 /* ElementCOLR.m */; };
 		555DFD972059BCE700E1B774 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 555DFD992059BCE700E1B774 /* Credits.rtf */; };
@@ -616,6 +617,7 @@
 		49F67EB3247B742B00553624 /* MacRomanFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacRomanFormatter.m; sourceTree = "<group>"; };
 		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
 		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
+		49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStatus.swift; sourceTree = "<group>"; };
 		49F9560C245D44D200D80C65 /* ElementCOLR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCOLR.h; sourceTree = "<group>"; };
 		49F9560D245D44D200D80C65 /* ElementCOLR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCOLR.m; sourceTree = "<group>"; };
 		550B9045189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AboutPanel.xib; sourceTree = "<group>"; };
@@ -1039,6 +1041,7 @@
 				4927A485248C7A9100CD3E5A /* SoundWindowController.swift */,
 				4927A487248C8C0500CD3E5A /* SoundResource.swift */,
 				4927A489248C9DBD00CD3E5A /* Sound.swift */,
+				49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */,
 			);
 			path = "Sound Editor";
 			sourceTree = "<group>";
@@ -2044,6 +2047,7 @@
 				49F6A2EC249C96D00086C0F4 /* BinaryDataWriter.swift in Sources */,
 				49F6A2EB249C96D00086C0F4 /* BinaryDataReader.swift in Sources */,
 				4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */,
+				49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

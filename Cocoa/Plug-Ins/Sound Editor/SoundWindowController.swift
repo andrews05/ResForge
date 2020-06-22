@@ -40,6 +40,7 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
 
     override func windowDidLoad() {
         super.windowDidLoad()
+        self.window?.title = self.resource.defaultWindowTitle()
         self.format.stringValue = ""
         self.channels.stringValue = ""
         self.sampleRate.stringValue = ""
@@ -99,7 +100,11 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
         panel.allowedFileTypes = ["aiff"]
         panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
             if returnCode.rawValue == NSFileHandlingPanelOKButton {
-                self.sound.export(to: panel.url!)
+                do {
+                    try self.sound.export(to: panel.url!)
+                } catch let error {
+                    self.presentError(error)
+                }
             }
         })
     }
@@ -115,13 +120,12 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
                 let format = self.selectFormat.selectedTag()
                 let channels = self.selectChannels.selectedTag()
                 let sampleRate = self.selectSampleRate.selectedTag()
-                self.sound.load(url: panel.url!, format: UInt32(format), channels: UInt32(channels), sampleRate: Double(sampleRate))
                 do {
+                    try self.sound.load(url: panel.url!, format: UInt32(format), channels: UInt32(channels), sampleRate: Double(sampleRate))
                     self.resource.data = try self.sound.data()
-                } catch {
-
+                } catch let error {
+                    self.presentError(error)
                 }
-                self.setDocumentEdited(true)
                 self.loadInfo()
             }
         })

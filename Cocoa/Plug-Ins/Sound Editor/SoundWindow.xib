@@ -25,31 +25,16 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <value key="minSize" type="size" width="480" height="270"/>
-            <value key="maxSize" type="size" width="480" height="270"/>
+            <rect key="contentRect" x="656" y="0.0" width="320" height="170"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <value key="minSize" type="size" width="320" height="170"/>
+            <value key="maxSize" type="size" width="320" height="170"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xok-pm-faL">
-                        <rect key="frame" x="208" y="117" width="66" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iH8-sD-e65">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-IA
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="playSound:" target="-2" id="rA7-6F-tS1"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8pV-Pu-93E">
-                        <rect key="frame" x="386" y="222" width="80" height="32"/>
+                        <rect key="frame" x="146" y="122" width="80" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Export" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fX6-K9-Pv7">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -60,7 +45,7 @@ IA
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I6o-Jo-YiD">
-                        <rect key="frame" x="75" y="234" width="147" height="16"/>
+                        <rect key="frame" x="73" y="92" width="229" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="eqO-Cu-nL5">
                             <font key="font" metaFont="system"/>
@@ -69,7 +54,7 @@ IA
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dFu-Ff-XHO">
-                        <rect key="frame" x="20" y="234" width="51" height="16"/>
+                        <rect key="frame" x="18" y="92" width="51" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Format:" id="2OL-IP-LJB">
                             <font key="font" metaFont="system"/>
@@ -78,7 +63,7 @@ IA
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z5D-yz-rSP">
-                        <rect key="frame" x="20" y="210" width="65" height="16"/>
+                        <rect key="frame" x="18" y="68" width="65" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Channels:" id="GcE-eh-5c0">
                             <font key="font" metaFont="system"/>
@@ -87,7 +72,7 @@ IA
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hf7-Ot-l5h">
-                        <rect key="frame" x="89" y="210" width="122" height="16"/>
+                        <rect key="frame" x="87" y="68" width="215" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="6ki-sq-i5X">
                             <font key="font" metaFont="system"/>
@@ -96,7 +81,7 @@ IA
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5iE-pI-o6d">
-                        <rect key="frame" x="20" y="186" width="84" height="16"/>
+                        <rect key="frame" x="18" y="44" width="84" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Sample Rate:" id="N8e-89-96P">
                             <font key="font" metaFont="system"/>
@@ -105,7 +90,7 @@ IA
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mFp-c5-pFt">
-                        <rect key="frame" x="108" y="186" width="101" height="16"/>
+                        <rect key="frame" x="106" y="44" width="196" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="TzQ-pu-wEL">
                             <font key="font" metaFont="system"/>
@@ -114,7 +99,7 @@ IA
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3nL-KW-VyZ">
-                        <rect key="frame" x="22" y="162" width="60" height="16"/>
+                        <rect key="frame" x="18" y="20" width="60" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Duration:" id="RDH-38-xpG">
                             <font key="font" metaFont="system"/>
@@ -123,7 +108,7 @@ IA
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SyL-9B-dhs">
-                        <rect key="frame" x="306" y="222" width="80" height="32"/>
+                        <rect key="frame" x="226" y="122" width="80" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Import" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FhO-6b-3H0">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -134,7 +119,7 @@ IA
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jXH-lE-bUj">
-                        <rect key="frame" x="86" y="162" width="123" height="16"/>
+                        <rect key="frame" x="82" y="20" width="220" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="MIh-jJ-t7R">
                             <font key="font" metaFont="system"/>
@@ -142,12 +127,40 @@ IA
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xok-pm-faL">
+                        <rect key="frame" x="14" y="122" width="80" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iH8-sD-e65">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="playSound:" target="-2" id="rA7-6F-tS1"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RgE-mP-JC2" userLabel="Alternate trigger">
+                        <rect key="frame" x="-50" y="102" width="48" height="48"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarPlayTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="LoA-or-B24">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+IA
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="performClick:" target="xok-pm-faL" id="OnO-Zc-Mgg"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="139" y="147"/>
+            <point key="canvasLocation" x="139" y="104"/>
         </window>
         <customView id="rvG-Hf-IKA">
             <rect key="frame" x="0.0" y="0.0" width="299" height="109"/>
@@ -174,13 +187,13 @@ IA
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WQk-2V-Qfn">
                     <rect key="frame" x="114" y="72" width="168" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="8-bit uncompressed" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" tag="1918990112" imageScaling="proportionallyDown" inset="2" selectedItem="D8p-f2-RnD" id="6hI-Ob-cP4">
+                    <popUpButtonCell key="cell" type="push" title="8-bit uncompressed" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1918990112" imageScaling="proportionallyDown" inset="2" selectedItem="D8p-f2-RnD" id="6hI-Ob-cP4">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <menu key="menu" id="g8e-MY-cId">
                             <items>
-                                <menuItem title="8-bit uncompressed" tag="1918990112" id="D8p-f2-RnD"/>
-                                <menuItem title="16-bit uncompressed" state="on" tag="1953984371" id="oFt-qv-8Fg"/>
+                                <menuItem title="8-bit uncompressed" state="on" tag="1918990112" id="D8p-f2-RnD"/>
+                                <menuItem title="16-bit uncompressed" tag="1953984371" id="oFt-qv-8Fg"/>
                                 <menuItem title="IMA 4:1" tag="1768775988" id="pD9-ru-kri"/>
                                 <menuItem title="A-Law 2:1" tag="1634492791" id="ehN-zC-6nr"/>
                                 <menuItem title="µ-Law 2:1" tag="1970037111" id="Bu8-MK-SPg"/>
@@ -194,13 +207,13 @@ IA
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Th-ex-OQ1">
                     <rect key="frame" x="114" y="41" width="168" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Same as source" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="hlC-5i-ME5" id="kVY-S9-TYv">
+                    <popUpButtonCell key="cell" type="push" title="Same as source" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="hlC-5i-ME5" id="kVY-S9-TYv">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <menu key="menu" id="X8K-3i-omx">
                             <items>
-                                <menuItem title="Same as source" id="hlC-5i-ME5"/>
-                                <menuItem title="Mono" state="on" tag="1" id="Cke-1U-CEk"/>
+                                <menuItem title="Same as source" state="on" id="hlC-5i-ME5"/>
+                                <menuItem title="Mono" tag="1" id="Cke-1U-CEk"/>
                                 <menuItem title="Stereo" tag="2" id="G49-jk-9JV"/>
                             </items>
                         </menu>
@@ -246,4 +259,7 @@ IA
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="V8I-kj-9KL"/>
     </objects>
+    <resources>
+        <image name="NSTouchBarPlayTemplate" width="14" height="30"/>
+    </resources>
 </document>
