@@ -84,41 +84,31 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 - (BOOL)windowShouldClose:(id)sender
 {
-	if([[self window] isDocumentEdited])
-	{
-		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-		NSAlert *alert = [[NSAlert alloc] init];
-		[alert setMessageText:NSLocalizedStringFromTableInBundle(@"KeepChangesDialogTitle", nil, bundle, nil)];
-		[alert setInformativeText:NSLocalizedStringFromTableInBundle(@"KeepChangesDialogMessage", nil, bundle, nil)];
-		[alert addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"KeepChangesButton", nil, bundle, nil)];
-		[alert addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"CancelButton", nil, bundle, nil)];
-		NSButton *button = [alert addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"DiscardChangesButton", nil, bundle, nil)];
-		[button setKeyEquivalent:@"d"];
-		[button setKeyEquivalentModifierMask:NSCommandKeyMask];
-		[alert beginSheetModalForWindow:sender modalDelegate:self didEndSelector:@selector(saveSheetDidClose:returnCode:contextInfo:) contextInfo:NULL];
-		//[alert release];
+	if (self.window.documentEdited) {
+		NSAlert *alert = [NSAlert new];
+		alert.messageText = @"Do you want to keep the changes you made to this resource?";
+		alert.informativeText = @"Your changes cannot be saved later if you don't keep them.";
+		[alert addButtonWithTitle:@"Keep"];
+		[alert addButtonWithTitle:@"Don't Keep"];
+		[alert addButtonWithTitle:@"Cancel"];
+		[alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+			switch (returnCode) {
+				case NSAlertFirstButtonReturn:	// keep
+					[self saveResource:nil];
+					[self.window close];
+					break;
+				
+				case NSAlertSecondButtonReturn:	// don't keep
+					[self.window close];
+					break;
+				
+				case NSModalResponseCancel:		// cancel
+					break;
+			}
+		}];
 		return NO;
 	}
-	else return YES;
-}
-
-- (void)saveSheetDidClose:(NSAlert *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	switch (returnCode) {
-		case NSAlertFirstButtonReturn:		// keep
-			[self saveResource:nil];
-			[[self window] close];
-			break;
-		
-		case NSAlertSecondButtonReturn:	// cancel
-			break;
-		
-		case NSAlertThirdButtonReturn:		// don't keep
-		default:
-			[[sheet window] orderOut:nil];
-			[[self window] close];
-			break;
-	}
+	return YES;
 }
 
 - (void)saveResource:(id)sender

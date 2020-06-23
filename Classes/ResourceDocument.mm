@@ -251,8 +251,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		[panel setAllowsMultipleSelection:NO];
 		[panel setCanChooseDirectories:YES];
 		[panel setCanChooseFiles:NO];
-		//[panel beginSheetForDirectory:nil file:nil modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(folderChoosePanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
-		[panel beginSheetModalForWindow:mainWindow completionHandler:^(NSInteger result) {
+		[panel beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse result) {
 			[self folderChoosePanelDidEnd:panel returnCode:result contextInfo:nil];
 		}];
 	}
@@ -295,15 +294,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	filename = [filename stringByAppendingPathExtension:extension];
 	[panel setNameFieldStringValue:filename];
 	//[panel beginSheetForDirectory:nil file:filename modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(exportPanelDidEnd:returnCode:contextInfo:) contextInfo:[exportData retain]];
-	[panel beginSheetModalForWindow:mainWindow completionHandler:^(NSInteger result) {
-		if(result == NSOKButton)
+	[panel beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse result) {
+		if(result == NSModalResponseOK)
 			[exportData writeToURL:[panel URL] atomically:YES];
 	}];
 }
 
-- (void)folderChoosePanelDidEnd:(NSSavePanel *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)folderChoosePanelDidEnd:(NSSavePanel *)sheet returnCode:(NSModalResponse)returnCode contextInfo:(void *)contextInfo
 {
-	if(returnCode == NSOKButton)
+	if(returnCode == NSModalResponseOK)
 	{
 		unsigned int i = 1;
 		NSString *filename, *extension;
@@ -716,16 +715,23 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 #pragma unused(sender)
 	if([[NSUserDefaults standardUserDefaults] boolForKey:kDeleteResourceWarning])
 	{
-		NSBeginCriticalAlertSheet(@"Delete Resource", @"Delete", @"Cancel", nil, [self mainWindow], self, @selector(deleteResourcesSheetDidEnd:returnCode:contextInfo:), NULL, nil, @"Are you sure you want to delete the selected resources?");
+		NSAlert *alert = [NSAlert new];
+		alert.messageText = @"Delete Resource";
+		alert.informativeText = @"Are you sure you want to delete the selected resources?";
+		[alert addButtonWithTitle:@"Delete"];
+		[alert addButtonWithTitle:@"Cancel"];
+		[alert beginSheetModalForWindow:self.mainWindow completionHandler:^(NSModalResponse returnCode) {
+			switch (returnCode) {
+				case NSAlertFirstButtonReturn:
+					[self deleteSelectedResources];
+					break;
+				
+				case NSModalResponseCancel:		// cancel
+					break;
+			}
+		}];
 	}
 	else [self deleteSelectedResources];
-}
-
-- (void)deleteResourcesSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-#pragma unused(contextInfo)
-	if(returnCode == NSOKButton)
-		[self deleteSelectedResources];
 }
 
 - (void)deleteSelectedResources

@@ -2,13 +2,12 @@
 #import "HexWindowController.h"
 
 @implementation FindSheetController
-@synthesize findString;
-@synthesize replaceString;
 
 @synthesize cancelButton;
 @synthesize findNextButton;
-@synthesize findReplaceForm;
 @synthesize replaceAllButton;
+@synthesize findText;
+@synthesize replaceText;
 
 @synthesize startAtTopBox;
 @synthesize wrapAroundBox;
@@ -17,19 +16,6 @@
 @synthesize caseSensitiveBox;
 @synthesize matchEntireWordsBox;
 @synthesize searchASCIIOrHexRadios;
-
-/* FORM DELEGATION METHOD */
-
-- (void)controlTextDidEndEditing:(NSNotification *)notification
-{
-	[self updateStrings];
-}
-
-- (void)updateStrings
-{
-	self.findString = [[findReplaceForm cellAtIndex:0] stringValue];
-	self.replaceString = [[findReplaceForm cellAtIndex:1] stringValue];
-}
 
 /* HIDE AND SHOW SHEET */
 
@@ -45,7 +31,7 @@
 	if( ![searchSelectionOnlyBox isEnabled] )	[searchSelectionOnlyBox setIntValue:0];
 	
 	// show sheet
-	[NSApp beginSheet:[self window] modalForWindow:[sender window] modalDelegate:self didEndSelector:NULL contextInfo:nil];
+	[[sender window] beginSheet:self.window completionHandler:nil];
 }
 
 - (IBAction)hideFindSheet:(id)sender
@@ -56,36 +42,32 @@
 
 - (IBAction)findNext:(id)sender
 {
-	[self updateStrings];
 	[self hideFindSheet:self];
-	NSLog( @"Finding next \"%@\"", findString );
+	NSLog( @"Finding next \"%@\"", findText.stringValue );
 }
 
 - (IBAction)findPrevious:(id)sender
 {
-	[self updateStrings];
 	[self hideFindSheet:self];
-	NSLog( @"Finding previous \"%@\"", findString );
+	NSLog( @"Finding previous \"%@\"", findText.stringValue );
 }
 
 - (IBAction)findWithSelection:(id)sender
 {
-	findString = [NSString string];
-	NSLog( @"Finding \"%@\"", findString );
+	findText.stringValue = [NSString string];
+	NSLog( @"Finding \"%@\"", findText.stringValue );
 }
 
 - (IBAction)replaceAll:(id)sender
 {
-	[self updateStrings];
 	[self hideFindSheet:self];
-	NSLog( @"Replacing all \"%@\" with \"%@\"", findString, replaceString );
+	NSLog( @"Replacing all \"%@\" with \"%@\"", findText.stringValue, replaceText.stringValue );
 }
 
 - (IBAction)replaceFindNext:(id)sender
 {
-	[self updateStrings];
 	[self hideFindSheet:self];
-	NSLog( @"Replacing \"%@\" with \"%@\" and finding next", findString, replaceString );
+	NSLog( @"Replacing \"%@\" with \"%@\" and finding next", findText.stringValue, replaceText.stringValue );
 }
 
 @end

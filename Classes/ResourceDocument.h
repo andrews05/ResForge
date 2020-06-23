@@ -44,7 +44,6 @@ typedef enum {
 - (IBAction)paste:(id)sender;
 - (void)pasteResources:(NSArray *)pastedResources;
 - (IBAction)delete:(id)sender;
-- (void)deleteResourcesSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)deleteSelectedResources;
 
 - (void)resourceNameWillChange:(NSNotification *)notification;

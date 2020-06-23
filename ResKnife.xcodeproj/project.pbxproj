@@ -123,7 +123,6 @@
 		55FEF5BA189D762000888898 /* misn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5B8189D762000888898 /* misn.xib */; };
 		55FEF5BD189D762F00888898 /* ship.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BB189D762F00888898 /* ship.xib */; };
 		55FEF5C0189D764300888898 /* desc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BE189D764300888898 /* desc.xib */; };
-		55FEF5C9189D76F200888898 /* NovaTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E17ADBC006A2132800842474 /* NovaTools.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55FEF5CD189D77CF00888898 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FEF5CC189D77CF00888898 /* QTKit.framework */; };
 		55FEF5CE189D781100888898 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F54625C6029174F601A8010C /* CoreServices.framework */; };
 		B22100CD15D3F944009FDEE1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
@@ -335,13 +334,6 @@
 			remoteGlobalIDString = 4953F594248874AA0002340F;
 			remoteInfo = "Sound Editor";
 		};
-		55FEF5CA189D76FA00888898 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E18BF5B7069FEA1400F076B8;
-			remoteInfo = NovaTools;
-		};
 		B229EEE215A4BB720032C12C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -387,16 +379,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B234338D16AB5D4A007134B9 /* Copy XPC Services */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			name = "Copy XPC Services";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B24FA09A15D303C900622683 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -446,7 +428,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */,
-				55FEF5C9189D76F200888898 /* NovaTools.plugin in Copy Plugins */,
 				B2B2C41515A9468300D6F61C /* Pattern Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* PICT Editor.plugin in Copy Plugins */,
 				B229EEDD15A4BA900032C12C /* PNG Editor.plugin in Copy Plugins */,
@@ -672,9 +653,9 @@
 		55FEF5C6189D769A00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/misn.strings; sourceTree = "<group>"; };
 		55FEF5C8189D769F00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ship.strings; sourceTree = "<group>"; };
 		55FEF5CC189D77CF00888898 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
-		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PNGWindowController.h; path = "Cocoa/Plug-Ins/PNG Editor/PNGWindowController.h"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PNGWindowController.m; path = "Cocoa/Plug-Ins/PNG Editor/PNGWindowController.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PNGWindowController.xib; path = "Cocoa/Plug-Ins/PNG Editor/PNGWindowController.xib"; sourceTree = SOURCE_ROOT; };
+		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PNGWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PNGWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PNGWindowController.xib; sourceTree = "<group>"; };
 		B229EECA15A4B8720032C12C /* PNG Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PNG Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B229EECE15A4B8720032C12C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		B229EED215A4B8720032C12C /* PNG Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PNG Editor-Info.plist"; sourceTree = "<group>"; };
@@ -1316,7 +1297,13 @@
 		F5B588100156D2A601000001 = {
 			isa = PBXGroup;
 			children = (
-				F5B5881A0156D40B01000001 /* Cocoa */,
+				3D0ABFBC04E172F700C85300 /* README.txt */,
+				3D35755A04DAEB4300B8225B /* main.m */,
+				F5B5881C0156D40B01000001 /* Classes */,
+				F5594EE9021F3E2301A80001 /* Categories */,
+				F5B588350156D40B01000001 /* Resources */,
+				F57CEE0B0189C95101A8010B /* Plug-Ins */,
+				E18BF9D706A01A2200F076B8 /* Info.plist */,
 				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 				497043F32472064F0035C0FA /* Graphite */,
@@ -1338,20 +1325,6 @@
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		F5B5881A0156D40B01000001 /* Cocoa */ = {
-			isa = PBXGroup;
-			children = (
-				3D0ABFBC04E172F700C85300 /* README.txt */,
-				3D35755A04DAEB4300B8225B /* main.m */,
-				F5B5881C0156D40B01000001 /* Classes */,
-				F5594EE9021F3E2301A80001 /* Categories */,
-				F5B588350156D40B01000001 /* Resources */,
-				F57CEE0B0189C95101A8010B /* Plug-Ins */,
-				E18BF9D706A01A2200F076B8 /* Info.plist */,
-			);
-			path = Cocoa;
 			sourceTree = "<group>";
 		};
 		F5B5881C0156D40B01000001 /* Classes */ = {
@@ -1456,8 +1429,7 @@
 				F58A183F0278353501A8010C /* Aux Support */,
 				F51FB38E0256057F01A80001 /* Resources */,
 			);
-			name = NovaTools;
-			path = ../../NovaTools;
+			path = NovaTools;
 			sourceTree = "<group>";
 		};
 		F5EF839F020C08E601A80001 /* Hex Editor */ = {
@@ -1718,15 +1690,12 @@
 				E1EAB18D06A20EEB0041EE35 /* Copy Plugins */,
 				E18BF56F069FEA1300F076B8 /* Sources */,
 				E18BF586069FEA1300F076B8 /* Frameworks */,
-				E18BF589069FEA1300F076B8 /* Rez */,
 				B24FA09A15D303C900622683 /* CopyFiles */,
-				B234338D16AB5D4A007134B9 /* Copy XPC Services */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				4953F5A52488759E0002340F /* PBXTargetDependency */,
-				55FEF5CB189D76FA00888898 /* PBXTargetDependency */,
 				B2FCA79B15A66B4A00696598 /* PBXTargetDependency */,
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
 				E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */,
@@ -1847,7 +1816,7 @@
 		F5B5880F0156D2A601000001 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1150;
 				TargetAttributes = {
 					4953F594248874AA0002340F = {
 						LastSwiftMigration = 1150;
@@ -2000,13 +1969,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXRezBuildPhase section */
-		E18BF589069FEA1300F076B8 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E18BF5A3069FEA1400F076B8 /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
@@ -2240,11 +2202,6 @@
 			isa = PBXTargetDependency;
 			target = 4953F594248874AA0002340F /* Sound Editor */;
 			targetProxy = 4953F5A42488759E0002340F /* PBXContainerItemProxy */;
-		};
-		55FEF5CB189D76FA00888898 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E18BF5B7069FEA1400F076B8 /* NovaTools */;
-			targetProxy = 55FEF5CA189D76FA00888898 /* PBXContainerItemProxy */;
 		};
 		B229EEE315A4BB720032C12C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2580,13 +2537,12 @@
 					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = Graphite;
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Sound Editor/Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Sound Editor/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Cocoa/Plug-Ins/Sound Editor/Sound Editor-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Sound Editor/Sound Editor-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
@@ -2602,13 +2558,12 @@
 					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = Graphite;
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Sound Editor/Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Sound Editor/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Cocoa/Plug-Ins/Sound Editor/Sound Editor-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Sound Editor/Sound Editor-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -2617,7 +2572,7 @@
 		B229EED815A4B8720032C12C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/PNG Editor/PNG Editor-Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/PNG Editor/PNG Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2628,7 +2583,7 @@
 		B229EED915A4B8720032C12C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/PNG Editor/PNG Editor-Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/PNG Editor/PNG Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2639,7 +2594,7 @@
 		B2B2C41115A9464400D6F61C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Pattern Editor/Pattern Editor-Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Pattern Editor/Pattern Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2650,7 +2605,7 @@
 		B2B2C41215A9464400D6F61C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Pattern Editor/Pattern Editor-Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Pattern Editor/Pattern Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2661,7 +2616,7 @@
 		B2FCA79415A66ACF00696598 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/PICT Editor/PICT Editor-Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/PICT Editor/PICT Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2672,7 +2627,7 @@
 		B2FCA79515A66ACF00696598 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/PICT Editor/PICT Editor-Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/PICT Editor/PICT Editor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2688,7 +2643,7 @@
 					"\"$(SRCROOT)\"/**",
 					"\"$(SRCROOT)\"",
 				);
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Hex Editor/Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Hexadecimal Editor";
 				WRAPPER_EXTENSION = plugin;
@@ -2703,7 +2658,7 @@
 					"\"$(SRCROOT)\"/**",
 					"\"$(SRCROOT)\"",
 				);
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Hex Editor/Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Hexadecimal Editor";
 				WRAPPER_EXTENSION = plugin;
@@ -2713,7 +2668,7 @@
 		E13F7ED608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Template Editor/Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Template Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Template Editor";
 				WRAPPER_EXTENSION = plugin;
@@ -2723,7 +2678,7 @@
 		E13F7ED708F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Template Editor/Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Template Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Template Editor";
 				WRAPPER_EXTENSION = plugin;
@@ -2741,7 +2696,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				HEADER_SEARCH_PATHS = Graphite;
-				INFOPLIST_FILE = Cocoa/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = ResKnife;
@@ -2761,7 +2716,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				HEADER_SEARCH_PATHS = Graphite;
-				INFOPLIST_FILE = Cocoa/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = ResKnife;
@@ -2773,7 +2728,7 @@
 		E13F7EE208F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Icon Editor/Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Icon Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ulikusterer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Bitmap Editor";
 				WRAPPER_EXTENSION = plugin;
@@ -2783,7 +2738,7 @@
 		E13F7EE308F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Icon Editor/Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Icon Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ulikusterer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Bitmap Editor";
 				WRAPPER_EXTENSION = plugin;
@@ -2796,7 +2751,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Font Editor/Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Font Editor/Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Font Editor";
@@ -2811,7 +2766,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
-				INFOPLIST_FILE = "Cocoa/Plug-Ins/Font Editor/Info.plist";
+				INFOPLIST_FILE = "Plug-Ins/Font Editor/Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Font Editor";
@@ -2823,7 +2778,7 @@
 		E13F7EEA08F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = NovaTools/Info.plist;
+				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.sutherland-studios.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = NovaTools;
 				WRAPPER_EXTENSION = plugin;
@@ -2833,7 +2788,7 @@
 		E13F7EEB08F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = NovaTools/Info.plist;
+				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.sutherland-studios.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = NovaTools;
 				WRAPPER_EXTENSION = plugin;
@@ -2883,7 +2838,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2928,10 +2883,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
 		};

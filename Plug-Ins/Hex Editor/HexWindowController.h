@@ -37,7 +37,6 @@
 - (IBAction)showFind:(id)sender;
 
 // save sheet methods
-- (void)saveSheetDidClose:(NSAlert *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (IBAction)saveResource:(id)sender;
 - (IBAction)revertResource:(id)sender;
 

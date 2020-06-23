@@ -1,0 +1,5 @@
+/* menu item for creating new array entries */
+"Create List Entry" = "Create List Entry";
+
+/* label for HEXD fields created in response to a template error */
+"Error: Hex Dump" = "Error: Dumping Hex";

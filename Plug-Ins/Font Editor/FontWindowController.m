@@ -116,30 +116,31 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 - (BOOL)windowShouldClose:(id)sender
 {
-	if([[self window] isDocumentEdited])
-	{
-		NSBeginAlertSheet(@"Do you want to keep the changes you made to this font?", @"Keep", @"Don't Keep", @"Cancel", sender, self, @selector(saveSheetDidClose:returnCode:contextInfo:), nil, nil, @"Your changes cannot be saved later if you don't keep them.");
+	if (self.window.documentEdited) {
+		NSAlert *alert = [NSAlert new];
+		alert.messageText = @"Do you want to keep the changes you made to this resource?";
+		alert.informativeText = @"Your changes cannot be saved later if you don't keep them.";
+		[alert addButtonWithTitle:@"Keep"];
+		[alert addButtonWithTitle:@"Don't Keep"];
+		[alert addButtonWithTitle:@"Cancel"];
+		[alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+			switch (returnCode) {
+				case NSAlertFirstButtonReturn:	// keep
+					[self saveResource:nil];
+					[self.window close];
+					break;
+				
+				case NSAlertSecondButtonReturn:	// don't keep
+					[self.window close];
+					break;
+				
+				case NSModalResponseCancel:		// cancel
+					break;
+			}
+		}];
 		return NO;
 	}
-	else return YES;
-}
-
-- (void)saveSheetDidClose:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	switch(returnCode)
-	{
-		case NSAlertDefaultReturn:		// keep
-			[self saveResource:nil];
-			[[self window] close];
-			break;
-		
-		case NSAlertAlternateReturn:	// don't keep
-			[[self window] close];
-			break;
-		
-		case NSAlertOtherReturn:		// cancel
-			break;
-	}
+	return YES;
 }
 
 - (void)saveResource:(id)sender

@@ -26,7 +26,7 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="656" y="0.0" width="320" height="170"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="320" height="170"/>
             <value key="maxSize" type="size" width="320" height="170"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
@@ -144,7 +144,7 @@ DQ
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RgE-mP-JC2" userLabel="Alternate trigger">
                         <rect key="frame" x="-50" y="102" width="48" height="48"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarPlayTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="LoA-or-B24">
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="LoA-or-B24">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -259,7 +259,4 @@ IA
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="V8I-kj-9KL"/>
     </objects>
-    <resources>
-        <image name="NSTouchBarPlayTemplate" width="14" height="30"/>
-    </resources>
 </document>
