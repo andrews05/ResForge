@@ -41,10 +41,6 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
     override func windowDidLoad() {
         super.windowDidLoad()
         self.window?.title = self.resource.defaultWindowTitle()
-        self.format.stringValue = ""
-        self.channels.stringValue = ""
-        self.sampleRate.stringValue = ""
-        self.duration.stringValue = ""
         self.loadInfo()
         sound.play()
     }
@@ -53,14 +49,13 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
         if resource.data!.count == 0 {
             self.format.stringValue = "(empty)"
         } else if sound.format != 0 {
+            self.format.stringValue = SoundResource.formatNames[sound.format] ?? NSFileTypeForHFSTypeCode(OSType(sound.format))
             if sound.valid {
-                self.format.stringValue = SoundResource.supportedFormats[sound.format]!
                 self.duration.stringValue = stringFromSeconds(sound.duration)
                 playButton.isEnabled = true
                 exportButton.isEnabled = true
             } else {
-                let format = NSFileTypeForHFSTypeCode(OSType(sound.format))!
-                self.format.stringValue = "\(format) (unsupported)"
+                self.format.stringValue += " (unsupported)"
             }
             self.channels.stringValue = sound.channels == 2 ? "Stereo" : "Mono"
             self.sampleRate.stringValue = String(format: "%.0f Hz", sound.sampleRate)

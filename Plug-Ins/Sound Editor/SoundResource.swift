@@ -13,12 +13,14 @@ class SoundResource {
     private var bufferRef: AudioQueueBufferRef? = nil
     private var numPackets: UInt32 = 0
     
-    static var supportedFormats = [
-        k8BitOffsetBinaryFormat: "8 bit uncompressed",
-        k16BitBigEndianFormat: "16 bit uncompressed",
+    static var formatNames = [
+        k8BitOffsetBinaryFormat: "8-bit Linear PCM",
+        k16BitBigEndianFormat: "16-bit Linear PCM",
         kAudioFormatAppleIMA4: "IMA 4:1",
         kAudioFormatALaw: "A-Law 2:1",
-        kAudioFormatULaw: "µ-Law 2:1"
+        kAudioFormatULaw: "µ-Law 2:1",
+        kAudioFormatMACE3: "MACE 3:1",
+        kAudioFormatMACE6: "MACE 6:1"
     ]
 
     init(_ data: Data) {
@@ -35,29 +37,20 @@ class SoundResource {
         streamDesc.mChannelsPerFrame = channels
         streamDesc.mFormatID = format
         streamDesc.mFormatFlags = 0
-        if format == kAudioFormatAppleIMA4 {
-            streamDesc.mBitsPerChannel = 0
-            streamDesc.mBytesPerFrame = 0
-            streamDesc.mFramesPerPacket = 64
-            streamDesc.mBytesPerPacket = 34 * streamDesc.mChannelsPerFrame
-        } else {
+        if format == k8BitOffsetBinaryFormat || format == k16BitBigEndianFormat {
+            streamDesc.mFormatID = kAudioFormatLinearPCM
             if format == k8BitOffsetBinaryFormat {
                 streamDesc.mBitsPerChannel = 8
-                streamDesc.mFormatID = kAudioFormatLinearPCM
-            } else if format == k16BitBigEndianFormat {
-                streamDesc.mBitsPerChannel = 16
-                streamDesc.mFormatID = kAudioFormatLinearPCM
-                streamDesc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsBigEndian
-            } else if format == kAudioFormatALaw || format == kAudioFormatULaw {
-                streamDesc.mBitsPerChannel = 8
             } else {
-                // Legacy formats such as MACE are unsupported on current macOS
-                streamDesc.mBytesPerPacket = 0
-                return streamDesc
+                streamDesc.mBitsPerChannel = 16
+                streamDesc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsBigEndian
             }
             streamDesc.mBytesPerFrame = (streamDesc.mBitsPerChannel/8) * streamDesc.mChannelsPerFrame
             streamDesc.mFramesPerPacket = 1
             streamDesc.mBytesPerPacket = streamDesc.mBytesPerFrame * streamDesc.mFramesPerPacket
+        } else {
+            var propSize = UInt32(MemoryLayout.size(ofValue: streamDesc))
+            AudioFormatGetProperty(kAudioFormatProperty_FormatInfo, 0, nil, &propSize, &streamDesc)
         }
         return streamDesc
     }
@@ -177,7 +170,14 @@ class SoundResource {
                 snthID: try reader.read(),
                 sampleSize: try reader.read()
             )
-            format = cmpHeader.format
+            // MACE is not supported but this at least allows to see the format id in the info
+            if cmpHeader.compressionID == threeToOne {
+                format = kAudioFormatMACE3
+            } else if cmpHeader.compressionID == sixToOne {
+                format = kAudioFormatMACE6
+            } else {
+                format = cmpHeader.format
+            }
             numChannels = header.length
             numPackets = cmpHeader.numFrames
         } else {
@@ -224,9 +224,10 @@ class SoundResource {
         
         // Configure output info and audio buffer
         streamDesc = getStreamDescription(format: format, channels: (channels == 0 ? inStreamDesc.mChannelsPerFrame : channels), sampleRate: (sampleRate == 0 ? inStreamDesc.mSampleRate : sampleRate))
+        // Calculate frame count
+        let numFrames = (Double(fileFrames) / inStreamDesc.mSampleRate) * streamDesc.mSampleRate
         // Packets = frames / framesPerPacket, but we need to round up
-        // FIXME: This doesn't account for change in sample rate
-        numPackets = (UInt32(fileFrames) + streamDesc.mFramesPerPacket - 1) / streamDesc.mFramesPerPacket
+        numPackets = (UInt32(numFrames) + streamDesc.mFramesPerPacket - 1) / streamDesc.mFramesPerPacket
         let byteSize = numPackets * streamDesc.mBytesPerPacket
         try initAudioQueue(byteSize)
         var bufferList = AudioBufferList(
@@ -238,7 +239,7 @@ class SoundResource {
             )
         )
         
-        if format == k16BitBigEndianFormat  {
+        if format == k16BitBigEndianFormat {
             // If importing to a PCM format the ExtAudioFile can perform any necessary conversion
             err = ExtAudioFileSetProperty(fRef!, kExtAudioFileProperty_ClientDataFormat, propSize, &streamDesc)
             try err.throwError()
