@@ -5,9 +5,15 @@
 //  Copyright 2007 ridiculous_fish. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+NS_ASSUME_NONNULL_BEGIN
 
 @class HFByteSlice, HFProgressTracker, HFFileReference, HFByteRangeAttributeArray;
+
+typedef NS_ENUM(NSUInteger, HFByteArrayDataStringType) {
+    HFHexDataStringType,
+    HFASCIIDataStringType
+};
+
 
 /*! @class HFByteArray
 @brief The principal Model class for HexFiend's MVC architecture.
@@ -25,13 +31,6 @@ ByteArrays have the usual threading restrictions for non-concurrent data structu
 HFByteArray is an abstract class.  It will raise an exception if you attempt to instantiate it directly.  The principal concrete subclass is HFBTreeByteArray.
 */
 
-enum
-{
-    HFHexDataStringType,
-    HFASCIIDataStringType
-};
-typedef NSUInteger HFByteArrayDataStringType;
-
 @class HFByteRangeAttributeArray;
 
 @interface HFByteArray : NSObject <NSCopying, NSMutableCopying> {
@@ -39,6 +38,17 @@ typedef NSUInteger HFByteArrayDataStringType;
     NSUInteger changeLockCounter;
     NSUInteger changeGenerationCount;
 }
+
+/*! @name Initialization
+ */
+//@{
+/*! Initialize to a byte array containing only the given slice. */
+- (instancetype)initWithByteSlice:(HFByteSlice *)slice;
+
+/*! Initialize to a byte array containing the slices of the given array. */
+- (instancetype)initWithByteArray:(HFByteArray *)array;
+//@}
+
 
 /*! @name Accessing raw data
 */
@@ -62,7 +72,7 @@ typedef NSUInteger HFByteArrayDataStringType;
 - (NSEnumerator *)byteSliceEnumerator;
 
 /*! Returns the byte slice containing the byte at the given index, and the actual offset of this slice. */
-- (HFByteSlice *)sliceContainingByteAtIndex:(unsigned long long)offset beginningOffset:(unsigned long long *)actualOffset;
+- (nullable HFByteSlice *)sliceContainingByteAtIndex:(unsigned long long)offset beginningOffset:(unsigned long long *_Nullable)actualOffset;
 //@}
 
 /*! @name Modifying the byte array
@@ -121,7 +131,7 @@ typedef NSUInteger HFByteArrayDataStringType;
     @param progressTracker An HFProgressTracker to allow progress reporting and cancelleation for the search operation.
     @return The index in the receiver of bytes equal to <tt>findBytes</tt>, or ULLONG_MAX if the byte array was not found (or the operation was cancelled)
 */
-- (unsigned long long)indexOfBytesEqualToBytes:(HFByteArray *)findBytes inRange:(HFRange)range searchingForwards:(BOOL)forwards trackingProgress:(HFProgressTracker *)progressTracker;
+- (unsigned long long)indexOfBytesEqualToBytes:(HFByteArray *)findBytes inRange:(HFRange)range searchingForwards:(BOOL)forwards trackingProgress:(nullable HFProgressTracker *)progressTracker;
 //@}
 
 @end
@@ -137,7 +147,7 @@ typedef NSUInteger HFByteArrayDataStringType;
    @param error An out NSError parameter.
    @return YES if the write succeeded, NO if it failed.
 */
-- (BOOL)writeToFile:(NSURL *)targetURL trackingProgress:(HFProgressTracker *)progressTracker error:(NSError **)error;
+- (BOOL)writeToFile:(NSURL *)targetURL trackingProgress:(nullable HFProgressTracker *)progressTracker error:(NSError **)error;
 
 /*! Returns the ranges of the file that would be modified, if the receiver were written to it.  This is useful (for example) in determining if the clipboard can be preserved after a save operation. This is a concrete method on HFByteArray.
    @param reference An HFFileReference to the file to be modified
@@ -151,7 +161,7 @@ typedef NSUInteger HFByteArrayDataStringType;
    @param hint A dictionary that can be used to improve the efficiency of the operation, by allowing multiple byte arrays to share the same state.  If you plan to call this method on multiple byte arrays, pass the first one an empty NSMutableDictionary, and pass the same dictionary to subsequent calls.
    @return A YES return indicates the operation was successful, and the receiver no longer contains byte slices that source data from any of the ranges of the given file (or never did).  A NO return indicates that breaking the dependencies would require too much memory, and so the receiver still depends on some of those ranges.
 */
-- (BOOL)clearDependenciesOnRanges:(NSArray *)ranges inFile:(HFFileReference *)reference hint:(NSMutableDictionary *)hint;
+- (BOOL)clearDependenciesOnRanges:(NSArray *)ranges inFile:(HFFileReference *)reference hint:(nullable NSMutableDictionary *)hint;
 
 @end
 
@@ -165,6 +175,8 @@ typedef NSUInteger HFByteArrayDataStringType;
 - (HFByteRangeAttributeArray *)attributesForBytesInRange:(HFRange)range;
 
 /*! Returns the HFByteArray level byte range attribute array. Default is to return nil. */
-- (HFByteRangeAttributeArray *)byteRangeAttributeArray;
+- (nullable HFByteRangeAttributeArray *)byteRangeAttributeArray;
 
 @end
+
+NS_ASSUME_NONNULL_END

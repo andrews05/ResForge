@@ -5,8 +5,9 @@
 //  Copyright 2007 ridiculous_fish. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
 #import <HexFiend/HFController.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*! @class HFRepresenter
     @brief The principal view class of Hex Fiend's MVC architecture.
@@ -28,9 +29,11 @@
 */
 @interface HFRepresenter : NSObject <NSCoding> {
     @private
-    id view;
+    HFView *view;
     HFController *controller;
+#if !TARGET_OS_IPHONE
     NSPoint layoutPosition;
+#endif
 }
 
 /*! @name View management
@@ -39,7 +42,7 @@
 //@{
 /*! Returns the view for the receiver, creating it if necessary.  The view for the HFRepresenter is initially nil.  When the \c -view method is called, if the view is nil, \c -createView is called and then the result is stored.  This method should not be overridden; however you may want to call it to access the view.
 */
-- (id)view;
+- (HFView *)view;
 
 /*! Returns YES if the view has been created, NO if it has not.  To create the view, call the view method.
  */
@@ -47,7 +50,7 @@
 
 /*! Override point for creating the view displaying this representation.  This is called on your behalf the first time the \c -view method is called, so you would not want to call this explicitly; however this method must be overridden.  This follows the "create" rule, and so it should return a retained view.
 */
-- (NSView *)createView NS_RETURNS_RETAINED;
+- (HFView *)createView;
 
 /*! Override point for initialization of view, after the HFRepresenter has the view set as its -view property.  The default implementation does nothing.
 */
@@ -59,7 +62,7 @@
 */
 //@{
 /*! Returns the HFController for the receiver.  This is set by the controller from the call to \c addRepresenter:. A representer can only be in one controller at a time. */
-- (HFController *)controller;
+- (nullable HFController *)controller;
 //@}
 
 /*! @name Property change notifications
@@ -107,19 +110,19 @@
 */
 //@{
 
-/*! Sets the receiver's layout position to the given value.
-*/
-- (void)setLayoutPosition:(NSPoint)position;
 
-/*! Returns the layout position for the receiver.
-*/
-- (NSPoint)layoutPosition;
+#if !TARGET_OS_IPHONE
+/// The layout position for the receiver.
+@property (nonatomic) NSPoint layoutPosition;
 
 /*! Returns the default layout position for representers of this class.  Within the -init method, the view's layout position is set to the default for this class.  You may override this to control the default layout position.  See HFLayoutRepresenter for a discussion of the significance of the layout postition.
 */
 + (NSPoint)defaultLayoutPosition;
+#endif
 
 //@}
 
 
 @end
+
+NS_ASSUME_NONNULL_END

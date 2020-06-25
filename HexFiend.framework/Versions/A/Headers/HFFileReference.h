@@ -5,38 +5,25 @@
 //  Copyright 2008 ridiculous_fish. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+NS_ASSUME_NONNULL_BEGIN
 
 /*! @class HFFileReference
     @brief A reference to an open file.
     
     HFFileReference encapsulates a reference to an open file.  Multiple instances of HFFileByteSlice may share an HFFileReference, so that the file only needs to be opened once.
  
-    HFFileReference is an abstract class.  You must instantiate HFConcreteFileReference.
-    
     All HFFileReferences use non-caching IO (F_NOCACHE is set).
 */
-@interface HFFileReference : NSObject {
-    @protected
-    int fileDescriptor;
-    dev_t device;
-    unsigned long long inode;
-    unsigned long long fileLength;
-    mode_t fileMode;
-    BOOL isWritable;
-    uint32_t blockSize;
-    BOOL isPrivileged;
-    BOOL isFixedLength;
-}
+@interface HFFileReference : NSObject
 
 @property (readonly) BOOL isPrivileged;
 @property (readonly) BOOL isFixedLength;
 
-/*! Open a file for reading and writing at the given path.  The permissions mode of any newly created file is 0744.  Returns nil if the file could not be opened, in which case the error parameter (if not nil) will be set. */
-- initWritableWithPath:(NSString *)path error:(NSError **)error;
+/*! Open a file for reading and writing at the given path.  The permissions mode of any newly created file is 0644.  Returns nil if the file could not be opened, in which case the error parameter (if not nil) will be set. */
+- (nullable instancetype)initWritableWithPath:(NSString *)path error:(NSError **)error;
 
 /*! Open a file for reading only at the given path.  Returns nil if the file could not be opened, in which case the error parameter (if not nil) will be set. */
-- initWithPath:(NSString *)path error:(NSError **)error;
+- (nullable instancetype)initWithPath:(NSString *)path error:(NSError **)error;
 
 /*! Closes the file. */
 - (void)close;
@@ -67,8 +54,4 @@
 
 @end
 
-/*! @class HFConcreteFileReference
- @brief A reference to an open file that can be read (and possibly written) using normal C functions
-*/
-@interface HFConcreteFileReference : HFFileReference
-@end
+NS_ASSUME_NONNULL_END

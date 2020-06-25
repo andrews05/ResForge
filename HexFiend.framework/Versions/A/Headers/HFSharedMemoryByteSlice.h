@@ -7,6 +7,8 @@
 
 #import <HexFiend/HFByteSlice.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*! @class HFSharedMemoryByteSlice
     @brief A subclass of HFByteSlice for working with data stored in memory.
     
@@ -23,10 +25,12 @@
 }
 
 // copies the data
-- (id)initWithUnsharedData:(NSData *)data;
+- (instancetype)initWithUnsharedData:(NSData *)data;
 
 // retains, does not copy
-- (id)initWithData:(NSMutableData *)data;
-- (id)initWithData:(NSMutableData *)data offset:(NSUInteger)offset length:(NSUInteger)length;
+- (instancetype)initWithData:(NSMutableData *)data;
+- (instancetype)initWithData:(NSMutableData *)data offset:(NSUInteger)offset length:(NSUInteger)length;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -53,8 +53,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
     
     [[textView layoutRepresenter] addRepresenter:lineCountingRepresenter];
     [[textView layoutRepresenter] addRepresenter:statusBarRepresenter];
-    // bug: lineCountingRepresenter doesn't correctly adjust for the nicer font
-    //[[textView controller] setFont:[NSFont userFixedPitchFontOfSize:10.0]];
+    [[textView controller] setFont:[NSFont userFixedPitchFontOfSize:10.0]];
     [[textView controller] addRepresenter:lineCountingRepresenter];
     [[textView controller] addRepresenter:statusBarRepresenter];
     textView.data = resource.data;

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
-        <plugIn identifier="com.apple.QTKitIBPlugin" version="13771"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,35 +18,35 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="244" y="369" width="480" height="264"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <value key="minSize" type="size" width="480" height="180"/>
             <view key="contentView" id="49">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="264"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50">
-                        <rect key="frame" x="20" y="45" width="440" height="199"/>
-                        <clipView key="contentView" id="6Gk-tl-kx8">
-                            <rect key="frame" x="1" y="1" width="438" height="197"/>
+                        <rect key="frame" x="20" y="44" width="440" height="200"/>
+                        <clipView key="contentView" drawsBackground="NO" id="6Gk-tl-kx8">
+                            <rect key="frame" x="1" y="1" width="438" height="198"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="36">
-                                    <rect key="frame" x="0.0" y="0.0" width="438" height="197"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="438" height="198"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="438" height="197"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="minSize" width="438" height="198"/>
                                     <size key="maxSize" width="440" height="10000000"/>
-                                    <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 </textView>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="163">
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="163">
                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="162">
-                            <rect key="frame" x="423" y="1" width="16" height="197"/>
+                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="162">
+                            <rect key="frame" x="423" y="1" width="16" height="198"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -67,7 +65,7 @@
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="113">
-                        <rect key="frame" x="39" y="20" width="118" height="17"/>
+                        <rect key="frame" x="39" y="20" width="118" height="16"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Graphics &amp; Movies" id="151">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -90,25 +88,26 @@
             <connections>
                 <outlet property="initialFirstResponder" destination="36" id="57"/>
             </connections>
+            <point key="canvasLocation" x="139" y="325"/>
         </window>
         <customView id="91" userLabel="Graphics">
             <rect key="frame" x="0.0" y="0.0" width="480" height="213"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="145">
-                    <rect key="frame" x="149" y="144" width="66" height="28"/>
+                    <rect key="frame" x="149" y="143" width="66" height="27"/>
                     <buttonCell key="cell" type="push" title="Choose" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" inset="2" id="159">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
+                        <font key="font" metaFont="message" size="11"/>
                     </buttonCell>
                     <connections>
                         <action selector="chooseMovieFile:" target="-2" id="148"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="120">
-                    <rect key="frame" x="18" y="152" width="49" height="14"/>
+                    <rect key="frame" x="18" y="151" width="49" height="14"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Movie:" id="158">
-                        <font key="font" metaFont="smallSystem"/>
+                        <font key="font" metaFont="message" size="11"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -116,7 +115,7 @@
                 <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="119">
                     <rect key="frame" x="73" y="172" width="140" height="22"/>
                     <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="157">
-                        <font key="font" metaFont="smallSystem"/>
+                        <font key="font" metaFont="message" size="11"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </comboBoxCell>
@@ -127,8 +126,8 @@
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="118">
                     <rect key="frame" x="73" y="149" width="73" height="19"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="156">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <font key="font" metaFont="message" size="11"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
@@ -136,9 +135,9 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="251" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="117">
-                    <rect key="frame" x="18" y="175" width="49" height="14"/>
+                    <rect key="frame" x="18" y="177" width="49" height="14"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Graphic:" id="155">
-                        <font key="font" metaFont="smallSystem"/>
+                        <font key="font" metaFont="message" size="11"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -146,27 +145,27 @@
                 <box title="Movie Options" translatesAutoresizingMaskIntoConstraints="NO" id="110">
                     <rect key="frame" x="17" y="16" width="196" height="125"/>
                     <view key="contentView" id="bFU-OZ-Xlh">
-                        <rect key="frame" x="2" y="2" width="192" height="105"/>
+                        <rect key="frame" x="3" y="3" width="190" height="105"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <matrix verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97">
-                                <rect key="frame" x="12" y="12" width="168" height="38"/>
+                                <rect key="frame" x="11" y="11" width="168" height="38"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 <size key="cellSize" width="168" height="18"/>
                                 <size key="intercellSpacing" width="4" height="2"/>
                                 <buttonCell key="prototype" type="check" title="Radio" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="161">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="smallSystem"/>
+                                    <font key="font" metaFont="message" size="11"/>
                                 </buttonCell>
                                 <cells>
                                     <column>
                                         <buttonCell type="check" title="Play at double size" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="98">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="font" metaFont="message" size="11"/>
                                         </buttonCell>
                                         <buttonCell type="check" title="Fade in and out" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="1" inset="2" id="102">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="font" metaFont="message" size="11"/>
                                         </buttonCell>
                                     </column>
                                 </cells>
@@ -179,23 +178,23 @@
                                 </connections>
                             </matrix>
                             <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="96">
-                                <rect key="frame" x="12" y="54" width="168" height="38"/>
+                                <rect key="frame" x="11" y="53" width="168" height="38"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 <size key="cellSize" width="167" height="18"/>
                                 <size key="intercellSpacing" width="4" height="2"/>
                                 <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" controlSize="small" inset="2" id="160">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="smallSystem"/>
+                                    <font key="font" metaFont="message" size="11"/>
                                 </buttonCell>
                                 <cells>
                                     <column>
                                         <buttonCell type="radio" title="Play before showing text" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="99">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="font" metaFont="message" size="11"/>
                                         </buttonCell>
                                         <buttonCell type="radio" title="Play after showing text" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="1" inset="2" id="95">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="font" metaFont="message" size="11"/>
                                         </buttonCell>
                                     </column>
                                 </cells>
@@ -218,18 +217,18 @@
                         <constraint firstAttribute="centerX" secondItem="97" secondAttribute="centerX" id="qB9-nd-qa7"/>
                         <constraint firstItem="97" firstAttribute="top" secondItem="96" secondAttribute="bottom" constant="4" id="uix-jh-v02"/>
                     </constraints>
-                    <font key="titleFont" metaFont="message"/>
+                    <font key="titleFont" metaFont="system"/>
                 </box>
                 <tabView controlSize="small" initialItem="105" translatesAutoresizingMaskIntoConstraints="NO" id="107">
                     <rect key="frame" x="211" y="10" width="256" height="195"/>
                     <tabViewItems>
                         <tabViewItem label="Graphic" identifier="1" id="105">
                             <view key="view" id="106">
-                                <rect key="frame" x="10" y="25" width="236" height="157"/>
+                                <rect key="frame" x="10" y="29" width="236" height="153"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="103">
-                                        <rect key="frame" x="0.0" y="0.0" width="236" height="157"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="236" height="153"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="152"/>
                                         <connections>
                                             <binding destination="123" name="hidden" keyPath="selection.graphic" id="144">
@@ -240,9 +239,9 @@
                                         </connections>
                                     </imageView>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="115" translatesAutoresizingMaskIntoConstraints="NO" id="116">
-                                        <rect key="frame" x="83" y="65" width="71" height="28"/>
+                                        <rect key="frame" x="83" y="63" width="71" height="28"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="No Graphic Specified" id="153">
-                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="font" metaFont="message" size="11"/>
                                             <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -270,21 +269,10 @@
                                 <rect key="frame" x="10" y="25" width="236" height="157"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <qtMovieView controllerVisible="NO" translatesAutoresizingMaskIntoConstraints="NO" id="165">
-                                        <rect key="frame" x="0.0" y="0.0" width="236" height="157"/>
-                                        <color key="fillColor" red="0.87529721467391308" green="0.87529721467391308" blue="0.87529721467391308" alpha="0.0" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <binding destination="123" name="hidden" keyPath="selection.movie" id="168">
-                                                <dictionary key="options">
-                                                    <string key="NSValueTransformerName">NSIsNil</string>
-                                                </dictionary>
-                                            </binding>
-                                        </connections>
-                                    </qtMovieView>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="115">
                                         <rect key="frame" x="88" y="65" width="61" height="28"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="No Movie Specified" id="154">
-                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="font" metaFont="message" size="11"/>
                                             <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -298,12 +286,8 @@
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="165" firstAttribute="leading" secondItem="104" secondAttribute="leading" id="F2v-Cc-yIy"/>
-                                    <constraint firstAttribute="trailing" secondItem="165" secondAttribute="trailing" id="NM7-lJ-HvJ"/>
                                     <constraint firstAttribute="centerX" secondItem="115" secondAttribute="centerX" id="NNH-Ho-bCf"/>
                                     <constraint firstAttribute="centerY" secondItem="115" secondAttribute="centerY" id="PAa-Ey-xr9"/>
-                                    <constraint firstAttribute="bottom" secondItem="165" secondAttribute="bottom" id="WnL-Wi-wQu"/>
-                                    <constraint firstItem="165" firstAttribute="top" secondItem="104" secondAttribute="top" id="aiB-HP-dP9"/>
                                 </constraints>
                             </view>
                         </tabViewItem>
@@ -337,6 +321,7 @@
                 <constraint firstItem="120" firstAttribute="baseline" secondItem="118" secondAttribute="baseline" id="uoi-ZG-dY8"/>
                 <constraint firstItem="107" firstAttribute="top" secondItem="91" secondAttribute="top" constant="11" id="zEB-li-Af2"/>
             </constraints>
+            <point key="canvasLocation" x="139" y="155"/>
         </customView>
         <objectController automaticallyPreparesContent="YES" id="123">
             <declaredKeys>

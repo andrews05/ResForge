@@ -10,16 +10,17 @@
  * Both the framework and the app are open source under a BSD-style license.  In summary, you may use Hex Fiend in any project as long as you include the copyright notice somewhere in the documentation.
  *
  * @section requirements Requirements
- * Hex Fiend is only available on Mac OS X, and supported on SnowLeopard and later.  It is compiled "hybrid" (works with both garbage collection and reference counting) and 2-way fat (64 bit and 32 bit, Intel only).  Support for 64 bits worth of data is available in both 32 bit and 64 bit - there is no functional difference between the 32 bit and 64 bit versions.
+ * Hex Fiend is only available on Mac OS X, and supported on Mountain Lion and later.
  *
  * @section getting_started Getting Started
  *
- * The Hex Fiend source code is available at http://ridiculousfish.com/hexfiend/
+ * The Hex Fiend source code is available at http://ridiculousfish.com/hexfiend/ and on GitHub at https://github.com/ridiculousfish/HexFiend
  *
  * Hex Fiend comes with some sample code ("HexFiendling"), distributed as part of the project.  And of course the Hex Fiend application itself is open source, acting as a more sophisticated sample code.
 */
 
 
+#import <TargetConditionals.h>
 #import <HexFiend/HFTypes.h>
 #import <HexFiend/HFFunctions.h>
 #import <HexFiend/HFController.h>
@@ -27,11 +28,16 @@
 #import <HexFiend/HFFullMemoryByteArray.h>
 #import <HexFiend/HFFullMemoryByteSlice.h>
 #import <HexFiend/HFHexTextRepresenter.h>
+#if !TARGET_OS_IPHONE
+#import <HexFiend/HFColumnRepresenter.h>
 #import <HexFiend/HFLineCountingRepresenter.h>
 #import <HexFiend/HFStatusBarRepresenter.h>
 #import <HexFiend/HFLayoutRepresenter.h>
+#endif
 #import <HexFiend/HFStringEncodingTextRepresenter.h>
+#if !TARGET_OS_IPHONE
 #import <HexFiend/HFVerticalScrollerRepresenter.h>
+#endif
 #import <HexFiend/HFByteArray.h>
 #import <HexFiend/HFFileByteSlice.h>
 #import <HexFiend/HFFileReference.h>
@@ -39,12 +45,14 @@
 #import <HexFiend/HFBTreeByteArray.h>
 #import <HexFiend/HFAttributedByteArray.h>
 #import <HexFiend/HFProgressTracker.h>
+#if !TARGET_OS_IPHONE
 #import <HexFiend/HFTextField.h>
 #import <HexFiend/HFTextView.h>
+#endif
 #import <HexFiend/HFSharedMemoryByteSlice.h>
-#import <HexFiend/HFIndexSet.h>
 #import <HexFiend/HFByteRangeAttribute.h>
 #import <HexFiend/HFByteRangeAttributeArray.h>
+#import <HexFiend/HFNSStringEncoding.h>
 
 
 /* The following is all for Doxygen */
