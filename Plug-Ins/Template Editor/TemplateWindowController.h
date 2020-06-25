@@ -27,15 +27,12 @@
 @interface TemplateWindowController : NSWindowController <ResKnifeTemplatePlugin, NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
 	ElementList *resourceStructure;		// Parsed form of our resource.
-	BOOL liveEdit;
 }
 @property IBOutlet NSOutlineView *dataList; // Data display.
 @property id <ResKnifeResource> resource;   // The resource we operate on.
-@property id <ResKnifeResource> backup;     // The original resource.
+@property id <ResKnifeResource> tmpl;       // The template resource.
 
 
-- (void)readTemplate:(id <ResKnifeResource>)tmplRes;
-- (void)loadResource;
 - (IBAction)itemValueUpdated:(id)sender;
 - (IBAction)saveResource:(id)sender;
 - (IBAction)revertResource:(id)sender;

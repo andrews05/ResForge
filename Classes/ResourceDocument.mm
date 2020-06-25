@@ -39,16 +39,17 @@ extern NSString *RKResourcePboardType;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(void *)contextInfo
+- (BOOL)windowShouldClose:(NSWindow *)sender
 {
+    // FIXME: This doesn't get called on quit, so app will still exit with unsaved resource windows open
     for (NSWindowController *controller in self.editorWindows.allValues) {
-        if ([controller respondsToSelector:@selector(windowShouldClose:)] && [controller performSelector:@selector(windowShouldClose:) withObject:controller.window]) {
+        if (![controller respondsToSelector:@selector(windowShouldClose:)] || [controller performSelector:@selector(windowShouldClose:) withObject:controller.window]) {
             [controller close];
         } else {
-            return;
+            return false;
         }
     }
-    [super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
+    return true;
 }
 
 #pragma mark -
@@ -559,8 +560,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (id <ResKnifePlugin>)openResource:(Resource *)resource usingEditor:(Class)editorClass template:(Resource *)tmpl
 {
     // Keep track of opened resources so we don't open them multiple times
-    // TODO: Allow opening in multiple different editors? I.e. template and hex at the same time.
-    NSString *key = resource.description;
+    NSString *key = [resource.description stringByAppendingString:editorClass.className];
     id <ResKnifePlugin> plug = self.editorWindows[key];
     if (plug) {
         [[(NSWindowController *)plug window] makeKeyAndOrderFront:nil];

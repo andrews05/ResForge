@@ -99,6 +99,29 @@
     self.configured = YES;
 }
 
+- (void)readResourceData:(NSData *)data
+{
+    // create new stream
+    ResourceStream *stream = [ResourceStream streamWithData:data];
+    // read the data into the template
+    [self readDataFrom:stream];
+}
+
+- (NSData *)getResourceData
+{
+    // get size of resource by summing size of all fields
+    UInt32 size = 0;
+    [self sizeOnDisk:&size];
+    
+    // create data and stream
+    NSMutableData *data = [NSMutableData dataWithLength:size];
+    ResourceStream *stream = [ResourceStream streamWithData:data];
+    
+    // write bytes into new data object
+    [self writeDataTo:stream];
+    return data;
+}
+
 #pragma mark -
 
 - (NSUInteger)count

@@ -16,6 +16,8 @@
 - (instancetype)initFromStream:(NSInputStream *)stream;
 
 - (void)configureElements;
+- (void)readResourceData:(NSData *)data;
+- (NSData *)getResourceData;
 
 - (__kindof Element *)elementAtIndex:(NSUInteger)index;
 - (void)insertElement:(Element *)element;

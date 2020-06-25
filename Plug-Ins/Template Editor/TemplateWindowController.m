@@ -9,7 +9,7 @@
 @implementation TemplateWindowController
 @synthesize dataList;
 @synthesize resource;
-@synthesize backup;
+@synthesize tmpl;
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
@@ -24,18 +24,12 @@
 	}
 	
 	//undoManager = [[NSUndoManager alloc] init];
-	liveEdit = NO;
-	if (liveEdit) {
-		resource = newResource;	// resource to work on
-		backup = [resource copy];	// for reverting only
-	} else {
-		backup = newResource;		// actual resource to change when saving data
-		resource = [backup copy];	// resource to work on
-	}
+    resource = newResource;
+    tmpl = tmplResource;
     resourceStructure = nil;
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:ResourceDataDidChangeNotification object:tmplResource];
-	[self readTemplate:tmplResource];	// reads (but doesn't retain) the template for this resource (TMPL resource with name equal to the passed resource's type)
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:ResourceDataDidChangeNotification object:tmpl];
     [self loadResource];
 	
 	// load the window from the nib
@@ -45,41 +39,34 @@
 
 }
 
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
     [dataList expandItem:nil expandChildren:YES];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(resourceDataDidChange:)
-                                                 name:ResourceDataDidChangeNotification
-                                               object:(liveEdit ? resource : backup)];
 	[self.window setTitle:resource.defaultWindowTitle];
 	[self showWindow:self];
 }
 
 - (void)templateDataDidChange:(NSNotification *)notification
 {
-	[self readTemplate:[notification object]];
-	if ([self isWindowLoaded])
-		[self loadResource];
+    // Reload the template while keeping the current data
+    NSData *currentData = [resourceStructure getResourceData];
+    [self readTemplate];
+    [resourceStructure readResourceData:currentData];
+    // expand all
+    [dataList reloadData];
+    [dataList expandItem:nil expandChildren:YES];
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
 {
-	if (!liveEdit)
-		// bug: should display alert asking if you want to replace data in this editor or reassert this data, revoking the other editor's changes
-		[resource setData:[backup.data copy]];
+    // TODO: should display alert asking if you want to replace data in this editor or reassert this data, revoking the other editor's changes
 	[self loadResource];
 }
 
-- (void)readTemplate:(id<ResKnifeResource>)tmplRes
+- (void)readTemplate
 {
-    NSInputStream *stream = [[NSInputStream alloc] initWithData:tmplRes.data];
+    NSInputStream *stream = [[NSInputStream alloc] initWithData:tmpl.data];
     resourceStructure = [ElementList listFromStream:stream];
     resourceStructure.controller = self;
     [resourceStructure configureElements];
@@ -87,14 +74,12 @@
 
 - (void)loadResource
 {
-    // create new stream
-    ResourceStream *stream = [ResourceStream streamWithData:resource.data];
-    // read the data into the template
-    [resourceStructure readDataFrom:stream];
-	
+    [self readTemplate];
+    [resourceStructure readResourceData:resource.data];
 	// expand all
     [dataList reloadData];
 	[dataList expandItem:nil expandChildren:YES];
+    self.documentEdited = NO;
 }
 
 - (BOOL)windowShouldClose:(id)sender
@@ -130,37 +115,16 @@
 
 - (void)saveResource:(id)sender
 {
-	// get size of resource by summing size of all fields
-    UInt32 size = 0;
-    [resourceStructure sizeOnDisk:&size];
-	
-	// create data and stream
-	NSMutableData *newData = [NSMutableData dataWithLength:size];
-    ResourceStream *stream = [ResourceStream streamWithData:newData];
-	
-	// write bytes into new data object
-    [resourceStructure writeDataTo:stream];
-	
 	// send the new resource data to ResKnife
-	if (liveEdit) {
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
-		[resource setData:newData];
-		[backup setData:[newData copy]];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	} else {
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:backup];
-		[resource setData:newData];
-		[backup setData:[newData copy]];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:backup];
-		self.documentEdited = NO;
-	}
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
+    [resource setData:[resourceStructure getResourceData]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+    self.documentEdited = NO;
 }
 
 - (void)revertResource:(id)sender
 {
-	[resource setData:[backup.data copy]];
     [self loadResource];
-    self.documentEdited = NO;
 }
 
 #pragma mark -
@@ -224,14 +188,7 @@
 
 - (IBAction)itemValueUpdated:(id)sender
 {
-    if (liveEdit) {
-        // remove self to avoid reloading the resource
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ResourceDataDidChangeNotification object:resource];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-    } else {
-        self.documentEdited = YES;
-    }
+    self.documentEdited = YES;
 }
 
 // these next five methods are a crude hack - the items ought to be in the responder chain themselves
@@ -245,7 +202,7 @@
 		[dataList reloadData];
         NSView *newHeader = [dataList viewAtColumn:0 row:row makeIfNecessary:YES];
         [self.window makeFirstResponder:newHeader];
-        if (!liveEdit) self.documentEdited = YES;
+        self.documentEdited = YES;
         // Expand the item and scroll the new content into view
 		[dataList expandItem:[dataList itemAtRow:row] expandChildren:YES];
         NSView *lastChild = [dataList rowViewAtRow:[dataList rowForItem:element] makeIfNecessary:YES];
@@ -262,7 +219,7 @@
         [element removeListEntry];
         [dataList reloadData];
         [self.window makeFirstResponder:[dataList viewAtColumn:0 row:row makeIfNecessary:YES]];
-        if (!liveEdit) self.documentEdited = YES;
+        self.documentEdited = YES;
     }
 }
 

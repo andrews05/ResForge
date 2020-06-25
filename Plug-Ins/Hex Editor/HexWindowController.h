@@ -20,15 +20,11 @@
 
 @interface HexWindowController : NSWindowController <ResKnifePlugin>
 {
-	FindSheetController			*sheetController;
-	
-	id <ResKnifeResource>	resource;
-	id <ResKnifeResource>	backup;
-	
-	BOOL			liveEdit;
-	NSUndoManager   *undoManager;
+	FindSheetController *sheetController;
+	NSUndoManager       *undoManager;
 }
 @property (weak) IBOutlet HFTextView *textView;
+@property id <ResKnifeResource> resource;   // The resource we operate on.
 
 // conform to the ResKnifePlugin with the inclusion of these methods
 - (instancetype)initWithResource:(id)newResource;
@@ -39,14 +35,5 @@
 // save sheet methods
 - (IBAction)saveResource:(id)sender;
 - (IBAction)revertResource:(id)sender;
-
-// normal methods
-- (void)resourceNameDidChange:(NSNotification *)notification;
-- (void)resourceDataDidChange:(NSNotification *)notification;
-- (void)resourceWasSaved:(NSNotification *)notification;
-
-// accessors
-- (id)resource;
-- (NSData *)data;
 
 @end
