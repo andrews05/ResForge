@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,34 +27,34 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES" utility="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="572" y="561" width="252" height="230"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2155" height="1240"/>
-            <value key="minSize" type="size" width="252" height="230"/>
-            <value key="maxSize" type="size" width="252" height="230"/>
+            <rect key="contentRect" x="572" y="561" width="252" height="220"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <value key="minSize" type="size" width="252" height="220"/>
+            <value key="maxSize" type="size" width="252" height="220"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="252" height="230"/>
+                <rect key="frame" x="0.0" y="0.0" width="252" height="220"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box boxType="oldStyle" borderType="none" title="Placeholder" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="8" y="8" width="236" height="159"/>
+                        <rect key="frame" x="8" y="8" width="236" height="164"/>
                         <view key="contentView" id="vcz-GY-YYF">
-                            <rect key="frame" x="0.0" y="0.0" width="236" height="159"/>
+                            <rect key="frame" x="0.0" y="0.0" width="236" height="164"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         </view>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="18">
-                        <rect key="frame" x="5" y="171" width="53" height="53"/>
+                        <rect key="frame" x="8" y="179" width="32" height="32"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="47" id="LfE-Hd-dka"/>
-                            <constraint firstAttribute="width" constant="47" id="QpN-FV-9wR"/>
+                            <constraint firstAttribute="height" constant="32" id="LfE-Hd-dka"/>
+                            <constraint firstAttribute="width" constant="32" id="QpN-FV-9wR"/>
                         </constraints>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="89"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="89"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="186" translatesAutoresizingMaskIntoConstraints="NO" id="32">
-                        <rect key="frame" x="60" y="174" width="187" height="47"/>
+                        <rect key="frame" x="45" y="179" width="201" height="32"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="90">
-                            <font key="font" metaFont="smallSystem"/>
+                            <font key="font" metaFont="system" size="12"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -64,7 +63,7 @@
                 <constraints>
                     <constraint firstAttribute="centerX" secondItem="7" secondAttribute="centerX" id="03b-2I-4tg"/>
                     <constraint firstItem="7" firstAttribute="top" secondItem="32" secondAttribute="bottom" constant="7" id="ASp-i3-6re"/>
-                    <constraint firstAttribute="trailing" secondItem="32" secondAttribute="trailing" constant="7" id="Lgg-yA-piS"/>
+                    <constraint firstAttribute="trailing" secondItem="32" secondAttribute="trailing" constant="8" id="Lgg-yA-piS"/>
                     <constraint firstItem="18" firstAttribute="top" secondItem="6" secondAttribute="top" constant="9" id="LsS-rI-Lfb"/>
                     <constraint firstAttribute="bottom" secondItem="7" secondAttribute="bottom" constant="8" id="aQ8-Rl-kGo"/>
                     <constraint firstItem="32" firstAttribute="leading" secondItem="18" secondAttribute="trailing" constant="7" id="hL4-lc-iLv"/>
@@ -74,25 +73,26 @@
                     <constraint firstAttribute="trailing" secondItem="7" secondAttribute="trailing" constant="8" id="twL-47-bHL"/>
                 </constraints>
             </view>
+            <point key="canvasLocation" x="140" y="305"/>
         </window>
         <window title="Resource Attributes" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="35" userLabel="Resource Attributes">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="356" y="374" width="281" height="195"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2155" height="1240"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="36">
                 <rect key="frame" x="0.0" y="0.0" width="281" height="195"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box title="Resource Attributes" translatesAutoresizingMaskIntoConstraints="NO" id="43">
-                        <rect key="frame" x="18" y="16" width="246" height="159"/>
+                        <rect key="frame" x="17" y="16" width="247" height="159"/>
                         <view key="contentView" id="5Kr-4A-5xw">
-                            <rect key="frame" x="2" y="2" width="242" height="139"/>
+                            <rect key="frame" x="3" y="3" width="241" height="139"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <matrix verticalHuggingPriority="750" mode="track" translatesAutoresizingMaskIntoConstraints="NO" id="44">
-                                    <rect key="frame" x="12" y="12" width="218" height="118"/>
+                                    <rect key="frame" x="11" y="11" width="218" height="118"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     <size key="cellSize" width="218" height="18"/>
                                     <size key="intercellSpacing" width="4" height="2"/>
@@ -155,28 +155,28 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="344" y="115" width="279" height="195"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2155" height="1240"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="56">
-                <rect key="frame" x="0.0" y="0.0" width="279" height="195"/>
+                <rect key="frame" x="0.0" y="0.0" width="279" height="190"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box title="File Properties" translatesAutoresizingMaskIntoConstraints="NO" id="53">
-                        <rect key="frame" x="16" y="16" width="246" height="159"/>
+                        <rect key="frame" x="17" y="16" width="245" height="154"/>
                         <view key="contentView" id="ky0-Tv-GbH">
-                            <rect key="frame" x="2" y="2" width="242" height="139"/>
+                            <rect key="frame" x="3" y="3" width="239" height="134"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="144" translatesAutoresizingMaskIntoConstraints="NO" id="72">
-                                    <rect key="frame" x="48" y="11" width="147" height="13"/>
+                                    <rect key="frame" x="46" y="10" width="147" height="13"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Fork sizes are as at last save" id="91">
-                                        <font key="font" metaFont="label"/>
+                                        <font key="font" metaFont="system" size="10"/>
                                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dld-9h-eFx">
-                                    <rect key="frame" x="18" y="107" width="101" height="17"/>
+                                    <rect key="frame" x="18" y="103" width="100" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Creator:" id="HmP-QG-gXU">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -184,7 +184,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kRO-KW-Q82">
-                                    <rect key="frame" x="18" y="82" width="101" height="17"/>
+                                    <rect key="frame" x="18" y="79" width="100" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Type:" id="C4O-dJ-3Ro">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -192,7 +192,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Shi-FY-tXv">
-                                    <rect key="frame" x="18" y="57" width="100" height="17"/>
+                                    <rect key="frame" x="18" y="55" width="99" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Data Fork:" id="HcI-yf-nLg">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -200,7 +200,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Set-iT-ETT">
-                                    <rect key="frame" x="18" y="32" width="100" height="17"/>
+                                    <rect key="frame" x="18" y="31" width="99" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Resource Fork:" id="JZa-ua-0mh">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -208,10 +208,10 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vcX-K0-60n">
-                                    <rect key="frame" x="125" y="105" width="97" height="22"/>
+                                    <rect key="frame" x="124" y="101" width="95" height="21"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="ResK" drawsBackground="YES" id="juW-kl-WBN">
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
@@ -220,10 +220,10 @@
                                     </connections>
                                 </textField>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pox-Qn-guL">
-                                    <rect key="frame" x="125" y="80" width="97" height="22"/>
+                                    <rect key="frame" x="124" y="77" width="95" height="21"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="rsrc" drawsBackground="YES" id="yIx-jL-SJA">
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
@@ -232,7 +232,7 @@
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bPl-P3-Z8S">
-                                    <rect key="frame" x="124" y="57" width="100" height="17"/>
+                                    <rect key="frame" x="123" y="55" width="98" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="data size" id="Jl2-KL-jqS">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -243,7 +243,7 @@
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vMs-RW-hgX">
-                                    <rect key="frame" x="124" y="32" width="100" height="17"/>
+                                    <rect key="frame" x="123" y="31" width="98" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="resource size" id="UIo-m7-vY9">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>

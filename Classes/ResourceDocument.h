@@ -29,7 +29,6 @@ typedef enum {
 + (NSMutableArray *)readResourceMap:(NSURL *)url document:(ResourceDocument *)document;
 
 - (IBAction)exportResources:(id)sender;
-- (void)exportResource:(Resource *)resource;
 
 - (IBAction)showCreateResourceSheet:(id)sender;
 - (IBAction)showSelectTemplateSheet:(id)sender;
@@ -45,11 +44,6 @@ typedef enum {
 - (void)pasteResources:(NSArray *)pastedResources;
 - (IBAction)delete:(id)sender;
 - (void)deleteSelectedResources;
-
-- (void)resourceNameWillChange:(NSNotification *)notification;
-- (void)resourceIDWillChange:(NSNotification *)notification;
-- (void)resourceTypeWillChange:(NSNotification *)notification;
-- (void)resourceAttributesWillChange:(NSNotification *)notification;
 
 - (NSWindow *)mainWindow;
 - (ResourceDataSource *)dataSource;

@@ -34,24 +34,6 @@ extern NSString *RKResourcePboardType;
     return self;
 }
 
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (BOOL)windowShouldClose:(NSWindow *)sender
-{
-    // FIXME: This doesn't get called on quit, so app will still exit with unsaved resource windows open
-    for (NSWindowController *controller in self.editorWindows.allValues) {
-        if (![controller respondsToSelector:@selector(windowShouldClose:)] || [controller performSelector:@selector(windowShouldClose:) withObject:controller.window]) {
-            [controller close];
-        } else {
-            return false;
-        }
-    }
-    return true;
-}
-
 #pragma mark -
 #pragma mark File Management
 
@@ -238,116 +220,75 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 #pragma mark -
 #pragma mark Export to File
 
-/*!
-@method		exportResources:
-@author		Nicholas Shanks
-@created	24 October 2003
-*/
-
 - (IBAction)exportResources:(id)sender
 {
-	if ([outlineView numberOfSelectedRows] > 1)
-	{
+    NSArray *selected = [dataSource allResourcesForItems:[outlineView selectedItems]];
+    if (selected.count > 1) {
 		NSOpenPanel *panel = [NSOpenPanel openPanel];
-		[panel setAllowsMultipleSelection:NO];
-		[panel setCanChooseDirectories:YES];
-		[panel setCanChooseFiles:NO];
+        panel.allowsMultipleSelection = NO;
+        panel.canChooseDirectories = YES;
+        panel.canChooseFiles = NO;
+        panel.prompt = @"Choose";
+        panel.message = @"Choose where to export the selected resources";
 		[panel beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse result) {
-			[self folderChoosePanelDidEnd:panel returnCode:result contextInfo:nil];
+            if (result == NSModalResponseOK) {
+                for (Resource *resource in selected) {
+                    NSString *filename = [self filenameForExport:resource];
+                    [self exportResource:resource toURL:[panel.URL URLByAppendingPathComponent:filename]];
+                }
+            }
 		}];
-	}
-	else
-	{
-		[self exportResource:[outlineView selectedItem]];
+    } else if (selected.count == 1) {
+        Resource *resource = selected.firstObject;
+        NSSavePanel *panel = [NSSavePanel savePanel];
+        NSString *filename = [self filenameForExport:resource];
+        panel.nameFieldStringValue = filename;
+        //panel.allowedFileTypes = @[filename.pathExtension];
+        [panel beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse result) {
+            if (result == NSModalResponseOK) {
+                [self exportResource:resource toURL:panel.URL];
+            }
+        }];
 	}
 }
 
-/*!
-@method		exportResource:
-@author		Uli Kusterer
-@updated	2003-10-24 NGS: moved IBAction target to exportResources: above, renamed this method
-*/
-
-#warning Note to Uli: how about changing the selector that the plug should implement to -(BOOL)dataForFileExport:(NSData **)fileData ofType:(NSString **)fileType. This is basically a concatenation of the two methods you came up with, but can allow the host app to specify a preferred file type (e.g. EPS) to a plug (say the PICT plug) and if the plug can't return data in that format, that's OK, it just returns the fileType of the associated data anyway. I would also recommend adding a plug method called something like availableTypesForFileExport: which returns a dictionary of file extensions and human-readable names (names should be overridden by system default names for that extension if present) that the plug can export data into, useful for say populating a pop-up menu in the export dialog.
-
-- (void)exportResource:(Resource *)resource
+- (NSString *)filenameForExport:(Resource *)resource
 {
-	Class		editorClass = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType([resource type])];
-	NSData		*exportData = [resource data];
-	NSString	*extension = [[GetNSStringFromOSType([resource type]) lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	
-	// basic overrides for file name extensions (assume no plug-ins installed)
-	NSString *newExtension;
-	NSDictionary *adjustments = @{@"sfnt": @"ttf"};
-	if((newExtension = adjustments[extension]))
-		extension = newExtension;
-	
-	// ask for data
-	if([editorClass respondsToSelector:@selector(dataForFileExport:)])
-		exportData = [editorClass dataForFileExport:resource];
-	
-	// ask for file extension
-	if([editorClass respondsToSelector:@selector(filenameExtensionForFileExport:)])
-		extension = [editorClass filenameExtensionForFileExport:resource];
-	
-	NSSavePanel *panel = [NSSavePanel savePanel];
-	NSString *filename = ([resource name] && ![[resource name] isEqualToString:@""]) ? [resource name] : NSLocalizedString(@"Untitled Resource",nil);
-	filename = [filename stringByAppendingPathExtension:extension];
-	[panel setNameFieldStringValue:filename];
-	//[panel beginSheetForDirectory:nil file:filename modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(exportPanelDidEnd:returnCode:contextInfo:) contextInfo:[exportData retain]];
-	[panel beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse result) {
-		if(result == NSModalResponseOK)
-			[exportData writeToURL:[panel URL] atomically:YES];
-	}];
+    NSString *resType = GetNSStringFromOSType(resource.type);
+    Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:resType];
+    NSString *extension;
+    
+    // ask for file extension
+    if ([editorClass respondsToSelector:@selector(filenameExtensionForFileExport:)]) {
+        extension = [editorClass filenameExtensionForFileExport:resource];
+    } else {
+        extension = [[resType lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
+    
+    NSString *filename = [resource.name stringByReplacingOccurrencesOfString:@"/" withString:@":"];
+    if ([filename isEqualToString:@""]) {
+        filename = [NSString stringWithFormat:@"%@ %d", resType, resource.resID];
+    }
+    NSString *fullname = [filename stringByAppendingPathExtension:extension];
+    
+    unsigned int i = 2;
+    while ([[NSFileManager defaultManager] fileExistsAtPath:fullname]) {
+        fullname = [filename stringByAppendingFormat:@" %d", i++];
+        fullname = [fullname stringByAppendingPathExtension:extension];
+    }
+    return fullname;
 }
 
-- (void)folderChoosePanelDidEnd:(NSSavePanel *)sheet returnCode:(NSModalResponse)returnCode contextInfo:(void *)contextInfo
+- (void)exportResource:(Resource *)resource toURL:(NSURL *)url
 {
-	if(returnCode == NSModalResponseOK)
-	{
-		unsigned int i = 1;
-		NSString *filename, *extension;
-		NSDictionary *adjustments = @{@"sfnt": @"ttf", @"PNGf": @"png"};
-		for (Resource *resource in [dataSource allResourcesForItems:[outlineView selectedItems]]) {
-			NSString *NSResType = GetNSStringFromOSType([resource type]);
-
-			Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType([resource type])];
-			NSData *exportData = [resource data];
-			extension = [[NSResType lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-			
-			// basic overrides for file name extensions (assume no plug-ins installed)
-			if(adjustments[NSResType])
-				extension = adjustments[NSResType];
-			
-			// ask for data
-			if([editorClass respondsToSelector:@selector(dataForFileExport:)])
-				exportData = [editorClass dataForFileExport:resource];
-			
-			// ask for file extension
-			if([editorClass respondsToSelector:@selector(filenameExtensionForFileExport:)])
-				extension = [editorClass filenameExtensionForFileExport:resource];
-			
-			filename = [resource name];
-			if (!filename || [filename isEqualToString:@""])
-			{
-				filename = [NSString stringWithFormat:NSLocalizedString(@"Untitled '%@' Resource %d",nil), [resource type], i++];
-				filename = [filename stringByAppendingPathExtension:extension];
-			}
-			else
-			{
-				unsigned int j = 1;
-				NSString *tempname = [filename stringByAppendingPathExtension:extension];
-				while ([[NSFileManager defaultManager] fileExistsAtPath:tempname])
-				{
-					tempname = [filename stringByAppendingFormat:@" (%d)", j++];
-					tempname = [tempname stringByAppendingPathExtension:extension];
-				}
-				filename = tempname;
-			}
-			NSURL *url = [[sheet URL] URLByAppendingPathComponent:filename];
-			[exportData writeToURL:url atomically:YES];
-		}
-	}
+    Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType(resource.type)];
+    if ([editorClass respondsToSelector:@selector(exportResource:toURL:)]) {
+        [editorClass exportResource:resource toURL:url];
+    } else if ([editorClass respondsToSelector:@selector(dataForFileExport:)]) {
+        [[editorClass dataForFileExport:resource] writeToURL:url atomically:YES];
+    } else {
+        [resource.data writeToURL:url atomically:YES];
+    }
 }
 
 #pragma mark -
@@ -357,14 +298,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 {
     return @"ResourceDocument";
 }
-
-/*	This is not used, just here for reference in case I need it in the future
-
-- (void)makeWindowControllers
-{
-	ResourceWindowController *resourceController = [[ResourceWindowController allocWithZone:[self zone]] initWithWindowNibName:@"ResourceDocument"];
-    [self addWindowController:resourceController];
-}*/
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)controller
 {
@@ -383,19 +316,17 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
     [dataSource addResources:_resources];
 }
 
-- (void)printDocumentWithSettings:(NSDictionary *)printSettings
-                   showPrintPanel:(BOOL)showPrintPanel
-                         delegate:(id)delegate
-                 didPrintSelector:(SEL)didPrintSelector
-                      contextInfo:(void *)contextInfo
+- (BOOL)windowShouldClose:(NSWindow *)sender
 {
-	NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:[mainWindow contentView]];
-	[printOperation runOperationModalForWindow:mainWindow delegate:self didRunSelector:@selector(printOperationDidRun:success:contextInfo:) contextInfo:NULL];
-}
-
-- (void)printOperationDidRun:(NSPrintOperation *)printOperation success:(BOOL)success contextInfo:(void *)contextInfo
-{
-	if(!success) NSLog(@"Printing Failed!");
+    // FIXME: This doesn't get called on quit, so app will still exit with unsaved resource windows open
+    for (NSWindowController *controller in self.editorWindows.allValues) {
+        if (![controller respondsToSelector:@selector(windowShouldClose:)] || [controller performSelector:@selector(windowShouldClose:) withObject:controller.window]) {
+            [controller close];
+        } else {
+            return false;
+        }
+    }
+    return true;
 }
 
 - (BOOL)keepBackupFile

@@ -125,4 +125,22 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
             }
         })
     }
+    
+    // ResKnifePlugin protocol export functions
+    static func filenameExtension(forFileExport: ResKnifeResource) -> String {
+        return "aiff"
+    }
+    
+    static func export(_ resource: ResKnifeResource, to: URL) {
+        let sound = SoundResource(resource.data!)
+        do {
+            try sound.export(to: to)
+        } catch let error {
+            resource.document().presentError(error)
+        }
+    }
+    
+    static func icon(forResourceType resourceType: OSType) -> NSImage! {
+        return NSWorkspace.shared.icon(forFileType: "public.audio")
+    }
 }
