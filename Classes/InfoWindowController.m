@@ -57,7 +57,8 @@
 		[[attributesMatrix cellAtRow:systemHeapBox column:0]	setState:selectedResource.attributes & resSysHeap];
 		
 		// swap box
-		[placeholderView setContentView:resourceView];
+		//[placeholderView setContentView:resourceView];
+        [placeholderView setContentView:nil];
 	} else if (currentDocument != nil) {
 		// get sizes of forks as they are on disk
 		NSInteger dataLogicalSize = 0, rsrcLogicalSize = 0;

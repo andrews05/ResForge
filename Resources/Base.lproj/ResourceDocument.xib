@@ -20,27 +20,27 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="14" y="561" width="643" height="430"/>
+            <rect key="contentRect" x="14" y="561" width="500" height="430"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="250" height="200"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
+                <rect key="frame" x="0.0" y="0.0" width="500" height="430"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" findBarPosition="aboveHorizontalRuler" translatesAutoresizingMaskIntoConstraints="NO" id="146">
-                        <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="430"/>
                         <clipView key="contentView" id="wBO-8u-DWd">
-                            <rect key="frame" x="0.0" y="0.0" width="643" height="430"/>
+                            <rect key="frame" x="0.0" y="0.0" width="500" height="430"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" autosaveName="Resource List" headerView="164" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="147" id="145">
-                                    <rect key="frame" x="0.0" y="0.0" width="643" height="407"/>
+                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" autosaveName="Resource List" headerView="164" indentationPerLevel="16" outlineTableColumn="147" id="145">
+                                    <rect key="frame" x="0.0" y="0.0" width="500" height="407"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="name" width="266" minWidth="16" maxWidth="1000" id="147">
+                                        <tableColumn identifier="name" width="308" minWidth="16" maxWidth="1000" id="147">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -98,7 +98,7 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="resID"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="size" editable="NO" width="71" minWidth="60" maxWidth="80" id="150">
+                                        <tableColumn identifier="size" editable="NO" width="60" minWidth="60" maxWidth="80" id="150">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Size">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -111,20 +111,6 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="size"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="attributes" editable="NO" width="171" minWidth="60" maxWidth="1000" id="151">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Attributes">
-                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                            </tableHeaderCell>
-                                            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="162">
-                                                <customFormatter key="formatter" id="tQd-3F-qvW" customClass="AttributesFormatter"/>
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="attributes"/>
-                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                        </tableColumn>
                                     </tableColumns>
                                     <connections>
                                         <action trigger="doubleAction" selector="openResources:" target="-2" id="d4H-KE-K8v"/>
@@ -135,7 +121,7 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="163">
-                            <rect key="frame" x="1" y="386" width="525" height="15"/>
+                            <rect key="frame" x="-100" y="-100" width="500" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="165">
@@ -143,7 +129,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="164">
-                            <rect key="frame" x="0.0" y="0.0" width="643" height="23"/>
+                            <rect key="frame" x="0.0" y="0.0" width="500" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
@@ -214,7 +200,6 @@
                             <action selector="changeView:" target="-2" id="4Pl-t2-6nT"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="Apn-Pj-HMi"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="d1R-hr-pl4"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="ATF-mj-yUD"/>
                 </allowedToolbarItems>
@@ -227,7 +212,6 @@
                     <toolbarItem reference="3yx-yF-8WS"/>
                     <toolbarItem reference="d1R-hr-pl4"/>
                     <toolbarItem reference="tCj-q7-1oo"/>
-                    <toolbarItem reference="Apn-Pj-HMi"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>
@@ -248,6 +232,20 @@
                 <outlet property="outlineView" destination="145" id="154"/>
             </connections>
         </customObject>
+        <tableColumn identifier="attributes" editable="NO" width="171" minWidth="60" maxWidth="1000" id="151">
+            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Attributes">
+                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+            </tableHeaderCell>
+            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="162">
+                <customFormatter key="formatter" id="tQd-3F-qvW" customClass="AttributesFormatter"/>
+                <font key="font" metaFont="system"/>
+                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+            </textFieldCell>
+            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="attributes"/>
+            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+        </tableColumn>
     </objects>
     <resources>
         <image name="Create" width="32" height="32"/>
