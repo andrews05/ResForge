@@ -16,12 +16,15 @@
         NSRect orig = view.frame;
         NSRect frame = view.frame;
         frame.size.width = self.popupWidth-1;
+        frame.size.height = 23;
+        frame.origin.y = -1;
         NSPopUpButton *select = [[NSPopUpButton alloc] initWithFrame:frame];
         select.target = self;
         select.action = @selector(caseChanged:);
         [select bind:@"content" toObject:self withKeyPath:@"cases" options:nil];
         [select bind:@"selectedObject" toObject:self withKeyPath:@"currentCase" options:nil];
         [view addSubview:select];
+        frame = view.frame;
         frame.origin.x += self.popupWidth;
         view.frame = frame;
         [self.currentCase configureView:view];

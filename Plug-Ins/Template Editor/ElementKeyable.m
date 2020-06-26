@@ -22,6 +22,8 @@
     }
     NSRect frame = view.frame;
     frame.size.width = self.width-1;
+    frame.size.height = 23;
+    frame.origin.y = -1;
     NSPopUpButton *keySelect = [[NSPopUpButton alloc] initWithFrame:frame];
     keySelect.target = self;
     keySelect.action = @selector(keyChanged:);
