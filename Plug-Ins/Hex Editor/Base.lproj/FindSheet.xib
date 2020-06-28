@@ -12,13 +12,9 @@
                 <outlet property="caseSensitiveBox" destination="47" id="62"/>
                 <outlet property="findNextButton" destination="13" id="52"/>
                 <outlet property="findText" destination="SKV-LN-kU9" id="mXA-qC-BsX"/>
-                <outlet property="matchEntireWordsBox" destination="48" id="63"/>
                 <outlet property="replaceAllButton" destination="15" id="55"/>
                 <outlet property="replaceText" destination="HTf-12-0al" id="PFH-Uk-fMx"/>
                 <outlet property="searchASCIIOrHexRadios" destination="17" id="64"/>
-                <outlet property="searchBackwardsBox" destination="46" id="65"/>
-                <outlet property="searchSelectionOnlyBox" destination="49" id="66"/>
-                <outlet property="startAtTopBox" destination="30" id="60"/>
                 <outlet property="window" destination="7" id="56"/>
                 <outlet property="wrapAroundBox" destination="31" id="61"/>
             </connections>
@@ -28,11 +24,12 @@
         <window title="Find &amp; Replace" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="Find" animationBehavior="default" id="7" userLabel="Find Panel" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="609" y="503" width="415" height="222"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <value key="minSize" type="size" width="213" height="107"/>
+            <rect key="contentRect" x="609" y="503" width="415" height="179"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <value key="minSize" type="size" width="415" height="180"/>
+            <value key="maxSize" type="size" width="415" height="180"/>
             <view key="contentView" autoresizesSubviews="NO" id="8">
-                <rect key="frame" x="0.0" y="0.0" width="415" height="222"/>
+                <rect key="frame" x="0.0" y="0.0" width="415" height="179"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button autoresizesSubviews="NO" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="13">
@@ -58,8 +55,21 @@ DQ
                             <action selector="replaceAll:" target="-2" id="58"/>
                         </connections>
                     </button>
+                    <button autoresizesSubviews="NO" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="51">
+                        <rect key="frame" x="14" y="13" width="82" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="76">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="hideFindSheet:" target="-2" id="59"/>
+                        </connections>
+                    </button>
                     <matrix autoresizesSubviews="NO" verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17">
-                        <rect key="frame" x="233" y="86" width="164" height="38"/>
+                        <rect key="frame" x="231" y="61" width="164" height="38"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="164" height="18"/>
                         <size key="intercellSpacing" width="4" height="2"/>
@@ -80,84 +90,52 @@ DQ
                             </column>
                         </cells>
                     </matrix>
-                    <button autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30">
-                        <rect key="frame" x="79" y="126" width="144" height="18"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="140" id="AdF-vT-Wdi"/>
-                        </constraints>
-                        <buttonCell key="cell" type="check" title="Start At Top" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="70">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
                     <button autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31">
-                        <rect key="frame" x="79" y="106" width="144" height="18"/>
-                        <buttonCell key="cell" type="check" title="Wrap Around" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="71">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
-                    <button autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46">
-                        <rect key="frame" x="79" y="86" width="144" height="18"/>
-                        <buttonCell key="cell" type="check" title="Search Backwards" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="72">
+                        <rect key="frame" x="79" y="81" width="146" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="142" id="8nE-a3-pdw"/>
+                        </constraints>
+                        <buttonCell key="cell" type="check" title="Wrap Around" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="71">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
                     <button autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47">
-                        <rect key="frame" x="79" y="59" width="144" height="18"/>
-                        <buttonCell key="cell" type="check" title="Case Sensitive" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="73">
+                        <rect key="frame" x="79" y="61" width="146" height="18"/>
+                        <buttonCell key="cell" type="check" title="Ignore Case" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="73">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
-                    <button autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="48">
-                        <rect key="frame" x="233" y="59" width="164" height="18"/>
-                        <buttonCell key="cell" type="check" title="Match Entire Words" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="74">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
-                    <button autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49">
-                        <rect key="frame" x="233" y="126" width="164" height="18"/>
-                        <buttonCell key="cell" type="check" title="Search Selection Only" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="75">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
-                    <button autoresizesSubviews="NO" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="51">
-                        <rect key="frame" x="14" y="13" width="82" height="32"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="76">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
                         </buttonCell>
                         <connections>
-                            <action selector="hideFindSheet:" target="-2" id="59"/>
+                            <binding destination="M3U-Xd-fsH" name="enabled" keyPath="content.state" id="Xko-0y-Q6z"/>
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="SKV-LN-kU9">
-                        <rect key="frame" x="81" y="180" width="314" height="22"/>
+                        <rect key="frame" x="81" y="137" width="314" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="93p-Jf-R5B">
                             <font key="font" usesAppearanceFont="YES"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="lZS-HW-OHb"/>
+                        </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" id="HTf-12-0al">
-                        <rect key="frame" x="81" y="150" width="314" height="22"/>
+                        <rect key="frame" x="81" y="107" width="314" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Kcc-eJ-EhC">
                             <font key="font" usesAppearanceFont="YES"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="eKM-xv-6lV"/>
+                        </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Gbr-q6-ptq">
-                        <rect key="frame" x="18" y="183" width="57" height="16"/>
+                        <rect key="frame" x="18" y="140" width="57" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Find:" id="Jgv-tx-6UJ">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -166,7 +144,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="02a-VH-w8V">
-                        <rect key="frame" x="18" y="153" width="57" height="16"/>
+                        <rect key="frame" x="18" y="110" width="57" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Replace:" id="usU-Fz-ekI">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -176,40 +154,34 @@ Gw
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="17" firstAttribute="leading" secondItem="31" secondAttribute="trailing" constant="12" id="2cc-1w-gQn"/>
                     <constraint firstAttribute="bottom" secondItem="13" secondAttribute="bottom" constant="20" symbolic="YES" id="4zD-FT-5oK"/>
-                    <constraint firstItem="51" firstAttribute="top" secondItem="47" secondAttribute="bottom" constant="20" symbolic="YES" id="6od-32-Ewt"/>
-                    <constraint firstItem="47" firstAttribute="trailing" secondItem="46" secondAttribute="trailing" id="7Si-kq-Suh"/>
+                    <constraint firstItem="13" firstAttribute="top" secondItem="17" secondAttribute="bottom" constant="20" symbolic="YES" id="5tM-ce-aGd"/>
+                    <constraint firstItem="47" firstAttribute="top" secondItem="31" secondAttribute="bottom" constant="6" symbolic="YES" id="804-06-2Px"/>
                     <constraint firstItem="51" firstAttribute="leading" secondItem="8" secondAttribute="leading" constant="20" id="9G5-Kb-wlv"/>
                     <constraint firstItem="15" firstAttribute="width" secondItem="13" secondAttribute="width" id="CDx-Jl-UYx"/>
-                    <constraint firstItem="31" firstAttribute="top" secondItem="30" secondAttribute="bottom" constant="6" symbolic="YES" id="Cwn-Vc-2mg"/>
-                    <constraint firstItem="46" firstAttribute="top" secondItem="31" secondAttribute="bottom" constant="6" symbolic="YES" id="E3A-5P-Axe"/>
-                    <constraint firstItem="17" firstAttribute="top" secondItem="49" secondAttribute="bottom" constant="4" id="Ehz-x1-Sxt"/>
                     <constraint firstItem="15" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8" secondAttribute="leading" constant="20" symbolic="YES" id="GO4-fn-jjL"/>
+                    <constraint firstItem="47" firstAttribute="leading" secondItem="31" secondAttribute="leading" id="I1N-cV-KNN"/>
+                    <constraint firstItem="13" firstAttribute="top" secondItem="47" secondAttribute="bottom" constant="22" id="Kc3-qw-mGu"/>
                     <constraint firstAttribute="trailing" secondItem="13" secondAttribute="trailing" constant="20" id="O5C-vA-Tyr"/>
-                    <constraint firstItem="48" firstAttribute="centerX" secondItem="17" secondAttribute="centerX" id="Q8W-Ke-GrO"/>
-                    <constraint firstItem="48" firstAttribute="baseline" secondItem="47" secondAttribute="baseline" id="RUg-UY-0NS"/>
-                    <constraint firstItem="46" firstAttribute="leading" secondItem="31" secondAttribute="leading" id="YfN-KD-RV9"/>
+                    <constraint firstItem="17" firstAttribute="leading" secondItem="31" secondAttribute="trailing" constant="8" symbolic="YES" id="WOU-Y3-MHa"/>
+                    <constraint firstItem="47" firstAttribute="trailing" secondItem="31" secondAttribute="trailing" id="Wd3-mJ-2Im"/>
                     <constraint firstItem="13" firstAttribute="leading" secondItem="15" secondAttribute="trailing" constant="12" symbolic="YES" id="YtC-SB-MPn"/>
-                    <constraint firstItem="30" firstAttribute="baseline" secondItem="49" secondAttribute="baseline" id="ZSY-hu-zh7"/>
-                    <constraint firstAttribute="trailing" secondItem="17" secondAttribute="trailing" constant="18" id="an3-IT-LzD"/>
+                    <constraint firstAttribute="trailing" secondItem="17" secondAttribute="trailing" constant="20" symbolic="YES" id="an3-IT-LzD"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="51" secondAttribute="trailing" constant="20" symbolic="YES" id="c5l-Nh-gqi"/>
-                    <constraint firstItem="48" firstAttribute="top" secondItem="17" secondAttribute="bottom" constant="11" id="e41-A4-iYv"/>
-                    <constraint firstItem="30" firstAttribute="trailing" secondItem="31" secondAttribute="trailing" id="gyl-04-6de"/>
-                    <constraint firstItem="31" firstAttribute="trailing" secondItem="46" secondAttribute="trailing" id="hOL-kQ-4gR"/>
-                    <constraint firstItem="49" firstAttribute="leading" secondItem="48" secondAttribute="leading" id="hdw-AD-RY5"/>
-                    <constraint firstItem="46" firstAttribute="leading" secondItem="47" secondAttribute="leading" id="j1m-9p-1LX"/>
-                    <constraint firstItem="49" firstAttribute="leading" secondItem="30" secondAttribute="trailing" constant="14" id="jnU-hv-yMe"/>
-                    <constraint firstItem="31" firstAttribute="leading" secondItem="30" secondAttribute="leading" id="mbw-ev-CMJ"/>
                     <constraint firstItem="51" firstAttribute="baseline" secondItem="15" secondAttribute="baseline" id="pRc-Og-D2g"/>
-                    <constraint firstItem="49" firstAttribute="centerX" secondItem="17" secondAttribute="centerX" id="qqt-u9-Da3"/>
                     <constraint firstItem="13" firstAttribute="baseline" secondItem="15" secondAttribute="baseline" id="uoO-P2-OmS"/>
+                    <constraint firstItem="17" firstAttribute="top" secondItem="HTf-12-0al" secondAttribute="bottom" constant="8" symbolic="YES" id="wzX-BL-m6S"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="50"/>
             </connections>
-            <point key="canvasLocation" x="139.5" y="147"/>
+            <point key="canvasLocation" x="139.5" y="168.5"/>
         </window>
+        <objectController objectClassName="NSButtonCell" id="M3U-Xd-fsH">
+            <connections>
+                <outlet property="content" destination="18" id="4F1-nK-9rQ"/>
+            </connections>
+        </objectController>
     </objects>
 </document>

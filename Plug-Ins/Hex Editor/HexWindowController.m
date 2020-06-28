@@ -1,22 +1,6 @@
 #import "HexWindowController.h"
 #import "FindSheetController.h"
 
-/*
-OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
-{
-	// init function called by carbon apps
-	if(NSApplicationLoad())
-	{
-		id newResource = [NSClassFromString(@"Resource") resourceOfType:[NSString stringWithCString:length:4] andID:[NSNumber numberWithInt:] withName:[NSString stringWithCString:length:] andAttributes:[NSNumber numberWithUnsignedShort:] data:[NSData dataWithBytes:length:]];
-		if(!newResource) return paramErr;
-		id windowController = [[HexWindowController alloc] initWithResource:newResource];
-		if(!windowController) return paramErr;
-		else return noErr;
-	}
-	else return paramErr;
-}
-*/
-
 @implementation HexWindowController
 @synthesize textView;
 @synthesize resource;
@@ -35,41 +19,36 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 	return self;
 }
 
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
 	
 	// here because we don't want these notifications until we have a window! (Only register for notifications on the resource we're editing)
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameDidChange:) name:ResourceNameDidChangeNotification object:resource];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resourceNameDidChange:) name:ResourceNameDidChangeNotification object:resource];
+	[NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
     
-    HFLineCountingRepresenter *lineCountingRepresenter = [[HFLineCountingRepresenter alloc] init];
-    HFStatusBarRepresenter *statusBarRepresenter = [[HFStatusBarRepresenter alloc] init];
+    HFLineCountingRepresenter *lineCountingRepresenter = [HFLineCountingRepresenter new];
+    HFStatusBarRepresenter *statusBarRepresenter = [HFStatusBarRepresenter new];
     
-    [[textView layoutRepresenter] addRepresenter:lineCountingRepresenter];
-    [[textView layoutRepresenter] addRepresenter:statusBarRepresenter];
-    [[textView controller] setFont:[NSFont userFixedPitchFontOfSize:10.0]];
-    [[textView controller] addRepresenter:lineCountingRepresenter];
-    [[textView controller] addRepresenter:statusBarRepresenter];
+    [textView.layoutRepresenter addRepresenter:lineCountingRepresenter];
+    [textView.layoutRepresenter addRepresenter:statusBarRepresenter];
+    [textView.controller setFont:[NSFont userFixedPitchFontOfSize:10.0]];
+    [textView.controller addRepresenter:lineCountingRepresenter];
+    [textView.controller addRepresenter:statusBarRepresenter];
     textView.data = resource.data;
     textView.delegate = self;
     [lineCountingRepresenter cycleLineNumberFormat];
-    [[textView controller] setUndoManager:undoManager];
+    [textView.controller setUndoManager:undoManager];
 	
 	// finally, set the window title & show the window
-	[[self window] setTitle:[resource defaultWindowTitle]];
+    self.window.title = resource.defaultWindowTitle;
 	[self showWindow:self];
-	[[textView layoutRepresenter] performLayout];
+	[textView.layoutRepresenter performLayout];
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
-	return [resource defaultWindowTitle];
+    return resource.defaultWindowTitle;
 }
 
 - (BOOL)windowShouldClose:(id)sender
@@ -103,7 +82,7 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
 
 - (void)saveResource:(id)sender
 {
-    [resource setData:[textView.data copy]];
+    resource.data = [textView.data copy];
 }
 
 - (void)revertResource:(id)sender
@@ -112,16 +91,37 @@ OSStatus Plug_InitInstance(Plug_PlugInRef plug, Plug_ResourceRef resource)
     [self setDocumentEdited:NO];
 }
 
-- (void)showFind:(id)sender
+- (IBAction)showFind:(id)sender
 {
-	if (!sheetController)
-		sheetController = [[FindSheetController alloc] initWithWindowNibName:@"FindSheet"];
-	[sheetController showFindSheet:self];
+    [FindSheetController.shared showFindSheet:self.window];
+}
+
+- (IBAction)findNext:(id)sender
+{
+    [FindSheetController.shared findIn:textView.controller forwards:YES];
+}
+
+- (IBAction)findPrevious:(id)sender
+{
+    [FindSheetController.shared findIn:textView.controller forwards:NO];
+}
+
+- (IBAction)findWithSelection:(id)sender
+{
+    BOOL asHex = [self.window.firstResponder.className isEqualToString:@"HFRepresenterHexTextView"];
+    [FindSheetController.shared setFindSelection:textView.controller asHex:asHex];
+}
+
+- (IBAction)scrollToSelection:(id)sender
+{
+    HFRange selection = [textView.controller.selectedContentsRanges[0] HFRange];
+    [textView.controller maximizeVisibilityOfContentsRange:selection];
+    [textView.controller pulseSelection];
 }
 
 - (void)resourceNameDidChange:(NSNotification *)notification
 {
-    [self.window setTitle:[resource defaultWindowTitle]];
+    [self.window setTitle:resource.defaultWindowTitle];
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification

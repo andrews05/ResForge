@@ -20,7 +20,6 @@
 
 @interface HexWindowController : NSWindowController <ResKnifePlugin>
 {
-	FindSheetController *sheetController;
 	NSUndoManager       *undoManager;
 }
 @property (weak) IBOutlet HFTextView *textView;
