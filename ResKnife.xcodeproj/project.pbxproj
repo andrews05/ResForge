@@ -46,6 +46,9 @@
 		49322A7A244FF65A00E1EAE4 /* ElementHLLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A78244FF65A00E1EAE4 /* ElementHLLG.m */; };
 		49322A7D2450E87000E1EAE4 /* ElementBBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A7B2450E87000E1EAE4 /* ElementBBIT.h */; };
 		49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A7C2450E87000E1EAE4 /* ElementBBIT.m */; };
+		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
+		49362DA124A9432B0040B793 /* FindWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA024A9432B0040B793 /* FindWindowController.swift */; };
+		49362DA324A966960040B793 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
 		494BEA67245A774B000EF1D0 /* ElementKeyable.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA65245A774B000EF1D0 /* ElementKeyable.h */; };
 		494BEA68245A774B000EF1D0 /* ElementKeyable.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA66245A774B000EF1D0 /* ElementKeyable.m */; };
 		494BEA6B245A84D1000EF1D0 /* ElementCASE.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA69245A84D1000EF1D0 /* ElementCASE.h */; };
@@ -233,10 +236,6 @@
 		E18BF588069FEA1300F076B8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
 		E18BF590069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
 		E18BF591069FEA1400F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
-		E18BF594069FEA1400F076B8 /* HexWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EF83A7020C08E601A80001 /* HexWindowController.h */; };
-		E18BF595069FEA1400F076B8 /* FindSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = F54E6220021B6A0801A80001 /* FindSheetController.h */; };
-		E18BF59D069FEA1400F076B8 /* HexWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EF83A8020C08E601A80001 /* HexWindowController.m */; };
-		E18BF59E069FEA1400F076B8 /* FindSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54E6221021B6A0801A80001 /* FindSheetController.m */; };
 		E18BF59F069FEA1400F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF5A2069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF5BA069FEA1400F076B8 /* BoomWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B7E025BC3A501A8010C /* BoomWindowController.h */; };
@@ -504,6 +503,10 @@
 		49322A78244FF65A00E1EAE4 /* ElementHLLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHLLG.m; sourceTree = "<group>"; };
 		49322A7B2450E87000E1EAE4 /* ElementBBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBBIT.h; sourceTree = "<group>"; };
 		49322A7C2450E87000E1EAE4 /* ElementBBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBBIT.m; sourceTree = "<group>"; };
+		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
+		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
+		49362DA024A9432B0040B793 /* FindWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindWindowController.swift; sourceTree = "<group>"; };
+		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
 		494BEA65245A774B000EF1D0 /* ElementKeyable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementKeyable.h; sourceTree = "<group>"; };
 		494BEA66245A774B000EF1D0 /* ElementKeyable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKeyable.m; sourceTree = "<group>"; };
 		494BEA69245A84D1000EF1D0 /* ElementCASE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCASE.h; sourceTree = "<group>"; };
@@ -616,8 +619,6 @@
 		550B905C189A036F005AC38D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Application.strings; sourceTree = "<group>"; };
 		550B905F189A0421005AC38D /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Application.strings; sourceTree = "<group>"; };
 		550B9060189A0876005AC38D /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Application.strings; sourceTree = "<group>"; };
-		550B9064189A187D005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HexWindow.strings; sourceTree = "<group>"; };
-		550B9066189A1882005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FindSheet.strings; sourceTree = "<group>"; };
 		550B9068189A1AA9005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
 		5542DCEC18DCF19C00AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5542DCED18DCF1AC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -722,8 +723,6 @@
 		F543AFDC027B2A5001A8010C /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F543AFF0027C716E01A8010C /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = "en.lproj/Resource Types.strings"; sourceTree = "<group>"; };
 		F54625C6029174F601A8010C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		F54E6220021B6A0801A80001 /* FindSheetController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FindSheetController.h; sourceTree = "<group>"; };
-		F54E6221021B6A0801A80001 /* FindSheetController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FindSheetController.m; sourceTree = "<group>"; };
 		F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResKnifePluginProtocol.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F577A900021215C801A80001 /* ResourceNameCell.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceNameCell.h; sourceTree = "<group>"; };
 		F577A901021215C801A80001 /* ResourceNameCell.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ResourceNameCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -770,8 +769,6 @@
 		F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnifeResourceProtocol.h; sourceTree = "<group>"; };
 		F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView-SelectedItems.h"; sourceTree = "<group>"; };
 		F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView-SelectedItems.m"; sourceTree = "<group>"; };
-		F5EF83A7020C08E601A80001 /* HexWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HexWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		F5EF83A8020C08E601A80001 /* HexWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HexWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F5F1071603CCC61E01A8010A /* PasteboardDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardDocument.h; sourceTree = "<group>"; };
 		F5F1071703CCC61E01A8010A /* PasteboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PasteboardDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardWindowController.h; sourceTree = "<group>"; };
@@ -1420,13 +1417,13 @@
 		F5EF839F020C08E601A80001 /* Hex Editor */ = {
 			isa = PBXGroup;
 			children = (
-				F54E6220021B6A0801A80001 /* FindSheetController.h */,
-				F54E6221021B6A0801A80001 /* FindSheetController.m */,
-				F5EF83A7020C08E601A80001 /* HexWindowController.h */,
-				F5EF83A8020C08E601A80001 /* HexWindowController.m */,
 				B27A65D215A678260029141B /* FindSheet.xib */,
 				B27A65D415A678260029141B /* HexWindow.xib */,
 				E18BF94B06A00F8E00F076B8 /* Info.plist */,
+				49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */,
+				49362D9D24A9317A0040B793 /* HexWindowController.swift */,
+				49362DA024A9432B0040B793 /* FindWindowController.swift */,
+				49362DA224A966960040B793 /* Hexadecimal.swift */,
 			);
 			path = "Hex Editor";
 			sourceTree = "<group>";
@@ -1487,8 +1484,6 @@
 			files = (
 				E18BF590069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */,
 				E18BF591069FEA1400F076B8 /* ResKnifePluginProtocol.h in Headers */,
-				E18BF594069FEA1400F076B8 /* HexWindowController.h in Headers */,
-				E18BF595069FEA1400F076B8 /* FindSheetController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1806,6 +1801,9 @@
 					4953F594248874AA0002340F = {
 						LastSwiftMigration = 1150;
 					};
+					E18BF58E069FEA1400F076B8 = {
+						LastSwiftMigration = 1150;
+					};
 				};
 			};
 			buildConfigurationList = E13F7F0508F0411100E2A5CB /* Build configuration list for PBXProject "ResKnife" */;
@@ -2071,9 +2069,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF59D069FEA1400F076B8 /* HexWindowController.m in Sources */,
-				E18BF59E069FEA1400F076B8 /* FindSheetController.m in Sources */,
+				49362D9F24A941800040B793 /* HexWindowController.swift in Sources */,
+				49362DA124A9432B0040B793 /* FindWindowController.swift in Sources */,
 				E18BF59F069FEA1400F076B8 /* Notifications.m in Sources */,
+				49362DA324A966960040B793 /* Hexadecimal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2403,7 +2402,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B904C189A0360005AC38D /* Base */,
-				550B9066189A1882005AC38D /* en */,
 			);
 			name = FindSheet.xib;
 			sourceTree = "<group>";
@@ -2412,7 +2410,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B904D189A0360005AC38D /* Base */,
-				550B9064189A187D005AC38D /* en */,
 			);
 			name = HexWindow.xib;
 			sourceTree = "<group>";
@@ -2623,14 +2620,19 @@
 		E13F7ED208F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Hexadecimal Editor";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -2638,14 +2640,18 @@
 		E13F7ED308F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Hexadecimal Editor";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;

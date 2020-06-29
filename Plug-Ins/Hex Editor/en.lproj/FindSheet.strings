@@ -30,7 +30,7 @@
 "72.title" = "Search Backwards";
 
 /* Class = "NSButtonCell"; title = "Case Sensitive"; ObjectID = "73"; */
-"73.title" = "Case Sensitive";
+"73.title" = "Ignore Case";
 
 /* Class = "NSButtonCell"; title = "Match Entire Words"; ObjectID = "74"; */
 "74.title" = "Match Entire Words";
