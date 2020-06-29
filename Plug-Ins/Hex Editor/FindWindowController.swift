@@ -1,8 +1,8 @@
 import Cocoa
 
 class FindWindowController: NSWindowController, NSTextFieldDelegate {
-    @IBOutlet var findText: NSTextField!
-    @IBOutlet var replaceText: NSTextField!
+    @IBOutlet var findField: NSTextField!
+    @IBOutlet var replaceField: NSTextField!
     @IBOutlet var wrapAround: NSButton!
     @IBOutlet var ignoreCase: NSButton!
     @IBOutlet var findType: NSMatrix!
@@ -15,13 +15,26 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
         return shared
     }()
     
+    override func windowDidLoad() {
+        super.windowDidLoad()
+        // Set initial string from the find pasteboard
+        findField.stringValue = NSPasteboard(name: .findPboard).string(forType: .string)!
+    }
+    
     func controlTextDidChange(_ obj: Notification) {
-        self.updateFieldData(obj.object as! NSTextField)
+        let field = obj.object as! NSTextField
+        self.updateFieldData(field)
+        if field == findField {
+            // Save the string in the find pasteboard
+            let pasteboard = NSPasteboard(name: .findPboard)
+            pasteboard.clearContents()
+            pasteboard.setString(field.stringValue, forType: .string)
+        }
     }
     
     @IBAction func toggleType(_ sender: Any) {
-        self.updateFieldData(findText)
-        self.updateFieldData(replaceText)
+        self.updateFieldData(findField)
+        self.updateFieldData(replaceField)
     }
 
     @IBAction func hide(_ sender: Any) {
@@ -30,12 +43,12 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
 
     @IBAction func findNext(_ sender: Any) {
         let controller = (sender as! NSButton).window!.sheetParent!.windowController as! HexWindowController;
-        findIn(controller.textView.controller)
+        self.findIn(controller.textView.controller)
     }
 
     @IBAction func replaceAll(_ sender: Any) {
         self.hide(sender)
-        //NSLog( @"Replacing all \"%@\" with \"%@\"", findText.stringValue, replaceText.stringValue );
+        //NSLog( @"Replacing all \"%@\" with \"%@\"", findField.stringValue, replaceField.stringValue );
     }
     
     private func updateFieldData(_ field: NSTextField) {
@@ -44,7 +57,7 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
         if (asHex) {
             let nonHexChars = NSCharacterSet(charactersIn: "0123456789ABCDEFabcdef").inverted;
             var hexString = field.stringValue.components(separatedBy: nonHexChars).joined()
-            field.stringValue = hexString;
+            field.stringValue = hexString
             if hexString.count % 2 == 1 {
                 hexString = "0" + hexString
             }
@@ -52,16 +65,20 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
         } else {
             data = field.stringValue.data(using: String.Encoding.macOSRoman)
         }
-        var byteArray: HFByteArray? = nil;
-        if data.count > 0 {
-            byteArray = HFBTreeByteArray()
-            byteArray!.insertByteSlice(HFSharedMemoryByteSlice(unsharedData: data), in:HFRangeMake(0,0))
-        }
-        if field == findText {
-            findBytes = byteArray
+        if field == findField {
+            findBytes = self.byteArray(data: data)
         } else {
-            replaceBytes = byteArray
+            replaceBytes = self.byteArray(data: data)
         }
+    }
+    
+    private func byteArray(data: Data) -> HFByteArray? {
+        if data.count == 0 {
+            return nil
+        }
+        let byteArray = HFBTreeByteArray()
+        byteArray.insertByteSlice(HFSharedMemoryByteSlice(unsharedData: data), in:HFRangeMake(0,0))
+        return byteArray
     }
 
     func showSheet(window: NSWindow) {
@@ -70,36 +87,44 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
     }
     
     func findIn(_ controller: HFController, forwards: Bool = true) {
-        guard let findBytes = findBytes else {
+        guard var findBytes = findBytes else {
             NSSound.beep()
             return
         }
         
         let startRange = HFRangeMake(0, controller.minimumSelectionLocation())
         let endRange = HFRangeMake(controller.maximumSelectionLocation(), controller.contentsLength()-controller.maximumSelectionLocation())
-        let firstRange = forwards ? endRange : startRange
-        let secondRange = forwards ? startRange : endRange
+        var range = forwards ? endRange : startRange
         
         var idx = UInt64.max
-        if self.ignoreCase.state == .on && findType.selectedRow == 0 {
-            // Case-insensitive requires converting the data to a string
+        if ignoreCase.state == .on && findType.selectedRow == 0 {
+            // Case-insensitive search is difficult and inefficient - string indices don't necessarily equal byte indices
+            // 1. Convert the current search range to a atring
+            // 2. Perform a string search
+            // 3. Create a byte array from the match
+            // 4. Proceed to byte search
             let options: NSString.CompareOptions = forwards ? .caseInsensitive : [.caseInsensitive, .backwards]
-            var text = String(data: controller.data(for: firstRange), encoding: .macOSRoman)!
-            var index = text.range(of: findText.stringValue, options: options)?.lowerBound
-            if let index = index {
-                idx = firstRange.location + UInt64(text.distance(from: text.startIndex, to: index))
-            } else if self.wrapAround.state == .on {
-                text = String(data: controller.data(for: secondRange), encoding: .macOSRoman)!
-                index = text.range(of: findText.stringValue, options: options)?.lowerBound
-                if let index = index {
-                    idx = secondRange.location + UInt64(text.distance(from: text.startIndex, to: index))
+            var text = String(data: controller.data(for: range), encoding: .macOSRoman)!
+            var textRange = text.range(of: findField.stringValue, options: options)
+            if let textRange = textRange {
+                findBytes = self.byteArray(data: text[textRange].data(using: .macOSRoman)!)!
+            } else if wrapAround.state == .on {
+                range = forwards ? startRange : endRange
+                text = String(data: controller.data(for: range), encoding: .macOSRoman)!
+                textRange = text.range(of: findField.stringValue, options: options)
+                if let textRange = textRange {
+                    findBytes = self.byteArray(data: text[textRange].data(using: .macOSRoman)!)!
                 }
             }
-        } else {
-            idx = controller.byteArray.indexOfBytesEqual(to: findBytes, in: firstRange, searchingForwards: forwards, trackingProgress: nil)
-            if idx == UInt64.max && self.wrapAround.state == .on {
-                idx = controller.byteArray.indexOfBytesEqual(to: findBytes, in: secondRange, searchingForwards: forwards, trackingProgress: nil)
+            if textRange == nil {
+               NSSound.beep()
+               return
             }
+        }
+        idx = controller.byteArray.indexOfBytesEqual(to: findBytes, in: range, searchingForwards: forwards, trackingProgress: nil)
+        if idx == UInt64.max && wrapAround.state == .on {
+            range = forwards ? startRange : endRange
+            idx = controller.byteArray.indexOfBytesEqual(to: findBytes, in: range, searchingForwards: forwards, trackingProgress: nil)
         }
         
         if idx == UInt64.max {
@@ -119,9 +144,9 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
         let range = (controller.selectedContentsRanges[0] as! HFRangeWrapper).hfRange()
         let data = controller.data(for: range)
         if asHex {
-            findText.stringValue = data.hexadecimal
+            findField.stringValue = data.hexadecimal
         } else {
-            findText.stringValue = String(data: data, encoding: .macOSRoman)!
+            findField.stringValue = String(data: data, encoding: .macOSRoman)!
         }
         findBytes = controller.byteArrayForSelectedContentsRanges()
     }

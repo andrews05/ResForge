@@ -8,10 +8,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FindWindowController" customModule="Hexadecimal_Editor" customModuleProvider="target">
             <connections>
-                <outlet property="findText" destination="SKV-LN-kU9" id="mXA-qC-BsX"/>
+                <outlet property="findField" destination="SKV-LN-kU9" id="Q5h-dG-TPo"/>
                 <outlet property="findType" destination="17" id="zc0-op-1dx"/>
                 <outlet property="ignoreCase" destination="47" id="qyH-h9-M80"/>
-                <outlet property="replaceText" destination="HTf-12-0al" id="PFH-Uk-fMx"/>
+                <outlet property="replaceField" destination="HTf-12-0al" id="77I-nM-j3Y"/>
                 <outlet property="window" destination="7" id="56"/>
                 <outlet property="wrapAround" destination="31" id="oti-OX-m2b"/>
             </connections>
@@ -22,9 +22,9 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="609" y="503" width="415" height="179"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <value key="minSize" type="size" width="415" height="180"/>
-            <value key="maxSize" type="size" width="415" height="180"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <value key="minSize" type="size" width="415" height="179"/>
+            <value key="maxSize" type="size" width="415" height="179"/>
             <view key="contentView" autoresizesSubviews="NO" id="8">
                 <rect key="frame" x="0.0" y="0.0" width="415" height="179"/>
                 <autoresizingMask key="autoresizingMask"/>
