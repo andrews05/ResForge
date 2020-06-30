@@ -22,7 +22,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="609" y="503" width="415" height="179"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="415" height="179"/>
             <value key="maxSize" type="size" width="415" height="179"/>
             <view key="contentView" autoresizesSubviews="NO" id="8">
@@ -30,7 +30,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button autoresizesSubviews="NO" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="13">
-                        <rect key="frame" x="294" y="13" width="107" height="32"/>
+                        <rect key="frame" x="312" y="13" width="89" height="32"/>
                         <buttonCell key="cell" type="push" title="Find" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="68">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -42,19 +42,9 @@ DQ
                             <action selector="findNext:" target="-2" id="57"/>
                         </connections>
                     </button>
-                    <button autoresizesSubviews="NO" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="15">
-                        <rect key="frame" x="187" y="13" width="107" height="32"/>
-                        <buttonCell key="cell" type="push" title="Replace All" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="69">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="replaceAll:" target="-2" id="58"/>
-                        </connections>
-                    </button>
                     <button autoresizesSubviews="NO" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="51">
-                        <rect key="frame" x="14" y="13" width="82" height="32"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="76">
+                        <rect key="frame" x="14" y="13" width="72" height="32"/>
+                        <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="76">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -152,25 +142,47 @@ Gw
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button autoresizesSubviews="NO" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="15">
+                        <rect key="frame" x="116" y="13" width="107" height="32"/>
+                        <buttonCell key="cell" type="push" title="Replace All" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="69">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="replaceAll:" target="-2" id="58"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j4l-QJ-YdX">
+                        <rect key="frame" x="223" y="13" width="89" height="32"/>
+                        <buttonCell key="cell" type="push" title="Replace" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x0t-5o-MQ8">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="replace:" target="-2" id="0G4-Y7-e21"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="13" secondAttribute="bottom" constant="20" symbolic="YES" id="4zD-FT-5oK"/>
                     <constraint firstItem="13" firstAttribute="top" secondItem="17" secondAttribute="bottom" constant="20" symbolic="YES" id="5tM-ce-aGd"/>
                     <constraint firstItem="47" firstAttribute="top" secondItem="31" secondAttribute="bottom" constant="6" symbolic="YES" id="804-06-2Px"/>
                     <constraint firstItem="51" firstAttribute="leading" secondItem="8" secondAttribute="leading" constant="20" id="9G5-Kb-wlv"/>
-                    <constraint firstItem="15" firstAttribute="width" secondItem="13" secondAttribute="width" id="CDx-Jl-UYx"/>
                     <constraint firstItem="15" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8" secondAttribute="leading" constant="20" symbolic="YES" id="GO4-fn-jjL"/>
                     <constraint firstItem="47" firstAttribute="leading" secondItem="31" secondAttribute="leading" id="I1N-cV-KNN"/>
                     <constraint firstItem="13" firstAttribute="top" secondItem="47" secondAttribute="bottom" constant="22" id="Kc3-qw-mGu"/>
-                    <constraint firstAttribute="trailing" secondItem="13" secondAttribute="trailing" constant="20" id="O5C-vA-Tyr"/>
+                    <constraint firstItem="j4l-QJ-YdX" firstAttribute="width" secondItem="13" secondAttribute="width" id="LW0-GT-RkQ"/>
+                    <constraint firstAttribute="trailing" secondItem="13" secondAttribute="trailing" constant="20" symbolic="YES" id="O5C-vA-Tyr"/>
                     <constraint firstItem="17" firstAttribute="leading" secondItem="31" secondAttribute="trailing" constant="8" symbolic="YES" id="WOU-Y3-MHa"/>
                     <constraint firstItem="47" firstAttribute="trailing" secondItem="31" secondAttribute="trailing" id="Wd3-mJ-2Im"/>
-                    <constraint firstItem="13" firstAttribute="leading" secondItem="15" secondAttribute="trailing" constant="12" symbolic="YES" id="YtC-SB-MPn"/>
                     <constraint firstAttribute="trailing" secondItem="17" secondAttribute="trailing" constant="20" symbolic="YES" id="an3-IT-LzD"/>
+                    <constraint firstItem="j4l-QJ-YdX" firstAttribute="firstBaseline" secondItem="13" secondAttribute="firstBaseline" id="b9C-fa-bsD"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="51" secondAttribute="trailing" constant="20" symbolic="YES" id="c5l-Nh-gqi"/>
                     <constraint firstItem="51" firstAttribute="baseline" secondItem="15" secondAttribute="baseline" id="pRc-Og-D2g"/>
+                    <constraint firstItem="j4l-QJ-YdX" firstAttribute="leading" secondItem="15" secondAttribute="trailing" constant="12" symbolic="YES" id="tVb-DL-dFB"/>
                     <constraint firstItem="13" firstAttribute="baseline" secondItem="15" secondAttribute="baseline" id="uoO-P2-OmS"/>
                     <constraint firstItem="17" firstAttribute="top" secondItem="HTf-12-0al" secondAttribute="bottom" constant="8" symbolic="YES" id="wzX-BL-m6S"/>
+                    <constraint firstItem="13" firstAttribute="leading" secondItem="j4l-QJ-YdX" secondAttribute="trailing" constant="12" symbolic="YES" id="yPm-yz-OKn"/>
                 </constraints>
             </view>
             <connections>

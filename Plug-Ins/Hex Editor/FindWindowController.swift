@@ -19,6 +19,7 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
         super.windowDidLoad()
         // Set initial string from the find pasteboard
         findField.stringValue = NSPasteboard(name: .findPboard).string(forType: .string)!
+        self.updateFieldData(findField)
     }
     
     func controlTextDidChange(_ obj: Notification) {
@@ -38,17 +39,39 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
     }
 
     @IBAction func hide(_ sender: Any) {
-        self.window?.orderOut(sender)
+        self.window?.sheetParent?.endSheet(self.window!)
     }
 
     @IBAction func findNext(_ sender: Any) {
-        let controller = (sender as! NSButton).window!.sheetParent!.windowController as! HexWindowController;
-        self.findIn(controller.textView.controller)
+        let wController = (sender as! NSButton).window!.sheetParent!.windowController as! HexWindowController
+        if self.findIn(wController.textView.controller) {
+            self.hide(self)
+        }
+    }
+
+    @IBAction func replace(_ sender: Any) {
+        let wController = (sender as! NSButton).window!.sheetParent!.windowController as! HexWindowController
+        let controller = wController.textView.controller
+        let range = self.replaceIn(controller)
+        // Find next, else select replaced text
+        if !self.findIn(controller) {
+            controller.selectedContentsRanges = [HFRangeWrapper.withRange(range)]
+        }
     }
 
     @IBAction func replaceAll(_ sender: Any) {
+        guard findBytes != nil else {
+            NSSound.beep()
+            return
+        }
+        let wController = (sender as! NSButton).window!.sheetParent!.windowController as! HexWindowController
+        let controller = wController.textView.controller
         self.hide(sender)
-        //NSLog( @"Replacing all \"%@\" with \"%@\"", findField.stringValue, replaceField.stringValue );
+        // start from top
+        controller.selectedContentsRanges = [HFRangeWrapper.withRange(HFRangeMake(0, 0))]
+        while self.findIn(controller, noWrap: true) {
+            _ = self.replaceIn(controller)
+        }
     }
     
     private func updateFieldData(_ field: NSTextField) {
@@ -80,18 +103,32 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
         byteArray.insertByteSlice(HFSharedMemoryByteSlice(unsharedData: data), in:HFRangeMake(0,0))
         return byteArray
     }
+    
+    private func replaceIn(_ controller: HFController) -> HFRange {
+        let range = (controller.selectedContentsRanges[0] as! HFRangeWrapper).hfRange()
+        let replaceLength: UInt64
+        if let replaceBytes = replaceBytes {
+            controller.insertByteArray(replaceBytes, replacingPreviousBytes: 0, allowUndoCoalescing: false)
+            replaceLength = replaceBytes.length()
+        } else {
+            controller.byteArray.deleteBytes(in: range)
+            replaceLength = 0
+        }
+        return HFRangeMake(range.location, replaceLength)
+    }
 
     func showSheet(window: NSWindow) {
         self.hide(window)
         window.beginSheet(self.window!, completionHandler: nil);
     }
     
-    func findIn(_ controller: HFController, forwards: Bool = true) {
+    func findIn(_ controller: HFController, forwards: Bool = true, noWrap: Bool = false) -> Bool {
         guard var findBytes = findBytes else {
             NSSound.beep()
-            return
+            return false
         }
         
+        let wrap = noWrap ? false : wrapAround.state == .on
         let startRange = HFRangeMake(0, controller.minimumSelectionLocation())
         let endRange = HFRangeMake(controller.maximumSelectionLocation(), controller.contentsLength()-controller.maximumSelectionLocation())
         var range = forwards ? endRange : startRange
@@ -108,7 +145,7 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
             var textRange = text.range(of: findField.stringValue, options: options)
             if let textRange = textRange {
                 findBytes = self.byteArray(data: text[textRange].data(using: .macOSRoman)!)!
-            } else if wrapAround.state == .on {
+            } else if wrap {
                 range = forwards ? startRange : endRange
                 text = String(data: controller.data(for: range), encoding: .macOSRoman)!
                 textRange = text.range(of: findField.stringValue, options: options)
@@ -118,24 +155,26 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
             }
             if textRange == nil {
                NSSound.beep()
-               return
+               return false
             }
         }
         idx = controller.byteArray.indexOfBytesEqual(to: findBytes, in: range, searchingForwards: forwards, trackingProgress: nil)
-        if idx == UInt64.max && wrapAround.state == .on {
+        if idx == UInt64.max && wrap {
             range = forwards ? startRange : endRange
             idx = controller.byteArray.indexOfBytesEqual(to: findBytes, in: range, searchingForwards: forwards, trackingProgress: nil)
         }
         
         if idx == UInt64.max {
             NSSound.beep()
-        } else {
-            self.hide(self);
-            let result = HFRangeMake(idx, findBytes.length());
-            controller.selectedContentsRanges = [HFRangeWrapper.withRange(result)]
+            return false
+        }
+        let result = HFRangeMake(idx, findBytes.length())
+        controller.selectedContentsRanges = [HFRangeWrapper.withRange(result)]
+        if !noWrap {
             controller.maximizeVisibility(ofContentsRange: result)
             controller.pulseSelection()
         }
+        return true
     }
 
     func setFindSelection(_ controller: HFController, asHex: Bool) {

@@ -98,11 +98,11 @@ class HexWindowController: NSWindowController, NSWindowDelegate, ResKnifePlugin,
     }
 
     @IBAction func findNext(_ sender: Any) {
-        FindWindowController.shared.findIn(textView.controller, forwards: true)
+        _ = FindWindowController.shared.findIn(textView.controller, forwards: true)
     }
 
     @IBAction func findPrevious(_ sender: Any) {
-        FindWindowController.shared.findIn(textView.controller, forwards: false)
+        _ = FindWindowController.shared.findIn(textView.controller, forwards: false)
     }
 
     @IBAction func findWithSelection(_ sender: Any) {
