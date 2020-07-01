@@ -96,8 +96,8 @@ class HexWindowController: NSWindowController, NSWindowDelegate, ResKnifePlugin,
     
 
     @IBAction func showFind(_ sender: Any) {
-        //findView.isHidden = false
-        FindWindowController.shared.showSheet(window: self.window!)
+        findView.isHidden = false
+        //FindWindowController.shared.showSheet(window: self.window!)
     }
         
     @IBAction func hideFind(_ sender: Any) {
