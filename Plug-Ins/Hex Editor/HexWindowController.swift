@@ -3,6 +3,7 @@ import Cocoa
 class HexWindowController: NSWindowController, NSWindowDelegate, ResKnifePlugin, HFTextViewDelegate {
     let resource: ResKnifeResource
     private let _undoManager = UndoManager()
+    @IBOutlet var findView: NSView!
     @IBOutlet var textView: HFTextView!
 
     override var windowNibName: String! {
@@ -31,6 +32,7 @@ class HexWindowController: NSWindowController, NSWindowDelegate, ResKnifePlugin,
     override func windowDidLoad() {
         super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle();
+        findView.isHidden = true
         
         let lineCountingRepresenter = HFLineCountingRepresenter()
         lineCountingRepresenter.lineNumberFormat = HFLineNumberFormat.hexadecimal
@@ -94,7 +96,12 @@ class HexWindowController: NSWindowController, NSWindowDelegate, ResKnifePlugin,
     
 
     @IBAction func showFind(_ sender: Any) {
+        //findView.isHidden = false
         FindWindowController.shared.showSheet(window: self.window!)
+    }
+        
+    @IBAction func hideFind(_ sender: Any) {
+        findView.isHidden = true
     }
 
     @IBAction func findNext(_ sender: Any) {

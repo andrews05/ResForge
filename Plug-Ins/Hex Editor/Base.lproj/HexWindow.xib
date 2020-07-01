@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="HexWindowController">
             <connections>
+                <outlet property="findView" destination="fZT-bk-PLR" id="EMd-5e-BP4"/>
                 <outlet property="textView" destination="89" id="90"/>
                 <outlet property="window" destination="36" id="37"/>
             </connections>
@@ -17,27 +18,86 @@
         <window title="Untitled Resource" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" animationBehavior="default" id="36" userLabel="Hex Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="387" y="534" width="570" height="319"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2069" height="1183"/>
+            <rect key="contentRect" x="387" y="534" width="570" height="330"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="300" height="140"/>
             <view key="contentView" id="35">
-                <rect key="frame" x="0.0" y="0.0" width="570" height="319"/>
+                <rect key="frame" x="0.0" y="0.0" width="570" height="330"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="89" customClass="HFTextView">
-                        <rect key="frame" x="0.0" y="0.0" width="570" height="319"/>
-                    </customView>
+                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bXx-Ol-8KL">
+                        <rect key="frame" x="0.0" y="0.0" width="570" height="430"/>
+                        <subviews>
+                            <view translatesAutoresizingMaskIntoConstraints="NO" id="fZT-bk-PLR">
+                                <rect key="frame" x="0.0" y="330" width="568" height="100"/>
+                                <subviews>
+                                    <box boxType="custom" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="zIh-2V-Iso">
+                                        <rect key="frame" x="-1" y="0.0" width="570" height="101"/>
+                                        <view key="contentView" id="mhf-0D-QIJ">
+                                            <rect key="frame" x="1" y="1" width="568" height="99"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <button autoresizesSubviews="NO" verticalHuggingPriority="750" id="oHP-uu-Vv1">
+                                                    <rect key="frame" x="14" y="14" width="72" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="MmV-2t-W7s">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="hideFind:" target="-2" id="AbL-xb-pi3"/>
+                                                    </connections>
+                                                </button>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="BeT-4U-0Nb">
+                                                    <rect key="frame" x="18" y="63" width="34" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Find:" id="rvQ-6s-R1Q">
+                                                        <font key="font" usesAppearanceFont="YES"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                            </subviews>
+                                        </view>
+                                        <color key="borderColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    </box>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="zIh-2V-Iso" firstAttribute="leading" secondItem="fZT-bk-PLR" secondAttribute="leading" constant="-1" id="5pp-wT-DgL"/>
+                                    <constraint firstAttribute="trailing" secondItem="zIh-2V-Iso" secondAttribute="trailing" constant="-1" id="BfI-iE-0RR"/>
+                                    <constraint firstAttribute="height" constant="100" id="OpQ-4n-RWb"/>
+                                    <constraint firstAttribute="bottom" secondItem="zIh-2V-Iso" secondAttribute="bottom" id="PpH-X0-lLZ"/>
+                                    <constraint firstItem="zIh-2V-Iso" firstAttribute="top" secondItem="fZT-bk-PLR" secondAttribute="top" constant="-1" id="T2c-fu-gWo"/>
+                                </constraints>
+                            </view>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="89" customClass="HFTextView">
+                                <rect key="frame" x="0.0" y="0.0" width="570" height="330"/>
+                            </customView>
+                        </subviews>
+                        <visibilityPriorities>
+                            <integer value="1000"/>
+                            <integer value="1000"/>
+                        </visibilityPriorities>
+                        <customSpacing>
+                            <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
+                        </customSpacing>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="89" firstAttribute="top" secondItem="35" secondAttribute="top" id="Lbc-WD-ZCq"/>
-                    <constraint firstAttribute="trailing" secondItem="89" secondAttribute="trailing" id="dzv-Wr-QDH"/>
-                    <constraint firstAttribute="bottom" secondItem="89" secondAttribute="bottom" id="kd8-uo-IN6"/>
-                    <constraint firstItem="89" firstAttribute="leading" secondItem="35" secondAttribute="leading" id="sap-uy-aFS"/>
+                    <constraint firstAttribute="trailing" secondItem="bXx-Ol-8KL" secondAttribute="trailing" id="GJG-mO-eXw"/>
+                    <constraint firstAttribute="bottom" secondItem="bXx-Ol-8KL" secondAttribute="bottom" id="acU-7O-BcM"/>
+                    <constraint firstItem="bXx-Ol-8KL" firstAttribute="top" secondItem="35" secondAttribute="top" id="sOs-Ly-JEW"/>
+                    <constraint firstItem="bXx-Ol-8KL" firstAttribute="leading" secondItem="35" secondAttribute="leading" id="z2w-1e-P7n"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="68"/>
             </connections>
+            <point key="canvasLocation" x="140" y="302"/>
         </window>
     </objects>
 </document>

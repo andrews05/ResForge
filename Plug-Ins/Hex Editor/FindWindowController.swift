@@ -7,7 +7,7 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var ignoreCase: NSButton!
     @IBOutlet var findType: NSMatrix!
     var findBytes: HFByteArray?
-    var replaceBytes: HFByteArray?
+    var replaceData: Data?
     
     static let shared: FindWindowController = {
         let shared = FindWindowController(windowNibName: "FindSheet")
@@ -52,11 +52,9 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
     @IBAction func replace(_ sender: Any) {
         let wController = (sender as! NSButton).window!.sheetParent!.windowController as! HexWindowController
         let controller = wController.textView.controller
-        let range = self.replaceIn(controller)
-        // Find next, else select replaced text
-        if !self.findIn(controller) {
-            controller.selectedContentsRanges = [HFRangeWrapper.withRange(range)]
-        }
+        self.replaceIn(controller)
+        // Find next
+        _ = self.findIn(controller)
     }
 
     @IBAction func replaceAll(_ sender: Any) {
@@ -70,7 +68,7 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
         // start from top
         controller.selectedContentsRanges = [HFRangeWrapper.withRange(HFRangeMake(0, 0))]
         while self.findIn(controller, noWrap: true) {
-            _ = self.replaceIn(controller)
+            self.replaceIn(controller)
         }
     }
     
@@ -91,7 +89,7 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
         if field == findField {
             findBytes = self.byteArray(data: data)
         } else {
-            replaceBytes = self.byteArray(data: data)
+            replaceData = data
         }
     }
     
@@ -104,17 +102,12 @@ class FindWindowController: NSWindowController, NSTextFieldDelegate {
         return byteArray
     }
     
-    private func replaceIn(_ controller: HFController) -> HFRange {
-        let range = (controller.selectedContentsRanges[0] as! HFRangeWrapper).hfRange()
-        let replaceLength: UInt64
-        if let replaceBytes = replaceBytes {
-            controller.insertByteArray(replaceBytes, replacingPreviousBytes: 0, allowUndoCoalescing: false)
-            replaceLength = replaceBytes.length()
+    private func replaceIn(_ controller: HFController) {
+        if let replaceData = replaceData {
+            controller.insert(replaceData, replacingPreviousBytes: 0, allowUndoCoalescing: false)
         } else {
-            controller.byteArray.deleteBytes(in: range)
-            replaceLength = 0
+            controller.deleteSelection()
         }
-        return HFRangeMake(range.location, replaceLength)
     }
 
     func showSheet(window: NSWindow) {
