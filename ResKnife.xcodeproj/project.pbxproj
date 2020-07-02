@@ -47,7 +47,6 @@
 		49322A7D2450E87000E1EAE4 /* ElementBBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A7B2450E87000E1EAE4 /* ElementBBIT.h */; };
 		49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A7C2450E87000E1EAE4 /* ElementBBIT.m */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
-		49362DA124A9432B0040B793 /* FindWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA024A9432B0040B793 /* FindWindowController.swift */; };
 		49362DA324A966960040B793 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
 		494BEA67245A774B000EF1D0 /* ElementKeyable.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA65245A774B000EF1D0 /* ElementKeyable.h */; };
 		494BEA68245A774B000EF1D0 /* ElementKeyable.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA66245A774B000EF1D0 /* ElementKeyable.m */; };
@@ -146,7 +145,6 @@
 		B24925E215A6776600C22060 /* PictWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* PictWindow.xib */; };
 		B24925E615A6778C00C22060 /* ICONWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E415A6778C00C22060 /* ICONWindow.xib */; };
 		B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65CE15A677F00029141B /* TemplateWindow.xib */; };
-		B27A65D615A678260029141B /* FindSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D215A678260029141B /* FindSheet.xib */; };
 		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
 		B2B2C40815A9464400D6F61C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2B2C40E15A9464400D6F61C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2B2C40C15A9464400D6F61C /* InfoPlist.strings */; };
@@ -505,7 +503,6 @@
 		49322A7C2450E87000E1EAE4 /* ElementBBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBBIT.m; sourceTree = "<group>"; };
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
-		49362DA024A9432B0040B793 /* FindWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindWindowController.swift; sourceTree = "<group>"; };
 		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
 		494BEA65245A774B000EF1D0 /* ElementKeyable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementKeyable.h; sourceTree = "<group>"; };
 		494BEA66245A774B000EF1D0 /* ElementKeyable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKeyable.m; sourceTree = "<group>"; };
@@ -609,7 +606,6 @@
 		550B9049189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrefsWindow.xib; sourceTree = "<group>"; };
 		550B904A189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ResourceDocument.xib; sourceTree = "<group>"; };
 		550B904B189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ResourceGridView.xib; sourceTree = "<group>"; };
-		550B904C189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FindSheet.xib; sourceTree = "<group>"; };
 		550B904D189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HexWindow.xib; sourceTree = "<group>"; };
 		550B904E189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TemplateWindow.xib; sourceTree = "<group>"; };
 		550B904F189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FontDocument.xib; sourceTree = "<group>"; };
@@ -1417,12 +1413,10 @@
 		F5EF839F020C08E601A80001 /* Hex Editor */ = {
 			isa = PBXGroup;
 			children = (
-				B27A65D215A678260029141B /* FindSheet.xib */,
 				B27A65D415A678260029141B /* HexWindow.xib */,
 				E18BF94B06A00F8E00F076B8 /* Info.plist */,
 				49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */,
 				49362D9D24A9317A0040B793 /* HexWindowController.swift */,
-				49362DA024A9432B0040B793 /* FindWindowController.swift */,
 				49362DA224A966960040B793 /* Hexadecimal.swift */,
 			);
 			path = "Hex Editor";
@@ -1899,7 +1893,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B27A65D615A678260029141B /* FindSheet.xib in Resources */,
 				B27A65D715A678260029141B /* HexWindow.xib in Resources */,
 				B22100CD15D3F944009FDEE1 /* Localizable.strings in Resources */,
 			);
@@ -2070,7 +2063,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49362D9F24A941800040B793 /* HexWindowController.swift in Sources */,
-				49362DA124A9432B0040B793 /* FindWindowController.swift in Sources */,
 				E18BF59F069FEA1400F076B8 /* Notifications.m in Sources */,
 				49362DA324A966960040B793 /* Hexadecimal.swift in Sources */,
 			);
@@ -2396,14 +2388,6 @@
 				550B904E189A0361005AC38D /* Base */,
 			);
 			name = TemplateWindow.xib;
-			sourceTree = "<group>";
-		};
-		B27A65D215A678260029141B /* FindSheet.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B904C189A0360005AC38D /* Base */,
-			);
-			name = FindSheet.xib;
 			sourceTree = "<group>";
 		};
 		B27A65D415A678260029141B /* HexWindow.xib */ = {
