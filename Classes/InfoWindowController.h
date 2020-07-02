@@ -23,12 +23,17 @@ enum Attributes
 	IBOutlet NSBox			*placeholderView;
 	IBOutlet NSBox			*resourceView;
 	IBOutlet NSBox			*documentView;
+    IBOutlet NSBox          *resourcePropsView;
 	
 	IBOutlet NSMatrix 		*attributesMatrix;
 	IBOutlet NSTextField	*creator;
     IBOutlet NSTextField    *type;
     IBOutlet NSTextField    *dataSize;
     IBOutlet NSTextField    *rsrcSize;
+    
+    IBOutlet NSTextField    *rType;
+    IBOutlet NSTextField    *rID;
+    IBOutlet NSTextField    *rSize;
 	
 @private
 	ResourceDocument		*currentDocument;
