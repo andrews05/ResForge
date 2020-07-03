@@ -19,8 +19,8 @@
 	
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(mainWindowChanged:) name:NSWindowDidBecomeMainNotification object:nil];
 	[NSNotificationCenter.defaultCenter addObserver:self selector:@selector(selectedResourceChanged:) name:NSOutlineViewSelectionDidChangeNotification object:nil];
-	[NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resourceAttributesDidChange:) name:ResourceAttributesDidChangeNotification object:nil];
-	[NSNotificationCenter.defaultCenter addObserver:self selector:@selector(documentInfoDidChange:) name:DocumentInfoDidChangeNotification object:nil];
+	[NSNotificationCenter.defaultCenter addObserver:self selector:@selector(propertiesDidChange:) name:ResourceDidChangeNotification object:nil];
+	[NSNotificationCenter.defaultCenter addObserver:self selector:@selector(propertiesDidChange:) name:DocumentInfoDidChangeNotification object:nil];
 }
 
 /*!
@@ -40,19 +40,20 @@
         self.window.title = NSLocalizedString(@"Resource Info", nil);
         nameView.stringValue = selectedResource.name;
         iconView.image = [(ApplicationDelegate *)[NSApp delegate] iconForResourceType:selectedResource.type];
-//		[[attributesMatrix cellAtRow:changedBox column:0]		setState:selectedResource.attributes & resChanged];
-//		[[attributesMatrix cellAtRow:preloadBox column:0]		setState:selectedResource.attributes & resPreload];
-//		[[attributesMatrix cellAtRow:protectedBox column:0]		setState:selectedResource.attributes & resProtected];
-//		[[attributesMatrix cellAtRow:lockedBox column:0]		setState:selectedResource.attributes & resLocked];
-//		[[attributesMatrix cellAtRow:purgableBox column:0]		setState:selectedResource.attributes & resPurgeable];
-//		[[attributesMatrix cellAtRow:systemHeapBox column:0]	setState:selectedResource.attributes & resSysHeap];
-//
-//		// swap box
-//        placeholderView.contentView = resourceView;
+        
+		[[attributesMatrix cellWithTag:resChanged]		setState:selectedResource.attributes & resChanged];
+		[[attributesMatrix cellWithTag:resPreload]		setState:selectedResource.attributes & resPreload];
+		[[attributesMatrix cellWithTag:resProtected]	setState:selectedResource.attributes & resProtected];
+		[[attributesMatrix cellWithTag:resLocked]		setState:selectedResource.attributes & resLocked];
+		[[attributesMatrix cellWithTag:resPurgeable]	setState:selectedResource.attributes & resPurgeable];
+		[[attributesMatrix cellWithTag:resSysHeap]	    setState:selectedResource.attributes & resSysHeap];
+
         rType.stringValue = GetNSStringFromOSType(selectedResource.type);
         rID.intValue = selectedResource.resID;
         rSize.integerValue = selectedResource.data.length;
-        placeholderView.contentView = resourcePropsView;
+        
+        // swap box
+        placeholderView.contentView = resourceView;
 	} else if (currentDocument) {
 		// get sizes of forks as they are on disk
 		NSInteger dataLogicalSize = 0, rsrcLogicalSize = 0;
@@ -89,14 +90,11 @@
 - (void)setMainWindow:(NSWindow *)mainWindow
 {
     NSWindowController *controller = mainWindow.windowController;
-	
-    if ([controller.document isKindOfClass:ResourceDocument.class])
+    if ([controller.document isKindOfClass:ResourceDocument.class]) {
         currentDocument = controller.document;
-	else currentDocument = nil;
-	
-    if (currentDocument) {
         [self setSelectedResource:currentDocument.outlineView.selectedItem];
     } else {
+        currentDocument = nil;
         [self setSelectedResource:controller.resource];
     }
 }
@@ -118,32 +116,45 @@
 
 - (void)selectedResourceChanged:(NSNotification *)notification
 {
-    if (![nameView.stringValue isEqualToString:selectedResource.name])
-		[self nameDidChange:nameView];
-    [self setSelectedResource:[notification.object selectedItem]];
+    NSOutlineView *outlineView = notification.object;
+    if (outlineView.window.windowController.document == currentDocument) {
+        [self setSelectedResource:[notification.object selectedItem]];
+    }
 }
 
-- (void)documentInfoDidChange:(NSNotification *)notification
+- (void)propertiesDidChange:(NSNotification *)notification
 {
-    currentDocument = notification.object[@"NSDocument"];
 	[self updateInfoWindow];
+}
+
+- (IBAction)creatorChanged:(id)sender
+{
+    currentDocument.creator = GetOSTypeFromNSString(creator.stringValue);
+}
+
+- (IBAction)typeChanged:(id)sender
+{
+    currentDocument.type = GetOSTypeFromNSString(type.stringValue);
+}
+
+- (IBAction)nameChanged:(id)sender
+{
+    selectedResource.name = nameView.stringValue;
+}
+
+- (IBAction)rTypeChanged:(id)sender
+{
+    selectedResource.type = GetOSTypeFromNSString(rType.stringValue);
+}
+
+- (IBAction)rIDChanged:(id)sender
+{
+    selectedResource.resID = (ResID)rID.intValue;
 }
 
 - (IBAction)attributesChanged:(id)sender
 {
-	short attr = (short)(0x0001 << ([sender selectedRow]+1));
-    short number = (selectedResource.attributes ^ attr);
-	[selectedResource setAttributes:number];
-}
-
-- (IBAction)nameDidChange:(id)sender
-{
-    [selectedResource setName:nameView.stringValue];
-}
-
-- (void)resourceAttributesDidChange:(NSNotification *)notification;
-{
-	[self updateInfoWindow];
+    selectedResource.attributes ^= (short)[sender selectedTag];
 }
 
 + (id)sharedInfoWindowController

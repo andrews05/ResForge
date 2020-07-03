@@ -5,16 +5,6 @@
 extern NSString *DocumentInfoWillChangeNotification;
 extern NSString *DocumentInfoDidChangeNotification;
 
-enum Attributes
-{
-	changedBox = 0,
-	preloadBox,
-	protectedBox,
-	lockedBox,
-	purgableBox,
-	systemHeapBox
-};
-
 @interface InfoWindowController : NSWindowController
 {
 	IBOutlet NSImageView	*iconView;
@@ -23,7 +13,6 @@ enum Attributes
 	IBOutlet NSBox			*placeholderView;
 	IBOutlet NSBox			*resourceView;
 	IBOutlet NSBox			*documentView;
-    IBOutlet NSBox          *resourcePropsView;
 	
 	IBOutlet NSMatrix 		*attributesMatrix;
 	IBOutlet NSTextField	*creator;
@@ -39,13 +28,6 @@ enum Attributes
 	ResourceDocument		*currentDocument;
 	Resource				*selectedResource;
 }
-
-- (void)updateInfoWindow;
-- (void)setMainWindow:(NSWindow *)mainWindow;
-- (IBAction)attributesChanged:(id)sender;
-- (IBAction)nameDidChange:(id)sender;
-- (void)resourceAttributesDidChange:(NSNotification *)notification;
-- (void)documentInfoDidChange:(NSNotification *)notification;
 
 + (id)sharedInfoWindowController;
 

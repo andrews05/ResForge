@@ -19,8 +19,6 @@
 {
 	// set default preferences
 	NSDictionary * prefDict = @{kPreserveBackups: @NO,
-								kAutosave: @NO,
-								kAutosaveInterval: @5,
 								kDeleteResourceWarning: @YES,
                                 kLaunchAction: kDisplayOpenPanel};
 	[[NSUserDefaults standardUserDefaults] registerDefaults:prefDict];
@@ -140,7 +138,8 @@
 {
     if (!self.prefsController)
         self.prefsController = [[NSWindowController alloc] initWithWindowNibName:@"PrefsWindow"];
-	[self.prefsController showWindow:sender];
+    [self.prefsController showWindow:sender];
+    [self.prefsController.window makeKeyAndOrderFront:sender];
 }
 
 /*!

@@ -5,7 +5,6 @@
 #import "ApplicationDelegate.h"
 #import "OpenPanelDelegate.h"
 #import "OutlineViewDelegate.h"
-#import "InfoWindowController.h"
 #import "PrefsController.h"
 #import "CreateResourceSheetController.h"
 #import "../Categories/NGSCategories.h"
@@ -194,7 +193,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
     }
 	
 	// update info window
-	[[InfoWindowController sharedInfoWindowController] updateInfoWindow];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:self];
 	
 	return YES;
 }
@@ -558,7 +557,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	// this saves the current state of the resource's attributes so we can undo the change
 	Resource *resource = (Resource *) [notification object];
     if ([resource document] == self) {
-        [[self undoManager] registerUndoWithTarget:resource selector:@selector(setAttributes:) object:[@([resource attributes]) copy]];
+        [(Resource*)[[self undoManager] prepareWithInvocationTarget:resource] setAttributes:[resource attributes]];
         if([[resource name] length] == 0)
             [[self undoManager] setActionName:NSLocalizedString(@"Attributes Change", nil)];
         else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Attributes Change for '%@'", nil), [resource name]]];
@@ -719,39 +718,25 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	return _type;
 }
 
-- (IBAction)creatorChanged:(id)sender
-{
-	OSType newCreator = GetOSTypeFromNSString([sender stringValue]);
-	[self setCreator:newCreator];
-}
-
-- (IBAction)typeChanged:(id)sender
-{
-	OSType newType = GetOSTypeFromNSString([sender stringValue]);
-	[self setType:newType];
-}
-
 - (void)setCreator:(OSType)newCreator
 {
 	if (newCreator != _creator) {
-		NSString *oldCreatorStr = GetNSStringFromOSType(newCreator);
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:@{@"NSDocument": self, @"creator": oldCreatorStr}];
-		[[self undoManager] registerUndoWithTarget:self selector:@selector(setCreator:) object:GetNSStringFromOSType(_creator)];
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:self];
+        [(ResourceDocument *)[[self undoManager] prepareWithInvocationTarget:self] setCreator:_creator];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change Creator Code", nil)];
 		_creator = newCreator;
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:@{@"NSDocument": self, @"creator": oldCreatorStr}];
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:self];
 	}
 }
 
 - (void)setType:(OSType)newType
 {
 	if (newType != _type) {
-		NSString *oldTypeStr = GetNSStringFromOSType(newType);
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:@{@"NSDocument": self, @"type": oldTypeStr}];
-		[[self undoManager] registerUndoWithTarget:self selector:@selector(setType:) object:GetNSStringFromOSType(_type)];
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:self];
+        [(ResourceDocument *)[[self undoManager] prepareWithInvocationTarget:self] setType:_type];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change File Type", nil)];
 		_type = newType;
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:@{@"NSDocument": self, @"type": oldTypeStr}];
+		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:self];
 	}
 }
 

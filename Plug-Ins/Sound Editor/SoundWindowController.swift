@@ -2,8 +2,8 @@ import AVKit
 import Cocoa
 
 class SoundWindowController: NSWindowController, ResKnifePlugin {
-    let resource: ResKnifeResource
-    let sound: SoundResource
+    @objc let resource: ResKnifeResource
+    private let sound: SoundResource
     @IBOutlet var playButton: NSButton!
     @IBOutlet var exportButton: NSButton!
     @IBOutlet var format: NSTextField!
@@ -45,7 +45,7 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
         sound.play()
     }
     
-    func loadInfo() {
+    private func loadInfo() {
         if resource.data!.count == 0 {
             self.format.stringValue = "(empty)"
         } else if sound.format != 0 {
@@ -64,7 +64,7 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
         }
     }
     
-    func stringFromSeconds(_ seconds: Double) -> String {
+    private func stringFromSeconds(_ seconds: Double) -> String {
         if seconds < 10 {
             return String(format: "%0.2fs", seconds)
         }

@@ -60,8 +60,8 @@
 
 - (void)resourceDataDidChange:(NSNotification *)notification
 {
-    // TODO: should display alert asking if you want to replace data in this editor or reassert this data, revoking the other editor's changes
-	[self loadResource];
+    if (!self.window.isDocumentEdited)
+        [self loadResource];
 }
 
 - (void)readTemplate

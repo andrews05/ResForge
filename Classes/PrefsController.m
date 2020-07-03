@@ -1,8 +1,6 @@
 #import "PrefsController.h"
 
 NSString * const kPreserveBackups = @"PreserveBackups";
-NSString * const kAutosave = @"Autosave";
-NSString * const kAutosaveInterval = @"AutosaveInterval";
 NSString * const kDeleteResourceWarning =  @"DeleteResourceWarning";
 NSString * const kLaunchAction = @"LaunchAction";
 NSString * const kOpenUntitledFile = @"OpenUntitledFile";

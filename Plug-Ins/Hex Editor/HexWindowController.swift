@@ -1,7 +1,7 @@
 import Cocoa
 
 class HexWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDelegate, ResKnifePlugin, HFTextViewDelegate {
-    let resource: ResKnifeResource
+    @objc let resource: ResKnifeResource
     private let _undoManager = UndoManager()
     @IBOutlet var textView: HFTextView!
     

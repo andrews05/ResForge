@@ -627,8 +627,6 @@
 		559C9EF41975B16D00444C6A /* gd */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
 		559C9EF81975B46900444C6A /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
-		559DE9B6189D6B1B00D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrefsWindow.strings; sourceTree = "<group>"; };
-		559DE9B8189D6B2000D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoWindow.strings; sourceTree = "<group>"; };
 		559DE9BA189D6B2600D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CreateResourceSheet.strings; sourceTree = "<group>"; };
 		559DE9BC189D6B2B00D55D3A /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AboutPanel.strings; sourceTree = "<group>"; };
 		559DE9BE189D6B3500D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceGridView.strings; sourceTree = "<group>"; };
@@ -2341,7 +2339,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B9048189A0360005AC38D /* Base */,
-				559DE9B8189D6B2000D55D3A /* en */,
 			);
 			name = InfoWindow.xib;
 			sourceTree = "<group>";
@@ -2350,7 +2347,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B9049189A0360005AC38D /* Base */,
-				559DE9B6189D6B1B00D55D3A /* en */,
 			);
 			name = PrefsWindow.xib;
 			sourceTree = "<group>";

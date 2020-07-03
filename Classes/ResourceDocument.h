@@ -49,8 +49,6 @@ typedef enum {
 - (ResourceDataSource *)dataSource;
 - (NSOutlineView *)outlineView;
 
-- (IBAction)creatorChanged:(id)sender;
-- (IBAction)typeChanged:(id)sender;
 - (IBAction)changeView:(id)sender;
 
 @end
