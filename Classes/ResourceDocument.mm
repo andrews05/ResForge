@@ -354,6 +354,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	else if([item action] == @selector(openResourcesInTemplate:))			return selectedRows > 0;
 	//else if([item action] == @selector(openResourcesWithOtherTemplate:))	return selectedRows > 0;
 	else if([item action] == @selector(openResourcesAsHex:))				return selectedRows > 0;
+    else if([item action] == @selector(exportResources:))                   return selectedRows > 0;
 	//else if([item action] == @selector(revertResourceToSaved:))	return selectedRows == 1 && [resource isDirty];
 	else return [super validateMenuItem:item];
 }

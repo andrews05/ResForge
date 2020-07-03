@@ -1,3 +1,6 @@
+// The Sound Editor uses the low-level AudioToolbox rather than the newer
+// AVFoundation, as an AudioQueueRef can directly play back the formats we need
+// while an AVAudioPlayerNode can only play back the "standard" (Float32) format
 import AudioToolbox
 
 extension Notification.Name {

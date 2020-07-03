@@ -312,6 +312,12 @@ CA
                                     <action selector="openResourcesAsHex:" target="-1" id="500"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Export Resources…" tag="6" id="uyA-9M-2HY">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportResources:" target="-1" id="K26-n0-cc3"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" tag="6" id="425">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -321,7 +327,7 @@ CA
                                     <action selector="saveResource:" target="-1" id="507"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Revert Resource…" tag="8" keyEquivalent="r" id="426">
+                            <menuItem title="Revert Resource" tag="8" keyEquivalent="r" id="426">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="revertResource:" target="-1" id="494"/>
