@@ -34,6 +34,15 @@ class SoundResource {
         }
     }
     
+    deinit {
+        if bufferRef != nil {
+            AudioQueueFreeBuffer(queueRef!, bufferRef!)
+        }
+        if queueRef != nil {
+            AudioQueueDispose(queueRef!, true)
+        }
+    }
+    
     private func getStreamDescription(format: UInt32, channels: UInt32, sampleRate: Double) -> AudioStreamBasicDescription {
         var streamDesc = AudioStreamBasicDescription()
         streamDesc.mSampleRate = sampleRate
@@ -60,6 +69,14 @@ class SoundResource {
 
     private func initAudioQueue(_ byteSize: UInt32) throws {
         var err: OSStatus
+        if bufferRef != nil {
+            AudioQueueFreeBuffer(queueRef!, bufferRef!)
+            bufferRef = nil
+        }
+        if queueRef != nil {
+            AudioQueueDispose(queueRef!, true)
+            queueRef = nil
+        }
         err = AudioQueueNewOutput(&streamDesc, {_,_,_ in }, nil, nil, nil, 0, &queueRef)
         try err.throwError()
         err = AudioQueueAllocateBuffer(queueRef!, byteSize, &bufferRef)
@@ -264,8 +281,10 @@ class SoundResource {
                 ioData.pointee.mBuffers.mData = UnsafeMutableRawPointer.allocate(byteCount: Int(ioData.pointee.mBuffers.mDataByteSize), alignment: 1)
                 return ExtAudioFileRead(uData.0, ioNumberDataPackets, ioData)
             }, &uData, &numPackets, &bufferList, nil)
+            AudioConverterDispose(converter!)
             try err.throwError()
         }
+        ExtAudioFileDispose(fRef!)
         bufferRef!.pointee.mAudioDataByteSize = bufferList.mBuffers.mDataByteSize
         self.valid = true
     }
@@ -375,8 +394,7 @@ class SoundResource {
         err = AudioFileCreateWithURL(url as CFURL, formatID, &streamDesc, [.eraseFile, .dontPageAlignAudioData], &fRef)
         try err.throwError()
         err = AudioFileWriteBytes(fRef!, false, 0, &bytes, bufferRef.pointee.mAudioData)
-        try err.throwError()
-        err = AudioFileClose(fRef!)
+        AudioFileClose(fRef!)
         try err.throwError()
     }
 
