@@ -4,7 +4,6 @@
 
 @interface CreateResourceSheetController : NSWindowController
 {
-	IBOutlet NSMatrix 		*attributesMatrix;
 	IBOutlet NSButton		*cancelButton;
 	IBOutlet NSButton		*createButton;
 	IBOutlet NSTextField	*nameView;
@@ -14,10 +13,6 @@
 	ResourceDocument		*document;
 }
 
-- (void)controlTextDidChange:(NSNotification *)notification;
-
-- (void)showCreateResourceSheet:(ResourceDocument *)sheetDoc;
-- (IBAction)hideCreateResourceSheet:(id)sender;
-- (IBAction)typePopupSelection:(id)sender;
+- (void)showCreateResourceSheet:(ResourceDocument *)sheetDoc withType:(NSString *)type andID:(NSNumber *)resID;
 
 @end

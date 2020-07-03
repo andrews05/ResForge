@@ -193,6 +193,18 @@ static ResourceDataSource* supportDataSource;
 	else					return [NSString stringWithFormat: NSLocalizedString(@"%@: %@ %i", @"default window title format without resource name"), [document displayName], GetNSStringFromOSType(type), resID];
 }
 
+- (BOOL)checkConflict:(OSType)type withID:(ResID)resID
+{
+    // If changing id or type we need to check whether a matching resource already exists
+    Resource *r = [self.document.dataSource resourceOfType:type andID:resID];
+    if (r) {
+        NSString *err = [NSString stringWithFormat:@"A resource of type '%@' with ID %d already exists.", GetNSStringFromOSType(type), resID];
+        [self.document presentError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSKeyValueValidationError userInfo:@{NSLocalizedDescriptionKey:err}]];
+        return false;
+    }
+    return true;
+}
+
 - (OSType)type
 {
 	return type;
@@ -200,7 +212,7 @@ static ResourceDataSource* supportDataSource;
 
 - (void)setType:(OSType)newType
 {
-	if(type != newType)
+	if(type != newType && [self checkConflict:newType withID:self.resID])
 	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceTypeWillChangeNotification object:self];
@@ -220,7 +232,7 @@ static ResourceDataSource* supportDataSource;
 
 - (void)setResID:(short)newResID
 {
-	if(resID != newResID)
+    if(resID != newResID && [self checkConflict:self.type withID:newResID])
 	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceWillChangeNotification object:self];
 		[[NSNotificationCenter defaultCenter] postNotificationName:ResourceIDWillChangeNotification object:self];

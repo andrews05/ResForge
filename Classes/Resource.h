@@ -29,7 +29,7 @@
 // accessor methods not part of the protocol
 @property (getter = isDirty) BOOL dirty;
 @property (copy) NSString *representedFork;
-@property (weak) NSDocument *document;
+@property (weak) ResourceDocument *document;
 
 - (void)open;
 

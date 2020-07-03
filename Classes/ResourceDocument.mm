@@ -399,12 +399,20 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (IBAction)showCreateResourceSheet:(id)sender
 {
-	// bug: ResourceDocument allocs a sheet controller, but it's never disposed of
-	
-	if (!sheetController)
+    if (!sheetController) {
 		sheetController = [[CreateResourceSheetController alloc] initWithWindowNibName:@"CreateResourceSheet"];
+        [sheetController window];
+    }
 	
-	[sheetController showCreateResourceSheet:self];
+    // Pass type of currently selected item
+    id item = outlineView.selectedItem;
+    NSString *type;
+    if ([item isKindOfClass:Resource.class]) {
+        type = GetNSStringFromOSType([(Resource *)item type]);
+    } else if ([item isKindOfClass:NSNumber.class]) {
+        type = GetNSStringFromOSType([item intValue]);
+    }
+    [sheetController showCreateResourceSheet:self withType:type andID:nil];
 }
 
 - (IBAction)showSelectTemplateSheet:(id)sender

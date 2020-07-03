@@ -4,7 +4,7 @@
 #import "ElementLSTB.h"
 
 #import "NSOutlineView-SelectedItems.h"
-#import "CreateResourceSheetController.h"
+#import "ResourceDocument.h"
 
 @implementation TemplateWindowController
 @synthesize dataList;

@@ -145,11 +145,13 @@
 - (IBAction)rTypeChanged:(id)sender
 {
     selectedResource.type = GetOSTypeFromNSString(rType.stringValue);
+    rType.stringValue = GetNSStringFromOSType(selectedResource.type); // Reload in case change was rejected
 }
 
 - (IBAction)rIDChanged:(id)sender
 {
     selectedResource.resID = (ResID)rID.intValue;
+    rID.intValue = selectedResource.resID;
 }
 
 - (IBAction)attributesChanged:(id)sender

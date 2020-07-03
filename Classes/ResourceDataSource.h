@@ -25,6 +25,5 @@
 - (Resource *)resourceOfType:(OSType)type andID:(short)resID;
 - (Resource *)resourceOfType:(OSType)type withName:(NSString *)name;
 - (NSArray *)allResourcesOfType:(OSType)type;
-- (NSArray *)allResourceIDsOfType:(OSType)type;
 
 @end

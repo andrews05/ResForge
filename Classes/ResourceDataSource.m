@@ -218,23 +218,12 @@ extern NSString *RKResourcePboardType;
     if ([tableColumn.identifier isEqualToString:@"name"]) {
         resource.name = object;
     } else {
-        // If changing id or type we need to check whether a matching resource already exists
-        ResID rID = resource.resID;
-        OSType rType = resource.type;
         if ([tableColumn.identifier isEqualToString:@"resID"]) {
-            rID = (ResID)[object intValue];
+            resource.resID = (ResID)[object intValue];
         } else if ([tableColumn.identifier isEqualToString:@"type"]) {
-            rType = GetOSTypeFromNSString(object);
+            resource.type = GetOSTypeFromNSString(object);
         }
-        Resource *r = [Resource resourceOfType:rType andID:rID inDocument:resource.document];
-        if (!r || r == resource) {
-            resource.type = rType;
-            resource.resID = rID;
-        } else {
-            NSString *err = [NSString stringWithFormat:@"A resource of type '%@' with ID %d already exists.", GetNSStringFromOSType(rType), rID];
-            [resource.document presentError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSKeyValueValidationError userInfo:@{NSLocalizedDescriptionKey:err}]];
-            [outlineView reloadItem:item];
-        }
+        [outlineView reloadItem:item];
     }
 }
 
@@ -265,25 +254,6 @@ extern NSString *RKResourcePboardType;
 }
 
 /*!
-@method		allResourceIDsOfType:
-@discussion	Returns an NSArray full of NSNumber* objects containing the IDs of all resources of specified type. Used by uniqueIDForType:.
-@updated	2003-08-01  UK  Created based on allResourcesOfType:
-*/
-
-- (NSArray*)allResourceIDsOfType:(OSType)type
-{
-	if(!type)
-		return @[];
-	
-	NSMutableArray  *array = [NSMutableArray array];
-	for (Resource *resource in resourcesByType[@(type)]) {
-		if([resource type] == type)
-			[array addObject:@(resource.resID)];
-	}
-	return [NSArray arrayWithArray:array];
-}
-
-/*!
 @method		uniqueIDForType:
 @discussion	Tries to return an unused resource ID for a new resource of specified type. If all IDs are used up (can't really happen, because the resource manager can't take more than 2727 resources per file without crashing, but just in theory...), this will return 128 no matter whether it's used or not.
 @updated	2003-08-01  UK:  Created.
@@ -292,16 +262,18 @@ extern NSString *RKResourcePboardType;
 
 - (short)uniqueIDForType:(OSType)type
 {
-	short   theID = [self defaultIDForType:type];
-	NSArray *array = [self allResourceIDsOfType:type];
+	short theID = [self defaultIDForType:type];
+    NSMutableArray *ids = [NSMutableArray new];
+    for (Resource *resource in resourcesByType[@(type)]) {
+        [ids addObject:@(resource.resID)];
+    }
 	
-	if([array count] <= USHRT_MAX)
-	{
-		while([array containsObject:@(theID)])
-			theID++;
-	}
+    if (ids.count <= USHRT_MAX) {
+        while ([ids containsObject:@(theID)])
+            theID++;
+    }
 	
-	return theID;
+    return theID;
 }
 
 /*!
