@@ -114,7 +114,7 @@ Gw
                     </button>
                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P1T-Pd-dZa">
                         <rect key="frame" x="20" y="59" width="97" height="25"/>
-                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="Qv2-X8-PHD">
+                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" numberOfVisibleItems="5" id="Qv2-X8-PHD">
                             <customFormatter key="formatter" id="8iw-b0-EqG" customClass="MacRomanFormatter">
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
@@ -127,13 +127,6 @@ Gw
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <objectValues>
-                                <string>BNDL</string>
-                                <string>vers</string>
-                                <string>STR </string>
-                                <string>STR#</string>
-                                <string>TEXT</string>
-                            </objectValues>
                         </comboBoxCell>
                         <connections>
                             <action selector="typeChanged:" target="-2" id="OBN-nx-OF8"/>

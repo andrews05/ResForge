@@ -8,7 +8,7 @@
 	IBOutlet NSButton		*createButton;
 	IBOutlet NSTextField	*nameView;
 	IBOutlet NSTextField	*resIDView;
-	IBOutlet NSTextField	*typeView;
+	IBOutlet NSComboBox 	*typeView;
 	
 	ResourceDocument		*document;
 }

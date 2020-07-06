@@ -231,7 +231,6 @@
 		E18BF584069FEA1300F076B8 /* RKEditorRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */; };
 		E18BF585069FEA1300F076B8 /* RKSupportResourceRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */; };
 		E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E18BF588069FEA1300F076B8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
 		E18BF590069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
 		E18BF591069FEA1400F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
 		E18BF59F069FEA1400F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
@@ -293,7 +292,6 @@
 		E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E18BF7D1069FFC7600F076B8 /* FontWindowController.h */; };
 		E18BF7D5069FFC7600F076B8 /* FontWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18BF7D2069FFC7600F076B8 /* FontWindowController.m */; };
 		E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E18BF8D206A0016D00F076B8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884A0156D40B01000001 /* Carbon.framework */; };
 		E18BF8EB06A0027700F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E1D0DB520A109A4F0011739C /* ElementKEYB.h in Headers */ = {isa = PBXBuildFile; fileRef = E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */; };
 		E1D0DB530A109A4F0011739C /* ElementKEYB.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */; };
@@ -755,7 +753,6 @@
 		F5B588300156D40B01000001 /* ResourceDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ResourceDataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5B588310156D40B01000001 /* ResourceDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResourceDocument.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F5B588320156D40B01000001 /* ResourceDocument.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = ResourceDocument.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F5B5884A0156D40B01000001 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		F5B5884B0156D40B01000001 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		F5C9ECCE027F474A01A8010C /* Notifications.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
 		F5C9ECD8027F562201A8010C /* Structs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Structs.h; sourceTree = "<group>"; };
@@ -807,7 +804,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */,
-				E18BF588069FEA1300F076B8 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -850,7 +846,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */,
-				E18BF8D206A0016D00F076B8 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1375,7 +1370,6 @@
 			children = (
 				4953F5A82488795B0002340F /* AVKit.framework */,
 				B25C779815D2B0C500C005DE /* HexFiend.framework */,
-				F5B5884A0156D40B01000001 /* Carbon.framework */,
 				F54625C6029174F601A8010C /* CoreServices.framework */,
 				F5B5884B0156D40B01000001 /* Cocoa.framework */,
 			);
@@ -1688,7 +1682,6 @@
 				E18BF597069FEA1400F076B8 /* Resources */,
 				E18BF59A069FEA1400F076B8 /* Sources */,
 				E18BF5A1069FEA1400F076B8 /* Frameworks */,
-				E18BF5A3069FEA1400F076B8 /* Rez */,
 				4927B28C24A49BC000DCF576 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -1708,7 +1701,6 @@
 				E18BF5C8069FEA1400F076B8 /* Resources */,
 				E18BF5D2069FEA1400F076B8 /* Sources */,
 				E18BF5DF069FEA1400F076B8 /* Frameworks */,
-				E18BF5E2069FEA1400F076B8 /* Rez */,
 			);
 			buildRules = (
 			);
@@ -1728,7 +1720,6 @@
 				E18BF693069FEA1800F076B8 /* Resources */,
 				E18BF695069FEA1800F076B8 /* Sources */,
 				E18BF698069FEA1800F076B8 /* Frameworks */,
-				E18BF69A069FEA1800F076B8 /* Rez */,
 			);
 			buildRules = (
 			);
@@ -1749,7 +1740,6 @@
 				E119386209991DAC00A3A6EA /* Copy Support Resources */,
 				E18BF6B3069FEA1800F076B8 /* Sources */,
 				E18BF6C2069FEA1800F076B8 /* Frameworks */,
-				E18BF6C4069FEA1800F076B8 /* Rez */,
 			);
 			buildRules = (
 				E18BF6C7069FEA1900F076B8 /* PBXBuildRule */,
@@ -1940,37 +1930,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXRezBuildPhase section */
-		E18BF5A3069FEA1400F076B8 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF5E2069FEA1400F076B8 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF69A069FEA1800F076B8 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF6C4069FEA1800F076B8 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXRezBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4953F595248874AA0002340F /* Sources */ = {

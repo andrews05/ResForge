@@ -8,6 +8,18 @@
 - (void)showCreateResourceSheet:(ResourceDocument *)sheetDoc withType:(NSString *)type andID:(NSNumber *)resID
 {
     document = sheetDoc;
+    // Add all types currently in the document
+    NSMutableOrderedSet *suggestions = [NSMutableOrderedSet orderedSetWithArray:document.dataSource.allTypes];
+    // Common types?
+    [suggestions addObjectsFromArray:@[
+        @"BNDL",
+        @"vers",
+        @"STR ",
+        @"STR#",
+        @"TEXT"
+    ]];
+    [typeView removeAllItems];
+    [typeView addItemsWithObjectValues:suggestions.array];
     if (type != nil) {
         typeView.stringValue = type;
         if (resID != nil) {
