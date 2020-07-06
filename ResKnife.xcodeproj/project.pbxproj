@@ -2625,6 +2625,7 @@
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MARKETING_VERSION = 0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = ResKnife;
 				SKIP_INSTALL = NO;
@@ -2644,6 +2645,7 @@
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MARKETING_VERSION = 0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = ResKnife;
 				SKIP_INSTALL = NO;
