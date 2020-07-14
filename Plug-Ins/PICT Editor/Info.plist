@@ -25,9 +25,10 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2012 Derailer. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
-	<string>PNGWindowController</string>
+	<string>PictWindowController</string>
 	<key>RKEditedTypes</key>
 	<array>
+		<string>PICT</string>
 		<string>PNG </string>
 	</array>
 </dict>

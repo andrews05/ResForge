@@ -66,6 +66,7 @@
 		4962B27924569EE50065590E /* ElementWBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B27724569EE50065590E /* ElementWBIT.m */; };
 		4962B27C245778950065590E /* ElementLBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B27A245778950065590E /* ElementLBIT.h */; };
 		4962B27D245778950065590E /* ElementLBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B27B245778950065590E /* ElementLBIT.m */; };
+		496674FE24BBC7CE00251406 /* PictWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* PictWindowController.swift */; };
 		4970442E24720C060035C0FA /* writer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044252472064F0035C0FA /* writer.hpp */; };
 		4970442F24720C060035C0FA /* reader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044262472064F0035C0FA /* reader.hpp */; };
 		4970443024720C070035C0FA /* data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044272472064F0035C0FA /* data.cpp */; };
@@ -129,13 +130,6 @@
 		55FEF5C0189D764300888898 /* desc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BE189D764300888898 /* desc.xib */; };
 		55FEF5CE189D781100888898 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F54625C6029174F601A8010C /* CoreServices.framework */; };
 		B22100CD15D3F944009FDEE1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
-		B229EECB15A4B8720032C12C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B229EED315A4B8720032C12C /* InfoPlist.strings */; };
-		B229EEDB15A4B9420032C12C /* PNGWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B229EEC115A4B7250032C12C /* PNGWindowController.m */; };
-		B229EEDC15A4B9420032C12C /* PNGWindowController.xib in Sources */ = {isa = PBXBuildFile; fileRef = B229EEC215A4B7250032C12C /* PNGWindowController.xib */; };
-		B229EEDD15A4BA900032C12C /* PNG Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B229EECA15A4B8720032C12C /* PNG Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		B229EEDE15A4BABD0032C12C /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
-		B229EEE115A4BB2E0032C12C /* PNGWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = B229EEC015A4B7250032C12C /* PNGWindowController.h */; };
 		B229EEF415A4FB6F0032C12C /* AboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEE815A4FB6F0032C12C /* AboutPanel.xib */; };
 		B229EEF515A4FB6F0032C12C /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEA15A4FB6F0032C12C /* Application.xib */; };
 		B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */; };
@@ -156,8 +150,6 @@
 		B2B2C43A15A9FCCF00D6F61C /* RKPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */; };
 		B2B3CEAA16B9DCE90027F33F /* ResourceGridView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */; };
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		B2FCA79115A66ACF00696598 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA78F15A66ACF00696598 /* InfoPlist.strings */; };
-		B2FCA79715A66B2A00696598 /* PictWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FCA78015A669C800696598 /* PictWindowController.m */; };
 		B2FCA79C15A66B5500696598 /* PICT Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B2FCA79D15A66B7200696598 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA79E15A6704900696598 /* FontDocument.xib */; };
@@ -327,13 +319,6 @@
 			remoteGlobalIDString = 4953F594248874AA0002340F;
 			remoteInfo = "Sound Editor";
 		};
-		B229EEE215A4BB720032C12C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B229EEC915A4B8720032C12C;
-			remoteInfo = "PNG Editor";
-		};
 		B2B2C41315A9467100D6F61C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -424,7 +409,6 @@
 				4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */,
 				B2B2C41515A9468300D6F61C /* Pattern Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* PICT Editor.plugin in Copy Plugins */,
-				B229EEDD15A4BA900032C12C /* PNG Editor.plugin in Copy Plugins */,
 				E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */,
 				E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */,
 				E13F837F08F13A4C00E2A5CB /* Font Editor.plugin in Copy Plugins */,
@@ -520,6 +504,8 @@
 		4962B27724569EE50065590E /* ElementWBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementWBIT.m; sourceTree = "<group>"; };
 		4962B27A245778950065590E /* ElementLBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementLBIT.h; sourceTree = "<group>"; };
 		4962B27B245778950065590E /* ElementLBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementLBIT.m; sourceTree = "<group>"; };
+		496674FC24BBC7CD00251406 /* PICT Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PICT Editor-Bridging-Header.h"; sourceTree = "<group>"; };
+		496674FD24BBC7CE00251406 /* PictWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictWindowController.swift; sourceTree = "<group>"; };
 		497043F42472064F0035C0FA /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		497043F52472064F0035C0FA /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		497043F62472064F0035C0FA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -642,12 +628,6 @@
 		55FEF5C4189D768100888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/cron.strings; sourceTree = "<group>"; };
 		55FEF5C6189D769A00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/misn.strings; sourceTree = "<group>"; };
 		55FEF5C8189D769F00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ship.strings; sourceTree = "<group>"; };
-		B229EEC015A4B7250032C12C /* PNGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PNGWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B229EEC115A4B7250032C12C /* PNGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PNGWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B229EEC215A4B7250032C12C /* PNGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PNGWindowController.xib; sourceTree = "<group>"; };
-		B229EECA15A4B8720032C12C /* PNG Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PNG Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B229EED215A4B8720032C12C /* PNG Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PNG Editor-Info.plist"; sourceTree = "<group>"; };
-		B229EED415A4B8720032C12C /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
 		B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PatternWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PatternWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -659,11 +639,8 @@
 		B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKPatternImageCell.m; sourceTree = "<group>"; };
 		B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPatternView.h; sourceTree = "<group>"; };
 		B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RKPatternView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B2FCA77F15A669C800696598 /* PictWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PictWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B2FCA78015A669C800696598 /* PictWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PictWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PICT Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2FCA78E15A66ACF00696598 /* PICT Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PICT Editor-Info.plist"; sourceTree = "<group>"; };
-		B2FCA79015A66ACF00696598 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E11936620998551200A3A6EA /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E119367D099864AD00A3A6EA /* ElementUBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementUBYT.h; sourceTree = "<group>"; };
 		E119367E099864AD00A3A6EA /* ElementUBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementUBYT.m; sourceTree = "<group>"; };
@@ -772,14 +749,6 @@
 			files = (
 				4953F5A92488795B0002340F /* AVKit.framework in Frameworks */,
 				4953F599248874AA0002340F /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B229EEC715A4B8720032C12C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B229EECB15A4B8720032C12C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,18 +1109,6 @@
 			path = BinaryData;
 			sourceTree = "<group>";
 		};
-		B229EEBF15A4B6FE0032C12C /* PNG Editor */ = {
-			isa = PBXGroup;
-			children = (
-				B229EEC015A4B7250032C12C /* PNGWindowController.h */,
-				B229EEC115A4B7250032C12C /* PNGWindowController.m */,
-				B229EEC215A4B7250032C12C /* PNGWindowController.xib */,
-				B229EED215A4B8720032C12C /* PNG Editor-Info.plist */,
-				B229EED315A4B8720032C12C /* InfoPlist.strings */,
-			);
-			path = "PNG Editor";
-			sourceTree = "<group>";
-		};
 		B2B2C3FC15A9451800D6F61C /* Pattern Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1172,10 +1129,9 @@
 			isa = PBXGroup;
 			children = (
 				B24925E015A6776600C22060 /* PictWindow.xib */,
-				B2FCA77F15A669C800696598 /* PictWindowController.h */,
-				B2FCA78015A669C800696598 /* PictWindowController.m */,
-				B2FCA78E15A66ACF00696598 /* PICT Editor-Info.plist */,
-				B2FCA78F15A66ACF00696598 /* InfoPlist.strings */,
+				B2FCA78E15A66ACF00696598 /* Info.plist */,
+				496674FC24BBC7CD00251406 /* PICT Editor-Bridging-Header.h */,
+				496674FD24BBC7CE00251406 /* PictWindowController.swift */,
 			);
 			path = "PICT Editor";
 			sourceTree = "<group>";
@@ -1251,7 +1207,6 @@
 				3D0B38A504DEF41E005AED5E /* Template Editor */,
 				E18BF7B8069FFA5200F076B8 /* Font Editor */,
 				B2FCA77C15A669C800696598 /* PICT Editor */,
-				B229EEBF15A4B6FE0032C12C /* PNG Editor */,
 				3D3B99B704DC167D0056861E /* Icon Editor */,
 				F5DF1C0F0254C78801A80001 /* NovaTools */,
 			);
@@ -1295,7 +1250,6 @@
 				E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */,
 				E18BF78B069FF23700F076B8 /* Font Editor.plugin */,
 				E17ADBC006A2132800842474 /* NovaTools.plugin */,
-				B229EECA15A4B8720032C12C /* PNG Editor.plugin */,
 				B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */,
 				B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */,
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
@@ -1416,14 +1370,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		B229EEE015A4BB250032C12C /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B229EEE115A4BB2E0032C12C /* PNGWindowController.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E18BF53C069FEA1300F076B8 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1593,24 +1539,6 @@
 			productReference = 4953F5A0248874AA0002340F /* Sound Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		B229EEC915A4B8720032C12C /* PNG Editor */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B229EED715A4B8720032C12C /* Build configuration list for PBXNativeTarget "PNG Editor" */;
-			buildPhases = (
-				B229EEC615A4B8720032C12C /* Sources */,
-				B229EEC715A4B8720032C12C /* Frameworks */,
-				B229EEC815A4B8720032C12C /* Resources */,
-				B229EEE015A4BB250032C12C /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "PNG Editor";
-			productName = "PNG Editor";
-			productReference = B229EECA15A4B8720032C12C /* PNG Editor.plugin */;
-			productType = "com.apple.product-type.bundle";
-		};
 		B2B2C40615A9464400D6F61C /* Pattern Editor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2B2C41015A9464400D6F61C /* Build configuration list for PBXNativeTarget "Pattern Editor" */;
@@ -1665,7 +1593,6 @@
 				E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */,
 				0ED5B4B813BF0A7800A5DC6D /* PBXTargetDependency */,
 				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
-				B229EEE315A4BB720032C12C /* PBXTargetDependency */,
 				B2B2C41415A9467100D6F61C /* PBXTargetDependency */,
 			);
 			name = ResKnife;
@@ -1782,6 +1709,9 @@
 					4953F594248874AA0002340F = {
 						LastSwiftMigration = 1150;
 					};
+					B2FCA78915A66ACE00696598 = {
+						LastSwiftMigration = 1150;
+					};
 					E18BF58E069FEA1400F076B8 = {
 						LastSwiftMigration = 1150;
 					};
@@ -1812,7 +1742,6 @@
 				E18BF68E069FEA1800F076B8 /* Bitmap Editor Cocoa */,
 				E18BF78A069FF23700F076B8 /* Font Editor Cocoa */,
 				E18BF5B7069FEA1400F076B8 /* NovaTools */,
-				B229EEC915A4B8720032C12C /* PNG Editor */,
 				B2FCA78915A66ACE00696598 /* PICT Editor */,
 				B2B2C40615A9464400D6F61C /* Pattern Editor */,
 				4953F594248874AA0002340F /* Sound Editor */,
@@ -1829,14 +1758,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B229EEC815A4B8720032C12C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B229EED515A4B8720032C12C /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B2B2C40515A9464400D6F61C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1850,7 +1771,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2FCA79115A66ACF00696598 /* InfoPlist.strings in Resources */,
 				B24925E215A6776600C22060 /* PictWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1945,16 +1865,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B229EEC615A4B8720032C12C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B229EEDB15A4B9420032C12C /* PNGWindowController.m in Sources */,
-				B229EEDC15A4B9420032C12C /* PNGWindowController.xib in Sources */,
-				B229EEDE15A4BABD0032C12C /* Notifications.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B2B2C40315A9464400D6F61C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1970,7 +1880,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2FCA79715A66B2A00696598 /* PictWindowController.m in Sources */,
+				496674FE24BBC7CE00251406 /* PictWindowController.swift in Sources */,
 				B2FCA79D15A66B7200696598 /* Notifications.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2135,11 +2045,6 @@
 			target = 4953F594248874AA0002340F /* Sound Editor */;
 			targetProxy = 4953F5A42488759E0002340F /* PBXContainerItemProxy */;
 		};
-		B229EEE315A4BB720032C12C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B229EEC915A4B8720032C12C /* PNG Editor */;
-			targetProxy = B229EEE215A4BB720032C12C /* PBXContainerItemProxy */;
-		};
 		B2B2C41415A9467100D6F61C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B2B2C40615A9464400D6F61C /* Pattern Editor */;
@@ -2255,14 +2160,6 @@
 			name = desc.xib;
 			sourceTree = "<group>";
 		};
-		B229EED315A4B8720032C12C /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B229EED415A4B8720032C12C /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		B229EEE815A4FB6F0032C12C /* AboutPanel.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2366,14 +2263,6 @@
 				559DE9BE189D6B3500D55D3A /* en */,
 			);
 			name = ResourceGridView.xib;
-			sourceTree = "<group>";
-		};
-		B2FCA78F15A66ACF00696598 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B2FCA79015A66ACF00696598 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		B2FCA79E15A6704900696598 /* FontDocument.xib */ = {
@@ -2488,28 +2377,6 @@
 			};
 			name = Release;
 		};
-		B229EED815A4B8720032C12C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/PNG Editor/PNG Editor-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = Debug;
-		};
-		B229EED915A4B8720032C12C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/PNG Editor/PNG Editor-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = Release;
-		};
 		B2B2C41115A9464400D6F61C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2535,10 +2402,15 @@
 		B2FCA79415A66ACF00696598 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/PICT Editor/PICT Editor-Info.plist";
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = "Plug-Ins/PICT Editor/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/PICT Editor/PICT Editor-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -2546,10 +2418,14 @@
 		B2FCA79515A66ACF00696598 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/PICT Editor/PICT Editor-Info.plist";
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = "Plug-Ins/PICT Editor/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/PICT Editor/PICT Editor-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -2827,15 +2703,6 @@
 			buildConfigurations = (
 				4953F59E248874AA0002340F /* Debug */,
 				4953F59F248874AA0002340F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		B229EED715A4B8720032C12C /* Build configuration list for PBXNativeTarget "PNG Editor" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B229EED815A4B8720032C12C /* Debug */,
-				B229EED915A4B8720032C12C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
