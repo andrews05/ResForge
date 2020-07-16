@@ -11,6 +11,7 @@
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		49203D7924BFEC840096DFF5 /* cicn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FC2472064F0035C0FA /* cicn.cpp */; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
@@ -1917,6 +1918,7 @@
 				4966750F24BE676C00251406 /* pict.cpp in Sources */,
 				4966752224BE6C6A00251406 /* QuickDraw.mm in Sources */,
 				4966751324BE678500251406 /* data.cpp in Sources */,
+				49203D7924BFEC840096DFF5 /* cicn.cpp in Sources */,
 				4966751024BE676F00251406 /* surface.cpp in Sources */,
 				4966751E24BE67D400251406 /* file.cpp in Sources */,
 				4966751B24BE67C400251406 /* type.cpp in Sources */,
@@ -2444,6 +2446,7 @@
 		B2FCA79415A66ACF00696598 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Plug-Ins/PICT Editor/Info.plist";
@@ -2461,6 +2464,7 @@
 		B2FCA79515A66ACF00696598 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Plug-Ins/PICT Editor/Info.plist";

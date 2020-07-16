@@ -1,5 +1,18 @@
 import Cocoa
 
+public enum ImageError: Error {
+    case dimensionsError
+}
+
+extension ImageError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .dimensionsError:
+            return NSLocalizedString("Image dimensions must be between 4 and 256 pixels.", comment: "")
+        }
+    }
+}
+
 class PictWindowController: NSWindowController, ResKnifePlugin {
     @objc let resource: ResKnifeResource
     @IBOutlet var imageView: NSImageView!
@@ -35,14 +48,17 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
         scrollView.addConstraints([widthConstraint,heightConstraint,l,r,t,b])
         
         imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
+        self.loadImage()
+    }
+    
+    private func loadImage() {
         if resource.data!.count > 0 {
-            if GetNSStringFromOSType(resource.type) == "PICT" {
+            switch GetNSStringFromOSType(resource.type) {
+            case "PICT":
                 imageView.image = NSImage(data: QuickDraw.tiff(fromPict: resource.data!))
-                // PICT needs 512 null bytes prepended (like a .pict file) on 10.15
-//                var data = Data(count: 512)
-//                data.append(resource.data!)
-//                imageView.image = NSImage(data: data)
-            } else {
+            case "cicn":
+                imageView.image = NSImage(data: QuickDraw.tiff(fromCicn: resource.data!))
+            default:
                 imageView.image = NSImage(data: resource.data!)
             }
             self.updateView()
@@ -58,13 +74,23 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
     }
     
     @IBAction func changedImage(_ sender: Any) {
-        self.updateView()
-        if GetNSStringFromOSType(resource.type) == "PICT" {
+        switch GetNSStringFromOSType(resource.type) {
+        case "PICT":
             resource.data = QuickDraw.pict(fromTiff: imageView.image!.tiffRepresentation!)
-        } else {
+        case "cicn":
+            let size = imageView.image!.size
+            if size.width < 4 || size.width > 256 || size.height < 4 || size.height > 256 {
+                self.window?.presentError(ImageError.dimensionsError)
+            } else {
+                // Perform colour reduction by first converting to gif - this is much faster and better than letting graphite try to do it
+                let rep = NSBitmapImageRep(data: imageView.image!.tiffRepresentation!)!
+                resource.data = QuickDraw.cicn(fromTiff: rep.representation(using: .gif, properties: [.ditherTransparency: false])!)
+            }
+        default:
             let bitmap = NSBitmapImageRep(data: imageView.image!.tiffRepresentation!)!
             resource.data = bitmap.representation(using: .png, properties: [.interlaced: false])
         }
+        self.loadImage()
     }
     
     @IBAction func copy(_ sender: Any) {

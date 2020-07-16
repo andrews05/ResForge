@@ -1,14 +1,39 @@
 #import "QuickDraw.h"
 #include "libGraphite/quickdraw/pict.hpp"
+#include "libGraphite/quickdraw/cicn.hpp"
 
 @implementation QuickDraw
 
-+ (NSData *)tiffFromPict:(NSData *)pictData {
-    std::vector<char> buffer((char *)pictData.bytes, (char *)pictData.bytes+pictData.length);
-    graphite::data::data data(std::make_shared<std::vector<char>>(buffer), pictData.length);
-    graphite::qd::pict pict(std::make_shared<graphite::data::data>(data), 0, "");
-    auto size = pict.image_surface().lock()->size();
-    auto raw = pict.image_surface().lock()->raw();
++ (NSData *)tiffFromPict:(NSData *)data {
+    std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
+    graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
+    graphite::qd::pict pict(std::make_shared<graphite::data::data>(gData), 0, "");
+    return [QuickDraw tiffFromSurface:pict.image_surface().lock()];
+}
+
++ (NSData *)pictFromTiff:(NSData *)tiffData {
+    graphite::qd::pict pict([QuickDraw surfaceFromTiff:tiffData]);
+    auto data = pict.data();
+    return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
+}
+
++ (NSData *)tiffFromCicn:(NSData *)data {
+    std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
+    graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
+    graphite::qd::cicn cicn(std::make_shared<graphite::data::data>(gData), 0, "");
+    return [QuickDraw tiffFromSurface:cicn.surface().lock()];
+}
+
++ (NSData *)cicnFromTiff:(NSData *)tiffData {
+    graphite::qd::cicn cicn([QuickDraw surfaceFromTiff:tiffData]);
+    auto data = cicn.data();
+    return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
+}
+
+
++ (NSData *)tiffFromSurface:(std::shared_ptr<graphite::qd::surface>)surface {
+    auto size = surface->size();
+    auto raw = surface->raw();
     unsigned char *ptr = (unsigned char*)raw.data();
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&ptr
                                                                     pixelsWide:size.width()
@@ -23,14 +48,12 @@
     return rep.TIFFRepresentation;
 }
 
-+ (NSData *)pictFromTiff:(NSData *)tiffData {
++ (std::shared_ptr<graphite::qd::surface>)surfaceFromTiff:(NSData *)tiffData {
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:tiffData];
     int length = (int)(rep.size.width * rep.size.height) * 4;
     std::vector<graphite::qd::color> buffer((graphite::qd::color *)rep.bitmapData, (graphite::qd::color *)(rep.bitmapData + length));
     graphite::qd::surface surface((int)rep.size.width, (int)rep.size.height, buffer);
-    graphite::qd::pict pict(std::make_shared<graphite::qd::surface>(surface));
-    auto data = pict.data();
-    return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
+    return std::make_shared<graphite::qd::surface>(surface);
 }
 
 @end

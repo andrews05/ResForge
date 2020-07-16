@@ -7,6 +7,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSData *)tiffFromPict:(NSData *)pictData;
 + (NSData *)pictFromTiff:(NSData *)tiffData;
++ (NSData *)tiffFromCicn:(NSData *)data;
++ (NSData *)cicnFromTiff:(NSData *)tiffData;
 
 @end
 
