@@ -4,3 +4,4 @@
 
 #import "ResKnifePluginProtocol.h"
 #import "ResKnifeResourceProtocol.h"
+#import "QuickDraw.h"

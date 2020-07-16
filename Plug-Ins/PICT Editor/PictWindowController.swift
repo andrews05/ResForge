@@ -30,19 +30,18 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
         let r = NSLayoutConstraint(item: imageView!, attribute: .trailing, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .trailing, multiplier: 1, constant: 0)
         let t = NSLayoutConstraint(item: imageView!, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .top, multiplier: 1, constant: 0)
         let b = NSLayoutConstraint(item: imageView!, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .bottom, multiplier: 1, constant: 0)
-        widthConstraint = NSLayoutConstraint(item: imageView!, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 128)
-        heightConstraint = NSLayoutConstraint(item: imageView!, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64)
+        widthConstraint = NSLayoutConstraint(item: imageView!, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
+        heightConstraint = NSLayoutConstraint(item: imageView!, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         scrollView.addConstraints([widthConstraint,heightConstraint,l,r,t,b])
         
-        imageView.isEditable = GetNSStringFromOSType(resource.type) == "PNG "
         imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
-        //imageView.setFrameSize(NSZeroSize)
         if resource.data!.count > 0 {
             if GetNSStringFromOSType(resource.type) == "PICT" {
-                // PICT needs 512 null bytes prepended
-                var data = Data(count: 512)
-                data.append(resource.data!)
-                imageView.image = NSImage(data: data)
+                imageView.image = NSImage(data: QuickDraw.tiff(fromPict: resource.data!))
+                // PICT needs 512 null bytes prepended (like a .pict file) on 10.15
+//                var data = Data(count: 512)
+//                data.append(resource.data!)
+//                imageView.image = NSImage(data: data)
             } else {
                 imageView.image = NSImage(data: resource.data!)
             }
@@ -52,16 +51,20 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
     
     private func updateView() {
         if let image = imageView.image {
-            widthConstraint.constant = image.size.width
-            heightConstraint.constant = image.size.height
-            self.window?.setContentSize(image.size)
+            widthConstraint.constant = max(image.size.width, 200)
+            heightConstraint.constant = max(image.size.height, 100)
+            self.window?.setContentSize(NSMakeSize(widthConstraint.constant, heightConstraint.constant))
         }
     }
     
     @IBAction func changedImage(_ sender: Any) {
         self.updateView()
-        let bitmap = NSBitmapImageRep(data: imageView.image!.tiffRepresentation!)!
-        resource.data = bitmap.representation(using: .png, properties: [.compressionFactor: 9])
+        if GetNSStringFromOSType(resource.type) == "PICT" {
+            resource.data = QuickDraw.pict(fromTiff: imageView.image!.tiffRepresentation!)
+        } else {
+            let bitmap = NSBitmapImageRep(data: imageView.image!.tiffRepresentation!)!
+            resource.data = bitmap.representation(using: .png, properties: [.interlaced: false])
+        }
     }
     
     @IBAction func copy(_ sender: Any) {
