@@ -42,7 +42,7 @@
                                                                samplesPerPixel:4
                                                                       hasAlpha:YES
                                                                       isPlanar:NO
-                                                                colorSpaceName:NSCalibratedRGBColorSpace
+                                                                colorSpaceName:NSDeviceRGBColorSpace
                                                                    bytesPerRow:size.width()*4
                                                                   bitsPerPixel:32];
     return rep.TIFFRepresentation;

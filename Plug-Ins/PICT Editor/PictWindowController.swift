@@ -1,18 +1,5 @@
 import Cocoa
 
-public enum ImageError: Error {
-    case dimensionsError
-}
-
-extension ImageError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .dimensionsError:
-            return NSLocalizedString("Image dimensions must be between 4 and 256 pixels.", comment: "")
-        }
-    }
-}
-
 class PictWindowController: NSWindowController, ResKnifePlugin {
     @objc let resource: ResKnifeResource
     @IBOutlet var imageView: NSImageView!
@@ -38,6 +25,7 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
     override func windowDidLoad() {
         super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle()
+        // Interface builder doesn't allow setting the document view so we have to do it here and configure the constraints
         scrollView.documentView = imageView
         let l = NSLayoutConstraint(item: imageView!, attribute: .leading, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .leading, multiplier: 1, constant: 0)
         let r = NSLayoutConstraint(item: imageView!, attribute: .trailing, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .trailing, multiplier: 1, constant: 0)
@@ -67,8 +55,8 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
     
     private func updateView() {
         if let image = imageView.image {
-            widthConstraint.constant = max(image.size.width, 200)
-            heightConstraint.constant = max(image.size.height, 100)
+            widthConstraint.constant = max(image.size.width, window!.contentMinSize.width)
+            heightConstraint.constant = max(image.size.height, window!.contentMinSize.height)
             self.window?.setContentSize(NSMakeSize(widthConstraint.constant, heightConstraint.constant))
         }
     }
@@ -78,19 +66,16 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
         case "PICT":
             resource.data = QuickDraw.pict(fromTiff: imageView.image!.tiffRepresentation!)
         case "cicn":
-            let size = imageView.image!.size
-            if size.width < 4 || size.width > 256 || size.height < 4 || size.height > 256 {
-                self.window?.presentError(ImageError.dimensionsError)
-            } else {
-                // Perform colour reduction by first converting to gif - this is much faster and better than letting graphite try to do it
-                let rep = NSBitmapImageRep(data: imageView.image!.tiffRepresentation!)!
-                resource.data = QuickDraw.cicn(fromTiff: rep.representation(using: .gif, properties: [.ditherTransparency: false])!)
-            }
+            // Perform colour reduction by first converting to gif - this is much faster and better than letting graphite try to do it
+            let rep = NSBitmapImageRep(data: imageView.image!.tiffRepresentation!)!
+            let gif = rep.representation(using: .gif, properties: [.ditherTransparency: false])!
+            imageView.image = NSImage(data: gif)
+            resource.data = QuickDraw.cicn(fromTiff: gif)
         default:
             let bitmap = NSBitmapImageRep(data: imageView.image!.tiffRepresentation!)!
             resource.data = bitmap.representation(using: .png, properties: [.interlaced: false])
         }
-        self.loadImage()
+        self.updateView()
     }
     
     @IBAction func copy(_ sender: Any) {

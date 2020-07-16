@@ -19,32 +19,32 @@
         <window title="Untitled Resource" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="17">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="0.0" y="556" width="545" height="357"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="contentRect" x="0.0" y="556" width="320" height="240"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <value key="minSize" type="size" width="200" height="100"/>
             <view key="contentView" id="18">
-                <rect key="frame" x="0.0" y="0.0" width="545" height="357"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PtH-kU-h2h">
-                        <rect key="frame" x="0.0" y="0.0" width="545" height="357"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
                         <clipView key="contentView" id="Yh0-a6-CPU">
-                            <rect key="frame" x="0.0" y="0.0" width="545" height="357"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view id="z3g-LT-GbE">
-                                    <rect key="frame" x="0.0" y="0.0" width="530" height="342"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="305" height="225"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="jgj-Kb-j7w">
-                            <rect key="frame" x="0.0" y="343" width="547" height="16"/>
+                            <rect key="frame" x="0.0" y="224" width="320" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2VW-jZ-w9D">
-                            <rect key="frame" x="531" y="0.0" width="16" height="359"/>
+                            <rect key="frame" x="304" y="0.0" width="16" height="160"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -62,12 +62,12 @@
             <point key="canvasLocation" x="139.5" y="146.5"/>
         </window>
         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="19">
-            <rect key="frame" x="0.0" y="0.0" width="545" height="357"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
             <imageCell key="cell" selectable="YES" editable="YES" alignment="left" id="20"/>
             <connections>
                 <action selector="changedImage:" target="-2" id="XGI-hO-elx"/>
             </connections>
-            <point key="canvasLocation" x="140" y="584"/>
+            <point key="canvasLocation" x="139" y="487"/>
         </imageView>
     </objects>
 </document>
