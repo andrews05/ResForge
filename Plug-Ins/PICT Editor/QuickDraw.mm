@@ -8,8 +8,12 @@
 + (NSData *)tiffFromPict:(NSData *)data {
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
-    graphite::qd::pict pict(std::make_shared<graphite::data::data>(gData), 0, "");
-    return [QuickDraw tiffFromSurface:pict.image_surface().lock()];
+    try {
+        graphite::qd::pict pict(std::make_shared<graphite::data::data>(gData), 0, "");
+        return [QuickDraw tiffFromSurface:pict.image_surface().lock()];
+    } catch (const std::exception& e) {
+        return nil;
+    }
 }
 
 + (NSData *)pictFromRep:(NSBitmapImageRep *)rep {
@@ -21,8 +25,12 @@
 + (NSData *)tiffFromCicn:(NSData *)data {
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
-    graphite::qd::cicn cicn(std::make_shared<graphite::data::data>(gData), 0, "");
-    return [QuickDraw tiffFromSurface:cicn.surface().lock()];
+    try {
+        graphite::qd::cicn cicn(std::make_shared<graphite::data::data>(gData), 0, "");
+        return [QuickDraw tiffFromSurface:cicn.surface().lock()];
+    } catch (const std::exception& e) {
+        return nil;
+    }
 }
 
 + (NSData *)cicnFromRep:(NSBitmapImageRep *)rep {
@@ -34,8 +42,12 @@
 + (NSData *)tiffFromPpat:(NSData *)data {
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
-    graphite::qd::ppat ppat(std::make_shared<graphite::data::data>(gData), 0, "");
-    return [QuickDraw tiffFromSurface:ppat.surface().lock()];
+    try {
+        graphite::qd::ppat ppat(std::make_shared<graphite::data::data>(gData), 0, "");
+        return [QuickDraw tiffFromSurface:ppat.surface().lock()];
+    } catch (const std::exception& e) {
+        return nil;
+    }
 }
 
 + (NSData *)ppatFromRep:(NSBitmapImageRep *)rep {
@@ -63,9 +75,9 @@
 }
 
 + (std::shared_ptr<graphite::qd::surface>)surfaceFromRep:(NSBitmapImageRep *)rep {
-    int length = (int)(rep.size.width * rep.size.height) * 4;
+    int length = (int)(rep.pixelsWide * rep.pixelsHigh) * 4;
     std::vector<graphite::qd::color> buffer((graphite::qd::color *)rep.bitmapData, (graphite::qd::color *)(rep.bitmapData + length));
-    graphite::qd::surface surface((int)rep.size.width, (int)rep.size.height, buffer);
+    graphite::qd::surface surface((int)rep.pixelsWide, (int)rep.pixelsHigh, buffer);
     return std::make_shared<graphite::qd::surface>(surface);
 }
 

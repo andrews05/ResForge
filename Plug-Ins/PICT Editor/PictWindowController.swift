@@ -4,6 +4,7 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
     @objc let resource: ResKnifeResource
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var scrollView: NSScrollView!
+    @IBOutlet var imageSize: NSTextField!
     private var widthConstraint: NSLayoutConstraint!
     private var heightConstraint: NSLayoutConstraint!
     
@@ -60,26 +61,28 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
             widthConstraint.constant = max(image.size.width, window!.contentMinSize.width)
             heightConstraint.constant = max(image.size.height, window!.contentMinSize.height)
             self.window?.setContentSize(NSMakeSize(widthConstraint.constant, heightConstraint.constant))
+            imageSize.stringValue = String(format: "%dx%d", image.representations[0].pixelsWide, image.representations[0].pixelsHigh)
+        } else if resource.data!.count > 0 {
+            imageSize.stringValue = "Invalid or unsupported image format"
         }
     }
     
     private func bitmapRep(_ image: NSImage, flatten: Bool=false, palette: Bool=false) -> NSBitmapImageRep {
-        if flatten && !image.representations[0].isOpaque {
-            // Flatten alpha with white background
-            image.lockFocus()
-            NSColor.white.set()
-            image.alignmentRect.fill(using: .destinationOver)
-            image.unlockFocus()
-        }
         var rep = image.representations[0] as? NSBitmapImageRep ?? NSBitmapImageRep(data: image.tiffRepresentation!)!
         if palette {
             // Reduce to 8-bit colour by converting to gif
             let data = rep.representation(using: .gif, properties: [.ditherTransparency: false])!
             rep = NSBitmapImageRep(data: data)!
-            // Update the image
-            image.removeRepresentation(image.representations[0])
-            image.addRepresentation(rep)
         }
+        if flatten {
+            // Hide alpha (might be nice to flatten to white background but not really worth the trouble)
+            rep.hasAlpha = false
+            // Ensure display size matches pixel dimensions
+            rep.size = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
+        }
+        // Update the image
+        image.removeRepresentation(image.representations[0])
+        image.addRepresentation(rep)
         return rep
     }
     
