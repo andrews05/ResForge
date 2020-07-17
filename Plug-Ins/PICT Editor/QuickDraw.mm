@@ -1,6 +1,7 @@
 #import "QuickDraw.h"
 #include "libGraphite/quickdraw/pict.hpp"
 #include "libGraphite/quickdraw/cicn.hpp"
+#include "libGraphite/quickdraw/ppat.hpp"
 
 @implementation QuickDraw
 
@@ -11,8 +12,8 @@
     return [QuickDraw tiffFromSurface:pict.image_surface().lock()];
 }
 
-+ (NSData *)pictFromTiff:(NSData *)tiffData {
-    graphite::qd::pict pict([QuickDraw surfaceFromTiff:tiffData]);
++ (NSData *)pictFromRep:(NSBitmapImageRep *)rep {
+    graphite::qd::pict pict([QuickDraw surfaceFromRep:rep]);
     auto data = pict.data();
     return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
 }
@@ -24,9 +25,22 @@
     return [QuickDraw tiffFromSurface:cicn.surface().lock()];
 }
 
-+ (NSData *)cicnFromTiff:(NSData *)tiffData {
-    graphite::qd::cicn cicn([QuickDraw surfaceFromTiff:tiffData]);
++ (NSData *)cicnFromRep:(NSBitmapImageRep *)rep {
+    graphite::qd::cicn cicn([QuickDraw surfaceFromRep:rep]);
     auto data = cicn.data();
+    return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
+}
+
++ (NSData *)tiffFromPpat:(NSData *)data {
+    std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
+    graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
+    graphite::qd::ppat ppat(std::make_shared<graphite::data::data>(gData), 0, "");
+    return [QuickDraw tiffFromSurface:ppat.surface().lock()];
+}
+
++ (NSData *)ppatFromRep:(NSBitmapImageRep *)rep {
+    graphite::qd::ppat ppat([QuickDraw surfaceFromRep:rep]);
+    auto data = ppat.data();
     return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
 }
 
@@ -48,8 +62,7 @@
     return rep.TIFFRepresentation;
 }
 
-+ (std::shared_ptr<graphite::qd::surface>)surfaceFromTiff:(NSData *)tiffData {
-    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:tiffData];
++ (std::shared_ptr<graphite::qd::surface>)surfaceFromRep:(NSBitmapImageRep *)rep {
     int length = (int)(rep.size.width * rep.size.height) * 4;
     std::vector<graphite::qd::color> buffer((graphite::qd::color *)rep.bitmapData, (graphite::qd::color *)(rep.bitmapData + length));
     graphite::qd::surface surface((int)rep.size.width, (int)rep.size.height, buffer);

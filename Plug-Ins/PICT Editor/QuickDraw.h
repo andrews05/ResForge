@@ -5,10 +5,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QuickDraw : NSObject
 
-+ (NSData *)tiffFromPict:(NSData *)pictData;
-+ (NSData *)pictFromTiff:(NSData *)tiffData;
++ (NSData *)tiffFromPict:(NSData *)data;
++ (NSData *)pictFromRep:(NSBitmapImageRep *)data;
 + (NSData *)tiffFromCicn:(NSData *)data;
-+ (NSData *)cicnFromTiff:(NSData *)tiffData;
++ (NSData *)cicnFromRep:(NSBitmapImageRep *)data;
++ (NSData *)tiffFromPpat:(NSData *)data;
++ (NSData *)ppatFromRep:(NSBitmapImageRep *)data;
 
 @end
 

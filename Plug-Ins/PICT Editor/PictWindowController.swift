@@ -37,6 +37,7 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
         
         imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
         self.loadImage()
+        self.updateView()
     }
     
     private func loadImage() {
@@ -46,10 +47,11 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
                 imageView.image = NSImage(data: QuickDraw.tiff(fromPict: resource.data!))
             case "cicn":
                 imageView.image = NSImage(data: QuickDraw.tiff(fromCicn: resource.data!))
+            case "ppat":
+                imageView.image = NSImage(data: QuickDraw.tiff(fromPpat: resource.data!))
             default:
                 imageView.image = NSImage(data: resource.data!)
             }
-            self.updateView()
         }
     }
     
@@ -61,19 +63,40 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
         }
     }
     
+    private func bitmapRep(_ image: NSImage, flatten: Bool=false, palette: Bool=false) -> NSBitmapImageRep {
+        if flatten && !image.representations[0].isOpaque {
+            // Flatten alpha with white background
+            image.lockFocus()
+            NSColor.white.set()
+            image.alignmentRect.fill(using: .destinationOver)
+            image.unlockFocus()
+        }
+        var rep = image.representations[0] as? NSBitmapImageRep ?? NSBitmapImageRep(data: image.tiffRepresentation!)!
+        if palette {
+            // Reduce to 8-bit colour by converting to gif
+            let data = rep.representation(using: .gif, properties: [.ditherTransparency: false])!
+            rep = NSBitmapImageRep(data: data)!
+            // Update the image
+            image.removeRepresentation(image.representations[0])
+            image.addRepresentation(rep)
+        }
+        return rep
+    }
+    
     @IBAction func changedImage(_ sender: Any) {
         switch GetNSStringFromOSType(resource.type) {
         case "PICT":
-            resource.data = QuickDraw.pict(fromTiff: imageView.image!.tiffRepresentation!)
+            let rep = self.bitmapRep(imageView.image!, flatten: true)
+            resource.data = QuickDraw.pict(from: rep)
         case "cicn":
-            // Perform colour reduction by first converting to gif - this is much faster and better than letting graphite try to do it
-            let rep = NSBitmapImageRep(data: imageView.image!.tiffRepresentation!)!
-            let gif = rep.representation(using: .gif, properties: [.ditherTransparency: false])!
-            imageView.image = NSImage(data: gif)
-            resource.data = QuickDraw.cicn(fromTiff: gif)
+            let rep = self.bitmapRep(imageView.image!, palette: true)
+            resource.data = QuickDraw.cicn(from: rep)
+        case "ppat":
+            let rep = self.bitmapRep(imageView.image!, flatten: true, palette: true)
+            resource.data = QuickDraw.ppat(from: rep)
         default:
-            let bitmap = NSBitmapImageRep(data: imageView.image!.tiffRepresentation!)!
-            resource.data = bitmap.representation(using: .png, properties: [.interlaced: false])
+            let rep = self.bitmapRep(imageView.image!)
+            resource.data = rep.representation(using: .png, properties: [.interlaced: false])
         }
         self.updateView()
     }

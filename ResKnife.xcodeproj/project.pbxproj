@@ -47,6 +47,7 @@
 		49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A7C2450E87000E1EAE4 /* ElementBBIT.m */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		49362DA324A966960040B793 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
+		4943604124C12E0000293E94 /* ppat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4943604024C12E0000293E94 /* ppat.cpp */; };
 		494BEA67245A774B000EF1D0 /* ElementKeyable.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA65245A774B000EF1D0 /* ElementKeyable.h */; };
 		494BEA68245A774B000EF1D0 /* ElementKeyable.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA66245A774B000EF1D0 /* ElementKeyable.m */; };
 		494BEA6B245A84D1000EF1D0 /* ElementCASE.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA69245A84D1000EF1D0 /* ElementCASE.h */; };
@@ -506,6 +507,8 @@
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
 		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
+		4943603F24C12DE100293E94 /* ppat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ppat.hpp; sourceTree = "<group>"; };
+		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
 		494BEA65245A774B000EF1D0 /* ElementKeyable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementKeyable.h; sourceTree = "<group>"; };
 		494BEA66245A774B000EF1D0 /* ElementKeyable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKeyable.m; sourceTree = "<group>"; };
 		494BEA69245A84D1000EF1D0 /* ElementCASE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCASE.h; sourceTree = "<group>"; };
@@ -1035,6 +1038,8 @@
 				497044092472064F0035C0FA /* pixmap.hpp */,
 				4970440A2472064F0035C0FA /* geometry.hpp */,
 				4970440B2472064F0035C0FA /* clut.hpp */,
+				4943603F24C12DE100293E94 /* ppat.hpp */,
+				4943604024C12E0000293E94 /* ppat.cpp */,
 			);
 			path = quickdraw;
 			sourceTree = "<group>";
@@ -1923,6 +1928,7 @@
 				4966751E24BE67D400251406 /* file.cpp in Sources */,
 				4966751B24BE67C400251406 /* type.cpp in Sources */,
 				B2FCA79D15A66B7200696598 /* Notifications.m in Sources */,
+				4943604124C12E0000293E94 /* ppat.cpp in Sources */,
 				4966751C24BE67C700251406 /* packbits.cpp in Sources */,
 				4966751424BE678800251406 /* reader.cpp in Sources */,
 				4966751124BE677200251406 /* geometry.cpp in Sources */,
