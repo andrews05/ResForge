@@ -39,10 +39,13 @@
 + (NSString *)filenameExtensionForFileExport:(id <ResKnifeResource>)resource;
 
 /*!
-@@method        iconForResourceType:
+@method        iconForResourceType:
 @abstract        Returns the icon to be used throughout the UI for any given resource type.
 */
 + (NSImage *)iconForResourceType:(OSType)resourceType;
+
+// Returns an NSImage representing the resource for use in grid view
++ (NSImage *)imageForResource:(id <ResKnifeResource>)resource;
 
 @end
 

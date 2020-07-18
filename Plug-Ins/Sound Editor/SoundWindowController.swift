@@ -131,10 +131,10 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
         return "aiff"
     }
     
-    static func export(_ resource: ResKnifeResource, to: URL) {
+    static func export(_ resource: ResKnifeResource, to url: URL) {
         let sound = SoundResource(resource.data!)
         do {
-            try sound.export(to: to)
+            try sound.export(to: url)
         } catch let error {
             resource.document().presentError(error)
         }

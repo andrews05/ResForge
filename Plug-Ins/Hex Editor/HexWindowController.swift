@@ -94,6 +94,7 @@ class HexWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDele
     
     @IBAction func saveResource(_ sender: Any) {
         resource.data = textView.data
+        self.setDocumentEdited(false)
     }
     
     @IBAction func revertResource(_ sender: Any) {

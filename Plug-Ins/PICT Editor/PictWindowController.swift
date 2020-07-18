@@ -1,6 +1,6 @@
 import Cocoa
 
-class PictWindowController: NSWindowController, ResKnifePlugin {
+class PictWindowController: NSWindowController, NSWindowDelegate, NSMenuItemValidation, ResKnifePlugin {
     @objc let resource: ResKnifeResource
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var scrollView: NSScrollView!
@@ -35,25 +35,35 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
         widthConstraint = NSLayoutConstraint(item: imageView!, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         heightConstraint = NSLayoutConstraint(item: imageView!, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         scrollView.addConstraints([widthConstraint,heightConstraint,l,r,t,b])
-        
         imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
+        imageView.isEditable = GetNSStringFromOSType(resource.type) != "icns"
+    
         self.loadImage()
-        self.updateView()
     }
     
-    private func loadImage() {
-        if resource.data!.count > 0 {
-            switch GetNSStringFromOSType(resource.type) {
-            case "PICT":
-                imageView.image = NSImage(data: QuickDraw.tiff(fromPict: resource.data!))
-            case "cicn":
-                imageView.image = NSImage(data: QuickDraw.tiff(fromCicn: resource.data!))
-            case "ppat":
-                imageView.image = NSImage(data: QuickDraw.tiff(fromPpat: resource.data!))
-            default:
-                imageView.image = NSImage(data: resource.data!)
-            }
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        self.saveResource(sender)
+        return true
+    }
+    
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        switch menuItem.action {
+        case #selector(saveResource(_:)):
+            return self.window!.isDocumentEdited
+        case #selector(revertResource(_:)):
+            return self.window!.isDocumentEdited
+        case #selector(paste(_:)):
+            return imageView.isEditable && NSPasteboard.general.canReadObject(forClasses: [NSImage.self], options: nil)
+        default:
+            return true
         }
+    }
+    
+    // MARK: -
+    
+    private func loadImage() {
+        imageView.image = PictWindowController.image(for: resource)
+        self.updateView()
     }
     
     private func updateView() {
@@ -64,10 +74,15 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
             imageSize.stringValue = String(format: "%dx%d", image.representations[0].pixelsWide, image.representations[0].pixelsHigh)
         } else if resource.data!.count > 0 {
             imageSize.stringValue = "Invalid or unsupported image format"
+        } else if imageView.isEditable {
+            imageSize.stringValue = "Paste or drag and drop an image to import"
+        } else {
+            imageSize.stringValue = "Can't edit resources of this type"
         }
     }
     
-    private func bitmapRep(_ image: NSImage, flatten: Bool=false, palette: Bool=false) -> NSBitmapImageRep {
+    private func bitmapRep(flatten: Bool=false, palette: Bool=false) -> NSBitmapImageRep {
+        let image = imageView.image!
         var rep = image.representations[0] as? NSBitmapImageRep ?? NSBitmapImageRep(data: image.tiffRepresentation!)!
         if palette {
             // Reduce to 8-bit colour by converting to gif
@@ -86,22 +101,46 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
         return rep
     }
     
+    // MARK: -
+    
     @IBAction func changedImage(_ sender: Any) {
+        let rep: NSBitmapImageRep
         switch GetNSStringFromOSType(resource.type) {
         case "PICT":
-            let rep = self.bitmapRep(imageView.image!, flatten: true)
+            rep = self.bitmapRep(flatten: true)
+        case "cicn":
+            rep = self.bitmapRep(palette: true)
+        case "ppat":
+            rep = self.bitmapRep(flatten: true, palette: true)
+        default:
+            rep = self.bitmapRep()
+        }
+        _ = rep.bitmapData // Trigger redraw
+        self.updateView()
+        self.setDocumentEdited(true)
+    }
+
+    @IBAction func saveResource(_ sender: Any) {
+        guard imageView.image != nil && self.window!.isDocumentEdited else {
+            return
+        }
+        let rep = self.bitmapRep()
+        switch GetNSStringFromOSType(resource.type) {
+        case "PICT":
             resource.data = QuickDraw.pict(from: rep)
         case "cicn":
-            let rep = self.bitmapRep(imageView.image!, palette: true)
             resource.data = QuickDraw.cicn(from: rep)
         case "ppat":
-            let rep = self.bitmapRep(imageView.image!, flatten: true, palette: true)
             resource.data = QuickDraw.ppat(from: rep)
         default:
-            let rep = self.bitmapRep(imageView.image!)
             resource.data = rep.representation(using: .png, properties: [.interlaced: false])
         }
-        self.updateView()
+        self.setDocumentEdited(false)
+    }
+
+    @IBAction func revertResource(_ sender: Any) {
+        self.loadImage()
+        self.setDocumentEdited(false)
     }
     
     @IBAction func copy(_ sender: Any) {
@@ -122,5 +161,54 @@ class PictWindowController: NSWindowController, ResKnifePlugin {
             imageView.image = images[0] as? NSImage
             self.changedImage(sender)
         }
+    }
+    
+    // MARK: -
+    static func filenameExtension(forFileExport: ResKnifeResource) -> String {
+        if GetNSStringFromOSType(forFileExport.type) == "icns" {
+            return "icns"
+        }
+        return "png"
+    }
+    
+    static func export(_ resource: ResKnifeResource, to url: URL) {
+        let data: Data
+        let type = GetNSStringFromOSType(resource.type)
+        if type == "PNG " || type == "icns" {
+            // Export resource data directly
+            data = resource.data!
+        } else {
+            // Read image and convert to png
+            guard let image = PictWindowController.image(for: resource) else {
+                return
+            }
+            let rep = image.representations[0] as! NSBitmapImageRep
+            data = rep.representation(using: .png, properties: [.interlaced: false])!
+        }
+        do {
+            try data.write(to: url)
+        } catch let error {
+            resource.document().presentError(error)
+        }
+    }
+    
+    static func image(for resource: ResKnifeResource!) -> NSImage! {
+        guard resource.data!.count > 0 else {
+            return nil
+        }
+        switch GetNSStringFromOSType(resource.type) {
+        case "PICT":
+            return NSImage(data: QuickDraw.tiff(fromPict: resource.data!))
+        case "cicn":
+            return NSImage(data: QuickDraw.tiff(fromCicn: resource.data!))
+        case "ppat":
+            return NSImage(data: QuickDraw.tiff(fromPpat: resource.data!))
+        default:
+            return NSImage(data: resource.data!)
+        }
+    }
+    
+    static func icon(forResourceType resourceType: OSType) -> NSImage! {
+        return NSWorkspace.shared.icon(forFileType: "public.image")
     }
 }
