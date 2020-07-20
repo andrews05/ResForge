@@ -36,7 +36,7 @@ class PictWindowController: NSWindowController, NSWindowDelegate, NSMenuItemVali
         heightConstraint = NSLayoutConstraint(item: imageView!, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         scrollView.addConstraints([widthConstraint,heightConstraint,l,r,t,b])
         imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
-        imageView.isEditable = GetNSStringFromOSType(resource.type) != "icns"
+        imageView.isEditable = ["PICT", "cicn", "ppat", "PNG "].contains(GetNSStringFromOSType(resource.type))
     
         self.loadImage()
     }
@@ -165,50 +165,89 @@ class PictWindowController: NSWindowController, NSWindowDelegate, NSMenuItemVali
     
     // MARK: -
     static func filenameExtension(forFileExport: ResKnifeResource) -> String {
-        if GetNSStringFromOSType(forFileExport.type) == "icns" {
+        switch GetNSStringFromOSType(forFileExport.type) {
+        case "PNG ":
+            return "png"
+        case "icns":
             return "icns"
+        default:
+            return "tiff"
         }
-        return "png"
     }
     
     static func export(_ resource: ResKnifeResource, to url: URL) {
-        let data: Data
-        let type = GetNSStringFromOSType(resource.type)
-        if type == "PNG " || type == "icns" {
-            // Export resource data directly
-            data = resource.data!
-        } else {
-            // Read image and convert to png
-            guard let image = PictWindowController.image(for: resource) else {
-                return
-            }
-            let rep = image.representations[0] as! NSBitmapImageRep
-            data = rep.representation(using: .png, properties: [.interlaced: false])!
-        }
         do {
-            try data.write(to: url)
+            try self.imageData(for: resource).write(to: url)
         } catch let error {
             resource.document().presentError(error)
         }
     }
     
-    static func image(for resource: ResKnifeResource!) -> NSImage! {
-        guard resource.data!.count > 0 else {
-            return nil
-        }
-        switch GetNSStringFromOSType(resource.type) {
-        case "PICT":
-            return NSImage(data: QuickDraw.tiff(fromPict: resource.data!))
-        case "cicn":
-            return NSImage(data: QuickDraw.tiff(fromCicn: resource.data!))
-        case "ppat":
-            return NSImage(data: QuickDraw.tiff(fromPpat: resource.data!))
-        default:
-            return NSImage(data: resource.data!)
-        }
+    static func image(for resource: ResKnifeResource!) -> NSImage? {
+        return NSImage(data: self.imageData(for: resource))
     }
     
     static func icon(forResourceType resourceType: OSType) -> NSImage! {
         return NSWorkspace.shared.icon(forFileType: "public.image")
+    }
+    
+    private static func imageData(for resource: ResKnifeResource!) -> Data {
+        let data = resource.data!
+        guard data.count > 0 else {
+            return data
+        }
+        let type = GetNSStringFromOSType(resource.type)
+        switch type {
+        case "PICT":
+            return QuickDraw.tiff(fromPict: data)
+        case "cicn":
+            return QuickDraw.tiff(fromCicn: data)
+        case "ppat":
+            return QuickDraw.tiff(fromPpat: data)
+        case "ICON":
+            return self.iconTiff(data, width: 32, height: 32, alpha: false)
+        case "ICN#":
+            return self.iconTiff(data, width: 32, height: 32)
+        case "ics#":
+            return self.iconTiff(data, width: 16, height: 16)
+        case "icm#":
+            return self.iconTiff(data, width: 16, height: 12)
+        case "CURS":
+            return self.iconTiff(data, width: 16, height: 16)
+        case "PAT ":
+            return self.iconTiff(data, width: 8, height: 8, alpha: false)
+        default:
+            return data
+        }
+    }
+    
+    private static func iconTiff(_ data: Data, width: Int, height: Int, alpha: Bool=true) -> Data {
+        let bytesPerRow = width / 8
+        let planeLength = bytesPerRow * height
+        var dataArray: [UInt8] = []
+        // Invert data
+        for i in 0..<planeLength {
+            dataArray.append(data[i] ^ 0xff)
+        }
+
+        return dataArray.withUnsafeMutableBufferPointer { (dataBuffer) -> Data in
+            var data = [UInt8](data)
+            return data.withUnsafeMutableBufferPointer { (maskBuffer) -> Data in
+                var planes = [dataBuffer.baseAddress]
+                if alpha {
+                    planes.append(maskBuffer.baseAddress! + planeLength)
+                }
+                return NSBitmapImageRep(bitmapDataPlanes: &planes,
+                                        pixelsWide: width,
+                                        pixelsHigh: height,
+                                        bitsPerSample: 1,
+                                        samplesPerPixel: alpha ? 2 : 1,
+                                        hasAlpha: alpha,
+                                        isPlanar: true,
+                                        colorSpaceName: .deviceWhite,
+                                        bytesPerRow: bytesPerRow,
+                                        bitsPerPixel: 1)!.tiffRepresentation!
+            }
+        }
     }
 }

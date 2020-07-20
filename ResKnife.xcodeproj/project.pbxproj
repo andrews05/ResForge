@@ -10,7 +10,6 @@
 		0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EBA8664122CF49800FEC1AC /* NGSCategories.h */; };
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
-		3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		49203D7924BFEC840096DFF5 /* cicn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FC2472064F0035C0FA /* cicn.cpp */; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
@@ -158,7 +157,6 @@
 		B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */; };
 		B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */; };
 		B24925E215A6776600C22060 /* PictWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* PictWindow.xib */; };
-		B24925E615A6778C00C22060 /* ICONWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E415A6778C00C22060 /* ICONWindow.xib */; };
 		B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65CE15A677F00029141B /* TemplateWindow.xib */; };
 		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
 		B2B2C40815A9464400D6F61C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
@@ -191,7 +189,6 @@
 		E119386509991DDD00A3A6EA /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E119383D09991C5100A3A6EA /* Templates.rsrc */; };
 		E119388D0999296B00A3A6EA /* ElementHEXD.h in Headers */ = {isa = PBXBuildFile; fileRef = E119388B0999296B00A3A6EA /* ElementHEXD.h */; };
 		E119388E0999296B00A3A6EA /* ElementHEXD.m in Sources */ = {isa = PBXBuildFile; fileRef = E119388C0999296B00A3A6EA /* ElementHEXD.m */; };
-		E1193949099940FD00A3A6EA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1193947099940FD00A3A6EA /* InfoPlist.strings */; };
 		E13F837F08F13A4C00E2A5CB /* Font Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF78B069FF23700F076B8 /* Font Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E14AC2760996BF1700D293E5 /* ElementDLLG.h in Headers */ = {isa = PBXBuildFile; fileRef = E14AC2740996BF1700D293E5 /* ElementDLLG.h */; };
 		E14AC2770996BF1700D293E5 /* ElementDLLG.m in Sources */ = {isa = PBXBuildFile; fileRef = E14AC2750996BF1700D293E5 /* ElementDLLG.m */; };
@@ -274,12 +271,6 @@
 		E18BF5DD069FEA1400F076B8 /* MisnWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB515054E918800A80202 /* MisnWindowController.m */; };
 		E18BF5DE069FEA1400F076B8 /* ShipWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB519054E919200A80202 /* ShipWindowController.m */; };
 		E18BF5E0069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E18BF690069FEA1800F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
-		E18BF691069FEA1800F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
-		E18BF692069FEA1800F076B8 /* ICONWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D3B99B904DC16A30056861E /* ICONWindowController.h */; };
-		E18BF696069FEA1800F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
-		E18BF697069FEA1800F076B8 /* ICONWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3B99B804DC16A30056861E /* ICONWindowController.m */; };
-		E18BF699069FEA1800F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF6A0069FEA1800F076B8 /* TemplateWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */; };
 		E18BF6A1069FEA1800F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
 		E18BF6A2069FEA1800F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
@@ -326,13 +317,6 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
-		0ED5B4B713BF0A7800A5DC6D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E18BF68E069FEA1800F076B8;
-			remoteInfo = "Bitmap Editor Cocoa";
-		};
 		4953F5A42488759E0002340F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -433,7 +417,6 @@
 				E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */,
 				E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */,
 				E13F837F08F13A4C00E2A5CB /* Font Editor.plugin in Copy Plugins */,
-				3DB9D6E712307F6300DDA647 /* Bitmap Editor.plugin in Copy Plugins */,
 			);
 			name = "Copy Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,8 +443,6 @@
 		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RKEditorRegistry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RKEditorRegistry.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3D3B99B804DC16A30056861E /* ICONWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ICONWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3D3B99B904DC16A30056861E /* ICONWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ICONWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D4737B304E872DB00AF65FE /* ElementDLNG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDLNG.m; sourceTree = "<group>"; };
 		3D4737B404E872DB00AF65FE /* ElementDLNG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDLNG.h; sourceTree = "<group>"; };
 		3D4737B704E873F300AF65FE /* ElementDBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDBYT.m; sourceTree = "<group>"; };
@@ -620,7 +601,6 @@
 		550B904F189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FontDocument.xib; sourceTree = "<group>"; };
 		550B9050189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FontWindow.xib; sourceTree = "<group>"; };
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PictWindow.xib; sourceTree = "<group>"; };
-		550B9052189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ICONWindow.xib; sourceTree = "<group>"; };
 		550B905C189A036F005AC38D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Application.strings; sourceTree = "<group>"; };
 		550B905F189A0421005AC38D /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Application.strings; sourceTree = "<group>"; };
 		550B9060189A0876005AC38D /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Application.strings; sourceTree = "<group>"; };
@@ -682,8 +662,6 @@
 		E119383D09991C5100A3A6EA /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		E119388B0999296B00A3A6EA /* ElementHEXD.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementHEXD.h; sourceTree = "<group>"; };
 		E119388C0999296B00A3A6EA /* ElementHEXD.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementHEXD.m; sourceTree = "<group>"; };
-		E1193948099940FD00A3A6EA /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E13F7F9808F05B5C00E2A5CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E14AC2740996BF1700D293E5 /* ElementDLLG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDLLG.h; sourceTree = "<group>"; };
 		E14AC2750996BF1700D293E5 /* ElementDLLG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDLLG.m; sourceTree = "<group>"; };
 		E14AC451099702F300D293E5 /* ElementFBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementFBYT.h; sourceTree = "<group>"; };
@@ -694,7 +672,6 @@
 		E17ADBC006A2132800842474 /* NovaTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovaTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF58C069FEA1400F076B8 /* ResKnife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResKnife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hexadecimal Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bitmap Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF78B069FF23700F076B8 /* Font Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Font Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF78C069FF23800F076B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -816,14 +793,6 @@
 			files = (
 				55FEF5CE189D781100888898 /* CoreServices.framework in Frameworks */,
 				E18BF5E0069FEA1400F076B8 /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF698069FEA1800F076B8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E18BF699069FEA1800F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -969,18 +938,6 @@
 				0EF7153F122BD0D0005DF94E /* Localizable.strings */,
 			);
 			path = "Template Editor";
-			sourceTree = "<group>";
-		};
-		3D3B99B704DC167D0056861E /* Icon Editor */ = {
-			isa = PBXGroup;
-			children = (
-				3D3B99B904DC16A30056861E /* ICONWindowController.h */,
-				3D3B99B804DC16A30056861E /* ICONWindowController.m */,
-				B24925E415A6778C00C22060 /* ICONWindow.xib */,
-				E13F7F9808F05B5C00E2A5CB /* Info.plist */,
-				E1193947099940FD00A3A6EA /* InfoPlist.strings */,
-			);
-			path = "Icon Editor";
 			sourceTree = "<group>";
 		};
 		4953F58F248873DD0002340F /* Sound Editor */ = {
@@ -1236,7 +1193,6 @@
 				3D0B38A504DEF41E005AED5E /* Template Editor */,
 				E18BF7B8069FFA5200F076B8 /* Font Editor */,
 				B2FCA77C15A669C800696598 /* PICT Editor */,
-				3D3B99B704DC167D0056861E /* Icon Editor */,
 				F5DF1C0F0254C78801A80001 /* NovaTools */,
 			);
 			path = "Plug-Ins";
@@ -1276,7 +1232,6 @@
 				E18BF58C069FEA1400F076B8 /* ResKnife.app */,
 				E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */,
 				E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */,
-				E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */,
 				E18BF78B069FF23700F076B8 /* Font Editor.plugin */,
 				E17ADBC006A2132800842474 /* NovaTools.plugin */,
 				B2FCA78A15A66ACE00696598 /* PICT Editor.plugin */,
@@ -1467,16 +1422,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E18BF68F069FEA1800F076B8 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E18BF690069FEA1800F076B8 /* ResKnifePluginProtocol.h in Headers */,
-				E18BF691069FEA1800F076B8 /* ResKnifeResourceProtocol.h in Headers */,
-				E18BF692069FEA1800F076B8 /* ICONWindowController.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E18BF69F069FEA1800F076B8 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1620,7 +1565,6 @@
 				B2FCA79B15A66B4A00696598 /* PBXTargetDependency */,
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
 				E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */,
-				0ED5B4B813BF0A7800A5DC6D /* PBXTargetDependency */,
 				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
 				B2B2C41415A9467100D6F61C /* PBXTargetDependency */,
 			);
@@ -1666,25 +1610,6 @@
 			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
 			productName = "NovaTools™";
 			productReference = E17ADBC006A2132800842474 /* NovaTools.plugin */;
-			productType = "com.apple.product-type.bundle";
-		};
-		E18BF68E069FEA1800F076B8 /* Bitmap Editor Cocoa */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E13F7EE108F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Bitmap Editor Cocoa" */;
-			buildPhases = (
-				E18BF68F069FEA1800F076B8 /* Headers */,
-				E18BF693069FEA1800F076B8 /* Resources */,
-				E18BF695069FEA1800F076B8 /* Sources */,
-				E18BF698069FEA1800F076B8 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Bitmap Editor Cocoa";
-			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
-			productName = "Bitmap Editor Cocoa";
-			productReference = E18BF69D069FEA1800F076B8 /* Bitmap Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		E18BF69E069FEA1800F076B8 /* Template Editor Cocoa */ = {
@@ -1768,7 +1693,6 @@
 				E18BF537069FEA1300F076B8 /* ResKnife */,
 				E18BF58E069FEA1400F076B8 /* Hex Editor Cocoa */,
 				E18BF69E069FEA1800F076B8 /* Template Editor Cocoa */,
-				E18BF68E069FEA1800F076B8 /* Bitmap Editor Cocoa */,
 				E18BF78A069FF23700F076B8 /* Font Editor Cocoa */,
 				E18BF5B7069FEA1400F076B8 /* NovaTools */,
 				B2FCA78915A66ACE00696598 /* PICT Editor */,
@@ -1847,15 +1771,6 @@
 				55FEF5B4189D75E500888898 /* colr.xib in Resources */,
 				E18BF5CF069FEA1400F076B8 /* Resource Types.strings in Resources */,
 				55FEF5A5189D758E00888898 /* NovaTools.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF693069FEA1800F076B8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1193949099940FD00A3A6EA /* InfoPlist.strings in Resources */,
-				B24925E615A6778C00C22060 /* ICONWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2002,15 +1917,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E18BF695069FEA1800F076B8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E18BF696069FEA1800F076B8 /* Notifications.m in Sources */,
-				E18BF697069FEA1800F076B8 /* ICONWindowController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E18BF6B3069FEA1800F076B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2085,11 +1991,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0ED5B4B813BF0A7800A5DC6D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E18BF68E069FEA1800F076B8 /* Bitmap Editor Cocoa */;
-			targetProxy = 0ED5B4B713BF0A7800A5DC6D /* PBXContainerItemProxy */;
-		};
 		4953F5A52488759E0002340F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4953F594248874AA0002340F /* Sound Editor */;
@@ -2274,14 +2175,6 @@
 			name = PictWindow.xib;
 			sourceTree = "<group>";
 		};
-		B24925E415A6778C00C22060 /* ICONWindow.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B9052189A0361005AC38D /* Base */,
-			);
-			name = ICONWindow.xib;
-			sourceTree = "<group>";
-		};
 		B27A65CE15A677F00029141B /* TemplateWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2337,14 +2230,6 @@
 				E11936620998551200A3A6EA /* en */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		E1193947099940FD00A3A6EA /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E1193948099940FD00A3A6EA /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */ = {
@@ -2585,26 +2470,6 @@
 			};
 			name = Release;
 		};
-		E13F7EE208F0411100E2A5CB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/Icon Editor/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ulikusterer.resknife.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "Bitmap Editor";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = Debug;
-		};
-		E13F7EE308F0411100E2A5CB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/Icon Editor/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ulikusterer.resknife.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "Bitmap Editor";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = Release;
-		};
 		E13F7EE608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2804,15 +2669,6 @@
 			buildConfigurations = (
 				E13F7EDA08F0411100E2A5CB /* Debug */,
 				E13F7EDB08F0411100E2A5CB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		E13F7EE108F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Bitmap Editor Cocoa" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E13F7EE208F0411100E2A5CB /* Debug */,
-				E13F7EE308F0411100E2A5CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

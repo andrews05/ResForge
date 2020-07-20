@@ -28,7 +28,6 @@
 	<string>PatternWindowController</string>
 	<key>RKEditedTypes</key>
 	<array>
-		<string>PAT </string>
 		<string>PAT#</string>
 	</array>
 </dict>
