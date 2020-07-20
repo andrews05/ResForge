@@ -3,7 +3,7 @@
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
 #import "ResourceNameCell.h"
-#import "ApplicationDelegate.h"
+#import "ResKnife-Swift.h"
 
 @implementation OutlineViewDelegate
 
@@ -72,8 +72,8 @@
     if ([tableColumn.identifier isEqualToString:@"name"]) {
         if ([item isKindOfClass:Resource.class]) {
             Resource *resource = (Resource *)item;
-            
             // set resource icon
+            
             [cell setDrawImage:YES];
             if (![resource representedFork])
                 [cell setImage:[(ApplicationDelegate *)[NSApp delegate] iconForResourceType:resource.type]];

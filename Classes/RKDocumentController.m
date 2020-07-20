@@ -1,5 +1,5 @@
 #import "RKDocumentController.h"
-#import "ApplicationDelegate.h"
+#import "ResKnife-Swift.h"
 #import "OpenPanelDelegate.h"
 
 @implementation RKDocumentController

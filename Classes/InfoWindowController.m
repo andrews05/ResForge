@@ -159,7 +159,7 @@
     selectedResource.attributes ^= (short)[sender selectedTag];
 }
 
-+ (id)sharedInfoWindowController
++ (instancetype)sharedInfoWindowController
 {
 	static InfoWindowController *sharedInfoWindowController = nil;
 	if (!sharedInfoWindowController)

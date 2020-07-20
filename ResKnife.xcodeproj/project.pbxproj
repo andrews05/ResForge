@@ -136,6 +136,8 @@
 		49F6A2EB249C96D00086C0F4 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49F6A2EC249C96D00086C0F4 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
+		49F6C76224C579700078EB55 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
+		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F9560C245D44D200D80C65 /* ElementCOLR.h */; };
 		49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9560D245D44D200D80C65 /* ElementCOLR.m */; };
 		555DFD972059BCE700E1B774 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 555DFD992059BCE700E1B774 /* Credits.rtf */; };
@@ -199,12 +201,10 @@
 		E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */ = {isa = PBXBuildFile; fileRef = E15CFF81099BECAF004929B6 /* ElementDATE.m */; };
 		E18BF53D069FEA1300F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
 		E18BF53E069FEA1300F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
-		E18BF53F069FEA1300F076B8 /* ApplicationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5881D0156D40B01000001 /* ApplicationDelegate.h */; };
 		E18BF540069FEA1300F076B8 /* AttributesFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5881F0156D40B01000001 /* AttributesFormatter.h */; };
 		E18BF541069FEA1300F076B8 /* CreateResourceSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588210156D40B01000001 /* CreateResourceSheetController.h */; };
 		E18BF542069FEA1300F076B8 /* InfoWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588250156D40B01000001 /* InfoWindowController.h */; };
 		E18BF543069FEA1300F076B8 /* OutlineViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588290156D40B01000001 /* OutlineViewDelegate.h */; };
-		E18BF544069FEA1300F076B8 /* PrefsController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882B0156D40B01000001 /* PrefsController.h */; };
 		E18BF545069FEA1300F076B8 /* Resource.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882D0156D40B01000001 /* Resource.h */; };
 		E18BF546069FEA1300F076B8 /* ResourceDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882F0156D40B01000001 /* ResourceDataSource.h */; };
 		E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588310156D40B01000001 /* ResourceDocument.h */; };
@@ -221,12 +221,10 @@
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
 		E18BF569069FEA1300F076B8 /* Resource Type Mappings.strings in Resources */ = {isa = PBXBuildFile; fileRef = E196FEE10551AF9600FE7E58 /* Resource Type Mappings.strings */; };
-		E18BF570069FEA1300F076B8 /* ApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5881E0156D40B01000001 /* ApplicationDelegate.m */; };
 		E18BF571069FEA1300F076B8 /* AttributesFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588200156D40B01000001 /* AttributesFormatter.m */; };
 		E18BF572069FEA1300F076B8 /* CreateResourceSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588220156D40B01000001 /* CreateResourceSheetController.m */; };
 		E18BF573069FEA1300F076B8 /* InfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588260156D40B01000001 /* InfoWindowController.m */; };
 		E18BF574069FEA1300F076B8 /* OutlineViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */; };
-		E18BF575069FEA1300F076B8 /* PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882C0156D40B01000001 /* PrefsController.m */; };
 		E18BF576069FEA1300F076B8 /* Resource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882E0156D40B01000001 /* Resource.m */; };
 		E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588300156D40B01000001 /* ResourceDataSource.m */; };
 		E18BF578069FEA1300F076B8 /* ResourceDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = F5B588320156D40B01000001 /* ResourceDocument.mm */; };
@@ -587,6 +585,9 @@
 		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
 		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStatus.swift; sourceTree = "<group>"; };
+		49F6C75D24C577270078EB55 /* ResKnife-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ResKnife-Bridging-Header.h"; sourceTree = "<group>"; };
+		49F6C76024C577430078EB55 /* PrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsController.swift; sourceTree = "<group>"; };
+		49F6C76124C577440078EB55 /* ApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDelegate.swift; sourceTree = "<group>"; };
 		49F9560C245D44D200D80C65 /* ElementCOLR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCOLR.h; sourceTree = "<group>"; };
 		49F9560D245D44D200D80C65 /* ElementCOLR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCOLR.m; sourceTree = "<group>"; };
 		550B9045189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AboutPanel.xib; sourceTree = "<group>"; };
@@ -1278,6 +1279,9 @@
 				3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */,
 				49F67EB2247B742B00553624 /* MacRomanFormatter.h */,
 				49F67EB3247B742B00553624 /* MacRomanFormatter.m */,
+				49F6C76124C577440078EB55 /* ApplicationDelegate.swift */,
+				49F6C76024C577430078EB55 /* PrefsController.swift */,
+				49F6C75D24C577270078EB55 /* ResKnife-Bridging-Header.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1361,14 +1365,12 @@
 				4970444224720E730035C0FA /* macroman.hpp in Headers */,
 				E18BF53D069FEA1300F076B8 /* ResKnifeResourceProtocol.h in Headers */,
 				E18BF53E069FEA1300F076B8 /* ResKnifePluginProtocol.h in Headers */,
-				E18BF53F069FEA1300F076B8 /* ApplicationDelegate.h in Headers */,
 				4970443224720C070035C0FA /* data.hpp in Headers */,
 				E18BF540069FEA1300F076B8 /* AttributesFormatter.h in Headers */,
 				E18BF541069FEA1300F076B8 /* CreateResourceSheetController.h in Headers */,
 				4970443524720C0B0035C0FA /* type.hpp in Headers */,
 				E18BF542069FEA1300F076B8 /* InfoWindowController.h in Headers */,
 				E18BF543069FEA1300F076B8 /* OutlineViewDelegate.h in Headers */,
-				E18BF544069FEA1300F076B8 /* PrefsController.h in Headers */,
 				4970443924720C0B0035C0FA /* classic.hpp in Headers */,
 				E18BF545069FEA1300F076B8 /* Resource.h in Headers */,
 				E18BF546069FEA1300F076B8 /* ResourceDataSource.h in Headers */,
@@ -1666,6 +1668,9 @@
 					B2FCA78915A66ACE00696598 = {
 						LastSwiftMigration = 1150;
 					};
+					E18BF537069FEA1300F076B8 = {
+						LastSwiftMigration = 1160;
+					};
 					E18BF58E069FEA1400F076B8 = {
 						LastSwiftMigration = 1150;
 					};
@@ -1854,18 +1859,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF570069FEA1300F076B8 /* ApplicationDelegate.m in Sources */,
 				E18BF571069FEA1300F076B8 /* AttributesFormatter.m in Sources */,
 				E18BF572069FEA1300F076B8 /* CreateResourceSheetController.m in Sources */,
 				4970443A24720C0B0035C0FA /* manager.cpp in Sources */,
+				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
 				4970443724720C0B0035C0FA /* extended.cpp in Sources */,
 				E18BF573069FEA1300F076B8 /* InfoWindowController.m in Sources */,
 				E18BF574069FEA1300F076B8 /* OutlineViewDelegate.m in Sources */,
-				E18BF575069FEA1300F076B8 /* PrefsController.m in Sources */,
 				E18BF576069FEA1300F076B8 /* Resource.m in Sources */,
 				E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */,
 				4970443024720C070035C0FA /* data.cpp in Sources */,
 				E18BF578069FEA1300F076B8 /* ResourceDocument.mm in Sources */,
+				49F6C76224C579700078EB55 /* ApplicationDelegate.swift in Sources */,
 				4970443C24720C0B0035C0FA /* classic.cpp in Sources */,
 				4970443B24720C0B0035C0FA /* file.cpp in Sources */,
 				E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */,
@@ -2433,6 +2438,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = ResKnife;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2445,6 +2451,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = ResKnife;
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/ResKnife-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2454,6 +2463,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = ResKnife;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2466,6 +2476,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = ResKnife;
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/ResKnife-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

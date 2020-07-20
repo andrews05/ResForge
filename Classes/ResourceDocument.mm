@@ -2,10 +2,9 @@
 #import "ResourceDataSource.h"
 #import "ResourceNameCell.h"
 #import "Resource.h"
-#import "ApplicationDelegate.h"
+#import "ResKnife-Swift.h"
 #import "OpenPanelDelegate.h"
 #import "OutlineViewDelegate.h"
-#import "PrefsController.h"
 #import "CreateResourceSheetController.h"
 #import "../Categories/NGSCategories.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
@@ -328,11 +327,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
     return true;
 }
 
-- (BOOL)keepBackupFile
-{
-	return [[NSUserDefaults standardUserDefaults] boolForKey:kPreserveBackups];
-}
-
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
 	NSInteger selectedRows = [outlineView numberOfSelectedRows];
@@ -652,7 +646,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)delete:(id)sender
 {
 #pragma unused(sender)
-	if([[NSUserDefaults standardUserDefaults] boolForKey:kDeleteResourceWarning])
+	if([[NSUserDefaults standardUserDefaults] boolForKey:@"DeleteResourceWarning"])
 	{
 		NSAlert *alert = [NSAlert new];
 		alert.messageText = @"Delete Resource";

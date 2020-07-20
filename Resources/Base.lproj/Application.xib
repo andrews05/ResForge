@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -12,7 +12,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="-3" userLabel="Application"/>
         <menu title="Application" systemMenu="main" id="335">
             <items>
                 <menuItem title="ResKnife" id="350">
@@ -21,7 +21,7 @@
                             <menuItem title="About ResKnife" id="352">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="showAbout:" target="431" id="459"/>
+                                    <action selector="orderFrontStandardAboutPanel:" target="-3" id="qrB-aI-Vn4"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Preferences..." keyEquivalent="," id="353">
@@ -190,15 +190,6 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="405">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Show Pasteboard" id="413">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="showPasteboard:" target="431" id="503"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="412">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Find" id="395">
@@ -416,25 +407,13 @@ CA
                                     <action selector="visitWebsite:" target="431" id="509"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Visit Source Repository…" id="385">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="visitSourceforge:" target="431" id="508"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Email Developer…" id="387">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="emailDeveloper:" target="431" id="510"/>
-                                </connections>
-                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
             </items>
             <point key="canvasLocation" x="140" y="154"/>
         </menu>
-        <customObject id="431" customClass="ApplicationDelegate">
+        <customObject id="431" customClass="ApplicationDelegate" customModule="ResKnife" customModuleProvider="target">
             <connections>
                 <outlet property="openPanelDelegate" destination="448" id="450"/>
             </connections>

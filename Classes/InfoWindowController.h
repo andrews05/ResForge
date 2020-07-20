@@ -29,7 +29,7 @@ extern NSString *DocumentInfoDidChangeNotification;
 	Resource				*selectedResource;
 }
 
-+ (id)sharedInfoWindowController;
++ (instancetype)sharedInfoWindowController;
 
 @end
 
