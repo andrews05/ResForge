@@ -87,6 +87,8 @@
 		4966752024BE67E900251406 /* extended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044192472064F0035C0FA /* extended.cpp */; };
 		4966752124BE67ED00251406 /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
 		4966752224BE6C6A00251406 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
+		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
+		4968C03B24C6808200716AB9 /* EditorRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* EditorRegistry.swift */; };
 		4970442E24720C060035C0FA /* writer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044252472064F0035C0FA /* writer.hpp */; };
 		4970442F24720C060035C0FA /* reader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044262472064F0035C0FA /* reader.hpp */; };
 		4970443024720C070035C0FA /* data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044272472064F0035C0FA /* data.cpp */; };
@@ -136,7 +138,6 @@
 		49F6A2EB249C96D00086C0F4 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49F6A2EC249C96D00086C0F4 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
-		49F6C76224C579700078EB55 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F9560C245D44D200D80C65 /* ElementCOLR.h */; };
 		49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9560D245D44D200D80C65 /* ElementCOLR.m */; };
@@ -214,7 +215,6 @@
 		E18BF54E069FEA1300F076B8 /* PasteboardWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */; };
 		E18BF54F069FEA1300F076B8 /* RKDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = F59481AD03D0776C01A8010A /* RKDocumentController.h */; };
 		E18BF550069FEA1300F076B8 /* OpenPanelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F59481B103D077DC01A8010A /* OpenPanelDelegate.h */; };
-		E18BF551069FEA1300F076B8 /* RKEditorRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */; };
 		E18BF552069FEA1300F076B8 /* RKSupportResourceRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */; };
 		E18BF55A069FEA1300F076B8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588420156D40B01000001 /* InfoPlist.strings */; };
 		E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588440156D40B01000001 /* Localizable.strings */; };
@@ -236,7 +236,6 @@
 		E18BF581069FEA1300F076B8 /* RKDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F59481AE03D0776C01A8010A /* RKDocumentController.m */; };
 		E18BF582069FEA1300F076B8 /* OpenPanelDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F59481B203D077DC01A8010A /* OpenPanelDelegate.m */; };
 		E18BF583069FEA1300F076B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755A04DAEB4300B8225B /* main.m */; };
-		E18BF584069FEA1300F076B8 /* RKEditorRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */; };
 		E18BF585069FEA1300F076B8 /* RKSupportResourceRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */; };
 		E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF590069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
@@ -510,6 +509,7 @@
 		496674FD24BBC7CE00251406 /* PictWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictWindowController.swift; sourceTree = "<group>"; };
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
 		4966750024BE5C8D00251406 /* QuickDraw.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QuickDraw.mm; sourceTree = "<group>"; };
+		4968C03424C66D8B00716AB9 /* EditorRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorRegistry.swift; sourceTree = "<group>"; };
 		497043F42472064F0035C0FA /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		497043F52472064F0035C0FA /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		497043F62472064F0035C0FA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1281,6 +1281,7 @@
 				49F67EB3247B742B00553624 /* MacRomanFormatter.m */,
 				49F6C76124C577440078EB55 /* ApplicationDelegate.swift */,
 				49F6C76024C577430078EB55 /* PrefsController.swift */,
+				4968C03424C66D8B00716AB9 /* EditorRegistry.swift */,
 				49F6C75D24C577270078EB55 /* ResKnife-Bridging-Header.h */,
 			);
 			path = Classes;
@@ -1387,7 +1388,6 @@
 				4970444024720C0B0035C0FA /* resource.hpp in Headers */,
 				49F67EB4247B742B00553624 /* MacRomanFormatter.h in Headers */,
 				E18BF550069FEA1300F076B8 /* OpenPanelDelegate.h in Headers */,
-				E18BF551069FEA1300F076B8 /* RKEditorRegistry.h in Headers */,
 				4970443424720C0B0035C0FA /* rez.hpp in Headers */,
 				E18BF552069FEA1300F076B8 /* RKSupportResourceRegistry.h in Headers */,
 				0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */,
@@ -1862,6 +1862,7 @@
 				E18BF571069FEA1300F076B8 /* AttributesFormatter.m in Sources */,
 				E18BF572069FEA1300F076B8 /* CreateResourceSheetController.m in Sources */,
 				4970443A24720C0B0035C0FA /* manager.cpp in Sources */,
+				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
 				4970443724720C0B0035C0FA /* extended.cpp in Sources */,
 				E18BF573069FEA1300F076B8 /* InfoWindowController.m in Sources */,
@@ -1870,12 +1871,12 @@
 				E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */,
 				4970443024720C070035C0FA /* data.cpp in Sources */,
 				E18BF578069FEA1300F076B8 /* ResourceDocument.mm in Sources */,
-				49F6C76224C579700078EB55 /* ApplicationDelegate.swift in Sources */,
 				4970443C24720C0B0035C0FA /* classic.cpp in Sources */,
 				4970443B24720C0B0035C0FA /* file.cpp in Sources */,
 				E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */,
 				4970443624720C0B0035C0FA /* resource.cpp in Sources */,
 				49F67EB6247B742B00553624 /* MacRomanFormatter.m in Sources */,
+				4968C03B24C6808200716AB9 /* EditorRegistry.swift in Sources */,
 				E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */,
 				E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */,
 				E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */,
@@ -1886,7 +1887,6 @@
 				E18BF583069FEA1300F076B8 /* main.m in Sources */,
 				4970443324720C070035C0FA /* writer.cpp in Sources */,
 				4970443F24720C0B0035C0FA /* type.cpp in Sources */,
-				E18BF584069FEA1300F076B8 /* RKEditorRegistry.m in Sources */,
 				4970444324720E730035C0FA /* macroman.cpp in Sources */,
 				E18BF585069FEA1300F076B8 /* RKSupportResourceRegistry.m in Sources */,
 				4970443124720C070035C0FA /* reader.cpp in Sources */,

@@ -13,7 +13,6 @@
 #include <copyfile.h>
 
 #import "../Plug-Ins/ResKnifePluginProtocol.h"
-#import "RKEditorRegistry.h"
 
 
 NSString *DocumentInfoWillChangeNotification = @"DocumentInfoWillChangeNotification";
@@ -253,7 +252,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (NSString *)filenameForExport:(Resource *)resource
 {
     NSString *resType = GetNSStringFromOSType(resource.type);
-    Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:resType];
+    Class editorClass = [EditorRegistry.defaultRegistry editorFor:resType];
     NSString *extension;
     
     // ask for file extension
@@ -279,7 +278,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)exportResource:(Resource *)resource toURL:(NSURL *)url
 {
-    Class editorClass = [[RKEditorRegistry defaultRegistry] editorForType:GetNSStringFromOSType(resource.type)];
+    Class editorClass = [EditorRegistry.defaultRegistry editorFor:GetNSStringFromOSType(resource.type)];
     if ([editorClass respondsToSelector:@selector(exportResource:toURL:)]) {
         [editorClass exportResource:resource toURL:url];
     } else if ([editorClass respondsToSelector:@selector(dataForFileExport:)]) {
@@ -460,7 +459,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (id <ResKnifePlugin>)openResourceUsingEditor:(Resource *)resource
 {
     NSString *type = GetNSStringFromOSType(resource.type);
-    Class editorClass = [RKEditorRegistry.defaultRegistry editorForType:type];
+    Class editorClass = [EditorRegistry.defaultRegistry editorFor:type];
     if (editorClass) {
         return [self openResource:resource usingEditor:editorClass template:nil];
     }
@@ -472,7 +471,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (id <ResKnifePlugin>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
 {
 	// opens resource in template using TMPL resource with name templateName
-    Class editorClass = [RKEditorRegistry.defaultRegistry editorForType:@"Template Editor"];
+    Class editorClass = [EditorRegistry.defaultRegistry editorFor:@"Template Editor"];
     Resource *tmpl = [Resource resourceOfType:'TMPL' withName:templateName inDocument:nil];
     // open the resources, passing in the template to use
     if (tmpl && editorClass) {
@@ -485,7 +484,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (id <ResKnifePlugin>)openResourceAsHex:(Resource *)resource
 {
-    Class editorClass = [RKEditorRegistry.defaultRegistry editorForType: @"Hexadecimal Editor"];
+    Class editorClass = [EditorRegistry.defaultRegistry editorFor: @"Hexadecimal Editor"];
     return [self openResource:resource usingEditor:editorClass template:nil];
 }
 

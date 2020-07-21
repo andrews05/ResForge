@@ -19,6 +19,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         NSUserDefaultsController.shared.initialValues = prefDict
         
         RKSupportResourceRegistry.scanForSupportResources()
+        EditorRegistry.default.scanForPlugins()
     }
     
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
@@ -53,11 +54,12 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     
     @objc public func icon(forResourceType resourceType: OSType) -> NSImage! {
         let type = GetNSStringFromOSType(resourceType)
-        var icon = iconCache[type]
-        if icon == nil {
-            icon = NSWorkspace.shared.icon(forFileType: "")
-            iconCache[type] = icon
+        if iconCache[type] == nil, let editor = EditorRegistry.default.editor(for: type) {
+            iconCache[type] = editor.icon?(forResourceType: resourceType)
         }
-        return icon
+        if iconCache[type] == nil {
+            iconCache[type] = NSWorkspace.shared.icon(forFileType: "")
+        }
+        return iconCache[type]
     }
 }

@@ -20,16 +20,9 @@
 	<string>4</string>
 	<key>NSPrincipalClass</key>
 	<string>TemplateWindowController</string>
-	<key>RKSupportedTypes</key>
+	<key>RKEditedTypes</key>
 	<array>
-		<dict>
-			<key>IsResKnifeDefaultForType</key>
-			<true/>
-			<key>RKTypeName</key>
-			<string>Template Editor</string>
-			<key>RKTypeRole</key>
-			<string>Editor</string>
-		</dict>
+		<string>Template Editor</string>
 	</array>
 </dict>
 </plist>

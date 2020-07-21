@@ -6,4 +6,4 @@
 #import "InfoWindowController.h"
 #import "OpenPanelDelegate.h"
 #import "ResKnifeResourceProtocol.h"
-#import "RKEditorRegistry.h"
+#import "ResKnifePluginProtocol.h"

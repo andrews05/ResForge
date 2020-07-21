@@ -24,11 +24,11 @@ class LaunchActionTransformer: ValueTransformer {
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
-        return LaunchActionTransformer.launchActions.firstIndex(of: value as! String)
+        return Self.launchActions.firstIndex(of: value as! String)
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any? {
-        return LaunchActionTransformer.launchActions[value as! Int]
+        return Self.launchActions[value as! Int]
     }
 }
 

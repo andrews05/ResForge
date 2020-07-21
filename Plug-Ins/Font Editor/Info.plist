@@ -20,18 +20,11 @@
 	<string>1</string>
 	<key>NSPrincipalClass</key>
 	<string>FontWindowController</string>
+	<key>RKEditedTypes</key>
+	<array>
+		<string>sfnt</string>
+	</array>
 	<key>RKPluginName</key>
 	<string>Great Expectations</string>
-	<key>RKSupportedTypes</key>
-	<array>
-		<dict>
-			<key>IsResKnifeDefaultForType</key>
-			<string>YES</string>
-			<key>RKTypeName</key>
-			<string>sfnt</string>
-			<key>RKTypeRole</key>
-			<string>Editor</string>
-		</dict>
-	</array>
 </dict>
 </plist>

@@ -20,16 +20,9 @@
 	<string>3</string>
 	<key>NSPrincipalClass</key>
 	<string>HexWindowController</string>
-	<key>RKSupportedTypes</key>
+	<key>RKEditedTypes</key>
 	<array>
-		<dict>
-			<key>IsResKnifeDefaultForType</key>
-			<true/>
-			<key>RKTypeName</key>
-			<string>Hexadecimal Editor</string>
-			<key>RKTypeRole</key>
-			<string>Editor</string>
-		</dict>
+		<string>Hexadecimal Editor</string>
 	</array>
 </dict>
 </plist>
