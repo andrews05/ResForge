@@ -12,7 +12,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="Application" systemMenu="main" id="335">
             <items>
                 <menuItem title="ResKnife" id="350">
@@ -435,10 +435,10 @@ CA
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="xWq-2O-h1B"/>
                     </constraints>
-                    <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kwd-tA-MiD" id="k6W-79-SSl">
+                    <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="kwd-tA-MiD" id="k6W-79-SSl">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
-                        <menu key="menu" id="e1x-em-dsm">
+                        <menu key="menu" autoenablesItems="NO" id="e1x-em-dsm">
                             <items>
                                 <menuItem title="Automatic" state="on" id="kwd-tA-MiD">
                                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -447,7 +447,7 @@ CA
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="448" name="selectedIndex" keyPath="forkIndex" id="6lU-6W-FIt"/>
+                        <action selector="selectFork:" target="448" id="YIu-vl-WQr"/>
                     </connections>
                 </popUpButton>
             </subviews>
@@ -461,13 +461,13 @@ CA
             </constraints>
             <point key="canvasLocation" x="3" y="361"/>
         </customView>
-        <customObject id="448" customClass="OpenPanelDelegate">
+        <customObject id="448" customClass="OpenPanelDelegate" customModule="ResKnife" customModuleProvider="target">
             <connections>
+                <outlet property="accessoryView" destination="432" id="ftN-P4-5CA"/>
                 <outlet property="forkSelect" destination="NW9-Ng-yIh" id="FkP-Ya-ttz"/>
-                <outlet property="openPanelAccessoryView" destination="432" id="455"/>
             </connections>
         </customObject>
-        <customObject id="tca-TO-GWK" userLabel="Document Controller" customClass="RKDocumentController"/>
+        <customObject id="tca-TO-GWK" userLabel="Document Controller" customClass="OpenPanelDelegate" customModule="ResKnife" customModuleProvider="target"/>
         <userDefaultsController representsSharedInstance="YES" id="HMK-4J-LXK"/>
     </objects>
 </document>

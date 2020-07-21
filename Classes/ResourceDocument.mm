@@ -3,7 +3,6 @@
 #import "ResourceNameCell.h"
 #import "Resource.h"
 #import "ResKnife-Swift.h"
-#import "OpenPanelDelegate.h"
 #import "OutlineViewDelegate.h"
 #import "CreateResourceSheetController.h"
 #import "../Categories/NGSCategories.h"

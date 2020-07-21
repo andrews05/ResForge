@@ -65,6 +65,8 @@
 		4962B27924569EE50065590E /* ElementWBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B27724569EE50065590E /* ElementWBIT.m */; };
 		4962B27C245778950065590E /* ElementLBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B27A245778950065590E /* ElementLBIT.h */; };
 		4962B27D245778950065590E /* ElementLBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B27B245778950065590E /* ElementLBIT.m */; };
+		4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */; };
+		4962BCD624C6D9BC00990DA0 /* OutlineViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */; };
 		496674FE24BBC7CE00251406 /* PictWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* PictWindowController.swift */; };
 		4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
 		4966750D24BE601B00251406 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -213,8 +215,6 @@
 		E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */; };
 		E18BF54D069FEA1300F076B8 /* PasteboardDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071603CCC61E01A8010A /* PasteboardDocument.h */; };
 		E18BF54E069FEA1300F076B8 /* PasteboardWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */; };
-		E18BF54F069FEA1300F076B8 /* RKDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = F59481AD03D0776C01A8010A /* RKDocumentController.h */; };
-		E18BF550069FEA1300F076B8 /* OpenPanelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F59481B103D077DC01A8010A /* OpenPanelDelegate.h */; };
 		E18BF552069FEA1300F076B8 /* RKSupportResourceRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */; };
 		E18BF55A069FEA1300F076B8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588420156D40B01000001 /* InfoPlist.strings */; };
 		E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588440156D40B01000001 /* Localizable.strings */; };
@@ -224,7 +224,6 @@
 		E18BF571069FEA1300F076B8 /* AttributesFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588200156D40B01000001 /* AttributesFormatter.m */; };
 		E18BF572069FEA1300F076B8 /* CreateResourceSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588220156D40B01000001 /* CreateResourceSheetController.m */; };
 		E18BF573069FEA1300F076B8 /* InfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588260156D40B01000001 /* InfoWindowController.m */; };
-		E18BF574069FEA1300F076B8 /* OutlineViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */; };
 		E18BF576069FEA1300F076B8 /* Resource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882E0156D40B01000001 /* Resource.m */; };
 		E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588300156D40B01000001 /* ResourceDataSource.m */; };
 		E18BF578069FEA1300F076B8 /* ResourceDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = F5B588320156D40B01000001 /* ResourceDocument.mm */; };
@@ -233,8 +232,6 @@
 		E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071703CCC61E01A8010A /* PasteboardDocument.m */; };
 		E18BF580069FEA1300F076B8 /* PasteboardWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071B03CCFAAC01A8010A /* PasteboardWindowController.m */; };
-		E18BF581069FEA1300F076B8 /* RKDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F59481AE03D0776C01A8010A /* RKDocumentController.m */; };
-		E18BF582069FEA1300F076B8 /* OpenPanelDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F59481B203D077DC01A8010A /* OpenPanelDelegate.m */; };
 		E18BF583069FEA1300F076B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755A04DAEB4300B8225B /* main.m */; };
 		E18BF585069FEA1300F076B8 /* RKSupportResourceRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */; };
 		E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
@@ -505,6 +502,7 @@
 		4962B27724569EE50065590E /* ElementWBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementWBIT.m; sourceTree = "<group>"; };
 		4962B27A245778950065590E /* ElementLBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementLBIT.h; sourceTree = "<group>"; };
 		4962B27B245778950065590E /* ElementLBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementLBIT.m; sourceTree = "<group>"; };
+		4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenPanelDelegate.swift; sourceTree = "<group>"; };
 		496674FC24BBC7CD00251406 /* PICT Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PICT Editor-Bridging-Header.h"; sourceTree = "<group>"; };
 		496674FD24BBC7CE00251406 /* PictWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictWindowController.swift; sourceTree = "<group>"; };
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
@@ -1280,6 +1278,7 @@
 				49F67EB2247B742B00553624 /* MacRomanFormatter.h */,
 				49F67EB3247B742B00553624 /* MacRomanFormatter.m */,
 				49F6C76124C577440078EB55 /* ApplicationDelegate.swift */,
+				4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */,
 				49F6C76024C577430078EB55 /* PrefsController.swift */,
 				4968C03424C66D8B00716AB9 /* EditorRegistry.swift */,
 				49F6C75D24C577270078EB55 /* ResKnife-Bridging-Header.h */,
@@ -1384,10 +1383,8 @@
 				4970444124720C0B0035C0FA /* extended.hpp in Headers */,
 				E18BF54E069FEA1300F076B8 /* PasteboardWindowController.h in Headers */,
 				4970443824720C0B0035C0FA /* file.hpp in Headers */,
-				E18BF54F069FEA1300F076B8 /* RKDocumentController.h in Headers */,
 				4970444024720C0B0035C0FA /* resource.hpp in Headers */,
 				49F67EB4247B742B00553624 /* MacRomanFormatter.h in Headers */,
-				E18BF550069FEA1300F076B8 /* OpenPanelDelegate.h in Headers */,
 				4970443424720C0B0035C0FA /* rez.hpp in Headers */,
 				E18BF552069FEA1300F076B8 /* RKSupportResourceRegistry.h in Headers */,
 				0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */,
@@ -1865,8 +1862,8 @@
 				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
 				4970443724720C0B0035C0FA /* extended.cpp in Sources */,
+				4962BCD624C6D9BC00990DA0 /* OutlineViewDelegate.m in Sources */,
 				E18BF573069FEA1300F076B8 /* InfoWindowController.m in Sources */,
-				E18BF574069FEA1300F076B8 /* OutlineViewDelegate.m in Sources */,
 				E18BF576069FEA1300F076B8 /* Resource.m in Sources */,
 				E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */,
 				4970443024720C070035C0FA /* data.cpp in Sources */,
@@ -1881,9 +1878,8 @@
 				E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */,
 				E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */,
 				E18BF580069FEA1300F076B8 /* PasteboardWindowController.m in Sources */,
-				E18BF581069FEA1300F076B8 /* RKDocumentController.m in Sources */,
 				4970443E24720C0B0035C0FA /* rez.cpp in Sources */,
-				E18BF582069FEA1300F076B8 /* OpenPanelDelegate.m in Sources */,
+				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
 				E18BF583069FEA1300F076B8 /* main.m in Sources */,
 				4970443324720C070035C0FA /* writer.cpp in Sources */,
 				4970443F24720C0B0035C0FA /* type.cpp in Sources */,
