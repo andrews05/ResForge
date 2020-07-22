@@ -18,7 +18,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         UserDefaults.standard.register(defaults: prefDict)
         NSUserDefaultsController.shared.initialValues = prefDict
         
-        RKSupportResourceRegistry.scanForSupportResources()
+        SupportResourceRegistry.scanForResources()
         EditorRegistry.default.scanForPlugins()
     }
     
@@ -52,7 +52,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         NSWorkspace.shared.open(URL(string: "http://resknife.sourceforge.net/")!)
     }
     
-    @objc public func icon(forResourceType resourceType: OSType) -> NSImage! {
+    @objc func icon(forResourceType resourceType: OSType) -> NSImage! {
         let type = GetNSStringFromOSType(resourceType)
         if iconCache[type] == nil, let editor = EditorRegistry.default.editor(for: type) {
             iconCache[type] = editor.icon?(forResourceType: resourceType)

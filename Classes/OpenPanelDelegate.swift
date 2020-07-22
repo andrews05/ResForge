@@ -22,6 +22,7 @@ class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
         openPanel.delegate = self
         openPanel.accessoryView = accessoryView
         openPanel.treatsFilePackagesAsDirectories = true
+        openPanel.isAccessoryViewDisclosed = forkIndex != 0
         
         let response = super.runModalOpenPanel(openPanel, forTypes: types)
         if response == NSApplication.ModalResponse.OK.rawValue {

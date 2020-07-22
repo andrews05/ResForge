@@ -1,19 +1,26 @@
+/*
+ This is a registry where all our resource-editor plugins are looked
+ up and entered in a list, so you can ask for the editor for a specific
+ resource type and it is returned immediately. This registry reads the
+ types a plugin handles from their info.plist.
+ */
+
 import Foundation
 
 class EditorRegistry: NSObject {
-    public static let `default` = EditorRegistry()
+    static let `default` = EditorRegistry()
     
     private var registry: [String: ResKnifePlugin.Type] = [:]
     
-    @objc public static func defaultRegistry() -> EditorRegistry {
+    @objc static func defaultRegistry() -> EditorRegistry {
         return Self.default
     }
     
-    @objc public func editor(for type: String) -> ResKnifePlugin.Type? {
+    @objc func editor(for type: String) -> ResKnifePlugin.Type? {
         return registry[type]
     }
     
-    public func scanForPlugins() {
+    func scanForPlugins() {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .allDomainsMask)
         for url in appSupport {
             self.scan(folder: url.appendingPathComponent("ResKnife/Plugins"))
@@ -31,18 +38,15 @@ class EditorRegistry: NSObject {
             return
         }
         for item in items {
-            guard item.pathExtension == "plugin" else {
-                continue
-            }
-            let plugin = Bundle(url: item)
             guard
-                let pluginClass = plugin?.principalClass as? ResKnifePlugin.Type,
-                let info = plugin?.infoDictionary,
-                let supportedTypes = info["RKEditedTypes"] as? Array<String>
+                item.pathExtension == "plugin",
+                let plugin = Bundle(url: item),
+                let pluginClass = plugin.principalClass as? ResKnifePlugin.Type,
+                let supportedTypes = plugin.infoDictionary?["RKEditedTypes"] as? Array<String>
             else {
                 continue
             }
-            RKSupportResourceRegistry.scanForSupportResources(in: plugin)
+            SupportResourceRegistry.scanForResources(in: plugin)
             for type in supportedTypes {
                 registry[type] = pluginClass
             }

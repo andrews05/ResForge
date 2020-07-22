@@ -91,6 +91,7 @@
 		4966752224BE6C6A00251406 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
 		4968C03B24C6808200716AB9 /* EditorRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* EditorRegistry.swift */; };
+		4968C03F24C78D7400716AB9 /* SupportResourceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03E24C78D7400716AB9 /* SupportResourceRegistry.swift */; };
 		4970442E24720C060035C0FA /* writer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044252472064F0035C0FA /* writer.hpp */; };
 		4970442F24720C060035C0FA /* reader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044262472064F0035C0FA /* reader.hpp */; };
 		4970443024720C070035C0FA /* data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044272472064F0035C0FA /* data.cpp */; };
@@ -215,7 +216,6 @@
 		E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */; };
 		E18BF54D069FEA1300F076B8 /* PasteboardDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071603CCC61E01A8010A /* PasteboardDocument.h */; };
 		E18BF54E069FEA1300F076B8 /* PasteboardWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */; };
-		E18BF552069FEA1300F076B8 /* RKSupportResourceRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */; };
 		E18BF55A069FEA1300F076B8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588420156D40B01000001 /* InfoPlist.strings */; };
 		E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588440156D40B01000001 /* Localizable.strings */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
@@ -233,7 +233,6 @@
 		E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071703CCC61E01A8010A /* PasteboardDocument.m */; };
 		E18BF580069FEA1300F076B8 /* PasteboardWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071B03CCFAAC01A8010A /* PasteboardWindowController.m */; };
 		E18BF583069FEA1300F076B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755A04DAEB4300B8225B /* main.m */; };
-		E18BF585069FEA1300F076B8 /* RKSupportResourceRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */; };
 		E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF590069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
 		E18BF591069FEA1400F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
@@ -508,6 +507,7 @@
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
 		4966750024BE5C8D00251406 /* QuickDraw.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QuickDraw.mm; sourceTree = "<group>"; };
 		4968C03424C66D8B00716AB9 /* EditorRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorRegistry.swift; sourceTree = "<group>"; };
+		4968C03E24C78D7400716AB9 /* SupportResourceRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportResourceRegistry.swift; sourceTree = "<group>"; };
 		497043F42472064F0035C0FA /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		497043F52472064F0035C0FA /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		497043F62472064F0035C0FA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1281,6 +1281,7 @@
 				4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */,
 				49F6C76024C577430078EB55 /* PrefsController.swift */,
 				4968C03424C66D8B00716AB9 /* EditorRegistry.swift */,
+				4968C03E24C78D7400716AB9 /* SupportResourceRegistry.swift */,
 				49F6C75D24C577270078EB55 /* ResKnife-Bridging-Header.h */,
 			);
 			path = Classes;
@@ -1386,7 +1387,6 @@
 				4970444024720C0B0035C0FA /* resource.hpp in Headers */,
 				49F67EB4247B742B00553624 /* MacRomanFormatter.h in Headers */,
 				4970443424720C0B0035C0FA /* rez.hpp in Headers */,
-				E18BF552069FEA1300F076B8 /* RKSupportResourceRegistry.h in Headers */,
 				0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */,
 				4970442E24720C060035C0FA /* writer.hpp in Headers */,
 			);
@@ -1878,13 +1878,13 @@
 				E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */,
 				E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */,
 				E18BF580069FEA1300F076B8 /* PasteboardWindowController.m in Sources */,
+				4968C03F24C78D7400716AB9 /* SupportResourceRegistry.swift in Sources */,
 				4970443E24720C0B0035C0FA /* rez.cpp in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
 				E18BF583069FEA1300F076B8 /* main.m in Sources */,
 				4970443324720C070035C0FA /* writer.cpp in Sources */,
 				4970443F24720C0B0035C0FA /* type.cpp in Sources */,
 				4970444324720E730035C0FA /* macroman.cpp in Sources */,
-				E18BF585069FEA1300F076B8 /* RKSupportResourceRegistry.m in Sources */,
 				4970443124720C070035C0FA /* reader.cpp in Sources */,
 				0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */,
 			);
