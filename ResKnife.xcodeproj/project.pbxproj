@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EBA8664122CF49800FEC1AC /* NGSCategories.h */; };
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
-		0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		49203D7924BFEC840096DFF5 /* cicn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FC2472064F0035C0FA /* cicn.cpp */; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
@@ -155,7 +154,6 @@
 		55FEF5BD189D762F00888898 /* ship.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BB189D762F00888898 /* ship.xib */; };
 		55FEF5C0189D764300888898 /* desc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BE189D764300888898 /* desc.xib */; };
 		55FEF5CE189D781100888898 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F54625C6029174F601A8010C /* CoreServices.framework */; };
-		B22100CD15D3F944009FDEE1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7153F122BD0D0005DF94E /* Localizable.strings */; };
 		B229EEF415A4FB6F0032C12C /* AboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEE815A4FB6F0032C12C /* AboutPanel.xib */; };
 		B229EEF515A4FB6F0032C12C /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEA15A4FB6F0032C12C /* Application.xib */; };
 		B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */; };
@@ -432,7 +430,6 @@
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TemplateWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TemplateWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3D2EE5E204E5C56F00515930 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RKEditorRegistry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RKEditorRegistry.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -934,7 +931,6 @@
 				3D0933EB04DF319F00DD74B1 /* Field Types */,
 				E11937F309991C1100A3A6EA /* Support Resources */,
 				E18BFA3606A20B7A00F076B8 /* Info.plist */,
-				0EF7153F122BD0D0005DF94E /* Localizable.strings */,
 			);
 			path = "Template Editor";
 			sourceTree = "<group>";
@@ -1675,10 +1671,9 @@
 			};
 			buildConfigurationList = E13F7F0508F0411100E2A5CB /* Build configuration list for PBXProject "ResKnife" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
 				Base,
 				en,
 				ja,
@@ -1756,7 +1751,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B27A65D715A678260029141B /* HexWindow.xib in Resources */,
-				B22100CD15D3F944009FDEE1 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1780,7 +1774,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0EF71540122BD0D0005DF94E /* Localizable.strings in Resources */,
 				B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2025,14 +2018,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		0EF7153F122BD0D0005DF94E /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D2EE5E204E5C56F00515930 /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
 		555DFD992059BCE700E1B774 /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2276,15 +2261,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Plug-Ins/Sound Editor/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.Sound-Editor";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Sound Editor/Sound Editor-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2297,15 +2276,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Plug-Ins/Sound Editor/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.Sound-Editor";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Sound Editor/Sound Editor-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -2342,9 +2315,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Plug-Ins/PICT Editor/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.PICT-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/PICT Editor/PICT Editor-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2360,9 +2332,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Plug-Ins/PICT Editor/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.PICT-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/PICT Editor/PICT Editor-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -2381,7 +2352,7 @@
 				);
 				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Hexadecimal-Editor";
 				PRODUCT_NAME = "Hexadecimal Editor";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2401,7 +2372,7 @@
 				);
 				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Hexadecimal-Editor";
 				PRODUCT_NAME = "Hexadecimal Editor";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

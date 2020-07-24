@@ -26,7 +26,7 @@ extern NSString *RKResourcePboardType;
 - (instancetype)init
 {
     if (self = [super init])
-        self.editorWindows = [NSMutableDictionary new];
+        self.registry = [EditorRegistry new];
     return self;
 }
 
@@ -251,7 +251,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (NSString *)filenameForExport:(Resource *)resource
 {
     NSString *resType = GetNSStringFromOSType(resource.type);
-    Class editorClass = [EditorRegistry.defaultRegistry editorFor:resType];
+    Class editorClass = [EditorRegistry editorFor:resType];
     NSString *extension;
     
     // ask for file extension
@@ -277,7 +277,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)exportResource:(Resource *)resource toURL:(NSURL *)url
 {
-    Class editorClass = [EditorRegistry.defaultRegistry editorFor:GetNSStringFromOSType(resource.type)];
+    Class editorClass = [EditorRegistry editorFor:GetNSStringFromOSType(resource.type)];
     if ([editorClass respondsToSelector:@selector(exportResource:toURL:)]) {
         [editorClass exportResource:resource toURL:url];
     } else if ([editorClass respondsToSelector:@selector(dataForFileExport:)]) {
@@ -312,17 +312,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
     [dataSource addResources:_resources];
 }
 
-- (BOOL)windowShouldClose:(NSWindow *)sender
-{
-    // FIXME: This doesn't get called on quit, so app will still exit with unsaved resource windows open
-    for (NSWindowController *controller in self.editorWindows.allValues) {
-        if (![controller respondsToSelector:@selector(windowShouldClose:)] || [controller performSelector:@selector(windowShouldClose:) withObject:controller.window]) {
-            [controller close];
-        } else {
-            return false;
-        }
+- (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(void *)contextInfo {
+    if ([self.registry closeAll]) {
+        [super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
     }
-    return true;
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
@@ -458,9 +451,9 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (id <ResKnifePlugin>)openResourceUsingEditor:(Resource *)resource
 {
     NSString *type = GetNSStringFromOSType(resource.type);
-    Class editorClass = [EditorRegistry.defaultRegistry editorFor:type];
+    Class editorClass = [EditorRegistry editorFor:type];
     if (editorClass) {
-        return [self openResource:resource usingEditor:editorClass template:nil];
+        return [self.registry openWithResource:resource using:editorClass template:nil];
     }
     
 	// if no editor exists, or the editor is broken, open using template
@@ -470,11 +463,11 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (id <ResKnifePlugin>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
 {
 	// opens resource in template using TMPL resource with name templateName
-    Class editorClass = [EditorRegistry.defaultRegistry editorFor:@"Template Editor"];
+    Class editorClass = [EditorRegistry editorFor:@"Template Editor"];
     Resource *tmpl = [Resource resourceOfType:'TMPL' withName:templateName inDocument:nil];
     // open the resources, passing in the template to use
     if (tmpl && editorClass) {
-        return [self openResource:resource usingEditor:editorClass template:tmpl];
+        return [self.registry openWithResource:resource using:editorClass template:tmpl];
     }
 	
 	// if no template exists, or template editor is broken, open as hex
@@ -483,39 +476,8 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (id <ResKnifePlugin>)openResourceAsHex:(Resource *)resource
 {
-    Class editorClass = [EditorRegistry.defaultRegistry editorFor: @"Hexadecimal Editor"];
-    return [self openResource:resource usingEditor:editorClass template:nil];
-}
-
-
-- (id <ResKnifePlugin>)openResource:(Resource *)resource usingEditor:(Class)editorClass template:(Resource *)tmpl
-{
-    // Keep track of opened resources so we don't open them multiple times
-    NSString *key = [resource.description stringByAppendingString:editorClass.className];
-    id <ResKnifePlugin> plug = self.editorWindows[key];
-    if (plug) {
-        [[(NSWindowController *)plug window] makeKeyAndOrderFront:nil];
-        return plug;
-    }
-    
-    if (tmpl) {
-        plug = [(id <ResKnifeTemplatePlugin>)[editorClass alloc] initWithResource:resource template:tmpl];
-    } else {
-        plug = [(id <ResKnifePlugin>)[editorClass alloc] initWithResource:resource];
-    }
-    self.editorWindows[key] = plug;
-    NSWindow *window = [(NSWindowController *)plug window];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(editorClosed:) name:NSWindowWillCloseNotification object:window];
-    return plug;
-}
-
-- (void)editorClosed:(NSNotification *)notification
-{
-    NSWindow *window = (NSWindow *)[notification object];
-    for (id key in [self.editorWindows allKeysForObject:window.windowController]) {
-        [self.editorWindows removeObjectForKey:key];
-    }
-    [NSNotificationCenter.defaultCenter removeObserver:self name:nil object:notification.object];
+    Class editorClass = [EditorRegistry editorFor: @"Hexadecimal Editor"];
+    return [self.registry openWithResource:resource using:editorClass template:nil];
 }
 
 

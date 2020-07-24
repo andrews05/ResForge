@@ -1,8 +1,7 @@
 import Cocoa
 
-class HexWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDelegate, ResKnifePlugin, HFTextViewDelegate {
+class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlugin, HFTextViewDelegate {
     @objc let resource: ResKnifeResource
-    private let _undoManager = UndoManager()
     @IBOutlet var textView: HFTextView!
     
     @IBOutlet var findView: NSView!
@@ -22,7 +21,6 @@ class HexWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDele
         super.init(window: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange), name: NSNotification.Name.ResourceDataDidChange, object: resource)
-        self.window?.makeKeyAndOrderFront(self)
     }
     
     required init?(coder: NSCoder) {
@@ -52,7 +50,7 @@ class HexWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDele
         textView.controller.font = NSFont.userFixedPitchFont(ofSize: 10.0)!
         textView.data = resource.data
         textView.delegate = self
-        textView.controller.undoManager = self._undoManager
+        textView.controller.undoManager = self.window?.undoManager
         
         textView.layoutRepresenter.performLayout();
     }
@@ -79,10 +77,6 @@ class HexWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDele
             return false
         }
         return true
-    }
-    
-    func windowWillReturnUndoManager(_ sender: NSWindow) -> UndoManager? {
-        return _undoManager
     }
     
     func hexTextView(_ view: HFTextView, didChangeProperties properties: HFControllerPropertyBits) {

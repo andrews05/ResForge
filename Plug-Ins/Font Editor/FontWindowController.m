@@ -21,9 +21,10 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	resource = inResource;
 	headerTable = [[NSMutableArray alloc] init];
 	[self loadFontFromResource];
-	
-	// load the window from the nib
-	[self window];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidBecomeKey:) name:NSWindowDidBecomeKeyNotification object:self.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResignKey:) name:NSWindowDidResignKeyNotification object:self.window];
+
 	return self;
 }
 
@@ -85,9 +86,6 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	
 	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	
-	// finally, show the window
-	[self showWindow:self];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification

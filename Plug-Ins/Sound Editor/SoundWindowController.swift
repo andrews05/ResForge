@@ -1,7 +1,7 @@
 import AVKit
 import Cocoa
 
-class SoundWindowController: NSWindowController, ResKnifePlugin {
+class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
     @objc let resource: ResKnifeResource
     private let sound: SoundResource
     @IBOutlet var playButton: NSButton!
@@ -27,7 +27,6 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.soundDidPlayStop), name: .SoundDidStartPlaying, object: sound)
         NotificationCenter.default.addObserver(self, selector: #selector(self.soundDidPlayStop), name: .SoundDidStopPlaying, object: sound)
-        self.window?.makeKeyAndOrderFront(self)
     }
     
     required init?(coder: NSCoder) {
@@ -45,23 +44,34 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
         sound.play()
     }
     
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        switch menuItem.action {
+        case #selector(saveResource(_:)):
+            return self.window!.isDocumentEdited
+        case #selector(revertResource(_:)):
+            return self.window!.isDocumentEdited
+        default:
+            return true
+        }
+    }
+    
     private func loadInfo() {
-        if resource.data!.count == 0 {
-            self.format.stringValue = "(empty)"
-        } else if sound.format != 0 {
+        if sound.format != 0 {
             self.format.stringValue = SoundResource.formatNames[sound.format] ?? NSFileTypeForHFSTypeCode(OSType(sound.format))
             if sound.valid {
                 self.duration.stringValue = stringFromSeconds(sound.duration)
-                playButton.isEnabled = true
-                exportButton.isEnabled = true
             } else {
                 self.format.stringValue += " (unsupported)"
             }
             self.channels.stringValue = sound.channels == 2 ? "Stereo" : "Mono"
             self.sampleRate.stringValue = String(format: "%.0f Hz", sound.sampleRate)
+        } else if resource.data!.count == 0 {
+            self.format.stringValue = "(empty)"
         } else {
             self.format.stringValue = "(unknown)"
         }
+        playButton.isEnabled = sound.valid
+        exportButton.isEnabled = sound.valid
     }
     
     private func stringFromSeconds(_ seconds: Double) -> String {
@@ -117,13 +127,31 @@ class SoundWindowController: NSWindowController, ResKnifePlugin {
                 let sampleRate = self.selectSampleRate.selectedTag()
                 do {
                     try self.sound.load(url: panel.url!, format: UInt32(format), channels: UInt32(channels), sampleRate: Double(sampleRate))
-                    self.resource.data = try self.sound.data()
+                    self.setDocumentEdited(true)
                 } catch let error {
                     self.presentError(error)
                 }
                 self.loadInfo()
             }
         })
+    }
+
+    @IBAction func saveResource(_ sender: Any) {
+        guard self.sound.valid && self.window!.isDocumentEdited else {
+            return
+        }
+        do {
+            self.resource.data = try self.sound.data()
+            self.setDocumentEdited(false)
+        } catch let error {
+            self.presentError(error)
+        }
+    }
+
+    @IBAction func revertResource(_ sender: Any) {
+        sound.load(data: resource.data!)
+        self.loadInfo()
+        self.setDocumentEdited(false)
     }
     
     // ResKnifePlugin protocol export functions

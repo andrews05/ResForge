@@ -20,16 +20,9 @@
 	<string>1</string>
 	<key>NSPrincipalClass</key>
 	<string>${SWIFT_MODULE_NAME}.SoundWindowController</string>
-	<key>RKSupportedTypes</key>
+	<key>RKEditedTypes</key>
 	<array>
-		<dict>
-			<key>IsResKnifeDefaultForType</key>
-			<string>YES</string>
-			<key>RKTypeName</key>
-			<string>snd </string>
-			<key>RKTypeRole</key>
-			<string>Editor</string>
-		</dict>
+		<string>snd </string>
 	</array>
 </dict>
 </plist>

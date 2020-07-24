@@ -11,7 +11,7 @@ extension Notification.Name {
 class SoundResource {
     private(set) var valid = false
     private(set) var playing = false
-    private var streamDesc = AudioStreamBasicDescription()
+    private var streamDesc: AudioStreamBasicDescription!
     private var queueRef: AudioQueueRef? = nil
     private var bufferRef: AudioQueueBufferRef? = nil
     private var numPackets: UInt32 = 0
@@ -27,11 +27,7 @@ class SoundResource {
     ]
 
     init(_ data: Data) {
-        do {
-            valid = try parse(data)
-        } catch {
-            valid = false
-        }
+        self.load(data: data)
     }
     
     deinit {
@@ -223,6 +219,16 @@ class SoundResource {
         return true
     }
     
+    func load(data: Data) {
+        self.stop()
+        do {
+            valid = try parse(data)
+        } catch {
+            valid = false
+            streamDesc = nil
+        }
+    }
+    
     func load(url: URL, format: UInt32, channels: UInt32, sampleRate: Double) throws {
         var err: OSStatus
         var fRef: ExtAudioFileRef?
@@ -400,7 +406,9 @@ class SoundResource {
 
     
     var format: AudioFormatID {
-        if streamDesc.mFormatFlags & kAudioFormatFlagIsBigEndian != 0 {
+        if streamDesc == nil {
+            return 0
+        } else if streamDesc.mFormatFlags & kAudioFormatFlagIsBigEndian != 0 {
             return k16BitBigEndianFormat
         } else if streamDesc.mFormatID == kAudioFormatLinearPCM {
             return k8BitOffsetBinaryFormat

@@ -1,7 +1,6 @@
 #import <Cocoa/Cocoa.h>
-#include <CoreServices/CoreServices.h>
 
-@class CreateResourceSheetController, ResourceWindowController, ResourceDataSource, Resource;
+@class CreateResourceSheetController, ResourceWindowController, ResourceDataSource, Resource, EditorRegistry;
 
 @protocol ResKnifePlugin;
 
@@ -20,7 +19,7 @@ typedef enum {
 	CreateResourceSheetController	*sheetController;
 }
 @property NSMutableArray *resources;
-@property NSMutableDictionary *editorWindows;
+@property EditorRegistry *registry;
 @property NSString *fork; // name of fork to save to, usually empty string (data fork) or 'rsrc'
 @property FileFormat format;
 @property OSType creator;

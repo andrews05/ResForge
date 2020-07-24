@@ -27,14 +27,12 @@
     resource = newResource;
     tmpl = tmplResource;
     resourceStructure = nil;
-	
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:ResourceDataDidChangeNotification object:tmpl];
     [self loadResource];
-	
-	// load the window from the nib
-	[self setShouldCascadeWindows:YES];
-	[self window];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:ResourceDataDidChangeNotification object:tmpl];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidBecomeKey:) name:NSWindowDidBecomeKeyNotification object:self.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResignKey:) name:NSWindowDidResignKeyNotification object:self.window];
 	return self;
 
 }
@@ -42,9 +40,8 @@
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
+    [self.window setTitle:resource.defaultWindowTitle];
     [dataList expandItem:nil expandChildren:YES];
-	[self.window setTitle:resource.defaultWindowTitle];
-	[self showWindow:self];
 }
 
 - (void)templateDataDidChange:(NSNotification *)notification
@@ -113,7 +110,7 @@
 	return YES;
 }
 
-- (void)saveResource:(id)sender
+- (IBAction)saveResource:(id)sender
 {
 	// send the new resource data to ResKnife
     [[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
@@ -122,7 +119,7 @@
     self.documentEdited = NO;
 }
 
-- (void)revertResource:(id)sender
+- (IBAction)revertResource:(id)sender
 {
     [self loadResource];
 }
@@ -248,17 +245,17 @@
         return NO;
 }
 
+- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
+{
+    return [resource defaultWindowTitle];
+}
+
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	NSMenu *resourceMenu = [[[NSApp mainMenu] itemWithTag:3] submenu];
 	NSMenuItem *createItem = [resourceMenu itemWithTag:0];
 	[createItem setTitle:NSLocalizedString(@"Create List Entry", nil)];
 	[createItem setAction:@selector(createListEntry:)];
-}
-
-- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
-{
-	return [resource defaultWindowTitle];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification

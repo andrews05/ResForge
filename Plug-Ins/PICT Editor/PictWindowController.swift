@@ -1,6 +1,6 @@
 import Cocoa
 
-class PictWindowController: NSWindowController, NSWindowDelegate, NSMenuItemValidation, ResKnifePlugin {
+class PictWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
     @objc let resource: ResKnifeResource
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var scrollView: NSScrollView!
@@ -15,8 +15,6 @@ class PictWindowController: NSWindowController, NSWindowDelegate, NSMenuItemVali
     required init(resource: ResKnifeResource) {
         self.resource = resource
         super.init(window: nil)
-        
-        self.window?.makeKeyAndOrderFront(self)
     }
 
     required init?(coder: NSCoder) {

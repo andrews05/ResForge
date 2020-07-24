@@ -19,7 +19,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         NSUserDefaultsController.shared.initialValues = prefDict
         
         SupportResourceRegistry.scanForResources()
-        EditorRegistry.default.scanForPlugins()
+        EditorRegistry.scanForPlugins()
     }
     
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
@@ -43,6 +43,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         if self.prefsController == nil {
             ValueTransformer.setValueTransformer(LaunchActionTransformer(), forName: .launchActionTransformerName)
             self.prefsController = NSWindowController(windowNibName: "PrefsWindow")
+            self.prefsController?.window?.center()
         }
         self.prefsController?.showWindow(sender)
         self.prefsController?.window?.makeKeyAndOrderFront(sender)
@@ -54,7 +55,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     
     @objc func icon(forResourceType resourceType: OSType) -> NSImage! {
         let type = GetNSStringFromOSType(resourceType)
-        if iconCache[type] == nil, let editor = EditorRegistry.default.editor(for: type) {
+        if iconCache[type] == nil, let editor = EditorRegistry.editor(for: type) {
             iconCache[type] = editor.icon?(forResourceType: resourceType)
         }
         if iconCache[type] == nil {

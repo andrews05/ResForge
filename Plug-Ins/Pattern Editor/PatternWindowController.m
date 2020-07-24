@@ -81,9 +81,6 @@
 	[tableView reloadData];
 	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-	
-	// finally, show the window
-	[self showWindow:self];
 }
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)inResource

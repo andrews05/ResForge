@@ -18,7 +18,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="277" y="484" width="315" height="224"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" autoresizesSubviews="NO" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="315" height="224"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -47,7 +47,7 @@
                                                     <binding destination="qp1-NG-sRe" name="value" keyPath="values.ConfirmChanges" id="4eC-Nm-0kV"/>
                                                 </connections>
                                             </buttonCell>
-                                            <buttonCell type="check" title="Warn when deleting resources" bezelStyle="regularSquare" imagePosition="left" alignment="left" tag="1" inset="2" id="19">
+                                            <buttonCell type="check" title="Confirm when deleting resources" bezelStyle="regularSquare" imagePosition="left" alignment="left" tag="1" inset="2" id="19">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <connections>

@@ -18,6 +18,9 @@
 
 @optional
 
+- (IBAction)saveResource:(id)sender;
+- (IBAction)revertResource:(id)sender;
+
 /*!
 @method        dataForFileExport:
 @abstract   Return the data to be saved to disk when your resource is exported to a flat file. By default the host application uses the raw resource data if you don't implement this. The idea is that this export function is non-lossy, i.e. only override this if there is a format that is a 100% equivalent to your data.
