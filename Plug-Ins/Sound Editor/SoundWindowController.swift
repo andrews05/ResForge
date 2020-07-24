@@ -2,7 +2,7 @@ import AVKit
 import Cocoa
 
 class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
-    @objc let resource: ResKnifeResource
+    let resource: ResKnifeResource
     private let sound: SoundResource
     @IBOutlet var playButton: NSButton!
     @IBOutlet var exportButton: NSButton!
@@ -46,9 +46,8 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.action {
-        case #selector(saveResource(_:)):
-            return self.window!.isDocumentEdited
-        case #selector(revertResource(_:)):
+        case #selector(saveResource(_:)),
+             #selector(revertResource(_:)):
             return self.window!.isDocumentEdited
         default:
             return true

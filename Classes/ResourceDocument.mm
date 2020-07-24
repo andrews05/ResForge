@@ -4,7 +4,6 @@
 #import "Resource.h"
 #import "ResKnife-Swift.h"
 #import "OutlineViewDelegate.h"
-#import "CreateResourceSheetController.h"
 #import "../Categories/NGSCategories.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
 #include "libGraphite/rsrc/file.hpp"
@@ -386,8 +385,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)showCreateResourceSheet:(id)sender
 {
     if (!sheetController) {
-		sheetController = [[CreateResourceSheetController alloc] initWithWindowNibName:@"CreateResourceSheet"];
-        [sheetController window];
+		sheetController = [[CreateResourceController alloc] initWithWindowNibName:@"CreateResourceSheet"];
     }
 	
     // Pass type of currently selected item
@@ -398,7 +396,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
     } else if ([item isKindOfClass:NSNumber.class]) {
         type = GetNSStringFromOSType([item intValue]);
     }
-    [sheetController showCreateResourceSheet:self withType:type andID:nil];
+    [sheetController showSheetIn:self type:type];
 }
 
 - (IBAction)showSelectTemplateSheet:(id)sender

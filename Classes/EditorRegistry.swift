@@ -92,10 +92,10 @@ class EditorRegistry: NSObject, NSWindowDelegate {
             alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
             alert.beginSheetModal(for: sender) { returnCode in
                 switch (returnCode) {
-                case .alertFirstButtonReturn:    // keep
+                case .alertFirstButtonReturn: // keep
                     plug.saveResource?(alert)
                     sender.close()
-                case .alertSecondButtonReturn:    // don't keep
+                case .alertSecondButtonReturn: // don't keep
                     sender.close()
                 default:
                     break

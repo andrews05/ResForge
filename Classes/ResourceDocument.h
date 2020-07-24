@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
 
-@class CreateResourceSheetController, ResourceWindowController, ResourceDataSource, Resource, EditorRegistry;
+@class CreateResourceController, ResourceWindowController, ResourceDataSource, Resource, EditorRegistry;
 
 @protocol ResKnifePlugin;
 
@@ -16,7 +16,7 @@ typedef enum {
 	IBOutlet NSWindow				*mainWindow;
 	IBOutlet NSOutlineView			*outlineView;
 
-	CreateResourceSheetController	*sheetController;
+	CreateResourceController	*sheetController;
 }
 @property NSMutableArray *resources;
 @property EditorRegistry *registry;

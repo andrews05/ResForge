@@ -1,7 +1,7 @@
 import Cocoa
 
 class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlugin, HFTextViewDelegate {
-    @objc let resource: ResKnifeResource
+    let resource: ResKnifeResource
     @IBOutlet var textView: HFTextView!
     
     @IBOutlet var findView: NSView!
@@ -53,30 +53,6 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         textView.controller.undoManager = self.window?.undoManager
         
         textView.layoutRepresenter.performLayout();
-    }
-
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
-        if self.window!.isDocumentEdited {
-            let alert = NSAlert()
-            alert.messageText = "Do you want to keep the changes you made to this resource?"
-            alert.informativeText = "Your changes cannot be saved later if you don't keep them."
-            alert.addButton(withTitle: "Keep")
-            alert.addButton(withTitle: "Don't Keep")
-            alert.addButton(withTitle: "Cancel")
-            alert.beginSheetModal(for: self.window!) { returnCode in
-                switch (returnCode) {
-                case .alertFirstButtonReturn:    // keep
-                    self.saveResource(self)
-                    self.window!.close()
-                case .alertSecondButtonReturn:    // don't keep
-                    self.window!.close()
-                default:
-                    break
-                }
-            }
-            return false
-        }
-        return true
     }
     
     func hexTextView(_ view: HFTextView, didChangeProperties properties: HFControllerPropertyBits) {

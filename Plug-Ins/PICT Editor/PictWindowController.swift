@@ -1,7 +1,7 @@
 import Cocoa
 
 class PictWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
-    @objc let resource: ResKnifeResource
+    let resource: ResKnifeResource
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var imageSize: NSTextField!
@@ -46,9 +46,8 @@ class PictWindowController: NSWindowController, NSMenuItemValidation, ResKnifePl
     
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.action {
-        case #selector(saveResource(_:)):
-            return self.window!.isDocumentEdited
-        case #selector(revertResource(_:)):
+        case #selector(saveResource(_:)),
+             #selector(revertResource(_:)):
             return self.window!.isDocumentEdited
         case #selector(paste(_:)):
             return imageView.isEditable && NSPasteboard.general.canReadObject(forClasses: [NSImage.self], options: nil)

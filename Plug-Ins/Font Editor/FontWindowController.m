@@ -33,11 +33,11 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	char *start = (char *)[[resource data] bytes];
 	if (start != 0x0)
 	{
-		arch = *(OSType*)start;
-		numTables = *(UInt16*)(start+4);
-		searchRange = *(UInt16*)(start+6);
-		entrySelector = *(UInt16*)(start+8);
-		rangeShift = *(UInt16*)(start+10);
+		arch = CFSwapInt32BigToHost(*(OSType*)start);
+		numTables = CFSwapInt16BigToHost(*(UInt16*)(start+4));
+		searchRange = CFSwapInt16BigToHost(*(UInt16*)(start+6));
+		entrySelector = CFSwapInt16BigToHost(*(UInt16*)(start+8));
+		rangeShift = CFSwapInt16BigToHost(*(UInt16*)(start+10));
 		UInt32 *pos = (UInt32 *)(start+12);
 #if 0
 		printf("%s\n", [[self displayName] cString]);
@@ -50,9 +50,9 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 		for(int i = 0; i < numTables; i++)
 		{
 			OSType name = *pos++;
-			UInt32 checksum = *pos++;
-			UInt32 offset = *pos++;
-			UInt32 length = *pos++;
+			UInt32 checksum = CFSwapInt32BigToHost(*pos++);
+			UInt32 offset = CFSwapInt32BigToHost(*pos++);
+			UInt32 length = CFSwapInt32BigToHost(*pos++);
 			[headerTable addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
 				[[NSString alloc] initWithBytes:&name length:4 encoding:NSMacOSRomanStringEncoding], @"name",
 				@(checksum), @"checksum",
@@ -110,35 +110,6 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 {
 	[headerTable removeAllObjects];
 	[self loadFontFromResource];
-}
-
-- (BOOL)windowShouldClose:(id)sender
-{
-	if (self.window.documentEdited) {
-		NSAlert *alert = [NSAlert new];
-		alert.messageText = @"Do you want to keep the changes you made to this resource?";
-		alert.informativeText = @"Your changes cannot be saved later if you don't keep them.";
-		[alert addButtonWithTitle:@"Keep"];
-		[alert addButtonWithTitle:@"Don't Keep"];
-		[alert addButtonWithTitle:@"Cancel"];
-		[alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
-			switch (returnCode) {
-				case NSAlertFirstButtonReturn:	// keep
-					[self saveResource:nil];
-					[self.window close];
-					break;
-				
-				case NSAlertSecondButtonReturn:	// don't keep
-					[self.window close];
-					break;
-				
-				case NSModalResponseCancel:		// cancel
-					break;
-			}
-		}];
-		return NO;
-	}
-	return YES;
 }
 
 - (void)saveResource:(id)sender
@@ -242,6 +213,7 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 			return;
 		}
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableDataDidChange:) name:ResourceDataDidChangeNotification object:tableResource];
+        [tableResource open];
 		if (editor)	[(id)[resource document] openResourceUsingEditor:tableResource];
 		else		[(id)[resource document] openResource:tableResource usingTemplate:[NSString stringWithFormat:@"sfnt subtable '%@'", [table valueForKey:@"name"]]];
 	}
