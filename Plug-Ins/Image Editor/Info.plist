@@ -19,7 +19,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NSPrincipalClass</key>
-	<string>${SWIFT_MODULE_NAME}.PictWindowController</string>
+	<string>${SWIFT_MODULE_NAME}.ImageWindowController</string>
 	<key>RKEditedTypes</key>
 	<array>
 		<string>PICT</string>
@@ -28,6 +28,7 @@
 		<string>ppat</string>
 		<string>icns</string>
 		<string>ICON</string>
+		<string>SICN</string>
 		<string>ICN#</string>
 		<string>icm#</string>
 		<string>ics#</string>

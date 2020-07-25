@@ -1,6 +1,6 @@
 import Cocoa
 
-class PictWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
+class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
     let resource: ResKnifeResource
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var scrollView: NSScrollView!
@@ -9,7 +9,7 @@ class PictWindowController: NSWindowController, NSMenuItemValidation, ResKnifePl
     private var heightConstraint: NSLayoutConstraint!
     
     override var windowNibName: String! {
-        return "PictWindow"
+        return "ImageWindow"
     }
 
     required init(resource: ResKnifeResource) {
@@ -59,7 +59,7 @@ class PictWindowController: NSWindowController, NSMenuItemValidation, ResKnifePl
     // MARK: -
     
     private func loadImage() {
-        imageView.image = PictWindowController.image(for: resource)
+        imageView.image = Self.image(for: resource)
         self.updateView()
     }
     
@@ -205,7 +205,7 @@ class PictWindowController: NSWindowController, NSMenuItemValidation, ResKnifePl
             return self.iconTiff(data, width: 32, height: 32, alpha: false)
         case "ICN#":
             return self.iconTiff(data, width: 32, height: 32)
-        case "ics#":
+        case "ics#", "SICN":
             return self.iconTiff(data, width: 16, height: 16)
         case "icm#":
             return self.iconTiff(data, width: 16, height: 12)
@@ -226,6 +226,7 @@ class PictWindowController: NSWindowController, NSMenuItemValidation, ResKnifePl
         for i in 0..<planeLength {
             dataArray.append(data[i] ^ 0xff)
         }
+        let alpha = alpha ? data.count >= planeLength*2 : false
 
         return dataArray.withUnsafeMutableBufferPointer { (dataBuffer) -> Data in
             var data = [UInt8](data)

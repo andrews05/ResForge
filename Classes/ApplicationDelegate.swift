@@ -10,6 +10,40 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         return prefs
     }()
     
+    // Resource type to file type mapping, used for obtaining icons
+    private static let typeMappings = [
+        "cfrg": "shlb",
+        "SIZE": "shlb",
+
+        "CODE": "s",
+
+        "STR ": "text",
+        "STR#": "text",
+
+        "plst": "plist",
+        "url ": "webloc",
+
+        //"hfdr": "com.apple.finder",
+
+        "cicn": "icns",
+        "SICN": "icns",
+        "icl8": "icns",
+        "icl4": "icns",
+        "ICON": "icns",
+        "ICN#": "icns",
+        "ics8": "icns",
+        "ics4": "icns",
+        "ics#": "icns",
+        "icm8": "icns",
+        "icm4": "icns",
+        "icm#": "icns",
+
+        "PNG ": "png",
+
+        "NFNT": "ttf",
+        "sfnt": "ttf"
+    ]
+    
     override init() {
         NSApp.registerServicesMenuSendTypes([.string], returnTypes: [.string])
     }
@@ -58,7 +92,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
             iconCache[type] = editor.icon?(forResourceType: resourceType)
         }
         if iconCache[type] == nil {
-            iconCache[type] = NSWorkspace.shared.icon(forFileType: "")
+            iconCache[type] = NSWorkspace.shared.icon(forFileType: Self.typeMappings[type] ?? "")
         }
         return iconCache[type]
     }
