@@ -29,7 +29,7 @@ class SupportResourceRegistry {
     }
     
     private static func load(resourceFile: URL) {
-        let resources = ResourceDocument.readResourceMap(resourceFile, document: nil)!
+        let resources = ResourceMap.read(resourceFile, document: nil)!
         Resource.supportDataSource()?.addResources(resources as? [Resource])
     }
 }

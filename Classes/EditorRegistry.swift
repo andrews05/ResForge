@@ -30,7 +30,7 @@ class EditorRegistry: NSObject, NSWindowDelegate {
         if let plug = plug as? NSWindowController {
             // We want to control the windowShouldClose function
             plug.window?.delegate = self
-            plug.window?.makeKeyAndOrderFront(self)
+            plug.showWindow(self)
         }
         return plug!
     }

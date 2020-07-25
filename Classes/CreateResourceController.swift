@@ -61,9 +61,10 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             dataSource.addResource(resource)
             var actionName = NSLocalizedString("Create Resource", comment: "")
             if nameView.stringValue.count > 0 {
-                actionName = actionName.appendingFormat(" '%@'", nameView.stringValue)
+                actionName = actionName.appending(" '\(nameView.stringValue)'")
             }
             dataSource.document.undoManager?.setActionName(actionName)
+            dataSource.document.undoManager?.endUndoGrouping()
             resource.open()
         }
         self.window?.sheetParent?.endSheet(self.window!)

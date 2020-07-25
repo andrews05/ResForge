@@ -1,9 +1,14 @@
 import Cocoa
 
 class ApplicationDelegate: NSObject, NSApplicationDelegate {
-    private var prefsController: NSWindowController?
     private var iconCache: [String: NSImage] = [:]
-    @IBOutlet var openPanelDelegate: OpenPanelDelegate!
+    // Don't configure prefs controller until needed
+    private lazy var prefsController: NSWindowController = {
+        ValueTransformer.setValueTransformer(LaunchActionTransformer(), forName: .launchActionTransformerName)
+        let prefs = NSWindowController(windowNibName: "PrefsWindow")
+        prefs.window?.center()
+        return prefs
+    }()
     
     override init() {
         NSApp.registerServicesMenuSendTypes([.string], returnTypes: [.string])
@@ -40,13 +45,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func showPrefs(_ sender: Any) {
-        if self.prefsController == nil {
-            ValueTransformer.setValueTransformer(LaunchActionTransformer(), forName: .launchActionTransformerName)
-            self.prefsController = NSWindowController(windowNibName: "PrefsWindow")
-            self.prefsController?.window?.center()
-        }
-        self.prefsController?.showWindow(sender)
-        self.prefsController?.window?.makeKeyAndOrderFront(sender)
+        self.prefsController.showWindow(sender)
     }
 
     @IBAction func visitWebsite(_ sender: Any) {

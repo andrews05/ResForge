@@ -2,13 +2,11 @@
 #import "ResourceDataSource.h"
 #import "ResourceNameCell.h"
 #import "Resource.h"
+#import "ResourceMap.h"
 #import "ResKnife-Swift.h"
 #import "OutlineViewDelegate.h"
 #import "../Categories/NGSCategories.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
-#include "libGraphite/rsrc/file.hpp"
-#include <fcntl.h>
-#include <copyfile.h>
 
 #import "../Plug-Ins/ResKnifePluginProtocol.h"
 
@@ -46,7 +44,7 @@ extern NSString *RKResourcePboardType;
     NSNumber *totalSize;
     BOOL hasData, hasRsrc;
     NSURL *rsrcURL = [url URLByAppendingPathComponent:@"..namedfork/rsrc"];
-    OpenPanelDelegate *openPanelDelegate = [(ApplicationDelegate *)[NSApp delegate] openPanelDelegate];
+    OpenPanelDelegate *openPanelDelegate = (OpenPanelDelegate *)NSDocumentController.sharedDocumentController;
     
     // Get the file info
     attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:url.path error:outError];
@@ -64,9 +62,9 @@ extern NSString *RKResourcePboardType;
     if (_fork) {
         // If fork was sepcified in open panel, try this fork only
         if ([_fork isEqualToString:@""] && hasData) {
-            _resources = [ResourceDocument readResourceMap:url document:self];
+            _resources = [ResourceMap read:url document:self];
         } else if ([_fork isEqualToString:@"rsrc"] && hasRsrc) {
-            _resources = [ResourceDocument readResourceMap:rsrcURL document:self];
+            _resources = [ResourceMap read:rsrcURL document:self];
         } else {
             // Fork is empty
             _resources = [NSMutableArray new];
@@ -75,12 +73,12 @@ extern NSString *RKResourcePboardType;
         // Try to open data fork
         if (hasData) {
             _fork = @"";
-            _resources = [ResourceDocument readResourceMap:url document:self];
+            _resources = [ResourceMap read:url document:self];
         }
         // If failed, try resource fork
         if (!_resources && hasRsrc) {
             _fork = @"rsrc";
-            _resources = [ResourceDocument readResourceMap:rsrcURL document:self];
+            _resources = [ResourceMap read:rsrcURL document:self];
         }
         // If still failed, find an empty fork
         if (!_resources && !hasData) {
@@ -98,30 +96,6 @@ extern NSString *RKResourcePboardType;
     }
 	
 	return YES;
-}
-
-+ (NSMutableArray *)readResourceMap:(NSURL *)url document:(ResourceDocument *)document
-{
-    graphite::rsrc::file gFile;
-    try {
-        gFile = graphite::rsrc::file(url.fileSystemRepresentation);
-    } catch (const std::exception& e) {
-        return nil;
-    }
-    if (document) document.format = (FileFormat)gFile.current_format();
-    NSMutableArray* resources = [NSMutableArray new];
-    for (auto type : gFile.types()) {
-        for (auto resource : type->resources()) {
-            // create the resource & add it to the array
-            NSString    *name       = [NSString stringWithUTF8String:resource->name().c_str()];
-            NSString    *resType    = [NSString stringWithUTF8String:type->code().c_str()];
-            NSData      *data       = [NSData dataWithBytes:resource->data()->get()->data()+resource->data()->start() length:resource->data()->size()];
-            Resource *r = [Resource resourceOfType:GetOSTypeFromNSString(resType) andID:(SInt16)resource->id() withName:name andAttributes:0 data:data];
-            [resources addObject:r]; // array retains resource
-            r.document = document;
-        }
-    }
-    return resources;
 }
 
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
@@ -166,7 +140,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
    
     // write resources to file
     NSURL *writeUrl = [_fork isEqualToString:@"rsrc"] ? [url URLByAppendingPathComponent:@"..namedfork/rsrc"] : url;
-    NSString *writeError = [self writeResourceMap:writeUrl];
+    NSString *writeError = [ResourceMap write:writeUrl document:self];
     if (writeError) {
         *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:@{NSLocalizedFailureReasonErrorKey:writeError}];
         return NO;
@@ -192,24 +166,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
     [[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:self];
 	
 	return YES;
-}
-
-- (NSString *)writeResourceMap:(NSURL *)url
-{
-    graphite::rsrc::file gFile = graphite::rsrc::file();
-    for (Resource* resource in [dataSource resources]) {
-        std::string name([resource.name UTF8String]);
-        std::string resType([GetNSStringFromOSType(resource.type) UTF8String]);
-        std::vector<char> buffer((char *)resource.data.bytes, (char *)resource.data.bytes+resource.size);
-        graphite::data::data data(std::make_shared<std::vector<char>>(buffer), resource.size);
-        gFile.add_resource(resType, resource.resID, name, std::make_shared<graphite::data::data>(data));
-    }
-    try {
-        gFile.write(url.fileSystemRepresentation, (graphite::rsrc::file::format)_format);
-    } catch (const std::exception& e) {
-        return [NSString stringWithUTF8String:e.what()];
-    }
-    return nil;
 }
 
 #pragma mark -

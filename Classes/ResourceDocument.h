@@ -25,8 +25,6 @@ typedef enum {
 @property OSType creator;
 @property OSType type;
 
-+ (NSMutableArray *)readResourceMap:(NSURL *)url document:(ResourceDocument *)document;
-
 - (IBAction)exportResources:(id)sender;
 
 - (IBAction)showCreateResourceSheet:(id)sender;

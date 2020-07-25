@@ -7,3 +7,4 @@
 #import "ResKnifePluginProtocol.h"
 #import "Resource.h"
 #import "ResourceDocument.h"
+#import "ResourceMap.h"
