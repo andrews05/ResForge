@@ -1,7 +1,6 @@
 #import "FontWindowController.h"
 #import "NGSCategories.h"
 #import "ResourceDocument.h"
-#import "Resource.h"
 @import Darwin.C.stdarg;
 
 static UInt32 TableChecksum(UInt32 *table, UInt32 length)
@@ -12,6 +11,7 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 }
 
 @implementation FontWindowController
+@synthesize resource;
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)inResource
 {
@@ -85,7 +85,7 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	}
 	
 	// we don't want this notification until we have a window! (Only register for notifications on the resource we're editing)
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:@"ResourceDataDidChangeNotification" object:resource];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
@@ -206,13 +206,13 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	NSData *data = [table valueForKey:@"data"];
 	if (data)
 	{
-		id tableResource = [NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([table valueForKey:@"name"]) andID:0 withName:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] andAttributes:0 data:[table valueForKey:@"data"]];
+        id tableResource = nil;//[NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([table valueForKey:@"name"]) andID:0 withName:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] andAttributes:0 data:[table valueForKey:@"data"]];
 		if (!tableResource)
 		{
 			NSLog(@"Couldn't create Resource with data for table '%@'.", [table valueForKey:@"name"]);
 			return;
 		}
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableDataDidChange:) name:ResourceDataDidChangeNotification object:tableResource];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableDataDidChange:) name:@"ResourceDataDidChangeNotification" object:tableResource];
         [tableResource open];
 		if (editor)	[(id)[resource document] openResourceUsingEditor:tableResource];
 		else		[(id)[resource document] openResource:tableResource usingTemplate:[NSString stringWithFormat:@"sfnt subtable '%@'", [table valueForKey:@"name"]]];
@@ -226,7 +226,7 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 - (void)setTableData:(id <ResKnifeResource>)tableResource
 {
-    NSString *type = GetNSStringFromOSType(tableResource.type);
+    NSString *type = tableResource.type;
 	NSDictionary *table = [headerTable firstObjectReturningValue:type forKey:@"name"];
 	if(!table)
 	{
@@ -234,10 +234,10 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 		return;
 	}
 	
-	id undoResource = [tableResource copy];
-	[undoResource setData:[table valueForKey:@"data"]];
-	[[[resource document] undoManager] registerUndoWithTarget:resource selector:@selector(setTableData:) object:undoResource];
-	[[[resource document] undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Edit of table '%@'", nil), type]];
+//	id undoResource = [tableResource copy];
+//	[undoResource setData:[table valueForKey:@"data"]];
+//	[[[resource document] undoManager] registerUndoWithTarget:resource selector:@selector(setTableData:) object:undoResource];
+//	[[[resource document] undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Edit of table '%@'", nil), type]];
 	[table setValue:[tableResource data] forKey:@"data"];
 	[self setDocumentEdited:YES];
 }
@@ -249,8 +249,8 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 + (NSString *)filenameExtensionForFileExport:(id <ResKnifeResource>)resource
 {
-	if([resource type] == 'sfnt') return @"ttf";
-	else return GetNSStringFromOSType([resource type]);
+    if([resource.type isEqualToString:@"sfnt"]) return @"ttf";
+	else return [resource type];
 }
 
 @end

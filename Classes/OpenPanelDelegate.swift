@@ -55,7 +55,7 @@ class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
         }
     }
     
-    @IBAction func selectFork(_ sender: Any?) {
+    @IBAction func selectFork(_ sender: Any) {
         forkIndex = forkSelect.indexOfSelectedItem
     }
 }

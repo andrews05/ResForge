@@ -1,4 +1,5 @@
 import Cocoa
+import ResKnifePlugins
 
 class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlugin, HFTextViewDelegate {
     let resource: ResKnifeResource
@@ -12,7 +13,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
     @IBOutlet var searchText: NSButton!
     @IBOutlet var searchHex: NSButton!
 
-    override var windowNibName: String! {
+    override var windowNibName: String {
         return "HexWindow"
     }
     
@@ -20,7 +21,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         self.resource = resource
         super.init(window: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange), name: NSNotification.Name.ResourceDataDidChange, object: resource)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange), name: .ResourceDataDidChange, object: resource)
     }
     
     required init?(coder: NSCoder) {
@@ -36,7 +37,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        self.window?.title = resource.defaultWindowTitle();
+        self.window?.title = resource.defaultWindowTitle;
         findView.isHidden = true
         
         let lineCountingRepresenter = HFLineCountingRepresenter()
@@ -63,7 +64,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
     
     
     @IBAction func saveResource(_ sender: Any) {
-        resource.data = textView.data
+        resource.data = textView.data!
         self.setDocumentEdited(false)
     }
     
@@ -122,17 +123,15 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         }
     }
         
-    @IBAction func find(_ sender: Any) {
-        let control = sender as! NSSegmentedControl
-        if !self.find(self.findBytes(), forwards: control.selectedTag() == 1) {
+    @IBAction func find(_ sender: NSSegmentedControl) {
+        if !self.find(self.findBytes(), forwards: sender.selectedTag() == 1) {
             NSSound.beep()
         }
     }
         
-    @IBAction func replace(_ sender: Any) {
-        let control = sender as! NSSegmentedControl
+    @IBAction func replace(_ sender: NSSegmentedControl) {
         let data = self.data(string: replaceField.stringValue)
-        if control.selectedTag() == 0 {
+        if sender.selectedTag() == 0 {
             // Replace and find
             self.replace(data)
             _ = self.find(self.findBytes())

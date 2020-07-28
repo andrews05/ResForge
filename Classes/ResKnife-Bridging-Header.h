@@ -3,8 +3,6 @@
 //
 
 #import "InfoWindowController.h"
-#import "ResKnifeResourceProtocol.h"
-#import "ResKnifePluginProtocol.h"
-#import "Resource.h"
 #import "ResourceDocument.h"
+#import "ResourceDataSource.h"
 #import "ResourceMap.h"

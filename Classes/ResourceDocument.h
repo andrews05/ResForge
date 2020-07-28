@@ -1,6 +1,16 @@
 #import <Cocoa/Cocoa.h>
 
-@class CreateResourceController, ResourceWindowController, ResourceDataSource, Resource, EditorRegistry;
+static inline NSString *GetNSStringFromOSType(OSType theType)
+{
+    return CFBridgingRelease(UTCreateStringForOSType(theType));
+}
+
+static inline OSType GetOSTypeFromNSString(NSString *theString)
+{
+    return UTGetOSTypeFromString((__bridge CFStringRef)theString);
+}
+
+@class CreateResourceController, ResourceWindowController, ResourceDataSource, Resource, PluginManager;
 
 @protocol ResKnifePlugin;
 
@@ -19,7 +29,7 @@ typedef enum {
 	CreateResourceController	*sheetController;
 }
 @property NSMutableArray *resources;
-@property EditorRegistry *registry;
+@property PluginManager *registry;
 @property NSString *fork; // name of fork to save to, usually empty string (data fork) or 'rsrc'
 @property FileFormat format;
 @property OSType creator;

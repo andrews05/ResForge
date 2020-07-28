@@ -6,10 +6,16 @@
  */
 
 import Foundation
+import ResKnifePlugins
 
-class EditorRegistry: NSObject, NSWindowDelegate {
+class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     private static var registry: [String: ResKnifePlugin.Type] = [:]
     private var editorWindows: [String: ResKnifePlugin] = [:]
+    private var document: ResourceDocument
+    
+    @objc init(_ document: ResourceDocument) {
+        self.document = document
+    }
     
     @objc static func editor(for type: String) -> ResKnifePlugin.Type? {
         return registry[type]
@@ -49,11 +55,11 @@ class EditorRegistry: NSObject, NSWindowDelegate {
     
     static func scanForPlugins() {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .allDomainsMask)
-        for url in appSupport {
-            self.scan(folder: url.appendingPathComponent("ResKnife/Plugins"))
-        }
         if let plugins = Bundle.main.builtInPlugInsURL {
             self.scan(folder: plugins)
+        }
+        for url in appSupport {
+            self.scan(folder: url.appendingPathComponent("ResKnife/Plugins"))
         }
     }
     
@@ -64,12 +70,11 @@ class EditorRegistry: NSObject, NSWindowDelegate {
         } catch {
             return
         }
-        for item in items {
+        for item in items where item.pathExtension == "plugin" {
             guard
-                item.pathExtension == "plugin",
                 let plugin = Bundle(url: item),
                 let pluginClass = plugin.principalClass as? ResKnifePlugin.Type,
-                let supportedTypes = plugin.infoDictionary?["RKEditedTypes"] as? Array<String>
+                let supportedTypes = plugin.infoDictionary?["RKEditedTypes"] as? [String]
             else {
                 continue
             }
@@ -112,5 +117,47 @@ class EditorRegistry: NSObject, NSWindowDelegate {
         for (key, value) in editorWindows where value === plug {
             editorWindows.removeValue(forKey: key)
         }
+    }
+    
+    /* PluginManagerProtocol */
+    func allResources(ofType type: String, currentDocumentOnly: Bool = false) -> [ResKnifeResource] {
+        var resources: [ResKnifeResource] = document.dataSource().allResources(ofType: type) as! [ResKnifeResource]
+        if !currentDocumentOnly {
+            let docs = NSDocumentController.shared.documents as! [ResourceDocument]
+            for doc in docs where doc !== document {
+                resources.append(contentsOf: doc.dataSource().allResources(ofType: type) as! [ResKnifeResource])
+            }
+        }
+        return resources
+    }
+    
+    func findResource(ofType type: String, id: Int, currentDocumentOnly: Bool = false) -> ResKnifeResource? {
+        if let resource = document.dataSource().resource(ofType: type, andID: Int16(id)) {
+            return resource
+        }
+        if !currentDocumentOnly {
+            let docs = NSDocumentController.shared.documents as! [ResourceDocument]
+            for doc in docs where doc !== document {
+                if let resource = document.dataSource().resource(ofType: type, andID: Int16(id)) {
+                    return resource
+                }
+            }
+        }
+        return SupportResourceRegistry.dataSource.resource(ofType: type, andID: Int16(id))
+    }
+    
+    func findResource(ofType type: String, name: String, currentDocumentOnly: Bool = false) -> ResKnifeResource? {
+        if let resource = document.dataSource().resource(ofType: type, withName: name) {
+            return resource
+        }
+        if !currentDocumentOnly {
+            let docs = NSDocumentController.shared.documents as! [ResourceDocument]
+            for doc in docs where doc !== document {
+                if let resource = document.dataSource().resource(ofType: type, withName: name) {
+                    return resource
+                }
+            }
+        }
+        return SupportResourceRegistry.dataSource.resource(ofType: type, withName: name)
     }
 }

@@ -20,16 +20,15 @@
    ========================================================================== */
 
 #import <Cocoa/Cocoa.h>
-#import "ResKnifePluginProtocol.h"
-#import "ResKnifeResourceProtocol.h"
 #import "ElementList.h"
+#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
 
 @interface TemplateWindowController : NSWindowController <ResKnifeTemplatePlugin, NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
 	ElementList *resourceStructure;		// Parsed form of our resource.
 }
 @property IBOutlet NSOutlineView *dataList; // Data display.
-@property id <ResKnifeResource> resource;   // The resource we operate on.
+@property (nonatomic) id <ResKnifeResource> resource;   // The resource we operate on.
 @property id <ResKnifeResource> tmpl;       // The template resource.
 
 

@@ -139,7 +139,7 @@ struct CmpSoundHeader {
     var numFrames: UInt32              /*length in frames ( packetFrames or sampleFrames )*/
     var AIFFSampleRate: extended80     /*IEEE sample rate*/
     var markerChunk: UInt32            /*sync track*/
-    var format: OSType                 /*data format type, was futureUse1*/
+    var format: UInt32                 /*data format type, was futureUse1*/
     var futureUse2: UInt32             /*reserved by Apple*/
     var stateVars: UInt32              /*pointer to State Block*/
     var leftOverSamples: UInt32        /*used to save truncated samples between compression calls*/

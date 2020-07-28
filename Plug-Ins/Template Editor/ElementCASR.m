@@ -2,7 +2,6 @@
 #import "ElementRSID.h"
 #import "ElementRangeable.h"
 #import "TemplateWindowController.h"
-#import "ResKnifeResourceProtocol.h"
 
 /*
  * The CASR element is an experimental case range element
@@ -53,7 +52,7 @@
                     NSString *resType;
                     [scanner scanUpToString:@"'" intoString:&resType];
                     if ([scanner scanString:@"'" intoString:nil]) {
-                        _resType = GetOSTypeFromNSString(resType);
+                        _resType = resType;
                     }
                 }
             } else {
@@ -111,14 +110,15 @@
     self.cases = [NSMutableArray new];
     self.caseMap = [NSMutableDictionary new];
     // Find resources in all documents and sort by id
-    NSArray *resources = [self.parentList.controller.resource.class allResourcesOfType:self.resType inDocument:nil];
+    id <ResKnifePluginManager> manager = (id <ResKnifePluginManager>)self.parentList.controller.window.delegate;
+    NSArray *resources = [manager allResourcesOfType:self.resType currentDocumentOnly:false];
     resources = [resources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
     for (id <ResKnifeResource> resource in resources) {
         if (!resource.name.length) continue; // No point showing resources with no name
         if (resource.resID < self.min || resource.resID > self.max) continue;
         NSString *resID = @(resource.resID).stringValue;
         if (![self.caseMap objectForKey:resID]) {
-            [self.cases addObject:[NSString stringWithFormat:@"%@ = %d", resource.name, resource.resID]];
+            [self.cases addObject:[NSString stringWithFormat:@"%@ = %ld", resource.name, (long)resource.resID]];
             [self.caseMap setObject:[NSString stringWithFormat:@"%@ = %@", resID, resource.name] forKey:resID];
         }
     }
@@ -126,8 +126,8 @@
 
 - (IBAction)openResource:(id)sender
 {
-    Class resourceProtocol = self.parentList.controller.resource.class;
-    id <ResKnifeResource> resource = [resourceProtocol resourceOfType:self.resType andID:(ResID)self.value inDocument:nil];
+    id <ResKnifePluginManager> manager = (id <ResKnifePluginManager>)self.parentList.controller.window.delegate;
+    id <ResKnifeResource> resource = [manager findResourceOfType:self.resType id:(ResID)self.value currentDocumentOnly:false];
     if (resource) {
         [resource open];
     } else {

@@ -11,11 +11,11 @@
 }
 
 - (BOOL)getObjectValue:(id *)object forString:(NSString *)string errorDescription:(NSString **)error {
-    if (valueRequired && string.length == 0) {
-        if (error) {
+    if (string.length == 0) {
+        if (valueRequired && error) {
             *error = @"The value must be not be blank.";
         }
-        return NO;
+        return !valueRequired;
     }
     if (exactLengthRequired && string.length != stringLength) {
         if (error) {

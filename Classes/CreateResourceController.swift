@@ -40,23 +40,22 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             createButton.isEnabled = false
         } else {
             // Check for conflict
-            let resource = dataSource.resource(ofType: GetOSTypeFromNSString(typeView.stringValue), andID: Int16(idView.integerValue))
+            let resource = dataSource.resource(ofType: typeView.stringValue, andID: Int16(idView.integerValue))
             createButton.isEnabled = resource == nil
         }
     }
     
     @IBAction func typeChanged(_ sender: Any) {
         // Get a suitable id for this type
-        idView.integerValue = Int(dataSource.uniqueID(forType: GetOSTypeFromNSString(typeView.stringValue)))
+        idView.integerValue = Int(dataSource.uniqueID(forType: typeView.stringValue))
         createButton.isEnabled = true
     }
     
-    @IBAction func hide(_ sender: Any) {
-        if sender as AnyObject === createButton {
-            let resource = Resource(ofType: GetOSTypeFromNSString(typeView.stringValue),
-                                    andID: Int16(idView.integerValue),
-                                    withName: nameView.stringValue,
-                                    andAttributes: 0)!
+    @IBAction func hide(_ sender: AnyObject) {
+        if sender === createButton {
+            let resource = Resource(type: typeView.stringValue,
+                                    id: idView.integerValue,
+                                    name: nameView.stringValue)
             dataSource.document.undoManager?.beginUndoGrouping()
             dataSource.addResource(resource)
             var actionName = NSLocalizedString("Create Resource", comment: "")

@@ -1,7 +1,8 @@
 #import "ElementRSID.h"
 #import "ElementCASE.h"
 #import "TemplateWindowController.h"
-#import "ResKnifeResourceProtocol.h"
+#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
+//#import "Template_Editor-Swift.h"
 /*
  * RSID allows selecting a resource id of a given type
  * The parameters are specified in the label
@@ -23,7 +24,7 @@
         NSTextCheckingResult *result = [regex firstMatchInString:l options:0 range:NSMakeRange(0, l.length)];
         NSRange r = [result rangeAtIndex:1];
         if (r.location != NSNotFound) {
-            _resType = GetOSTypeFromNSString([l substringWithRange:[result rangeAtIndex:1]]);
+            _resType = [l substringWithRange:[result rangeAtIndex:1]];
         }
         r = [result rangeAtIndex:2];
         if (r.location != NSNotFound) {
@@ -37,12 +38,12 @@
     return self;
 }
 
-- (OSType)resType
+- (NSString *)resType
 {
     return _resType;
 }
 
-- (void)setResType:(OSType)resType
+- (void)setResType:(NSString *)resType
 {
     _resType = resType;
     [self loadCases];
@@ -50,6 +51,7 @@
 
 - (void)configureView:(NSView *)view
 {
+    [self loadCases];
     [super configureView:view];
     [ElementRSID configureLinkButton:[view.subviews lastObject] forElement:self];
 }
@@ -92,7 +94,6 @@
         element = [self.parentList peek:1];
     }
     self.caseMap = [NSMutableDictionary new];
-    [self loadCases];
 }
 
 - (void)loadCases
@@ -107,7 +108,8 @@
     }
     if (self.resType) {
         // Find resources in all documents and sort by id
-        NSArray *resources = [self.parentList.controller.resource.class allResourcesOfType:self.resType inDocument:nil];
+        id <ResKnifePluginManager> manager = (id <ResKnifePluginManager>)self.parentList.controller.window.delegate;
+        NSArray *resources = [manager allResourcesOfType:self.resType currentDocumentOnly:false];
         resources = [resources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
         for (id <ResKnifeResource> resource in resources) {
             if (!resource.name.length) continue; // No point showing resources with no name
@@ -125,8 +127,8 @@
 
 - (IBAction)openResource:(id)sender
 {
-    Class resourceProtocol = self.parentList.controller.resource.class;
-    id <ResKnifeResource> resource = [resourceProtocol resourceOfType:self.resType andID:(ResID)(self.value+self.offset) inDocument:nil];
+    id <ResKnifePluginManager> manager = (id <ResKnifePluginManager>)self.parentList.controller.window.delegate;
+    id <ResKnifeResource> resource = [manager findResourceOfType:self.resType id:(ResID)(self.value+self.offset) currentDocumentOnly:false];
     if (resource) {
         [resource open];
     } else {

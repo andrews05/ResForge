@@ -8,7 +8,7 @@
 @property int max;
 @property int offset;
 @property BOOL invert;
-@property OSType resType;
+@property NSString *resType;
 @property (strong) NSView *view;
 @property ElementRangeable *parentElement;
 

@@ -3,7 +3,7 @@
 @class ResourceDocument, Resource;
 
 @interface ResourceDataSource : NSObject <NSOutlineViewDataSource>
-@property (strong) NSMutableDictionary<NSNumber*,NSMutableArray<Resource*>*> *resourcesByType;
+@property (strong) NSMutableDictionary<NSString*,NSMutableArray<Resource*>*> *resourcesByType;
 @property (strong) NSMutableArray<NSString*> *allTypes;
 @property (weak) IBOutlet NSOutlineView		*outlineView;
 @property (weak) IBOutlet ResourceDocument	*document;
@@ -19,11 +19,11 @@
 - (NSArray *)allResourcesForItems:(NSArray *)items;
 - (void)selectResources:(NSArray *)resources;
 
-- (short)uniqueIDForType:(OSType)type;
-- (short)defaultIDForType:(OSType)type;
+- (short)uniqueIDForType:(NSString *)type;
+- (short)defaultIDForType:(NSString *)type;
 
-- (Resource *)resourceOfType:(OSType)type andID:(short)resID;
-- (Resource *)resourceOfType:(OSType)type withName:(NSString *)name;
-- (NSArray *)allResourcesOfType:(OSType)type;
+- (Resource *)resourceOfType:(NSString *)type andID:(short)resID;
+- (Resource *)resourceOfType:(NSString *)type withName:(NSString *)name;
+- (NSArray *)allResourcesOfType:(NSString *)type;
 
 @end

@@ -1,13 +1,11 @@
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
+#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
 
-#import "ResKnifePluginProtocol.h"
-#import "ResKnifeResourceProtocol.h"
+@protocol ResKnifePlugin, ResKnifeResource;
 
 @interface FontWindowController : NSWindowController <ResKnifePlugin>
 {
-	id <ResKnifeResource>	resource;
-	
 	OSType arch;
 	UInt16 numTables;
 	UInt16 searchRange;
@@ -15,11 +13,14 @@
 	UInt16 rangeShift;
 	NSMutableArray *headerTable;
 }
+@property (nonatomic) id <ResKnifeResource> resource;
+
 - (void)loadFontFromResource;
 - (IBAction)saveResource:(id)sender;
 - (void)setTableData:(id <ResKnifeResource>)tableResource;
 - (void)openTable:(NSDictionary *)table inEditor:(BOOL)editor;
 @end
+
 
 /*	known Open Font Architectures (OFAs)
 

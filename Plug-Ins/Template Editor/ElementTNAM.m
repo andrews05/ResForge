@@ -1,6 +1,5 @@
 #import "ElementTNAM.h"
 #import "MacRomanFormatter.h"
-#import "ResKnifeResourceProtocol.h"
 
 #define SIZE_ON_DISK (4)
 
@@ -26,12 +25,12 @@
 
 - (NSString *)value
 {
-    return GetNSStringFromOSType(self.tnam);
+    return CFBridgingRelease(UTCreateStringForOSType(self.tnam));
 }
 
 - (void)setValue:(NSString *)value
 {
-    self.tnam = GetOSTypeFromNSString(value);
+    self.tnam = UTGetOSTypeFromString((__bridge CFStringRef _Nonnull)(value));
 }
 
 + (NSFormatter *)sharedFormatter

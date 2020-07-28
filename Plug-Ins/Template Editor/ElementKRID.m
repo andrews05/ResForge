@@ -1,5 +1,7 @@
 #import "ElementKRID.h"
 #import "TemplateWindowController.h"
+#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
+//#import "Template_Editor-Swift.h"
 
 @implementation ElementKRID
 

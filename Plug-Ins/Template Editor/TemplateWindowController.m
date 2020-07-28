@@ -13,7 +13,7 @@
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)newResource
 {
-	return [self initWithResource:newResource template:nil];
+	return nil;
 }
 
 - (instancetype)initWithResource:(id <ResKnifeResource>)newResource template:(id <ResKnifeResource>)tmplResource
@@ -29,8 +29,8 @@
     resourceStructure = nil;
     [self loadResource];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:ResourceDataDidChangeNotification object:tmpl];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:@"ResourceDataDidChangeNotification" object:resource];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateDataDidChange:) name:@"ResourceDataDidChangeNotification" object:tmpl];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidBecomeKey:) name:NSWindowDidBecomeKeyNotification object:self.window];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResignKey:) name:NSWindowDidResignKeyNotification object:self.window];
 	return self;
@@ -113,9 +113,9 @@
 - (IBAction)saveResource:(id)sender
 {
 	// send the new resource data to ResKnife
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:ResourceDataDidChangeNotification object:resource];
-    [resource setData:[resourceStructure getResourceData]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:resource];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ResourceDataDidChangeNotification" object:resource];
+    resource.data = [resourceStructure getResourceData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:@"ResourceDataDidChangeNotification" object:resource];
     self.documentEdited = NO;
 }
 
@@ -247,7 +247,7 @@
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
-    return [resource defaultWindowTitle];
+    return resource.defaultWindowTitle;
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification

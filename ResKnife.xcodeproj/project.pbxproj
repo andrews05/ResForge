@@ -10,6 +10,9 @@
 		0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EBA8664122CF49800FEC1AC /* NGSCategories.h */; };
 		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
 		49203D7924BFEC840096DFF5 /* cicn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FC2472064F0035C0FA /* cicn.cpp */; };
+		492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */; };
+		492722AE24CF8E6D00819E32 /* OutlineView-SelectedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */; };
+		492722AF24CFADD600819E32 /* ResKnifePlugins.h in Headers */ = {isa = PBXBuildFile; fileRef = 49AACD7D24CE931A0081DD4A /* ResKnifePlugins.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
@@ -89,7 +92,7 @@
 		4966752124BE67ED00251406 /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
 		4966752224BE6C6A00251406 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
-		4968C03B24C6808200716AB9 /* EditorRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* EditorRegistry.swift */; };
+		4968C03B24C6808200716AB9 /* PluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* PluginManager.swift */; };
 		4968C03F24C78D7400716AB9 /* SupportResourceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03E24C78D7400716AB9 /* SupportResourceRegistry.swift */; };
 		4970442E24720C060035C0FA /* writer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044252472064F0035C0FA /* writer.hpp */; };
 		4970442F24720C060035C0FA /* reader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044262472064F0035C0FA /* reader.hpp */; };
@@ -120,6 +123,16 @@
 		499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499216ED24CB914F0054A390 /* CreateResourceController.swift */; };
 		499216F124CCD2250054A390 /* ResourceMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 499216EF24CCD2250054A390 /* ResourceMap.h */; };
 		499216F224CCD2250054A390 /* ResourceMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 499216F024CCD2250054A390 /* ResourceMap.mm */; };
+		49AACD6424CE41A60081DD4A /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
+		49AACD8224CE931A0081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
+		49AACD8324CE931A0081DD4A /* ResKnifePlugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		49AACD8824CE93520081DD4A /* ResKnifePluginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */; };
+		49AACD8924CE93560081DD4A /* ResKnifeResourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6124CE3C830081DD4A /* ResKnifeResourceProtocol.swift */; };
+		49AACD8A24CE95FD0081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
+		49AACD8B24CE97CB0081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
+		49AACD8D24CE97CD0081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
+		49AACD9324CF6AB00081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
+		49AACD9424CF6B180081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
 		49F6403C2461199500E7CE4D /* ElementPACK.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403A2461199500E7CE4D /* ElementPACK.h */; };
 		49F6403D2461199500E7CE4D /* ElementPACK.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F6403B2461199500E7CE4D /* ElementPACK.m */; };
 		49F640402462C84B00E7CE4D /* ElementDVDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403E2462C84B00E7CE4D /* ElementDVDR.h */; };
@@ -166,18 +179,9 @@
 		B24925E215A6776600C22060 /* ImageWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* ImageWindow.xib */; };
 		B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65CE15A677F00029141B /* TemplateWindow.xib */; };
 		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
-		B2B2C40815A9464400D6F61C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		B2B2C40E15A9464400D6F61C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2B2C40C15A9464400D6F61C /* InfoPlist.strings */; };
-		B2B2C41515A9468300D6F61C /* Pattern Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		B2B2C41615A946FB00D6F61C /* PatternWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */; };
-		B2B2C41715A9470500D6F61C /* PatternWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */; };
-		B2B2C41815A9473C00D6F61C /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
-		B2B2C42115A9EEEF00D6F61C /* RKPatternImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */; };
-		B2B2C43A15A9FCCF00D6F61C /* RKPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */; };
 		B2B3CEAA16B9DCE90027F33F /* ResourceGridView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */; };
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		B2FCA79D15A66B7200696598 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA79E15A6704900696598 /* FontDocument.xib */; };
 		B2FCA7A315A6704900696598 /* FontWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA7A015A6704900696598 /* FontWindow.xib */; };
 		E11936660998552900A3A6EA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E11936650998552900A3A6EA /* Localizable.strings */; };
@@ -204,38 +208,24 @@
 		E15CFD6E099995D1004929B6 /* Templates for sfnt tables.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */; };
 		E15CFF82099BECAF004929B6 /* ElementDATE.h in Headers */ = {isa = PBXBuildFile; fileRef = E15CFF80099BECAE004929B6 /* ElementDATE.h */; };
 		E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */ = {isa = PBXBuildFile; fileRef = E15CFF81099BECAF004929B6 /* ElementDATE.m */; };
-		E18BF53D069FEA1300F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
-		E18BF53E069FEA1300F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
 		E18BF540069FEA1300F076B8 /* AttributesFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5881F0156D40B01000001 /* AttributesFormatter.h */; };
-		E18BF542069FEA1300F076B8 /* InfoWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588250156D40B01000001 /* InfoWindowController.h */; };
 		E18BF543069FEA1300F076B8 /* OutlineViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588290156D40B01000001 /* OutlineViewDelegate.h */; };
-		E18BF545069FEA1300F076B8 /* Resource.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882D0156D40B01000001 /* Resource.h */; };
 		E18BF546069FEA1300F076B8 /* ResourceDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882F0156D40B01000001 /* ResourceDataSource.h */; };
 		E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588310156D40B01000001 /* ResourceDocument.h */; };
 		E18BF548069FEA1300F076B8 /* ResourceNameCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F577A900021215C801A80001 /* ResourceNameCell.h */; };
 		E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */; };
-		E18BF54D069FEA1300F076B8 /* PasteboardDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071603CCC61E01A8010A /* PasteboardDocument.h */; };
-		E18BF54E069FEA1300F076B8 /* PasteboardWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */; };
 		E18BF55A069FEA1300F076B8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588420156D40B01000001 /* InfoPlist.strings */; };
 		E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588440156D40B01000001 /* Localizable.strings */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
 		E18BF569069FEA1300F076B8 /* Resource Type Mappings.strings in Resources */ = {isa = PBXBuildFile; fileRef = E196FEE10551AF9600FE7E58 /* Resource Type Mappings.strings */; };
 		E18BF571069FEA1300F076B8 /* AttributesFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588200156D40B01000001 /* AttributesFormatter.m */; };
-		E18BF573069FEA1300F076B8 /* InfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588260156D40B01000001 /* InfoWindowController.m */; };
-		E18BF576069FEA1300F076B8 /* Resource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882E0156D40B01000001 /* Resource.m */; };
 		E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588300156D40B01000001 /* ResourceDataSource.m */; };
 		E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588320156D40B01000001 /* ResourceDocument.m */; };
 		E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F577A901021215C801A80001 /* ResourceNameCell.m */; };
 		E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */; };
-		E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
-		E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071703CCC61E01A8010A /* PasteboardDocument.m */; };
-		E18BF580069FEA1300F076B8 /* PasteboardWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F1071B03CCFAAC01A8010A /* PasteboardWindowController.m */; };
 		E18BF583069FEA1300F076B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755A04DAEB4300B8225B /* main.m */; };
 		E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E18BF590069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
-		E18BF591069FEA1400F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
-		E18BF59F069FEA1400F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF5A2069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF5BA069FEA1400F076B8 /* BoomWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B7E025BC3A501A8010C /* BoomWindowController.h */; };
 		E18BF5BB069FEA1400F076B8 /* NovaWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B82025BC73001A8010C /* NovaWindowController.h */; };
@@ -243,8 +233,6 @@
 		E18BF5BD069FEA1400F076B8 /* ColrWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B8A025BC7C001A8010C /* ColrWindowController.h */; };
 		E18BF5BE069FEA1400F076B8 /* CronWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B8E025BCF5901A8010C /* CronWindowController.h */; };
 		E18BF5BF069FEA1400F076B8 /* DescWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B93025BD97701A8010C /* DescWindowController.h */; };
-		E18BF5C0069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
-		E18BF5C1069FEA1400F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
 		E18BF5C2069FEA1400F076B8 /* DescSplitViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F58A18410278355D01A8010C /* DescSplitViewDelegate.h */; };
 		E18BF5C3069FEA1400F076B8 /* DataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F543AFDB027B2A5001A8010C /* DataSource.h */; };
 		E18BF5C4069FEA1400F076B8 /* Structs.h in Headers */ = {isa = PBXBuildFile; fileRef = F5C9ECD8027F562201A8010C /* Structs.h */; };
@@ -259,13 +247,10 @@
 		E18BF5D8069FEA1400F076B8 /* DescWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B92025BD97701A8010C /* DescWindowController.m */; };
 		E18BF5D9069FEA1400F076B8 /* DescSplitViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F58A18400278355D01A8010C /* DescSplitViewDelegate.m */; };
 		E18BF5DA069FEA1400F076B8 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F543AFDC027B2A5001A8010C /* DataSource.m */; };
-		E18BF5DB069FEA1400F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF5DD069FEA1400F076B8 /* MisnWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB515054E918800A80202 /* MisnWindowController.m */; };
 		E18BF5DE069FEA1400F076B8 /* ShipWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB519054E919200A80202 /* ShipWindowController.m */; };
 		E18BF5E0069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF6A0069FEA1800F076B8 /* TemplateWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */; };
-		E18BF6A1069FEA1800F076B8 /* ResKnifePluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */; };
-		E18BF6A2069FEA1800F076B8 /* ResKnifeResourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */; };
 		E18BF6A3069FEA1800F076B8 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933A604DEFEE600DD74B1 /* Element.h */; };
 		E18BF6A5069FEA1800F076B8 /* ResourceStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BE04DF151C00DD74B1 /* ResourceStream.h */; };
 		E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */; };
@@ -275,7 +260,6 @@
 		E18BF6AC069FEA1800F076B8 /* ElementDBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B804E873F300AF65FE /* ElementDBYT.h */; };
 		E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50046F04EF040900F3B64D /* ElementOCNT.h */; };
 		E18BF6B4069FEA1800F076B8 /* TemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */; };
-		E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E18BF6B6069FEA1800F076B8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* Element.m */; };
 		E18BF6B8069FEA1800F076B8 /* ResourceStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* ResourceStream.m */; };
 		E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */; };
@@ -288,7 +272,6 @@
 		E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E18BF7D1069FFC7600F076B8 /* FontWindowController.h */; };
 		E18BF7D5069FFC7600F076B8 /* FontWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18BF7D2069FFC7600F076B8 /* FontWindowController.m */; };
 		E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E18BF8EB06A0027700F076B8 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9ECCE027F474A01A8010C /* Notifications.m */; };
 		E1D0DB520A109A4F0011739C /* ElementKEYB.h in Headers */ = {isa = PBXBuildFile; fileRef = E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */; };
 		E1D0DB530A109A4F0011739C /* ElementKEYB.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */; };
 		E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -316,12 +299,12 @@
 			remoteGlobalIDString = 4953F594248874AA0002340F;
 			remoteInfo = "Sound Editor";
 		};
-		B2B2C41315A9467100D6F61C /* PBXContainerItemProxy */ = {
+		49AACD8024CE931A0081DD4A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B2B2C40615A9464400D6F61C;
-			remoteInfo = "Pattern Editor";
+			remoteGlobalIDString = 49AACD7A24CE931A0081DD4A;
+			remoteInfo = ResKnifePlugins;
 		};
 		B2FCA79A15A66B4A00696598 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -365,6 +348,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		49AACD8724CE931A0081DD4A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				49AACD8324CE931A0081DD4A /* ResKnifePlugins.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E119383F09991CA300A3A6EA /* Copy Support Resources */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -404,7 +398,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */,
-				B2B2C41515A9468300D6F61C /* Pattern Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */,
 				E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */,
 				E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */,
@@ -442,7 +435,7 @@
 		3D50047004EF040900F3B64D /* ElementOCNT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementOCNT.m; sourceTree = "<group>"; };
 		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
 		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
-		4927A484248C7A9100CD3E5A /* Sound Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sound Editor-Bridging-Header.h"; sourceTree = "<group>"; };
+		492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OutlineView-SelectedItems.swift"; sourceTree = "<group>"; };
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
@@ -504,7 +497,7 @@
 		496674FD24BBC7CE00251406 /* ImageWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWindowController.swift; sourceTree = "<group>"; };
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
 		4966750024BE5C8D00251406 /* QuickDraw.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QuickDraw.mm; sourceTree = "<group>"; };
-		4968C03424C66D8B00716AB9 /* EditorRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorRegistry.swift; sourceTree = "<group>"; };
+		4968C03424C66D8B00716AB9 /* PluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
 		4968C03E24C78D7400716AB9 /* SupportResourceRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportResourceRegistry.swift; sourceTree = "<group>"; };
 		497043F42472064F0035C0FA /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		497043F52472064F0035C0FA /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -562,6 +555,13 @@
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
 		499216EF24CCD2250054A390 /* ResourceMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceMap.h; sourceTree = "<group>"; };
 		499216F024CCD2250054A390 /* ResourceMap.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceMap.mm; sourceTree = "<group>"; };
+		49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoWindowController.swift; sourceTree = "<group>"; };
+		49AACD6124CE3C830081DD4A /* ResKnifeResourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResKnifeResourceProtocol.swift; sourceTree = "<group>"; };
+		49AACD6324CE41A60081DD4A /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResKnifePluginProtocol.swift; sourceTree = "<group>"; };
+		49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResKnifePlugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49AACD7D24CE931A0081DD4A /* ResKnifePlugins.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResKnifePlugins.h; sourceTree = "<group>"; };
+		49AACD7E24CE931A0081DD4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49F1C23C24404D2000D46B35 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		49F6403A2461199500E7CE4D /* ElementPACK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementPACK.h; sourceTree = "<group>"; };
 		49F6403B2461199500E7CE4D /* ElementPACK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementPACK.m; sourceTree = "<group>"; };
@@ -637,7 +637,6 @@
 		B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PatternWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PatternWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PatternWindowController.xib; sourceTree = "<group>"; };
-		B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pattern Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B2C40B15A9464400D6F61C /* Pattern Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pattern Editor-Info.plist"; sourceTree = "<group>"; };
 		B2B2C40D15A9464400D6F61C /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2B2C41D15A9EEE100D6F61C /* RKPatternImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPatternImageCell.h; sourceTree = "<group>"; };
@@ -749,16 +748,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49AACD8B24CE97CB0081DD4A /* ResKnifePlugins.framework in Frameworks */,
 				4953F5A92488795B0002340F /* AVKit.framework in Frameworks */,
 				4953F599248874AA0002340F /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B2B2C40415A9464400D6F61C /* Frameworks */ = {
+		49AACD7824CE931A0081DD4A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2B2C40815A9464400D6F61C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,6 +765,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49AACD8A24CE95FD0081DD4A /* ResKnifePlugins.framework in Frameworks */,
 				B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -774,6 +774,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49AACD8224CE931A0081DD4A /* ResKnifePlugins.framework in Frameworks */,
 				E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -782,6 +783,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49AACD8D24CE97CD0081DD4A /* ResKnifePlugins.framework in Frameworks */,
 				E18BF5A2069FEA1400F076B8 /* Cocoa.framework in Frameworks */,
 				4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */,
 			);
@@ -800,6 +802,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49AACD9324CF6AB00081DD4A /* ResKnifePlugins.framework in Frameworks */,
 				E18BF6C3069FEA1800F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -808,6 +811,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49AACD9424CF6B180081DD4A /* ResKnifePlugins.framework in Frameworks */,
 				E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -944,7 +948,6 @@
 			children = (
 				4953F5922488740F0002340F /* SoundWindow.xib */,
 				4953F593248874260002340F /* Info.plist */,
-				4927A484248C7A9100CD3E5A /* Sound Editor-Bridging-Header.h */,
 				4927A485248C7A9100CD3E5A /* SoundWindowController.swift */,
 				4927A487248C8C0500CD3E5A /* SoundResource.swift */,
 				4927A489248C9DBD00CD3E5A /* Sound.swift */,
@@ -1083,6 +1086,17 @@
 			path = GraphiteTest;
 			sourceTree = "<group>";
 		};
+		49AACD7C24CE931A0081DD4A /* ResKnifePlugins */ = {
+			isa = PBXGroup;
+			children = (
+				49AACD7E24CE931A0081DD4A /* Info.plist */,
+				49AACD7D24CE931A0081DD4A /* ResKnifePlugins.h */,
+				49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */,
+				49AACD6124CE3C830081DD4A /* ResKnifeResourceProtocol.swift */,
+			);
+			path = ResKnifePlugins;
+			sourceTree = "<group>";
+		};
 		49F6A2E8249C96D00086C0F4 /* BinaryData */ = {
 			isa = PBXGroup;
 			children = (
@@ -1213,12 +1227,13 @@
 			isa = PBXGroup;
 			children = (
 				3D0ABFBC04E172F700C85300 /* README.txt */,
+				E18BF9D706A01A2200F076B8 /* Info.plist */,
 				3D35755A04DAEB4300B8225B /* main.m */,
 				F5B5881C0156D40B01000001 /* Classes */,
 				F5594EE9021F3E2301A80001 /* Categories */,
 				F5B588350156D40B01000001 /* Resources */,
 				F57CEE0B0189C95101A8010B /* Plug-Ins */,
-				E18BF9D706A01A2200F076B8 /* Info.plist */,
+				49AACD7C24CE931A0081DD4A /* ResKnifePlugins */,
 				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 				497043F32472064F0035C0FA /* Graphite */,
@@ -1234,8 +1249,8 @@
 				E18BF78B069FF23700F076B8 /* Font Editor.plugin */,
 				E17ADBC006A2132800842474 /* NovaTools.plugin */,
 				B2FCA78A15A66ACE00696598 /* Image Editor.plugin */,
-				B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */,
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
+				49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1282,9 +1297,12 @@
 				49F6C76124C577440078EB55 /* ApplicationDelegate.swift */,
 				4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */,
 				49F6C76024C577430078EB55 /* PrefsController.swift */,
-				4968C03424C66D8B00716AB9 /* EditorRegistry.swift */,
-				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
+				4968C03424C66D8B00716AB9 /* PluginManager.swift */,
 				4968C03E24C78D7400716AB9 /* SupportResourceRegistry.swift */,
+				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
+				49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */,
+				49AACD6324CE41A60081DD4A /* Resource.swift */,
+				492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */,
 				49F6C75D24C577270078EB55 /* ResKnife-Bridging-Header.h */,
 			);
 			path = Classes;
@@ -1362,20 +1380,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		49AACD7624CE931A0081DD4A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				492722AF24CFADD600819E32 /* ResKnifePlugins.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E18BF53C069FEA1300F076B8 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				4970444224720E730035C0FA /* macroman.hpp in Headers */,
-				E18BF53D069FEA1300F076B8 /* ResKnifeResourceProtocol.h in Headers */,
-				E18BF53E069FEA1300F076B8 /* ResKnifePluginProtocol.h in Headers */,
 				4970443224720C070035C0FA /* data.hpp in Headers */,
 				E18BF540069FEA1300F076B8 /* AttributesFormatter.h in Headers */,
 				4970443524720C0B0035C0FA /* type.hpp in Headers */,
-				E18BF542069FEA1300F076B8 /* InfoWindowController.h in Headers */,
 				E18BF543069FEA1300F076B8 /* OutlineViewDelegate.h in Headers */,
 				4970443924720C0B0035C0FA /* classic.hpp in Headers */,
-				E18BF545069FEA1300F076B8 /* Resource.h in Headers */,
 				499216F124CCD2250054A390 /* ResourceMap.h in Headers */,
 				E18BF546069FEA1300F076B8 /* ResourceDataSource.h in Headers */,
 				E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */,
@@ -1383,9 +1405,7 @@
 				E18BF548069FEA1300F076B8 /* ResourceNameCell.h in Headers */,
 				4970443D24720C0B0035C0FA /* manager.hpp in Headers */,
 				E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */,
-				E18BF54D069FEA1300F076B8 /* PasteboardDocument.h in Headers */,
 				4970444124720C0B0035C0FA /* extended.hpp in Headers */,
-				E18BF54E069FEA1300F076B8 /* PasteboardWindowController.h in Headers */,
 				4970443824720C0B0035C0FA /* file.hpp in Headers */,
 				4970444024720C0B0035C0FA /* resource.hpp in Headers */,
 				49F67EB4247B742B00553624 /* MacRomanFormatter.h in Headers */,
@@ -1399,8 +1419,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF590069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */,
-				E18BF591069FEA1400F076B8 /* ResKnifePluginProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1414,8 +1432,6 @@
 				E18BF5BD069FEA1400F076B8 /* ColrWindowController.h in Headers */,
 				E18BF5BE069FEA1400F076B8 /* CronWindowController.h in Headers */,
 				E18BF5BF069FEA1400F076B8 /* DescWindowController.h in Headers */,
-				E18BF5C0069FEA1400F076B8 /* ResKnifeResourceProtocol.h in Headers */,
-				E18BF5C1069FEA1400F076B8 /* ResKnifePluginProtocol.h in Headers */,
 				E18BF5C2069FEA1400F076B8 /* DescSplitViewDelegate.h in Headers */,
 				E18BF5C3069FEA1400F076B8 /* DataSource.h in Headers */,
 				E18BF5C4069FEA1400F076B8 /* Structs.h in Headers */,
@@ -1430,8 +1446,6 @@
 			files = (
 				49F6404C246376D900E7CE4D /* ElementLORV.h in Headers */,
 				E18BF6A0069FEA1800F076B8 /* TemplateWindowController.h in Headers */,
-				E18BF6A1069FEA1800F076B8 /* ResKnifePluginProtocol.h in Headers */,
-				E18BF6A2069FEA1800F076B8 /* ResKnifeResourceProtocol.h in Headers */,
 				E18BF6A3069FEA1800F076B8 /* Element.h in Headers */,
 				E18BF6A5069FEA1800F076B8 /* ResourceStream.h in Headers */,
 				49322A5D244FAADA00E1EAE4 /* ElementCHAR.h in Headers */,
@@ -1515,22 +1529,23 @@
 			productReference = 4953F5A0248874AA0002340F /* Sound Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		B2B2C40615A9464400D6F61C /* Pattern Editor */ = {
+		49AACD7A24CE931A0081DD4A /* ResKnifePlugins */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B2B2C41015A9464400D6F61C /* Build configuration list for PBXNativeTarget "Pattern Editor" */;
+			buildConfigurationList = 49AACD8424CE931A0081DD4A /* Build configuration list for PBXNativeTarget "ResKnifePlugins" */;
 			buildPhases = (
-				B2B2C40315A9464400D6F61C /* Sources */,
-				B2B2C40415A9464400D6F61C /* Frameworks */,
-				B2B2C40515A9464400D6F61C /* Resources */,
+				49AACD7624CE931A0081DD4A /* Headers */,
+				49AACD7724CE931A0081DD4A /* Sources */,
+				49AACD7824CE931A0081DD4A /* Frameworks */,
+				49AACD7924CE931A0081DD4A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Pattern Editor";
-			productName = "Pattern Editor";
-			productReference = B2B2C40715A9464400D6F61C /* Pattern Editor.plugin */;
-			productType = "com.apple.product-type.bundle";
+			name = ResKnifePlugins;
+			productName = ResKnifePlugins;
+			productReference = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		B2FCA78915A66ACE00696598 /* Image Editor */ = {
 			isa = PBXNativeTarget;
@@ -1559,6 +1574,7 @@
 				E1EAB18D06A20EEB0041EE35 /* Copy Plugins */,
 				E18BF56F069FEA1300F076B8 /* Sources */,
 				E18BF586069FEA1300F076B8 /* Frameworks */,
+				49AACD8724CE931A0081DD4A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1568,7 +1584,7 @@
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
 				E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */,
 				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
-				B2B2C41415A9467100D6F61C /* PBXTargetDependency */,
+				49AACD8124CE931A0081DD4A /* PBXTargetDependency */,
 			);
 			name = ResKnife;
 			productInstallPath = "$(USER_APPS_DIR)";
@@ -1665,6 +1681,10 @@
 					4953F594248874AA0002340F = {
 						LastSwiftMigration = 1150;
 					};
+					49AACD7A24CE931A0081DD4A = {
+						CreatedOnToolsVersion = 11.6;
+						ProvisioningStyle = Automatic;
+					};
 					B2FCA78915A66ACE00696598 = {
 						LastSwiftMigration = 1150;
 					};
@@ -1700,8 +1720,8 @@
 				E18BF78A069FF23700F076B8 /* Font Editor Cocoa */,
 				E18BF5B7069FEA1400F076B8 /* NovaTools */,
 				B2FCA78915A66ACE00696598 /* Image Editor */,
-				B2B2C40615A9464400D6F61C /* Pattern Editor */,
 				4953F594248874AA0002340F /* Sound Editor */,
+				49AACD7A24CE931A0081DD4A /* ResKnifePlugins */,
 			);
 		};
 /* End PBXProject section */
@@ -1715,12 +1735,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B2B2C40515A9464400D6F61C /* Resources */ = {
+		49AACD7924CE931A0081DD4A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2B2C40E15A9464400D6F61C /* InfoPlist.strings in Resources */,
-				B2B2C41715A9470500D6F61C /* PatternWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1811,14 +1829,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B2B2C40315A9464400D6F61C /* Sources */ = {
+		49AACD7724CE931A0081DD4A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2B2C41615A946FB00D6F61C /* PatternWindowController.m in Sources */,
-				B2B2C41815A9473C00D6F61C /* Notifications.m in Sources */,
-				B2B2C42115A9EEEF00D6F61C /* RKPatternImageCell.m in Sources */,
-				B2B2C43A15A9FCCF00D6F61C /* RKPatternView.m in Sources */,
+				49AACD8924CE93560081DD4A /* ResKnifeResourceProtocol.swift in Sources */,
+				49AACD8824CE93520081DD4A /* ResKnifePluginProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1844,7 +1860,6 @@
 				4966751024BE676F00251406 /* surface.cpp in Sources */,
 				4966751E24BE67D400251406 /* file.cpp in Sources */,
 				4966751B24BE67C400251406 /* type.cpp in Sources */,
-				B2FCA79D15A66B7200696598 /* Notifications.m in Sources */,
 				4943604124C12E0000293E94 /* ppat.cpp in Sources */,
 				4966751C24BE67C700251406 /* packbits.cpp in Sources */,
 				4966751424BE678800251406 /* reader.cpp in Sources */,
@@ -1859,11 +1874,10 @@
 				E18BF571069FEA1300F076B8 /* AttributesFormatter.m in Sources */,
 				4970443A24720C0B0035C0FA /* manager.cpp in Sources */,
 				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
+				49AACD6424CE41A60081DD4A /* Resource.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
 				4970443724720C0B0035C0FA /* extended.cpp in Sources */,
 				4962BCD624C6D9BC00990DA0 /* OutlineViewDelegate.m in Sources */,
-				E18BF573069FEA1300F076B8 /* InfoWindowController.m in Sources */,
-				E18BF576069FEA1300F076B8 /* Resource.m in Sources */,
 				E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */,
 				4970443024720C070035C0FA /* data.cpp in Sources */,
 				E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */,
@@ -1872,22 +1886,21 @@
 				E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */,
 				4970443624720C0B0035C0FA /* resource.cpp in Sources */,
 				49F67EB6247B742B00553624 /* MacRomanFormatter.m in Sources */,
-				4968C03B24C6808200716AB9 /* EditorRegistry.swift in Sources */,
+				4968C03B24C6808200716AB9 /* PluginManager.swift in Sources */,
 				499216F224CCD2250054A390 /* ResourceMap.mm in Sources */,
 				E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */,
-				E18BF57D069FEA1300F076B8 /* Notifications.m in Sources */,
-				E18BF57F069FEA1300F076B8 /* PasteboardDocument.m in Sources */,
-				E18BF580069FEA1300F076B8 /* PasteboardWindowController.m in Sources */,
 				4968C03F24C78D7400716AB9 /* SupportResourceRegistry.swift in Sources */,
 				4970443E24720C0B0035C0FA /* rez.cpp in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
 				E18BF583069FEA1300F076B8 /* main.m in Sources */,
 				4970443324720C070035C0FA /* writer.cpp in Sources */,
+				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
 				4970443F24720C0B0035C0FA /* type.cpp in Sources */,
 				4970444324720E730035C0FA /* macroman.cpp in Sources */,
 				4970443124720C070035C0FA /* reader.cpp in Sources */,
 				0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */,
+				492722AE24CF8E6D00819E32 /* OutlineView-SelectedItems.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1896,7 +1909,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49362D9F24A941800040B793 /* HexWindowController.swift in Sources */,
-				E18BF59F069FEA1400F076B8 /* Notifications.m in Sources */,
 				49362DA324A966960040B793 /* Hexadecimal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1913,7 +1925,6 @@
 				E18BF5D8069FEA1400F076B8 /* DescWindowController.m in Sources */,
 				E18BF5D9069FEA1400F076B8 /* DescSplitViewDelegate.m in Sources */,
 				E18BF5DA069FEA1400F076B8 /* DataSource.m in Sources */,
-				E18BF5DB069FEA1400F076B8 /* Notifications.m in Sources */,
 				E18BF5DD069FEA1400F076B8 /* MisnWindowController.m in Sources */,
 				E18BF5DE069FEA1400F076B8 /* ShipWindowController.m in Sources */,
 			);
@@ -1927,7 +1938,6 @@
 				49882A0E2448EF0E00D439BC /* ElementAWRD.m in Sources */,
 				49F640412462C84B00E7CE4D /* ElementDVDR.m in Sources */,
 				49322A62244FBF4E00E1EAE4 /* ElementTNAM.m in Sources */,
-				E18BF6B5069FEA1800F076B8 /* Notifications.m in Sources */,
 				E18BF6B6069FEA1800F076B8 /* Element.m in Sources */,
 				E18BF6B8069FEA1800F076B8 /* ResourceStream.m in Sources */,
 				49F640512464B96E00E7CE4D /* ElementCASR.m in Sources */,
@@ -1986,7 +1996,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18BF7D5069FFC7600F076B8 /* FontWindowController.m in Sources */,
-				E18BF8EB06A0027700F076B8 /* Notifications.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1998,10 +2007,10 @@
 			target = 4953F594248874AA0002340F /* Sound Editor */;
 			targetProxy = 4953F5A42488759E0002340F /* PBXContainerItemProxy */;
 		};
-		B2B2C41415A9467100D6F61C /* PBXTargetDependency */ = {
+		49AACD8124CE931A0081DD4A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B2B2C40615A9464400D6F61C /* Pattern Editor */;
-			targetProxy = B2B2C41315A9467100D6F61C /* PBXContainerItemProxy */;
+			target = 49AACD7A24CE931A0081DD4A /* ResKnifePlugins */;
+			targetProxy = 49AACD8024CE931A0081DD4A /* PBXContainerItemProxy */;
 		};
 		B2FCA79B15A66B4A00696598 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2273,9 +2282,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Sound Editor/Sound Editor-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -2288,31 +2295,96 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Sound Editor/Sound Editor-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
 		};
-		B2B2C41115A9464400D6F61C /* Debug */ = {
+		49AACD8524CE931A0081DD4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/Pattern Editor/Pattern Editor-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = plugin;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ResKnifePlugins/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nickshanks.ResKnifePlugins;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		B2B2C41215A9464400D6F61C /* Release */ = {
+		49AACD8624CE931A0081DD4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/Pattern Editor/Pattern Editor-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.derailer.resknife.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = plugin;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ResKnifePlugins/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nickshanks.ResKnifePlugins;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -2328,7 +2400,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Image Editor/Image Editor-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -2344,7 +2415,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Image-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Image Editor/Image Editor-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -2364,7 +2434,6 @@
 				PRODUCT_NAME = "Hexadecimal Editor";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -2383,7 +2452,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Hexadecimal-Editor";
 				PRODUCT_NAME = "Hexadecimal Editor";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -2428,7 +2496,6 @@
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/ResKnife-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2452,7 +2519,6 @@
 				PRODUCT_NAME = ResKnife;
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/ResKnife-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2556,6 +2622,7 @@
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -2600,6 +2667,7 @@
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -2615,11 +2683,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		B2B2C41015A9464400D6F61C /* Build configuration list for PBXNativeTarget "Pattern Editor" */ = {
+		49AACD8424CE931A0081DD4A /* Build configuration list for PBXNativeTarget "ResKnifePlugins" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B2B2C41115A9464400D6F61C /* Debug */,
-				B2B2C41215A9464400D6F61C /* Release */,
+				49AACD8524CE931A0081DD4A /* Debug */,
+				49AACD8624CE931A0081DD4A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

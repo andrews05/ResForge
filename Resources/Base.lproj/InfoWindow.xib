@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="InfoWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="InfoWindowController" customModule="ResKnife" customModuleProvider="target">
             <connections>
                 <outlet property="attributesMatrix" destination="xa2-7U-EHu" id="aeT-b0-P27"/>
                 <outlet property="creator" destination="vcX-K0-60n" id="5BJ-BO-b4N"/>
@@ -294,7 +294,7 @@
                             <outlet property="formatter" destination="t7T-4V-eof" id="woq-VB-Qk3"/>
                         </connections>
                     </textField>
-                    <matrix hidden="YES" verticalHuggingPriority="750" mode="track" translatesAutoresizingMaskIntoConstraints="NO" id="xa2-7U-EHu">
+                    <matrix verticalHuggingPriority="750" mode="track" translatesAutoresizingMaskIntoConstraints="NO" id="xa2-7U-EHu">
                         <rect key="frame" x="5" y="9" width="222" height="36"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="74" height="18"/>

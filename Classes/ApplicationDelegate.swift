@@ -1,7 +1,7 @@
 import Cocoa
 
 class ApplicationDelegate: NSObject, NSApplicationDelegate {
-    private var iconCache: [String: NSImage] = [:]
+    private static var iconCache: [String: NSImage] = [:]
     // Don't configure prefs controller until needed
     private lazy var prefsController: NSWindowController = {
         ValueTransformer.setValueTransformer(LaunchActionTransformer(), forName: .launchActionTransformerName)
@@ -25,21 +25,6 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
 
         //"hfdr": "com.apple.finder",
 
-        "cicn": "icns",
-        "SICN": "icns",
-        "icl8": "icns",
-        "icl4": "icns",
-        "ICON": "icns",
-        "ICN#": "icns",
-        "ics8": "icns",
-        "ics4": "icns",
-        "ics#": "icns",
-        "icm8": "icns",
-        "icm4": "icns",
-        "icm#": "icns",
-
-        "PNG ": "png",
-
         "NFNT": "ttf",
         "sfnt": "ttf"
     ]
@@ -58,7 +43,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         NSUserDefaultsController.shared.initialValues = prefDict
         
         SupportResourceRegistry.scanForResources()
-        EditorRegistry.scanForPlugins()
+        PluginManager.scanForPlugins()
     }
     
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
@@ -75,7 +60,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func showInfo(_ sender: Any) {
-        InfoWindowController.shared().showWindow(sender)
+        InfoWindowController.shared.showWindow(sender)
     }
     
     @IBAction func showPrefs(_ sender: Any) {
@@ -86,14 +71,15 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         NSWorkspace.shared.open(URL(string: "http://resknife.sourceforge.net/")!)
     }
     
-    @objc func icon(forResourceType resourceType: OSType) -> NSImage! {
-        let type = GetNSStringFromOSType(resourceType)
-        if iconCache[type] == nil, let editor = EditorRegistry.editor(for: type) {
-            iconCache[type] = editor.icon?(forResourceType: resourceType)
+    @objc static func icon(for resourceType: String) -> NSImage! {
+        if iconCache[resourceType] == nil, let editor = PluginManager.editor(for: resourceType) {
+            // ask politly for icon
+            iconCache[resourceType] = editor.icon?(for: resourceType)
         }
-        if iconCache[type] == nil {
-            iconCache[type] = NSWorkspace.shared.icon(forFileType: Self.typeMappings[type] ?? "")
+        if iconCache[resourceType] == nil {
+            // try to retrieve from file system using our resource type to file name extension mapping, falling back to default document type
+            iconCache[resourceType] = NSWorkspace.shared.icon(forFileType: Self.typeMappings[resourceType] ?? "")
         }
-        return iconCache[type]
+        return iconCache[resourceType]
     }
 }

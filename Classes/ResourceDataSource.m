@@ -1,6 +1,7 @@
 #import "ResourceDataSource.h"
 #import "ResourceDocument.h"
-#import "Resource.h"
+#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
+#import "ResKnife-Swift.h"
 @import Darwin.C.limits;
 
 NSString *DataSourceWillAddResourceNotification = @"DataSourceWillAddResource";
@@ -8,7 +9,7 @@ NSString *DataSourceDidAddResourceNotification = @"DataSourceDidAddResource";
 NSString *DataSourceWillRemoveResourceNotification = @"DataSourceWillRemoveResource";
 NSString *DataSourceDidRemoveResourceNotification = @"DataSourceDidRemoveResource";
 
-extern NSString *RKResourcePboardType;
+NSString *RKResourcePboardType = @"RKResourcePboardType";
 
 @implementation ResourceDataSource
 @synthesize document;
@@ -19,9 +20,9 @@ extern NSString *RKResourcePboardType;
 - (instancetype)init
 {
 	self = [super init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeWillChange:) name:ResourceTypeWillChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeDidChange:) name:ResourceTypeDidChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDidChange:) name:ResourceDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeWillChange:) name:@"ResourceTypeWillChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeDidChange:) name:@"ResourceTypeDidChangeNotification" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDidChange:) name:@"ResourceDidChangeNotification" object:nil];
     
     resourcesByType = [[NSMutableDictionary alloc] init];
     allTypes = [[NSMutableArray alloc] init];
@@ -63,9 +64,9 @@ extern NSString *RKResourcePboardType;
 	//	for large resource files, the data source gets reloaded hundreds of times upon load
 	[self addResourceToTypedList: resource];
     [resource setDocument:document];
-    [resourcesByType[@(resource.type)] sortUsingDescriptors:[outlineView sortDescriptors]];
+    [resourcesByType[resource.type] sortUsingDescriptors:[outlineView sortDescriptors]];
 	[outlineView reloadData];
-    [outlineView expandItem:@(resource.type)];
+    [outlineView expandItem:resource.type];
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:DataSourceDidAddResourceNotification object:dictionary];
 	[[document undoManager] registerUndoWithTarget:self selector:@selector(removeResource:) object:resource];	// undo action name set by calling function
@@ -86,12 +87,12 @@ extern NSString *RKResourcePboardType;
 
 -(void)addResourceToTypedList:(Resource*)inResource
 {
-    NSMutableArray* listsForType = resourcesByType[@(inResource.type)];
+    NSMutableArray* listsForType = resourcesByType[inResource.type];
     if( !listsForType )
     {
         listsForType = [NSMutableArray arrayWithObject: inResource];
-        resourcesByType[@(inResource.type)] = listsForType;
-        [allTypes addObject:GetNSStringFromOSType(inResource.type)];
+        resourcesByType[inResource.type] = listsForType;
+        [allTypes addObject:inResource.type];
         [allTypes sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     }
     else
@@ -102,11 +103,11 @@ extern NSString *RKResourcePboardType;
 
 -(void)removeResourceFromTypedList:(Resource*)inResource
 {
-    NSMutableArray* listsForType = resourcesByType[@(inResource.type)];
+    NSMutableArray* listsForType = resourcesByType[inResource.type];
     [listsForType removeObject: inResource];
     if ([listsForType count] == 0) {
-        [resourcesByType removeObjectForKey:@(inResource.type)];
-        [allTypes removeObject:GetNSStringFromOSType(inResource.type)];
+        [resourcesByType removeObjectForKey:inResource.type];
+        [allTypes removeObject:inResource.type];
     }
 }
 
@@ -122,7 +123,7 @@ extern NSString *RKResourcePboardType;
     Resource* resource = [notification object];
     if ([resource document] == document) {
         [self addResourceToTypedList:resource];
-        [resourcesByType[@(resource.type)] sortUsingDescriptors:[outlineView sortDescriptors]];
+        [resourcesByType[resource.type] sortUsingDescriptors:[outlineView sortDescriptors]];
         [outlineView reloadData];
         [self selectResources:@[resource]];
     }
@@ -155,7 +156,7 @@ extern NSString *RKResourcePboardType;
 {
     NSMutableIndexSet* indexes = [[NSMutableIndexSet alloc] init];
     for (Resource* resource in resources) {
-        [outlineView expandItem:@(resource.type)];
+        [outlineView expandItem:resource.type];
         [indexes addIndex:[outlineView rowForItem:resource]];
     }
     [outlineView selectRowIndexes:indexes byExtendingSelection:NO];
@@ -167,8 +168,8 @@ extern NSString *RKResourcePboardType;
 {
 	#pragma unused(outlineView)
     if (item == nil) {
-		NSNumber* resType = @(GetOSTypeFromNSString(allTypes[index]));
-        if ([resType isEqual:@0])
+		NSString* resType = allTypes[index];
+        if (!resType.length)
             return resourcesByType[resType][0];
         else
             return resType;
@@ -200,11 +201,11 @@ extern NSString *RKResourcePboardType;
     if ([item isKindOfClass:Resource.class]) {
         Resource *resource = (Resource *)item;
         if ([tableColumn.identifier isEqualToString:@"type"])
-            return GetNSStringFromOSType(resource.type);
+            return resource.type;
 		return [item valueForKey:tableColumn.identifier];
     } else {
         if ([tableColumn.identifier isEqualToString:@"name"])
-            return GetNSStringFromOSType([item intValue]);
+            return item;
         else if ([tableColumn.identifier isEqualToString:@"size"])
             return @(resourcesByType[item].count);
         else
@@ -221,7 +222,7 @@ extern NSString *RKResourcePboardType;
         if ([tableColumn.identifier isEqualToString:@"resID"]) {
             resource.resID = (ResID)[object intValue];
         } else if ([tableColumn.identifier isEqualToString:@"type"]) {
-            resource.type = GetOSTypeFromNSString(object);
+            resource.type = object;
         }
         [outlineView reloadItem:item];
     }
@@ -230,27 +231,27 @@ extern NSString *RKResourcePboardType;
 #pragma mark -
 /* ACCESSORS */
 
-- (Resource *)resourceOfType:(OSType)type andID:(short)resID
+- (Resource *)resourceOfType:(NSString *)type andID:(short)resID
 {
-	for (Resource *resource in resourcesByType[@(type)]) {
-		if(resID && resource.resID == resID && type && resource.type == type)
+	for (Resource *resource in resourcesByType[type]) {
+		if(resID && resource.resID == resID && type && [resource.type isEqualToString:type])
 			return resource;
 	}
 	return nil;
 }
 
-- (Resource *)resourceOfType:(OSType)type withName:(NSString *)name
+- (Resource *)resourceOfType:(NSString *)type withName:(NSString *)name
 {
-	for (Resource *resource in resourcesByType[@(type)]) {
-		if([resource.name isEqualToString:name] && resource.type == type)
+	for (Resource *resource in resourcesByType[type]) {
+        if([resource.name isEqualToString:name] && [resource.type isEqualToString:type])
 			return resource;
 	}
 	return nil;
 }
 
-- (NSArray *)allResourcesOfType:(OSType)type
+- (NSArray *)allResourcesOfType:(NSString *)type
 {
-	return [NSArray arrayWithArray:resourcesByType[@(type)]];
+	return [NSArray arrayWithArray:resourcesByType[type]];
 }
 
 /*!
@@ -260,11 +261,11 @@ extern NSString *RKResourcePboardType;
 @updated	2003-10-21  NGS:  Changed to obtain initial ID from -[resource defaultIDForType:], so we can vary it on a pre-resource-type basis (like Resourcerer can)
 */
 
-- (short)uniqueIDForType:(OSType)type
+- (short)uniqueIDForType:(NSString *)type
 {
 	short theID = [self defaultIDForType:type];
     NSMutableArray *ids = [NSMutableArray new];
-    for (Resource *resource in resourcesByType[@(type)]) {
+    for (Resource *resource in resourcesByType[type]) {
         [ids addObject:@(resource.resID)];
     }
 	
@@ -281,7 +282,7 @@ extern NSString *RKResourcePboardType;
 @pending	Method should look for resources specifying what the initial ID is for this resource type (e.g. 'vers' resources start at 0)
 */
 
-- (short)defaultIDForType:(OSType)type
+- (short)defaultIDForType:(NSString *)type
 {
 	short defaultID = 128;
 	return defaultID;
@@ -328,7 +329,7 @@ extern NSString *RKResourcePboardType;
 }
 
 - (void)outlineView:(NSOutlineView *)oView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
-    for (NSNumber* key in resourcesByType) {
+    for (NSString* key in resourcesByType) {
         [[resourcesByType objectForKey:key] sortUsingDescriptors:[outlineView sortDescriptors]];
     }
     [outlineView reloadData];

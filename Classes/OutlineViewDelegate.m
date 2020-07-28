@@ -1,8 +1,8 @@
 #import "OutlineViewDelegate.h"
-#import "Resource.h"
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
 #import "ResourceNameCell.h"
+#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
 #import "ResKnife-Swift.h"
 
 @implementation OutlineViewDelegate
@@ -11,8 +11,8 @@
 {
 	self = [super init];
 	if(!self) return nil;
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceholder:) name:ResourceTypeDidChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceholder:) name:ResourceIDDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceholder:) name:@"ResourceTypeDidChangeNotification" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceholder:) name:@"ResourceIDDidChangeNotification" object:nil];
 	return self;
 }
 
@@ -28,7 +28,7 @@
     if (resource.resID == -16455)    // don't bother checking type since there are too many icon types
         return NSLocalizedString(@"Custom Icon", nil);
     
-    switch (resource.type) {
+    switch (GetOSTypeFromNSString(resource.type)) {
         case 'carb':
             if (resource.resID == 0)
                 return NSLocalizedString(@"Carbon Identifier", nil);
@@ -75,10 +75,7 @@
             // set resource icon
             
             [cell setDrawImage:YES];
-            if (![resource representedFork])
-                [cell setImage:[(ApplicationDelegate *)[NSApp delegate] iconForResourceType:resource.type]];
-            else
-                [cell setImage:[(ApplicationDelegate *)[NSApp delegate] iconForResourceType:0]];
+            [cell setImage:[ApplicationDelegate iconFor:resource.type]];
             
             [cell setPlaceholderString:[self resourcePlaceholder:resource]];
         } else {

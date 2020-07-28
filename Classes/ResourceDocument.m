@@ -1,18 +1,15 @@
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
 #import "ResourceNameCell.h"
-#import "Resource.h"
 #import "ResourceMap.h"
+#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
 #import "ResKnife-Swift.h"
 #import "OutlineViewDelegate.h"
 #import "../Categories/NGSCategories.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
+#include <copyfile.h>
 
-#import "../Plug-Ins/ResKnifePluginProtocol.h"
 
-
-NSString *DocumentInfoWillChangeNotification = @"DocumentInfoWillChangeNotification";
-NSString *DocumentInfoDidChangeNotification = @"DocumentInfoDidChangeNotification";
 extern NSString *RKResourcePboardType;
 
 @implementation ResourceDocument
@@ -23,7 +20,7 @@ extern NSString *RKResourcePboardType;
 - (instancetype)init
 {
     if (self = [super init])
-        self.registry = [EditorRegistry new];
+        self.registry = [[PluginManager alloc] init:self];
     return self;
 }
 
@@ -163,7 +160,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
     }
 	
 	// update info window
-    [[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"DocumentInfoDidChangeNotification" object:self];
 	
 	return YES;
 }
@@ -205,20 +202,20 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (NSString *)filenameForExport:(Resource *)resource
 {
-    NSString *resType = GetNSStringFromOSType(resource.type);
-    Class editorClass = [EditorRegistry editorFor:resType];
+    NSString *resType = resource.type;
+    Class editorClass = [PluginManager editorFor:resType];
     NSString *extension;
     
     // ask for file extension
-    if ([editorClass respondsToSelector:@selector(filenameExtensionForFileExport:)]) {
-        extension = [editorClass filenameExtensionForFileExport:resource];
+    if ([editorClass respondsToSelector:@selector(filenameExtensionFor:)]) {
+        extension = [editorClass filenameExtensionFor:resource.type];
     } else {
         extension = [[resType lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     }
     
     NSString *filename = [resource.name stringByReplacingOccurrencesOfString:@"/" withString:@":"];
     if ([filename isEqualToString:@""]) {
-        filename = [NSString stringWithFormat:@"%@ %d", resType, resource.resID];
+        filename = [NSString stringWithFormat:@"%@ %ld", resType, (long)resource.resID];
     }
     NSString *fullname = [filename stringByAppendingPathExtension:extension];
     
@@ -232,11 +229,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)exportResource:(Resource *)resource toURL:(NSURL *)url
 {
-    Class editorClass = [EditorRegistry editorFor:GetNSStringFromOSType(resource.type)];
+    Class editorClass = [PluginManager editorFor:resource.type];
     if ([editorClass respondsToSelector:@selector(exportResource:toURL:)]) {
         [editorClass exportResource:resource toURL:url];
-    } else if ([editorClass respondsToSelector:@selector(dataForFileExport:)]) {
-        [[editorClass dataForFileExport:resource] writeToURL:url atomically:YES];
     } else {
         [resource.data writeToURL:url atomically:YES];
     }
@@ -258,11 +253,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[outlineView registerForDraggedTypes:@[RKResourcePboardType, NSStringPboardType, NSFilenamesPboardType]];
 	
 	// register for resource will change notifications (for undo management)
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameWillChange:) name:ResourceNameWillChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceIDWillChange:) name:ResourceIDWillChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeWillChange:) name:ResourceTypeWillChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesWillChange:) name:ResourceAttributesWillChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:ResourceDataDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameWillChange:) name:@"ResourceNameWillChangeNotification" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceIDWillChange:) name:@"ResourceIDWillChangeNotification" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeWillChange:) name:@"ResourceTypeWillChangeNotification" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesWillChange:) name:@"ResourceAttributesWillChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:@"ResourceDataDidChangeNotification" object:nil];
 	
     [dataSource addResources:_resources];
 }
@@ -348,9 +343,9 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
     id item = outlineView.selectedItem;
     NSString *type;
     if ([item isKindOfClass:Resource.class]) {
-        type = GetNSStringFromOSType([(Resource *)item type]);
-    } else if ([item isKindOfClass:NSNumber.class]) {
-        type = GetNSStringFromOSType([item intValue]);
+        type = [(Resource *)item type];
+    } else if ([item isKindOfClass:NSString.class]) {
+        type = item;
     }
     [sheetController showSheetIn:self type:type];
 }
@@ -387,7 +382,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	// opens the resource in its default template
 	for (Resource *resource in outlineView.selectedItems) {
         if ([resource isKindOfClass: Resource.class]) {
-            [self openResource:resource usingTemplate:GetNSStringFromOSType(resource.type)];
+            [self openResource:resource usingTemplate:resource.type];
         }
 	}
 }
@@ -404,21 +399,20 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (id <ResKnifePlugin>)openResourceUsingEditor:(Resource *)resource
 {
-    NSString *type = GetNSStringFromOSType(resource.type);
-    Class editorClass = [EditorRegistry editorFor:type];
+    Class editorClass = [PluginManager editorFor:resource.type];
     if (editorClass) {
         return [self.registry openWithResource:resource using:editorClass template:nil];
     }
     
 	// if no editor exists, or the editor is broken, open using template
-	return [self openResource:resource usingTemplate:type];
+    return [self openResource:resource usingTemplate:resource.type];
 }
 
 - (id <ResKnifePlugin>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
 {
 	// opens resource in template using TMPL resource with name templateName
-    Class editorClass = [EditorRegistry editorFor:@"Template Editor"];
-    Resource *tmpl = [Resource resourceOfType:'TMPL' withName:templateName inDocument:nil];
+    Class editorClass = [PluginManager editorFor:@"Template Editor"];
+    Resource *tmpl = (Resource *)[self.registry findResourceOfType:@"TMPL" name:templateName currentDocumentOnly:false];
     // open the resources, passing in the template to use
     if (tmpl && editorClass) {
         return [self.registry openWithResource:resource using:editorClass template:tmpl];
@@ -430,7 +424,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 
 - (id <ResKnifePlugin>)openResourceAsHex:(Resource *)resource
 {
-    Class editorClass = [EditorRegistry editorFor: @"Hexadecimal Editor"];
+    Class editorClass = [PluginManager editorFor: @"Hexadecimal Editor"];
     return [self.registry openWithResource:resource using:editorClass template:nil];
 }
 
@@ -450,7 +444,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	// this saves the current resource's ID number so we can undo the change
 	Resource *resource = (Resource *) [notification object];
     if ([resource document] == self) {
-        [[[self undoManager] prepareWithInvocationTarget:resource] setResID:[resource resID]];
+        [[[self undoManager] prepareWithInvocationTarget:resource] setResID:resource.resID];
         if([[resource name] length] == 0)
             [[self undoManager] setActionName:NSLocalizedString(@"ID Change", nil)];
         else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"ID Change for '%@'", nil), [resource name]]];
@@ -472,13 +466,13 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (void)resourceAttributesWillChange:(NSNotification *)notification
 {
 	// this saves the current state of the resource's attributes so we can undo the change
-	Resource *resource = (Resource *) [notification object];
-    if ([resource document] == self) {
-        [(Resource*)[[self undoManager] prepareWithInvocationTarget:resource] setAttributes:[resource attributes]];
-        if([[resource name] length] == 0)
-            [[self undoManager] setActionName:NSLocalizedString(@"Attributes Change", nil)];
-        else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Attributes Change for '%@'", nil), [resource name]]];
-    }
+//	Resource *resource = (Resource *) [notification object];
+//    if ([resource document] == self) {
+//        [(Resource*)[[self undoManager] prepareWithInvocationTarget:resource] setAttributes:[resource attributes]];
+//        if([[resource name] length] == 0)
+//            [[self undoManager] setActionName:NSLocalizedString(@"Attributes Change", nil)];
+//        else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Attributes Change for '%@'", nil), [resource name]]];
+//    }
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
@@ -522,7 +516,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	while(resource = (Resource *) [enumerator nextObject])
 	{
 		// check resource type/ID is available
-		if([dataSource resourceOfType:[resource type] andID:[resource resID]] == nil)
+        if([dataSource resourceOfType:[resource type] andID:(short)resource.resID] == nil)
 		{
 			// resource slot is available, paste this one in
 			[dataSource addResource:resource];
@@ -533,19 +527,19 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 			NSArray *remainingResources = [enumerator allObjects];
 			NSAlert *alert = [[NSAlert alloc] init];
 			alert.messageText = @"Paste Error";
-			alert.informativeText = [NSString stringWithFormat:@"There already exists a resource of type %@ with ID %hd. Do you wish to assign the pasted resource a unique ID, overwrite the existing resource, or skip pasting of this resource?", GetNSStringFromOSType([resource type]), [resource resID]];
+            alert.informativeText = [NSString stringWithFormat:@"There already exists a resource of type %@ with ID %ld. Do you wish to assign the pasted resource a unique ID, overwrite the existing resource, or skip pasting of this resource?", resource.type, (long)resource.resID];
 			[alert addButtonWithTitle:@"Unique ID"];
 			[alert addButtonWithTitle:@"Overwrite"];
 			[alert addButtonWithTitle:@"Skip"];
 			[alert beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse returnCode) {
 				if(returnCode == NSAlertFirstButtonReturn)	// unique ID
 				{
-					Resource *newResource = [Resource resourceOfType:[resource type] andID:[self.dataSource uniqueIDForType:[resource type]] withName:[resource name] andAttributes:[resource attributes] data:[resource data]];
-					[self.dataSource addResource:newResource];
+                    //Resource *newResource = [[Resource alloc] initWithType:resource.type id:[self.dataSource uniqueIDForType:resource.type] name:resource.name attributes:resource.attributes data:resource.data];
+					[self.dataSource addResource:resource];
 				}
 				else if(returnCode == NSAlertSecondButtonReturn)				// overwrite
 				{
-					[self.dataSource removeResource:[self.dataSource resourceOfType:[resource type] andID:[resource resID]]];
+					[self.dataSource removeResource:[self.dataSource resourceOfType:resource.type andID:(short)resource.resID]];
 					[self.dataSource addResource:resource];
 				}
 				//else if(NSAlertAlternateReturn)			// skip
@@ -638,22 +632,22 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (void)setCreator:(OSType)newCreator
 {
 	if (newCreator != _creator) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"DocumentInfoWillChangeNotification" object:self];
         [(ResourceDocument *)[[self undoManager] prepareWithInvocationTarget:self] setCreator:_creator];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change Creator Code", nil)];
 		_creator = newCreator;
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"DocumentInfoDidChangeNotification" object:self];
 	}
 }
 
 - (void)setType:(OSType)newType
 {
 	if (newType != _type) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoWillChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"DocumentInfoWillChangeNotification" object:self];
         [(ResourceDocument *)[[self undoManager] prepareWithInvocationTarget:self] setType:_type];
 		[[self undoManager] setActionName:NSLocalizedString(@"Change File Type", nil)];
 		_type = newType;
-		[[NSNotificationCenter defaultCenter] postNotificationName:DocumentInfoDidChangeNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"DocumentInfoDidChangeNotification" object:self];
 	}
 }
 

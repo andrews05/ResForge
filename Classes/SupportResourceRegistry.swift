@@ -1,6 +1,8 @@
 import Foundation
 
 class SupportResourceRegistry {
+    static let dataSource = ResourceDataSource()
+    
     static func scanForResources() {
         Self.scanForResources(in: Bundle.main)
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .allDomainsMask)
@@ -30,6 +32,6 @@ class SupportResourceRegistry {
     
     private static func load(resourceFile: URL) {
         let resources = ResourceMap.read(resourceFile, document: nil)!
-        Resource.supportDataSource()?.addResources(resources as? [Resource])
+        dataSource.addResources(resources as? [Resource])
     }
 }

@@ -1,4 +1,5 @@
 import Cocoa
+import ResKnifePlugins
 
 class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
     let resource: ResKnifeResource
@@ -8,7 +9,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     private var widthConstraint: NSLayoutConstraint!
     private var heightConstraint: NSLayoutConstraint!
     
-    override var windowNibName: String! {
+    override var windowNibName: String {
         return "ImageWindow"
     }
 
@@ -23,7 +24,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        self.window?.title = resource.defaultWindowTitle()
+        self.window?.title = resource.defaultWindowTitle
         // Interface builder doesn't allow setting the document view so we have to do it here and configure the constraints
         scrollView.documentView = imageView
         let l = NSLayoutConstraint(item: imageView!, attribute: .leading, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .leading, multiplier: 1, constant: 0)
@@ -34,7 +35,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         heightConstraint = NSLayoutConstraint(item: imageView!, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         scrollView.addConstraints([widthConstraint,heightConstraint,l,r,t,b])
         imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
-        imageView.isEditable = ["PICT", "cicn", "ppat", "PNG "].contains(GetNSStringFromOSType(resource.type))
+        imageView.isEditable = ["PICT", "cicn", "ppat", "PNG "].contains(resource.type)
     
         self.loadImage()
     }
@@ -69,7 +70,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
             heightConstraint.constant = max(image.size.height, window!.contentMinSize.height)
             self.window?.setContentSize(NSMakeSize(widthConstraint.constant, heightConstraint.constant))
             imageSize.stringValue = String(format: "%dx%d", image.representations[0].pixelsWide, image.representations[0].pixelsHigh)
-        } else if resource.data!.count > 0 {
+        } else if resource.data.count > 0 {
             imageSize.stringValue = "Invalid or unsupported image format"
         } else if imageView.isEditable {
             imageSize.stringValue = "Paste or drag and drop an image to import"
@@ -102,7 +103,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     
     @IBAction func changedImage(_ sender: Any) {
         let rep: NSBitmapImageRep
-        switch GetNSStringFromOSType(resource.type) {
+        switch resource.type {
         case "PICT":
             rep = self.bitmapRep(flatten: true)
         case "cicn":
@@ -122,7 +123,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
             return
         }
         let rep = self.bitmapRep()
-        switch GetNSStringFromOSType(resource.type) {
+        switch resource.type {
         case "PICT":
             resource.data = QuickDraw.pict(from: rep)
         case "cicn":
@@ -130,7 +131,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         case "ppat":
             resource.data = QuickDraw.ppat(from: rep)
         default:
-            resource.data = rep.representation(using: .png, properties: [.interlaced: false])
+            resource.data = rep.representation(using: .png, properties: [.interlaced: false])!
         }
         self.setDocumentEdited(false)
     }
@@ -161,8 +162,8 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
     
     // MARK: -
-    static func filenameExtension(forFileExport: ResKnifeResource) -> String {
-        switch GetNSStringFromOSType(forFileExport.type) {
+    static func filenameExtension(for resourceType: String) -> String {
+        switch resourceType {
         case "PNG ":
             return "png"
         case "icns":
@@ -176,24 +177,24 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         do {
             try self.imageData(for: resource).write(to: url)
         } catch let error {
-            resource.document().presentError(error)
+            resource.document?.presentError(error)
         }
     }
     
-    static func image(for resource: ResKnifeResource!) -> NSImage? {
+    static func image(for resource: ResKnifeResource) -> NSImage? {
         return NSImage(data: self.imageData(for: resource))
     }
     
-    static func icon(forResourceType resourceType: OSType) -> NSImage! {
+    static func icon(for resourceType: String) -> NSImage? {
         return NSWorkspace.shared.icon(forFileType: "public.image")
     }
     
     private static func imageData(for resource: ResKnifeResource!) -> Data {
-        let data = resource.data!
+        let data = resource.data
         guard data.count > 0 else {
             return data
         }
-        let type = GetNSStringFromOSType(resource.type)
+        let type = resource.type
         switch type {
         case "PICT":
             return QuickDraw.tiff(fromPict: data)
@@ -201,24 +202,20 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
             return QuickDraw.tiff(fromCicn: data)
         case "ppat":
             return QuickDraw.tiff(fromPpat: data)
-        case "ICON":
-            return self.iconTiff(data, width: 32, height: 32, alpha: false)
-        case "ICN#":
+        case "ICN#", "ICON":
             return self.iconTiff(data, width: 32, height: 32)
-        case "ics#", "SICN":
+        case "ics#", "SICN", "CURS":
             return self.iconTiff(data, width: 16, height: 16)
         case "icm#":
             return self.iconTiff(data, width: 16, height: 12)
-        case "CURS":
-            return self.iconTiff(data, width: 16, height: 16)
         case "PAT ":
-            return self.iconTiff(data, width: 8, height: 8, alpha: false)
+            return self.iconTiff(data, width: 8, height: 8)
         default:
             return data
         }
     }
     
-    private static func iconTiff(_ data: Data, width: Int, height: Int, alpha: Bool=true) -> Data {
+    private static func iconTiff(_ data: Data, width: Int, height: Int) -> Data {
         let bytesPerRow = width / 8
         let planeLength = bytesPerRow * height
         var dataArray: [UInt8] = []
@@ -226,7 +223,8 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         for i in 0..<planeLength {
             dataArray.append(data[i] ^ 0xff)
         }
-        let alpha = alpha ? data.count >= planeLength*2 : false
+        // Assume alpha if sufficient data
+        let alpha = data.count >= planeLength*2
 
         return dataArray.withUnsafeMutableBufferPointer { (dataBuffer) -> Data in
             var data = [UInt8](data)

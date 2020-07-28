@@ -1,5 +1,6 @@
 import AVKit
 import Cocoa
+import ResKnifePlugins
 
 class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
     let resource: ResKnifeResource
@@ -15,14 +16,14 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     @IBOutlet var selectChannels: NSPopUpButton!
     @IBOutlet var selectSampleRate: NSPopUpButton!
 
-    override var windowNibName: String! {
+    override var windowNibName: String {
         return "SoundWindow"
     }
     
     required init(resource: ResKnifeResource) {
         UserDefaults.standard.register(defaults: ["SndFormat":k16BitBigEndianFormat])
         self.resource = resource
-        sound = SoundResource(resource.data!)
+        sound = SoundResource(resource.data)
         super.init(window: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.soundDidPlayStop), name: .SoundDidStartPlaying, object: sound)
@@ -30,7 +31,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
     
     required init?(coder: NSCoder) {
-        fatalError("not implemented")
+        fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
@@ -39,7 +40,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
 
     override func windowDidLoad() {
         super.windowDidLoad()
-        self.window?.title = self.resource.defaultWindowTitle()
+        self.window?.title = self.resource.defaultWindowTitle
         self.loadInfo()
         sound.play()
     }
@@ -64,7 +65,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
             }
             self.channels.stringValue = sound.channels == 2 ? "Stereo" : "Mono"
             self.sampleRate.stringValue = String(format: "%.0f Hz", sound.sampleRate)
-        } else if resource.data!.count == 0 {
+        } else if resource.data.count == 0 {
             self.format.stringValue = "(empty)"
         } else {
             self.format.stringValue = "(unknown)"
@@ -96,8 +97,8 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     
     @IBAction func exportSound(_ sender: Any) {
         let panel = NSSavePanel()
-        if self.resource.name!.count > 0 {
-            panel.nameFieldStringValue = self.resource.name!
+        if self.resource.name.count > 0 {
+            panel.nameFieldStringValue = self.resource.name
         } else {
             panel.nameFieldStringValue = "Sound \(resource.resID)"
         }
@@ -148,26 +149,26 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
 
     @IBAction func revertResource(_ sender: Any) {
-        sound.load(data: resource.data!)
+        sound.load(data: resource.data)
         self.loadInfo()
         self.setDocumentEdited(false)
     }
     
     // ResKnifePlugin protocol export functions
-    static func filenameExtension(forFileExport: ResKnifeResource) -> String {
+    static func filenameExtension(for resourceType: String) -> String {
         return "aiff"
     }
     
     static func export(_ resource: ResKnifeResource, to url: URL) {
-        let sound = SoundResource(resource.data!)
+        let sound = SoundResource(resource.data)
         do {
             try sound.export(to: url)
         } catch let error {
-            resource.document().presentError(error)
+            resource.document.presentError(error)
         }
     }
     
-    static func icon(forResourceType resourceType: OSType) -> NSImage! {
+    static func icon(for resourceType: String) -> NSImage? {
         return NSWorkspace.shared.icon(forFileType: "public.audio")
     }
 }
