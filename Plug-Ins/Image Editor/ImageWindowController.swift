@@ -197,7 +197,8 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         let type = resource.type
         switch type {
         case "PICT":
-            return QuickDraw.tiff(fromPict: data)
+            // See if system can decode it first (<10.15), else fallback to Graphite (less compatible)
+            return NSImage(data: data)?.tiffRepresentation ?? QuickDraw.tiff(fromPict: data)
         case "cicn":
             return QuickDraw.tiff(fromCicn: data)
         case "ppat":

@@ -132,15 +132,15 @@ class Resource: NSObject, NSCoding, ResKnifeResource {
         _type = coder.decodeObject() as! String
         _id = coder.decodeObject() as! Int
         name = coder.decodeObject() as! String
-        attributes = coder.decodeObject() as! ResAttributes
-        data = coder.decodeObject() as! Data
+        attributes = ResAttributes(rawValue: coder.decodeObject() as! Int)
+        data = coder.decodeData()!
     }
     
     func encode(with coder: NSCoder) {
         coder.encode(_type)
         coder.encode(_id)
         coder.encode(name)
-        coder.encode(attributes)
+        coder.encode(attributes.rawValue)
         coder.encode(data)
     }
 }
