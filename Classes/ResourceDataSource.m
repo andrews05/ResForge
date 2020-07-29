@@ -1,6 +1,6 @@
 #import "ResourceDataSource.h"
 #import "ResourceDocument.h"
-#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
+#import "RKSupport/RKSupport-Swift.h"
 #import "ResKnife-Swift.h"
 @import Darwin.C.limits;
 
@@ -28,11 +28,6 @@ NSString *RKResourcePboardType = @"RKResourcePboardType";
     allTypes = [[NSMutableArray alloc] init];
     
 	return self;
-}
-
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSArray *)resources

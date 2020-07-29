@@ -1,9 +1,0 @@
-/* Localized versions of Info.plist keys */
-
-CFBundleName = "ResKnife";
-CFBundleGetInfoString = "ResKnife 0.7git\nCopyright © Nicholas Shanks, 2001-2010.";
-NSHumanReadableCopyright = "© Nicholas Shanks, 2001-2010.";
-ResourceMap = "Resource Map (Data Fork)";
-ResourceMapRF = "Resource Map (Resource Fork)";
-ResourceMapExtended = "Extended Resource Map";
-"com.nickshanks.resource-map" = "Resource Map";

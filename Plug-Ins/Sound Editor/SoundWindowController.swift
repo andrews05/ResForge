@@ -1,9 +1,9 @@
 import AVKit
 import Cocoa
-import ResKnifePlugins
+import RKSupport
 
 class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
-    let resource: ResKnifeResource
+    let resource: Resource
     private let sound: SoundResource
     @IBOutlet var playButton: NSButton!
     @IBOutlet var exportButton: NSButton!
@@ -20,7 +20,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         return "SoundWindow"
     }
     
-    required init(resource: ResKnifeResource) {
+    required init(resource: Resource) {
         UserDefaults.standard.register(defaults: ["SndFormat":k16BitBigEndianFormat])
         self.resource = resource
         sound = SoundResource(resource.data)
@@ -159,7 +159,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         return "aiff"
     }
     
-    static func export(_ resource: ResKnifeResource, to url: URL) {
+    static func export(_ resource: Resource, to url: URL) {
         let sound = SoundResource(resource.data)
         do {
             try sound.export(to: url)

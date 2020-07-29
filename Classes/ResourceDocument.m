@@ -1,11 +1,8 @@
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
-#import "ResourceNameCell.h"
-#import "ResourceMap.h"
-#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
-#import "ResKnife-Swift.h"
 #import "OutlineViewDelegate.h"
-#import "../Categories/NGSCategories.h"
+#import "RKSupport/RKSupport-Swift.h"
+#import "ResKnife-Swift.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
 #include <copyfile.h>
 
@@ -59,9 +56,9 @@ extern NSString *RKResourcePboardType;
     if (_fork) {
         // If fork was sepcified in open panel, try this fork only
         if ([_fork isEqualToString:@""] && hasData) {
-            _resources = [ResourceMap read:url document:self];
+            _resources = [ResourceFile readFromURL:url format:&_format error:outError];
         } else if ([_fork isEqualToString:@"rsrc"] && hasRsrc) {
-            _resources = [ResourceMap read:rsrcURL document:self];
+            _resources = [ResourceFile readFromURL:rsrcURL format:&_format error:outError];
         } else {
             // Fork is empty
             _resources = [NSMutableArray new];
@@ -70,12 +67,12 @@ extern NSString *RKResourcePboardType;
         // Try to open data fork
         if (hasData) {
             _fork = @"";
-            _resources = [ResourceMap read:url document:self];
+            _resources = [ResourceFile readFromURL:url format:&_format error:outError];
         }
         // If failed, try resource fork
         if (!_resources && hasRsrc) {
             _fork = @"rsrc";
-            _resources = [ResourceMap read:rsrcURL document:self];
+            _resources = [ResourceFile readFromURL:rsrcURL format:&_format error:outError];
         }
         // If still failed, find an empty fork
         if (!_resources && !hasData) {
@@ -87,12 +84,14 @@ extern NSString *RKResourcePboardType;
         }
     }
     
-    if (!_resources) {
-        *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:nil];
-        return NO;
+    if (_resources) {
+        for (Resource *resource in _resources) {
+            resource.document = self;
+        }
+        return YES;
     }
-	
-	return YES;
+    
+    return NO;
 }
 
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
@@ -137,9 +136,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
    
     // write resources to file
     NSURL *writeUrl = [_fork isEqualToString:@"rsrc"] ? [url URLByAppendingPathComponent:@"..namedfork/rsrc"] : url;
-    NSString *writeError = [ResourceMap write:writeUrl document:self];
-    if (writeError) {
-        *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:@{NSLocalizedFailureReasonErrorKey:writeError}];
+    if (![ResourceFile writeResources:dataSource.resources toURL:writeUrl withFormat:self.format error:outError]) {
         return NO;
     }
     
@@ -368,8 +365,8 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 		[self openResourcesAsHex:sender];
     } else {
         for (Resource *resource in outlineView.selectedItems) {
-            if ([resource isKindOfClass: Resource.class] ) {
-                [self openResourceUsingEditor:resource];
+            if ([resource isKindOfClass:Resource.class] ) {
+                [self.registry openWithResource:resource using:nil template:nil];
             } else {
                 [outlineView expandItem:resource];
             }
@@ -380,52 +377,22 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)openResourcesInTemplate:(id)sender
 {
 	// opens the resource in its default template
+    Class editorClass = [PluginManager editorFor:@"Template Editor"];
 	for (Resource *resource in outlineView.selectedItems) {
         if ([resource isKindOfClass: Resource.class]) {
-            [self openResource:resource usingTemplate:resource.type];
+            [self.registry openWithResource:resource using:editorClass template:nil];
         }
 	}
 }
 
 - (IBAction)openResourcesAsHex:(id)sender
 {
+    Class editorClass = [PluginManager editorFor:@"Hexadecimal Editor"];
 	for (Resource *resource in outlineView.selectedItems) {
         if ([resource isKindOfClass: Resource.class]) {
-            [self openResourceAsHex:resource];
+            [self.registry openWithResource:resource using:editorClass template:nil];
         }
 	}
-}
-
-
-- (id <ResKnifePlugin>)openResourceUsingEditor:(Resource *)resource
-{
-    Class editorClass = [PluginManager editorFor:resource.type];
-    if (editorClass) {
-        return [self.registry openWithResource:resource using:editorClass template:nil];
-    }
-    
-	// if no editor exists, or the editor is broken, open using template
-    return [self openResource:resource usingTemplate:resource.type];
-}
-
-- (id <ResKnifePlugin>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName
-{
-	// opens resource in template using TMPL resource with name templateName
-    Class editorClass = [PluginManager editorFor:@"Template Editor"];
-    Resource *tmpl = (Resource *)[self.registry findResourceOfType:@"TMPL" name:templateName currentDocumentOnly:false];
-    // open the resources, passing in the template to use
-    if (tmpl && editorClass) {
-        return [self.registry openWithResource:resource using:editorClass template:tmpl];
-    }
-	
-	// if no template exists, or template editor is broken, open as hex
-	return [self openResourceAsHex:resource];
-}
-
-- (id <ResKnifePlugin>)openResourceAsHex:(Resource *)resource
-{
-    Class editorClass = [PluginManager editorFor: @"Hexadecimal Editor"];
-    return [self.registry openWithResource:resource using:editorClass template:nil];
 }
 
 

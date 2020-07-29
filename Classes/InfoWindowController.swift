@@ -1,9 +1,51 @@
 import Foundation
-import ResKnifePlugins
+import RKSupport
 
 extension Notification.Name {
     static let DocumentInfoWillChange = Notification.Name("DocumentInfoWillChangeNotification")
     static let DocumentInfoDidChange = Notification.Name("DocumentInfoDidChangeNotification")
+}
+
+// Extend to the Resource class to add conflict checking when changing the type or id
+extension Resource {
+    func setType(_ type: String) -> Bool {
+        if type != self.type {
+            if self.hasConflict(type: type, id: self.resID) {
+                return false
+            }
+            self.type = type
+        }
+        return true
+    }
+    
+    func setId(_ id: Int) -> Bool {
+        if id != self.resID {
+            if self.hasConflict(type: self.type, id: id) {
+                return false
+            }
+            self.resID = id
+        }
+        return true
+    }
+    
+    private func hasConflict(type: String, id: Int) -> Bool {
+        // If changing id or type we need to check whether a matching resource already exists
+        if (document as? ResourceDocument)?.dataSource()?.resource(ofType: type, andID: Int16(id)) != nil {
+            document?.presentError(ResourceError.conflict(type, id))
+            return true
+        }
+        return false
+    }
+}
+
+enum ResourceError: LocalizedError {
+    case conflict(String, Int)
+    var errorDescription: String? {
+        switch self {
+        case .conflict(let type, let id):
+            return String(format: NSLocalizedString("A resource of type '%@' with ID %d already exists.", comment: ""), type, id)
+        }
+    }
 }
 
 class InfoWindowController: NSWindowController {
@@ -23,8 +65,8 @@ class InfoWindowController: NSWindowController {
     @IBOutlet var rSize: NSTextField!
     @IBOutlet var attributesMatrix: NSMatrix!
     
-    private var currentDocument: ResourceDocument?
-    private var selectedResource: Resource?
+    private var currentDocument: ResourceDocument!
+    private var selectedResource: Resource!
     
     static var shared = InfoWindowController(windowNibName: "InfoWindow")
     
@@ -52,12 +94,12 @@ class InfoWindowController: NSWindowController {
             nameView.stringValue = resource.name
             iconView.image = ApplicationDelegate.icon(for: resource.type)
             
-            attributesMatrix.cell(withTag: ResAttributes.resChanged.rawValue)?.state    = resource.attributes.contains(.resChanged) ? .on : .off
-            attributesMatrix.cell(withTag: ResAttributes.resPreload.rawValue)?.state    = resource.attributes.contains(.resPreload) ? .on : .off
-            attributesMatrix.cell(withTag: ResAttributes.resProtected.rawValue)?.state  = resource.attributes.contains(.resProtected) ? .on : .off
-            attributesMatrix.cell(withTag: ResAttributes.resLocked.rawValue)?.state     = resource.attributes.contains(.resLocked) ? .on : .off
-            attributesMatrix.cell(withTag: ResAttributes.resPurgeable.rawValue)?.state  = resource.attributes.contains(.resPurgeable) ? .on : .off
-            attributesMatrix.cell(withTag: ResAttributes.resSysHeap.rawValue)?.state    = resource.attributes.contains(.resSysHeap) ? .on : .off
+            attributesMatrix.cell(withTag: ResAttributes.changed.rawValue)?.state    = resource.attributes.contains(.changed) ? .on : .off
+            attributesMatrix.cell(withTag: ResAttributes.preload.rawValue)?.state    = resource.attributes.contains(.preload) ? .on : .off
+            attributesMatrix.cell(withTag: ResAttributes.protected.rawValue)?.state  = resource.attributes.contains(.protected) ? .on : .off
+            attributesMatrix.cell(withTag: ResAttributes.locked.rawValue)?.state     = resource.attributes.contains(.locked) ? .on : .off
+            attributesMatrix.cell(withTag: ResAttributes.purgeable.rawValue)?.state  = resource.attributes.contains(.purgeable) ? .on : .off
+            attributesMatrix.cell(withTag: ResAttributes.sysHeap.rawValue)?.state    = resource.attributes.contains(.sysHeap) ? .on : .off
             
             rType.stringValue = resource.type
             rID.integerValue = resource.resID
@@ -99,7 +141,7 @@ class InfoWindowController: NSWindowController {
             selectedResource = document.outlineView().selectedItem as? Resource
         } else {
             currentDocument = nil
-            selectedResource = (mainWindow?.windowController as? ResKnifePlugin)?.resource as? Resource
+            selectedResource = (mainWindow?.windowController as? ResKnifePlugin)?.resource
         }
         self.update()
     }
@@ -121,29 +163,31 @@ class InfoWindowController: NSWindowController {
     }
     
     @IBAction func creatorChanged(_ sender: Any) {
-        currentDocument?.creator = OSType(creator.stringValue)
+        currentDocument.creator = OSType(creator.stringValue)
     }
     
     @IBAction func typeChanged(_ sender: Any) {
-        currentDocument?.type = OSType(type.stringValue)
+        currentDocument.type = OSType(type.stringValue)
     }
     
     @IBAction func nameChanged(_ sender: Any) {
-        selectedResource?.name = nameView.stringValue
+        selectedResource.name = nameView.stringValue
     }
     
     @IBAction func rTypeChanged(_ sender: Any) {
-        selectedResource!.type = rType.stringValue
-        rType.stringValue = selectedResource!.type // Reload in case change was rejected
+        if !selectedResource.setType(rType.stringValue) {
+            rType.stringValue = selectedResource.type // Change was rejected, reload
+        }
     }
     
     @IBAction func rIDChanged(_ sender: Any) {
-        selectedResource!.resID = rID.integerValue
-        rID.integerValue = selectedResource!.resID
+        if !selectedResource.setId(rID.integerValue) {
+            rID.integerValue = selectedResource.resID
+        }
     }
     
     @IBAction func attributesChanged(_ sender: NSButton) {
         let att = ResAttributes(rawValue: sender.selectedTag())
-        selectedResource!.attributes.formSymmetricDifference(att)
+        selectedResource.attributes.formSymmetricDifference(att)
     }
 }

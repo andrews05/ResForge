@@ -46,7 +46,7 @@
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
                                             <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="158" customClass="ResourceNameCell">
-                                                <customFormatter key="formatter" id="OdU-x8-vVN" customClass="MacRomanFormatter">
+                                                <customFormatter key="formatter" id="OdU-x8-vVN" customClass="MacRomanFormatter" customModule="RKSupport">
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
                                                             <integer key="value" value="255"/>
@@ -66,7 +66,7 @@
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
                                             <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="159">
-                                                <customFormatter key="formatter" id="0F4-tn-FwS" customClass="MacRomanFormatter">
+                                                <customFormatter key="formatter" id="0F4-tn-FwS" customClass="MacRomanFormatter" customModule="RKSupport">
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
                                                             <integer key="value" value="4"/>
@@ -238,7 +238,7 @@
                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
             </tableHeaderCell>
             <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="162">
-                <customFormatter key="formatter" id="tQd-3F-qvW" customClass="AttributesFormatter"/>
+                <customFormatter key="formatter" id="tQd-3F-qvW" customClass="AttributesFormatter" customModule="ResKnife" customModuleProvider="target"/>
                 <font key="font" metaFont="system"/>
                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

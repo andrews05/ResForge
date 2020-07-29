@@ -1,10 +1,10 @@
 import Foundation
 
-enum BinaryDataWriterError: Error {
+public enum BinaryDataWriterError: Error {
     case notAStruct
 }
 
-class BinaryDataWriter {
+public class BinaryDataWriter {
     public var data: Data
     public var bigEndian: Bool
 

@@ -7,12 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EBA8664122CF49800FEC1AC /* NGSCategories.h */; };
-		0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA8665122CF49800FEC1AC /* NGSCategories.m */; };
-		49203D7924BFEC840096DFF5 /* cicn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FC2472064F0035C0FA /* cicn.cpp */; };
 		492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */; };
 		492722AE24CF8E6D00819E32 /* OutlineView-SelectedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */; };
-		492722AF24CFADD600819E32 /* ResKnifePlugins.h in Headers */ = {isa = PBXBuildFile; fileRef = 49AACD7D24CE931A0081DD4A /* ResKnifePlugins.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		492722AF24CFADD600819E32 /* RKSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 49AACD7D24CE931A0081DD4A /* RKSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
@@ -48,7 +45,6 @@
 		49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A7C2450E87000E1EAE4 /* ElementBBIT.m */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		49362DA324A966960040B793 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
-		4943604124C12E0000293E94 /* ppat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4943604024C12E0000293E94 /* ppat.cpp */; };
 		494BEA67245A774B000EF1D0 /* ElementKeyable.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA65245A774B000EF1D0 /* ElementKeyable.h */; };
 		494BEA68245A774B000EF1D0 /* ElementKeyable.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA66245A774B000EF1D0 /* ElementKeyable.m */; };
 		494BEA6B245A84D1000EF1D0 /* ElementCASE.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA69245A84D1000EF1D0 /* ElementCASE.h */; };
@@ -72,67 +68,56 @@
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
 		4966750D24BE601B00251406 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4966750F24BE676C00251406 /* pict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044042472064F0035C0FA /* pict.cpp */; };
-		4966751024BE676F00251406 /* surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044032472064F0035C0FA /* surface.cpp */; };
-		4966751124BE677200251406 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043F92472064F0035C0FA /* geometry.cpp */; };
-		4966751224BE678200251406 /* clut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FA2472064F0035C0FA /* clut.cpp */; };
-		4966751324BE678500251406 /* data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044272472064F0035C0FA /* data.cpp */; };
-		4966751424BE678800251406 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044282472064F0035C0FA /* reader.cpp */; };
-		4966751524BE678A00251406 /* writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970442A2472064F0035C0FA /* writer.cpp */; };
-		4966751624BE679700251406 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044002472064F0035C0FA /* color.cpp */; };
-		4966751724BE679C00251406 /* pixmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044052472064F0035C0FA /* pixmap.cpp */; };
-		4966751824BE67AE00251406 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
-		4966751924BE67B200251406 /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044182472064F0035C0FA /* resource.cpp */; };
-		4966751A24BE67C100251406 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441C2472064F0035C0FA /* manager.cpp */; };
-		4966751B24BE67C400251406 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044212472064F0035C0FA /* type.cpp */; };
-		4966751C24BE67C700251406 /* packbits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044012472064F0035C0FA /* packbits.cpp */; };
-		4966751E24BE67D400251406 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441D2472064F0035C0FA /* file.cpp */; };
-		4966751F24BE67E600251406 /* classic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441E2472064F0035C0FA /* classic.cpp */; };
-		4966752024BE67E900251406 /* extended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044192472064F0035C0FA /* extended.cpp */; };
-		4966752124BE67ED00251406 /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
-		4966752224BE6C6A00251406 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
 		4968C03B24C6808200716AB9 /* PluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* PluginManager.swift */; };
-		4968C03F24C78D7400716AB9 /* SupportResourceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03E24C78D7400716AB9 /* SupportResourceRegistry.swift */; };
-		4970442E24720C060035C0FA /* writer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044252472064F0035C0FA /* writer.hpp */; };
-		4970442F24720C060035C0FA /* reader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044262472064F0035C0FA /* reader.hpp */; };
-		4970443024720C070035C0FA /* data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044272472064F0035C0FA /* data.cpp */; };
-		4970443124720C070035C0FA /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044282472064F0035C0FA /* reader.cpp */; };
-		4970443224720C070035C0FA /* data.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044292472064F0035C0FA /* data.hpp */; };
-		4970443324720C070035C0FA /* writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970442A2472064F0035C0FA /* writer.cpp */; };
+		4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03E24C78D7400716AB9 /* SupportRegistry.swift */; };
 		4970443424720C0B0035C0FA /* rez.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044162472064F0035C0FA /* rez.hpp */; };
 		4970443524720C0B0035C0FA /* type.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044172472064F0035C0FA /* type.hpp */; };
-		4970443624720C0B0035C0FA /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044182472064F0035C0FA /* resource.cpp */; };
-		4970443724720C0B0035C0FA /* extended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044192472064F0035C0FA /* extended.cpp */; };
 		4970443824720C0B0035C0FA /* file.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4970441A2472064F0035C0FA /* file.hpp */; };
-		4970443924720C0B0035C0FA /* classic.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4970441B2472064F0035C0FA /* classic.hpp */; };
-		4970443A24720C0B0035C0FA /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441C2472064F0035C0FA /* manager.cpp */; };
-		4970443B24720C0B0035C0FA /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441D2472064F0035C0FA /* file.cpp */; };
-		4970443C24720C0B0035C0FA /* classic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441E2472064F0035C0FA /* classic.cpp */; };
 		4970443D24720C0B0035C0FA /* manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4970441F2472064F0035C0FA /* manager.hpp */; };
-		4970443E24720C0B0035C0FA /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
-		4970443F24720C0B0035C0FA /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044212472064F0035C0FA /* type.cpp */; };
 		4970444024720C0B0035C0FA /* resource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044222472064F0035C0FA /* resource.hpp */; };
-		4970444124720C0B0035C0FA /* extended.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044232472064F0035C0FA /* extended.hpp */; };
-		4970444224720E730035C0FA /* macroman.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044132472064F0035C0FA /* macroman.hpp */; };
-		4970444324720E730035C0FA /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
 		49882A092447F45700D439BC /* ElementFCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A072447F45700D439BC /* ElementFCNT.h */; };
 		49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A082447F45700D439BC /* ElementFCNT.m */; };
 		49882A0D2448EF0E00D439BC /* ElementAWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A0B2448EF0E00D439BC /* ElementAWRD.h */; };
 		49882A0E2448EF0E00D439BC /* ElementAWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A0C2448EF0E00D439BC /* ElementAWRD.m */; };
 		499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499216ED24CB914F0054A390 /* CreateResourceController.swift */; };
-		499216F124CCD2250054A390 /* ResourceMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 499216EF24CCD2250054A390 /* ResourceMap.h */; };
-		499216F224CCD2250054A390 /* ResourceMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 499216F024CCD2250054A390 /* ResourceMap.mm */; };
-		49AACD6424CE41A60081DD4A /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
-		49AACD8224CE931A0081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
-		49AACD8324CE931A0081DD4A /* ResKnifePlugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
+		49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043F92472064F0035C0FA /* geometry.cpp */; };
+		49964DE424D0EB4900BAB902 /* clut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FA2472064F0035C0FA /* clut.cpp */; };
+		49964DE524D0EB4E00BAB902 /* cicn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FC2472064F0035C0FA /* cicn.cpp */; };
+		49964DE624D0EB5100BAB902 /* pict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044042472064F0035C0FA /* pict.cpp */; };
+		49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044052472064F0035C0FA /* pixmap.cpp */; };
+		49964DE824D0EB5800BAB902 /* ppat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4943604024C12E0000293E94 /* ppat.cpp */; };
+		49964DE924D0EB5D00BAB902 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044002472064F0035C0FA /* color.cpp */; };
+		49964DEA24D0EB6000BAB902 /* packbits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044012472064F0035C0FA /* packbits.cpp */; };
+		49964DEB24D0EB6300BAB902 /* surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044032472064F0035C0FA /* surface.cpp */; };
+		49964DEC24D0EB7000BAB902 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
+		49964DED24D0EB8900BAB902 /* data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044272472064F0035C0FA /* data.cpp */; };
+		49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044282472064F0035C0FA /* reader.cpp */; };
+		49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970442A2472064F0035C0FA /* writer.cpp */; };
+		49964DF724D0EC0700BAB902 /* classic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441E2472064F0035C0FA /* classic.cpp */; };
+		49964DF824D0EC0F00BAB902 /* extended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044192472064F0035C0FA /* extended.cpp */; };
+		49964DF924D0EC1600BAB902 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441D2472064F0035C0FA /* file.cpp */; };
+		49964DFA24D0EC1A00BAB902 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441C2472064F0035C0FA /* manager.cpp */; };
+		49964DFB24D0EC1C00BAB902 /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044182472064F0035C0FA /* resource.cpp */; };
+		49964DFC24D0EC2000BAB902 /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
+		49964DFD24D0EC2300BAB902 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044212472064F0035C0FA /* type.cpp */; };
+		49964E0824D0ECB200BAB902 /* macroman.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044132472064F0035C0FA /* macroman.hpp */; };
+		49964E1324D1034400BAB902 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
+		49964E1424D10A1000BAB902 /* ResourceFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 499216F024CCD2250054A390 /* ResourceFile.mm */; };
+		49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1524D10ED900BAB902 /* AttributesFormatter.swift */; };
+		49964E1724D127CF00BAB902 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		49AACD8224CE931A0081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
+		49AACD8324CE931A0081DD4A /* RKSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49AACD8824CE93520081DD4A /* ResKnifePluginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */; };
-		49AACD8924CE93560081DD4A /* ResKnifeResourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6124CE3C830081DD4A /* ResKnifeResourceProtocol.swift */; };
-		49AACD8A24CE95FD0081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
-		49AACD8B24CE97CB0081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
-		49AACD8D24CE97CD0081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
-		49AACD9324CF6AB00081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
-		49AACD9424CF6B180081DD4A /* ResKnifePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */; };
+		49AACD8A24CE95FD0081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
+		49AACD8B24CE97CB0081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
+		49AACD8D24CE97CD0081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
+		49AACD9324CF6AB00081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
+		49AACD9424CF6B180081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
+		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
+		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
+		49C5622B24D0D8D20072D659 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */; };
 		49F6403C2461199500E7CE4D /* ElementPACK.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403A2461199500E7CE4D /* ElementPACK.h */; };
 		49F6403D2461199500E7CE4D /* ElementPACK.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F6403B2461199500E7CE4D /* ElementPACK.m */; };
 		49F640402462C84B00E7CE4D /* ElementDVDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403E2462C84B00E7CE4D /* ElementDVDR.h */; };
@@ -149,12 +134,6 @@
 		49F640552466083800E7CE4D /* ElementCaseable.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F640532466083800E7CE4D /* ElementCaseable.m */; };
 		49F640582466099C00E7CE4D /* ElementRangeable.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F640562466099C00E7CE4D /* ElementRangeable.h */; };
 		49F640592466099C00E7CE4D /* ElementRangeable.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F640572466099C00E7CE4D /* ElementRangeable.m */; };
-		49F67EB4247B742B00553624 /* MacRomanFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F67EB2247B742B00553624 /* MacRomanFormatter.h */; };
-		49F67EB5247B742B00553624 /* MacRomanFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F67EB2247B742B00553624 /* MacRomanFormatter.h */; };
-		49F67EB6247B742B00553624 /* MacRomanFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F67EB3247B742B00553624 /* MacRomanFormatter.m */; };
-		49F67EB7247B742B00553624 /* MacRomanFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F67EB3247B742B00553624 /* MacRomanFormatter.m */; };
-		49F6A2EB249C96D00086C0F4 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
-		49F6A2EC249C96D00086C0F4 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F9560C245D44D200D80C65 /* ElementCOLR.h */; };
@@ -169,7 +148,6 @@
 		55FEF5BA189D762000888898 /* misn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5B8189D762000888898 /* misn.xib */; };
 		55FEF5BD189D762F00888898 /* ship.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BB189D762F00888898 /* ship.xib */; };
 		55FEF5C0189D764300888898 /* desc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BE189D764300888898 /* desc.xib */; };
-		55FEF5CE189D781100888898 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F54625C6029174F601A8010C /* CoreServices.framework */; };
 		B229EEF415A4FB6F0032C12C /* AboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEE815A4FB6F0032C12C /* AboutPanel.xib */; };
 		B229EEF515A4FB6F0032C12C /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEA15A4FB6F0032C12C /* Application.xib */; };
 		B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */; };
@@ -208,18 +186,14 @@
 		E15CFD6E099995D1004929B6 /* Templates for sfnt tables.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */; };
 		E15CFF82099BECAF004929B6 /* ElementDATE.h in Headers */ = {isa = PBXBuildFile; fileRef = E15CFF80099BECAE004929B6 /* ElementDATE.h */; };
 		E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */ = {isa = PBXBuildFile; fileRef = E15CFF81099BECAF004929B6 /* ElementDATE.m */; };
-		E18BF540069FEA1300F076B8 /* AttributesFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5881F0156D40B01000001 /* AttributesFormatter.h */; };
 		E18BF543069FEA1300F076B8 /* OutlineViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588290156D40B01000001 /* OutlineViewDelegate.h */; };
 		E18BF546069FEA1300F076B8 /* ResourceDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882F0156D40B01000001 /* ResourceDataSource.h */; };
 		E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588310156D40B01000001 /* ResourceDocument.h */; };
 		E18BF548069FEA1300F076B8 /* ResourceNameCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F577A900021215C801A80001 /* ResourceNameCell.h */; };
 		E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */; };
-		E18BF55A069FEA1300F076B8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588420156D40B01000001 /* InfoPlist.strings */; };
 		E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588440156D40B01000001 /* Localizable.strings */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
-		E18BF569069FEA1300F076B8 /* Resource Type Mappings.strings in Resources */ = {isa = PBXBuildFile; fileRef = E196FEE10551AF9600FE7E58 /* Resource Type Mappings.strings */; };
-		E18BF571069FEA1300F076B8 /* AttributesFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588200156D40B01000001 /* AttributesFormatter.m */; };
 		E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588300156D40B01000001 /* ResourceDataSource.m */; };
 		E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588320156D40B01000001 /* ResourceDocument.m */; };
 		E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F577A901021215C801A80001 /* ResourceNameCell.m */; };
@@ -354,7 +328,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				49AACD8324CE931A0081DD4A /* ResKnifePlugins.framework in Embed Frameworks */,
+				49AACD8324CE931A0081DD4A /* RKSupport.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,8 +383,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0EBA8664122CF49800FEC1AC /* NGSCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NGSCategories.h; sourceTree = "<group>"; };
-		0EBA8665122CF49800FEC1AC /* NGSCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NGSCategories.m; sourceTree = "<group>"; };
 		3D0933A604DEFEE600DD74B1 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Element.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0933A704DEFEE600DD74B1 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Element.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3D0933BE04DF151C00DD74B1 /* ResourceStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResourceStream.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -425,16 +397,12 @@
 		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TemplateWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TemplateWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RKEditorRegistry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RKEditorRegistry.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3D4737B304E872DB00AF65FE /* ElementDLNG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDLNG.m; sourceTree = "<group>"; };
 		3D4737B404E872DB00AF65FE /* ElementDLNG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDLNG.h; sourceTree = "<group>"; };
 		3D4737B704E873F300AF65FE /* ElementDBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDBYT.m; sourceTree = "<group>"; };
 		3D4737B804E873F300AF65FE /* ElementDBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDBYT.h; sourceTree = "<group>"; };
 		3D50046F04EF040900F3B64D /* ElementOCNT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementOCNT.h; sourceTree = "<group>"; };
 		3D50047004EF040900F3B64D /* ElementOCNT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementOCNT.m; sourceTree = "<group>"; };
-		3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSupportResourceRegistry.h; sourceTree = "<group>"; };
-		3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSupportResourceRegistry.m; sourceTree = "<group>"; };
 		492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OutlineView-SelectedItems.swift"; sourceTree = "<group>"; };
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
@@ -498,7 +466,7 @@
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
 		4966750024BE5C8D00251406 /* QuickDraw.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QuickDraw.mm; sourceTree = "<group>"; };
 		4968C03424C66D8B00716AB9 /* PluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
-		4968C03E24C78D7400716AB9 /* SupportResourceRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportResourceRegistry.swift; sourceTree = "<group>"; };
+		4968C03E24C78D7400716AB9 /* SupportRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportRegistry.swift; sourceTree = "<group>"; };
 		497043F42472064F0035C0FA /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		497043F52472064F0035C0FA /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		497043F62472064F0035C0FA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -553,16 +521,16 @@
 		49882A0B2448EF0E00D439BC /* ElementAWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementAWRD.h; sourceTree = "<group>"; };
 		49882A0C2448EF0E00D439BC /* ElementAWRD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementAWRD.m; sourceTree = "<group>"; };
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
-		499216EF24CCD2250054A390 /* ResourceMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceMap.h; sourceTree = "<group>"; };
-		499216F024CCD2250054A390 /* ResourceMap.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceMap.mm; sourceTree = "<group>"; };
+		499216EF24CCD2250054A390 /* ResourceFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceFile.h; sourceTree = "<group>"; };
+		499216F024CCD2250054A390 /* ResourceFile.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceFile.mm; sourceTree = "<group>"; };
+		49964E1524D10ED900BAB902 /* AttributesFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesFormatter.swift; sourceTree = "<group>"; };
 		49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoWindowController.swift; sourceTree = "<group>"; };
-		49AACD6124CE3C830081DD4A /* ResKnifeResourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResKnifeResourceProtocol.swift; sourceTree = "<group>"; };
 		49AACD6324CE41A60081DD4A /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResKnifePluginProtocol.swift; sourceTree = "<group>"; };
-		49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResKnifePlugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		49AACD7D24CE931A0081DD4A /* ResKnifePlugins.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResKnifePlugins.h; sourceTree = "<group>"; };
+		49AACD7B24CE931A0081DD4A /* RKSupport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RKSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49AACD7D24CE931A0081DD4A /* RKSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RKSupport.h; sourceTree = "<group>"; };
 		49AACD7E24CE931A0081DD4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		49F1C23C24404D2000D46B35 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; };
 		49F6403A2461199500E7CE4D /* ElementPACK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementPACK.h; sourceTree = "<group>"; };
 		49F6403B2461199500E7CE4D /* ElementPACK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementPACK.m; sourceTree = "<group>"; };
 		49F6403E2462C84B00E7CE4D /* ElementDVDR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementDVDR.h; sourceTree = "<group>"; };
@@ -579,8 +547,6 @@
 		49F640532466083800E7CE4D /* ElementCaseable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCaseable.m; sourceTree = "<group>"; };
 		49F640562466099C00E7CE4D /* ElementRangeable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementRangeable.h; sourceTree = "<group>"; };
 		49F640572466099C00E7CE4D /* ElementRangeable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRangeable.m; sourceTree = "<group>"; };
-		49F67EB2247B742B00553624 /* MacRomanFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacRomanFormatter.h; sourceTree = "<group>"; };
-		49F67EB3247B742B00553624 /* MacRomanFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacRomanFormatter.m; sourceTree = "<group>"; };
 		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
 		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStatus.swift; sourceTree = "<group>"; };
@@ -604,17 +570,11 @@
 		550B905C189A036F005AC38D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Application.strings; sourceTree = "<group>"; };
 		550B905F189A0421005AC38D /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Application.strings; sourceTree = "<group>"; };
 		550B9060189A0876005AC38D /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Application.strings; sourceTree = "<group>"; };
-		550B9068189A1AA9005AC38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
 		5542DCEC18DCF19C00AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5542DCED18DCF1AC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5542DCED18DCF1AC00AC9627 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5542DCEF18DCF1D300AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5542DCF018DCF1DC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		555DFD982059BCE700E1B774 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		557238941970F72800748CF6 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/Application.strings; sourceTree = "<group>"; };
-		557B66B91970C0DD004A7BD5 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		559C9EF41975B16D00444C6A /* gd */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
-		559C9EF81975B46900444C6A /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/ResourceDocument.strings; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		559DE9BC189D6B2B00D55D3A /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AboutPanel.strings; sourceTree = "<group>"; };
 		559DE9BE189D6B3500D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceGridView.strings; sourceTree = "<group>"; };
@@ -634,15 +594,6 @@
 		55FEF5C6189D769A00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/misn.strings; sourceTree = "<group>"; };
 		55FEF5C8189D769F00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ship.strings; sourceTree = "<group>"; };
 		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
-		B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PatternWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PatternWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PatternWindowController.xib; sourceTree = "<group>"; };
-		B2B2C40B15A9464400D6F61C /* Pattern Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pattern Editor-Info.plist"; sourceTree = "<group>"; };
-		B2B2C40D15A9464400D6F61C /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B2B2C41D15A9EEE100D6F61C /* RKPatternImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPatternImageCell.h; sourceTree = "<group>"; };
-		B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKPatternImageCell.m; sourceTree = "<group>"; };
-		B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKPatternView.h; sourceTree = "<group>"; };
-		B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RKPatternView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B2FCA78A15A66ACE00696598 /* Image Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Image Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E11936620998551200A3A6EA /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -679,7 +630,6 @@
 		E18BF94B06A00F8E00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF9D706A01A2200F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BFA3606A20B7A00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E196FEE10551AF9600FE7E58 /* Resource Type Mappings.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Resource Type Mappings.strings"; sourceTree = "<group>"; };
 		E19FB514054E918800A80202 /* MisnWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MisnWindowController.h; path = misn/MisnWindowController.h; sourceTree = "<group>"; };
 		E19FB515054E918800A80202 /* MisnWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MisnWindowController.m; path = misn/MisnWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E19FB518054E919200A80202 /* ShipWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ShipWindowController.h; path = ship/ShipWindowController.h; sourceTree = "<group>"; };
@@ -691,8 +641,6 @@
 		F543AFDB027B2A5001A8010C /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataSource.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F543AFDC027B2A5001A8010C /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F543AFF0027C716E01A8010C /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = "en.lproj/Resource Types.strings"; sourceTree = "<group>"; };
-		F54625C6029174F601A8010C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResKnifePluginProtocol.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F577A900021215C801A80001 /* ResourceNameCell.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceNameCell.h; sourceTree = "<group>"; };
 		F577A901021215C801A80001 /* ResourceNameCell.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ResourceNameCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F58A18400278355D01A8010C /* DescSplitViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = DescSplitViewDelegate.m; path = desc/DescSplitViewDelegate.m; sourceTree = "<group>"; };
@@ -709,38 +657,16 @@
 		F58F6B8F025BCF5901A8010C /* CronWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CronWindowController.m; path = cron/CronWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F58F6B92025BD97701A8010C /* DescWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DescWindowController.m; path = desc/DescWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F58F6B93025BD97701A8010C /* DescWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescWindowController.h; path = desc/DescWindowController.h; sourceTree = "<group>"; };
-		F59481AD03D0776C01A8010A /* RKDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RKDocumentController.h; sourceTree = "<group>"; };
-		F59481AE03D0776C01A8010A /* RKDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RKDocumentController.m; sourceTree = "<group>"; };
-		F59481B103D077DC01A8010A /* OpenPanelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OpenPanelDelegate.h; sourceTree = "<group>"; };
-		F59481B203D077DC01A8010A /* OpenPanelDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = OpenPanelDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F5B5881D0156D40B01000001 /* ApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ApplicationDelegate.h; sourceTree = "<group>"; };
-		F5B5881E0156D40B01000001 /* ApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ApplicationDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F5B5881F0156D40B01000001 /* AttributesFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AttributesFormatter.h; sourceTree = "<group>"; };
-		F5B588200156D40B01000001 /* AttributesFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AttributesFormatter.m; sourceTree = "<group>"; };
-		F5B588210156D40B01000001 /* CreateResourceSheetController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CreateResourceSheetController.h; sourceTree = "<group>"; };
-		F5B588220156D40B01000001 /* CreateResourceSheetController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CreateResourceSheetController.m; sourceTree = "<group>"; };
-		F5B588250156D40B01000001 /* InfoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = InfoWindowController.h; sourceTree = "<group>"; };
-		F5B588260156D40B01000001 /* InfoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = InfoWindowController.m; sourceTree = "<group>"; };
 		F5B588290156D40B01000001 /* OutlineViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OutlineViewDelegate.h; sourceTree = "<group>"; };
 		F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = OutlineViewDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F5B5882B0156D40B01000001 /* PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PrefsController.h; sourceTree = "<group>"; };
-		F5B5882C0156D40B01000001 /* PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PrefsController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F5B5882D0156D40B01000001 /* Resource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Resource.h; sourceTree = "<group>"; };
-		F5B5882E0156D40B01000001 /* Resource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Resource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5B5882F0156D40B01000001 /* ResourceDataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceDataSource.h; sourceTree = "<group>"; };
 		F5B588300156D40B01000001 /* ResourceDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ResourceDataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5B588310156D40B01000001 /* ResourceDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResourceDocument.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F5B588320156D40B01000001 /* ResourceDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ResourceDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5B5884B0156D40B01000001 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		F5C9ECCE027F474A01A8010C /* Notifications.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
 		F5C9ECD8027F562201A8010C /* Structs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Structs.h; sourceTree = "<group>"; };
-		F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResKnifeResourceProtocol.h; sourceTree = "<group>"; };
 		F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView-SelectedItems.h"; sourceTree = "<group>"; };
 		F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView-SelectedItems.m"; sourceTree = "<group>"; };
-		F5F1071603CCC61E01A8010A /* PasteboardDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardDocument.h; sourceTree = "<group>"; };
-		F5F1071703CCC61E01A8010A /* PasteboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PasteboardDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PasteboardWindowController.h; sourceTree = "<group>"; };
-		F5F1071B03CCFAAC01A8010A /* PasteboardWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PasteboardWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -748,7 +674,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49AACD8B24CE97CB0081DD4A /* ResKnifePlugins.framework in Frameworks */,
+				49AACD8B24CE97CB0081DD4A /* RKSupport.framework in Frameworks */,
 				4953F5A92488795B0002340F /* AVKit.framework in Frameworks */,
 				4953F599248874AA0002340F /* Cocoa.framework in Frameworks */,
 			);
@@ -758,6 +684,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49964E1724D127CF00BAB902 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,7 +692,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49AACD8A24CE95FD0081DD4A /* ResKnifePlugins.framework in Frameworks */,
+				49AACD8A24CE95FD0081DD4A /* RKSupport.framework in Frameworks */,
 				B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -774,7 +701,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49AACD8224CE931A0081DD4A /* ResKnifePlugins.framework in Frameworks */,
+				49AACD8224CE931A0081DD4A /* RKSupport.framework in Frameworks */,
 				E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -783,7 +710,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49AACD8D24CE97CD0081DD4A /* ResKnifePlugins.framework in Frameworks */,
+				49AACD8D24CE97CD0081DD4A /* RKSupport.framework in Frameworks */,
 				E18BF5A2069FEA1400F076B8 /* Cocoa.framework in Frameworks */,
 				4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */,
 			);
@@ -793,7 +720,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55FEF5CE189D781100888898 /* CoreServices.framework in Frameworks */,
 				E18BF5E0069FEA1400F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -802,7 +728,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49AACD9324CF6AB00081DD4A /* ResKnifePlugins.framework in Frameworks */,
+				49AACD9324CF6AB00081DD4A /* RKSupport.framework in Frameworks */,
 				E18BF6C3069FEA1800F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -811,7 +737,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49AACD9424CF6B180081DD4A /* ResKnifePlugins.framework in Frameworks */,
+				49AACD9424CF6B180081DD4A /* RKSupport.framework in Frameworks */,
 				E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1086,40 +1012,22 @@
 			path = GraphiteTest;
 			sourceTree = "<group>";
 		};
-		49AACD7C24CE931A0081DD4A /* ResKnifePlugins */ = {
+		49AACD7C24CE931A0081DD4A /* RKSupport */ = {
 			isa = PBXGroup;
 			children = (
 				49AACD7E24CE931A0081DD4A /* Info.plist */,
-				49AACD7D24CE931A0081DD4A /* ResKnifePlugins.h */,
+				49AACD7D24CE931A0081DD4A /* RKSupport.h */,
+				49AACD6324CE41A60081DD4A /* Resource.swift */,
 				49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */,
-				49AACD6124CE3C830081DD4A /* ResKnifeResourceProtocol.swift */,
-			);
-			path = ResKnifePlugins;
-			sourceTree = "<group>";
-		};
-		49F6A2E8249C96D00086C0F4 /* BinaryData */ = {
-			isa = PBXGroup;
-			children = (
 				49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */,
 				49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */,
+				49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */,
+				499216EF24CCD2250054A390 /* ResourceFile.h */,
+				499216F024CCD2250054A390 /* ResourceFile.mm */,
+				496674FF24BE5C8C00251406 /* QuickDraw.h */,
+				4966750024BE5C8D00251406 /* QuickDraw.mm */,
 			);
-			path = BinaryData;
-			sourceTree = "<group>";
-		};
-		B2B2C3FC15A9451800D6F61C /* Pattern Editor */ = {
-			isa = PBXGroup;
-			children = (
-				B2B2C40B15A9464400D6F61C /* Pattern Editor-Info.plist */,
-				B2B2C40C15A9464400D6F61C /* InfoPlist.strings */,
-				B2B2C3FD15A9453300D6F61C /* PatternWindowController.h */,
-				B2B2C3FE15A9453300D6F61C /* PatternWindowController.m */,
-				B2B2C3FF15A9453300D6F61C /* PatternWindowController.xib */,
-				B2B2C41D15A9EEE100D6F61C /* RKPatternImageCell.h */,
-				B2B2C41E15A9EEE100D6F61C /* RKPatternImageCell.m */,
-				B2B2C43815A9FCCF00D6F61C /* RKPatternView.h */,
-				B2B2C43915A9FCCF00D6F61C /* RKPatternView.m */,
-			);
-			path = "Pattern Editor";
+			path = RKSupport;
 			sourceTree = "<group>";
 		};
 		B2FCA77C15A669C800696598 /* Image Editor */ = {
@@ -1129,8 +1037,6 @@
 				B2FCA78E15A66ACF00696598 /* Info.plist */,
 				496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */,
 				496674FD24BBC7CE00251406 /* ImageWindowController.swift */,
-				496674FF24BE5C8C00251406 /* QuickDraw.h */,
-				4966750024BE5C8D00251406 /* QuickDraw.mm */,
 			);
 			path = "Image Editor";
 			sourceTree = "<group>";
@@ -1184,8 +1090,6 @@
 		F5594EE9021F3E2301A80001 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				0EBA8664122CF49800FEC1AC /* NGSCategories.h */,
-				0EBA8665122CF49800FEC1AC /* NGSCategories.m */,
 				F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */,
 				F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */,
 			);
@@ -1195,17 +1099,11 @@
 		F57CEE0B0189C95101A8010B /* Plug-Ins */ = {
 			isa = PBXGroup;
 			children = (
-				49F1C23C24404D2000D46B35 /* README.txt */,
-				F5C9ECCE027F474A01A8010C /* Notifications.m */,
-				F5502C4001C579FF01C57124 /* ResKnifePluginProtocol.h */,
-				F5CDEBAB01FC893201A80001 /* ResKnifeResourceProtocol.h */,
-				49F6A2E8249C96D00086C0F4 /* BinaryData */,
-				4953F58F248873DD0002340F /* Sound Editor */,
-				B2B2C3FC15A9451800D6F61C /* Pattern Editor */,
 				F5EF839F020C08E601A80001 /* Hex Editor */,
 				3D0B38A504DEF41E005AED5E /* Template Editor */,
-				E18BF7B8069FFA5200F076B8 /* Font Editor */,
 				B2FCA77C15A669C800696598 /* Image Editor */,
+				4953F58F248873DD0002340F /* Sound Editor */,
+				E18BF7B8069FFA5200F076B8 /* Font Editor */,
 				F5DF1C0F0254C78801A80001 /* NovaTools */,
 			);
 			path = "Plug-Ins";
@@ -1232,8 +1130,8 @@
 				F5B5881C0156D40B01000001 /* Classes */,
 				F5594EE9021F3E2301A80001 /* Categories */,
 				F5B588350156D40B01000001 /* Resources */,
+				49AACD7C24CE931A0081DD4A /* RKSupport */,
 				F57CEE0B0189C95101A8010B /* Plug-Ins */,
-				49AACD7C24CE931A0081DD4A /* ResKnifePlugins */,
 				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 				497043F32472064F0035C0FA /* Graphite */,
@@ -1250,7 +1148,7 @@
 				E17ADBC006A2132800842474 /* NovaTools.plugin */,
 				B2FCA78A15A66ACE00696598 /* Image Editor.plugin */,
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
-				49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */,
+				49AACD7B24CE931A0081DD4A /* RKSupport.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1258,52 +1156,24 @@
 		F5B5881C0156D40B01000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				F5B5881D0156D40B01000001 /* ApplicationDelegate.h */,
-				F5B5881E0156D40B01000001 /* ApplicationDelegate.m */,
-				F5B5881F0156D40B01000001 /* AttributesFormatter.h */,
-				F5B588200156D40B01000001 /* AttributesFormatter.m */,
-				F5B588210156D40B01000001 /* CreateResourceSheetController.h */,
-				F5B588220156D40B01000001 /* CreateResourceSheetController.m */,
-				F5B588250156D40B01000001 /* InfoWindowController.h */,
-				F5B588260156D40B01000001 /* InfoWindowController.m */,
-				F59481B103D077DC01A8010A /* OpenPanelDelegate.h */,
-				F59481B203D077DC01A8010A /* OpenPanelDelegate.m */,
 				F5B588290156D40B01000001 /* OutlineViewDelegate.h */,
 				F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */,
-				F5F1071603CCC61E01A8010A /* PasteboardDocument.h */,
-				F5F1071703CCC61E01A8010A /* PasteboardDocument.m */,
-				F5F1071A03CCFAAC01A8010A /* PasteboardWindowController.h */,
-				F5F1071B03CCFAAC01A8010A /* PasteboardWindowController.m */,
-				F5B5882B0156D40B01000001 /* PrefsController.h */,
-				F5B5882C0156D40B01000001 /* PrefsController.m */,
-				F5B5882D0156D40B01000001 /* Resource.h */,
-				F5B5882E0156D40B01000001 /* Resource.m */,
 				F5B5882F0156D40B01000001 /* ResourceDataSource.h */,
 				F5B588300156D40B01000001 /* ResourceDataSource.m */,
 				F5B588310156D40B01000001 /* ResourceDocument.h */,
 				F5B588320156D40B01000001 /* ResourceDocument.m */,
-				499216EF24CCD2250054A390 /* ResourceMap.h */,
-				499216F024CCD2250054A390 /* ResourceMap.mm */,
 				F577A900021215C801A80001 /* ResourceNameCell.h */,
 				F577A901021215C801A80001 /* ResourceNameCell.m */,
-				F59481AD03D0776C01A8010A /* RKDocumentController.h */,
-				F59481AE03D0776C01A8010A /* RKDocumentController.m */,
-				3D35755C04DAEB6200B8225B /* RKEditorRegistry.h */,
-				3D35755D04DAEB6200B8225B /* RKEditorRegistry.m */,
-				3D53A9FD04F171DC006651FA /* RKSupportResourceRegistry.h */,
-				3D53A9FE04F171DC006651FA /* RKSupportResourceRegistry.m */,
-				49F67EB2247B742B00553624 /* MacRomanFormatter.h */,
-				49F67EB3247B742B00553624 /* MacRomanFormatter.m */,
+				49F6C75D24C577270078EB55 /* ResKnife-Bridging-Header.h */,
 				49F6C76124C577440078EB55 /* ApplicationDelegate.swift */,
+				49964E1524D10ED900BAB902 /* AttributesFormatter.swift */,
 				4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */,
 				49F6C76024C577430078EB55 /* PrefsController.swift */,
 				4968C03424C66D8B00716AB9 /* PluginManager.swift */,
-				4968C03E24C78D7400716AB9 /* SupportResourceRegistry.swift */,
+				4968C03E24C78D7400716AB9 /* SupportRegistry.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */,
-				49AACD6324CE41A60081DD4A /* Resource.swift */,
 				492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */,
-				49F6C75D24C577270078EB55 /* ResKnife-Bridging-Header.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1319,9 +1189,7 @@
 				B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */,
 				B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */,
 				B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */,
-				F5B588420156D40B01000001 /* InfoPlist.strings */,
 				F5B588440156D40B01000001 /* Localizable.strings */,
-				E196FEE10551AF9600FE7E58 /* Resource Type Mappings.strings */,
 				F5041736036BD60801A8010A /* ResKnife.scriptSuite */,
 				F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */,
 				559DE9B3189D665000D55D3A /* Icons.xcassets */,
@@ -1334,7 +1202,6 @@
 			children = (
 				4953F5A82488795B0002340F /* AVKit.framework */,
 				B25C779815D2B0C500C005DE /* HexFiend.framework */,
-				F54625C6029174F601A8010C /* CoreServices.framework */,
 				F5B5884B0156D40B01000001 /* Cocoa.framework */,
 			);
 			name = Frameworks;
@@ -1384,7 +1251,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492722AF24CFADD600819E32 /* ResKnifePlugins.h in Headers */,
+				49964E0824D0ECB200BAB902 /* macroman.hpp in Headers */,
+				492722AF24CFADD600819E32 /* RKSupport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1392,26 +1260,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4970444224720E730035C0FA /* macroman.hpp in Headers */,
-				4970443224720C070035C0FA /* data.hpp in Headers */,
-				E18BF540069FEA1300F076B8 /* AttributesFormatter.h in Headers */,
 				4970443524720C0B0035C0FA /* type.hpp in Headers */,
 				E18BF543069FEA1300F076B8 /* OutlineViewDelegate.h in Headers */,
-				4970443924720C0B0035C0FA /* classic.hpp in Headers */,
-				499216F124CCD2250054A390 /* ResourceMap.h in Headers */,
 				E18BF546069FEA1300F076B8 /* ResourceDataSource.h in Headers */,
 				E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */,
-				4970442F24720C060035C0FA /* reader.hpp in Headers */,
 				E18BF548069FEA1300F076B8 /* ResourceNameCell.h in Headers */,
 				4970443D24720C0B0035C0FA /* manager.hpp in Headers */,
 				E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */,
-				4970444124720C0B0035C0FA /* extended.hpp in Headers */,
 				4970443824720C0B0035C0FA /* file.hpp in Headers */,
 				4970444024720C0B0035C0FA /* resource.hpp in Headers */,
-				49F67EB4247B742B00553624 /* MacRomanFormatter.h in Headers */,
 				4970443424720C0B0035C0FA /* rez.hpp in Headers */,
-				0EBA8666122CF49800FEC1AC /* NGSCategories.h in Headers */,
-				4970442E24720C060035C0FA /* writer.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1453,7 +1311,6 @@
 				49F640502464B96E00E7CE4D /* ElementCASR.h in Headers */,
 				494BEA73245BE256000EF1D0 /* ElementRSID.h in Headers */,
 				E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */,
-				49F67EB5247B742B00553624 /* MacRomanFormatter.h in Headers */,
 				493229CD244C3C2000E1EAE4 /* ElementLFLG.h in Headers */,
 				E18BF6A9069FEA1800F076B8 /* ElementDWRD.h in Headers */,
 				493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */,
@@ -1529,9 +1386,9 @@
 			productReference = 4953F5A0248874AA0002340F /* Sound Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		49AACD7A24CE931A0081DD4A /* ResKnifePlugins */ = {
+		49AACD7A24CE931A0081DD4A /* RKSupport */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49AACD8424CE931A0081DD4A /* Build configuration list for PBXNativeTarget "ResKnifePlugins" */;
+			buildConfigurationList = 49AACD8424CE931A0081DD4A /* Build configuration list for PBXNativeTarget "RKSupport" */;
 			buildPhases = (
 				49AACD7624CE931A0081DD4A /* Headers */,
 				49AACD7724CE931A0081DD4A /* Sources */,
@@ -1542,9 +1399,9 @@
 			);
 			dependencies = (
 			);
-			name = ResKnifePlugins;
+			name = RKSupport;
 			productName = ResKnifePlugins;
-			productReference = 49AACD7B24CE931A0081DD4A /* ResKnifePlugins.framework */;
+			productReference = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		B2FCA78915A66ACE00696598 /* Image Editor */ = {
@@ -1721,7 +1578,7 @@
 				E18BF5B7069FEA1400F076B8 /* NovaTools */,
 				B2FCA78915A66ACE00696598 /* Image Editor */,
 				4953F594248874AA0002340F /* Sound Editor */,
-				49AACD7A24CE931A0081DD4A /* ResKnifePlugins */,
+				49AACD7A24CE931A0081DD4A /* RKSupport */,
 			);
 		};
 /* End PBXProject section */
@@ -1754,11 +1611,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF55A069FEA1300F076B8 /* InfoPlist.strings in Resources */,
 				E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */,
 				E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */,
 				E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */,
-				E18BF569069FEA1300F076B8 /* Resource Type Mappings.strings in Resources */,
 				B229EEF415A4FB6F0032C12C /* AboutPanel.xib in Resources */,
 				B229EEF515A4FB6F0032C12C /* Application.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */,
@@ -1822,8 +1677,6 @@
 			files = (
 				4927A48C248E162F00CD3E5A /* Sound.swift in Sources */,
 				4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */,
-				49F6A2EC249C96D00086C0F4 /* BinaryDataWriter.swift in Sources */,
-				49F6A2EB249C96D00086C0F4 /* BinaryDataReader.swift in Sources */,
 				4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */,
 				49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */,
 			);
@@ -1833,8 +1686,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49AACD8924CE93560081DD4A /* ResKnifeResourceProtocol.swift in Sources */,
+				49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */,
+				49964DE424D0EB4900BAB902 /* clut.cpp in Sources */,
+				49964DF724D0EC0700BAB902 /* classic.cpp in Sources */,
+				49964DF824D0EC0F00BAB902 /* extended.cpp in Sources */,
+				49964E1424D10A1000BAB902 /* ResourceFile.mm in Sources */,
+				49964DED24D0EB8900BAB902 /* data.cpp in Sources */,
+				49964DFC24D0EC2000BAB902 /* rez.cpp in Sources */,
+				49964DFB24D0EC1C00BAB902 /* resource.cpp in Sources */,
+				49964DEB24D0EB6300BAB902 /* surface.cpp in Sources */,
+				49964DEA24D0EB6000BAB902 /* packbits.cpp in Sources */,
+				49964DF924D0EC1600BAB902 /* file.cpp in Sources */,
+				49964DFA24D0EC1A00BAB902 /* manager.cpp in Sources */,
+				49964DE824D0EB5800BAB902 /* ppat.cpp in Sources */,
+				49964DE524D0EB4E00BAB902 /* cicn.cpp in Sources */,
+				49964DE624D0EB5100BAB902 /* pict.cpp in Sources */,
+				49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */,
 				49AACD8824CE93520081DD4A /* ResKnifePluginProtocol.swift in Sources */,
+				49C5622B24D0D8D20072D659 /* MacRomanFormatter.swift in Sources */,
+				49964E1324D1034400BAB902 /* Resource.swift in Sources */,
+				49964DEC24D0EB7000BAB902 /* macroman.cpp in Sources */,
+				49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */,
+				49964DE924D0EB5D00BAB902 /* color.cpp in Sources */,
+				49964DFD24D0EC2300BAB902 /* type.cpp in Sources */,
+				49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */,
+				49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */,
+				49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */,
+				49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1842,28 +1720,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4966751524BE678A00251406 /* writer.cpp in Sources */,
-				4966751A24BE67C100251406 /* manager.cpp in Sources */,
-				4966752024BE67E900251406 /* extended.cpp in Sources */,
-				4966751924BE67B200251406 /* resource.cpp in Sources */,
 				496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */,
-				4966751F24BE67E600251406 /* classic.cpp in Sources */,
-				4966751824BE67AE00251406 /* macroman.cpp in Sources */,
-				4966751724BE679C00251406 /* pixmap.cpp in Sources */,
-				4966751224BE678200251406 /* clut.cpp in Sources */,
-				4966752124BE67ED00251406 /* rez.cpp in Sources */,
-				4966751624BE679700251406 /* color.cpp in Sources */,
-				4966750F24BE676C00251406 /* pict.cpp in Sources */,
-				4966752224BE6C6A00251406 /* QuickDraw.mm in Sources */,
-				4966751324BE678500251406 /* data.cpp in Sources */,
-				49203D7924BFEC840096DFF5 /* cicn.cpp in Sources */,
-				4966751024BE676F00251406 /* surface.cpp in Sources */,
-				4966751E24BE67D400251406 /* file.cpp in Sources */,
-				4966751B24BE67C400251406 /* type.cpp in Sources */,
-				4943604124C12E0000293E94 /* ppat.cpp in Sources */,
-				4966751C24BE67C700251406 /* packbits.cpp in Sources */,
-				4966751424BE678800251406 /* reader.cpp in Sources */,
-				4966751124BE677200251406 /* geometry.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1871,35 +1728,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF571069FEA1300F076B8 /* AttributesFormatter.m in Sources */,
-				4970443A24720C0B0035C0FA /* manager.cpp in Sources */,
 				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
-				49AACD6424CE41A60081DD4A /* Resource.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
-				4970443724720C0B0035C0FA /* extended.cpp in Sources */,
 				4962BCD624C6D9BC00990DA0 /* OutlineViewDelegate.m in Sources */,
 				E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */,
-				4970443024720C070035C0FA /* data.cpp in Sources */,
 				E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */,
-				4970443C24720C0B0035C0FA /* classic.cpp in Sources */,
-				4970443B24720C0B0035C0FA /* file.cpp in Sources */,
 				E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */,
-				4970443624720C0B0035C0FA /* resource.cpp in Sources */,
-				49F67EB6247B742B00553624 /* MacRomanFormatter.m in Sources */,
 				4968C03B24C6808200716AB9 /* PluginManager.swift in Sources */,
-				499216F224CCD2250054A390 /* ResourceMap.mm in Sources */,
 				E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */,
-				4968C03F24C78D7400716AB9 /* SupportResourceRegistry.swift in Sources */,
-				4970443E24720C0B0035C0FA /* rez.cpp in Sources */,
+				4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
+				49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */,
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
 				E18BF583069FEA1300F076B8 /* main.m in Sources */,
-				4970443324720C070035C0FA /* writer.cpp in Sources */,
 				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
-				4970443F24720C0B0035C0FA /* type.cpp in Sources */,
-				4970444324720E730035C0FA /* macroman.cpp in Sources */,
-				4970443124720C070035C0FA /* reader.cpp in Sources */,
-				0EBA8667122CF49800FEC1AC /* NGSCategories.m in Sources */,
 				492722AE24CF8E6D00819E32 /* OutlineView-SelectedItems.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1982,7 +1824,6 @@
 				49322A72244FF5F600E1EAE4 /* ElementHWRD.m in Sources */,
 				49322A6A244FD18700E1EAE4 /* ElementDOUB.m in Sources */,
 				E119388E0999296B00A3A6EA /* ElementHEXD.m in Sources */,
-				49F67EB7247B742B00553624 /* MacRomanFormatter.m in Sources */,
 				E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */,
 				49322A7A244FF65A00E1EAE4 /* ElementHLLG.m in Sources */,
 				493229DA244D1DAB00E1EAE4 /* ElementBOOL.m in Sources */,
@@ -2009,7 +1850,7 @@
 		};
 		49AACD8124CE931A0081DD4A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 49AACD7A24CE931A0081DD4A /* ResKnifePlugins */;
+			target = 49AACD7A24CE931A0081DD4A /* RKSupport */;
 			targetProxy = 49AACD8024CE931A0081DD4A /* PBXContainerItemProxy */;
 		};
 		B2FCA79B15A66B4A00696598 /* PBXTargetDependency */ = {
@@ -2163,9 +2004,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B904A189A0360005AC38D /* Base */,
-				550B9068189A1AA9005AC38D /* en */,
-				559C9EF81975B46900444C6A /* cy */,
-				559C9EF41975B16D00444C6A /* gd */,
 			);
 			name = ResourceDocument.xib;
 			sourceTree = "<group>";
@@ -2192,14 +2030,6 @@
 				550B904D189A0360005AC38D /* Base */,
 			);
 			name = HexWindow.xib;
-			sourceTree = "<group>";
-		};
-		B2B2C40C15A9464400D6F61C /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B2B2C40D15A9464400D6F61C /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */ = {
@@ -2249,16 +2079,6 @@
 				F543AFF0027C716E01A8010C /* en */,
 			);
 			name = "Resource Types.strings";
-			sourceTree = "<group>";
-		};
-		F5B588420156D40B01000001 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5542DCEF18DCF1D300AC9626 /* en */,
-				5542DCF018DCF1DC00AC9626 /* cy */,
-				557B66B91970C0DD004A7BD5 /* gd */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		F5B588440156D40B01000001 /* Localizable.strings */ = {
@@ -2327,12 +2147,13 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = ResKnifePlugins/Info.plist;
+				HEADER_SEARCH_PATHS = Graphite;
+				INFOPLIST_FILE = RKSupport/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.nickshanks.ResKnifePlugins;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nickshanks.resknife.RKSupport;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -2373,12 +2194,13 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = ResKnifePlugins/Info.plist;
+				HEADER_SEARCH_PATHS = Graphite;
+				INFOPLIST_FILE = RKSupport/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.nickshanks.ResKnifePlugins;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nickshanks.resknife.RKSupport;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -2393,7 +2215,6 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
-				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Plug-Ins/Image Editor/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Image-Editor";
@@ -2409,7 +2230,6 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
-				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Plug-Ins/Image Editor/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Image-Editor";
@@ -2683,7 +2503,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		49AACD8424CE931A0081DD4A /* Build configuration list for PBXNativeTarget "ResKnifePlugins" */ = {
+		49AACD8424CE931A0081DD4A /* Build configuration list for PBXNativeTarget "RKSupport" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49AACD8524CE931A0081DD4A /* Debug */,

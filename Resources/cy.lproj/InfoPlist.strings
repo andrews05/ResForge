@@ -1,7 +1,0 @@
-/* Localized versions of Info.plist keys */
-
-CFBundleName = "ResKnife";
-CFBundleGetInfoString = "ResKnife 0.7git\nHawlfraint © Nicolas Siancs, 2001-2010.";
-NSHumanReadableCopyright = "© Nicolas Siancs, 2001-2010.";
-ResourceMap = "Adnodd Ffeil";
-"com.nickshanks.resource-map" = "Adnodd Ffeil";

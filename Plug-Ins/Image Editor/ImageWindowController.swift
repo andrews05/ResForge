@@ -1,8 +1,8 @@
 import Cocoa
-import ResKnifePlugins
+import RKSupport
 
 class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
-    let resource: ResKnifeResource
+    let resource: Resource
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var imageSize: NSTextField!
@@ -13,7 +13,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         return "ImageWindow"
     }
 
-    required init(resource: ResKnifeResource) {
+    required init(resource: Resource) {
         self.resource = resource
         super.init(window: nil)
     }
@@ -173,7 +173,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         }
     }
     
-    static func export(_ resource: ResKnifeResource, to url: URL) {
+    static func export(_ resource: Resource, to url: URL) {
         do {
             try self.imageData(for: resource).write(to: url)
         } catch let error {
@@ -181,7 +181,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         }
     }
     
-    static func image(for resource: ResKnifeResource) -> NSImage? {
+    static func image(for resource: Resource) -> NSImage? {
         return NSImage(data: self.imageData(for: resource))
     }
     
@@ -189,7 +189,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         return NSWorkspace.shared.icon(forFileType: "public.image")
     }
     
-    private static func imageData(for resource: ResKnifeResource!) -> Data {
+    private static func imageData(for resource: Resource!) -> Data {
         let data = resource.data
         guard data.count > 0 else {
             return data

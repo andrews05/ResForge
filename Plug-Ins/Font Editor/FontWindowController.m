@@ -1,7 +1,5 @@
 #import "FontWindowController.h"
-#import "NGSCategories.h"
 #import "ResourceDocument.h"
-@import Darwin.C.stdarg;
 
 static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 {
@@ -13,7 +11,7 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 @implementation FontWindowController
 @synthesize resource;
 
-- (instancetype)initWithResource:(id <ResKnifeResource>)inResource
+- (instancetype)initWithResource:(Resource *)inResource
 {
 	self = [self initWithWindowNibName:@"FontDocument"];
 	if(!self) return nil;
@@ -153,9 +151,10 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	}
 	
 	// write checksum adjustment to head table
-	NSDictionary *head = [headerTable firstObjectReturningValue:@"head" forKey:@"name"];
-	if(head)
+    NSUInteger index = [[headerTable valueForKey:@"name"] indexOfObject:@"head"];
+	if(index != NSNotFound)
 	{
+        NSDictionary *head = headerTable[index];
 		UInt32 fontChecksum = 0;
 		NSRange csRange = NSMakeRange([[head valueForKey:@"offset"] unsignedLongValue]+8,4);
 		[data replaceBytesInRange:csRange withBytes:&fontChecksum length:4];
@@ -206,16 +205,17 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	NSData *data = [table valueForKey:@"data"];
 	if (data)
 	{
-        id tableResource = nil;//[NSClassFromString(@"Resource") resourceOfType:GetOSTypeFromNSString([table valueForKey:@"name"]) andID:0 withName:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] andAttributes:0 data:[table valueForKey:@"data"]];
+        Resource *tableResource = [[Resource alloc] initWithType:[table valueForKey:@"name"] id:0 name:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] attributes:0 data:[table valueForKey:@"data"]];
 		if (!tableResource)
 		{
 			NSLog(@"Couldn't create Resource with data for table '%@'.", [table valueForKey:@"name"]);
 			return;
 		}
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableDataDidChange:) name:@"ResourceDataDidChangeNotification" object:tableResource];
-        [tableResource open];
-		if (editor)	[(id)[resource document] openResourceUsingEditor:tableResource];
-		else		[(id)[resource document] openResource:tableResource usingTemplate:[NSString stringWithFormat:@"sfnt subtable '%@'", [table valueForKey:@"name"]]];
+        tableResource.document = resource.document;
+        id <ResKnifePluginManager> manager = (id <ResKnifePluginManager>)self.window.delegate;
+		if (editor)	[manager openWithResource:tableResource using:nil template:nil];
+//		else		[(id)[resource document] openResource:tableResource usingTemplate:[NSString stringWithFormat:@"sfnt subtable '%@'", [table valueForKey:@"name"]]];
 	}
 }
 
@@ -224,16 +224,17 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	[self setTableData:[notification object]];
 }
 
-- (void)setTableData:(id <ResKnifeResource>)tableResource
+- (void)setTableData:(Resource *)tableResource
 {
     NSString *type = tableResource.type;
-	NSDictionary *table = [headerTable firstObjectReturningValue:type forKey:@"name"];
-	if(!table)
+    NSUInteger index = [[headerTable valueForKey:@"name"] indexOfObject:type];
+	if(index == NSNotFound)
 	{
 		NSLog(@"Couldn't retrieve table with name '%@'.", type);
 		return;
 	}
 	
+    NSDictionary *table = headerTable[index];
 //	id undoResource = [tableResource copy];
 //	[undoResource setData:[table valueForKey:@"data"]];
 //	[[[resource document] undoManager] registerUndoWithTarget:resource selector:@selector(setTableData:) object:undoResource];
@@ -247,7 +248,7 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	return [NSArray arrayWithObject:@"ttf"];
 }
 
-+ (NSString *)filenameExtensionForFileExport:(id <ResKnifeResource>)resource
++ (NSString *)filenameExtensionForFileExport:(Resource *)resource
 {
     if([resource.type isEqualToString:@"sfnt"]) return @"ttf";
 	else return [resource type];

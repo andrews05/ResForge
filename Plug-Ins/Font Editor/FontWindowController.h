@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
-#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
+#import "RKSupport/RKSupport-Swift.h"
 
 @protocol ResKnifePlugin, ResKnifeResource;
 
@@ -13,11 +13,11 @@
 	UInt16 rangeShift;
 	NSMutableArray *headerTable;
 }
-@property (nonatomic) id <ResKnifeResource> resource;
+@property (nonatomic) Resource *resource;
 
 - (void)loadFontFromResource;
 - (IBAction)saveResource:(id)sender;
-- (void)setTableData:(id <ResKnifeResource>)tableResource;
+- (void)setTableData:(Resource *)tableResource;
 - (void)openTable:(NSDictionary *)table inEditor:(BOOL)editor;
 @end
 

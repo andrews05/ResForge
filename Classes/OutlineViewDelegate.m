@@ -2,7 +2,7 @@
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
 #import "ResourceNameCell.h"
-#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
+#import "RKSupport/RKSupport-Swift.h"
 #import "ResKnife-Swift.h"
 
 @implementation OutlineViewDelegate

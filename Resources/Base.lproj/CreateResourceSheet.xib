@@ -88,7 +88,7 @@ Gw
                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P1T-Pd-dZa">
                         <rect key="frame" x="20" y="112" width="97" height="25"/>
                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" numberOfVisibleItems="5" id="Qv2-X8-PHD">
-                            <customFormatter key="formatter" id="8iw-b0-EqG" customClass="MacRomanFormatter">
+                            <customFormatter key="formatter" id="8iw-b0-EqG" customClass="MacRomanFormatter" customModule="ResKnifePlugins">
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
                                         <integer key="value" value="4"/>
@@ -118,7 +118,7 @@ Gw
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19">
                         <rect key="frame" x="20" y="61" width="260" height="21"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="Untitled Resource" drawsBackground="YES" id="74">
-                            <customFormatter key="formatter" id="RJp-yW-AA5" customClass="MacRomanFormatter">
+                            <customFormatter key="formatter" id="RJp-yW-AA5" customClass="MacRomanFormatter" customModule="ResKnifePlugins">
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
                                         <integer key="value" value="255"/>

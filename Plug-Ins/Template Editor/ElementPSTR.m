@@ -1,6 +1,5 @@
 #import "ElementPSTR.h"
 #import "TemplateWindowController.h"
-#import "MacRomanFormatter.h"
 
 // implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, Pnnn, Cnnn
 @implementation ElementPSTR

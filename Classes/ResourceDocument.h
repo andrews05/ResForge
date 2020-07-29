@@ -1,4 +1,5 @@
 #import <Cocoa/Cocoa.h>
+#import "ResourceFile.h"
 
 static inline NSString *GetNSStringFromOSType(OSType theType)
 {
@@ -14,12 +15,6 @@ static inline OSType GetOSTypeFromNSString(NSString *theString)
 
 @protocol ResKnifePlugin;
 
-typedef enum {
-    kFormatClassic,
-    kFormatExtended,
-    kFormatRez
-} FileFormat;
-
 @interface ResourceDocument : NSDocument
 {
 	IBOutlet ResourceDataSource		*dataSource;
@@ -31,7 +26,7 @@ typedef enum {
 @property NSMutableArray *resources;
 @property PluginManager *registry;
 @property NSString *fork; // name of fork to save to, usually empty string (data fork) or 'rsrc'
-@property FileFormat format;
+@property ResourceFileFormat format;
 @property OSType creator;
 @property OSType type;
 
@@ -42,9 +37,6 @@ typedef enum {
 - (IBAction)openResources:(id)sender;
 - (IBAction)openResourcesInTemplate:(id)sender;
 - (IBAction)openResourcesAsHex:(id)sender;
-- (id <ResKnifePlugin>)openResourceUsingEditor:(Resource *)resource;
-- (id <ResKnifePlugin>)openResource:(Resource *)resource usingTemplate:(NSString *)templateName;
-- (id <ResKnifePlugin>)openResourceAsHex:(Resource *)resource;
 
 - (IBAction)copy:(id)sender;
 - (IBAction)paste:(id)sender;

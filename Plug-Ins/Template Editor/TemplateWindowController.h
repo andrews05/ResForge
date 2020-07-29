@@ -21,15 +21,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "ElementList.h"
-#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
+#import "RKSupport/RKSupport-Swift.h"
 
 @interface TemplateWindowController : NSWindowController <ResKnifeTemplatePlugin, NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
 	ElementList *resourceStructure;		// Parsed form of our resource.
 }
 @property IBOutlet NSOutlineView *dataList; // Data display.
-@property (nonatomic) id <ResKnifeResource> resource;   // The resource we operate on.
-@property id <ResKnifeResource> tmpl;       // The template resource.
+@property (nonatomic) Resource *resource;   // The resource we operate on.
+@property Resource *tmpl;       // The template resource.
 
 
 - (IBAction)itemValueUpdated:(id)sender;

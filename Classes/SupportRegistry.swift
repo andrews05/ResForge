@@ -1,6 +1,7 @@
 import Foundation
+import RKSupport
 
-class SupportResourceRegistry {
+class SupportRegistry {
     static let dataSource = ResourceDataSource()
     
     static func scanForResources() {
@@ -31,7 +32,9 @@ class SupportResourceRegistry {
     }
     
     private static func load(resourceFile: URL) {
-        let resources = ResourceMap.read(resourceFile, document: nil)!
-        dataSource.addResources(resources as? [Resource])
+        do {
+            let resources = try ResourceFile.read(from: resourceFile, format: nil)
+            dataSource.addResources(resources as? [Resource])
+        } catch {}
     }
 }

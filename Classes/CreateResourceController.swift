@@ -1,4 +1,5 @@
 import Foundation
+import RKSupport
 
 class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var createButton: NSButton!
@@ -64,7 +65,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             }
             dataSource.document.undoManager?.setActionName(actionName)
             dataSource.document.undoManager?.endUndoGrouping()
-            resource.open()
+            dataSource.document.registry.open(resource: resource)
         }
         self.window?.sheetParent?.endSheet(self.window!)
     }

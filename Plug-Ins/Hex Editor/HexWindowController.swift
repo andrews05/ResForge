@@ -1,8 +1,8 @@
 import Cocoa
-import ResKnifePlugins
+import RKSupport
 
 class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlugin, HFTextViewDelegate {
-    let resource: ResKnifeResource
+    let resource: Resource
     @IBOutlet var textView: HFTextView!
     
     @IBOutlet var findView: NSView!
@@ -17,7 +17,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         return "HexWindow"
     }
     
-    required init(resource: ResKnifeResource) {
+    required init(resource: Resource) {
         self.resource = resource
         super.init(window: nil)
         

@@ -3,7 +3,6 @@
 #import "Element.h"
 #import "ElementLSTB.h"
 
-#import "NSOutlineView-SelectedItems.h"
 #import "ResourceDocument.h"
 
 @implementation TemplateWindowController
@@ -11,12 +10,12 @@
 @synthesize resource;
 @synthesize tmpl;
 
-- (instancetype)initWithResource:(id <ResKnifeResource>)newResource
+- (instancetype)initWithResource:(Resource *)newResource
 {
 	return nil;
 }
 
-- (instancetype)initWithResource:(id <ResKnifeResource>)newResource template:(id <ResKnifeResource>)tmplResource
+- (instancetype)initWithResource:(Resource *)newResource template:(Resource *)tmplResource
 {
 	self = [self initWithWindowNibName:@"TemplateWindow"];
 	if (!self) {
@@ -79,44 +78,15 @@
     self.documentEdited = NO;
 }
 
-- (BOOL)windowShouldClose:(id)sender
-{
-	[self.window makeFirstResponder:dataList];
-	
-	if (self.window.documentEdited) {
-		NSAlert *alert = [NSAlert new];
-		alert.messageText = @"Do you want to keep the changes you made to this resource?";
-		alert.informativeText = @"Your changes cannot be saved later if you don't keep them.";
-		[alert addButtonWithTitle:@"Keep"];
-		[alert addButtonWithTitle:@"Don't Keep"];
-		[alert addButtonWithTitle:@"Cancel"];
-		[alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
-			switch (returnCode) {
-				case NSAlertFirstButtonReturn:	// keep
-					[self saveResource:nil];
-					[self.window close];
-					break;
-				
-				case NSAlertSecondButtonReturn:	// don't keep
-					[self.window close];
-					break;
-				
-				case NSModalResponseCancel:		// cancel
-					break;
-			}
-		}];
-		return NO;
-	}
-	return YES;
-}
-
 - (IBAction)saveResource:(id)sender
 {
-	// send the new resource data to ResKnife
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ResourceDataDidChangeNotification" object:resource];
-    resource.data = [resourceStructure getResourceData];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:@"ResourceDataDidChangeNotification" object:resource];
-    self.documentEdited = NO;
+    if (self.window.documentEdited) {
+        // send the new resource data to ResKnife
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ResourceDataDidChangeNotification" object:resource];
+        resource.data = [resourceStructure getResourceData];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:@"ResourceDataDidChangeNotification" object:resource];
+        self.documentEdited = NO;
+    }
 }
 
 - (IBAction)revertResource:(id)sender

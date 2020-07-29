@@ -42,7 +42,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         UserDefaults.standard.register(defaults: prefDict)
         NSUserDefaultsController.shared.initialValues = prefDict
         
-        SupportResourceRegistry.scanForResources()
+        SupportRegistry.scanForResources()
         PluginManager.scanForPlugins()
     }
     

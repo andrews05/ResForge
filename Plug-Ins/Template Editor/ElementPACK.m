@@ -1,6 +1,5 @@
 #import "ElementPACK.h"
 #import "ElementRangeable.h"
-#import "ResKnifeResourceProtocol.h"
 
 /*
  * The PACK element is an experimental layout control element

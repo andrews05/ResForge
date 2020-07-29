@@ -1,14 +1,13 @@
 import Foundation
 
-enum BinaryDataReaderError: Error {
-    case notAStruct
+public enum BinaryDataReaderError: Error {
 	case notEnoughData
 }
 
-class BinaryDataReader {
-    public var data: Data
+public class BinaryDataReader {
+    private(set) public var data: Data
     public var bigEndian: Bool
-	public var position: Int = 0
+	private(set) public var position: Int = 0
 
     public init(_ data: Data, bigEndian: Bool = true) {
         self.data = data

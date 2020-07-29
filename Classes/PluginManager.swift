@@ -6,7 +6,7 @@
  */
 
 import Foundation
-import ResKnifePlugins
+import RKSupport
 
 class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     private static var registry: [String: ResKnifePlugin.Type] = [:]
@@ -21,15 +21,29 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
         return registry[type]
     }
     
-    @objc func open(resource: Resource, using editor: ResKnifePlugin.Type, template: Resource? = nil) -> ResKnifePlugin {
+    @objc func open(resource: Resource, using editor: ResKnifePlugin.Type? = nil, template: Resource? = nil) {
+        // Work out editor to use
+        var editor = editor ?? Self.editor(for: resource.type) ?? Self.editor(for: "Template Editor")
+        var template = template
+        if (editor as? ResKnifeTemplatePlugin.Type) != nil {
+            // If template editor, work out template to use
+            if template == nil {
+                template = self.findResource(ofType: "TMPL", name: resource.type)
+            }
+            // If no template, switch to hex editor
+            if template == nil {
+                editor = Self.editor(for: "Hexadecimal Editor")
+            }
+        }
+        
         // Keep track of opened resources so we don't open them multiple times
-        let key = resource.description.appending(String(describing: editor))
+        let key = String(describing: resource).appending(String(describing: editor))
         var plug = editorWindows[key]
         if plug == nil {
-            if let template = template, let editor = editor as? ResKnifeTemplatePlugin.Type {
-                plug = editor.init(resource: resource, template: template)
+            if let editor = editor as? ResKnifeTemplatePlugin.Type {
+                plug = editor.init(resource: resource, template: template!)
             } else {
-                plug = editor.init(resource: resource)
+                plug = editor!.init(resource: resource)
             }
             editorWindows[key] = plug
         }
@@ -38,7 +52,6 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
             plug.window?.delegate = self
             plug.showWindow(self)
         }
-        return plug!
     }
     
     @objc func closeAll() -> Bool {
@@ -78,7 +91,7 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
             else {
                 continue
             }
-            SupportResourceRegistry.scanForResources(in: plugin)
+            SupportRegistry.scanForResources(in: plugin)
             for type in supportedTypes {
                 registry[type] = pluginClass
             }
@@ -120,44 +133,82 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     }
     
     /* PluginManagerProtocol */
-    func allResources(ofType type: String, currentDocumentOnly: Bool = false) -> [ResKnifeResource] {
-        var resources: [ResKnifeResource] = document.dataSource().allResources(ofType: type) as! [ResKnifeResource]
+//    static func allResources(ofType type: String, document: NSDocument? = nil) -> [Resource] {
+//        if let document = document as? ResourceDocument {
+//            return document.dataSource().allResources(ofType: type) as! [ResKnifeResource]
+//        }
+//        var resources: [ResKnifeResource] = []
+//        let docs = NSDocumentController.shared.documents as! [ResourceDocument]
+//        for doc in docs {
+//            resources.append(contentsOf: doc.dataSource().allResources(ofType: type) as! [Resource])
+//        }
+//        return resources
+//    }
+//
+//    static func findResource(ofType type: String, id: Int, document: NSDocument? = nil) -> Resource? {
+//        if let document = document as? ResourceDocument {
+//            return document.dataSource().resource(ofType: type, andID: Int16(id))
+//        }
+//        let docs = NSDocumentController.shared.documents as! [ResourceDocument]
+//        for doc in docs where doc !== document {
+//            if let resource = doc.dataSource().resource(ofType: type, andID: Int16(id)) {
+//                return resource
+//            }
+//        }
+//        return SupportResourceRegistry.dataSource.resource(ofType: type, andID: Int16(id))
+//    }
+//
+//    static func findResource(ofType type: String, name: String, document: NSDocument? = nil) -> Resource? {
+//        if let document = document as? ResourceDocument {
+//            return document.dataSource().resource(ofType: type, withName: name)
+//        }
+//        let docs = NSDocumentController.shared.documents as! [ResourceDocument]
+//        for doc in docs where doc !== document {
+//            if let resource = doc.dataSource().resource(ofType: type, withName: name) {
+//                return resource
+//            }
+//        }
+//        return SupportResourceRegistry.dataSource.resource(ofType: type, withName: name)
+//    }
+    
+    func allResources(ofType type: String, currentDocumentOnly: Bool = false) -> [Resource] {
+        var resources = document.dataSource().allResources(ofType: type) as! [Resource]
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                resources.append(contentsOf: doc.dataSource().allResources(ofType: type) as! [ResKnifeResource])
+                resources.append(contentsOf: doc.dataSource().allResources(ofType: type) as! [Resource])
             }
         }
         return resources
     }
-    
-    func findResource(ofType type: String, id: Int, currentDocumentOnly: Bool = false) -> ResKnifeResource? {
+
+    func findResource(ofType type: String, id: Int, currentDocumentOnly: Bool = false) -> Resource? {
         if let resource = document.dataSource().resource(ofType: type, andID: Int16(id)) {
             return resource
         }
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                if let resource = document.dataSource().resource(ofType: type, andID: Int16(id)) {
+                if let resource = doc.dataSource().resource(ofType: type, andID: Int16(id)) {
                     return resource
                 }
             }
         }
-        return SupportResourceRegistry.dataSource.resource(ofType: type, andID: Int16(id))
+        return SupportRegistry.dataSource.resource(ofType: type, andID: Int16(id))
     }
-    
-    func findResource(ofType type: String, name: String, currentDocumentOnly: Bool = false) -> ResKnifeResource? {
+
+    func findResource(ofType type: String, name: String, currentDocumentOnly: Bool = false) -> Resource? {
         if let resource = document.dataSource().resource(ofType: type, withName: name) {
             return resource
         }
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                if let resource = document.dataSource().resource(ofType: type, withName: name) {
+                if let resource = doc.dataSource().resource(ofType: type, withName: name) {
                     return resource
                 }
             }
         }
-        return SupportResourceRegistry.dataSource.resource(ofType: type, withName: name)
+        return SupportRegistry.dataSource.resource(ofType: type, withName: name)
     }
 }

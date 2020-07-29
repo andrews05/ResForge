@@ -1,7 +1,7 @@
 #import "ElementRSID.h"
 #import "ElementCASE.h"
 #import "TemplateWindowController.h"
-#import "ResKnifePlugins/ResKnifePlugins-Swift.h"
+#import "RKSupport/RKSupport-Swift.h"
 //#import "Template_Editor-Swift.h"
 /*
  * RSID allows selecting a resource id of a given type
@@ -111,7 +111,7 @@
         id <ResKnifePluginManager> manager = (id <ResKnifePluginManager>)self.parentList.controller.window.delegate;
         NSArray *resources = [manager allResourcesOfType:self.resType currentDocumentOnly:false];
         resources = [resources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
-        for (id <ResKnifeResource> resource in resources) {
+        for (Resource *resource in resources) {
             if (!resource.name.length) continue; // No point showing resources with no name
             if (self.max && (resource.resID < self.offset || resource.resID > self.max)) continue;
             NSString *resID = @(resource.resID-self.offset).stringValue;
@@ -128,9 +128,9 @@
 - (IBAction)openResource:(id)sender
 {
     id <ResKnifePluginManager> manager = (id <ResKnifePluginManager>)self.parentList.controller.window.delegate;
-    id <ResKnifeResource> resource = [manager findResourceOfType:self.resType id:(ResID)(self.value+self.offset) currentDocumentOnly:false];
+    Resource *resource = [manager findResourceOfType:self.resType id:(ResID)(self.value+self.offset) currentDocumentOnly:false];
     if (resource) {
-        [resource open];
+        [manager openWithResource:resource using:nil template:nil];
     } else {
         NSBeep();
     }

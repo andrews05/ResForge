@@ -31,7 +31,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="572" y="561" width="252" height="220"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <value key="minSize" type="size" width="252" height="220"/>
             <value key="maxSize" type="size" width="252" height="220"/>
             <view key="contentView" id="6">
@@ -57,6 +57,13 @@
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="186" translatesAutoresizingMaskIntoConstraints="NO" id="32">
                         <rect key="frame" x="45" y="189" width="199" height="22"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="90">
+                            <customFormatter key="formatter" id="4Mx-hY-5n6" customClass="MacRomanFormatter" customModule="RKSupport">
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
+                                        <integer key="value" value="255"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </customFormatter>
                             <font key="font" metaFont="label" size="12"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -91,7 +98,7 @@
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="144" translatesAutoresizingMaskIntoConstraints="NO" id="72">
                         <rect key="frame" x="43" y="10" width="147" height="13"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Fork sizes are as at last save" id="91">
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                             <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -209,7 +216,7 @@
             <point key="canvasLocation" x="-57" y="568"/>
         </box>
         <byteCountFormatter id="t7T-4V-eof"/>
-        <customFormatter id="9Ky-lD-TeE" customClass="MacRomanFormatter">
+        <customFormatter id="9Ky-lD-TeE" customClass="MacRomanFormatter" customModule="RKSupport">
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
                     <integer key="value" value="4"/>
@@ -251,7 +258,7 @@
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kNq-HP-5AV">
                         <rect key="frame" x="120" y="101" width="92" height="21"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="qK9-aj-CFo">
-                            <customFormatter key="formatter" id="pc1-VG-PAO" customClass="MacRomanFormatter">
+                            <customFormatter key="formatter" id="pc1-VG-PAO" customClass="MacRomanFormatter" customModule="RKSupport">
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
                                         <integer key="value" value="4"/>
