@@ -119,7 +119,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
 
     @IBAction func saveResource(_ sender: Any) {
-        guard imageView.image != nil && self.window!.isDocumentEdited else {
+        guard imageView.image != nil else {
             return
         }
         let rep = self.bitmapRep()

@@ -80,13 +80,11 @@
 
 - (IBAction)saveResource:(id)sender
 {
-    if (self.window.documentEdited) {
-        // send the new resource data to ResKnife
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ResourceDataDidChangeNotification" object:resource];
-        resource.data = [resourceStructure getResourceData];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:@"ResourceDataDidChangeNotification" object:resource];
-        self.documentEdited = NO;
-    }
+    // send the new resource data to ResKnife
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ResourceDataDidChangeNotification" object:resource];
+    resource.data = [resourceStructure getResourceData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:@"ResourceDataDidChangeNotification" object:resource];
+    self.documentEdited = NO;
 }
 
 - (IBAction)revertResource:(id)sender

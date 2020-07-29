@@ -137,7 +137,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
 
     @IBAction func saveResource(_ sender: Any) {
-        guard self.sound.valid && self.window!.isDocumentEdited else {
+        guard self.sound.valid else {
             return
         }
         do {

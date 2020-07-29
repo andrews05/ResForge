@@ -35,10 +35,7 @@ public extension FourCharCode {
 }
 
 @objc public protocol ResKnifePluginManager {
-    @objc func open(resource: Resource, using editor: ResKnifePlugin.Type?, template: Resource?)
-//    @objc static func allResources(ofType: String, document: NSDocument?) -> [Resource]
-//    @objc static func findResource(ofType: String, id: Int, document: NSDocument?) -> Resource?
-//    @objc static func findResource(ofType: String, name: String, document: NSDocument?) -> Resource?
+    @objc func open(resource: Resource, using editor: ResKnifePlugin.Type?, template: String?)
     @objc func allResources(ofType: String, currentDocumentOnly: Bool) -> [Resource]
     @objc func findResource(ofType: String, id: Int, currentDocumentOnly: Bool) -> Resource?
     @objc func findResource(ofType: String, name: String, currentDocumentOnly: Bool) -> Resource?

@@ -51,7 +51,6 @@
 
 - (void)configureView:(NSView *)view
 {
-    [self loadCases];
     [super configureView:view];
     [ElementRSID configureLinkButton:[view.subviews lastObject] forElement:self];
 }
@@ -94,6 +93,7 @@
         element = [self.parentList peek:1];
     }
     self.caseMap = [NSMutableDictionary new];
+    [self loadCases];
 }
 
 - (void)loadCases
@@ -108,7 +108,7 @@
     }
     if (self.resType) {
         // Find resources in all documents and sort by id
-        id <ResKnifePluginManager> manager = (id <ResKnifePluginManager>)self.parentList.controller.window.delegate;
+        id <ResKnifePluginManager> manager = self.parentList.controller.resource.manager;
         NSArray *resources = [manager allResourcesOfType:self.resType currentDocumentOnly:false];
         resources = [resources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
         for (Resource *resource in resources) {
@@ -127,7 +127,7 @@
 
 - (IBAction)openResource:(id)sender
 {
-    id <ResKnifePluginManager> manager = (id <ResKnifePluginManager>)self.parentList.controller.window.delegate;
+    id <ResKnifePluginManager> manager = self.parentList.controller.resource.manager;
     Resource *resource = [manager findResourceOfType:self.resType id:(ResID)(self.value+self.offset) currentDocumentOnly:false];
     if (resource) {
         [manager openWithResource:resource using:nil template:nil];

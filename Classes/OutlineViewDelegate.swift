@@ -51,12 +51,11 @@ class OutlineViewDelegate: NSObject, NSOutlineViewDelegate {
     }
     
     func outlineView(_ outlineView: NSOutlineView, shouldEdit tableColumn: NSTableColumn?, item: Any) -> Bool {
-        return (item as? Resource) != nil
+        return item is Resource
     }
     
     func outlineView(_ outlineView: NSOutlineView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, item: Any) {
-        if tableColumn?.identifier.rawValue == "name" {
-            let cell = cell as! ResourceNameCell
+        if let cell = cell as? ResourceNameCell {
             if let resource = item as? Resource {
                 // set resource icon
                 cell.drawImage = true

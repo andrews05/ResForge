@@ -213,7 +213,7 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 		}
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableDataDidChange:) name:@"ResourceDataDidChangeNotification" object:tableResource];
         tableResource.document = resource.document;
-        id <ResKnifePluginManager> manager = (id <ResKnifePluginManager>)self.window.delegate;
+        id <ResKnifePluginManager> manager = self.resource.manager;
 		if (editor)	[manager openWithResource:tableResource using:nil template:nil];
 //		else		[(id)[resource document] openResource:tableResource usingTemplate:[NSString stringWithFormat:@"sfnt subtable '%@'", [table valueForKey:@"name"]]];
 	}

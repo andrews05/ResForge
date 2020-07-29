@@ -85,6 +85,7 @@ public class Resource: NSObject, NSCoding {
     }
     
     @objc public var document: NSDocument!
+    @objc public var manager: ResKnifePluginManager!
     
     @objc public var defaultWindowTitle: String {
         let title = document.displayName.appending(": \(type) \(resID)")
