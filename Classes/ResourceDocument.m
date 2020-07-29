@@ -1,6 +1,5 @@
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
-#import "OutlineViewDelegate.h"
 #import "RKSupport/RKSupport-Swift.h"
 #import "ResKnife-Swift.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
@@ -465,7 +464,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	NSArray *selectedItems = [dataSource allResourcesForItems:[outlineView selectedItems]];
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	[pb declareTypes:@[RKResourcePboardType] owner:self];
-	[pb setData:[NSKeyedArchiver archivedDataWithRootObject:selectedItems] forType:RKResourcePboardType];
+	[pb setData:[NSArchiver archivedDataWithRootObject:selectedItems] forType:RKResourcePboardType];
 }
 
 - (IBAction)paste:(id)sender
@@ -473,7 +472,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	#pragma unused(sender)
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	if([pb availableTypeFromArray:@[RKResourcePboardType]])
-		[self pasteResources:[NSKeyedUnarchiver unarchiveObjectWithData:[pb dataForType:RKResourcePboardType]]];
+		[self pasteResources:[NSUnarchiver unarchiveObjectWithData:[pb dataForType:RKResourcePboardType]]];
 }
 
 - (void)pasteResources:(NSArray *)pastedResources

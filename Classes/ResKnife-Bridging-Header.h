@@ -4,3 +4,4 @@
 
 #import "ResourceDocument.h"
 #import "ResourceDataSource.h"
+#import "ResourceNameCell.h"

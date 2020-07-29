@@ -42,7 +42,7 @@ public class MacRomanFormatter: Formatter {
         if partialStringPtr.pointee.length > stringLength {
             // If a range is selected then characters in that range will be removed so adjust the length accordingly
             var range = origSelRange
-            range.length += stringLength - origString.count
+            range.length += max(stringLength - origString.count, 0)
 
             // Perform the replacement
             let insert = partialStringPtr.pointee.substring(with: range)

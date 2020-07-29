@@ -23,7 +23,7 @@
             NSString    *resType    = [NSString stringWithUTF8String:type->code().c_str()];
             NSData      *data       = [NSData dataWithBytes:resource->data()->get()->data()+resource->data()->start() length:resource->data()->size()];
             Resource *r = [[Resource alloc] initWithType:resType id:resource->id() name:name attributes:0 data:data];
-            [resources addObject:r]; // array retains resource
+            [resources addObject:r];
         }
     }
     return resources;

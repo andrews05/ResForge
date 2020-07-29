@@ -64,7 +64,6 @@
 		4962B27C245778950065590E /* ElementLBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B27A245778950065590E /* ElementLBIT.h */; };
 		4962B27D245778950065590E /* ElementLBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B27B245778950065590E /* ElementLBIT.m */; };
 		4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */; };
-		4962BCD624C6D9BC00990DA0 /* OutlineViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */; };
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
 		4966750D24BE601B00251406 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -107,6 +106,7 @@
 		49964E1424D10A1000BAB902 /* ResourceFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 499216F024CCD2250054A390 /* ResourceFile.mm */; };
 		49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1524D10ED900BAB902 /* AttributesFormatter.swift */; };
 		49964E1724D127CF00BAB902 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
+		49964E1924D12FFC00BAB902 /* OutlineViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1824D12FFC00BAB902 /* OutlineViewDelegate.swift */; };
 		49AACD8224CE931A0081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
 		49AACD8324CE931A0081DD4A /* RKSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49AACD8824CE93520081DD4A /* ResKnifePluginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */; };
@@ -186,7 +186,6 @@
 		E15CFD6E099995D1004929B6 /* Templates for sfnt tables.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */; };
 		E15CFF82099BECAF004929B6 /* ElementDATE.h in Headers */ = {isa = PBXBuildFile; fileRef = E15CFF80099BECAE004929B6 /* ElementDATE.h */; };
 		E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */ = {isa = PBXBuildFile; fileRef = E15CFF81099BECAF004929B6 /* ElementDATE.m */; };
-		E18BF543069FEA1300F076B8 /* OutlineViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588290156D40B01000001 /* OutlineViewDelegate.h */; };
 		E18BF546069FEA1300F076B8 /* ResourceDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B5882F0156D40B01000001 /* ResourceDataSource.h */; };
 		E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588310156D40B01000001 /* ResourceDocument.h */; };
 		E18BF548069FEA1300F076B8 /* ResourceNameCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F577A900021215C801A80001 /* ResourceNameCell.h */; };
@@ -524,6 +523,7 @@
 		499216EF24CCD2250054A390 /* ResourceFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceFile.h; sourceTree = "<group>"; };
 		499216F024CCD2250054A390 /* ResourceFile.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceFile.mm; sourceTree = "<group>"; };
 		49964E1524D10ED900BAB902 /* AttributesFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesFormatter.swift; sourceTree = "<group>"; };
+		49964E1824D12FFC00BAB902 /* OutlineViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineViewDelegate.swift; sourceTree = "<group>"; };
 		49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoWindowController.swift; sourceTree = "<group>"; };
 		49AACD6324CE41A60081DD4A /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResKnifePluginProtocol.swift; sourceTree = "<group>"; };
@@ -657,8 +657,6 @@
 		F58F6B8F025BCF5901A8010C /* CronWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CronWindowController.m; path = cron/CronWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F58F6B92025BD97701A8010C /* DescWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DescWindowController.m; path = desc/DescWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F58F6B93025BD97701A8010C /* DescWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescWindowController.h; path = desc/DescWindowController.h; sourceTree = "<group>"; };
-		F5B588290156D40B01000001 /* OutlineViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OutlineViewDelegate.h; sourceTree = "<group>"; };
-		F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = OutlineViewDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5B5882F0156D40B01000001 /* ResourceDataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ResourceDataSource.h; sourceTree = "<group>"; };
 		F5B588300156D40B01000001 /* ResourceDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ResourceDataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5B588310156D40B01000001 /* ResourceDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResourceDocument.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1156,8 +1154,6 @@
 		F5B5881C0156D40B01000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				F5B588290156D40B01000001 /* OutlineViewDelegate.h */,
-				F5B5882A0156D40B01000001 /* OutlineViewDelegate.m */,
 				F5B5882F0156D40B01000001 /* ResourceDataSource.h */,
 				F5B588300156D40B01000001 /* ResourceDataSource.m */,
 				F5B588310156D40B01000001 /* ResourceDocument.h */,
@@ -1171,8 +1167,9 @@
 				49F6C76024C577430078EB55 /* PrefsController.swift */,
 				4968C03424C66D8B00716AB9 /* PluginManager.swift */,
 				4968C03E24C78D7400716AB9 /* SupportRegistry.swift */,
-				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */,
+				49964E1824D12FFC00BAB902 /* OutlineViewDelegate.swift */,
+				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */,
 			);
 			path = Classes;
@@ -1261,7 +1258,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4970443524720C0B0035C0FA /* type.hpp in Headers */,
-				E18BF543069FEA1300F076B8 /* OutlineViewDelegate.h in Headers */,
 				E18BF546069FEA1300F076B8 /* ResourceDataSource.h in Headers */,
 				E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */,
 				E18BF548069FEA1300F076B8 /* ResourceNameCell.h in Headers */,
@@ -1730,7 +1726,6 @@
 			files = (
 				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
-				4962BCD624C6D9BC00990DA0 /* OutlineViewDelegate.m in Sources */,
 				E18BF577069FEA1300F076B8 /* ResourceDataSource.m in Sources */,
 				E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */,
 				E18BF579069FEA1300F076B8 /* ResourceNameCell.m in Sources */,
@@ -1738,6 +1733,7 @@
 				E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */,
 				4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
+				49964E1924D12FFC00BAB902 /* OutlineViewDelegate.swift in Sources */,
 				49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */,
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
 				E18BF583069FEA1300F076B8 /* main.m in Sources */,

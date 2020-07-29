@@ -179,7 +179,7 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="8CB4AAD6-A5F3-4E60-A4D9-BDE7CFC1FA2C" explicitItemIdentifier="com.nickshanks.resknife.toolbar.showinfo" label="Show Info" paletteLabel="Show Info" toolTip="Show Resource Information Window" tag="-1" image="NSInfo" id="7us-Ml-nAe">
                         <connections>
-                            <action selector="showInfo:" target="tNB-Az-cgs" id="3dr-hh-Zxf"/>
+                            <action selector="showInfo:" target="-1" id="z7f-Pn-iWM"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="2984972A-01F9-4E9E-AC42-3C7C5649D6B7" explicitItemIdentifier="com.nickshanks.resknife.toolbar.view" label="View" paletteLabel="View" toolTip="View as a list or previews" id="aSH-4w-Wwd">
@@ -220,10 +220,9 @@
             </connections>
             <point key="canvasLocation" x="140" y="147"/>
         </window>
-        <customObject id="tNB-Az-cgs" customClass="ApplicationDelegate" customModule="ResKnife" customModuleProvider="target"/>
-        <customObject id="24" userLabel="OutlineViewDelegate" customClass="OutlineViewDelegate">
+        <customObject id="24" userLabel="OutlineViewDelegate" customClass="OutlineViewDelegate" customModule="ResKnife" customModuleProvider="target">
             <connections>
-                <outlet property="outlineView" destination="145" id="8H5-n5-hDR"/>
+                <outlet property="outlineView" destination="145" id="vzk-Zj-Dul"/>
             </connections>
         </customObject>
         <customObject id="32" userLabel="ResourceDataSource" customClass="ResourceDataSource">
