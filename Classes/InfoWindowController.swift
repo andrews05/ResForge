@@ -18,7 +18,7 @@ extension Resource {
         return true
     }
     
-    func setId(_ id: Int) -> Bool {
+    func setID(_ id: Int) -> Bool {
         if id != self.resID {
             if self.hasConflict(type: self.type, id: id) {
                 return false
@@ -30,7 +30,7 @@ extension Resource {
     
     private func hasConflict(type: String, id: Int) -> Bool {
         // If changing id or type we need to check whether a matching resource already exists
-        if (document as? ResourceDocument)?.dataSource()?.resource(ofType: type, andID: Int16(id)) != nil {
+        if (document as? ResourceDocument)?.dataSource()?.findResource(type: type, id: id) != nil {
             document?.presentError(ResourceError.conflict(type, id))
             return true
         }
@@ -181,7 +181,7 @@ class InfoWindowController: NSWindowController {
     }
     
     @IBAction func rIDChanged(_ sender: Any) {
-        if !selectedResource.setId(rID.integerValue) {
+        if !selectedResource.setID(rID.integerValue) {
             rID.integerValue = selectedResource.resID
         }
     }

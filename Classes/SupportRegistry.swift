@@ -34,7 +34,7 @@ class SupportRegistry {
     private static func load(resourceFile: URL) {
         do {
             let resources = try ResourceFile.read(from: resourceFile, format: nil)
-            dataSource.addResources(resources as? [Resource])
+            dataSource.add(resources: resources)
         } catch {}
     }
 }

@@ -4,7 +4,7 @@
 
 @implementation ResourceFile
 
-+ (NSMutableArray *)readFromURL:(NSURL *)url format:(ResourceFileFormat *)format error:(NSError **)outError
++ (NSArray<Resource *> *)readFromURL:(NSURL *)url format:(ResourceFileFormat *)format error:(NSError **)outError
 {
     graphite::rsrc::file gFile;
     try {
@@ -29,7 +29,7 @@
     return resources;
 }
 
-+ (BOOL)writeResources:(NSArray *)resources toURL:(NSURL *)url withFormat:(ResourceFileFormat)format error:(NSError **)outError
++ (BOOL)writeResources:(NSArray<Resource *> *)resources toURL:(NSURL *)url withFormat:(ResourceFileFormat)format error:(NSError **)outError
 {
     graphite::rsrc::file gFile = graphite::rsrc::file();
     for (Resource* resource in resources) {

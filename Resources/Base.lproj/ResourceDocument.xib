@@ -21,7 +21,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="14" y="561" width="500" height="430"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="250" height="200"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="500" height="430"/>
@@ -115,13 +115,13 @@
                                     <connections>
                                         <action trigger="doubleAction" selector="openResources:" target="-2" id="d4H-KE-K8v"/>
                                         <outlet property="dataSource" destination="32" id="152"/>
-                                        <outlet property="delegate" destination="24" id="153"/>
+                                        <outlet property="delegate" destination="32" id="yNx-IN-GtD"/>
                                     </connections>
                                 </outlineView>
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="163">
-                            <rect key="frame" x="-100" y="-100" width="500" height="16"/>
+                            <rect key="frame" x="0.0" y="414" width="500" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="165">
@@ -220,12 +220,7 @@
             </connections>
             <point key="canvasLocation" x="140" y="147"/>
         </window>
-        <customObject id="24" userLabel="OutlineViewDelegate" customClass="OutlineViewDelegate" customModule="ResKnife" customModuleProvider="target">
-            <connections>
-                <outlet property="outlineView" destination="145" id="vzk-Zj-Dul"/>
-            </connections>
-        </customObject>
-        <customObject id="32" userLabel="ResourceDataSource" customClass="ResourceDataSource">
+        <customObject id="32" userLabel="ResourceDataSource" customClass="ResourceDataSource" customModule="ResKnife" customModuleProvider="target">
             <connections>
                 <outlet property="document" destination="-2" id="121"/>
                 <outlet property="outlineView" destination="145" id="154"/>

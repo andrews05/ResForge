@@ -3,7 +3,7 @@
  It serves as a bridge between C++ and Swift.
  */
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 typedef enum {
     kFormatClassic,
@@ -13,10 +13,12 @@ typedef enum {
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class Resource;
+
 @interface ResourceFile : NSObject
 
-+ (NSMutableArray * _Nullable)readFromURL:(NSURL *)url format:(ResourceFileFormat * _Nullable)format error:(NSError ** _Nullable)outError;
-+ (BOOL)writeResources:(NSArray *)resources toURL:(NSURL *)url withFormat:(ResourceFileFormat)format error:(NSError ** _Nullable)outError;
++ (NSArray<Resource *> * _Nullable)readFromURL:(NSURL *)url format:(ResourceFileFormat * _Nullable)format error:(NSError ** _Nullable)outError;
++ (BOOL)writeResources:(NSArray<Resource *> *)resources toURL:(NSURL *)url withFormat:(ResourceFileFormat)format error:(NSError ** _Nullable)outError;
 
 @end
 

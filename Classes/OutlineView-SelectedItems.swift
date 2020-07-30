@@ -9,9 +9,9 @@ extension NSOutlineView {
         }
     }
     
-    var selectedItems: [Any?] {
-        return self.selectedColumnIndexes.map {
-            self.item(atRow: $0)
+    var selectedItems: [Any] {
+        return self.selectedRowIndexes.map {
+            self.item(atRow: $0)!
         }
     }
 }

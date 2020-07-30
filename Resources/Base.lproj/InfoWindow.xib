@@ -31,7 +31,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="572" y="561" width="252" height="220"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="252" height="220"/>
             <value key="maxSize" type="size" width="252" height="220"/>
             <view key="contentView" id="6">
@@ -98,7 +98,7 @@
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="144" translatesAutoresizingMaskIntoConstraints="NO" id="72">
                         <rect key="frame" x="43" y="10" width="147" height="13"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Fork sizes are as at last save" id="91">
-                            <font key="font" metaFont="menu" size="10"/>
+                            <font key="font" metaFont="system" size="10"/>
                             <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -301,7 +301,7 @@
                             <outlet property="formatter" destination="t7T-4V-eof" id="woq-VB-Qk3"/>
                         </connections>
                     </textField>
-                    <matrix verticalHuggingPriority="750" mode="track" translatesAutoresizingMaskIntoConstraints="NO" id="xa2-7U-EHu">
+                    <matrix hidden="YES" verticalHuggingPriority="750" mode="track" translatesAutoresizingMaskIntoConstraints="NO" id="xa2-7U-EHu">
                         <rect key="frame" x="5" y="9" width="222" height="36"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="74" height="18"/>

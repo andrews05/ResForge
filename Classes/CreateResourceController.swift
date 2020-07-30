@@ -13,7 +13,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         self.loadWindow()
         dataSource = document.dataSource()
         // Add all types currently in the document
-        var suggestions = dataSource.allTypes as! [String]
+        var suggestions = dataSource.allTypes
         // Common types?
         for value in ["BNDL", "vers", "STR ", "STR#", "TEXT"] {
             if !suggestions.contains(value) {
@@ -27,7 +27,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             typeView.stringValue = type
 //            if id != nil {
 //                idView.integerValue = id
-//                let resource = document.dataSource()?.resource(ofType: GetOSTypeFromNSString(type), andID: Int16(id))
+//                let resource = dataSource.findResource(type: type, id: id)
 //                createButton.isEnabled = resource == nil
 //            } else {
                 self.typeChanged(self)
@@ -41,14 +41,14 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             createButton.isEnabled = false
         } else {
             // Check for conflict
-            let resource = dataSource.resource(ofType: typeView.stringValue, andID: Int16(idView.integerValue))
+            let resource = dataSource.findResource(type: typeView.stringValue, id: idView.integerValue)
             createButton.isEnabled = resource == nil
         }
     }
     
     @IBAction func typeChanged(_ sender: Any) {
         // Get a suitable id for this type
-        idView.integerValue = Int(dataSource.uniqueID(forType: typeView.stringValue))
+        idView.integerValue = dataSource.uniqueID(for: typeView.stringValue)
         createButton.isEnabled = true
     }
     
@@ -58,7 +58,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
                                     id: idView.integerValue,
                                     name: nameView.stringValue)
             dataSource.document.undoManager?.beginUndoGrouping()
-            dataSource.addResource(resource)
+            dataSource.add(resource)
             var actionName = NSLocalizedString("Create Resource", comment: "")
             if nameView.stringValue.count > 0 {
                 actionName = actionName.appending(" '\(nameView.stringValue)'")

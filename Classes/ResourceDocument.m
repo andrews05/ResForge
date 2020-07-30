@@ -1,12 +1,11 @@
 #import "ResourceDocument.h"
-#import "ResourceDataSource.h"
 #import "RKSupport/RKSupport-Swift.h"
 #import "ResKnife-Swift.h"
 #import "../Categories/NSOutlineView-SelectedItems.h"
 #include <copyfile.h>
 
 
-extern NSString *RKResourcePboardType;
+NSString *RKResourcePboardType = @"com.nickshanks.resknife.resource";
 
 @implementation ResourceDocument
 @synthesize resources = _resources;
@@ -166,7 +165,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (IBAction)exportResources:(id)sender
 {
-    NSArray *selected = [dataSource allResourcesForItems:[outlineView selectedItems]];
+    NSArray *selected = [dataSource allSelectedResources];
     if (selected.count > 1) {
 		NSOpenPanel *panel = [NSOpenPanel openPanel];
         panel.allowsMultipleSelection = NO;
@@ -243,10 +242,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)controller
 {
+    [dataSource addWithResources:_resources];
 	[super windowControllerDidLoadNib:controller];
 	
 	[outlineView setVerticalMotionCanBeginDrag:YES];
-	[outlineView registerForDraggedTypes:@[RKResourcePboardType, NSStringPboardType, NSFilenamesPboardType]];
+	[outlineView registerForDraggedTypes:@[RKResourcePboardType]];
 	
 	// register for resource will change notifications (for undo management)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameWillChange:) name:@"ResourceNameWillChangeNotification" object:nil];
@@ -255,7 +255,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesWillChange:) name:@"ResourceAttributesWillChangeNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:@"ResourceDataDidChangeNotification" object:nil];
 	
-    [dataSource addResources:_resources];
 }
 
 - (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(void *)contextInfo {
@@ -461,18 +460,16 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 - (IBAction)copy:(id)sender
 {
 	#pragma unused(sender)
-	NSArray *selectedItems = [dataSource allResourcesForItems:[outlineView selectedItems]];
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
 	[pb declareTypes:@[RKResourcePboardType] owner:self];
-	[pb setData:[NSArchiver archivedDataWithRootObject:selectedItems] forType:RKResourcePboardType];
+    [pb writeObjects:[dataSource allSelectedResources]];
 }
 
 - (IBAction)paste:(id)sender
 {
 	#pragma unused(sender)
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSGeneralPboard];
-	if([pb availableTypeFromArray:@[RKResourcePboardType]])
-		[self pasteResources:[NSUnarchiver unarchiveObjectWithData:[pb dataForType:RKResourcePboardType]]];
+    [self pasteResources:[pb readObjectsForClasses:@[Resource.class] options:nil]];
 }
 
 - (void)pasteResources:(NSArray *)pastedResources
@@ -482,10 +479,10 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	while(resource = (Resource *) [enumerator nextObject])
 	{
 		// check resource type/ID is available
-        if([dataSource resourceOfType:[resource type] andID:(short)resource.resID] == nil)
+        if([dataSource findResourceWithType:resource.type id:resource.resID] == nil)
 		{
 			// resource slot is available, paste this one in
-			[dataSource addResource:resource];
+			[dataSource add:resource];
 		}
 		else
 		{
@@ -500,13 +497,14 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 			[alert beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse returnCode) {
 				if(returnCode == NSAlertFirstButtonReturn)	// unique ID
 				{
+                    resource.resID = [self.dataSource uniqueIDFor:resource.type starting:resource.resID];
                     //Resource *newResource = [[Resource alloc] initWithType:resource.type id:[self.dataSource uniqueIDForType:resource.type] name:resource.name attributes:resource.attributes data:resource.data];
-					[self.dataSource addResource:resource];
+					[self.dataSource add:resource];
 				}
 				else if(returnCode == NSAlertSecondButtonReturn)				// overwrite
 				{
-					[self.dataSource removeResource:[self.dataSource resourceOfType:resource.type andID:(short)resource.resID]];
-					[self.dataSource addResource:resource];
+                    [self.dataSource remove:[self.dataSource findResourceWithType:resource.type id:resource.resID]];
+					[self.dataSource add:resource];
 				}
 				//else if(NSAlertAlternateReturn)			// skip
 				
@@ -545,14 +543,14 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 {
 	Resource *resource;
 	NSEnumerator *enumerator;
-    NSArray *selected = [dataSource allResourcesForItems:[outlineView selectedItems]];
+    NSArray *selected = [dataSource allSelectedResources];
 	
 	// enumerate through array and delete resources
 	[[self undoManager] beginUndoGrouping];
 	enumerator = [selected reverseObjectEnumerator];		// reverse so an undo will replace items in original order
 	while(resource = [enumerator nextObject])
 	{
-		[dataSource removeResource:resource];
+		[dataSource remove:resource];
 		if([[resource name] length] == 0)
 			[[self undoManager] setActionName:NSLocalizedString(@"Delete Resource", nil)];
 		else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Delete Resource '%@'", nil), [resource name]]];

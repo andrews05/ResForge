@@ -23,7 +23,7 @@ static inline OSType GetOSTypeFromNSString(NSString *theString)
 
 	CreateResourceController	*sheetController;
 }
-@property NSMutableArray *resources;
+@property NSArray *resources;
 @property PluginManager *registry;
 @property NSString *fork; // name of fork to save to, usually empty string (data fork) or 'rsrc'
 @property ResourceFileFormat format;

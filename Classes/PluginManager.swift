@@ -141,43 +141,43 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     }
     
     func allResources(ofType type: String, currentDocumentOnly: Bool = false) -> [Resource] {
-        var resources = document.dataSource().allResources(ofType: type) as! [Resource]
+        var resources = document.dataSource().allResources(ofType: type)
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                resources.append(contentsOf: doc.dataSource().allResources(ofType: type) as! [Resource])
+                resources.append(contentsOf: doc.dataSource().allResources(ofType: type))
             }
         }
         return resources
     }
 
     func findResource(ofType type: String, id: Int, currentDocumentOnly: Bool = false) -> Resource? {
-        if let resource = document.dataSource().resource(ofType: type, andID: Int16(id)) {
+        if let resource = document.dataSource().findResource(type: type, id: id) {
             return resource
         }
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                if let resource = doc.dataSource().resource(ofType: type, andID: Int16(id)) {
+                if let resource = doc.dataSource().findResource(type: type, id: id) {
                     return resource
                 }
             }
         }
-        return SupportRegistry.dataSource.resource(ofType: type, andID: Int16(id))
+        return SupportRegistry.dataSource.findResource(type: type, id: id)
     }
 
     func findResource(ofType type: String, name: String, currentDocumentOnly: Bool = false) -> Resource? {
-        if let resource = document.dataSource().resource(ofType: type, withName: name) {
+        if let resource = document.dataSource().findResource(type: type, name: name) {
             return resource
         }
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                if let resource = doc.dataSource().resource(ofType: type, withName: name) {
+                if let resource = doc.dataSource().findResource(type: type, name: name) {
                     return resource
                 }
             }
         }
-        return SupportRegistry.dataSource.resource(ofType: type, withName: name)
+        return SupportRegistry.dataSource.findResource(type: type, name: name)
     }
 }
