@@ -205,14 +205,13 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	NSData *data = [table valueForKey:@"data"];
 	if (data)
 	{
-        Resource *tableResource = [[Resource alloc] initWithType:[table valueForKey:@"name"] id:0 name:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] attributes:0 data:[table valueForKey:@"data"]];
+        Resource *tableResource = [[Resource alloc] initWithType:[@"sfnt." stringByAppendingString:[table valueForKey:@"name"]] id:0 name:[NSString stringWithFormat:NSLocalizedString(@"%@ >> %@", nil), [resource name], [table valueForKey:@"name"]] attributes:0 data:[table valueForKey:@"data"]];
 		if (!tableResource)
 		{
 			NSLog(@"Couldn't create Resource with data for table '%@'.", [table valueForKey:@"name"]);
 			return;
 		}
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableDataDidChange:) name:@"ResourceDataDidChangeNotification" object:tableResource];
-        tableResource.document = resource.document;
         id <ResKnifePluginManager> manager = self.resource.manager;
 		if (editor)	[manager openWithResource:tableResource using:nil template:nil];
 //		else		[(id)[resource document] openResource:tableResource usingTemplate:[NSString stringWithFormat:@"sfnt subtable '%@'", [table valueForKey:@"name"]]];
@@ -226,7 +225,7 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 
 - (void)setTableData:(Resource *)tableResource
 {
-    NSString *type = tableResource.type;
+    NSString *type = [tableResource.type substringFromIndex:5];
     NSUInteger index = [[headerTable valueForKey:@"name"] indexOfObject:type];
 	if(index == NSNotFound)
 	{

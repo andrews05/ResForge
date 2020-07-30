@@ -118,11 +118,10 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
 
     /// Tries to return an unused resource ID for a new resource of specified type.
     @objc func uniqueID(for type: String, starting: Int = 128) -> Int {
-        var id = starting
-        if let used = resourcesByType[type]?.map({ $0.id }) {
-            while used.contains(id) {
-                id += 1
-            }
+        var id = starting > Int16.max ? 128 : starting
+        let used = self.allResources(ofType: type).map({ $0.id })
+        while used.contains(id) {
+            id = id == Int16.max ? 128 : id+1
         }
         return id
     }
@@ -275,7 +274,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         }
         switch tableColumn!.identifier.rawValue {
         case "name":
-            resource.name = object as! String
+            resource.name = object as? String ?? ""
         case "type":
             if !resource.setType(object as! String) {
                 outlineView.reloadItem(item)

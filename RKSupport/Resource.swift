@@ -75,8 +75,11 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     @objc public var manager: ResKnifePluginManager!
     
     @objc public var defaultWindowTitle: String {
-        let title = document.displayName.appending(": \(type) \(id)")
-        return name.count > 0 ? title.appending(" '\(name)'") : title
+        if let document = document {
+            let title = document.displayName.appending(": \(type) \(id)")
+            return name.count > 0 ? title.appending(" '\(name)'") : title
+        }
+        return name
     }
     
     
