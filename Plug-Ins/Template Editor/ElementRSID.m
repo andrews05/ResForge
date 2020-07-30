@@ -113,8 +113,8 @@
         resources = [resources sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
         for (Resource *resource in resources) {
             if (!resource.name.length) continue; // No point showing resources with no name
-            if (self.max && (resource.resID < self.offset || resource.resID > self.max)) continue;
-            NSString *resID = @(resource.resID-self.offset).stringValue;
+            if (self.max && (resource.id < self.offset || resource.id > self.max)) continue;
+            NSString *resID = @(resource.id-self.offset).stringValue;
             if (![self.caseMap valueForKey:resID]) {
                 NSString *idDisplay = [self resIDDisplay:resID];
                 [cases addObject:[NSString stringWithFormat:@"%@ = %@", resource.name, idDisplay]];
@@ -128,7 +128,7 @@
 - (IBAction)openResource:(id)sender
 {
     id <ResKnifePluginManager> manager = self.parentList.controller.resource.manager;
-    Resource *resource = [manager findResourceOfType:self.resType id:(ResID)(self.value+self.offset) currentDocumentOnly:false];
+    Resource *resource = [manager findResourceOfType:self.resType id:(self.value+self.offset) currentDocumentOnly:false];
     if (resource) {
         [manager openWithResource:resource using:nil template:nil];
     } else {

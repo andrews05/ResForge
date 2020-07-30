@@ -18,7 +18,7 @@
 {
     [self readCases];
     // Get the current resource id
-    self.value = @(self.parentList.controller.resource.resID).stringValue;
+    self.value = @(self.parentList.controller.resource.id).stringValue;
     self.currentSection = self.keyedSections[self.value];
     if (self.currentSection) {
         [self.parentList insertElement:self.currentSection];

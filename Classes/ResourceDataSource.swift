@@ -2,9 +2,7 @@ import Foundation
 import RKSupport
 
 extension Notification.Name {
-    static let DataSourceWillAddResource    = Self("DataSourceWillAddResource")
     static let DataSourceDidAddResource     = Self("DataSourceDidAddResource")
-    static let DataSourceWillRemoveResource = Self("DataSourceWillRemoveResource")
     static let DataSourceDidRemoveResource  = Self("DataSourceDidRemoveResource")
 }
 
@@ -25,6 +23,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     // MARK: - Resource management
     
+    /// Add an array of resources to the data source. The outline view will be refreshed but there will be no notifications or undo registration.
     @objc func add(resources: [Resource]) {
         for resource in resources {
             self.addToTypedList(resource)
@@ -33,7 +32,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         if let outlineView = outlineView {
             if outlineView.sortDescriptors.count == 0 {
                 // Default sort resources by id
-                outlineView.sortDescriptors = [NSSortDescriptor(key: "resID", ascending: true)]
+                outlineView.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
             } else {
                 self.outlineView(self.outlineView, sortDescriptorsDidChange:outlineView.sortDescriptors)
             }
@@ -41,8 +40,6 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     @objc func add(_ resource: Resource) {
-        NotificationCenter.default.post(name: .DataSourceWillAddResource, object: resource)
-        
         self.addToTypedList(resource)
         resource.document = document
         resourcesByType[resource.type]?.sort(using: outlineView.sortDescriptors)
@@ -50,17 +47,15 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         outlineView.expandItem(resource.type)
         
         NotificationCenter.default.post(name: .DataSourceDidAddResource, object: resource)
-        document.undoManager?.registerUndo(withTarget: resource, handler: { [weak self] in self?.remove($0) })
+        document.undoManager?.registerUndo(withTarget: self, handler: { $0.remove(resource) })
     }
     
     @objc func remove(_ resource: Resource) {
-        NotificationCenter.default.post(name: .DataSourceWillRemoveResource, object: resource)
-        
         self.removeFromTypedList(resource)
         outlineView.reloadData()
 
         NotificationCenter.default.post(name: .DataSourceDidRemoveResource, object: resource)
-        document.undoManager?.registerUndo(withTarget: resource, handler: { [weak self] in self?.add($0) })
+        document.undoManager?.registerUndo(withTarget: self, handler: { $0.add(resource) })
     }
     
     private func addToTypedList(_ resource: Resource) {
@@ -105,7 +100,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     @objc func findResource(type: String, id: Int) -> Resource? {
         if let resources = resourcesByType[type] {
-            for resource in resources where resource.resID == id {
+            for resource in resources where resource.id == id {
                 return resource
             }
         }
@@ -124,7 +119,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     /// Tries to return an unused resource ID for a new resource of specified type.
     @objc func uniqueID(for type: String, starting: Int = 128) -> Int {
         var id = starting
-        if let used = resourcesByType[type]?.map({ $0.resID }) {
+        if let used = resourcesByType[type]?.map({ $0.id }) {
             while used.contains(id) {
                 id += 1
             }
@@ -147,7 +142,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         return self.allResources(for: outlineView.selectedItems)
     }
     
-    func allResources(for items: [Any]) -> [Resource] {
+    private func allResources(for items: [Any]) -> [Resource] {
         var resources: [Resource] = []
         for item in items {
             if let item = item as? String {
@@ -174,28 +169,28 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     func placeholder(for resource: Resource) -> String {
-        if resource.resID == -16455 {
+        if resource.id == -16455 {
             // don't bother checking type since there are too many icon types
             return NSLocalizedString("Custom Icon", comment: "")
         }
         
         switch resource.type {
         case "carb":
-            if resource.resID == 0 {
+            if resource.id == 0 {
                 return NSLocalizedString("Carbon Identifier", comment: "")
             }
         case "pnot":
-            if resource.resID == 0 {
+            if resource.id == 0 {
                 return NSLocalizedString("File Preview", comment: "")
             }
         case "STR ":
-            if resource.resID == -16396 {
+            if resource.id == -16396 {
                 return NSLocalizedString("Creator Information", comment: "")
             }
         case "vers":
-            if resource.resID == 1 {
+            if resource.id == 1 {
                 return NSLocalizedString("File Version", comment: "")
-            } else if resource.resID == 2 {
+            } else if resource.id == 2 {
                 return NSLocalizedString("Package Version", comment: "")
             }
         default:
@@ -252,8 +247,8 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
                 return resource.name
             case "type":
                 return resource.type
-            case "resID":
-                return resource.resID
+            case "id":
+                return resource.id
             case "size":
                 return resource.data.count
             case "attributes":
@@ -285,7 +280,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             if !resource.setType(object as! String) {
                 outlineView.reloadItem(item)
             }
-        case "resID":
+        case "id":
             if !resource.setID(object as! Int) {
                 outlineView.reloadItem(item)
             }
@@ -300,18 +295,11 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         }
         outlineView.reloadData()
     }
-
-    func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
-        let resources: [Resource]
-        if let resource = item as? Resource {
-            // The resource conforms to NSPasteboardWriting and could be returned directly, but much simpler to handle everything the same way
-            resources = [resource]
-        } else {
-            resources = resourcesByType[item as! String]!
-        }
-        let pItem = NSPasteboardItem()
-        pItem.setData(NSKeyedArchiver.archivedData(withRootObject: resources), forType: .RKResource)
-        return pItem
+    
+    func outlineView(_ outlineView: NSOutlineView, writeItems items: [Any], to pasteboard: NSPasteboard) -> Bool {
+        let data = NSKeyedArchiver.archivedData(withRootObject: allResources(for: items))
+        pasteboard.setData(data, forType: .RKResource)
+        return true
     }
     
     func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
@@ -323,12 +311,12 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
-        let resources = info.draggingPasteboard.readObjects(forClasses: [NSPasteboardItem.self], options: nil)!.flatMap { item -> [Resource] in
-            let data = (item as! NSPasteboardItem).data(forType: .RKResource)!
-            return NSKeyedUnarchiver.unarchiveObject(with: data) as! [Resource]
+        if let data = info.draggingPasteboard.data(forType: .RKResource),
+            let resources = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Resource] {
+            document.pasteResources(resources)
+            return true
         }
-        document.pasteResources(resources)
-        return true
+        return false
     }
 }
 

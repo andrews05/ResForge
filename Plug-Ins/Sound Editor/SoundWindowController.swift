@@ -100,7 +100,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         if self.resource.name.count > 0 {
             panel.nameFieldStringValue = self.resource.name
         } else {
-            panel.nameFieldStringValue = "Sound \(resource.resID)"
+            panel.nameFieldStringValue = "Sound \(resource.id)"
         }
         panel.allowedFileTypes = ["aiff"]
         panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in

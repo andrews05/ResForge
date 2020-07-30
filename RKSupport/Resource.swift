@@ -1,13 +1,6 @@
 import Cocoa
 
 public extension Notification.Name {
-    static let ResourceWillChange           = Self("ResourceWillChangeNotification")
-    static let ResourceNameWillChange       = Self("ResourceNameWillChangeNotification")
-    static let ResourceTypeWillChange       = Self("ResourceTypeWillChangeNotification")
-    static let ResourceIDWillChange         = Self("ResourceIDWillChangeNotification")
-    static let ResourceAttributesWillChange = Self("ResourceAttributesWillChangeNotification")
-    static let ResourceDataWillChange       = Self("ResourceDataWillChangeNotification")
-    
     static let ResourceDidChange            = Self("ResourceDidChangeNotification")
     static let ResourceNameDidChange        = Self("ResourceNameDidChangeNotification")
     static let ResourceTypeDidChange        = Self("ResourceTypeDidChangeNotification")
@@ -35,71 +28,61 @@ public struct ResAttributes: OptionSet {
 
 public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboardReading {
     @objc public var type: String {
-        willSet {
-            NotificationCenter.default.post(name: .ResourceTypeWillChange, object: self)
-        }
         didSet {
             NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
             NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+            self.document?.undoManager?.setActionName(NSLocalizedString("Change Type", comment: ""))
+            self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.type = oldValue })
         }
     }
     
-    @objc public var resID: Int {
-        willSet {
-            NotificationCenter.default.post(name: .ResourceIDWillChange, object: self)
-        }
+    @objc public var id: Int {
         didSet {
             NotificationCenter.default.post(name: .ResourceIDDidChange, object: self, userInfo: ["oldValue":oldValue])
             NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+            self.document?.undoManager?.setActionName(NSLocalizedString("Change ID", comment: ""))
+            self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.id = oldValue })
         }
     }
     
     @objc public var name: String {
-        willSet {
-            NotificationCenter.default.post(name: .ResourceNameWillChange, object: self)
-        }
         didSet {
             NotificationCenter.default.post(name: .ResourceNameDidChange, object: self, userInfo: ["oldValue":oldValue])
             NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+            self.document?.undoManager?.setActionName(NSLocalizedString("Change Name", comment: ""))
+            self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.name = oldValue })
         }
     }
     
     public var attributes: ResAttributes {
-        willSet {
-            NotificationCenter.default.post(name: .ResourceAttributesWillChange, object: self)
-        }
         didSet {
             NotificationCenter.default.post(name: .ResourceAttributesDidChange, object: self, userInfo: ["oldValue":oldValue])
             NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+            self.document?.undoManager?.setActionName(NSLocalizedString("Change Attributes", comment: ""))
+            self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.attributes = oldValue })
         }
     }
     
     @objc public var data: Data {
-        willSet {
-            NotificationCenter.default.post(name: .ResourceDataWillChange, object: self)
-        }
         didSet {
-            NotificationCenter.default.post(name: .ResourceDataDidChange, object: self, userInfo: ["oldValue":oldValue])
+            NotificationCenter.default.post(name: .ResourceDataDidChange, object: self)
             NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+            self.document?.updateChangeCount(.changeDone)
         }
-    }
-    
-    @objc public var size: Int {
-        return data.count
     }
     
     @objc public var document: NSDocument!
     @objc public var manager: ResKnifePluginManager!
     
     @objc public var defaultWindowTitle: String {
-        let title = document.displayName.appending(": \(type) \(resID)")
+        let title = document.displayName.appending(": \(type) \(id)")
         return name.count > 0 ? title.appending(" '\(name)'") : title
     }
     
     
     @objc public init(type: String, id: Int, name: String = "", attributes: Int = 0, data: Data = Data()) {
         self.type = type
-        self.resID = id
+        self.id = id
         self.name = name
         self.attributes = ResAttributes(rawValue: attributes)
         self.data = data
@@ -111,7 +94,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     
     public required init?(coder: NSCoder) {
         type = coder.decodeObject(of: NSString.self, forKey: "type")! as String
-        resID = coder.decodeInteger(forKey: "id")
+        id = coder.decodeInteger(forKey: "id")
         name = coder.decodeObject(of: NSString.self, forKey: "name")! as String
         attributes = ResAttributes(rawValue: coder.decodeInteger(forKey: "attributes"))
         data = coder.decodeObject(of: NSData.self, forKey: "data")! as Data
@@ -119,7 +102,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     
     public func encode(with coder: NSCoder) {
         coder.encode(type, forKey: "type")
-        coder.encode(resID, forKey: "id")
+        coder.encode(id, forKey: "id")
         coder.encode(name, forKey: "name")
         coder.encode(attributes.rawValue, forKey: "attributes")
         coder.encode(data, forKey: "data")

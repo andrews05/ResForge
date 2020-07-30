@@ -2,15 +2,14 @@ import Foundation
 import RKSupport
 
 extension Notification.Name {
-    static let DocumentInfoWillChange = Notification.Name("DocumentInfoWillChangeNotification")
     static let DocumentInfoDidChange = Notification.Name("DocumentInfoDidChangeNotification")
 }
 
-// Extend to the Resource class to add conflict checking when changing the type or id
+// Extend the Resource class to add conflict checking when changing the type or id
 extension Resource {
     func setType(_ type: String) -> Bool {
         if type != self.type {
-            if self.hasConflict(type: type, id: self.resID) {
+            if self.hasConflict(type: type, id: self.id) {
                 return false
             }
             self.type = type
@@ -19,11 +18,11 @@ extension Resource {
     }
     
     func setID(_ id: Int) -> Bool {
-        if id != self.resID {
+        if id != self.id {
             if self.hasConflict(type: self.type, id: id) {
                 return false
             }
-            self.resID = id
+            self.id = id
         }
         return true
     }
@@ -44,6 +43,12 @@ enum ResourceError: LocalizedError {
         switch self {
         case .conflict(let type, let id):
             return String(format: NSLocalizedString("A resource of type '%@' with ID %d already exists.", comment: ""), type, id)
+        }
+    }
+    var recoverySuggestion: String? {
+        switch self {
+        case .conflict(_, _):
+            return String(format: NSLocalizedString("Please enter a unique value.", comment: ""))
         }
     }
 }
@@ -102,7 +107,7 @@ class InfoWindowController: NSWindowController {
             attributesMatrix.cell(withTag: ResAttributes.sysHeap.rawValue)?.state    = resource.attributes.contains(.sysHeap) ? .on : .off
             
             rType.stringValue = resource.type
-            rID.integerValue = resource.resID
+            rID.integerValue = resource.id
             rSize.integerValue = resource.data.count
             
             // swap box
@@ -182,7 +187,7 @@ class InfoWindowController: NSWindowController {
     
     @IBAction func rIDChanged(_ sender: Any) {
         if !selectedResource.setID(rID.integerValue) {
-            rID.integerValue = selectedResource.resID
+            rID.integerValue = selectedResource.id
         }
     }
     

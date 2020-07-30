@@ -210,7 +210,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
     
     NSString *filename = [resource.name stringByReplacingOccurrencesOfString:@"/" withString:@":"];
     if ([filename isEqualToString:@""]) {
-        filename = [NSString stringWithFormat:@"%@ %ld", resType, (long)resource.resID];
+        filename = [NSString stringWithFormat:@"%@ %ld", resType, (long)resource.id];
     }
     NSString *fullname = [filename stringByAppendingPathExtension:extension];
     
@@ -244,17 +244,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 {
     [dataSource addWithResources:_resources];
 	[super windowControllerDidLoadNib:controller];
-	
-	[outlineView setVerticalMotionCanBeginDrag:YES];
 	[outlineView registerForDraggedTypes:@[RKResourcePboardType]];
-	
-	// register for resource will change notifications (for undo management)
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceNameWillChange:) name:@"ResourceNameWillChangeNotification" object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceIDWillChange:) name:@"ResourceIDWillChangeNotification" object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceTypeWillChange:) name:@"ResourceTypeWillChangeNotification" object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceAttributesWillChange:) name:@"ResourceAttributesWillChangeNotification" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resourceDataDidChange:) name:@"ResourceDataDidChangeNotification" object:nil];
-	
 }
 
 - (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(void *)contextInfo {
@@ -393,61 +383,6 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	}
 }
 
-
-- (void)resourceNameWillChange:(NSNotification *)notification
-{
-	// this saves the current resource's name so we can undo the change
-	Resource *resource = (Resource *) [notification object];
-    if ([resource document] == self) {
-        [[self undoManager] registerUndoWithTarget:resource selector:@selector(setName:) object:[[resource name] copy]];
-        [[self undoManager] setActionName:NSLocalizedString(@"Name Change", nil)];
-    }
-}
-
-- (void)resourceIDWillChange:(NSNotification *)notification
-{
-	// this saves the current resource's ID number so we can undo the change
-	Resource *resource = (Resource *) [notification object];
-    if ([resource document] == self) {
-        [[[self undoManager] prepareWithInvocationTarget:resource] setResID:resource.resID];
-        if([[resource name] length] == 0)
-            [[self undoManager] setActionName:NSLocalizedString(@"ID Change", nil)];
-        else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"ID Change for '%@'", nil), [resource name]]];
-    }
-}
-
-- (void)resourceTypeWillChange:(NSNotification *)notification
-{
-	// this saves the current resource's type so we can undo the change
-	Resource *resource = (Resource *) [notification object];
-    if ([resource document] == self) {
-        [(Resource*)[[self undoManager] prepareWithInvocationTarget:resource] setType:[resource type]];
-        if([[resource name] length] == 0)
-            [[self undoManager] setActionName:NSLocalizedString(@"Type Change", nil)];
-        else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Type Change for '%@'", nil), [resource name]]];
-    }
-}
-
-- (void)resourceAttributesWillChange:(NSNotification *)notification
-{
-	// this saves the current state of the resource's attributes so we can undo the change
-//	Resource *resource = (Resource *) [notification object];
-//    if ([resource document] == self) {
-//        [(Resource*)[[self undoManager] prepareWithInvocationTarget:resource] setAttributes:[resource attributes]];
-//        if([[resource name] length] == 0)
-//            [[self undoManager] setActionName:NSLocalizedString(@"Attributes Change", nil)];
-//        else [[self undoManager] setActionName:[NSString stringWithFormat:NSLocalizedString(@"Attributes Change for '%@'", nil), [resource name]]];
-//    }
-}
-
-- (void)resourceDataDidChange:(NSNotification *)notification
-{
-    Resource *resource = (Resource *) [notification object];
-    if ([resource document] == self) {
-        [self updateChangeCount:NSChangeDone];
-    }
-}
-
 #pragma mark -
 #pragma mark Edit Operations
 
@@ -479,7 +414,7 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 	while(resource = (Resource *) [enumerator nextObject])
 	{
 		// check resource type/ID is available
-        if([dataSource findResourceWithType:resource.type id:resource.resID] == nil)
+        if([dataSource findResourceWithType:resource.type id:resource.id] == nil)
 		{
 			// resource slot is available, paste this one in
 			[dataSource add:resource];
@@ -490,20 +425,20 @@ static NSString *RKViewItemIdentifier		= @"com.nickshanks.resknife.toolbar.view"
 			NSArray *remainingResources = [enumerator allObjects];
 			NSAlert *alert = [[NSAlert alloc] init];
 			alert.messageText = @"Paste Error";
-            alert.informativeText = [NSString stringWithFormat:@"There already exists a resource of type %@ with ID %ld. Do you wish to assign the pasted resource a unique ID, overwrite the existing resource, or skip pasting of this resource?", resource.type, (long)resource.resID];
+            alert.informativeText = [NSString stringWithFormat:@"There already exists a resource of type %@ with ID %ld. Do you wish to assign the pasted resource a unique ID, overwrite the existing resource, or skip pasting of this resource?", resource.type, (long)resource.id];
 			[alert addButtonWithTitle:@"Unique ID"];
 			[alert addButtonWithTitle:@"Overwrite"];
 			[alert addButtonWithTitle:@"Skip"];
 			[alert beginSheetModalForWindow:mainWindow completionHandler:^(NSModalResponse returnCode) {
 				if(returnCode == NSAlertFirstButtonReturn)	// unique ID
 				{
-                    resource.resID = [self.dataSource uniqueIDFor:resource.type starting:resource.resID];
+                    resource.id = [self.dataSource uniqueIDFor:resource.type starting:resource.id];
                     //Resource *newResource = [[Resource alloc] initWithType:resource.type id:[self.dataSource uniqueIDForType:resource.type] name:resource.name attributes:resource.attributes data:resource.data];
 					[self.dataSource add:resource];
 				}
 				else if(returnCode == NSAlertSecondButtonReturn)				// overwrite
 				{
-                    [self.dataSource remove:[self.dataSource findResourceWithType:resource.type id:resource.resID]];
+                    [self.dataSource remove:[self.dataSource findResourceWithType:resource.type id:resource.id]];
 					[self.dataSource add:resource];
 				}
 				//else if(NSAlertAlternateReturn)			// skip

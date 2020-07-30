@@ -33,5 +33,5 @@ class LaunchActionTransformer: ValueTransformer {
 }
 
 extension NSValueTransformerName {
-    static let launchActionTransformerName = NSValueTransformerName(rawValue: "LaunchActionTransformer")
+    static let launchActionTransformerName = Self(rawValue: "LaunchActionTransformer")
 }
