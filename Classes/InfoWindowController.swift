@@ -7,24 +7,12 @@ extension Notification.Name {
 
 // Extend the Resource class to add conflict checking when changing the type or id
 extension Resource {
-    func setType(_ type: String) -> Bool {
-        if type != self.type {
-            if self.hasConflict(type: type, id: self.id) {
-                return false
-            }
-            self.type = type
-        }
-        return true
+    func canSetType(_ type: String) -> Bool {
+        return type == self.type || !self.hasConflict(type: type, id: self.id)
     }
     
-    func setID(_ id: Int) -> Bool {
-        if id != self.id {
-            if self.hasConflict(type: self.type, id: id) {
-                return false
-            }
-            self.id = id
-        }
-        return true
+    func canSetID(_ id: Int) -> Bool {
+        return id == self.id || !self.hasConflict(type: self.type, id: id)
     }
     
     private func hasConflict(type: String, id: Int) -> Bool {
@@ -53,7 +41,7 @@ enum ResourceError: LocalizedError {
     }
 }
 
-class InfoWindowController: NSWindowController {
+class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var iconView: NSImageView!
     @IBOutlet var nameView: NSTextField!
     @IBOutlet var placeholderView: NSBox!
@@ -78,8 +66,6 @@ class InfoWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
         
-        // set window to only accept key when editing text boxes
-        (self.window as? NSPanel)?.becomesKeyOnlyIfNeeded = true
         self.setMainWindow(NSApp.mainWindow)
         self.update()
         
@@ -167,27 +153,35 @@ class InfoWindowController: NSWindowController {
         self.update()
     }
     
-    @IBAction func creatorChanged(_ sender: Any) {
-        currentDocument.creator = OSType(creator.stringValue)
-    }
-    
-    @IBAction func typeChanged(_ sender: Any) {
-        currentDocument.type = OSType(type.stringValue)
-    }
-    
-    @IBAction func nameChanged(_ sender: Any) {
-        selectedResource.name = nameView.stringValue
-    }
-    
-    @IBAction func rTypeChanged(_ sender: Any) {
-        if !selectedResource.setType(rType.stringValue) {
-            rType.stringValue = selectedResource.type // Change was rejected, reload
+    // Check for conflicts
+    func control(_ control: NSControl, isValidObject obj: Any?) -> Bool {
+        let textField = control as! NSTextField
+        switch textField.identifier?.rawValue {
+        case "rType":
+            return selectedResource.canSetType(obj as! String)
+        case "rID":
+            return selectedResource.canSetID(obj as! Int)
+        default:
+            break
         }
+        return true
     }
     
-    @IBAction func rIDChanged(_ sender: Any) {
-        if !selectedResource.setID(rID.integerValue) {
-            rID.integerValue = selectedResource.id
+    func controlTextDidEndEditing(_ obj: Notification) {
+        let textField = obj.object as! NSTextField
+        switch textField.identifier?.rawValue {
+        case "name":
+            selectedResource.name = textField.stringValue
+        case "rType":
+            selectedResource.type = textField.stringValue
+        case "rID":
+            selectedResource.id = textField.integerValue
+        case "creator":
+            currentDocument.creator = OSType(textField.stringValue)
+        case "type":
+            currentDocument.type = OSType(textField.stringValue)
+        default:
+            break
         }
     }
     

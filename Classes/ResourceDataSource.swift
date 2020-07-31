@@ -191,28 +191,37 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         return view
     }
     
-    // Here we set the values of the resource when editing. We use the shouldEndEditing event for two reasons:
-    // 1. Unlike didEndEditing and the control's action, this is only triggered when the field value has actually changed.
-    // 2. It allows us to prevent ending editing if a conflict arises.
-    func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
-        var shouldEnd = true
-        if let textField = control as? NSTextField, let resource = outlineView.item(atRow: outlineView.row(for: textField)) as? Resource {
-            // We don't need to reload the item after changing values here
-            noReload = true
-            let tableColumn = outlineView.tableColumns[outlineView.column(for: textField)]
-            switch tableColumn.identifier.rawValue {
-            case "name":
-                resource.name = textField.stringValue
-            case "type":
-                shouldEnd = resource.setType(textField.stringValue)
-            case "id":
-                shouldEnd = resource.setID(textField.integerValue)
-            default:
-                break
-            }
-            noReload = false
+    // Check for conflicts
+    func control(_ control: NSControl, isValidObject obj: Any?) -> Bool {
+        let textField = control as! NSTextField
+        let resource = outlineView.item(atRow: outlineView.row(for: textField)) as! Resource
+        switch textField.identifier?.rawValue {
+        case "type":
+            return resource.canSetType(obj as! String)
+        case "id":
+            return resource.canSetID(obj as! Int)
+        default:
+            break
         }
-        return shouldEnd
+        return true
+    }
+    
+    func controlTextDidEndEditing(_ obj: Notification) {
+        let textField = obj.object as! NSTextField
+        let resource = outlineView.item(atRow: outlineView.row(for: textField)) as! Resource
+        // We don't need to reload the item after changing values here
+        noReload = true
+        switch textField.identifier?.rawValue {
+        case "name":
+            resource.name = textField.stringValue
+        case "type":
+            resource.type = textField.stringValue
+        case "id":
+            resource.id = textField.integerValue
+        default:
+            break
+        }
+        noReload = false
     }
     
     @objc func resourceDidChange(_ notification: Notification) {
@@ -225,6 +234,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         }
         let view = outlineView.view(atColumn: 0, row: outlineView.row(forItem: resource), makeIfNecessary: false) as? NSTableCellView
         view?.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
+        // TODO: Re-sort the list and refresh the view, retaining the selection
         if !noReload {
             outlineView.reloadItem(resource)
         }

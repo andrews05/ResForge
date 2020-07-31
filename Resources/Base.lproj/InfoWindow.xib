@@ -54,7 +54,7 @@
                         </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="89"/>
                     </imageView>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="186" translatesAutoresizingMaskIntoConstraints="NO" id="32">
+                    <textField identifier="name" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="186" translatesAutoresizingMaskIntoConstraints="NO" id="32">
                         <rect key="frame" x="45" y="189" width="199" height="22"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="90">
                             <customFormatter key="formatter" id="4Mx-hY-5n6" customClass="MacRomanFormatter" customModule="RKSupport">
@@ -69,7 +69,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <action selector="nameChanged:" target="-2" id="SHe-zD-8LE"/>
+                            <outlet property="delegate" destination="-2" id="neV-Q3-2id"/>
                         </connections>
                     </textField>
                 </subviews>
@@ -135,7 +135,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vcX-K0-60n">
+                    <textField identifier="creator" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vcX-K0-60n">
                         <rect key="frame" x="120" y="101" width="92" height="21"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="ResK" drawsBackground="YES" id="juW-kl-WBN">
                             <font key="font" metaFont="system"/>
@@ -143,11 +143,11 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <action selector="creatorChanged:" target="-2" id="ySR-Py-m7V"/>
+                            <outlet property="delegate" destination="-2" id="oOd-vB-6W5"/>
                             <outlet property="formatter" destination="9Ky-lD-TeE" id="NxZ-0w-mcm"/>
                         </connections>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pox-Qn-guL">
+                    <textField identifier="type" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pox-Qn-guL">
                         <rect key="frame" x="120" y="77" width="92" height="21"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="rsrc" drawsBackground="YES" id="yIx-jL-SJA">
                             <font key="font" metaFont="system"/>
@@ -155,7 +155,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <action selector="typeChanged:" target="-2" id="cZj-XT-uDd"/>
+                            <outlet property="delegate" destination="-2" id="cxm-Fu-Kgu"/>
                             <outlet property="formatter" destination="9Ky-lD-TeE" id="nK3-hQ-pXo"/>
                         </connections>
                     </textField>
@@ -255,7 +255,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kNq-HP-5AV">
+                    <textField identifier="rType" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kNq-HP-5AV">
                         <rect key="frame" x="120" y="101" width="92" height="21"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="qK9-aj-CFo">
                             <customFormatter key="formatter" id="pc1-VG-PAO" customClass="MacRomanFormatter" customModule="RKSupport">
@@ -272,10 +272,10 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <action selector="rTypeChanged:" target="-2" id="dDc-uH-dtl"/>
+                            <outlet property="delegate" destination="-2" id="yM8-94-TRd"/>
                         </connections>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wc5-m9-c69">
+                    <textField identifier="rID" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wc5-m9-c69">
                         <rect key="frame" x="120" y="77" width="92" height="21"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="KqN-ja-2ZS">
                             <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="BLG-5h-lCM">
@@ -287,7 +287,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <action selector="rIDChanged:" target="-2" id="yf1-2G-1Mm"/>
+                            <outlet property="delegate" destination="-2" id="Umh-bA-jLw"/>
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ACD-TC-daM">
