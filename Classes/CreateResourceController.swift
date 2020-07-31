@@ -65,6 +65,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             }
             dataSource.document.undoManager?.setActionName(actionName)
             dataSource.document.undoManager?.endUndoGrouping()
+            dataSource.select([resource])
             dataSource.document.registry.open(resource: resource)
         }
         self.window?.sheetParent?.endSheet(self.window!)

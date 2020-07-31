@@ -29,37 +29,45 @@ public struct ResAttributes: OptionSet {
 public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboardReading {
     @objc public var type: String {
         didSet {
-            NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
-            NotificationCenter.default.post(name: .ResourceDidChange, object: self)
-            self.document?.undoManager?.setActionName(NSLocalizedString("Change Type", comment: ""))
-            self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.type = oldValue })
+            if type != oldValue {
+                NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
+                NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+                self.document?.undoManager?.setActionName(NSLocalizedString("Change Type", comment: ""))
+                self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.type = oldValue })
+            }
         }
     }
     
     @objc public var id: Int {
         didSet {
-            NotificationCenter.default.post(name: .ResourceIDDidChange, object: self, userInfo: ["oldValue":oldValue])
-            NotificationCenter.default.post(name: .ResourceDidChange, object: self)
-            self.document?.undoManager?.setActionName(NSLocalizedString("Change ID", comment: ""))
-            self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.id = oldValue })
+            if id != oldValue {
+                NotificationCenter.default.post(name: .ResourceIDDidChange, object: self, userInfo: ["oldValue":oldValue])
+                NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+                self.document?.undoManager?.setActionName(NSLocalizedString("Change ID", comment: ""))
+                self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.id = oldValue })
+            }
         }
     }
     
     @objc public var name: String {
         didSet {
-            NotificationCenter.default.post(name: .ResourceNameDidChange, object: self, userInfo: ["oldValue":oldValue])
-            NotificationCenter.default.post(name: .ResourceDidChange, object: self)
-            self.document?.undoManager?.setActionName(NSLocalizedString("Change Name", comment: ""))
-            self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.name = oldValue })
+            if name != oldValue {
+                NotificationCenter.default.post(name: .ResourceNameDidChange, object: self, userInfo: ["oldValue":oldValue])
+                NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+                self.document?.undoManager?.setActionName(NSLocalizedString("Change Name", comment: ""))
+                self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.name = oldValue })
+            }
         }
     }
     
     public var attributes: ResAttributes {
         didSet {
-            NotificationCenter.default.post(name: .ResourceAttributesDidChange, object: self, userInfo: ["oldValue":oldValue])
-            NotificationCenter.default.post(name: .ResourceDidChange, object: self)
-            self.document?.undoManager?.setActionName(NSLocalizedString("Change Attributes", comment: ""))
-            self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.attributes = oldValue })
+            if attributes != oldValue {
+                NotificationCenter.default.post(name: .ResourceAttributesDidChange, object: self, userInfo: ["oldValue":oldValue])
+                NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+                self.document?.undoManager?.setActionName(NSLocalizedString("Change Attributes", comment: ""))
+                self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.attributes = oldValue })
+            }
         }
     }
     

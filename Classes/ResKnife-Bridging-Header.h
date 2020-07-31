@@ -3,4 +3,3 @@
 //
 
 #import "ResourceDocument.h"
-#import "ResourceNameCell.h"

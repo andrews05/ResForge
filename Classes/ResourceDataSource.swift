@@ -6,7 +6,7 @@ extension Notification.Name {
     static let DataSourceDidRemoveResource  = Self("DataSourceDidRemoveResource")
 }
 
-class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource {
+class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate {
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var document: ResourceDocument!
     var resourcesByType: [String: [Resource]] = [:]
@@ -14,6 +14,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     @objc var resources: [Resource] {
         return Array(resourcesByType.values.joined())
     }
+    private var noReload = false
     
     override init() {
         super.init()
@@ -66,7 +67,6 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             allTypes.append(resource.type)
             allTypes.sort()
         }
-        
     }
     
     private func removeFromTypedList(_ resource: Resource, type: String? = nil) {
@@ -134,6 +134,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             return outlineView.row(forItem: resource)
         }
         outlineView.selectRowIndexes(IndexSet(rows), byExtendingSelection: false)
+        outlineView.scrollRowToVisible(outlineView.selectedRow)
     }
     
     /// Return a flat list of all resources in the current selection.
@@ -153,6 +154,67 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         return resources
     }
     
+    func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+        var view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
+        if let resource = item as? Resource {
+            switch tableColumn!.identifier.rawValue {
+            case "name":
+                view.textField?.stringValue = resource.name
+                view.textField?.isEditable = true
+                view.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
+                view.imageView?.image = ApplicationDelegate.icon(for: resource.type)
+            case "type":
+                view.textField?.stringValue = resource.type
+                view.textField?.isEditable = true
+            case "id":
+                view.textField?.integerValue = resource.id
+                view.textField?.isEditable = true
+            case "size":
+                view.textField?.integerValue = resource.data.count
+            case "attributes":
+                view.textField?.objectValue = resource.attributes
+            default:
+                return nil
+            }
+        } else if let type = item as? String {
+            switch tableColumn!.identifier.rawValue {
+            case "name":
+                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "type"), owner: self) as! NSTableCellView
+                view.textField?.stringValue = type // Type header
+                view.textField?.isEditable = false
+            case "size":
+                view.textField?.integerValue = resourcesByType[type]!.count // Type count
+            default:
+                return nil
+            }
+        }
+        return view
+    }
+    
+    // Here we set the values of the resource when editing. We use the shouldEndEditing event for two reasons:
+    // 1. Unlike didEndEditing and the control's action, this is only triggered when the field value has actually changed.
+    // 2. It allows us to prevent ending editing if a conflict arises.
+    func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
+        var shouldEnd = true
+        if let textField = control as? NSTextField, let resource = outlineView.item(atRow: outlineView.row(for: textField)) as? Resource {
+            // We don't need to reload the item after changing values here
+            noReload = true
+            let tableColumn = outlineView.tableColumns[outlineView.column(for: textField)]
+            switch tableColumn.identifier.rawValue {
+            case "name":
+                resource.name = textField.stringValue
+            case "type":
+                shouldEnd = resource.setType(textField.stringValue)
+            case "id":
+                shouldEnd = resource.setID(textField.integerValue)
+            default:
+                break
+            }
+            noReload = false
+        }
+        return shouldEnd
+    }
+    
     @objc func resourceDidChange(_ notification: Notification) {
         guard
             let document = document,
@@ -161,57 +223,10 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         else {
             return
         }
-        let column = outlineView.tableColumn(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "name"))
-        let cell = column?.dataCell(forRow: outlineView.row(forItem: resource)) as! NSTextFieldCell
-        cell.placeholderString = self.placeholder(for: resource)
-        outlineView.reloadItem(notification.object)
-    }
-    
-    func placeholder(for resource: Resource) -> String {
-        if resource.id == -16455 {
-            // don't bother checking type since there are too many icon types
-            return NSLocalizedString("Custom Icon", comment: "")
-        }
-        
-        switch resource.type {
-        case "carb":
-            if resource.id == 0 {
-                return NSLocalizedString("Carbon Identifier", comment: "")
-            }
-        case "pnot":
-            if resource.id == 0 {
-                return NSLocalizedString("File Preview", comment: "")
-            }
-        case "STR ":
-            if resource.id == -16396 {
-                return NSLocalizedString("Creator Information", comment: "")
-            }
-        case "vers":
-            if resource.id == 1 {
-                return NSLocalizedString("File Version", comment: "")
-            } else if resource.id == 2 {
-                return NSLocalizedString("Package Version", comment: "")
-            }
-        default:
-            return NSLocalizedString("Untitled Resource", comment: "")
-        }
-        return ""
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, shouldEdit tableColumn: NSTableColumn?, item: Any) -> Bool {
-        return item is Resource
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, item: Any) {
-        if let cell = cell as? ResourceNameCell {
-            if let resource = item as? Resource {
-                // set resource icon
-                cell.drawImage = true
-                cell.image = ApplicationDelegate.icon(for: resource.type)
-                cell.placeholderString = self.placeholder(for: resource)
-            } else {
-                cell.drawImage = false
-            }
+        let view = outlineView.view(atColumn: 0, row: outlineView.row(forItem: resource), makeIfNecessary: false) as? NSTableCellView
+        view?.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
+        if !noReload {
+            outlineView.reloadItem(resource)
         }
     }
 
@@ -236,55 +251,6 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             return resourcesByType[type]!.count
         } else {
             return 0
-        }
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {
-        if let resource = item as? Resource {
-            switch tableColumn!.identifier.rawValue {
-            case "name":
-                return resource.name
-            case "type":
-                return resource.type
-            case "id":
-                return resource.id
-            case "size":
-                return resource.data.count
-            case "attributes":
-                return resource.attributes
-            default:
-                break
-            }
-        } else if let type = item as? String {
-            switch tableColumn!.identifier.rawValue {
-            case "name":
-                return item // Type header
-            case "size":
-                return resourcesByType[type]!.count // Type count
-            default:
-                break
-            }
-        }
-        return nil
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, byItem item: Any?) {
-        guard let resource = item as? Resource else {
-            return
-        }
-        switch tableColumn!.identifier.rawValue {
-        case "name":
-            resource.name = object as? String ?? ""
-        case "type":
-            if !resource.setType(object as! String) {
-                outlineView.reloadItem(item)
-            }
-        case "id":
-            if !resource.setID(object as! Int) {
-                outlineView.reloadItem(item)
-            }
-        default:
-            break
         }
     }
     
