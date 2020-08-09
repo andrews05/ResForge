@@ -3,7 +3,7 @@
  It serves as a bridge between C++ and Swift.
  */
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 typedef enum {
     kFormatClassic,

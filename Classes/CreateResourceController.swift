@@ -1,4 +1,4 @@
-import Foundation
+import Cocoa
 import RKSupport
 
 class CreateResourceController: NSWindowController, NSTextFieldDelegate {
@@ -6,14 +6,17 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var nameView: NSTextField!
     @IBOutlet var idView: NSTextField!
     @IBOutlet var typeView: NSComboBox!
+    var collection: ResourceCollection!
     
-    var dataSource: ResourceDataSource!
+    override var windowNibName: NSNib.Name? {
+        "CreateResourceSheet"
+    }
     
-    @objc func showSheet(in document: ResourceDocument, type: String! = nil) {
-        self.loadWindow()
-        dataSource = document.dataSource()
+    func showSheet(in document: ResourceDocument, type: String? = nil, id: Int = 128) {
+        _ = self.window
+        collection = document.collection
         // Add all types currently in the document
-        var suggestions = dataSource.allTypes
+        var suggestions = collection.allTypes
         // Common types?
         for value in ["BNDL", "vers", "STR ", "STR#", "TEXT"] {
             if !suggestions.contains(value) {
@@ -23,15 +26,15 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         typeView.removeAllItems()
         typeView.addItems(withObjectValues: suggestions)
         
-        if type != nil {
+        if let type = type {
             typeView.stringValue = type
-//            if id != nil {
-//                idView.integerValue = id
-//                let resource = dataSource.findResource(type: type, id: id)
-//                createButton.isEnabled = resource == nil
-//            } else {
-                self.typeChanged(self)
-//            }
+            idView.integerValue = collection.uniqueID(for: type, starting: id)
+            createButton.isEnabled = true
+        } else if typeView.stringValue.count == 4 {
+            idView.integerValue = collection.uniqueID(for: typeView.stringValue, starting: idView.integerValue)
+            createButton.isEnabled = true
+        } else {
+            createButton.isEnabled = false
         }
         document.windowForSheet?.beginSheet(self.window!, completionHandler: nil)
     }
@@ -41,14 +44,14 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             createButton.isEnabled = false
         } else {
             // Check for conflict
-            let resource = dataSource.findResource(type: typeView.stringValue, id: idView.integerValue)
+            let resource = collection.findResource(type: typeView.stringValue, id: idView.integerValue)
             createButton.isEnabled = resource == nil
         }
     }
     
     @IBAction func typeChanged(_ sender: Any) {
         // Get a suitable id for this type
-        idView.integerValue = dataSource.uniqueID(for: typeView.stringValue)
+        idView.integerValue = collection.uniqueID(for: typeView.stringValue)
         createButton.isEnabled = true
     }
     
@@ -57,16 +60,16 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             let resource = Resource(type: typeView.stringValue,
                                     id: idView.integerValue,
                                     name: nameView.stringValue)
-            dataSource.document.undoManager?.beginUndoGrouping()
-            dataSource.add(resource)
+            collection.document.undoManager?.beginUndoGrouping()
+            collection.add(resource)
             var actionName = NSLocalizedString("Create Resource", comment: "")
             if nameView.stringValue.count > 0 {
                 actionName = actionName.appending(" '\(nameView.stringValue)'")
             }
-            dataSource.document.undoManager?.setActionName(actionName)
-            dataSource.document.undoManager?.endUndoGrouping()
-            dataSource.select([resource])
-            dataSource.document.registry.open(resource: resource)
+            collection.document.undoManager?.setActionName(actionName)
+            collection.document.undoManager?.endUndoGrouping()
+            collection.document.dataSource.select([resource])
+            collection.document.pluginManager.open(resource: resource)
         }
         self.window?.sheetParent?.endSheet(self.window!)
     }

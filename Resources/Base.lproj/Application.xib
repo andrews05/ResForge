@@ -24,7 +24,7 @@
                                     <action selector="orderFrontStandardAboutPanel:" target="-3" id="qrB-aI-Vn4"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Preferences..." keyEquivalent="," id="353">
+                            <menuItem title="Preferences…" keyEquivalent="," id="353">
                                 <connections>
                                     <action selector="showPrefs:" target="431" id="470"/>
                                 </connections>
@@ -74,7 +74,7 @@
                                     <action selector="newDocument:" target="-1" id="466"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Open..." keyEquivalent="o" id="365">
+                            <menuItem title="Open…" keyEquivalent="o" id="365">
                                 <connections>
                                     <action selector="openDocument:" target="-1" id="460"/>
                                 </connections>
@@ -105,12 +105,12 @@
                                     <action selector="performClose:" target="-1" id="506"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save" keyEquivalent="s" id="368">
+                            <menuItem title="Save" keyEquivalent="s" identifier="save" id="368">
                                 <connections>
                                     <action selector="saveDocument:" target="-1" id="462"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save As..." keyEquivalent="S" id="372">
+                            <menuItem title="Save As…" keyEquivalent="S" id="372">
                                 <connections>
                                     <action selector="saveDocumentAs:" target="-1" id="465"/>
                                 </connections>
@@ -131,12 +131,12 @@
                             <menuItem isSeparatorItem="YES" id="378">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Page Setup..." keyEquivalent="P" id="369">
+                            <menuItem title="Page Setup…" enabled="NO" keyEquivalent="P" id="369">
                                 <connections>
                                     <action selector="runPageLayout:" target="-1" id="463"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Print..." keyEquivalent="p" id="370">
+                            <menuItem title="Print..." enabled="NO" keyEquivalent="p" id="370">
                                 <connections>
                                     <action selector="printDocument:" target="-1" id="464"/>
                                 </connections>
@@ -275,7 +275,7 @@ CA
                         <items>
                             <menuItem title="Create New Resource…" keyEquivalent="k" id="420">
                                 <connections>
-                                    <action selector="showCreateResourceSheet:" target="-1" id="490"/>
+                                    <action selector="createNewItem:" target="-1" id="sNB-uY-Iqz"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" tag="1" id="421">
@@ -413,7 +413,7 @@ CA
             </items>
             <point key="canvasLocation" x="140" y="154"/>
         </menu>
-        <customObject id="431" customClass="ApplicationDelegate" customModuleProvider="target"/>
+        <customObject id="431" customClass="ApplicationDelegate" customModule="ResKnife" customModuleProvider="target"/>
         <customView id="432">
             <rect key="frame" x="0.0" y="0.0" width="500" height="39"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>

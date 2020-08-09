@@ -1,6 +1,7 @@
 import Cocoa
 import RKSupport
 
+@NSApplicationMain
 class ApplicationDelegate: NSObject, NSApplicationDelegate {
     private static var iconCache: [String: NSImage] = [:]
     // Don't configure prefs controller until needed
@@ -73,7 +74,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     /// Returns an icon representing the resource type.
-    @objc static func icon(for resourceType: String) -> NSImage! {
+    static func icon(for resourceType: String) -> NSImage! {
         if iconCache[resourceType] == nil, let editor = PluginManager.editor(for: resourceType) {
             // ask politly for icon
             iconCache[resourceType] = editor.icon?(for: resourceType)

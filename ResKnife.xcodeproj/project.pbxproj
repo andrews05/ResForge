@@ -64,6 +64,10 @@
 		4962B27C245778950065590E /* ElementLBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B27A245778950065590E /* ElementLBIT.h */; };
 		4962B27D245778950065590E /* ElementLBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B27B245778950065590E /* ElementLBIT.m */; };
 		4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */; };
+		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
+		49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */; };
+		49655DFC24DF94B500D6AFF6 /* ResourceCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceCollection.swift */; };
+		49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */; };
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
 		4966750D24BE601B00251406 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -186,14 +190,9 @@
 		E15CFD6E099995D1004929B6 /* Templates for sfnt tables.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */; };
 		E15CFF82099BECAF004929B6 /* ElementDATE.h in Headers */ = {isa = PBXBuildFile; fileRef = E15CFF80099BECAE004929B6 /* ElementDATE.h */; };
 		E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */ = {isa = PBXBuildFile; fileRef = E15CFF81099BECAF004929B6 /* ElementDATE.m */; };
-		E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B588310156D40B01000001 /* ResourceDocument.h */; };
-		E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */; };
 		E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588440156D40B01000001 /* Localizable.strings */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
-		E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B588320156D40B01000001 /* ResourceDocument.m */; };
-		E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */; };
-		E18BF583069FEA1300F076B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D35755A04DAEB4300B8225B /* main.m */; };
 		E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF5A2069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF5BA069FEA1400F076B8 /* BoomWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B7E025BC3A501A8010C /* BoomWindowController.h */; };
@@ -391,7 +390,6 @@
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TemplateWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TemplateWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3D35755A04DAEB4300B8225B /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D4737B304E872DB00AF65FE /* ElementDLNG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDLNG.m; sourceTree = "<group>"; };
 		3D4737B404E872DB00AF65FE /* ElementDLNG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDLNG.h; sourceTree = "<group>"; };
 		3D4737B704E873F300AF65FE /* ElementDBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDBYT.m; sourceTree = "<group>"; };
@@ -456,6 +454,10 @@
 		4962B27A245778950065590E /* ElementLBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementLBIT.h; sourceTree = "<group>"; };
 		4962B27B245778950065590E /* ElementLBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementLBIT.m; sourceTree = "<group>"; };
 		4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenPanelDelegate.swift; sourceTree = "<group>"; };
+		49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDocument.swift; sourceTree = "<group>"; };
+		49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource-Conflict.swift"; sourceTree = "<group>"; };
+		49655DFB24DF94B500D6AFF6 /* ResourceCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCollection.swift; sourceTree = "<group>"; };
+		49655E3F24DFF26700D6AFF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Image Editor-Bridging-Header.h"; sourceTree = "<group>"; };
 		496674FD24BBC7CE00251406 /* ImageWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWindowController.swift; sourceTree = "<group>"; };
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
@@ -651,12 +653,8 @@
 		F58F6B8F025BCF5901A8010C /* CronWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CronWindowController.m; path = cron/CronWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F58F6B92025BD97701A8010C /* DescWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DescWindowController.m; path = desc/DescWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F58F6B93025BD97701A8010C /* DescWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescWindowController.h; path = desc/DescWindowController.h; sourceTree = "<group>"; };
-		F5B588310156D40B01000001 /* ResourceDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResourceDocument.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		F5B588320156D40B01000001 /* ResourceDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ResourceDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5B5884B0156D40B01000001 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		F5C9ECD8027F562201A8010C /* Structs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Structs.h; sourceTree = "<group>"; };
-		F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView-SelectedItems.h"; sourceTree = "<group>"; };
-		F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView-SelectedItems.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1077,15 +1075,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		F5594EE9021F3E2301A80001 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				F5D0CBCF022744C701A80001 /* NSOutlineView-SelectedItems.h */,
-				F5D0CBD0022744C701A80001 /* NSOutlineView-SelectedItems.m */,
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
 		F57CEE0B0189C95101A8010B /* Plug-Ins */ = {
 			isa = PBXGroup;
 			children = (
@@ -1116,9 +1105,7 @@
 			children = (
 				3D0ABFBC04E172F700C85300 /* README.txt */,
 				E18BF9D706A01A2200F076B8 /* Info.plist */,
-				3D35755A04DAEB4300B8225B /* main.m */,
 				F5B5881C0156D40B01000001 /* Classes */,
-				F5594EE9021F3E2301A80001 /* Categories */,
 				F5B588350156D40B01000001 /* Resources */,
 				49AACD7C24CE931A0081DD4A /* RKSupport */,
 				F57CEE0B0189C95101A8010B /* Plug-Ins */,
@@ -1146,8 +1133,6 @@
 		F5B5881C0156D40B01000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				F5B588310156D40B01000001 /* ResourceDocument.h */,
-				F5B588320156D40B01000001 /* ResourceDocument.m */,
 				49F6C75D24C577270078EB55 /* ResKnife-Bridging-Header.h */,
 				49F6C76124C577440078EB55 /* ApplicationDelegate.swift */,
 				49964E1524D10ED900BAB902 /* AttributesFormatter.swift */,
@@ -1157,8 +1142,11 @@
 				4968C03E24C78D7400716AB9 /* SupportRegistry.swift */,
 				49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */,
 				49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */,
+				49655DFB24DF94B500D6AFF6 /* ResourceCollection.swift */,
+				49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */,
+				49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1174,6 +1162,7 @@
 				B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */,
 				B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */,
 				B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */,
+				49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */,
 				F5B588440156D40B01000001 /* Localizable.strings */,
 				F5041736036BD60801A8010A /* ResKnife.scriptSuite */,
 				F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */,
@@ -1246,9 +1235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4970443524720C0B0035C0FA /* type.hpp in Headers */,
-				E18BF547069FEA1300F076B8 /* ResourceDocument.h in Headers */,
 				4970443D24720C0B0035C0FA /* manager.hpp in Headers */,
-				E18BF54A069FEA1300F076B8 /* NSOutlineView-SelectedItems.h in Headers */,
 				4970443824720C0B0035C0FA /* file.hpp in Headers */,
 				4970444024720C0B0035C0FA /* resource.hpp in Headers */,
 				4970443424720C0B0035C0FA /* rez.hpp in Headers */,
@@ -1596,6 +1583,7 @@
 				E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */,
 				E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */,
 				E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */,
+				49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */,
 				B229EEF415A4FB6F0032C12C /* AboutPanel.xib in Resources */,
 				B229EEF515A4FB6F0032C12C /* Application.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */,
@@ -1712,15 +1700,15 @@
 			files = (
 				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
-				E18BF578069FEA1300F076B8 /* ResourceDocument.m in Sources */,
+				49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */,
+				49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */,
 				4968C03B24C6808200716AB9 /* PluginManager.swift in Sources */,
-				E18BF57B069FEA1300F076B8 /* NSOutlineView-SelectedItems.m in Sources */,
 				4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
 				49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */,
 				49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */,
+				49655DFC24DF94B500D6AFF6 /* ResourceCollection.swift in Sources */,
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
-				E18BF583069FEA1300F076B8 /* main.m in Sources */,
 				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
 				492722AE24CF8E6D00819E32 /* OutlineView-SelectedItems.swift in Sources */,
 			);
@@ -1856,6 +1844,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				49655E3F24DFF26700D6AFF6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		555DFD992059BCE700E1B774 /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (

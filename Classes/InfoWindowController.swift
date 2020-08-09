@@ -1,45 +1,5 @@
-import Foundation
+import Cocoa
 import RKSupport
-
-extension Notification.Name {
-    static let DocumentInfoDidChange = Notification.Name("DocumentInfoDidChangeNotification")
-}
-
-// Extend the Resource class to add conflict checking when changing the type or id
-extension Resource {
-    func canSetType(_ type: String) -> Bool {
-        return type == self.type || !self.hasConflict(type: type, id: self.id)
-    }
-    
-    func canSetID(_ id: Int) -> Bool {
-        return id == self.id || !self.hasConflict(type: self.type, id: id)
-    }
-    
-    private func hasConflict(type: String, id: Int) -> Bool {
-        // If changing id or type we need to check whether a matching resource already exists
-        if (document as? ResourceDocument)?.dataSource()?.findResource(type: type, id: id) != nil {
-            document?.presentError(ResourceError.conflict(type, id))
-            return true
-        }
-        return false
-    }
-}
-
-enum ResourceError: LocalizedError {
-    case conflict(String, Int)
-    var errorDescription: String? {
-        switch self {
-        case .conflict(let type, let id):
-            return String(format: NSLocalizedString("A resource of type '%@' with ID %d already exists.", comment: ""), type, id)
-        }
-    }
-    var recoverySuggestion: String? {
-        switch self {
-        case .conflict(_, _):
-            return String(format: NSLocalizedString("Please enter a unique value.", comment: ""))
-        }
-    }
-}
 
 class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var iconView: NSImageView!
@@ -118,8 +78,8 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
                 nameView.stringValue = document.displayName
             }
             
-            creator.stringValue = document.creator.stringValue
-            type.stringValue = document.type.stringValue
+            creator.stringValue = document.hfsCreator.stringValue
+            type.stringValue = document.hfsType.stringValue
             
             // swap box
             placeholderView.contentView = documentView
@@ -129,7 +89,7 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     private func setMainWindow(_ mainWindow: NSWindow?) {
         if let document = mainWindow?.windowController?.document as? ResourceDocument {
             currentDocument = document
-            selectedResource = document.outlineView().selectedItem as? Resource
+            selectedResource = document.outlineView.selectedItem as? Resource
         } else {
             currentDocument = nil
             selectedResource = (mainWindow?.windowController as? ResKnifePlugin)?.resource
@@ -177,9 +137,9 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
         case "rID":
             selectedResource.id = textField.integerValue
         case "creator":
-            currentDocument.creator = OSType(textField.stringValue)
+            currentDocument.hfsCreator = OSType(textField.stringValue)
         case "type":
-            currentDocument.type = OSType(textField.stringValue)
+            currentDocument.hfsType = OSType(textField.stringValue)
         default:
             break
         }

@@ -1,4 +1,4 @@
-import Foundation
+import Cocoa
 
 class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
     @IBOutlet var accessoryView: NSView!
@@ -9,7 +9,7 @@ class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
     private let formatter = ByteCountFormatter()
     private static let forks = [nil, "", "rsrc"]
     
-    @objc func getSelectedFork() -> String? {
+    func getSelectedFork() -> String? {
         if !readOpenPanelForFork {
             return nil
         }

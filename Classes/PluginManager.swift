@@ -5,7 +5,7 @@
  types a plugin handles from their info.plist.
  */
 
-import Foundation
+import Cocoa
 import RKSupport
 
 class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
@@ -13,7 +13,7 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     private var editorWindows: [String: ResKnifePlugin] = [:]
     private var document: ResourceDocument
     
-    @objc static func editor(for type: String) -> ResKnifePlugin.Type? {
+    static func editor(for type: String) -> ResKnifePlugin.Type? {
         return registry[type]
     }
     
@@ -51,14 +51,30 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     
     // MARK: -
     
-    @objc init(_ document: ResourceDocument) {
+    init(_ document: ResourceDocument) {
         self.document = document
+        super.init()
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .CollectionDidRemoveResource, object: document.collection)
     }
     
-    @objc func closeAll() -> Bool {
+    @objc func resourceRemoved(_ notification: Notification) {
+        // Close any open editors without saving
+        let resource = notification.userInfo!["resource"] as! Resource
+        for (_, value) in editorWindows where value.resource === resource {
+            if let plug = value as? NSWindowController {
+                plug.window?.close()
+            }
+        }
+    }
+    
+    func closeAll(saving: Bool) -> Bool {
         for (_, value) in editorWindows {
             if let plug = value as? NSWindowController {
-                plug.window?.performClose(self)
+                if saving {
+                    plug.window?.performClose(self)
+                } else {
+                    plug.window?.close()
+                }
                 if plug.window?.isVisible ?? false {
                     return false
                 }
@@ -141,43 +157,43 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     }
     
     func allResources(ofType type: String, currentDocumentOnly: Bool = false) -> [Resource] {
-        var resources = document.dataSource().allResources(ofType: type)
+        var resources = document.collection.allResources(ofType: type)
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                resources.append(contentsOf: doc.dataSource().allResources(ofType: type))
+                resources.append(contentsOf: doc.collection.allResources(ofType: type))
             }
         }
         return resources
     }
 
     func findResource(ofType type: String, id: Int, currentDocumentOnly: Bool = false) -> Resource? {
-        if let resource = document.dataSource().findResource(type: type, id: id) {
+        if let resource = document.collection.findResource(type: type, id: id) {
             return resource
         }
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                if let resource = doc.dataSource().findResource(type: type, id: id) {
+                if let resource = doc.collection.findResource(type: type, id: id) {
                     return resource
                 }
             }
         }
-        return SupportRegistry.dataSource.findResource(type: type, id: id)
+        return SupportRegistry.collection.findResource(type: type, id: id)
     }
 
     func findResource(ofType type: String, name: String, currentDocumentOnly: Bool = false) -> Resource? {
-        if let resource = document.dataSource().findResource(type: type, name: name) {
+        if let resource = document.collection.findResource(type: type, name: name) {
             return resource
         }
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                if let resource = doc.dataSource().findResource(type: type, name: name) {
+                if let resource = doc.collection.findResource(type: type, name: name) {
                     return resource
                 }
             }
         }
-        return SupportRegistry.dataSource.findResource(type: type, name: name)
+        return SupportRegistry.collection.findResource(type: type, name: name)
     }
 }

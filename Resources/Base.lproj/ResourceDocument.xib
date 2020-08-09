@@ -6,10 +6,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ResourceDocument">
+        <customObject id="-2" userLabel="File's Owner" customClass="ResourceDocument" customModule="ResKnife" customModuleProvider="target">
             <connections>
                 <outlet property="dataSource" destination="32" id="120"/>
-                <outlet property="mainWindow" destination="5" id="122"/>
                 <outlet property="outlineView" destination="145" id="155"/>
                 <outlet property="window" destination="5" id="8"/>
             </connections>
@@ -208,7 +207,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <action trigger="doubleAction" selector="openResources:" target="-2" id="d4H-KE-K8v"/>
+                                        <action trigger="doubleAction" selector="doubleClickItems:" target="-2" id="sn9-O9-oAk"/>
                                         <outlet property="dataSource" destination="32" id="152"/>
                                         <outlet property="delegate" destination="32" id="yNx-IN-GtD"/>
                                     </connections>
@@ -244,7 +243,7 @@
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="62E6010F-6BE5-4A94-8B94-B0C107F77886" explicitItemIdentifier="com.nickshanks.resknife.toolbar.create" label="Create" paletteLabel="Create" toolTip="Create New Resource" tag="-1" image="Create" id="sSv-8g-zJC">
                         <connections>
-                            <action selector="showCreateResourceSheet:" target="-2" id="gq7-IF-tYu"/>
+                            <action selector="createNewItem:" target="-2" id="rBI-9G-K93"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="10C49397-14E8-4F96-A3B3-CCAA26CAE75A" explicitItemIdentifier="com.nickshanks.resknife.toolbar.delete" label="Delete" paletteLabel="Delete" toolTip="Delete Selected Resource" tag="-1" image="Delete" id="eac-Nk-mK5">

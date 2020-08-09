@@ -3,8 +3,6 @@
 #import "Element.h"
 #import "ElementLSTB.h"
 
-#import "ResourceDocument.h"
-
 @implementation TemplateWindowController
 @synthesize dataList;
 @synthesize resource;
@@ -157,7 +155,7 @@
 }
 
 // these next five methods are a crude hack - the items ought to be in the responder chain themselves
-- (IBAction)createListEntry:(id)sender;
+- (IBAction)createNewItem:(id)sender;
 {
 	// This works by selecting a list element (LSTB) and passing the message on to it
     NSInteger row = [dataList rowForView:(NSView *)self.window.firstResponder];
@@ -203,7 +201,7 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
     id element = [dataList itemAtRow:[dataList rowForView:(NSView *)self.window.firstResponder]];
-	if (item.action == @selector(createListEntry:))
+	if (item.action == @selector(createNewItem:))
         return [element class] == ElementLSTB.class && [element allowsCreateListEntry];
 	else if (item.action == @selector(delete:))
         return [element class] == ElementLSTB.class && [element allowsRemoveListEntry];
@@ -223,15 +221,13 @@
 	NSMenu *resourceMenu = [[[NSApp mainMenu] itemWithTag:3] submenu];
 	NSMenuItem *createItem = [resourceMenu itemWithTag:0];
 	[createItem setTitle:NSLocalizedString(@"Create List Entry", nil)];
-	[createItem setAction:@selector(createListEntry:)];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
 	NSMenu *resourceMenu = [[[NSApp mainMenu] itemWithTag:3] submenu];
 	NSMenuItem *createItem = [resourceMenu itemWithTag:0];
-	[createItem setTitle:NSLocalizedString(@"Create New Resource...", nil)];
-	[createItem setAction:@selector(showCreateResourceSheet:)];
+	[createItem setTitle:NSLocalizedString(@"Create New Resource…", nil)];
 }
 
 @end

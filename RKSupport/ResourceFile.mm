@@ -1,4 +1,5 @@
 #import "ResourceFile.h"
+#import <Cocoa/Cocoa.h> // Required for RKSupport-Swift
 #import "RKSupport/RKSupport-Swift.h"
 #include "libGraphite/rsrc/file.hpp"
 
@@ -15,7 +16,7 @@
         return nil;
     }
     if (format) *format = (ResourceFileFormat)gFile.current_format();
-    NSMutableArray* resources = [NSMutableArray new];
+    NSMutableArray *resources = [NSMutableArray new];
     for (auto typeList : gFile.types()) {
         for (auto resource : typeList->resources()) {
             // create the resource & add it to the array
@@ -32,10 +33,11 @@
 + (BOOL)writeResources:(NSArray<Resource *> *)resources toURL:(NSURL *)url withFormat:(ResourceFileFormat)format error:(NSError **)outError
 {
     graphite::rsrc::file gFile = graphite::rsrc::file();
-    for (Resource* resource in resources) {
+    for (Resource *resource in resources) {
         std::string name([resource.name UTF8String]);
         std::string type([resource.type UTF8String]);
-        std::vector<char> buffer((char *)resource.data.bytes, (char *)resource.data.bytes+resource.data.length);
+        char *first = (char *)resource.data.bytes; // Bytes pointer should only be accessed once
+        std::vector<char> buffer(first, first+resource.data.length);
         graphite::data::data data(std::make_shared<std::vector<char>>(buffer), resource.data.length);
         gFile.add_resource(type, resource.id, name, std::make_shared<graphite::data::data>(data));
     }

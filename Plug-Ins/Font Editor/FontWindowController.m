@@ -1,5 +1,4 @@
 #import "FontWindowController.h"
-#import "ResourceDocument.h"
 
 static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 {
@@ -89,19 +88,17 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	NSMenu *resourceMenu = [[[NSApp mainMenu] itemAtIndex:3] submenu];
-	NSMenuItem *createItem = [resourceMenu itemAtIndex:[resourceMenu indexOfItemWithTarget:nil andAction:@selector(showCreateResourceSheet:)]];
+    NSMenuItem *createItem = [resourceMenu itemWithTag:0];
 	
-	[createItem setTitle: NSLocalizedString(@"Add Font Table...", nil)];
-	[createItem setAction:@selector(showAddFontTableSheet:)];
+	[createItem setTitle: NSLocalizedString(@"Add Font Table…", nil)];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
 	NSMenu *resourceMenu = [[[NSApp mainMenu] itemAtIndex:3] submenu];
-	NSMenuItem *createItem = [resourceMenu itemAtIndex:[resourceMenu indexOfItemWithTarget:nil andAction:@selector(showAddFontTableSheet:)]];
+    NSMenuItem *createItem = [resourceMenu itemWithTag:0];
 	
-	[createItem setTitle: NSLocalizedString(@"Create New Resource...", nil)];
-	[createItem setAction:@selector(showCreateResourceSheet:)];
+	[createItem setTitle: NSLocalizedString(@"Create New Resource…", nil)];
 }
 
 - (void)resourceDataDidChange:(NSNotification *)notification
@@ -168,7 +165,7 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	[self setDocumentEdited:NO];
 }
 
-- (IBAction)showAddFontTableSheet:(id)sender
+- (IBAction)createNewItem:(id)sender
 {
     [self addFontTable:@"head"];
 }
@@ -242,15 +239,10 @@ static UInt32 TableChecksum(UInt32 *table, UInt32 length)
 	[self setDocumentEdited:YES];
 }
 
-+ (NSArray *)filenameExtensionsForNativeHandling
++ (NSString *)filenameExtensionFor:(NSString *)resourceType
 {
-	return [NSArray arrayWithObject:@"ttf"];
-}
-
-+ (NSString *)filenameExtensionForFileExport:(Resource *)resource
-{
-    if([resource.type isEqualToString:@"sfnt"]) return @"ttf";
-	else return [resource type];
+    if([resourceType isEqualToString:@"sfnt"]) return @"ttf";
+	else return resourceType;
 }
 
 @end

@@ -31,15 +31,7 @@
 @property (nonatomic) Resource *resource;   // The resource we operate on.
 @property Resource *tmpl;       // The template resource.
 
-
 - (IBAction)itemValueUpdated:(id)sender;
-- (IBAction)saveResource:(id)sender;
-- (IBAction)revertResource:(id)sender;
-- (IBAction)createListEntry:(id)sender;
-- (IBAction)cut:(id)sender;
-- (IBAction)copy:(id)sender;
-- (IBAction)paste:(id)sender;
-- (IBAction)delete:(id)sender;
 
 @end
 

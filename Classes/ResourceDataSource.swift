@@ -1,81 +1,39 @@
-import Foundation
+import Cocoa
 import RKSupport
-
-extension Notification.Name {
-    static let DataSourceDidAddResource     = Self("DataSourceDidAddResource")
-    static let DataSourceDidRemoveResource  = Self("DataSourceDidRemoveResource")
-}
 
 class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate {
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var document: ResourceDocument!
-    var resourcesByType: [String: [Resource]] = [:]
-    var allTypes: [String] = []
-    @objc var resources: [Resource] {
-        return Array(resourcesByType.values.joined())
-    }
-    private var noReload = false
+    private var noReload = false // Flag to prevent reloading items when editing inline
     
-    override init() {
-        super.init()
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
-    }
-    
-    // MARK: - Resource management
-    
-    /// Add an array of resources to the data source. The outline view will be refreshed but there will be no notifications or undo registration.
-    @objc func add(resources: [Resource]) {
-        for resource in resources {
-            self.addToTypedList(resource)
-        }
-        
-        if let outlineView = outlineView {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // awakeFromNib is re-triggered each time a cell is created - to ensure we only do this once, check the registered dragged types
+        if outlineView.registeredDraggedTypes.count == 0 {
+            NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(resourceAdded(_:)), name: .CollectionDidAddResource, object: document.collection)
+            NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .CollectionDidRemoveResource, object: document.collection)
+            
+            outlineView.registerForDraggedTypes([.RKResource])
             if outlineView.sortDescriptors.count == 0 {
                 // Default sort resources by id
                 outlineView.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
             } else {
-                self.outlineView(self.outlineView, sortDescriptorsDidChange:outlineView.sortDescriptors)
+                document.collection.sortDescriptors = outlineView.sortDescriptors
             }
         }
     }
     
-    @objc func add(_ resource: Resource) {
-        self.addToTypedList(resource)
-        resource.document = document
-        resourcesByType[resource.type]?.sort(using: outlineView.sortDescriptors)
+    @objc func resourceAdded(_ notification: Notification) {
         outlineView.reloadData()
-        outlineView.expandItem(resource.type)
-        
-        NotificationCenter.default.post(name: .DataSourceDidAddResource, object: resource)
-        document.undoManager?.registerUndo(withTarget: self, handler: { $0.remove(resource) })
-    }
-    
-    @objc func remove(_ resource: Resource) {
-        self.removeFromTypedList(resource)
-        outlineView.reloadData()
-
-        NotificationCenter.default.post(name: .DataSourceDidRemoveResource, object: resource)
-        document.undoManager?.registerUndo(withTarget: self, handler: { $0.add(resource) })
-    }
-    
-    private func addToTypedList(_ resource: Resource) {
-        if resourcesByType[resource.type] != nil {
-            resourcesByType[resource.type]!.append(resource)
-        } else {
-            resourcesByType[resource.type] = [resource]
-            allTypes.append(resource.type)
-            allTypes.sort()
+        if let resource = notification.userInfo?["resource"] as? Resource {
+            outlineView.expandItem(resource.type)
         }
     }
     
-    private func removeFromTypedList(_ resource: Resource, type: String? = nil) {
-        let type = type ?? resource.type
-        resourcesByType[type]?.removeAll(where: { $0 === resource })
-        if resourcesByType[type]?.count == 0 {
-            resourcesByType.removeValue(forKey: type)
-            allTypes.removeAll(where: { $0 == type })
-        }
+    @objc func resourceRemoved(_ notification: Notification) {
+        outlineView.reloadData()
     }
     
     @objc func resourceTypeDidChange(_ notification: Notification) {
@@ -86,47 +44,27 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         else {
             return
         }
-        let oldType = notification.userInfo!["oldValue"] as! String
-        self.removeFromTypedList(resource, type: oldType)
-        self.addToTypedList(resource)
-        resourcesByType[resource.type]?.sort(using: outlineView.sortDescriptors)
         outlineView.reloadData()
         self.select([resource])
     }
-
-    func allResources(ofType type: String) -> [Resource] {
-        return resourcesByType[type] ?? []
+    
+    @objc func resourceDidChange(_ notification: Notification) {
+        guard
+            let document = document,
+            let resource = notification.object as? Resource,
+            resource.document === document
+        else {
+            return
+        }
+        let view = outlineView.view(atColumn: 0, row: outlineView.row(forItem: resource), makeIfNecessary: false) as? NSTableCellView
+        view?.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
+        // TODO: Re-sort the list and refresh the view, retaining the selection
+        if !noReload {
+            outlineView.reloadItem(resource)
+        }
     }
     
-    @objc func findResource(type: String, id: Int) -> Resource? {
-        if let resources = resourcesByType[type] {
-            for resource in resources where resource.id == id {
-                return resource
-            }
-        }
-        return nil
-    }
-    
-    func findResource(type: String, name: String) -> Resource? {
-        if let resources = resourcesByType[type] {
-            for resource in resources where resource.name == name {
-                return resource
-            }
-        }
-        return nil
-    }
-
-    /// Tries to return an unused resource ID for a new resource of specified type.
-    @objc func uniqueID(for type: String, starting: Int = 128) -> Int {
-        var id = starting > Int16.max ? 128 : starting
-        let used = self.allResources(ofType: type).map({ $0.id })
-        while used.contains(id) {
-            id = id == Int16.max ? 128 : id+1
-        }
-        return id
-    }
-    
-    // MARK: - Outline view management
+    // MARK: - Selection management
     
     func select(_ resources: [Resource]) {
         let rows = resources.map { resource -> Int in
@@ -138,7 +76,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     /// Return a flat list of all resources in the current selection.
-    @objc func allSelectedResources() -> [Resource] {
+    func allSelectedResources() -> [Resource] {
         return self.allResources(for: outlineView.selectedItems)
     }
     
@@ -146,13 +84,15 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         var resources: [Resource] = []
         for item in items {
             if let item = item as? String {
-                resources.append(contentsOf: resourcesByType[item]!)
+                resources.append(contentsOf: document.collection.resourcesByType[item]!)
             } else if let item = item as? Resource, !resources.contains(item) {
                 resources.append(item)
             }
         }
         return resources
     }
+    
+    // MARK: - Delegate functions
     
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         var view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
@@ -183,7 +123,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
                 view.textField?.stringValue = type // Type header
                 view.textField?.isEditable = false
             case "size":
-                view.textField?.integerValue = resourcesByType[type]!.count // Type count
+                view.textField?.integerValue = document.collection.resourcesByType[type]!.count // Type count
             default:
                 return nil
             }
@@ -223,30 +163,14 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         }
         noReload = false
     }
-    
-    @objc func resourceDidChange(_ notification: Notification) {
-        guard
-            let document = document,
-            let resource = notification.object as? Resource,
-            resource.document === document
-        else {
-            return
-        }
-        let view = outlineView.view(atColumn: 0, row: outlineView.row(forItem: resource), makeIfNecessary: false) as? NSTableCellView
-        view?.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
-        // TODO: Re-sort the list and refresh the view, retaining the selection
-        if !noReload {
-            outlineView.reloadItem(resource)
-        }
-    }
 
     // MARK: - DataSource protocol functions
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         if let type = item as? String {
-            return resourcesByType[type]![index]
+            return document.collection.resourcesByType[type]![index]
         } else {
-            return allTypes[index]
+            return document.collection.allTypes[index]
         }
     }
     
@@ -256,18 +180,16 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         if item == nil {
-            return allTypes.count
+            return document.collection.allTypes.count
         } else if let type = item as? String {
-            return resourcesByType[type]!.count
+            return document.collection.resourcesByType[type]!.count
         } else {
             return 0
         }
     }
     
     func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
-        for type in allTypes {
-            resourcesByType[type]?.sort(using: outlineView.sortDescriptors)
-        }
+        document.collection.sortDescriptors = outlineView.sortDescriptors
         outlineView.reloadData()
     }
     
@@ -288,28 +210,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         if let data = info.draggingPasteboard.data(forType: .RKResource),
             let resources = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Resource] {
-            document.pasteResources(resources)
+            document.add(resources: resources)
             return true
         }
         return false
-    }
-}
-
-extension MutableCollection where Self: RandomAccessCollection {
-    /// Sort the collection using an array of NSSortDescriptors, such as those obtained from as NSTableView.
-    mutating func sort(using descriptors: [NSSortDescriptor]) {
-        self.sort {
-            for descriptor in descriptors {
-                switch descriptor.compare($0, to: $1) {
-                case .orderedAscending:
-                    return true
-                case .orderedDescending:
-                    return false
-                default:
-                    continue
-                }
-            }
-            return false
-        }
     }
 }
