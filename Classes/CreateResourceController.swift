@@ -57,18 +57,15 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     
     @IBAction func hide(_ sender: AnyObject) {
         if sender === createButton {
-            let resource = Resource(type: typeView.stringValue,
-                                    id: idView.integerValue,
-                                    name: nameView.stringValue)
-            collection.document.undoManager?.beginUndoGrouping()
-            collection.add(resource)
+            let resource = Resource(type: typeView.stringValue, id: idView.integerValue, name: nameView.stringValue)
+            collection.document.dataSource.reload {
+                [collection.add(resource)]
+            }
             var actionName = NSLocalizedString("Create Resource", comment: "")
             if nameView.stringValue.count > 0 {
                 actionName = actionName.appending(" '\(nameView.stringValue)'")
             }
             collection.document.undoManager?.setActionName(actionName)
-            collection.document.undoManager?.endUndoGrouping()
-            collection.document.dataSource.select([resource])
             collection.document.pluginManager.open(resource: resource)
         }
         self.window?.sheetParent?.endSheet(self.window!)

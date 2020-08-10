@@ -12,8 +12,6 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         if outlineView.registeredDraggedTypes.count == 0 {
             NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(resourceAdded(_:)), name: .CollectionDidAddResource, object: document.collection)
-            NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .CollectionDidRemoveResource, object: document.collection)
             
             outlineView.registerForDraggedTypes([.RKResource])
             if outlineView.sortDescriptors.count == 0 {
@@ -25,17 +23,6 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         }
     }
     
-    @objc func resourceAdded(_ notification: Notification) {
-        outlineView.reloadData()
-        if let resource = notification.userInfo?["resource"] as? Resource {
-            outlineView.expandItem(resource.type)
-        }
-    }
-    
-    @objc func resourceRemoved(_ notification: Notification) {
-        outlineView.reloadData()
-    }
-    
     @objc func resourceTypeDidChange(_ notification: Notification) {
         guard
             let document = document,
@@ -44,8 +31,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         else {
             return
         }
-        outlineView.reloadData()
-        self.select([resource])
+        self.reload(selecting: [resource], withUndo: false)
     }
     
     @objc func resourceDidChange(_ notification: Notification) {
@@ -64,15 +50,35 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         }
     }
     
-    // MARK: - Selection management
+    // MARK: - Resource management
     
-    func select(_ resources: [Resource]) {
+    /// Reload the data source after performing a given operation. The resources returned from the operation will be selected.
+    ///
+    /// This function is important for managing undo operations when adding/removing resources. It creates an undo group and ensures that the data source is always reloaded after the operation is peformed, even when undoing/redoing.
+    func reload(after operation: () -> [Resource]) {
+        document.undoManager?.beginUndoGrouping()
+        self.willReload()
+        self.reload(selecting: operation())
+        document.undoManager?.endUndoGrouping()
+    }
+    
+    /// Register intent to reload the data source before performing changes.
+    private func willReload(_ resources: [Resource] = []) {
+        document.undoManager?.registerUndo(withTarget: self, handler: { $0.reload(selecting: resources) })
+    }
+    
+    /// Reload the data source and select the given resources, expanding type lists as necessary.
+    func reload(selecting resources: [Resource] = [], withUndo: Bool = true) {
+        outlineView.reloadData()
         let rows = resources.map { resource -> Int in
             outlineView.expandItem(resource.type)
             return outlineView.row(forItem: resource)
         }
         outlineView.selectRowIndexes(IndexSet(rows), byExtendingSelection: false)
         outlineView.scrollRowToVisible(outlineView.selectedRow)
+        if withUndo {
+            document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
+        }
     }
     
     /// Return a flat list of all resources in the current selection.

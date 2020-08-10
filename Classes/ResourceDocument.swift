@@ -96,7 +96,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
             hfsCreator = attrs[.hfsCreatorCode] as! OSType
             collection.reset()
             collection.add(resources)
-            outlineView?.reloadData()
+            dataSource?.reload()
             self.undoManager?.enableUndoRegistration()
         } else {
             throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: nil)
@@ -323,9 +323,12 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
     // MARK: - Edit Operations
     
     @IBAction func cut(_ sender: Any) {
-        self.copy(sender)
+        let resources = dataSource.allSelectedResources()
+        let pb = NSPasteboard.init(name: .generalPboard)
+        pb.declareTypes([.RKResource], owner: self)
+        pb.writeObjects(resources)
         self.undoManager?.disableUndoRegistration()
-        self.deleteSelected()
+        self.remove(resources: resources)
         self.undoManager?.enableUndoRegistration()
     }
     
@@ -338,49 +341,6 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
     @IBAction func paste(_ sender: Any) {
         let pb = NSPasteboard.init(name: .generalPboard)
         self.add(resources: pb.readObjects(forClasses: [Resource.self], options: nil) as! [Resource])
-        self.undoManager?.setActionName(NSLocalizedString("Paste", comment: ""))
-    }
-    
-    func add(resources: [Resource]) {
-        // FIXME: This is inefficient - outline view reloads with each resource added
-        var alert: NSAlert!
-        var modalResponse: NSApplication.ModalResponse?
-        for resource in resources {
-            // Check resource type/ID is available
-            if let conflicted = collection.findResource(type: resource.type, id: resource.id) {
-                // Resource slot is occupied, ask user what to do
-                if modalResponse == nil {
-                    if alert == nil {
-                        alert = NSAlert()
-                        alert.informativeText = NSLocalizedString("Do you wish to assign the new resource a unique ID, overwrite the existing resource, or skip this resource?", comment: "")
-                        alert.addButton(withTitle: NSLocalizedString("Unique ID", comment: ""))
-                        alert.addButton(withTitle: NSLocalizedString("Overwrite", comment: ""))
-                        alert.addButton(withTitle: NSLocalizedString("Skip", comment: ""))
-                        // Show apply to all checkbox when there are multiple resources
-                        alert.showsSuppressionButton = resources.count > 1
-                        alert.suppressionButton?.title = NSLocalizedString("Apply to all", comment: "")
-                    }
-                    alert.messageText = String(format: NSLocalizedString("A resource of type '%@' with ID %ld already exists.", comment: ""), resource.type, resource.id)
-                    modalResponse = alert.runModal()
-                }
-                switch (modalResponse!) {
-                case .alertFirstButtonReturn: // unique id
-                    resource.id = self.collection.uniqueID(for: resource.type, starting: resource.id+1)
-                    self.collection.add(resource)
-                case .alertSecondButtonReturn: // overwrite
-                    self.collection.remove(conflicted)
-                    self.collection.add(resource)
-                default:
-                    break
-                }
-                // If suppression button was not checked, clear the response (otherwise remember it for next time)
-                if alert.suppressionButton?.state == .off {
-                    modalResponse = nil
-                }
-            } else {
-                self.collection.add(resource)
-            }
-        }
     }
     
     @IBAction func delete(_ sender: Any) {
@@ -391,22 +351,76 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
             alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
             alert.beginSheetModal(for: self.windowForSheet!) { modalResponse in
                 if modalResponse == .alertFirstButtonReturn {
-                    self.deleteSelected()
+                    self.remove(resources: self.dataSource.allSelectedResources())
                 }
             }
         } else {
-            self.deleteSelected()
+            self.remove(resources: dataSource.allSelectedResources())
         }
     }
     
-    private func deleteSelected() {
-        let resources = dataSource.allSelectedResources()
-        for resource in resources {
-            // FIXME: This is inefficient
-            self.collection.remove(resource)
+    func add(resources: [Resource]) {
+        guard resources.count > 0 else {
+            return
         }
-        self.undoManager?.setActionName(NSLocalizedString(resources.count > 1 ? "Delete Resources" : "Delete Resource", comment: ""))
-        // Deselect resources
-        outlineView.deselectAll(self)
+        dataSource.reload {
+            var added: [Resource] = []
+            var alert: NSAlert!
+            var modalResponse: NSApplication.ModalResponse?
+            for resource in resources {
+                if let conflicted = collection.findResource(type: resource.type, id: resource.id) {
+                    // Resource slot is occupied, ask user what to do
+                    if modalResponse == nil {
+                        if alert == nil {
+                            alert = NSAlert()
+                            alert.informativeText = NSLocalizedString("Do you wish to assign the new resource a unique ID, overwrite the existing resource, or skip this resource?", comment: "")
+                            alert.addButton(withTitle: NSLocalizedString("Unique ID", comment: ""))
+                            alert.addButton(withTitle: NSLocalizedString("Overwrite", comment: ""))
+                            alert.addButton(withTitle: NSLocalizedString("Skip", comment: ""))
+                            // Show apply to all checkbox when there are multiple resources
+                            alert.showsSuppressionButton = resources.count > 1
+                            alert.suppressionButton?.title = NSLocalizedString("Apply to all", comment: "")
+                        }
+                        alert.messageText = String(format: NSLocalizedString("A resource of type '%@' with ID %ld already exists.", comment: ""), resource.type, resource.id)
+                        // TODO: Do this in a non-blocking way?
+                        alert.beginSheetModal(for: self.windowForSheet!) { modalResponse in
+                            NSApp.stopModal(withCode: modalResponse)
+                        }
+                        modalResponse = NSApp.runModal(for: alert.window)
+                    }
+                    switch (modalResponse!) {
+                    case .alertFirstButtonReturn: // unique id
+                        resource.id = collection.uniqueID(for: resource.type, starting: resource.id+1)
+                        added.append(collection.add(resource))
+                    case .alertSecondButtonReturn: // overwrite
+                        collection.remove(conflicted)
+                        added.append(collection.add(resource))
+                    default:
+                        break
+                    }
+                    // If suppression button was not checked, clear the response (otherwise remember it for next time)
+                    if alert.suppressionButton?.state == .off {
+                        modalResponse = nil
+                    }
+                } else {
+                    added.append(collection.add(resource))
+                }
+            }
+            return added
+        }
+        self.undoManager?.setActionName(NSLocalizedString(resources.count == 1 ? "Paste Resource" : "Paste Resources", comment: ""))
+    }
+    
+    func remove(resources: [Resource]) {
+        guard resources.count > 0 else {
+            return
+        }
+        dataSource.reload {
+            for resource in resources {
+                collection.remove(resource)
+            }
+            return []
+        }
+        self.undoManager?.setActionName(NSLocalizedString(resources.count == 1 ? "Delete Resource" : "Delete Resources", comment: ""))
     }
 }

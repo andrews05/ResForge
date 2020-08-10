@@ -30,11 +30,13 @@ class ResourceCollection {
         NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
     }
     
+    /// Remove all resources.
     func reset() {
         resourcesByType.removeAll()
         allTypes.removeAll()
     }
     
+    /// Add an array of resources with no notification or undo registration.
     func add(_ resources: [Resource]) {
         for resource in resources {
             self.addToTypedList(resource)
@@ -44,20 +46,22 @@ class ResourceCollection {
         }
     }
     
-    /// Add a single resource to the data source.
-    func add(_ resource: Resource) {
+    /// Add a single resource.
+    func add(_ resource: Resource) -> Resource {
         self.addToTypedList(resource)
         resourcesByType[resource.type]?.sort(using: sortDescriptors)
         
         NotificationCenter.default.post(name: .CollectionDidAddResource, object: self, userInfo: ["resource": resource])
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.remove(resource) })
+        return resource
     }
     
+    /// Remove a single resource.
     func remove(_ resource: Resource) {
         self.removeFromTypedList(resource)
 
         NotificationCenter.default.post(name: .CollectionDidRemoveResource, object: self, userInfo: ["resource": resource])
-        document.undoManager?.registerUndo(withTarget: self, handler: { $0.add(resource) })
+        document.undoManager?.registerUndo(withTarget: self, handler: { _ = $0.add(resource) })
     }
     
     private func addToTypedList(_ resource: Resource) {
