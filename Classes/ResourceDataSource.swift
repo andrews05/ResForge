@@ -4,7 +4,7 @@ import RKSupport
 class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate {
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var document: ResourceDocument!
-    private var noReload = false // Flag to prevent reloading items when editing inline
+    private var inlineUpdate = false // Flag to prevent reloading items when editing inline
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,7 +31,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         else {
             return
         }
-        self.reload(selecting: [resource], withUndo: false)
+        document.undoManager?.disableUndoRegistration()
+        self.reload(selecting: [resource])
+        document.undoManager?.enableUndoRegistration()
     }
     
     @objc func resourceDidChange(_ notification: Notification) {
@@ -42,10 +44,17 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         else {
             return
         }
-        let view = outlineView.view(atColumn: 0, row: outlineView.row(forItem: resource), makeIfNecessary: false) as? NSTableCellView
-        view?.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
-        // TODO: Re-sort the list and refresh the view, retaining the selection
-        if !noReload {
+        // Update the position
+        let row = outlineView.row(forItem: resource)
+        let offset = outlineView.row(forItem: resource.type) + 1
+        let newRow = document.collection.resourcesByType[resource.type]!.firstIndex(of: resource)!
+        outlineView.moveItem(at: row-offset, inParent: resource.type, to: newRow, inParent: resource.type)
+        if inlineUpdate {
+            outlineView.scrollRowToVisible(outlineView.selectedRow)
+            // Update the placeholder
+            let view = outlineView.view(atColumn: 0, row: outlineView.selectedRow, makeIfNecessary: false) as? NSTableCellView
+            view?.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
+        } else {
             outlineView.reloadItem(resource)
         }
     }
@@ -55,7 +64,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     /// Reload the data source after performing a given operation. The resources returned from the operation will be selected.
     ///
     /// This function is important for managing undo operations when adding/removing resources. It creates an undo group and ensures that the data source is always reloaded after the operation is peformed, even when undoing/redoing.
-    func reload(after operation: () -> [Resource]) {
+    func reload(after operation: () -> [Resource]?) {
         document.undoManager?.beginUndoGrouping()
         self.willReload()
         self.reload(selecting: operation())
@@ -63,22 +72,27 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     /// Register intent to reload the data source before performing changes.
-    private func willReload(_ resources: [Resource] = []) {
+    private func willReload(_ resources: [Resource]? = nil) {
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.reload(selecting: resources) })
     }
     
     /// Reload the data source and select the given resources, expanding type lists as necessary.
-    func reload(selecting resources: [Resource] = [], withUndo: Bool = true) {
+    func reload(selecting resources: [Resource]? = nil) {
         outlineView.reloadData()
+        if let resources = resources {
+            self.select(resources)
+            outlineView.window?.makeFirstResponder(outlineView) // Outline view seems to lose focus without this?
+        }
+        document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
+    }
+    
+    func select(_ resources: [Resource]) {
         let rows = resources.map { resource -> Int in
             outlineView.expandItem(resource.type)
             return outlineView.row(forItem: resource)
         }
         outlineView.selectRowIndexes(IndexSet(rows), byExtendingSelection: false)
         outlineView.scrollRowToVisible(outlineView.selectedRow)
-        if withUndo {
-            document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
-        }
     }
     
     /// Return a flat list of all resources in the current selection.
@@ -156,7 +170,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         let textField = obj.object as! NSTextField
         let resource = outlineView.item(atRow: outlineView.row(for: textField)) as! Resource
         // We don't need to reload the item after changing values here
-        noReload = true
+        inlineUpdate = true
         switch textField.identifier?.rawValue {
         case "name":
             resource.name = textField.stringValue
@@ -167,7 +181,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         default:
             break
         }
-        noReload = false
+        inlineUpdate = false
     }
 
     // MARK: - DataSource protocol functions

@@ -327,9 +327,8 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
         let pb = NSPasteboard.init(name: .generalPboard)
         pb.declareTypes([.RKResource], owner: self)
         pb.writeObjects(resources)
-        self.undoManager?.disableUndoRegistration()
         self.remove(resources: resources)
-        self.undoManager?.enableUndoRegistration()
+        self.undoManager?.setActionName(NSLocalizedString(resources.count == 1 ? "Cut Resource" : "Cut Resources", comment: ""))
     }
     
     @IBAction func copy(_ sender: Any) {
@@ -419,7 +418,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
             for resource in resources {
                 collection.remove(resource)
             }
-            return []
+            return nil
         }
         self.undoManager?.setActionName(NSLocalizedString(resources.count == 1 ? "Delete Resource" : "Delete Resources", comment: ""))
     }

@@ -28,6 +28,7 @@ class ResourceCollection {
     init(_ document: ResourceDocument) {
         self.document = document
         NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
     }
     
     /// Remove all resources.
@@ -95,7 +96,18 @@ class ResourceCollection {
         let oldType = notification.userInfo!["oldValue"] as! String
         self.removeFromTypedList(resource, type: oldType)
         self.addToTypedList(resource)
-        resourcesByType[resource.type]?.sort(using: sortDescriptors)
+        resourcesByType[resource.type]!.sort(using: sortDescriptors)
+    }
+    
+    @objc func resourceDidChange(_ notification: Notification) {
+        guard
+            let document = document,
+            let resource = notification.object as? Resource,
+            resource.document === document
+        else {
+            return
+        }
+        resourcesByType[resource.type]!.sort(using: sortDescriptors)
     }
 
     func allResources(ofType type: String) -> [Resource] {

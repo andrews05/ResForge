@@ -36,6 +36,7 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     }
     
     private func update() {
+        nameView.abortEditing()
         nameView.isEditable = selectedResource != nil
         nameView.isBezeled = selectedResource != nil
         
@@ -115,6 +116,9 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     
     // Check for conflicts
     func control(_ control: NSControl, isValidObject obj: Any?) -> Bool {
+        guard selectedResource != nil else {
+            return false
+        }
         let textField = control as! NSTextField
         switch textField.identifier?.rawValue {
         case "rType":
@@ -128,6 +132,9 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     }
     
     func controlTextDidEndEditing(_ obj: Notification) {
+        guard selectedResource != nil else {
+            return
+        }
         let textField = obj.object as! NSTextField
         switch textField.identifier?.rawValue {
         case "name":

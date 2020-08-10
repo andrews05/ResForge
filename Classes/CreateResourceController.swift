@@ -61,11 +61,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             collection.document.dataSource.reload {
                 [collection.add(resource)]
             }
-            var actionName = NSLocalizedString("Create Resource", comment: "")
-            if nameView.stringValue.count > 0 {
-                actionName = actionName.appending(" '\(nameView.stringValue)'")
-            }
-            collection.document.undoManager?.setActionName(actionName)
+            collection.document.undoManager?.setActionName(NSLocalizedString("Create Resource", comment: ""))
             collection.document.pluginManager.open(resource: resource)
         }
         self.window?.sheetParent?.endSheet(self.window!)
