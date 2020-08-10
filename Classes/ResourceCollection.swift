@@ -96,6 +96,7 @@ class ResourceCollection {
         let oldType = notification.userInfo!["oldValue"] as! String
         self.removeFromTypedList(resource, type: oldType)
         self.addToTypedList(resource)
+        // Currently the type list gets sorted twice - this one seems redundant but it's important to do this before the data source receives the notification
         resourcesByType[resource.type]!.sort(using: sortDescriptors)
     }
     
@@ -132,19 +133,32 @@ class ResourceCollection {
         return nil
     }
 
-    /// Tries to return an unused resource ID for a new resource of specified type.
+    /// Return an unused resource ID for a new resource of specified type.
     func uniqueID(for type: String, starting: Int = 128) -> Int {
-        var id = starting > Int16.max ? 128 : starting
-        let used = self.allResources(ofType: type).map({ $0.id })
-        while used.contains(id) {
-            id = id == Int16.max ? 128 : id+1
+        // Get a sorted list of used ids
+        let used = self.allResources(ofType: type).map({ $0.id }).sorted()
+        // Find the index of the starting id
+        guard var i = used.firstIndex(where: { $0 == starting }) else {
+            return starting
+        }
+        // Keep incrementing the id until we find an unused one
+        // (This method is much faster than repeatedly calling contains())
+        var id = starting
+        while i != used.endIndex && id == used[i] {
+            if id == Int16.max {
+                id = min(used[0], 128)
+                i = 0
+            } else {
+                id = id+1
+                i = i+1
+            }
         }
         return id
     }
 }
 
 extension MutableCollection where Self: RandomAccessCollection {
-    /// Sort the collection using an array of NSSortDescriptors, such as those obtained from as NSTableView.
+    /// Sort the collection using an array of NSSortDescriptors, such as those obtained from an NSTableView.
     mutating func sort(using descriptors: [NSSortDescriptor]) {
         self.sort {
             for descriptor in descriptors {

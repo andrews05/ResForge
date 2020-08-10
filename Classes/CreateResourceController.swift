@@ -40,7 +40,9 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     }
     
     func controlTextDidChange(_ obj: Notification) {
-        if typeView.stringValue.count != 4 || idView.stringValue.count == 0 {
+        // Accessing the control value will force validation of the field, causing problems when trying to enter a negative id.
+        // To workaround this, check the field editor for a negative symbol before checking the id value.
+        if typeView.objectValue == nil || (obj.userInfo!["NSFieldEditor"] as! NSText).string == "-" || idView.objectValue == nil {
             createButton.isEnabled = false
         } else {
             // Check for conflict

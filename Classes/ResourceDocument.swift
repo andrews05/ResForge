@@ -259,7 +259,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
         // Pass type and id of currently selected item
         let item = outlineView.selectedItem
         if let resource = item as? Resource {
-            createController.showSheet(in: self, type: resource.type, id: resource.id+1)
+            createController.showSheet(in: self, type: resource.type, id: resource.id)
         } else {
             createController.showSheet(in: self, type: item as? String)
         }
@@ -389,7 +389,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
                     }
                     switch (modalResponse!) {
                     case .alertFirstButtonReturn: // unique id
-                        resource.id = collection.uniqueID(for: resource.type, starting: resource.id+1)
+                        resource.id = collection.uniqueID(for: resource.type, starting: resource.id)
                         added.append(collection.add(resource))
                     case .alertSecondButtonReturn: // overwrite
                         collection.remove(conflicted)
