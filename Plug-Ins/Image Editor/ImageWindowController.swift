@@ -211,6 +211,9 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
             return self.iconTiff(data, width: 16, height: 12)
         case "PAT ":
             return self.iconTiff(data, width: 8, height: 8)
+        case "PAT#":
+            // This just stacks all the patterns vertically
+            return self.iconTiff(data[2...], width: 8, height: 8 * Int(data[1]))
         default:
             return data
         }
@@ -219,18 +222,18 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     private static func iconTiff(_ data: Data, width: Int, height: Int) -> Data {
         let bytesPerRow = width / 8
         let planeLength = bytesPerRow * height
-        var dataArray: [UInt8] = []
-        // Invert data
-        for i in 0..<planeLength {
-            dataArray.append(data[i] ^ 0xff)
+        if data.count < planeLength {
+            return Data()
         }
         // Assume alpha if sufficient data
         let alpha = data.count >= planeLength*2
+        // Invert data
+        var plane = data.prefix(planeLength).map({ $0 ^ 0xff })
 
-        return dataArray.withUnsafeMutableBufferPointer { (dataBuffer) -> Data in
-            var data = [UInt8](data)
-            return data.withUnsafeMutableBufferPointer { (maskBuffer) -> Data in
-                var planes = [dataBuffer.baseAddress]
+        return plane.withUnsafeMutableBufferPointer { (planeBuffer) -> Data in
+            var mask = [UInt8](data)
+            return mask.withUnsafeMutableBufferPointer { (maskBuffer) -> Data in
+                var planes = [planeBuffer.baseAddress]
                 if alpha {
                     planes.append(maskBuffer.baseAddress! + planeLength)
                 }
