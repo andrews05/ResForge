@@ -7,12 +7,9 @@ extension Notification.Name {
 }
 
 class ResourceCollection {
-    let document: ResourceDocument!
-    var resourcesByType: [String: [Resource]] = [:]
-    var allTypes: [String] = []
-    var resources: [Resource] {
-        return Array(resourcesByType.values.joined())
-    }
+    private(set) weak var document: ResourceDocument!
+    private(set) var resourcesByType: [String: [Resource]] = [:]
+    private(set) var allTypes: [String] = []
     var sortDescriptors: [NSSortDescriptor] = [] {
         didSet {
             for type in allTypes {
@@ -110,8 +107,12 @@ class ResourceCollection {
         }
         resourcesByType[resource.type]!.sort(using: sortDescriptors)
     }
+    
+    func resources() -> [Resource] {
+        return Array(resourcesByType.values.joined())
+    }
 
-    func allResources(ofType type: String) -> [Resource] {
+    func resources(ofType type: String) -> [Resource] {
         return resourcesByType[type] ?? []
     }
     
@@ -136,7 +137,7 @@ class ResourceCollection {
     /// Return an unused resource ID for a new resource of specified type.
     func uniqueID(for type: String, starting: Int = 128) -> Int {
         // Get a sorted list of used ids
-        let used = self.allResources(ofType: type).map({ $0.id }).sorted()
+        let used = self.resources(ofType: type).map({ $0.id }).sorted()
         // Find the index of the starting id
         guard var i = used.firstIndex(where: { $0 == starting }) else {
             return starting

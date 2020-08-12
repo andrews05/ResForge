@@ -18,8 +18,8 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var rSize: NSTextField!
     @IBOutlet var attributesMatrix: NSMatrix!
     
-    private var currentDocument: ResourceDocument!
-    private var selectedResource: Resource!
+    private weak var currentDocument: ResourceDocument!
+    private weak var selectedResource: Resource!
     
     static var shared = InfoWindowController(windowNibName: "InfoWindow")
     

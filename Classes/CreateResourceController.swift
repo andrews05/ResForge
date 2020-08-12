@@ -6,17 +6,25 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var nameView: NSTextField!
     @IBOutlet var idView: NSTextField!
     @IBOutlet var typeView: NSComboBox!
-    var collection: ResourceCollection!
+    private weak var rDocument: ResourceDocument!
     
     override var windowNibName: NSNib.Name? {
         "CreateResourceSheet"
     }
     
-    func showSheet(in document: ResourceDocument, type: String? = nil, id: Int = 128) {
+    init(_ document: ResourceDocument) {
+        super.init(window: nil)
+        self.rDocument = document
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func show(type: String? = nil, id: Int = 128, name: String? = nil) {
         _ = self.window
-        collection = document.collection
         // Add all types currently in the document
-        var suggestions = collection.allTypes
+        var suggestions = rDocument.collection.allTypes
         // Common types?
         for value in ["BNDL", "vers", "STR ", "STR#", "TEXT"] {
             if !suggestions.contains(value) {
@@ -28,15 +36,18 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         
         if let type = type {
             typeView.stringValue = type
-            idView.integerValue = collection.uniqueID(for: type, starting: id)
+            idView.integerValue = rDocument.collection.uniqueID(for: type, starting: id)
             createButton.isEnabled = true
-        } else if typeView.stringValue.count == 4 {
-            idView.integerValue = collection.uniqueID(for: typeView.stringValue, starting: idView.integerValue)
+        } else if typeView.objectValue != nil {
+            idView.integerValue = rDocument.collection.uniqueID(for: typeView.stringValue, starting: idView.integerValue)
             createButton.isEnabled = true
         } else {
             createButton.isEnabled = false
         }
-        document.windowForSheet?.beginSheet(self.window!, completionHandler: nil)
+        if let name = name {
+            nameView.stringValue = name
+        }
+        rDocument.windowForSheet?.beginSheet(self.window!, completionHandler: nil)
     }
     
     func controlTextDidChange(_ obj: Notification) {
@@ -46,25 +57,25 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             createButton.isEnabled = false
         } else {
             // Check for conflict
-            let resource = collection.findResource(type: typeView.stringValue, id: idView.integerValue)
+            let resource = rDocument.collection.findResource(type: typeView.stringValue, id: idView.integerValue)
             createButton.isEnabled = resource == nil
         }
     }
     
     @IBAction func typeChanged(_ sender: Any) {
         // Get a suitable id for this type
-        idView.integerValue = collection.uniqueID(for: typeView.stringValue)
+        idView.integerValue = rDocument.collection.uniqueID(for: typeView.stringValue)
         createButton.isEnabled = true
     }
     
     @IBAction func hide(_ sender: AnyObject) {
         if sender === createButton {
             let resource = Resource(type: typeView.stringValue, id: idView.integerValue, name: nameView.stringValue)
-            collection.document.dataSource.reload {
-                [collection.add(resource)]
+            rDocument.dataSource.reload {
+                [rDocument.collection.add(resource)]
             }
-            collection.document.undoManager?.setActionName(NSLocalizedString("Create Resource", comment: ""))
-            collection.document.pluginManager.open(resource: resource)
+            rDocument.undoManager?.setActionName(NSLocalizedString("Create Resource", comment: ""))
+            rDocument.pluginManager.open(resource: resource)
         }
         self.window?.sheetParent?.endSheet(self.window!)
     }

@@ -1,7 +1,7 @@
 import Cocoa
 import RKSupport
 
-class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlugin, HFTextViewDelegate {
+class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlugin {
     let resource: Resource
     @IBOutlet var textView: HFTextView!
     
@@ -21,18 +21,11 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         self.resource = resource
         super.init(window: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange), name: .ResourceDataDidChange, object: resource)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange(_:)), name: .ResourceDataDidChange, object: resource)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    
-    @objc func resourceDataDidChange(notification: NSNotification) {
-        if !self.window!.isDocumentEdited {
-            textView.data = resource.data
-        }
     }
     
     override func windowDidLoad() {
@@ -50,18 +43,25 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         textView.controller.addRepresenter(statusBarRepresenter)
         textView.controller.font = NSFont.userFixedPitchFont(ofSize: 10.0)!
         textView.data = resource.data
-        textView.delegate = self
         textView.controller.undoManager = self.window?.undoManager
+        textView.layoutRepresenter.performLayout()
         
-        textView.layoutRepresenter.performLayout();
+        // Using the textView's delegate results in a reference cycle. Register for notifications instead.
+        NotificationCenter.default.addObserver(self, selector: #selector(self.hexDidChangeProperties(_:)), name: NSNotification.Name.HFControllerDidChangeProperties, object: textView.controller)
     }
     
-    func hexTextView(_ view: HFTextView, didChangeProperties properties: HFControllerPropertyBits) {
+    @objc func resourceDataDidChange(_ notification: NSNotification) {
+        if !self.window!.isDocumentEdited {
+            textView.data = resource.data
+        }
+    }
+    
+    @objc func hexDidChangeProperties(_ notification: NSNotification) {
+        let properties = HFControllerPropertyBits(rawValue: notification.userInfo![HFControllerChangedPropertiesKey] as! UInt)
         if (properties.contains(.contentValue)) {
             self.setDocumentEdited(true)
         }
     }
-    
     
     @IBAction func saveResource(_ sender: Any) {
         resource.data = textView.data!
@@ -73,7 +73,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         self.setDocumentEdited(false)
     }
     
-    // MARK: Find/Replace
+    // MARK: - Find/Replace
 
     @IBAction func showFind(_ sender: Any) {
         findField.stringValue = self.sanitize(NSPasteboard(name: .findPboard).string(forType: .string)!)

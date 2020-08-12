@@ -79,8 +79,8 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
     }
     
-    @objc public var document: NSDocument!
-    @objc public var manager: ResKnifePluginManager!
+    @objc public weak var document: NSDocument!
+    @objc public weak var manager: ResKnifePluginManager!
     
     @objc public var defaultWindowTitle: String {
         if let document = document {
@@ -89,7 +89,6 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
         return name
     }
-    
     
     @objc public init(type: String, id: Int, name: String = "", attributes: Int = 0, data: Data = Data()) {
         self.type = type

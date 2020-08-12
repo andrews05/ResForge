@@ -11,7 +11,7 @@ import RKSupport
 class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     private static var registry: [String: ResKnifePlugin.Type] = [:]
     private var editorWindows: [String: ResKnifePlugin] = [:]
-    private var document: ResourceDocument
+    private weak var document: ResourceDocument!
     
     static func editor(for type: String) -> ResKnifePlugin.Type? {
         return registry[type]
@@ -62,7 +62,7 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
         let resource = notification.userInfo!["resource"] as! Resource
         for (_, value) in editorWindows where value.resource === resource {
             if let plug = value as? NSWindowController {
-                plug.window?.close()
+                plug.close()
             }
         }
     }
@@ -73,7 +73,7 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
                 if saving {
                     plug.window?.performClose(self)
                 } else {
-                    plug.window?.close()
+                    plug.close()
                 }
                 if plug.window?.isVisible ?? false {
                     return false
@@ -157,11 +157,11 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     }
     
     func allResources(ofType type: String, currentDocumentOnly: Bool = false) -> [Resource] {
-        var resources = document.collection.allResources(ofType: type)
+        var resources = document.collection.resources(ofType: type)
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                resources.append(contentsOf: doc.collection.allResources(ofType: type))
+                resources.append(contentsOf: doc.collection.resources(ofType: type))
             }
         }
         return resources

@@ -1,9 +1,9 @@
 import AppKit
 
 public class MacRomanFormatter: Formatter {
-    @objc public var stringLength: Int = 0
-    @objc public var valueRequired = false
-    @objc public var exactLengthRequired = false
+    @IBInspectable public var stringLength: Int = 0
+    @IBInspectable public var valueRequired: Bool = false
+    @IBInspectable public var exactLengthRequired: Bool = false
     
     public override func string(for obj: Any?) -> String? {
         return obj as? String

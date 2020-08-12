@@ -8,9 +8,9 @@ extension Notification.Name {
 class ResourceDocument: NSDocument, NSToolbarItemValidation {
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var dataSource: ResourceDataSource!
-    lazy var collection = ResourceCollection(self)
-    lazy var pluginManager = PluginManager(self)
-    private lazy var createController = CreateResourceController()
+    private(set) lazy var collection = ResourceCollection(self)
+    private(set) lazy var pluginManager = PluginManager(self)
+    private(set) lazy var createController = CreateResourceController(self)
     private var fork: String!
     private var format: ResourceFileFormat = kFormatClassic
     var hfsType: OSType = 0 {
@@ -30,7 +30,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
                self.undoManager?.registerUndo(withTarget: self, handler: { $0.hfsCreator = oldValue })
            }
        }
-   }
+    }
 
     override var windowNibName: String {
         return "ResourceDocument"
@@ -140,7 +140,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
         
         // Write resources to file
         let writeUrl = fork == "rsrc" ? url.appendingPathComponent("..namedfork/rsrc") : url
-        try ResourceFile.write(collection.resources, to: writeUrl, with: format)
+        try ResourceFile.write(collection.resources(), to: writeUrl, with: format)
         
         // If writing the resource fork, copy the data from the old file
         if saveOperation == .saveOperation && fork == "rsrc" {
@@ -259,9 +259,9 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
         // Pass type and id of currently selected item
         let item = outlineView.selectedItem
         if let resource = item as? Resource {
-            createController.showSheet(in: self, type: resource.type, id: resource.id)
+            createController.show(type: resource.type, id: resource.id)
         } else {
-            createController.showSheet(in: self, type: item as? String)
+            createController.show(type: item as? String)
         }
     }
     
