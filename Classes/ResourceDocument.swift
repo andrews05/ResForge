@@ -383,10 +383,12 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
                     switch (modalResponse!) {
                     case .alertFirstButtonReturn: // unique id
                         resource.id = collection.uniqueID(for: resource.type, starting: resource.id)
-                        added.append(collection.add(resource))
+                        collection.add(resource)
+                        added.append(resource)
                     case .alertSecondButtonReturn: // overwrite
                         collection.remove(conflicted)
-                        added.append(collection.add(resource))
+                        collection.add(resource)
+                        added.append(resource)
                     default:
                         break
                     }
@@ -395,7 +397,8 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
                         modalResponse = nil
                     }
                 } else {
-                    added.append(collection.add(resource))
+                    collection.add(resource)
+                    added.append(resource)
                 }
             }
             return added

@@ -77,7 +77,8 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         if sender === createButton {
             let resource = Resource(type: typeView.stringValue, id: idView.integerValue, name: nameView.stringValue)
             rDocument.dataSource.reload {
-                [rDocument.collection.add(resource)]
+                rDocument.collection.add(resource)
+                return [resource]
             }
             rDocument.undoManager?.setActionName(NSLocalizedString("Create Resource", comment: ""))
             rDocument.pluginManager.open(resource: resource)

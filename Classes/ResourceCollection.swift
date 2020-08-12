@@ -39,27 +39,20 @@ class ResourceCollection {
         for resource in resources {
             self.addToTypedList(resource)
         }
-        for type in allTypes {
-            resourcesByType[type]?.sort(using: sortDescriptors)
-        }
     }
     
     /// Add a single resource.
-    func add(_ resource: Resource) -> Resource {
+    func add(_ resource: Resource) {
         self.addToTypedList(resource)
-        resourcesByType[resource.type]?.sort(using: sortDescriptors)
-        
-        NotificationCenter.default.post(name: .CollectionDidAddResource, object: self, userInfo: ["resource": resource])
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.remove(resource) })
-        return resource
+        NotificationCenter.default.post(name: .CollectionDidAddResource, object: self, userInfo: ["resource": resource])
     }
     
     /// Remove a single resource.
     func remove(_ resource: Resource) {
         self.removeFromTypedList(resource)
-
+        document.undoManager?.registerUndo(withTarget: self, handler: { $0.add(resource) })
         NotificationCenter.default.post(name: .CollectionDidRemoveResource, object: self, userInfo: ["resource": resource])
-        document.undoManager?.registerUndo(withTarget: self, handler: { _ = $0.add(resource) })
     }
     
     private func addToTypedList(_ resource: Resource) {
@@ -69,16 +62,16 @@ class ResourceCollection {
             allTypes.append(resource.type)
             allTypes.sort(by: { $0.localizedCompare($1) == .orderedAscending })
         } else {
-            resourcesByType[resource.type]!.append(resource)
+            resourcesByType[resource.type]!.insert(resource, using: sortDescriptors)
         }
     }
     
     private func removeFromTypedList(_ resource: Resource, type: String? = nil) {
         let type = type ?? resource.type
-        resourcesByType[type]?.removeAll(where: { $0 === resource })
+        resourcesByType[type]?.removeFirst(resource)
         if resourcesByType[type]?.count == 0 {
             resourcesByType.removeValue(forKey: type)
-            allTypes.removeAll(where: { $0 == type })
+            allTypes.removeFirst(type)
         }
     }
     
@@ -93,8 +86,6 @@ class ResourceCollection {
         let oldType = notification.userInfo!["oldValue"] as! String
         self.removeFromTypedList(resource, type: oldType)
         self.addToTypedList(resource)
-        // Currently the type list gets sorted twice - this one seems redundant but it's important to do this before the data source receives the notification
-        resourcesByType[resource.type]!.sort(using: sortDescriptors)
     }
     
     @objc func resourceDidChange(_ notification: Notification) {
@@ -143,7 +134,6 @@ class ResourceCollection {
             return starting
         }
         // Keep incrementing the id until we find an unused one
-        // (This method is much faster than repeatedly calling contains())
         var id = starting
         while i != used.endIndex && id == used[i] {
             if id == Int16.max {
@@ -158,21 +148,56 @@ class ResourceCollection {
     }
 }
 
-extension MutableCollection where Self: RandomAccessCollection {
-    /// Sort the collection using an array of NSSortDescriptors, such as those obtained from an NSTableView.
+// MARK: - Sorted Array extensions
+
+extension Array where Element: NSSortDescriptor {
+    /// Compare two elements using all the descriptors in this array.
+    func compare<T>(_ a: T, _ b: T) -> Bool {
+        for descriptor in self {
+            switch descriptor.compare(a, to: b) {
+            case .orderedAscending:
+                return true
+            case .orderedDescending:
+                return false
+            default:
+                continue
+            }
+        }
+        return false
+    }
+}
+
+extension Array where Element: Equatable {
+    /// Sort the array using an array of NSSortDescriptors, such as those obtained from an NSTableView.
     mutating func sort(using descriptors: [NSSortDescriptor]) {
-        self.sort {
-            for descriptor in descriptors {
-                switch descriptor.compare($0, to: $1) {
-                case .orderedAscending:
-                    return true
-                case .orderedDescending:
-                    return false
-                default:
-                    continue
+        if descriptors.count > 0 {
+            self.sort(by: descriptors.compare)
+        }
+    }
+    
+    /// Insert an element into the sorted array at the position appropriate for the given NSSortDescriptors.
+    mutating func insert(_ newElement: Element, using descriptors: [NSSortDescriptor]) {
+        if descriptors.count > 0 {
+            var slice : SubSequence = self[...]
+            // Perform a binary search
+            while !slice.isEmpty {
+                let middle = slice.index(slice.startIndex, offsetBy: slice.count / 2)
+                if descriptors.compare(slice[middle], newElement) {
+                    slice = slice[index(after: middle)...]
+                } else {
+                    slice = slice[..<middle]
                 }
             }
-            return false
+            self.insert(newElement, at: slice.startIndex)
+        } else {
+            self.append(newElement)
+        }
+    }
+    
+    /// Remove the first occurence of a given element.
+    mutating func removeFirst(_ item: Element) {
+        if let i = self.firstIndex(of: item) {
+            self.remove(at: i)
         }
     }
 }
