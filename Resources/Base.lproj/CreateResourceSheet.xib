@@ -21,7 +21,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="528" y="151" width="300" height="179"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="16">
                 <rect key="frame" x="0.0" y="0.0" width="300" height="179"/>
@@ -56,7 +56,6 @@
                         </textFieldCell>
                         <connections>
                             <outlet property="delegate" destination="-2" id="bZ7-66-MK9"/>
-                            <outlet property="nextKeyView" destination="19" id="33"/>
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="21">
@@ -104,7 +103,6 @@ Gw
                         <connections>
                             <action selector="typeChanged:" target="-2" id="OBN-nx-OF8"/>
                             <outlet property="delegate" destination="-2" id="8EB-se-0af"/>
-                            <outlet property="nextKeyView" destination="6" id="cmg-WH-A1U"/>
                         </connections>
                     </comboBox>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="103" translatesAutoresizingMaskIntoConstraints="NO" id="27">
@@ -129,9 +127,6 @@ Gw
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
-                        <connections>
-                            <outlet property="nextKeyView" destination="P1T-Pd-dZa" id="AgZ-Rg-8Lq"/>
-                        </connections>
                     </textField>
                 </subviews>
                 <constraints>
@@ -161,9 +156,6 @@ Gw
                     <constraint firstItem="7" firstAttribute="top" secondItem="16" secondAttribute="top" constant="20" symbolic="YES" id="yso-vZ-fem"/>
                 </constraints>
             </view>
-            <connections>
-                <outlet property="initialFirstResponder" destination="P1T-Pd-dZa" id="Lpe-eS-wz3"/>
-            </connections>
             <point key="canvasLocation" x="132" y="161.5"/>
         </window>
     </objects>

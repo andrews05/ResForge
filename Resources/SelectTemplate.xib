@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SelectTemplateController" customModule="ResKnife" customModuleProvider="target">
             <connections>
+                <outlet property="openButton" destination="nFU-NU-Joq" id="SdC-YV-OR2"/>
                 <outlet property="typeList" destination="icg-n4-8Pu" id="SJu-QE-Tkd"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="lTS-1B-OnF"/>
             </connections>
@@ -18,14 +19,14 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="220" height="100"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="220" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nFU-NU-Joq">
                         <rect key="frame" x="133" y="13" width="73" height="32"/>
-                        <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bj1-1r-38e">
+                        <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bj1-1r-38e">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -61,6 +62,9 @@ Gw
                                 <string>Item 3</string>
                             </objectValues>
                         </comboBoxCell>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="xcc-3p-QTG"/>
+                        </connections>
                     </comboBox>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tn3-5A-fXy">
                         <rect key="frame" x="18" y="63" width="64" height="16"/>

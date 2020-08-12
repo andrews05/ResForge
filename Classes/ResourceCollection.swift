@@ -67,7 +67,7 @@ class ResourceCollection {
         if resourcesByType[resource.type] == nil {
             resourcesByType[resource.type] = [resource]
             allTypes.append(resource.type)
-            allTypes.sort()
+            allTypes.sort(by: { $0.localizedCompare($1) == .orderedAscending })
         } else {
             resourcesByType[resource.type]!.append(resource)
         }
