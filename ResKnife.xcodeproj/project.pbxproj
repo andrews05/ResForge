@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		491EDA5124E375CE008E58CB /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 491EDA5024E375CE008E58CB /* SelectTemplate.xib */; };
+		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */; };
 		492722AE24CF8E6D00819E32 /* OutlineView-SelectedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */; };
 		492722AF24CFADD600819E32 /* RKSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 49AACD7D24CE931A0081DD4A /* RKSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -190,7 +192,6 @@
 		E15CFD6E099995D1004929B6 /* Templates for sfnt tables.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */; };
 		E15CFF82099BECAF004929B6 /* ElementDATE.h in Headers */ = {isa = PBXBuildFile; fileRef = E15CFF80099BECAE004929B6 /* ElementDATE.h */; };
 		E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */ = {isa = PBXBuildFile; fileRef = E15CFF81099BECAF004929B6 /* ElementDATE.m */; };
-		E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5B588440156D40B01000001 /* Localizable.strings */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
 		E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
@@ -396,6 +397,8 @@
 		3D4737B804E873F300AF65FE /* ElementDBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDBYT.h; sourceTree = "<group>"; };
 		3D50046F04EF040900F3B64D /* ElementOCNT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementOCNT.h; sourceTree = "<group>"; };
 		3D50047004EF040900F3B64D /* ElementOCNT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementOCNT.m; sourceTree = "<group>"; };
+		491EDA5024E375CE008E58CB /* SelectTemplate.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectTemplate.xib; sourceTree = "<group>"; };
+		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; };
 		492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OutlineView-SelectedItems.swift"; sourceTree = "<group>"; };
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
@@ -565,14 +568,7 @@
 		550B904F189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FontDocument.xib; sourceTree = "<group>"; };
 		550B9050189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FontWindow.xib; sourceTree = "<group>"; };
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImageWindow.xib; sourceTree = "<group>"; };
-		550B905C189A036F005AC38D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Application.strings; sourceTree = "<group>"; };
-		550B905F189A0421005AC38D /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Application.strings; sourceTree = "<group>"; };
-		550B9060189A0876005AC38D /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Application.strings; sourceTree = "<group>"; };
-		5542DCEC18DCF19C00AC9626 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5542DCED18DCF1AC00AC9626 /* cy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5542DCED18DCF1AC00AC9627 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/Localizable.strings; sourceTree = "<group>"; };
 		555DFD982059BCE700E1B774 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		557238941970F72800748CF6 /* gd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = gd; path = gd.lproj/Application.strings; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		559DE9BC189D6B2B00D55D3A /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AboutPanel.strings; sourceTree = "<group>"; };
 		559DE9BE189D6B3500D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceGridView.strings; sourceTree = "<group>"; };
@@ -1145,6 +1141,7 @@
 				49655DFB24DF94B500D6AFF6 /* ResourceCollection.swift */,
 				49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
+				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
 				492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */,
 				49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */,
 			);
@@ -1161,9 +1158,9 @@
 				B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */,
 				B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */,
 				B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */,
+				491EDA5024E375CE008E58CB /* SelectTemplate.xib */,
 				B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */,
 				49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */,
-				F5B588440156D40B01000001 /* Localizable.strings */,
 				F5041736036BD60801A8010A /* ResKnife.scriptSuite */,
 				F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */,
 				559DE9B3189D665000D55D3A /* Icons.xcassets */,
@@ -1580,7 +1577,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF55B069FEA1300F076B8 /* Localizable.strings in Resources */,
 				E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */,
 				E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */,
 				49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */,
@@ -1591,6 +1587,7 @@
 				555DFD972059BCE700E1B774 /* Credits.rtf in Resources */,
 				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,
 				B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */,
+				491EDA5124E375CE008E58CB /* SelectTemplate.xib in Resources */,
 				B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */,
 				B2B3CEAA16B9DCE90027F33F /* ResourceGridView.xib in Resources */,
 			);
@@ -1701,6 +1698,7 @@
 				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
 				49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */,
+				491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */,
 				49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */,
 				4968C03B24C6808200716AB9 /* PluginManager.swift in Sources */,
 				4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */,
@@ -1944,10 +1942,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B9046189A0360005AC38D /* Base */,
-				550B905C189A036F005AC38D /* en */,
-				550B905F189A0421005AC38D /* ja */,
-				550B9060189A0876005AC38D /* cy */,
-				557238941970F72800748CF6 /* gd */,
 			);
 			name = Application.xib;
 			sourceTree = "<group>";
@@ -2055,16 +2049,6 @@
 				F543AFF0027C716E01A8010C /* en */,
 			);
 			name = "Resource Types.strings";
-			sourceTree = "<group>";
-		};
-		F5B588440156D40B01000001 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5542DCEC18DCF19C00AC9626 /* en */,
-				5542DCED18DCF1AC00AC9626 /* cy */,
-				5542DCED18DCF1AC00AC9627 /* gd */,
-			);
-			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

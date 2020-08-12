@@ -281,23 +281,17 @@ CA
                             <menuItem isSeparatorItem="YES" tag="1" id="421">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Edit in Default Editor" tag="2" keyEquivalent="e" id="422">
+                            <menuItem title="Edit with Default Editor" tag="2" keyEquivalent="e" id="422">
                                 <connections>
                                     <action selector="openResources:" target="-1" id="491"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Edit with Default Template" tag="3" keyEquivalent="E" id="423">
+                            <menuItem title="Edit with Template…" tag="3" keyEquivalent="E" id="423">
                                 <connections>
                                     <action selector="openResourcesInTemplate:" target="-1" id="492"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Edit with Specific Template…" tag="4" keyEquivalent="E" id="424">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="showSelectTemplateSheet:" target="-1" id="493"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Edit as Hexadecimal" tag="5" keyEquivalent="e" id="428">
+                            <menuItem title="Edit with Hexadecimal Editor" tag="5" keyEquivalent="e" id="428">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="openResourcesAsHex:" target="-1" id="500"/>

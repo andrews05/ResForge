@@ -95,12 +95,23 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         outlineView.scrollRowToVisible(outlineView.selectedRow)
     }
     
-    /// Return a flat list of all resources in the current selection.
-    func allSelectedResources() -> [Resource] {
-        return self.allResources(for: outlineView.selectedItems)
+    /// Return a flat list of all resources in the current selection, optionally including resources within selected type lists.
+    func selectedResources(deep: Bool = false) -> [Resource] {
+        if !deep {
+            return outlineView.selectedItems.compactMap({ $0 as? Resource })
+        }
+        var resources: [Resource] = []
+        for item in outlineView.selectedItems {
+            if deep, let item = item as? String {
+                resources.append(contentsOf: document.collection.resourcesByType[item]!)
+            } else if let item = item as? Resource, !deep || !resources.contains(item) {
+                resources.append(item)
+            }
+        }
+        return resources
     }
     
-    private func allResources(for items: [Any]) -> [Resource] {
+    private func resources(for items: [Any]) -> [Resource] {
         var resources: [Resource] = []
         for item in items {
             if let item = item as? String {
@@ -214,13 +225,13 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     func outlineView(_ outlineView: NSOutlineView, writeItems items: [Any], to pasteboard: NSPasteboard) -> Bool {
-        let data = NSKeyedArchiver.archivedData(withRootObject: allResources(for: items))
+        let data = NSKeyedArchiver.archivedData(withRootObject: self.resources(for: items))
         pasteboard.setData(data, forType: .RKResource)
         return true
     }
     
     func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
-        if info.draggingSource as? NSOutlineView === self.outlineView {
+        if info.draggingSource as? NSOutlineView === outlineView {
             return []
         }
         outlineView.setDropItem(nil, dropChildIndex: NSOutlineViewDropOnItemIndex)

@@ -47,7 +47,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         if let name = name {
             nameView.stringValue = name
         }
-        rDocument.windowForSheet?.beginSheet(self.window!, completionHandler: nil)
+        rDocument.windowForSheet?.beginSheet(self.window!)
     }
     
     func controlTextDidChange(_ obj: Notification) {

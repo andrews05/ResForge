@@ -23,13 +23,13 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
         }
     }
     var hfsCreator: OSType = 0 {
-       didSet {
-           if hfsCreator != oldValue {
-               NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
-               self.undoManager?.setActionName(NSLocalizedString("Change File Creator", comment: ""))
-               self.undoManager?.registerUndo(withTarget: self, handler: { $0.hfsCreator = oldValue })
-           }
-       }
+        didSet {
+            if hfsCreator != oldValue {
+                NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
+                self.undoManager?.setActionName(NSLocalizedString("Change File Creator", comment: ""))
+                self.undoManager?.registerUndo(withTarget: self, handler: { $0.hfsCreator = oldValue })
+            }
+        }
     }
 
     override var windowNibName: String {
@@ -157,7 +157,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
     // MARK: - Export
     
     @IBAction func exportResources(_ sender: Any?) {
-        let resources = dataSource.allSelectedResources()
+        let resources = dataSource.selectedResources(deep: true)
         if resources.count > 1 {
             // Multiple resources, choose a directory to export to
             let panel = NSOpenPanel()
@@ -228,7 +228,6 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
             #selector(openResources(_:)),
             #selector(openResourcesInTemplate(_:)),
             #selector(openResourcesAsHex(_:)),
-            #selector(showSelectTemplateSheet(_:)),
             #selector(exportResources(_:)):
             return outlineView.numberOfSelectedRows > 0
         default:
@@ -267,7 +266,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
     
     @IBAction func doubleClickItems(_ sender: NSOutlineView) {
         // Ignore double-clicks in table header
-        guard outlineView.clickedRow != -1 else {
+        guard sender.clickedRow != -1 else {
             return
         }
         // Use hex editor if holding option key
@@ -276,43 +275,39 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
             editor = PluginManager.editor(for: "Hexadecimal Editor")
         }
         
-        for item in outlineView.selectedItems {
+        for item in sender.selectedItems {
             if let resource = item as? Resource {
                 pluginManager.open(resource: resource, using: editor, template: nil)
             } else {
                 // Expand the type list
-                outlineView.expandItem(item)
+                sender.expandItem(item)
             }
         }
     }
     
     @IBAction func openResources(_ sender: NSObject) {
-        for item in outlineView.selectedItems {
-            if let resource = item as? Resource {
-                pluginManager.open(resource: resource)
-            }
+        for resource in dataSource.selectedResources() {
+            pluginManager.open(resource: resource)
         }
     }
     
-    @IBAction func showSelectTemplateSheet(_ sender: Any) {
-        
-    }
-    
     @IBAction func openResourcesInTemplate(_ sender: Any) {
+        let resources = dataSource.selectedResources()
+        guard resources.count != 0 else {
+            return
+        }
         let editor = PluginManager.editor(for: "Template Editor")
-        for item in outlineView.selectedItems {
-            if let resource = item as? Resource {
-                pluginManager.open(resource: resource, using: editor, template: nil)
+        SelectTemplateController().show(self, type: resources.first!.type) { template in
+            for resource in resources {
+                self.pluginManager.open(resource: resource, using: editor, template: template)
             }
         }
     }
     
     @IBAction func openResourcesAsHex(_ sender: Any) {
         let editor = PluginManager.editor(for: "Hexadecimal Editor")
-        for item in outlineView.selectedItems {
-            if let resource = item as? Resource {
-                pluginManager.open(resource: resource, using: editor, template: nil)
-            }
+        for resource in dataSource.selectedResources() {
+            pluginManager.open(resource: resource, using: editor)
         }
     }
     
@@ -323,7 +318,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
     // MARK: - Edit Operations
     
     @IBAction func cut(_ sender: Any) {
-        let resources = dataSource.allSelectedResources()
+        let resources = dataSource.selectedResources(deep: true)
         let pb = NSPasteboard.init(name: .generalPboard)
         pb.declareTypes([.RKResource], owner: self)
         pb.writeObjects(resources)
@@ -334,7 +329,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
     @IBAction func copy(_ sender: Any) {
         let pb = NSPasteboard.init(name: .generalPboard)
         pb.declareTypes([.RKResource], owner: self)
-        pb.writeObjects(dataSource.allSelectedResources())
+        pb.writeObjects(dataSource.selectedResources(deep: true))
     }
     
     @IBAction func paste(_ sender: Any) {
@@ -350,11 +345,11 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
             alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
             alert.beginSheetModal(for: self.windowForSheet!) { modalResponse in
                 if modalResponse == .alertFirstButtonReturn {
-                    self.remove(resources: self.dataSource.allSelectedResources())
+                    self.remove(resources: self.dataSource.selectedResources(deep: true))
                 }
             }
         } else {
-            self.remove(resources: dataSource.allSelectedResources())
+            self.remove(resources: dataSource.selectedResources(deep: true))
         }
     }
     
