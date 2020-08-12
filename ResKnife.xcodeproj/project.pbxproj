@@ -154,7 +154,6 @@
 		55FEF5BA189D762000888898 /* misn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5B8189D762000888898 /* misn.xib */; };
 		55FEF5BD189D762F00888898 /* ship.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BB189D762F00888898 /* ship.xib */; };
 		55FEF5C0189D764300888898 /* desc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BE189D764300888898 /* desc.xib */; };
-		B229EEF415A4FB6F0032C12C /* AboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEE815A4FB6F0032C12C /* AboutPanel.xib */; };
 		B229EEF515A4FB6F0032C12C /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEA15A4FB6F0032C12C /* Application.xib */; };
 		B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */; };
 		B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */; };
@@ -163,12 +162,10 @@
 		B24925E215A6776600C22060 /* ImageWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* ImageWindow.xib */; };
 		B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65CE15A677F00029141B /* TemplateWindow.xib */; };
 		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
-		B2B3CEAA16B9DCE90027F33F /* ResourceGridView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */; };
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA79E15A6704900696598 /* FontDocument.xib */; };
 		B2FCA7A315A6704900696598 /* FontWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA7A015A6704900696598 /* FontWindow.xib */; };
-		E11936660998552900A3A6EA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E11936650998552900A3A6EA /* Localizable.strings */; };
 		E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367D099864AD00A3A6EA /* ElementUBYT.h */; };
 		E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = E119367E099864AD00A3A6EA /* ElementUBYT.m */; };
 		E1193685099864AD00A3A6EA /* ElementULNG.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367F099864AD00A3A6EA /* ElementULNG.h */; };
@@ -570,8 +567,6 @@
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImageWindow.xib; sourceTree = "<group>"; };
 		555DFD982059BCE700E1B774 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
-		559DE9BC189D6B2B00D55D3A /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AboutPanel.strings; sourceTree = "<group>"; };
-		559DE9BE189D6B3500D55D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResourceGridView.strings; sourceTree = "<group>"; };
 		55FEF5A4189D758E00888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NovaTools.xib; sourceTree = "<group>"; };
 		55FEF5A7189D759F00888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/boom.xib; sourceTree = "<group>"; };
 		55FEF5AA189D75AB00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/boom.strings; sourceTree = "<group>"; };
@@ -590,7 +585,6 @@
 		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
 		B2FCA78A15A66ACE00696598 /* Image Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Image Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E11936620998551200A3A6EA /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E119367D099864AD00A3A6EA /* ElementUBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementUBYT.h; sourceTree = "<group>"; };
 		E119367E099864AD00A3A6EA /* ElementUBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementUBYT.m; sourceTree = "<group>"; };
 		E119367F099864AD00A3A6EA /* ElementULNG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementULNG.h; sourceTree = "<group>"; };
@@ -832,6 +826,7 @@
 			isa = PBXGroup;
 			children = (
 				B27A65CE15A677F00029141B /* TemplateWindow.xib */,
+				E18BFA3606A20B7A00F076B8 /* Info.plist */,
 				3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */,
 				3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */,
 				3D0933BE04DF151C00DD74B1 /* ResourceStream.h */,
@@ -848,7 +843,6 @@
 				49F640572466099C00E7CE4D /* ElementRangeable.m */,
 				3D0933EB04DF319F00DD74B1 /* Field Types */,
 				E11937F309991C1100A3A6EA /* Support Resources */,
-				E18BFA3606A20B7A00F076B8 /* Info.plist */,
 			);
 			path = "Template Editor";
 			sourceTree = "<group>";
@@ -1050,7 +1044,6 @@
 				B2FCA7A015A6704900696598 /* FontWindow.xib */,
 				E15CFDA009999637004929B6 /* Support Resources */,
 				E18BF78C069FF23800F076B8 /* Info.plist */,
-				E11936650998552900A3A6EA /* Localizable.strings */,
 			);
 			path = "Font Editor";
 			sourceTree = "<group>";
@@ -1580,7 +1573,6 @@
 				E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */,
 				E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */,
 				49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */,
-				B229EEF415A4FB6F0032C12C /* AboutPanel.xib in Resources */,
 				B229EEF515A4FB6F0032C12C /* Application.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */,
 				559DE9B4189D665000D55D3A /* Icons.xcassets in Resources */,
@@ -1589,7 +1581,6 @@
 				B229EEF815A4FB6F0032C12C /* PrefsWindow.xib in Resources */,
 				491EDA5124E375CE008E58CB /* SelectTemplate.xib in Resources */,
 				B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */,
-				B2B3CEAA16B9DCE90027F33F /* ResourceGridView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1629,7 +1620,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E11936660998552900A3A6EA /* Localizable.strings in Resources */,
 				B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */,
 				B2FCA7A315A6704900696598 /* FontWindow.xib in Resources */,
 			);
@@ -1933,7 +1923,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B9045189A0360005AC38D /* Base */,
-				559DE9BC189D6B2B00D55D3A /* en */,
 			);
 			name = AboutPanel.xib;
 			sourceTree = "<group>";
@@ -2006,7 +1995,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B904B189A0360005AC38D /* Base */,
-				559DE9BE189D6B3500D55D3A /* en */,
 			);
 			name = ResourceGridView.xib;
 			sourceTree = "<group>";
@@ -2025,14 +2013,6 @@
 				550B9050189A0361005AC38D /* Base */,
 			);
 			name = FontWindow.xib;
-			sourceTree = "<group>";
-		};
-		E11936650998552900A3A6EA /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E11936620998551200A3A6EA /* en */,
-			);
-			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */ = {

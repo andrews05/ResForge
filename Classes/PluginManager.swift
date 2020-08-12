@@ -10,6 +10,8 @@ import RKSupport
 
 class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     private static var registry: [String: ResKnifePlugin.Type] = [:]
+    private(set) static var templateEditor: ResKnifePlugin.Type! = nil
+    private(set) static var hexEditor: ResKnifePlugin.Type! = nil
     private var editorWindows: [String: ResKnifePlugin] = [:]
     private weak var document: ResourceDocument!
     
@@ -44,7 +46,14 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
             }
             SupportRegistry.scanForResources(in: plugin)
             for type in supportedTypes {
-                registry[type] = pluginClass
+                switch type {
+                case "Hexadecimal Editor":
+                    Self.hexEditor = pluginClass
+                case "Template Editor":
+                    Self.templateEditor = pluginClass
+                default:
+                    registry[type] = pluginClass
+                }
             }
         }
     }
@@ -125,14 +134,14 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     
     @objc func open(resource: Resource, using editor: ResKnifePlugin.Type? = nil, template: String? = nil) {
         // Work out editor to use
-        var editor = editor ?? Self.editor(for: resource.type) ?? Self.editor(for: "Template Editor")
+        var editor = editor ?? Self.editor(for: resource.type) ?? Self.templateEditor
         var tmplResource: Resource!
         if editor is ResKnifeTemplatePlugin.Type {
             // If template editor, find the template to use
             tmplResource = self.findResource(ofType: "TMPL", name: template ?? resource.type)
             // If no template, switch to hex editor
             if tmplResource == nil {
-                editor = Self.editor(for: "Hexadecimal Editor")
+                editor = Self.hexEditor
             }
         }
         

@@ -272,7 +272,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
         // Use hex editor if holding option key
         var editor: ResKnifePlugin.Type?
         if NSApp.currentEvent!.modifierFlags.contains(.option) {
-            editor = PluginManager.editor(for: "Hexadecimal Editor")
+            editor = PluginManager.hexEditor
         }
         
         for item in sender.selectedItems {
@@ -296,18 +296,16 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
         guard resources.count != 0 else {
             return
         }
-        let editor = PluginManager.editor(for: "Template Editor")
         SelectTemplateController().show(self, type: resources.first!.type) { template in
             for resource in resources {
-                self.pluginManager.open(resource: resource, using: editor, template: template)
+                self.pluginManager.open(resource: resource, using: PluginManager.templateEditor, template: template)
             }
         }
     }
     
     @IBAction func openResourcesAsHex(_ sender: Any) {
-        let editor = PluginManager.editor(for: "Hexadecimal Editor")
         for resource in dataSource.selectedResources() {
-            pluginManager.open(resource: resource, using: editor)
+            pluginManager.open(resource: resource, using: PluginManager.hexEditor)
         }
     }
     

@@ -34,7 +34,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="open:" target="-2" id="UXg-c3-nZD"/>
+                            <action selector="hide:" target="-2" id="3GR-6h-RFX"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g1U-Go-JiD">
@@ -47,7 +47,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="cancel:" target="-2" id="4gU-jE-9KV"/>
+                            <action selector="hide:" target="-2" id="NR1-V2-Jm1"/>
                         </connections>
                     </button>
                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="icg-n4-8Pu">
