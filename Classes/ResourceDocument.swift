@@ -239,6 +239,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
         }
     }
     
+    // FIXME: This function is for image-type items only - a new solution is needed for button types
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
         switch item.action {
         case #selector(delete(_:)),
@@ -309,8 +310,10 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
         }
     }
     
-    @IBAction func changeView(_ sender: Any) {
-        
+    @IBAction func toggleSidebar(_ sender: Any) {
+        dataSource.toggleSidebar()
+        let item = NSApp.mainMenu?.item(withTitle: "Window")?.submenu?.item(withTag: 1)
+        item?.title = NSLocalizedString(dataSource.useTypeList ? "Hide Sidebar" : "Show Sidebar", comment: "")
     }
     
     // MARK: - Edit Operations

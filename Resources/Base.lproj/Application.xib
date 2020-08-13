@@ -339,16 +339,10 @@ CA
                             <menuItem isSeparatorItem="YES" id="346">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="List View" id="347">
+                            <menuItem title="Show Sidebar" tag="1" identifier="sidebar" id="348">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="useListView:" target="-1" id="511"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Icon View" id="348">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="useIconView:" target="-1" id="512"/>
+                                    <action selector="toggleSidebar:" target="-1" id="WYc-Vb-CcA"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="340">

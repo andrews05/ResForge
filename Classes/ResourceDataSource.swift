@@ -1,9 +1,13 @@
 import Cocoa
 import RKSupport
 
-class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate {
+class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource, NSSplitViewDelegate {
     @IBOutlet var outlineView: NSOutlineView!
+    @IBOutlet var typeList: NSTableView!
+    @IBOutlet var splitView: NSSplitView!
     @IBOutlet weak var document: ResourceDocument!
+    private(set) var useTypeList = false
+    private var currentType: String? = nil
     private var inlineUpdate = false // Flag to prevent reloading items when editing inline
     
     override func awakeFromNib() {
@@ -12,7 +16,8 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         if outlineView.registeredDraggedTypes.count == 0 {
             NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
-            
+
+            splitView.setPosition(useTypeList ? 80 : 0, ofDividerAt: 0)
             outlineView.registerForDraggedTypes([.RKResource])
             if outlineView.sortDescriptors.count == 0 {
                 // Default sort resources by id
@@ -46,9 +51,13 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         }
         // Update the position
         let row = outlineView.row(forItem: resource)
-        let offset = outlineView.row(forItem: resource.type) + 1
         let newRow = document.collection.resourcesByType[resource.type]!.firstIndex(of: resource)!
-        outlineView.moveItem(at: row-offset, inParent: resource.type, to: newRow, inParent: resource.type)
+        if useTypeList {
+            outlineView.moveItem(at: row, inParent: nil, to: newRow, inParent: nil)
+        } else {
+            let offset = outlineView.row(forItem: resource.type) + 1
+            outlineView.moveItem(at: row-offset, inParent: resource.type, to: newRow, inParent: resource.type)
+        }
         if inlineUpdate {
             outlineView.scrollRowToVisible(outlineView.selectedRow)
             // Update the placeholder
@@ -76,23 +85,31 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.reload(selecting: resources) })
     }
     
-    /// Reload the data source and select the given resources, expanding type lists as necessary.
+    /// Reload the view and select the given resources.
     func reload(selecting resources: [Resource]? = nil) {
-        outlineView.reloadData()
+        typeList.reloadData()
+        if useTypeList, let type = resources?.first?.type ?? currentType,
+            let i = document.collection.allTypes.firstIndex(of: type) {
+            typeList.selectRowIndexes(IndexSet(integer: i+1), byExtendingSelection: false)
+        } else {
+            currentType = nil
+            outlineView.reloadData()
+        }
         if let resources = resources {
             self.select(resources)
-            outlineView.window?.makeFirstResponder(outlineView) // Outline view seems to lose focus without this?
         }
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
     }
     
     func select(_ resources: [Resource]) {
-        let rows = resources.map { resource -> Int in
+        let rows = resources.compactMap { resource -> Int? in
             outlineView.expandItem(resource.type)
-            return outlineView.row(forItem: resource)
+            let i = outlineView.row(forItem: resource)
+            return i == -1 ? nil : i
         }
         outlineView.selectRowIndexes(IndexSet(rows), byExtendingSelection: false)
         outlineView.scrollRowToVisible(outlineView.selectedRow)
+        outlineView.window?.makeFirstResponder(outlineView) // Outline view seems to lose focus without this?
     }
     
     /// Return a flat list of all resources in the current selection, optionally including resources within selected type lists.
@@ -126,20 +143,18 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     // MARK: - Delegate functions
     
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-        var view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
+        let view: NSTableCellView
         if let resource = item as? Resource {
+            view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
             switch tableColumn!.identifier.rawValue {
             case "name":
                 view.textField?.stringValue = resource.name
-                view.textField?.isEditable = true
                 view.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
                 view.imageView?.image = ApplicationDelegate.icon(for: resource.type)
             case "type":
                 view.textField?.stringValue = resource.type
-                view.textField?.isEditable = true
             case "id":
                 view.textField?.integerValue = resource.id
-                view.textField?.isEditable = true
             case "size":
                 view.textField?.integerValue = resource.data.count
             case "attributes":
@@ -147,19 +162,22 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             default:
                 return nil
             }
+            return view
         } else if let type = item as? String {
-            switch tableColumn!.identifier.rawValue {
-            case "name":
-                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "type"), owner: self) as! NSTableCellView
-                view.textField?.stringValue = type // Type header
-                view.textField?.isEditable = false
-            case "size":
-                view.textField?.integerValue = document.collection.resourcesByType[type]!.count // Type count
+            let identifier = tableColumn!.identifier.rawValue.appending("Group")
+            switch identifier {
+            case "nameGroup":
+                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), owner: self) as! NSTableCellView
+                view.textField?.stringValue = type
+            case "sizeGroup":
+                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), owner: self) as! NSTableCellView
+                view.textField?.integerValue = document.collection.resourcesByType[type]!.count
             default:
                 return nil
             }
+            return view
         }
-        return view
+        return nil
     }
     
     // Check for conflicts
@@ -198,7 +216,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     // MARK: - DataSource protocol functions
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if let type = item as? String {
+        if let type = item as? String ?? currentType {
             return document.collection.resourcesByType[type]![index]
         } else {
             return document.collection.allTypes[index]
@@ -210,13 +228,12 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if item == nil {
-            return document.collection.allTypes.count
-        } else if let type = item as? String {
+        if let type = item as? String ?? currentType {
             return document.collection.resourcesByType[type]!.count
-        } else {
-            return 0
+        } else if !useTypeList {
+            return document.collection.allTypes.count
         }
+        return 0
     }
     
     func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
@@ -245,5 +262,67 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             return true
         }
         return false
+    }
+
+    // MARK: - Sidebar functions
+    
+    func toggleSidebar() {
+        useTypeList = !useTypeList
+        splitView.setPosition(useTypeList ? 80 : 0, ofDividerAt: 0)
+        self.reload(selecting: self.selectedResources())
+    }
+    
+    // Prevent dragging the divider
+    func splitView(_ splitView: NSSplitView, effectiveRect proposedEffectiveRect: NSRect, forDrawnRect drawnRect: NSRect, ofDividerAt dividerIndex: Int) -> NSRect {
+        return NSZeroRect
+    }
+    
+    // Sidebar width should remain fixed
+    func splitView(_ splitView: NSSplitView, shouldAdjustSizeOfSubview view: NSView) -> Bool {
+        return splitView.subviews[1] === view
+    }
+    
+    // Allow sidebar to collapse
+    func splitView(_ splitView: NSSplitView, constrainMinCoordinate proposedMinimumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
+        return 2
+    }
+    func splitView(_ splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
+        return splitView.subviews[0] === subview
+    }
+    
+    // Hide divider when sidebar collapsed
+    func splitView(_ splitView: NSSplitView, shouldHideDividerAt dividerIndex: Int) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        if let identifier = tableColumn?.identifier {
+            let view = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
+            view.textField?.stringValue = document.collection.allTypes[row-1]
+            return view
+        } else {
+            return tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: self) as! NSTableCellView
+        }
+    }
+    
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        return document.collection.allTypes.count + 1
+    }
+    
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        return row != 0
+    }
+    
+    func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
+        return row == 0
+    }
+    
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        if useTypeList && typeList.selectedRow > 0 {
+            currentType = document.collection.allTypes[typeList.selectedRow-1]
+        } else {
+            currentType = nil
+        }
+        outlineView.reloadData()
     }
 }
