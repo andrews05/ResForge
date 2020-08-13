@@ -17,7 +17,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
 
-            splitView.setPosition(useTypeList ? 80 : 0, ofDividerAt: 0)
+            splitView.setPosition(useTypeList ? 100 : 0, ofDividerAt: 0)
             outlineView.registerForDraggedTypes([.RKResource])
             if outlineView.sortDescriptors.count == 0 {
                 // Default sort resources by id
@@ -268,7 +268,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     func toggleSidebar() {
         useTypeList = !useTypeList
-        splitView.setPosition(useTypeList ? 80 : 0, ofDividerAt: 0)
+        splitView.setPosition(useTypeList ? 100 : 0, ofDividerAt: 0)
         self.reload(selecting: self.selectedResources())
     }
     
@@ -297,8 +297,11 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         if let identifier = tableColumn?.identifier {
+            let type = document.collection.allTypes[row-1]
+            let count = String(document.collection.resourcesByType[type]!.count)
             let view = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
-            view.textField?.stringValue = document.collection.allTypes[row-1]
+            view.textField?.stringValue = type
+            (view.subviews.last as? NSButton)?.title = count
             return view
         } else {
             return tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: self) as! NSTableCellView
