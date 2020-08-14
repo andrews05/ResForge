@@ -39,10 +39,10 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         let prefDict: [String: Any] = [
             kConfirmChanges: false,
             kDeleteResourceWarning: true,
-            kLaunchAction: kDisplayOpenPanel
+            kLaunchAction: kDisplayOpenPanel,
+            kShowSidebar: false
         ]
         UserDefaults.standard.register(defaults: prefDict)
-        NSUserDefaultsController.shared.initialValues = prefDict
         
         SupportRegistry.scanForResources()
         PluginManager.scanForPlugins()

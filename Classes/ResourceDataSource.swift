@@ -6,7 +6,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     @IBOutlet var typeList: NSTableView!
     @IBOutlet var splitView: NSSplitView!
     @IBOutlet weak var document: ResourceDocument!
-    private(set) var useTypeList = false
+    private(set) var useTypeList = UserDefaults.standard.bool(forKey: kShowSidebar)
     private var currentType: String? = nil
     private var inlineUpdate = false // Flag to prevent reloading items when editing inline
     
@@ -17,13 +17,19 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
 
-            splitView.setPosition(useTypeList ? 100 : 0, ofDividerAt: 0)
             outlineView.registerForDraggedTypes([.RKResource])
             if outlineView.sortDescriptors.count == 0 {
                 // Default sort resources by id
                 outlineView.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
             } else {
                 document.collection.sortDescriptors = outlineView.sortDescriptors
+            }
+            if useTypeList {
+                // Select first type by default
+                typeList.selectRowIndexes(IndexSet(integer: 1), byExtendingSelection: false)
+            } else {
+                // Showing the sidebar here when it is already visible seems to cause problems - only update if it should be hidden
+                self.updateSidebar()
             }
         }
     }
@@ -36,9 +42,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         else {
             return
         }
-        document.undoManager?.disableUndoRegistration()
-        self.reload(selecting: [resource])
-        document.undoManager?.enableUndoRegistration()
+        self.reload(selecting: [resource], withUndo: false)
     }
     
     @objc func resourceDidChange(_ notification: Notification) {
@@ -86,7 +90,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     /// Reload the view and select the given resources.
-    func reload(selecting resources: [Resource]? = nil) {
+    func reload(selecting resources: [Resource]? = nil, withUndo: Bool = true) {
         typeList.reloadData()
         if useTypeList, let type = resources?.first?.type ?? currentType,
             let i = document.collection.allTypes.firstIndex(of: type) {
@@ -98,7 +102,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         if let resources = resources {
             self.select(resources)
         }
-        document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
+        if withUndo {
+            document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
+        }
     }
     
     func select(_ resources: [Resource]) {
@@ -109,23 +115,25 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         }
         outlineView.selectRowIndexes(IndexSet(rows), byExtendingSelection: false)
         outlineView.scrollRowToVisible(outlineView.selectedRow)
-        outlineView.window?.makeFirstResponder(outlineView) // Outline view seems to lose focus without this?
+    }
+    
+    /// Return the currently selected type.
+    func selectedType() -> String? {
+        if useTypeList {
+            return currentType
+        } else {
+            let item = outlineView.item(atRow: outlineView.selectedRow)
+            return item as? String ?? (item as? Resource)?.type
+        }
     }
     
     /// Return a flat list of all resources in the current selection, optionally including resources within selected type lists.
     func selectedResources(deep: Bool = false) -> [Resource] {
-        if !deep {
+        if deep {
+            return self.resources(for: outlineView.selectedItems)
+        } else {
             return outlineView.selectedItems.compactMap({ $0 as? Resource })
         }
-        var resources: [Resource] = []
-        for item in outlineView.selectedItems {
-            if deep, let item = item as? String {
-                resources.append(contentsOf: document.collection.resourcesByType[item]!)
-            } else if let item = item as? Resource, !deep || !resources.contains(item) {
-                resources.append(item)
-            }
-        }
-        return resources
     }
     
     private func resources(for items: [Any]) -> [Resource] {
@@ -267,9 +275,19 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     // MARK: - Sidebar functions
     
     func toggleSidebar() {
+        if !useTypeList {
+            // Try to make sure sure a type is selected when showing the sidebar
+            currentType = self.selectedType() ?? outlineView.item(atRow: 0) as? String
+        }
         useTypeList = !useTypeList
+        self.updateSidebar()
+        self.reload(selecting: self.selectedResources(), withUndo: false)
+        UserDefaults.standard.set(useTypeList, forKey: kShowSidebar)
+    }
+    
+    private func updateSidebar() {
         splitView.setPosition(useTypeList ? 100 : 0, ofDividerAt: 0)
-        self.reload(selecting: self.selectedResources())
+        outlineView.indentationPerLevel = useTypeList ? 0 : 1
     }
     
     // Prevent dragging the divider
@@ -328,4 +346,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         }
         outlineView.reloadData()
     }
+}
+
+// Prevent the source list from becoming first responder
+class SourceList: NSTableView {
+    override var acceptsFirstResponder: Bool { false }
 }

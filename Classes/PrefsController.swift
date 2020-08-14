@@ -6,6 +6,7 @@ let kLaunchAction = "LaunchAction"
 let kOpenUntitledFile = "OpenUntitledFile"
 let kDisplayOpenPanel = "DisplayOpenPanel"
 let kNoLaunchOption = "None"
+let kShowSidebar = "ShowSidebar"
 
 // Transform launch action matrix index to string constants
 class LaunchActionTransformer: ValueTransformer {

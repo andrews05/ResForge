@@ -5,7 +5,7 @@ extension Notification.Name {
     static let DocumentInfoDidChange = Notification.Name("DocumentInfoDidChangeNotification")
 }
 
-class ResourceDocument: NSDocument, NSToolbarItemValidation {
+class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var dataSource: ResourceDataSource!
     private(set) lazy var collection = ResourceCollection(self)
@@ -253,15 +253,23 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
         }
     }
     
+    func windowDidBecomeKey(_ notification: Notification) {
+        self.updateSidebarMenuTitle()
+    }
+    
+    private func updateSidebarMenuTitle() {
+        let item = NSApp.mainMenu?.item(withTitle: "Window")?.submenu?.item(withTag: 1)
+        item?.title = NSLocalizedString(dataSource.useTypeList ? "Hide Sidebar" : "Show Sidebar", comment: "")
+    }
+    
     // MARK: - Document Management
 
     @IBAction func createNewItem(_ sender: Any) {
         // Pass type and id of currently selected item
-        let item = outlineView.selectedItem
-        if let resource = item as? Resource {
+        if let resource = dataSource.selectedResources().first {
             createController.show(type: resource.type, id: resource.id)
         } else {
-            createController.show(type: item as? String)
+            createController.show(type: dataSource.selectedType())
         }
     }
     
@@ -312,8 +320,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation {
     
     @IBAction func toggleSidebar(_ sender: Any) {
         dataSource.toggleSidebar()
-        let item = NSApp.mainMenu?.item(withTitle: "Window")?.submenu?.item(withTag: 1)
-        item?.title = NSLocalizedString(dataSource.useTypeList ? "Hide Sidebar" : "Show Sidebar", comment: "")
+        self.updateSidebarMenuTitle()
     }
     
     // MARK: - Edit Operations

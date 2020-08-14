@@ -30,6 +30,7 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
         self.update()
         
         NotificationCenter.default.addObserver(self, selector: #selector(mainWindowChanged(_:)), name: NSWindow.didBecomeMainNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(mainWindowResigned(_:)), name: NSWindow.didResignMainNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(selectedResourceChanged(_:)), name: NSOutlineView.selectionDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(propertiesChanged(_:)), name: .ResourceDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(propertiesChanged(_:)), name: .DocumentInfoDidChange, object: nil)
@@ -44,6 +45,7 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
             // set UI values
             self.window?.title = NSLocalizedString("Resource Info", comment: "")
             nameView.stringValue = resource.name
+            nameView.placeholderString = NSLocalizedString("Untitled Resource", comment: "")
             iconView.image = ApplicationDelegate.icon(for: resource.type)
             
             attributesMatrix.cell(withTag: ResAttributes.changed.rawValue)?.state    = resource.attributes.contains(.changed) ? .on : .off
@@ -84,6 +86,12 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
             
             // swap box
             placeholderView.contentView = documentView
+        } else {
+            self.window?.title = NSLocalizedString("Document Info", comment: "")
+            iconView.image = nil
+            nameView.stringValue = ""
+            nameView.placeholderString = NSLocalizedString("No Document", comment: "")
+            placeholderView.contentView = nil
         }
     }
     
@@ -100,6 +108,13 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     
     @objc func mainWindowChanged(_ notification: Notification) {
         self.setMainWindow(notification.object as? NSWindow)
+    }
+    
+    @objc func mainWindowResigned(_ notification: Notification) {
+        if (notification.object as? NSWindow)?.windowController?.document === currentDocument {
+            currentDocument = nil
+            self.update()
+        }
     }
     
     @objc func selectedResourceChanged(_ notification: Notification) {
