@@ -13,7 +13,7 @@ public extension NSPasteboard.PasteboardType {
     static let RKResource = Self(rawValue: "com.nickshanks.resknife.resource")
 }
 
-public struct ResAttributes: OptionSet {
+public struct ResAttributes: OptionSet, Hashable {
     public let rawValue: Int
     public static let changed   = Self(rawValue: 2)
     public static let preload   = Self(rawValue: 4)
