@@ -12,6 +12,7 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     private static var registry: [String: ResKnifePlugin.Type] = [:]
     private(set) static var templateEditor: ResKnifePlugin.Type! = nil
     private(set) static var hexEditor: ResKnifePlugin.Type! = nil
+    private(set) static var previewSizes: [String: Int] = [:]
     private var editorWindows: [String: ResKnifePlugin] = [:]
     private weak var document: ResourceDocument!
     
@@ -53,6 +54,9 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
                     Self.templateEditor = pluginClass
                 default:
                     registry[type] = pluginClass
+                    if pluginClass.image != nil {
+                        previewSizes[type] = 128
+                    }
                 }
             }
         }

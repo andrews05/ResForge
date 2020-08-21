@@ -1,10 +1,12 @@
 import Cocoa
 import RKSupport
 
-class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource, NSSplitViewDelegate {
+class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource, NSSplitViewDelegate, NSCollectionViewDataSource {
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var typeList: NSTableView!
     @IBOutlet var splitView: NSSplitView!
+    @IBOutlet var scrollView: NSScrollView!
+    @IBOutlet var collectionView: NSCollectionView!
     @IBOutlet weak var document: ResourceDocument!
     private(set) var useTypeList = UserDefaults.standard.bool(forKey: kShowSidebar)
     private var currentType: String? = nil
@@ -27,10 +29,8 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             if useTypeList {
                 // Select first type by default
                 typeList.selectRowIndexes(IndexSet(integer: 1), byExtendingSelection: false)
-            } else {
-                // Showing the sidebar here when it is already visible seems to cause problems - only update if it should be hidden
-                self.updateSidebar()
             }
+            self.updateSidebar()
         }
     }
     
@@ -92,7 +92,8 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     /// Reload the view and select the given resources.
     func reload(selecting resources: [Resource]? = nil, withUndo: Bool = true) {
         typeList.reloadData()
-        if useTypeList, let type = resources?.first?.type ?? currentType,
+        if useTypeList,
+            let type = resources?.first?.type ?? currentType,
             let i = document.collection.allTypes.firstIndex(of: type) {
             typeList.selectRowIndexes(IndexSet(integer: i+1), byExtendingSelection: false)
         } else {
@@ -280,6 +281,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             currentType = self.selectedType() ?? outlineView.item(atRow: 0) as? String
         }
         useTypeList = !useTypeList
+        if !useTypeList {
+            scrollView.documentView = outlineView
+        }
         self.updateSidebar()
         self.reload(selecting: self.selectedResources(), withUndo: false)
         UserDefaults.standard.set(useTypeList, forKey: kShowSidebar)
@@ -344,7 +348,27 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         } else {
             currentType = nil
         }
-        outlineView.reloadData()
+        if let type = currentType, PluginManager.previewSizes[type] != nil {
+            scrollView.documentView = collectionView
+            collectionView.reloadData()
+        } else {
+            scrollView.documentView = outlineView
+            outlineView.reloadData()
+        }
+    }
+    
+    // MARK: - Collection view
+    
+    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+        return document.collection.resourcesByType[currentType!]!.count
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+        let resource = document.collection.resourcesByType[currentType!]![indexPath.last!]
+        let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceGridView"), for: indexPath)
+        view.imageView?.image = PluginManager.editor(for: resource.type)?.image?(for: resource)
+        view.textField?.stringValue = resource.name
+        return view
     }
 }
 

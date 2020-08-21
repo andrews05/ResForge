@@ -142,6 +142,7 @@
 		49F640592466099C00E7CE4D /* ElementRangeable.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F640572466099C00E7CE4D /* ElementRangeable.m */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
+		49F79A5F24F09460002A8607 /* ResourceGridView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */; };
 		49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F9560C245D44D200D80C65 /* ElementCOLR.h */; };
 		49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9560D245D44D200D80C65 /* ElementCOLR.m */; };
 		555DFD972059BCE700E1B774 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 555DFD992059BCE700E1B774 /* Credits.rtf */; };
@@ -1492,7 +1493,7 @@
 		F5B5880F0156D2A601000001 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1160;
 				TargetAttributes = {
 					4953F594248874AA0002340F = {
 						LastSwiftMigration = 1150;
@@ -1572,6 +1573,7 @@
 			files = (
 				E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */,
 				E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */,
+				49F79A5F24F09460002A8607 /* ResourceGridView.xib in Resources */,
 				49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */,
 				B229EEF515A4FB6F0032C12C /* Application.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */,
@@ -2248,6 +2250,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = ResKnife;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2272,6 +2275,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = ResKnife;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
