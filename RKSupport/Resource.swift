@@ -80,7 +80,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     }
     
     @objc public weak var document: NSDocument!
-    @objc public weak var manager: ResKnifePluginManager!
+    @objc public weak var manager: ResKnifePluginManager! // This isn't set until the resource is opened in an editor
     
     @objc public var defaultWindowTitle: String {
         if let document = document {

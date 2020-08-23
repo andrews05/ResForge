@@ -118,6 +118,14 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         outlineView.scrollRowToVisible(outlineView.selectedRow)
     }
     
+    func hasSelection() -> Bool {
+        if useTypeList && scrollView.documentView === collectionView {
+            return collectionView.selectionIndexes.count > 0
+        } else {
+            return outlineView.numberOfSelectedRows > 0
+        }
+    }
+    
     /// Return the currently selected type.
     func selectedType() -> String? {
         if useTypeList {
@@ -130,7 +138,11 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     /// Return a flat list of all resources in the current selection, optionally including resources within selected type lists.
     func selectedResources(deep: Bool = false) -> [Resource] {
-        if deep {
+        if useTypeList && scrollView.documentView === collectionView {
+            return collectionView.selectionIndexes.map {
+                document.collection.resourcesByType[currentType!]![$0]
+            }
+        } else if deep {
             return self.resources(for: outlineView.selectedItems)
         } else {
             return outlineView.selectedItems.compactMap({ $0 as? Resource })
@@ -290,7 +302,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     private func updateSidebar() {
-        splitView.setPosition(useTypeList ? 100 : 0, ofDividerAt: 0)
+        splitView.setPosition(useTypeList ? 110 : 0, ofDividerAt: 0)
         outlineView.indentationPerLevel = useTypeList ? 0 : 1
     }
     
@@ -348,7 +360,8 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         } else {
             currentType = nil
         }
-        if let type = currentType, PluginManager.previewSizes[type] != nil {
+        if let type = currentType, let size = PluginManager.previewSizes[type] {
+            (collectionView.collectionViewLayout as? NSCollectionViewFlowLayout)?.itemSize = NSSize(width: size+8, height: size+26)
             scrollView.documentView = collectionView
             collectionView.reloadData()
         } else {
@@ -365,7 +378,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let resource = document.collection.resourcesByType[currentType!]![indexPath.last!]
-        let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceGridView"), for: indexPath)
+        let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceItem"), for: indexPath)
         view.imageView?.image = PluginManager.editor(for: resource.type)?.image?(for: resource)
         view.textField?.stringValue = resource.name
         return view

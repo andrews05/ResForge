@@ -55,7 +55,7 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
                 default:
                     registry[type] = pluginClass
                     if pluginClass.image != nil {
-                        previewSizes[type] = 128
+                        previewSizes[type] = pluginClass.previewSize?(for: type) ?? 64
                     }
                 }
             }

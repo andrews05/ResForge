@@ -229,7 +229,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
             #selector(openResourcesInTemplate(_:)),
             #selector(openResourcesAsHex(_:)),
             #selector(exportResources(_:)):
-            return outlineView.numberOfSelectedRows > 0
+            return dataSource.hasSelection()
         default:
             // Auto validation of save menu item isn't working for existing documents - force override
             if menuItem.identifier?.rawValue == "save" {
@@ -247,7 +247,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
             #selector(openResourcesInTemplate(_:)),
             #selector(openResourcesAsHex(_:)),
             #selector(exportResources(_:)):
-            return outlineView.numberOfSelectedRows > 0
+            return dataSource.hasSelection()
         default:
             return true
         }

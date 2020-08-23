@@ -73,6 +73,8 @@
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
 		4966750D24BE601B00251406 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4968368824F20843009BDBBE /* ResourceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968368724F20843009BDBBE /* ResourceItem.swift */; };
+		4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
 		4968C03B24C6808200716AB9 /* PluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* PluginManager.swift */; };
 		4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03E24C78D7400716AB9 /* SupportRegistry.swift */; };
@@ -142,7 +144,6 @@
 		49F640592466099C00E7CE4D /* ElementRangeable.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F640572466099C00E7CE4D /* ElementRangeable.m */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
-		49F79A5F24F09460002A8607 /* ResourceGridView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */; };
 		49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F9560C245D44D200D80C65 /* ElementCOLR.h */; };
 		49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9560D245D44D200D80C65 /* ElementCOLR.m */; };
 		555DFD972059BCE700E1B774 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 555DFD992059BCE700E1B774 /* Credits.rtf */; };
@@ -463,6 +464,7 @@
 		496674FD24BBC7CE00251406 /* ImageWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWindowController.swift; sourceTree = "<group>"; };
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
 		4966750024BE5C8D00251406 /* QuickDraw.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QuickDraw.mm; sourceTree = "<group>"; };
+		4968368724F20843009BDBBE /* ResourceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceItem.swift; sourceTree = "<group>"; };
 		4968C03424C66D8B00716AB9 /* PluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
 		4968C03E24C78D7400716AB9 /* SupportRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportRegistry.swift; sourceTree = "<group>"; };
 		497043F42472064F0035C0FA /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -560,7 +562,7 @@
 		550B9048189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfoWindow.xib; sourceTree = "<group>"; };
 		550B9049189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrefsWindow.xib; sourceTree = "<group>"; };
 		550B904A189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ResourceDocument.xib; sourceTree = "<group>"; };
-		550B904B189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ResourceGridView.xib; sourceTree = "<group>"; };
+		550B904B189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ResourceItem.xib; sourceTree = "<group>"; };
 		550B904D189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HexWindow.xib; sourceTree = "<group>"; };
 		550B904E189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TemplateWindow.xib; sourceTree = "<group>"; };
 		550B904F189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FontDocument.xib; sourceTree = "<group>"; };
@@ -1134,6 +1136,7 @@
 				49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */,
 				49655DFB24DF94B500D6AFF6 /* ResourceCollection.swift */,
 				49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */,
+				4968368724F20843009BDBBE /* ResourceItem.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
 				492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */,
@@ -1153,7 +1156,7 @@
 				B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */,
 				B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */,
 				491EDA5024E375CE008E58CB /* SelectTemplate.xib */,
-				B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */,
+				B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */,
 				49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */,
 				F5041736036BD60801A8010A /* ResKnife.scriptSuite */,
 				F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */,
@@ -1571,9 +1574,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */,
 				E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */,
 				E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */,
-				49F79A5F24F09460002A8607 /* ResourceGridView.xib in Resources */,
 				49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */,
 				B229EEF515A4FB6F0032C12C /* Application.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */,
@@ -1699,6 +1702,7 @@
 				49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */,
 				49655DFC24DF94B500D6AFF6 /* ResourceCollection.swift in Sources */,
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
+				4968368824F20843009BDBBE /* ResourceItem.swift in Sources */,
 				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
 				492722AE24CF8E6D00819E32 /* OutlineView-SelectedItems.swift in Sources */,
 			);
@@ -1993,12 +1997,12 @@
 			name = HexWindow.xib;
 			sourceTree = "<group>";
 		};
-		B2B3CEA816B9DCE90027F33F /* ResourceGridView.xib */ = {
+		B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				550B904B189A0360005AC38D /* Base */,
 			);
-			name = ResourceGridView.xib;
+			name = ResourceItem.xib;
 			sourceTree = "<group>";
 		};
 		B2FCA79E15A6704900696598 /* FontDocument.xib */ = {

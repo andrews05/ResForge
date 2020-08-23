@@ -189,6 +189,15 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         return NSWorkspace.shared.icon(forFileType: "public.image")
     }
     
+    static func previewSize(for resourceType: String) -> Int {
+        switch resourceType {
+        case "PICT", "PNG ":
+            return 100
+        default:
+            return 64
+        }
+    }
+    
     private static func imageData(for resource: Resource!) -> Data {
         let data = resource.data
         guard data.count > 0 else {

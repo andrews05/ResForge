@@ -26,8 +26,11 @@ public extension FourCharCode {
     /// Return the icon to be used throughout the UI for any given resource type.
     @objc optional static func icon(for resourceType: String) -> NSImage?
 
-    /// Return an NSImage representing the resource for use in grid view
+    /// Return an NSImage representing the resource for use in grid view.
     @objc optional static func image(for resource: Resource) -> NSImage?
+    
+    /// Return the preferred preview size for grid view.
+    @objc optional static func previewSize(for resourceType: String) -> Int
 }
 
 @objc public protocol ResKnifeTemplatePlugin: ResKnifePlugin {
