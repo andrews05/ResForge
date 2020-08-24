@@ -1,37 +1,30 @@
 import Cocoa
 import RKSupport
 
-class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource, NSSplitViewDelegate, NSCollectionViewDataSource {
-    @IBOutlet var outlineView: NSOutlineView!
-    @IBOutlet var typeList: NSTableView!
+class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, NSSplitViewDelegate {
     @IBOutlet var splitView: NSSplitView!
+    @IBOutlet var typeList: NSTableView!
     @IBOutlet var scrollView: NSScrollView!
+    @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var collectionView: NSCollectionView!
-    @IBOutlet weak var document: ResourceDocument!
+    @IBOutlet var outlineController: OutlineController!
+    @IBOutlet var collectionController: CollectionController!
+    @IBOutlet var document: ResourceDocument!
+    
     private(set) var useTypeList = UserDefaults.standard.bool(forKey: kShowSidebar)
-    private var currentType: String? = nil
-    private var inlineUpdate = false // Flag to prevent reloading items when editing inline
+    private var resourcesView: ResourcesView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // awakeFromNib is re-triggered each time a cell is created - to ensure we only do this once, check the registered dragged types
-        if outlineView.registeredDraggedTypes.count == 0 {
-            NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
 
-            outlineView.registerForDraggedTypes([.RKResource])
-            if outlineView.sortDescriptors.count == 0 {
-                // Default sort resources by id
-                outlineView.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-            } else {
-                document.collection.sortDescriptors = outlineView.sortDescriptors
-            }
-            if useTypeList {
-                // Select first type by default
-                typeList.selectRowIndexes(IndexSet(integer: 1), byExtendingSelection: false)
-            }
-            self.updateSidebar()
+        resourcesView = outlineController
+        if useTypeList {
+            // Attempt to select first type by default
+            typeList.selectRowIndexes([1], byExtendingSelection: false)
         }
+        self.updateSidebar()
     }
     
     @objc func resourceTypeDidChange(_ notification: Notification) {
@@ -42,7 +35,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         else {
             return
         }
-        self.reload(selecting: [resource], withUndo: false)
+        document.undoManager?.disableUndoRegistration()
+        self.reload(selecting: [resource])
+        document.undoManager?.enableUndoRegistration()
     }
     
     @objc func resourceDidChange(_ notification: Notification) {
@@ -53,23 +48,8 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         else {
             return
         }
-        // Update the position
-        let row = outlineView.row(forItem: resource)
-        let newRow = document.collection.resourcesByType[resource.type]!.firstIndex(of: resource)!
-        if useTypeList {
-            outlineView.moveItem(at: row, inParent: nil, to: newRow, inParent: nil)
-        } else {
-            let offset = outlineView.row(forItem: resource.type) + 1
-            outlineView.moveItem(at: row-offset, inParent: resource.type, to: newRow, inParent: resource.type)
-        }
-        if inlineUpdate {
-            outlineView.scrollRowToVisible(outlineView.selectedRow)
-            // Update the placeholder
-            let view = outlineView.view(atColumn: 0, row: outlineView.selectedRow, makeIfNecessary: false) as? NSTableCellView
-            view?.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
-        } else {
-            outlineView.reloadItem(resource)
-        }
+        let newIndex = document.directory.resourcesByType[resource.type]!.firstIndex(of: resource)!
+        resourcesView.changed(resource: resource, newIndex: newIndex)
     }
     
     // MARK: - Resource management
@@ -90,214 +70,60 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     /// Reload the view and select the given resources.
-    func reload(selecting resources: [Resource]? = nil, withUndo: Bool = true) {
-        typeList.reloadData()
-        if useTypeList,
-            let type = resources?.first?.type ?? currentType,
-            let i = document.collection.allTypes.firstIndex(of: type) {
-            typeList.selectRowIndexes(IndexSet(integer: i+1), byExtendingSelection: false)
+    func reload(selecting resources: [Resource]? = nil) {
+        if useTypeList {
+            typeList.reloadData()
+            if let type = resources?.first?.type ?? resourcesView.selectedType(),
+                let i = document.directory.allTypes.firstIndex(of: type) {
+                typeList.selectRowIndexes([i+1], byExtendingSelection: false)
+            } else {
+                resourcesView.reload(type: "")
+            }
         } else {
-            currentType = nil
-            outlineView.reloadData()
+            resourcesView.reload(type: nil)
         }
         if let resources = resources {
-            self.select(resources)
+            resourcesView.select(resources)
         }
-        if withUndo {
-            document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
-        }
+        document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
     }
     
-    func select(_ resources: [Resource]) {
-        let rows = resources.compactMap { resource -> Int? in
-            outlineView.expandItem(resource.type)
-            let i = outlineView.row(forItem: resource)
-            return i == -1 ? nil : i
-        }
-        outlineView.selectRowIndexes(IndexSet(rows), byExtendingSelection: false)
-        outlineView.scrollRowToVisible(outlineView.selectedRow)
-    }
-    
-    func hasSelection() -> Bool {
-        if useTypeList && scrollView.documentView === collectionView {
-            return collectionView.selectionIndexes.count > 0
-        } else {
-            return outlineView.numberOfSelectedRows > 0
-        }
-    }
-    
-    /// Return the currently selected type.
-    func selectedType() -> String? {
-        if useTypeList {
-            return currentType
-        } else {
-            let item = outlineView.item(atRow: outlineView.selectedRow)
-            return item as? String ?? (item as? Resource)?.type
-        }
+    /// Return the number of selected items.
+    func selectionCount() -> Int {
+        return resourcesView.selectionCount()
     }
     
     /// Return a flat list of all resources in the current selection, optionally including resources within selected type lists.
     func selectedResources(deep: Bool = false) -> [Resource] {
-        if useTypeList && scrollView.documentView === collectionView {
-            return collectionView.selectionIndexes.map {
-                document.collection.resourcesByType[currentType!]![$0]
-            }
-        } else if deep {
-            return self.resources(for: outlineView.selectedItems)
-        } else {
-            return outlineView.selectedItems.compactMap({ $0 as? Resource })
-        }
+        return resourcesView.selectedResources(deep: deep)
     }
     
-    private func resources(for items: [Any]) -> [Resource] {
-        var resources: [Resource] = []
-        for item in items {
-            if let item = item as? String {
-                resources.append(contentsOf: document.collection.resourcesByType[item]!)
-            } else if let item = item as? Resource, !resources.contains(item) {
-                resources.append(item)
-            }
-        }
-        return resources
-    }
-    
-    // MARK: - Delegate functions
-    
-    func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-        let view: NSTableCellView
-        if let resource = item as? Resource {
-            view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
-            switch tableColumn!.identifier.rawValue {
-            case "name":
-                view.textField?.stringValue = resource.name
-                view.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
-                view.imageView?.image = ApplicationDelegate.icon(for: resource.type)
-            case "type":
-                view.textField?.stringValue = resource.type
-            case "id":
-                view.textField?.integerValue = resource.id
-            case "size":
-                view.textField?.integerValue = resource.data.count
-            case "attributes":
-                view.textField?.objectValue = resource.attributes
-            default:
-                return nil
-            }
-            return view
-        } else if let type = item as? String {
-            let identifier = tableColumn!.identifier.rawValue.appending("Group")
-            switch identifier {
-            case "nameGroup":
-                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), owner: self) as! NSTableCellView
-                view.textField?.stringValue = type
-            case "sizeGroup":
-                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), owner: self) as! NSTableCellView
-                view.textField?.integerValue = document.collection.resourcesByType[type]!.count
-            default:
-                return nil
-            }
-            return view
-        }
-        return nil
-    }
-    
-    // Check for conflicts
-    func control(_ control: NSControl, isValidObject obj: Any?) -> Bool {
-        let textField = control as! NSTextField
-        let resource = outlineView.item(atRow: outlineView.row(for: textField)) as! Resource
-        switch textField.identifier?.rawValue {
-        case "type":
-            return resource.canSetType(obj as! String)
-        case "id":
-            return resource.canSetID(obj as! Int)
-        default:
-            break
-        }
-        return true
-    }
-    
-    func controlTextDidEndEditing(_ obj: Notification) {
-        let textField = obj.object as! NSTextField
-        let resource = outlineView.item(atRow: outlineView.row(for: textField)) as! Resource
-        // We don't need to reload the item after changing values here
-        inlineUpdate = true
-        switch textField.identifier?.rawValue {
-        case "name":
-            resource.name = textField.stringValue
-        case "type":
-            resource.type = textField.stringValue
-        case "id":
-            resource.id = textField.integerValue
-        default:
-            break
-        }
-        inlineUpdate = false
-    }
-
-    // MARK: - DataSource protocol functions
-    
-    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if let type = item as? String ?? currentType {
-            return document.collection.resourcesByType[type]![index]
-        } else {
-            return document.collection.allTypes[index]
-        }
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        return item is String
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if let type = item as? String ?? currentType {
-            return document.collection.resourcesByType[type]!.count
-        } else if !useTypeList {
-            return document.collection.allTypes.count
-        }
-        return 0
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
-        document.collection.sortDescriptors = outlineView.sortDescriptors
-        outlineView.reloadData()
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, writeItems items: [Any], to pasteboard: NSPasteboard) -> Bool {
-        let data = NSKeyedArchiver.archivedData(withRootObject: self.resources(for: items))
-        pasteboard.setData(data, forType: .RKResource)
-        return true
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
-        if info.draggingSource as? NSOutlineView === outlineView {
-            return []
-        }
-        outlineView.setDropItem(nil, dropChildIndex: NSOutlineViewDropOnItemIndex)
-        return .copy
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
-        if let data = info.draggingPasteboard.data(forType: .RKResource),
-            let resources = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Resource] {
-            document.add(resources: resources)
-            return true
-        }
-        return false
+    /// Return the currently selected type.
+    func selectedType() -> String? {
+        return resourcesView.selectedType()
     }
 
     // MARK: - Sidebar functions
     
     func toggleSidebar() {
-        if !useTypeList {
-            // Try to make sure sure a type is selected when showing the sidebar
-            currentType = self.selectedType() ?? outlineView.item(atRow: 0) as? String
-        }
         useTypeList = !useTypeList
-        if !useTypeList {
+        let selection = self.selectedResources()
+        if useTypeList {
+            typeList.reloadData()
+            // Try to make sure sure a type is selected when showing the sidebar
+            if let type = resourcesView.selectedType() ?? document.directory.allTypes.first,
+                let i = document.directory.allTypes.firstIndex(of: type) {
+                typeList.selectRowIndexes([i+1], byExtendingSelection: false)
+            } else {
+                resourcesView.reload(type: "")
+            }
+        } else {
+            resourcesView = outlineController
             scrollView.documentView = outlineView
+            resourcesView.reload(type: nil)
         }
         self.updateSidebar()
-        self.reload(selecting: self.selectedResources(), withUndo: false)
+        resourcesView.select(selection)
         UserDefaults.standard.set(useTypeList, forKey: kShowSidebar)
     }
     
@@ -331,19 +157,19 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         if let identifier = tableColumn?.identifier {
-            let type = document.collection.allTypes[row-1]
-            let count = String(document.collection.resourcesByType[type]!.count)
-            let view = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
+            let type = document.directory.allTypes[row-1]
+            let count = String(document.directory.resourcesByType[type]!.count)
+            let view = tableView.makeView(withIdentifier: identifier, owner: nil) as! NSTableCellView
             view.textField?.stringValue = type
             (view.subviews.last as? NSButton)?.title = count
             return view
         } else {
-            return tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: self) as! NSTableCellView
+            return tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: nil) as! NSTableCellView
         }
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return document.collection.allTypes.count + 1
+        return document.directory.allTypes.count + 1
     }
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
@@ -355,37 +181,47 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     func tableViewSelectionDidChange(_ notification: Notification) {
-        if useTypeList && typeList.selectedRow > 0 {
-            currentType = document.collection.allTypes[typeList.selectedRow-1]
+        let type: String
+        if typeList.selectedRow > 0 {
+            type = document.directory.allTypes[typeList.selectedRow-1]
         } else {
-            currentType = nil
+            type = ""
         }
-        if let type = currentType, let size = PluginManager.previewSizes[type] {
-            (collectionView.collectionViewLayout as? NSCollectionViewFlowLayout)?.itemSize = NSSize(width: size+8, height: size+26)
+        if let size = PluginManager.previewSizes[type] {
+            let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
+            layout.itemSize = NSSize(width: size+8, height: size+26)
+            resourcesView = collectionController
             scrollView.documentView = collectionView
-            collectionView.reloadData()
         } else {
+            resourcesView = outlineController
             scrollView.documentView = outlineView
-            outlineView.reloadData()
         }
-    }
-    
-    // MARK: - Collection view
-    
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return document.collection.resourcesByType[currentType!]!.count
-    }
-    
-    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        let resource = document.collection.resourcesByType[currentType!]![indexPath.last!]
-        let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceItem"), for: indexPath)
-        view.imageView?.image = PluginManager.editor(for: resource.type)?.image?(for: resource)
-        view.textField?.stringValue = resource.name
-        return view
+        resourcesView.reload(type: type)
     }
 }
 
 // Prevent the source list from becoming first responder
 class SourceList: NSTableView {
     override var acceptsFirstResponder: Bool { false }
+}
+
+// Common interface for the OutlineController and CollectionController
+protocol ResourcesView {
+    /// Reload the data in the view.
+    func reload(type: String?)
+    
+    /// Select the given resources.
+    func select(_ resources: [Resource])
+    
+    /// Return the number of selected items.
+    func selectionCount() -> Int
+    
+    /// Return a flat list of all resources in the current selection, optionally including resources within selected type lists.
+    func selectedResources(deep: Bool) -> [Resource]
+    
+    /// Return the currently selcted type.
+    func selectedType() -> String?
+    
+    /// Notify the view that a resource may have moved position.
+    func changed(resource: Resource, newIndex: Int)
 }

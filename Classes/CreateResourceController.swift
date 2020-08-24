@@ -24,7 +24,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     func show(type: String? = nil, id: Int? = nil, name: String? = nil) {
         _ = self.window
         // Add all types currently in the document
-        var suggestions = rDocument.collection.allTypes
+        var suggestions = rDocument.directory.allTypes
         // Common types?
         for value in ["PICT", "snd ", "STR ", "STR#", "TMPL", "vers"] {
             if !suggestions.contains(value) {
@@ -39,10 +39,10 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         nameView.objectValue = name
         if let type = type {
             if let id = id {
-                idView.integerValue = rDocument.collection.uniqueID(for: type, starting: id)
+                idView.integerValue = rDocument.directory.uniqueID(for: type, starting: id)
                 self.window?.makeFirstResponder(nameView)
             } else {
-                idView.integerValue = rDocument.collection.uniqueID(for: type)
+                idView.integerValue = rDocument.directory.uniqueID(for: type)
                 self.window?.makeFirstResponder(idView)
             }
             createButton.isEnabled = true
@@ -60,7 +60,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             createButton.isEnabled = false
         } else {
             // Check for conflict
-            let resource = rDocument.collection.findResource(type: typeView.stringValue, id: idView.integerValue)
+            let resource = rDocument.directory.findResource(type: typeView.stringValue, id: idView.integerValue)
             createButton.isEnabled = resource == nil
         }
     }
@@ -68,7 +68,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     @IBAction func typeChanged(_ sender: Any) {
         // Get a suitable id for this type
         if typeView.objectValue != nil {
-            idView.integerValue = rDocument.collection.uniqueID(for: typeView.stringValue)
+            idView.integerValue = rDocument.directory.uniqueID(for: typeView.stringValue)
             createButton.isEnabled = true
         }
     }
@@ -77,7 +77,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         if sender === createButton {
             let resource = Resource(type: typeView.stringValue, id: idView.integerValue, name: nameView.stringValue)
             rDocument.dataSource.reload {
-                rDocument.collection.add(resource)
+                rDocument.directory.add(resource)
                 return [resource]
             }
             rDocument.undoManager?.setActionName(NSLocalizedString("Create Resource", comment: ""))

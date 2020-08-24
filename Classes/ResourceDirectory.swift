@@ -2,11 +2,11 @@ import Foundation
 import RKSupport
 
 extension Notification.Name {
-    static let CollectionDidAddResource     = Self("CollectionDidAddResource")
-    static let CollectionDidRemoveResource  = Self("CollectionDidRemoveResource")
+    static let DirectoryDidAddResource     = Self("DirectoryDidAddResource")
+    static let DirectoryDidRemoveResource  = Self("DirectoryDidRemoveResource")
 }
 
-class ResourceCollection {
+class ResourceDirectory {
     private(set) weak var document: ResourceDocument!
     private(set) var resourcesByType: [String: [Resource]] = [:]
     private(set) var allTypes: [String] = []
@@ -45,14 +45,14 @@ class ResourceCollection {
     func add(_ resource: Resource) {
         self.addToTypedList(resource)
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.remove(resource) })
-        NotificationCenter.default.post(name: .CollectionDidAddResource, object: self, userInfo: ["resource": resource])
+        NotificationCenter.default.post(name: .DirectoryDidAddResource, object: self, userInfo: ["resource": resource])
     }
     
     /// Remove a single resource.
     func remove(_ resource: Resource) {
         self.removeFromTypedList(resource)
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.add(resource) })
-        NotificationCenter.default.post(name: .CollectionDidRemoveResource, object: self, userInfo: ["resource": resource])
+        NotificationCenter.default.post(name: .DirectoryDidRemoveResource, object: self, userInfo: ["resource": resource])
     }
     
     private func addToTypedList(_ resource: Resource) {

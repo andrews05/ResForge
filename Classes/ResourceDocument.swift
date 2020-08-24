@@ -2,13 +2,13 @@ import Cocoa
 import RKSupport
 
 extension Notification.Name {
-    static let DocumentInfoDidChange = Notification.Name("DocumentInfoDidChangeNotification")
+    static let DocumentInfoDidChange        = Self("DocumentInfoDidChangeNotification")
+    static let DocumentSelectionDidChange   = Self("DocumentSelectionDidChangeNotification")
 }
 
 class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
-    @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var dataSource: ResourceDataSource!
-    private(set) lazy var collection = ResourceCollection(self)
+    private(set) lazy var directory = ResourceDirectory(self)
     private(set) lazy var pluginManager = PluginManager(self)
     private(set) lazy var createController = CreateResourceController(self)
     private var fork: String!
@@ -94,8 +94,8 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
             _ = pluginManager.closeAll(saving: false)
             hfsType = attrs[.hfsTypeCode] as! OSType
             hfsCreator = attrs[.hfsCreatorCode] as! OSType
-            collection.reset()
-            collection.add(resources)
+            directory.reset()
+            directory.add(resources)
             dataSource?.reload()
             self.undoManager?.enableUndoRegistration()
         } else {
@@ -140,7 +140,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
         
         // Write resources to file
         let writeUrl = fork == "rsrc" ? url.appendingPathComponent("..namedfork/rsrc") : url
-        try ResourceFile.write(collection.resources(), to: writeUrl, with: format)
+        try ResourceFile.write(directory.resources(), to: writeUrl, with: format)
         
         // If writing the resource fork, copy the data from the old file
         if saveOperation == .saveOperation && fork == "rsrc" {
@@ -229,7 +229,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
             #selector(openResourcesInTemplate(_:)),
             #selector(openResourcesAsHex(_:)),
             #selector(exportResources(_:)):
-            return dataSource.hasSelection()
+            return dataSource.selectionCount() > 0
         default:
             // Auto validation of save menu item isn't working for existing documents - force override
             if menuItem.identifier?.rawValue == "save" {
@@ -247,7 +247,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
             #selector(openResourcesInTemplate(_:)),
             #selector(openResourcesAsHex(_:)),
             #selector(exportResources(_:)):
-            return dataSource.hasSelection()
+            return dataSource.selectionCount() > 0
         default:
             return true
         }
@@ -270,27 +270,6 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
             createController.show(type: resource.type, id: resource.id)
         } else {
             createController.show(type: dataSource.selectedType())
-        }
-    }
-    
-    @IBAction func doubleClickItems(_ sender: NSOutlineView) {
-        // Ignore double-clicks in table header
-        guard sender.clickedRow != -1 else {
-            return
-        }
-        // Use hex editor if holding option key
-        var editor: ResKnifePlugin.Type?
-        if NSApp.currentEvent!.modifierFlags.contains(.option) {
-            editor = PluginManager.hexEditor
-        }
-        
-        for item in sender.selectedItems {
-            if let resource = item as? Resource {
-                pluginManager.open(resource: resource, using: editor, template: nil)
-            } else {
-                // Expand the type list
-                sender.expandItem(item)
-            }
         }
     }
     
@@ -370,7 +349,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
             var alert: NSAlert!
             var modalResponse: NSApplication.ModalResponse?
             for resource in resources {
-                if let conflicted = collection.findResource(type: resource.type, id: resource.id) {
+                if let conflicted = directory.findResource(type: resource.type, id: resource.id) {
                     // Resource slot is occupied, ask user what to do
                     if modalResponse == nil {
                         if alert == nil {
@@ -392,12 +371,12 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
                     }
                     switch (modalResponse!) {
                     case .alertFirstButtonReturn: // unique id
-                        resource.id = collection.uniqueID(for: resource.type, starting: resource.id)
-                        collection.add(resource)
+                        resource.id = directory.uniqueID(for: resource.type, starting: resource.id)
+                        directory.add(resource)
                         added.append(resource)
                     case .alertSecondButtonReturn: // overwrite
-                        collection.remove(conflicted)
-                        collection.add(resource)
+                        directory.remove(conflicted)
+                        directory.add(resource)
                         added.append(resource)
                     default:
                         break
@@ -407,7 +386,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
                         modalResponse = nil
                     }
                 } else {
-                    collection.add(resource)
+                    directory.add(resource)
                     added.append(resource)
                 }
             }
@@ -422,7 +401,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
         }
         dataSource.reload {
             for resource in resources {
-                collection.remove(resource)
+                directory.remove(resource)
             }
             return nil
         }

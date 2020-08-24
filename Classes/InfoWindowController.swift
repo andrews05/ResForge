@@ -31,7 +31,7 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(mainWindowChanged(_:)), name: NSWindow.didBecomeMainNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(mainWindowResigned(_:)), name: NSWindow.didResignMainNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(selectedResourceChanged(_:)), name: NSOutlineView.selectionDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(selectedResourceChanged(_:)), name: .DocumentSelectionDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(propertiesChanged(_:)), name: .ResourceDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(propertiesChanged(_:)), name: .DocumentInfoDidChange, object: nil)
     }
@@ -98,7 +98,7 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     private func setMainWindow(_ mainWindow: NSWindow?) {
         if let document = mainWindow?.windowController?.document as? ResourceDocument {
             currentDocument = document
-            selectedResource = document.outlineView.selectedItem as? Resource
+            selectedResource = document.dataSource.selectionCount() == 1 ? document.dataSource.selectedResources().first : nil
         } else {
             currentDocument = nil
             selectedResource = (mainWindow?.windowController as? ResKnifePlugin)?.resource
@@ -118,9 +118,8 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     }
     
     @objc func selectedResourceChanged(_ notification: Notification) {
-        let outline = notification.object as! NSOutlineView
-        if outline.window?.windowController?.document === currentDocument {
-            selectedResource = outline.selectedItem as? Resource
+        if notification.object as AnyObject? === currentDocument {
+            selectedResource = currentDocument.dataSource.selectionCount() == 1 ? currentDocument.dataSource.selectedResources().first : nil
             self.update()
         }
     }

@@ -67,7 +67,7 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     init(_ document: ResourceDocument) {
         self.document = document
         super.init()
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .CollectionDidRemoveResource, object: document.collection)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .DirectoryDidRemoveResource, object: document.directory)
     }
     
     @objc func resourceRemoved(_ notification: Notification) {
@@ -170,43 +170,43 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     }
     
     func allResources(ofType type: String, currentDocumentOnly: Bool = false) -> [Resource] {
-        var resources = document.collection.resources(ofType: type)
+        var resources = document.directory.resources(ofType: type)
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                resources.append(contentsOf: doc.collection.resources(ofType: type))
+                resources.append(contentsOf: doc.directory.resources(ofType: type))
             }
         }
         return resources
     }
 
     func findResource(ofType type: String, id: Int, currentDocumentOnly: Bool = false) -> Resource? {
-        if let resource = document.collection.findResource(type: type, id: id) {
+        if let resource = document.directory.findResource(type: type, id: id) {
             return resource
         }
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                if let resource = doc.collection.findResource(type: type, id: id) {
+                if let resource = doc.directory.findResource(type: type, id: id) {
                     return resource
                 }
             }
         }
-        return SupportRegistry.collection.findResource(type: type, id: id)
+        return SupportRegistry.directory.findResource(type: type, id: id)
     }
 
     func findResource(ofType type: String, name: String, currentDocumentOnly: Bool = false) -> Resource? {
-        if let resource = document.collection.findResource(type: type, name: name) {
+        if let resource = document.directory.findResource(type: type, name: name) {
             return resource
         }
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                if let resource = doc.collection.findResource(type: type, name: name) {
+                if let resource = doc.directory.findResource(type: type, name: name) {
                     return resource
                 }
             }
         }
-        return SupportRegistry.collection.findResource(type: type, name: name)
+        return SupportRegistry.directory.findResource(type: type, name: name)
     }
 }

@@ -10,7 +10,6 @@
 		491EDA5124E375CE008E58CB /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 491EDA5024E375CE008E58CB /* SelectTemplate.xib */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */; };
-		492722AE24CF8E6D00819E32 /* OutlineView-SelectedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */; };
 		492722AF24CFADD600819E32 /* RKSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 49AACD7D24CE931A0081DD4A /* RKSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
@@ -68,7 +67,7 @@
 		4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */; };
 		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
 		49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */; };
-		49655DFC24DF94B500D6AFF6 /* ResourceCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceCollection.swift */; };
+		49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */; };
 		49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */; };
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
@@ -126,6 +125,8 @@
 		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49C5622B24D0D8D20072D659 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */; };
+		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
+		49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1D24F377A400BE0F0F /* CollectionController.swift */; };
 		49F6403C2461199500E7CE4D /* ElementPACK.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403A2461199500E7CE4D /* ElementPACK.h */; };
 		49F6403D2461199500E7CE4D /* ElementPACK.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F6403B2461199500E7CE4D /* ElementPACK.m */; };
 		49F640402462C84B00E7CE4D /* ElementDVDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403E2462C84B00E7CE4D /* ElementDVDR.h */; };
@@ -398,7 +399,6 @@
 		3D50047004EF040900F3B64D /* ElementOCNT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementOCNT.m; sourceTree = "<group>"; };
 		491EDA5024E375CE008E58CB /* SelectTemplate.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectTemplate.xib; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; };
-		492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OutlineView-SelectedItems.swift"; sourceTree = "<group>"; };
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
@@ -458,7 +458,7 @@
 		4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenPanelDelegate.swift; sourceTree = "<group>"; };
 		49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDocument.swift; sourceTree = "<group>"; };
 		49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource-Conflict.swift"; sourceTree = "<group>"; };
-		49655DFB24DF94B500D6AFF6 /* ResourceCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCollection.swift; sourceTree = "<group>"; };
+		49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDirectory.swift; sourceTree = "<group>"; };
 		49655E3F24DFF26700D6AFF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Image Editor-Bridging-Header.h"; sourceTree = "<group>"; };
 		496674FD24BBC7CE00251406 /* ImageWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWindowController.swift; sourceTree = "<group>"; };
@@ -532,6 +532,8 @@
 		49AACD7D24CE931A0081DD4A /* RKSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RKSupport.h; sourceTree = "<group>"; };
 		49AACD7E24CE931A0081DD4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; };
+		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
+		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
 		49F6403A2461199500E7CE4D /* ElementPACK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementPACK.h; sourceTree = "<group>"; };
 		49F6403B2461199500E7CE4D /* ElementPACK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementPACK.m; sourceTree = "<group>"; };
 		49F6403E2462C84B00E7CE4D /* ElementDVDR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementDVDR.h; sourceTree = "<group>"; };
@@ -1133,13 +1135,14 @@
 				4968C03424C66D8B00716AB9 /* PluginManager.swift */,
 				4968C03E24C78D7400716AB9 /* SupportRegistry.swift */,
 				49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */,
-				49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */,
-				49655DFB24DF94B500D6AFF6 /* ResourceCollection.swift */,
 				49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */,
+				49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */,
+				49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */,
+				49DB6A1B24F375A100BE0F0F /* OutlineController.swift */,
+				49DB6A1D24F377A400BE0F0F /* CollectionController.swift */,
 				4968368724F20843009BDBBE /* ResourceItem.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
-				492722AD24CF8E6D00819E32 /* OutlineView-SelectedItems.swift */,
 				49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */,
 			);
 			path = Classes;
@@ -1155,8 +1158,8 @@
 				B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */,
 				B229EEF015A4FB6F0032C12C /* PrefsWindow.xib */,
 				B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */,
-				491EDA5024E375CE008E58CB /* SelectTemplate.xib */,
 				B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */,
+				491EDA5024E375CE008E58CB /* SelectTemplate.xib */,
 				49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */,
 				F5041736036BD60801A8010A /* ResKnife.scriptSuite */,
 				F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */,
@@ -1694,17 +1697,18 @@
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
 				49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */,
 				491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */,
+				49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */,
 				49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */,
 				4968C03B24C6808200716AB9 /* PluginManager.swift in Sources */,
+				49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */,
 				4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
 				49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */,
 				49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */,
-				49655DFC24DF94B500D6AFF6 /* ResourceCollection.swift in Sources */,
+				49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */,
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
 				4968368824F20843009BDBBE /* ResourceItem.swift in Sources */,
 				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
-				492722AE24CF8E6D00819E32 /* OutlineView-SelectedItems.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

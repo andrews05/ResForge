@@ -13,7 +13,7 @@ extension Resource {
     
     private func hasConflict(type: String, id: Int) -> Bool {
         // If changing id or type we need to check whether a matching resource already exists
-        if (document as? ResourceDocument)?.collection.findResource(type: type, id: id) != nil {
+        if (document as? ResourceDocument)?.directory.findResource(type: type, id: id) != nil {
             document?.presentError(ResourceError.conflict(type, id))
             return true
         }

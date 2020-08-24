@@ -2,7 +2,7 @@ import Foundation
 import RKSupport
 
 class SupportRegistry {
-    static let collection = ResourceCollection()
+    static let directory = ResourceDirectory()
     
     static func scanForResources() {
         Self.scanForResources(in: Bundle.main)
@@ -34,7 +34,7 @@ class SupportRegistry {
     private static func load(resourceFile: URL) {
         do {
             let resources = try ResourceFile.read(from: resourceFile, format: nil)
-            collection.add(resources)
+            directory.add(resources)
         } catch {}
     }
 }

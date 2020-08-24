@@ -9,7 +9,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ResourceDocument" customModule="ResKnife" customModuleProvider="target">
             <connections>
                 <outlet property="dataSource" destination="32" id="120"/>
-                <outlet property="outlineView" destination="145" id="155"/>
                 <outlet property="window" destination="5" id="8"/>
             </connections>
         </customObject>
@@ -183,7 +182,7 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <outlet property="delegate" destination="32" id="k61-gT-3C0"/>
+                                                                        <outlet property="delegate" destination="KZo-Ug-Xhc" id="a87-u5-FmT"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -242,7 +241,7 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <outlet property="delegate" destination="32" id="aDl-du-JhM"/>
+                                                                        <outlet property="delegate" destination="KZo-Ug-Xhc" id="OO8-NW-94w"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -306,9 +305,9 @@
                                                 </tableColumn>
                                             </tableColumns>
                                             <connections>
-                                                <action trigger="doubleAction" selector="doubleClickItems:" target="-2" id="sn9-O9-oAk"/>
-                                                <outlet property="dataSource" destination="32" id="152"/>
-                                                <outlet property="delegate" destination="32" id="yNx-IN-GtD"/>
+                                                <action trigger="doubleAction" selector="doubleClickItems:" target="KZo-Ug-Xhc" id="hgK-Id-S1B"/>
+                                                <outlet property="dataSource" destination="KZo-Ug-Xhc" id="eTg-yF-2Hf"/>
+                                                <outlet property="delegate" destination="KZo-Ug-Xhc" id="VGP-c0-RwU"/>
                                             </connections>
                                         </outlineView>
                                     </subviews>
@@ -466,12 +465,26 @@
         </window>
         <customObject id="32" customClass="ResourceDataSource" customModule="ResKnife" customModuleProvider="target">
             <connections>
+                <outlet property="collectionController" destination="bpN-Hx-BgR" id="Szf-ze-LIG"/>
                 <outlet property="collectionView" destination="XSg-qL-KmL" id="c0I-fZ-ZmU"/>
                 <outlet property="document" destination="-2" id="121"/>
+                <outlet property="outlineController" destination="KZo-Ug-Xhc" id="Aov-yV-BjU"/>
                 <outlet property="outlineView" destination="145" id="154"/>
                 <outlet property="scrollView" destination="146" id="QYq-XB-rik"/>
                 <outlet property="splitView" destination="P36-7u-Lzi" id="BCv-y2-KAq"/>
                 <outlet property="typeList" destination="u10-wc-uhV" id="23Z-LS-Zzh"/>
+            </connections>
+        </customObject>
+        <customObject id="KZo-Ug-Xhc" customClass="OutlineController" customModule="ResKnife" customModuleProvider="target">
+            <connections>
+                <outlet property="document" destination="-2" id="v0M-hs-4Ud"/>
+                <outlet property="outlineView" destination="145" id="xnq-a5-pCf"/>
+            </connections>
+        </customObject>
+        <customObject id="bpN-Hx-BgR" customClass="CollectionController" customModule="ResKnife" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="XSg-qL-KmL" id="tda-kJ-ynm"/>
+                <outlet property="document" destination="-2" id="oZ5-YA-qgn"/>
             </connections>
         </customObject>
         <tableColumn identifier="type" width="60" minWidth="60" maxWidth="60" id="148">
@@ -558,9 +571,10 @@
             </collectionViewFlowLayout>
             <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
             <connections>
-                <outlet property="dataSource" destination="32" id="gMQ-fQ-8ps"/>
+                <outlet property="dataSource" destination="bpN-Hx-BgR" id="Ed4-38-yxI"/>
+                <outlet property="delegate" destination="bpN-Hx-BgR" id="sYY-eI-Fvh"/>
             </connections>
-            <point key="canvasLocation" x="138" y="750"/>
+            <point key="canvasLocation" x="142" y="548"/>
         </collectionView>
     </objects>
     <resources>

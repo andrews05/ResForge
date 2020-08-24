@@ -13,9 +13,9 @@ class SelectTemplateController: NSWindowController, NSTextFieldDelegate {
         _ = self.window
         let docs = NSDocumentController.shared.documents as! [ResourceDocument]
         var names = docs.flatMap {
-            $0.collection.resources(ofType: "TMPL").map({ $0.name })
+            $0.directory.resources(ofType: "TMPL").map({ $0.name })
         }
-        names.append(contentsOf: SupportRegistry.collection.resources(ofType: "TMPL").map({ $0.name }))
+        names.append(contentsOf: SupportRegistry.directory.resources(ofType: "TMPL").map({ $0.name }))
         templates = Set(names) // Remove any duplicates
         typeList.addItems(withObjectValues: templates.sorted())
         

@@ -18,13 +18,13 @@ class ResourceItem: NSCollectionViewItem {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let clicker = NSClickGestureRecognizer(target: self, action: #selector(doubleClick))
-        clicker.numberOfClicksRequired = 2
-        clicker.delaysPrimaryMouseButtonEvents = false
-        self.view.addGestureRecognizer(clicker)
-    }
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        let clicker = NSClickGestureRecognizer(target: self, action: #selector(doubleClick))
+//        clicker.numberOfClicksRequired = 2
+//        clicker.delaysPrimaryMouseButtonEvents = false
+//        self.view.addGestureRecognizer(clicker)
+//    }
     
     private func highlight(_ on: Bool) {
         imageBox.isTransparent = !on
