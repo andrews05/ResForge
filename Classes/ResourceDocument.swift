@@ -2,11 +2,11 @@ import Cocoa
 import RKSupport
 
 extension Notification.Name {
-    static let DocumentInfoDidChange        = Self("DocumentInfoDidChangeNotification")
-    static let DocumentSelectionDidChange   = Self("DocumentSelectionDidChangeNotification")
+    static let DocumentInfoDidChange        = Self("DocumentInfoDidChange")
+    static let DocumentSelectionDidChange   = Self("DocumentSelectionDidChange")
 }
 
-class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
+class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, NSDraggingDestination {
     @IBOutlet var dataSource: ResourceDataSource!
     private(set) lazy var directory = ResourceDirectory(self)
     private(set) lazy var pluginManager = PluginManager(self)
@@ -214,6 +214,26 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
     
     // MARK: - Window Management
     
+    override func windowControllerDidLoadNib(_ windowController: NSWindowController) {
+        windowController.window?.registerForDraggedTypes([.RKResource])
+    }
+    
+    func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
+        // Can't drag to self
+        if (sender.draggingSource as? NSView)?.window?.delegate === self {
+            return []
+        }
+        return .copy
+    }
+    
+    func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        if let resources = sender.draggingPasteboard.readObjects(forClasses: [Resource.self], options: nil) as? [Resource] {
+            self.add(resources: resources)
+            return true
+        }
+        return false
+    }
+    
     override func canClose(withDelegate delegate: Any, shouldClose shouldCloseSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
         if pluginManager.closeAll(saving: true) {
             super.canClose(withDelegate: delegate, shouldClose: shouldCloseSelector, contextInfo: contextInfo)
@@ -314,13 +334,13 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate {
     }
     
     @IBAction func copy(_ sender: Any) {
-        let pb = NSPasteboard.init(name: .generalPboard)
+        let pb = NSPasteboard(name: .generalPboard)
         pb.declareTypes([.RKResource], owner: self)
         pb.writeObjects(dataSource.selectedResources(deep: true))
     }
     
     @IBAction func paste(_ sender: Any) {
-        let pb = NSPasteboard.init(name: .generalPboard)
+        let pb = NSPasteboard(name: .generalPboard)
         self.add(resources: pb.readObjects(forClasses: [Resource.self], options: nil) as! [Resource])
     }
     

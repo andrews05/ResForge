@@ -562,7 +562,7 @@
                 </tableCellView>
             </prototypeCellViews>
         </tableColumn>
-        <collectionView selectable="YES" allowsMultipleSelection="YES" id="XSg-qL-KmL">
+        <collectionView selectable="YES" allowsMultipleSelection="YES" id="XSg-qL-KmL" customClass="ResourceCollection" customModule="ResKnife" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="250" height="158"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="Pxt-Mn-njY">

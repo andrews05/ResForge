@@ -2,8 +2,9 @@ import Foundation
 import RKSupport
 
 extension Notification.Name {
-    static let DirectoryDidAddResource     = Self("DirectoryDidAddResource")
-    static let DirectoryDidRemoveResource  = Self("DirectoryDidRemoveResource")
+    static let DirectoryDidAddResource      = Self("DirectoryDidAddResource")
+    static let DirectoryDidRemoveResource   = Self("DirectoryDidRemoveResource")
+    static let DirectoryDidUpdateResource   = Self("DirectoryDidUpdateResource")
 }
 
 class ResourceDirectory {
@@ -92,11 +93,18 @@ class ResourceDirectory {
         guard
             let document = document,
             let resource = notification.object as? Resource,
-            resource.document === document
+            resource.document === document,
+            let idx = resourcesByType[resource.type]!.firstIndex(of: resource)
         else {
             return
         }
         resourcesByType[resource.type]!.sort(using: sortDescriptors)
+        let newIdx = resourcesByType[resource.type]!.firstIndex(of: resource)!
+        NotificationCenter.default.post(name: .DirectoryDidUpdateResource, object: self, userInfo: [
+            "resource": resource,
+            "oldIndex": idx,
+            "newIndex": newIdx
+        ])
     }
     
     func resources() -> [Resource] {

@@ -6,11 +6,6 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     @IBOutlet var document: ResourceDocument!
     private var currentType: String? = nil
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        collectionView.registerForDraggedTypes([.RKResource])
-    }
-    
     func reload(type: String?) {
         currentType = type
         collectionView.reloadData()
@@ -44,8 +39,16 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         }
     }
     
-    func changed(resource: Resource, newIndex: Int) {
-        
+    func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
+        let old: IndexPath = [0, oldIndex]
+        let new: IndexPath = [0, newIndex]
+        // Collection view doesn't retain selection when reloading - we need to keep track of it ourselves
+        let selected = collectionView.selectionIndexPaths.contains(old)
+        collectionView.animator().moveItem(at: old, to: new)
+        collectionView.animator().reloadItems(at: [new])
+        if selected {
+            collectionView.animator().selectItems(at: [new], scrollPosition: [])
+        }
     }
     
     // MARK: - Delegate functions
@@ -57,15 +60,8 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
     }
     
-//    func collectionView(_ collectionView: NSCollectionView, pasteboardWriterForItemAt index: Int) -> NSPasteboardWriting? {
-//        return document.directory.resourcesByType[currentType!]![index]
-//    }
-    
-    func collectionView(_ collectionView: NSCollectionView, writeItemsAt indexes: Set<IndexPath>, to pasteboard: NSPasteboard) -> Bool {
-        pasteboard.declareTypes([.RKResource], owner: nil)
-        let data = NSKeyedArchiver.archivedData(withRootObject: self.resources(for: indexes))
-        pasteboard.setData(data, forType: .RKResource)
-        return true
+    func collectionView(_ collectionView: NSCollectionView, pasteboardWriterForItemAt index: Int) -> NSPasteboardWriting? {
+        return document.directory.resourcesByType[currentType!]![index]
     }
     
     // Don't hide original items when dragging
@@ -73,23 +69,6 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         for i in indexes {
             collectionView.item(at: i)!.view.isHidden = false
         }
-    }
-    
-    func collectionView(_ collectionView: NSCollectionView, validateDrop draggingInfo: NSDraggingInfo, proposedIndexPath proposedDropIndexPath: AutoreleasingUnsafeMutablePointer<NSIndexPath>, dropOperation proposedDropOperation: UnsafeMutablePointer<NSCollectionView.DropOperation>) -> NSDragOperation {
-        if draggingInfo.draggingSource as AnyObject === collectionView {
-            return []
-        }
-        proposedDropOperation.pointee = .on
-        return .copy
-    }
-    
-    func collectionView(_ collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: IndexPath, dropOperation: NSCollectionView.DropOperation) -> Bool {
-        if let data = draggingInfo.draggingPasteboard.data(forType: .RKResource),
-            let resources = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Resource] {
-            document.add(resources: resources)
-            return true
-        }
-        return false
     }
     
     // MARK: - DataSource functions
@@ -104,5 +83,16 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         view.imageView?.image = PluginManager.editor(for: resource.type)?.image?(for: resource)
         view.textField?.stringValue = resource.name
         return view
+    }
+}
+
+class ResourceCollection: NSCollectionView {
+    // The collection view seems to absorb delete key events - override to pass this event on
+    override func keyDown(with event: NSEvent) {
+        if event.specialKey == .delete {
+            self.nextResponder?.keyDown(with: event)
+        } else {
+            super.keyDown(with: event)
+        }
     }
 }

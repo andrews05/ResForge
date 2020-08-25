@@ -17,7 +17,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     override func awakeFromNib() {
         super.awakeFromNib()
         NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceDidUpdate(_:)), name: .DirectoryDidUpdateResource, object: document.directory)
 
         resourcesView = outlineController
         if useTypeList {
@@ -35,21 +35,14 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         else {
             return
         }
-        document.undoManager?.disableUndoRegistration()
-        self.reload(selecting: [resource])
-        document.undoManager?.enableUndoRegistration()
+        self.reload(selecting: [resource], withUndo: false)
     }
     
-    @objc func resourceDidChange(_ notification: Notification) {
-        guard
-            let document = document,
-            let resource = notification.object as? Resource,
-            resource.document === document
-        else {
-            return
+    @objc func resourceDidUpdate(_ notification: Notification) {
+        let resource = notification.userInfo!["resource"] as! Resource
+        if !useTypeList || resource.type == resourcesView.selectedType() {
+            resourcesView.updated(resource: resource, oldIndex: notification.userInfo!["oldIndex"] as! Int, newIndex: notification.userInfo!["newIndex"] as! Int)
         }
-        let newIndex = document.directory.resourcesByType[resource.type]!.firstIndex(of: resource)!
-        resourcesView.changed(resource: resource, newIndex: newIndex)
     }
     
     // MARK: - Resource management
@@ -70,22 +63,24 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     }
     
     /// Reload the view and select the given resources.
-    func reload(selecting resources: [Resource]? = nil) {
-        if useTypeList {
-            typeList.reloadData()
-            if let type = resources?.first?.type ?? resourcesView.selectedType(),
-                let i = document.directory.allTypes.firstIndex(of: type) {
-                typeList.selectRowIndexes([i+1], byExtendingSelection: false)
-            } else {
-                resourcesView.reload(type: "")
-            }
+    func reload(selecting resources: [Resource]? = nil, withUndo: Bool = true) {
+        typeList.reloadData()
+        if useTypeList,
+            // When showing the sidebar (withUndo = false), select the first available type if nothing else selected
+            let type = resources?.first?.type ?? resourcesView.selectedType() ?? (withUndo ? nil : document.directory.allTypes.first),
+            let i = document.directory.allTypes.firstIndex(of: type) {
+            typeList.selectRowIndexes([i+1], byExtendingSelection: false)
         } else {
-            resourcesView.reload(type: nil)
+            resourcesView = outlineController
+            scrollView.documentView = outlineView
+            resourcesView.reload(type: useTypeList ? "" : nil)
         }
         if let resources = resources {
             resourcesView.select(resources)
         }
-        document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
+        if (withUndo) {
+            document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
+        }
     }
     
     /// Return the number of selected items.
@@ -107,23 +102,8 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     
     func toggleSidebar() {
         useTypeList = !useTypeList
-        let selection = self.selectedResources()
-        if useTypeList {
-            typeList.reloadData()
-            // Try to make sure sure a type is selected when showing the sidebar
-            if let type = resourcesView.selectedType() ?? document.directory.allTypes.first,
-                let i = document.directory.allTypes.firstIndex(of: type) {
-                typeList.selectRowIndexes([i+1], byExtendingSelection: false)
-            } else {
-                resourcesView.reload(type: "")
-            }
-        } else {
-            resourcesView = outlineController
-            scrollView.documentView = outlineView
-            resourcesView.reload(type: nil)
-        }
         self.updateSidebar()
-        resourcesView.select(selection)
+        self.reload(selecting: self.selectedResources(), withUndo: false)
         UserDefaults.standard.set(useTypeList, forKey: kShowSidebar)
     }
     
@@ -222,6 +202,6 @@ protocol ResourcesView {
     /// Return the currently selcted type.
     func selectedType() -> String?
     
-    /// Notify the view that a resource may have moved position.
-    func changed(resource: Resource, newIndex: Int)
+    /// Notify the view that a resource has been updated..
+    func updated(resource: Resource, oldIndex: Int, newIndex: Int)
 }

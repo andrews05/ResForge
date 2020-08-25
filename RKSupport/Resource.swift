@@ -1,12 +1,12 @@
 import Cocoa
 
 public extension Notification.Name {
-    static let ResourceDidChange            = Self("ResourceDidChangeNotification")
-    static let ResourceNameDidChange        = Self("ResourceNameDidChangeNotification")
-    static let ResourceTypeDidChange        = Self("ResourceTypeDidChangeNotification")
-    static let ResourceIDDidChange          = Self("ResourceIDDidChangeNotification")
-    static let ResourceAttributesDidChange  = Self("ResourceAttributesDidChangeNotification")
-    static let ResourceDataDidChange        = Self("ResourceDataDidChangeNotification")
+    static let ResourceDidChange            = Self("ResourceDidChange")
+    static let ResourceNameDidChange        = Self("ResourceNameDidChange")
+    static let ResourceTypeDidChange        = Self("ResourceTypeDidChange")
+    static let ResourceIDDidChange          = Self("ResourceIDDidChange")
+    static let ResourceAttributesDidChange  = Self("ResourceAttributesDidChange")
+    static let ResourceDataDidChange        = Self("ResourceDataDidChange")
 }
 
 public extension NSPasteboard.PasteboardType {

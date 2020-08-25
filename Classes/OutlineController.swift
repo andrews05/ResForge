@@ -9,15 +9,12 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // awakeFromNib is re-triggered each time a cell is created - make sure we only do this once
-        if outlineView.registeredDraggedTypes.count == 0 {
-            outlineView.registerForDraggedTypes([.RKResource])
-            if outlineView.sortDescriptors.count == 0 {
-                // Default sort resources by id
-                outlineView.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-            } else {
-                document.directory.sortDescriptors = outlineView.sortDescriptors
-            }
+        // Note: awakeFromNib is re-triggered each time a cell is created - be careful not to re-sort each time
+        if outlineView.sortDescriptors.count == 0 {
+            // Default sort resources by id
+            outlineView.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        } else if document.directory.sortDescriptors.count == 0 {
+            document.directory.sortDescriptors = outlineView.sortDescriptors
         }
     }
     
@@ -90,14 +87,12 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         return resources
     }
     
-    func changed(resource: Resource, newIndex: Int) {
-        // Update the position
-        let row = outlineView.row(forItem: resource)
+    func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
         if currentType != nil {
-            outlineView.moveItem(at: row, inParent: nil, to: newIndex, inParent: nil)
+            outlineView.moveItem(at: oldIndex, inParent: nil, to: newIndex, inParent: nil)
         } else {
             let offset = outlineView.row(forItem: resource.type) + 1
-            outlineView.moveItem(at: row-offset, inParent: resource.type, to: newIndex, inParent: resource.type)
+            outlineView.moveItem(at: oldIndex-offset, inParent: resource.type, to: newIndex, inParent: resource.type)
         }
         if inlineUpdate {
             outlineView.scrollRowToVisible(outlineView.selectedRow)
@@ -213,27 +208,9 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         outlineView.reloadData()
     }
     
-    func outlineView(_ outlineView: NSOutlineView, writeItems items: [Any], to pasteboard: NSPasteboard) -> Bool {
-        let data = NSKeyedArchiver.archivedData(withRootObject: self.resources(for: items))
-        pasteboard.setData(data, forType: .RKResource)
-        return true
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
-        if info.draggingSource as AnyObject === outlineView {
-            return []
-        }
-        outlineView.setDropItem(nil, dropChildIndex: NSOutlineViewDropOnItemIndex)
-        return .copy
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
-        if let data = info.draggingPasteboard.data(forType: .RKResource),
-            let resources = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Resource] {
-            document.add(resources: resources)
-            return true
-        }
-        return false
+    func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
+        // This currently doesn't allow dragging an entire type collection (can still copy/paste it though)
+        return item as? Resource
     }
 }
 
