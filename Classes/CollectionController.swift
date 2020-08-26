@@ -79,9 +79,11 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let resource = document.directory.resourcesByType[currentType!]![indexPath.last!]
-        let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceItem"), for: indexPath)
+        let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceItem"), for: indexPath) as! ResourceItem
         view.imageView?.image = resource.preview()
-        view.textField?.stringValue = resource.name
+        view.textField?.stringValue = String(resource.id)
+        view.nameField.stringValue = resource.name
+        view.nameField.isHidden = resource.name.count == 0
         return view
     }
 }
@@ -94,5 +96,50 @@ class ResourceCollection: NSCollectionView {
         } else {
             super.keyDown(with: event)
         }
+    }
+    
+    // Detect clicks only the image or text
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        let view = super.hitTest(point)
+        return view is NSImageView || view is NSTextField ? view : self
+    }
+}
+
+class ResourceItem: NSCollectionViewItem {
+    @IBOutlet var imageBox: NSBox!
+    @IBOutlet var textBox: NSBox!
+    @IBOutlet var nameField: NSTextField!
+    
+    override var isSelected: Bool {
+        didSet {
+            self.highlight(isSelected)
+        }
+    }
+    
+    override var highlightState: NSCollectionViewItem.HighlightState {
+        didSet {
+            if !isSelected || highlightState == .forDeselection {
+                self.highlight(highlightState == .forSelection)
+            }
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let clicker = NSClickGestureRecognizer(target: self, action: #selector(doubleClick))
+        clicker.numberOfClicksRequired = 2
+        clicker.delaysPrimaryMouseButtonEvents = false
+        self.view.addGestureRecognizer(clicker)
+    }
+    
+    private func highlight(_ on: Bool) {
+        imageBox.fillColor = on ? .secondarySelectedControlColor : .clear
+        textBox.fillColor = on ? .alternateSelectedControlColor : .clear
+        textField?.textColor = on ? .alternateSelectedControlTextColor : .controlTextColor
+    }
+    
+    @objc private func doubleClick() {
+        let document = self.view.window!.delegate as! ResourceDocument
+        document.openResources(self)
     }
 }

@@ -73,7 +73,6 @@
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
 		4966750D24BE601B00251406 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4968368824F20843009BDBBE /* ResourceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968368724F20843009BDBBE /* ResourceItem.swift */; };
 		4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
 		4968C03B24C6808200716AB9 /* EditorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* EditorManager.swift */; };
@@ -466,7 +465,6 @@
 		496674FD24BBC7CE00251406 /* ImageWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWindowController.swift; sourceTree = "<group>"; };
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
 		4966750024BE5C8D00251406 /* QuickDraw.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QuickDraw.mm; sourceTree = "<group>"; };
-		4968368724F20843009BDBBE /* ResourceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceItem.swift; sourceTree = "<group>"; };
 		4968C03424C66D8B00716AB9 /* EditorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorManager.swift; sourceTree = "<group>"; };
 		4968C03E24C78D7400716AB9 /* SupportRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportRegistry.swift; sourceTree = "<group>"; };
 		497043F42472064F0035C0FA /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1002,9 +1000,9 @@
 			children = (
 				49AACD7E24CE931A0081DD4A /* Info.plist */,
 				49AACD7D24CE931A0081DD4A /* RKSupport.h */,
+				491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */,
 				49AACD6324CE41A60081DD4A /* Resource.swift */,
 				49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */,
-				491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */,
 				49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */,
 				49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */,
 				49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */,
@@ -1143,7 +1141,6 @@
 				49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */,
 				49DB6A1B24F375A100BE0F0F /* OutlineController.swift */,
 				49DB6A1D24F377A400BE0F0F /* CollectionController.swift */,
-				4968368724F20843009BDBBE /* ResourceItem.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
 				49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */,
@@ -1711,7 +1708,6 @@
 				49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */,
 				49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */,
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
-				4968368824F20843009BDBBE /* ResourceItem.swift in Sources */,
 				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

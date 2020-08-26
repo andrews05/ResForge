@@ -31,7 +31,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="572" y="561" width="252" height="220"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="252" height="220"/>
             <value key="maxSize" type="size" width="252" height="220"/>
             <view key="contentView" id="6">
@@ -56,7 +56,7 @@
                     </imageView>
                     <textField identifier="name" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="186" translatesAutoresizingMaskIntoConstraints="NO" id="32">
                         <rect key="frame" x="45" y="189" width="199" height="22"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" enabled="NO" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="90">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="90">
                             <customFormatter key="formatter" id="4Mx-hY-5n6" customClass="MacRomanFormatter" customModule="RKSupport">
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
@@ -64,7 +64,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </customFormatter>
-                            <font key="font" metaFont="label" size="12"/>
+                            <font key="font" metaFont="controlContent"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>

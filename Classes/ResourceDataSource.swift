@@ -77,6 +77,8 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         }
         if let resources = resources {
             resourcesView.select(resources)
+        } else {
+            NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
         }
         if (withUndo) {
             document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
@@ -169,7 +171,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         }
         if let size = PluginRegistry.previewSizes[type] {
             let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
-            layout.itemSize = NSSize(width: size+8, height: size+26)
+            layout.itemSize = NSSize(width: size+8, height: size+39)
             resourcesView = collectionController
             scrollView.documentView = collectionView
         } else {
@@ -178,6 +180,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         }
         resourcesView.reload(type: type)
         scrollView.window?.makeFirstResponder(scrollView.documentView)
+        NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
     }
 }
 
