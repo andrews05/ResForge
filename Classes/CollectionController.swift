@@ -67,7 +67,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     // Don't hide original items when dragging
     func collectionView(_ collectionView: NSCollectionView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forItemsAt indexes: Set<IndexPath>) {
         for i in indexes {
-            collectionView.item(at: i)!.view.isHidden = false
+            collectionView.item(at: i)?.view.isHidden = false
         }
     }
     

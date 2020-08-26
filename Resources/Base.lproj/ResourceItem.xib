@@ -10,11 +10,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <view id="7">
-            <rect key="frame" x="0.0" y="0.0" width="108" height="139"/>
+            <rect key="frame" x="0.0" y="0.0" width="108" height="140"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Gtn-p1-9T1">
-                    <rect key="frame" x="0.0" y="31" width="108" height="108"/>
+                    <rect key="frame" x="0.0" y="32" width="108" height="108"/>
                     <view key="contentView" id="fkY-yQ-8rZ">
                         <rect key="frame" x="0.0" y="0.0" width="108" height="108"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -36,18 +36,18 @@
                     </view>
                 </box>
                 <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="wRp-cn-dhz">
-                    <rect key="frame" x="36" y="12" width="37" height="17"/>
+                    <rect key="frame" x="45" y="13" width="18" height="17"/>
                     <view key="contentView" id="dQm-an-CvF">
-                        <rect key="frame" x="0.0" y="0.0" width="37" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="18" height="17"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KKS-Bl-Sd6">
-                                <rect key="frame" x="1" y="1" width="35" height="16"/>
+                                <rect key="frame" x="1" y="1" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="DtA-kI-qcO"/>
                                 </constraints>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="cwj-Hf-ndf">
-                                    <font key="font" metaFont="label" size="12"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="ID" id="cwj-Hf-ndf">
+                                    <font key="font" metaFont="controlContent"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -61,17 +61,17 @@
                         </constraints>
                     </view>
                 </box>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sdy-Z7-HX9">
-                    <rect key="frame" x="40" y="0.0" width="28" height="11"/>
-                    <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" title="Label" id="E6P-MI-5Cq">
-                        <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
+                <textField verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sdy-Z7-HX9">
+                    <rect key="frame" x="38" y="0.0" width="32" height="13"/>
+                    <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" title="Name" id="E6P-MI-5Cq">
+                        <font key="font" metaFont="system" size="10"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="sdy-Z7-HX9" firstAttribute="top" secondItem="wRp-cn-dhz" secondAttribute="bottom" constant="1" id="7am-Sa-2rz"/>
+                <constraint firstItem="sdy-Z7-HX9" firstAttribute="top" secondItem="wRp-cn-dhz" secondAttribute="bottom" id="7am-Sa-2rz"/>
                 <constraint firstItem="Gtn-p1-9T1" firstAttribute="top" secondItem="7" secondAttribute="top" id="Cld-uy-eK4"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wRp-cn-dhz" secondAttribute="trailing" id="F87-Ca-I1a"/>
                 <constraint firstItem="Gtn-p1-9T1" firstAttribute="leading" secondItem="7" secondAttribute="leading" id="HcY-tE-R43"/>

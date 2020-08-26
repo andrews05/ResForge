@@ -172,7 +172,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         }
         if let size = PluginRegistry.previewSizes[type] {
             let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
-            layout.itemSize = NSSize(width: size+8, height: size+39)
+            layout.itemSize = NSSize(width: size+8, height: size+40)
             resourcesView = collectionController
             scrollView.documentView = collectionView
         } else {
