@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		491EDA5124E375CE008E58CB /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 491EDA5024E375CE008E58CB /* SelectTemplate.xib */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
+		491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */; };
 		492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */; };
 		492722AF24CFADD600819E32 /* RKSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 49AACD7D24CE931A0081DD4A /* RKSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
@@ -75,7 +76,7 @@
 		4968368824F20843009BDBBE /* ResourceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968368724F20843009BDBBE /* ResourceItem.swift */; };
 		4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
-		4968C03B24C6808200716AB9 /* PluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* PluginManager.swift */; };
+		4968C03B24C6808200716AB9 /* EditorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* EditorManager.swift */; };
 		4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03E24C78D7400716AB9 /* SupportRegistry.swift */; };
 		4970443424720C0B0035C0FA /* rez.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044162472064F0035C0FA /* rez.hpp */; };
 		4970443524720C0B0035C0FA /* type.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044172472064F0035C0FA /* type.hpp */; };
@@ -399,6 +400,7 @@
 		3D50047004EF040900F3B64D /* ElementOCNT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementOCNT.m; sourceTree = "<group>"; };
 		491EDA5024E375CE008E58CB /* SelectTemplate.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectTemplate.xib; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; };
+		491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; };
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
@@ -465,7 +467,7 @@
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
 		4966750024BE5C8D00251406 /* QuickDraw.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QuickDraw.mm; sourceTree = "<group>"; };
 		4968368724F20843009BDBBE /* ResourceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceItem.swift; sourceTree = "<group>"; };
-		4968C03424C66D8B00716AB9 /* PluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
+		4968C03424C66D8B00716AB9 /* EditorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorManager.swift; sourceTree = "<group>"; };
 		4968C03E24C78D7400716AB9 /* SupportRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportRegistry.swift; sourceTree = "<group>"; };
 		497043F42472064F0035C0FA /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		497043F52472064F0035C0FA /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -1002,6 +1004,7 @@
 				49AACD7D24CE931A0081DD4A /* RKSupport.h */,
 				49AACD6324CE41A60081DD4A /* Resource.swift */,
 				49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */,
+				491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */,
 				49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */,
 				49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */,
 				49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */,
@@ -1132,7 +1135,7 @@
 				49964E1524D10ED900BAB902 /* AttributesFormatter.swift */,
 				4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */,
 				49F6C76024C577430078EB55 /* PrefsController.swift */,
-				4968C03424C66D8B00716AB9 /* PluginManager.swift */,
+				4968C03424C66D8B00716AB9 /* EditorManager.swift */,
 				4968C03E24C78D7400716AB9 /* SupportRegistry.swift */,
 				49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */,
 				49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */,
@@ -1671,6 +1674,7 @@
 				49C5622B24D0D8D20072D659 /* MacRomanFormatter.swift in Sources */,
 				49964E1324D1034400BAB902 /* Resource.swift in Sources */,
 				49964DEC24D0EB7000BAB902 /* macroman.cpp in Sources */,
+				491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */,
 				49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */,
 				49964DE924D0EB5D00BAB902 /* color.cpp in Sources */,
 				49964DFD24D0EC2300BAB902 /* type.cpp in Sources */,
@@ -1699,7 +1703,7 @@
 				491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */,
 				49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */,
 				49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */,
-				4968C03B24C6808200716AB9 /* PluginManager.swift in Sources */,
+				4968C03B24C6808200716AB9 /* EditorManager.swift in Sources */,
 				49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */,
 				4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,

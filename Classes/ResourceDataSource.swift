@@ -167,7 +167,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         } else {
             type = ""
         }
-        if let size = PluginManager.previewSizes[type] {
+        if let size = PluginRegistry.previewSizes[type] {
             let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
             layout.itemSize = NSSize(width: size+8, height: size+26)
             resourcesView = collectionController
@@ -177,6 +177,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
             scrollView.documentView = outlineView
         }
         resourcesView.reload(type: type)
+        scrollView.window?.makeFirstResponder(scrollView.documentView)
     }
 }
 

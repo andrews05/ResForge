@@ -80,7 +80,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let resource = document.directory.resourcesByType[currentType!]![indexPath.last!]
         let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceItem"), for: indexPath)
-        view.imageView?.image = PluginManager.editor(for: resource.type)?.image?(for: resource)
+        view.imageView?.image = resource.preview()
         view.textField?.stringValue = resource.name
         return view
     }

@@ -26,12 +26,12 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         // Use hex editor if holding option key
         var editor: ResKnifePlugin.Type?
         if NSApp.currentEvent!.modifierFlags.contains(.option) {
-            editor = PluginManager.hexEditor
+            editor = PluginRegistry.hexEditor
         }
         
         for item in outlineView.selectedItems {
             if let resource = item as? Resource {
-                document.pluginManager.open(resource: resource, using: editor, template: nil)
+                document.editorManager.open(resource: resource, using: editor, template: nil)
             } else {
                 // Expand the type list
                 outlineView.expandItem(item)
@@ -114,7 +114,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             case "name":
                 view.textField?.stringValue = resource.name
                 view.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
-                view.imageView?.image = ApplicationDelegate.icon(for: resource.type)
+                view.imageView?.image = PluginRegistry.icon(for: resource.type)
             case "type":
                 view.textField?.stringValue = resource.type
             case "id":

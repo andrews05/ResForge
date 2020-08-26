@@ -46,7 +46,7 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
             self.window?.title = NSLocalizedString("Resource Info", comment: "")
             nameView.stringValue = resource.name
             nameView.placeholderString = NSLocalizedString("Untitled Resource", comment: "")
-            iconView.image = ApplicationDelegate.icon(for: resource.type)
+            iconView.image = PluginRegistry.icon(for: resource.type)
             
             attributesMatrix.cell(withTag: ResAttributes.changed.rawValue)?.state    = resource.attributes.contains(.changed) ? .on : .off
             attributesMatrix.cell(withTag: ResAttributes.preload.rawValue)?.state    = resource.attributes.contains(.preload) ? .on : .off

@@ -32,8 +32,8 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             if type != oldValue {
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
-                self.document?.undoManager?.setActionName(NSLocalizedString("Change Type", comment: ""))
-                self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.type = oldValue })
+                document?.undoManager?.setActionName(NSLocalizedString("Change Type", comment: ""))
+                document?.undoManager?.registerUndo(withTarget: self, handler: { $0.type = oldValue })
             }
         }
     }
@@ -43,8 +43,8 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             if id != oldValue {
                 NotificationCenter.default.post(name: .ResourceIDDidChange, object: self, userInfo: ["oldValue":oldValue])
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
-                self.document?.undoManager?.setActionName(NSLocalizedString("Change ID", comment: ""))
-                self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.id = oldValue })
+                document?.undoManager?.setActionName(NSLocalizedString("Change ID", comment: ""))
+                document?.undoManager?.registerUndo(withTarget: self, handler: { $0.id = oldValue })
             }
         }
     }
@@ -54,8 +54,8 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             if name != oldValue {
                 NotificationCenter.default.post(name: .ResourceNameDidChange, object: self, userInfo: ["oldValue":oldValue])
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
-                self.document?.undoManager?.setActionName(NSLocalizedString("Change Name", comment: ""))
-                self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.name = oldValue })
+                document?.undoManager?.setActionName(NSLocalizedString("Change Name", comment: ""))
+                document?.undoManager?.registerUndo(withTarget: self, handler: { $0.name = oldValue })
             }
         }
     }
@@ -65,8 +65,8 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             if attributes != oldValue {
                 NotificationCenter.default.post(name: .ResourceAttributesDidChange, object: self, userInfo: ["oldValue":oldValue])
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
-                self.document?.undoManager?.setActionName(NSLocalizedString("Change Attributes", comment: ""))
-                self.document?.undoManager?.registerUndo(withTarget: self, handler: { $0.attributes = oldValue })
+                document?.undoManager?.setActionName(NSLocalizedString("Change Attributes", comment: ""))
+                document?.undoManager?.registerUndo(withTarget: self, handler: { $0.attributes = oldValue })
             }
         }
     }
@@ -75,12 +75,14 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         didSet {
             NotificationCenter.default.post(name: .ResourceDataDidChange, object: self)
             NotificationCenter.default.post(name: .ResourceDidChange, object: self)
-            self.document?.updateChangeCount(.changeDone)
+            document?.updateChangeCount(.changeDone)
+            _preview = nil
         }
     }
     
     @objc public weak var document: NSDocument!
     @objc public weak var manager: ResKnifePluginManager! // This isn't set until the resource is opened in an editor
+    private var _preview: NSImage?
     
     @objc public var defaultWindowTitle: String {
         if let document = document {
@@ -96,6 +98,13 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         self.name = name
         self.attributes = ResAttributes(rawValue: attributes)
         self.data = data
+    }
+    
+    public func preview() -> NSImage? {
+        if _preview == nil {
+            _preview = PluginRegistry.editors[type]?.image?(for: self)
+        }
+        return _preview
     }
 
     // MARK: - Pasteboard functions

@@ -3,7 +3,6 @@ import RKSupport
 
 @NSApplicationMain
 class ApplicationDelegate: NSObject, NSApplicationDelegate {
-    private static var iconCache: [String: NSImage] = [:]
     // Don't configure prefs controller until needed
     private lazy var prefsController: NSWindowController = {
         ValueTransformer.setValueTransformer(LaunchActionTransformer(), forName: .launchActionTransformerName)
@@ -12,40 +11,27 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         return prefs
     }()
     
-    // Resource type to file type mapping, used for obtaining icons
-    private static let typeMappings = [
-        "cfrg": "shlb",
-        "SIZE": "shlb",
-
-        "CODE": "s",
-
-        "STR ": "text",
-        "STR#": "text",
-
-        "plst": "plist",
-        "url ": "webloc",
-
-        //"hfdr": "com.apple.finder",
-
-        "NFNT": "ttf",
-        "sfnt": "ttf"
-    ]
-    
     override init() {
         NSApp.registerServicesMenuSendTypes([.string], returnTypes: [.string])
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        let prefDict: [String: Any] = [
+        UserDefaults.standard.register(defaults: [
             kConfirmChanges: false,
             kDeleteResourceWarning: true,
             kLaunchAction: kDisplayOpenPanel,
-            kShowSidebar: false
-        ]
-        UserDefaults.standard.register(defaults: prefDict)
+            kShowSidebar: true
+        ])
         
         SupportRegistry.scanForResources()
-        PluginManager.scanForPlugins()
+        // Load plugins
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .allDomainsMask)
+        if let plugins = Bundle.main.builtInPlugInsURL {
+            self.scanForPlugins(folder: plugins)
+        }
+        for url in appSupport {
+            self.scanForPlugins(folder: url.appendingPathComponent("ResKnife/Plugins"))
+        }
     }
     
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
@@ -73,17 +59,20 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         NSWorkspace.shared.open(URL(string: "http://resknife.sourceforge.net/")!)
     }
     
-    /// Returns an icon representing the resource type.
-    static func icon(for resourceType: String) -> NSImage! {
-        if iconCache[resourceType] == nil, let editor = PluginManager.editor(for: resourceType) {
-            // ask politly for icon
-            iconCache[resourceType] = editor.icon?(for: resourceType)
+    private func scanForPlugins(folder: URL) {
+        let items: [URL]
+        do {
+            items = try FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        } catch {
+            return
         }
-        if iconCache[resourceType] == nil {
-            // try to retrieve from file system using our resource type to file name extension mapping, falling back to default document type
-            iconCache[resourceType] = NSWorkspace.shared.icon(forFileType: Self.typeMappings[resourceType] ?? "")
+        for item in items where item.pathExtension == "plugin" {
+            guard let plugin = Bundle(url: item) else {
+                continue
+            }
+            SupportRegistry.scanForResources(in: plugin)
+            PluginRegistry.register(plugin)
         }
-        return iconCache[resourceType]
     }
     
     /// Returns a placeholder name to show for a resource when it has no name.

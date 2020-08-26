@@ -1,68 +1,9 @@
-/*
- This is a registry where all our resource-editor plugins are looked
- up and entered in a list, so you can ask for the editor for a specific
- resource type and it is returned immediately. This registry reads the
- types a plugin handles from their info.plist.
- */
-
 import Cocoa
 import RKSupport
 
-class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
-    private static var registry: [String: ResKnifePlugin.Type] = [:]
-    private(set) static var templateEditor: ResKnifePlugin.Type! = nil
-    private(set) static var hexEditor: ResKnifePlugin.Type! = nil
-    private(set) static var previewSizes: [String: Int] = [:]
+class EditorManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     private var editorWindows: [String: ResKnifePlugin] = [:]
     private weak var document: ResourceDocument!
-    
-    static func editor(for type: String) -> ResKnifePlugin.Type? {
-        return registry[type]
-    }
-    
-    static func scanForPlugins() {
-        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .allDomainsMask)
-        if let plugins = Bundle.main.builtInPlugInsURL {
-            self.scan(folder: plugins)
-        }
-        for url in appSupport {
-            self.scan(folder: url.appendingPathComponent("ResKnife/Plugins"))
-        }
-    }
-    
-    private static func scan(folder: URL) {
-        let items: [URL]
-        do {
-            items = try FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-        } catch {
-            return
-        }
-        for item in items where item.pathExtension == "plugin" {
-            guard
-                let plugin = Bundle(url: item),
-                let pluginClass = plugin.principalClass as? ResKnifePlugin.Type,
-                let supportedTypes = plugin.infoDictionary?["RKEditedTypes"] as? [String]
-            else {
-                continue
-            }
-            SupportRegistry.scanForResources(in: plugin)
-            for type in supportedTypes {
-                switch type {
-                case "Hexadecimal Editor":
-                    Self.hexEditor = pluginClass
-                case "Template Editor":
-                    Self.templateEditor = pluginClass
-                default:
-                    registry[type] = pluginClass
-                    if pluginClass.image != nil {
-                        previewSizes[type] = pluginClass.previewSize?(for: type) ?? 64
-                    }
-                }
-            }
-        }
-    }
-    
-    // MARK: -
     
     init(_ document: ResourceDocument) {
         self.document = document
@@ -138,14 +79,14 @@ class PluginManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     
     @objc func open(resource: Resource, using editor: ResKnifePlugin.Type? = nil, template: String? = nil) {
         // Work out editor to use
-        var editor = editor ?? Self.editor(for: resource.type) ?? Self.templateEditor
+        var editor = editor ?? PluginRegistry.editors[resource.type] ?? PluginRegistry.templateEditor
         var tmplResource: Resource!
         if editor is ResKnifeTemplatePlugin.Type {
             // If template editor, find the template to use
             tmplResource = self.findResource(ofType: "TMPL", name: template ?? resource.type)
             // If no template, switch to hex editor
             if tmplResource == nil {
-                editor = Self.hexEditor
+                editor = PluginRegistry.hexEditor
             }
         }
         

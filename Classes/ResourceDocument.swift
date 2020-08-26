@@ -9,7 +9,7 @@ extension Notification.Name {
 class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, NSDraggingDestination {
     @IBOutlet var dataSource: ResourceDataSource!
     private(set) lazy var directory = ResourceDirectory(self)
-    private(set) lazy var pluginManager = PluginManager(self)
+    private(set) lazy var editorManager = EditorManager(self)
     private(set) lazy var createController = CreateResourceController(self)
     private var fork: String!
     private var format: ResourceFileFormat = kFormatClassic
@@ -91,7 +91,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
             // Get type and creator - make sure undo registration is disabled while configuring
             let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
             self.undoManager?.disableUndoRegistration()
-            _ = pluginManager.closeAll(saving: false)
+            _ = editorManager.closeAll(saving: false)
             hfsType = attrs[.hfsTypeCode] as! OSType
             hfsCreator = attrs[.hfsCreatorCode] as! OSType
             directory.reset()
@@ -200,13 +200,13 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
         if filename == "" {
             filename = "\(resource.type) \(resource.id)"
         }
-        let editor = PluginManager.editor(for: resource.type)
+        let editor = PluginRegistry.editors[resource.type]
         let ext = editor?.filenameExtension?(for: resource.type) ?? resource.type.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         return (filename, ext)
     }
     
     private func export(resource: Resource, to url: URL) {
-        let editor = PluginManager.editor(for: resource.type)
+        let editor = PluginRegistry.editors[resource.type]
         do {
             try editor?.export?(resource, to: url) ?? resource.data.write(to: url)
         } catch {}
@@ -235,7 +235,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
     }
     
     override func canClose(withDelegate delegate: Any, shouldClose shouldCloseSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
-        if pluginManager.closeAll(saving: true) {
+        if editorManager.closeAll(saving: true) {
             super.canClose(withDelegate: delegate, shouldClose: shouldCloseSelector, contextInfo: contextInfo)
         }
     }
@@ -295,7 +295,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
     
     @IBAction func openResources(_ sender: NSObject) {
         for resource in dataSource.selectedResources() {
-            pluginManager.open(resource: resource)
+            editorManager.open(resource: resource)
         }
     }
     
@@ -306,14 +306,14 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
         }
         SelectTemplateController().show(self, type: resources.first!.type) { template in
             for resource in resources {
-                self.pluginManager.open(resource: resource, using: PluginManager.templateEditor, template: template)
+                self.editorManager.open(resource: resource, using: PluginRegistry.templateEditor, template: template)
             }
         }
     }
     
     @IBAction func openResourcesAsHex(_ sender: Any) {
         for resource in dataSource.selectedResources() {
-            pluginManager.open(resource: resource, using: PluginManager.hexEditor)
+            editorManager.open(resource: resource, using: PluginRegistry.hexEditor)
         }
     }
     
