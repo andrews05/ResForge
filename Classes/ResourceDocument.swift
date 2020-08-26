@@ -278,7 +278,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
     }
     
     private func updateSidebarMenuTitle() {
-        let item = NSApp.mainMenu?.item(withTitle: "Window")?.submenu?.item(withTag: 1)
+        let item = NSApp.mainMenu?.item(withTitle: "View")?.submenu?.item(withTag: 1)
         item?.title = NSLocalizedString(dataSource.useTypeList ? "Hide Sidebar" : "Show Sidebar", comment: "")
     }
     

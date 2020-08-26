@@ -270,6 +270,36 @@ CA
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="View" id="IlK-qQ-PMQ">
+                    <menu key="submenu" title="View" id="hYa-qi-crD">
+                        <items>
+                            <menuItem title="Show Sidebar" tag="1" keyEquivalent="s" identifier="sidebar" id="348">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleSidebar:" target="-1" id="WYc-Vb-CcA"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="342">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Show Toolbar" keyEquivalent="t" id="343">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleToolbarShown:" target="-1" id="498"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Customize Toolbar…" id="341">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="runToolbarCustomizationPalette:" target="-1" id="497"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="n8f-YK-URp">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Resource" tag="3" id="418">
                     <menu key="submenu" title="Resource" id="419">
                         <items>
@@ -297,7 +327,7 @@ CA
                                     <action selector="openResourcesAsHex:" target="-1" id="500"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Export Resources…" tag="6" id="uyA-9M-2HY">
+                            <menuItem title="Export…" tag="6" id="uyA-9M-2HY">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="exportResources:" target="-1" id="K26-n0-cc3"/>
@@ -329,8 +359,8 @@ CA
                                     <action selector="performMiniaturize:" target="-1" id="458"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Zoom Window" keyEquivalent="z" id="344">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                            <menuItem title="Zoom" id="344">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="performZoom:" target="-1" id="499"/>
                                 </connections>
@@ -338,36 +368,6 @@ CA
                             <menuItem title="Cycle Through Windows" keyEquivalent="`" id="349"/>
                             <menuItem isSeparatorItem="YES" id="346">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Show Sidebar" tag="1" identifier="sidebar" id="348">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="toggleSidebar:" target="-1" id="WYc-Vb-CcA"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="340">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Show Toolbar" id="343">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="toggleToolbarShown:" target="-1" id="498"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Customize Toolbar…" id="341">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="runToolbarCustomizationPalette:" target="-1" id="497"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="342">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Move to Back" id="345">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="orderBack:" target="-1" id="501"/>
-                                </connections>
                             </menuItem>
                             <menuItem title="Bring All to Front" id="338">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -451,6 +451,5 @@ CA
                 <outlet property="forkSelect" destination="NW9-Ng-yIh" id="FkP-Ya-ttz"/>
             </connections>
         </customObject>
-        <userDefaultsController representsSharedInstance="YES" id="HMK-4J-LXK"/>
     </objects>
 </document>
