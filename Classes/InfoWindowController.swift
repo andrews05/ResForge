@@ -18,16 +18,14 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var rSize: NSTextField!
     @IBOutlet var attributesMatrix: NSMatrix!
     
-    private weak var currentDocument: ResourceDocument!
-    private weak var selectedResource: Resource!
+    private weak var currentDocument: ResourceDocument?
+    private weak var selectedResource: Resource?
     
     static var shared = InfoWindowController(windowNibName: "InfoWindow")
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        
         self.setMainWindow(NSApp.mainWindow)
-        self.update()
         
         NotificationCenter.default.addObserver(self, selector: #selector(mainWindowChanged(_:)), name: NSWindow.didBecomeMainNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(mainWindowResigned(_:)), name: NSWindow.didResignMainNotification, object: nil)
@@ -118,9 +116,12 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     }
     
     @objc func selectedResourceChanged(_ notification: Notification) {
-        if notification.object as AnyObject? === currentDocument {
-            selectedResource = currentDocument.dataSource.selectionCount() == 1 ? currentDocument.dataSource.selectedResources().first : nil
-            self.update()
+        if let document = currentDocument, notification.object as AnyObject? === document {
+            let resource = document.dataSource.selectionCount() == 1 ? document.dataSource.selectedResources().first : nil
+            if resource !== selectedResource {
+                selectedResource = resource
+                self.update()
+            }
         }
     }
 
@@ -130,15 +131,12 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     
     // Check for conflicts
     func control(_ control: NSControl, isValidObject obj: Any?) -> Bool {
-        guard selectedResource != nil else {
-            return false
-        }
         let textField = control as! NSTextField
         switch textField.identifier?.rawValue {
         case "rType":
-            return selectedResource.canSetType(obj as! String)
+            return selectedResource?.canSetType(obj as! String) ?? false
         case "rID":
-            return selectedResource.canSetID(obj as! Int)
+            return selectedResource?.canSetID(obj as! Int) ?? false
         default:
             break
         }
@@ -146,21 +144,18 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     }
     
     func controlTextDidEndEditing(_ obj: Notification) {
-        guard selectedResource != nil else {
-            return
-        }
         let textField = obj.object as! NSTextField
         switch textField.identifier?.rawValue {
         case "name":
-            selectedResource.name = textField.stringValue
+            selectedResource?.name = textField.stringValue
         case "rType":
-            selectedResource.type = textField.stringValue
+            selectedResource?.type = textField.stringValue
         case "rID":
-            selectedResource.id = textField.integerValue
+            selectedResource?.id = textField.integerValue
         case "creator":
-            currentDocument.hfsCreator = OSType(textField.stringValue)
+            currentDocument?.hfsCreator = OSType(textField.stringValue)
         case "type":
-            currentDocument.hfsType = OSType(textField.stringValue)
+            currentDocument?.hfsType = OSType(textField.stringValue)
         default:
             break
         }
@@ -168,6 +163,6 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
     
     @IBAction func attributesChanged(_ sender: NSButton) {
         let att = ResAttributes(rawValue: sender.selectedTag())
-        selectedResource.attributes.formSymmetricDifference(att)
+        selectedResource?.attributes.formSymmetricDifference(att)
     }
 }

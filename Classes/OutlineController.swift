@@ -88,12 +88,8 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
     
     func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
-        if currentType != nil {
-            outlineView.moveItem(at: oldIndex, inParent: nil, to: newIndex, inParent: nil)
-        } else {
-            let offset = outlineView.row(forItem: resource.type) + 1
-            outlineView.moveItem(at: oldIndex-offset, inParent: resource.type, to: newIndex, inParent: resource.type)
-        }
+        let parent = currentType == nil ? resource.type : nil
+        outlineView.moveItem(at: oldIndex, inParent: parent, to: newIndex, inParent: parent)
         if inlineUpdate {
             outlineView.scrollRowToVisible(outlineView.selectedRow)
             // Update the placeholder
@@ -130,7 +126,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         } else if let type = item as? String {
             let identifier = tableColumn!.identifier.rawValue.appending("Group")
             switch identifier {
-            case "nameGroup":
+            case "idGroup":
                 view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), owner: self) as! NSTableCellView
                 view.textField?.stringValue = type
             case "sizeGroup":

@@ -110,8 +110,9 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     }
     
     private func updateSidebar() {
+        outlineView.indentationPerLevel = useTypeList ? 0 : 16
+        outlineView.tableColumns[0].width = useTypeList ? 50 : 82
         splitView.setPosition(useTypeList ? 110 : 0, ofDividerAt: 0)
-        outlineView.indentationPerLevel = useTypeList ? 0 : 1
     }
     
     // Prevent dragging the divider
