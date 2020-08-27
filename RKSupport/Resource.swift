@@ -73,10 +73,10 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     
     @objc public var data: Data {
         didSet {
+            _preview = nil
             NotificationCenter.default.post(name: .ResourceDataDidChange, object: self)
             NotificationCenter.default.post(name: .ResourceDidChange, object: self)
             document?.updateChangeCount(.changeDone)
-            _preview = nil
         }
     }
     

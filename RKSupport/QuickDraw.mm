@@ -9,8 +9,8 @@
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
-        graphite::qd::pict pict(std::make_shared<graphite::data::data>(gData), 0, "");
-        return [QuickDraw tiffFromSurface:pict.image_surface().lock()];
+        auto surface = graphite::qd::pict(std::make_shared<graphite::data::data>(gData), 0, "").image_surface().lock();
+        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size()];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -26,8 +26,8 @@
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
-        graphite::qd::cicn cicn(std::make_shared<graphite::data::data>(gData), 0, "");
-        return [QuickDraw tiffFromSurface:cicn.surface().lock()];
+        auto surface = graphite::qd::cicn(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
+        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size()];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -43,8 +43,8 @@
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
-        graphite::qd::ppat ppat(std::make_shared<graphite::data::data>(gData), 0, "");
-        return [QuickDraw tiffFromSurface:ppat.surface().lock()];
+        auto surface = graphite::qd::ppat(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
+        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size()];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -56,10 +56,33 @@
     return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
 }
 
++ (NSData *)tiffFromCrsr:(NSData *)data {
+    // Quick hack for parsing crsr resources - data is like a ppat but with a mask
+    std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
+    // Clear the first byte to make graphite think it's a normal ppat
+    buffer[0] = 0;
+    graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
+    try {
+        auto surface = graphite::qd::ppat(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
+        auto raw = surface->raw();
+        // 16x16 1-bit mask is stored at offset 52
+        // Loop over the bytes and bits and clear the alpha component as necessary
+        for (int i = 0; i < 32; i++) {
+            char byte = buffer[i+52];
+            for (int j = 0; j < 8; j++) {
+                if (!((byte >> (7-j)) & 0x1)) {
+                    raw[i*8+j] &= 0x00FFFFFF;
+                }
+            }
+        }
+        return [QuickDraw tiffFromRaw:raw size:surface->size()];
+    } catch (const std::exception& e) {
+        return nil;
+    }
+}
 
-+ (NSData *)tiffFromSurface:(std::shared_ptr<graphite::qd::surface>)surface {
-    auto size = surface->size();
-    auto raw = surface->raw();
+
++ (NSData *)tiffFromRaw:(std::vector<uint32_t>)raw size:(graphite::qd::size)size {
     unsigned char *ptr = (unsigned char*)raw.data();
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&ptr
                                                                     pixelsWide:size.width()

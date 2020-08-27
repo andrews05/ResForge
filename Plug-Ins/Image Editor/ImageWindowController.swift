@@ -220,6 +220,8 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
             return QuickDraw.tiff(fromCicn: data)
         case "ppat":
             return QuickDraw.tiff(fromPpat: data)
+        case "crsr":
+            return QuickDraw.tiff(fromCrsr: data)
         case "ICN#", "ICON":
             return Icons.tiff(data, width: 32, height: 32, depth: 1)
         case "ics#", "SICN", "CURS":
