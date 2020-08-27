@@ -30,8 +30,14 @@
 		<string>ICON</string>
 		<string>SICN</string>
 		<string>ICN#</string>
-		<string>icm#</string>
 		<string>ics#</string>
+		<string>icm#</string>
+		<string>icl4</string>
+		<string>ics4</string>
+		<string>icm4</string>
+		<string>icl8</string>
+		<string>ics8</string>
+		<string>icm8</string>
 		<string>CURS</string>
 		<string>PAT </string>
 		<string>PAT#</string>

@@ -199,6 +199,14 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
     
     private static func imageData(for resource: Resource!) -> Data {
+        if let clut = resource.manager?.findResource(ofType: "clut", id: 8, currentDocumentOnly: true)?.data {
+            var x: [[UInt8]] = []
+            for i in 0..<256 {
+                x.append([clut[i*8+11], clut[i*8+13], clut[i*8+15]])
+            }
+            print(x)
+        }
+        
         let data = resource.data
         guard data.count > 0 else {
             return data
@@ -213,50 +221,30 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         case "ppat":
             return QuickDraw.tiff(fromPpat: data)
         case "ICN#", "ICON":
-            return self.iconTiff(data, width: 32, height: 32)
+            return Icons.tiff(data, width: 32, height: 32, depth: 1)
         case "ics#", "SICN", "CURS":
-            return self.iconTiff(data, width: 16, height: 16)
+            return Icons.tiff(data, width: 16, height: 16, depth: 1)
         case "icm#":
-            return self.iconTiff(data, width: 16, height: 12)
+            return Icons.tiff(data, width: 16, height: 12, depth: 1)
+        case "icl4":
+            return Icons.tiff(data, width: 32, height: 32, depth: 4)
+        case "ics4":
+            return Icons.tiff(data, width: 16, height: 16, depth: 4)
+        case "icm4":
+            return Icons.tiff(data, width: 16, height: 12, depth: 4)
+        case "icl8":
+            return Icons.tiff(data, width: 32, height: 32, depth: 8)
+        case "ics8":
+            return Icons.tiff(data, width: 16, height: 16, depth: 8)
+        case "icm8":
+            return Icons.tiff(data, width: 16, height: 12, depth: 8)
         case "PAT ":
-            return self.iconTiff(data, width: 8, height: 8)
+            return Icons.tiff(data, width: 8, height: 8, depth: 1)
         case "PAT#":
             // This just stacks all the patterns vertically
-            return self.iconTiff(data[2...], width: 8, height: 8 * Int(data[1]))
+            return Icons.tiff(data[2...], width: 8, height: 8 * Int(data[1]), depth: 1)
         default:
             return data
-        }
-    }
-    
-    private static func iconTiff(_ data: Data, width: Int, height: Int) -> Data {
-        let bytesPerRow = width / 8
-        let planeLength = bytesPerRow * height
-        if data.count < planeLength {
-            return Data()
-        }
-        // Assume alpha if sufficient data
-        let alpha = data.count >= planeLength*2
-        // Invert data
-        var plane = data.prefix(planeLength).map({ $0 ^ 0xff })
-
-        return plane.withUnsafeMutableBufferPointer { (planeBuffer) -> Data in
-            var mask = [UInt8](data)
-            return mask.withUnsafeMutableBufferPointer { (maskBuffer) -> Data in
-                var planes = [planeBuffer.baseAddress]
-                if alpha {
-                    planes.append(maskBuffer.baseAddress! + planeLength)
-                }
-                return NSBitmapImageRep(bitmapDataPlanes: &planes,
-                                        pixelsWide: width,
-                                        pixelsHigh: height,
-                                        bitsPerSample: 1,
-                                        samplesPerPixel: alpha ? 2 : 1,
-                                        hasAlpha: alpha,
-                                        isPlanar: true,
-                                        colorSpaceName: .deviceWhite,
-                                        bytesPerRow: bytesPerRow,
-                                        bitsPerPixel: 1)!.tiffRepresentation!
-            }
         }
     }
 }
