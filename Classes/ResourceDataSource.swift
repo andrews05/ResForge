@@ -104,8 +104,8 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     
     func toggleSidebar() {
         useTypeList = !useTypeList
-        self.updateSidebar()
         self.reload(selecting: self.selectedResources(), withUndo: false)
+        self.updateSidebar()
         UserDefaults.standard.set(useTypeList, forKey: kShowSidebar)
     }
     

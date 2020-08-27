@@ -169,7 +169,6 @@
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA79E15A6704900696598 /* FontDocument.xib */; };
-		B2FCA7A315A6704900696598 /* FontWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA7A015A6704900696598 /* FontWindow.xib */; };
 		E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367D099864AD00A3A6EA /* ElementUBYT.h */; };
 		E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = E119367E099864AD00A3A6EA /* ElementUBYT.m */; };
 		E1193685099864AD00A3A6EA /* ElementULNG.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367F099864AD00A3A6EA /* ElementULNG.h */; };
@@ -1632,7 +1631,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */,
-				B2FCA7A315A6704900696598 /* FontWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

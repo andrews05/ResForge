@@ -31,7 +31,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         
         for item in outlineView.selectedItems {
             if let resource = item as? Resource {
-                document.editorManager.open(resource: resource, using: editor, template: nil)
+                document.editorManager.open(resource: resource, using: editor)
             } else {
                 // Expand the type list
                 outlineView.expandItem(item)

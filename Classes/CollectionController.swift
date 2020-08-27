@@ -4,17 +4,17 @@ import RKSupport
 class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionViewDataSource, ResourcesView {
     @IBOutlet var collectionView: NSCollectionView!
     @IBOutlet var document: ResourceDocument!
-    private var currentType: String? = nil
+    private var currentType: String!
     
     func reload(type: String?) {
-        currentType = type
+        currentType = type!
         collectionView.reloadData()
     }
     
     func select(_ resources: [Resource]) {
         var paths: Set<IndexPath> = Set()
         for resource in resources where resource.type == currentType {
-            let i = document.directory.resourcesByType[currentType!]!.firstIndex(of: resource)!
+            let i = document.directory.resourcesByType[currentType]!.firstIndex(of: resource)!
             paths.insert([0, i])
         }
         collectionView.selectionIndexPaths = paths
@@ -26,17 +26,13 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     }
     
     func selectedResources(deep: Bool = false) -> [Resource] {
-        return self.resources(for: collectionView.selectionIndexPaths)
+        return collectionView.selectionIndexPaths.map {
+            document.directory.resourcesByType[currentType]![$0.last!]
+        }
     }
     
     func selectedType() -> String? {
         return currentType == "" ? nil : currentType
-    }
-    
-    private func resources(for indexes: Set<IndexPath>) -> [Resource] {
-        return indexes.map {
-            document.directory.resourcesByType[currentType!]![$0.last!]
-        }
     }
     
     func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
@@ -61,7 +57,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     }
     
     func collectionView(_ collectionView: NSCollectionView, pasteboardWriterForItemAt index: Int) -> NSPasteboardWriting? {
-        return document.directory.resourcesByType[currentType!]![index]
+        return document.directory.resourcesByType[currentType]![index]
     }
     
     // Don't hide original items when dragging
@@ -74,11 +70,11 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     // MARK: - DataSource functions
     
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return document.directory.resourcesByType[currentType!]!.count
+        return document.directory.resourcesByType[currentType]!.count
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        let resource = document.directory.resourcesByType[currentType!]![indexPath.last!]
+        let resource = document.directory.resourcesByType[currentType]![indexPath.last!]
         let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceItem"), for: indexPath) as! ResourceItem
         view.imageView?.image = resource.preview()
         view.textField?.stringValue = String(resource.id)
@@ -140,6 +136,11 @@ class ResourceItem: NSCollectionViewItem {
     
     @objc private func doubleClick() {
         let document = self.view.window!.delegate as! ResourceDocument
-        document.openResources(self)
+        // Use hex editor if holding option key
+        if NSApp.currentEvent!.modifierFlags.contains(.option) {
+            document.openResourcesAsHex(self)
+        } else {
+            document.openResources(self)
+        }
     }
 }
