@@ -10,7 +10,9 @@
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
         auto surface = graphite::qd::pict(std::make_shared<graphite::data::data>(gData), 0, "").image_surface().lock();
-        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size()];
+        if (!surface) return nil;
+        // Most software seems to ignore PICT alpha - we will too, as it can contain garbage data
+        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size() alpha:false];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -27,7 +29,7 @@
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
         auto surface = graphite::qd::cicn(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
-        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size()];
+        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size() alpha:true];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -44,7 +46,7 @@
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
         auto surface = graphite::qd::ppat(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
-        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size()];
+        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size() alpha:false];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -75,14 +77,14 @@
                 }
             }
         }
-        return [QuickDraw tiffFromRaw:raw size:surface->size()];
+        return [QuickDraw tiffFromRaw:raw size:surface->size() alpha:true];
     } catch (const std::exception& e) {
         return nil;
     }
 }
 
 
-+ (NSData *)tiffFromRaw:(std::vector<uint32_t>)raw size:(graphite::qd::size)size {
++ (NSData *)tiffFromRaw:(std::vector<uint32_t>)raw size:(graphite::qd::size)size alpha:(bool)alpha {
     unsigned char *ptr = (unsigned char*)raw.data();
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&ptr
                                                                     pixelsWide:size.width()
@@ -94,6 +96,7 @@
                                                                 colorSpaceName:NSDeviceRGBColorSpace
                                                                    bytesPerRow:size.width()*4
                                                                   bitsPerPixel:32];
+    rep.alpha = alpha;
     return rep.TIFFRepresentation;
 }
 

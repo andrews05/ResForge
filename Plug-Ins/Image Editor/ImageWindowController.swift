@@ -199,14 +199,6 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
     
     private static func imageData(for resource: Resource!) -> Data {
-        if let clut = resource.manager?.findResource(ofType: "clut", id: 8, currentDocumentOnly: true)?.data {
-            var x: [[UInt8]] = []
-            for i in 0..<256 {
-                x.append([clut[i*8+11], clut[i*8+13], clut[i*8+15]])
-            }
-            print(x)
-        }
-        
         let data = resource.data
         guard data.count > 0 else {
             return data

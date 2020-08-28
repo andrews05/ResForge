@@ -24,7 +24,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="17" secondAttribute="height" multiplier="1:1" id="dmr-w8-aG2"/>
                                 </constraints>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="18"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStopProgressTemplate" id="18"/>
                             </imageView>
                         </subviews>
                         <constraints>
@@ -97,4 +97,7 @@
             </connections>
         </collectionViewItem>
     </objects>
+    <resources>
+        <image name="NSStopProgressTemplate" width="11" height="11"/>
+    </resources>
 </document>

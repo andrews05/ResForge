@@ -101,8 +101,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     }
     
     public func preview() -> NSImage? {
-        if _preview == nil {
-            _preview = PluginRegistry.editors[type]?.image?(for: self)
+        if _preview == nil && data.count > 0 {
+            // If we fail to load a preview, show an x image instead - this prevents repeatedly trying to parse bad data
+            _preview = PluginRegistry.editors[type]?.image?(for: self) ?? NSImage(named: NSImage.stopProgressTemplateName)
         }
         return _preview
     }

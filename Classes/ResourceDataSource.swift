@@ -9,7 +9,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     @IBOutlet var collectionView: NSCollectionView!
     @IBOutlet var outlineController: OutlineController!
     @IBOutlet var collectionController: CollectionController!
-    @IBOutlet var document: ResourceDocument!
+    @IBOutlet weak var document: ResourceDocument!
     
     private(set) var useTypeList = UserDefaults.standard.bool(forKey: kShowSidebar)
     private var resourcesView: ResourcesView!
@@ -110,8 +110,8 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     }
     
     private func updateSidebar() {
-        outlineView.indentationPerLevel = useTypeList ? 0 : 16
-        outlineView.tableColumns[0].width = useTypeList ? 50 : 82
+        outlineView.indentationPerLevel = useTypeList ? 0 : 4
+        outlineView.tableColumns[0].width = useTypeList ? 50 : 70
         splitView.setPosition(useTypeList ? 110 : 0, ofDividerAt: 0)
     }
     

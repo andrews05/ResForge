@@ -3,7 +3,7 @@ import RKSupport
 
 class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionViewDataSource, ResourcesView {
     @IBOutlet var collectionView: NSCollectionView!
-    @IBOutlet var document: ResourceDocument!
+    @IBOutlet weak var document: ResourceDocument!
     private var currentType: String!
     
     func reload(type: String?) {
