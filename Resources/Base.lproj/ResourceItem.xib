@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="108" height="108"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="17">
+                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="17" customClass="CustomImageView" customModule="RKSupport">
                                 <rect key="frame" x="4" y="4" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="17" secondAttribute="height" multiplier="1:1" id="dmr-w8-aG2"/>
@@ -47,10 +47,13 @@
                                     <constraint firstAttribute="height" constant="16" id="DtA-kI-qcO"/>
                                 </constraints>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="ID" id="cwj-Hf-ndf">
-                                    <font key="font" metaFont="controlContent"/>
+                                    <font key="font" metaFont="label" size="12"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="6" id="kpe-QS-m1c"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <constraints>
@@ -62,12 +65,22 @@
                     </view>
                 </box>
                 <textField verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sdy-Z7-HX9">
-                    <rect key="frame" x="38" y="0.0" width="32" height="13"/>
-                    <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" title="Name" id="E6P-MI-5Cq">
+                    <rect key="frame" x="51" y="0.0" width="7" height="13"/>
+                    <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" placeholderString=" " id="E6P-MI-5Cq">
+                        <customFormatter key="formatter" id="NlX-HS-SKt" customClass="MacRomanFormatter" customModule="RKSupport">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
+                                    <integer key="value" value="255"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </customFormatter>
                         <font key="font" metaFont="system" size="10"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="6" id="y6s-Zu-yT1"/>
+                    </connections>
                 </textField>
             </subviews>
             <constraints>

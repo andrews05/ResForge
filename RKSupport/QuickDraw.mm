@@ -73,7 +73,7 @@
             char byte = buffer[i+52];
             for (int j = 0; j < 8; j++) {
                 if (!((byte >> (7-j)) & 0x1)) {
-                    raw[i*8+j] &= 0x00FFFFFF;
+                    raw[i*8+j] = 0;
                 }
             }
         }

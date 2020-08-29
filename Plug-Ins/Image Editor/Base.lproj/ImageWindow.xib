@@ -70,7 +70,7 @@
             </view>
             <point key="canvasLocation" x="139.5" y="146.5"/>
         </window>
-        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="19">
+        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="19" customClass="CustomImageView" customModule="RKSupport">
             <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
             <imageCell key="cell" selectable="YES" editable="YES" alignment="left" id="20"/>
             <connections>

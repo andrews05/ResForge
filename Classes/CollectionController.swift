@@ -18,7 +18,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
             paths.insert([0, i])
         }
         collectionView.selectionIndexPaths = paths
-        collectionView.scrollToItems(at: paths, scrollPosition: .top)
+        collectionView.scrollToItems(at: paths, scrollPosition: .nearestHorizontalEdge)
     }
     
     func selectionCount() -> Int {
@@ -40,10 +40,14 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         let new: IndexPath = [0, newIndex]
         // Collection view doesn't retain selection when reloading - we need to keep track of it ourselves
         let selected = collectionView.selectionIndexPaths.contains(old)
-        collectionView.animator().moveItem(at: old, to: new)
-        collectionView.animator().reloadItems(at: [new])
+        if old == new {
+            collectionView.reloadItems(at: [new])
+        } else {
+            collectionView.animator().moveItem(at: old, to: new)
+            collectionView.animator().reloadItems(at: [new])
+        }
         if selected {
-            collectionView.animator().selectItems(at: [new], scrollPosition: [])
+            collectionView.selectItems(at: [new], scrollPosition: .nearestHorizontalEdge)
         }
     }
     
@@ -76,10 +80,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let resource = document.directory.resourcesByType[currentType]![indexPath.last!]
         let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceItem"), for: indexPath) as! ResourceItem
-        view.imageView?.image = resource.preview()
-        view.textField?.stringValue = String(resource.id)
-        view.nameField.stringValue = resource.name
-        view.nameField.isHidden = resource.name.count == 0
+        view.configure(resource)
         return view
     }
 }
@@ -99,12 +100,30 @@ class ResourceCollection: NSCollectionView {
         let view = super.hitTest(point)
         return view is NSImageView || view is NSTextField ? view : self
     }
+    
+    override func insertNewline(_ sender: Any?) {
+        // Begin editing the selected item when enter is pressed
+        if self.selectionIndexPaths.count == 1 {
+            self.scrollToItems(at: self.selectionIndexPaths, scrollPosition: .nearestHorizontalEdge)
+            let item = self.item(at: self.selectionIndexPaths.first!) as! ResourceItem
+            item.beginEditing()
+        }
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        // Stop editing the selected item as soon as first responder returns to us
+        if self.selectionIndexPaths.count == 1, let item = self.item(at: self.selectionIndexPaths.first!) as? ResourceItem {
+            item.endEditing()
+        }
+        return true
+    }
 }
 
-class ResourceItem: NSCollectionViewItem {
+class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     @IBOutlet var imageBox: NSBox!
     @IBOutlet var textBox: NSBox!
     @IBOutlet var nameField: NSTextField!
+    private var resource: Resource!
     
     override var isSelected: Bool {
         didSet {
@@ -141,6 +160,45 @@ class ResourceItem: NSCollectionViewItem {
             document.openResourcesAsHex(self)
         } else {
             document.openResources(self)
+        }
+    }
+    
+    func configure(_ resource: Resource) {
+        self.resource = resource
+        imageView?.image = resource.preview()
+        textField?.stringValue = String(resource.id)
+        nameField.stringValue = resource.name
+        self.endEditing()
+    }
+    
+    func beginEditing() {
+        nameField.isHidden = false
+        nameField.isEditable = true
+        nameField.alignment = .center
+        self.view.window?.makeFirstResponder(nameField)
+    }
+    
+    func endEditing() {
+        nameField.isHidden = resource.name.count == 0
+        nameField.isEditable = false
+        nameField.alignment = .natural
+    }
+    
+    func controlTextDidEndEditing(_ obj: Notification) {
+        resource.name = nameField.stringValue
+    }
+    
+    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        switch commandSelector {
+        case #selector(cancelOperation(_:)):
+            nameField.abortEditing()
+            fallthrough
+        case #selector(insertNewline(_:)), #selector(insertTab(_:)), #selector(insertBacktab(_:)):
+            // Return first responder to the collection view when editing should end
+            self.view.window?.makeFirstResponder(self.collectionView)
+            return true
+        default:
+            return false
         }
     }
 }

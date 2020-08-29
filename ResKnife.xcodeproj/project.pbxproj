@@ -77,6 +77,7 @@
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
 		4968C03B24C6808200716AB9 /* EditorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* EditorManager.swift */; };
 		4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03E24C78D7400716AB9 /* SupportRegistry.swift */; };
+		496A52BE24F9B047006A12DF /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496A52BD24F9B047006A12DF /* CustomImageView.swift */; };
 		4970443424720C0B0035C0FA /* rez.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044162472064F0035C0FA /* rez.hpp */; };
 		4970443524720C0B0035C0FA /* type.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044172472064F0035C0FA /* type.hpp */; };
 		4970443824720C0B0035C0FA /* file.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4970441A2472064F0035C0FA /* file.hpp */; };
@@ -467,6 +468,7 @@
 		4966750024BE5C8D00251406 /* QuickDraw.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QuickDraw.mm; sourceTree = "<group>"; };
 		4968C03424C66D8B00716AB9 /* EditorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorManager.swift; sourceTree = "<group>"; };
 		4968C03E24C78D7400716AB9 /* SupportRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportRegistry.swift; sourceTree = "<group>"; };
+		496A52BD24F9B047006A12DF /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		497043F42472064F0035C0FA /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		497043F52472064F0035C0FA /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		497043F62472064F0035C0FA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1007,6 +1009,7 @@
 				49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */,
 				49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */,
 				49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */,
+				496A52BD24F9B047006A12DF /* CustomImageView.swift */,
 				499216EF24CCD2250054A390 /* ResourceFile.h */,
 				499216F024CCD2250054A390 /* ResourceFile.mm */,
 				496674FF24BE5C8C00251406 /* QuickDraw.h */,
@@ -1673,6 +1676,7 @@
 				49964E1324D1034400BAB902 /* Resource.swift in Sources */,
 				49964DEC24D0EB7000BAB902 /* macroman.cpp in Sources */,
 				491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */,
+				496A52BE24F9B047006A12DF /* CustomImageView.swift in Sources */,
 				49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */,
 				49964DE924D0EB5D00BAB902 /* color.cpp in Sources */,
 				49964DFD24D0EC2300BAB902 /* type.cpp in Sources */,
