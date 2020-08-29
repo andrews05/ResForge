@@ -165,10 +165,13 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     
     func configure(_ resource: Resource) {
         self.resource = resource
-        imageView?.image = resource.preview()
+        imageView?.image = nil
         textField?.stringValue = String(resource.id)
         nameField.stringValue = resource.name
         self.endEditing()
+        resource.preview {
+            self.imageView?.image = $0
+        }
     }
     
     func beginEditing() {

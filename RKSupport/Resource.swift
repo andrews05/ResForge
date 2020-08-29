@@ -100,12 +100,23 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         self.data = data
     }
     
-    public func preview() -> NSImage? {
+    /// Asynchonously fetch the resource's preview image. The image will be initially loaded on a background thread and cached for future use.
+    public func preview(_ callback: @escaping (NSImage?) -> Void) {
         if _preview == nil && data.count > 0 {
-            // If we fail to load a preview, show an x image instead - this prevents repeatedly trying to parse bad data
-            _preview = PluginRegistry.editors[type]?.image?(for: self) ?? NSImage(named: NSImage.stopProgressTemplateName)
+            if let loader = PluginRegistry.editors[type]?.image {
+                DispatchQueue.global().async {
+                    // If we fail to load a preview, show an x image instead - this prevents repeatedly trying to parse bad data
+                    self._preview = loader(self) ?? NSImage(named: NSImage.stopProgressTemplateName)
+                    DispatchQueue.main.async {
+                        callback(self._preview)
+                    }
+                }
+                return
+            } else {
+                _preview = NSImage(named: NSImage.stopProgressTemplateName)
+            }
         }
-        return _preview
+        callback(self._preview)
     }
 
     // MARK: - Pasteboard functions
