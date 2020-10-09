@@ -1,7 +1,7 @@
 import Cocoa
 import RKSupport
 
-class InfoWindowController: NSWindowController, NSTextFieldDelegate {
+class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     @IBOutlet var iconView: NSImageView!
     @IBOutlet var nameView: NSTextField!
     @IBOutlet var placeholderView: NSBox!
@@ -32,6 +32,21 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(selectedResourceChanged(_:)), name: .DocumentSelectionDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(propertiesChanged(_:)), name: .ResourceDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(propertiesChanged(_:)), name: .DocumentInfoDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(propertiesChanged(_:)), name: .DocumentInfoDidChange, object: nil)
+    }
+    
+    func windowWillClose(_ notification: Notification) {
+        // Cancel all editing on close (not sure how to just get the active field)
+        nameView.abortEditing()
+        creator.abortEditing()
+        type.abortEditing()
+        rType.abortEditing()
+        rID.abortEditing()
+    }
+    
+    func windowDidResignKey(_ notification: Notification) {
+        // End editing (accept changes) when clicking out of the window
+        self.window?.makeFirstResponder(nil)
     }
     
     private func update() {
@@ -59,6 +74,7 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
             
             // swap box
             placeholderView.contentView = resourceView
+            self.window?.recalculateKeyViewLoop()
         } else if let document = currentDocument {
             // get sizes of forks as they are on disk
             dataSize.integerValue = 0
@@ -84,6 +100,7 @@ class InfoWindowController: NSWindowController, NSTextFieldDelegate {
             
             // swap box
             placeholderView.contentView = documentView
+            self.window?.recalculateKeyViewLoop()
         } else {
             self.window?.title = NSLocalizedString("Document Info", comment: "")
             iconView.image = nil
