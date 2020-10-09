@@ -37,13 +37,14 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         typeView.objectValue = type
         idView.objectValue = id
         nameView.objectValue = name
+        // The last non-nil value provided will receive focus
         if let type = type {
             if let id = id {
                 idView.integerValue = rDocument.directory.uniqueID(for: type, starting: id)
-                self.window?.makeFirstResponder(nameView)
+                self.window?.makeFirstResponder(name == nil ? idView : nameView)
             } else {
                 idView.integerValue = rDocument.directory.uniqueID(for: type)
-                self.window?.makeFirstResponder(idView)
+                self.window?.makeFirstResponder(typeView)
             }
             createButton.isEnabled = true
         } else {
@@ -54,22 +55,21 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     }
     
     func controlTextDidChange(_ obj: Notification) {
-        // Accessing the control value will force validation of the field, causing problems when trying to enter a negative id.
-        // To workaround this, check the field editor for a negative symbol before checking the id value.
-        if typeView.objectValue == nil || (obj.userInfo!["NSFieldEditor"] as! NSText).string == "-" || idView.objectValue == nil {
-            createButton.isEnabled = false
+        createButton.isEnabled = false
+        if obj.object as AnyObject === typeView {
+            // If valid type, get a unique id
+            if typeView.objectValue != nil {
+                idView.integerValue = rDocument.directory.uniqueID(for: typeView.stringValue)
+                createButton.isEnabled = true
+            }
         } else {
-            // Check for conflict
-            let resource = rDocument.directory.findResource(type: typeView.stringValue, id: idView.integerValue)
-            createButton.isEnabled = resource == nil
-        }
-    }
-    
-    @IBAction func typeChanged(_ sender: Any) {
-        // Get a suitable id for this type
-        if typeView.objectValue != nil {
-            idView.integerValue = rDocument.directory.uniqueID(for: typeView.stringValue)
-            createButton.isEnabled = true
+            // If valid type and id, check for conflict
+            // Accessing the control value will force validation of the field, causing problems when trying to enter a negative id.
+            // To workaround this, check the field editor for a negative symbol before checking the value.
+            if typeView.objectValue != nil && (obj.userInfo!["NSFieldEditor"] as! NSText).string != "-" && idView.objectValue != nil {
+                let resource = rDocument.directory.findResource(type: typeView.stringValue, id: idView.integerValue)
+                createButton.isEnabled = resource == nil
+            }
         }
     }
     
