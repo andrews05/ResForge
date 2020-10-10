@@ -31,6 +31,9 @@ public extension FourCharCode {
     
     /// Return the preferred preview size for grid view.
     @objc optional static func previewSize(for resourceType: String) -> Int
+    
+    /// Return a placeholder name to show for a resource when it has no name.
+    @objc optional static func placeholderName(for resource: Resource) -> String
 }
 
 @objc public protocol ResKnifeTemplatePlugin: ResKnifePlugin {

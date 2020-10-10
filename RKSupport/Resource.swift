@@ -118,6 +118,14 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
         callback(self._preview)
     }
+    
+    /// Return a placeholder name to show for when the resource has no name.
+    public func placeholderName() -> String {
+        if let name = PluginRegistry.editors[type]?.placeholderName?(for: self) {
+            return name
+        }
+        return PluginRegistry.placeholderName(for: self)
+    }
 
     // MARK: - Pasteboard functions
     

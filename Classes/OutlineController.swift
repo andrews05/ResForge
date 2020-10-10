@@ -94,7 +94,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             outlineView.scrollRowToVisible(outlineView.selectedRow)
             // Update the placeholder
             let view = outlineView.view(atColumn: 0, row: outlineView.selectedRow, makeIfNecessary: false) as? NSTableCellView
-            view?.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
+            view?.textField?.placeholderString = resource.placeholderName()
         } else {
             outlineView.reloadItem(resource)
         }
@@ -109,7 +109,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             switch tableColumn!.identifier.rawValue {
             case "name":
                 view.textField?.stringValue = resource.name
-                view.textField?.placeholderString = ApplicationDelegate.placeholderName(for: resource)
+                view.textField?.placeholderString = resource.placeholderName()
                 view.imageView?.image = PluginRegistry.icon(for: resource.type)
             case "type":
                 view.textField?.stringValue = resource.type

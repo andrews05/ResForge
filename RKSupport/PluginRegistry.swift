@@ -50,4 +50,54 @@ public class PluginRegistry {
         }
         return icons[resourceType]
     }
+    
+    /// Return a placeholder name to show for a resource when it has no name.
+    public static func placeholderName(for resource: Resource) -> String {
+        if resource.id == -16455 {
+            // don't bother checking type since there are too many icon types
+            return NSLocalizedString("Custom Icon", comment: "")
+        }
+        
+        switch resource.type {
+        case "carb":
+            if resource.id == 0 {
+                return NSLocalizedString("Carbon Identifier", comment: "")
+            }
+        case "pnot":
+            if resource.id == 0 {
+                return NSLocalizedString("File Preview", comment: "")
+            }
+        case "STR ":
+            if resource.data.count > 1 {
+                do {
+                    return try BinaryDataReader(resource.data).readPString(encoding: .macOSRoman)
+                } catch {}
+            }
+            if resource.id == -16396 {
+                return NSLocalizedString("Creator Information", comment: "")
+            }
+        case "STR#":
+            if resource.data.count > 3 {
+                do {
+                    // Read first string at offset 2
+                    return try BinaryDataReader(resource.data[2...]).readPString(encoding: .macOSRoman)
+                } catch {}
+            }
+        case "vers":
+            if resource.data.count > 8 {
+                do {
+                    // Read short version string at offset 7
+                    return try BinaryDataReader(resource.data[7...]).readPString(encoding: .macOSRoman)
+                } catch {}
+            }
+            if resource.id == 1 {
+                return NSLocalizedString("File Version", comment: "")
+            } else if resource.id == 2 {
+                return NSLocalizedString("Package Version", comment: "")
+            }
+        default:
+            break
+        }
+        return NSLocalizedString("Untitled Resource", comment: "")
+    }
 }
