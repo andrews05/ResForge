@@ -1,6 +1,6 @@
 #import "ElementCaseable.h"
 #import "ElementCASE.h"
-#import "TemplateWindowController.h"
+#import "Template_Editor-Swift.h"
 
 // Abstract Element subclass that handles CASE elements
 @implementation ElementCaseable

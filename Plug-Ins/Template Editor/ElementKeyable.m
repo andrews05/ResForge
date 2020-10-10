@@ -1,6 +1,6 @@
 #import "ElementKeyable.h"
 #import "ElementCASE.h"
-#import "TemplateWindowController.h"
+#import "Template_Editor-Swift.h"
 
 // Abstract Element subclass that handles keyed sections
 @implementation ElementKeyable

@@ -1,5 +1,5 @@
 #import "ElementCOLR.h"
-#import "TemplateWindowController.h"
+#import "Template_Editor-Swift.h"
 
 @implementation ElementCOLR
 

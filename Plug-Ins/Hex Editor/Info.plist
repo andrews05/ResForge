@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_FILE}</string>
+	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -17,9 +17,9 @@
 	<key>CFBundleSignature</key>
 	<string>ResK</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>1</string>
 	<key>NSPrincipalClass</key>
-	<string>HexWindowController</string>
+	<string>${SWIFT_MODULE_NAME}.HexWindowController</string>
 	<key>RKEditedTypes</key>
 	<array>
 		<string>Hexadecimal Editor</string>

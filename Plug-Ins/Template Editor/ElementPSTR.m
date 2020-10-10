@@ -1,5 +1,5 @@
 #import "ElementPSTR.h"
-#import "TemplateWindowController.h"
+#import "Template_Editor-Swift.h"
 
 // implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, Pnnn, Cnnn
 @implementation ElementPSTR

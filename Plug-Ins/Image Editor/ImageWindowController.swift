@@ -40,11 +40,6 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         self.loadImage()
     }
     
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
-        self.saveResource(sender)
-        return true
-    }
-    
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.action {
         case #selector(saveResource(_:)),

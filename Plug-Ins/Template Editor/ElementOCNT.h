@@ -1,8 +1,6 @@
-#import "Element.h"
+#import "GroupElement.h"
 
-@interface ElementOCNT : Element
+@interface ElementOCNT : Element <GroupElement>
 @property UInt32 value;
-
-- (void)configureGroupView:(NSTableCellView *)groupView;
 
 @end

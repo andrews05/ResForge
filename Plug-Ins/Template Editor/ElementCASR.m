@@ -1,7 +1,7 @@
 #import "ElementCASR.h"
 #import "ElementRSID.h"
 #import "ElementRangeable.h"
-#import "TemplateWindowController.h"
+#import "Template_Editor-Swift.h"
 
 /*
  * The CASR element is an experimental case range element

@@ -1,6 +1,6 @@
 #import "TemplateWindowController.h"
 #import "ResourceStream.h"
-#import "Element.h"
+#import "GroupElement.h"
 #import "ElementLSTB.h"
 
 @implementation TemplateWindowController
@@ -143,7 +143,7 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(Element *)item
 {
-    return [item respondsToSelector:@selector(configureGroupView:)];
+    return [item conformsToProtocol:@protocol(GroupElement)];
 }
 
 #pragma mark -
@@ -293,21 +293,6 @@
 - (NSRect)frameOfOutlineCellAtRow:(NSInteger)row
 {
     return NSZeroRect;
-}
-
-- (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row {
-    NSRect superFrame = [super frameOfCellAtColumn:column row:row];
-    if (column == 0) {
-        // Manually manage indentation for list headers (prevents the label column from growing wider)
-        CGFloat indent = [self levelForRow:row] * 16;
-        superFrame.origin.x += indent;
-        superFrame.size.width -= indent;
-    } else if (column == -1) {
-        // Small left margin for group rows
-        superFrame.origin.x += 3;
-        superFrame.size.width -= 3;
-    }
-    return superFrame;
 }
 
 @end

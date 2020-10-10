@@ -1,7 +1,5 @@
-#import "Element.h"
+#import "GroupElement.h"
 
-@interface ElementDVDR : Element
-
-- (void)configureGroupView:(NSTableCellView *)groupView;
+@interface ElementDVDR : Element <GroupElement>
 
 @end

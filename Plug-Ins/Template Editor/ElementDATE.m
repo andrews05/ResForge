@@ -1,5 +1,5 @@
 #import "ElementDATE.h"
-#import "TemplateWindowController.h"
+#import "Template_Editor-Swift.h"
 
 @implementation ElementDATE
 

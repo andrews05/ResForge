@@ -1,7 +1,6 @@
 #import "ElementKRID.h"
-#import "TemplateWindowController.h"
+#import "Template_Editor-Swift.h"
 #import "RKSupport/RKSupport-Swift.h"
-//#import "Template_Editor-Swift.h"
 
 @implementation ElementKRID
 

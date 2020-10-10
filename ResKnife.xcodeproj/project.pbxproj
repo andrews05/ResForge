@@ -47,6 +47,11 @@
 		49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A7C2450E87000E1EAE4 /* ElementBBIT.m */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		49362DA324A966960040B793 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
+		4945DBFB25315CAB00856385 /* GroupElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 4945DBFA25315CAB00856385 /* GroupElement.h */; };
+		4945DC3725316EF900856385 /* TMPLOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC152531671400856385 /* TMPLOutlineView.swift */; };
+		4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DBF2253142AE00856385 /* TemplateWindowController.swift */; };
+		4945DC512531745600856385 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC232531689900856385 /* LabelView.swift */; };
+		4945DC642531826400856385 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
 		494BEA67245A774B000EF1D0 /* ElementKeyable.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA65245A774B000EF1D0 /* ElementKeyable.h */; };
 		494BEA68245A774B000EF1D0 /* ElementKeyable.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA66245A774B000EF1D0 /* ElementKeyable.m */; };
 		494BEA6B245A84D1000EF1D0 /* ElementCASE.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA69245A84D1000EF1D0 /* ElementCASE.h */; };
@@ -99,7 +104,6 @@
 		49964DE924D0EB5D00BAB902 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044002472064F0035C0FA /* color.cpp */; };
 		49964DEA24D0EB6000BAB902 /* packbits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044012472064F0035C0FA /* packbits.cpp */; };
 		49964DEB24D0EB6300BAB902 /* surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044032472064F0035C0FA /* surface.cpp */; };
-		49964DEC24D0EB7000BAB902 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
 		49964DED24D0EB8900BAB902 /* data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044272472064F0035C0FA /* data.cpp */; };
 		49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044282472064F0035C0FA /* reader.cpp */; };
 		49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970442A2472064F0035C0FA /* writer.cpp */; };
@@ -110,7 +114,6 @@
 		49964DFB24D0EC1C00BAB902 /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044182472064F0035C0FA /* resource.cpp */; };
 		49964DFC24D0EC2000BAB902 /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
 		49964DFD24D0EC2300BAB902 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044212472064F0035C0FA /* type.cpp */; };
-		49964E0824D0ECB200BAB902 /* macroman.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044132472064F0035C0FA /* macroman.hpp */; };
 		49964E1324D1034400BAB902 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
 		49964E1424D10A1000BAB902 /* ResourceFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 499216F024CCD2250054A390 /* ResourceFile.mm */; };
 		49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1524D10ED900BAB902 /* AttributesFormatter.swift */; };
@@ -220,7 +223,6 @@
 		E18BF5DD069FEA1400F076B8 /* MisnWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB515054E918800A80202 /* MisnWindowController.m */; };
 		E18BF5DE069FEA1400F076B8 /* ShipWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB519054E919200A80202 /* ShipWindowController.m */; };
 		E18BF5E0069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E18BF6A0069FEA1800F076B8 /* TemplateWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */; };
 		E18BF6A3069FEA1800F076B8 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933A604DEFEE600DD74B1 /* Element.h */; };
 		E18BF6A5069FEA1800F076B8 /* ResourceStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BE04DF151C00DD74B1 /* ResourceStream.h */; };
 		E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */; };
@@ -229,7 +231,6 @@
 		E18BF6AB069FEA1800F076B8 /* ElementDLNG.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B404E872DB00AF65FE /* ElementDLNG.h */; };
 		E18BF6AC069FEA1800F076B8 /* ElementDBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B804E873F300AF65FE /* ElementDBYT.h */; };
 		E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50046F04EF040900F3B64D /* ElementOCNT.h */; };
-		E18BF6B4069FEA1800F076B8 /* TemplateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */; };
 		E18BF6B6069FEA1800F076B8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* Element.m */; };
 		E18BF6B8069FEA1800F076B8 /* ResourceStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* ResourceStream.m */; };
 		E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */; };
@@ -439,6 +440,11 @@
 		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
 		4943603F24C12DE100293E94 /* ppat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ppat.hpp; sourceTree = "<group>"; };
 		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
+		4945DBF1253142AE00856385 /* Template Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Template Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
+		4945DBF2253142AE00856385 /* TemplateWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateWindowController.swift; sourceTree = "<group>"; };
+		4945DBFA25315CAB00856385 /* GroupElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupElement.h; sourceTree = "<group>"; };
+		4945DC152531671400856385 /* TMPLOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMPLOutlineView.swift; sourceTree = "<group>"; };
+		4945DC232531689900856385 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		494BEA65245A774B000EF1D0 /* ElementKeyable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementKeyable.h; sourceTree = "<group>"; };
 		494BEA66245A774B000EF1D0 /* ElementKeyable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKeyable.m; sourceTree = "<group>"; };
 		494BEA69245A84D1000EF1D0 /* ElementCASE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCASE.h; sourceTree = "<group>"; };
@@ -849,8 +855,13 @@
 				494BEA66245A774B000EF1D0 /* ElementKeyable.m */,
 				49F640562466099C00E7CE4D /* ElementRangeable.h */,
 				49F640572466099C00E7CE4D /* ElementRangeable.m */,
+				4945DBFA25315CAB00856385 /* GroupElement.h */,
 				3D0933EB04DF319F00DD74B1 /* Field Types */,
 				E11937F309991C1100A3A6EA /* Support Resources */,
+				4945DBF1253142AE00856385 /* Template Editor Cocoa-Bridging-Header.h */,
+				4945DBF2253142AE00856385 /* TemplateWindowController.swift */,
+				4945DC152531671400856385 /* TMPLOutlineView.swift */,
+				4945DC232531689900856385 /* LabelView.swift */,
 			);
 			path = "Template Editor";
 			sourceTree = "<group>";
@@ -1227,7 +1238,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49964E0824D0ECB200BAB902 /* macroman.hpp in Headers */,
 				492722AF24CFADD600819E32 /* RKSupport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1274,7 +1284,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49F6404C246376D900E7CE4D /* ElementLORV.h in Headers */,
-				E18BF6A0069FEA1800F076B8 /* TemplateWindowController.h in Headers */,
 				E18BF6A3069FEA1800F076B8 /* Element.h in Headers */,
 				E18BF6A5069FEA1800F076B8 /* ResourceStream.h in Headers */,
 				49322A5D244FAADA00E1EAE4 /* ElementCHAR.h in Headers */,
@@ -1326,6 +1335,7 @@
 				493229D1244C7B1200E1EAE4 /* ElementRECT.h in Headers */,
 				49F640442463628900E7CE4D /* ElementBORV.h in Headers */,
 				49F640402462C84B00E7CE4D /* ElementDVDR.h in Headers */,
+				4945DBFB25315CAB00856385 /* GroupElement.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1420,9 +1430,9 @@
 			productReference = E18BF58C069FEA1400F076B8 /* ResKnife.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E18BF58E069FEA1400F076B8 /* Hex Editor Cocoa */ = {
+		E18BF58E069FEA1400F076B8 /* Hex Editor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E13F7ED108F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Hex Editor Cocoa" */;
+			buildConfigurationList = E13F7ED108F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Hex Editor" */;
 			buildPhases = (
 				E18BF58F069FEA1400F076B8 /* Headers */,
 				E18BF597069FEA1400F076B8 /* Resources */,
@@ -1434,7 +1444,7 @@
 			);
 			dependencies = (
 			);
-			name = "Hex Editor Cocoa";
+			name = "Hex Editor";
 			productName = "Hex Editor Cocoa";
 			productReference = E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
@@ -1458,9 +1468,9 @@
 			productReference = E17ADBC006A2132800842474 /* NovaTools.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		E18BF69E069FEA1800F076B8 /* Template Editor Cocoa */ = {
+		E18BF69E069FEA1800F076B8 /* Template Editor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E13F7ED508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Template Editor Cocoa" */;
+			buildConfigurationList = E13F7ED508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Template Editor" */;
 			buildPhases = (
 				E18BF69F069FEA1800F076B8 /* Headers */,
 				E18BF6AF069FEA1800F076B8 /* Resources */,
@@ -1473,15 +1483,15 @@
 			);
 			dependencies = (
 			);
-			name = "Template Editor Cocoa";
+			name = "Template Editor";
 			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
 			productName = "Template Editor Cocoa";
 			productReference = E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		E18BF78A069FF23700F076B8 /* Font Editor Cocoa */ = {
+		E18BF78A069FF23700F076B8 /* Font Editor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E13F7EE508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Font Editor Cocoa" */;
+			buildConfigurationList = E13F7EE508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Font Editor" */;
 			buildPhases = (
 				E18BF786069FF23700F076B8 /* Headers */,
 				E18BF787069FF23700F076B8 /* Resources */,
@@ -1493,7 +1503,7 @@
 			);
 			dependencies = (
 			);
-			name = "Font Editor Cocoa";
+			name = "Font Editor";
 			productName = "Font Editor";
 			productReference = E18BF78B069FF23700F076B8 /* Font Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
@@ -1522,6 +1532,9 @@
 					E18BF58E069FEA1400F076B8 = {
 						LastSwiftMigration = 1150;
 					};
+					E18BF69E069FEA1800F076B8 = {
+						LastSwiftMigration = 1200;
+					};
 				};
 			};
 			buildConfigurationList = E13F7F0508F0411100E2A5CB /* Build configuration list for PBXProject "ResKnife" */;
@@ -1543,9 +1556,9 @@
 			projectRoot = "";
 			targets = (
 				E18BF537069FEA1300F076B8 /* ResKnife */,
-				E18BF58E069FEA1400F076B8 /* Hex Editor Cocoa */,
-				E18BF69E069FEA1800F076B8 /* Template Editor Cocoa */,
-				E18BF78A069FF23700F076B8 /* Font Editor Cocoa */,
+				E18BF58E069FEA1400F076B8 /* Hex Editor */,
+				E18BF69E069FEA1800F076B8 /* Template Editor */,
+				E18BF78A069FF23700F076B8 /* Font Editor */,
 				E18BF5B7069FEA1400F076B8 /* NovaTools */,
 				B2FCA78915A66ACE00696598 /* Image Editor */,
 				4953F594248874AA0002340F /* Sound Editor */,
@@ -1674,8 +1687,8 @@
 				49AACD8824CE93520081DD4A /* ResKnifePluginProtocol.swift in Sources */,
 				49C5622B24D0D8D20072D659 /* MacRomanFormatter.swift in Sources */,
 				49964E1324D1034400BAB902 /* Resource.swift in Sources */,
-				49964DEC24D0EB7000BAB902 /* macroman.cpp in Sources */,
 				491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */,
+				4945DC642531826400856385 /* macroman.cpp in Sources */,
 				496A52BE24F9B047006A12DF /* CustomImageView.swift in Sources */,
 				49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */,
 				49964DE924D0EB5D00BAB902 /* color.cpp in Sources */,
@@ -1748,12 +1761,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF6B4069FEA1800F076B8 /* TemplateWindowController.m in Sources */,
 				49882A0E2448EF0E00D439BC /* ElementAWRD.m in Sources */,
 				49F640412462C84B00E7CE4D /* ElementDVDR.m in Sources */,
 				49322A62244FBF4E00E1EAE4 /* ElementTNAM.m in Sources */,
 				E18BF6B6069FEA1800F076B8 /* Element.m in Sources */,
 				E18BF6B8069FEA1800F076B8 /* ResourceStream.m in Sources */,
+				4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */,
 				49F640512464B96E00E7CE4D /* ElementCASR.m in Sources */,
 				49F640552466083800E7CE4D /* ElementCaseable.m in Sources */,
 				E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */,
@@ -1762,6 +1775,7 @@
 				494BEA74245BE256000EF1D0 /* ElementRSID.m in Sources */,
 				E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */,
 				E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */,
+				4945DC3725316EF900856385 /* TMPLOutlineView.swift in Sources */,
 				E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */,
 				4962B27D245778950065590E /* ElementLBIT.m in Sources */,
 				4962B275245535280065590E /* ElementList.m in Sources */,
@@ -1776,6 +1790,7 @@
 				E14AC454099702F400D293E5 /* ElementFBYT.m in Sources */,
 				49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */,
 				E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */,
+				4945DC512531745600856385 /* LabelView.swift in Sources */,
 				493229D2244C7B1200E1EAE4 /* ElementRECT.m in Sources */,
 				E1193686099864AD00A3A6EA /* ElementULNG.m in Sources */,
 				493229CE244C3C2000E1EAE4 /* ElementLFLG.m in Sources */,
@@ -1832,17 +1847,17 @@
 		};
 		E13F836508F139E900E2A5CB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E18BF78A069FF23700F076B8 /* Font Editor Cocoa */;
+			target = E18BF78A069FF23700F076B8 /* Font Editor */;
 			targetProxy = E13F836408F139E900E2A5CB /* PBXContainerItemProxy */;
 		};
 		E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E18BF58E069FEA1400F076B8 /* Hex Editor Cocoa */;
+			target = E18BF58E069FEA1400F076B8 /* Hex Editor */;
 			targetProxy = E18BF6C9069FEA1900F076B8 /* PBXContainerItemProxy */;
 		};
 		E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E18BF69E069FEA1800F076B8 /* Template Editor Cocoa */;
+			target = E18BF69E069FEA1800F076B8 /* Template Editor */;
 			targetProxy = E18BF6CF069FEA1900F076B8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2241,9 +2256,14 @@
 		E13F7ED608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Plug-Ins/Template Editor/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Template Editor";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Template Editor/Template Editor Cocoa-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -2251,9 +2271,13 @@
 		E13F7ED708F0411100E2A5CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Plug-Ins/Template Editor/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Template Editor";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Template Editor/Template Editor Cocoa-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -2487,7 +2511,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		E13F7ED108F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Hex Editor Cocoa" */ = {
+		E13F7ED108F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Hex Editor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E13F7ED208F0411100E2A5CB /* Debug */,
@@ -2496,7 +2520,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		E13F7ED508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Template Editor Cocoa" */ = {
+		E13F7ED508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Template Editor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E13F7ED608F0411100E2A5CB /* Debug */,
@@ -2514,7 +2538,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		E13F7EE508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Font Editor Cocoa" */ = {
+		E13F7EE508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Font Editor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E13F7EE608F0411100E2A5CB /* Debug */,

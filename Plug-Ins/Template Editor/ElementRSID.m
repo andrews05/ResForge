@@ -1,8 +1,8 @@
 #import "ElementRSID.h"
 #import "ElementCASE.h"
-#import "TemplateWindowController.h"
+#import "Template_Editor-Swift.h"
 #import "RKSupport/RKSupport-Swift.h"
-//#import "Template_Editor-Swift.h"
+
 /*
  * RSID allows selecting a resource id of a given type
  * The parameters are specified in the label
