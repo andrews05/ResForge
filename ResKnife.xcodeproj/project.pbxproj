@@ -55,6 +55,8 @@
 		4945DCB9253248DA00856385 /* ElementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DCB8253248DA00856385 /* ElementList.swift */; };
 		4945DCDE25329BAA00856385 /* ResourceStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* ResourceStream.m */; };
 		4945DCE525329BAD00856385 /* ResourceStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BE04DF151C00DD74B1 /* ResourceStream.h */; };
+		4945DD692532DEFA00856385 /* ElementDBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B704E873F300AF65FE /* ElementDBYT.m */; };
+		4945DD702532DEFD00856385 /* ElementDBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B804E873F300AF65FE /* ElementDBYT.h */; };
 		494BEA67245A774B000EF1D0 /* ElementKeyable.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA65245A774B000EF1D0 /* ElementKeyable.h */; };
 		494BEA68245A774B000EF1D0 /* ElementKeyable.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA66245A774B000EF1D0 /* ElementKeyable.m */; };
 		494BEA6B245A84D1000EF1D0 /* ElementCASE.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA69245A84D1000EF1D0 /* ElementCASE.h */; };
@@ -229,14 +231,12 @@
 		E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933E704DF317D00DD74B1 /* ElementPSTR.h */; };
 		E18BF6A9069FEA1800F076B8 /* ElementDWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933EF04DF381900DD74B1 /* ElementDWRD.h */; };
 		E18BF6AB069FEA1800F076B8 /* ElementDLNG.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B404E872DB00AF65FE /* ElementDLNG.h */; };
-		E18BF6AC069FEA1800F076B8 /* ElementDBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B804E873F300AF65FE /* ElementDBYT.h */; };
 		E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50046F04EF040900F3B64D /* ElementOCNT.h */; };
 		E18BF6B6069FEA1800F076B8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* Element.m */; };
 		E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */; };
 		E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933E804DF317D00DD74B1 /* ElementPSTR.m */; };
 		E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933EE04DF381900DD74B1 /* ElementDWRD.m */; };
 		E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B304E872DB00AF65FE /* ElementDLNG.m */; };
-		E18BF6BF069FEA1800F076B8 /* ElementDBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B704E873F300AF65FE /* ElementDBYT.m */; };
 		E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047004EF040900F3B64D /* ElementOCNT.m */; };
 		E18BF6C3069FEA1800F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E18BF7D1069FFC7600F076B8 /* FontWindowController.h */; };
@@ -445,6 +445,7 @@
 		4945DC152531671400856385 /* TMPLOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMPLOutlineView.swift; sourceTree = "<group>"; };
 		4945DC232531689900856385 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		4945DCB8253248DA00856385 /* ElementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementList.swift; sourceTree = "<group>"; };
+		4945DD062532DAE500856385 /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		494BEA65245A774B000EF1D0 /* ElementKeyable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementKeyable.h; sourceTree = "<group>"; };
 		494BEA66245A774B000EF1D0 /* ElementKeyable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKeyable.m; sourceTree = "<group>"; };
 		494BEA69245A84D1000EF1D0 /* ElementCASE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCASE.h; sourceTree = "<group>"; };
@@ -863,6 +864,7 @@
 				4945DC152531671400856385 /* TMPLOutlineView.swift */,
 				4945DC232531689900856385 /* LabelView.swift */,
 				4945DCB8253248DA00856385 /* ElementList.swift */,
+				4945DD062532DAE500856385 /* Element.swift */,
 			);
 			path = "Template Editor";
 			sourceTree = "<group>";
@@ -1284,6 +1286,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4945DD702532DEFD00856385 /* ElementDBYT.h in Headers */,
 				49F6404C246376D900E7CE4D /* ElementLORV.h in Headers */,
 				E18BF6A3069FEA1800F076B8 /* Element.h in Headers */,
 				49322A5D244FAADA00E1EAE4 /* ElementCHAR.h in Headers */,
@@ -1301,7 +1304,6 @@
 				49322A75244FF63000E1EAE4 /* ElementHLNG.h in Headers */,
 				49322A7D2450E87000E1EAE4 /* ElementBBIT.h in Headers */,
 				49322A71244FF5F600E1EAE4 /* ElementHWRD.h in Headers */,
-				E18BF6AC069FEA1800F076B8 /* ElementDBYT.h in Headers */,
 				E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */,
 				49F640582466099C00E7CE4D /* ElementRangeable.h in Headers */,
 				E14AC2760996BF1700D293E5 /* ElementDLLG.h in Headers */,
@@ -1779,7 +1781,6 @@
 				E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */,
 				4962B27D245778950065590E /* ElementLBIT.m in Sources */,
 				49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */,
-				E18BF6BF069FEA1800F076B8 /* ElementDBYT.m in Sources */,
 				E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */,
 				49F640492463759900E7CE4D /* ElementWORV.m in Sources */,
 				493229CA244C3A0800E1EAE4 /* ElementWFLG.m in Sources */,
@@ -1800,6 +1801,7 @@
 				494BEA70245B90D1000EF1D0 /* ElementKRID.m in Sources */,
 				494BEA6C245A84D1000EF1D0 /* ElementCASE.m in Sources */,
 				493229D6244D19CF00E1EAE4 /* ElementPNT.m in Sources */,
+				4945DD692532DEFA00856385 /* ElementDBYT.m in Sources */,
 				E119376F0998768600A3A6EA /* ElementFRAC.m in Sources */,
 				493229C6244C2B5000E1EAE4 /* ElementBFLG.m in Sources */,
 				49F6403D2461199500E7CE4D /* ElementPACK.m in Sources */,

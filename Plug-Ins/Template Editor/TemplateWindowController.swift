@@ -5,7 +5,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     let resource: Resource
     private let template: Resource
     private var resourceStructure: ElementList! = nil
-    @IBOutlet var dataList: NSOutlineView!
+    @IBOutlet var dataList: TMPLOutlineView!
     
     override var windowNibName: String {
         return "TemplateWindow"
