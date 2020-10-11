@@ -1,5 +1,6 @@
 #import "ElementLSTB.h"
 #import "ElementDVDR.h"
+#import "Template_Editor-Swift.h"
 
 // implements LSTB, LSTZ, LSTC
 @implementation ElementLSTB
@@ -63,7 +64,7 @@
 - (void)checkSingleElement
 {
     if (self.subElements.count == 1) {
-        self.singleElement = [self.subElements elementAtIndex:0];
+        self.singleElement = [self.subElements elementAt:0];
         self.rowHeight = 22;
     }
 }
@@ -72,7 +73,7 @@
 {
     // Create a new list entry at the current index (just before self)
     ElementLSTB *list = [self copy];
-    [self.parentList insertElement:list];
+    [self.parentList insert:list];
     [self.entries addObject:list];
     return list;
 }
@@ -108,7 +109,7 @@
 - (void)sizeOnDisk:(UInt32 *)size
 {
     if (self != self.tail) {
-        [self.subElements sizeOnDisk:size];
+        *size += [self.subElements sizeOnDisk];
     } else if (_zeroTerminated) {
         *size += 1;
     }
@@ -144,7 +145,7 @@
 {
     if (self.singleElement)
         return [self.singleElement subElementAtIndex:n];
-    return [self.subElements elementAtIndex:n];
+    return [self.subElements elementAt:n];
 }
 
 - (BOOL)allowsCreateListEntry
@@ -160,14 +161,14 @@
 - (void)createListEntry
 {
     ElementLSTB *list = [self.tail copy];
-    [self.parentList insertElement:list before:self];
+    [self.parentList insert:list before:self];
     [self.entries insertObject:list atIndex:[self.entries indexOfObject:self]];
     self.tail.countElement.value++;
 }
 
 - (void)removeListEntry
 {
-	[self.parentList removeElement:self];
+	[self.parentList remove:self];
     [self.entries removeObject:self];
     self.tail.countElement.value--;
 }

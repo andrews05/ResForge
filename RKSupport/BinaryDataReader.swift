@@ -18,7 +18,7 @@ public class BinaryDataReader {
     
     public func read<T: FixedWidthInteger>(bigEndian: Bool? = nil) throws -> T {
 		let bytes = T.bitWidth / 8
-		guard position + bytes < data.endIndex else {
+		guard position + bytes <= data.endIndex else {
 			throw BinaryDataReaderError.notEnoughData
 		}
 		var val: T = 0

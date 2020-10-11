@@ -38,10 +38,8 @@
     ElementKEYB *oldSection = [self setCase:self.cases[sender.indexOfSelectedItem]];
     if (oldSection) {
         // Check if the section sizes match and attempt to copy the data
-        UInt32 currentSize = 0;
-        [oldSection.subElements sizeOnDisk:&currentSize];
-        UInt32 newSize = 0;
-        [self.currentSection.subElements sizeOnDisk:&newSize];
+        UInt32 currentSize = [oldSection.subElements sizeOnDisk];
+        UInt32 newSize = [self.currentSection.subElements sizeOnDisk];
         if (currentSize == newSize && currentSize > 0) {
             NSMutableData *data = [NSMutableData dataWithLength:currentSize];
             ResourceStream *stream = [ResourceStream streamWithData:data];
@@ -63,10 +61,10 @@
     if (newSection == self.currentSection)
         return nil;
     ElementKEYB *oldSection = self.currentSection;
-    [self.parentList removeElement:oldSection];
+    [self.parentList remove:oldSection];
     self.currentSection = newSection;
     if (newSection)
-        [self.parentList insertElement:newSection after:self];
+        [self.parentList insert:newSection after:self];
     return oldSection;
 }
 
@@ -119,7 +117,7 @@
     self.currentSection = self.keyedSections[value];
     [self validateValue:&value forKey:@"value" error:nil];
     [self setValue:value forKey:@"value"];
-    [self.parentList insertElement:self.currentSection];
+    [self.parentList insert:self.currentSection];
     
     // Use KVO to observe value change when data is first read
     // This saves us adding any key logic to the concrete element subclasses

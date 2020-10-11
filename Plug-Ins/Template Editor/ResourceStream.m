@@ -4,7 +4,7 @@
 @synthesize length;
 @synthesize bytesToGo;
 
-+ (instancetype)streamWithData:(NSData *)data
++ (instancetype)streamWithData:(NSMutableData *)data
 {
     return [[self alloc] initStreamWithBytes:(char *)[data bytes] length:(UInt32)data.length];
 }

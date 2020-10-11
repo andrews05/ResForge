@@ -35,7 +35,7 @@
 - (void)configure
 {
     // Read CASE elements
-    ElementCASE *element = [self.parentList peek:1];
+    ElementCASE *element = (ElementCASE *)[self.parentList peek:1];
     if (element.class == ElementCASE.class) {
         self.cases = [NSMutableArray new];
         self.caseMap = [NSMutableDictionary new];
@@ -48,7 +48,7 @@
             NSString *display = [NSString stringWithFormat:@"%@ = %@", element.value, element.displayLabel];
             [self.cases addObject:option];
             [self.caseMap setObject:display forKey:element.value];
-            element = [self.parentList peek:1];
+            element = (ElementCASE *)[self.parentList peek:1];
         }
     }
 }

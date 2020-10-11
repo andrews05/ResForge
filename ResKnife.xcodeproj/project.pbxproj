@@ -52,6 +52,9 @@
 		4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DBF2253142AE00856385 /* TemplateWindowController.swift */; };
 		4945DC512531745600856385 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC232531689900856385 /* LabelView.swift */; };
 		4945DC642531826400856385 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
+		4945DCB9253248DA00856385 /* ElementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DCB8253248DA00856385 /* ElementList.swift */; };
+		4945DCDE25329BAA00856385 /* ResourceStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* ResourceStream.m */; };
+		4945DCE525329BAD00856385 /* ResourceStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BE04DF151C00DD74B1 /* ResourceStream.h */; };
 		494BEA67245A774B000EF1D0 /* ElementKeyable.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA65245A774B000EF1D0 /* ElementKeyable.h */; };
 		494BEA68245A774B000EF1D0 /* ElementKeyable.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA66245A774B000EF1D0 /* ElementKeyable.m */; };
 		494BEA6B245A84D1000EF1D0 /* ElementCASE.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA69245A84D1000EF1D0 /* ElementCASE.h */; };
@@ -64,8 +67,6 @@
 		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
 		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4953F5A92488795B0002340F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4953F5A82488795B0002340F /* AVKit.framework */; };
-		4962B274245535280065590E /* ElementList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B272245535270065590E /* ElementList.h */; };
-		4962B275245535280065590E /* ElementList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B273245535270065590E /* ElementList.m */; };
 		4962B27824569EE50065590E /* ElementWBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B27624569EE50065590E /* ElementWBIT.h */; };
 		4962B27924569EE50065590E /* ElementWBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B27724569EE50065590E /* ElementWBIT.m */; };
 		4962B27C245778950065590E /* ElementLBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B27A245778950065590E /* ElementLBIT.h */; };
@@ -224,7 +225,6 @@
 		E18BF5DE069FEA1400F076B8 /* ShipWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB519054E919200A80202 /* ShipWindowController.m */; };
 		E18BF5E0069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF6A3069FEA1800F076B8 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933A604DEFEE600DD74B1 /* Element.h */; };
-		E18BF6A5069FEA1800F076B8 /* ResourceStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BE04DF151C00DD74B1 /* ResourceStream.h */; };
 		E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */; };
 		E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933E704DF317D00DD74B1 /* ElementPSTR.h */; };
 		E18BF6A9069FEA1800F076B8 /* ElementDWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933EF04DF381900DD74B1 /* ElementDWRD.h */; };
@@ -232,7 +232,6 @@
 		E18BF6AC069FEA1800F076B8 /* ElementDBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B804E873F300AF65FE /* ElementDBYT.h */; };
 		E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50046F04EF040900F3B64D /* ElementOCNT.h */; };
 		E18BF6B6069FEA1800F076B8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* Element.m */; };
-		E18BF6B8069FEA1800F076B8 /* ResourceStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* ResourceStream.m */; };
 		E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */; };
 		E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933E804DF317D00DD74B1 /* ElementPSTR.m */; };
 		E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933EE04DF381900DD74B1 /* ElementDWRD.m */; };
@@ -445,6 +444,7 @@
 		4945DBFA25315CAB00856385 /* GroupElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupElement.h; sourceTree = "<group>"; };
 		4945DC152531671400856385 /* TMPLOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMPLOutlineView.swift; sourceTree = "<group>"; };
 		4945DC232531689900856385 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
+		4945DCB8253248DA00856385 /* ElementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementList.swift; sourceTree = "<group>"; };
 		494BEA65245A774B000EF1D0 /* ElementKeyable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementKeyable.h; sourceTree = "<group>"; };
 		494BEA66245A774B000EF1D0 /* ElementKeyable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKeyable.m; sourceTree = "<group>"; };
 		494BEA69245A84D1000EF1D0 /* ElementCASE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCASE.h; sourceTree = "<group>"; };
@@ -862,6 +862,7 @@
 				4945DBF2253142AE00856385 /* TemplateWindowController.swift */,
 				4945DC152531671400856385 /* TMPLOutlineView.swift */,
 				4945DC232531689900856385 /* LabelView.swift */,
+				4945DCB8253248DA00856385 /* ElementList.swift */,
 			);
 			path = "Template Editor";
 			sourceTree = "<group>";
@@ -1285,7 +1286,6 @@
 			files = (
 				49F6404C246376D900E7CE4D /* ElementLORV.h in Headers */,
 				E18BF6A3069FEA1800F076B8 /* Element.h in Headers */,
-				E18BF6A5069FEA1800F076B8 /* ResourceStream.h in Headers */,
 				49322A5D244FAADA00E1EAE4 /* ElementCHAR.h in Headers */,
 				E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */,
 				49F640502464B96E00E7CE4D /* ElementCASR.h in Headers */,
@@ -1306,6 +1306,7 @@
 				49F640582466099C00E7CE4D /* ElementRangeable.h in Headers */,
 				E14AC2760996BF1700D293E5 /* ElementDLLG.h in Headers */,
 				49322A79244FF65A00E1EAE4 /* ElementHLLG.h in Headers */,
+				4945DCE525329BAD00856385 /* ResourceStream.h in Headers */,
 				E14AC453099702F400D293E5 /* ElementFBYT.h in Headers */,
 				49F640482463759900E7CE4D /* ElementWORV.h in Headers */,
 				494BEA67245A774B000EF1D0 /* ElementKeyable.h in Headers */,
@@ -1324,7 +1325,6 @@
 				E119379309987CC400A3A6EA /* ElementULLG.h in Headers */,
 				494BEA6F245B90D1000EF1D0 /* ElementKRID.h in Headers */,
 				49322A61244FBF4E00E1EAE4 /* ElementTNAM.h in Headers */,
-				4962B274245535280065590E /* ElementList.h in Headers */,
 				49322A6D244FE71200E1EAE4 /* ElementHBYT.h in Headers */,
 				4962B27824569EE50065590E /* ElementWBIT.h in Headers */,
 				49322A65244FD17800E1EAE4 /* ElementREAL.h in Headers */,
@@ -1765,10 +1765,10 @@
 				49F640412462C84B00E7CE4D /* ElementDVDR.m in Sources */,
 				49322A62244FBF4E00E1EAE4 /* ElementTNAM.m in Sources */,
 				E18BF6B6069FEA1800F076B8 /* Element.m in Sources */,
-				E18BF6B8069FEA1800F076B8 /* ResourceStream.m in Sources */,
 				4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */,
 				49F640512464B96E00E7CE4D /* ElementCASR.m in Sources */,
 				49F640552466083800E7CE4D /* ElementCaseable.m in Sources */,
+				4945DCDE25329BAA00856385 /* ResourceStream.m in Sources */,
 				E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */,
 				49F6404D246376D900E7CE4D /* ElementLORV.m in Sources */,
 				49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */,
@@ -1778,7 +1778,6 @@
 				4945DC3725316EF900856385 /* TMPLOutlineView.swift in Sources */,
 				E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */,
 				4962B27D245778950065590E /* ElementLBIT.m in Sources */,
-				4962B275245535280065590E /* ElementList.m in Sources */,
 				49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */,
 				E18BF6BF069FEA1800F076B8 /* ElementDBYT.m in Sources */,
 				E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */,
@@ -1795,6 +1794,7 @@
 				E1193686099864AD00A3A6EA /* ElementULNG.m in Sources */,
 				493229CE244C3C2000E1EAE4 /* ElementLFLG.m in Sources */,
 				E1193688099864AD00A3A6EA /* ElementUWRD.m in Sources */,
+				4945DCB9253248DA00856385 /* ElementList.swift in Sources */,
 				4962B27924569EE50065590E /* ElementWBIT.m in Sources */,
 				E119371C09986D8300A3A6EA /* ElementFIXD.m in Sources */,
 				494BEA70245B90D1000EF1D0 /* ElementKRID.m in Sources */,

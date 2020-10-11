@@ -1,5 +1,6 @@
 #import "ElementBBIT.h"
 #import "ElementBOOL.h"
+#import "Template_Editor-Swift.h"
 
 #define SIZE_ON_DISK (1)
 

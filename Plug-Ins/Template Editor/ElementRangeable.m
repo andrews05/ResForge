@@ -55,7 +55,7 @@
 - (void)configure
 {
     // Read CASR elements
-    ElementCASR *element = [self.parentList peek:1];
+    ElementCASR *element = (ElementCASR *)[self.parentList peek:1];
     if (element.class == ElementCASR.class) {
         self.popupWidth = 240;
         self.isRanged = YES;
@@ -67,7 +67,7 @@
             element.width = self.width;
             if (element.min != element.max)
                 self.popupWidth = 180; // Shrink pop-up menu if any CASR needs a field
-            element = [self.parentList peek:1];
+            element = (ElementCASR *)[self.parentList peek:1];
         }
     } else {
         [super configure];

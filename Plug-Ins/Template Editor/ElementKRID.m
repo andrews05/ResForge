@@ -20,7 +20,7 @@
     self.value = @(self.parentList.controller.resource.id).stringValue;
     self.currentSection = self.keyedSections[self.value];
     if (self.currentSection) {
-        [self.parentList insertElement:self.currentSection];
+        [self.parentList insert:self.currentSection];
     } else {
         NSLog(@"No KEYB for resource id %@.", self.value);
     }

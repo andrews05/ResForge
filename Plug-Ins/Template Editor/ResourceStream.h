@@ -8,7 +8,7 @@
 @property UInt32 length;
 @property UInt32 bytesToGo;
 
-+ (instancetype)streamWithData:(NSData *)data;
++ (instancetype)streamWithData:(NSMutableData *)data;
 
 - (instancetype)initStreamWithBytes:(char *)d length:(UInt32)l;
 

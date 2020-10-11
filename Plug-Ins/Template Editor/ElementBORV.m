@@ -1,6 +1,7 @@
 #import "ElementBORV.h"
 #import "ElementCASE.h"
 #import "ElementBOOL.h"
+#import "Template_Editor-Swift.h"
 
 #define SIZE_ON_DISK (1)
 
@@ -28,7 +29,7 @@
     // Read hex values from the CASEs
     self.cases = [NSMutableArray new];
     self.values = [NSMutableArray new];
-    ElementCASE *element = [self.parentList peek:1];
+    ElementCASE *element = (ElementCASE *)[self.parentList peek:1];
     while (element.class == ElementCASE.class) {
         [self.parentList pop];
         NSString *value = element.value;
@@ -41,7 +42,7 @@
         // Store the value in our list while setting the element to 0, which will be used for the checkbox state
         [self.values addObject:@(val)];
         element.value = @"0";
-        element = [self.parentList peek:1];
+        element = (ElementCASE *)[self.parentList peek:1];
     }
     self.rowHeight = (20 * self.cases.count) + 2;
 }

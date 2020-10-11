@@ -1,4 +1,5 @@
 #import "ElementKEYB.h"
+#import "Template_Editor-Swift.h"
 
 @implementation ElementKEYB
 
@@ -32,7 +33,7 @@
 
 - (void)sizeOnDisk:(UInt32 *)size
 {
-    [self.subElements sizeOnDisk:size];
+    *size += [self.subElements sizeOnDisk];
 }
 
 - (void)writeDataTo:(ResourceStream *)stream
@@ -47,7 +48,7 @@
 
 - (Element *)subElementAtIndex:(NSInteger)n
 {
-	return [self.subElements elementAtIndex:n];
+	return [self.subElements elementAt:n];
 }
 
 @end

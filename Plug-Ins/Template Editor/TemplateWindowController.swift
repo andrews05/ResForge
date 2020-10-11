@@ -42,7 +42,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         // Reload the template while keeping the current data
         let currentData = resourceStructure.getResourceData()
         self.readTemplate()
-        resourceStructure.readResourceData(currentData)
+        resourceStructure.readResource(data: currentData)
         // expand all
         dataList.reloadData()
         dataList.expandItem(nil, expandChildren: true)
@@ -56,7 +56,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     
     func loadResource() {
         self.readTemplate()
-        resourceStructure.readResourceData(resource.data)
+        resourceStructure.readResource(data: resource.data)
         // expand all
         dataList?.reloadData()
         dataList?.expandItem(nil, expandChildren: true)
@@ -64,8 +64,11 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     }
     
     func readTemplate() {
-        resourceStructure = ElementList(from: InputStream(data: template.data))
-        resourceStructure.controller = self
+        do {
+            resourceStructure = try ElementList(from: template.data, controller: self)
+        } catch let error {
+            print(error)
+        }
         resourceStructure.configureElements()
     }
     
@@ -114,7 +117,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         if let item = item as? Element {
             return item.subElement(at: index)!
         }
-        return resourceStructure.element(at: UInt(index))!
+        return resourceStructure.element(at: index)
     }
     
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
@@ -190,14 +193,12 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     }
     
     @objc func windowDidBecomeKey(_ notification: Notification) {
-        let resourceMenu = NSApp.mainMenu!.item(withTag: 3)!.submenu!
-        let createItem = resourceMenu.item(withTag: 0)!
-        createItem.title = NSLocalizedString("Create List Entry", comment: "")
+        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
+        createItem?.title = NSLocalizedString("Create List Entry", comment: "")
     }
     
     @objc func windowDidResignKey(_ notification: Notification) {
-        let resourceMenu = NSApp.mainMenu!.item(withTag: 3)!.submenu!
-        let createItem = resourceMenu.item(withTag: 0)!
-        createItem.title = NSLocalizedString("Create New Resource…", comment: "")
+        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
+        createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
     }
 }

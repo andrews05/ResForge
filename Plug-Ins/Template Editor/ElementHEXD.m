@@ -1,4 +1,5 @@
 #import "ElementHEXD.h"
+#import "Template_Editor-Swift.h"
 
 @implementation ElementHEXD
 

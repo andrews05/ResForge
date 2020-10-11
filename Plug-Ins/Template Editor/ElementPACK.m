@@ -1,5 +1,6 @@
 #import "ElementPACK.h"
 #import "ElementRangeable.h"
+#import "Template_Editor-Swift.h"
 
 /*
  * The PACK element is an experimental layout control element

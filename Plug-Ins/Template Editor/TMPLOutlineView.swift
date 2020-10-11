@@ -32,7 +32,7 @@ class TMPLOutlineView: NSOutlineView {
                 view.scrollToVisible(view.superview!.bounds)
                 return
             }
-            i = i-1
+            i -= 1
         }
     }
     
@@ -59,12 +59,23 @@ class TMPLOutlineView: NSOutlineView {
                 view.scrollToVisible(view.superview!.bounds)
                 return
             }
-            i = i+1
+            i += 1
         }
     }
     
     // Don't draw the disclosure triangles
     override func frameOfOutlineCell(atRow row: Int) -> NSRect {
         return NSZeroRect
+    }
+    
+    // Manually manage indentation for list headers
+    override func frameOfCell(atColumn column: Int, row: Int) -> NSRect {
+        var superFrame = super.frameOfCell(atColumn: column, row: row)
+        if column == 0 && self.item(atRow: row) is ElementLSTB {
+            let indent = self.level(forRow: row) * 16
+            superFrame.origin.x += CGFloat(indent)
+            superFrame.size.width -= CGFloat(indent)
+        }
+        return superFrame
     }
 }

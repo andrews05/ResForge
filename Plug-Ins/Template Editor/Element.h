@@ -1,5 +1,4 @@
 #import <Cocoa/Cocoa.h>
-#import "ElementList.h"
 #import "ResourceStream.h"
 
 /*
@@ -12,6 +11,8 @@
  own variables' values (or retains references to them, if that is more
  effective and the object in question isn't mutable).
  */
+
+@class ElementList, ResourceStream;
 
 @interface Element : NSValueTransformer <NSCopying, NSComboBoxDelegate>
 // Accessors:
