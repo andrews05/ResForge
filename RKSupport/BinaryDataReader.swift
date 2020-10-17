@@ -21,6 +21,12 @@ public class BinaryDataReader {
 		guard position + bytes <= data.endIndex else {
 			throw BinaryDataReaderError.notEnoughData
 		}
+        // Int8 must be constructed from a bit pattern
+        if T.self is Int8.Type {
+            let val = Int8(bitPattern: data[position]) as! T
+            position += 1
+            return val
+        }
 		var val: T = 0
         for i in 0..<bytes {
             val += T(data[position]) << (i * 8)

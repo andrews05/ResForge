@@ -5,7 +5,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     let resource: Resource
     private let template: Resource
     private var resourceStructure: ElementList! = nil
-    @IBOutlet var dataList: TMPLOutlineView!
+    @IBOutlet var dataList: TabbableOutlineView!
     
     override var windowNibName: String {
         return "TemplateWindow"
@@ -42,7 +42,11 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         // Reload the template while keeping the current data
         let currentData = resourceStructure.getResourceData()
         self.readTemplate()
-        resourceStructure.readResource(data: currentData)
+        do {
+            try resourceStructure.readResource(data: currentData)
+        } catch let error {
+            print(error)
+        }
         // expand all
         dataList.reloadData()
         dataList.expandItem(nil, expandChildren: true)
@@ -56,7 +60,11 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     
     func loadResource() {
         self.readTemplate()
-        resourceStructure.readResource(data: resource.data)
+        do {
+            try resourceStructure.readResource(data: resource.data)
+        } catch let error {
+            print(error)
+        }
         // expand all
         dataList?.reloadData()
         dataList?.expandItem(nil, expandChildren: true)
@@ -65,11 +73,10 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     
     func readTemplate() {
         do {
-            resourceStructure = try ElementList(from: template.data, controller: self)
+            resourceStructure = try ElementList(controller: self, template: template.data)
         } catch let error {
             print(error)
         }
-        resourceStructure.configureElements()
     }
     
     @IBAction func saveResource(_ sender: Any) {
@@ -90,18 +97,18 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
             var identifier = tableColumn.identifier
             if identifier.rawValue == "data" {
                 view = NSView(frame: NSMakeRect(0, 0, tableColumn.width, CGFloat(item.rowHeight)))
-                item.configureView(view)
+                item.configure(view: view)
             } else {
                 if let item = item as? ElementLSTB, item.allowsCreateListEntry() {
                     identifier = NSUserInterfaceItemIdentifier("listLabel")
                 }
                 view = outlineView.makeView(withIdentifier: identifier, owner: self)!
-                (view as! NSTableCellView).textField?.stringValue = item.displayLabel()
+                (view as! NSTableCellView).textField?.stringValue = item.displayLabel
             }
             view.toolTip = item.tooltip
         } else {
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("groupView"), owner: self)!
-            (item as! GroupElement).configureGroupView(view as? NSTableCellView)
+            (item as! GroupElement).configureGroup(view: view as! NSTableCellView)
         }
         return view
     }

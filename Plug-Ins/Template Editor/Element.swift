@@ -1,49 +1,40 @@
 import Cocoa
+import RKSupport
 
-class Element: ValueTransformer, NSCopying, NSComboBoxDelegate {
+class Element: ValueTransformer, NSCopying, NSTextFieldDelegate {
+    static var sharedFormatters: [String: Formatter] = [:]
+    
     /// Type code of this field.
-    private(set) var type: String
+    let type: String
     /// Label ("name") of this field.
-    private(set) var label: String
+    let label: String
     /// Descriptive tooltip of this field, derived from subsequent lines of the label.
-    private(set) var tooltip: String
+    let tooltip: String
+    /// Type code of an ending element if this element marks the start of a section.
+    let endType: String! = nil
     /// The list of the template field containing us, or the template window's list.
     weak var parentList: ElementList!
-    /// Type code of an ending element if this element marks the start of a section.
-    private(set) var endType: String! = nil
-    private(set) var rowHeight: Double = 22
-    private(set) var visible: Bool = true
-    private(set) var width: CGFloat = 60 // Default for many types
+    var rowHeight: Double = 22
+    var visible: Bool = true
+    var width: CGFloat = 60 // Default for many types
     
     /// The label to display, if different from the template label.
     var displayLabel: String {
-        label.components(separatedBy: "=").first ?? ""
+        label.components(separatedBy: "=")[0]
     }
-    /// Create a shared (static) formatter for displaying your data in the list.
-    static var sharedFormatter: Formatter? {
+    /// Create a formatter for this element's data..
+    var formatter: Formatter? {
         nil
     }
-    /// Override this if the formatter should not be shared.
-    var formatter: Formatter? {
-        Self.sharedFormatter
-    }
     
-    init(for type: String, withLabel label: String) {
+    required init(type: String, label: String, tooltip: String = "") {
         self.type = type
-        // Any extra lines in the label will be used as a tooltip
-        let components = label.components(separatedBy: "\n")
-        self.label = components[0]
-        if components.count > 1 {
-            tooltip = components[1...].joined(separator: "\n")
-        } else {
-            tooltip = ""
-        }
+        self.label = label
+        self.tooltip = tooltip
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let element = Element(for: type, withLabel: label)
-        element.tooltip = tooltip
-        return element
+        return Element(type: type, label: label, tooltip: tooltip)
     }
     
     // Notify the controller when a field has been edited
@@ -69,6 +60,9 @@ class Element: ValueTransformer, NSCopying, NSComboBoxDelegate {
     }
     
     // MARK: - Methods Subclasses Should Override
+    
+    /// Perform any configuration that may depend on other elements.
+    func configure() throws {}
     
     /// Configure the view to display this element in the list.
     /// The default implementation creates a text field bound to a "value" property.
@@ -102,18 +96,17 @@ class Element: ValueTransformer, NSCopying, NSComboBoxDelegate {
         return nil
     }
     
-    /// Perform any configuration that may depend on other elements.
-    func configure() {}
-    
     /// Read the value of the field from the stream.
-    func readData(from stream: ResourceStream) {}
+    func readData(from reader: BinaryDataReader) throws {}
     
     /// Before writeData is called, this is called to calculate the final resource size.
     /// Items with sub-elements should return the sum of the sizes of all their sub-elements here as well.
-    func sizeOnDisk() -> UInt32 {
-        return 0
-    }
+    func dataSize(_ size: inout Int) {}
     
     /// Write the value of the field to the stream.
-    func writeData(to stream: ResourceStream) {}
+    func writeData(to writer: BinaryDataWriter) {}
+}
+
+protocol GroupElement {
+    func configureGroup(view: NSView)
 }

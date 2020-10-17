@@ -15,64 +15,20 @@
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
-		493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C3244C2B5000E1EAE4 /* ElementBFLG.h */; };
-		493229C6244C2B5000E1EAE4 /* ElementBFLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229C4244C2B5000E1EAE4 /* ElementBFLG.m */; };
-		493229C9244C3A0800E1EAE4 /* ElementWFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229C7244C3A0800E1EAE4 /* ElementWFLG.h */; };
-		493229CA244C3A0800E1EAE4 /* ElementWFLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229C8244C3A0800E1EAE4 /* ElementWFLG.m */; };
-		493229CD244C3C2000E1EAE4 /* ElementLFLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229CB244C3C2000E1EAE4 /* ElementLFLG.h */; };
-		493229CE244C3C2000E1EAE4 /* ElementLFLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229CC244C3C2000E1EAE4 /* ElementLFLG.m */; };
-		493229D1244C7B1200E1EAE4 /* ElementRECT.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229CF244C7B1200E1EAE4 /* ElementRECT.h */; };
-		493229D2244C7B1200E1EAE4 /* ElementRECT.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229D0244C7B1200E1EAE4 /* ElementRECT.m */; };
-		493229D5244D19CF00E1EAE4 /* ElementPNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229D3244D19CF00E1EAE4 /* ElementPNT.h */; };
-		493229D6244D19CF00E1EAE4 /* ElementPNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229D4244D19CF00E1EAE4 /* ElementPNT.m */; };
-		493229D9244D1DAB00E1EAE4 /* ElementBOOL.h in Headers */ = {isa = PBXBuildFile; fileRef = 493229D7244D1DAB00E1EAE4 /* ElementBOOL.h */; };
-		493229DA244D1DAB00E1EAE4 /* ElementBOOL.m in Sources */ = {isa = PBXBuildFile; fileRef = 493229D8244D1DAB00E1EAE4 /* ElementBOOL.m */; };
-		49322A5D244FAADA00E1EAE4 /* ElementCHAR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A5B244FAADA00E1EAE4 /* ElementCHAR.h */; };
-		49322A5E244FAADA00E1EAE4 /* ElementCHAR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A5C244FAADA00E1EAE4 /* ElementCHAR.m */; };
-		49322A61244FBF4E00E1EAE4 /* ElementTNAM.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A5F244FBF4E00E1EAE4 /* ElementTNAM.h */; };
-		49322A62244FBF4E00E1EAE4 /* ElementTNAM.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A60244FBF4E00E1EAE4 /* ElementTNAM.m */; };
-		49322A65244FD17800E1EAE4 /* ElementREAL.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A63244FD17800E1EAE4 /* ElementREAL.h */; };
-		49322A66244FD17800E1EAE4 /* ElementREAL.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A64244FD17800E1EAE4 /* ElementREAL.m */; };
-		49322A69244FD18700E1EAE4 /* ElementDOUB.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A67244FD18700E1EAE4 /* ElementDOUB.h */; };
-		49322A6A244FD18700E1EAE4 /* ElementDOUB.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A68244FD18700E1EAE4 /* ElementDOUB.m */; };
-		49322A6D244FE71200E1EAE4 /* ElementHBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A6B244FE71200E1EAE4 /* ElementHBYT.h */; };
-		49322A6E244FE71200E1EAE4 /* ElementHBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A6C244FE71200E1EAE4 /* ElementHBYT.m */; };
-		49322A71244FF5F600E1EAE4 /* ElementHWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A6F244FF5F600E1EAE4 /* ElementHWRD.h */; };
-		49322A72244FF5F600E1EAE4 /* ElementHWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A70244FF5F600E1EAE4 /* ElementHWRD.m */; };
-		49322A75244FF63000E1EAE4 /* ElementHLNG.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A73244FF63000E1EAE4 /* ElementHLNG.h */; };
-		49322A76244FF63000E1EAE4 /* ElementHLNG.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A74244FF63000E1EAE4 /* ElementHLNG.m */; };
-		49322A79244FF65A00E1EAE4 /* ElementHLLG.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A77244FF65A00E1EAE4 /* ElementHLLG.h */; };
-		49322A7A244FF65A00E1EAE4 /* ElementHLLG.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A78244FF65A00E1EAE4 /* ElementHLLG.m */; };
-		49322A7D2450E87000E1EAE4 /* ElementBBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49322A7B2450E87000E1EAE4 /* ElementBBIT.h */; };
-		49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49322A7C2450E87000E1EAE4 /* ElementBBIT.m */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		49362DA324A966960040B793 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
-		4945DBFB25315CAB00856385 /* GroupElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 4945DBFA25315CAB00856385 /* GroupElement.h */; };
-		4945DC3725316EF900856385 /* TMPLOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC152531671400856385 /* TMPLOutlineView.swift */; };
+		4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC152531671400856385 /* TabbableOutlineView.swift */; };
 		4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DBF2253142AE00856385 /* TemplateWindowController.swift */; };
 		4945DC512531745600856385 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC232531689900856385 /* LabelView.swift */; };
 		4945DC642531826400856385 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
 		4945DCB9253248DA00856385 /* ElementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DCB8253248DA00856385 /* ElementList.swift */; };
-		4945DCDE25329BAA00856385 /* ResourceStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933BF04DF151C00DD74B1 /* ResourceStream.m */; };
-		4945DCE525329BAD00856385 /* ResourceStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933BE04DF151C00DD74B1 /* ResourceStream.h */; };
-		4945DD692532DEFA00856385 /* ElementDBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B704E873F300AF65FE /* ElementDBYT.m */; };
-		4945DD702532DEFD00856385 /* ElementDBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B804E873F300AF65FE /* ElementDBYT.h */; };
-		494BEA67245A774B000EF1D0 /* ElementKeyable.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA65245A774B000EF1D0 /* ElementKeyable.h */; };
-		494BEA68245A774B000EF1D0 /* ElementKeyable.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA66245A774B000EF1D0 /* ElementKeyable.m */; };
-		494BEA6B245A84D1000EF1D0 /* ElementCASE.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA69245A84D1000EF1D0 /* ElementCASE.h */; };
-		494BEA6C245A84D1000EF1D0 /* ElementCASE.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA6A245A84D1000EF1D0 /* ElementCASE.m */; };
-		494BEA6F245B90D1000EF1D0 /* ElementKRID.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA6D245B90D1000EF1D0 /* ElementKRID.h */; };
-		494BEA70245B90D1000EF1D0 /* ElementKRID.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA6E245B90D1000EF1D0 /* ElementKRID.m */; };
-		494BEA73245BE256000EF1D0 /* ElementRSID.h in Headers */ = {isa = PBXBuildFile; fileRef = 494BEA71245BE256000EF1D0 /* ElementRSID.h */; };
-		494BEA74245BE256000EF1D0 /* ElementRSID.m in Sources */ = {isa = PBXBuildFile; fileRef = 494BEA72245BE256000EF1D0 /* ElementRSID.m */; };
+		4951AB4D25341BBE009A8285 /* ElementDWRD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB4C25341BBE009A8285 /* ElementDWRD.swift */; };
+		4951AB5A25341CB4009A8285 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DD062532DAE500856385 /* Element.swift */; };
+		4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB6125341D3E009A8285 /* ElementLSTB.swift */; };
 		4953F599248874AA0002340F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
 		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4953F5A92488795B0002340F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4953F5A82488795B0002340F /* AVKit.framework */; };
-		4962B27824569EE50065590E /* ElementWBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B27624569EE50065590E /* ElementWBIT.h */; };
-		4962B27924569EE50065590E /* ElementWBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B27724569EE50065590E /* ElementWBIT.m */; };
-		4962B27C245778950065590E /* ElementLBIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 4962B27A245778950065590E /* ElementLBIT.h */; };
-		4962B27D245778950065590E /* ElementLBIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962B27B245778950065590E /* ElementLBIT.m */; };
 		4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */; };
 		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
 		49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */; };
@@ -92,10 +48,6 @@
 		4970443D24720C0B0035C0FA /* manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4970441F2472064F0035C0FA /* manager.hpp */; };
 		4970444024720C0B0035C0FA /* resource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044222472064F0035C0FA /* resource.hpp */; };
 		497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BB1DB24F741E400858EF1 /* Icons.swift */; };
-		49882A092447F45700D439BC /* ElementFCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A072447F45700D439BC /* ElementFCNT.h */; };
-		49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A082447F45700D439BC /* ElementFCNT.m */; };
-		49882A0D2448EF0E00D439BC /* ElementAWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 49882A0B2448EF0E00D439BC /* ElementAWRD.h */; };
-		49882A0E2448EF0E00D439BC /* ElementAWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 49882A0C2448EF0E00D439BC /* ElementAWRD.m */; };
 		499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499216ED24CB914F0054A390 /* CreateResourceController.swift */; };
 		49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
 		49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043F92472064F0035C0FA /* geometry.cpp */; };
@@ -135,26 +87,11 @@
 		49C5622B24D0D8D20072D659 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
 		49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1D24F377A400BE0F0F /* CollectionController.swift */; };
-		49F6403C2461199500E7CE4D /* ElementPACK.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403A2461199500E7CE4D /* ElementPACK.h */; };
-		49F6403D2461199500E7CE4D /* ElementPACK.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F6403B2461199500E7CE4D /* ElementPACK.m */; };
-		49F640402462C84B00E7CE4D /* ElementDVDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6403E2462C84B00E7CE4D /* ElementDVDR.h */; };
-		49F640412462C84B00E7CE4D /* ElementDVDR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F6403F2462C84B00E7CE4D /* ElementDVDR.m */; };
-		49F640442463628900E7CE4D /* ElementBORV.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F640422463628900E7CE4D /* ElementBORV.h */; };
-		49F640452463628900E7CE4D /* ElementBORV.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F640432463628900E7CE4D /* ElementBORV.m */; };
-		49F640482463759900E7CE4D /* ElementWORV.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F640462463759900E7CE4D /* ElementWORV.h */; };
-		49F640492463759900E7CE4D /* ElementWORV.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F640472463759900E7CE4D /* ElementWORV.m */; };
-		49F6404C246376D900E7CE4D /* ElementLORV.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6404A246376D900E7CE4D /* ElementLORV.h */; };
-		49F6404D246376D900E7CE4D /* ElementLORV.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F6404B246376D900E7CE4D /* ElementLORV.m */; };
-		49F640502464B96E00E7CE4D /* ElementCASR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F6404E2464B96E00E7CE4D /* ElementCASR.h */; };
-		49F640512464B96E00E7CE4D /* ElementCASR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F6404F2464B96E00E7CE4D /* ElementCASR.m */; };
-		49F640542466083800E7CE4D /* ElementCaseable.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F640522466083800E7CE4D /* ElementCaseable.h */; };
-		49F640552466083800E7CE4D /* ElementCaseable.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F640532466083800E7CE4D /* ElementCaseable.m */; };
-		49F640582466099C00E7CE4D /* ElementRangeable.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F640562466099C00E7CE4D /* ElementRangeable.h */; };
-		49F640592466099C00E7CE4D /* ElementRangeable.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F640572466099C00E7CE4D /* ElementRangeable.m */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
-		49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */ = {isa = PBXBuildFile; fileRef = 49F9560C245D44D200D80C65 /* ElementCOLR.h */; };
-		49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9560D245D44D200D80C65 /* ElementCOLR.m */; };
+		49FE7B49253A7E7700D2219D /* CaseableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE7B48253A7E7700D2219D /* CaseableElement.swift */; };
+		49FE7B51253A7EBA00D2219D /* ElementCASE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE7B50253A7EBA00D2219D /* ElementCASE.swift */; };
+		49FE7B59253AC5F400D2219D /* ElementTNAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE7B58253AC5F400D2219D /* ElementTNAM.swift */; };
 		555DFD972059BCE700E1B774 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 555DFD992059BCE700E1B774 /* Credits.rtf */; };
 		559DE9B4189D665000D55D3A /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Icons.xcassets */; };
 		55FEF5A5189D758E00888898 /* NovaTools.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5A3189D758E00888898 /* NovaTools.xib */; };
@@ -176,29 +113,9 @@
 		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA79E15A6704900696598 /* FontDocument.xib */; };
-		E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367D099864AD00A3A6EA /* ElementUBYT.h */; };
-		E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = E119367E099864AD00A3A6EA /* ElementUBYT.m */; };
-		E1193685099864AD00A3A6EA /* ElementULNG.h in Headers */ = {isa = PBXBuildFile; fileRef = E119367F099864AD00A3A6EA /* ElementULNG.h */; };
-		E1193686099864AD00A3A6EA /* ElementULNG.m in Sources */ = {isa = PBXBuildFile; fileRef = E1193680099864AD00A3A6EA /* ElementULNG.m */; };
-		E1193687099864AD00A3A6EA /* ElementUWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = E1193681099864AD00A3A6EA /* ElementUWRD.h */; };
-		E1193688099864AD00A3A6EA /* ElementUWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = E1193682099864AD00A3A6EA /* ElementUWRD.m */; };
-		E119371B09986D8300A3A6EA /* ElementFIXD.h in Headers */ = {isa = PBXBuildFile; fileRef = E119371909986D8200A3A6EA /* ElementFIXD.h */; };
-		E119371C09986D8300A3A6EA /* ElementFIXD.m in Sources */ = {isa = PBXBuildFile; fileRef = E119371A09986D8200A3A6EA /* ElementFIXD.m */; };
-		E119376E0998768600A3A6EA /* ElementFRAC.h in Headers */ = {isa = PBXBuildFile; fileRef = E119376C0998768500A3A6EA /* ElementFRAC.h */; };
-		E119376F0998768600A3A6EA /* ElementFRAC.m in Sources */ = {isa = PBXBuildFile; fileRef = E119376D0998768500A3A6EA /* ElementFRAC.m */; };
-		E119379309987CC400A3A6EA /* ElementULLG.h in Headers */ = {isa = PBXBuildFile; fileRef = E119379109987CC400A3A6EA /* ElementULLG.h */; };
-		E119379409987CC400A3A6EA /* ElementULLG.m in Sources */ = {isa = PBXBuildFile; fileRef = E119379209987CC400A3A6EA /* ElementULLG.m */; };
 		E119386509991DDD00A3A6EA /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E119383D09991C5100A3A6EA /* Templates.rsrc */; };
-		E119388D0999296B00A3A6EA /* ElementHEXD.h in Headers */ = {isa = PBXBuildFile; fileRef = E119388B0999296B00A3A6EA /* ElementHEXD.h */; };
-		E119388E0999296B00A3A6EA /* ElementHEXD.m in Sources */ = {isa = PBXBuildFile; fileRef = E119388C0999296B00A3A6EA /* ElementHEXD.m */; };
 		E13F837F08F13A4C00E2A5CB /* Font Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF78B069FF23700F076B8 /* Font Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		E14AC2760996BF1700D293E5 /* ElementDLLG.h in Headers */ = {isa = PBXBuildFile; fileRef = E14AC2740996BF1700D293E5 /* ElementDLLG.h */; };
-		E14AC2770996BF1700D293E5 /* ElementDLLG.m in Sources */ = {isa = PBXBuildFile; fileRef = E14AC2750996BF1700D293E5 /* ElementDLLG.m */; };
-		E14AC453099702F400D293E5 /* ElementFBYT.h in Headers */ = {isa = PBXBuildFile; fileRef = E14AC451099702F300D293E5 /* ElementFBYT.h */; };
-		E14AC454099702F400D293E5 /* ElementFBYT.m in Sources */ = {isa = PBXBuildFile; fileRef = E14AC452099702F400D293E5 /* ElementFBYT.m */; };
 		E15CFD6E099995D1004929B6 /* Templates for sfnt tables.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */; };
-		E15CFF82099BECAF004929B6 /* ElementDATE.h in Headers */ = {isa = PBXBuildFile; fileRef = E15CFF80099BECAE004929B6 /* ElementDATE.h */; };
-		E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */ = {isa = PBXBuildFile; fileRef = E15CFF81099BECAF004929B6 /* ElementDATE.m */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
 		E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
@@ -226,24 +143,10 @@
 		E18BF5DD069FEA1400F076B8 /* MisnWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB515054E918800A80202 /* MisnWindowController.m */; };
 		E18BF5DE069FEA1400F076B8 /* ShipWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB519054E919200A80202 /* ShipWindowController.m */; };
 		E18BF5E0069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E18BF6A3069FEA1800F076B8 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933A604DEFEE600DD74B1 /* Element.h */; };
-		E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */; };
-		E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933E704DF317D00DD74B1 /* ElementPSTR.h */; };
-		E18BF6A9069FEA1800F076B8 /* ElementDWRD.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0933EF04DF381900DD74B1 /* ElementDWRD.h */; };
-		E18BF6AB069FEA1800F076B8 /* ElementDLNG.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D4737B404E872DB00AF65FE /* ElementDLNG.h */; };
-		E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D50046F04EF040900F3B64D /* ElementOCNT.h */; };
-		E18BF6B6069FEA1800F076B8 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933A704DEFEE600DD74B1 /* Element.m */; };
-		E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */; };
-		E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933E804DF317D00DD74B1 /* ElementPSTR.m */; };
-		E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0933EE04DF381900DD74B1 /* ElementDWRD.m */; };
-		E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4737B304E872DB00AF65FE /* ElementDLNG.m */; };
-		E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D50047004EF040900F3B64D /* ElementOCNT.m */; };
 		E18BF6C3069FEA1800F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E18BF7D1069FFC7600F076B8 /* FontWindowController.h */; };
 		E18BF7D5069FFC7600F076B8 /* FontWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18BF7D2069FFC7600F076B8 /* FontWindowController.m */; };
 		E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E1D0DB520A109A4F0011739C /* ElementKEYB.h in Headers */ = {isa = PBXBuildFile; fileRef = E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */; };
-		E1D0DB530A109A4F0011739C /* ElementKEYB.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */; };
 		E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -439,10 +342,9 @@
 		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
 		4943603F24C12DE100293E94 /* ppat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ppat.hpp; sourceTree = "<group>"; };
 		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
-		4945DBF1253142AE00856385 /* Template Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Template Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		4945DBF2253142AE00856385 /* TemplateWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateWindowController.swift; sourceTree = "<group>"; };
 		4945DBFA25315CAB00856385 /* GroupElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupElement.h; sourceTree = "<group>"; };
-		4945DC152531671400856385 /* TMPLOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMPLOutlineView.swift; sourceTree = "<group>"; };
+		4945DC152531671400856385 /* TabbableOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbableOutlineView.swift; sourceTree = "<group>"; };
 		4945DC232531689900856385 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		4945DCB8253248DA00856385 /* ElementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementList.swift; sourceTree = "<group>"; };
 		4945DD062532DAE500856385 /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
@@ -454,6 +356,8 @@
 		494BEA6E245B90D1000EF1D0 /* ElementKRID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKRID.m; sourceTree = "<group>"; };
 		494BEA71245BE256000EF1D0 /* ElementRSID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementRSID.h; sourceTree = "<group>"; };
 		494BEA72245BE256000EF1D0 /* ElementRSID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRSID.m; sourceTree = "<group>"; };
+		4951AB4C25341BBE009A8285 /* ElementDWRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDWRD.swift; sourceTree = "<group>"; };
+		4951AB6125341D3E009A8285 /* ElementLSTB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementLSTB.swift; sourceTree = "<group>"; };
 		4953F5922488740F0002340F /* SoundWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundWindow.xib; sourceTree = "<group>"; };
 		4953F593248874260002340F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4953F5A0248874AA0002340F /* Sound Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sound Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -568,6 +472,9 @@
 		49F6C76124C577440078EB55 /* ApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDelegate.swift; sourceTree = "<group>"; };
 		49F9560C245D44D200D80C65 /* ElementCOLR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCOLR.h; sourceTree = "<group>"; };
 		49F9560D245D44D200D80C65 /* ElementCOLR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCOLR.m; sourceTree = "<group>"; };
+		49FE7B48253A7E7700D2219D /* CaseableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseableElement.swift; sourceTree = "<group>"; };
+		49FE7B50253A7EBA00D2219D /* ElementCASE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCASE.swift; sourceTree = "<group>"; };
+		49FE7B58253AC5F400D2219D /* ElementTNAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTNAM.swift; sourceTree = "<group>"; };
 		550B9045189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AboutPanel.xib; sourceTree = "<group>"; };
 		550B9046189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Application.xib; sourceTree = "<group>"; };
 		550B9047189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CreateResourceSheet.xib; sourceTree = "<group>"; };
@@ -859,14 +766,26 @@
 				4945DBFA25315CAB00856385 /* GroupElement.h */,
 				3D0933EB04DF319F00DD74B1 /* Field Types */,
 				E11937F309991C1100A3A6EA /* Support Resources */,
-				4945DBF1253142AE00856385 /* Template Editor Cocoa-Bridging-Header.h */,
 				4945DBF2253142AE00856385 /* TemplateWindowController.swift */,
-				4945DC152531671400856385 /* TMPLOutlineView.swift */,
+				4945DC152531671400856385 /* TabbableOutlineView.swift */,
 				4945DC232531689900856385 /* LabelView.swift */,
 				4945DCB8253248DA00856385 /* ElementList.swift */,
 				4945DD062532DAE500856385 /* Element.swift */,
+				49FE7B48253A7E7700D2219D /* CaseableElement.swift */,
+				4951AB4B25341B97009A8285 /* Elements */,
 			);
 			path = "Template Editor";
+			sourceTree = "<group>";
+		};
+		4951AB4B25341B97009A8285 /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				4951AB4C25341BBE009A8285 /* ElementDWRD.swift */,
+				49FE7B58253AC5F400D2219D /* ElementTNAM.swift */,
+				4951AB6125341D3E009A8285 /* ElementLSTB.swift */,
+				49FE7B50253A7EBA00D2219D /* ElementCASE.swift */,
+			);
+			path = Elements;
 			sourceTree = "<group>";
 		};
 		4953F58F248873DD0002340F /* Sound Editor */ = {
@@ -1286,58 +1205,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4945DD702532DEFD00856385 /* ElementDBYT.h in Headers */,
-				49F6404C246376D900E7CE4D /* ElementLORV.h in Headers */,
-				E18BF6A3069FEA1800F076B8 /* Element.h in Headers */,
-				49322A5D244FAADA00E1EAE4 /* ElementCHAR.h in Headers */,
-				E18BF6A6069FEA1800F076B8 /* ElementLSTB.h in Headers */,
-				49F640502464B96E00E7CE4D /* ElementCASR.h in Headers */,
-				494BEA73245BE256000EF1D0 /* ElementRSID.h in Headers */,
-				E18BF6A8069FEA1800F076B8 /* ElementPSTR.h in Headers */,
-				493229CD244C3C2000E1EAE4 /* ElementLFLG.h in Headers */,
-				E18BF6A9069FEA1800F076B8 /* ElementDWRD.h in Headers */,
-				493229C5244C2B5000E1EAE4 /* ElementBFLG.h in Headers */,
-				49F9560E245D44D200D80C65 /* ElementCOLR.h in Headers */,
-				49F640542466083800E7CE4D /* ElementCaseable.h in Headers */,
-				49322A69244FD18700E1EAE4 /* ElementDOUB.h in Headers */,
-				E18BF6AB069FEA1800F076B8 /* ElementDLNG.h in Headers */,
-				49322A75244FF63000E1EAE4 /* ElementHLNG.h in Headers */,
-				49322A7D2450E87000E1EAE4 /* ElementBBIT.h in Headers */,
-				49322A71244FF5F600E1EAE4 /* ElementHWRD.h in Headers */,
-				E18BF6AD069FEA1800F076B8 /* ElementOCNT.h in Headers */,
-				49F640582466099C00E7CE4D /* ElementRangeable.h in Headers */,
-				E14AC2760996BF1700D293E5 /* ElementDLLG.h in Headers */,
-				49322A79244FF65A00E1EAE4 /* ElementHLLG.h in Headers */,
-				4945DCE525329BAD00856385 /* ResourceStream.h in Headers */,
-				E14AC453099702F400D293E5 /* ElementFBYT.h in Headers */,
-				49F640482463759900E7CE4D /* ElementWORV.h in Headers */,
-				494BEA67245A774B000EF1D0 /* ElementKeyable.h in Headers */,
-				E1193683099864AD00A3A6EA /* ElementUBYT.h in Headers */,
-				493229C9244C3A0800E1EAE4 /* ElementWFLG.h in Headers */,
-				E1193685099864AD00A3A6EA /* ElementULNG.h in Headers */,
-				49882A092447F45700D439BC /* ElementFCNT.h in Headers */,
-				E1193687099864AD00A3A6EA /* ElementUWRD.h in Headers */,
-				4962B27C245778950065590E /* ElementLBIT.h in Headers */,
-				49882A0D2448EF0E00D439BC /* ElementAWRD.h in Headers */,
-				494BEA6B245A84D1000EF1D0 /* ElementCASE.h in Headers */,
-				E119371B09986D8300A3A6EA /* ElementFIXD.h in Headers */,
-				E119376E0998768600A3A6EA /* ElementFRAC.h in Headers */,
-				493229D9244D1DAB00E1EAE4 /* ElementBOOL.h in Headers */,
-				493229D5244D19CF00E1EAE4 /* ElementPNT.h in Headers */,
-				E119379309987CC400A3A6EA /* ElementULLG.h in Headers */,
-				494BEA6F245B90D1000EF1D0 /* ElementKRID.h in Headers */,
-				49322A61244FBF4E00E1EAE4 /* ElementTNAM.h in Headers */,
-				49322A6D244FE71200E1EAE4 /* ElementHBYT.h in Headers */,
-				4962B27824569EE50065590E /* ElementWBIT.h in Headers */,
-				49322A65244FD17800E1EAE4 /* ElementREAL.h in Headers */,
-				E119388D0999296B00A3A6EA /* ElementHEXD.h in Headers */,
-				49F6403C2461199500E7CE4D /* ElementPACK.h in Headers */,
-				E15CFF82099BECAF004929B6 /* ElementDATE.h in Headers */,
-				E1D0DB520A109A4F0011739C /* ElementKEYB.h in Headers */,
-				493229D1244C7B1200E1EAE4 /* ElementRECT.h in Headers */,
-				49F640442463628900E7CE4D /* ElementBORV.h in Headers */,
-				49F640402462C84B00E7CE4D /* ElementDVDR.h in Headers */,
-				4945DBFB25315CAB00856385 /* GroupElement.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1763,61 +1630,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49882A0E2448EF0E00D439BC /* ElementAWRD.m in Sources */,
-				49F640412462C84B00E7CE4D /* ElementDVDR.m in Sources */,
-				49322A62244FBF4E00E1EAE4 /* ElementTNAM.m in Sources */,
-				E18BF6B6069FEA1800F076B8 /* Element.m in Sources */,
 				4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */,
-				49F640512464B96E00E7CE4D /* ElementCASR.m in Sources */,
-				49F640552466083800E7CE4D /* ElementCaseable.m in Sources */,
-				4945DCDE25329BAA00856385 /* ResourceStream.m in Sources */,
-				E18BF6B9069FEA1800F076B8 /* ElementLSTB.m in Sources */,
-				49F6404D246376D900E7CE4D /* ElementLORV.m in Sources */,
-				49882A0A2447F45700D439BC /* ElementFCNT.m in Sources */,
-				494BEA74245BE256000EF1D0 /* ElementRSID.m in Sources */,
-				E18BF6BB069FEA1800F076B8 /* ElementPSTR.m in Sources */,
-				E18BF6BC069FEA1800F076B8 /* ElementDWRD.m in Sources */,
-				4945DC3725316EF900856385 /* TMPLOutlineView.swift in Sources */,
-				E18BF6BE069FEA1800F076B8 /* ElementDLNG.m in Sources */,
-				4962B27D245778950065590E /* ElementLBIT.m in Sources */,
-				49F9560F245D44D200D80C65 /* ElementCOLR.m in Sources */,
-				E18BF6C0069FEA1800F076B8 /* ElementOCNT.m in Sources */,
-				49F640492463759900E7CE4D /* ElementWORV.m in Sources */,
-				493229CA244C3A0800E1EAE4 /* ElementWFLG.m in Sources */,
-				E14AC2770996BF1700D293E5 /* ElementDLLG.m in Sources */,
-				49322A5E244FAADA00E1EAE4 /* ElementCHAR.m in Sources */,
-				494BEA68245A774B000EF1D0 /* ElementKeyable.m in Sources */,
-				E14AC454099702F400D293E5 /* ElementFBYT.m in Sources */,
-				49322A7E2450E87000E1EAE4 /* ElementBBIT.m in Sources */,
-				E1193684099864AD00A3A6EA /* ElementUBYT.m in Sources */,
+				4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */,
+				4951AB4D25341BBE009A8285 /* ElementDWRD.swift in Sources */,
 				4945DC512531745600856385 /* LabelView.swift in Sources */,
-				493229D2244C7B1200E1EAE4 /* ElementRECT.m in Sources */,
-				E1193686099864AD00A3A6EA /* ElementULNG.m in Sources */,
-				493229CE244C3C2000E1EAE4 /* ElementLFLG.m in Sources */,
-				E1193688099864AD00A3A6EA /* ElementUWRD.m in Sources */,
 				4945DCB9253248DA00856385 /* ElementList.swift in Sources */,
-				4962B27924569EE50065590E /* ElementWBIT.m in Sources */,
-				E119371C09986D8300A3A6EA /* ElementFIXD.m in Sources */,
-				494BEA70245B90D1000EF1D0 /* ElementKRID.m in Sources */,
-				494BEA6C245A84D1000EF1D0 /* ElementCASE.m in Sources */,
-				493229D6244D19CF00E1EAE4 /* ElementPNT.m in Sources */,
-				4945DD692532DEFA00856385 /* ElementDBYT.m in Sources */,
-				E119376F0998768600A3A6EA /* ElementFRAC.m in Sources */,
-				493229C6244C2B5000E1EAE4 /* ElementBFLG.m in Sources */,
-				49F6403D2461199500E7CE4D /* ElementPACK.m in Sources */,
-				49322A66244FD17800E1EAE4 /* ElementREAL.m in Sources */,
-				49F640452463628900E7CE4D /* ElementBORV.m in Sources */,
-				49322A6E244FE71200E1EAE4 /* ElementHBYT.m in Sources */,
-				49F640592466099C00E7CE4D /* ElementRangeable.m in Sources */,
-				E119379409987CC400A3A6EA /* ElementULLG.m in Sources */,
-				49322A72244FF5F600E1EAE4 /* ElementHWRD.m in Sources */,
-				49322A6A244FD18700E1EAE4 /* ElementDOUB.m in Sources */,
-				E119388E0999296B00A3A6EA /* ElementHEXD.m in Sources */,
-				E15CFF83099BECAF004929B6 /* ElementDATE.m in Sources */,
-				49322A7A244FF65A00E1EAE4 /* ElementHLLG.m in Sources */,
-				493229DA244D1DAB00E1EAE4 /* ElementBOOL.m in Sources */,
-				E1D0DB530A109A4F0011739C /* ElementKEYB.m in Sources */,
-				49322A76244FF63000E1EAE4 /* ElementHLNG.m in Sources */,
+				49FE7B49253A7E7700D2219D /* CaseableElement.swift in Sources */,
+				4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */,
+				49FE7B59253AC5F400D2219D /* ElementTNAM.swift in Sources */,
+				49FE7B51253A7EBA00D2219D /* ElementCASE.swift in Sources */,
+				4951AB5A25341CB4009A8285 /* Element.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2263,7 +2085,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Template Editor";
-				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Template Editor/Template Editor Cocoa-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
@@ -2278,7 +2099,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Template Editor";
-				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Template Editor/Template Editor Cocoa-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
