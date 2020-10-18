@@ -1,18 +1,10 @@
 import RKSupport
 
-class ElementTNAM: Element {
-    var tnam: FourCharCode = 0
-    @objc var value: String {
-        get {
-            tnam.stringValue
-        }
-        set {
-            tnam = FourCharCode(newValue)
-        }
-    }
+class ElementTNAM: CaseableElement {
+    @objc private var value: String = ""
     
     override func readData(from reader: BinaryDataReader) throws {
-        tnam = try reader.read()
+        value = (try reader.read() as FourCharCode).stringValue
     }
     
     override func dataSize(_ size: inout Int) {
@@ -20,7 +12,7 @@ class ElementTNAM: Element {
     }
     
     override func writeData(to writer: BinaryDataWriter) {
-        writer.write(tnam)
+        writer.write(FourCharCode(value))
     }
     
     override var formatter: Formatter? {

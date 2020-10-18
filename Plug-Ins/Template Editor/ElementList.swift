@@ -214,7 +214,7 @@ class ElementList: NSObject, NSCopying {
     // MARK: -
     
     func readElement(from reader: BinaryDataReader) throws -> Element {
-        let label = try reader.readPString(encoding: .macOSRoman)
+        let label = try reader.readPString()
         let typeCode: FourCharCode = try reader.read()
         let type = typeCode.stringValue
         
@@ -229,23 +229,21 @@ class ElementList: NSObject, NSCopying {
         }
         if let elType = elType {
             // Any additional lines in the label will be used as a tooltip
-            let components = label.components(separatedBy: "\n")
-            let tooltip: String
-            if components.count > 1 {
-                tooltip = components[1...].joined(separator: "\n")
-            } else {
-                tooltip = ""
+            let lines = label.split(separator: "\n", maxSplits: 1, omittingEmptySubsequences: false)
+            if lines.count == 2 {
+                return elType.init(type: type, label: String(lines[0]), tooltip: String(lines[1]))
             }
-            return elType.init(type: type, label: components[0], tooltip: tooltip)
+            return elType.init(type: type, label: label)
+            
         }
         throw TemplateError.unknownElement(type)
     }
     
     static let fieldRegistry: [String: Element.Type] = [
-        "DBYT": ElementDWRD<Int8>.self,   // signed ints
+        "DBYT": ElementDWRD<Int8>.self,     // signed ints
         "DWRD": ElementDWRD<Int16>.self,
         "DLNG": ElementDWRD<Int32>.self,
-        "DLLG": ElementDWRD<Int64>.self,   // (ResKnife)
+        "DLLG": ElementDWRD<Int64>.self,    // (ResKnife)
 //        "UBYT": ElementDWRD<UInt8>.self,   // unsigned ints
 //        "UWRD": ElementDWRD<UInt16>.self,
 //        "ULNG": ElementDWRD<UInt32>.self,
@@ -275,23 +273,23 @@ class ElementList: NSObject, NSCopying {
 //        "DOUB": ElementDOUB.self,   // double precision float
 //        "FIXD": ElementFIXD.self,   // 16.16 fixed fraction
 //        "FRAC": ElementFRAC.self,   // 2.30 fixed fraction
-//
-//        // strings
-//        "PSTR": ElementPSTR.self,
-//        "BSTR": ElementPSTR.self,
-//        "WSTR": ElementPSTR.self,
-//        "LSTR": ElementPSTR.self,
-//        "OSTR": ElementPSTR.self,
-//        "ESTR": ElementPSTR.self,
-//        "CSTR": ElementPSTR.self,
-//        "OCST": ElementPSTR.self,
-//        "ECST": ElementPSTR.self,
-//        "P"   : ElementPSTR.self,   // Pnnn
-//        "C"   : ElementPSTR.self,   // Cnnn
+
+        // strings
+        "PSTR": ElementPSTR<UInt8>.self,
+        "BSTR": ElementPSTR<UInt8>.self,
+        "WSTR": ElementPSTR<UInt16>.self,
+        "LSTR": ElementPSTR<UInt32>.self,
+        "OSTR": ElementPSTR<UInt8>.self,
+        "ESTR": ElementPSTR<UInt8>.self,
+        "CSTR": ElementPSTR<UInt32>.self,
+        "OCST": ElementPSTR<UInt32>.self,
+        "ECST": ElementPSTR<UInt32>.self,
+        "P"   : ElementPSTR<UInt8>.self,    // Pnnn
+        "C"   : ElementPSTR<UInt8>.self,    // Cnnn
 //        "CHAR": ElementCHAR.self,
         "TNAM": ElementTNAM.self,
-//
-//        // bits
+
+        // bits
 //        "BOOL": ElementBOOL.self,   // true = 256; false = 0
 //        "BFLG": ElementBFLG.self,   // binary flag the size of a byte/word/long
 //        "WFLG": ElementWFLG.self,
@@ -318,25 +316,23 @@ class ElementList: NSObject, NSCopying {
 //        "LSEX": ElementHEXD.self,
 //        "HEXD": ElementHEXD.self,
 //        "H"   : ElementHEXD.self,   // Hnnn
-//
-//        // list counters
-//        "OCNT": ElementOCNT.self,
-//        "ZCNT": ElementOCNT.self,
-//        "BCNT": ElementOCNT.self,
-//        "BZCT": ElementOCNT.self,   // (ResKnife)
-//        "WCNT": ElementOCNT.self,
-//        "WZCT": ElementOCNT.self,   // (ResKnife)
-//        "LCNT": ElementOCNT.self,
-//        "LZCT": ElementOCNT.self,
-//        "FCNT": ElementFCNT.self,   // fixed count with count in label (why didn't they choose Lnnn?)
-//        // list begin/end
-//        "LSTB": ElementLSTB.self,
-//        "LSTZ": ElementLSTB.self,
-//        "LSTC": ElementLSTB.self,
-//        "LSTE": Element.self,
-//
-//        // option lists
-        "CASE": ElementCASE.self,   // single option for preceding element
+
+        // list counters
+        "OCNT": ElementOCNT<UInt16>.self,
+        "ZCNT": ElementOCNT<Int16>.self,
+        "BCNT": ElementOCNT<UInt8>.self,
+        "WCNT": ElementOCNT<UInt16>.self,   // Same as OCNT
+        "LCNT": ElementOCNT<UInt32>.self,
+        "LZCT": ElementOCNT<Int32>.self,
+        "FCNT": ElementFCNT.self,           // fixed count with count in label (why didn't they choose Lnnn?)
+        // list begin/end
+        "LSTB": ElementLSTB.self,
+        "LSTZ": ElementLSTB.self,
+        "LSTC": ElementLSTB.self,
+        "LSTE": Element.self,
+
+        // option lists
+        "CASE": ElementCASE.self,           // single option for preceding element
 //        "CASR": ElementCASR.self,   // option range for preceding element (ResKnife)
 //        "RSID": ElementRSID.self,   // resouce id (signed word) - type and offset in label
 //

@@ -9,9 +9,9 @@ class Element: ValueTransformer, NSCopying, NSTextFieldDelegate {
     /// Label ("name") of this field.
     let label: String
     /// Descriptive tooltip of this field, derived from subsequent lines of the label.
-    let tooltip: String
+    var tooltip: String
     /// Type code of an ending element if this element marks the start of a section.
-    let endType: String! = nil
+    var endType: String! = nil
     /// The list of the template field containing us, or the template window's list.
     weak var parentList: ElementList!
     var rowHeight: Double = 22
@@ -34,7 +34,7 @@ class Element: ValueTransformer, NSCopying, NSTextFieldDelegate {
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
-        return Element(type: type, label: label, tooltip: tooltip)
+        return Self.init(type: type, label: label, tooltip: tooltip)
     }
     
     // Notify the controller when a field has been edited
@@ -85,15 +85,15 @@ class Element: ValueTransformer, NSCopying, NSTextFieldDelegate {
         view.addSubview(textField)
     }
     
-    // Items that have sub-items (like LSTB, LSTZ, LSTC and other lists) should implement these:
-    func hasSubElements() -> Bool {
-        return false
+    // Items that have sub-items (like lists or keyed-sections) should implement these:
+    var hasSubElements: Bool {
+        false
     }
-    func subElementCount() -> Int {
-        return 0
+    var subElementCount: Int {
+        0
     }
-    func subElement(at index: Int) -> Element? {
-        return nil
+    func subElement(at index: Int) -> Element {
+        return self // This is invalid but the function shouldn't be called here
     }
     
     /// Read the value of the field from the stream.
@@ -107,6 +107,6 @@ class Element: ValueTransformer, NSCopying, NSTextFieldDelegate {
     func writeData(to writer: BinaryDataWriter) {}
 }
 
-protocol GroupElement {
-    func configureGroup(view: NSView)
+protocol GroupElement where Self: Element {
+    func configureGroup(view: NSTableCellView)
 }

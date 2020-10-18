@@ -2,6 +2,7 @@ import Foundation
 
 public enum BinaryDataWriterError: Error {
     case notAStruct
+    case stringEncodeFailure
 }
 
 public class BinaryDataWriter {
@@ -13,12 +14,25 @@ public class BinaryDataWriter {
         self.bigEndian = bigEndian
     }
     
+    public func advance(_ count: Int) {
+        for _ in 0..<count {
+            data.append(0)
+        }
+    }
+    
     public func write<T: FixedWidthInteger>(_ value: T, bigEndian: Bool? = nil) {
         let val = bigEndian ?? self.bigEndian ? value.bigEndian : value.littleEndian
         for i in 0..<(val.bitWidth / 8) {
             let byte = UInt8(truncatingIfNeeded: val >> (i * 8))
             data.append(byte)
         }
+    }
+    
+    public func writeString(_ value: String, encoding: String.Encoding = .utf8) throws {
+        guard let encoded = value.data(using: encoding) else {
+            throw BinaryDataWriterError.stringEncodeFailure
+        }
+        data += encoded
     }
     
     public func writeStruct(_ value: Any, bigEndian: Bool? = nil) throws {

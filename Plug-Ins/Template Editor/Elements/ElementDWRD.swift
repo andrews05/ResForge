@@ -1,5 +1,6 @@
 import RKSupport
 
+// Implement DBYT, DWRD, DLNG, DLLG
 class ElementDWRD<T: FixedWidthInteger & SignedInteger>: CaseableElement {
     @objc private var value: Int = 0
     
@@ -8,7 +9,7 @@ class ElementDWRD<T: FixedWidthInteger & SignedInteger>: CaseableElement {
     }
     
     override func dataSize(_ size: inout Int) {
-        size += T.bitWidth * 8
+        size += T.bitWidth / 8
     }
     
     override func writeData(to writer: BinaryDataWriter) {

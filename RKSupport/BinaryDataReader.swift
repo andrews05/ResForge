@@ -1,14 +1,14 @@
 import Foundation
 
 public enum BinaryDataReaderError: Error {
-	case notEnoughData
+    case notEnoughData
     case stringDecodeFailure
 }
 
 public class BinaryDataReader {
     private(set) public var data: Data
     public var bigEndian: Bool
-	private(set) public var position: Int
+    private(set) public var position: Int
 
     public init(_ data: Data, bigEndian: Bool = true) {
         self.data = data
@@ -16,37 +16,46 @@ public class BinaryDataReader {
         self.bigEndian = bigEndian
     }
     
+    public func advance(_ count: Int) throws {
+        guard position + count <= data.endIndex else {
+            throw BinaryDataReaderError.notEnoughData
+        }
+        position += count
+    }
+    
     public func read<T: FixedWidthInteger>(bigEndian: Bool? = nil) throws -> T {
-		let bytes = T.bitWidth / 8
-		guard position + bytes <= data.endIndex else {
-			throw BinaryDataReaderError.notEnoughData
-		}
+        let bytes = T.bitWidth / 8
+        guard position + bytes <= data.endIndex else {
+            throw BinaryDataReaderError.notEnoughData
+        }
         // Int8 must be constructed from a bit pattern
         if T.self is Int8.Type {
             let val = Int8(bitPattern: data[position]) as! T
             position += 1
             return val
         }
-		var val: T = 0
+        var val: T = 0
         for i in 0..<bytes {
             val += T(data[position]) << (i * 8)
-			position += 1
+            position += 1
         }
-		return bigEndian ?? self.bigEndian ? T(bigEndian: val) : T(littleEndian: val)
+        return bigEndian ?? self.bigEndian ? T(bigEndian: val) : T(littleEndian: val)
     }
     
-    public func readPString(encoding: String.Encoding = .utf8) throws -> String {
-        guard position < data.endIndex else {
+    public func readString(length: Int, encoding: String.Encoding = .utf8) throws -> String {
+        let end = position + length
+        guard end <= data.endIndex else {
             throw BinaryDataReaderError.notEnoughData
         }
-        let length = Int(data[position])
-        position += 1
-        let end = min(position+length, data.endIndex)
-        let string = String(data: data[position..<end], encoding: encoding)
-        position = end
-        if string == nil {
+        guard let string = String(data: data[position..<end], encoding: encoding) else {
             throw BinaryDataReaderError.stringDecodeFailure
         }
-        return string!
+        position = end
+        return string
+    }
+    
+    public func readPString(encoding: String.Encoding = .macOSRoman) throws -> String {
+        let length = Int(try self.read() as UInt8)
+        return try self.readString(length: length, encoding: encoding)
     }
 }

@@ -99,6 +99,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
                 view = NSView(frame: NSMakeRect(0, 0, tableColumn.width, CGFloat(item.rowHeight)))
                 item.configure(view: view)
             } else {
+                // Use the focusable list label for elements that allow creating entries
                 if let item = item as? ElementLSTB, item.allowsCreateListEntry() {
                     identifier = NSUserInterfaceItemIdentifier("listLabel")
                 }
@@ -115,20 +116,20 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         if let item = item as? Element {
-            return item.subElementCount()
+            return item.subElementCount
         }
         return Int(resourceStructure.count)
     }
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         if let item = item as? Element {
-            return item.subElement(at: index)!
+            return item.subElement(at: index)
         }
         return resourceStructure.element(at: index)
     }
     
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        return (item as! Element).hasSubElements()
+        return (item as! Element).hasSubElements
     }
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {

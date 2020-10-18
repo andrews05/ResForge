@@ -70,7 +70,7 @@ public class PluginRegistry {
         case "STR ":
             if resource.data.count > 1 {
                 do {
-                    return try BinaryDataReader(resource.data).readPString(encoding: .macOSRoman)
+                    return try BinaryDataReader(resource.data).readPString()
                 } catch {}
             }
             if resource.id == -16396 {
@@ -80,14 +80,14 @@ public class PluginRegistry {
             if resource.data.count > 3 {
                 do {
                     // Read first string at offset 2
-                    return try BinaryDataReader(resource.data[2...]).readPString(encoding: .macOSRoman)
+                    return try BinaryDataReader(resource.data[2...]).readPString()
                 } catch {}
             }
         case "vers":
             if resource.data.count > 8 {
                 do {
                     // Read short version string at offset 7
-                    return try BinaryDataReader(resource.data[7...]).readPString(encoding: .macOSRoman)
+                    return try BinaryDataReader(resource.data[7...]).readPString()
                 } catch {}
             }
             if resource.id == 1 {
