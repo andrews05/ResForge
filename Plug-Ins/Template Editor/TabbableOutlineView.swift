@@ -18,7 +18,7 @@ class TabbableOutlineView: NSOutlineView {
             if i != -1 {
                 // Going backward we need to look at the column view and see if it's valid
                 view = self.view(atColumn: 1, row: i, makeIfNecessary: true)!
-                if !view.canBecomeKeyView {
+                if !view.canBecomeKeyView && view.subviews.count > 0 {
                     view = view.subviews.last!
                 }
                 if !view.canBecomeKeyView {

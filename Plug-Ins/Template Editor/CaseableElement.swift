@@ -2,32 +2,31 @@ import Cocoa
 
 // Abstract Element subclass that handles CASE elements
 class CaseableElement: Element, NSComboBoxDelegate {
-    @objc var cases: [String]! = nil;
-    var caseMap: [String: String]! = nil;
+    @objc var cases: [Any] = []
+    var caseMap: [String: Any] = [:]
     
     override func configure() throws {
         // Read CASE elements
-        if self.parentList.peek(1) is ElementCASE {
-            cases = []
-            caseMap = [:]
+        while let element = self.parentList.peek(1) as? ElementCASE {
+            _ = self.parentList.pop()
+            // Cases will show as "name = value" in the options list to allow searching by name
+            // Text field will display as "value = name" for consistency when there's no matching case
+            let option = "\(element.displayLabel) = \(element.value)"
+            let display = "\(element.value) = \(element.displayLabel)"
+            cases.append(option)
+            caseMap[element.value] = display
+        }
+        if cases.count > 0 {
             self.width = 240
-            while let element = self.parentList.peek(1) as? ElementCASE {
-                _ = self.parentList.pop()
-                // Cases will show as "name = value" in the options list to allow searching by name
-                // Text field will display as "value = name" for consistency when there's no matching case
-                let option = "\(element.displayLabel) = \(element.value)"
-                let display = "\(element.value) = \(element.displayLabel)"
-                cases.append(option)
-                caseMap[element.value] = display
-            }
         }
     }
     
     override func configure(view: NSView) {
-        if self.caseMap == nil {
+        if cases.count == 0 {
             super.configure(view: view)
             return
         }
+        
         var frame = view.frame
         if self.width != 0 {
             frame.size.width = self.width - 1

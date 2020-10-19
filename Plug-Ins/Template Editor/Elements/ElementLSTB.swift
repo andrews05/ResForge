@@ -3,13 +3,13 @@ import RKSupport
 
 // Implements LSTB, LSTZ, LSTC
 class ElementLSTB: Element {
-    var counter: CounterElement? = nil
+    var counter: CounterElement?
     private let zeroTerminated: Bool
     private var fixedCount: Bool = false
-    private var subElements: ElementList! = nil
-    private var entries: [Element]! = nil
-    private var tail: ElementLSTB! = nil
-    private var singleElement: Element? = nil
+    private var subElements: ElementList!
+    private var entries: [Element]!
+    private var tail: ElementLSTB!
+    private var singleElement: Element?
     
     override var displayLabel: String {
         let index = tail.entries.firstIndex(of: self)! + 1

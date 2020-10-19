@@ -1,8 +1,8 @@
 import RKSupport
 
 // Implement DBYT, DWRD, DLNG, DLLG
-class ElementDWRD<T: FixedWidthInteger & SignedInteger>: CaseableElement {
-    @objc private var value: Int = 0
+class ElementDWRD<T: FixedWidthInteger & SignedInteger>: KeyableElement {
+    @objc dynamic private var value: Int = 0
     
     override func readData(from reader: BinaryDataReader) throws {
         value = Int(try reader.read() as T)

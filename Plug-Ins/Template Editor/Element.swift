@@ -11,7 +11,7 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     /// Descriptive tooltip of this field, derived from subsequent lines of the label.
     var tooltip: String
     /// Type code of an ending element if this element marks the start of a section.
-    var endType: String! = nil
+    var endType: String!
     /// The list of the template field containing us, or the template window's list.
     weak var parentList: ElementList!
     var rowHeight: Double = 22

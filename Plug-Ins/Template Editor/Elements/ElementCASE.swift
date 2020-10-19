@@ -1,6 +1,6 @@
 import Cocoa
 
-class ElementCASE: CaseableElement {
+class ElementCASE: Element {
     let value: String
  
     required init(type: String, label: String, tooltip: String? = nil) {
@@ -12,5 +12,10 @@ class ElementCASE: CaseableElement {
     
     override func configure() throws {
         throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a supported element.", comment: ""))
+    }
+    
+    // For key elements, where the case elements are used as the objects in the popup list
+    override var description: String {
+        self.displayLabel
     }
 }

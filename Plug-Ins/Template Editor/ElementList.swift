@@ -13,9 +13,9 @@ enum TemplateError: LocalizedError {
         case let .unknownElement(type):
             return String(format: NSLocalizedString("Unknown element type '%@'.", comment: ""), type)
         case let .unclosedElement(element):
-            return String(format: NSLocalizedString("%@: Closing '%@' element not found.", comment: ""), element.type, element.endType)
+            return "\(element.type) \"\(element.label)\": ".appendingFormat(NSLocalizedString("Closing '%@' element not found.", comment: ""), element.type, element.endType)
         case let .invalidStructure(element, message):
-            return "\(element.type): \(message)"
+            return "\(element.type) \"\(element.label)\": ".appending(message)
         }
     }
 }
@@ -263,12 +263,12 @@ class ElementList {
 //        "HWRD": ElementHWRD.self,
 //        "HLNG": ElementHLNG.self,
 //        "HLLG": ElementHLLG.self,   // (ResKnife)
-//
-//        // multiple fields
+
+        // multiple fields
 //        "RECT": ElementRECT.self,   // QuickDraw rect
 //        "PNT ": ElementPNT.self,    // QuickDraw point
-//
-//        // align & fill
+
+        // align & fill
 //        "AWRD": ElementAWRD.self,   // alignment ints
 //        "ALNG": ElementAWRD.self,
 //        "AL08": ElementAWRD.self,
@@ -278,8 +278,8 @@ class ElementList {
 //        "FLNG": ElementFBYT.self,
 //        "FLLG": ElementFBYT.self,
 //        "F"   : ElementFBYT.self,   // Fnnn
-//
-//        // fractions
+
+        // fractions
 //        "REAL": ElementREAL.self,   // single precision float
 //        "DOUB": ElementDOUB.self,   // double precision float
 //        "FIXD": ElementFIXD.self,   // 16.16 fixed fraction
@@ -314,11 +314,11 @@ class ElementList {
 //        "LBIT": ElementLBIT.self,
 //        "LB"  : ElementLBIT.self,   // LBnn
 //        "LF"  : ElementLBIT.self,   // LFnn (ResKnife)
-//        "BORV": ElementBORV.self,   // byte/word/long OR-value (Rezilla)
+//        "BORV": ElementBORV.self,   // OR-value (Rezilla)
 //        "WORV": ElementWORV.self,
 //        "LORV": ElementLORV.self,
-//
-//        // hex dumps
+
+        // hex dumps
 //        "BHEX": ElementHEXD.self,
 //        "WHEX": ElementHEXD.self,
 //        "LHEX": ElementHEXD.self,
@@ -346,12 +346,12 @@ class ElementList {
         "CASE": ElementCASE.self,           // single option for preceding element
 //        "CASR": ElementCASR.self,   // option range for preceding element (ResKnife)
 //        "RSID": ElementRSID.self,   // resouce id (signed word) - type and offset in label
-//
-//        // key selection
-//        "KBYT": ElementDBYT.self,   // signed keys
-//        "KWRD": ElementDWRD.self,
-//        "KLNG": ElementDLNG.self,
-//        "KLLG": ElementDLLG.self,   // (ResKnife)
+
+        // key selection
+        "KBYT": ElementDWRD<Int8>.self,     // signed keys
+        "KWRD": ElementDWRD<Int16>.self,
+        "KLNG": ElementDWRD<Int32>.self,
+        "KLLG": ElementDWRD<Int64>.self,    // (ResKnife)
 //        "KUBT": ElementUBYT.self,   // unsigned keys
 //        "KUWD": ElementUWRD.self,
 //        "KULG": ElementULNG.self,
@@ -363,15 +363,15 @@ class ElementList {
 //        "KCHR": ElementCHAR.self,   // string keys
 //        "KTYP": ElementTNAM.self,
 //        "KRID": ElementKRID.self,   // key on ID of the resource
-//        // keyed section begin/end
-//        "KEYB": ElementKEYB.self,
-//        "KEYE": Element.self,
-//
-//        // dates
+        // keyed section begin/end
+        "KEYB": ElementKEYB.self,
+        "KEYE": Element.self,
+
+        // dates
 //        "DATE": ElementDATE.self,   // 4-byte date (seconds since 1 Jan 1904)
 //        "MDAT": ElementDATE.self,
-//
-//        // colours
+
+        // colours
 //        "COLR": ElementCOLR.self,   // 6-byte QuickDraw colour
 //        "WCOL": ElementCOLR.self,   // 2-byte (15-bit) colour (Rezilla)
 //        "LCOL": ElementCOLR.self,   // 4-byte (24-bit) colour (Rezilla)
