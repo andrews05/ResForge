@@ -1,7 +1,7 @@
 import Cocoa
 import RKSupport
 
-class Element: ValueTransformer, NSCopying, NSTextFieldDelegate {
+class Element: ValueTransformer, NSTextFieldDelegate {
     static var sharedFormatters: [String: Formatter] = [:]
     
     /// Type code of this field.
@@ -27,13 +27,24 @@ class Element: ValueTransformer, NSCopying, NSTextFieldDelegate {
         nil
     }
     
-    required init(type: String, label: String, tooltip: String = "") {
+    required init(type: String, label: String, tooltip: String? = nil) {
         self.type = type
-        self.label = label
-        self.tooltip = tooltip
+        if let tooltip = tooltip {
+            self.label = label
+            self.tooltip = tooltip
+        } else {
+           let lines = label.split(separator: "\n", maxSplits: 1, omittingEmptySubsequences: false)
+           if lines.count == 2 {
+                self.label = String(lines[0])
+                self.tooltip = String(lines[1])
+            } else {
+                self.label = label
+                self.tooltip = ""
+            }
+        }
     }
     
-    func copy(with zone: NSZone? = nil) -> Any {
+    func copy() -> Self {
         return Self.init(type: type, label: label, tooltip: tooltip)
     }
     
@@ -58,6 +69,9 @@ class Element: ValueTransformer, NSCopying, NSTextFieldDelegate {
             return false
         }
     }
+    
+    // This is required here for subclasses to override
+    func controlTextDidChange(_ obj: Notification) {}
     
     // MARK: - Methods Subclasses Should Override
     

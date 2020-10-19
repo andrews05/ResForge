@@ -54,6 +54,7 @@ public class BinaryDataReader {
         return string
     }
     
+    // Since Pascal strings are common in resources, this function is included here as a convenience
     public func readPString(encoding: String.Encoding = .macOSRoman) throws -> String {
         let length = Int(try self.read() as UInt8)
         return try self.readString(length: length, encoding: encoding)

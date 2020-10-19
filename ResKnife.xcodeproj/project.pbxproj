@@ -18,6 +18,7 @@
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
 		4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD50253BD1290044BC45 /* ElementPSTR.swift */; };
 		4935CD6D253C10210044BC45 /* ElementFCNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD6C253C10210044BC45 /* ElementFCNT.swift */; };
+		4935CD75253CEB3C0044BC45 /* ElementDVDR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		49362DA324A966960040B793 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
 		4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC152531671400856385 /* TabbableOutlineView.swift */; };
@@ -343,6 +344,7 @@
 		49322A7C2450E87000E1EAE4 /* ElementBBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBBIT.m; sourceTree = "<group>"; };
 		4935CD50253BD1290044BC45 /* ElementPSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPSTR.swift; sourceTree = "<group>"; };
 		4935CD6C253C10210044BC45 /* ElementFCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementFCNT.swift; sourceTree = "<group>"; };
+		4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDVDR.swift; sourceTree = "<group>"; };
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
 		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
@@ -793,6 +795,7 @@
 				4935CD6C253C10210044BC45 /* ElementFCNT.swift */,
 				4951AB6125341D3E009A8285 /* ElementLSTB.swift */,
 				49FE7B50253A7EBA00D2219D /* ElementCASE.swift */,
+				4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -1639,6 +1642,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4935CD75253CEB3C0044BC45 /* ElementDVDR.swift in Sources */,
 				4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */,
 				491BC28B253B894200149D78 /* ElementOCNT.swift in Sources */,
 				4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */,

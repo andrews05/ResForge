@@ -1,7 +1,9 @@
+import Cocoa
+
 class ElementCASE: CaseableElement {
     let value: String
  
-    required init(type: String, label: String, tooltip: String = "") {
+    required init(type: String, label: String, tooltip: String? = nil) {
         // The case value is the part of the label to the right of the "=" character if it exists, else the label itself
         self.value = String(label.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false).last!)
         super.init(type: type, label: label, tooltip: tooltip)
@@ -9,6 +11,6 @@ class ElementCASE: CaseableElement {
     }
     
     override func configure() throws {
-        throw TemplateError.invalidStructure("CASE element not associated to an element that supports cases.")
+        throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a supported element.", comment: ""))
     }
 }

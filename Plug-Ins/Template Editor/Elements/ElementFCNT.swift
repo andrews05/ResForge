@@ -4,7 +4,7 @@ class ElementFCNT: Element, GroupElement, CounterElement {
     var count: Int
     private let groupLabel: String
     
-    required init(type: String, label: String, tooltip: String = "") {
+    required init(type: String, label: String, tooltip: String? = nil) {
         // Read count from label - hex value denoted by leading '$'
         let scanner = Scanner(string: label)
         if label.first == "$" {
@@ -15,7 +15,7 @@ class ElementFCNT: Element, GroupElement, CounterElement {
         } else {
             var value: Int32 = 0
             scanner.scanInt32(&value)
-            count = Int(value)
+            count = Int(abs(value))
         }
         // Remove count from label
         let index = label.index(label.startIndex, offsetBy: scanner.scanLocation)
@@ -28,7 +28,7 @@ class ElementFCNT: Element, GroupElement, CounterElement {
     
     override func configure() throws {
         guard let lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB else {
-            throw TemplateError.invalidStructure("\(type) element not followed by an LSTC element.")
+            throw TemplateError.invalidStructure(self, NSLocalizedString("Following 'LSTC' element not found.", comment: ""))
         }
         lstc.counter = self
     }

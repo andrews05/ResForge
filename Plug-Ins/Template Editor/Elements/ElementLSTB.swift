@@ -16,16 +16,16 @@ class ElementLSTB: Element {
         return "\(index)) " + (singleElement?.displayLabel ?? super.displayLabel)
     }
     
-    required init(type: String, label: String, tooltip: String = "") {
+    required init(type: String, label: String, tooltip: String? = nil) {
         zeroTerminated = type == "LSTZ"
         super.init(type: type, label: label, tooltip: tooltip)
         self.rowHeight = 18
         self.endType = "LSTE"
     }
     
-    override func copy(with zone: NSZone? = nil) -> Any {
-        let element = super.copy(with: zone) as! Self
-        element.subElements = subElements?.copy(with: zone) as? ElementList
+    override func copy() -> Self {
+        let element = (super.copy() as Element) as! Self
+        element.subElements = try? subElements?.copy()
         element.checkSingleElement()
         element.fixedCount = fixedCount
         element.tail = tail
@@ -34,20 +34,22 @@ class ElementLSTB: Element {
     
     override func configure() throws {
         guard counter != nil || type != "LSTC" else {
-            throw TemplateError.invalidStructure("LSTC element not preceeded by a count element.")
+            throw TemplateError.invalidStructure(self, NSLocalizedString("Preceeding count element not found.", comment: ""))
         }
         // This item will be the tail
         tail = self
-        entries = [self]
+        entries = []
         subElements = try self.parentList.subList(for: self)
+        _ = try subElements.copy() // Validate the subElements configuration
         if let counter = counter, counter.type == "FCNT" {
             // Fixed count list, create all the entries now
+            self.visible = false
             fixedCount = true
-            for _ in 1..<counter.count {
+            for _ in 0..<counter.count {
                 _ = self.createNext()
             }
-            try self.subElements.configure()
-            self.checkSingleElement()
+        } else {
+            entries.append(self)
         }
     }
     
@@ -67,7 +69,7 @@ class ElementLSTB: Element {
     
     private func createNext() -> Self {
         // Create a new list entry at the current index (just before self)
-        let list = self.copy() as! Self
+        let list = self.copy() as Self
         self.parentList.insert(list)
         tail.entries.append(list)
         return list
@@ -115,7 +117,7 @@ class ElementLSTB: Element {
     // MARK: -
     
     override var hasSubElements: Bool {
-        singleElement?.hasSubElements ?? (fixedCount || tail != self)
+        singleElement?.hasSubElements ?? (tail != self)
     }
     
     override var subElementCount: Int {
@@ -135,7 +137,7 @@ class ElementLSTB: Element {
     }
     
     func createListEntry() {
-        let list = tail.copy() as! Self
+        let list = tail.copy() as ElementLSTB
         parentList.insert(list, before: self)
         tail.entries.insert(list, at: tail.entries.firstIndex(of: self)!)
         tail.counter?.count += 1

@@ -17,14 +17,14 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
         }
     }
     
-    required init(type: String, label: String, tooltip: String = "") {
+    required init(type: String, label: String, tooltip: String? = nil) {
         super.init(type: type, label: label, tooltip: tooltip)
         self.rowHeight = 17
     }
     
     override func configure() throws {
         guard let lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB else {
-            throw TemplateError.invalidStructure("\(type) element not followed by an LSTC element.")
+            throw TemplateError.invalidStructure(self, NSLocalizedString("Following 'LSTC' element not found.", comment: ""))
         }
         lstc.counter = self
     }

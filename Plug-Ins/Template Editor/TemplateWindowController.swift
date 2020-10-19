@@ -16,7 +16,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         self.template = template
         super.init(window: nil)
         
-        self.loadResource()
+        self.load(data: resource.data)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange(_:)), name: .ResourceDataDidChange, object: resource)
         NotificationCenter.default.addObserver(self, selector: #selector(self.templateDataDidChange(_:)), name: .ResourceDataDidChange, object: template)
@@ -34,21 +34,13 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     
     @objc func resourceDataDidChange(_ notification: NSNotification) {
         if !self.window!.isDocumentEdited {
-            self.loadResource()
+            self.load(data: resource.data)
         }
     }
     
     @objc func templateDataDidChange(_ notification: NSNotification) {
         // Reload the template while keeping the current data
-        let currentData = resourceStructure.getResourceData()
-        self.readTemplate()
-        do {
-            try resourceStructure.readResource(data: currentData)
-        } catch let error {
-            print(error)
-        }
-        // expand all
-        dataList.reloadData()
+        self.load(data: resourceStructure.getResourceData())
         dataList.expandItem(nil, expandChildren: true)
     }
         
@@ -58,25 +50,17 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         dataList.expandItem(nil, expandChildren: true)
     }
     
-    func loadResource() {
-        self.readTemplate()
+    func load(data: Data) {
+        resourceStructure = ElementList(controller: self)
         do {
-            try resourceStructure.readResource(data: resource.data)
+            try resourceStructure.readTemplate(data: template.data)
+            try resourceStructure.readResource(data: data)
         } catch let error {
             print(error)
         }
         // expand all
         dataList?.reloadData()
         dataList?.expandItem(nil, expandChildren: true)
-        self.setDocumentEdited(false)
-    }
-    
-    func readTemplate() {
-        do {
-            resourceStructure = try ElementList(controller: self, template: template.data)
-        } catch let error {
-            print(error)
-        }
     }
     
     @IBAction func saveResource(_ sender: Any) {
@@ -85,7 +69,8 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     }
     
     @IBAction func revertResource(_ sender: Any) {
-        self.loadResource()
+        self.load(data: resource.data)
+        self.setDocumentEdited(false)
     }
     
     // MARK: - OutlineView functions
@@ -104,7 +89,9 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
                     identifier = NSUserInterfaceItemIdentifier("listLabel")
                 }
                 view = outlineView.makeView(withIdentifier: identifier, owner: self)!
-                (view as! NSTableCellView).textField?.stringValue = item.displayLabel
+                let textField = (view as! NSTableCellView).textField!
+                textField.stringValue = item.displayLabel
+                textField.alignment = item is ElementLSTB ? .left : .right
             }
             view.toolTip = item.tooltip
         } else {

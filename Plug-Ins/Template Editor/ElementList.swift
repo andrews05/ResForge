@@ -1,14 +1,26 @@
 import Cocoa
 import RKSupport
 
-enum TemplateError: Error {
+enum TemplateError: LocalizedError {
     case corrupt
-    case unknownElement(_ type: String)
-    case unclosedElement(_ element: Element)
-    case invalidStructure(_ message: String)
+    case unknownElement(String)
+    case unclosedElement(Element)
+    case invalidStructure(Element, String)
+    var errorDescription: String? {
+        switch self {
+        case .corrupt:
+            return NSLocalizedString("Corrupt or insufficient data.", comment: "")
+        case let .unknownElement(type):
+            return String(format: NSLocalizedString("Unknown element type '%@'.", comment: ""), type)
+        case let .unclosedElement(element):
+            return String(format: NSLocalizedString("%@: Closing '%@' element not found.", comment: ""), element.type, element.endType)
+        case let .invalidStructure(element, message):
+            return "\(element.type): \(message)"
+        }
+    }
 }
 
-class ElementList: NSObject, NSCopying {
+class ElementList {
     let parentList: ElementList?
     private(set) weak var controller: TemplateWindowController!
     private var elements: [Element] = []
@@ -19,33 +31,15 @@ class ElementList: NSObject, NSCopying {
         return visibleElements.count
     }
     
-    init(controller: TemplateWindowController, template: Data) throws {
-        parentList = nil
-        self.controller = controller
-        super.init()
-        let reader = BinaryDataReader(template)
-        while reader.position < reader.data.endIndex {
-            let element = try self.readElement(from: reader)
-            elements.append(element)
-        }
-        try self.configure()
-    }
-    
-    private init(controller: TemplateWindowController, parent: ElementList?) {
+    init(controller: TemplateWindowController, parent: ElementList? = nil) {
         parentList = parent
         self.controller = controller
-        super.init()
     }
     
-    func copy(with zone: NSZone? = nil) -> Any {
+    func copy() throws -> ElementList {
         let list = ElementList(controller: controller, parent: parentList)
-        list.elements = elements.map({ $0.copy() as! Element })
-        do {
-            try list.configure()
-        } catch let error {
-            // TODO: Handle error
-            print(error);
-        }
+        list.elements = elements.map({ $0.copy() as Element })
+        try list.configure()
         return list
     }
     
@@ -56,13 +50,31 @@ class ElementList: NSObject, NSCopying {
         while currentIndex < elements.count {
             let element = elements[currentIndex]
             element.parentList = self
-            if element.visible {
-                visibleElements.append(element)
-            }
+            // Get the visible index now and insert afterwards - allows the element to change visibility during configure
+            let visIndex = visibleElements.endIndex
             try element.configure()
+            if element.visible {
+                visibleElements.insert(element, at: visIndex)
+            }
             currentIndex += 1
         }
         configured = true
+    }
+    
+    func readTemplate(data: Data) throws {
+        do {
+            let reader = BinaryDataReader(data)
+            while reader.position < reader.data.endIndex {
+                let element = try self.readElement(from: reader)
+                elements.append(element)
+            }
+            try self.configure()
+        } catch let error {
+            let element = ElementDVDR(type: "DVDR", label: "Template Error\n\(error.localizedDescription)")
+            elements = [element]
+            visibleElements = [element]
+            throw error
+        }
     }
     
     func readResource(data: Data) throws {
@@ -214,8 +226,11 @@ class ElementList: NSObject, NSCopying {
     // MARK: -
     
     func readElement(from reader: BinaryDataReader) throws -> Element {
-        let label = try reader.readPString()
-        let typeCode: FourCharCode = try reader.read()
+        guard let label = try? reader.readPString(),
+              let typeCode: FourCharCode = try? reader.read()
+        else {
+            throw TemplateError.corrupt
+        }
         let type = typeCode.stringValue
         
         var elType = Self.fieldRegistry[type]
@@ -228,18 +243,14 @@ class ElementList: NSObject, NSCopying {
             elType = Self.fieldRegistry[String(type.prefix(2))]
         }
         if let elType = elType {
-            // Any additional lines in the label will be used as a tooltip
-            let lines = label.split(separator: "\n", maxSplits: 1, omittingEmptySubsequences: false)
-            if lines.count == 2 {
-                return elType.init(type: type, label: String(lines[0]), tooltip: String(lines[1]))
-            }
             return elType.init(type: type, label: label)
-            
+        } else {
+            throw TemplateError.unknownElement(type)
         }
-        throw TemplateError.unknownElement(type)
     }
     
     static let fieldRegistry: [String: Element.Type] = [
+        // integers
         "DBYT": ElementDWRD<Int8>.self,     // signed ints
         "DWRD": ElementDWRD<Int16>.self,
         "DLNG": ElementDWRD<Int32>.self,
@@ -285,7 +296,7 @@ class ElementList: NSObject, NSCopying {
         "OCST": ElementPSTR<UInt32>.self,
         "ECST": ElementPSTR<UInt32>.self,
         "P"   : ElementPSTR<UInt8>.self,    // Pnnn
-        "C"   : ElementPSTR<UInt8>.self,    // Cnnn
+        "C"   : ElementPSTR<UInt32>.self,   // Cnnn
 //        "CHAR": ElementCHAR.self,
         "TNAM": ElementTNAM.self,
 
@@ -364,12 +375,12 @@ class ElementList: NSObject, NSCopying {
 //        "COLR": ElementCOLR.self,   // 6-byte QuickDraw colour
 //        "WCOL": ElementCOLR.self,   // 2-byte (15-bit) colour (Rezilla)
 //        "LCOL": ElementCOLR.self,   // 4-byte (24-bit) colour (Rezilla)
-//
-//        // layout
-//        "DVDR": ElementDVDR.self,   // divider
+
+        // layout
+        "DVDR": ElementDVDR.self,   // divider
 //        "PACK": ElementPACK.self,   // pack other elements together (ResKnife)
-//
-//        // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
+
+        // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
 //        "SFRC": ElementUWRD.self,   // 0.16 fixed fraction
 //        "FXYZ": ElementUWRD.self,   // 1.15 fixed fraction
 //        "FWID": ElementUWRD.self,   // 4.12 fixed fraction

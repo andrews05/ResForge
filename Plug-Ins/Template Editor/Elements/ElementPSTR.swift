@@ -15,7 +15,7 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
     private let padding: StringPadding
     private let zeroTerminated: Bool // Indicates Pascal (false) or C string (true)
     
-    required init(type: String, label: String, tooltip: String = "") {
+    required init(type: String, label: String, tooltip: String? = nil) {
         var length = Int(T.max)
         switch type {
         case "PSTR", "BSTR", "WSTR", "LSTR":
@@ -62,11 +62,13 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
         if self.width == 0 {
             textField.lineBreakMode = .byWordWrapping
             textField.autoresizingMask = [.width, .height]
-            //[self performSelector:@selector(autoRowHeight:) withObject:textField afterDelay:0];
+            DispatchQueue.main.async {
+                self.autoRowHeight(textField)
+            }
         }
     }
     
-    func controlTextDidChange(_ obj: Notification) {
+    override func controlTextDidChange(_ obj: Notification) {
         if self.width == 0 {
             self.autoRowHeight(obj.object as! NSTextField)
         }
@@ -115,8 +117,8 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
             try reader.advance((length+1) % 2)
         case .even:
             try reader.advance(length % 2)
-        case let .fixed(amount):
-            try reader.advance(amount - length)
+        case let .fixed(count):
+            try reader.advance(count - length)
         default:
             break
         }
@@ -127,10 +129,7 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
             size += count
             return
         }
-        var length = value.lengthOfBytes(using: .macOSRoman)
-        if length > maxLength {
-            length = maxLength
-        }
+        var length = min(value.count, maxLength)
         length += zeroTerminated ? 1 : T.bitWidth / 8
         switch padding {
         case .odd:
@@ -148,17 +147,12 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
             value = String(value.prefix(maxLength))
         }
         var length = value.count
-        if (!zeroTerminated) {
+        if !zeroTerminated {
             writer.write(T(length))
         }
         
-        do {
-            try writer.writeString(value, encoding: .macOSRoman)
-        } catch let error {
-            // This shouldn't happen because the formatter won't allow non-MacRoman characters
-            print(error)
-            writer.advance(length)
-        }
+        // Error shouldn't happen because the formatter won't allow non-MacRoman characters
+        try? writer.writeString(value, encoding: .macOSRoman)
         
         if zeroTerminated {
             writer.advance(1)
@@ -171,8 +165,8 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
             writer.advance((length+1) % 2)
         case .even:
             writer.advance(length % 2)
-        case let .fixed(amount):
-            writer.advance(amount - length)
+        case let .fixed(count):
+            writer.advance(count - length)
         default:
             break
         }

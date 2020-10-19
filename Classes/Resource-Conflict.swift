@@ -25,7 +25,7 @@ enum ResourceError: LocalizedError {
     case conflict(String, Int)
     var errorDescription: String? {
         switch self {
-        case .conflict(let type, let id):
+        case let .conflict(type, id):
             return String(format: NSLocalizedString("A resource of type '%@' with ID %ld already exists.", comment: ""), type, id)
         }
     }
