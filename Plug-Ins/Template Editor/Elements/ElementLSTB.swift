@@ -77,7 +77,9 @@ class ElementLSTB: Element {
     
     override func readData(from reader: BinaryDataReader) throws {
         if fixedCount {
-            try subElements.readData(from: reader)
+            if tail != self {
+                try subElements.readData(from: reader)
+            }
             return
         }
         

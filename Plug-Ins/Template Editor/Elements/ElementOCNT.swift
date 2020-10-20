@@ -24,7 +24,7 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
     
     override func configure() throws {
         guard let lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB else {
-            throw TemplateError.invalidStructure(self, NSLocalizedString("Following 'LSTC' element not found.", comment: ""))
+            throw TemplateError.invalidStructure(self, NSLocalizedString("Following ‘LSTC’ element not found.", comment: ""))
         }
         lstc.counter = self
     }

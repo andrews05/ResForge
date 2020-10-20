@@ -11,11 +11,11 @@ enum TemplateError: LocalizedError {
         case .corrupt:
             return NSLocalizedString("Corrupt or insufficient data.", comment: "")
         case let .unknownElement(type):
-            return String(format: NSLocalizedString("Unknown element type '%@'.", comment: ""), type)
+            return String(format: NSLocalizedString("Unknown element type ‘%@’.", comment: ""), type)
         case let .unclosedElement(element):
-            return "\(element.type) \"\(element.label)\": ".appendingFormat(NSLocalizedString("Closing '%@' element not found.", comment: ""), element.type, element.endType)
+            return "\(element.type) “\(element.label)”: ".appendingFormat(NSLocalizedString("Closing ‘%@’ element not found.", comment: ""), element.type, element.endType)
         case let .invalidStructure(element, message):
-            return "\(element.type) \"\(element.label)\": ".appending(message)
+            return "\(element.type) “\(element.label)”: ".appending(message)
         }
     }
 }
@@ -149,12 +149,15 @@ class ElementList {
     }
     
     // Pop the next element out of the list
-    func pop() -> Element? {
+    func pop(_ type: String? = nil) -> Element? {
         let i = currentIndex + 1
         if i >= elements.endIndex {
             return nil
         }
         let element = elements[i]
+        if let type = type, element.type != type {
+            return nil
+        }
         elements.remove(at: i)
         return element
     }
@@ -345,13 +348,13 @@ class ElementList {
         // option lists
         "CASE": ElementCASE.self,           // single option for preceding element
 //        "CASR": ElementCASR.self,   // option range for preceding element (ResKnife)
-//        "RSID": ElementRSID.self,   // resouce id (signed word) - type and offset in label
+        "RSID": ElementRSID.self,           // resouce id (signed word) - type and offset in label
 
         // key selection
-        "KBYT": ElementDWRD<Int8>.self,     // signed keys
-        "KWRD": ElementDWRD<Int16>.self,
-        "KLNG": ElementDWRD<Int32>.self,
-        "KLLG": ElementDWRD<Int64>.self,    // (ResKnife)
+        "KBYT": ElementKWRD<Int8>.self,     // signed keys
+        "KWRD": ElementKWRD<Int16>.self,
+        "KLNG": ElementKWRD<Int32>.self,
+        "KLLG": ElementKWRD<Int64>.self,    // (ResKnife)
 //        "KUBT": ElementUBYT.self,   // unsigned keys
 //        "KUWD": ElementUWRD.self,
 //        "KULG": ElementULNG.self,

@@ -45,4 +45,5 @@ public extension FourCharCode {
     @objc func allResources(ofType: String, currentDocumentOnly: Bool) -> [Resource]
     @objc func findResource(ofType: String, id: Int, currentDocumentOnly: Bool) -> Resource?
     @objc func findResource(ofType: String, name: String, currentDocumentOnly: Bool) -> Resource?
+    @objc func createResource(ofType: String, id: Int, name: String)
 }

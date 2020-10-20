@@ -150,4 +150,8 @@ class EditorManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
         }
         return SupportRegistry.directory.findResource(type: type, name: name)
     }
+    
+    func createResource(ofType: String, id: Int, name: String) {
+        document.createController.show(type: ofType, id: id, name: name)
+    }
 }

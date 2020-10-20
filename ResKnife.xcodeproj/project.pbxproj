@@ -19,8 +19,9 @@
 		4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD50253BD1290044BC45 /* ElementPSTR.swift */; };
 		4935CD6D253C10210044BC45 /* ElementFCNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD6C253C10210044BC45 /* ElementFCNT.swift */; };
 		4935CD75253CEB3C0044BC45 /* ElementDVDR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */; };
-		4935CD89253D32110044BC45 /* KeyableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD88253D32110044BC45 /* KeyableElement.swift */; };
+		4935CD89253D32110044BC45 /* KeyElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD88253D32110044BC45 /* KeyElement.swift */; };
 		4935CD91253D32E00044BC45 /* ElementKEYB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD90253D32E00044BC45 /* ElementKEYB.swift */; };
+		4935CD9F253E25890044BC45 /* ElementKWRD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD9E253E25890044BC45 /* ElementKWRD.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		49362DA324A966960040B793 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
 		4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC152531671400856385 /* TabbableOutlineView.swift */; };
@@ -88,6 +89,7 @@
 		49AACD8D24CE97CD0081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
 		49AACD9324CF6AB00081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
 		49AACD9424CF6B180081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
+		49C3AC72253E6C7C0020037B /* ElementRSID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3AC71253E6C7C0020037B /* ElementRSID.swift */; };
 		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49C5622B24D0D8D20072D659 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */; };
@@ -347,8 +349,9 @@
 		4935CD50253BD1290044BC45 /* ElementPSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPSTR.swift; sourceTree = "<group>"; };
 		4935CD6C253C10210044BC45 /* ElementFCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementFCNT.swift; sourceTree = "<group>"; };
 		4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDVDR.swift; sourceTree = "<group>"; };
-		4935CD88253D32110044BC45 /* KeyableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyableElement.swift; sourceTree = "<group>"; };
+		4935CD88253D32110044BC45 /* KeyElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyElement.swift; sourceTree = "<group>"; };
 		4935CD90253D32E00044BC45 /* ElementKEYB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKEYB.swift; sourceTree = "<group>"; };
+		4935CD9E253E25890044BC45 /* ElementKWRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKWRD.swift; sourceTree = "<group>"; };
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
 		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
@@ -457,6 +460,7 @@
 		49AACD7B24CE931A0081DD4A /* RKSupport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RKSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49AACD7D24CE931A0081DD4A /* RKSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RKSupport.h; sourceTree = "<group>"; };
 		49AACD7E24CE931A0081DD4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49C3AC71253E6C7C0020037B /* ElementRSID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRSID.swift; sourceTree = "<group>"; };
 		49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
@@ -784,7 +788,7 @@
 				4945DCB8253248DA00856385 /* ElementList.swift */,
 				4945DD062532DAE500856385 /* Element.swift */,
 				49FE7B48253A7E7700D2219D /* CaseableElement.swift */,
-				4935CD88253D32110044BC45 /* KeyableElement.swift */,
+				4935CD88253D32110044BC45 /* KeyElement.swift */,
 				4951AB4B25341B97009A8285 /* Elements */,
 			);
 			path = "Template Editor";
@@ -800,8 +804,10 @@
 				4935CD6C253C10210044BC45 /* ElementFCNT.swift */,
 				4951AB6125341D3E009A8285 /* ElementLSTB.swift */,
 				49FE7B50253A7EBA00D2219D /* ElementCASE.swift */,
+				49C3AC71253E6C7C0020037B /* ElementRSID.swift */,
 				4935CD90253D32E00044BC45 /* ElementKEYB.swift */,
 				4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */,
+				4935CD9E253E25890044BC45 /* ElementKWRD.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -1654,13 +1660,15 @@
 				491BC28B253B894200149D78 /* ElementOCNT.swift in Sources */,
 				4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */,
 				4935CD6D253C10210044BC45 /* ElementFCNT.swift in Sources */,
+				49C3AC72253E6C7C0020037B /* ElementRSID.swift in Sources */,
 				4951AB4D25341BBE009A8285 /* ElementDWRD.swift in Sources */,
 				4945DC512531745600856385 /* LabelView.swift in Sources */,
 				4945DCB9253248DA00856385 /* ElementList.swift in Sources */,
 				49FE7B49253A7E7700D2219D /* CaseableElement.swift in Sources */,
 				4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */,
 				4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */,
-				4935CD89253D32110044BC45 /* KeyableElement.swift in Sources */,
+				4935CD9F253E25890044BC45 /* ElementKWRD.swift in Sources */,
+				4935CD89253D32110044BC45 /* KeyElement.swift in Sources */,
 				49FE7B59253AC5F400D2219D /* ElementTNAM.swift in Sources */,
 				49FE7B51253A7EBA00D2219D /* ElementCASE.swift in Sources */,
 				4951AB5A25341CB4009A8285 /* Element.swift in Sources */,

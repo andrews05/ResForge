@@ -1,11 +1,13 @@
+import Cocoa
 import RKSupport
 
-// Implement DBYT, DWRD, DLNG, DLLG
-class ElementDWRD<T: FixedWidthInteger & SignedInteger>: CaseableElement {
-    @objc dynamic var value: Int = 0
+// Implement KBYT, KWRD, KLNG, KLLG
+class ElementKWRD<T: FixedWidthInteger & SignedInteger>: KeyElement {
+    @objc private var value: Int = 0
     
     override func readData(from reader: BinaryDataReader) throws {
         value = Int(try reader.read() as T)
+        _ = self.setCase(self.transformedValue(value) as? ElementCASE)
     }
     
     override func dataSize(_ size: inout Int) {

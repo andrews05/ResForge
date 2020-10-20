@@ -50,7 +50,7 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
     
     override func configure() throws {
         try super.configure()
-        self.width = (self.cases.count == 0 && maxLength > 32) ? 0 : 240
+        self.width = (self.cases == nil && maxLength > 32) ? 0 : 240
     }
     
     override func configure(view: NSView) {

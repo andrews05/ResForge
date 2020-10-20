@@ -1,7 +1,8 @@
 import RKSupport
 
 class ElementTNAM: CaseableElement {
-    @objc private var value: String = ""
+    // This is marked as dynamic so that RSID can bind to it and receive changes
+    @objc dynamic private var value: String = ""
     
     override func readData(from reader: BinaryDataReader) throws {
         value = (try reader.read() as FourCharCode).stringValue
