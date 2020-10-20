@@ -17,8 +17,9 @@ class ElementRSID: ElementDWRD<Int16> {
         }
     }
     private let offset: Int
-    private let max: Int
-    private var fixedCases: [ElementCASE] = []
+    private let range: ClosedRange<Int>?
+    private var fixedCases: [String]!
+    private var fixedMap: [AnyHashable: String]!
 
     required init(type: String, label: String, tooltip: String? = nil) {
         // Determine parameters from label
@@ -33,20 +34,18 @@ class ElementRSID: ElementDWRD<Int16> {
             offset = 0
         }
         if let nsr = result?.range(at: 3), let r = Range(nsr, in: label) {
-            max = offset + Int(label[r])!
+            range = offset...(offset + Int(label[r])!)
         } else {
-            max = Int.max
+            range = nil
         }
         super.init(type: type, label: label, tooltip: tooltip)
     }
     
     override func configure() throws {
-        self.cases = []
-        self.caseMap = [:]
+        try super.configure()
         self.width = 240
-        while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
-            fixedCases.append(caseEl)
-        }
+        fixedCases = self.cases ?? []
+        fixedMap = self.caseMap ?? [:]
         if resType == nil {
             // See if we can bind to a preceding TNAM field
             guard let tnam = self.parentList.previous(ofType: "TNAM") else {
@@ -64,31 +63,25 @@ class ElementRSID: ElementDWRD<Int16> {
     }
     
     private func loadCases() {
-        self.cases.removeAll()
-        self.caseMap.removeAll()
-        for caseEl in fixedCases {
-            self.cases.append(caseEl.optionLabel)
-            self.caseMap[caseEl.value] = caseEl.displayLabel
-        }
-        if let resType = resType {
-            // Find resources in all documents and sort by id
-            let manager = self.parentList.controller.resource.manager!
-            var resources = manager.allResources(ofType: resType, currentDocumentOnly: false)
-            resources.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
-            for resource in resources where !resource.name.isEmpty && offset...max ~= resource.id {
-                let resID = String(resource.id - offset)
-                if self.caseMap[resID] == nil {
-                    let idDisplay = self.resIDDisplay(resID)
-                    self.cases.append("\(resource.name) = \(idDisplay)")
-                    self.caseMap[resID] = "\(idDisplay) = \(resource.name)"
-                }
+        self.cases = fixedCases
+        self.caseMap = fixedMap
+        // Find resources in all documents and sort by id
+        let manager = self.parentList.controller.resource.manager!
+        var resources = manager.allResources(ofType: resType, currentDocumentOnly: false)
+        resources.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+        for resource in resources where !resource.name.isEmpty && range?.contains(resource.id) != false {
+            let resID = resource.id - offset
+            if self.caseMap[resID] == nil {
+                let idDisplay = self.resIDDisplay(resID)
+                self.cases.append("\(resource.name) = \(idDisplay)")
+                self.caseMap[resID] = "\(idDisplay) = \(resource.name)"
             }
         }
     }
     
-    private func resIDDisplay(_ resID: String) -> String {
+    private func resIDDisplay(_ resID: Int) -> String {
         // If an offset is used, the value will be displayed as "value (#actual id)"
-        return offset == 0 ? resID : "\(resID) (#\(Int(resID)!+offset))"
+        return offset == 0 ? String(resID) : "\(resID) (#\(resID+offset))"
     }
     
     static func configureLinkButton(comboBox: NSComboBox, for element: Element) {
@@ -119,8 +112,7 @@ class ElementRSID: ElementDWRD<Int16> {
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
-        let value = String(value as! Int)
-        return self.caseMap[value] ?? self.resIDDisplay(value)
+        return self.caseMap[value as! AnyHashable] ?? self.resIDDisplay(value as! Int)
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any? {

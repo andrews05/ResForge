@@ -2,7 +2,19 @@ import RKSupport
 
 // Implement DBYT, DWRD, DLNG, DLLG
 class ElementDWRD<T: FixedWidthInteger & SignedInteger>: CaseableElement {
-    @objc dynamic var value: Int = 0
+    @objc var value: Int = 0
+    
+    override func configure() throws {
+        switch T.bitWidth/8 {
+        case 4:
+            self.width = 90
+        case 8:
+            self.width = 120
+        default:
+            break
+        }
+        try super.configure()
+    }
     
     override func readData(from reader: BinaryDataReader) throws {
         value = Int(try reader.read() as T)

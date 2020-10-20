@@ -95,7 +95,7 @@ class Element: ValueTransformer, NSTextFieldDelegate {
         textField.placeholderString = type
         textField.lineBreakMode = .byTruncatingTail
         textField.allowsDefaultTighteningForTruncation = true
-        textField.bind(NSBindingName("value"), to: self, withKeyPath: "value", options: nil)
+        textField.bind(.value, to: self, withKeyPath: "value", options: nil)
         view.addSubview(textField)
     }
     

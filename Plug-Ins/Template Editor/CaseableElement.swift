@@ -3,7 +3,7 @@ import Cocoa
 // Abstract Element subclass that handles CASE elements
 class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
     var cases: [String]!
-    var caseMap: [String: String]!
+    var caseMap: [AnyHashable: String]!
     
     override func configure() throws {
         // Read CASE elements
@@ -13,8 +13,11 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
                 caseMap = [:]
                 self.width = 240
             }
-            cases.append(caseEl.optionLabel)
-            caseMap[caseEl.value] = caseEl.displayLabel
+            try caseEl.configure(for: self)
+            // Cases will show as "title = value" in the options list to allow searching by title
+            // Text field will display as "value = title" for consistency when there's no matching case
+            cases.append("\(caseEl.displayLabel) = \(caseEl.displayValue)")
+            caseMap[caseEl.value] = "\(caseEl.displayValue) = \(caseEl.displayLabel)"
         }
     }
     
@@ -41,15 +44,12 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
         combo.dataSource = self
         // The formatter isn't directly compatible with the values displayed by the combo box
         // Use a combination of value transformation with immediate validation to run the formatter manually
-        combo.bind(NSBindingName(rawValue: "value"), to: self, withKeyPath: "value", options:
-                    [.valueTransformer: self, .validatesImmediately: self.formatter != nil])
+        combo.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self, .validatesImmediately: self.formatter != nil])
         view.addSubview(combo)
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
-        // Run the value through the formatter before looking it up in the map
-        let value = self.formatter?.string(for: value) ?? value
-        return caseMap[value as! String] ?? value
+        return caseMap[value as! AnyHashable] ?? self.formatter?.string(for: value) ?? value
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any? {

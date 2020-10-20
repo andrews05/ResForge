@@ -14,7 +14,7 @@ class KeyElement: Element {
         // Set initial value to first case
         let caseEl = self.cases.first!
         currentSection = keyedSections[caseEl]
-        self.setValue(caseEl.objectValue, forKey: "value")
+        self.setValue(caseEl.value, forKey: "value")
         self.parentList.insert(currentSection)
     }
     
@@ -24,7 +24,7 @@ class KeyElement: Element {
         while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
             try caseEl.configure(for: self)
             self.cases.append(caseEl)
-            self.caseMap[caseEl.objectValue as! AnyHashable] = caseEl
+            self.caseMap[caseEl.value] = caseEl
         }
         if self.cases.isEmpty {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ elements found.", comment: ""))
@@ -36,7 +36,7 @@ class KeyElement: Element {
             // Allow one KEYB to be used for multiple CASEs
             let vals = keyB.label.components(separatedBy: ",")
             for value in vals {
-                guard let caseEl = self.cases.first(where: { $0.value == value }) else {
+                guard let caseEl = self.cases.first(where: { $0.displayValue == value }) else {
                     throw TemplateError.invalidStructure(keyB, NSLocalizedString("No corresponding ‘CASE’ element.", comment: ""))
                 }
                 keyedSections[caseEl] = keyB
@@ -55,8 +55,8 @@ class KeyElement: Element {
         let keySelect = NSPopUpButton(frame: frame)
         keySelect.target = self
         keySelect.action = #selector(keyChanged(_:))
-        keySelect.bind(NSBindingName("content"), to: self, withKeyPath: "cases", options: nil)
-        keySelect.bind(NSBindingName("selectedObject"), to: self, withKeyPath: "value", options: [.valueTransformer: self])
+        keySelect.bind(.content, to: self, withKeyPath: "cases", options: nil)
+        keySelect.bind(.selectedObject, to: self, withKeyPath: "value", options: [.valueTransformer: self])
         view.addSubview(keySelect)
     }
     
@@ -118,6 +118,6 @@ class KeyElement: Element {
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any? {
-        return (value as! ElementCASE).objectValue
+        return (value as! ElementCASE).value
     }
 }
