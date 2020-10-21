@@ -21,8 +21,8 @@ class ElementCASR: CaseableElement {
             parentElement.displayValue = newValue
         }
     }
-    private(set) var min = Int(Int32.min)
-    private(set) var max = Int(Int32.max)
+    private(set) var min = Int.min
+    private(set) var max = Int.max
     private var offset = 0
     private var invert = false
     private var resType: String!
@@ -43,33 +43,35 @@ class ElementCASR: CaseableElement {
         
         // Determine parameters from label
         let components = self.label.components(separatedBy: "=")
-        var valid = false
+        var hasMin = false
+        var hasMax = false
         if components.count > 1 {
             let scanner = Scanner(string: components[1])
-            if scanner.scanInt(&min) {
-                valid = true
-            }
+            hasMin = scanner.scanInt(&min)
             scanner.charactersToBeSkipped = nil
             if scanner.scanString(",", into: nil) {
-                if scanner.scanInt(&max) {
-                    valid = true
-                }
+                hasMax = scanner.scanInt(&max)
                 scanner.charactersToBeSkipped = .whitespacesAndNewlines
                 var normal: Int = 0
                 if scanner.scanInt(&normal) {
-                    // If specified minimum is negative and no max was specified, assume inverted (from minimum down)
-                    if min < 0, max == Int32.max {
-                        max = -max
+                    if !hasMin {
+                        throw TemplateError.invalidStructure(self, NSLocalizedString("Normal requires explicit minimum.", comment: ""))
                     }
-                    invert = min > max
+                    // Invert if min greater than max, or if min is negative and no max was specified (i.e. from min down)
+                    invert = min > max || (min < 0 && !hasMax)
                     offset = (invert ? -min : min) - normal
                     min = normal
-                    max = (invert ? -max : max) - offset
+                    if hasMax {
+                        max = (invert ? -max : max) - offset
+                    }
                 }
                 if scanner.scanString("'", into: nil) {
                     var resType: NSString?
                     scanner.scanUpTo("'", into: &resType)
-                    if resType?.length == 4 && scanner.scanString("'", into: nil) {
+                    if scanner.scanString("'", into: nil) {
+                        if resType?.length != 4 {
+                            throw TemplateError.invalidStructure(self, NSLocalizedString("Resource type must be 4 characters.", comment: ""))
+                        }
                         self.resType = resType as String?
                     }
                 }
@@ -78,8 +80,8 @@ class ElementCASR: CaseableElement {
                 max = min
             }
         }
-        if !valid {
-            throw TemplateError.invalidStructure(self, "Could not determine parameters from label.")
+        if !hasMin && !hasMax {
+            throw TemplateError.invalidStructure(self, NSLocalizedString("Could not determine parameters from label.", comment: ""))
         }
     }
     
