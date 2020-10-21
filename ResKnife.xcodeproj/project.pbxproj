@@ -29,6 +29,8 @@
 		4945DC512531745600856385 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC232531689900856385 /* LabelView.swift */; };
 		4945DC642531826400856385 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
 		4945DCB9253248DA00856385 /* ElementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DCB8253248DA00856385 /* ElementList.swift */; };
+		494D05F5253FAAF200F5A789 /* ElementUWRD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D05F4253FAAF200F5A789 /* ElementUWRD.swift */; };
+		494D05FD253FAB5D00F5A789 /* ElementHWRD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D05FC253FAB5D00F5A789 /* ElementHWRD.swift */; };
 		4951AB4D25341BBE009A8285 /* ElementDWRD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB4C25341BBE009A8285 /* ElementDWRD.swift */; };
 		4951AB5A25341CB4009A8285 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DD062532DAE500856385 /* Element.swift */; };
 		4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB6125341D3E009A8285 /* ElementLSTB.swift */; };
@@ -371,6 +373,8 @@
 		494BEA6E245B90D1000EF1D0 /* ElementKRID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKRID.m; sourceTree = "<group>"; };
 		494BEA71245BE256000EF1D0 /* ElementRSID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementRSID.h; sourceTree = "<group>"; };
 		494BEA72245BE256000EF1D0 /* ElementRSID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRSID.m; sourceTree = "<group>"; };
+		494D05F4253FAAF200F5A789 /* ElementUWRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUWRD.swift; sourceTree = "<group>"; };
+		494D05FC253FAB5D00F5A789 /* ElementHWRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHWRD.swift; sourceTree = "<group>"; };
 		4951AB4C25341BBE009A8285 /* ElementDWRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDWRD.swift; sourceTree = "<group>"; };
 		4951AB6125341D3E009A8285 /* ElementLSTB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementLSTB.swift; sourceTree = "<group>"; };
 		4953F5922488740F0002340F /* SoundWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundWindow.xib; sourceTree = "<group>"; };
@@ -798,6 +802,8 @@
 			isa = PBXGroup;
 			children = (
 				4951AB4C25341BBE009A8285 /* ElementDWRD.swift */,
+				494D05F4253FAAF200F5A789 /* ElementUWRD.swift */,
+				494D05FC253FAB5D00F5A789 /* ElementHWRD.swift */,
 				49FE7B58253AC5F400D2219D /* ElementTNAM.swift */,
 				4935CD50253BD1290044BC45 /* ElementPSTR.swift */,
 				491BC28A253B894200149D78 /* ElementOCNT.swift */,
@@ -1657,6 +1663,7 @@
 				4935CD75253CEB3C0044BC45 /* ElementDVDR.swift in Sources */,
 				4935CD91253D32E00044BC45 /* ElementKEYB.swift in Sources */,
 				4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */,
+				494D05FD253FAB5D00F5A789 /* ElementHWRD.swift in Sources */,
 				491BC28B253B894200149D78 /* ElementOCNT.swift in Sources */,
 				4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */,
 				4935CD6D253C10210044BC45 /* ElementFCNT.swift in Sources */,
@@ -1669,6 +1676,7 @@
 				4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */,
 				4935CD9F253E25890044BC45 /* ElementKWRD.swift in Sources */,
 				4935CD89253D32110044BC45 /* KeyElement.swift in Sources */,
+				494D05F5253FAAF200F5A789 /* ElementUWRD.swift in Sources */,
 				49FE7B59253AC5F400D2219D /* ElementTNAM.swift in Sources */,
 				49FE7B51253A7EBA00D2219D /* ElementCASE.swift in Sources */,
 				4951AB5A25341CB4009A8285 /* Element.swift in Sources */,

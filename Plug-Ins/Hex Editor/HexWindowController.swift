@@ -53,6 +53,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
     @objc func resourceDataDidChange(_ notification: NSNotification) {
         if !self.window!.isDocumentEdited {
             textView.data = resource.data
+            self.setDocumentEdited(false) // Will have been set to true by hexDidChangeProperties
         }
     }
     

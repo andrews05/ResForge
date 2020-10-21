@@ -13,21 +13,17 @@ public class MacRomanFormatter: Formatter {
                                         for string: String,
                                         errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
         if string.count == 0 {
-            if valueRequired && error != nil {
+            if valueRequired {
                 error?.pointee = NSLocalizedString("The value must be not be blank.", comment: "") as NSString
             }
             return !valueRequired
         }
         if exactLengthRequired && string.count != stringLength {
-            if error != nil {
-                error?.pointee = String(format: NSLocalizedString("The value must be exactly %d characters.", comment: ""), stringLength) as NSString
-            }
+            error?.pointee = String(format: NSLocalizedString("The value must be exactly %d characters.", comment: ""), stringLength) as NSString
             return false
         }
         if !string.canBeConverted(to: .macOSRoman) {
-            if error != nil {
-                error?.pointee = NSLocalizedString("The value contains invalid characters for Mac OS Roman encoding.", comment: "") as NSString
-            }
+            error?.pointee = NSLocalizedString("The value contains invalid characters for Mac OS Roman encoding.", comment: "") as NSString
             return false
         }
         obj?.pointee = string as AnyObject

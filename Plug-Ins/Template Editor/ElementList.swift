@@ -258,14 +258,14 @@ class ElementList {
         "DWRD": ElementDWRD<Int16>.self,
         "DLNG": ElementDWRD<Int32>.self,
         "DLLG": ElementDWRD<Int64>.self,    // (ResKnife)
-//        "UBYT": ElementDWRD<UInt8>.self,   // unsigned ints
-//        "UWRD": ElementDWRD<UInt16>.self,
-//        "ULNG": ElementDWRD<UInt32>.self,
-//        "ULLG": ElementDWRD<UInt64>.self,   // (ResKnife)
-//        "HBYT": ElementHBYT.self,   // hex byte/word/long
-//        "HWRD": ElementHWRD.self,
-//        "HLNG": ElementHLNG.self,
-//        "HLLG": ElementHLLG.self,   // (ResKnife)
+        "UBYT": ElementUWRD<UInt8>.self,    // unsigned ints
+        "UWRD": ElementUWRD<UInt16>.self,
+        "ULNG": ElementUWRD<UInt32>.self,
+        "ULLG": ElementUWRD<UInt64>.self,   // (ResKnife)
+        "HBYT": ElementHWRD<UInt8>.self,    // hex byte/word/long
+        "HWRD": ElementHWRD<UInt16>.self,
+        "HLNG": ElementHWRD<UInt32>.self,
+        "HLLG": ElementHWRD<UInt64>.self,   // (ResKnife)
 
         // multiple fields
 //        "RECT": ElementRECT.self,   // QuickDraw rect
@@ -384,13 +384,13 @@ class ElementList {
 //        "PACK": ElementPACK.self,   // pack other elements together (ResKnife)
 
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
-//        "SFRC": ElementUWRD.self,   // 0.16 fixed fraction
-//        "FXYZ": ElementUWRD.self,   // 1.15 fixed fraction
-//        "FWID": ElementUWRD.self,   // 4.12 fixed fraction
-//        "LLDT": ElementULLG.self,   // 8-byte date (seconds since 1 Jan 1904) (ResKnife)
-//        "STYL": ElementDBYT.self,   // QuickDraw font style (ResKnife)
-//        "SCPC": ElementDWRD.self,   // MacOS script code (ScriptCode)
-//        "LNGC": ElementDWRD.self,   // MacOS language code (LangCode)
-//        "RGNC": ElementDWRD.self,   // MacOS region code (RegionCode)
+        "SFRC": ElementUWRD<UInt16>.self,   // 0.16 fixed fraction
+        "FXYZ": ElementUWRD<UInt16>.self,   // 1.15 fixed fraction
+        "FWID": ElementUWRD<UInt16>.self,   // 4.12 fixed fraction
+        "LLDT": ElementUWRD<UInt64>.self,   // 8-byte date (seconds since 1 Jan 1904) (ResKnife, used by Font Editor templates)
+        "STYL": ElementDWRD<Int8>.self,     // QuickDraw font style (ResKnife)
+        "SCPC": ElementDWRD<Int16>.self,    // MacOS script code (ScriptCode)
+        "LNGC": ElementDWRD<Int16>.self,    // MacOS language code (LangCode)
+        "RGNC": ElementDWRD<Int16>.self,    // MacOS region code (RegionCode)
     ]
 }

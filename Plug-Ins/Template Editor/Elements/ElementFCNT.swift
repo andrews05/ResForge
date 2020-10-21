@@ -18,8 +18,7 @@ class ElementFCNT: Element, GroupElement, CounterElement {
             count = Int(abs(value))
         }
         // Remove count from label
-        let index = label.index(label.startIndex, offsetBy: scanner.scanLocation)
-        groupLabel = label.suffix(from: index).trimmingCharacters(in: .whitespaces)
+        groupLabel = label.dropFirst(scanner.scanLocation).trimmingCharacters(in: .whitespaces)
         super.init(type: type, label: label, tooltip: tooltip)
         self.rowHeight = 17
         // Hide if no remaining label
