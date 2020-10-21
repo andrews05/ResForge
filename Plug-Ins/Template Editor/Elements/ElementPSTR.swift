@@ -75,15 +75,13 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
     }
     
     private func autoRowHeight(_ field: NSTextField) {
-        let outline = self.parentList.controller.dataList!
-        let index = outline.row(for: field)
-        let element = outline.item(atRow: index) as! Element
         let bounds = NSMakeRect(0, 0, field.bounds.size.width-4, CGFloat.greatestFiniteMagnitude)
         let height = Double(field.cell!.cellSize(forBounds: bounds).height) + 1
-        if height != element.rowHeight {
-            element.rowHeight = height
+        if height != self.rowHeight {
+            self.rowHeight = height
             // Notify the outline view
-            outline.noteHeightOfRows(withIndexesChanged: [index])
+            let outline = self.parentList.controller.dataList!
+            outline.noteHeightOfRows(withIndexesChanged: [outline.row(for: field)])
         }
     }
     

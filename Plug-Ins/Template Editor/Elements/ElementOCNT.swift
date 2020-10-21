@@ -17,12 +17,8 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
         }
     }
     
-    required init(type: String, label: String, tooltip: String? = nil) {
-        super.init(type: type, label: label, tooltip: tooltip)
-        self.rowHeight = 17
-    }
-    
     override func configure() throws {
+        self.rowHeight = 18
         guard let lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Following ‘LSTC’ element not found.", comment: ""))
         }
@@ -31,7 +27,7 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
     
     func configureGroup(view: NSTableCellView) {
         // Element will show as a group row - we need to combine the counter into the label
-        view.textField?.bind(NSBindingName("value"), to: self, withKeyPath: "count", options: [.valueTransformer: self])
+        view.textField?.bind(.value, to: self, withKeyPath: "count", options: [.valueTransformer: self])
     }
     
     override func transformedValue(_ value: Any?) -> Any? {

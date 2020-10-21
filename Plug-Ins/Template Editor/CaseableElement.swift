@@ -2,7 +2,7 @@ import Cocoa
 
 // Abstract Element subclass that handles CASE elements
 class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
-    var cases: [String]!
+    var cases: [ElementCASE]!
     var caseMap: [AnyHashable: String]!
     
     override func configure() throws {
@@ -14,10 +14,11 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
                 self.width = 240
             }
             try caseEl.configure(for: self)
+            cases.append(caseEl)
             // Cases will show as "title = value" in the options list to allow searching by title
             // Text field will display as "value = title" for consistency when there's no matching case
-            cases.append("\(caseEl.displayLabel) = \(caseEl.displayValue)")
             caseMap[caseEl.value] = "\(caseEl.displayValue) = \(caseEl.displayLabel)"
+            caseEl.displayValue = "\(caseEl.displayLabel) = \(caseEl.displayValue)"
         }
     }
     
@@ -77,12 +78,12 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
         // Use insensitive completion, except for TNAM
         let options: NSString.CompareOptions = self.type == "TNAM" ? [] : .caseInsensitive
         return self.cases.first {
-            $0.commonPrefix(with: string, options: options).count == string.count
-        }
+            $0.displayValue.commonPrefix(with: string, options: options).count == string.count
+        }?.displayValue
     }
     
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
-        return index < self.cases.endIndex ? self.cases[index] : nil
+        return index < self.cases.endIndex ? self.cases[index].displayValue : nil
     }
     
     func numberOfItems(in comboBox: NSComboBox) -> Int {

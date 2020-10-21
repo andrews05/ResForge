@@ -20,12 +20,12 @@ class ElementFCNT: Element, GroupElement, CounterElement {
         // Remove count from label
         groupLabel = label.dropFirst(scanner.scanLocation).trimmingCharacters(in: .whitespaces)
         super.init(type: type, label: label, tooltip: tooltip)
-        self.rowHeight = 17
         // Hide if no remaining label
         self.visible = groupLabel.count > 0
     }
     
     override func configure() throws {
+        self.rowHeight = 18
         guard let lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Following ‘LSTC’ element not found.", comment: ""))
         }

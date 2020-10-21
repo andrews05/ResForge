@@ -31,6 +31,9 @@
 		4945DCB9253248DA00856385 /* ElementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DCB8253248DA00856385 /* ElementList.swift */; };
 		494D05F5253FAAF200F5A789 /* ElementUWRD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D05F4253FAAF200F5A789 /* ElementUWRD.swift */; };
 		494D05FD253FAB5D00F5A789 /* ElementHWRD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D05FC253FAB5D00F5A789 /* ElementHWRD.swift */; };
+		494D060B2540C43F00F5A789 /* ElementPACK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D060A2540C43F00F5A789 /* ElementPACK.swift */; };
+		494D06132540CB3600F5A789 /* ElementBORV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D06122540CB3600F5A789 /* ElementBORV.swift */; };
+		494D061B2540CEC200F5A789 /* ElementBOOL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D061A2540CEC200F5A789 /* ElementBOOL.swift */; };
 		4951AB4D25341BBE009A8285 /* ElementDWRD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB4C25341BBE009A8285 /* ElementDWRD.swift */; };
 		4951AB5A25341CB4009A8285 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DD062532DAE500856385 /* Element.swift */; };
 		4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB6125341D3E009A8285 /* ElementLSTB.swift */; };
@@ -377,6 +380,9 @@
 		494BEA72245BE256000EF1D0 /* ElementRSID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRSID.m; sourceTree = "<group>"; };
 		494D05F4253FAAF200F5A789 /* ElementUWRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUWRD.swift; sourceTree = "<group>"; };
 		494D05FC253FAB5D00F5A789 /* ElementHWRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHWRD.swift; sourceTree = "<group>"; };
+		494D060A2540C43F00F5A789 /* ElementPACK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPACK.swift; sourceTree = "<group>"; };
+		494D06122540CB3600F5A789 /* ElementBORV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBORV.swift; sourceTree = "<group>"; };
+		494D061A2540CEC200F5A789 /* ElementBOOL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBOOL.swift; sourceTree = "<group>"; };
 		4951AB4C25341BBE009A8285 /* ElementDWRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDWRD.swift; sourceTree = "<group>"; };
 		4951AB6125341D3E009A8285 /* ElementLSTB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementLSTB.swift; sourceTree = "<group>"; };
 		4953F5922488740F0002340F /* SoundWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundWindow.xib; sourceTree = "<group>"; };
@@ -811,6 +817,8 @@
 				494D05FC253FAB5D00F5A789 /* ElementHWRD.swift */,
 				49FE7B58253AC5F400D2219D /* ElementTNAM.swift */,
 				4935CD50253BD1290044BC45 /* ElementPSTR.swift */,
+				494D061A2540CEC200F5A789 /* ElementBOOL.swift */,
+				494D06122540CB3600F5A789 /* ElementBORV.swift */,
 				491BC28A253B894200149D78 /* ElementOCNT.swift */,
 				4935CD6C253C10210044BC45 /* ElementFCNT.swift */,
 				4951AB6125341D3E009A8285 /* ElementLSTB.swift */,
@@ -819,6 +827,7 @@
 				49C3AC71253E6C7C0020037B /* ElementRSID.swift */,
 				4935CD90253D32E00044BC45 /* ElementKEYB.swift */,
 				4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */,
+				494D060A2540C43F00F5A789 /* ElementPACK.swift */,
 				4935CD9E253E25890044BC45 /* ElementKWRD.swift */,
 			);
 			path = Elements;
@@ -1681,11 +1690,14 @@
 				49B9E6742540042900A266DE /* RangeableElement.swift in Sources */,
 				4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */,
 				4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */,
+				494D06132540CB3600F5A789 /* ElementBORV.swift in Sources */,
 				4935CD9F253E25890044BC45 /* ElementKWRD.swift in Sources */,
+				494D060B2540C43F00F5A789 /* ElementPACK.swift in Sources */,
 				4935CD89253D32110044BC45 /* KeyElement.swift in Sources */,
 				49B9E66C253FF1AB00A266DE /* ElementCASR.swift in Sources */,
 				494D05F5253FAAF200F5A789 /* ElementUWRD.swift in Sources */,
 				49FE7B59253AC5F400D2219D /* ElementTNAM.swift in Sources */,
+				494D061B2540CEC200F5A789 /* ElementBOOL.swift in Sources */,
 				49FE7B51253A7EBA00D2219D /* ElementCASE.swift in Sources */,
 				4951AB5A25341CB4009A8285 /* Element.swift in Sources */,
 			);

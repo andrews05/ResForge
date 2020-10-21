@@ -18,7 +18,7 @@ class ElementRSID: ElementDWRD<Int16> {
     }
     private let offset: Int
     private let range: ClosedRange<Int>?
-    private var fixedCases: [String]!
+    private var fixedCases: [ElementCASE]!
     private var fixedMap: [AnyHashable: String]!
 
     required init(type: String, label: String, tooltip: String? = nil) {
@@ -73,7 +73,7 @@ class ElementRSID: ElementDWRD<Int16> {
             let resID = resource.id - offset
             if self.caseMap[resID] == nil {
                 let idDisplay = self.resIDDisplay(resID)
-                self.cases.append("\(resource.name) = \(idDisplay)")
+                self.cases.append(ElementCASE(value: resource.id, displayValue: "\(resource.name) = \(idDisplay)"))
                 self.caseMap[resID] = "\(idDisplay) = \(resource.name)"
             }
         }

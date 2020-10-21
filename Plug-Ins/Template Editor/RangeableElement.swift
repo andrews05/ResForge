@@ -3,8 +3,8 @@ import Cocoa
 // Abstract Element subclass that handles CASR elements
 class RangeableElement: CaseableElement {
     @objc dynamic var displayValue = 0
-    @objc var casrs: [ElementCASR]!
-    @objc var currentCase: ElementCASR!
+    @objc private(set) var casrs: [ElementCASR]!
+    @objc private var currentCase: ElementCASR!
     var popupWidth: CGFloat = 240
     
     override func configure() throws {

@@ -3,7 +3,17 @@ import RKSupport
 
 class ElementCASE: Element {
     var displayValue: String = ""
-    var value: AnyHashable!
+    @objc var value: AnyHashable!
+    
+    required init(type: String, label: String, tooltip: String? = nil) {
+        super.init(type: type, label: label, tooltip: tooltip)
+    }
+    
+    init(value: AnyHashable, displayValue: String) {
+        super.init(type: "CASE", label: displayValue, tooltip: "")
+        self.displayValue = displayValue
+        self.value = value
+    }
     
     // For key elements, the case's description is used in the popup menu
     override var description: String {

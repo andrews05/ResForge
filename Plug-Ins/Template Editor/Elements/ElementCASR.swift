@@ -113,7 +113,7 @@ class ElementCASR: CaseableElement {
         resources.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
         for resource in resources where !resource.name.isEmpty && min...max ~= resource.id {
             if self.caseMap[resource.id] == nil {
-                self.cases.append("\(resource.name) = \(resource.id)")
+                self.cases.append(ElementCASE(value: resource.id, displayValue: "\(resource.name) = \(resource.id)"))
                 self.caseMap[resource.id] = "\(resource.id) = \(resource.name)"
             }
         }

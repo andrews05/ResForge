@@ -304,7 +304,7 @@ class ElementList {
         "TNAM": ElementTNAM.self,
 
         // bits
-//        "BOOL": ElementBOOL.self,   // true = 256; false = 0
+        "BOOL": ElementBOOL.self,           // true = 256; false = 0
 //        "BFLG": ElementBFLG.self,   // binary flag the size of a byte/word/long
 //        "WFLG": ElementWFLG.self,
 //        "LFLG": ElementLFLG.self,
@@ -317,9 +317,9 @@ class ElementList {
 //        "LBIT": ElementLBIT.self,
 //        "LB"  : ElementLBIT.self,   // LBnn
 //        "LF"  : ElementLBIT.self,   // LFnn (ResKnife)
-//        "BORV": ElementBORV.self,   // OR-value (Rezilla)
-//        "WORV": ElementWORV.self,
-//        "LORV": ElementLORV.self,
+        "BORV": ElementBORV<UInt8>.self,    // OR-value (Rezilla)
+        "WORV": ElementBORV<UInt16>.self,
+        "LORV": ElementBORV<UInt32>.self,
 
         // hex dumps
 //        "BHEX": ElementHEXD.self,
@@ -380,8 +380,8 @@ class ElementList {
 //        "LCOL": ElementCOLR.self,   // 4-byte (24-bit) colour (Rezilla)
 
         // layout
-        "DVDR": ElementDVDR.self,   // divider
-//        "PACK": ElementPACK.self,   // pack other elements together (ResKnife)
+        "DVDR": ElementDVDR.self,           // divider
+        "PACK": ElementPACK.self,           // pack other elements together (ResKnife)
 
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
         "SFRC": ElementUWRD<UInt16>.self,   // 0.16 fixed fraction
