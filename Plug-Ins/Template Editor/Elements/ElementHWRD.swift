@@ -1,6 +1,7 @@
 import Cocoa
 import RKSupport
 
+// Implements HBYT, HWRD, HLNG, HLLG
 class ElementHWRD<T: FixedWidthInteger & UnsignedInteger>: ElementUWRD<T> {
     override var formatter: Formatter? {
         if Element.sharedFormatters[type] == nil {

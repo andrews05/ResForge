@@ -91,6 +91,8 @@
 		49AACD8D24CE97CD0081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
 		49AACD9324CF6AB00081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
 		49AACD9424CF6B180081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
+		49B9E66C253FF1AB00A266DE /* ElementCASR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B9E66B253FF1AB00A266DE /* ElementCASR.swift */; };
+		49B9E6742540042900A266DE /* RangeableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B9E6732540042900A266DE /* RangeableElement.swift */; };
 		49C3AC72253E6C7C0020037B /* ElementRSID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3AC71253E6C7C0020037B /* ElementRSID.swift */; };
 		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
@@ -464,6 +466,8 @@
 		49AACD7B24CE931A0081DD4A /* RKSupport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RKSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49AACD7D24CE931A0081DD4A /* RKSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RKSupport.h; sourceTree = "<group>"; };
 		49AACD7E24CE931A0081DD4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49B9E66B253FF1AB00A266DE /* ElementCASR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCASR.swift; sourceTree = "<group>"; };
+		49B9E6732540042900A266DE /* RangeableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeableElement.swift; sourceTree = "<group>"; };
 		49C3AC71253E6C7C0020037B /* ElementRSID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRSID.swift; sourceTree = "<group>"; };
 		49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
@@ -792,6 +796,7 @@
 				4945DCB8253248DA00856385 /* ElementList.swift */,
 				4945DD062532DAE500856385 /* Element.swift */,
 				49FE7B48253A7E7700D2219D /* CaseableElement.swift */,
+				49B9E6732540042900A266DE /* RangeableElement.swift */,
 				4935CD88253D32110044BC45 /* KeyElement.swift */,
 				4951AB4B25341B97009A8285 /* Elements */,
 			);
@@ -810,6 +815,7 @@
 				4935CD6C253C10210044BC45 /* ElementFCNT.swift */,
 				4951AB6125341D3E009A8285 /* ElementLSTB.swift */,
 				49FE7B50253A7EBA00D2219D /* ElementCASE.swift */,
+				49B9E66B253FF1AB00A266DE /* ElementCASR.swift */,
 				49C3AC71253E6C7C0020037B /* ElementRSID.swift */,
 				4935CD90253D32E00044BC45 /* ElementKEYB.swift */,
 				4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */,
@@ -1672,10 +1678,12 @@
 				4945DC512531745600856385 /* LabelView.swift in Sources */,
 				4945DCB9253248DA00856385 /* ElementList.swift in Sources */,
 				49FE7B49253A7E7700D2219D /* CaseableElement.swift in Sources */,
+				49B9E6742540042900A266DE /* RangeableElement.swift in Sources */,
 				4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */,
 				4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */,
 				4935CD9F253E25890044BC45 /* ElementKWRD.swift in Sources */,
 				4935CD89253D32110044BC45 /* KeyElement.swift in Sources */,
+				49B9E66C253FF1AB00A266DE /* ElementCASR.swift in Sources */,
 				494D05F5253FAAF200F5A789 /* ElementUWRD.swift in Sources */,
 				49FE7B59253AC5F400D2219D /* ElementTNAM.swift in Sources */,
 				49FE7B51253A7EBA00D2219D /* ElementCASE.swift in Sources */,

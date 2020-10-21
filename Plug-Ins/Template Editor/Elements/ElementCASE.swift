@@ -7,7 +7,7 @@ class ElementCASE: Element {
     
     // For key elements, the case's description is used in the popup menu
     override var description: String {
-        displayLabel
+        self.displayLabel
     }
     
     override func configure() throws {

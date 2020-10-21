@@ -1,7 +1,7 @@
 import RKSupport
 
-// Implement DBYT, DWRD, DLNG, DLLG
-class ElementDWRD<T: FixedWidthInteger & SignedInteger>: CaseableElement {
+// Implements DBYT, DWRD, DLNG, DLLG
+class ElementDWRD<T: FixedWidthInteger & SignedInteger>: RangeableElement {
     @objc var value: Int = 0
     
     override func configure() throws {

@@ -1,6 +1,6 @@
 import RKSupport
 
-// Implement UBYT, UWRD, ULNG, ULLG
+// Implements UBYT, UWRD, ULNG, ULLG
 class ElementUWRD<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
     @objc var value: UInt = 0
     

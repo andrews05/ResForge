@@ -347,7 +347,7 @@ class ElementList {
 
         // option lists
         "CASE": ElementCASE.self,           // single option for preceding element
-//        "CASR": ElementCASR.self,   // option range for preceding element (ResKnife)
+        "CASR": ElementCASR.self,           // option range for preceding element (ResKnife)
         "RSID": ElementRSID.self,           // resouce id (signed word) - type and offset in label
 
         // key selection
