@@ -1,13 +1,23 @@
-import Cocoa
 import RKSupport
 
-// Implement KBYT, KWRD, KLNG, KLLG
-class ElementKWRD<T: FixedWidthInteger & SignedInteger>: KeyElement {
-    @objc private var value: Int = 0
+// Implements DBYT, DWRD, DLNG, DLLG
+class ElementDBYT<T: FixedWidthInteger & SignedInteger>: RangeableElement {
+    @objc var value: Int = 0
+    
+    override func configure() throws {
+        switch T.bitWidth/8 {
+        case 4:
+            self.width = 90
+        case 8:
+            self.width = 120
+        default:
+            break
+        }
+        try super.configure()
+    }
     
     override func readData(from reader: BinaryDataReader) throws {
         value = Int(try reader.read() as T)
-        _ = self.setCase(self.transformedValue(value) as? ElementCASE)
     }
     
     override func dataSize(_ size: inout Int) {
@@ -22,8 +32,8 @@ class ElementKWRD<T: FixedWidthInteger & SignedInteger>: KeyElement {
         if Element.sharedFormatters[type] == nil {
             let formatter = NumberFormatter()
             formatter.hasThousandSeparators = true
-            formatter.minimum = NSNumber(value: Int(T.min))
-            formatter.maximum = NSNumber(value: Int(T.max))
+            formatter.minimum = T.min as? NSNumber
+            formatter.maximum = T.max as? NSNumber
             formatter.nilSymbol = "\0"
             Element.sharedFormatters[type] = formatter
         }

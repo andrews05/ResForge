@@ -245,8 +245,8 @@ class ElementList {
         if elType == nil && type.range(of: "[A-Z]{2}(?!00)[0-9]{2}", options: .regularExpression) != nil {
             elType = Self.fieldRegistry[String(type.prefix(2))]
         }
-        if let elType = elType {
-            return elType.init(type: type, label: label)
+        if let elType = elType, let el = elType.init(type: type, label: label) {
+            return el
         } else {
             throw TemplateError.unknownElement(type)
         }
@@ -254,33 +254,33 @@ class ElementList {
     
     static let fieldRegistry: [String: Element.Type] = [
         // integers
-        "DBYT": ElementDWRD<Int8>.self,     // signed ints
-        "DWRD": ElementDWRD<Int16>.self,
-        "DLNG": ElementDWRD<Int32>.self,
-        "DLLG": ElementDWRD<Int64>.self,    // (ResKnife)
-        "UBYT": ElementUWRD<UInt8>.self,    // unsigned ints
-        "UWRD": ElementUWRD<UInt16>.self,
-        "ULNG": ElementUWRD<UInt32>.self,
-        "ULLG": ElementUWRD<UInt64>.self,   // (ResKnife)
-        "HBYT": ElementHWRD<UInt8>.self,    // hex byte/word/long
-        "HWRD": ElementHWRD<UInt16>.self,
-        "HLNG": ElementHWRD<UInt32>.self,
-        "HLLG": ElementHWRD<UInt64>.self,   // (ResKnife)
+        "DBYT": ElementDBYT<Int8>.self,     // signed ints
+        "DWRD": ElementDBYT<Int16>.self,
+        "DLNG": ElementDBYT<Int32>.self,
+        "DLLG": ElementDBYT<Int64>.self,    // (ResKnife)
+        "UBYT": ElementUBYT<UInt8>.self,    // unsigned ints
+        "UWRD": ElementUBYT<UInt16>.self,
+        "ULNG": ElementUBYT<UInt32>.self,
+        "ULLG": ElementUBYT<UInt64>.self,   // (ResKnife)
+        "HBYT": ElementHBYT<UInt8>.self,    // hex byte/word/long
+        "HWRD": ElementHBYT<UInt16>.self,
+        "HLNG": ElementHBYT<UInt32>.self,
+        "HLLG": ElementHBYT<UInt64>.self,   // (ResKnife)
 
         // multiple fields
 //        "RECT": ElementRECT.self,   // QuickDraw rect
 //        "PNT ": ElementPNT.self,    // QuickDraw point
 
         // align & fill
-//        "AWRD": ElementAWRD.self,   // alignment ints
-//        "ALNG": ElementAWRD.self,
-//        "AL08": ElementAWRD.self,
-//        "AL16": ElementAWRD.self,
-//        "FBYT": ElementFBYT.self,   // filler ints
-//        "FWRD": ElementFBYT.self,
-//        "FLNG": ElementFBYT.self,
-//        "FLLG": ElementFBYT.self,
-//        "F"   : ElementFBYT.self,   // Fnnn
+        "AWRD": ElementAWRD.self,           // alignment ints
+        "ALNG": ElementAWRD.self,
+        "AL08": ElementAWRD.self,
+        "AL16": ElementAWRD.self,
+        "FBYT": ElementFBYT.self,           // filler ints
+        "FWRD": ElementFBYT.self,
+        "FLNG": ElementFBYT.self,
+        "FLLG": ElementFBYT.self,
+        "F"   : ElementFBYT.self,           // Fnnn
 
         // fractions
 //        "REAL": ElementREAL.self,   // single precision float
@@ -305,18 +305,18 @@ class ElementList {
 
         // bits
         "BOOL": ElementBOOL.self,           // true = 256; false = 0
-//        "BFLG": ElementBFLG.self,   // binary flag the size of a byte/word/long
-//        "WFLG": ElementWFLG.self,
-//        "LFLG": ElementLFLG.self,
-//        "BBIT": ElementBBIT.self,   // bit within a byte
-//        "BB"  : ElementBBIT.self,   // BBnn bit field
-//        "BF"  : ElementBBIT.self,   // BFnn fill bits (ResKnife)
-//        "WBIT": ElementWBIT.self,
-//        "WB"  : ElementWBIT.self,   // WBnn
-//        "WF"  : ElementWBIT.self,   // WFnn (ResKnife)
-//        "LBIT": ElementLBIT.self,
-//        "LB"  : ElementLBIT.self,   // LBnn
-//        "LF"  : ElementLBIT.self,   // LFnn (ResKnife)
+        "BFLG": ElementBFLG<UInt8>.self,    // binary flag the size of a byte/word/long
+        "WFLG": ElementBFLG<UInt16>.self,
+        "LFLG": ElementBFLG<UInt32>.self,
+        "BBIT": ElementBBIT<UInt8>.self,    // bit within a byte
+        "BB"  : ElementBBIT<UInt8>.self,    // BBnn bit field
+        "BF"  : ElementBBIT<UInt8>.self,    // BFnn fill bits (ResKnife)
+        "WBIT": ElementBBIT<UInt16>.self,
+        "WB"  : ElementBBIT<UInt16>.self,   // WBnn
+        "WF"  : ElementBBIT<UInt16>.self,   // WFnn (ResKnife)
+        "LBIT": ElementBBIT<UInt32>.self,
+        "LB"  : ElementBBIT<UInt32>.self,   // LBnn
+        "LF"  : ElementBBIT<UInt32>.self,   // LFnn (ResKnife)
         "BORV": ElementBORV<UInt8>.self,    // OR-value (Rezilla)
         "WORV": ElementBORV<UInt16>.self,
         "LORV": ElementBORV<UInt32>.self,
@@ -351,10 +351,10 @@ class ElementList {
         "RSID": ElementRSID.self,           // resouce id (signed word) - type and offset in label
 
         // key selection
-        "KBYT": ElementKWRD<Int8>.self,     // signed keys
-        "KWRD": ElementKWRD<Int16>.self,
-        "KLNG": ElementKWRD<Int32>.self,
-        "KLLG": ElementKWRD<Int64>.self,    // (ResKnife)
+        "KBYT": ElementKBYT<Int8>.self,     // signed keys
+        "KWRD": ElementKBYT<Int16>.self,
+        "KLNG": ElementKBYT<Int32>.self,
+        "KLLG": ElementKBYT<Int64>.self,    // (ResKnife)
 //        "KUBT": ElementUBYT.self,   // unsigned keys
 //        "KUWD": ElementUWRD.self,
 //        "KULG": ElementULNG.self,
@@ -384,13 +384,14 @@ class ElementList {
         "PACK": ElementPACK.self,           // pack other elements together (ResKnife)
 
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
-        "SFRC": ElementUWRD<UInt16>.self,   // 0.16 fixed fraction
-        "FXYZ": ElementUWRD<UInt16>.self,   // 1.15 fixed fraction
-        "FWID": ElementUWRD<UInt16>.self,   // 4.12 fixed fraction
-        "LLDT": ElementUWRD<UInt64>.self,   // 8-byte date (seconds since 1 Jan 1904) (ResKnife, used by Font Editor templates)
-        "STYL": ElementDWRD<Int8>.self,     // QuickDraw font style (ResKnife)
-        "SCPC": ElementDWRD<Int16>.self,    // MacOS script code (ScriptCode)
-        "LNGC": ElementDWRD<Int16>.self,    // MacOS language code (LangCode)
-        "RGNC": ElementDWRD<Int16>.self,    // MacOS region code (RegionCode)
+        "SFRC": ElementUBYT<UInt16>.self,   // 0.16 fixed fraction
+        "FXYZ": ElementUBYT<UInt16>.self,   // 1.15 fixed fraction
+        "FWID": ElementUBYT<UInt16>.self,   // 4.12 fixed fraction
+        "LLDT": ElementUBYT<UInt64>.self,   // 8-byte date (seconds since 1 Jan 1904) (ResKnife, used by Font Editor templates)
+        "STYL": ElementDBYT<Int8>.self,     // QuickDraw font style (ResKnife)
+        "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
+        "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
+        "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)
     ]
 }
+

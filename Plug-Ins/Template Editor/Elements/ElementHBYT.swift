@@ -2,7 +2,7 @@ import Cocoa
 import RKSupport
 
 // Implements HBYT, HWRD, HLNG, HLLG
-class ElementHWRD<T: FixedWidthInteger & UnsignedInteger>: ElementUWRD<T> {
+class ElementHBYT<T: FixedWidthInteger & UnsignedInteger>: ElementUBYT<T> {
     override var formatter: Formatter? {
         if Element.sharedFormatters[type] == nil {
             Element.sharedFormatters[type] = HexFormatter<T>()

@@ -1,8 +1,8 @@
 import RKSupport
 
 class ElementKEYB: Element {
-    var subElements: ElementList!
-    var keyElement: Element!
+    private(set) var subElements: ElementList!
+    private var keyElement: Element!
     
     required init(type: String, label: String, tooltip: String? = nil) {
         super.init(type: type, label: label, tooltip: tooltip)

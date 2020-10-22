@@ -1,7 +1,7 @@
 import RKSupport
 
 // Implements UBYT, UWRD, ULNG, ULLG
-class ElementUWRD<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
+class ElementUBYT<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
     @objc var value: UInt = 0
     
     override func configure() throws {
@@ -32,8 +32,8 @@ class ElementUWRD<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
         if Element.sharedFormatters[type] == nil {
             let formatter = NumberFormatter()
             formatter.hasThousandSeparators = true
-            formatter.minimum = NSNumber(value: UInt(T.min))
-            formatter.maximum = NSNumber(value: UInt(T.max))
+            formatter.minimum = T.min as? NSNumber
+            formatter.maximum = T.max as? NSNumber
             formatter.nilSymbol = "\0"
             Element.sharedFormatters[type] = formatter
         }

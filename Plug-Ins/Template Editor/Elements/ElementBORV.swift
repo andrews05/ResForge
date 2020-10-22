@@ -7,7 +7,7 @@ import RKSupport
  * In ResKnife we display it as a list of checkboxes (because we don't have enough checkbox types already!)
  * The main difference from BBITs is it allows a custom ordering of the bits (it also gives a slightly more compact display)
  */
-class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHWRD<T> {
+class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
     private var values: [T] = []
     
     override func configure() throws {
@@ -36,21 +36,21 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHWRD<T> {
     }
     
     override func readData(from reader: BinaryDataReader) throws {
-        let wholeValue: T = try reader.read()
+        let completeValue: T = try reader.read()
         for i in self.cases.indices {
             let caseEl = self.cases[i]
             let value = self.values[i]
-            caseEl.value = (wholeValue & value) == value ? 1 : 0
+            caseEl.value = (completeValue & value) == value ? 1 : 0
         }
     }
     
     override func writeData(to writer: BinaryDataWriter) {
-        var wholeValue: T = 0
+        var completeValue: T = 0
         for i in self.cases.indices {
             if self.cases[i].value as! Int != 0 {
-                wholeValue |= self.values[i]
+                completeValue |= self.values[i]
             }
         }
-        writer.write(wholeValue)
+        writer.write(completeValue)
     }
 }

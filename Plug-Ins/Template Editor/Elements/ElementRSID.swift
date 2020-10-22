@@ -10,7 +10,7 @@ import Cocoa
  * E.g. "Extension scope info 'scop' -27136 +2" will show 'scop' resources between -27136 and -27134
  * If the resource type cannot be determined from the label, it will look for a preceding TNAM element to determine the type
  */
-class ElementRSID: ElementDWRD<Int16> {
+class ElementRSID: ElementDBYT<Int16> {
     @objc private var resType: String! {
         didSet {
             self.loadCases()

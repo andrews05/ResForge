@@ -26,6 +26,7 @@ class ElementCASR: CaseableElement {
     private var offset = 0
     private var invert = false
     private var resType: String!
+    private var _formatter: NumberFormatter!
     var parentElement: RangeableElement!
     
     override var description: String {
@@ -40,6 +41,7 @@ class ElementCASR: CaseableElement {
         self.parentElement = element
         self.parentList = element.parentList // Required to trigger itemValueUpdated
         self.width = element.width
+        _formatter = element.formatter?.copy() as? NumberFormatter
         
         // Determine parameters from label
         let components = self.label.components(separatedBy: "=")
@@ -48,11 +50,17 @@ class ElementCASR: CaseableElement {
         if components.count > 1 {
             let scanner = Scanner(string: components[1])
             hasMin = scanner.scanInt(&min)
+            if hasMin && min < _formatter.minimum as! Int {
+                throw TemplateError.invalidStructure(self, NSLocalizedString("Minimum value out of range.", comment: ""))
+            }
             scanner.charactersToBeSkipped = nil
             if scanner.scanString(",", into: nil) {
                 hasMax = scanner.scanInt(&max)
+                if hasMax && max > _formatter.maximum as! Int {
+                    throw TemplateError.invalidStructure(self, NSLocalizedString("Maximum value out of range.", comment: ""))
+                }
                 scanner.charactersToBeSkipped = .whitespacesAndNewlines
-                var normal: Int = 0
+                var normal = 0
                 if scanner.scanInt(&normal) {
                     if !hasMin {
                         throw TemplateError.invalidStructure(self, NSLocalizedString("Normal requires explicit minimum.", comment: ""))
@@ -82,6 +90,12 @@ class ElementCASR: CaseableElement {
         }
         if !hasMin && !hasMax {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Could not determine parameters from label.", comment: ""))
+        }
+        if hasMin {
+            _formatter.minimum = min as NSNumber
+        }
+        if hasMax {
+            _formatter.maximum = max as NSNumber
         }
     }
     
@@ -129,14 +143,7 @@ class ElementCASR: CaseableElement {
     }
     
     override var formatter: Formatter? {
-        let formatter = parentElement.formatter!.copy() as! NumberFormatter
-        if formatter.minimum!.intValue < min {
-            formatter.minimum = min as NSNumber
-        }
-        if formatter.maximum!.intValue > max {
-            formatter.maximum = max as NSNumber
-        }
-        return formatter
+        return _formatter
     }
     
     func matches(value: Int) -> Bool {

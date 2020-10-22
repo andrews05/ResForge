@@ -27,7 +27,7 @@ class Element: ValueTransformer, NSTextFieldDelegate {
         nil
     }
     
-    required init(type: String, label: String, tooltip: String? = nil) {
+    required init!(type: String, label: String, tooltip: String? = nil) {
         self.type = type
         if let tooltip = tooltip {
             self.label = label
