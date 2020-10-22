@@ -268,8 +268,8 @@ class ElementList {
         "HLLG": ElementHBYT<UInt64>.self,   // (ResKnife)
 
         // multiple fields
-//        "RECT": ElementRECT.self,   // QuickDraw rect
-//        "PNT ": ElementPNT.self,    // QuickDraw point
+        "RECT": ElementRECT.self,           // QuickDraw rect
+        "PNT ": ElementPNT.self,            // QuickDraw point
 
         // align & fill
         "AWRD": ElementAWRD.self,           // alignment ints
@@ -300,7 +300,7 @@ class ElementList {
         "ECST": ElementPSTR<UInt32>.self,
         "P"   : ElementPSTR<UInt8>.self,    // Pnnn
         "C"   : ElementPSTR<UInt32>.self,   // Cnnn
-//        "CHAR": ElementCHAR.self,
+        "CHAR": ElementCHAR.self,
         "TNAM": ElementTNAM.self,
 
         // bits

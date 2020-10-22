@@ -22,10 +22,6 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     var displayLabel: String {
         label.components(separatedBy: "=")[0]
     }
-    /// Create a formatter for this element's data..
-    var formatter: Formatter? {
-        nil
-    }
     
     required init!(type: String, label: String, tooltip: String? = nil) {
         self.type = type
@@ -58,16 +54,15 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     // Allow tabbing between rows
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         let outline = parentList.controller.dataList
-        switch commandSelector {
-        case #selector(NSTextView.insertBacktab(_:)):
+        if commandSelector == #selector(NSTextView.insertBacktab(_:)) && (control.previousValidKeyView == nil || control.previousValidKeyView == outline) {
             outline?.selectPreviousKeyView(control)
             return true
-        case #selector(NSTextView.insertTab(_:)):
+        }
+        if commandSelector == #selector(NSTextView.insertTab(_:)) && control.nextValidKeyView == nil {
             outline?.selectNextKeyView(control)
             return true
-        default:
-            return false
         }
+        return false
     }
     
     // This is required here for subclasses to override
@@ -119,6 +114,19 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     
     /// Write the value of the field to the stream.
     func writeData(to writer: BinaryDataWriter) {}
+    
+    /// Obtain a formatter for this element's data.
+    var formatter: Formatter? {
+        if Self.sharedFormatters[type] == nil {
+            Self.sharedFormatters[type] = Self.formatter
+        }
+        return Self.sharedFormatters[type]
+    }
+    
+    /// Create a shared formatter for this element's data.
+    class var formatter: Formatter? {
+        nil
+    }
 }
 
 protocol GroupElement where Self: Element {

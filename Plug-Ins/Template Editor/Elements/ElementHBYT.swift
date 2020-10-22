@@ -3,11 +3,8 @@ import RKSupport
 
 // Implements HBYT, HWRD, HLNG, HLLG
 class ElementHBYT<T: FixedWidthInteger & UnsignedInteger>: ElementUBYT<T> {
-    override var formatter: Formatter? {
-        if Element.sharedFormatters[type] == nil {
-            Element.sharedFormatters[type] = HexFormatter<T>()
-        }
-        return Element.sharedFormatters[type]
+    override class var formatter: Formatter? {
+        return HexFormatter<T>()
     }
 }
 

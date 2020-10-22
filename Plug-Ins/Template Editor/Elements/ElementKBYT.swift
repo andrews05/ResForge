@@ -18,15 +18,7 @@ class ElementKBYT<T: FixedWidthInteger & SignedInteger>: KeyElement {
         writer.write(T(value))
     }
     
-    override var formatter: Formatter? {
-        if Element.sharedFormatters[type] == nil {
-            let formatter = NumberFormatter()
-            formatter.hasThousandSeparators = true
-            formatter.minimum = T.min as? NSNumber
-            formatter.maximum = T.max as? NSNumber
-            formatter.nilSymbol = "\0"
-            Element.sharedFormatters[type] = formatter
-        }
-        return Element.sharedFormatters[type]
+    override class var formatter: Formatter? {
+        return ElementDBYT<T>.formatter
     }
 }

@@ -42,6 +42,7 @@ class ElementCASR: CaseableElement {
         self.parentList = element.parentList // Required to trigger itemValueUpdated
         self.width = element.width
         _formatter = element.formatter?.copy() as? NumberFormatter
+        let range = (_formatter.minimum as! Int)...(_formatter.maximum as! Int)
         
         // Determine parameters from label
         let components = self.label.components(separatedBy: "=")
@@ -50,19 +51,19 @@ class ElementCASR: CaseableElement {
         if components.count > 1 {
             let scanner = Scanner(string: components[1])
             hasMin = scanner.scanInt(&min)
-            if hasMin && min < _formatter.minimum as! Int {
-                throw TemplateError.invalidStructure(self, NSLocalizedString("Minimum value out of range.", comment: ""))
+            guard !hasMin || range ~= min else {
+                throw TemplateError.invalidStructure(self, NSLocalizedString("Minimum value out of range for field type.", comment: ""))
             }
             scanner.charactersToBeSkipped = nil
             if scanner.scanString(",", into: nil) {
                 hasMax = scanner.scanInt(&max)
-                if hasMax && max > _formatter.maximum as! Int {
-                    throw TemplateError.invalidStructure(self, NSLocalizedString("Maximum value out of range.", comment: ""))
+                guard !hasMax || range ~= max else {
+                    throw TemplateError.invalidStructure(self, NSLocalizedString("Maximum value out of range for field type.", comment: ""))
                 }
                 scanner.charactersToBeSkipped = .whitespacesAndNewlines
                 var normal = 0
                 if scanner.scanInt(&normal) {
-                    if !hasMin {
+                    guard hasMin else {
                         throw TemplateError.invalidStructure(self, NSLocalizedString("Normal requires explicit minimum.", comment: ""))
                     }
                     // Invert if min greater than max, or if min is negative and no max was specified (i.e. from min down)
@@ -76,10 +77,7 @@ class ElementCASR: CaseableElement {
                 if scanner.scanString("'", into: nil) {
                     var resType: NSString?
                     scanner.scanUpTo("'", into: &resType)
-                    if scanner.scanString("'", into: nil) {
-                        if resType?.length != 4 {
-                            throw TemplateError.invalidStructure(self, NSLocalizedString("Resource type must be 4 characters.", comment: ""))
-                        }
+                    if resType?.length == 4 && scanner.scanString("'", into: nil) {
                         self.resType = resType as String?
                     }
                 }
@@ -88,8 +86,11 @@ class ElementCASR: CaseableElement {
                 max = min
             }
         }
-        if !hasMin && !hasMax {
+        guard hasMin || hasMax else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Could not determine parameters from label.", comment: ""))
+        }
+        guard max >= min else {
+            throw TemplateError.invalidStructure(self, NSLocalizedString("Maximum must be greater than minimum.", comment: ""))
         }
         if hasMin {
             _formatter.minimum = min as NSNumber

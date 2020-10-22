@@ -1,11 +1,19 @@
 import RKSupport
 
 class ElementTNAM: CaseableElement {
+    private var tnam: FourCharCode = 0
     // This is marked as dynamic so that RSID can bind to it and receive changes
-    @objc dynamic private var value: String = ""
+    @objc dynamic private var value: String {
+        get {
+            tnam.stringValue
+        }
+        set {
+            tnam = FourCharCode(newValue)
+        }
+    }
     
     override func readData(from reader: BinaryDataReader) throws {
-        value = (try reader.read() as FourCharCode).stringValue
+        tnam = try reader.read()
     }
     
     override func dataSize(_ size: inout Int) {
@@ -13,17 +21,13 @@ class ElementTNAM: CaseableElement {
     }
     
     override func writeData(to writer: BinaryDataWriter) {
-        writer.write(FourCharCode(value))
+        writer.write(tnam)
     }
     
-    override var formatter: Formatter? {
-        if Element.sharedFormatters[type] == nil {
-            let formatter = MacRomanFormatter()
-            formatter.stringLength = 4
-            formatter.exactLengthRequired = true
-            Element.sharedFormatters[type] = formatter
-        }
-        return Element.sharedFormatters[type]
+    override class var formatter: Formatter? {
+        let formatter = MacRomanFormatter()
+        formatter.stringLength = 4
+        formatter.exactLengthRequired = true
+        return formatter
     }
-    
 }
