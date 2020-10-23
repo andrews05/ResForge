@@ -107,6 +107,11 @@
 		49D185762542160600EA380C /* ElementCHAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D185752542160600EA380C /* ElementCHAR.swift */; };
 		49D1857E2542280300EA380C /* ElementRECT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D1857D2542280300EA380C /* ElementRECT.swift */; };
 		49D1858625422AA300EA380C /* ElementPNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D1858525422AA300EA380C /* ElementPNT.swift */; };
+		49D1858E254249D900EA380C /* ElementDATE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D1858D254249D900EA380C /* ElementDATE.swift */; };
+		49D185962542524200EA380C /* ElementCOLR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D185952542524200EA380C /* ElementCOLR.swift */; };
+		49D1859E254264BD00EA380C /* ElementWCOL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D1859D254264BD00EA380C /* ElementWCOL.swift */; };
+		49D185A6254278EC00EA380C /* ElementHEXD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D185A5254278EC00EA380C /* ElementHEXD.swift */; };
+		49D185AE25427D8B00EA380C /* ElementBHEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D185AD25427D8B00EA380C /* ElementBHEX.swift */; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
 		49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1D24F377A400BE0F0F /* CollectionController.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
@@ -490,6 +495,11 @@
 		49D185752542160600EA380C /* ElementCHAR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCHAR.swift; sourceTree = "<group>"; };
 		49D1857D2542280300EA380C /* ElementRECT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRECT.swift; sourceTree = "<group>"; };
 		49D1858525422AA300EA380C /* ElementPNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPNT.swift; sourceTree = "<group>"; };
+		49D1858D254249D900EA380C /* ElementDATE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDATE.swift; sourceTree = "<group>"; };
+		49D185952542524200EA380C /* ElementCOLR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCOLR.swift; sourceTree = "<group>"; };
+		49D1859D254264BD00EA380C /* ElementWCOL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementWCOL.swift; sourceTree = "<group>"; };
+		49D185A5254278EC00EA380C /* ElementHEXD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHEXD.swift; sourceTree = "<group>"; };
+		49D185AD25427D8B00EA380C /* ElementBHEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBHEX.swift; sourceTree = "<group>"; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
 		49F6403A2461199500E7CE4D /* ElementPACK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementPACK.h; sourceTree = "<group>"; };
@@ -833,6 +843,11 @@
 				49D1858525422AA300EA380C /* ElementPNT.swift */,
 				49FE7B58253AC5F400D2219D /* ElementTNAM.swift */,
 				49D185752542160600EA380C /* ElementCHAR.swift */,
+				49D1858D254249D900EA380C /* ElementDATE.swift */,
+				49D185952542524200EA380C /* ElementCOLR.swift */,
+				49D1859D254264BD00EA380C /* ElementWCOL.swift */,
+				49D185A5254278EC00EA380C /* ElementHEXD.swift */,
+				49D185AD25427D8B00EA380C /* ElementBHEX.swift */,
 				49D1855925412DEF00EA380C /* ElementFBYT.swift */,
 				49D185672541309900EA380C /* ElementAWRD.swift */,
 				4935CD50253BD1290044BC45 /* ElementPSTR.swift */,
@@ -1714,8 +1729,10 @@
 				49B9E6742540042900A266DE /* RangeableElement.swift in Sources */,
 				4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */,
 				49D1855A25412DEF00EA380C /* ElementFBYT.swift in Sources */,
+				49D185962542524200EA380C /* ElementCOLR.swift in Sources */,
 				4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */,
 				494D06132540CB3600F5A789 /* ElementBORV.swift in Sources */,
+				49D1859E254264BD00EA380C /* ElementWCOL.swift in Sources */,
 				4935CD9F253E25890044BC45 /* ElementKBYT.swift in Sources */,
 				494D060B2540C43F00F5A789 /* ElementPACK.swift in Sources */,
 				4935CD89253D32110044BC45 /* KeyElement.swift in Sources */,
@@ -1724,10 +1741,13 @@
 				49D1857E2542280300EA380C /* ElementRECT.swift in Sources */,
 				494D062F2540FC0A00F5A789 /* ElementBFLG.swift in Sources */,
 				49FE7B59253AC5F400D2219D /* ElementTNAM.swift in Sources */,
+				49D185AE25427D8B00EA380C /* ElementBHEX.swift in Sources */,
 				494D061B2540CEC200F5A789 /* ElementBOOL.swift in Sources */,
 				49FE7B51253A7EBA00D2219D /* ElementCASE.swift in Sources */,
+				49D1858E254249D900EA380C /* ElementDATE.swift in Sources */,
 				4951AB5A25341CB4009A8285 /* Element.swift in Sources */,
 				49D185682541309900EA380C /* ElementAWRD.swift in Sources */,
+				49D185A6254278EC00EA380C /* ElementHEXD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

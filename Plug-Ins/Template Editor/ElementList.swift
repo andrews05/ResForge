@@ -322,14 +322,14 @@ class ElementList {
         "LORV": ElementBORV<UInt32>.self,
 
         // hex dumps
-//        "BHEX": ElementHEXD.self,
-//        "WHEX": ElementHEXD.self,
-//        "LHEX": ElementHEXD.self,
-//        "BSEX": ElementHEXD.self,
-//        "WSEX": ElementHEXD.self,
-//        "LSEX": ElementHEXD.self,
-//        "HEXD": ElementHEXD.self,
-//        "H"   : ElementHEXD.self,   // Hnnn
+        "HEXD": ElementHEXD.self,
+        "H"   : ElementHEXD.self,           // Hnnn
+        "BHEX": ElementBHEX<UInt8>.self,
+        "WHEX": ElementBHEX<UInt16>.self,
+        "LHEX": ElementBHEX<UInt32>.self,
+        "BSHX": ElementBHEX<UInt8>.self,
+        "WSHX": ElementBHEX<UInt16>.self,
+        "LSHX": ElementBHEX<UInt32>.self,
 
         // list counters
         "OCNT": ElementOCNT<UInt16>.self,
@@ -371,13 +371,13 @@ class ElementList {
         "KEYE": Element.self,
 
         // dates
-//        "DATE": ElementDATE.self,   // 4-byte date (seconds since 1 Jan 1904)
-//        "MDAT": ElementDATE.self,
+        "DATE": ElementDATE.self,           // 4-byte date (seconds since 1 Jan 1904)
+        "MDAT": ElementDATE.self,
 
         // colours
-//        "COLR": ElementCOLR.self,   // 6-byte QuickDraw colour
-//        "WCOL": ElementCOLR.self,   // 2-byte (15-bit) colour (Rezilla)
-//        "LCOL": ElementCOLR.self,   // 4-byte (24-bit) colour (Rezilla)
+        "COLR": ElementCOLR.self,           // 6-byte QuickDraw colour
+        "WCOL": ElementWCOL<UInt16>.self,   // 2-byte (15-bit) colour (Rezilla)
+        "LCOL": ElementWCOL<UInt32>.self,   // 4-byte (24-bit) colour (Rezilla)
 
         // layout
         "DVDR": ElementDVDR.self,           // divider

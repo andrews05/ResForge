@@ -42,6 +42,16 @@ public class BinaryDataReader {
         return bigEndian ?? self.bigEndian ? T(bigEndian: val) : T(littleEndian: val)
     }
     
+    public func readData(length: Int) throws -> Data {
+        let end = position + length
+        guard end <= data.endIndex else {
+            throw BinaryDataReaderError.notEnoughData
+        }
+        let data = self.data[position..<end]
+        position = end
+        return data
+    }
+    
     public func readString(length: Int, encoding: String.Encoding = .utf8) throws -> String {
         let end = position + length
         guard end <= data.endIndex else {
