@@ -1,4 +1,5 @@
 import RKSupport
+import Carbon
 
 // Implements UBYT, UWRD, ULNG, ULLG
 class ElementUBYT<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
@@ -33,6 +34,7 @@ class ElementUBYT<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
         formatter.hasThousandSeparators = true
         formatter.minimum = T.min as? NSNumber
         formatter.maximum = T.max as? NSNumber
+        formatter.allowsFloats = false
         formatter.nilSymbol = "\0"
         return formatter
     }

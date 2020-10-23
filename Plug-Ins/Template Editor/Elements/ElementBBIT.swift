@@ -18,7 +18,6 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
             }
         }
         super.init(type: type, label: label, tooltip: tooltip)
-        self.visible = type.dropFirst().first != "F" // Hide fill bits
     }
     
     override func configure() throws {

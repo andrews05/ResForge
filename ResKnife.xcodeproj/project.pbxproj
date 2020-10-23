@@ -23,7 +23,6 @@
 		4935CD91253D32E00044BC45 /* ElementKEYB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD90253D32E00044BC45 /* ElementKEYB.swift */; };
 		4935CD9F253E25890044BC45 /* ElementKBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD9E253E25890044BC45 /* ElementKBYT.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
-		49362DA324A966960040B793 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
 		493CA127254295BF00893F98 /* ElementRREF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CA126254295BF00893F98 /* ElementRREF.swift */; };
 		4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC152531671400856385 /* TabbableOutlineView.swift */; };
 		4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DBF2253142AE00856385 /* TemplateWindowController.swift */; };
@@ -92,6 +91,9 @@
 		49A43296254298B3000B1109 /* ElementKCHR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A43295254298B3000B1109 /* ElementKCHR.swift */; };
 		49A4329E25429D84000B1109 /* ElementKTYP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A4329D25429D84000B1109 /* ElementKTYP.swift */; };
 		49A432B22542C0CF000B1109 /* ElementKRID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A432B12542C0CF000B1109 /* ElementKRID.swift */; };
+		49A432BA25436390000B1109 /* ElementDOUB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A432B925436390000B1109 /* ElementDOUB.swift */; };
+		49A432C225436672000B1109 /* ElementREAL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A432C125436672000B1109 /* ElementREAL.swift */; };
+		49A432D025437C64000B1109 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
 		49AACD8224CE931A0081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
 		49AACD8324CE931A0081DD4A /* RKSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49AACD8824CE93520081DD4A /* ResKnifePluginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */; };
@@ -489,6 +491,8 @@
 		49A43295254298B3000B1109 /* ElementKCHR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKCHR.swift; sourceTree = "<group>"; };
 		49A4329D25429D84000B1109 /* ElementKTYP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKTYP.swift; sourceTree = "<group>"; };
 		49A432B12542C0CF000B1109 /* ElementKRID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKRID.swift; sourceTree = "<group>"; };
+		49A432B925436390000B1109 /* ElementDOUB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDOUB.swift; sourceTree = "<group>"; };
+		49A432C125436672000B1109 /* ElementREAL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementREAL.swift; sourceTree = "<group>"; };
 		49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoWindowController.swift; sourceTree = "<group>"; };
 		49AACD6324CE41A60081DD4A /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResKnifePluginProtocol.swift; sourceTree = "<group>"; };
@@ -851,6 +855,8 @@
 				494D05FC253FAB5D00F5A789 /* ElementHBYT.swift */,
 				49D1857D2542280300EA380C /* ElementRECT.swift */,
 				49D1858525422AA300EA380C /* ElementPNT.swift */,
+				49A432C125436672000B1109 /* ElementREAL.swift */,
+				49A432B925436390000B1109 /* ElementDOUB.swift */,
 				49D185752542160600EA380C /* ElementCHAR.swift */,
 				49FE7B58253AC5F400D2219D /* ElementTNAM.swift */,
 				49D1858D254249D900EA380C /* ElementDATE.swift */,
@@ -1701,7 +1707,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49362D9F24A941800040B793 /* HexWindowController.swift in Sources */,
-				49362DA324A966960040B793 /* Hexadecimal.swift in Sources */,
+				49A432D025437C64000B1109 /* Hexadecimal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1756,6 +1762,7 @@
 				49B9E66C253FF1AB00A266DE /* ElementCASR.swift in Sources */,
 				494D05F5253FAAF200F5A789 /* ElementUBYT.swift in Sources */,
 				49D1857E2542280300EA380C /* ElementRECT.swift in Sources */,
+				49A432C225436672000B1109 /* ElementREAL.swift in Sources */,
 				49A432B22542C0CF000B1109 /* ElementKRID.swift in Sources */,
 				494D062F2540FC0A00F5A789 /* ElementBFLG.swift in Sources */,
 				49A4328E25429785000B1109 /* ElementKHBT.swift in Sources */,
@@ -1768,6 +1775,7 @@
 				4951AB5A25341CB4009A8285 /* Element.swift in Sources */,
 				49D185682541309900EA380C /* ElementAWRD.swift in Sources */,
 				49D185A6254278EC00EA380C /* ElementHEXD.swift in Sources */,
+				49A432BA25436390000B1109 /* ElementDOUB.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

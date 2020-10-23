@@ -6,7 +6,7 @@ class ElementBHEX<T: FixedWidthInteger & UnsignedInteger>: ElementHEXD {
     private var lengthBytes = 0
     
     override func configure() throws {
-        skipLengthBytes = self.type.dropFirst().first == "S"
+        skipLengthBytes = self.type.hasSuffix("SHX")
         lengthBytes = T.bitWidth / 8
     }
     

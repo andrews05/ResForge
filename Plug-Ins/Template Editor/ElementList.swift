@@ -283,10 +283,8 @@ class ElementList {
         "F"   : ElementFBYT.self,           // Fnnn
 
         // fractions
-//        "REAL": ElementREAL.self,   // single precision float
-//        "DOUB": ElementDOUB.self,   // double precision float
-//        "FIXD": ElementFIXD.self,   // 16.16 fixed fraction
-//        "FRAC": ElementFRAC.self,   // 2.30 fixed fraction
+        "REAL": ElementREAL.self,           // single precision float
+        "DOUB": ElementDOUB.self,           // double precision float
 
         // strings
         "PSTR": ElementPSTR<UInt8>.self,
@@ -310,13 +308,10 @@ class ElementList {
         "LFLG": ElementBFLG<UInt32>.self,
         "BBIT": ElementBBIT<UInt8>.self,    // bit within a byte
         "BB"  : ElementBBIT<UInt8>.self,    // BBnn bit field
-        "BF"  : ElementBBIT<UInt8>.self,    // BFnn fill bits (ResKnife)
         "WBIT": ElementBBIT<UInt16>.self,
         "WB"  : ElementBBIT<UInt16>.self,   // WBnn
-        "WF"  : ElementBBIT<UInt16>.self,   // WFnn (ResKnife)
         "LBIT": ElementBBIT<UInt32>.self,
         "LB"  : ElementBBIT<UInt32>.self,   // LBnn
-        "LF"  : ElementBBIT<UInt32>.self,   // LFnn (ResKnife)
         "BORV": ElementBORV<UInt8>.self,    // OR-value (Rezilla)
         "WORV": ElementBORV<UInt16>.self,
         "LORV": ElementBORV<UInt32>.self,
@@ -379,7 +374,7 @@ class ElementList {
         "WCOL": ElementWCOL<UInt16>.self,   // 2-byte (15-bit) colour (Rezilla)
         "LCOL": ElementWCOL<UInt32>.self,   // 4-byte (24-bit) colour (Rezilla)
 
-        // layout
+        // cosmetic
         "DVDR": ElementDVDR.self,           // divider
         "RREF": ElementRREF.self,           // static reference to another resource
         "PACK": ElementPACK.self,           // pack other elements together (ResKnife)
@@ -388,6 +383,8 @@ class ElementList {
         "SFRC": ElementUBYT<UInt16>.self,   // 0.16 fixed fraction
         "FXYZ": ElementUBYT<UInt16>.self,   // 1.15 fixed fraction
         "FWID": ElementUBYT<UInt16>.self,   // 4.12 fixed fraction
+        "FRAC": ElementUBYT<UInt32>.self,   // 2.30 fixed fraction
+        "FIXD": ElementUBYT<UInt32>.self,   // 16.16 fixed fraction
         "LLDT": ElementUBYT<UInt64>.self,   // 8-byte date (seconds since 1 Jan 1904) (ResKnife, used by Font Editor templates)
         "STYL": ElementDBYT<Int8>.self,     // QuickDraw font style (ResKnife)
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
