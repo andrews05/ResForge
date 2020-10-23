@@ -355,17 +355,17 @@ class ElementList {
         "KWRD": ElementKBYT<Int16>.self,
         "KLNG": ElementKBYT<Int32>.self,
         "KLLG": ElementKBYT<Int64>.self,    // (ResKnife)
-//        "KUBT": ElementUBYT.self,   // unsigned keys
-//        "KUWD": ElementUWRD.self,
-//        "KULG": ElementULNG.self,
-//        "KULL": ElementULLG.self,   // (ResKnife)
-//        "KHBT": ElementHBYT.self,   // hex keys
-//        "KHWD": ElementHWRD.self,
-//        "KHLG": ElementHLNG.self,
-//        "KHLL": ElementHLLG.self,   // (ResKnife)
-//        "KCHR": ElementCHAR.self,   // string keys
-//        "KTYP": ElementTNAM.self,
-//        "KRID": ElementKRID.self,   // key on ID of the resource
+        "KUBT": ElementKBYT<UInt8>.self,    // unsigned keys
+        "KUWD": ElementKBYT<UInt16>.self,
+        "KULG": ElementKBYT<UInt32>.self,
+        "KULL": ElementKBYT<UInt64>.self,   // (ResKnife)
+        "KHBT": ElementKHBT<UInt8>.self,    // hex keys
+        "KHWD": ElementKHBT<UInt16>.self,
+        "KHLG": ElementKHBT<UInt32>.self,
+        "KHLL": ElementKHBT<UInt64>.self,   // (ResKnife)
+        "KCHR": ElementKCHR.self,           // string keys
+        "KTYP": ElementKTYP.self,
+        "KRID": ElementKRID.self,           // key on ID of the resource
         // keyed section begin/end
         "KEYB": ElementKEYB.self,
         "KEYE": Element.self,
@@ -381,6 +381,7 @@ class ElementList {
 
         // layout
         "DVDR": ElementDVDR.self,           // divider
+        "RREF": ElementRREF.self,           // static reference to another resource
         "PACK": ElementPACK.self,           // pack other elements together (ResKnife)
 
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)

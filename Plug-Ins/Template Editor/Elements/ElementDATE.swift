@@ -1,5 +1,4 @@
 import Cocoa
-import CoreServices
 
 class ElementDATE: ElementUBYT<UInt32> {
     static var hfsToRef: Double = 2082844800+978307200 // Seconds between 1904 and 2001

@@ -1,7 +1,7 @@
 import RKSupport
 
 // Implements DBYT, DWRD, DLNG, DLLG
-class ElementDBYT<T: FixedWidthInteger & SignedInteger>: RangeableElement {
+class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
     @objc var value: Int = 0
     
     override func configure() throws {
@@ -33,6 +33,7 @@ class ElementDBYT<T: FixedWidthInteger & SignedInteger>: RangeableElement {
         formatter.hasThousandSeparators = true
         formatter.minimum = T.min as? NSNumber
         formatter.maximum = T.max as? NSNumber
+        formatter.allowsFloats = false
         formatter.nilSymbol = "\0"
         return formatter
     }

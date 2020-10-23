@@ -1,8 +1,7 @@
 import RKSupport
 
 class ElementKEYB: Element {
-    private(set) var subElements: ElementList!
-    private var keyElement: Element!
+    var subElements: ElementList!
     
     required init(type: String, label: String, tooltip: String? = nil) {
         super.init(type: type, label: label, tooltip: tooltip)
@@ -17,8 +16,7 @@ class ElementKEYB: Element {
     }
     
     override func configure() throws {
-        subElements = try parentList.subList(for: self)
-        try subElements.configure()
+        throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a key element.", comment: ""))
     }
     
     override func readData(from reader: BinaryDataReader) throws {

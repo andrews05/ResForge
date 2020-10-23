@@ -4,7 +4,7 @@ class ElementCHAR: CaseableElement {
     private var charCode: UInt8 = 0
     @objc private var value: String {
         get {
-            String(data: Data([charCode]), encoding: .macOSRoman) ?? ""
+            charCode == 0 ? "" : String(bytes: [charCode], encoding: .macOSRoman)!
         }
         set {
             charCode = newValue.data(using: .macOSRoman)?.first ?? 0
@@ -26,6 +26,7 @@ class ElementCHAR: CaseableElement {
     override class var formatter: Formatter? {
         let formatter = MacRomanFormatter()
         formatter.stringLength = 1
+        formatter.exactLengthRequired = true
         return formatter
     }
 }

@@ -1,5 +1,4 @@
 import Cocoa
-import RKSupport
 
 // Implements HBYT, HWRD, HLNG, HLLG
 class ElementHBYT<T: FixedWidthInteger & UnsignedInteger>: ElementUBYT<T> {

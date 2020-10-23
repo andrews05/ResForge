@@ -1,13 +1,16 @@
-import Cocoa
 import RKSupport
 
-// Implement KBYT, KWRD, KLNG, KLLG
-class ElementKBYT<T: FixedWidthInteger & SignedInteger>: KeyElement {
-    @objc private var value: Int = 0
+// Implements KBYT, KWRD, KLNG, KLLG, KUBT, KUWD, KULG, KULL
+class ElementKBYT<T: FixedWidthInteger>: KeyElement {
+    var tValue: T = 0
+    @objc private var value: NSNumber {
+        get { tValue as! NSNumber }
+        set { tValue = newValue as! T }
+    }
     
     override func readData(from reader: BinaryDataReader) throws {
-        value = Int(try reader.read() as T)
-        _ = self.setCase(self.transformedValue(value) as? ElementCASE)
+        tValue = try reader.read()
+        _ = self.setCase(self.caseMap[value])
     }
     
     override func dataSize(_ size: inout Int) {
@@ -15,7 +18,7 @@ class ElementKBYT<T: FixedWidthInteger & SignedInteger>: KeyElement {
     }
     
     override func writeData(to writer: BinaryDataWriter) {
-        writer.write(T(value))
+        writer.write(tValue)
     }
     
     override class var formatter: Formatter? {

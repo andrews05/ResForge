@@ -15,10 +15,9 @@ public class MacRomanFormatter: Formatter {
         if string.count == 0 {
             if valueRequired {
                 error?.pointee = NSLocalizedString("The value must be not be blank.", comment: "") as NSString
+                return false
             }
-            return !valueRequired
-        }
-        if exactLengthRequired && string.count != stringLength {
+        } else if exactLengthRequired && string.count != stringLength {
             error?.pointee = String(format: NSLocalizedString("The value must be exactly %d characters.", comment: ""), stringLength) as NSString
             return false
         }

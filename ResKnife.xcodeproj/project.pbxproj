@@ -24,6 +24,7 @@
 		4935CD9F253E25890044BC45 /* ElementKBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD9E253E25890044BC45 /* ElementKBYT.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		49362DA324A966960040B793 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
+		493CA127254295BF00893F98 /* ElementRREF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CA126254295BF00893F98 /* ElementRREF.swift */; };
 		4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC152531671400856385 /* TabbableOutlineView.swift */; };
 		4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DBF2253142AE00856385 /* TemplateWindowController.swift */; };
 		4945DC512531745600856385 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC232531689900856385 /* LabelView.swift */; };
@@ -87,6 +88,10 @@
 		49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1524D10ED900BAB902 /* AttributesFormatter.swift */; };
 		49964E1724D127CF00BAB902 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */; };
+		49A4328E25429785000B1109 /* ElementKHBT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A4328D25429785000B1109 /* ElementKHBT.swift */; };
+		49A43296254298B3000B1109 /* ElementKCHR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A43295254298B3000B1109 /* ElementKCHR.swift */; };
+		49A4329E25429D84000B1109 /* ElementKTYP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A4329D25429D84000B1109 /* ElementKTYP.swift */; };
+		49A432B22542C0CF000B1109 /* ElementKRID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A432B12542C0CF000B1109 /* ElementKRID.swift */; };
 		49AACD8224CE931A0081DD4A /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
 		49AACD8324CE931A0081DD4A /* RKSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49AACD8824CE93520081DD4A /* ResKnifePluginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */; };
@@ -374,6 +379,7 @@
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
 		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
+		493CA126254295BF00893F98 /* ElementRREF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRREF.swift; sourceTree = "<group>"; };
 		4943603F24C12DE100293E94 /* ppat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ppat.hpp; sourceTree = "<group>"; };
 		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
 		4945DBF2253142AE00856385 /* TemplateWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateWindowController.swift; sourceTree = "<group>"; };
@@ -479,6 +485,10 @@
 		499216F024CCD2250054A390 /* ResourceFile.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceFile.mm; sourceTree = "<group>"; };
 		49964E1524D10ED900BAB902 /* AttributesFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesFormatter.swift; sourceTree = "<group>"; };
 		49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDataSource.swift; sourceTree = "<group>"; };
+		49A4328D25429785000B1109 /* ElementKHBT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKHBT.swift; sourceTree = "<group>"; };
+		49A43295254298B3000B1109 /* ElementKCHR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKCHR.swift; sourceTree = "<group>"; };
+		49A4329D25429D84000B1109 /* ElementKTYP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKTYP.swift; sourceTree = "<group>"; };
+		49A432B12542C0CF000B1109 /* ElementKRID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKRID.swift; sourceTree = "<group>"; };
 		49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoWindowController.swift; sourceTree = "<group>"; };
 		49AACD6324CE41A60081DD4A /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		49AACD6924CE57EB0081DD4A /* ResKnifePluginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResKnifePluginProtocol.swift; sourceTree = "<group>"; };
@@ -841,8 +851,8 @@
 				494D05FC253FAB5D00F5A789 /* ElementHBYT.swift */,
 				49D1857D2542280300EA380C /* ElementRECT.swift */,
 				49D1858525422AA300EA380C /* ElementPNT.swift */,
-				49FE7B58253AC5F400D2219D /* ElementTNAM.swift */,
 				49D185752542160600EA380C /* ElementCHAR.swift */,
+				49FE7B58253AC5F400D2219D /* ElementTNAM.swift */,
 				49D1858D254249D900EA380C /* ElementDATE.swift */,
 				49D185952542524200EA380C /* ElementCOLR.swift */,
 				49D1859D254264BD00EA380C /* ElementWCOL.swift */,
@@ -863,8 +873,13 @@
 				49C3AC71253E6C7C0020037B /* ElementRSID.swift */,
 				4935CD90253D32E00044BC45 /* ElementKEYB.swift */,
 				4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */,
+				493CA126254295BF00893F98 /* ElementRREF.swift */,
 				494D060A2540C43F00F5A789 /* ElementPACK.swift */,
 				4935CD9E253E25890044BC45 /* ElementKBYT.swift */,
+				49A4328D25429785000B1109 /* ElementKHBT.swift */,
+				49A43295254298B3000B1109 /* ElementKCHR.swift */,
+				49A4329D25429D84000B1109 /* ElementKTYP.swift */,
+				49A432B12542C0CF000B1109 /* ElementKRID.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -1724,6 +1739,8 @@
 				4951AB4D25341BBE009A8285 /* ElementDBYT.swift in Sources */,
 				4945DC512531745600856385 /* LabelView.swift in Sources */,
 				4945DCB9253248DA00856385 /* ElementList.swift in Sources */,
+				493CA127254295BF00893F98 /* ElementRREF.swift in Sources */,
+				49A4329E25429D84000B1109 /* ElementKTYP.swift in Sources */,
 				49D1854C2541007400EA380C /* ElementBBIT.swift in Sources */,
 				49FE7B49253A7E7700D2219D /* CaseableElement.swift in Sources */,
 				49B9E6742540042900A266DE /* RangeableElement.swift in Sources */,
@@ -1739,11 +1756,14 @@
 				49B9E66C253FF1AB00A266DE /* ElementCASR.swift in Sources */,
 				494D05F5253FAAF200F5A789 /* ElementUBYT.swift in Sources */,
 				49D1857E2542280300EA380C /* ElementRECT.swift in Sources */,
+				49A432B22542C0CF000B1109 /* ElementKRID.swift in Sources */,
 				494D062F2540FC0A00F5A789 /* ElementBFLG.swift in Sources */,
+				49A4328E25429785000B1109 /* ElementKHBT.swift in Sources */,
 				49FE7B59253AC5F400D2219D /* ElementTNAM.swift in Sources */,
 				49D185AE25427D8B00EA380C /* ElementBHEX.swift in Sources */,
 				494D061B2540CEC200F5A789 /* ElementBOOL.swift in Sources */,
 				49FE7B51253A7EBA00D2219D /* ElementCASE.swift in Sources */,
+				49A43296254298B3000B1109 /* ElementKCHR.swift in Sources */,
 				49D1858E254249D900EA380C /* ElementDATE.swift in Sources */,
 				4951AB5A25341CB4009A8285 /* Element.swift in Sources */,
 				49D185682541309900EA380C /* ElementAWRD.swift in Sources */,

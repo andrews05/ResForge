@@ -1,11 +1,12 @@
 import Cocoa
 import RKSupport
 
+// Abstract Element subclass that handles key elements
 class KeyElement: Element {
     @objc private var cases: [ElementCASE] = []
-    private var caseMap: [AnyHashable: ElementCASE] = [:]
-    private var keyedSections: [ElementCASE: ElementKEYB]!
-    private var currentSection: ElementKEYB!
+    private(set) var caseMap: [AnyHashable: ElementCASE] = [:]
+    private(set) var keyedSections: [ElementCASE: ElementKEYB]!
+    var currentSection: ElementKEYB!
     
     override func configure() throws {
         try self.readCases()
@@ -18,7 +19,7 @@ class KeyElement: Element {
         self.parentList.insert(currentSection)
     }
     
-    private func readCases() throws {
+    func readCases() throws {
         keyedSections = [:]
         // Read CASEs
         while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
@@ -31,8 +32,8 @@ class KeyElement: Element {
         }
         // Read KEYBs
         while let keyB = self.parentList.pop("KEYB") as? ElementKEYB {
-            keyB.parentList = self.parentList
-            try keyB.configure()
+            keyB.subElements = try parentList.subList(for: keyB)
+            try keyB.subElements.configure()
             // Allow one KEYB to be used for multiple CASEs
             let vals = keyB.label.components(separatedBy: ",")
             for value in vals {
