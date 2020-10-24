@@ -1,8 +1,12 @@
 import RKSupport
 
-// Implements DBYT, DWRD, DLNG, DLLG
+// Implements DBYT, DWRD, DLNG, DLLG, UBYT, UWRD, ULNG, ULLG
 class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
-    @objc var value: Int = 0
+    var tValue: T = 0
+    @objc private var value: NSNumber {
+        get { tValue as! NSNumber }
+        set { tValue = newValue as! T}
+    }
     
     override func configure() throws {
         switch T.bitWidth/8 {
@@ -17,7 +21,7 @@ class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
     }
     
     override func readData(from reader: BinaryDataReader) throws {
-        value = Int(try reader.read() as T)
+        tValue = try reader.read()
     }
     
     override func dataSize(_ size: inout Int) {
@@ -25,7 +29,7 @@ class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
     }
     
     override func writeData(to writer: BinaryDataWriter) {
-        writer.write(T(value))
+        writer.write(tValue)
     }
     
     override class var formatter: Formatter? {

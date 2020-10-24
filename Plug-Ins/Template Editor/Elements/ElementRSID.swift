@@ -102,7 +102,7 @@ class ElementRSID: ElementDBYT<Int16> {
     }
     
     @IBAction func openResource(_ sender: Any) {
-        let id = self.value+offset
+        let id = Int(self.tValue)+offset
         let manager = self.parentList.controller.resource.manager!
         if let resource = manager.findResource(ofType: resType, id: id, currentDocumentOnly: false) {
             manager.open(resource: resource, using: nil, template: nil)

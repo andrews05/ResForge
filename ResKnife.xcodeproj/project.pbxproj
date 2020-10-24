@@ -29,7 +29,6 @@
 		4945DC512531745600856385 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC232531689900856385 /* LabelView.swift */; };
 		4945DC642531826400856385 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
 		4945DCB9253248DA00856385 /* ElementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DCB8253248DA00856385 /* ElementList.swift */; };
-		494D05F5253FAAF200F5A789 /* ElementUBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D05F4253FAAF200F5A789 /* ElementUBYT.swift */; };
 		494D05FD253FAB5D00F5A789 /* ElementHBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D05FC253FAB5D00F5A789 /* ElementHBYT.swift */; };
 		494D060B2540C43F00F5A789 /* ElementPACK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D060A2540C43F00F5A789 /* ElementPACK.swift */; };
 		494D06132540CB3600F5A789 /* ElementBORV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D06122540CB3600F5A789 /* ElementBORV.swift */; };
@@ -398,7 +397,6 @@
 		494BEA6E245B90D1000EF1D0 /* ElementKRID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKRID.m; sourceTree = "<group>"; };
 		494BEA71245BE256000EF1D0 /* ElementRSID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementRSID.h; sourceTree = "<group>"; };
 		494BEA72245BE256000EF1D0 /* ElementRSID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRSID.m; sourceTree = "<group>"; };
-		494D05F4253FAAF200F5A789 /* ElementUBYT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUBYT.swift; sourceTree = "<group>"; };
 		494D05FC253FAB5D00F5A789 /* ElementHBYT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHBYT.swift; sourceTree = "<group>"; };
 		494D060A2540C43F00F5A789 /* ElementPACK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPACK.swift; sourceTree = "<group>"; };
 		494D06122540CB3600F5A789 /* ElementBORV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBORV.swift; sourceTree = "<group>"; };
@@ -851,7 +849,6 @@
 			isa = PBXGroup;
 			children = (
 				4951AB4C25341BBE009A8285 /* ElementDBYT.swift */,
-				494D05F4253FAAF200F5A789 /* ElementUBYT.swift */,
 				494D05FC253FAB5D00F5A789 /* ElementHBYT.swift */,
 				49D1857D2542280300EA380C /* ElementRECT.swift */,
 				49D1858525422AA300EA380C /* ElementPNT.swift */,
@@ -1760,7 +1757,6 @@
 				494D060B2540C43F00F5A789 /* ElementPACK.swift in Sources */,
 				4935CD89253D32110044BC45 /* KeyElement.swift in Sources */,
 				49B9E66C253FF1AB00A266DE /* ElementCASR.swift in Sources */,
-				494D05F5253FAAF200F5A789 /* ElementUBYT.swift in Sources */,
 				49D1857E2542280300EA380C /* ElementRECT.swift in Sources */,
 				49A432C225436672000B1109 /* ElementREAL.swift in Sources */,
 				49A432B22542C0CF000B1109 /* ElementKRID.swift in Sources */,

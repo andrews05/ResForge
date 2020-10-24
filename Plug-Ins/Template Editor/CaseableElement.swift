@@ -40,7 +40,6 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
         combo.numberOfVisibleItems = 10
         combo.delegate = self
         combo.placeholderString = self.type
-//        combo.bind(NSBindingName(rawValue: "contentValues"), to: self, withKeyPath: "cases", options: nil)
         combo.usesDataSource = true
         combo.dataSource = self
         // The formatter isn't directly compatible with the values displayed by the combo box

@@ -8,15 +8,17 @@ class RangeableElement: CaseableElement {
     var popupWidth: CGFloat = 240
     
     override func configure() throws {
-        // Read CASR elements
-        while let casr = self.parentList.pop("CASR") as? ElementCASR {
-            if casrs == nil {
-                casrs = []
-            }
-            try casr.configure(for: self)
-            casrs.append(casr)
-            if casr.min != casr.max {
-                popupWidth = 180 // Shrink pop-up menu if any CASR needs a field
+        // Read CASR elements - only supported for number types, excluding UInt64
+        if self.formatter is NumberFormatter && self.type != "ULLG" {
+            while let casr = self.parentList.pop("CASR") as? ElementCASR {
+                if casrs == nil {
+                    casrs = []
+                }
+                try casr.configure(for: self)
+                casrs.append(casr)
+                if casr.min != casr.max {
+                    popupWidth = 180 // Shrink pop-up menu if any CASR needs a field
+                }
             }
         }
         if casrs == nil {

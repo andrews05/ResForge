@@ -65,8 +65,9 @@ class ElementList {
         do {
             let reader = BinaryDataReader(data)
             while reader.position < reader.data.endIndex {
-                let element = try self.readElement(from: reader)
-                elements.append(element)
+                if let element = try self.readElement(from: reader) {
+                    elements.append(element)
+                }
             }
             try self.configure()
         } catch let error {
@@ -228,7 +229,7 @@ class ElementList {
     
     // MARK: -
     
-    func readElement(from reader: BinaryDataReader) throws -> Element {
+    func readElement(from reader: BinaryDataReader) throws -> Element? {
         guard let label = try? reader.readPString(),
               let typeCode: FourCharCode = try? reader.read()
         else {
@@ -237,10 +238,28 @@ class ElementList {
         let type = typeCode.stringValue
         
         var elType = Self.fieldRegistry[type]
+        
         // check for Xnnn type - currently using resorcerer's nmm restriction to reserve all alpha types (e.g. FACE) for potential future use
         if elType == nil && type.range(of: "[A-Z](?!000)[0-9][0-9A-F]{2}", options: .regularExpression) != nil {
+            if type.first == "R" {
+                // Rnnn psuedo-element repeats the following element n times
+                let count = Int(type.suffix(3), radix: 16)!
+                let offset = Int(label.split(separator: "=").last!) ?? 1
+                guard var el = try self.readElement(from: reader) else {
+                    throw TemplateError.corrupt
+                }
+                let l = el.label
+                for i in 0..<count {
+                    // Replace % symbol with index
+                    let label = l.replacingOccurrences(of: "%", with: String(i+offset))
+                    el = Swift.type(of: el).init(type: el.type, label: label, tooltip: el.tooltip)!
+                    elements.append(el)
+                }
+                return nil
+            }
             elType = Self.fieldRegistry[String(type.prefix(1))]
         }
+        
         // check for XXnn type
         if elType == nil && type.range(of: "[A-Z]{2}(?!00)[0-9]{2}", options: .regularExpression) != nil {
             elType = Self.fieldRegistry[String(type.prefix(2))]
@@ -258,10 +277,10 @@ class ElementList {
         "DWRD": ElementDBYT<Int16>.self,
         "DLNG": ElementDBYT<Int32>.self,
         "DLLG": ElementDBYT<Int64>.self,    // (ResKnife)
-        "UBYT": ElementUBYT<UInt8>.self,    // unsigned ints
-        "UWRD": ElementUBYT<UInt16>.self,
-        "ULNG": ElementUBYT<UInt32>.self,
-        "ULLG": ElementUBYT<UInt64>.self,   // (ResKnife)
+        "UBYT": ElementDBYT<UInt8>.self,    // unsigned ints
+        "UWRD": ElementDBYT<UInt16>.self,
+        "ULNG": ElementDBYT<UInt32>.self,
+        "ULLG": ElementDBYT<UInt64>.self,   // (ResKnife)
         "HBYT": ElementHBYT<UInt8>.self,    // hex byte/word/long
         "HWRD": ElementHBYT<UInt16>.self,
         "HLNG": ElementHBYT<UInt32>.self,
@@ -380,16 +399,15 @@ class ElementList {
         "PACK": ElementPACK.self,           // pack other elements together (ResKnife)
 
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
-        "SFRC": ElementUBYT<UInt16>.self,   // 0.16 fixed fraction
-        "FXYZ": ElementUBYT<UInt16>.self,   // 1.15 fixed fraction
-        "FWID": ElementUBYT<UInt16>.self,   // 4.12 fixed fraction
-        "FRAC": ElementUBYT<UInt32>.self,   // 2.30 fixed fraction
-        "FIXD": ElementUBYT<UInt32>.self,   // 16.16 fixed fraction
-        "LLDT": ElementUBYT<UInt64>.self,   // 8-byte date (seconds since 1 Jan 1904) (ResKnife, used by Font Editor templates)
+        "SFRC": ElementDBYT<UInt16>.self,   // 0.16 fixed fraction
+        "FXYZ": ElementDBYT<UInt16>.self,   // 1.15 fixed fraction
+        "FWID": ElementDBYT<UInt16>.self,   // 4.12 fixed fraction
+        "FRAC": ElementDBYT<UInt32>.self,   // 2.30 fixed fraction
+        "FIXD": ElementDBYT<UInt32>.self,   // 16.16 fixed fraction
+        "LLDT": ElementDBYT<UInt64>.self,   // 8-byte date (seconds since 1 Jan 1904) (ResKnife, used by Font Editor templates)
         "STYL": ElementDBYT<Int8>.self,     // QuickDraw font style (ResKnife)
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
         "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)
     ]
 }
-

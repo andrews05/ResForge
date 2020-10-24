@@ -20,6 +20,9 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
             values.append(caseEl.value as! T)
             caseEl.value = 0
         }
+        if self.cases.isEmpty {
+            throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ elements found.", comment: ""))
+        }
         self.rowHeight = Double(self.cases.count * 20) + 2
     }
     

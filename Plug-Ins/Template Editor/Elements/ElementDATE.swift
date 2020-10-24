@@ -1,11 +1,16 @@
 import Cocoa
 
-class ElementDATE: ElementUBYT<UInt32> {
+class ElementDATE: ElementDBYT<UInt32> {
     static var hfsToRef: Double = 2082844800+978307200 // Seconds between 1904 and 2001
+    @objc private var value: Date {
+        get { Date(timeIntervalSinceReferenceDate: Double(tValue) - Self.hfsToRef) }
+        set { tValue = UInt32(newValue.timeIntervalSinceReferenceDate + Self.hfsToRef) }
+    }
     
     override func configure() throws {
         self.width = 240
-        self.value = UInt(Date().timeIntervalSinceReferenceDate + Self.hfsToRef)
+        self.value = Date()
+        self.tValue += UInt32(TimeZone.current.secondsFromGMT())
     }
     
     override func configure(view: NSView) {
@@ -18,15 +23,7 @@ class ElementDATE: ElementUBYT<UInt32> {
         picker.font = NSFont.systemFont(ofSize: 12)
         picker.drawsBackground = true
         picker.action = #selector(TemplateWindowController.itemValueUpdated(_:))
-        picker.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self])
+        picker.bind(.value, to: self, withKeyPath: "value")
         view.addSubview(picker)
-    }
-    
-    override func transformedValue(_ value: Any?) -> Any? {
-        return Double(value as! UInt) - Self.hfsToRef
-    }
-    
-    override func reverseTransformedValue(_ value: Any?) -> Any? {
-        return UInt((value as! Date).timeIntervalSinceReferenceDate + Self.hfsToRef)
     }
 }

@@ -1,26 +1,13 @@
 import RKSupport
 
-class ElementCHAR: CaseableElement {
-    private var charCode: UInt8 = 0
+class ElementCHAR: ElementDBYT<UInt8> {
     @objc private var value: String {
         get {
-            charCode == 0 ? "" : String(bytes: [charCode], encoding: .macOSRoman)!
+            tValue == 0 ? "" : String(bytes: [tValue], encoding: .macOSRoman)!
         }
         set {
-            charCode = newValue.data(using: .macOSRoman)?.first ?? 0
+            tValue = newValue.data(using: .macOSRoman)?.first ?? 0
         }
-    }
-    
-    override func readData(from reader: BinaryDataReader) throws {
-        charCode = try reader.read()
-    }
-    
-    override func dataSize(_ size: inout Int) {
-        size += 1
-    }
-    
-    override func writeData(to writer: BinaryDataWriter) {
-        writer.write(charCode)
     }
     
     override class var formatter: Formatter? {
