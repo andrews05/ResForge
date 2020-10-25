@@ -101,6 +101,9 @@ class EditorManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
             } else {
                 plug = editor!.init(resource: resource)
             }
+            if plug == nil {
+                return
+            }
             editorWindows[key] = plug
         }
         if let plug = plug as? NSWindowController {

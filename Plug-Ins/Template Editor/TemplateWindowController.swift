@@ -12,12 +12,14 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         return "TemplateWindow"
     }
     
-    required init(resource: Resource, template: Resource) {
+    required init?(resource: Resource, template: Resource) {
         self.resource = resource
         self.template = template
         super.init(window: nil)
         
-        self.load(data: resource.data)
+        if !self.load(data: resource.data) {
+            return nil
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange(_:)), name: .ResourceDataDidChange, object: resource)
         NotificationCenter.default.addObserver(self, selector: #selector(self.templateDataDidChange(_:)), name: .ResourceDataDidChange, object: template)
@@ -35,13 +37,13 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     
     @objc func resourceDataDidChange(_ notification: NSNotification) {
         if !self.window!.isDocumentEdited {
-            self.load(data: resource.data)
+            _ = self.load(data: resource.data)
         }
     }
     
     @objc func templateDataDidChange(_ notification: NSNotification) {
         // Reload the template while keeping the current data
-        self.load(data: resourceStructure.getResourceData())
+        _ = self.load(data: resourceStructure.getResourceData())
         dataList.expandItem(nil, expandChildren: true)
     }
         
@@ -54,19 +56,28 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         }
     }
     
-    func load(data: Data) {
+    func load(data: Data) -> Bool {
         resourceStructure = ElementList(controller: self)
         validStructure = resourceStructure.readTemplate(data: template.data)
         if validStructure && !resource.data.isEmpty {
+            let reader = BinaryDataReader(resource.data)
             do {
-                try resourceStructure.readResource(data: data)
+                try resourceStructure.readData(from: reader)
+            } catch BinaryDataReaderError.insufficientData {
+                // Ignore error, data will be padded on save
             } catch let error {
-                print(error)
+                NSApp.presentError(error)
+                return false
+            }
+            if reader.remainingBytes > 0 {
+                // Show warning
+                NSApp.presentError(TemplateError.truncate)
             }
         }
         // expand all
         dataList?.reloadData()
         dataList?.expandItem(nil, expandChildren: true)
+        return true
     }
     
     @IBAction func saveResource(_ sender: Any) {
@@ -75,7 +86,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     }
     
     @IBAction func revertResource(_ sender: Any) {
-        self.load(data: resource.data)
+        _ = self.load(data: resource.data)
         self.setDocumentEdited(false)
     }
     

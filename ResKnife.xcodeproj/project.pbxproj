@@ -24,6 +24,7 @@
 		4935CD9F253E25890044BC45 /* ElementKBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD9E253E25890044BC45 /* ElementKBYT.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		493CA127254295BF00893F98 /* ElementRREF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CA126254295BF00893F98 /* ElementRREF.swift */; };
+		494180EE2545575B008CBABE /* TemplateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494180ED2545575B008CBABE /* TemplateError.swift */; };
 		4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC152531671400856385 /* TabbableOutlineView.swift */; };
 		4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DBF2253142AE00856385 /* TemplateWindowController.swift */; };
 		4945DC512531745600856385 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC232531689900856385 /* LabelView.swift */; };
@@ -147,7 +148,6 @@
 		B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA79E15A6704900696598 /* FontDocument.xib */; };
 		E119386509991DDD00A3A6EA /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E119383D09991C5100A3A6EA /* Templates.rsrc */; };
-		E13F837F08F13A4C00E2A5CB /* Font Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF78B069FF23700F076B8 /* Font Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E15CFD6E099995D1004929B6 /* Templates for sfnt tables.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
@@ -218,13 +218,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B2FCA78915A66ACE00696598;
 			remoteInfo = "PICT Editor";
-		};
-		E13F836408F139E900E2A5CB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E18BF78A069FF23700F076B8;
-			remoteInfo = "Font Editor Cocoa";
 		};
 		E18BF6C9069FEA1900F076B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -307,7 +300,6 @@
 				B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */,
 				E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */,
 				E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */,
-				E13F837F08F13A4C00E2A5CB /* Font Editor.plugin in Copy Plugins */,
 			);
 			name = "Copy Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,6 +373,7 @@
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
 		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
 		493CA126254295BF00893F98 /* ElementRREF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRREF.swift; sourceTree = "<group>"; };
+		494180ED2545575B008CBABE /* TemplateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateError.swift; sourceTree = "<group>"; };
 		4943603F24C12DE100293E94 /* ppat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ppat.hpp; sourceTree = "<group>"; };
 		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
 		4945DBF2253142AE00856385 /* TemplateWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateWindowController.swift; sourceTree = "<group>"; };
@@ -835,6 +828,7 @@
 				4945DBF2253142AE00856385 /* TemplateWindowController.swift */,
 				4945DC152531671400856385 /* TabbableOutlineView.swift */,
 				4945DC232531689900856385 /* LabelView.swift */,
+				494180ED2545575B008CBABE /* TemplateError.swift */,
 				4945DCB8253248DA00856385 /* ElementList.swift */,
 				4945DD062532DAE500856385 /* Element.swift */,
 				49FE7B48253A7E7700D2219D /* CaseableElement.swift */,
@@ -1389,7 +1383,6 @@
 				B2FCA79B15A66B4A00696598 /* PBXTargetDependency */,
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
 				E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */,
-				E13F836508F139E900E2A5CB /* PBXTargetDependency */,
 				49AACD8124CE931A0081DD4A /* PBXTargetDependency */,
 			);
 			name = ResKnife;
@@ -1745,6 +1738,7 @@
 				493CA127254295BF00893F98 /* ElementRREF.swift in Sources */,
 				49A4329E25429D84000B1109 /* ElementKTYP.swift in Sources */,
 				49D1854C2541007400EA380C /* ElementBBIT.swift in Sources */,
+				494180EE2545575B008CBABE /* TemplateError.swift in Sources */,
 				49FE7B49253A7E7700D2219D /* CaseableElement.swift in Sources */,
 				49B9E6742540042900A266DE /* RangeableElement.swift in Sources */,
 				4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */,
@@ -1800,11 +1794,6 @@
 			isa = PBXTargetDependency;
 			target = B2FCA78915A66ACE00696598 /* Image Editor */;
 			targetProxy = B2FCA79A15A66B4A00696598 /* PBXContainerItemProxy */;
-		};
-		E13F836508F139E900E2A5CB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E18BF78A069FF23700F076B8 /* Font Editor */;
-			targetProxy = E13F836408F139E900E2A5CB /* PBXContainerItemProxy */;
 		};
 		E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

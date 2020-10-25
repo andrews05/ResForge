@@ -14,6 +14,7 @@ class ElementHEXD: Element {
         } else {
             // Hnnn
             length = Int(self.type.suffix(3), radix: 16)!
+            data = Data(count: length)
             self.setRowHeight()
         }
         self.width = 240
@@ -41,11 +42,18 @@ class ElementHEXD: Element {
     }
     
     override func readData(from reader: BinaryDataReader) throws {
+        let remainder = reader.remainingBytes
         if self.type == "HEXD" {
-            length = reader.data.endIndex - reader.position
-            self.setRowHeight()
+            length = remainder
         }
-        data = try reader.readData(length: length)
+        self.setRowHeight()
+        if length > remainder {
+            // Pad to expected length and throw error
+            data = try reader.readData(length: remainder) + Data(count: length-remainder)
+            throw BinaryDataReaderError.insufficientData
+        } else {
+            data = try reader.readData(length: length)
+        }
     }
     
     override func dataSize(_ size: inout Int) {

@@ -1,25 +1,6 @@
 import Cocoa
 import RKSupport
 
-enum TemplateError: LocalizedError {
-    case corrupt
-    case unknownElement(String)
-    case unclosedElement(Element)
-    case invalidStructure(Element, String)
-    var errorDescription: String? {
-        switch self {
-        case .corrupt:
-            return NSLocalizedString("Corrupt or insufficient data.", comment: "")
-        case let .unknownElement(type):
-            return String(format: NSLocalizedString("Unknown element type ‘%@’.", comment: ""), type)
-        case let .unclosedElement(element):
-            return "\(element.type) “\(element.label)”: ".appendingFormat(NSLocalizedString("Closing ‘%@’ element not found.", comment: ""), element.type, element.endType)
-        case let .invalidStructure(element, message):
-            return "\(element.type) “\(element.label)”: ".appending(message)
-        }
-    }
-}
-
 class ElementList {
     let parentList: ElementList?
     private(set) weak var controller: TemplateWindowController!
@@ -77,10 +58,6 @@ class ElementList {
             visibleElements = [element]
             return false
         }
-    }
-    
-    func readResource(data: Data) throws {
-        try self.readData(from: BinaryDataReader(data))
     }
     
     func getResourceData() -> Data {

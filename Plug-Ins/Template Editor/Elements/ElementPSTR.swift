@@ -10,14 +10,14 @@ enum StringPadding {
 
 // Implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, Pnnn, Cnnn
 class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
-    @objc private var value: String = ""
-    private let maxLength: Int
-    private let padding: StringPadding
-    private let zeroTerminated: Bool // Indicates Pascal (false) or C string (true)
+    @objc private var value = ""
+    private var maxLength = Int(T.max)
+    private var padding = StringPadding.none
+    private var zeroTerminated = false // Indicates Pascal (false) or C string (true)
     
-    required init(type: String, label: String, tooltip: String? = nil) {
-        var length = Int(T.max)
-        switch type {
+    override func configure() throws {
+        try super.configure()
+        switch self.type {
         case "PSTR", "BSTR", "WSTR", "LSTR":
             padding = .none
             zeroTerminated = false
@@ -40,16 +40,10 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
             // Assume Xnnn for anything else
             let nnn = Int(type.suffix(3), radix: 16)!
             // Use resorcerer's more consistent n = datalength rather than resedit's n = stringlength
-            length = min(nnn-1, length)
+            maxLength = min(nnn-1, maxLength)
             padding = .fixed(nnn)
             zeroTerminated = type.first == "C"
         }
-        maxLength = length
-        super.init(type: type, label: label, tooltip: tooltip)
-    }
-    
-    override func configure() throws {
-        try super.configure()
         self.width = (self.cases == nil && maxLength > 32) ? 0 : 240
     }
     
@@ -91,12 +85,17 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
         if zeroTerminated {
             // Get offset to null
             let end = reader.data[reader.position...].firstIndex(of: 0) ?? reader.data.endIndex
-            length = end - reader.position
+            length = min(end - reader.position, maxLength)
         } else {
             length = Int(try reader.read() as T)
-        }
-        if length > maxLength {
-            length = maxLength
+            guard length <= reader.remainingBytes else {
+                throw TemplateError.dataMismtach
+            }
+            // This safety check is currently disabled as it causing problems when reading certain resources where the data must be forced into the template
+//            guard length <= maxLength else {
+//                throw TemplateError.dataMismtach
+//            }
+            length = min(length, maxLength)
         }
         
         if length > 0 {

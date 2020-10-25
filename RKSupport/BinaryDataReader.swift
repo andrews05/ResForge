@@ -1,7 +1,7 @@
 import Foundation
 
 public enum BinaryDataReaderError: Error {
-    case notEnoughData
+    case insufficientData
     case stringDecodeFailure
 }
 
@@ -9,6 +9,9 @@ public class BinaryDataReader {
     private(set) public var data: Data
     public var bigEndian: Bool
     private(set) public var position: Int
+    public var remainingBytes: Int {
+        data.endIndex - position
+    }
 
     public init(_ data: Data, bigEndian: Bool = true) {
         self.data = data
@@ -17,16 +20,16 @@ public class BinaryDataReader {
     }
     
     public func advance(_ count: Int) throws {
-        guard position + count <= data.endIndex else {
-            throw BinaryDataReaderError.notEnoughData
+        guard count <= remainingBytes else {
+            throw BinaryDataReaderError.insufficientData
         }
         position += count
     }
     
     public func read<T: FixedWidthInteger>(bigEndian: Bool? = nil) throws -> T {
         let bytes = T.bitWidth / 8
-        guard position + bytes <= data.endIndex else {
-            throw BinaryDataReaderError.notEnoughData
+        guard bytes <= remainingBytes else {
+            throw BinaryDataReaderError.insufficientData
         }
         // Int8 must be constructed from a bit pattern
         if T.self is Int8.Type {
@@ -43,24 +46,22 @@ public class BinaryDataReader {
     }
     
     public func readData(length: Int) throws -> Data {
-        let end = position + length
-        guard end <= data.endIndex else {
-            throw BinaryDataReaderError.notEnoughData
+        guard length <= remainingBytes else {
+            throw BinaryDataReaderError.insufficientData
         }
-        let data = self.data[position..<end]
-        position = end
+        let data = self.data[position..<(position+length)]
+        position += length
         return data
     }
     
     public func readString(length: Int, encoding: String.Encoding = .utf8) throws -> String {
-        let end = position + length
-        guard end <= data.endIndex else {
-            throw BinaryDataReaderError.notEnoughData
+        guard length <= remainingBytes else {
+            throw BinaryDataReaderError.insufficientData
         }
-        guard let string = String(data: data[position..<end], encoding: encoding) else {
+        guard let string = String(data: data[position..<(position+length)], encoding: encoding) else {
             throw BinaryDataReaderError.stringDecodeFailure
         }
-        position = end
+        position += length
         return string
     }
     

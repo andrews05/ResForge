@@ -39,6 +39,9 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
     override func readData(from reader: BinaryDataReader) throws {
         if T.isSigned {
             value = try reader.read() + 1
+            guard value >= 0 else {
+                throw TemplateError.dataMismtach
+            }
         } else {
             value = try reader.read()
         }

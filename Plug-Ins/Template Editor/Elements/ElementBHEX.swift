@@ -8,14 +8,18 @@ class ElementBHEX<T: FixedWidthInteger & UnsignedInteger>: ElementHEXD {
     override func configure() throws {
         skipLengthBytes = self.type.hasSuffix("SHX")
         lengthBytes = T.bitWidth / 8
+        self.width = 240
     }
     
     override func readData(from reader: BinaryDataReader) throws {
         length = Int(try reader.read() as T)
         if skipLengthBytes {
-            length = max(length-lengthBytes, 0)
+            guard length >= lengthBytes else {
+                throw TemplateError.dataMismtach
+            }
+            length -= lengthBytes
         }
-        data = try reader.readData(length: length)
+        try super.readData(from: reader)
     }
     
     override func dataSize(_ size: inout Int) {
@@ -28,10 +32,6 @@ class ElementBHEX<T: FixedWidthInteger & UnsignedInteger>: ElementHEXD {
             writeLength += lengthBytes
         }
         writer.write(T(writeLength))
-        if let data = data {
-            writer.data.append(data)
-        } else {
-            writer.advance(length)
-        }
+        super.writeData(to: writer)
     }
 }

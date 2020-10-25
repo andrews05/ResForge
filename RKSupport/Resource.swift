@@ -80,11 +80,11 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
     }
     
-    @objc public weak var document: NSDocument!
-    @objc public weak var manager: ResKnifePluginManager! // This isn't set until the resource is opened in an editor
+    public weak var document: NSDocument!
+    public weak var manager: ResKnifePluginManager! // This isn't set until the resource is opened in an editor
     private var _preview: NSImage?
     
-    @objc public var defaultWindowTitle: String {
+    public var defaultWindowTitle: String {
         if let document = document {
             let title = document.displayName.appending(": \(type) \(id)")
             return name.count > 0 ? title.appending(" '\(name)'") : title

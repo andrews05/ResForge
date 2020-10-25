@@ -10,8 +10,8 @@ public extension FourCharCode {
 }
 
 @objc public protocol ResKnifePlugin {
-    @objc var resource: Resource { get }
-    @objc init(resource: Resource)
+    var resource: Resource { get }
+    init?(resource: Resource)
     
     @objc optional func saveResource(_ sender: Any)
     @objc optional func revertResource(_ sender: Any)
@@ -36,14 +36,14 @@ public extension FourCharCode {
     @objc optional static func placeholderName(for resource: Resource) -> String
 }
 
-@objc public protocol ResKnifeTemplatePlugin: ResKnifePlugin {
-    @objc init(resource: Resource, template: Resource)
+public protocol ResKnifeTemplatePlugin: ResKnifePlugin {
+    init?(resource: Resource, template: Resource)
 }
 
-@objc public protocol ResKnifePluginManager {
-    @objc func open(resource: Resource, using editor: ResKnifePlugin.Type?, template: String?)
-    @objc func allResources(ofType: String, currentDocumentOnly: Bool) -> [Resource]
-    @objc func findResource(ofType: String, id: Int, currentDocumentOnly: Bool) -> Resource?
-    @objc func findResource(ofType: String, name: String, currentDocumentOnly: Bool) -> Resource?
-    @objc func createResource(ofType: String, id: Int, name: String)
+public protocol ResKnifePluginManager: class {
+    func open(resource: Resource, using editor: ResKnifePlugin.Type?, template: String?)
+    func allResources(ofType: String, currentDocumentOnly: Bool) -> [Resource]
+    func findResource(ofType: String, id: Int, currentDocumentOnly: Bool) -> Resource?
+    func findResource(ofType: String, name: String, currentDocumentOnly: Bool) -> Resource?
+    func createResource(ofType: String, id: Int, name: String)
 }
