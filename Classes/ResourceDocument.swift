@@ -301,7 +301,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
     
     @IBAction func openResourcesInTemplate(_ sender: Any) {
         let resources = dataSource.selectedResources()
-        guard resources.count != 0 else {
+        guard !resources.isEmpty else {
             return
         }
         SelectTemplateController().show(self, type: resources.first!.type) { template in

@@ -12,7 +12,7 @@ public class MacRomanFormatter: Formatter {
     public override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?,
                                         for string: String,
                                         errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
-        if string.count == 0 {
+        if string.isEmpty {
             if valueRequired {
                 error?.pointee = NSLocalizedString("The value must be not be blank.", comment: "") as NSString
                 return false

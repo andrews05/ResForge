@@ -7,11 +7,6 @@ class ElementTNAM: ElementDBYT<UInt32> {
         set { tValue = FourCharCode(newValue) }
     }
     
-    override func configure() throws {
-        try super.configure()
-        self.width = 60
-    }
-    
     override class var formatter: Formatter? {
         let formatter = MacRomanFormatter()
         formatter.stringLength = 4

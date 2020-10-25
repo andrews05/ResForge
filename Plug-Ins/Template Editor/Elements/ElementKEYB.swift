@@ -16,7 +16,9 @@ class ElementKEYB: Element {
     }
     
     override func configure() throws {
-        throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a key element.", comment: ""))
+        guard subElements != nil else {
+            throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a key element.", comment: ""))
+        }
     }
     
     override func readData(from reader: BinaryDataReader) throws {

@@ -4,8 +4,8 @@ import RKSupport
 // Implements LSTB, LSTZ, LSTC
 class ElementLSTB: Element {
     var counter: CounterElement?
+    var fixedCount: Bool = false
     private let zeroTerminated: Bool
-    private var fixedCount: Bool = false
     private var subElements: ElementList!
     private var entries: [Element]!
     private var tail: ElementLSTB!
@@ -33,23 +33,22 @@ class ElementLSTB: Element {
     }
     
     override func configure() throws {
-        guard counter != nil || type != "LSTC" else {
+        guard type != "LSTC" || counter != nil  else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Preceeding count element not found.", comment: ""))
         }
+        subElements = try self.parentList.subList(for: self)
+        guard type != "LSTB" || (self.parentList.parentList == nil && self.parentList.peek(1) == nil) else {
+            throw TemplateError.invalidStructure(self, NSLocalizedString("Closing ‘LSTE’ must be last element in template.", comment: ""))
+        }
+        _ = try subElements.copy() // Validate the subElements configuration
         // This item will be the tail
         tail = self
-        entries = []
-        subElements = try self.parentList.subList(for: self)
-        _ = try subElements.copy() // Validate the subElements configuration
-        if let counter = counter, counter.type == "FCNT" {
+        entries = [self]
+        if fixedCount {
             // Fixed count list, create all the entries now
-            self.visible = false
-            fixedCount = true
-            for _ in 0..<counter.count {
-                _ = self.createNext()
+            for _ in 0..<counter!.count {
+                self.parentList.insert(self.createNext())
             }
-        } else {
-            entries.append(self)
         }
     }
     
@@ -67,37 +66,27 @@ class ElementLSTB: Element {
         }
     }
     
-    private func createNext() -> Self {
-        // Create a new list entry at the current index (just before self)
+    func createNext() -> Self {
+        // Create a new list entry, inserting before self
         let list = self.copy() as Self
-        self.parentList.insert(list)
-        tail.entries.append(list)
+        tail.entries.insert(list, at: tail.entries.endIndex-1)
         return list
     }
     
     override func readData(from reader: BinaryDataReader) throws {
-        if fixedCount {
-            if tail != self {
-                try subElements.readData(from: reader)
-            }
-            return
-        }
-        
-        entries.removeAll()
-        if type == "LSTC" {
-            for _ in 0..<counter!.count {
-                try self.createNext().subElements.readData(from: reader)
-            }
-        } else {
-            while (reader.position < reader.data.endIndex) {
+        if tail != self {
+            try subElements.readData(from: reader)
+        } else if counter == nil {
+            while reader.position < reader.data.endIndex {
                 if zeroTerminated && reader.data[reader.position] == 0 {
                     try reader.advance(1)
                     break
                 }
-                try self.createNext().subElements.readData(from: reader)
+                let list = self.createNext()
+                self.parentList.insert(list)
+                try list.subElements.readData(from: reader)
             }
         }
-        entries.append(self)
     }
     
     override func dataSize(_ size: inout Int) {

@@ -8,7 +8,7 @@ class ElementHEXD: Element {
     
     override func configure() throws {
         if self.type == "HEXD" {
-            guard self.parentList.peek(1) == nil else {
+            guard self.parentList.parentList == nil && self.parentList.peek(1) == nil else {
                 throw TemplateError.invalidStructure(self, NSLocalizedString("Must be last element in template.", comment: ""))
             }
         } else {

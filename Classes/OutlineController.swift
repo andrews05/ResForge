@@ -10,10 +10,10 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     override func awakeFromNib() {
         super.awakeFromNib()
         // Note: awakeFromNib is re-triggered each time a cell is created - be careful not to re-sort each time
-        if outlineView.sortDescriptors.count == 0 {
+        if outlineView.sortDescriptors.isEmpty {
             // Default sort resources by id
             outlineView.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-        } else if document.directory.sortDescriptors.count == 0 {
+        } else if document.directory.sortDescriptors.isEmpty {
             document.directory.sortDescriptors = outlineView.sortDescriptors
         }
     }

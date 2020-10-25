@@ -65,7 +65,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
             }
             self.channels.stringValue = sound.channels == 2 ? "Stereo" : "Mono"
             self.sampleRate.stringValue = String(format: "%.0f Hz", sound.sampleRate)
-        } else if resource.data.count == 0 {
+        } else if resource.data.isEmpty {
             self.format.stringValue = "(empty)"
         } else {
             self.format.stringValue = "(unknown)"

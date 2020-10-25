@@ -199,7 +199,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
     }
     
     private func byteArray(data: Data) -> HFByteArray? {
-        if data.count == 0 {
+        if data.isEmpty {
             return nil
         }
         let byteArray = HFBTreeByteArray()

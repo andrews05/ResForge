@@ -5,17 +5,19 @@ class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
     var tValue: T = 0
     @objc private var value: NSNumber {
         get { tValue as! NSNumber }
-        set { tValue = newValue as! T}
+        set { tValue = newValue as! T }
     }
     
     override func configure() throws {
-        switch T.bitWidth/8 {
-        case 4:
-            self.width = 90
-        case 8:
-            self.width = 120
-        default:
-            break
+        if Swift.type(of: self) == ElementDBYT.self {
+            switch T.bitWidth/8 {
+            case 4:
+                self.width = 90
+            case 8:
+                self.width = 120
+            default:
+                break
+            }
         }
         try super.configure()
     }

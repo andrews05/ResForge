@@ -61,7 +61,7 @@ class ElementList {
         configured = true
     }
     
-    func readTemplate(data: Data) throws {
+    func readTemplate(data: Data) -> Bool {
         do {
             let reader = BinaryDataReader(data)
             while reader.position < reader.data.endIndex {
@@ -70,11 +70,12 @@ class ElementList {
                 }
             }
             try self.configure()
+            return true
         } catch let error {
             let element = ElementDVDR(type: "DVDR", label: "Template Error\n\(error.localizedDescription)")
             elements = [element]
             visibleElements = [element]
-            throw error
+            return false
         }
     }
     
@@ -96,24 +97,14 @@ class ElementList {
         return visibleElements[index]
     }
 
-    // Insert a new element at the current position
+    // Insert a new element before the current element during read/configure
     func insert(_ element: Element) {
+        elements.insert(element, at: currentIndex)
         element.parentList = self
-        if !configured {
-            // Insert after current element during configure (e.g. fixed count list, keyed section)
-            currentIndex += 1
-            elements.insert(element, at: currentIndex)
-            if element.visible {
-                visibleElements.append(element)
-            }
-        } else {
-            // Insert before current element during read (e.g. other lists)
-            elements.insert(element, at: currentIndex)
-            currentIndex += 1
-            if element.visible {
-                let visIndex = visibleElements.firstIndex(of: elements[currentIndex])!
-                visibleElements.insert(element, at: visIndex)
-            }
+        currentIndex += 1
+        if element.visible {
+            let visIndex = visibleElements.firstIndex(of: elements[currentIndex]) ?? visibleElements.endIndex
+            visibleElements.insert(element, at: visIndex)
         }
     }
     
@@ -239,7 +230,7 @@ class ElementList {
         
         var elType = Self.fieldRegistry[type]
         
-        // check for Xnnn type - currently using resorcerer's nmm restriction to reserve all alpha types (e.g. FACE) for potential future use
+        // check for Xnnn type - currently using resorcerer's nmm restriction to reserve all-alpha types (e.g. FACE) for potential future use
         if elType == nil && type.range(of: "[A-Z](?!000)[0-9][0-9A-F]{2}", options: .regularExpression) != nil {
             if type.first == "R" {
                 // Rnnn psuedo-element repeats the following element n times
@@ -353,6 +344,7 @@ class ElementList {
         "LCNT": ElementOCNT<UInt32>.self,
         "LZCT": ElementOCNT<Int32>.self,
         "FCNT": ElementFCNT.self,           // fixed count with count in label (why didn't they choose Lnnn?)
+        "R"   : Element.self,               // single-element repeat (ResKnife) (never initialised but included here for reference)
         // list begin/end
         "LSTB": ElementLSTB.self,
         "LSTZ": ElementLSTB.self,
@@ -395,7 +387,7 @@ class ElementList {
 
         // cosmetic
         "DVDR": ElementDVDR.self,           // divider
-        "RREF": ElementRREF.self,           // static reference to another resource
+        "RREF": ElementRREF.self,           // static reference to another resource (ResKnife)
         "PACK": ElementPACK.self,           // pack other elements together (ResKnife)
 
         // and some faked ones just to increase compatibility (these are marked 'x' in the docs)

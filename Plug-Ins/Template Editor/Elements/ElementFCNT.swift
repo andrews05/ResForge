@@ -30,6 +30,8 @@ class ElementFCNT: Element, GroupElement, CounterElement {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Following ‘LSTC’ element not found.", comment: ""))
         }
         lstc.counter = self
+        lstc.visible = false
+        lstc.fixedCount = true
     }
     
     func configureGroup(view: NSTableCellView) {

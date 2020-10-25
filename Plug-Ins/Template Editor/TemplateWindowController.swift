@@ -5,6 +5,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     let resource: Resource
     private let template: Resource
     private var resourceStructure: ElementList! = nil
+    private var validStructure = false
     @IBOutlet var dataList: TabbableOutlineView!
     
     override var windowNibName: String {
@@ -48,15 +49,20 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle
         dataList.expandItem(nil, expandChildren: true)
+        if validStructure && resource.data.isEmpty {
+            self.setDocumentEdited(true)
+        }
     }
     
     func load(data: Data) {
         resourceStructure = ElementList(controller: self)
-        do {
-            try resourceStructure.readTemplate(data: template.data)
-            try resourceStructure.readResource(data: data)
-        } catch let error {
-            print(error)
+        validStructure = resourceStructure.readTemplate(data: template.data)
+        if validStructure && !resource.data.isEmpty {
+            do {
+                try resourceStructure.readResource(data: data)
+            } catch let error {
+                print(error)
+            }
         }
         // expand all
         dataList?.reloadData()

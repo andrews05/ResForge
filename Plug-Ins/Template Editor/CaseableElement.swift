@@ -15,10 +15,15 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
             }
             try caseEl.configure(for: self)
             cases.append(caseEl)
-            // Cases will show as "title = value" in the options list to allow searching by title
-            // Text field will display as "value = title" for consistency when there's no matching case
-            caseMap[caseEl.value] = "\(caseEl.displayValue) = \(caseEl.displayLabel)"
-            caseEl.displayValue = "\(caseEl.displayLabel) = \(caseEl.displayValue)"
+            if caseEl.displayLabel == caseEl.displayValue {
+                // Value matches title, use as-is
+                caseMap[caseEl.value] = caseEl.displayValue
+            } else {
+                // Cases will show as "title = value" in the options list to allow searching by title
+                // Text field will display as "value = title" for consistency when there's no matching case
+                caseMap[caseEl.value] = "\(caseEl.displayValue) = \(caseEl.displayLabel)"
+                caseEl.displayValue = "\(caseEl.displayLabel) = \(caseEl.displayValue)"
+            }
         }
     }
     

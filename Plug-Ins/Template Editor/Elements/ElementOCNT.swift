@@ -8,6 +8,7 @@ protocol CounterElement where Self: Element {
 // Implements OCNT, ZCNT, BCNT, WCNT, LCNT, LZCT
 class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
     private var value: T = 0
+    private var lstc: ElementLSTB!
     @objc var count: Int {
         get {
             Int(value)
@@ -19,7 +20,8 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
     
     override func configure() throws {
         self.rowHeight = 18
-        guard let lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB else {
+        lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB
+        guard lstc != nil else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Following ‘LSTC’ element not found.", comment: ""))
         }
         lstc.counter = self
@@ -39,6 +41,9 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
             value = try reader.read() + 1
         } else {
             value = try reader.read()
+        }
+        for _ in 0..<count {
+            self.parentList.insert(lstc.createNext(), before: lstc)
         }
     }
     

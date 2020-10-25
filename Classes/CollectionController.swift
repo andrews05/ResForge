@@ -182,7 +182,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     }
     
     func endEditing() {
-        nameField.isHidden = resource.name.count == 0
+        nameField.isHidden = resource.name.isEmpty
         nameField.isEditable = false
         nameField.alignment = .natural
     }

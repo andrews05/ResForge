@@ -16,12 +16,12 @@ class ElementRSID: ElementDBYT<Int16> {
             self.loadCases()
         }
     }
-    private let offset: Int
-    private let range: ClosedRange<Int>?
+    private var offset: Int = 0
+    private var range: ClosedRange<Int>?
     private var fixedCases: [ElementCASE]!
     private var fixedMap: [AnyHashable: String]!
-
-    required init(type: String, label: String, tooltip: String? = nil) {
+    
+    override func configure() throws {
         // Determine parameters from label
         let regex = try! NSRegularExpression(pattern: "(?:.*[‘'](.{4})['’])?(?:.*?(-?[0-9]+) *[+]([0-9]+)?)?", options: [])
         let result = regex.firstMatch(in: label, options: [], range: NSMakeRange(0, label.count))
@@ -30,18 +30,11 @@ class ElementRSID: ElementDBYT<Int16> {
         }
         if let nsr = result?.range(at: 2), let r = Range(nsr, in: label) {
             offset = Int(label[r])!
-        } else {
-            offset = 0
         }
         if let nsr = result?.range(at: 3), let r = Range(nsr, in: label) {
             range = offset...(offset + Int(label[r])!)
-        } else {
-            range = nil
         }
-        super.init(type: type, label: label, tooltip: tooltip)
-    }
-    
-    override func configure() throws {
+        
         try super.configure()
         self.width = 240
         fixedCases = self.cases ?? []

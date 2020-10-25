@@ -16,7 +16,7 @@ class KeyElement: Element {
         let caseEl = self.cases.first!
         currentSection = keyedSections[caseEl]
         self.setValue(caseEl.value, forKey: "value")
-        self.parentList.insert(currentSection)
+        self.parentList.insert(currentSection, after: self)
     }
     
     func readCases() throws {

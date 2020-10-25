@@ -38,7 +38,9 @@ class HexFormatter<T: FixedWidthInteger & UnsignedInteger>: Formatter {
         return nil
     }
     
-    override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
+    override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?,
+                                 for string: String,
+                                 errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
         var string = string
         if string.first == "$" {
             string = String(string.dropFirst())
