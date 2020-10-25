@@ -17,7 +17,7 @@ class ElementHEXD: Element {
             data = Data(count: length)
             self.setRowHeight()
         }
-        self.width = 240
+        self.width = 360
     }
     
     override func configure(view: NSView) {
@@ -38,7 +38,7 @@ class ElementHEXD: Element {
     
     private func setRowHeight() {
         // 16 bytes per line, 17pt line height
-        self.rowHeight = (ceil(Double(length) / 16) * 17) + 5
+        self.rowHeight = (ceil(Double(length) / 24) * 17) + 5
     }
     
     override func readData(from reader: BinaryDataReader) throws {

@@ -218,8 +218,8 @@ class ElementList {
                 }
                 let l = el.label
                 for i in 0..<count {
-                    // Replace % symbol with index
-                    let label = l.replacingOccurrences(of: "%", with: String(i+offset))
+                    // Replace * symbol with index
+                    let label = l.replacingOccurrences(of: "*", with: String(i+offset))
                     el = Swift.type(of: el).init(type: el.type, label: label, tooltip: el.tooltip)!
                     elements.append(el)
                 }
@@ -295,10 +295,13 @@ class ElementList {
         "LFLG": ElementBFLG<UInt32>.self,
         "BBIT": ElementBBIT<UInt8>.self,    // bit within a byte
         "BB"  : ElementBBIT<UInt8>.self,    // BBnn bit field
+        "BF"  : ElementBBIT<UInt8>.self,    // BFnn fill bits
         "WBIT": ElementBBIT<UInt16>.self,
         "WB"  : ElementBBIT<UInt16>.self,   // WBnn
+        "WF"  : ElementBBIT<UInt16>.self,   // WFnn
         "LBIT": ElementBBIT<UInt32>.self,
         "LB"  : ElementBBIT<UInt32>.self,   // LBnn
+        "LF"  : ElementBBIT<UInt32>.self,   // LFnn
         "BORV": ElementBORV<UInt8>.self,    // OR-value (Rezilla)
         "WORV": ElementBORV<UInt16>.self,
         "LORV": ElementBORV<UInt32>.self,

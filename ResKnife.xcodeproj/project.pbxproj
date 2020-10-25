@@ -307,25 +307,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3D0933A604DEFEE600DD74B1 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Element.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3D0933A704DEFEE600DD74B1 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Element.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3D0933BE04DF151C00DD74B1 /* ResourceStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ResourceStream.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3D0933BF04DF151C00DD74B1 /* ResourceStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ResourceStream.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementLSTB.h; sourceTree = "<group>"; };
-		3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementLSTB.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3D0933E704DF317D00DD74B1 /* ElementPSTR.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementPSTR.h; sourceTree = "<group>"; };
-		3D0933E804DF317D00DD74B1 /* ElementPSTR.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementPSTR.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3D0933EE04DF381900DD74B1 /* ElementDWRD.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDWRD.m; sourceTree = "<group>"; };
-		3D0933EF04DF381900DD74B1 /* ElementDWRD.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDWRD.h; sourceTree = "<group>"; };
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
-		3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TemplateWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TemplateWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3D4737B304E872DB00AF65FE /* ElementDLNG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDLNG.m; sourceTree = "<group>"; };
-		3D4737B404E872DB00AF65FE /* ElementDLNG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDLNG.h; sourceTree = "<group>"; };
-		3D4737B704E873F300AF65FE /* ElementDBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDBYT.m; sourceTree = "<group>"; };
-		3D4737B804E873F300AF65FE /* ElementDBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDBYT.h; sourceTree = "<group>"; };
-		3D50046F04EF040900F3B64D /* ElementOCNT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementOCNT.h; sourceTree = "<group>"; };
-		3D50047004EF040900F3B64D /* ElementOCNT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementOCNT.m; sourceTree = "<group>"; };
 		491BC28A253B894200149D78 /* ElementOCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementOCNT.swift; sourceTree = "<group>"; };
 		491EDA5024E375CE008E58CB /* SelectTemplate.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectTemplate.xib; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; };
@@ -333,36 +315,6 @@
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
-		493229C3244C2B5000E1EAE4 /* ElementBFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBFLG.h; sourceTree = "<group>"; };
-		493229C4244C2B5000E1EAE4 /* ElementBFLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBFLG.m; sourceTree = "<group>"; };
-		493229C7244C3A0800E1EAE4 /* ElementWFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementWFLG.h; sourceTree = "<group>"; };
-		493229C8244C3A0800E1EAE4 /* ElementWFLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementWFLG.m; sourceTree = "<group>"; };
-		493229CB244C3C2000E1EAE4 /* ElementLFLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementLFLG.h; sourceTree = "<group>"; };
-		493229CC244C3C2000E1EAE4 /* ElementLFLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementLFLG.m; sourceTree = "<group>"; };
-		493229CF244C7B1200E1EAE4 /* ElementRECT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementRECT.h; sourceTree = "<group>"; };
-		493229D0244C7B1200E1EAE4 /* ElementRECT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRECT.m; sourceTree = "<group>"; };
-		493229D3244D19CF00E1EAE4 /* ElementPNT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementPNT.h; sourceTree = "<group>"; };
-		493229D4244D19CF00E1EAE4 /* ElementPNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementPNT.m; sourceTree = "<group>"; };
-		493229D7244D1DAB00E1EAE4 /* ElementBOOL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBOOL.h; sourceTree = "<group>"; };
-		493229D8244D1DAB00E1EAE4 /* ElementBOOL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBOOL.m; sourceTree = "<group>"; };
-		49322A5B244FAADA00E1EAE4 /* ElementCHAR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCHAR.h; sourceTree = "<group>"; };
-		49322A5C244FAADA00E1EAE4 /* ElementCHAR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCHAR.m; sourceTree = "<group>"; };
-		49322A5F244FBF4E00E1EAE4 /* ElementTNAM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementTNAM.h; sourceTree = "<group>"; };
-		49322A60244FBF4E00E1EAE4 /* ElementTNAM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementTNAM.m; sourceTree = "<group>"; };
-		49322A63244FD17800E1EAE4 /* ElementREAL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementREAL.h; sourceTree = "<group>"; };
-		49322A64244FD17800E1EAE4 /* ElementREAL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementREAL.m; sourceTree = "<group>"; };
-		49322A67244FD18700E1EAE4 /* ElementDOUB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementDOUB.h; sourceTree = "<group>"; };
-		49322A68244FD18700E1EAE4 /* ElementDOUB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementDOUB.m; sourceTree = "<group>"; };
-		49322A6B244FE71200E1EAE4 /* ElementHBYT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementHBYT.h; sourceTree = "<group>"; };
-		49322A6C244FE71200E1EAE4 /* ElementHBYT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHBYT.m; sourceTree = "<group>"; };
-		49322A6F244FF5F600E1EAE4 /* ElementHWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementHWRD.h; sourceTree = "<group>"; };
-		49322A70244FF5F600E1EAE4 /* ElementHWRD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHWRD.m; sourceTree = "<group>"; };
-		49322A73244FF63000E1EAE4 /* ElementHLNG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementHLNG.h; sourceTree = "<group>"; };
-		49322A74244FF63000E1EAE4 /* ElementHLNG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHLNG.m; sourceTree = "<group>"; };
-		49322A77244FF65A00E1EAE4 /* ElementHLLG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementHLLG.h; sourceTree = "<group>"; };
-		49322A78244FF65A00E1EAE4 /* ElementHLLG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementHLLG.m; sourceTree = "<group>"; };
-		49322A7B2450E87000E1EAE4 /* ElementBBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBBIT.h; sourceTree = "<group>"; };
-		49322A7C2450E87000E1EAE4 /* ElementBBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBBIT.m; sourceTree = "<group>"; };
 		4935CD50253BD1290044BC45 /* ElementPSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPSTR.swift; sourceTree = "<group>"; };
 		4935CD6C253C10210044BC45 /* ElementFCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementFCNT.swift; sourceTree = "<group>"; };
 		4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDVDR.swift; sourceTree = "<group>"; };
@@ -377,19 +329,10 @@
 		4943603F24C12DE100293E94 /* ppat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ppat.hpp; sourceTree = "<group>"; };
 		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
 		4945DBF2253142AE00856385 /* TemplateWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateWindowController.swift; sourceTree = "<group>"; };
-		4945DBFA25315CAB00856385 /* GroupElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupElement.h; sourceTree = "<group>"; };
 		4945DC152531671400856385 /* TabbableOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbableOutlineView.swift; sourceTree = "<group>"; };
 		4945DC232531689900856385 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		4945DCB8253248DA00856385 /* ElementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementList.swift; sourceTree = "<group>"; };
 		4945DD062532DAE500856385 /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
-		494BEA65245A774B000EF1D0 /* ElementKeyable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementKeyable.h; sourceTree = "<group>"; };
-		494BEA66245A774B000EF1D0 /* ElementKeyable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKeyable.m; sourceTree = "<group>"; };
-		494BEA69245A84D1000EF1D0 /* ElementCASE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCASE.h; sourceTree = "<group>"; };
-		494BEA6A245A84D1000EF1D0 /* ElementCASE.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCASE.m; sourceTree = "<group>"; };
-		494BEA6D245B90D1000EF1D0 /* ElementKRID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementKRID.h; sourceTree = "<group>"; };
-		494BEA6E245B90D1000EF1D0 /* ElementKRID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementKRID.m; sourceTree = "<group>"; };
-		494BEA71245BE256000EF1D0 /* ElementRSID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementRSID.h; sourceTree = "<group>"; };
-		494BEA72245BE256000EF1D0 /* ElementRSID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRSID.m; sourceTree = "<group>"; };
 		494D05FC253FAB5D00F5A789 /* ElementHBYT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHBYT.swift; sourceTree = "<group>"; };
 		494D060A2540C43F00F5A789 /* ElementPACK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPACK.swift; sourceTree = "<group>"; };
 		494D06122540CB3600F5A789 /* ElementBORV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBORV.swift; sourceTree = "<group>"; };
@@ -401,12 +344,6 @@
 		4953F593248874260002340F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4953F5A0248874AA0002340F /* Sound Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sound Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4953F5A82488795B0002340F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
-		4962B272245535270065590E /* ElementList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementList.h; sourceTree = "<group>"; };
-		4962B273245535270065590E /* ElementList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementList.m; sourceTree = "<group>"; };
-		4962B27624569EE50065590E /* ElementWBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementWBIT.h; sourceTree = "<group>"; };
-		4962B27724569EE50065590E /* ElementWBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementWBIT.m; sourceTree = "<group>"; };
-		4962B27A245778950065590E /* ElementLBIT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementLBIT.h; sourceTree = "<group>"; };
-		4962B27B245778950065590E /* ElementLBIT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementLBIT.m; sourceTree = "<group>"; };
 		4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenPanelDelegate.swift; sourceTree = "<group>"; };
 		49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDocument.swift; sourceTree = "<group>"; };
 		49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource-Conflict.swift"; sourceTree = "<group>"; };
@@ -469,10 +406,6 @@
 		4970442B2472064F0035C0FA /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		4970442D2472064F0035C0FA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
-		49882A072447F45700D439BC /* ElementFCNT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementFCNT.h; sourceTree = "<group>"; };
-		49882A082447F45700D439BC /* ElementFCNT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementFCNT.m; sourceTree = "<group>"; };
-		49882A0B2448EF0E00D439BC /* ElementAWRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementAWRD.h; sourceTree = "<group>"; };
-		49882A0C2448EF0E00D439BC /* ElementAWRD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementAWRD.m; sourceTree = "<group>"; };
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
 		499216EF24CCD2250054A390 /* ResourceFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceFile.h; sourceTree = "<group>"; };
 		499216F024CCD2250054A390 /* ResourceFile.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceFile.mm; sourceTree = "<group>"; };
@@ -507,30 +440,12 @@
 		49D185AD25427D8B00EA380C /* ElementBHEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBHEX.swift; sourceTree = "<group>"; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
-		49F6403A2461199500E7CE4D /* ElementPACK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementPACK.h; sourceTree = "<group>"; };
-		49F6403B2461199500E7CE4D /* ElementPACK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementPACK.m; sourceTree = "<group>"; };
-		49F6403E2462C84B00E7CE4D /* ElementDVDR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementDVDR.h; sourceTree = "<group>"; };
-		49F6403F2462C84B00E7CE4D /* ElementDVDR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementDVDR.m; sourceTree = "<group>"; };
-		49F640422463628900E7CE4D /* ElementBORV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementBORV.h; sourceTree = "<group>"; };
-		49F640432463628900E7CE4D /* ElementBORV.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementBORV.m; sourceTree = "<group>"; };
-		49F640462463759900E7CE4D /* ElementWORV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementWORV.h; sourceTree = "<group>"; };
-		49F640472463759900E7CE4D /* ElementWORV.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementWORV.m; sourceTree = "<group>"; };
-		49F6404A246376D900E7CE4D /* ElementLORV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementLORV.h; sourceTree = "<group>"; };
-		49F6404B246376D900E7CE4D /* ElementLORV.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementLORV.m; sourceTree = "<group>"; };
-		49F6404E2464B96E00E7CE4D /* ElementCASR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCASR.h; sourceTree = "<group>"; };
-		49F6404F2464B96E00E7CE4D /* ElementCASR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCASR.m; sourceTree = "<group>"; };
-		49F640522466083800E7CE4D /* ElementCaseable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCaseable.h; sourceTree = "<group>"; };
-		49F640532466083800E7CE4D /* ElementCaseable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCaseable.m; sourceTree = "<group>"; };
-		49F640562466099C00E7CE4D /* ElementRangeable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementRangeable.h; sourceTree = "<group>"; };
-		49F640572466099C00E7CE4D /* ElementRangeable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementRangeable.m; sourceTree = "<group>"; };
 		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
 		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStatus.swift; sourceTree = "<group>"; };
 		49F6C75D24C577270078EB55 /* ResKnife-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ResKnife-Bridging-Header.h"; sourceTree = "<group>"; };
 		49F6C76024C577430078EB55 /* PrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsController.swift; sourceTree = "<group>"; };
 		49F6C76124C577440078EB55 /* ApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDelegate.swift; sourceTree = "<group>"; };
-		49F9560C245D44D200D80C65 /* ElementCOLR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElementCOLR.h; sourceTree = "<group>"; };
-		49F9560D245D44D200D80C65 /* ElementCOLR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElementCOLR.m; sourceTree = "<group>"; };
 		49FE7B48253A7E7700D2219D /* CaseableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseableElement.swift; sourceTree = "<group>"; };
 		49FE7B50253A7EBA00D2219D /* ElementCASE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCASE.swift; sourceTree = "<group>"; };
 		49FE7B58253AC5F400D2219D /* ElementTNAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTNAM.swift; sourceTree = "<group>"; };
@@ -566,28 +481,8 @@
 		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
 		B2FCA78A15A66ACE00696598 /* Image Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Image Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E119367D099864AD00A3A6EA /* ElementUBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementUBYT.h; sourceTree = "<group>"; };
-		E119367E099864AD00A3A6EA /* ElementUBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementUBYT.m; sourceTree = "<group>"; };
-		E119367F099864AD00A3A6EA /* ElementULNG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementULNG.h; sourceTree = "<group>"; };
-		E1193680099864AD00A3A6EA /* ElementULNG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementULNG.m; sourceTree = "<group>"; };
-		E1193681099864AD00A3A6EA /* ElementUWRD.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementUWRD.h; sourceTree = "<group>"; };
-		E1193682099864AD00A3A6EA /* ElementUWRD.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementUWRD.m; sourceTree = "<group>"; };
-		E119371909986D8200A3A6EA /* ElementFIXD.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementFIXD.h; sourceTree = "<group>"; };
-		E119371A09986D8200A3A6EA /* ElementFIXD.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementFIXD.m; sourceTree = "<group>"; };
-		E119376C0998768500A3A6EA /* ElementFRAC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementFRAC.h; sourceTree = "<group>"; };
-		E119376D0998768500A3A6EA /* ElementFRAC.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementFRAC.m; sourceTree = "<group>"; };
-		E119379109987CC400A3A6EA /* ElementULLG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementULLG.h; sourceTree = "<group>"; };
-		E119379209987CC400A3A6EA /* ElementULLG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementULLG.m; sourceTree = "<group>"; };
 		E119383D09991C5100A3A6EA /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
-		E119388B0999296B00A3A6EA /* ElementHEXD.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementHEXD.h; sourceTree = "<group>"; };
-		E119388C0999296B00A3A6EA /* ElementHEXD.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementHEXD.m; sourceTree = "<group>"; };
-		E14AC2740996BF1700D293E5 /* ElementDLLG.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDLLG.h; sourceTree = "<group>"; };
-		E14AC2750996BF1700D293E5 /* ElementDLLG.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDLLG.m; sourceTree = "<group>"; };
-		E14AC451099702F300D293E5 /* ElementFBYT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementFBYT.h; sourceTree = "<group>"; };
-		E14AC452099702F400D293E5 /* ElementFBYT.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementFBYT.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Templates for sfnt tables.rsrc"; sourceTree = "<group>"; };
-		E15CFF80099BECAE004929B6 /* ElementDATE.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementDATE.h; sourceTree = "<group>"; };
-		E15CFF81099BECAF004929B6 /* ElementDATE.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ElementDATE.m; sourceTree = "<group>"; };
 		E17ADBC006A2132800842474 /* NovaTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovaTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF58C069FEA1400F076B8 /* ResKnife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResKnife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hexadecimal Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -603,8 +498,6 @@
 		E19FB515054E918800A80202 /* MisnWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MisnWindowController.m; path = misn/MisnWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E19FB518054E919200A80202 /* ShipWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ShipWindowController.h; path = ship/ShipWindowController.h; sourceTree = "<group>"; };
 		E19FB519054E919200A80202 /* ShipWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ShipWindowController.m; path = ship/ShipWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ElementKEYB.h; sourceTree = "<group>"; };
-		E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementKEYB.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F5041736036BD60801A8010A /* ResKnife.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ResKnife.scriptSuite; sourceTree = "<group>"; };
 		F50DFE17036C203F01A8010A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = en.lproj/ResKnife.scriptTerminology; sourceTree = "<group>"; };
 		F543AFDB027B2A5001A8010C /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataSource.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -704,126 +597,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3D0933EB04DF319F00DD74B1 /* Field Types */ = {
-			isa = PBXGroup;
-			children = (
-				3D4737B804E873F300AF65FE /* ElementDBYT.h */,
-				3D4737B704E873F300AF65FE /* ElementDBYT.m */,
-				3D0933EF04DF381900DD74B1 /* ElementDWRD.h */,
-				3D0933EE04DF381900DD74B1 /* ElementDWRD.m */,
-				3D4737B404E872DB00AF65FE /* ElementDLNG.h */,
-				3D4737B304E872DB00AF65FE /* ElementDLNG.m */,
-				E14AC2740996BF1700D293E5 /* ElementDLLG.h */,
-				E14AC2750996BF1700D293E5 /* ElementDLLG.m */,
-				E119367D099864AD00A3A6EA /* ElementUBYT.h */,
-				E119367E099864AD00A3A6EA /* ElementUBYT.m */,
-				E1193681099864AD00A3A6EA /* ElementUWRD.h */,
-				E1193682099864AD00A3A6EA /* ElementUWRD.m */,
-				E119367F099864AD00A3A6EA /* ElementULNG.h */,
-				E1193680099864AD00A3A6EA /* ElementULNG.m */,
-				E119379109987CC400A3A6EA /* ElementULLG.h */,
-				E119379209987CC400A3A6EA /* ElementULLG.m */,
-				49322A6B244FE71200E1EAE4 /* ElementHBYT.h */,
-				49322A6C244FE71200E1EAE4 /* ElementHBYT.m */,
-				49322A6F244FF5F600E1EAE4 /* ElementHWRD.h */,
-				49322A70244FF5F600E1EAE4 /* ElementHWRD.m */,
-				49322A73244FF63000E1EAE4 /* ElementHLNG.h */,
-				49322A74244FF63000E1EAE4 /* ElementHLNG.m */,
-				49322A77244FF65A00E1EAE4 /* ElementHLLG.h */,
-				49322A78244FF65A00E1EAE4 /* ElementHLLG.m */,
-				493229CF244C7B1200E1EAE4 /* ElementRECT.h */,
-				493229D0244C7B1200E1EAE4 /* ElementRECT.m */,
-				493229D3244D19CF00E1EAE4 /* ElementPNT.h */,
-				493229D4244D19CF00E1EAE4 /* ElementPNT.m */,
-				49322A63244FD17800E1EAE4 /* ElementREAL.h */,
-				49322A64244FD17800E1EAE4 /* ElementREAL.m */,
-				49322A67244FD18700E1EAE4 /* ElementDOUB.h */,
-				49322A68244FD18700E1EAE4 /* ElementDOUB.m */,
-				E119371909986D8200A3A6EA /* ElementFIXD.h */,
-				E119371A09986D8200A3A6EA /* ElementFIXD.m */,
-				E119376C0998768500A3A6EA /* ElementFRAC.h */,
-				E119376D0998768500A3A6EA /* ElementFRAC.m */,
-				E14AC451099702F300D293E5 /* ElementFBYT.h */,
-				E14AC452099702F400D293E5 /* ElementFBYT.m */,
-				49882A0B2448EF0E00D439BC /* ElementAWRD.h */,
-				49882A0C2448EF0E00D439BC /* ElementAWRD.m */,
-				3D0933E704DF317D00DD74B1 /* ElementPSTR.h */,
-				3D0933E804DF317D00DD74B1 /* ElementPSTR.m */,
-				49322A5B244FAADA00E1EAE4 /* ElementCHAR.h */,
-				49322A5C244FAADA00E1EAE4 /* ElementCHAR.m */,
-				49322A5F244FBF4E00E1EAE4 /* ElementTNAM.h */,
-				49322A60244FBF4E00E1EAE4 /* ElementTNAM.m */,
-				E119388B0999296B00A3A6EA /* ElementHEXD.h */,
-				E119388C0999296B00A3A6EA /* ElementHEXD.m */,
-				E15CFF80099BECAE004929B6 /* ElementDATE.h */,
-				E15CFF81099BECAF004929B6 /* ElementDATE.m */,
-				49F9560C245D44D200D80C65 /* ElementCOLR.h */,
-				49F9560D245D44D200D80C65 /* ElementCOLR.m */,
-				3D50046F04EF040900F3B64D /* ElementOCNT.h */,
-				3D50047004EF040900F3B64D /* ElementOCNT.m */,
-				49882A072447F45700D439BC /* ElementFCNT.h */,
-				49882A082447F45700D439BC /* ElementFCNT.m */,
-				3D0933C404DF1C0800DD74B1 /* ElementLSTB.h */,
-				3D0933C504DF1C0800DD74B1 /* ElementLSTB.m */,
-				493229D7244D1DAB00E1EAE4 /* ElementBOOL.h */,
-				493229D8244D1DAB00E1EAE4 /* ElementBOOL.m */,
-				493229C3244C2B5000E1EAE4 /* ElementBFLG.h */,
-				493229C4244C2B5000E1EAE4 /* ElementBFLG.m */,
-				493229C7244C3A0800E1EAE4 /* ElementWFLG.h */,
-				493229C8244C3A0800E1EAE4 /* ElementWFLG.m */,
-				493229CB244C3C2000E1EAE4 /* ElementLFLG.h */,
-				493229CC244C3C2000E1EAE4 /* ElementLFLG.m */,
-				49322A7B2450E87000E1EAE4 /* ElementBBIT.h */,
-				49322A7C2450E87000E1EAE4 /* ElementBBIT.m */,
-				4962B27624569EE50065590E /* ElementWBIT.h */,
-				4962B27724569EE50065590E /* ElementWBIT.m */,
-				4962B27A245778950065590E /* ElementLBIT.h */,
-				4962B27B245778950065590E /* ElementLBIT.m */,
-				494BEA69245A84D1000EF1D0 /* ElementCASE.h */,
-				494BEA6A245A84D1000EF1D0 /* ElementCASE.m */,
-				49F6404E2464B96E00E7CE4D /* ElementCASR.h */,
-				49F6404F2464B96E00E7CE4D /* ElementCASR.m */,
-				49F640422463628900E7CE4D /* ElementBORV.h */,
-				49F640432463628900E7CE4D /* ElementBORV.m */,
-				49F640462463759900E7CE4D /* ElementWORV.h */,
-				49F640472463759900E7CE4D /* ElementWORV.m */,
-				49F6404A246376D900E7CE4D /* ElementLORV.h */,
-				49F6404B246376D900E7CE4D /* ElementLORV.m */,
-				494BEA71245BE256000EF1D0 /* ElementRSID.h */,
-				494BEA72245BE256000EF1D0 /* ElementRSID.m */,
-				E1D0DB4E0A109A4E0011739C /* ElementKEYB.h */,
-				E1D0DB4F0A109A4E0011739C /* ElementKEYB.m */,
-				494BEA6D245B90D1000EF1D0 /* ElementKRID.h */,
-				494BEA6E245B90D1000EF1D0 /* ElementKRID.m */,
-				49F6403E2462C84B00E7CE4D /* ElementDVDR.h */,
-				49F6403F2462C84B00E7CE4D /* ElementDVDR.m */,
-				49F6403A2461199500E7CE4D /* ElementPACK.h */,
-				49F6403B2461199500E7CE4D /* ElementPACK.m */,
-			);
-			name = "Field Types";
-			sourceTree = "<group>";
-		};
 		3D0B38A504DEF41E005AED5E /* Template Editor */ = {
 			isa = PBXGroup;
 			children = (
 				B27A65CE15A677F00029141B /* TemplateWindow.xib */,
 				E18BFA3606A20B7A00F076B8 /* Info.plist */,
-				3D0B38B204DEF41E005AED5E /* TemplateWindowController.h */,
-				3D0B38B304DEF41E005AED5E /* TemplateWindowController.m */,
-				3D0933BE04DF151C00DD74B1 /* ResourceStream.h */,
-				3D0933BF04DF151C00DD74B1 /* ResourceStream.m */,
-				4962B272245535270065590E /* ElementList.h */,
-				4962B273245535270065590E /* ElementList.m */,
-				3D0933A604DEFEE600DD74B1 /* Element.h */,
-				3D0933A704DEFEE600DD74B1 /* Element.m */,
-				49F640522466083800E7CE4D /* ElementCaseable.h */,
-				49F640532466083800E7CE4D /* ElementCaseable.m */,
-				494BEA65245A774B000EF1D0 /* ElementKeyable.h */,
-				494BEA66245A774B000EF1D0 /* ElementKeyable.m */,
-				49F640562466099C00E7CE4D /* ElementRangeable.h */,
-				49F640572466099C00E7CE4D /* ElementRangeable.m */,
-				4945DBFA25315CAB00856385 /* GroupElement.h */,
-				3D0933EB04DF319F00DD74B1 /* Field Types */,
 				E11937F309991C1100A3A6EA /* Support Resources */,
 				4945DBF2253142AE00856385 /* TemplateWindowController.swift */,
 				4945DC152531671400856385 /* TabbableOutlineView.swift */,

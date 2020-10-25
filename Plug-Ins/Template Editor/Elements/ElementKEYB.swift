@@ -11,7 +11,7 @@ class ElementKEYB: Element {
     
     override func copy() -> Self {
         let element = (super.copy() as Element) as! Self
-        element.subElements = try? subElements.copy()
+        element.subElements = try? subElements?.copy()
         return element
     }
     

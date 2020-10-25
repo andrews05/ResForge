@@ -8,7 +8,7 @@ class ElementBHEX<T: FixedWidthInteger & UnsignedInteger>: ElementHEXD {
     override func configure() throws {
         skipLengthBytes = self.type.hasSuffix("SHX")
         lengthBytes = T.bitWidth / 8
-        self.width = 240
+        self.width = 360
     }
     
     override func readData(from reader: BinaryDataReader) throws {
