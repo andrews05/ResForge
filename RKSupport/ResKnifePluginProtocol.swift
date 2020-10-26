@@ -9,31 +9,31 @@ public extension FourCharCode {
     }
 }
 
-@objc public protocol ResKnifePlugin {
+public protocol ResKnifePlugin: class {
     var resource: Resource { get }
     init?(resource: Resource)
     
-    @objc optional func saveResource(_ sender: Any)
-    @objc optional func revertResource(_ sender: Any)
+    func saveResource(_ sender: Any)
+    func revertResource(_ sender: Any)
     
     /// You can return here the filename extension for your resource type. By default the host application substitutes the resource type if you do not implement this.
-    @objc optional static func filenameExtension(for resourceType: String) -> String
+    static func filenameExtension(for resourceType: String) -> String?
     
     /// Implement this if the plugin needs to control the data that gets written to disk on export. By default the host application writes the raw resource data.
     /// The idea is that this export function is non-lossy, i.e. only override this if there is a format that is a 100% equivalent to your data.
-    @objc optional static func export(_ resource: Resource, to url: URL)
+    static func export(_ resource: Resource, to url: URL) -> Bool
     
     /// Return the icon to be used throughout the UI for any given resource type.
-    @objc optional static func icon(for resourceType: String) -> NSImage?
+    static func icon(for resourceType: String) -> NSImage?
 
     /// Return an NSImage representing the resource for use in grid view.
-    @objc optional static func image(for resource: Resource) -> NSImage?
+    static func image(for resource: Resource) -> NSImage?
     
     /// Return the preferred preview size for grid view.
-    @objc optional static func previewSize(for resourceType: String) -> Int
+    static func previewSize(for resourceType: String) -> Int?
     
     /// Return a placeholder name to show for a resource when it has no name.
-    @objc optional static func placeholderName(for resource: Resource) -> String
+    static func placeholderName(for resource: Resource) -> String?
 }
 
 public protocol ResKnifeTemplatePlugin: ResKnifePlugin {
@@ -46,4 +46,14 @@ public protocol ResKnifePluginManager: class {
     func findResource(ofType: String, id: Int, currentDocumentOnly: Bool) -> Resource?
     func findResource(ofType: String, name: String, currentDocumentOnly: Bool) -> Resource?
     func createResource(ofType: String, id: Int, name: String)
+}
+
+// Default implementations for optional functions
+public extension ResKnifePlugin {
+    static func filenameExtension(for resourceType: String) -> String? { nil }
+    static func export(_ resource: Resource, to url: URL) -> Bool { false }
+    static func icon(for resourceType: String) -> NSImage? { nil }
+    static func image(for resource: Resource) -> NSImage? { nil }
+    static func previewSize(for resourceType: String) -> Int? { nil }
+    static func placeholderName(for resource: Resource) -> String? { nil }
 }

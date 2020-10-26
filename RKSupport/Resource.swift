@@ -121,7 +121,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     
     /// Return a placeholder name to show for when the resource has no name.
     public func placeholderName() -> String {
-        if let name = PluginRegistry.editors[type]?.placeholderName?(for: self) {
+        if let name = PluginRegistry.editors[type]?.placeholderName(for: self) {
             return name
         }
         return PluginRegistry.placeholderName(for: self)

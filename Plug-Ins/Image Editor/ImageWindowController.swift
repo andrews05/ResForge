@@ -157,7 +157,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
     
     // MARK: -
-    static func filenameExtension(for resourceType: String) -> String {
+    static func filenameExtension(for resourceType: String) -> String? {
         switch resourceType {
         case "PNG ":
             return "png"
@@ -168,12 +168,13 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         }
     }
     
-    static func export(_ resource: Resource, to url: URL) {
+    static func export(_ resource: Resource, to url: URL) -> Bool {
         do {
             try self.imageData(for: resource).write(to: url)
         } catch let error {
             resource.document?.presentError(error)
         }
+        return true
     }
     
     static func image(for resource: Resource) -> NSImage? {
@@ -184,7 +185,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         return NSWorkspace.shared.icon(forFileType: "public.image")
     }
     
-    static func previewSize(for resourceType: String) -> Int {
+    static func previewSize(for resourceType: String) -> Int? {
         switch resourceType {
         case "PICT", "PNG ":
             return 100

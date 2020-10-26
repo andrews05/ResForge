@@ -53,7 +53,7 @@ class EditorManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
                 alert.beginSheetModal(for: sender) { returnCode in
                     switch (returnCode) {
                     case .alertFirstButtonReturn: // keep
-                        plug.saveResource?(alert)
+                        plug.saveResource(alert)
                         sender.close()
                     case .alertSecondButtonReturn: // don't keep
                         sender.close()
@@ -63,7 +63,7 @@ class EditorManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
                 }
                 return false
             }
-            plug.saveResource?(sender)
+            plug.saveResource(sender)
         }
         return true
     }
@@ -77,7 +77,7 @@ class EditorManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     
     // MARK: - Protocol functions
     
-    @objc func open(resource: Resource, using editor: ResKnifePlugin.Type? = nil, template: String? = nil) {
+    func open(resource: Resource, using editor: ResKnifePlugin.Type? = nil, template: String? = nil) {
         // Work out editor to use
         var editor = editor ?? PluginRegistry.editors[resource.type] ?? PluginRegistry.templateEditor
         var tmplResource: Resource!

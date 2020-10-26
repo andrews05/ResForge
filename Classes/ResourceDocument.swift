@@ -201,15 +201,17 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
             filename = "\(resource.type) \(resource.id)"
         }
         let editor = PluginRegistry.editors[resource.type]
-        let ext = editor?.filenameExtension?(for: resource.type) ?? resource.type.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        let ext = editor?.filenameExtension(for: resource.type) ?? resource.type.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         return (filename, ext)
     }
     
     private func export(resource: Resource, to url: URL) {
         let editor = PluginRegistry.editors[resource.type]
-        do {
-            try editor?.export?(resource, to: url) ?? resource.data.write(to: url)
-        } catch {}
+        if editor?.export(resource, to: url) != true {
+            do {
+                try resource.data.write(to: url)
+            } catch {}
+        }
     }
     
     // MARK: - Window Management

@@ -155,17 +155,18 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
     
     // ResKnifePlugin protocol export functions
-    static func filenameExtension(for resourceType: String) -> String {
+    static func filenameExtension(for resourceType: String) -> String? {
         return "aiff"
     }
     
-    static func export(_ resource: Resource, to url: URL) {
+    static func export(_ resource: Resource, to url: URL) -> Bool {
         let sound = SoundResource(resource.data)
         do {
             try sound.export(to: url)
         } catch let error {
             resource.document.presentError(error)
         }
+        return true
     }
     
     static func icon(for resourceType: String) -> NSImage? {

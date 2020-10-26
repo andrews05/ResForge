@@ -35,8 +35,8 @@ public class PluginRegistry {
                 Self.templateEditor = pluginClass
             default:
                 editors[type] = pluginClass
-                if pluginClass.image != nil {
-                    previewSizes[type] = pluginClass.previewSize?(for: type) ?? 64
+                if let previewSize = pluginClass.previewSize(for: type) {
+                    previewSizes[type] = previewSize
                 }
             }
         }
@@ -46,7 +46,7 @@ public class PluginRegistry {
     public static func icon(for resourceType: String) -> NSImage! {
         if icons[resourceType] == nil {
             // Ask the editor for an icon, falling back to our predefined type mapping or just a default document type
-            icons[resourceType] = editors[resourceType]?.icon?(for: resourceType) ?? NSWorkspace.shared.icon(forFileType: iconTypeMappings[resourceType] ?? "")
+            icons[resourceType] = editors[resourceType]?.icon(for: resourceType) ?? NSWorkspace.shared.icon(forFileType: iconTypeMappings[resourceType] ?? "")
         }
         return icons[resourceType]
     }

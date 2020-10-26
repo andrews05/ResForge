@@ -89,13 +89,14 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     
     func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
         let parent = currentType == nil ? resource.type : nil
-        outlineView.moveItem(at: oldIndex, inParent: parent, to: newIndex, inParent: parent)
         if inlineUpdate {
-            outlineView.scrollRowToVisible(outlineView.selectedRow)
-            // Update the placeholder
-            let view = outlineView.view(atColumn: 0, row: outlineView.selectedRow, makeIfNecessary: false) as? NSTableCellView
-            view?.textField?.placeholderString = resource.placeholderName()
+            // The resource has been edited inline, perform the move async to ensure the first responder has been properly updated
+            DispatchQueue.main.async { [self] in
+                outlineView.moveItem(at: oldIndex, inParent: parent, to: newIndex, inParent: parent)
+                outlineView.scrollRowToVisible(outlineView.selectedRow)
+            }
         } else {
+            outlineView.moveItem(at: oldIndex, inParent: parent, to: newIndex, inParent: parent)
             outlineView.reloadItem(resource)
         }
     }
