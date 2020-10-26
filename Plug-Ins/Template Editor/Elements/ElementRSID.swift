@@ -27,6 +27,12 @@ class ElementRSID: ElementDBYT<Int16> {
         let result = regex.firstMatch(in: label, options: [], range: NSMakeRange(0, label.count))
         if let nsr = result?.range(at: 1), let r = Range(nsr, in: label) {
             resType = String(label[r])
+        } else {
+            // See if we can bind to a preceding TNAM field
+            guard let tnam = self.parentList.previous(ofType: "TNAM") else {
+                throw TemplateError.invalidStructure(self, "Could not determine resource type.")
+            }
+            self.bind(NSBindingName("resType"), to: tnam, withKeyPath: "value")
         }
         if let nsr = result?.range(at: 2), let r = Range(nsr, in: label) {
             offset = Int(label[r])!
@@ -39,15 +45,7 @@ class ElementRSID: ElementDBYT<Int16> {
         self.width = 240
         fixedCases = self.cases ?? []
         fixedMap = self.caseMap ?? [:]
-        if resType == nil {
-            // See if we can bind to a preceding TNAM field
-            guard let tnam = self.parentList.previous(ofType: "TNAM") else {
-                throw TemplateError.invalidStructure(self, "Could not determine resource type.")
-            }
-            self.bind(NSBindingName("resType"), to: tnam, withKeyPath: "value") // This will trigger loadCases
-        } else {
-            self.loadCases()
-        }
+        self.loadCases()
     }
     
     override func configure(view: NSView) {
@@ -56,6 +54,9 @@ class ElementRSID: ElementDBYT<Int16> {
     }
     
     private func loadCases() {
+        guard fixedCases != nil else {
+            return
+        }
         self.cases = fixedCases
         self.caseMap = fixedMap
         // Find resources in all documents and sort by id

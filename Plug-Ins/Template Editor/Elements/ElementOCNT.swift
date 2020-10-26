@@ -8,7 +8,7 @@ protocol CounterElement where Self: Element {
 // Implements OCNT, ZCNT, BCNT, WCNT, LCNT, LZCT
 class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
     private var value: T = 0
-    private var lstc: ElementLSTB!
+    private weak var lstc: ElementLSTB!
     @objc var count: Int {
         get {
             Int(value)

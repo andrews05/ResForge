@@ -2,7 +2,7 @@ import Cocoa
 import RKSupport
 
 class ElementList {
-    let parentList: ElementList?
+    private(set) weak var parentList: ElementList?
     private(set) weak var controller: TemplateWindowController!
     private var elements: [Element] = []
     private var visibleElements: [Element] = []
@@ -10,6 +10,10 @@ class ElementList {
     private var configured = false
     var count: Int {
         return visibleElements.count
+    }
+    
+    deinit {
+        print("deinit ElementList")
     }
     
     init(controller: TemplateWindowController, parent: ElementList? = nil) {
@@ -31,12 +35,10 @@ class ElementList {
         while currentIndex < elements.count {
             let element = elements[currentIndex]
             element.parentList = self
-            // Get the visible index now and insert afterwards - allows the element to change visibility during configure
-            let visIndex = visibleElements.endIndex
-            try element.configure()
             if element.visible {
-                visibleElements.insert(element, at: visIndex)
+                visibleElements.append(element)
             }
+            try element.configure()
             currentIndex += 1
         }
         configured = true

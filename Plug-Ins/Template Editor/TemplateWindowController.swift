@@ -63,15 +63,15 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
             let reader = BinaryDataReader(resource.data)
             do {
                 try resourceStructure.readData(from: reader)
+                if reader.remainingBytes > 0 {
+                    // Show warning
+                    NSApp.presentError(TemplateError.truncate)
+                }
             } catch BinaryDataReaderError.insufficientData {
                 // Ignore error, data will be padded on save
             } catch let error {
                 NSApp.presentError(error)
                 return false
-            }
-            if reader.remainingBytes > 0 {
-                // Show warning
-                NSApp.presentError(TemplateError.truncate)
             }
         }
         // expand all

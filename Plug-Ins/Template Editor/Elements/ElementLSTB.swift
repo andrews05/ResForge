@@ -3,18 +3,19 @@ import RKSupport
 
 // Implements LSTB, LSTZ, LSTC
 class ElementLSTB: Element {
-    var counter: CounterElement?
+    weak var counter: CounterElement?
     var fixedCount: Bool = false
     private let zeroTerminated: Bool
     private var subElements: ElementList!
     private var entries: [Element]!
-    private var tail: ElementLSTB!
+    private weak var tail: ElementLSTB!
     private var singleElement: Element?
     
     override var displayLabel: String {
-        guard let index = tail?.entries.firstIndex(of: self) else {
+        guard tail != nil else {
             return super.displayLabel
         }
+        let index = entries?.endIndex ?? tail.entries.firstIndex(of: self)!
         return "\(index+1)) " + (singleElement?.displayLabel ?? super.displayLabel)
     }
     
@@ -45,7 +46,7 @@ class ElementLSTB: Element {
         _ = try subElements.copy() // Validate the subElements configuration
         // This item will be the tail
         tail = self
-        entries = [self]
+        entries = [] // Don't include tail in the list as this will create a reference cycle
         if fixedCount {
             // Fixed count list, create all the entries now
             for _ in 0..<counter!.count {
@@ -71,7 +72,7 @@ class ElementLSTB: Element {
     func createNext() -> Self {
         // Create a new list entry, inserting before self
         let list = self.copy() as Self
-        tail.entries.insert(list, at: tail.entries.endIndex-1)
+        tail.entries.append(list)
         return list
     }
     
@@ -132,7 +133,8 @@ class ElementLSTB: Element {
     func createListEntry() {
         let list = tail.copy() as ElementLSTB
         parentList.insert(list, before: self)
-        tail.entries.insert(list, at: tail.entries.firstIndex(of: self)!)
+        let index = entries?.endIndex ?? tail.entries.firstIndex(of: self)!
+        tail.entries.insert(list, at: index)
         tail.counter?.count += 1
     }
     

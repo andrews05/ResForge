@@ -27,7 +27,7 @@ class ElementCASR: CaseableElement {
     private var invert = false
     private var resType: String!
     private var _formatter: NumberFormatter!
-    var parentElement: RangeableElement!
+    weak var parentElement: RangeableElement!
     
     override var description: String {
         self.displayLabel
