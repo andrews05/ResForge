@@ -156,6 +156,8 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
     
     @IBAction func toggleType(_ sender: Any) {
         ignoreCase.isEnabled = searchText.state == .on
+        findField.stringValue = self.sanitize(findField.stringValue)
+        replaceField.stringValue = self.sanitize(replaceField.stringValue)
     }
     
     // NSTextFieldDelegate
