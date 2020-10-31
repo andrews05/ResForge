@@ -7,9 +7,9 @@ class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
     var readOpenPanelForFork = false
     private var forkIndex = 0
     private let formatter = ByteCountFormatter()
-    private static let forks = [nil, "", "rsrc"]
+    private static let forks = [nil, FileFork.data, FileFork.rsrc]
     
-    func getSelectedFork() -> String? {
+    func getSelectedFork() -> FileFork? {
         if !readOpenPanelForFork {
             return nil
         }

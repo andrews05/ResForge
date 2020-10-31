@@ -6,12 +6,41 @@ extension Notification.Name {
     static let DocumentSelectionDidChange   = Self("DocumentSelectionDidChange")
 }
 
+enum FileFork {
+    case data
+    case rsrc
+    var name: String {
+        switch self {
+        case .data:
+            return NSLocalizedString("Data Fork", comment: "")
+        case .rsrc:
+            return NSLocalizedString("Resource Fork", comment: "")
+        }
+    }
+}
+
+extension ResourceFileFormat {
+    var name: String {
+        switch self {
+        case kFormatClassic:
+            return NSLocalizedString("Resource File", comment: "")
+        case kFormatExtended:
+            return NSLocalizedString("Extended Resource File", comment: "")
+        case kFormatRez:
+            return NSLocalizedString("Rez File", comment: "")
+        default:
+            return ""
+        }
+    }
+}
+
 class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, NSDraggingDestination {
     @IBOutlet var dataSource: ResourceDataSource!
+    @IBOutlet var statusText: NSTextField!
     private(set) lazy var directory = ResourceDirectory(self)
     private(set) lazy var editorManager = EditorManager(self)
     private(set) lazy var createController = CreateResourceController(self)
-    private var fork: String!
+    private var fork: FileFork!
     private var format: ResourceFileFormat = kFormatClassic
     var hfsType: OSType = 0 {
         didSet {
@@ -54,36 +83,36 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
         var resources: [Resource]?
         if let fork = fork {
             // If fork was sepcified in open panel, try this fork only
-            if fork == "" && hasData {
+            if fork == .data && hasData {
                 resources = try ResourceFile.read(from: url, format: &format)
-            } else if fork == "rsrc" && hasRsrc {
+            } else if fork == .rsrc && hasRsrc {
                 resources = try ResourceFile.read(from: rsrcURL, format: &format)
             } else {
                 // Fork is empty
                 resources = []
             }
         } else {
-            // Try to open data fork
-            if hasData {
-                do {
-                    resources = try ResourceFile.read(from: url, format: &format)
-                    fork = ""
-                } catch {}
-            }
-            // If failed, try resource fork
-            if resources == nil && hasRsrc {
+            // If resource fork exists, try it first
+            if hasRsrc {
                 do {
                     resources = try ResourceFile.read(from: rsrcURL, format: &format)
-                    fork = "rsrc"
+                    fork = .rsrc
+                } catch {}
+            }
+            // If failed, try data fork
+            if resources == nil && hasData {
+                do {
+                    resources = try ResourceFile.read(from: url, format: &format)
+                    fork = .data
                 } catch {}
             }
             // If still failed, find an empty fork
             if resources == nil && !hasData {
                 resources = []
-                fork = ""
+                fork = .data
             } else if resources == nil && !hasRsrc {
                 resources = []
-                fork = "rsrc"
+                fork = .rsrc
             }
         }
         
@@ -97,6 +126,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
             directory.reset()
             directory.add(resources)
             dataSource?.reload()
+            self.updateStatus()
             self.undoManager?.enableUndoRegistration()
         } else {
             throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: nil)
@@ -115,7 +145,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
             // Set fork according to typeName
             if typeName == "ResourceMapRF" {
                 format = kFormatClassic
-                fork = "rsrc"
+                fork = .rsrc
                 // Set default type/creator for resource fork only
                 if hfsType == 0 && hfsCreator == 0 {
                     hfsType = OSType("rsrc")
@@ -123,7 +153,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
                 }
             } else {
                 format = typeName == "ResourceMapExtended" ? kFormatExtended : kFormatClassic
-                fork = ""
+                fork = .data
                 // Clear type/creator for data fork (assume filename extension)
                 hfsType = 0
                 hfsCreator = 0
@@ -139,11 +169,11 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
         FileManager.default.createFile(atPath: url.path, contents: nil, attributes: attrs)
         
         // Write resources to file
-        let writeUrl = fork == "rsrc" ? url.appendingPathComponent("..namedfork/rsrc") : url
+        let writeUrl = fork == .rsrc ? url.appendingPathComponent("..namedfork/rsrc") : url
         try ResourceFile.write(directory.resources(), to: writeUrl, with: format)
         
         // If writing the resource fork, copy the data from the old file
-        if saveOperation == .saveOperation && fork == "rsrc" {
+        if saveOperation == .saveOperation && fork == .rsrc {
             let err = copyfile(absoluteOriginalContentsURL?.path.cString(using: .utf8), url.path.cString(using: .utf8), nil, copyfile_flags_t(COPYFILE_DATA))
             if err != noErr {
                 throw NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
@@ -152,6 +182,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
         
         // Update info window
         NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
+        self.updateStatus()
     }
     
     // MARK: - Export
@@ -218,6 +249,23 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
     
     override func windowControllerDidLoadNib(_ windowController: NSWindowController) {
         windowController.window?.registerForDraggedTypes([.RKResource])
+        self.updateStatus()
+    }
+    
+    func updateStatus() {
+        guard let statusText = statusText else {
+            return
+        }
+        let count = directory.count
+        var status = count == 1 ? "\(count) resource" : "\(count) resources"
+        if let fork = fork {
+            var formatName = format.name
+            if format == kFormatClassic || fork == .rsrc {
+                formatName += " (\(fork.name))"
+            }
+            status = "\(formatName) — \(status)"
+        }
+        statusText.stringValue = status
     }
     
     func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {

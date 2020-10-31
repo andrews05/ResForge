@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ResourceDocument" customModule="ResKnife" customModuleProvider="target">
             <connections>
                 <outlet property="dataSource" destination="32" id="120"/>
+                <outlet property="statusText" destination="8F9-Fo-UGC" id="Jnt-Qo-hHy"/>
                 <outlet property="window" destination="5" id="8"/>
             </connections>
         </customObject>
@@ -18,25 +19,25 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="600" y="600" width="450" height="430"/>
+            <rect key="contentRect" x="600" y="600" width="450" height="450"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <value key="minSize" type="size" width="250" height="200"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="450" height="430"/>
+                <rect key="frame" x="0.0" y="0.0" width="450" height="449"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P36-7u-Lzi">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="431"/>
+                        <rect key="frame" x="0.0" y="22" width="450" height="428"/>
                         <subviews>
                             <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="sqc-t3-6l4">
-                                <rect key="frame" x="0.0" y="0.0" width="110" height="431"/>
+                                <rect key="frame" x="0.0" y="0.0" width="110" height="428"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="fOO-eZ-9LT">
-                                    <rect key="frame" x="0.0" y="0.0" width="110" height="431"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="110" height="428"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" floatsGroupRows="NO" id="u10-wc-uhV" customClass="SourceList" customModule="ResKnife" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="110" height="431"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="110" height="428"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -328,12 +329,22 @@
                             <outlet property="delegate" destination="32" id="whc-7l-gy4"/>
                         </connections>
                     </splitView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8F9-Fo-UGC">
+                        <rect key="frame" x="194" y="4" width="63" height="14"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Status Text" id="Vgz-rE-IcP">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="8F9-Fo-UGC" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="7dE-Va-FNg"/>
                     <constraint firstAttribute="trailing" secondItem="P36-7u-Lzi" secondAttribute="trailing" id="CZ8-Tg-JPW"/>
-                    <constraint firstAttribute="bottom" secondItem="P36-7u-Lzi" secondAttribute="bottom" id="awk-fW-IYv"/>
                     <constraint firstItem="P36-7u-Lzi" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="b5o-CK-gWi"/>
+                    <constraint firstItem="8F9-Fo-UGC" firstAttribute="top" secondItem="P36-7u-Lzi" secondAttribute="bottom" constant="4" id="eft-kP-STc"/>
                     <constraint firstItem="P36-7u-Lzi" firstAttribute="top" secondItem="6" secondAttribute="top" constant="-1" id="q7Q-N2-hqT"/>
+                    <constraint firstAttribute="bottom" secondItem="8F9-Fo-UGC" secondAttribute="bottom" constant="4" id="u1p-t7-o57"/>
                 </constraints>
             </view>
             <toolbar key="toolbar" implicitIdentifier="BAC334F2-D895-447E-9E05-C55DD8F8276C" autosavesConfiguration="NO" prefersToBeShown="NO" displayMode="iconAndLabel" sizeMode="regular" id="XPc-uC-N93">
@@ -450,6 +461,7 @@
                     <toolbarItem reference="jAZ-NB-kFb"/>
                 </defaultToolbarItems>
             </toolbar>
+            <contentBorderThickness minY="22"/>
             <connections>
                 <outlet property="delegate" destination="-2" id="9"/>
                 <outlet property="initialFirstResponder" destination="145" id="156"/>

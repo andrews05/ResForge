@@ -47,6 +47,7 @@ class ResourceDirectory {
         self.addToTypedList(resource)
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.remove(resource) })
         NotificationCenter.default.post(name: .DirectoryDidAddResource, object: self, userInfo: ["resource": resource])
+        document.updateStatus()
     }
     
     /// Remove a single resource.
@@ -54,6 +55,7 @@ class ResourceDirectory {
         self.removeFromTypedList(resource)
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.add(resource) })
         NotificationCenter.default.post(name: .DirectoryDidRemoveResource, object: self, userInfo: ["resource": resource])
+        document.updateStatus()
     }
     
     private func addToTypedList(_ resource: Resource) {
@@ -105,6 +107,10 @@ class ResourceDirectory {
             "oldIndex": idx,
             "newIndex": newIdx
         ])
+    }
+    
+    var count: Int {
+        resourcesByType.flatMap { $1 }.count
     }
     
     func resources() -> [Resource] {
