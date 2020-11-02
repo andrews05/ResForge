@@ -12,10 +12,6 @@ class ElementList {
         return visibleElements.count
     }
     
-    deinit {
-        print("deinit ElementList")
-    }
-    
     init(controller: TemplateWindowController, parent: ElementList? = nil) {
         parentList = parent
         self.controller = controller
@@ -338,7 +334,7 @@ class ElementList {
         "CASR": ElementCASR.self,           // option range for preceding element (ResKnife)
         "RSID": ElementRSID.self,           // resouce id (signed word) - type and offset in label
 
-        // key selection
+        // key selectors
         "KBYT": ElementKBYT<Int8>.self,     // signed keys
         "KWRD": ElementKBYT<Int16>.self,
         "KLNG": ElementKBYT<Int32>.self,
@@ -372,13 +368,12 @@ class ElementList {
         "RREF": ElementRREF.self,           // static reference to another resource (ResKnife)
         "PACK": ElementPACK.self,           // pack other elements together (ResKnife)
 
-        // and some faked ones just to increase compatibility (these are marked 'x' in the docs)
+        // and some faked ones just to increase compatibility
         "SFRC": ElementDBYT<UInt16>.self,   // 0.16 fixed fraction
         "FXYZ": ElementDBYT<UInt16>.self,   // 1.15 fixed fraction
         "FWID": ElementDBYT<UInt16>.self,   // 4.12 fixed fraction
         "FRAC": ElementDBYT<UInt32>.self,   // 2.30 fixed fraction
         "FIXD": ElementDBYT<UInt32>.self,   // 16.16 fixed fraction
-        "LLDT": ElementDBYT<UInt64>.self,   // 8-byte date (seconds since 1 Jan 1904) (ResKnife, used by Font Editor templates)
         "STYL": ElementDBYT<Int8>.self,     // QuickDraw font style (ResKnife)
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)

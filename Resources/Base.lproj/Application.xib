@@ -427,11 +427,17 @@ CA
                                 <menuItem title="Automatic" state="on" id="kwd-tA-MiD">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
+                                <menuItem title="Data Fork" id="FeS-8m-rN6">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="Resource Fork" id="s52-qF-bzN">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
                             </items>
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <action selector="selectFork:" target="448" id="YIu-vl-WQr"/>
+                        <binding destination="448" name="selectedIndex" keyPath="forkIndex" id="PVy-Iy-ukN"/>
                     </connections>
                 </popUpButton>
             </subviews>
@@ -451,5 +457,6 @@ CA
                 <outlet property="forkSelect" destination="NW9-Ng-yIh" id="FkP-Ya-ttz"/>
             </connections>
         </customObject>
+        <userDefaultsController representsSharedInstance="YES" id="e7o-Nx-2Jo"/>
     </objects>
 </document>

@@ -11,8 +11,7 @@
     try {
         gFile = graphite::rsrc::file(url.fileSystemRepresentation);
     } catch (const std::exception& e) {
-        NSString *message = [NSString stringWithUTF8String:e.what()];
-        *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:@{NSLocalizedFailureReasonErrorKey:message}];
+        *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:nil];
         return nil;
     }
     if (format) *format = (ResourceFileFormat)gFile.current_format();

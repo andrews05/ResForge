@@ -122,7 +122,8 @@ class ElementRSID: ElementDBYT<Int16> {
 extension NSComboBoxCell {
     open override func drawingRect(forBounds rect: NSRect) -> NSRect {
         var r = super.drawingRect(forBounds: rect)
-        if (self.dataSource as? NSComboBox)?.dataSource is ElementRSID {
+        let source = (self.dataSource as? NSComboBox)?.dataSource
+        if source is ElementRSID || source is ElementCASR {
             r.size.width -= 15
         }
         return r
