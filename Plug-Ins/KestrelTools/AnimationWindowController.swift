@@ -5,10 +5,24 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
     static let supportedTypes = ["rlëD"]
     
     let resource: Resource
+    private var playing = false {
+        didSet {
+            playButton.title = playing ? "Pause" : "Play"
+            timer?.invalidate()
+            if playing {
+                timer = Timer(timeInterval: 1/30, target: self, selector: #selector(nextFrame), userInfo: nil, repeats: true)
+                RunLoop.main.add(timer!, forMode: .default)
+            }
+        }
+    }
     private var frames: [NSBitmapImageRep]!
     private var currentFrame = 0
+    private var timer: Timer?
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var imageSize: NSTextField!
+    @IBOutlet var playButton: NSButton!
+    @IBOutlet var exportButton: NSButton!
+    @IBOutlet var frameCounter: NSTextField!
     
     override var windowNibName: String {
         return "AnimationWindow"
@@ -17,6 +31,7 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
     required init(resource: Resource) {
         self.resource = resource
         super.init(window: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.windowWillClose(_:)), name: NSWindow.willCloseNotification, object: self.window)
     }
 
     required init?(coder: NSCoder) {
@@ -27,9 +42,13 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
         super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle
         imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
-        imageView.isEditable = ["PICT", "cicn", "ppat", "PNG "].contains(resource.type)
+        imageView.isEditable = [].contains(resource.type)
     
         self.loadImage()
+    }
+    
+    @objc private func windowWillClose(_ notification: Notification) {
+        timer?.invalidate()
     }
     
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
@@ -44,10 +63,46 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
         }
     }
     
+    @IBAction func playPause(_ sender: Any) {
+        playing = !playing
+    }
+    
+    @IBAction func exportImage(_ sender: Any) {
+        let panel = NSSavePanel()
+        if self.resource.name.count > 0 {
+            panel.nameFieldStringValue = self.resource.name
+        } else {
+            panel.nameFieldStringValue = "Frame sheet \(resource.id)"
+        }
+        panel.allowedFileTypes = ["tiff"]
+        panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
+            if returnCode.rawValue == NSFileHandlingPanelOKButton {
+                _ = Self.export(self.resource, to: panel.url!)
+            }
+        })
+    }
+    
+    override func keyDown(with event: NSEvent) {
+        if event.characters == " " {
+            playing = !playing
+        } else if event.specialKey == .leftArrow {
+            playing = false
+            currentFrame = (currentFrame+frames.count-2) % frames.count
+            self.nextFrame()
+        } else if event.specialKey == .rightArrow {
+            playing = false
+            self.nextFrame()
+        }
+    }
+    
     // MARK: -
     
     private func loadImage() {
         imageView.image = nil
+        playing = false
+        frameCounter.stringValue = "-/-"
+        playButton.isEnabled = false
+        exportButton.isEnabled = false
         if resource.data.count > 0 {
             do {
                 let rle = try Rle(resource.data)
@@ -56,8 +111,10 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
                     frames.append(try rle.readFrame())
                 }
                 imageView.image = NSImage(size: NSMakeSize(CGFloat(rle.frameWidth), CGFloat(rle.frameHeight)))
+                playButton.isEnabled = true
+                exportButton.isEnabled = true
                 currentFrame = -1
-                self.nextFrame()
+                playing = true
             } catch {}
         }
         self.updateView()
@@ -73,9 +130,7 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
         }
         image.addRepresentation(frames[currentFrame])
         imageView.setNeedsDisplay()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1/30) { [weak self] in
-            self?.nextFrame()
-        }
+        frameCounter.stringValue = "\(currentFrame+1)/\(frames.count)"
     }
     
     private func updateView() {

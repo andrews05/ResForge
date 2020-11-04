@@ -3,13 +3,17 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AnimationWindowController" customModule="KestrelTools" customModuleProvider="target">
             <connections>
+                <outlet property="exportButton" destination="C2f-Qi-BIY" id="PHB-CW-QzQ"/>
+                <outlet property="frameCounter" destination="gx5-MO-Xlp" id="oNT-LT-Ebc"/>
                 <outlet property="imageSize" destination="Idz-Rc-j82" id="g5Y-Vm-wsW"/>
                 <outlet property="imageView" destination="19" id="YAm-A5-vRc"/>
+                <outlet property="playButton" destination="e3j-NW-hCp" id="ixM-k6-9AM"/>
                 <outlet property="window" destination="17" id="22"/>
             </connections>
         </customObject>
@@ -18,24 +22,67 @@
         <window title="Animation Editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="17">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="0.0" y="556" width="320" height="240"/>
+            <rect key="contentRect" x="0.0" y="556" width="320" height="320"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-            <value key="minSize" type="size" width="200" height="100"/>
+            <value key="minSize" type="size" width="200" height="160"/>
             <view key="contentView" id="18">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <box boxType="custom" borderType="line" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="wbE-5V-m6D">
+                        <rect key="frame" x="-1" y="-1" width="322" height="261"/>
+                        <view key="contentView" id="oB5-be-VIo">
+                            <rect key="frame" x="1" y="1" width="320" height="259"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        </view>
+                        <color key="borderColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                        <color key="fillColor" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </box>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="19" customClass="CustomImageView" customModule="RKSupport">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="259"/>
                         <imageCell key="cell" selectable="YES" editable="YES" alignment="left" id="20"/>
                         <connections>
                             <action selector="changedImage:" target="-2" id="XGI-hO-elx"/>
                         </connections>
                     </imageView>
                     <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Idz-Rc-j82">
-                        <rect key="frame" x="0.0" y="226" width="59" height="14"/>
+                        <rect key="frame" x="0.0" y="245" width="59" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Image info" drawsBackground="YES" id="hdb-ib-th2">
                             <font key="font" metaFont="message" size="11"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e3j-NW-hCp">
+                        <rect key="frame" x="14" y="272" width="80" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="68" id="g5R-Co-Aru"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DQ7-97-wNv">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="playPause:" target="-2" id="g5n-pj-dNc"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C2f-Qi-BIY">
+                        <rect key="frame" x="226" y="272" width="80" height="32"/>
+                        <buttonCell key="cell" type="push" title="Export" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="REi-Yh-F9s">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="exportImage:" target="-2" id="Olb-52-uIB"/>
+                        </connections>
+                    </button>
+                    <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gx5-MO-Xlp">
+                        <rect key="frame" x="283" y="245" width="37" height="14"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="Frame" drawsBackground="YES" id="cXj-Eb-Rcj">
+                            <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -43,15 +90,27 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="19" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="1EJ-rh-qFT"/>
+                    <constraint firstAttribute="trailing" secondItem="C2f-Qi-BIY" secondAttribute="trailing" constant="20" symbolic="YES" id="1m9-d7-SBV"/>
+                    <constraint firstItem="gx5-MO-Xlp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="18" secondAttribute="leading" id="4yZ-W9-8DN"/>
+                    <constraint firstItem="e3j-NW-hCp" firstAttribute="leading" secondItem="18" secondAttribute="leading" constant="20" symbolic="YES" id="53a-03-dgM"/>
+                    <constraint firstItem="C2f-Qi-BIY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="e3j-NW-hCp" secondAttribute="trailing" constant="12" symbolic="YES" id="7Du-KU-9Uw"/>
+                    <constraint firstItem="e3j-NW-hCp" firstAttribute="top" secondItem="18" secondAttribute="top" constant="20" symbolic="YES" id="82T-IK-rVa"/>
+                    <constraint firstItem="C2f-Qi-BIY" firstAttribute="top" secondItem="18" secondAttribute="top" constant="20" symbolic="YES" id="Fpu-ma-fqn"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Idz-Rc-j82" secondAttribute="trailing" id="NcJ-HJ-Rpa"/>
-                    <constraint firstItem="Idz-Rc-j82" firstAttribute="top" secondItem="18" secondAttribute="top" id="To8-Ni-Dfl"/>
+                    <constraint firstItem="wbE-5V-m6D" firstAttribute="top" secondItem="19" secondAttribute="top" constant="-1" id="PfR-Sw-1YH"/>
+                    <constraint firstItem="Idz-Rc-j82" firstAttribute="top" secondItem="e3j-NW-hCp" secondAttribute="bottom" constant="20" symbolic="YES" id="To8-Ni-Dfl"/>
+                    <constraint firstItem="wbE-5V-m6D" firstAttribute="leading" secondItem="19" secondAttribute="leading" constant="-1" id="XOM-dx-GAg"/>
+                    <constraint firstItem="19" firstAttribute="top" secondItem="e3j-NW-hCp" secondAttribute="bottom" constant="20" symbolic="YES" id="YpW-Ae-7z6"/>
                     <constraint firstAttribute="trailing" secondItem="19" secondAttribute="trailing" id="ZOj-Lf-r1Y"/>
-                    <constraint firstItem="19" firstAttribute="top" secondItem="18" secondAttribute="top" id="qhw-iT-PX9"/>
+                    <constraint firstAttribute="trailing" secondItem="gx5-MO-Xlp" secondAttribute="trailing" id="gM0-cg-nWi"/>
+                    <constraint firstItem="wbE-5V-m6D" firstAttribute="trailing" secondItem="19" secondAttribute="trailing" constant="1" id="hH2-ys-85Z"/>
+                    <constraint firstItem="wbE-5V-m6D" firstAttribute="bottom" secondItem="19" secondAttribute="bottom" constant="1" id="jOD-4k-Xah"/>
                     <constraint firstItem="Idz-Rc-j82" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="rRT-KN-Ney"/>
                     <constraint firstAttribute="bottom" secondItem="19" secondAttribute="bottom" id="rnA-R2-6tO"/>
+                    <constraint firstItem="gx5-MO-Xlp" firstAttribute="top" secondItem="e3j-NW-hCp" secondAttribute="bottom" constant="20" symbolic="YES" id="w7A-fR-PmO"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="139.5" y="146.5"/>
+            <point key="canvasLocation" x="139" y="146"/>
         </window>
     </objects>
 </document>
