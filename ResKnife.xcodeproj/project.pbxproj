@@ -16,6 +16,7 @@
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
+		492E912E2551373100195174 /* Rle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E912D2551373100195174 /* Rle.swift */; };
 		4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD50253BD1290044BC45 /* ElementPSTR.swift */; };
 		4935CD6D253C10210044BC45 /* ElementFCNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD6C253C10210044BC45 /* ElementFCNT.swift */; };
 		4935CD75253CEB3C0044BC45 /* ElementDVDR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */; };
@@ -38,7 +39,6 @@
 		4951AB4D25341BBE009A8285 /* ElementDBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB4C25341BBE009A8285 /* ElementDBYT.swift */; };
 		4951AB5A25341CB4009A8285 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DD062532DAE500856385 /* Element.swift */; };
 		4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB6125341D3E009A8285 /* ElementLSTB.swift */; };
-		4953F599248874AA0002340F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
 		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4953F5A92488795B0002340F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4953F5A82488795B0002340F /* AVKit.framework */; };
@@ -85,7 +85,6 @@
 		49964E1324D1034400BAB902 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
 		49964E1424D10A1000BAB902 /* ResourceFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 499216F024CCD2250054A390 /* ResourceFile.mm */; };
 		49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1524D10ED900BAB902 /* AttributesFormatter.swift */; };
-		49964E1724D127CF00BAB902 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */; };
 		49A4328E25429785000B1109 /* ElementKHBT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A4328D25429785000B1109 /* ElementKHBT.swift */; };
 		49A43296254298B3000B1109 /* ElementKCHR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A43295254298B3000B1109 /* ElementKCHR.swift */; };
@@ -119,8 +118,15 @@
 		49D1859E254264BD00EA380C /* ElementWCOL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D1859D254264BD00EA380C /* ElementWCOL.swift */; };
 		49D185A6254278EC00EA380C /* ElementHEXD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D185A5254278EC00EA380C /* ElementHEXD.swift */; };
 		49D185AE25427D8B00EA380C /* ElementBHEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D185AD25427D8B00EA380C /* ElementBHEX.swift */; };
+		49DA3A4C2550BD2800821A7E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DA3A4B2550BD2800821A7E /* Cocoa.framework */; };
+		49DA3A4D2550BD2E00821A7E /* RKSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */; };
+		49DA3A572550BD9000821A7E /* KestrelTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 49EE72D82550B79600BEABDB /* KestrelTools.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		49DA3A8B2550C65900821A7E /* rle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044062472064F0035C0FA /* rle.cpp */; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
 		49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1D24F377A400BE0F0F /* CollectionController.swift */; };
+		49EE73012550B99200BEABDB /* AnimationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49EE72AC2550A7F300BEABDB /* AnimationWindow.xib */; };
+		49EE73092550B9B400BEABDB /* AnimationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE72AA2550A7F300BEABDB /* AnimationWindowController.swift */; };
+		49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE738F2550BC8D00BEABDB /* KestrelTools.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		49FE7B49253A7E7700D2219D /* CaseableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE7B48253A7E7700D2219D /* CaseableElement.swift */; };
@@ -144,15 +150,12 @@
 		B24925E215A6776600C22060 /* ImageWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24925E015A6776600C22060 /* ImageWindow.xib */; };
 		B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65CE15A677F00029141B /* TemplateWindow.xib */; };
 		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
-		B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B2FCA7A215A6704900696598 /* FontDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2FCA79E15A6704900696598 /* FontDocument.xib */; };
 		E119386509991DDD00A3A6EA /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E119383D09991C5100A3A6EA /* Templates.rsrc */; };
 		E15CFD6E099995D1004929B6 /* Templates for sfnt tables.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
-		E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E18BF5A2069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF5BA069FEA1400F076B8 /* BoomWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B7E025BC3A501A8010C /* BoomWindowController.h */; };
 		E18BF5BB069FEA1400F076B8 /* NovaWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B82025BC73001A8010C /* NovaWindowController.h */; };
 		E18BF5BC069FEA1400F076B8 /* CharWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B86025BC76D01A8010C /* CharWindowController.h */; };
@@ -175,11 +178,8 @@
 		E18BF5DA069FEA1400F076B8 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F543AFDC027B2A5001A8010C /* DataSource.m */; };
 		E18BF5DD069FEA1400F076B8 /* MisnWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB515054E918800A80202 /* MisnWindowController.m */; };
 		E18BF5DE069FEA1400F076B8 /* ShipWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB519054E919200A80202 /* ShipWindowController.m */; };
-		E18BF5E0069FEA1400F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
-		E18BF6C3069FEA1800F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E18BF7D1069FFC7600F076B8 /* FontWindowController.h */; };
 		E18BF7D5069FFC7600F076B8 /* FontWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18BF7D2069FFC7600F076B8 /* FontWindowController.m */; };
-		E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5884B0156D40B01000001 /* Cocoa.framework */; };
 		E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -211,6 +211,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 49AACD7A24CE931A0081DD4A;
 			remoteInfo = ResKnifePlugins;
+		};
+		49DA3A552550BD7C00821A7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 49EE72D72550B79600BEABDB;
+			remoteInfo = KestrelTools;
 		};
 		B2FCA79A15A66B4A00696598 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -296,6 +303,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				49DA3A572550BD9000821A7E /* KestrelTools.plugin in Copy Plugins */,
 				4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */,
 				E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */,
@@ -315,6 +323,7 @@
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		492E912D2551373100195174 /* Rle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rle.swift; sourceTree = "<group>"; };
 		4935CD50253BD1290044BC45 /* ElementPSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPSTR.swift; sourceTree = "<group>"; };
 		4935CD6C253C10210044BC45 /* ElementFCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementFCNT.swift; sourceTree = "<group>"; };
 		4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDVDR.swift; sourceTree = "<group>"; };
@@ -438,8 +447,15 @@
 		49D1859D254264BD00EA380C /* ElementWCOL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementWCOL.swift; sourceTree = "<group>"; };
 		49D185A5254278EC00EA380C /* ElementHEXD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHEXD.swift; sourceTree = "<group>"; };
 		49D185AD25427D8B00EA380C /* ElementBHEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBHEX.swift; sourceTree = "<group>"; };
+		49DA3A4B2550BD2800821A7E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
+		49EE72A92550A7F300BEABDB /* KestrelTools-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KestrelTools-Bridging-Header.h"; sourceTree = "<group>"; };
+		49EE72AA2550A7F300BEABDB /* AnimationWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationWindowController.swift; sourceTree = "<group>"; };
+		49EE72AD2550A7F300BEABDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AnimationWindow.xib; sourceTree = "<group>"; };
+		49EE72D82550B79600BEABDB /* KestrelTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KestrelTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		49EE72DA2550B79600BEABDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49EE738F2550BC8D00BEABDB /* KestrelTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KestrelTools.swift; sourceTree = "<group>"; };
 		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
 		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStatus.swift; sourceTree = "<group>"; };
@@ -517,7 +533,6 @@
 		F58F6B8F025BCF5901A8010C /* CronWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CronWindowController.m; path = cron/CronWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F58F6B92025BD97701A8010C /* DescWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DescWindowController.m; path = desc/DescWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F58F6B93025BD97701A8010C /* DescWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescWindowController.h; path = desc/DescWindowController.h; sourceTree = "<group>"; };
-		F5B5884B0156D40B01000001 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		F5C9ECD8027F562201A8010C /* Structs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Structs.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -528,7 +543,6 @@
 			files = (
 				49AACD8B24CE97CB0081DD4A /* RKSupport.framework in Frameworks */,
 				4953F5A92488795B0002340F /* AVKit.framework in Frameworks */,
-				4953F599248874AA0002340F /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,7 +550,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49964E1724D127CF00BAB902 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49EE72D52550B79600BEABDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49DA3A4D2550BD2E00821A7E /* RKSupport.framework in Frameworks */,
+				49DA3A4C2550BD2800821A7E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +567,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49AACD8A24CE95FD0081DD4A /* RKSupport.framework in Frameworks */,
-				B2FCA78B15A66ACE00696598 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,7 +575,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49AACD8224CE931A0081DD4A /* RKSupport.framework in Frameworks */,
-				E18BF587069FEA1300F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,7 +583,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49AACD8D24CE97CD0081DD4A /* RKSupport.framework in Frameworks */,
-				E18BF5A2069FEA1400F076B8 /* Cocoa.framework in Frameworks */,
 				4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -572,7 +591,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF5E0069FEA1400F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,7 +599,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49AACD9324CF6AB00081DD4A /* RKSupport.framework in Frameworks */,
-				E18BF6C3069FEA1800F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,7 +607,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49AACD9424CF6B180081DD4A /* RKSupport.framework in Frameworks */,
-				E18BF8D006A0016B00F076B8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -822,6 +838,19 @@
 			path = RKSupport;
 			sourceTree = "<group>";
 		};
+		49EE72D92550B79600BEABDB /* KestrelTools */ = {
+			isa = PBXGroup;
+			children = (
+				49EE72AC2550A7F300BEABDB /* AnimationWindow.xib */,
+				49EE72DA2550B79600BEABDB /* Info.plist */,
+				49EE72A92550A7F300BEABDB /* KestrelTools-Bridging-Header.h */,
+				49EE72AA2550A7F300BEABDB /* AnimationWindowController.swift */,
+				49EE738F2550BC8D00BEABDB /* KestrelTools.swift */,
+				492E912D2551373100195174 /* Rle.swift */,
+			);
+			path = KestrelTools;
+			sourceTree = "<group>";
+		};
 		B2FCA77C15A669C800696598 /* Image Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -882,6 +911,7 @@
 		F57CEE0B0189C95101A8010B /* Plug-Ins */ = {
 			isa = PBXGroup;
 			children = (
+				49EE72D92550B79600BEABDB /* KestrelTools */,
 				F5EF839F020C08E601A80001 /* Hex Editor */,
 				3D0B38A504DEF41E005AED5E /* Template Editor */,
 				B2FCA77C15A669C800696598 /* Image Editor */,
@@ -930,6 +960,7 @@
 				B2FCA78A15A66ACE00696598 /* Image Editor.plugin */,
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
 				49AACD7B24CE931A0081DD4A /* RKSupport.framework */,
+				49EE72D82550B79600BEABDB /* KestrelTools.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -980,9 +1011,9 @@
 		F5B588490156D40B01000001 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				49DA3A4B2550BD2800821A7E /* Cocoa.framework */,
 				4953F5A82488795B0002340F /* AVKit.framework */,
 				B25C779815D2B0C500C005DE /* HexFiend.framework */,
-				F5B5884B0156D40B01000001 /* Cocoa.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1125,6 +1156,23 @@
 			productReference = 49AACD7B24CE931A0081DD4A /* RKSupport.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		49EE72D72550B79600BEABDB /* KestrelTools */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 49EE72DB2550B79600BEABDB /* Build configuration list for PBXNativeTarget "KestrelTools" */;
+			buildPhases = (
+				49EE72D42550B79600BEABDB /* Sources */,
+				49EE72D52550B79600BEABDB /* Frameworks */,
+				49EE72D62550B79600BEABDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KestrelTools;
+			productName = KestrelTools;
+			productReference = 49EE72D82550B79600BEABDB /* KestrelTools.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		B2FCA78915A66ACE00696598 /* Image Editor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2FCA79315A66ACF00696598 /* Build configuration list for PBXNativeTarget "Image Editor" */;
@@ -1161,6 +1209,7 @@
 				B2FCA79B15A66B4A00696598 /* PBXTargetDependency */,
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
 				E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */,
+				49DA3A562550BD7C00821A7E /* PBXTargetDependency */,
 				49AACD8124CE931A0081DD4A /* PBXTargetDependency */,
 			);
 			name = ResKnife;
@@ -1262,6 +1311,9 @@
 						CreatedOnToolsVersion = 11.6;
 						ProvisioningStyle = Automatic;
 					};
+					49EE72D72550B79600BEABDB = {
+						CreatedOnToolsVersion = 12.1;
+					};
 					B2FCA78915A66ACE00696598 = {
 						LastSwiftMigration = 1150;
 					};
@@ -1297,11 +1349,12 @@
 				E18BF537069FEA1300F076B8 /* ResKnife */,
 				E18BF58E069FEA1400F076B8 /* Hex Editor */,
 				E18BF69E069FEA1800F076B8 /* Template Editor */,
-				E18BF78A069FF23700F076B8 /* Font Editor */,
-				E18BF5B7069FEA1400F076B8 /* NovaTools */,
 				B2FCA78915A66ACE00696598 /* Image Editor */,
 				4953F594248874AA0002340F /* Sound Editor */,
+				49EE72D72550B79600BEABDB /* KestrelTools */,
 				49AACD7A24CE931A0081DD4A /* RKSupport */,
+				E18BF78A069FF23700F076B8 /* Font Editor */,
+				E18BF5B7069FEA1400F076B8 /* NovaTools */,
 			);
 		};
 /* End PBXProject section */
@@ -1319,6 +1372,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49EE72D62550B79600BEABDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49EE73012550B99200BEABDB /* AnimationWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1434,8 +1495,19 @@
 				49964DFD24D0EC2300BAB902 /* type.cpp in Sources */,
 				49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */,
 				49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */,
+				49DA3A8B2550C65900821A7E /* rle.cpp in Sources */,
 				49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */,
 				49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49EE72D42550B79600BEABDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */,
+				492E912E2551373100195174 /* Rle.swift in Sources */,
+				49EE73092550B9B400BEABDB /* AnimationWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1568,6 +1640,11 @@
 			target = 49AACD7A24CE931A0081DD4A /* RKSupport */;
 			targetProxy = 49AACD8024CE931A0081DD4A /* PBXContainerItemProxy */;
 		};
+		49DA3A562550BD7C00821A7E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 49EE72D72550B79600BEABDB /* KestrelTools */;
+			targetProxy = 49DA3A552550BD7C00821A7E /* PBXContainerItemProxy */;
+		};
 		B2FCA79B15A66B4A00696598 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B2FCA78915A66ACE00696598 /* Image Editor */;
@@ -1592,6 +1669,14 @@
 				49655E3F24DFF26700D6AFF6 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		49EE72AC2550A7F300BEABDB /* AnimationWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				49EE72AD2550A7F300BEABDB /* Base */,
+			);
+			name = AnimationWindow.xib;
 			sourceTree = "<group>";
 		};
 		555DFD992059BCE700E1B774 /* Credits.rtf */ = {
@@ -1793,10 +1878,8 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Plug-Ins/Sound Editor/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1806,7 +1889,6 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Plug-Ins/Sound Editor/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
@@ -1910,17 +1992,36 @@
 			};
 			name = Release;
 		};
+		49EE72DC2550B79600BEABDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Plug-Ins/KestrelTools/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nickshanks.resknife.KestrelTools;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/KestrelTools/KestrelTools-Bridging-Header.h";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		49EE72DD2550B79600BEABDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Plug-Ins/KestrelTools/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nickshanks.resknife.KestrelTools;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/KestrelTools/KestrelTools-Bridging-Header.h";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
 		B2FCA79415A66ACF00696598 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Plug-Ins/Image Editor/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Image-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Image Editor/Image Editor-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1928,10 +2029,8 @@
 		B2FCA79515A66ACF00696598 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Plug-Ins/Image Editor/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Image-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Image Editor/Image Editor-Bridging-Header.h";
@@ -1949,11 +2048,9 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Hexadecimal-Editor";
 				PRODUCT_NAME = "Hexadecimal Editor";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1968,7 +2065,6 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.Hexadecimal-Editor";
 				PRODUCT_NAME = "Hexadecimal Editor";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
@@ -1981,11 +2077,8 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Plug-Ins/Template Editor/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Template Editor";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1995,10 +2088,8 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Plug-Ins/Template Editor/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nickshanks.resknife.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Template Editor";
-				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -2023,7 +2114,6 @@
 				PRODUCT_NAME = ResKnife;
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/ResKnife-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2106,8 +2196,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -2129,15 +2217,12 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2152,6 +2237,7 @@
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -2160,8 +2246,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -2178,11 +2262,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2219,6 +2301,15 @@
 			buildConfigurations = (
 				49AACD8524CE931A0081DD4A /* Debug */,
 				49AACD8624CE931A0081DD4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		49EE72DB2550B79600BEABDB /* Build configuration list for PBXNativeTarget "KestrelTools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49EE72DC2550B79600BEABDB /* Debug */,
+				49EE72DD2550B79600BEABDB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

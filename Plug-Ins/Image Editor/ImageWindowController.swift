@@ -2,6 +2,29 @@ import Cocoa
 import RKSupport
 
 class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
+    static let supportedTypes = [
+        "PICT",
+        "PNG ",
+        "cicn",
+        "ppat",
+        "crsr",
+        "icns",
+        "ICON",
+        "SICN",
+        "ICN#",
+        "ics#",
+        "icm#",
+        "icl4",
+        "ics4",
+        "icm4",
+        "icl8",
+        "ics8",
+        "icm8",
+        "CURS",
+        "PAT ",
+        "PAT#"
+    ]
+    
     let resource: Resource
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var scrollView: NSScrollView!
@@ -199,8 +222,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         guard data.count > 0 else {
             return data
         }
-        let type = resource.type
-        switch type {
+        switch resource.type {
         case "PICT":
             // See if system can decode it first (<10.15), else fallback to Graphite (less compatible)
             return NSImage(data: data)?.tiffRepresentation ?? QuickDraw.tiff(fromPict: data)

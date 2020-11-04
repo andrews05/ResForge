@@ -14,9 +14,11 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NSPrincipalClass</key>
-	<string>${SWIFT_MODULE_NAME}.ImageWindowController</string>
+	<string>${SWIFT_MODULE_NAME}.KestrelTools</string>
 </dict>
 </plist>

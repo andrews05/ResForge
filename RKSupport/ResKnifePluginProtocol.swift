@@ -10,6 +10,9 @@ public extension FourCharCode {
 }
 
 public protocol ResKnifePlugin: class {
+    /// The list of resource types that this plugin supports.
+    static var supportedTypes: [String] { get }
+    
     var resource: Resource { get }
     init?(resource: Resource)
     
@@ -38,6 +41,11 @@ public protocol ResKnifePlugin: class {
 
 public protocol ResKnifeTemplatePlugin: ResKnifePlugin {
     init?(resource: Resource, template: Resource)
+}
+
+/// If your bundle consists of multiple editors for different types, the principal class should implement this to provide a list of all the plugin classes.
+public protocol ResKnifePluginPackage {
+    static var pluginClasses: [ResKnifePlugin.Type] { get }
 }
 
 public protocol ResKnifePluginManager: class {

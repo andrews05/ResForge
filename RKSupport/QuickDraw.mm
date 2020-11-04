@@ -2,6 +2,7 @@
 #include "libGraphite/quickdraw/pict.hpp"
 #include "libGraphite/quickdraw/cicn.hpp"
 #include "libGraphite/quickdraw/ppat.hpp"
+#include "libGraphite/quickdraw/rle.hpp"
 
 @implementation QuickDraw
 
@@ -78,6 +79,18 @@
             }
         }
         return [QuickDraw tiffFromRaw:raw size:surface->size() alpha:true];
+    } catch (const std::exception& e) {
+        return nil;
+    }
+}
+
+
++ (NSData *)tiffFromRle:(NSData *)data {
+    std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
+    graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
+    try {
+        auto surface = graphite::qd::rle(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
+        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size() alpha:true];
     } catch (const std::exception& e) {
         return nil;
     }

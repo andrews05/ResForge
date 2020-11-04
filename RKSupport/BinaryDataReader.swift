@@ -31,18 +31,24 @@ public class BinaryDataReader {
         guard bytes <= remainingBytes else {
             throw BinaryDataReaderError.insufficientData
         }
-        // Int8 must be constructed from a bit pattern
-        if T.self is Int8.Type {
-            let val = Int8(bitPattern: data[position]) as! T
-            position += 1
-            return val
+        let val = data[position..<position+bytes].withUnsafeBytes {
+            return $0.baseAddress!.bindMemory(to: T.self, capacity: bytes).pointee
         }
-        var val: T = 0
-        for i in 0..<bytes {
-            val += T(data[position]) << (i * 8)
-            position += 1
-        }
+        position += bytes
         return bigEndian ?? self.bigEndian ? T(bigEndian: val) : T(littleEndian: val)
+    }
+    
+    /// Read an array of integers. This is intended for high-performance and does not perform any byte-swapping - you will need to do this yourself as necessary.
+    public func readRaw<T: FixedWidthInteger>(count: Int) throws -> [T] {
+        let bytes = (T.bitWidth / 8) * count
+        guard bytes <= remainingBytes else {
+            throw BinaryDataReaderError.insufficientData
+        }
+        let vals = data[position..<position+bytes].withUnsafeBytes {
+            return Array($0.bindMemory(to: T.self))
+        }
+        position += bytes
+        return vals
     }
     
     public func readData(length: Int) throws -> Data {

@@ -21,22 +21,26 @@ public class PluginRegistry {
     
     /// Register a plugin bundle as an editor for types defined in its info.plist.
     public static func register(_ plugin: Bundle) {
-        guard
-            let pluginClass = plugin.principalClass as? ResKnifePlugin.Type,
-            let supportedTypes = plugin.infoDictionary?["RKEditedTypes"] as? [String]
-        else {
+        let pluginClasses: [ResKnifePlugin.Type]
+        if let mainClass = plugin.principalClass as? ResKnifePluginPackage.Type {
+            pluginClasses = mainClass.pluginClasses
+        } else if let mainClass = plugin.principalClass as? ResKnifePlugin.Type {
+            pluginClasses = [mainClass]
+        } else {
             return
         }
-        for type in supportedTypes {
-            switch type {
-            case "Hexadecimal Editor":
-                Self.hexEditor = pluginClass
-            case "Template Editor":
-                Self.templateEditor = pluginClass
-            default:
-                editors[type] = pluginClass
-                if let previewSize = pluginClass.previewSize(for: type) {
-                    previewSizes[type] = previewSize
+        for pluginClass in pluginClasses {
+            for type in pluginClass.supportedTypes {
+                switch type {
+                case "Hex":
+                    Self.hexEditor = pluginClass
+                case "Template":
+                    Self.templateEditor = pluginClass
+                default:
+                    editors[type] = pluginClass
+                    if let previewSize = pluginClass.previewSize(for: type) {
+                        previewSizes[type] = previewSize
+                    }
                 }
             }
         }

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSData *)ppatFromRep:(NSBitmapImageRep *)data;
 + (NSData *)tiffFromCrsr:(NSData *)data;
 
++ (NSData *)tiffFromRle:(NSData *)data;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -2,6 +2,8 @@ import Cocoa
 import RKSupport
 
 class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlugin {
+    static let supportedTypes = ["Hex"]
+    
     let resource: Resource
     @IBOutlet var textView: HFTextView!
     
