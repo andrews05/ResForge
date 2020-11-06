@@ -88,7 +88,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
             heightConstraint.constant = max(image.size.height, window!.contentMinSize.height)
             self.window?.setContentSize(NSMakeSize(widthConstraint.constant, heightConstraint.constant))
             imageSize.stringValue = String(format: "%dx%d", image.representations[0].pixelsWide, image.representations[0].pixelsHigh)
-        } else if resource.data.count > 0 {
+        } else if !resource.data.isEmpty {
             imageSize.stringValue = "Invalid or unsupported image format"
         } else if imageView.isEditable {
             imageSize.stringValue = "Paste or drag and drop an image to import"
@@ -173,7 +173,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         guard let images = NSPasteboard.general.readObjects(forClasses: [NSImage.self], options: nil) else {
             return
         }
-        if images.count > 0 {
+        if !images.isEmpty {
             imageView.image = images[0] as? NSImage
             self.changedImage(sender)
         }
@@ -219,7 +219,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     
     private static func imageData(for resource: Resource!) -> Data {
         let data = resource.data
-        guard data.count > 0 else {
+        guard !data.isEmpty else {
             return data
         }
         switch resource.type {

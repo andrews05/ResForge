@@ -21,7 +21,7 @@ class ElementFCNT: Element, GroupElement, CounterElement {
         groupLabel = label.dropFirst(scanner.scanLocation).trimmingCharacters(in: .whitespaces)
         super.init(type: type, label: label, tooltip: tooltip)
         // Hide if no remaining label
-        self.visible = groupLabel.count > 0
+        self.visible = !groupLabel.isEmpty
     }
     
     override func configure() throws {

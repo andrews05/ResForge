@@ -442,12 +442,12 @@ CA
                 </popUpButton>
             </subviews>
             <constraints>
-                <constraint firstItem="tZz-d2-V4c" firstAttribute="leading" secondItem="432" secondAttribute="leading" constant="20" id="9aR-9f-XGG"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NW9-Ng-yIh" secondAttribute="trailing" constant="20" id="Og2-yR-vYj"/>
-                <constraint firstAttribute="bottom" secondItem="tZz-d2-V4c" secondAttribute="bottom" constant="13" id="YSo-Ff-HWF"/>
-                <constraint firstItem="NW9-Ng-yIh" firstAttribute="leading" secondItem="tZz-d2-V4c" secondAttribute="trailing" constant="8" id="hyU-bs-Ii7"/>
+                <constraint firstItem="tZz-d2-V4c" firstAttribute="leading" secondItem="432" secondAttribute="leading" constant="20" symbolic="YES" id="9aR-9f-XGG"/>
+                <constraint firstItem="NW9-Ng-yIh" firstAttribute="top" secondItem="432" secondAttribute="top" constant="8" id="Gtc-oz-f2l"/>
+                <constraint firstAttribute="bottom" secondItem="NW9-Ng-yIh" secondAttribute="bottom" constant="10" id="OEn-jb-bPN"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NW9-Ng-yIh" secondAttribute="trailing" constant="20" symbolic="YES" id="Og2-yR-vYj"/>
+                <constraint firstItem="NW9-Ng-yIh" firstAttribute="leading" secondItem="tZz-d2-V4c" secondAttribute="trailing" constant="8" symbolic="YES" id="hyU-bs-Ii7"/>
                 <constraint firstItem="NW9-Ng-yIh" firstAttribute="baseline" secondItem="tZz-d2-V4c" secondAttribute="baseline" id="jto-Vc-Rfo"/>
-                <constraint firstItem="tZz-d2-V4c" firstAttribute="top" secondItem="432" secondAttribute="top" constant="10" id="t2S-dN-dC7"/>
             </constraints>
             <point key="canvasLocation" x="3" y="361"/>
         </customView>

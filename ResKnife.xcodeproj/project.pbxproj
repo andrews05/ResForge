@@ -17,6 +17,7 @@
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
 		492E912E2551373100195174 /* Rle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E912D2551373100195174 /* Rle.swift */; };
+		492E91CA2553ADB100195174 /* AnimationImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E91C92553ADB100195174 /* AnimationImporter.swift */; };
 		4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD50253BD1290044BC45 /* ElementPSTR.swift */; };
 		4935CD6D253C10210044BC45 /* ElementFCNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD6C253C10210044BC45 /* ElementFCNT.swift */; };
 		4935CD75253CEB3C0044BC45 /* ElementDVDR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */; };
@@ -324,6 +325,7 @@
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		492E912D2551373100195174 /* Rle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rle.swift; sourceTree = "<group>"; };
+		492E91C92553ADB100195174 /* AnimationImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationImporter.swift; sourceTree = "<group>"; };
 		4935CD50253BD1290044BC45 /* ElementPSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPSTR.swift; sourceTree = "<group>"; };
 		4935CD6C253C10210044BC45 /* ElementFCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementFCNT.swift; sourceTree = "<group>"; };
 		4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDVDR.swift; sourceTree = "<group>"; };
@@ -465,7 +467,6 @@
 		49FE7B48253A7E7700D2219D /* CaseableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseableElement.swift; sourceTree = "<group>"; };
 		49FE7B50253A7EBA00D2219D /* ElementCASE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCASE.swift; sourceTree = "<group>"; };
 		49FE7B58253AC5F400D2219D /* ElementTNAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTNAM.swift; sourceTree = "<group>"; };
-		550B9045189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AboutPanel.xib; sourceTree = "<group>"; };
 		550B9046189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Application.xib; sourceTree = "<group>"; };
 		550B9047189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CreateResourceSheet.xib; sourceTree = "<group>"; };
 		550B9048189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfoWindow.xib; sourceTree = "<group>"; };
@@ -847,6 +848,7 @@
 				49EE72AA2550A7F300BEABDB /* AnimationWindowController.swift */,
 				49EE738F2550BC8D00BEABDB /* KestrelTools.swift */,
 				492E912D2551373100195174 /* Rle.swift */,
+				492E91C92553ADB100195174 /* AnimationImporter.swift */,
 			);
 			path = KestrelTools;
 			sourceTree = "<group>";
@@ -992,7 +994,6 @@
 			isa = PBXGroup;
 			children = (
 				555DFD992059BCE700E1B774 /* Credits.rtf */,
-				B229EEE815A4FB6F0032C12C /* AboutPanel.xib */,
 				B229EEEA15A4FB6F0032C12C /* Application.xib */,
 				B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */,
 				B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */,
@@ -1505,6 +1506,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				492E91CA2553ADB100195174 /* AnimationImporter.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */,
 				492E912E2551373100195174 /* Rle.swift in Sources */,
 				49EE73092550B9B400BEABDB /* AnimationWindowController.swift in Sources */,
@@ -1756,14 +1758,6 @@
 				55FEF5C2189D767A00888898 /* en */,
 			);
 			name = desc.xib;
-			sourceTree = "<group>";
-		};
-		B229EEE815A4FB6F0032C12C /* AboutPanel.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B9045189A0360005AC38D /* Base */,
-			);
-			name = AboutPanel.xib;
 			sourceTree = "<group>";
 		};
 		B229EEEA15A4FB6F0032C12C /* Application.xib */ = {

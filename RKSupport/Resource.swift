@@ -87,7 +87,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     public var defaultWindowTitle: String {
         if let document = document {
             let title = document.displayName.appending(": \(type) \(id)")
-            return name.count > 0 ? title.appending(" '\(name)'") : title
+            return name.isEmpty ? title : title.appending(" '\(name)'")
         }
         return name
     }
@@ -102,7 +102,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     
     /// Asynchonously fetch the resource's preview image. The image will be initially loaded on a background thread and cached for future use.
     public func preview(_ callback: @escaping (NSImage?) -> Void) {
-        if _preview == nil && data.count > 0 {
+        if _preview == nil && !data.isEmpty {
             if let loader = PluginRegistry.editors[type]?.image {
                 DispatchQueue.global().async {
                     // If we fail to load a preview, show an x image instead - this prevents repeatedly trying to parse bad data

@@ -3,11 +3,13 @@ import Foundation
 public enum BinaryDataWriterError: Error {
     case notAStruct
     case stringEncodeFailure
+    case outOfBounds
 }
 
 public class BinaryDataWriter {
     public var data: Data
     public var bigEndian: Bool
+    public var position: Int { data.count }
 
     public init(capacity: Int, bigEndian: Bool = true) {
         self.data = Data(capacity: capacity)
@@ -15,16 +17,27 @@ public class BinaryDataWriter {
     }
     
     public func advance(_ count: Int) {
-        for _ in 0..<count {
-            data.append(0)
-        }
+        data.append(Data(count: count))
     }
     
     public func write<T: FixedWidthInteger>(_ value: T, bigEndian: Bool? = nil) {
         let val = bigEndian ?? self.bigEndian ? value.bigEndian : value.littleEndian
-        for i in 0..<(val.bitWidth / 8) {
-            let byte = UInt8(truncatingIfNeeded: val >> (i * 8))
-            data.append(byte)
+        withUnsafeBytes(of: val) {
+            data.append($0.bindMemory(to: T.self))
+        }
+    }
+    
+    public func write<T: FixedWidthInteger>(_ value: T, at position: Int, bigEndian: Bool? = nil) {
+        let end = position + T.bitWidth/8
+        let val = bigEndian ?? self.bigEndian ? value.bigEndian : value.littleEndian
+        withUnsafeBytes(of: val) {
+            data.replaceSubrange(position..<end, with: $0)
+        }
+    }
+    
+    public func writeRaw<T: FixedWidthInteger>(_ values: [T]) {
+        values.withUnsafeBufferPointer {
+            data.append($0)
         }
     }
     
@@ -32,7 +45,7 @@ public class BinaryDataWriter {
         guard let encoded = value.data(using: encoding) else {
             throw BinaryDataWriterError.stringEncodeFailure
         }
-        data += encoded
+        data.append(encoded)
     }
     
     public func writeStruct(_ value: Any, bigEndian: Bool? = nil) throws {

@@ -411,7 +411,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
     }
     
     func add(resources: [Resource]) {
-        guard resources.count > 0 else {
+        guard !resources.isEmpty else {
             return
         }
         dataSource.reload {
@@ -466,7 +466,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
     }
     
     func remove(resources: [Resource]) {
-        guard resources.count > 0 else {
+        guard !resources.isEmpty else {
             return
         }
         dataSource.reload {

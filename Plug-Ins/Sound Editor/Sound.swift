@@ -1,6 +1,6 @@
 /*
 Sound Manager Interfaces
-Cconverted from CarbonSound/Sound.h
+Converted from CarbonSound/Sound.h
 */
 
 let rate48khz: UnsignedFixed            = 0xbb800000 /*48000.00000 in fixed-point*/

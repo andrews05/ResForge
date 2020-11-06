@@ -265,10 +265,10 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
     }
     
     private func replace(_ replaceData: Data) {
-        if replaceData.count > 0 {
-            textView.controller.insert(replaceData, replacingPreviousBytes: 0, allowUndoCoalescing: false)
-        } else {
+        if replaceData.isEmpty {
             textView.controller.deleteSelection()
+        } else {
+            textView.controller.insert(replaceData, replacingPreviousBytes: 0, allowUndoCoalescing: false)
         }
     }
 }

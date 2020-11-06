@@ -5,15 +5,37 @@ enum RleError: Error {
     case unsupported
 }
 
-enum RleOpcode: Int {
-    case frameEnd = 0, lineStart, pixels, transparentRun, colourRun
+typealias RleOp = UInt32
+extension RleOp {
+    enum code: UInt32 {
+        case frameEnd = 0x00000000
+        case lineStart = 0x01000000
+        case pixels = 0x02000000
+        case transparentRun = 0x03000000
+        case colourRun = 0x04000000
+    }
+    var count: Int { Int(self & 0x00FFFFFF) / 2 }
+    var code: RleOp.code? { RleOp.code(rawValue: self & 0xFF000000) }
+    init(_ code: RleOp.code, count: Int) {
+        self = code.rawValue | UInt32(count*2)
+    }
+    init(_ code: RleOp.code, bytes: Int = 0) {
+        self = code.rawValue | UInt32(bytes)
+    }
 }
 
 class Rle {
-    private let reader: BinaryDataReader
+    private var reader: BinaryDataReader!
     let frameWidth: Int
     let frameHeight: Int
     let frameCount: Int
+    private var writer: BinaryDataWriter!
+    private var source: NSBitmapImageRep!
+    private var currentFrame = 0
+    
+    var data: Data {
+        writer?.data ?? reader.data
+    }
     
     init(_ data: Data) throws {
         reader = BinaryDataReader(data)
@@ -27,6 +49,76 @@ class Rle {
         try reader.advance(2)
         frameCount = Int(try reader.read() as UInt16)
         try reader.advance(6)
+    }
+    
+    init(image: NSImage, gridX: Int, gridY: Int) {
+        source = NSBitmapImageRep(data: image.tiffRepresentation!)!
+        frameWidth = source.pixelsWide / gridX
+        frameHeight = source.pixelsHigh / gridY
+        frameCount = gridX * gridY
+        writer = BinaryDataWriter(capacity: 16)
+        writer.write(UInt16(frameWidth))
+        writer.write(UInt16(frameHeight))
+        writer.write(UInt16(16))
+        writer.advance(2)
+        writer.write(UInt16(frameCount))
+        writer.advance(6)
+    }
+    
+    func writeFrame() -> NSBitmapImageRep {
+        let gridX = source.pixelsWide / frameWidth
+        let originX = currentFrame % gridX * frameWidth
+        let originY = currentFrame / gridX * frameHeight
+        currentFrame += 1
+        let frame = NSBitmapImageRep(bitmapDataPlanes: nil,
+                                     pixelsWide: frameWidth,
+                                     pixelsHigh: frameHeight,
+                                     bitsPerSample: 8,
+                                     samplesPerPixel: 4,
+                                     hasAlpha: true,
+                                     isPlanar: false,
+                                     colorSpaceName: .deviceRGB,
+                                     bytesPerRow: frameWidth*4,
+                                     bitsPerPixel: 0)!
+        var framePointer = frame.bitmapData!
+        let sourcePointer = source.bitmapData!
+        for y in originY..<(originY+frameHeight) {
+            writer.write(RleOp(.lineStart))
+            let linePos = writer.position
+            var transparent = 0
+            var pixels: [UInt16] = []
+            for x in originX..<(originX+frameWidth) {
+                let p = (y*source.pixelsWide+x) * 4
+                if sourcePointer[p+3] == 0 {
+                    framePointer = framePointer.advanced(by: 4)
+                    transparent += 1
+                } else {
+                    if transparent != 0 {
+                        // Starting pixel data after transparency, write the transparent run
+                        if !pixels.isEmpty {
+                            // We have previous unwritten pixel data, write this first
+                            self.write(pixels: pixels)
+                            pixels.removeAll()
+                        }
+                        writer.write(RleOp(.transparentRun, count: transparent))
+                        transparent = 0
+                    }
+                    let pixel =
+                        UInt16(sourcePointer[p] & 0xF8) * 0x80 |
+                        UInt16(sourcePointer[p+1] & 0xF8) * 0x04 |
+                        UInt16(sourcePointer[p+2] & 0xF8) / 0x08
+                    self.write(pixel, to: &framePointer)
+                    pixels.append(pixel.bigEndian)
+                }
+            }
+            if !pixels.isEmpty {
+                self.write(pixels: pixels)
+                // Rewrite the line length
+                writer.write(RleOp(.lineStart, bytes: writer.position-linePos), at: linePos-4)
+            }
+        }
+        writer.write(RleOp(.frameEnd))
+        return frame
     }
     
     func readFrame() throws -> NSBitmapImageRep {
@@ -44,14 +136,9 @@ class Rle {
                                      bitsPerPixel: 0)!
         var framePointer = frame.bitmapData!
         while true {
-            var bytes = Int(try reader.read() as UInt32)
-            let opcode = RleOpcode(rawValue: bytes >> 24)
-            bytes &= 0x00FFFFFF
-            guard bytes % 2 == 0 else {
-                throw RleError.invalid
-            }
-            let count = bytes / 2
-            switch opcode {
+            let op = try reader.read() as RleOp
+            let count = op.count
+            switch op.code {
             case .lineStart:
                 guard y < frameHeight else {
                     throw RleError.invalid
@@ -75,8 +162,8 @@ class Rle {
                 for pixel in try reader.readRaw(count: count) as [UInt16] {
                     self.write(UInt16(bigEndian: pixel), to: &framePointer)
                 }
-                if bytes % 4 != 0 {
-                    try reader.advance(4 - bytes%4)
+                if count % 2 != 0 {
+                    try reader.advance(2)
                 }
             case .colourRun:
                 x += count
@@ -101,13 +188,18 @@ class Rle {
     
     private func write(_ pixel: UInt16, to framePointer: inout UnsafeMutablePointer<UInt8>) {
         // Division/multiplication is used here instead of bitshifts as it is much faster in unoptimised debug builds
-        framePointer.pointee = UInt8((pixel & 0x7C00) / 0x80)
-        framePointer = framePointer.successor()
-        framePointer.pointee = UInt8((pixel & 0x03E0) / 0x04)
-        framePointer = framePointer.successor()
-        framePointer.pointee = UInt8((pixel & 0x001F) * 0x08)
-        framePointer = framePointer.successor()
-        framePointer.pointee = 0xFF
-        framePointer = framePointer.successor()
+        framePointer[0] = UInt8((pixel & 0x7C00) / 0x80)
+        framePointer[1] = UInt8((pixel & 0x03E0) / 0x04)
+        framePointer[2] = UInt8((pixel & 0x001F) * 0x08)
+        framePointer[3] = 0xFF
+        framePointer = framePointer.advanced(by: 4)
+    }
+    
+    private func write(pixels: [UInt16]) {
+        writer.write(RleOp(.pixels, count: pixels.count))
+        writer.writeRaw(pixels)
+        if pixels.count % 2 != 0 {
+            writer.advance(2)
+        }
     }
 }

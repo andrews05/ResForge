@@ -5,6 +5,17 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
     static let supportedTypes = ["rlëD"]
     
     let resource: Resource
+    private var rle: Rle!
+    private var frames: [NSBitmapImageRep] = []
+    private var currentFrame = 0
+    private var timer: Timer?
+    @IBOutlet var imageView: NSImageView!
+    @IBOutlet var imageSize: NSTextField!
+    @IBOutlet var playButton: NSButton!
+    @IBOutlet var exportButton: NSButton!
+    @IBOutlet var frameCounter: NSTextField!
+    @IBOutlet var importPanel: AnimationImporter!
+    
     private var playing = false {
         didSet {
             playButton.title = playing ? "Pause" : "Play"
@@ -15,14 +26,6 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
             }
         }
     }
-    private var frames: [NSBitmapImageRep]!
-    private var currentFrame = 0
-    private var timer: Timer?
-    @IBOutlet var imageView: NSImageView!
-    @IBOutlet var imageSize: NSTextField!
-    @IBOutlet var playButton: NSButton!
-    @IBOutlet var exportButton: NSButton!
-    @IBOutlet var frameCounter: NSTextField!
     
     override var windowNibName: String {
         return "AnimationWindow"
@@ -41,9 +44,7 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
     override func windowDidLoad() {
         super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle
-        imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
-        imageView.isEditable = [].contains(resource.type)
-    
+        imageView.allowsCutCopyPaste = false
         self.loadImage()
     }
     
@@ -56,8 +57,6 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
         case #selector(saveResource(_:)),
              #selector(revertResource(_:)):
             return self.window!.isDocumentEdited
-        case #selector(paste(_:)):
-            return imageView.isEditable && NSPasteboard.general.canReadObject(forClasses: [NSImage.self], options: nil)
         default:
             return true
         }
@@ -69,17 +68,17 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
     
     @IBAction func exportImage(_ sender: Any) {
         let panel = NSSavePanel()
-        if self.resource.name.count > 0 {
-            panel.nameFieldStringValue = self.resource.name
-        } else {
+        if self.resource.name.isEmpty {
             panel.nameFieldStringValue = "Frame sheet \(resource.id)"
+        } else {
+            panel.nameFieldStringValue = self.resource.name
         }
         panel.allowedFileTypes = ["tiff"]
-        panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
-            if returnCode.rawValue == NSFileHandlingPanelOKButton {
+        panel.beginSheetModal(for: self.window!) { returnCode in
+            if returnCode == .OK {
                 _ = Self.export(self.resource, to: panel.url!)
             }
-        })
+        }
     }
     
     override func keyDown(with event: NSEvent) {
@@ -98,23 +97,14 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
     // MARK: -
     
     private func loadImage() {
-        imageView.image = nil
-        playing = false
-        frameCounter.stringValue = "-/-"
-        playButton.isEnabled = false
-        exportButton.isEnabled = false
-        if resource.data.count > 0 {
+        rle = nil
+        frames.removeAll()
+        if !resource.data.isEmpty {
             do {
-                let rle = try Rle(resource.data)
-                self.frames = []
+                rle = try Rle(resource.data)
                 for _ in 0..<rle.frameCount {
                     frames.append(try rle.readFrame())
                 }
-                imageView.image = NSImage(size: NSMakeSize(CGFloat(rle.frameWidth), CGFloat(rle.frameHeight)))
-                playButton.isEnabled = true
-                exportButton.isEnabled = true
-                currentFrame = -1
-                playing = true
             } catch {}
         }
         self.updateView()
@@ -125,7 +115,7 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
             return
         }
         currentFrame = (currentFrame + 1) % frames.count
-        if image.representations.count > 0 {
+        if !image.representations.isEmpty {
             image.removeRepresentation(image.representations[0])
         }
         image.addRepresentation(frames[currentFrame])
@@ -134,17 +124,27 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
     }
     
     private func updateView() {
-        if let image = imageView.image {
-            let width = max(image.size.width, window!.contentMinSize.width)
-            let height = max(image.size.height, window!.contentMinSize.height)
+        playing = false
+        if !frames.isEmpty {
+            imageView.image = NSImage(size: frames[0].size)
+            let width = max(frames[0].size.width, window!.contentMinSize.width)
+            let height = max(frames[0].size.height, window!.contentMinSize.height)
             self.window?.setContentSize(NSMakeSize(width, height))
-            imageSize.stringValue = String(format: "%.0fx%.0f", image.size.width, image.size.height)
-        } else if resource.data.count > 0 {
-            imageSize.stringValue = "Invalid or unsupported data format"
-        } else if imageView.isEditable {
-            imageSize.stringValue = "Paste or drag and drop an image to import"
+            imageSize.stringValue = "\(frames[0].pixelsWide)x\(frames[0].pixelsHigh)"
+            playButton.isEnabled = frames.count > 1
+            exportButton.isEnabled = true
+            currentFrame = -1
+            if playButton.isEnabled {
+                playing = true
+            } else {
+                nextFrame()
+            }
         } else {
-            imageSize.stringValue = "Can't edit resources of this type"
+            imageView.image = nil
+            playButton.isEnabled = false
+            exportButton.isEnabled = false
+            imageSize.stringValue = resource.data.isEmpty ? "No data" : "Invalid data"
+            frameCounter.stringValue = "-/-"
         }
     }
     
@@ -159,26 +159,24 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
     
     // MARK: -
     
-    @IBAction func changedImage(_ sender: Any) {
-        let rep: NSBitmapImageRep
-        switch resource.type {
-        default:
-            rep = self.bitmapRep()
+    @IBAction func importImage(_ sender: Any) {
+        playing = false
+        importPanel.beginSheetModal(for: self.window!) { [self] (image, gridX, gridY) in
+            rle = Rle(image: image, gridX: gridX, gridY: gridY)
+            frames = []
+            for _ in 0..<rle.frameCount {
+                frames.append(rle.writeFrame())
+            }
+            self.updateView()
+            self.setDocumentEdited(true)
         }
-        _ = rep.bitmapData // Trigger redraw
-        self.updateView()
-        self.setDocumentEdited(true)
     }
 
     @IBAction func saveResource(_ sender: Any) {
-        guard imageView.image != nil else {
+        guard let rle = rle else {
             return
         }
-        let rep = self.bitmapRep()
-        switch resource.type {
-        default:
-            resource.data = rep.representation(using: .png, properties: [.interlaced: false])!
-        }
+        resource.data = rle.data
         self.setDocumentEdited(false)
     }
 
@@ -191,19 +189,6 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
         if let image = imageView.image {
             NSPasteboard.general.clearContents()
             NSPasteboard.general.writeObjects([image])
-        }
-    }
-    
-    @IBAction func paste(_ sender: Any) {
-        guard imageView.isEditable else {
-            return
-        }
-        guard let images = NSPasteboard.general.readObjects(forClasses: [NSImage.self], options: nil) else {
-            return
-        }
-        if images.count > 0 {
-            imageView.image = images[0] as? NSImage
-            self.changedImage(sender)
         }
     }
     
@@ -230,7 +215,7 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
     }
     
     static func image(for resource: Resource) -> NSImage? {
-        guard resource.data.count > 0 else {
+        guard !resource.data.isEmpty else {
             return nil
         }
         switch resource.type {

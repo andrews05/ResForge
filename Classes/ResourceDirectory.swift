@@ -184,14 +184,14 @@ extension Array where Element: NSSortDescriptor {
 extension Array where Element: Equatable {
     /// Sort the array using an array of NSSortDescriptors, such as those obtained from an NSTableView.
     mutating func sort(using descriptors: [NSSortDescriptor]) {
-        if descriptors.count > 0 {
+        if !descriptors.isEmpty {
             self.sort(by: descriptors.compare)
         }
     }
     
     /// Insert an element into the sorted array at the position appropriate for the given NSSortDescriptors.
     mutating func insert(_ newElement: Element, using descriptors: [NSSortDescriptor]) {
-        if descriptors.count > 0 {
+        if !descriptors.isEmpty {
             var slice : SubSequence = self[...]
             // Perform a binary search
             while !slice.isEmpty {

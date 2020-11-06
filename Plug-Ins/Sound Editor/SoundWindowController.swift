@@ -99,10 +99,10 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     
     @IBAction func exportSound(_ sender: Any) {
         let panel = NSSavePanel()
-        if self.resource.name.count > 0 {
-            panel.nameFieldStringValue = self.resource.name
-        } else {
+        if self.resource.name.isEmpty {
             panel.nameFieldStringValue = "Sound \(resource.id)"
+        } else {
+            panel.nameFieldStringValue = self.resource.name
         }
         panel.allowedFileTypes = ["aiff"]
         panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
@@ -123,7 +123,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         panel.isAccessoryViewDisclosed = true
         panel.prompt = "Import"
         panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
-            if returnCode.rawValue == NSFileHandlingPanelOKButton {
+            if returnCode == .OK {
                 let format = self.selectFormat.selectedTag()
                 let channels = self.selectChannels.selectedTag()
                 let sampleRate = self.selectSampleRate.selectedTag()
