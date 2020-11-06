@@ -1,9 +1,12 @@
 import Cocoa
 
 public class CustomImageView: NSImageView {
-    // Somehow this nonsensical override reduces the bluriness of 72-dpi images on retina displays.
-    // This will have to do until I can figure out how to fix it properly.
+    // This override ensures crisp rendering of 72-dpi images on retina displays.
     public override func draw(_ dirtyRect: NSRect) {
+        if let image = self.image, image.size.width <= dirtyRect.size.width && image.size.height <= dirtyRect.size.height {
+            NSGraphicsContext.current?.imageInterpolation = .none
+        }
         super.draw(dirtyRect)
+        NSGraphicsContext.current?.imageInterpolation = .default
     }
 }
