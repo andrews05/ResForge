@@ -26,6 +26,14 @@ public class BinaryDataReader {
         position += count
     }
     
+    public func setPosition(_ position: Int) throws {
+        let position = data.startIndex + position
+        guard position <= data.endIndex else {
+            throw BinaryDataReaderError.insufficientData
+        }
+        self.position = position
+    }
+    
     public func read<T: FixedWidthInteger>(bigEndian: Bool? = nil) throws -> T {
         let bytes = T.bitWidth / 8
         guard bytes <= remainingBytes else {

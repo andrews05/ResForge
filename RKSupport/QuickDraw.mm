@@ -85,18 +85,6 @@
 }
 
 
-+ (NSData *)tiffFromRle:(NSData *)data {
-    std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
-    graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
-    try {
-        auto surface = graphite::qd::rle(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
-        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size() alpha:true];
-    } catch (const std::exception& e) {
-        return nil;
-    }
-}
-
-
 + (NSData *)tiffFromRaw:(std::vector<uint32_t>)raw size:(graphite::qd::size)size alpha:(bool)alpha {
     unsigned char *ptr = (unsigned char*)raw.data();
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&ptr

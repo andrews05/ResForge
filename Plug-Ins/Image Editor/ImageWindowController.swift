@@ -192,8 +192,9 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
     
     static func export(_ resource: Resource, to url: URL) -> Bool {
+        let data = self.imageData(for: resource) ?? Data()
         do {
-            try self.imageData(for: resource).write(to: url)
+            try data.write(to: url)
         } catch let error {
             resource.document?.presentError(error)
         }
@@ -201,7 +202,10 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
     }
     
     static func image(for resource: Resource) -> NSImage? {
-        return NSImage(data: self.imageData(for: resource))
+        guard let data = self.imageData(for: resource) else {
+            return nil
+        }
+        return NSImage(data: data)
     }
     
     static func icon(for resourceType: String) -> NSImage? {
@@ -217,7 +221,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         }
     }
     
-    private static func imageData(for resource: Resource!) -> Data {
+    private static func imageData(for resource: Resource!) -> Data? {
         let data = resource.data
         guard !data.isEmpty else {
             return data

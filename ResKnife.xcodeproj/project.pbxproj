@@ -135,14 +135,6 @@
 		49FE7B59253AC5F400D2219D /* ElementTNAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE7B58253AC5F400D2219D /* ElementTNAM.swift */; };
 		555DFD972059BCE700E1B774 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 555DFD992059BCE700E1B774 /* Credits.rtf */; };
 		559DE9B4189D665000D55D3A /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Icons.xcassets */; };
-		55FEF5A5189D758E00888898 /* NovaTools.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5A3189D758E00888898 /* NovaTools.xib */; };
-		55FEF5A8189D759F00888898 /* boom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5A6189D759F00888898 /* boom.xib */; };
-		55FEF5AF189D75C900888898 /* char.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5AD189D75C900888898 /* char.xib */; };
-		55FEF5B4189D75E500888898 /* colr.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5B2189D75E400888898 /* colr.xib */; };
-		55FEF5B7189D75F100888898 /* cron.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5B5189D75F100888898 /* cron.xib */; };
-		55FEF5BA189D762000888898 /* misn.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5B8189D762000888898 /* misn.xib */; };
-		55FEF5BD189D762F00888898 /* ship.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BB189D762F00888898 /* ship.xib */; };
-		55FEF5C0189D764300888898 /* desc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF5BE189D764300888898 /* desc.xib */; };
 		B229EEF515A4FB6F0032C12C /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEA15A4FB6F0032C12C /* Application.xib */; };
 		B229EEF615A4FB6F0032C12C /* CreateResourceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEC15A4FB6F0032C12C /* CreateResourceSheet.xib */; };
 		B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */; };
@@ -157,28 +149,6 @@
 		E15CFD6E099995D1004929B6 /* Templates for sfnt tables.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */; };
 		E18BF566069FEA1300F076B8 /* ResKnife.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = F5041736036BD60801A8010A /* ResKnife.scriptSuite */; };
 		E18BF567069FEA1300F076B8 /* ResKnife.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = F50DFE16036C203F01A8010A /* ResKnife.scriptTerminology */; };
-		E18BF5BA069FEA1400F076B8 /* BoomWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B7E025BC3A501A8010C /* BoomWindowController.h */; };
-		E18BF5BB069FEA1400F076B8 /* NovaWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B82025BC73001A8010C /* NovaWindowController.h */; };
-		E18BF5BC069FEA1400F076B8 /* CharWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B86025BC76D01A8010C /* CharWindowController.h */; };
-		E18BF5BD069FEA1400F076B8 /* ColrWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B8A025BC7C001A8010C /* ColrWindowController.h */; };
-		E18BF5BE069FEA1400F076B8 /* CronWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B8E025BCF5901A8010C /* CronWindowController.h */; };
-		E18BF5BF069FEA1400F076B8 /* DescWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = F58F6B93025BD97701A8010C /* DescWindowController.h */; };
-		E18BF5C2069FEA1400F076B8 /* DescSplitViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F58A18410278355D01A8010C /* DescSplitViewDelegate.h */; };
-		E18BF5C3069FEA1400F076B8 /* DataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F543AFDB027B2A5001A8010C /* DataSource.h */; };
-		E18BF5C4069FEA1400F076B8 /* Structs.h in Headers */ = {isa = PBXBuildFile; fileRef = F5C9ECD8027F562201A8010C /* Structs.h */; };
-		E18BF5C6069FEA1400F076B8 /* MisnWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E19FB514054E918800A80202 /* MisnWindowController.h */; };
-		E18BF5C7069FEA1400F076B8 /* ShipWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E19FB518054E919200A80202 /* ShipWindowController.h */; };
-		E18BF5CF069FEA1400F076B8 /* Resource Types.strings in Resources */ = {isa = PBXBuildFile; fileRef = F543AFEF027C716E01A8010C /* Resource Types.strings */; };
-		E18BF5D3069FEA1400F076B8 /* BoomWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B7F025BC3A501A8010C /* BoomWindowController.m */; };
-		E18BF5D4069FEA1400F076B8 /* NovaWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B83025BC73001A8010C /* NovaWindowController.m */; };
-		E18BF5D5069FEA1400F076B8 /* CharWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B87025BC76D01A8010C /* CharWindowController.m */; };
-		E18BF5D6069FEA1400F076B8 /* ColrWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B8B025BC7C001A8010C /* ColrWindowController.m */; };
-		E18BF5D7069FEA1400F076B8 /* CronWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B8F025BCF5901A8010C /* CronWindowController.m */; };
-		E18BF5D8069FEA1400F076B8 /* DescWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F6B92025BD97701A8010C /* DescWindowController.m */; };
-		E18BF5D9069FEA1400F076B8 /* DescSplitViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F58A18400278355D01A8010C /* DescSplitViewDelegate.m */; };
-		E18BF5DA069FEA1400F076B8 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F543AFDC027B2A5001A8010C /* DataSource.m */; };
-		E18BF5DD069FEA1400F076B8 /* MisnWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB515054E918800A80202 /* MisnWindowController.m */; };
-		E18BF5DE069FEA1400F076B8 /* ShipWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19FB519054E919200A80202 /* ShipWindowController.m */; };
 		E18BF7D4069FFC7600F076B8 /* FontWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = E18BF7D1069FFC7600F076B8 /* FontWindowController.h */; };
 		E18BF7D5069FFC7600F076B8 /* FontWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18BF7D2069FFC7600F076B8 /* FontWindowController.m */; };
 		E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -480,21 +450,6 @@
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImageWindow.xib; sourceTree = "<group>"; };
 		555DFD982059BCE700E1B774 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
-		55FEF5A4189D758E00888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NovaTools.xib; sourceTree = "<group>"; };
-		55FEF5A7189D759F00888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/boom.xib; sourceTree = "<group>"; };
-		55FEF5AA189D75AB00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/boom.strings; sourceTree = "<group>"; };
-		55FEF5AC189D75AE00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NovaTools.strings; sourceTree = "<group>"; };
-		55FEF5AE189D75C900888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/char.xib; sourceTree = "<group>"; };
-		55FEF5B1189D75D000888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/char.strings; sourceTree = "<group>"; };
-		55FEF5B3189D75E400888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/colr.xib; sourceTree = "<group>"; };
-		55FEF5B6189D75F100888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/cron.xib; sourceTree = "<group>"; };
-		55FEF5B9189D762000888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/misn.xib; sourceTree = "<group>"; };
-		55FEF5BC189D762F00888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ship.xib; sourceTree = "<group>"; };
-		55FEF5BF189D764300888898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/desc.xib; sourceTree = "<group>"; };
-		55FEF5C2189D767A00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/desc.strings; sourceTree = "<group>"; };
-		55FEF5C4189D768100888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/cron.strings; sourceTree = "<group>"; };
-		55FEF5C6189D769A00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/misn.strings; sourceTree = "<group>"; };
-		55FEF5C8189D769F00888898 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ship.strings; sourceTree = "<group>"; };
 		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
 		B2FCA78A15A66ACE00696598 /* Image Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Image Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -511,30 +466,8 @@
 		E18BF94B06A00F8E00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF9D706A01A2200F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BFA3606A20B7A00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E19FB514054E918800A80202 /* MisnWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MisnWindowController.h; path = misn/MisnWindowController.h; sourceTree = "<group>"; };
-		E19FB515054E918800A80202 /* MisnWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MisnWindowController.m; path = misn/MisnWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E19FB518054E919200A80202 /* ShipWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ShipWindowController.h; path = ship/ShipWindowController.h; sourceTree = "<group>"; };
-		E19FB519054E919200A80202 /* ShipWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ShipWindowController.m; path = ship/ShipWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F5041736036BD60801A8010A /* ResKnife.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ResKnife.scriptSuite; sourceTree = "<group>"; };
 		F50DFE17036C203F01A8010A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = en.lproj/ResKnife.scriptTerminology; sourceTree = "<group>"; };
-		F543AFDB027B2A5001A8010C /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataSource.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		F543AFDC027B2A5001A8010C /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F543AFF0027C716E01A8010C /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = "en.lproj/Resource Types.strings"; sourceTree = "<group>"; };
-		F58A18400278355D01A8010C /* DescSplitViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = DescSplitViewDelegate.m; path = desc/DescSplitViewDelegate.m; sourceTree = "<group>"; };
-		F58A18410278355D01A8010C /* DescSplitViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescSplitViewDelegate.h; path = desc/DescSplitViewDelegate.h; sourceTree = "<group>"; };
-		F58F6B7E025BC3A501A8010C /* BoomWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = BoomWindowController.h; path = boom/BoomWindowController.h; sourceTree = "<group>"; };
-		F58F6B7F025BC3A501A8010C /* BoomWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = BoomWindowController.m; path = boom/BoomWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F58F6B82025BC73001A8010C /* NovaWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NovaWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		F58F6B83025BC73001A8010C /* NovaWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NovaWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F58F6B86025BC76D01A8010C /* CharWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CharWindowController.h; path = char/CharWindowController.h; sourceTree = "<group>"; };
-		F58F6B87025BC76D01A8010C /* CharWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CharWindowController.m; path = char/CharWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F58F6B8A025BC7C001A8010C /* ColrWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ColrWindowController.h; path = colr/ColrWindowController.h; sourceTree = "<group>"; };
-		F58F6B8B025BC7C001A8010C /* ColrWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ColrWindowController.m; path = colr/ColrWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F58F6B8E025BCF5901A8010C /* CronWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CronWindowController.h; path = cron/CronWindowController.h; sourceTree = "<group>"; };
-		F58F6B8F025BCF5901A8010C /* CronWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CronWindowController.m; path = cron/CronWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F58F6B92025BD97701A8010C /* DescWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DescWindowController.m; path = desc/DescWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F58F6B93025BD97701A8010C /* DescWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DescWindowController.h; path = desc/DescWindowController.h; sourceTree = "<group>"; };
-		F5C9ECD8027F562201A8010C /* Structs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Structs.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -894,22 +827,6 @@
 			path = "Font Editor";
 			sourceTree = "<group>";
 		};
-		F51FB38E0256057F01A80001 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				55FEF5A3189D758E00888898 /* NovaTools.xib */,
-				55FEF5A6189D759F00888898 /* boom.xib */,
-				55FEF5AD189D75C900888898 /* char.xib */,
-				55FEF5B2189D75E400888898 /* colr.xib */,
-				55FEF5B5189D75F100888898 /* cron.xib */,
-				55FEF5BE189D764300888898 /* desc.xib */,
-				55FEF5B8189D762000888898 /* misn.xib */,
-				55FEF5BB189D762F00888898 /* ship.xib */,
-				F543AFEF027C716E01A8010C /* Resource Types.strings */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		F57CEE0B0189C95101A8010B /* Plug-Ins */ = {
 			isa = PBXGroup;
 			children = (
@@ -919,21 +836,8 @@
 				B2FCA77C15A669C800696598 /* Image Editor */,
 				4953F58F248873DD0002340F /* Sound Editor */,
 				E18BF7B8069FFA5200F076B8 /* Font Editor */,
-				F5DF1C0F0254C78801A80001 /* NovaTools */,
 			);
 			path = "Plug-Ins";
-			sourceTree = "<group>";
-		};
-		F58A183F0278353501A8010C /* Aux Support */ = {
-			isa = PBXGroup;
-			children = (
-				F5C9ECD8027F562201A8010C /* Structs.h */,
-				F543AFDB027B2A5001A8010C /* DataSource.h */,
-				F543AFDC027B2A5001A8010C /* DataSource.m */,
-				F58A18410278355D01A8010C /* DescSplitViewDelegate.h */,
-				F58A18400278355D01A8010C /* DescSplitViewDelegate.m */,
-			);
-			name = "Aux Support";
 			sourceTree = "<group>";
 		};
 		F5B588100156D2A601000001 = {
@@ -1019,31 +923,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F5DF1C0F0254C78801A80001 /* NovaTools */ = {
-			isa = PBXGroup;
-			children = (
-				F58F6B82025BC73001A8010C /* NovaWindowController.h */,
-				F58F6B83025BC73001A8010C /* NovaWindowController.m */,
-				F58F6B7E025BC3A501A8010C /* BoomWindowController.h */,
-				F58F6B7F025BC3A501A8010C /* BoomWindowController.m */,
-				F58F6B86025BC76D01A8010C /* CharWindowController.h */,
-				F58F6B87025BC76D01A8010C /* CharWindowController.m */,
-				F58F6B8A025BC7C001A8010C /* ColrWindowController.h */,
-				F58F6B8B025BC7C001A8010C /* ColrWindowController.m */,
-				F58F6B8E025BCF5901A8010C /* CronWindowController.h */,
-				F58F6B8F025BCF5901A8010C /* CronWindowController.m */,
-				F58F6B93025BD97701A8010C /* DescWindowController.h */,
-				F58F6B92025BD97701A8010C /* DescWindowController.m */,
-				E19FB514054E918800A80202 /* MisnWindowController.h */,
-				E19FB515054E918800A80202 /* MisnWindowController.m */,
-				E19FB518054E919200A80202 /* ShipWindowController.h */,
-				E19FB519054E919200A80202 /* ShipWindowController.m */,
-				F58A183F0278353501A8010C /* Aux Support */,
-				F51FB38E0256057F01A80001 /* Resources */,
-			);
-			path = NovaTools;
-			sourceTree = "<group>";
-		};
 		F5EF839F020C08E601A80001 /* Hex Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1090,17 +969,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF5BA069FEA1400F076B8 /* BoomWindowController.h in Headers */,
-				E18BF5BB069FEA1400F076B8 /* NovaWindowController.h in Headers */,
-				E18BF5BC069FEA1400F076B8 /* CharWindowController.h in Headers */,
-				E18BF5BD069FEA1400F076B8 /* ColrWindowController.h in Headers */,
-				E18BF5BE069FEA1400F076B8 /* CronWindowController.h in Headers */,
-				E18BF5BF069FEA1400F076B8 /* DescWindowController.h in Headers */,
-				E18BF5C2069FEA1400F076B8 /* DescSplitViewDelegate.h in Headers */,
-				E18BF5C3069FEA1400F076B8 /* DataSource.h in Headers */,
-				E18BF5C4069FEA1400F076B8 /* Structs.h in Headers */,
-				E18BF5C6069FEA1400F076B8 /* MisnWindowController.h in Headers */,
-				E18BF5C7069FEA1400F076B8 /* ShipWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1423,15 +1291,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55FEF5BA189D762000888898 /* misn.xib in Resources */,
-				55FEF5AF189D75C900888898 /* char.xib in Resources */,
-				55FEF5BD189D762F00888898 /* ship.xib in Resources */,
-				55FEF5A8189D759F00888898 /* boom.xib in Resources */,
-				55FEF5B7189D75F100888898 /* cron.xib in Resources */,
-				55FEF5C0189D764300888898 /* desc.xib in Resources */,
-				55FEF5B4189D75E500888898 /* colr.xib in Resources */,
-				E18BF5CF069FEA1400F076B8 /* Resource Types.strings in Resources */,
-				55FEF5A5189D758E00888898 /* NovaTools.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1557,16 +1416,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E18BF5D3069FEA1400F076B8 /* BoomWindowController.m in Sources */,
-				E18BF5D4069FEA1400F076B8 /* NovaWindowController.m in Sources */,
-				E18BF5D5069FEA1400F076B8 /* CharWindowController.m in Sources */,
-				E18BF5D6069FEA1400F076B8 /* ColrWindowController.m in Sources */,
-				E18BF5D7069FEA1400F076B8 /* CronWindowController.m in Sources */,
-				E18BF5D8069FEA1400F076B8 /* DescWindowController.m in Sources */,
-				E18BF5D9069FEA1400F076B8 /* DescSplitViewDelegate.m in Sources */,
-				E18BF5DA069FEA1400F076B8 /* DataSource.m in Sources */,
-				E18BF5DD069FEA1400F076B8 /* MisnWindowController.m in Sources */,
-				E18BF5DE069FEA1400F076B8 /* ShipWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1689,77 +1538,6 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		55FEF5A3189D758E00888898 /* NovaTools.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55FEF5A4189D758E00888898 /* Base */,
-				55FEF5AC189D75AE00888898 /* en */,
-			);
-			name = NovaTools.xib;
-			sourceTree = "<group>";
-		};
-		55FEF5A6189D759F00888898 /* boom.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55FEF5A7189D759F00888898 /* Base */,
-				55FEF5AA189D75AB00888898 /* en */,
-			);
-			name = boom.xib;
-			sourceTree = "<group>";
-		};
-		55FEF5AD189D75C900888898 /* char.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55FEF5AE189D75C900888898 /* Base */,
-				55FEF5B1189D75D000888898 /* en */,
-			);
-			name = char.xib;
-			sourceTree = "<group>";
-		};
-		55FEF5B2189D75E400888898 /* colr.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55FEF5B3189D75E400888898 /* Base */,
-			);
-			name = colr.xib;
-			sourceTree = "<group>";
-		};
-		55FEF5B5189D75F100888898 /* cron.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55FEF5B6189D75F100888898 /* Base */,
-				55FEF5C4189D768100888898 /* en */,
-			);
-			name = cron.xib;
-			sourceTree = "<group>";
-		};
-		55FEF5B8189D762000888898 /* misn.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55FEF5B9189D762000888898 /* Base */,
-				55FEF5C6189D769A00888898 /* en */,
-			);
-			name = misn.xib;
-			sourceTree = "<group>";
-		};
-		55FEF5BB189D762F00888898 /* ship.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55FEF5BC189D762F00888898 /* Base */,
-				55FEF5C8189D769F00888898 /* en */,
-			);
-			name = ship.xib;
-			sourceTree = "<group>";
-		};
-		55FEF5BE189D764300888898 /* desc.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55FEF5BF189D764300888898 /* Base */,
-				55FEF5C2189D767A00888898 /* en */,
-			);
-			name = desc.xib;
-			sourceTree = "<group>";
-		};
 		B229EEEA15A4FB6F0032C12C /* Application.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1854,14 +1632,6 @@
 				F50DFE17036C203F01A8010A /* en */,
 			);
 			name = ResKnife.scriptTerminology;
-			sourceTree = "<group>";
-		};
-		F543AFEF027C716E01A8010C /* Resource Types.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F543AFF0027C716E01A8010C /* en */,
-			);
-			name = "Resource Types.strings";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

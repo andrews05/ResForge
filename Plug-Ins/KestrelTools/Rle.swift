@@ -45,8 +45,7 @@ class Rle {
         guard depth == 16 else {
             throw RleError.unsupported
         }
-        //let palette = try reader.read() as UInt16
-        try reader.advance(2)
+        try reader.advance(2) // Palette is ignored for 16-bit
         frameCount = Int(try reader.read() as UInt16)
         try reader.advance(6)
     }
@@ -63,6 +62,110 @@ class Rle {
         writer.advance(2)
         writer.write(UInt16(frameCount))
         writer.advance(6)
+    }
+    
+    func readFrame() throws -> NSBitmapImageRep {
+        let frame = NSBitmapImageRep(bitmapDataPlanes: nil,
+                                     pixelsWide: frameWidth,
+                                     pixelsHigh: frameHeight,
+                                     bitsPerSample: 8,
+                                     samplesPerPixel: 4,
+                                     hasAlpha: true,
+                                     isPlanar: false,
+                                     colorSpaceName: .deviceRGB,
+                                     bytesPerRow: frameWidth*4,
+                                     bitsPerPixel: 0)!
+        try self.readFrame(to: frame.bitmapData!, lineAdvance: frameWidth)
+        return frame
+    }
+    
+    func readSheet() throws -> NSBitmapImageRep {
+        if reader == nil {
+            reader = BinaryDataReader(self.data)
+        }
+        try reader.setPosition(16)
+        var gridX = 6
+        if frameCount <= gridX {
+            gridX = frameCount
+        } else {
+            while frameCount % gridX != 0 {
+                gridX += 1
+            }
+        }
+        let gridY = frameCount / gridX
+        let sheet = NSBitmapImageRep(bitmapDataPlanes: nil,
+                                     pixelsWide: frameWidth * gridX,
+                                     pixelsHigh: frameHeight * gridY,
+                                     bitsPerSample: 8,
+                                     samplesPerPixel: 4,
+                                     hasAlpha: true,
+                                     isPlanar: false,
+                                     colorSpaceName: .deviceRGB,
+                                     bytesPerRow: frameWidth * gridX * 4,
+                                     bitsPerPixel: 0)!
+        let framePointer = sheet.bitmapData!
+        for y in 0..<gridY {
+            for x in 0..<gridX {
+                let advance = (y*frameHeight*sheet.pixelsWide + x*frameWidth) * 4
+                try self.readFrame(to: framePointer.advanced(by: advance), lineAdvance: sheet.pixelsWide)
+            }
+        }
+        return sheet
+    }
+    
+    private func readFrame(to framePointer: UnsafeMutablePointer<UInt8>, lineAdvance: Int) throws {
+        var y = 0
+        var x = 0
+        var framePointer = framePointer
+        while true {
+            let op = try reader.read() as RleOp
+            let count = op.count
+            switch op.code {
+            case .lineStart:
+                guard y < frameHeight else {
+                    throw RleError.invalid
+                }
+                if y != 0 {
+                    framePointer = framePointer.advanced(by: (lineAdvance-x)*4)
+                }
+                x = 0
+                y += 1
+            case .transparentRun:
+                x += count
+                guard x <= frameWidth else {
+                    throw RleError.invalid
+                }
+                framePointer = framePointer.advanced(by: count*4)
+            case .pixels:
+                x += count
+                guard x <= frameWidth else {
+                    throw RleError.invalid
+                }
+                for pixel in try reader.readRaw(count: count) as [UInt16] {
+                    self.write(UInt16(bigEndian: pixel), to: &framePointer)
+                }
+                if count % 2 != 0 {
+                    try reader.advance(2)
+                }
+            case .colourRun:
+                x += count
+                guard x <= frameWidth else {
+                    throw RleError.invalid
+                }
+                let pixel = try reader.read() as UInt16
+                for _ in 0..<count {
+                    self.write(pixel, to: &framePointer)
+                }
+                try reader.advance(2)
+            case .frameEnd:
+                guard y == frameHeight else {
+                    throw RleError.invalid
+                }
+                return
+            default:
+                throw RleError.invalid
+            }
+        }
     }
     
     func writeFrame() -> NSBitmapImageRep {
@@ -119,71 +222,6 @@ class Rle {
         }
         writer.write(RleOp(.frameEnd))
         return frame
-    }
-    
-    func readFrame() throws -> NSBitmapImageRep {
-        var y = 0
-        var x = 0
-        let frame = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                     pixelsWide: frameWidth,
-                                     pixelsHigh: frameHeight,
-                                     bitsPerSample: 8,
-                                     samplesPerPixel: 4,
-                                     hasAlpha: true,
-                                     isPlanar: false,
-                                     colorSpaceName: .deviceRGB,
-                                     bytesPerRow: frameWidth*4,
-                                     bitsPerPixel: 0)!
-        var framePointer = frame.bitmapData!
-        while true {
-            let op = try reader.read() as RleOp
-            let count = op.count
-            switch op.code {
-            case .lineStart:
-                guard y < frameHeight else {
-                    throw RleError.invalid
-                }
-                if y != 0 {
-                    framePointer = framePointer.advanced(by: (frameWidth-x)*4)
-                }
-                x = 0
-                y += 1
-            case .transparentRun:
-                x += count
-                guard x <= frameWidth else {
-                    throw RleError.invalid
-                }
-                framePointer = framePointer.advanced(by: count*4)
-            case .pixels:
-                x += count
-                guard x <= frameWidth else {
-                    throw RleError.invalid
-                }
-                for pixel in try reader.readRaw(count: count) as [UInt16] {
-                    self.write(UInt16(bigEndian: pixel), to: &framePointer)
-                }
-                if count % 2 != 0 {
-                    try reader.advance(2)
-                }
-            case .colourRun:
-                x += count
-                guard x <= frameWidth else {
-                    throw RleError.invalid
-                }
-                let pixel = try reader.read() as UInt16
-                for _ in 0..<count {
-                    self.write(pixel, to: &framePointer)
-                }
-                try reader.advance(2)
-            case .frameEnd:
-                guard y == frameHeight else {
-                    throw RleError.invalid
-                }
-                return frame
-            default:
-                throw RleError.invalid
-            }
-        }
     }
     
     private func write(_ pixel: UInt16, to framePointer: inout UnsafeMutablePointer<UInt8>) {

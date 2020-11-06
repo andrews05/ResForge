@@ -76,7 +76,12 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
         panel.allowedFileTypes = ["tiff"]
         panel.beginSheetModal(for: self.window!) { returnCode in
             if returnCode == .OK {
-                _ = Self.export(self.resource, to: panel.url!)
+                do {
+                    let data = try self.rle.readSheet().tiffRepresentation!
+                    try data.write(to: panel.url!)
+                } catch {
+                    self.presentError(error)
+                }
             }
         }
     }
@@ -148,15 +153,6 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
         }
     }
     
-    private func bitmapRep() -> NSBitmapImageRep {
-        let image = imageView.image!
-        let rep = image.representations[0] as? NSBitmapImageRep ?? NSBitmapImageRep(data: image.tiffRepresentation!)!
-        // Update the image
-        image.removeRepresentation(image.representations[0])
-        image.addRepresentation(rep)
-        return rep
-    }
-    
     // MARK: -
     
     @IBAction func importImage(_ sender: Any) {
@@ -201,8 +197,11 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
         var data = resource.data
         switch resource.type {
         case "rlëD":
-            // Allow graphite to handle this
-            data = QuickDraw.tiff(fromRle: data)
+            do {
+                data = try Rle(data).readSheet().tiffRepresentation!
+            } catch {
+                data = Data()
+            }
         default:
             break
         }
