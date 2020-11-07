@@ -8,11 +8,11 @@ enum RleError: Error {
 typealias RleOp = UInt32
 extension RleOp {
     enum code: UInt32 {
-        case frameEnd = 0x00000000
-        case lineStart = 0x01000000
-        case pixels = 0x02000000
+        case frameEnd       = 0x00000000
+        case lineStart      = 0x01000000
+        case pixels         = 0x02000000
         case transparentRun = 0x03000000
-        case colourRun = 0x04000000
+        case colourRun      = 0x04000000
     }
     var count: Int { Int(self & 0x00FFFFFF) / 2 }
     var code: RleOp.code? { RleOp.code(rawValue: self & 0xFF000000) }
@@ -51,10 +51,27 @@ class Rle {
     }
     
     init(image: NSImage, gridX: Int, gridY: Int) {
-        source = NSBitmapImageRep(data: image.tiffRepresentation!)!
+        // Create a new bitmap representation of the image in the layout that we need
+        let rep = image.representations[0]
+        source = NSBitmapImageRep(bitmapDataPlanes: nil,
+                                  pixelsWide: rep.pixelsWide,
+                                  pixelsHigh: rep.pixelsHigh,
+                                  bitsPerSample: 8,
+                                  samplesPerPixel: 4,
+                                  hasAlpha: true,
+                                  isPlanar: false,
+                                  colorSpaceName: .deviceRGB,
+                                  bytesPerRow: rep.pixelsWide*4,
+                                  bitsPerPixel: 0)!
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: source)
+        rep.draw()
+        NSGraphicsContext.restoreGraphicsState()
+    
         frameWidth = source.pixelsWide / gridX
         frameHeight = source.pixelsHigh / gridY
         frameCount = gridX * gridY
+        
         writer = BinaryDataWriter(capacity: 16)
         writer.write(UInt16(frameWidth))
         writer.write(UInt16(frameHeight))

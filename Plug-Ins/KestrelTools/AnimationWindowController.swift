@@ -66,26 +66,6 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
         playing = !playing
     }
     
-    @IBAction func exportImage(_ sender: Any) {
-        let panel = NSSavePanel()
-        if self.resource.name.isEmpty {
-            panel.nameFieldStringValue = "Frame sheet \(resource.id)"
-        } else {
-            panel.nameFieldStringValue = self.resource.name
-        }
-        panel.allowedFileTypes = ["tiff"]
-        panel.beginSheetModal(for: self.window!) { returnCode in
-            if returnCode == .OK {
-                do {
-                    let data = try self.rle.readSheet().tiffRepresentation!
-                    try data.write(to: panel.url!)
-                } catch {
-                    self.presentError(error)
-                }
-            }
-        }
-    }
-    
     override func keyDown(with event: NSEvent) {
         if event.characters == " " {
             playing = !playing
@@ -167,6 +147,26 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
             self.setDocumentEdited(true)
         }
     }
+    
+    @IBAction func exportImage(_ sender: Any) {
+        let panel = NSSavePanel()
+        if self.resource.name.isEmpty {
+            panel.nameFieldStringValue = "Frame sheet \(resource.id)"
+        } else {
+            panel.nameFieldStringValue = self.resource.name
+        }
+        panel.allowedFileTypes = ["tiff"]
+        panel.beginSheetModal(for: self.window!) { returnCode in
+            if returnCode == .OK {
+                do {
+                    let data = try self.rle.readSheet().tiffRepresentation!
+                    try data.write(to: panel.url!)
+                } catch {
+                    self.presentError(error)
+                }
+            }
+        }
+    }
 
     @IBAction func saveResource(_ sender: Any) {
         guard let rle = rle else {
@@ -236,5 +236,13 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
     
     static func previewSize(for resourceType: String) -> Int? {
         return 100
+    }
+}
+
+class AnimationBox: NSBox {
+    // Toggle black background on click
+    override func mouseDown(with event: NSEvent) {
+        self.borderColor = self.borderColor == .gridColor ? .quaternaryLabelColor : .gridColor
+        self.fillColor = self.fillColor == .black ? .gridColor : .black
     }
 }

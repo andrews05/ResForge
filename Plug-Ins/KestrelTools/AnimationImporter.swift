@@ -61,8 +61,8 @@ class AnimationImporter: NSObject, NSOpenSavePanelDelegate {
         if let url = (sender as! NSOpenPanel).url {
             image = NSImage(contentsOf: url)
             if image.isValid {
-                let width = Int(image.size.width)
-                let height = Int(image.size.height)
+                let width = image.representations[0].pixelsWide
+                let height = image.representations[0].pixelsHigh
                 imageSize.stringValue = "\(width) x \(height)"
             } else {
                 image = nil
@@ -81,8 +81,8 @@ class AnimationImporter: NSObject, NSOpenSavePanelDelegate {
             preview.image = nil
             return
         }
-        let width = Int(image.size.width)
-        let height = Int(image.size.height)
+        let width = image.representations[0].pixelsWide
+        let height = image.representations[0].pixelsHigh
         let x = xTiles.integerValue
         let y = yTiles.integerValue
         guard x > 0, width % x == 0, y > 0, height % y == 0 else {
@@ -91,7 +91,7 @@ class AnimationImporter: NSObject, NSOpenSavePanelDelegate {
             return
         }
         frameSize.stringValue = "\(width/x) x \(height/y)"
-        let size = NSMakeSize(CGFloat(width/x), CGFloat(height/y))
+        let size = NSMakeSize(image.size.width/CGFloat(x), image.size.height/CGFloat(y))
         preview.image = NSImage(size: size)
         preview.image?.lockFocus()
         image.draw(at: NSZeroPoint, from: NSMakeRect(0, image.size.height-size.height, size.width, size.height), operation: .copy, fraction: 1)

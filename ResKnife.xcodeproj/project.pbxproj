@@ -778,10 +778,10 @@
 				49EE72AC2550A7F300BEABDB /* AnimationWindow.xib */,
 				49EE72DA2550B79600BEABDB /* Info.plist */,
 				49EE72A92550A7F300BEABDB /* KestrelTools-Bridging-Header.h */,
-				49EE72AA2550A7F300BEABDB /* AnimationWindowController.swift */,
 				49EE738F2550BC8D00BEABDB /* KestrelTools.swift */,
-				492E912D2551373100195174 /* Rle.swift */,
+				49EE72AA2550A7F300BEABDB /* AnimationWindowController.swift */,
 				492E91C92553ADB100195174 /* AnimationImporter.swift */,
+				492E912D2551373100195174 /* Rle.swift */,
 			);
 			path = KestrelTools;
 			sourceTree = "<group>";
