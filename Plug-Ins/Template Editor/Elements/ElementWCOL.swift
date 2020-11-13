@@ -25,10 +25,6 @@ class ElementWCOL<T: FixedWidthInteger & UnsignedInteger>: ElementCOLR {
         b = UInt16(tmp & mask)
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += T.bitWidth / 8
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         var tmp: T = 0
         tmp |= T(r) << (bits*2)

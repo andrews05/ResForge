@@ -86,12 +86,6 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
         }
     }
     
-    override func dataSize(_ size: inout Int) {
-        if first {
-            size += T.bitWidth/8
-        }
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         if first {
             var completeValue: T = 0

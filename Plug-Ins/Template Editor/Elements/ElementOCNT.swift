@@ -50,10 +50,6 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
         }
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += T.bitWidth / 8
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         if T.isSigned {
             writer.write(value - 1)

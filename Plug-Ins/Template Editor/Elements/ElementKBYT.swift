@@ -13,10 +13,6 @@ class ElementKBYT<T: FixedWidthInteger>: KeyElement {
         _ = self.setCase(self.caseMap[value])
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += T.bitWidth / 8
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(tValue)
     }

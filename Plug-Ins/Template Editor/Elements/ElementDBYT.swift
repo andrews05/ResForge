@@ -26,10 +26,6 @@ class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
         tValue = try reader.read()
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += T.bitWidth / 8
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(tValue)
     }

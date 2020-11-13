@@ -18,10 +18,6 @@ class ElementPNT: Element {
         y = try reader.read()
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += 4
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(x)
         writer.write(y)

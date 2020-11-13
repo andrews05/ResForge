@@ -92,14 +92,6 @@ class ElementLSTB: Element {
         }
     }
     
-    override func dataSize(_ size: inout Int) {
-        if tail != self {
-            subElements.dataSize(&size)
-        } else if zeroTerminated {
-            size += 1
-        }
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         if tail != self {
             subElements.writeData(to: writer)

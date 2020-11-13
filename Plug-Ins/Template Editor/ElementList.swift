@@ -59,11 +59,9 @@ class ElementList {
     }
     
     func getResourceData() -> Data {
-        var size = 0
-        self.dataSize(&size)
-        let writer = BinaryDataWriter(capacity: size)
+        let writer = BinaryDataWriter()
         self.writeData(to: writer)
-        return Data(writer.data)
+        return writer.data
     }
     
     // MARK: -
@@ -178,12 +176,6 @@ class ElementList {
         while currentIndex < elements.count && reader.position < reader.data.endIndex {
             try elements[currentIndex].readData(from: reader)
             currentIndex += 1
-        }
-    }
-    
-    func dataSize(_ size: inout Int) {
-        for element in elements {
-            element.dataSize(&size)
         }
     }
     

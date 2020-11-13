@@ -22,10 +22,6 @@ class ElementBHEX<T: FixedWidthInteger & UnsignedInteger>: ElementHEXD {
         try super.readData(from: reader)
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += length + lengthBytes
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         var writeLength = length
         if skipLengthBytes {

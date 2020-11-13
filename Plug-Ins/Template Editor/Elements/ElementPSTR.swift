@@ -121,24 +121,6 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
         }
     }
     
-    override func dataSize(_ size: inout Int) {
-        if case let .fixed(count) = padding {
-            size += count
-            return
-        }
-        var length = min(value.count, maxLength)
-        length += zeroTerminated ? 1 : T.bitWidth / 8
-        switch padding {
-        case .odd:
-            length += (length+1) % 2
-        case .even:
-            length += length % 2
-        default:
-            break
-        }
-        size += length
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         if value.count > maxLength {
             value = String(value.prefix(maxLength))

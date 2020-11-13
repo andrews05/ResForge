@@ -9,6 +9,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     private var resourceStructure: ElementList! = nil
     private var validStructure = false
     @IBOutlet var dataList: TabbableOutlineView!
+    var resourceCache: [String: [Resource]] = [:] // Shared cache for RSID/CASR
     
     override var windowNibName: String {
         return "TemplateWindow"
@@ -80,6 +81,20 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         dataList?.reloadData()
         dataList?.expandItem(nil, expandChildren: true)
         return true
+    }
+    
+    // This function is used by RSID/CASR to get resources for the combo box, caching them by type to improve performance.
+    // Note that the cache is on the window controller instance rather than static, to ensure the resources aren't retained indefinitely.
+    func resources(ofType type: String) -> [Resource] {
+        if resourceCache[type] == nil {
+            // Find resources in all documents and sort by name
+            var resources = resource.manager!.allResources(ofType: type, currentDocumentOnly: false).filter {
+                !$0.name.isEmpty
+            }
+            resources.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+            resourceCache[type] = resources
+        }
+        return resourceCache[type]!
     }
     
     @IBAction func saveResource(_ sender: Any) {

@@ -108,10 +108,6 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     /// Read the value of the field from the stream.
     func readData(from reader: BinaryDataReader) throws {}
     
-    /// Before writeData is called, this is called to calculate the final resource size.
-    /// Items with sub-elements should return the sum of the sizes of all their sub-elements here as well.
-    func dataSize(_ size: inout Int) {}
-    
     /// Write the value of the field to the stream.
     func writeData(to writer: BinaryDataWriter) {}
     

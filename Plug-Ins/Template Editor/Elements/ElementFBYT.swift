@@ -25,10 +25,6 @@ class ElementFBYT: Element {
         try reader.advance(length)
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += length
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         writer.advance(length)
     }

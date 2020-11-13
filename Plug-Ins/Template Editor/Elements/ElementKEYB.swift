@@ -25,10 +25,6 @@ class ElementKEYB: Element {
         try subElements.readData(from: reader)
     }
     
-    override func dataSize(_ size: inout Int) {
-        subElements.dataSize(&size)
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         subElements.writeData(to: writer)
     }

@@ -66,15 +66,10 @@ class KeyElement: Element {
         if oldSection != currentSection {
             if let oldSection = oldSection {
                 // Check if the section sizes match and attempt to copy the data
-                var currentSize = 0
-                oldSection.subElements.dataSize(&currentSize)
-                var newSize = 0
-                currentSection.subElements.dataSize(&newSize)
-                if currentSize == newSize {
-                    let writer = BinaryDataWriter(capacity: currentSize)
-                    oldSection.writeData(to: writer)
-                    let reader = BinaryDataReader(writer.data)
-                    try? currentSection.readData(from: reader)
+                let oldData = oldSection.subElements.getResourceData()
+                let newData = currentSection.subElements.getResourceData()
+                if oldData.count == newData.count {
+                    try? currentSection.readData(from: BinaryDataReader(oldData))
                 }
             }
             // Reload the view - note the outline item isn't necessarily self

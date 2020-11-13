@@ -22,10 +22,6 @@ class ElementRECT: Element {
         right = try reader.read()
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += 8
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(top)
         writer.write(left)

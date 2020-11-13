@@ -27,10 +27,6 @@ class ElementAWRD: Element {
         try reader.advance(self.align(reader.position))
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += self.align(size)
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         writer.advance(self.align(writer.data.count))
     }

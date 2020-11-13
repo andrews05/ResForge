@@ -56,10 +56,6 @@ class ElementHEXD: Element {
         }
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += length
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         if let data = self.data {
             writer.data.append(data)

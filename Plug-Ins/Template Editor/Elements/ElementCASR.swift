@@ -122,11 +122,8 @@ class ElementCASR: CaseableElement {
         self.width = parentElement.casrs.count > 1 ? 180 : 240
         self.cases = []
         self.caseMap = [:]
-        // Find resources in all documents and sort by id
-        let manager = self.parentList.controller.resource.manager!
-        var resources = manager.allResources(ofType: resType, currentDocumentOnly: false)
-        resources.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
-        for resource in resources where !resource.name.isEmpty && min...max ~= resource.id {
+        let resources = self.parentList.controller.resources(ofType: resType)
+        for resource in resources where min...max ~= resource.id {
             if self.caseMap[resource.id] == nil {
                 self.cases.append(ElementCASE(value: resource.id, displayValue: "\(resource.name) = \(resource.id)"))
                 self.caseMap[resource.id] = "\(resource.id) = \(resource.name)"

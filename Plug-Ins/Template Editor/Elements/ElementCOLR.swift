@@ -36,10 +36,6 @@ class ElementCOLR: Element {
         b = try reader.read()
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += 6
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(r)
         writer.write(g)

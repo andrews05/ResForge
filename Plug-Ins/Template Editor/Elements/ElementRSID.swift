@@ -59,11 +59,8 @@ class ElementRSID: ElementDBYT<Int16> {
         }
         self.cases = fixedCases
         self.caseMap = fixedMap
-        // Find resources in all documents and sort by id
-        let manager = self.parentList.controller.resource.manager!
-        var resources = manager.allResources(ofType: resType, currentDocumentOnly: false)
-        resources.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
-        for resource in resources where !resource.name.isEmpty && range?.contains(resource.id) != false {
+        let resources = self.parentList.controller.resources(ofType: resType)
+        for resource in resources where range?.contains(resource.id) != false {
             let resID = resource.id - offset
             if self.caseMap[resID] == nil {
                 let idDisplay = self.resIDDisplay(resID)

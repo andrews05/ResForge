@@ -12,10 +12,6 @@ class ElementREAL: CaseableElement {
         value = Float(bitPattern: try reader.read())
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += 4
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(value.bitPattern)
     }

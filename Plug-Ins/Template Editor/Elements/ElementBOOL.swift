@@ -28,10 +28,6 @@ class ElementBOOL: Element {
         try reader.advance(1)
     }
     
-    override func dataSize(_ size: inout Int) {
-        size += 2
-    }
-    
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(value)
         writer.advance(1)

@@ -11,7 +11,7 @@ public class BinaryDataWriter {
     public var bigEndian: Bool
     public var position: Int { data.count }
 
-    public init(capacity: Int, bigEndian: Bool = true) {
+    public init(capacity: Int = 0, bigEndian: Bool = true) {
         self.data = Data(capacity: capacity)
         self.bigEndian = bigEndian
     }

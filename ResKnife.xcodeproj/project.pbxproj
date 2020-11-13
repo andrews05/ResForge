@@ -61,6 +61,7 @@
 		4970443824720C0B0035C0FA /* file.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4970441A2472064F0035C0FA /* file.hpp */; };
 		4970443D24720C0B0035C0FA /* manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4970441F2472064F0035C0FA /* manager.hpp */; };
 		4970444024720C0B0035C0FA /* resource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 497044222472064F0035C0FA /* resource.hpp */; };
+		497A93C5255BB50800900C7B /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = 497A93BD255BB49600900C7B /* Templates.rsrc */; };
 		497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BB1DB24F741E400858EF1 /* Icons.swift */; };
 		499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499216ED24CB914F0054A390 /* CreateResourceController.swift */; };
 		49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
@@ -225,6 +226,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		497A93C4255BB4FD00900C7B /* Copy Support Resources */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "Support Resources";
+			dstSubfolderSpec = 7;
+			files = (
+				497A93C5255BB50800900C7B /* Templates.rsrc in Copy Support Resources */,
+			);
+			name = "Copy Support Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		49AACD8724CE931A0081DD4A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,6 +398,7 @@
 		4970442A2472064F0035C0FA /* writer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = writer.cpp; sourceTree = "<group>"; };
 		4970442B2472064F0035C0FA /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		4970442D2472064F0035C0FA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		497A93BD255BB49600900C7B /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
 		499216EF24CCD2250054A390 /* ResourceFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceFile.h; sourceTree = "<group>"; };
@@ -455,7 +468,6 @@
 		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E119383D09991C5100A3A6EA /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		E15CFD6D099995D1004929B6 /* Templates for sfnt tables.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Templates for sfnt tables.rsrc"; sourceTree = "<group>"; };
-		E17ADBC006A2132800842474 /* NovaTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovaTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF58C069FEA1400F076B8 /* ResKnife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResKnife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hexadecimal Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -521,13 +533,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E18BF5DF069FEA1400F076B8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E18BF6C2069FEA1800F076B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -552,7 +557,7 @@
 			children = (
 				B27A65CE15A677F00029141B /* TemplateWindow.xib */,
 				E18BFA3606A20B7A00F076B8 /* Info.plist */,
-				E11937F309991C1100A3A6EA /* Support Resources */,
+				E119383D09991C5100A3A6EA /* Templates.rsrc */,
 				4945DBF2253142AE00856385 /* TemplateWindowController.swift */,
 				4945DC152531671400856385 /* TabbableOutlineView.swift */,
 				4945DC232531689900856385 /* LabelView.swift */,
@@ -777,6 +782,7 @@
 			children = (
 				49EE72AC2550A7F300BEABDB /* AnimationWindow.xib */,
 				49EE72DA2550B79600BEABDB /* Info.plist */,
+				497A93BD255BB49600900C7B /* Templates.rsrc */,
 				49EE72A92550A7F300BEABDB /* KestrelTools-Bridging-Header.h */,
 				49EE738F2550BC8D00BEABDB /* KestrelTools.swift */,
 				49EE72AA2550A7F300BEABDB /* AnimationWindowController.swift */,
@@ -796,14 +802,6 @@
 				497BB1DB24F741E400858EF1 /* Icons.swift */,
 			);
 			path = "Image Editor";
-			sourceTree = "<group>";
-		};
-		E11937F309991C1100A3A6EA /* Support Resources */ = {
-			isa = PBXGroup;
-			children = (
-				E119383D09991C5100A3A6EA /* Templates.rsrc */,
-			);
-			name = "Support Resources";
 			sourceTree = "<group>";
 		};
 		E15CFDA009999637004929B6 /* Support Resources */ = {
@@ -862,7 +860,6 @@
 				E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */,
 				E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */,
 				E18BF78B069FF23700F076B8 /* Font Editor.plugin */,
-				E17ADBC006A2132800842474 /* NovaTools.plugin */,
 				B2FCA78A15A66ACE00696598 /* Image Editor.plugin */,
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
 				49AACD7B24CE931A0081DD4A /* RKSupport.framework */,
@@ -958,27 +955,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E18BF58F069FEA1400F076B8 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF5B8069FEA1400F076B8 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF69F069FEA1800F076B8 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E18BF786069FF23700F076B8 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1032,6 +1008,7 @@
 				49EE72D42550B79600BEABDB /* Sources */,
 				49EE72D52550B79600BEABDB /* Frameworks */,
 				49EE72D62550B79600BEABDB /* Resources */,
+				497A93C4255BB4FD00900C7B /* Copy Support Resources */,
 			);
 			buildRules = (
 			);
@@ -1091,10 +1068,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E13F7ED108F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Hex Editor" */;
 			buildPhases = (
-				E18BF58F069FEA1400F076B8 /* Headers */,
-				E18BF597069FEA1400F076B8 /* Resources */,
 				E18BF59A069FEA1400F076B8 /* Sources */,
 				E18BF5A1069FEA1400F076B8 /* Frameworks */,
+				E18BF597069FEA1400F076B8 /* Resources */,
 				4966750E24BE601B00251406 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -1106,34 +1082,14 @@
 			productReference = E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		E18BF5B7069FEA1400F076B8 /* NovaTools */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E13F7EE908F0411100E2A5CB /* Build configuration list for PBXNativeTarget "NovaTools" */;
-			buildPhases = (
-				E18BF5B8069FEA1400F076B8 /* Headers */,
-				E18BF5C8069FEA1400F076B8 /* Resources */,
-				E18BF5D2069FEA1400F076B8 /* Sources */,
-				E18BF5DF069FEA1400F076B8 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = NovaTools;
-			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
-			productName = "NovaTools™";
-			productReference = E17ADBC006A2132800842474 /* NovaTools.plugin */;
-			productType = "com.apple.product-type.bundle";
-		};
 		E18BF69E069FEA1800F076B8 /* Template Editor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E13F7ED508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Template Editor" */;
 			buildPhases = (
-				E18BF69F069FEA1800F076B8 /* Headers */,
-				E18BF6AF069FEA1800F076B8 /* Resources */,
-				E119386209991DAC00A3A6EA /* Copy Support Resources */,
 				E18BF6B3069FEA1800F076B8 /* Sources */,
 				E18BF6C2069FEA1800F076B8 /* Frameworks */,
+				E18BF6AF069FEA1800F076B8 /* Resources */,
+				E119386209991DAC00A3A6EA /* Copy Support Resources */,
 			);
 			buildRules = (
 				E18BF6C7069FEA1900F076B8 /* PBXBuildRule */,
@@ -1223,7 +1179,6 @@
 				49EE72D72550B79600BEABDB /* KestrelTools */,
 				49AACD7A24CE931A0081DD4A /* RKSupport */,
 				E18BF78A069FF23700F076B8 /* Font Editor */,
-				E18BF5B7069FEA1400F076B8 /* NovaTools */,
 			);
 		};
 /* End PBXProject section */
@@ -1284,13 +1239,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B27A65D715A678260029141B /* HexWindow.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF5C8069FEA1400F076B8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1409,13 +1357,6 @@
 			files = (
 				49362D9F24A941800040B793 /* HexWindowController.swift in Sources */,
 				49A432D025437C64000B1109 /* Hexadecimal.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF5D2069FEA1400F076B8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1936,26 +1877,6 @@
 			};
 			name = Release;
 		};
-		E13F7EEA08F0411100E2A5CB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "au.com.sutherland-studios.resknife.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = NovaTools;
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = Debug;
-		};
-		E13F7EEB08F0411100E2A5CB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "au.com.sutherland-studios.resknife.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = NovaTools;
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = Release;
-		};
 		E13F7F0608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2119,15 +2040,6 @@
 			buildConfigurations = (
 				E13F7EE608F0411100E2A5CB /* Debug */,
 				E13F7EE708F0411100E2A5CB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		E13F7EE908F0411100E2A5CB /* Build configuration list for PBXNativeTarget "NovaTools" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E13F7EEA08F0411100E2A5CB /* Debug */,
-				E13F7EEB08F0411100E2A5CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
