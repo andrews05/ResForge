@@ -303,7 +303,7 @@ CA
                 <menuItem title="Resource" tag="3" id="418">
                     <menu key="submenu" title="Resource" id="419">
                         <items>
-                            <menuItem title="Create New Resource…" keyEquivalent="k" id="420">
+                            <menuItem title="New Resource…" keyEquivalent="k" id="420">
                                 <connections>
                                     <action selector="createNewItem:" target="-1" id="sNB-uY-Iqz"/>
                                 </connections>

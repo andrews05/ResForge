@@ -47,11 +47,13 @@ class ResourceDirectory {
         for resource in resources {
             self.addToTypedList(resource)
         }
+        filtered = [:]
     }
     
     /// Add a single resource.
     func add(_ resource: Resource) {
         self.addToTypedList(resource)
+        filtered.removeValue(forKey: resource.type)
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.remove(resource) })
         NotificationCenter.default.post(name: .DirectoryDidAddResource, object: self, userInfo: ["resource": resource])
         document.updateStatus()
@@ -60,6 +62,7 @@ class ResourceDirectory {
     /// Remove a single resource.
     func remove(_ resource: Resource) {
         self.removeFromTypedList(resource)
+        filtered.removeValue(forKey: resource.type)
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.add(resource) })
         NotificationCenter.default.post(name: .DirectoryDidRemoveResource, object: self, userInfo: ["resource": resource])
         document.updateStatus()
