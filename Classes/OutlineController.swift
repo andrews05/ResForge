@@ -182,9 +182,9 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         if let type = item as? String ?? currentType {
-            return document.directory.resourcesByType[type]![index]
+            return document.directory.filteredResources(type: type)[index]
         } else {
-            return document.directory.allTypes[index]
+            return document.directory.filteredTypes()[index]
         }
     }
     
@@ -194,9 +194,9 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         if let type = item as? String ?? currentType {
-            return document.directory.resourcesByType[type]?.count ?? 0
+            return document.directory.filteredResources(type: type).count
         } else {
-            return document.directory.allTypes.count
+            return document.directory.filteredTypes().count
         }
     }
     

@@ -14,7 +14,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     func select(_ resources: [Resource]) {
         var paths: Set<IndexPath> = Set()
         for resource in resources where resource.type == currentType {
-            let i = document.directory.resourcesByType[currentType]!.firstIndex(of: resource)!
+            let i = document.directory.filteredResources(type: currentType).firstIndex(of: resource)!
             paths.insert([0, i])
         }
         collectionView.selectionIndexPaths = paths
@@ -27,7 +27,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     
     func selectedResources(deep: Bool = false) -> [Resource] {
         return collectionView.selectionIndexPaths.map {
-            document.directory.resourcesByType[currentType]![$0.last!]
+            document.directory.filteredResources(type: currentType)[$0.last!]
         }
     }
     
@@ -61,7 +61,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     }
     
     func collectionView(_ collectionView: NSCollectionView, pasteboardWriterForItemAt index: Int) -> NSPasteboardWriting? {
-        return document.directory.resourcesByType[currentType]![index]
+        return document.directory.filteredResources(type: currentType)[index]
     }
     
     // Don't hide original items when dragging
@@ -74,11 +74,11 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     // MARK: - DataSource functions
     
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return document.directory.resourcesByType[currentType]!.count
+        return document.directory.filteredResources(type: currentType).count
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        let resource = document.directory.resourcesByType[currentType]![indexPath.last!]
+        let resource = document.directory.filteredResources(type: currentType)[indexPath.last!]
         let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceItem"), for: indexPath) as! ResourceItem
         view.configure(resource)
         return view

@@ -187,7 +187,7 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
     
     // MARK: - Export
     
-    @IBAction func exportResources(_ sender: Any?) {
+    @IBAction func exportResources(_ sender: Any) {
         let resources = dataSource.selectedResources(deep: true)
         if resources.count > 1 {
             // Multiple resources, choose a directory to export to

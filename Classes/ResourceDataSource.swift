@@ -13,6 +13,9 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     
     private(set) var useTypeList = UserDefaults.standard.bool(forKey: kShowSidebar)
     private var resourcesView: ResourcesView!
+    private var currentType: String {
+        return typeList.selectedRow > 0 ? document.directory.allTypes[typeList.selectedRow-1] : ""
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,6 +46,11 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         if !useTypeList || resource.type == resourcesView.selectedType() {
             resourcesView.updated(resource: resource, oldIndex: notification.userInfo!["oldIndex"] as! Int, newIndex: notification.userInfo!["newIndex"] as! Int)
         }
+    }
+    
+    @IBAction func filter(_ sender: Any) {
+        document.directory.filter = (sender as! NSSearchField).stringValue
+        resourcesView.reload(type: useTypeList ? currentType : nil)
     }
     
     // MARK: - Resource management
@@ -164,12 +172,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     }
     
     func tableViewSelectionDidChange(_ notification: Notification) {
-        let type: String
-        if typeList.selectedRow > 0 {
-            type = document.directory.allTypes[typeList.selectedRow-1]
-        } else {
-            type = ""
-        }
+        let type = currentType
         if let size = PluginRegistry.previewSizes[type] {
             let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
             layout.itemSize = NSSize(width: size+8, height: size+40)

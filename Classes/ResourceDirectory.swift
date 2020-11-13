@@ -11,11 +11,18 @@ class ResourceDirectory {
     private(set) weak var document: ResourceDocument!
     private(set) var resourcesByType: [String: [Resource]] = [:]
     private(set) var allTypes: [String] = []
+    private var filtered: [String: [Resource]] = [:]
+    var filter = "" {
+        didSet {
+            filtered = [:]
+        }
+    }
     var sortDescriptors: [NSSortDescriptor] = [] {
         didSet {
             for type in allTypes {
                 resourcesByType[type]?.sort(using: sortDescriptors)
             }
+            filtered = [:]
         }
     }
     
@@ -56,6 +63,30 @@ class ResourceDirectory {
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.add(resource) })
         NotificationCenter.default.post(name: .DirectoryDidRemoveResource, object: self, userInfo: ["resource": resource])
         document.updateStatus()
+    }
+    
+    /// Get the resources for the given type that match the current filter.
+    func filteredResources(type: String) -> [Resource] {
+        if filter.isEmpty {
+            return resourcesByType[type]!
+        }
+        let id = Int(filter)
+        // Maintain a cache of the filtered resources
+        if filtered[type] == nil, let resouces = resourcesByType[type] {
+            filtered[type] = resouces.filter {
+                return $0.id == id || $0.name.localizedCaseInsensitiveContains(filter)
+            }
+        }
+        return filtered[type] ?? []
+    }
+    
+    /// Get all types that contain resources matching the current filter.
+    func filteredTypes() -> [String] {
+        if filter.isEmpty {
+            return allTypes
+        }
+        _ = allTypes.map(self.filteredResources)
+        return filtered.filter({ !$1.isEmpty }).keys.sorted(by: { $0.localizedCompare($1) == .orderedAscending })
     }
     
     private func addToTypedList(_ resource: Resource) {
