@@ -25,9 +25,6 @@ public protocol ResKnifePlugin: class {
     /// Implement this if the plugin needs to control the data that gets written to disk on export. By default the host application writes the raw resource data.
     /// The idea is that this export function is non-lossy, i.e. only override this if there is a format that is a 100% equivalent to your data.
     static func export(_ resource: Resource, to url: URL) -> Bool
-    
-    /// Return the icon to be used throughout the UI for any given resource type.
-    static func icon(for resourceType: String) -> NSImage?
 
     /// Return an NSImage representing the resource for use in grid view.
     static func image(for resource: Resource) -> NSImage?
@@ -61,7 +58,6 @@ public protocol ResKnifePluginManager: class {
 public extension ResKnifePlugin {
     static func filenameExtension(for resourceType: String) -> String? { nil }
     static func export(_ resource: Resource, to url: URL) -> Bool { false }
-    static func icon(for resourceType: String) -> NSImage? { nil }
     static func image(for resource: Resource) -> NSImage? { nil }
     static func previewSize(for resourceType: String) -> Int? { nil }
     static func placeholderName(for resource: Resource) -> String? { nil }

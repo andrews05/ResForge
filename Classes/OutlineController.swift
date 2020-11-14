@@ -111,7 +111,6 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             case "name":
                 view.textField?.stringValue = resource.name
                 view.textField?.placeholderString = resource.placeholderName()
-                view.imageView?.image = PluginRegistry.icon(for: resource.type)
             case "type":
                 view.textField?.stringValue = resource.type
             case "id":

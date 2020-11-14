@@ -208,10 +208,6 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         return NSImage(data: data)
     }
     
-    static func icon(for resourceType: String) -> NSImage? {
-        return NSWorkspace.shared.icon(forFileType: "public.image")
-    }
-    
     static func previewSize(for resourceType: String) -> Int? {
         switch resourceType {
         case "PICT", "PNG ":

@@ -6,19 +6,6 @@ public class PluginRegistry {
     public private(set) static var hexEditor: ResKnifePlugin.Type! = nil
     public private(set) static var previewSizes: [String: Int] = [:]
     public private(set) static var packages: [ResKnifePluginPackage.Type] = []
-    private static var icons: [String: NSImage] = [:]
-    // Some default icon mappings
-    private static let iconTypeMappings = [
-        "cfrg": "shlb",
-        "SIZE": "shlb",
-        "CODE": "s",
-        "STR ": "txt",
-        "STR#": "txt",
-        "plst": "plist",
-        "url ": "webloc",
-        "NFNT": "ttf",
-        "sfnt": "ttf"
-    ]
     
     /// Register a plugin bundle as an editor for types defined in its info.plist.
     public static func register(_ plugin: Bundle) {
@@ -46,15 +33,6 @@ public class PluginRegistry {
                 }
             }
         }
-    }
-    
-    /// Return an icon representing the resource type.
-    public static func icon(for resourceType: String) -> NSImage! {
-        if icons[resourceType] == nil {
-            // Ask the editor for an icon, falling back to our predefined type mapping or just a default document type
-            icons[resourceType] = editors[resourceType]?.icon(for: resourceType) ?? NSWorkspace.shared.icon(forFileType: iconTypeMappings[resourceType] ?? "")
-        }
-        return icons[resourceType]
     }
     
     /// Return a placeholder name to show for a resource when it has no name.

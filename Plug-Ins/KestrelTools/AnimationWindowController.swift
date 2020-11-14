@@ -230,10 +230,6 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKn
         }
     }
     
-    static func icon(for resourceType: String) -> NSImage? {
-        return NSWorkspace.shared.icon(forFileType: "public.image")
-    }
-    
     static func previewSize(for resourceType: String) -> Int? {
         return 100
     }

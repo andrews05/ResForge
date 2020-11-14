@@ -170,8 +170,4 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         }
         return true
     }
-    
-    static func icon(for resourceType: String) -> NSImage? {
-        return NSWorkspace.shared.icon(forFileType: "public.audio")
-    }
 }

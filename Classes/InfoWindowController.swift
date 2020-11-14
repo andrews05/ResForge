@@ -2,17 +2,18 @@ import Cocoa
 import RKSupport
 
 class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
+    @IBOutlet var placeholderView: NSView!
+    @IBOutlet var resourceView: NSView!
+    @IBOutlet var documentView: NSView!
+    
     @IBOutlet var iconView: NSImageView!
     @IBOutlet var nameView: NSTextField!
-    @IBOutlet var placeholderView: NSBox!
-    @IBOutlet var resourceView: NSBox!
-    @IBOutlet var documentView: NSBox!
-    
     @IBOutlet var creator: NSTextField!
     @IBOutlet var type: NSTextField!
     @IBOutlet var dataSize: NSTextField!
     @IBOutlet var rsrcSize: NSTextField!
     
+    @IBOutlet var rName: NSTextField!
     @IBOutlet var rType: NSTextField!
     @IBOutlet var rID: NSTextField!
     @IBOutlet var rSize: NSTextField!
@@ -37,9 +38,9 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     
     func windowWillClose(_ notification: Notification) {
         // Cancel all editing on close (not sure how to just get the active field)
-        nameView.abortEditing()
         creator.abortEditing()
         type.abortEditing()
+        rName.abortEditing()
         rType.abortEditing()
         rID.abortEditing()
     }
@@ -50,16 +51,13 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     }
     
     private func update() {
-        nameView.abortEditing()
-        nameView.isEditable = selectedResource != nil
-        nameView.isBezeled = selectedResource != nil
-        
         if let resource = selectedResource {
             // set UI values
             self.window?.title = NSLocalizedString("Resource Info", comment: "")
-            nameView.stringValue = resource.name
-            nameView.placeholderString = NSLocalizedString("Untitled Resource", comment: "")
-            iconView.image = PluginRegistry.icon(for: resource.type)
+            rName.stringValue = resource.name
+            rType.stringValue = resource.type
+            rID.integerValue = resource.id
+            rSize.integerValue = resource.data.count
             
             attributesMatrix.cell(withTag: ResAttributes.changed.rawValue)?.state    = resource.attributes.contains(.changed) ? .on : .off
             attributesMatrix.cell(withTag: ResAttributes.preload.rawValue)?.state    = resource.attributes.contains(.preload) ? .on : .off
@@ -68,13 +66,8 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             attributesMatrix.cell(withTag: ResAttributes.purgeable.rawValue)?.state  = resource.attributes.contains(.purgeable) ? .on : .off
             attributesMatrix.cell(withTag: ResAttributes.sysHeap.rawValue)?.state    = resource.attributes.contains(.sysHeap) ? .on : .off
             
-            rType.stringValue = resource.type
-            rID.integerValue = resource.id
-            rSize.integerValue = resource.data.count
-            
-            // swap box
-            placeholderView.contentView = resourceView
-            self.window?.recalculateKeyViewLoop()
+            // swap view
+            self.window?.contentView = resourceView
         } else if let document = currentDocument {
             // get sizes of forks as they are on disk
             dataSize.integerValue = 0
@@ -98,15 +91,11 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             creator.stringValue = document.hfsCreator.stringValue
             type.stringValue = document.hfsType.stringValue
             
-            // swap box
-            placeholderView.contentView = documentView
-            self.window?.recalculateKeyViewLoop()
+            // swap view
+            self.window?.contentView = documentView
         } else {
             self.window?.title = NSLocalizedString("Document Info", comment: "")
-            iconView.image = nil
-            nameView.stringValue = ""
-            nameView.placeholderString = NSLocalizedString("No Document", comment: "")
-            placeholderView.contentView = nil
+            self.window?.contentView = placeholderView
         }
     }
     
@@ -128,6 +117,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     @objc func mainWindowResigned(_ notification: Notification) {
         if (notification.object as? NSWindow)?.windowController?.document === currentDocument {
             currentDocument = nil
+            selectedResource = nil
             self.update()
         }
     }
