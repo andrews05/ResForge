@@ -2,7 +2,7 @@ import Cocoa
 import RKSupport
 
 class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate, NSMenuItemValidation, ResKnifeTemplatePlugin {
-    static let supportedTypes = ["Template"]
+    static let editedTypes = ["Template"]
     
     let resource: Resource
     private let template: Resource

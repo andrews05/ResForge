@@ -2,7 +2,7 @@ import Cocoa
 import RKSupport
 
 class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
-    static let supportedTypes = ["rlëD"]
+    static let editedTypes = ["rlëD"]
     
     let resource: Resource
     private var rle: Rle!

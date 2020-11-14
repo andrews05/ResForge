@@ -3,7 +3,7 @@ import Cocoa
 import RKSupport
 
 class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
-    static let supportedTypes = ["snd "]
+    static let editedTypes = ["snd "]
     
     let resource: Resource
     private let sound: SoundResource

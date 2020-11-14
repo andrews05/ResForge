@@ -2,7 +2,7 @@ import Cocoa
 import RKSupport
 
 class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
-    static let supportedTypes = [
+    static let editedTypes = [
         "PICT",
         "PNG ",
         "cicn",

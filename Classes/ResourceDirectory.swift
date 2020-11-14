@@ -71,7 +71,7 @@ class ResourceDirectory {
     /// Get the resources for the given type that match the current filter.
     func filteredResources(type: String) -> [Resource] {
         if filter.isEmpty {
-            return resourcesByType[type]!
+            return resourcesByType[type] ?? []
         }
         let id = Int(filter)
         // Maintain a cache of the filtered resources

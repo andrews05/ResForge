@@ -11,7 +11,7 @@ public extension FourCharCode {
 
 public protocol ResKnifePlugin: class {
     /// The list of resource types that this plugin supports.
-    static var supportedTypes: [String] { get }
+    static var editedTypes: [String] { get }
     
     var resource: Resource { get }
     init?(resource: Resource)
@@ -46,6 +46,7 @@ public protocol ResKnifeTemplatePlugin: ResKnifePlugin {
 /// If your bundle consists of multiple editors for different types, the principal class should implement this to provide a list of all the plugin classes.
 public protocol ResKnifePluginPackage {
     static var pluginClasses: [ResKnifePlugin.Type] { get }
+    static func placeholderName(for resource: Resource) -> String?
 }
 
 public protocol ResKnifePluginManager: class {
@@ -63,5 +64,8 @@ public extension ResKnifePlugin {
     static func icon(for resourceType: String) -> NSImage? { nil }
     static func image(for resource: Resource) -> NSImage? { nil }
     static func previewSize(for resourceType: String) -> Int? { nil }
+    static func placeholderName(for resource: Resource) -> String? { nil }
+}
+public extension ResKnifePluginPackage {
     static func placeholderName(for resource: Resource) -> String? { nil }
 }

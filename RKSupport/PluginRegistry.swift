@@ -5,6 +5,7 @@ public class PluginRegistry {
     public private(set) static var templateEditor: ResKnifePlugin.Type! = nil
     public private(set) static var hexEditor: ResKnifePlugin.Type! = nil
     public private(set) static var previewSizes: [String: Int] = [:]
+    public private(set) static var packages: [ResKnifePluginPackage.Type] = []
     private static var icons: [String: NSImage] = [:]
     // Some default icon mappings
     private static let iconTypeMappings = [
@@ -23,6 +24,7 @@ public class PluginRegistry {
     public static func register(_ plugin: Bundle) {
         let pluginClasses: [ResKnifePlugin.Type]
         if let mainClass = plugin.principalClass as? ResKnifePluginPackage.Type {
+            packages.append(mainClass)
             pluginClasses = mainClass.pluginClasses
         } else if let mainClass = plugin.principalClass as? ResKnifePlugin.Type {
             pluginClasses = [mainClass]
@@ -30,7 +32,7 @@ public class PluginRegistry {
             return
         }
         for pluginClass in pluginClasses {
-            for type in pluginClass.supportedTypes {
+            for type in pluginClass.editedTypes {
                 switch type {
                 case "Hex":
                     Self.hexEditor = pluginClass
@@ -57,6 +59,15 @@ public class PluginRegistry {
     
     /// Return a placeholder name to show for a resource when it has no name.
     public static func placeholderName(for resource: Resource) -> String {
+        if let placeholder = editors[resource.type]?.placeholderName(for: resource) {
+            return placeholder
+        }
+        for package in packages {
+            if let placeholder = package.placeholderName(for: resource) {
+                return placeholder
+            }
+        }
+        
         if resource.id == -16455 {
             // don't bother checking type since there are too many icon types
             return NSLocalizedString("Custom Icon", comment: "")
