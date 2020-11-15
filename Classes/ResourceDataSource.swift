@@ -49,8 +49,10 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     }
     
     @IBAction func filter(_ sender: Any) {
-        document.directory.filter = (sender as! NSSearchField).stringValue
-        resourcesView.reload(type: useTypeList ? currentType : nil)
+        if let field = sender as? NSSearchField {
+            document.directory.filter = field.stringValue
+            resourcesView.reload(type: useTypeList ? currentType : nil)
+        }
     }
     
     // MARK: - Resource management
