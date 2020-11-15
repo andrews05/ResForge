@@ -6,6 +6,16 @@ extension Notification.Name {
     static let DocumentSelectionDidChange   = Self("DocumentSelectionDidChange")
 }
 
+extension NSToolbarItem.Identifier {
+    static let addResource      = Self("addResource")
+    static let deleteResource   = Self("deleteResource")
+    static let editResource     = Self("editResource")
+    static let editHex          = Self("editHex")
+    static let exportResources  = Self("exportResources")
+    static let showInfo         = Self("showInfo")
+    static let searchField      = Self("searchField")
+}
+
 enum FileFork {
     case data
     case rsrc
@@ -34,7 +44,7 @@ extension ResourceFileFormat {
     }
 }
 
-class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, NSDraggingDestination {
+class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate {
     @IBOutlet var dataSource: ResourceDataSource!
     @IBOutlet var statusText: NSTextField!
     private(set) lazy var directory = ResourceDirectory(self)
@@ -245,6 +255,116 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
         }
     }
     
+    // MARK: - Toolbar Management
+    
+    func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+        return [
+            .toggleSidebar,
+            .addResource,
+            .deleteResource,
+            .editResource,
+            .editHex,
+            .exportResources,
+            .showInfo,
+            .searchField,
+            .space,
+            .flexibleSpace
+        ]
+    }
+    
+    func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+        var defaults: [NSToolbarItem.Identifier] = [
+            .toggleSidebar,
+            .space,
+            .addResource,
+            .editResource,
+            .exportResources,
+            .showInfo,
+            .flexibleSpace,
+            .searchField
+        ]
+        if #available(OSX 11.0, *) {
+            defaults.removeFirst(.space)
+        }
+        return defaults
+    }
+    
+    func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
+        // Create the toolbar items. On macOS 11 we use the special search toolbar item as well as the system symbol images.
+        let item: NSToolbarItem
+        if itemIdentifier == .searchField {
+            if #available(OSX 11.0, *) {
+                item = NSSearchToolbarItem(itemIdentifier: itemIdentifier)
+                (item as! NSSearchToolbarItem).preferredWidthForSearchField = 180
+            } else {
+                item = NSToolbarItem(itemIdentifier: itemIdentifier)
+                item.view = NSSearchField()
+            }
+            item.action = #selector(ResourceDataSource.filter(_:))
+            item.target = dataSource
+            return item
+        }
+        
+        item = NSToolbarItem(itemIdentifier: itemIdentifier)
+        let button = NSButton(frame: NSMakeRect(0, 0, 36, 0))
+        button.bezelStyle = .texturedRounded
+        item.view = button
+        item.target = self
+        switch itemIdentifier {
+        case .addResource:
+            item.label = NSLocalizedString("Add", comment: "")
+            item.image = NSImage(named: NSImage.addTemplateName)
+            item.action = #selector(createNewItem(_:))
+        case .deleteResource:
+            item.label = NSLocalizedString("Delete", comment: "")
+            if #available(OSX 11.0, *) {
+                item.image = NSImage(systemSymbolName: "trash", accessibilityDescription: nil)
+            } else {
+                item.image = NSImage(named: "trash")
+            }
+            item.action = #selector(delete(_:))
+        case .editResource:
+            item.label = NSLocalizedString("Edit", comment: "")
+            if #available(OSX 11.0, *) {
+                item.image = NSImage(systemSymbolName: "square.and.pencil", accessibilityDescription: nil)
+            } else {
+                item.image = NSImage(named: "square.and.pencil")
+            }
+            item.action = #selector(openResources(_:))
+        case .editHex:
+            item.label = NSLocalizedString("Edit Hex", comment: "")
+            if #available(OSX 11.0, *) {
+                item.image = NSImage(systemSymbolName: "rectangle.and.pencil.and.ellipsis", accessibilityDescription: nil)
+            } else {
+                item.image = NSImage(named: "rectangle.and.pencil.and.ellipsis")
+            }
+            item.action = #selector(openResourcesAsHex(_:))
+        case .exportResources:
+            item.label = NSLocalizedString("Export", comment: "")
+            item.image = NSImage(named: NSImage.shareTemplateName)
+            item.action = #selector(exportResources(_:))
+        case .showInfo:
+            item.label = NSLocalizedString("Show Info", comment: "")
+            if #available(OSX 11.0, *) {
+                item.image = NSImage(systemSymbolName: "info.circle", accessibilityDescription: nil)
+            } else {
+                item.image = NSImage(named: "info.circle")
+            }
+            item.target = NSApp.delegate
+            item.action = #selector(ApplicationDelegate.showInfo(_:))
+        default:
+            break
+        }
+        return item
+    }
+    
+    func toolbarWillAddItem(_ notification: Notification) {
+        // Set the sidebar toggle target to self
+        if let addedItem = notification.userInfo?["item"] as? NSToolbarItem, addedItem.itemIdentifier == .toggleSidebar {
+            addedItem.target = self
+        }
+    }
+    
     // MARK: - Window Management
     
     override func windowControllerDidLoadNib(_ windowController: NSWindowController) {
@@ -306,20 +426,6 @@ class ResourceDocument: NSDocument, NSToolbarItemValidation, NSWindowDelegate, N
                 return self.isDocumentEdited
             }
             return super.validateMenuItem(menuItem)
-        }
-    }
-    
-    // FIXME: This function is for image-type items only - a new solution is needed for button types
-    func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
-        switch item.action {
-        case #selector(delete(_:)),
-            #selector(openResources(_:)),
-            #selector(openResourcesInTemplate(_:)),
-            #selector(openResourcesAsHex(_:)),
-            #selector(exportResources(_:)):
-            return dataSource.selectionCount() > 0
-        default:
-            return true
         }
     }
     

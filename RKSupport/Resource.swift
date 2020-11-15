@@ -10,7 +10,7 @@ public extension Notification.Name {
 }
 
 public extension NSPasteboard.PasteboardType {
-    static let RKResource = Self(rawValue: "com.nickshanks.resknife.resource")
+    static let RKResource = Self("com.nickshanks.resknife.resource")
 }
 
 public struct ResAttributes: OptionSet, Hashable {

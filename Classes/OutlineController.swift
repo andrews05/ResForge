@@ -127,10 +127,10 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             let identifier = tableColumn!.identifier.rawValue.appending("Group")
             switch identifier {
             case "idGroup":
-                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), owner: self) as! NSTableCellView
+                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(identifier), owner: self) as! NSTableCellView
                 view.textField?.stringValue = type
             case "sizeGroup":
-                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), owner: self) as! NSTableCellView
+                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(identifier), owner: self) as! NSTableCellView
                 view.textField?.integerValue = document.directory.resourcesByType[type]!.count
             default:
                 return nil

@@ -79,7 +79,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let resource = document.directory.filteredResources(type: currentType)[indexPath.last!]
-        let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ResourceItem"), for: indexPath) as! ResourceItem
+        let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier("ResourceItem"), for: indexPath) as! ResourceItem
         view.configure(resource)
         return view
     }

@@ -60,7 +60,7 @@ class AnimationImporter: NSObject, NSOpenSavePanelDelegate {
     func panelSelectionDidChange(_ sender: Any?) {
         if let url = (sender as! NSOpenPanel).url {
             image = NSImage(contentsOf: url)
-            if image.isValid {
+            if image?.isValid == true {
                 let width = image.representations[0].pixelsWide
                 let height = image.representations[0].pixelsHigh
                 imageSize.stringValue = "\(width) x \(height)"
