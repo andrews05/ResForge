@@ -299,6 +299,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             } else {
                 item = NSToolbarItem(itemIdentifier: itemIdentifier)
                 item.view = NSSearchField()
+                item.label = NSLocalizedString("Search", comment: "")
+                item.minSize = NSMakeSize(120, 0)
+                item.maxSize = NSMakeSize(180, 0)
             }
             item.action = #selector(ResourceDataSource.filter(_:))
             item.target = dataSource
@@ -323,6 +326,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 item.image = NSImage(named: "trash")
             }
             item.action = #selector(delete(_:))
+            item.isEnabled = false
         case .editResource:
             item.label = NSLocalizedString("Edit", comment: "")
             if #available(OSX 11.0, *) {
@@ -331,6 +335,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 item.image = NSImage(named: "square.and.pencil")
             }
             item.action = #selector(openResources(_:))
+            item.isEnabled = false
         case .editHex:
             item.label = NSLocalizedString("Edit Hex", comment: "")
             if #available(OSX 11.0, *) {
@@ -339,10 +344,12 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 item.image = NSImage(named: "rectangle.and.pencil.and.ellipsis")
             }
             item.action = #selector(openResourcesAsHex(_:))
+            item.isEnabled = false
         case .exportResources:
             item.label = NSLocalizedString("Export", comment: "")
             item.image = NSImage(named: NSImage.shareTemplateName)
             item.action = #selector(exportResources(_:))
+            item.isEnabled = false
         case .showInfo:
             item.label = NSLocalizedString("Show Info", comment: "")
             if #available(OSX 11.0, *) {
@@ -365,11 +372,29 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
     }
     
+    @objc func validateToolbarItems(_ notification: Notification) {
+        if let toolbar = windowControllers.first?.window?.toolbar {
+            let enabled = dataSource.selectionCount() > 0
+            for item in toolbar.items {
+                switch item.itemIdentifier {
+                case .deleteResource, .editResource, .editHex, .exportResources:
+                    item.isEnabled = enabled
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
     // MARK: - Window Management
     
     override func windowControllerDidLoadNib(_ windowController: NSWindowController) {
         windowController.window?.registerForDraggedTypes([.RKResource])
         self.updateStatus()
+        NotificationCenter.default.addObserver(self, selector: #selector(validateToolbarItems(_:)), name: .DocumentSelectionDidChange, object: self)
+        if #available(OSX 11.0, *) {
+            (statusText.superview?.superview as? NSBox)?.fillColor = .windowBackgroundColor
+        }
     }
     
     func updateStatus() {
