@@ -66,14 +66,11 @@ public class PluginRegistry {
                     return try BinaryDataReader(resource.data).readPString()
                 } catch {}
             }
-            if resource.id == -16396 {
-                return NSLocalizedString("Creator Information", comment: "")
-            }
         case "STR#":
             if resource.data.count > 3 {
                 do {
                     // Read first string at offset 2
-                    return try BinaryDataReader(resource.data[2...]).readPString()
+                    return try BinaryDataReader(resource.data.dropFirst(2)).readPString()
                 } catch {}
             }
         case "TEXT":
@@ -81,16 +78,11 @@ public class PluginRegistry {
                 return string
             }
         case "vers":
-            if resource.data.count > 8 {
+            if resource.data.count > 7 {
                 do {
-                    // Read short version string at offset 7
-                    return try BinaryDataReader(resource.data[7...]).readPString()
+                    // Read short version string at offset 6
+                    return try BinaryDataReader(resource.data.dropFirst(6)).readPString()
                 } catch {}
-            }
-            if resource.id == 1 {
-                return NSLocalizedString("File Version", comment: "")
-            } else if resource.id == 2 {
-                return NSLocalizedString("Package Version", comment: "")
             }
         default:
             break
