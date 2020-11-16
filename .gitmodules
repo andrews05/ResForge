@@ -1,3 +1,6 @@
 [submodule "Graphite"]
 	path = Graphite
 	url = https://github.com/TheDiamondProject/Graphite
+[submodule "HexFiend"]
+	path = HexFiend
+	url = https://github.com/ridiculousfish/HexFiend.git

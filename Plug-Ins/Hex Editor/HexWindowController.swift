@@ -1,7 +1,7 @@
 import Cocoa
 import RKSupport
 
-class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlugin {
+class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlugin, HFTextViewDelegate {
     static let editedTypes = ["Hex"]
     
     let resource: Resource
@@ -36,7 +36,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         findView.isHidden = true
         
         let lineCountingRepresenter = HFLineCountingRepresenter()
-        lineCountingRepresenter.lineNumberFormat = HFLineNumberFormat.hexadecimal
+        lineCountingRepresenter.lineNumberFormat = .hexadecimal
         let statusBarRepresenter = HFStatusBarRepresenter()
         
         textView.layoutRepresenter.addRepresenter(lineCountingRepresenter)
@@ -47,9 +47,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         textView.data = resource.data
         textView.controller.undoManager = self.window?.undoManager
         textView.layoutRepresenter.performLayout()
-        
-        // Using the textView's delegate results in a reference cycle. Register for notifications instead.
-        NotificationCenter.default.addObserver(self, selector: #selector(self.hexDidChangeProperties(_:)), name: NSNotification.Name.HFControllerDidChangeProperties, object: textView.controller)
+        textView.delegate = self
     }
     
     @objc func resourceDataDidChange(_ notification: NSNotification) {
@@ -59,8 +57,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         }
     }
     
-    @objc func hexDidChangeProperties(_ notification: NSNotification) {
-        let properties = HFControllerPropertyBits(rawValue: notification.userInfo![HFControllerChangedPropertiesKey] as! UInt)
+    func hexTextView(_ view: HFTextView, didChangeProperties properties: HFControllerPropertyBits) {
         if (properties.contains(.contentValue)) {
             self.setDocumentEdited(true)
         }

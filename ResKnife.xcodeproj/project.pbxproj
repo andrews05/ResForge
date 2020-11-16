@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		490D94AF25624FCF00F73544 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; };
 		491BC28B253B894200149D78 /* ElementOCNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491BC28A253B894200149D78 /* ElementOCNT.swift */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */; };
@@ -48,8 +50,6 @@
 		49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */; };
 		49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */; };
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
-		4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; };
-		4966750D24BE601B00251406 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B25C779815D2B0C500C005DE /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
 		4968C03B24C6808200716AB9 /* EditorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* EditorManager.swift */; };
@@ -170,19 +170,61 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
+		490D949925624F5D00F73544 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = HexFiend_2;
+		};
+		490D949B25624F5D00F73544 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D01E7BB80CDC530C00943F9E;
+			remoteInfo = HexFiend_Framework;
+		};
+		490D949D25624F5D00F73544 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A5EF294A20F187B700CA7B39;
+			remoteInfo = HexFiend_Framework_iOS;
+		};
+		490D949F25624F5D00F73544 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D047E3151022CEFE00EF307B;
+			remoteInfo = "FortunateSon (PrivilegedHelper)";
+		};
+		490D94A125624F5D00F73544 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D00C15E50FF091FF006D021F;
+			remoteInfo = HexFiendling;
+		};
+		490D94A325624F5D00F73544 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9408FBFA19DD72DE004F800E;
+			remoteInfo = "HexFiend_Framework Tests";
+		};
+		490D94A525624F5D00F73544 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A550A7161F7877F8001C79C7;
+			remoteInfo = hexf;
+		};
 		4953F5A42488759E0002340F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4953F594248874AA0002340F;
 			remoteInfo = "Sound Editor";
-		};
-		49AACD8024CE931A0081DD4A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 49AACD7A24CE931A0081DD4A;
-			remoteInfo = ResKnifePlugins;
 		};
 		49DA3A552550BD7C00821A7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -221,7 +263,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4966750D24BE601B00251406 /* HexFiend.framework in Embed Frameworks */,
+				490D94AF25624FCF00F73544 /* HexFiend.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,6 +341,7 @@
 
 /* Begin PBXFileReference section */
 		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
+		490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
 		491BC28A253B894200149D78 /* ElementOCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementOCNT.swift; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; };
 		491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; };
@@ -463,7 +506,6 @@
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImageWindow.xib; sourceTree = "<group>"; };
 		555DFD982059BCE700E1B774 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
-		B25C779815D2B0C500C005DE /* HexFiend.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HexFiend.framework; sourceTree = "<group>"; };
 		B2FCA78A15A66ACE00696598 /* Image Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Image Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E119383D09991C5100A3A6EA /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
@@ -528,8 +570,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */,
 				49AACD8D24CE97CD0081DD4A /* RKSupport.framework in Frameworks */,
-				4966750C24BE601B00251406 /* HexFiend.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +612,20 @@
 				4951AB4B25341B97009A8285 /* Elements */,
 			);
 			path = "Template Editor";
+			sourceTree = "<group>";
+		};
+		490D948E25624F5D00F73544 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				490D949A25624F5D00F73544 /* Hex Fiend.app */,
+				490D949C25624F5D00F73544 /* HexFiend.framework */,
+				490D949E25624F5D00F73544 /* HexFiend_Framework_iOS.framework */,
+				490D94A025624F5D00F73544 /* com.ridiculousfish.HexFiend.PrivilegedHelper */,
+				490D94A225624F5D00F73544 /* HexFiendling.app */,
+				490D94A425624F5D00F73544 /* HexFiend_Framework Tests.xctest */,
+				490D94A625624F5D00F73544 /* hexf */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		4951AB4B25341B97009A8285 /* Elements */ = {
@@ -850,6 +906,7 @@
 				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 				497043F32472064F0035C0FA /* Graphite */,
+				490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -915,7 +972,6 @@
 			children = (
 				49DA3A4B2550BD2800821A7E /* Cocoa.framework */,
 				4953F5A82488795B0002340F /* AVKit.framework */,
-				B25C779815D2B0C500C005DE /* HexFiend.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1056,7 +1112,6 @@
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
 				E18BF6D0069FEA1900F076B8 /* PBXTargetDependency */,
 				49DA3A562550BD7C00821A7E /* PBXTargetDependency */,
-				49AACD8124CE931A0081DD4A /* PBXTargetDependency */,
 			);
 			name = ResKnife;
 			productInstallPath = "$(USER_APPS_DIR)";
@@ -1169,6 +1224,12 @@
 			mainGroup = F5B588100156D2A601000001;
 			productRefGroup = F5B588110156D30301000001 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 490D948E25624F5D00F73544 /* Products */;
+					ProjectRef = 490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				E18BF537069FEA1300F076B8 /* ResKnife */,
@@ -1182,6 +1243,58 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		490D949A25624F5D00F73544 /* Hex Fiend.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Hex Fiend.app";
+			remoteRef = 490D949925624F5D00F73544 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		490D949C25624F5D00F73544 /* HexFiend.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HexFiend.framework;
+			remoteRef = 490D949B25624F5D00F73544 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		490D949E25624F5D00F73544 /* HexFiend_Framework_iOS.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HexFiend_Framework_iOS.framework;
+			remoteRef = 490D949D25624F5D00F73544 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		490D94A025624F5D00F73544 /* com.ridiculousfish.HexFiend.PrivilegedHelper */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = com.ridiculousfish.HexFiend.PrivilegedHelper;
+			remoteRef = 490D949F25624F5D00F73544 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		490D94A225624F5D00F73544 /* HexFiendling.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HexFiendling.app;
+			remoteRef = 490D94A125624F5D00F73544 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		490D94A425624F5D00F73544 /* HexFiend_Framework Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "HexFiend_Framework Tests.xctest";
+			remoteRef = 490D94A325624F5D00F73544 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		490D94A625624F5D00F73544 /* hexf */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = hexf;
+			remoteRef = 490D94A525624F5D00F73544 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4953F59A248874AA0002340F /* Resources */ = {
@@ -1426,11 +1539,6 @@
 			isa = PBXTargetDependency;
 			target = 4953F594248874AA0002340F /* Sound Editor */;
 			targetProxy = 4953F5A42488759E0002340F /* PBXContainerItemProxy */;
-		};
-		49AACD8124CE931A0081DD4A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 49AACD7A24CE931A0081DD4A /* RKSupport */;
-			targetProxy = 49AACD8024CE931A0081DD4A /* PBXContainerItemProxy */;
 		};
 		49DA3A562550BD7C00821A7E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
