@@ -1,10 +1,19 @@
 import RKSupport
 
-class ElementTNAM: ElementDBYT<UInt32> {
+class ElementTNAM: CaseableElement {
+    private var tValue: FourCharCode = 0
     // This is marked as dynamic so that RSID can bind to it and receive changes
     @objc dynamic private var value: String {
         get { tValue.stringValue }
         set { tValue = FourCharCode(newValue) }
+    }
+    
+    override func readData(from reader: BinaryDataReader) throws {
+        tValue = try reader.read()
+    }
+    
+    override func writeData(to writer: BinaryDataWriter) {
+        writer.write(tValue)
     }
     
     override class var formatter: Formatter? {

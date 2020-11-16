@@ -1,7 +1,9 @@
 import Cocoa
+import RKSupport
 
-class ElementDATE: ElementDBYT<UInt32> {
+class ElementDATE: Element {
     static var hfsToRef: Double = 2082844800+978307200 // Seconds between 1904 and 2001
+    private var tValue: UInt32 = 0
     @objc private var value: Date {
         get { Date(timeIntervalSinceReferenceDate: Double(tValue) - Self.hfsToRef) }
         set { tValue = UInt32(newValue.timeIntervalSinceReferenceDate + Self.hfsToRef) }
@@ -25,5 +27,13 @@ class ElementDATE: ElementDBYT<UInt32> {
         picker.action = #selector(TemplateWindowController.itemValueUpdated(_:))
         picker.bind(.value, to: self, withKeyPath: "value")
         view.addSubview(picker)
+    }
+    
+    override func readData(from reader: BinaryDataReader) throws {
+        tValue = try reader.read()
+    }
+    
+    override func writeData(to writer: BinaryDataWriter) {
+        writer.write(tValue)
     }
 }

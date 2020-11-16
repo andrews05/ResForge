@@ -15,8 +15,8 @@ class RangeableElement: CaseableElement {
     var popupWidth: CGFloat = 240
     
     override func configure() throws {
-        // Read CASR elements - only supported for number types, excluding UInt64
-        if self.formatter is NumberFormatter && self.type != "ULLG" {
+        // Read CASR elements - UInt64 not supported as it could overflow our Int64
+        if self.type != "ULLG" {
             while let casr = self.parentList.pop("CASR") as? ElementCASR {
                 if casrs == nil {
                     casrs = []

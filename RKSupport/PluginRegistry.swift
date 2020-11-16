@@ -76,6 +76,10 @@ public class PluginRegistry {
                     return try BinaryDataReader(resource.data[2...]).readPString()
                 } catch {}
             }
+        case "TEXT":
+            if !resource.data.isEmpty, let string = String(data: resource.data.prefix(100), encoding: .macOSRoman) {
+                return string
+            }
         case "vers":
             if resource.data.count > 8 {
                 do {

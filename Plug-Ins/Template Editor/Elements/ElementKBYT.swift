@@ -2,7 +2,7 @@ import RKSupport
 
 // Implements KBYT, KWRD, KLNG, KLLG, KUBT, KUWD, KULG, KULL
 class ElementKBYT<T: FixedWidthInteger>: KeyElement {
-    var tValue: T = 0
+    private var tValue: T = 0
     @objc private var value: NSNumber {
         get { tValue as! NSNumber }
         set { tValue = newValue as! T }
