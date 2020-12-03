@@ -13,8 +13,8 @@
 			<string>ResourceMap</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<integer>0</integer>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).ResourceDocument</string>
 		</dict>
@@ -23,8 +23,8 @@
 			<string>ResourceMapRF</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).ResourceDocument</string>
 		</dict>
@@ -33,12 +33,13 @@
 			<string>Unknown document</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.data</string>
+				<string>com.nickshanks.resource-map</string>
 			</array>
-			<key>LSTypeIsPackage</key>
-			<integer>0</integer>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).ResourceDocument</string>
 		</dict>
@@ -47,8 +48,8 @@
 			<string>ResourceMapExtended</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<integer>0</integer>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).ResourceDocument</string>
 		</dict>
