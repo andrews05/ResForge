@@ -15,7 +15,7 @@ class ElementBHEX<T: FixedWidthInteger & UnsignedInteger>: ElementHEXD {
         length = Int(try reader.read() as T)
         if skipLengthBytes {
             guard length >= lengthBytes else {
-                throw TemplateError.dataMismtach
+                throw TemplateError.dataMismatch(self)
             }
             length -= lengthBytes
         }

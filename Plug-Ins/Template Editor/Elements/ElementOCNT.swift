@@ -40,7 +40,7 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
         if T.isSigned {
             value = try reader.read() + 1
             guard value >= 0 else {
-                throw TemplateError.dataMismtach
+                throw TemplateError.dataMismatch(self)
             }
         } else {
             value = try reader.read()

@@ -91,11 +91,11 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
         } else {
             length = Int(try reader.read() as T)
             guard length <= reader.remainingBytes else {
-                throw TemplateError.dataMismtach
+                throw TemplateError.dataMismatch(self)
             }
             // This safety check is currently disabled as it causing problems when reading certain resources where the data must be forced into the template
 //            guard length <= maxLength else {
-//                throw TemplateError.dataMismtach
+//                throw TemplateError.dataMismatch(self)
 //            }
             length = min(length, maxLength)
         }

@@ -222,7 +222,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlug
         var idx = UInt64.max
         if ignoreCase.state == .on && searchText.state == .on {
             // Case-insensitive search is difficult and inefficient - string indices don't necessarily equal byte indices
-            // 1. Convert the current search range to a atring
+            // 1. Convert the current search range to a string
             // 2. Perform a string search
             // 3. Create a byte array from the match
             // 4. Proceed to byte search

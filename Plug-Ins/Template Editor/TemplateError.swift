@@ -1,12 +1,14 @@
 import Foundation
+import RKSupport
 
-enum TemplateError: LocalizedError {
+enum TemplateError: LocalizedError, RecoverableError {
     case corrupt
     case unknownElement(String)
     case unclosedElement(Element)
     case invalidStructure(Element, String)
-    case dataMismtach
+    case dataMismatch(Element)
     case truncate
+    
     var errorDescription: String? {
         switch self {
         case .corrupt:
@@ -17,12 +19,13 @@ enum TemplateError: LocalizedError {
             return "\(element.type) “\(element.label)”: ".appendingFormat(NSLocalizedString("Closing ‘%@’ element not found.", comment: ""), element.type, element.endType)
         case let .invalidStructure(element, message):
             return "\(element.type) “\(element.label)”: ".appending(message)
-        case .dataMismtach:
+        case .dataMismatch:
             return NSLocalizedString("The resource’s data cannot be interpreted by the template.", comment: "")
         case .truncate:
             return NSLocalizedString("The resource contains more data than will fit the template.", comment: "")
         }
     }
+    
     var recoverySuggestion: String? {
         switch self {
         case .truncate:
@@ -30,5 +33,22 @@ enum TemplateError: LocalizedError {
         default:
             return nil
         }
+    }
+    
+    var recoveryOptions: [String] {
+        switch self {
+        case .dataMismatch:
+            return [NSLocalizedString("OK", comment: ""), NSLocalizedString("Open with Hex Editor", comment: "")]
+        default:
+            return []
+        }
+    }
+    
+    func attemptRecovery(optionIndex recoveryOptionIndex: Int) -> Bool {
+        if recoveryOptionIndex == 1, case let .dataMismatch(element) = self {
+            let resource = element.parentList.controller.resource
+            resource.manager.open(resource: resource, using: PluginRegistry.hexEditor, template: "")
+        }
+        return false
     }
 }
