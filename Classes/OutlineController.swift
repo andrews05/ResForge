@@ -161,7 +161,10 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     
     func controlTextDidEndEditing(_ obj: Notification) {
         let textField = obj.object as! NSTextField
-        let resource = outlineView.item(atRow: outlineView.row(for: textField)) as! Resource
+        guard let resource = outlineView.item(atRow: outlineView.row(for: textField)) as? Resource else {
+            // This can happen if the resource was updated by some other means while the field was in edit mode
+            return
+        }
         // We don't need to reload the item after changing values here
         inlineUpdate = true
         switch textField.identifier?.rawValue {
