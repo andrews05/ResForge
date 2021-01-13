@@ -102,6 +102,24 @@
 }
 
 + (std::shared_ptr<graphite::qd::surface>)surfaceFromRep:(NSBitmapImageRep *)rep {
+    // Ensure 32-bit RGBA
+    if (rep.bitsPerPixel != 32 || rep.colorSpace.colorSpaceModel != NSColorSpaceModelRGB) {
+        NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:nil
+                                                                           pixelsWide:rep.pixelsWide
+                                                                           pixelsHigh:rep.pixelsHigh
+                                                                        bitsPerSample:8
+                                                                      samplesPerPixel:4
+                                                                             hasAlpha:YES
+                                                                             isPlanar:NO
+                                                                       colorSpaceName:NSDeviceRGBColorSpace
+                                                                          bytesPerRow:rep.pixelsWide*4
+                                                                         bitsPerPixel:32];
+        [NSGraphicsContext saveGraphicsState];
+        NSGraphicsContext.currentContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:newRep];
+        [rep draw];
+        [NSGraphicsContext restoreGraphicsState];
+        rep = newRep;
+    }
     int length = (int)(rep.pixelsWide * rep.pixelsHigh) * 4;
     std::vector<graphite::qd::color> buffer((graphite::qd::color *)rep.bitmapData, (graphite::qd::color *)(rep.bitmapData + length));
     graphite::qd::surface surface((int)rep.pixelsWide, (int)rep.pixelsHigh, buffer);
