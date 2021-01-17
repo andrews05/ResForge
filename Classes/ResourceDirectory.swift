@@ -123,6 +123,8 @@ class ResourceDirectory {
         let oldType = notification.userInfo!["oldValue"] as! String
         self.removeFromTypedList(resource, type: oldType)
         self.addToTypedList(resource)
+        filtered.removeValue(forKey: oldType)
+        filtered.removeValue(forKey: resource.type)
     }
     
     @objc func resourceDidChange(_ notification: Notification) {
@@ -136,6 +138,7 @@ class ResourceDirectory {
         }
         resourcesByType[resource.type]!.sort(using: sortDescriptors)
         let newIdx = resourcesByType[resource.type]!.firstIndex(of: resource)!
+        filtered.removeValue(forKey: resource.type)
         NotificationCenter.default.post(name: .DirectoryDidUpdateResource, object: self, userInfo: [
             "resource": resource,
             "oldIndex": idx,

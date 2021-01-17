@@ -44,14 +44,31 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     @objc func resourceDidUpdate(_ notification: Notification) {
         let resource = notification.userInfo!["resource"] as! Resource
         if !useTypeList || resource.type == resourcesView.selectedType() {
-            resourcesView.updated(resource: resource, oldIndex: notification.userInfo!["oldIndex"] as! Int, newIndex: notification.userInfo!["newIndex"] as! Int)
+            if document.directory.filter.isEmpty {
+                resourcesView.updated(resource: resource, oldIndex: notification.userInfo!["oldIndex"] as! Int, newIndex: notification.userInfo!["newIndex"] as! Int)
+            } else {
+                // If filter is active we need to refresh it
+                self.updateFilter()
+            }
         }
     }
     
     @IBAction func filter(_ sender: Any) {
         if let field = sender as? NSSearchField {
             document.directory.filter = field.stringValue
-            resourcesView.reload(type: useTypeList ? currentType : nil)
+            self.updateFilter()
+        }
+    }
+    
+    /// Reload the resources view, attempting to preserve the current selection.
+    private func updateFilter() {
+        let selection = self.selectedResources()
+        resourcesView.reload(type: useTypeList ? currentType : nil)
+        if selection.count != 0 {
+            resourcesView.select(selection)
+            if self.selectionCount() == 0 {
+                NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
+            }
         }
     }
     
