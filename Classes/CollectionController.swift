@@ -14,11 +14,13 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     func select(_ resources: [Resource]) {
         var paths: Set<IndexPath> = Set()
         for resource in resources where resource.type == currentType {
-            let i = document.directory.filteredResources(type: currentType).firstIndex(of: resource)!
-            paths.insert([0, i])
+            if let i = document.directory.filteredResources(type: currentType).firstIndex(of: resource) {
+                paths.insert([0, i])
+            }
         }
         collectionView.selectionIndexPaths = paths
         collectionView.scrollToItems(at: paths, scrollPosition: .nearestHorizontalEdge)
+        NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
     }
     
     func selectionCount() -> Int {
@@ -26,8 +28,16 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     }
     
     func selectedResources(deep: Bool = false) -> [Resource] {
-        return collectionView.selectionIndexPaths.map {
-            document.directory.filteredResources(type: currentType)[$0.last!]
+        return collectionView.selectionIndexPaths.compactMap {
+            // First attempt to get the resource from the ResourceItem
+            if let r = (collectionView.item(at: $0) as? ResourceItem)?.resource {
+                return r
+            }
+            // If the ResourceItem doesn't exist (offscreen), look it up in the directory
+            // Note: If the filtered list has just changed, we can't guarantee the correct selection will be returned
+            let list = document.directory.filteredResources(type: currentType)
+            let idx = $0.last!
+            return list.indices.contains(idx) ? list[idx] : nil
         }
     }
     
@@ -123,7 +133,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     @IBOutlet var imageBox: NSBox!
     @IBOutlet var textBox: NSBox!
     @IBOutlet var nameField: NSTextField!
-    private var resource: Resource!
+    private(set) var resource: Resource!
     
     override var isSelected: Bool {
         didSet {
@@ -170,7 +180,10 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
         nameField.stringValue = resource.name
         self.endEditing()
         resource.preview {
-            self.imageView?.image = $0
+            // Check the resource is still the same, in case we got reconfigured with a different resource while waiting
+            if self.resource == resource {
+                self.imageView?.image = $0
+            }
         }
     }
     

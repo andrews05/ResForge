@@ -55,18 +55,21 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     
     @IBAction func filter(_ sender: Any) {
         if let field = sender as? NSSearchField {
-            document.directory.filter = field.stringValue
-            self.updateFilter()
+            self.updateFilter(field.stringValue)
         }
     }
     
     /// Reload the resources view, attempting to preserve the current selection.
-    private func updateFilter() {
+    private func updateFilter(_ filter: String? = nil) {
         let selection = self.selectedResources()
+        if let filter = filter {
+            document.directory.filter = filter
+        }
         resourcesView.reload(type: useTypeList ? currentType : nil)
         if selection.count != 0 {
             resourcesView.select(selection)
             if self.selectionCount() == 0 {
+                // No selection was made we need to post a notification manually
                 NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
             }
         }
