@@ -10,6 +10,8 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     let label: String
     /// Descriptive tooltip of this field, derived from subsequent lines of the label.
     var tooltip: String
+    /// The label to display, if different from the template label.
+    var displayLabel: String
     /// Type code of an ending element if this element marks the start of a section.
     var endType: String!
     /// The list of the template field containing us, or the template window's list.
@@ -17,11 +19,7 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     var rowHeight: Double = 22
     var visible: Bool = true
     var width: CGFloat = 60 // Default for many types
-    
-    /// The label to display, if different from the template label.
-    var displayLabel: String {
-        label.components(separatedBy: "=")[0]
-    }
+
     
     required init!(type: String, label: String, tooltip: String? = nil) {
         self.type = type
@@ -38,6 +36,7 @@ class Element: ValueTransformer, NSTextFieldDelegate {
                 self.tooltip = ""
             }
         }
+        displayLabel = self.label.components(separatedBy: "=")[0]
     }
     
     func copy() -> Self {

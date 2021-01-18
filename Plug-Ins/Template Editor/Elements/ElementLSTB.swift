@@ -12,11 +12,16 @@ class ElementLSTB: Element {
     private var singleElement: Element?
     
     override var displayLabel: String {
-        guard tail != nil else {
-            return super.displayLabel
+        get {
+            guard tail != nil else {
+                return super.displayLabel
+            }
+            let index = entries?.endIndex ?? tail.entries.firstIndex(of: self)!
+            return "\(index+1)) " + (singleElement?.displayLabel ?? super.displayLabel)
         }
-        let index = entries?.endIndex ?? tail.entries.firstIndex(of: self)!
-        return "\(index+1)) " + (singleElement?.displayLabel ?? super.displayLabel)
+        set {
+            super.displayLabel = newValue
+        }
     }
     
     required init(type: String, label: String, tooltip: String? = nil) {
