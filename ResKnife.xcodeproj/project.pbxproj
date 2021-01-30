@@ -325,7 +325,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3D0ABFBC04E172F700C85300 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
 		491BC28A253B894200149D78 /* ElementOCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementOCNT.swift; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; };
@@ -428,6 +427,7 @@
 		497A93BD255BB49600900C7B /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		497A93DF255F371100900C7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SelectTemplate.xib; sourceTree = "<group>"; };
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		498A02C225C3E4B500783776 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
 		499216EF24CCD2250054A390 /* ResourceFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceFile.h; sourceTree = "<group>"; };
 		499216F024CCD2250054A390 /* ResourceFile.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceFile.mm; sourceTree = "<group>"; };
@@ -882,7 +882,7 @@
 		F5B588100156D2A601000001 = {
 			isa = PBXGroup;
 			children = (
-				3D0ABFBC04E172F700C85300 /* README.txt */,
+				498A02C225C3E4B500783776 /* README.md */,
 				E18BF9D706A01A2200F076B8 /* Info.plist */,
 				F5B5881C0156D40B01000001 /* Classes */,
 				F5B588350156D40B01000001 /* Resources */,
