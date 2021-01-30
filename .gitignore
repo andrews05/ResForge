@@ -1,13 +1,5 @@
-
-# /
-/build
-
-# /ResKnife.xcodeproj/
-/ResKnife.xcodeproj/lane.pbxuser
-/ResKnife.xcodeproj/lane.perspectivev3
-
 .DS_Store
 
+# Xcode user data
 *.xcworkspace/
 xcuserdata/
-
