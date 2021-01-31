@@ -2,7 +2,7 @@
 
 The following is a list of template element types that have been defined by various editors. ResKnife currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
-* Most of [Resorcerer's extensions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (49 of 77)
+* Many of [Resorcerer's extensions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (51 of 92)
 * All of [Rezilla's extensions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
 * ResKnife's own extensions (10)
 
@@ -12,7 +12,7 @@ The following is a list of template element types that have been defined by vari
 
 🔵 Read-Only
 
-🟡 Compatibility Shim
+🟡 Faked (interpreted as a different type)
 
 🔴 Not Yet Supported
 
@@ -90,7 +90,7 @@ Tnmm|Text with Fixed Padding|$_nmm_ bytes||✓|✓|🔴
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 ----|-----------|----|-------|----------|-------|--------
-BHEX|Byte Length Hex Dump|1 to .256||✓|✓|🔵
+BHEX|Byte Length Hex Dump|1 to 256||✓|✓|🔵
 WHEX|Word Length Hex Dump|2 to 64KB||✓|✓|🔵
 LHEX|Long Length Hex Dump|4 to 4MB||✓|✓|🔵
 BSHX|Byte Length - 1 Hex Dump|1 to 255||✓|✓|🔵
@@ -129,7 +129,7 @@ LSTS|Begin Sized List Item|0 bytes||✓||🔴
 LSTZ|Begin List Item, Ending in Zero Byte|0 bytes|✓|✓|✓|🟢
 LSTE|End of any List Item|0 or 1 bytes|✓|✓|✓|🟢
 SELF|List Item is Entire TMPL|any||✓||🔴
-Rnmm|Repeat Following Item $_nmm_ Times|0 bytes||||🟢
+Rnmm|Repeat Following Element $_nmm_ Times|0 bytes||||🟢
 
 ### Key Values for Subsequent Variant Items
 
@@ -184,7 +184,14 @@ COLR|QuickDraw Color RGB Triplet|6 bytes||✓|✓|🟢
 WCOL|15-bit Color|2 bytes|||✓|🟢
 LCOL|24-bit Color|4 bytes|||✓|🟢
 CLUT|Color Lookup Table Hex Dump|any||✓||🔴
-CODE|680x0 Disassembled Code Dump|any||✓||🔴
+CODE|680x0 Disassembled Code Dump|any||✓||🟡
+
+### Big and Little-Endian Parsing
+
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+----|-----------|----|-------|----------|-------|--------
+BNDN|Use Big-Endian Data Parsing|0 bytes||✓||🟢
+LNDN|Use Little-Endian Data Parsing|0 bytes||✓||🟢
 
 ### Symbolic Constants
 
@@ -193,17 +200,35 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 CASE|Symbolic and/or Default Value|0 bytes||✓|✓|🟢
 CASR|Symbolic Value Range|0 bytes||||🟢
 
-### Big and Little-Endian Parsing
-
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
-----|-----------|----|-------|----------|-------|--------
-BNDN|Use Big-Endian Data Parsing|0 bytes||✓||🔴
-LNDN|Use Little-Endian Data Parsing|0 bytes||✓||🔴
-
 ### Cosmetic and Layout Control
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 ----|-----------|----|-------|----------|-------|--------
 DVDR|Divider Line with Comment|0 bytes||✓|✓|🟢
 RREF|Static Resource Reference|0 bytes||||🟢
-PACK|Combine/Rearrange Items|0 bytes||||🟢
+PACK|Combine Other Elements|0 bytes||||🟢
+
+### Inserting or Deleting Data in Existing Resources
+
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+----|-----------|----|-------|----------|-------|--------
++BYT|Insert a Byte When Opening|1 byte||✓||🔴
++WRD|Insert a Word When Opening|2 bytes||✓||🔴
++LNG|Insert a Long When Opening|4 bytes||✓||🔴
++nmm|Insert Bytes When Opening|$_nmm_ bytes||✓||🔴
++PST|Insert a Pascal String When Opening|1 to 256||✓||🔴
++EST|Insert an Even Pascal String When Opening|2 to 256||✓||🔴
++CST|Insert a C String When Opening|1 or more||✓||🔴
+-BYT|Delete a Byte When Closing|1 byte||✓||🔴
+-WRD|Delete a Word When Closing|2 bytes||✓||🔴
+-LNG|Delete a Long When Closing|4 bytes||✓||🔴
+-nmm|Insert Bytes When Closing|$_nmm_ bytes||✓||🔴
+-PST|Delete a Pascal String When Closing|1 to 256||✓||🔴
+-EST|Delete an Even Pascal String When Closing|2 to 256||✓||🔴
+-CST|Delete a C String When Closing|1 or more||✓||🔴
+
+### Pre- and Post-Processing Data with Code Filters
+
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+----|-----------|----|-------|----------|-------|--------
+FLTR|Declare Filtered Template (with comment)|0 bytes||✓||🔴

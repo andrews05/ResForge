@@ -7,7 +7,7 @@ class ElementHEXD: Element {
     var length = 0
     
     override func configure() throws {
-        if self.type == "HEXD" {
+        if self.type == "HEXD" || self.type == "CODE" {
             guard self.parentList.parentList == nil && self.parentList.peek(1) == nil else {
                 throw TemplateError.invalidStructure(self, NSLocalizedString("Must be last element in template.", comment: ""))
             }
@@ -43,7 +43,7 @@ class ElementHEXD: Element {
     
     override func readData(from reader: BinaryDataReader) throws {
         let remainder = reader.remainingBytes
-        if self.type == "HEXD" {
+        if self.type == "HEXD" || self.type == "CODE" {
             length = remainder
         }
         self.setRowHeight()

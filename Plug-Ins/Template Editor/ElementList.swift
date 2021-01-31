@@ -354,6 +354,10 @@ class ElementList {
         "COLR": ElementCOLR.self,           // 6-byte QuickDraw colour
         "WCOL": ElementWCOL<UInt16>.self,   // 2-byte (15-bit) colour (Rezilla)
         "LCOL": ElementWCOL<UInt32>.self,   // 4-byte (24-bit) colour (Rezilla)
+        
+        // byte order
+        "BNDN": ElementBNDN.self,           // Big-endian
+        "LNDN": ElementBNDN.self,           // Little-endian
 
         // cosmetic
         "DVDR": ElementDVDR.self,           // divider
@@ -366,9 +370,9 @@ class ElementList {
         "FWID": ElementDBYT<UInt16>.self,   // 4.12 fixed fraction
         "FRAC": ElementDBYT<UInt32>.self,   // 2.30 fixed fraction
         "FIXD": ElementDBYT<UInt32>.self,   // 16.16 fixed fraction
-        "STYL": ElementDBYT<Int8>.self,     // QuickDraw font style (ResKnife)
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
         "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)
+        "CODE": ElementHEXD.self            // 680x0 Disassembled Code Dump
     ]
 }
