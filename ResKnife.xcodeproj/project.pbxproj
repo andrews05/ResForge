@@ -449,6 +449,7 @@
 		49B9E6732540042900A266DE /* RangeableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeableElement.swift; sourceTree = "<group>"; };
 		49C3AC71253E6C7C0020037B /* ElementRSID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRSID.swift; sourceTree = "<group>"; };
 		49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; };
+		49C8D0F625C64BA7001266FC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		49D1854B2541007400EA380C /* ElementBBIT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBBIT.swift; sourceTree = "<group>"; };
 		49D1855925412DEF00EA380C /* ElementFBYT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementFBYT.swift; sourceTree = "<group>"; };
 		49D185672541309900EA380C /* ElementAWRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementAWRD.swift; sourceTree = "<group>"; };
@@ -582,6 +583,7 @@
 		3D0B38A504DEF41E005AED5E /* Template Editor */ = {
 			isa = PBXGroup;
 			children = (
+				49C8D0F625C64BA7001266FC /* README.md */,
 				B27A65CE15A677F00029141B /* TemplateWindow.xib */,
 				E18BFA3606A20B7A00F076B8 /* Info.plist */,
 				E119383D09991C5100A3A6EA /* Templates.rsrc */,
@@ -1153,7 +1155,7 @@
 		F5B5880F0156D2A601000001 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1230;
 				TargetAttributes = {
 					4953F594248874AA0002340F = {
 						LastSwiftMigration = 1150;
@@ -1897,6 +1899,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = ResKnife;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = Info.plist;
@@ -1913,6 +1916,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = ResKnife;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = Info.plist;
