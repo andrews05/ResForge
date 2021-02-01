@@ -1,15 +1,19 @@
 import Cocoa
 import RKSupport
 
-// Implements HEXD, Hnnn
+// Implements HEXD, HEXS, Hnnn
 class ElementHEXD: Element {
     var data: Data?
     var length = 0
     
     override func configure() throws {
         if self.type == "HEXD" || self.type == "CODE" {
-            guard self.parentList.parentList == nil && self.parentList.peek(1) == nil else {
+            guard self.parentList.parentElement == nil && self.parentList.peek(1) == nil else {
                 throw TemplateError.invalidStructure(self, NSLocalizedString("Must be last element in template.", comment: ""))
+            }
+        } else if self.type == "HEXS" {
+            guard let parent = self.parentList.parentElement, parent.endType == "SKPE" && self.parentList.peek(1) == nil else {
+                throw TemplateError.invalidStructure(self, NSLocalizedString("Must be last element in skip offset section.", comment: ""))
             }
         } else {
             // Hnnn
@@ -43,7 +47,7 @@ class ElementHEXD: Element {
     
     override func readData(from reader: BinaryDataReader) throws {
         let remainder = reader.remainingBytes
-        if self.type == "HEXD" || self.type == "CODE" {
+        if self.type == "HEXD" || self.type == "CODE" || self.type == "HEXS" {
             length = remainder
         }
         self.setRowHeight()

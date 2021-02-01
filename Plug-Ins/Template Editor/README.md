@@ -2,7 +2,7 @@
 
 The following is a list of template element types that have been defined by various editors. ResKnife currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
-* Many of [Resorcerer's extensions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (51 of 92)
+* Most of [Resorcerer's extensions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (62 of 92)
 * All of [Rezilla's extensions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
 * ResKnife's own extensions (10)
 
@@ -81,10 +81,10 @@ OCST|C String Odd-Padded|1 or more|✓|✓|✓|🟢
 BSTR|Byte Length String (same as PSTR)|1 to 256||✓|✓|🟢
 WSTR|Word Length String|2 to 64KB|✓|✓|✓|🟢
 LSTR|Long Length String|4 to 4MB|✓|✓|✓|🟢
-TXTS|Sized Text Dump|any||✓||🔴
+TXTS|Sized Text Dump|any||✓||🟢
 Pnmm|Pascal String with Fixed Padding|$_nmm_ bytes|✓|✓|✓|🟢
 Cnmm|C String with Fixed Padding|$_nmm_ bytes|✓|✓|✓|🟢
-Tnmm|Text with Fixed Padding|$_nmm_ bytes||✓|✓|🔴
+Tnmm|Text with Fixed Padding|$_nmm_ bytes||✓|✓|🟢
 
 ### Hexadecimal Dump Field Types
 
@@ -97,20 +97,20 @@ BSHX|Byte Length - 1 Hex Dump|1 to 255||✓|✓|🔵
 WSHX|Word Length - 2 Hex Dump|2 to 64KB-2||✓|✓|🔵
 LHEX|Long Length - 4 Hex Dump|4 to 4MB-4||✓|✓|🔵
 Hnmm|Fixed-Length Hex Dump|$_nmm_ bytes|✓|✓|✓|🔵
-HEXS|Sized Hex Dump|any||✓||🔴
+HEXS|Sized Hex Dump|any||✓||🔵
 HEXD|Hex Dump|any|✓|✓|✓|🔵
 
 ### Skip Offset Field Types
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 ----|-----------|----|-------|----------|-------|--------
-BSKP|Offset to SKPE in Byte, inclusive|1 byte||✓|✓|🔴
-WSKP|Offset to SKPE in Word, inclusive|2 bytes||✓|✓|🔴
-LSKP|Offset to SKPE in Byte, inclusive|4 bytes||✓|✓|🔴
-BSIZ|Offset to SKPE in Byte, exclusive|1 byte||✓|✓|🔴
-WSIZ|Offset to SKPE in Word, exclusive|2 bytes||✓|✓|🔴
-LSIZ|Offset to SKPE in Byte, exclusive|4 bytes||✓|✓|🔴
-SKPE|End of Skip or Sizeof|0 bytes||✓|✓|🔴
+BSKP|Offset to SKPE in Byte, inclusive|1 byte||✓|✓|🟢
+WSKP|Offset to SKPE in Word, inclusive|2 bytes||✓|✓|🟢
+LSKP|Offset to SKPE in Byte, inclusive|4 bytes||✓|✓|🟢
+BSIZ|Offset to SKPE in Byte, exclusive|1 byte||✓|✓|🟢
+WSIZ|Offset to SKPE in Word, exclusive|2 bytes||✓|✓|🟢
+LSIZ|Offset to SKPE in Byte, exclusive|4 bytes||✓|✓|🟢
+SKPE|End of Skip or Sizeof|0 bytes||✓|✓|🟢
 
 ### Counted Lists/Arrays
 
@@ -125,7 +125,7 @@ LZCT|Zero-Based Long Count of List Items|4 bytes||✓|✓|🟢
 FCNT|Fixed Count of List Items|0 bytes||✓|✓|🟢
 LSTC|Begin Counted List Item|0 bytes|✓|✓|✓|🟢
 LSTB|Begin Non-Counted List Item|0 bytes|✓|✓|✓|🟢
-LSTS|Begin Sized List Item|0 bytes||✓||🔴
+LSTS|Begin Sized List Item|0 bytes||✓||🟢
 LSTZ|Begin List Item, Ending in Zero Byte|0 bytes|✓|✓|✓|🟢
 LSTE|End of any List Item|0 or 1 bytes|✓|✓|✓|🟢
 SELF|List Item is Entire TMPL|any||✓||🔴

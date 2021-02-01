@@ -7,42 +7,62 @@ enum StringPadding {
     case even
     case fixed(_ count: Int)
 }
+enum StringType {
+    case none
+    case lengthBytes
+    case nullTerminated
+}
 
-// Implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, Pnnn, Cnnn
+// Implements PSTR, OSTR, ESTR, BSTR, WSTR, LSTR, CSTR, OCST, ECST, TXTS, Pnnn, Cnnn, Tnnn
 class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
     @objc private var value = ""
     private var maxLength = Int(T.max)
     private var padding = StringPadding.none
-    private var zeroTerminated = false // Indicates Pascal (false) or C string (true)
+    private var stringType = StringType.none
     
     override func configure() throws {
         try super.configure()
         switch self.type {
         case "PSTR", "BSTR", "WSTR", "LSTR":
             padding = .none
-            zeroTerminated = false
+            stringType = .lengthBytes
         case "OSTR":
             padding = .odd
-            zeroTerminated = false
+            stringType = .lengthBytes
         case "ESTR":
             padding = .even
-            zeroTerminated = false
+            stringType = .lengthBytes
         case "CSTR":
             padding = .none
-            zeroTerminated = true
+            stringType = .nullTerminated
         case "OCST":
             padding = .odd
-            zeroTerminated = true
+            stringType = .nullTerminated
         case "ECST":
             padding = .even
-            zeroTerminated = true
+            stringType = .nullTerminated
+        case "TXTS":
+            guard let parent = self.parentList.parentElement, parent.endType == "SKPE" && self.parentList.peek(1) == nil else {
+                throw TemplateError.invalidStructure(self, NSLocalizedString("Must be last element in skip offset section.", comment: ""))
+            }
+            padding = .none
+            stringType = .none
         default:
             // Assume Xnnn for anything else
             let nnn = Int(type.suffix(3), radix: 16)!
             // Use resorcerer's more consistent n = datalength rather than resedit's n = stringlength
-            maxLength = min(nnn-1, maxLength)
             padding = .fixed(nnn)
-            zeroTerminated = type.first == "C"
+            switch type.first {
+            case "P":
+                maxLength = min(nnn-1, maxLength)
+                stringType = .lengthBytes
+            case "C":
+                maxLength = nnn-1
+                stringType = .nullTerminated
+            default:
+                maxLength = nnn
+                stringType = .none
+            }
         }
         self.width = (self.cases == nil && maxLength > 32) ? 0 : 240
     }
@@ -86,7 +106,7 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
     override func readData(from reader: BinaryDataReader) throws {
         // Determine string length
         var length: Int
-        if zeroTerminated {
+        if stringType != .lengthBytes {
             // Get offset to null
             let end = reader.data[reader.position...].firstIndex(of: 0) ?? reader.data.endIndex
             length = min(end - reader.position, maxLength)
@@ -107,10 +127,10 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
         }
         
         // Advance over empty bytes
-        if zeroTerminated {
+        if stringType == .nullTerminated {
             try reader.advance(1)
             length += 1
-        } else {
+        } else if stringType == .lengthBytes {
             length += T.bitWidth / 8
         }
         switch padding {
@@ -130,17 +150,17 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
             value = String(value.prefix(maxLength))
         }
         var length = value.count
-        if !zeroTerminated {
+        if stringType == .lengthBytes {
             writer.write(T(length))
         }
         
         // Error shouldn't happen because the formatter won't allow non-MacRoman characters
         try? writer.writeString(value, encoding: .macOSRoman)
         
-        if zeroTerminated {
+        if stringType == .nullTerminated {
             writer.advance(1)
             length += 1
-        } else {
+        } else if stringType == .lengthBytes {
             length += T.bitWidth / 8
         }
         switch padding {

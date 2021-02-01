@@ -2,7 +2,7 @@ import Cocoa
 import RKSupport
 
 class ElementList {
-    private(set) weak var parentList: ElementList?
+    private(set) weak var parentElement: Element?
     private(set) weak var controller: TemplateWindowController!
     private var elements: [Element] = []
     private var visibleElements: [Element] = []
@@ -12,13 +12,13 @@ class ElementList {
         return visibleElements.count
     }
     
-    init(controller: TemplateWindowController, parent: ElementList? = nil) {
-        parentList = parent
+    init(controller: TemplateWindowController, parent: Element? = nil) {
+        parentElement = parent
         self.controller = controller
     }
     
     func copy() throws -> ElementList {
-        let list = ElementList(controller: controller, parent: parentList)
+        let list = ElementList(controller: controller, parent: parentElement)
         list.elements = elements.map({ $0.copy() as Element })
         try list.configure()
         return list
@@ -137,8 +137,8 @@ class ElementList {
         if let element = elements[0..<currentIndex].last(where: { $0.type == type }) {
             return element
         }
-        if let list = parentList {
-            return list.previous(ofType: type)
+        if let parent = parentElement {
+            return parent.parentList.previous(ofType: type)
         }
         return nil
     }
@@ -149,7 +149,7 @@ class ElementList {
     
     // Create a new ElementList by extracting all elements following the current one up until a given type
     func subList(for startElement: Element) throws -> ElementList {
-        let list = ElementList(controller: controller, parent: self)
+        let list = ElementList(controller: controller, parent: startElement)
         var nesting = 0
         while true {
             guard let element = self.pop() else {
@@ -273,8 +273,10 @@ class ElementList {
         "CSTR": ElementPSTR<UInt32>.self,
         "OCST": ElementPSTR<UInt32>.self,
         "ECST": ElementPSTR<UInt32>.self,
+        "TXTS": ElementPSTR<UInt32>.self,
         "P"   : ElementPSTR<UInt8>.self,    // Pnnn
         "C"   : ElementPSTR<UInt32>.self,   // Cnnn
+        "T"   : ElementPSTR<UInt32>.self,   // Tnnn
         "CHAR": ElementCHAR.self,
         "TNAM": ElementTNAM.self,
 
@@ -298,6 +300,7 @@ class ElementList {
 
         // hex dumps
         "HEXD": ElementHEXD.self,
+        "HEXS": ElementHEXD.self,
         "H"   : ElementHEXD.self,           // Hnnn
         "BHEX": ElementBHEX<UInt8>.self,
         "WHEX": ElementBHEX<UInt16>.self,
@@ -317,6 +320,7 @@ class ElementList {
         "R"   : Element.self,               // single-element repeat (ResKnife) (never initialised but included here for reference)
         // list begin/end
         "LSTB": ElementLSTB.self,
+        "LSTS": ElementLSTB.self,
         "LSTZ": ElementLSTB.self,
         "LSTC": ElementLSTB.self,
         "LSTE": Element.self,
@@ -354,6 +358,15 @@ class ElementList {
         "COLR": ElementCOLR.self,           // 6-byte QuickDraw colour
         "WCOL": ElementWCOL<UInt16>.self,   // 2-byte (15-bit) colour (Rezilla)
         "LCOL": ElementWCOL<UInt32>.self,   // 4-byte (24-bit) colour (Rezilla)
+        
+        // offsets
+        "BSKP": ElementBSKP<UInt8>.self,
+        "SKIP": ElementBSKP<UInt16>.self,
+        "LSKP": ElementBSKP<UInt32>.self,
+        "BSIZ": ElementBSKP<UInt8>.self,
+        "WSIZ": ElementBSKP<UInt16>.self,
+        "LSIZ": ElementBSKP<UInt32>.self,
+        "SKPE": Element.self,
         
         // byte order
         "BNDN": ElementBNDN.self,           // Big-endian

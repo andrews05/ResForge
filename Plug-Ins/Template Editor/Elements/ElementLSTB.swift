@@ -45,8 +45,14 @@ class ElementLSTB: Element {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Preceeding count element not found.", comment: ""))
         }
         subElements = try self.parentList.subList(for: self)
-        guard type != "LSTB" || (self.parentList.parentList == nil && self.parentList.peek(1) == nil) else {
-            throw TemplateError.invalidStructure(self, NSLocalizedString("Closing ‘LSTE’ must be last element in template.", comment: ""))
+        if type == "LSTB" {
+            guard self.parentList.parentElement == nil && self.parentList.peek(1) == nil else {
+                throw TemplateError.invalidStructure(self, NSLocalizedString("Closing ‘LSTE’ must be last element in template.", comment: ""))
+            }
+        } else if type == "LSTS" {
+            guard let parent = self.parentList.parentElement, parent.endType == "SKPE" && self.parentList.peek(1) == nil else {
+                throw TemplateError.invalidStructure(self, NSLocalizedString("Closing ‘LSTE’ must be last element in skip offset section.", comment: ""))
+            }
         }
         _ = try subElements.copy() // Validate the subElements configuration
         // This item will be the tail
