@@ -1,8 +1,8 @@
 # Template Editor
 
-The following is a list of template element types that have been defined by various editors. ResKnife currently supports:
+The following is a list of template field types that have been defined by various editors. ResKnife currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
-* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (62 of 92)
+* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (64 of 95)
 * All of [Rezilla's additions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
 * ResKnife's own additions (10)
 
@@ -60,6 +60,7 @@ DOUB|Double Precision Float|8 bytes||✓||🟢
 EXTN|Extended 80-bit SANE Float|10 bytes||✓||🔴
 XT96|Extended 96-bit SANE Float|12 bytes||✓||🔴
 UNIV|THINK C Universal 96-bit Float|12 bytes||✓||🔴
+DBDB|PowerPC Double Double|16 bytes||✓||🔴
 FIXD|16:16 Fixed Point Number|4 bytes||✓||🟡
 FRAC|2:30 Fixed Point Number|4 bytes||✓||🟡
 SFRC|0:16 Fixed Point Small Fraction|2 bytes||✓||🟡
@@ -129,7 +130,7 @@ LSTS|Begin Sized List Item|0 bytes||✓||🟢
 LSTZ|Begin List Item, Ending in Zero Byte|0 bytes|✓|✓|✓|🟢
 LSTE|End of any List Item|0 or 1 bytes|✓|✓|✓|🟢
 SELF|List Item is Entire TMPL|any||✓||🔴
-Rnmm|Repeat Following Element $_nmm_ Times|0 bytes||||🟢
+Rnmm|Repeat Following Field $_nmm_ Times|0 bytes||||🟢
 
 ### Key Values for Subsequent Variant Items
 
@@ -190,8 +191,10 @@ CODE|680x0 Disassembled Code Dump|any||✓||🟡
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 ----|-----------|----|-------|----------|-------|--------
-BNDN|Use Big-Endian Data Parsing|0 bytes||✓||🟢
-LNDN|Use Little-Endian Data Parsing|0 bytes||✓||🟢
+LTLE|Use Big-Endian Data Parsing|0 bytes||✓||🟢
+BIGE|Use Little-Endian Data Parsing|0 bytes||✓||🟢
+BNDN|Use Big-Endian Data Parsing (hidden)|0 bytes||✓||🟢
+LNDN|Use Little-Endian Data Parsing (hidden)|0 bytes||✓||🟢
 
 ### Symbolic Constants
 
@@ -206,7 +209,7 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 ----|-----------|----|-------|----------|-------|--------
 DVDR|Divider Line with Comment|0 bytes||✓|✓|🟢
 RREF|Static Resource Reference|0 bytes||||🟢
-PACK|Combine Other Elements|0 bytes||||🟢
+PACK|Combine Other Fields|0 bytes||||🟢
 
 ### Inserting or Deleting Data in Existing Resources
 

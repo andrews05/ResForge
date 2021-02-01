@@ -69,8 +69,8 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element {
             position = writer.position
         }
         subElements.writeData(to: writer)
-        let length = T(clamping: writer.position - position)
         // Note: data corruption may occur if the length of the section exceeds the maximum size of the field
+        let length = T(clamping: writer.position - position)
         writer.write(length, at: position)
         value = Int(length)
         self.parentList.controller.dataList.reloadItem(self)

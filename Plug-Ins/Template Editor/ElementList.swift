@@ -171,18 +171,23 @@ class ElementList {
     // MARK: -
     
     func readData(from reader: BinaryDataReader) throws {
+        let bigEndian = reader.bigEndian
         currentIndex = 0;
-        // Don't use fast enumeration here as the list may be modified while reading
+        // Don't use for loop here as the list may be modified while reading
         while currentIndex < elements.count && reader.position < reader.data.endIndex {
             try elements[currentIndex].readData(from: reader)
             currentIndex += 1
         }
+        // Always restore original endianness at the end of any sublist
+        reader.bigEndian = bigEndian
     }
     
     func writeData(to writer: BinaryDataWriter) {
+        let bigEndian = writer.bigEndian
         for element in elements {
             element.writeData(to: writer)
         }
+        writer.bigEndian = bigEndian
     }
     
     // MARK: -
@@ -369,8 +374,10 @@ class ElementList {
         "SKPE": Element.self,
         
         // byte order
-        "BNDN": ElementBNDN.self,           // Big-endian
-        "LNDN": ElementBNDN.self,           // Little-endian
+        "BIGE": ElementBNDN.self,           // Big-endian
+        "LTLE": ElementBNDN.self,           // Little-endian
+        "BNDN": ElementBNDN.self,           // Big-endian (hidden)
+        "LNDN": ElementBNDN.self,           // Little-endian (hidden)
 
         // cosmetic
         "DVDR": ElementDVDR.self,           // divider

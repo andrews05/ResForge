@@ -6,7 +6,7 @@ ResKnife is a resource editor for macOS, capable of editing classic resource for
 
 * Supports both resource and data forks in the original resource file format, as well as experimental support for the new extended format defined by [Graphite](https://github.com/TheDiamondProject/Graphite).
 * Hexadecimal editor, powered by [HexFiend](https://github.com/HexFiend/HexFiend).
-* Template editor, supporting a wide array of [element types](https://github.com/andrews05/ResKnife/tree/master/Plug-Ins/Template%20Editor).
+* Template editor, supporting a wide array of [field types](https://github.com/andrews05/ResKnife/tree/master/Plug-Ins/Template%20Editor).
 * Image editor, supporting 'PICT', 'PNG ', 'cicn' & 'ppat' resources, plus view-only support for a variety of icons and other bitmaps.
 * Sound editor, supporting sampled 'snd ' resources.
 * Sprite editor, supporting 'rlëD' resources used by EV Nova.

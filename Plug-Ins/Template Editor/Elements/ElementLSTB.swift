@@ -1,7 +1,7 @@
 import Cocoa
 import RKSupport
 
-// Implements LSTB, LSTZ, LSTC
+// Implements LSTB, LSTZ, LSTC, LSTS
 class ElementLSTB: Element {
     weak var counter: CounterElement?
     var fixedCount: Bool = false
