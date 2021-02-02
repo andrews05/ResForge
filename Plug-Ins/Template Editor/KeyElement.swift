@@ -74,7 +74,9 @@ class KeyElement: Element {
             }
             // Reload the view - note the outline item isn't necessarily self
             let outline = self.parentList.controller.dataList!
-            outline.reloadItem(outline.item(atRow: outline.row(for: sender)), reloadChildren: true)
+            let item = outline.item(atRow: outline.row(for: sender))
+            outline.reloadItem(item, reloadChildren: true)
+            outline.expandItem(item, expandChildren: true)
         }
         self.parentList.controller.itemValueUpdated(sender)
     }
