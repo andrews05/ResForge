@@ -6,7 +6,7 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element {
     private var subElements: ElementList!
     private var skipLengthBytes: Bool
     private var lengthBytes: Int
-    private var value = -1
+    @objc dynamic var value = -1
     
     required init!(type: String, label: String, tooltip: String? = nil) {
         skipLengthBytes = !type.hasSuffix("SIZ")
@@ -27,12 +27,17 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element {
         textField.isBezeled = false
         textField.isEditable = false
         textField.isSelectable = true
-        if value == -1 {
-            textField.stringValue = NSLocalizedString("(calculated on save)", comment: "")
-        } else {
-            textField.stringValue = "\(value) " + NSLocalizedString("(recalculated on save)", comment: "")
-        }
+        textField.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self])
         view.addSubview(textField)
+    }
+    
+    override func transformedValue(_ value: Any?) -> Any? {
+        let value = value as! Int
+        if value == -1 {
+            return NSLocalizedString("(calculated on save)", comment: "")
+        } else {
+            return "\(value) " + NSLocalizedString("(recalculated on save)", comment: "")
+        }
     }
     
     override func readData(from reader: BinaryDataReader) throws {
@@ -73,20 +78,19 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element {
         let length = T(clamping: writer.position - position)
         writer.write(length, at: position)
         value = Int(length)
-        self.parentList.controller.dataList.reloadItem(self)
     }
 
     // MARK: -
     
     override var hasSubElements: Bool {
-        true
+        return true
     }
     
     override var subElementCount: Int {
-        subElements.count
+        return subElements.count
     }
     
     override func subElement(at index: Int) -> Element {
-        subElements.element(at: index)
+        return subElements.element(at: index)
     }
 }
