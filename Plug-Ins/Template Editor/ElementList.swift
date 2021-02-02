@@ -239,15 +239,15 @@ class ElementList {
         "DBYT": ElementDBYT<Int8>.self,     // signed ints
         "DWRD": ElementDBYT<Int16>.self,
         "DLNG": ElementDBYT<Int32>.self,
-        "DLLG": ElementDBYT<Int64>.self,    // (ResKnife)
+//        "DLLG": ElementDBYT<Int64>.self,    // (ResKnife)
         "UBYT": ElementDBYT<UInt8>.self,    // unsigned ints
         "UWRD": ElementDBYT<UInt16>.self,
         "ULNG": ElementDBYT<UInt32>.self,
-        "ULLG": ElementDBYT<UInt64>.self,   // (ResKnife)
+//        "ULLG": ElementDBYT<UInt64>.self,   // (ResKnife)
         "HBYT": ElementHBYT<UInt8>.self,    // hex byte/word/long
         "HWRD": ElementHBYT<UInt16>.self,
         "HLNG": ElementHBYT<UInt32>.self,
-        "HLLG": ElementHBYT<UInt64>.self,   // (ResKnife)
+//        "HLLG": ElementHBYT<UInt64>.self,   // (ResKnife)
 
         // multiple fields
         "RECT": ElementRECT.self,           // QuickDraw rect
@@ -292,13 +292,13 @@ class ElementList {
         "LFLG": ElementBFLG<UInt32>.self,
         "BBIT": ElementBBIT<UInt8>.self,    // bit within a byte
         "BB"  : ElementBBIT<UInt8>.self,    // BBnn bit field
-        "BF"  : ElementBBIT<UInt8>.self,    // BFnn fill bits
+        "BF"  : ElementBBIT<UInt8>.self,    // BFnn fill bits (ResKnife)
         "WBIT": ElementBBIT<UInt16>.self,
         "WB"  : ElementBBIT<UInt16>.self,   // WBnn
-        "WF"  : ElementBBIT<UInt16>.self,   // WFnn
+        "WF"  : ElementBBIT<UInt16>.self,   // WFnn (ResKnife)
         "LBIT": ElementBBIT<UInt32>.self,
         "LB"  : ElementBBIT<UInt32>.self,   // LBnn
-        "LF"  : ElementBBIT<UInt32>.self,   // LFnn
+        "LF"  : ElementBBIT<UInt32>.self,   // LFnn (ResKnife)
         "BORV": ElementBORV<UInt8>.self,    // OR-value (Rezilla)
         "WORV": ElementBORV<UInt16>.self,
         "LORV": ElementBORV<UInt32>.self,
@@ -339,15 +339,15 @@ class ElementList {
         "KBYT": ElementKBYT<Int8>.self,     // signed keys
         "KWRD": ElementKBYT<Int16>.self,
         "KLNG": ElementKBYT<Int32>.self,
-        "KLLG": ElementKBYT<Int64>.self,    // (ResKnife)
+//        "KLLG": ElementKBYT<Int64>.self,    // (ResKnife)
         "KUBT": ElementKBYT<UInt8>.self,    // unsigned keys
         "KUWD": ElementKBYT<UInt16>.self,
         "KULG": ElementKBYT<UInt32>.self,
-        "KULL": ElementKBYT<UInt64>.self,   // (ResKnife)
+//        "KULL": ElementKBYT<UInt64>.self,   // (ResKnife)
         "KHBT": ElementKHBT<UInt8>.self,    // hex keys
         "KHWD": ElementKHBT<UInt16>.self,
         "KHLG": ElementKHBT<UInt32>.self,
-        "KHLL": ElementKHBT<UInt64>.self,   // (ResKnife)
+//        "KHLL": ElementKHBT<UInt64>.self,   // (ResKnife)
         "KCHR": ElementKCHR.self,           // string keys
         "KTYP": ElementKTYP.self,
         "KRID": ElementKRID.self,           // key on ID of the resource

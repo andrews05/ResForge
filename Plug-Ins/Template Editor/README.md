@@ -4,7 +4,7 @@ The following is a list of template field types that have been defined by variou
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
 * Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (64 of 95)
 * All of [Rezilla's additions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
-* ResKnife's own additions (10)
+* ResKnife's own additions (7)
 
 ### Key
 
@@ -23,15 +23,12 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 DBYT|Signed Decimal Byte|1 byte|✓|✓|✓|🟢
 DWRD|Signed Decimal Word|2 bytes|✓|✓|✓|🟢
 DLNG|Signed Decimal Long|4 bytes|✓|✓|✓|🟢
-DLLG|Signed Decimal Long Long|8 bytes||||🟢
 UBYT|Unsigned Decimal Byte|1 byte||✓|✓|🟢
 UWRD|Unsigned Decimal Word|2 bytes||✓|✓|🟢
 ULNG|Unsigned Decimal Long|4 bytes||✓|✓|🟢
-ULLG|Unsigned Decimal Long Long|8 bytes||||🟢
 HBYT|Hex Byte|1 byte|✓|✓|✓|🟢
 HWRD|Hex Word|2 bytes|✓|✓|✓|🟢
 HLNG|Hex Long|4 bytes|✓|✓|✓|🟢
-HLLG|Hex Long Long|8 bytes||||🟢
 
 ### Bit and Bit Field Types
 
@@ -39,10 +36,13 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 ----|-----------|----|-------|----------|-------|--------
 BBIT|Bit Within a Byte|1 bit|✓|✓|✓|🟢
 BBnn|Bit Field Within a Byte|_nn_ bits||✓|✓|🟢
+BFnn|Fill Bits Within a Byte|_nn_ bits||||🟢
 WBIT|Bit Within a Word|1 bit||✓|✓|🟢
 WBnn|Bit Field Within a Word|_nn_ bits||✓|✓|🟢
+WFnn|Fill Bits Within a Word|_nn_ bits||||🟢
 LBIT|Bit Within a Long|1 bit||✓|✓|🟢
 LBnn|Bit Field Within a Long|_nn_ bits||✓|✓|🟢
+LFnn|Fill Bits Within a Long|_nn_ bits||||🟢
 BOOL|Boolean Word|2 bytes|✓|✓|✓|🟢
 BFLAG|Byte Boolean Flag (low-order bit)|1 byte||✓|✓|🟢
 WFLAG|Word Boolean Flag (low-order bit)|2 bytes||✓|✓|🟢
@@ -139,15 +139,12 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 KBYT|Signed Decimal Byte Key|1 byte||✓|✓|🟢
 KWRD|Signed Decimal Word Key|2 bytes||✓|✓|🟢
 KLNG|Signed Decimal Long Key|4 bytes||✓|✓|🟢
-KLLG|Signed Decimal Long Long Key|8 bytes||||🟢
 KUBT|Unsigned Decimal Byte Key|1 byte||✓|✓|🟢
 KUWD|Unsigned Decimal Word Key|2 bytes||✓|✓|🟢
 KULG|Unsigned Decimal Long Key|4 bytes||✓|✓|🟢
-KULL|Unsigned Decimal Long Long Key|8 bytes||||🟢
 KHBT|Unsigned Hex Byte Key|1 byte||✓|✓|🟢
 KHWD|Unsigned Hex Word Key|2 bytes||✓|✓|🟢
 KHLG|Unsigned Hex Long Key|4 bytes||✓|✓|🟢
-KHLL|Unsigned Hex Long Long Key|8 bytes||||🟢
 KCHR|Single ASCII Character Key|1 byte||✓|✓|🟢
 KNAM|Four-Character Type Key|4 bytes||✓|✓|🟢
 KRID|Key on Current Resource ID|0 bytes||✓|✓|🟢
