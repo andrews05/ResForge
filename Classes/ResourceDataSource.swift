@@ -4,6 +4,7 @@ import RKSupport
 class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, NSSplitViewDelegate {
     @IBOutlet var splitView: NSSplitView!
     @IBOutlet var typeList: NSTableView!
+    @IBOutlet var typeCell: NSTableCellView!
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var collectionView: NSCollectionView!
@@ -175,6 +176,14 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
             let view = tableView.makeView(withIdentifier: identifier, owner: nil) as! NSTableCellView
             view.textField?.stringValue = type
             (view.subviews.last as? NSButton)?.title = count
+            if #available(OSX 11.0, *) {
+                // Remove leading/trailing spacing on macOS 11
+                for constraint in view.constraints {
+                    if constraint.firstAttribute == .leading || constraint.firstAttribute == .trailing {
+                        constraint.constant = 0
+                    }
+                }
+            }
             return view
         } else {
             return tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: nil) as! NSTableCellView
@@ -213,6 +222,13 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
 // Prevent the source list from becoming first responder
 class SourceList: NSTableView {
     override var acceptsFirstResponder: Bool { false }
+}
+
+// Pass badge click through to parent
+class SourceCount: NSButton {
+    override func mouseDown(with event: NSEvent) {
+        self.superview?.mouseDown(with: event)
+    }
 }
 
 // Common interface for the OutlineController and CollectionController
