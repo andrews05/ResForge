@@ -315,11 +315,10 @@ class ElementList {
         "LSHX": ElementBHEX<UInt32>.self,
 
         // list counters
-        "OCNT": ElementOCNT<UInt16>.self,
-        "ZCNT": ElementOCNT<Int16>.self,
         "BCNT": ElementOCNT<UInt8>.self,
-        "WCNT": ElementOCNT<UInt16>.self,   // Same as OCNT
+        "OCNT": ElementOCNT<UInt16>.self,
         "LCNT": ElementOCNT<UInt32>.self,
+        "ZCNT": ElementOCNT<Int16>.self,
         "LZCT": ElementOCNT<Int32>.self,
         "FCNT": ElementFCNT.self,           // fixed count with count in label (why didn't they choose Lnnn?)
         "R"   : Element.self,               // single-element repeat (ResKnife) (never initialised but included here for reference)

@@ -2,7 +2,7 @@
 
 The following is a list of template field types that have been defined by various editors. ResKnife currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
-* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (64 of 95)
+* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (63 of 94)
 * All of [Rezilla's additions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
 * ResKnife's own additions (7)
 
@@ -73,12 +73,12 @@ FXYZ|1:15 Fixed Point Colour Component|2 bytes||✓||🟡
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 ----|-----------|----|-------|----------|-------|--------
 PSTR|Pascal String|1 to 256|✓|✓|✓|🟢
-ESTR|Pascal String|2 to 256|✓|✓|✓|🟢
+ESTR|Even-Padded Pascal String|2 to 256|✓|✓|✓|🟢
 PPST|Even Pascal String (pad included)|2 to 256||✓|✓|🔴
-OSTR|Pascal String Odd-Padded|1 to 255|✓|✓|✓|🟢
+OSTR|Odd-Padded Pascal String|1 to 255|✓|✓|✓|🟢
 CSTR|Null-Terminated C String|1 or more|✓|✓|✓|🟢
 ECST|Even-Padded C String|2 or more|✓|✓|✓|🟢
-OCST|C String Odd-Padded|1 or more|✓|✓|✓|🟢
+OCST|Odd-Padded C String|1 or more|✓|✓|✓|🟢
 BSTR|Byte Length String (same as PSTR)|1 to 256||✓|✓|🟢
 WSTR|Word Length String|2 to 64KB|✓|✓|✓|🟢
 LSTR|Long Length String|4 to 4MB|✓|✓|✓|🟢
@@ -117,10 +117,9 @@ SKPE|End of Skip or Sizeof|0 bytes||✓|✓|🟢
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 ----|-----------|----|-------|----------|-------|--------
-BCNT|Byte Count of List Items|1 byte||✓|✓|🟢
-OCNT|One-Based Count of List Items|2 bytes|✓|✓|✓|🟢
-WCNT|Word Count of List Items (same as OCNT)|2 bytes||✓|✓|🟢
-LCNT|Long Count of List Items|4 bytes||✓|✓|🟢
+BCNT|One-Based Byte Count of List Items|1 byte||✓|✓|🟢
+OCNT|One-Based Word Count of List Items|2 bytes|✓|✓|✓|🟢
+LCNT|One-Based Long Count of List Items|4 bytes||✓|✓|🟢
 ZCNT|Zero-Based Word Count of List Items|2 bytes|✓|✓|✓|🟢
 LZCT|Zero-Based Long Count of List Items|4 bytes||✓|✓|🟢
 FCNT|Fixed Count of List Items|0 bytes||✓|✓|🟢

@@ -5,7 +5,7 @@ protocol CounterElement where Self: Element {
     var count: Int { get set }
 }
 
-// Implements OCNT, ZCNT, BCNT, WCNT, LCNT, LZCT
+// Implements OCNT, ZCNT, BCNT, LCNT, LZCT
 class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
     private var value: T = 0
     private weak var lstc: ElementLSTB!
