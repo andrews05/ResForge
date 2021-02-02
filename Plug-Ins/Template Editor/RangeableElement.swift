@@ -2,12 +2,11 @@ import Cocoa
 
 // Abstract Element subclass that handles CASR elements
 class RangeableElement: CaseableElement {
-    var displayValue: Int {
-        get {
-            currentCase.normalise(self.value(forKey: "value") as! Int)
-        }
-        set {
-            self.setValue(currentCase.deNormalise(newValue), forKey: "value")
+    var displayValue = 0 {
+        didSet {
+            if currentCase != nil {
+                self.setValue(currentCase.deNormalise(displayValue), forKey: "value")
+            }
         }
     }
     @objc private(set) var casrs: [ElementCASR]!
@@ -69,8 +68,11 @@ class RangeableElement: CaseableElement {
     
     private func loadValue() {
         let value = self.value(forKey: "value") as! Int
-        currentCase = casrs.first(where: { $0.matches(value: value) })
-        if currentCase == nil {
+        if let matchedCase = casrs.first(where: { $0.matches(value: value) }) {
+            // Set displayValue before currentCase to avoid re-setting the base value
+            displayValue = matchedCase.normalise(value)
+            currentCase = matchedCase
+        } else {
             // Force value to min of first case
             currentCase = casrs[0]
             displayValue = currentCase.min
@@ -83,7 +85,7 @@ class RangeableElement: CaseableElement {
         } else if displayValue > currentCase.max {
             displayValue = currentCase.max
         } else {
-            displayValue = +displayValue // Still need to trigger the transformer
+            displayValue = +displayValue // Still need to trigger didSet
         }
         let outline = self.parentList.controller.dataList!
         // Item isn't necessarily self
