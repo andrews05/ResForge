@@ -22,7 +22,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
     }
     
     override func configure() throws {
-        if 1..<T.bitWidth ~= bits {
+        if 2..<T.bitWidth ~= bits {
             try super.configure() // Allow bitfields to configure cases
         }
         if !first {
@@ -40,8 +40,15 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
             bitList.append(self)
             position = T.bitWidth - bits
             var pos = position
+            var i = 0
             while pos > 0 {
-                guard let bbit = self.parentList.peek(bitList.count) as? ElementBBIT else {
+                i += 1
+                let next = self.parentList.peek(i)
+                // Skip over cosmetic items
+                if let next = next, ["CASE", "CASR", "DVDR", "RREF", "PACK"].contains(next.type) {
+                    continue
+                }
+                guard let bbit = next as? ElementBBIT else {
                     throw TemplateError.invalidStructure(self, NSLocalizedString("Not enough bits in bit field.", comment: ""))
                 }
                 if bbit.bits > pos {
