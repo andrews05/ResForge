@@ -21,18 +21,18 @@
             <rect key="contentRect" x="406" y="385" width="460" height="400"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <value key="minSize" type="size" width="213" height="107"/>
-            <view key="contentView" wantsLayer="YES" misplaced="YES" id="22">
+            <view key="contentView" wantsLayer="YES" id="22">
                 <rect key="frame" x="0.0" y="0.0" width="460" height="400"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35">
-                        <rect key="frame" x="0.0" y="0.0" width="457" height="385"/>
+                        <rect key="frame" x="0.0" y="0.0" width="460" height="400"/>
                         <clipView key="contentView" id="ZgB-a4-tUl">
-                            <rect key="frame" x="0.0" y="0.0" width="457" height="385"/>
+                            <rect key="frame" x="0.0" y="0.0" width="460" height="400"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationMarkerFollowsCell="NO" outlineTableColumn="37" id="36" customClass="TabbableOutlineView" customModule="Template_Editor" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="457" height="380"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="460" height="395"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="6" height="4"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -119,7 +119,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="data" editable="NO" width="269" minWidth="236" maxWidth="1000" id="34">
+                                        <tableColumn identifier="data" editable="NO" width="272" minWidth="236" maxWidth="1000" id="34">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Data">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
@@ -142,7 +142,7 @@
                         <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="5"/>
                         <edgeInsets key="scrollerInsets" left="0.0" right="0.0" top="0.0" bottom="-5"/>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="58">
-                            <rect key="frame" x="0.0" y="374" width="457" height="16"/>
+                            <rect key="frame" x="0.0" y="384" width="457" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="60">
@@ -161,7 +161,7 @@
             <connections>
                 <outlet property="initialFirstResponder" destination="36" id="46"/>
             </connections>
-            <point key="canvasLocation" x="140" y="147"/>
+            <point key="canvasLocation" x="140" y="146.5"/>
         </window>
     </objects>
 </document>

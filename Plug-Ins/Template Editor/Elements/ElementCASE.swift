@@ -1,7 +1,7 @@
 import Cocoa
 import RKSupport
 
-class ElementCASE: Element, GroupElement {
+class ElementCASE: Element {
     var displayValue: String = ""
     @objc var value: AnyHashable!
     
@@ -20,14 +20,23 @@ class ElementCASE: Element, GroupElement {
         self.displayLabel
     }
     
-//    override func configure() throws {
-//        throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a supported element.", comment: ""))
-//    }
+    // Configure will only be called if the CASE is not associated to a supported element.
+    // If this happens we will just show the label as a help tip below the previous element.
+    override func configure() throws {
+        self.displayLabel = ""
+        self.rowHeight = 16
+    }
     
-    // Soft fail unsupported cases
-    func configureGroup(view: NSTableCellView) {
-        let error = TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a supported element.", comment: ""))
-        view.textField?.stringValue = error.errorDescription!
+    override func configure(view: NSView) {
+        var frame = view.frame
+        frame.origin.y += 2
+        let textField = NSTextField(frame: frame)
+        textField.isBezeled = false
+        textField.isEditable = false
+        textField.isSelectable = true
+        textField.stringValue = self.label
+        textField.textColor = .secondaryLabelColor
+        view.addSubview(textField)
     }
     
     func configure(for element: Element) throws {
