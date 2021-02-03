@@ -7,14 +7,8 @@ class ElementHEXD: Element {
     var length = 0
     
     override func configure() throws {
-        if self.type == "HEXD" || self.type == "CODE" {
-            guard self.parentList.parentElement == nil && self.parentList.peek(1) == nil else {
-                throw TemplateError.invalidStructure(self, NSLocalizedString("Must be last element in template.", comment: ""))
-            }
-        } else if self.type == "HEXS" {
-            guard let parent = self.parentList.parentElement, parent.endType == "SKPE" && self.parentList.peek(1) == nil else {
-                throw TemplateError.invalidStructure(self, NSLocalizedString("Must be last element in skip offset section.", comment: ""))
-            }
+        if self.type == "HEXD" || self.type == "HEXS" || self.type == "CODE" {
+            try self.requireLast()
         } else {
             // Hnnn
             length = Int(self.type.suffix(3), radix: 16)!
@@ -47,7 +41,7 @@ class ElementHEXD: Element {
     
     override func readData(from reader: BinaryDataReader) throws {
         let remainder = reader.remainingBytes
-        if self.type == "HEXD" || self.type == "CODE" || self.type == "HEXS" {
+        if self.type == "HEXD" || self.type == "HEXS" || self.type == "CODE" {
             length = remainder
         }
         self.setRowHeight()

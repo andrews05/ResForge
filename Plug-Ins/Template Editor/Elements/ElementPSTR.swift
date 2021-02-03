@@ -42,9 +42,7 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
             padding = .even
             stringType = .nullTerminated
         case "TXTS":
-            guard let parent = self.parentList.parentElement, parent.endType == "SKPE" && self.parentList.peek(1) == nil else {
-                throw TemplateError.invalidStructure(self, NSLocalizedString("Must be last element in skip offset section.", comment: ""))
-            }
+            try self.requireLast()
             padding = .none
             stringType = .none
         default:

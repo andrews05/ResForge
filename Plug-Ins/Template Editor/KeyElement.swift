@@ -32,6 +32,7 @@ class KeyElement: Element {
         }
         // Read KEYBs
         while let keyB = self.parentList.pop("KEYB") as? ElementKEYB {
+            keyB.parentList = self.parentList
             keyB.subElements = try parentList.subList(for: keyB)
             try keyB.subElements.configure()
             // Allow one KEYB to be used for multiple CASEs

@@ -1,7 +1,7 @@
 import Cocoa
 import RKSupport
 
-class ElementCASE: Element {
+class ElementCASE: Element, GroupElement {
     var displayValue: String = ""
     @objc var value: AnyHashable!
     
@@ -20,8 +20,14 @@ class ElementCASE: Element {
         self.displayLabel
     }
     
-    override func configure() throws {
-        throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a supported element.", comment: ""))
+//    override func configure() throws {
+//        throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a supported element.", comment: ""))
+//    }
+    
+    // Soft fail unsupported cases
+    func configureGroup(view: NSTableCellView) {
+        let error = TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a supported element.", comment: ""))
+        view.textField?.stringValue = error.errorDescription!
     }
     
     func configure(for element: Element) throws {
