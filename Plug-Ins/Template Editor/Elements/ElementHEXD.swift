@@ -8,7 +8,9 @@ class ElementHEXD: Element {
     
     override func configure() throws {
         if self.type == "HEXD" || self.type == "HEXS" || self.type == "CODE" {
-            try self.requireLast()
+            guard self.isAtEnd() else {
+                throw TemplateError.unboundedElement(self)
+            }
         } else {
             // Hnnn
             length = Int(self.type.suffix(3), radix: 16)!

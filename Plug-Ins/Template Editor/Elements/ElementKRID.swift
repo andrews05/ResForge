@@ -22,14 +22,15 @@ class ElementKRID: KeyElement, GroupElement {
             keyB.subElements = try parentList.subList(for: keyB)
             let vals = keyB.label.components(separatedBy: ",")
             if vals.contains(rID) {
-                try keyB.subElements.configure()
                 self.currentSection = keyB
             }
         }
         guard self.currentSection != nil else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘KEYB’ for this resource id.", comment: ""))
         }
+        self.currentSection.parentList = self.parentList
         self.parentList.insert(self.currentSection)
+        try self.currentSection.subElements.configure()
     }
     
     func configureGroup(view: NSTableCellView) {

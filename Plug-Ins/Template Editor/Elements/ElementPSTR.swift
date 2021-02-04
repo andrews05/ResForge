@@ -42,7 +42,9 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
             padding = .even
             stringType = .nullTerminated
         case "TXTS":
-            try self.requireLast()
+            guard self.isAtEnd() else {
+                throw TemplateError.unboundedElement(self)
+            }
             padding = .none
             stringType = .none
         default:
@@ -87,7 +89,9 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
     }
     
     private func autoRowHeight(_ field: NSTextField) {
-        let outline = self.parentList.controller.dataList!
+        guard let outline = self.parentList.controller?.dataList else {
+            return
+        }
         let index = outline.row(for: field)
         if index != -1 {
             let element = outline.item(atRow: index) as! Element

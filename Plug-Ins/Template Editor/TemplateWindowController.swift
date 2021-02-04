@@ -131,6 +131,12 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         } else {
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("groupView"), owner: self)!
             (item as! GroupElement).configureGroup(view: view as! NSTableCellView)
+            if item is CounterElement {
+                // Match indentation of list headers with that in TabbableOutlineView
+                let indent = outlineView.level(forItem: item) * 16
+                let constraint = view.constraints.first(where: { $0.firstAttribute == .leading })!
+                constraint.constant = 5 + CGFloat(indent)
+            }
         }
         return view
     }

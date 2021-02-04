@@ -67,24 +67,16 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     // This is required here for subclasses to override
     func controlTextDidChange(_ obj: Notification) {}
     
-    // Subclasses should call this function on configure if their data is of a type whose length cannot be determined when reading.
-    // Such an element must only appear at the end of the template or a sized/skip section.
-    func requireLast() throws {
+    // Check if this element is at the end of either the template, a sized/skip section, or a keyed section which is itself at the end.
+    // I.E. Check that there is no more data to be read after this.
+    func isAtEnd() -> Bool {
         let topLevel: Bool
         if let parent = self.parentList.parentElement {
-            topLevel = parent.endType == "SKPE"
+            topLevel = parent.endType == "SKPE" || (parent.endType == "KEYE" && parent.isAtEnd())
         } else {
             topLevel = true
         }
-        guard topLevel && self.parentList.peek(1) == nil else {
-            let message: String
-            if let endType = endType {
-                message = String(format: NSLocalizedString("Closing ‘%@’ must be last element in template or sized section.", comment: ""), endType)
-            } else {
-                message = NSLocalizedString("Must be last element in template or sized section.", comment: "")
-            }
-            throw TemplateError.invalidStructure(self, message)
-        }
+        return topLevel && self.parentList.peek(1) == nil
     }
     
     // MARK: - Methods Subclasses Should Override

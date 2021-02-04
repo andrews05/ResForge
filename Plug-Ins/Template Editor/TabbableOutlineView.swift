@@ -3,7 +3,7 @@ import Cocoa
 // Table views don't support tabbing between rows so we need to handle the key view loop manually
 class TabbableOutlineView: NSOutlineView {
     @objc func selectPreviousKeyView(_ sender: Any) {
-        var view = self.window!.firstResponder as! NSView
+        let view = self.window!.firstResponder as! NSView
         if self.numberOfRows == 0 || (view.previousValidKeyView != nil && view.previousValidKeyView != self) {
             self.window?.selectPreviousKeyView(view)
             return
@@ -15,9 +15,7 @@ class TabbableOutlineView: NSOutlineView {
         }
         var i = row-1
         while i != row {
-            if i != -1 {
-                // Going backward we need to look at the column view and see if it's valid
-                view = self.view(atColumn: 1, row: i, makeIfNecessary: true)!
+            if i != -1, var view = self.view(atColumn: 1, row: i, makeIfNecessary: true) {
                 if !view.canBecomeKeyView && !view.subviews.isEmpty {
                     view = view.subviews.last!
                 }
@@ -35,7 +33,7 @@ class TabbableOutlineView: NSOutlineView {
     }
     
     @objc func selectNextKeyView(_ sender: Any) {
-        var view: NSView! = self.window?.firstResponder as? NSView
+        let view = self.window!.firstResponder as! NSView
         if self.numberOfRows == 0 || view.nextValidKeyView != nil {
             self.window?.selectNextKeyView(view)
             return
@@ -46,14 +44,10 @@ class TabbableOutlineView: NSOutlineView {
             row = self.numberOfRows
         }
         while i != row {
-            if i != self.numberOfRows {
-                // Going forward we can ask the row for its nextValidKeyView
-                view = self.rowView(atRow: i, makeIfNecessary: true)?.nextValidKeyView
-                if view != nil {
-                    self.window?.makeFirstResponder(view)
-                    view.scrollToVisible(view.superview!.bounds)
-                    return
-                }
+            if i != self.numberOfRows, let view = self.rowView(atRow: i, makeIfNecessary: true)?.nextValidKeyView {
+                self.window?.makeFirstResponder(view)
+                view.scrollToVisible(view.superview!.bounds)
+                return
             }
             i = i == self.numberOfRows ? 0 : i+1
         }

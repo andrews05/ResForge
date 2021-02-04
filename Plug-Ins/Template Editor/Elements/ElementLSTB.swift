@@ -46,7 +46,9 @@ class ElementLSTB: Element {
         }
         subElements = try self.parentList.subList(for: self)
         if type == "LSTB" || type == "LSTS" {
-            try self.requireLast()
+            guard self.isAtEnd() else {
+                throw TemplateError.unboundedElement(self)
+            }
         }
         _ = try subElements.copy() // Validate the subElements configuration
         // This item will be the tail
