@@ -31,10 +31,8 @@ class KeyElement: Element {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ elements found.", comment: ""))
         }
         // Read KEYBs
+        var keyBs: [ElementKEYB] = []
         while let keyB = self.parentList.pop("KEYB") as? ElementKEYB {
-            keyB.parentList = self.parentList
-            keyB.subElements = try parentList.subList(for: keyB)
-            try keyB.subElements.configure()
             // Allow one KEYB to be used for multiple CASEs
             let vals = keyB.label.components(separatedBy: ",")
             for value in vals {
@@ -43,9 +41,16 @@ class KeyElement: Element {
                 }
                 keyedSections[caseEl] = keyB
             }
+            keyB.parentList = self.parentList
+            keyB.subElements = try parentList.subList(for: keyB)
+            keyBs.append(keyB)
         }
         for caseEl in self.cases where keyedSections[caseEl] == nil {
             throw TemplateError.invalidStructure(caseEl, NSLocalizedString("No corresponding ‘KEYB’ element.", comment: ""))
+        }
+        // Configure the KEYBs only after all of them are detached from the parent list
+        for keyB in keyBs {
+            try keyB.subElements.configure()
         }
     }
     
