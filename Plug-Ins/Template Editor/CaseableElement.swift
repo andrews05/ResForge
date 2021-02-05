@@ -38,7 +38,7 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
             frame.size.width = self.width - 1
         }
         frame.size.height = 26
-        frame.origin.y = -2
+        frame.origin.y -= 2
         let combo = NSComboBox(frame: frame)
         combo.isEditable = true
         combo.completes = true

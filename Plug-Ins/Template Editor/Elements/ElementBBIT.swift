@@ -65,10 +65,13 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
     override func configure(view: NSView) {
         if bits == T.bitWidth {
             // Display as checkboxes
-            var frame = NSMakeRect(0, CGFloat(self.rowHeight-1), 20, 20)
+            var frame = view.frame
+            frame.origin.y += CGFloat(self.rowHeight) - 1
+            frame.size.width = 20
+            frame.size.height = 20
             for i in 0..<bits {
                 if i % 8 == 0 {
-                    frame.origin.x = 0
+                    frame.origin.x = view.frame.origin.x
                     frame.origin.y -= 20
                 }
                 view.addSubview(ElementBOOL.createCheckbox(with: frame, for: bitList[i]))

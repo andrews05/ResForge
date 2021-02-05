@@ -21,7 +21,11 @@ class ElementHEXD: Element {
     }
     
     override func configure(view: NSView) {
-        let textField = NSTextField(frame: NSMakeRect(0, 3, self.width-4, CGFloat(self.rowHeight)-5))
+        var frame = view.frame
+        frame.origin.y += 3
+        frame.size.width = self.width - 4
+        frame.size.height = CGFloat(self.rowHeight) - 5
+        let textField = NSTextField(frame: frame)
         textField.isBezeled = false
         textField.isEditable = false
         textField.isSelectable = true

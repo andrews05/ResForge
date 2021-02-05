@@ -75,7 +75,7 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
         }
         if self.width == 0 {
             textField.lineBreakMode = .byWordWrapping
-            textField.autoresizingMask = [.width, .height]
+            textField.autoresizingMask = [.width]
             DispatchQueue.main.async {
                 self.autoRowHeight(textField)
             }
@@ -99,8 +99,14 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
             let height = Double(field.cell!.cellSize(forBounds: bounds).height) + 1
             if height != element.rowHeight {
                 element.rowHeight = height
-                // Notify the outline view
+                // Notify the outline view without animating
+                NSAnimationContext.beginGrouping()
+                NSAnimationContext.current.duration = 0
                 outline.noteHeightOfRows(withIndexesChanged: [outline.row(for: field)])
+                NSAnimationContext.endGrouping()
+                var frame = field.frame
+                frame.size.height = CGFloat(height)
+                field.frame = frame
             }
         }
     }
