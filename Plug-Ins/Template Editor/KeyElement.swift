@@ -5,7 +5,7 @@ import RKSupport
 class KeyElement: Element {
     @objc private var cases: [ElementCASE] = []
     private(set) var caseMap: [AnyHashable: ElementCASE] = [:]
-    private(set) var keyedSections: [ElementCASE: ElementKEYB]!
+    private(set) var keyedSections: [ElementCASE?: ElementKEYB]!
     var currentSection: ElementKEYB!
     
     override func configure() throws {
@@ -39,7 +39,9 @@ class KeyElement: Element {
             // Allow one KEYB to be used for multiple CASEs
             let vals = keyB.label.components(separatedBy: ",")
             for value in vals {
-                guard let caseEl = self.cases.first(where: { $0.displayValue == value }) else {
+                let caseEl = self.cases.first(where: { $0.displayValue == value })
+                // A value of "*" that doesn't match a CASE will be a wildcard, used when the existing data doesn't match any cases
+                guard caseEl != nil || value == "*" else {
                     throw TemplateError.invalidStructure(keyB, NSLocalizedString("No corresponding ‘CASE’ element.", comment: ""))
                 }
                 guard keyedSections[caseEl] == nil else {
@@ -94,7 +96,7 @@ class KeyElement: Element {
     }
     
     func setCase(_ element: ElementCASE?) -> ElementKEYB? {
-        let newSection = element.map { keyedSections[$0]! }
+        let newSection = keyedSections[element]
         if newSection == currentSection {
             return currentSection
         }
