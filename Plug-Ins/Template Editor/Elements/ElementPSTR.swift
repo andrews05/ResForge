@@ -76,7 +76,7 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
         if self.width == 0 {
             textField.lineBreakMode = .byWordWrapping
             DispatchQueue.main.async {
-                textField.autoresizingMask = [.width]
+                textField.autoresizingMask = [.width, .height]
                 self.autoRowHeight(textField)
             }
         }
@@ -94,19 +94,17 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
         }
         let index = outline.row(for: field)
         if index != -1 {
-            let element = outline.item(atRow: index) as! Element
-            let bounds = NSMakeRect(0, 0, field.bounds.size.width-4, CGFloat.greatestFiniteMagnitude)
-            let height = Double(field.cell!.cellSize(forBounds: bounds).height) + 1
-            if height != element.rowHeight {
-                element.rowHeight = height
+            let frame = field.cell!.expansionFrame(withFrame: NSMakeRect(0, 0, field.frame.size.width-4, 0), in: field)
+            let height = Double(frame.height) + 6
+            if height != self.rowHeight {
+                self.rowHeight = height
+                // In case we're not our own row...
+                (outline.item(atRow: index) as! Element).rowHeight = height
                 // Notify the outline view without animating
                 NSAnimationContext.beginGrouping()
                 NSAnimationContext.current.duration = 0
-                outline.noteHeightOfRows(withIndexesChanged: [outline.row(for: field)])
+                outline.noteHeightOfRows(withIndexesChanged: [index])
                 NSAnimationContext.endGrouping()
-                var frame = field.frame
-                frame.size.height = CGFloat(height)
-                field.frame = frame
             }
         }
     }

@@ -40,7 +40,10 @@ class EditorManager: NSObject, NSWindowDelegate, ResKnifePluginManager {
     // This is called when closing editor windows. It provides a common save process, with confirmation
     // according to the user preferences, so that plugins don't have to handle this themselves.
     func windowShouldClose(_ sender: NSWindow) -> Bool {
-        sender.makeFirstResponder(nil) // Ensure any controls have ended editing
+        // Ensure any controls have ended editing
+        if !sender.makeFirstResponder(nil) {
+            return false
+        }
         if sender.isDocumentEdited {
             let plug = sender.windowController as! ResKnifePlugin
             if UserDefaults.standard.bool(forKey: kConfirmChanges) {

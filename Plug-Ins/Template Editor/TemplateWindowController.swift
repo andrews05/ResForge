@@ -98,8 +98,10 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     }
     
     @IBAction func saveResource(_ sender: Any) {
-        resource.data = resourceStructure.getResourceData()
-        self.setDocumentEdited(false)
+        if self.window!.makeFirstResponder(dataList) {
+            resource.data = resourceStructure.getResourceData()
+            self.setDocumentEdited(false)
+        }
     }
     
     @IBAction func revertResource(_ sender: Any) {

@@ -92,6 +92,7 @@ class Element: ValueTransformer, NSTextFieldDelegate {
             return
         }
         var frame = view.frame
+        frame.size.height = CGFloat(rowHeight)
         if width != 0 {
             frame.size.width = width - 4
         }

@@ -143,8 +143,14 @@ class ElementList {
         return nil
     }
     
+    // Search for the next visible element with the given display label
     func next(withLabel label: String) -> Element? {
-        return elements[(currentIndex+1)...].first(where: { $0.displayLabel == label })
+        for el in elements[(currentIndex+1)...] where el.visible {
+            if el.displayLabel == label {
+                return el
+            }
+        }
+        return nil
     }
     
     // Create a new ElementList by extracting all elements following the current one up until a given type
