@@ -204,17 +204,20 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     
     func tableViewSelectionDidChange(_ notification: Notification) {
         let type = currentType
-        if let size = PluginRegistry.previewSizes[type] {
-            let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
-            layout.itemSize = NSSize(width: size+8, height: size+40)
-            resourcesView = collectionController
-            scrollView.documentView = collectionView
-        } else {
-            resourcesView = outlineController
-            scrollView.documentView = outlineView
+        // Check if type actually changed, rather than just being reselected after a reload
+        if resourcesView.selectedType() != type {
+            if let size = PluginRegistry.previewSizes[type] {
+                let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
+                layout.itemSize = NSSize(width: size+8, height: size+40)
+                resourcesView = collectionController
+                scrollView.documentView = collectionView
+            } else {
+                resourcesView = outlineController
+                scrollView.documentView = outlineView
+                outlineView.scrollToBeginningOfDocument(self)
+            }
         }
         resourcesView.reload(type: type)
-        scrollView.window?.makeFirstResponder(scrollView.documentView)
         NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
     }
 }
