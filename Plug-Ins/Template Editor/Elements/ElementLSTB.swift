@@ -17,7 +17,11 @@ class ElementLSTB: Element {
                 return super.displayLabel
             }
             let index = entries?.endIndex ?? tail.entries.firstIndex(of: self)!
-            return "\(index+1)) " + (singleElement?.displayLabel ?? super.displayLabel)
+            if tail == self {
+                return "\(index+1))"
+            } else {
+                return "\(index+1)) " + (singleElement?.displayLabel ?? super.displayLabel)
+            }
         }
         set {
             super.displayLabel = newValue

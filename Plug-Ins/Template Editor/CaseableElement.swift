@@ -14,6 +14,9 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
                 self.width = 240
             }
             try caseEl.configure(for: self)
+            guard caseMap[caseEl.value] == nil else {
+                throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
+            }
             cases.append(caseEl)
             if caseEl.displayLabel == caseEl.displayValue {
                 // Value matches title, use as-is

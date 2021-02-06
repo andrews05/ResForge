@@ -18,6 +18,7 @@ class ElementDATE: Element {
     override func configure(view: NSView) {
         var frame = view.frame
         frame.size.width = self.width-4
+        frame.size.height = 24
         let picker = NSDatePicker(frame: frame)
         picker.minDate = Date(timeIntervalSinceReferenceDate: -Self.hfsToRef)
         picker.maxDate = Date(timeIntervalSinceReferenceDate: Double(UInt32.max)-Self.hfsToRef)

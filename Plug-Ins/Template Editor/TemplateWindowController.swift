@@ -115,12 +115,12 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         if let tableColumn = tableColumn {
             var identifier = tableColumn.identifier
             if identifier.rawValue == "data" {
-                view = NSView(frame: NSMakeRect(0, 0, tableColumn.width, CGFloat(item.rowHeight)))
+                view = NSView(frame: NSMakeRect(0, 2, tableColumn.width, CGFloat(item.rowHeight)))
                 item.configure(view: view)
             } else {
                 // Use the focusable list label for elements that allow creating entries
                 if let item = item as? ElementLSTB, item.allowsCreateListEntry() {
-                    identifier = NSUserInterfaceItemIdentifier("listLabel")
+                    identifier = NSUserInterfaceItemIdentifier(item.allowsRemoveListEntry() ? "listLabel" : "listEndLabel")
                 }
                 view = outlineView.makeView(withIdentifier: identifier, owner: self)!
                 let textField = (view as! NSTableCellView).textField!
@@ -160,7 +160,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     }
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        return CGFloat((item as! Element).rowHeight)
+        return CGFloat((item as! Element).rowHeight) + 4
     }
     
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
@@ -173,10 +173,9 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         self.setDocumentEdited(true)
     }
     
-    // these next five methods are a crude hack - the items ought to be in the responder chain themselves
     @IBAction func createNewItem(_ sender: Any) {
-        // This works by selecting a list element (LSTB) and passing the message on to it
-        let row = dataList.row(for: self.window!.firstResponder as! NSView)
+        let view = sender is NSButton ? sender as! NSView : self.window!.firstResponder as! NSView
+        let row = dataList.row(for: view)
         if let element = dataList.item(atRow: row) as? ElementLSTB, element.allowsCreateListEntry() {
             element.createListEntry()
             dataList.reloadData()

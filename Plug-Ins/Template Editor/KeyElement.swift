@@ -24,6 +24,9 @@ class KeyElement: Element {
         // Read CASEs
         while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
             try caseEl.configure(for: self)
+            guard caseMap[caseEl.value] == nil else {
+                throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
+            }
             self.cases.append(caseEl)
             self.caseMap[caseEl.value] = caseEl
         }
@@ -38,6 +41,9 @@ class KeyElement: Element {
             for value in vals {
                 guard let caseEl = self.cases.first(where: { $0.displayValue == value }) else {
                     throw TemplateError.invalidStructure(keyB, NSLocalizedString("No corresponding ‘CASE’ element.", comment: ""))
+                }
+                guard keyedSections[caseEl] == nil else {
+                    throw TemplateError.invalidStructure(keyB, NSLocalizedString("Duplicate value.", comment: ""))
                 }
                 keyedSections[caseEl] = keyB
             }

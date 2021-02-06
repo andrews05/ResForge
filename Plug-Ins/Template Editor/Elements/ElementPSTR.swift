@@ -69,14 +69,14 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: CaseableElement {
     
     override func configure(view: NSView) {
         super.configure(view: view)
-        let textField = view.subviews[0] as! NSTextField
+        let textField = view.subviews.last as! NSTextField
         if maxLength < UInt32.max {
             textField.placeholderString = "\(type) (\(maxLength) characters)"
         }
         if self.width == 0 {
             textField.lineBreakMode = .byWordWrapping
-            textField.autoresizingMask = [.width]
             DispatchQueue.main.async {
+                textField.autoresizingMask = [.width]
                 self.autoRowHeight(textField)
             }
         }

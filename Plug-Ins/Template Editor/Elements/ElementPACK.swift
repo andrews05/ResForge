@@ -55,6 +55,7 @@ class ElementPACK: Element {
             }
             element.configure(view: view)
             frame.origin.x += element.width
+            frame.size.width -= element.width
             view.frame = frame
         }
         view.frame = orig
