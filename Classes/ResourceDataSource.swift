@@ -205,7 +205,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     func tableViewSelectionDidChange(_ notification: Notification) {
         let type = currentType
         // Check if type actually changed, rather than just being reselected after a reload
-        if resourcesView.selectedType() != type {
+        if resourcesView.currentType != type {
             if let size = PluginRegistry.previewSizes[type] {
                 let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
                 layout.itemSize = NSSize(width: size+8, height: size+40)
@@ -236,6 +236,8 @@ class SourceCount: NSButton {
 
 // Common interface for the OutlineController and CollectionController
 protocol ResourcesView {
+    var currentType: String? { get }
+    
     /// Reload the data in the view.
     func reload(type: String?)
     

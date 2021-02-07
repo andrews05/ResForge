@@ -4,7 +4,7 @@ import RKSupport
 class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate, ResourcesView {
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet weak var document: ResourceDocument!
-    private var currentType: String? = nil
+    private(set) var currentType: String? = nil
     private var inlineUpdate = false // Flag to prevent reloading items when editing inline
     
     override func awakeFromNib() {
