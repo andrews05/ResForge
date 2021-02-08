@@ -14,9 +14,6 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     
     private(set) var useTypeList = UserDefaults.standard.bool(forKey: kShowSidebar)
     private var resourcesView: ResourcesView!
-    private var currentType: String {
-        return typeList.selectedRow > 0 ? document.directory.allTypes[typeList.selectedRow-1] : ""
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -66,7 +63,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         if let filter = filter {
             document.directory.filter = filter
         }
-        resourcesView.reload(type: useTypeList ? currentType : nil)
+        resourcesView.reload(type: resourcesView.currentType)
         if selection.count != 0 {
             resourcesView.select(selection)
             if self.selectionCount() == 0 {
@@ -203,7 +200,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     }
     
     func tableViewSelectionDidChange(_ notification: Notification) {
-        let type = currentType
+        let type = document.directory.allTypes[typeList.selectedRow-1]
         // Check if type actually changed, rather than just being reselected after a reload
         if resourcesView.currentType != type {
             if let size = PluginRegistry.previewSizes[type] {
@@ -236,6 +233,7 @@ class SourceCount: NSButton {
 
 // Common interface for the OutlineController and CollectionController
 protocol ResourcesView {
+    /// Get the currently displayed type.
     var currentType: String? { get }
     
     /// Reload the data in the view.
