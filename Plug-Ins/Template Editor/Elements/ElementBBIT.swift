@@ -66,16 +66,16 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
         if bits == T.bitWidth {
             // Display as checkboxes
             var frame = view.frame
-            frame.origin.y += CGFloat(self.rowHeight) - 1
+            frame.origin.y += 1
             frame.size.width = 20
             frame.size.height = 20
             for i in 0..<bits {
-                if i % 8 == 0 {
-                    frame.origin.x = view.frame.origin.x
-                    frame.origin.y -= 20
-                }
                 view.addSubview(ElementBOOL.createCheckbox(with: frame, for: bitList[i]))
                 frame.origin.x += 20
+                if i % 8 == 7 {
+                    frame.origin.x = view.frame.origin.x
+                    frame.origin.y += 20
+                }
             }
         } else if bits == 1 {
             view.addSubview(ElementBOOL.createCheckbox(with: view.frame, for: self))

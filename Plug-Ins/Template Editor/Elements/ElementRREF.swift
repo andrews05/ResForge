@@ -33,7 +33,7 @@ class ElementRREF: Element {
     
     override func configure(view: NSView) {
         var frame = view.frame
-        frame.origin.y += 1
+        frame.origin.y += 2
         frame.size.width = self.width - 4
         frame.size.height = 19
         let button = NSButton(frame: frame)

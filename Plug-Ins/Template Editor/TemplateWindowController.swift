@@ -117,7 +117,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         if let tableColumn = tableColumn {
             var identifier = tableColumn.identifier
             if identifier.rawValue == "data" {
-                view = NSView(frame: NSMakeRect(0, 2, tableColumn.width, CGFloat(item.rowHeight)))
+                view = DataView(frame: NSMakeRect(0, 2, tableColumn.width, CGFloat(item.rowHeight)))
                 item.configure(view: view)
             } else {
                 // Use the focusable list label for elements that allow creating entries

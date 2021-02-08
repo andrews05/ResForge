@@ -22,7 +22,7 @@ class ElementHEXD: Element {
     
     override func configure(view: NSView) {
         var frame = view.frame
-        frame.origin.y += 3
+        frame.origin.y += 2
         frame.size.width = self.width - 4
         frame.size.height = CGFloat(self.rowHeight) - 5
         let textField = NSTextField(frame: frame)

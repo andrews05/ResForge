@@ -28,13 +28,13 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
     
     override func configure(view: NSView) {
         var frame = view.frame
-        frame.origin.y += CGFloat(self.rowHeight) - 1
+        frame.origin.y += 1
         frame.size.height = 20
         for caseEl in self.cases {
-            frame.origin.y -= 20
             let checkbox = ElementBOOL.createCheckbox(with: frame, for: caseEl)
             checkbox.title = caseEl.displayLabel
             view.addSubview(checkbox)
+            frame.origin.y += 20
         }
     }
     

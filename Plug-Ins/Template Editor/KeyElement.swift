@@ -66,7 +66,6 @@ class KeyElement: Element {
         var frame = view.frame
         frame.size.width = self.width-1
         frame.size.height = 24
-        frame.origin.y -= 2
         let keySelect = NSPopUpButton(frame: frame)
         keySelect.target = self
         keySelect.action = #selector(keyChanged(_:))

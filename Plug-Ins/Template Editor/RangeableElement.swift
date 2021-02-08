@@ -47,7 +47,6 @@ class RangeableElement: CaseableElement {
             var frame = view.frame
             frame.size.width = popupWidth-1
             frame.size.height = 24
-            frame.origin.y -= 2
             let select = NSPopUpButton(frame: frame)
             select.target = self
             select.action = #selector(caseChanged(_:))

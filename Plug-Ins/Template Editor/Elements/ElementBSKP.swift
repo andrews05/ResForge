@@ -22,7 +22,7 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element {
     
     override func configure(view: NSView) {
         var frame = view.frame
-        frame.origin.y -= 3
+        frame.origin.y += 3
         let textField = NSTextField(frame: frame)
         textField.isBezeled = false
         textField.isEditable = false

@@ -29,7 +29,7 @@ class ElementCASE: Element {
     
     override func configure(view: NSView) {
         var frame = view.frame
-        frame.origin.y += 2
+        frame.origin.y -= 2
         let textField = NSTextField(frame: frame)
         textField.isBezeled = false
         textField.isEditable = false
