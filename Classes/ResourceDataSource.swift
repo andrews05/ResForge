@@ -213,6 +213,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
                 scrollView.documentView = outlineView
                 outlineView.scrollToBeginningOfDocument(self)
             }
+            scrollView.window?.makeFirstResponder(scrollView.documentView)
         }
         resourcesView.reload(type: type)
         NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)

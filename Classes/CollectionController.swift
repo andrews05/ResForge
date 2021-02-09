@@ -96,9 +96,19 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
 }
 
 class ResourceCollection: NSCollectionView {
-    // The collection view seems to absorb delete key events - override to pass this event on
+    // The collection view doesn't seem to have sensible key handling.
+    // We need to handle home/end manually, as well as arrows keys when selection is empty,
+    // pass on delete and pageup/dn to the next responder, then accept everything else.
     override func keyDown(with event: NSEvent) {
-        if event.specialKey == .delete {
+        if event.specialKey == .home {
+            self.scroll(NSZeroPoint)
+        } else if event.specialKey == .end {
+            self.scroll(NSMakePoint(self.frame.width, self.frame.height))
+        } else if (event.specialKey == .downArrow || event.specialKey == .rightArrow) && self.selectionIndexPaths.isEmpty {
+            self.selectItems(at: [[0, 0]], scrollPosition: [.top,.left])
+        } else if (event.specialKey == .upArrow || event.specialKey == .leftArrow) && self.selectionIndexPaths.isEmpty {
+            self.selectItems(at: [[0, self.numberOfItems(inSection: 0)-1]], scrollPosition: [.bottom,.right])
+        } else if event.specialKey == .delete || event.specialKey == .pageUp || event.specialKey == .pageDown {
             self.nextResponder?.keyDown(with: event)
         } else {
             super.keyDown(with: event)
