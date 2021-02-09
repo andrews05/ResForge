@@ -17,6 +17,7 @@ class ElementDATE: Element {
     
     override func configure(view: NSView) {
         var frame = view.frame
+        frame.origin.y -= 1
         frame.size.width = self.width-4
         frame.size.height = 24
         let picker = NSDatePicker(frame: frame)
