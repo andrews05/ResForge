@@ -84,7 +84,11 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     // MARK: - DataSource functions
     
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return document.directory.filteredResources(type: currentType!).count
+        if let type = currentType {
+            return document.directory.filteredResources(type: type).count
+        } else {
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
