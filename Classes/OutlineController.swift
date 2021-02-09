@@ -59,8 +59,18 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
     
     func selectedResources(deep: Bool = false) -> [Resource] {
-        if deep {
-            return self.resources(for: outlineView.selectedItems)
+        if currentType != nil {
+            return outlineView.selectedItems as! [Resource]
+        } else if deep {
+            var resources: [Resource] = []
+            for item in outlineView.selectedItems {
+                if let item = item as? String {
+                    resources.append(contentsOf: document.directory.resourcesByType[item]!)
+                } else if let item = item as? Resource, !resources.contains(item) {
+                    resources.append(item)
+                }
+            }
+            return resources
         } else {
             return outlineView.selectedItems.compactMap({ $0 as? Resource })
         }
@@ -73,18 +83,6 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         } else {
             return currentType == "" ? nil : currentType
         }
-    }
-    
-    private func resources(for items: [Any]) -> [Resource] {
-        var resources: [Resource] = []
-        for item in items {
-            if let item = item as? String {
-                resources.append(contentsOf: document.directory.resourcesByType[item]!)
-            } else if let item = item as? Resource, !resources.contains(item) {
-                resources.append(item)
-            }
-        }
-        return resources
     }
     
     func updated(resource: Resource, oldIndex: Int, newIndex: Int) {

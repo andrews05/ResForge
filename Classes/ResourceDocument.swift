@@ -373,6 +373,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     @objc func validateToolbarItems(_ notification: Notification) {
+        updateStatus()
         if let toolbar = windowControllers.first?.window?.toolbar {
             let enabled = dataSource.selectionCount() > 0
             for item in toolbar.items {
@@ -403,6 +404,26 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         let count = directory.count
         var status = count == 1 ? "\(count) resource" : "\(count) resources"
+        if count > 0 {
+            let selected = dataSource.selectedResources()
+            if !selected.isEmpty || !directory.filter.isEmpty {
+                let matching: Int
+                if dataSource.useTypeList {
+                    matching = directory.filteredResources(type: dataSource.selectedType()!).count
+                } else if directory.filter.isEmpty {
+                    matching = count
+                } else {
+                    matching = directory.allTypes.flatMap(directory.filteredResources).count
+                }
+                if selected.isEmpty {
+                    status += ", \(matching) matching filter"
+                } else if !dataSource.useTypeList && directory.filter.isEmpty {
+                    status += ", \(selected.count) selected"
+                } else {
+                    status += ", \(selected.count) of \(matching) selected"
+                }
+            }
+        }
         if let fork = fork {
             var formatName = format.name
             if format == kFormatClassic || fork == .rsrc {
@@ -501,6 +522,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     @IBAction func toggleSidebar(_ sender: Any) {
         dataSource.toggleSidebar()
         self.updateSidebarMenuTitle()
+        self.updateStatus()
     }
     
     // MARK: - Edit Operations

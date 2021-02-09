@@ -66,10 +66,10 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         resourcesView.reload(type: resourcesView.currentType)
         if selection.count != 0 {
             resourcesView.select(selection)
-            if self.selectionCount() == 0 {
-                // No selection was made we need to post a notification manually
-                NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
-            }
+        }
+        if self.selectionCount() == 0 {
+            // No selection was made, we need to post a notification anyway
+            NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
         }
     }
     
