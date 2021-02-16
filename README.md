@@ -1,12 +1,14 @@
 # ResForge
 
+![ResForge](https://github.com/andrews05/ResForge/raw/master/ResForge/Assets.xcassets/ResForge.appiconset/ResForge_128.png)
+
 ResForge is a resource editor for macOS, capable of editing classic resource fork files and related formats. Based on [ResKnife](https://github.com/nickshanks/ResKnife) by Nicholas Shanks and Uli Kusterer, this derivative of the project has been rewritten for modern macOS systems.
 
 ### Features
 
 * Supports both resource and data forks in the original resource file format, as well as experimental support for the new extended format defined by [Graphite](https://github.com/TheDiamondProject/Graphite).
 * Hexadecimal editor, powered by [HexFiend](https://github.com/HexFiend/HexFiend).
-* Template editor, supporting a wide array of [field types](https://github.com/andrews05/ResForge/tree/master/Plug-Ins/Template%20Editor).
+* Template editor, supporting a wide array of [field types](https://github.com/andrews05/ResForge/tree/master/Plug-Ins/Template%20Editor#template-editor).
 * Image editor, supporting 'PICT', 'PNG ', 'cicn' & 'ppat' resources, plus view-only support for a variety of icons and other bitmaps.
 * Sound editor, supporting sampled 'snd ' resources.
 * Sprite editor, supporting 'rlëD' resources used by EV Nova.

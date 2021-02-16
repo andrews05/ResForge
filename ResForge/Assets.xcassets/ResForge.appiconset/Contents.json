@@ -1,61 +1,61 @@
 {
   "images" : [
     {
-      "filename" : "ResKnife-16.png",
+      "filename" : "ResForge_16.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "16x16"
     },
     {
-      "filename" : "ResKnife-33.png",
+      "filename" : "ResForge_16@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "16x16"
     },
     {
-      "filename" : "ResKnife-32.png",
+      "filename" : "ResForge_32.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "32x32"
     },
     {
-      "filename" : "ResKnife-64.png",
+      "filename" : "ResForge_32@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "32x32"
     },
     {
-      "filename" : "ResKnife-128.png",
+      "filename" : "ResForge_128.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
     },
     {
-      "filename" : "ResKnife-257.png",
+      "filename" : "ResForge_128@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
     },
     {
-      "filename" : "ResKnife-256.png",
+      "filename" : "ResForge_256.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
     },
     {
-      "filename" : "ResKnife@0.5x-1.png",
+      "filename" : "ResForge_256@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
-      "filename" : "ResKnife@0.5x.png",
+      "filename" : "ResForge_512.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
     },
     {
-      "filename" : "ResKnife.png",
+      "filename" : "ResForge_512@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
