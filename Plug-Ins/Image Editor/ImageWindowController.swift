@@ -1,7 +1,7 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
-class ImageWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
+class ImageWindowController: NSWindowController, NSMenuItemValidation, ResForgePlugin {
     static let editedTypes = [
         "PICT",
         "PNG ",

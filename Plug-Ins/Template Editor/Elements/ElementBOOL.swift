@@ -1,5 +1,5 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 class ElementBOOL: Element {
     @objc private var value: UInt8 = 0

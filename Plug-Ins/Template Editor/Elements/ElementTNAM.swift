@@ -1,4 +1,5 @@
-import RKSupport
+import Foundation
+import RFSupport
 
 class ElementTNAM: CaseableElement {
     private var tValue: FourCharCode = 0

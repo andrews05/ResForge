@@ -1,4 +1,5 @@
-import RKSupport
+import Foundation
+import RFSupport
 
 // Implements DBYT, DWRD, DLNG, DLLG, UBYT, UWRD, ULNG, ULLG
 class ElementDBYT<T: FixedWidthInteger>: RangeableElement {

@@ -1,4 +1,5 @@
-import RKSupport
+import Foundation
+import RFSupport
 
 class ElementREAL: CaseableElement {
     @objc private var value: Float = 0

@@ -1,5 +1,5 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 class ElementList {
     private(set) weak var parentElement: Element?
@@ -245,15 +245,15 @@ class ElementList {
         "DBYT": ElementDBYT<Int8>.self,     // signed ints
         "DWRD": ElementDBYT<Int16>.self,
         "DLNG": ElementDBYT<Int32>.self,
-//        "DLLG": ElementDBYT<Int64>.self,    // (ResKnife)
+//        "DLLG": ElementDBYT<Int64>.self,    // (ResForge)
         "UBYT": ElementDBYT<UInt8>.self,    // unsigned ints
         "UWRD": ElementDBYT<UInt16>.self,
         "ULNG": ElementDBYT<UInt32>.self,
-//        "ULLG": ElementDBYT<UInt64>.self,   // (ResKnife)
+//        "ULLG": ElementDBYT<UInt64>.self,   // (ResForge)
         "HBYT": ElementHBYT<UInt8>.self,    // hex byte/word/long
         "HWRD": ElementHBYT<UInt16>.self,
         "HLNG": ElementHBYT<UInt32>.self,
-//        "HLLG": ElementHBYT<UInt64>.self,   // (ResKnife)
+//        "HLLG": ElementHBYT<UInt64>.self,   // (ResForge)
 
         // multiple fields
         "RECT": ElementRECT.self,           // QuickDraw rect
@@ -298,13 +298,13 @@ class ElementList {
         "LFLG": ElementBFLG<UInt32>.self,
         "BBIT": ElementBBIT<UInt8>.self,    // bit within a byte
         "BB"  : ElementBBIT<UInt8>.self,    // BBnn bit field
-        "BF"  : ElementBBIT<UInt8>.self,    // BFnn fill bits (ResKnife)
+        "BF"  : ElementBBIT<UInt8>.self,    // BFnn fill bits (ResForge)
         "WBIT": ElementBBIT<UInt16>.self,
         "WB"  : ElementBBIT<UInt16>.self,   // WBnn
-        "WF"  : ElementBBIT<UInt16>.self,   // WFnn (ResKnife)
+        "WF"  : ElementBBIT<UInt16>.self,   // WFnn (ResForge)
         "LBIT": ElementBBIT<UInt32>.self,
         "LB"  : ElementBBIT<UInt32>.self,   // LBnn
-        "LF"  : ElementBBIT<UInt32>.self,   // LFnn (ResKnife)
+        "LF"  : ElementBBIT<UInt32>.self,   // LFnn (ResForge)
         "BORV": ElementBORV<UInt8>.self,    // OR-value (Rezilla)
         "WORV": ElementBORV<UInt16>.self,
         "LORV": ElementBORV<UInt32>.self,
@@ -327,7 +327,7 @@ class ElementList {
         "ZCNT": ElementOCNT<Int16>.self,
         "LZCT": ElementOCNT<Int32>.self,
         "FCNT": ElementFCNT.self,           // fixed count with count in label (why didn't they choose Lnnn?)
-        "R"   : Element.self,               // single-element repeat (ResKnife) (never initialised but included here for reference)
+        "R"   : Element.self,               // single-element repeat (ResForge) (never initialised but included here for reference)
         // list begin/end
         "LSTB": ElementLSTB.self,
         "LSTS": ElementLSTB.self,
@@ -337,22 +337,22 @@ class ElementList {
 
         // option lists
         "CASE": ElementCASE.self,           // single option for preceding element
-        "CASR": ElementCASR.self,           // option range for preceding element (ResKnife)
+        "CASR": ElementCASR.self,           // option range for preceding element (ResForge)
         "RSID": ElementRSID.self,           // resouce id (signed word) - type and offset in label
 
         // key selectors
         "KBYT": ElementKBYT<Int8>.self,     // signed keys
         "KWRD": ElementKBYT<Int16>.self,
         "KLNG": ElementKBYT<Int32>.self,
-//        "KLLG": ElementKBYT<Int64>.self,    // (ResKnife)
+//        "KLLG": ElementKBYT<Int64>.self,    // (ResForge)
         "KUBT": ElementKBYT<UInt8>.self,    // unsigned keys
         "KUWD": ElementKBYT<UInt16>.self,
         "KULG": ElementKBYT<UInt32>.self,
-//        "KULL": ElementKBYT<UInt64>.self,   // (ResKnife)
+//        "KULL": ElementKBYT<UInt64>.self,   // (ResForge)
         "KHBT": ElementKHBT<UInt8>.self,    // hex keys
         "KHWD": ElementKHBT<UInt16>.self,
         "KHLG": ElementKHBT<UInt32>.self,
-//        "KHLL": ElementKHBT<UInt64>.self,   // (ResKnife)
+//        "KHLL": ElementKHBT<UInt64>.self,   // (ResForge)
         "KCHR": ElementKCHR.self,           // string keys
         "KTYP": ElementKTYP.self,
         "KRID": ElementKRID.self,           // key on ID of the resource
@@ -386,8 +386,8 @@ class ElementList {
 
         // cosmetic
         "DVDR": ElementDVDR.self,           // divider
-        "RREF": ElementRREF.self,           // static reference to another resource (ResKnife)
-        "PACK": ElementPACK.self,           // pack other elements together (ResKnife)
+        "RREF": ElementRREF.self,           // static reference to another resource (ResForge)
+        "PACK": ElementPACK.self,           // pack other elements together (ResForge)
 
         // and some faked ones just to increase compatibility
         "SFRC": ElementDBYT<UInt16>.self,   // 0.16 fixed fraction

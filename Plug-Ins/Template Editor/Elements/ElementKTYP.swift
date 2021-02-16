@@ -1,4 +1,5 @@
-import RKSupport
+import Foundation
+import RFSupport
 
 class ElementKTYP: KeyElement {
     private var tValue: UInt32 = 0

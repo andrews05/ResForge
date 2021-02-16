@@ -1,5 +1,5 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 // Implements BNDN, LNDN, BIGE, LTLE
 class ElementBNDN: Element, GroupElement {

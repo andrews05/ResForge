@@ -1,10 +1,10 @@
 # Template Editor
 
-The following is a list of template field types that have been defined by various editors. ResKnife currently supports:
+The following is a list of template field types that have been defined by various editors. ResForge currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
 * Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (63 of 94)
 * All of [Rezilla's additions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
-* ResKnife's own additions (7)
+* ResForge's own additions (7)
 
 ### Key
 
@@ -18,7 +18,7 @@ The following is a list of template field types that have been defined by variou
 
 ### Decimal and Hex Integer Field Types
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 DBYT|Signed Decimal Byte|1 byte|✓|✓|✓|🟢
 DWRD|Signed Decimal Word|2 bytes|✓|✓|✓|🟢
@@ -32,7 +32,7 @@ HLNG|Hex Long|4 bytes|✓|✓|✓|🟢
 
 ### Bit and Bit Field Types
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 BBIT|Bit Within a Byte|1 bit|✓|✓|✓|🟢
 BBnn|Bit Field Within a Byte|_nn_ bits||✓|✓|🟢
@@ -53,7 +53,7 @@ LORV|OR Long Value|4 bytes|||✓|🟢
 
 ### Floating and Fixed Point Field Types
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 REAL|Single Precision Float|4 bytes||✓||🟢
 DOUB|Double Precision Float|8 bytes||✓||🟢
@@ -70,7 +70,7 @@ FXYZ|1:15 Fixed Point Colour Component|2 bytes||✓||🟡
 
 ### ASCII Text String Field Types
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 PSTR|Pascal String|1 to 256|✓|✓|✓|🟢
 ESTR|Even-Padded Pascal String|2 to 256|✓|✓|✓|🟢
@@ -89,7 +89,7 @@ Tnmm|Text with Fixed Padding|$_nmm_ bytes||✓|✓|🟢
 
 ### Hexadecimal Dump Field Types
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 BHEX|Byte Length Hex Dump|1 to 256||✓|✓|🔵
 WHEX|Word Length Hex Dump|2 to 64KB||✓|✓|🔵
@@ -103,7 +103,7 @@ HEXD|Hex Dump|any|✓|✓|✓|🔵
 
 ### Skip Offset Field Types
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 BSKP|Offset to SKPE in Byte, inclusive|1 byte||✓|✓|🟢
 WSKP|Offset to SKPE in Word, inclusive|2 bytes||✓|✓|🟢
@@ -115,7 +115,7 @@ SKPE|End of Skip or Sizeof|0 bytes||✓|✓|🟢
 
 ### Counted Lists/Arrays
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 BCNT|One-Based Byte Count of List Items|1 byte||✓|✓|🟢
 OCNT|One-Based Word Count of List Items|2 bytes|✓|✓|✓|🟢
@@ -133,7 +133,7 @@ Rnmm|Repeat Following Field $_nmm_ Times|0 bytes||||🟢
 
 ### Key Values for Subsequent Variant Items
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 KBYT|Signed Decimal Byte Key|1 byte||✓|✓|🟢
 KWRD|Signed Decimal Word Key|2 bytes||✓|✓|🟢
@@ -152,7 +152,7 @@ KEYE|End of Keyed Item|0 bytes||✓|✓|🟢
 
 ### Alignment and Filler Field Types
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 AWRD|Align to 2-byte boundary|0 to 1|✓|✓|✓|🟢
 ALNG|Align to 4-byte boundary|0 to 3|✓|✓|✓|🟢
@@ -165,7 +165,7 @@ Fnmm|Fill Bytes|$_nmm_ bytes||✓|✓|🟢
 
 ### Miscellaneous Graphic and System Field Types
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 RSID|Signed Resource ID Integer|2 bytes||✓|✓|🟢
 CHAR|ASCII Character|1 byte|✓|✓|✓|🟢
@@ -185,7 +185,7 @@ CODE|680x0 Disassembled Code Dump|any||✓||🟡
 
 ### Big and Little-Endian Parsing
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 LTLE|Use Big-Endian Data Parsing|0 bytes||✓||🟢
 BIGE|Use Little-Endian Data Parsing|0 bytes||✓||🟢
@@ -194,14 +194,14 @@ LNDN|Use Little-Endian Data Parsing (hidden)|0 bytes||✓||🟢
 
 ### Symbolic Constants
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 CASE|Symbolic and/or Default Value|0 bytes||✓|✓|🟢
 CASR|Symbolic Value Range|0 bytes||||🟢
 
 ### Cosmetic and Layout Control
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 DVDR|Divider Line with Comment|0 bytes||✓|✓|🟢
 RREF|Static Resource Reference|0 bytes||||🟢
@@ -209,7 +209,7 @@ PACK|Combine Other Fields|0 bytes||||🟢
 
 ### Inserting or Deleting Data in Existing Resources
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 +BYT|Insert a Byte When Opening|1 byte||✓||🔴
 +WRD|Insert a Word When Opening|2 bytes||✓||🔴
@@ -228,6 +228,6 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
 
 ### Pre- and Post-Processing Data with Code Filters
 
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResKnife
+Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 FLTR|Declare Filtered Template (with comment)|0 bytes||✓||🔴

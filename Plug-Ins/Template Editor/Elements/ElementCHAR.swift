@@ -1,4 +1,5 @@
-import RKSupport
+import Foundation
+import RFSupport
 
 class ElementCHAR: CaseableElement {
     private var tValue: UInt8 = 0

@@ -1,5 +1,5 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 class Element: ValueTransformer, NSTextFieldDelegate {
     static var sharedFormatters: [String: Formatter] = [:]

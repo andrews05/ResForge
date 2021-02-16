@@ -1,5 +1,5 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 // Implements BBIT/BBnn/BFnn, WBIT/WBnn/WFnn, LBIT/LBnn/LFnn
 class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {

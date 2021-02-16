@@ -1,7 +1,7 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
-class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate, NSMenuItemValidation, ResKnifeTemplatePlugin {
+class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate, NSMenuItemValidation, ResForgeTemplatePlugin {
     static let editedTypes = ["Template"]
     
     let resource: Resource

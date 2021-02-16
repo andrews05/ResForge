@@ -1,5 +1,5 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 // Implements HEXD, HEXS, Hnnn
 class ElementHEXD: Element {

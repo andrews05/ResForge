@@ -1,4 +1,4 @@
-import RKSupport
+import RFSupport
 
 enum RleError: Error {
     case invalid

@@ -1,5 +1,5 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 // Implements BSKP, SKIP, LSKP, BSIZ, WSIZ, LSIZ
 class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element {

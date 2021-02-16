@@ -1,10 +1,10 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 /*
  * BORV is a Rezilla creation which is an OR combination of named (CASE) values
  * In Rezilla it is displayed as a multiple select popup menu
- * In ResKnife we display it as a list of checkboxes (because we don't have enough checkbox types already!)
+ * In ResForge we display it as a list of checkboxes (because we don't have enough checkbox types already!)
  * The main difference from BBITs is it allows a custom ordering of the bits (it also gives a slightly more compact display)
  */
 class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {

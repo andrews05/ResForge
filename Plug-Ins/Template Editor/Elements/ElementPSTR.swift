@@ -1,5 +1,5 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 enum StringPadding {
     case none

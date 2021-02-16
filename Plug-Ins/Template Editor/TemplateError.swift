@@ -1,5 +1,5 @@
 import Foundation
-import RKSupport
+import RFSupport
 
 enum TemplateError: LocalizedError, RecoverableError {
     case corrupt

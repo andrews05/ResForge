@@ -1,5 +1,5 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 class ElementCOLR: Element {
     var r: UInt16 = 0

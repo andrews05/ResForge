@@ -1,7 +1,7 @@
-import RKSupport
+import RFSupport
 
-class KestrelTools: ResKnifePluginPackage {
-    static let pluginClasses: [ResKnifePlugin.Type] = [
+class KestrelTools: ResForgePluginPackage {
+    static let pluginClasses: [ResForgePlugin.Type] = [
         AnimationWindowController.self
     ]
     

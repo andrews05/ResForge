@@ -1,4 +1,5 @@
-import RKSupport
+import Foundation
+import RFSupport
 
 class ElementKCHR: KeyElement {
     private var tValue: UInt8 = 0

@@ -1,4 +1,5 @@
-import RKSupport
+import Foundation
+import RFSupport
 
 class ElementDOUB: CaseableElement {
     @objc private var value: Double = 0

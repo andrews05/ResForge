@@ -1,4 +1,5 @@
-import RKSupport
+import Foundation
+import RFSupport
 
 // Implements KBYT, KWRD, KLNG, KLLG, KUBT, KUWD, KULG, KULL
 class ElementKBYT<T: FixedWidthInteger>: KeyElement {

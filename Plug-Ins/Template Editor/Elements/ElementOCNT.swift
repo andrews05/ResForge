@@ -1,5 +1,5 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
 protocol CounterElement where Self: Element {
     var count: Int { get set }

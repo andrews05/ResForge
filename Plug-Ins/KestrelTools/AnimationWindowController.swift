@@ -1,7 +1,7 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
-class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
+class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResForgePlugin {
     static let editedTypes = ["rlëD"]
     
     let resource: Resource

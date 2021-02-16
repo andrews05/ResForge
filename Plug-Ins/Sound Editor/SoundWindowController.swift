@@ -1,8 +1,8 @@
 import AVKit
 import Cocoa
-import RKSupport
+import RFSupport
 
-class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifePlugin {
+class SoundWindowController: NSWindowController, NSMenuItemValidation, ResForgePlugin {
     static let editedTypes = ["snd "]
     
     let resource: Resource
@@ -156,7 +156,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResKnifeP
         self.setDocumentEdited(false)
     }
     
-    // ResKnifePlugin protocol export functions
+    // ResForgePlugin protocol export functions
     static func filenameExtension(for resourceType: String) -> String? {
         return "aiff"
     }

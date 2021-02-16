@@ -1,7 +1,7 @@
 import Cocoa
-import RKSupport
+import RFSupport
 
-class HexWindowController: NSWindowController, NSTextFieldDelegate, ResKnifePlugin, HFTextViewDelegate {
+class HexWindowController: NSWindowController, NSTextFieldDelegate, ResForgePlugin, HFTextViewDelegate {
     static let editedTypes = ["Hex"]
     
     let resource: Resource
