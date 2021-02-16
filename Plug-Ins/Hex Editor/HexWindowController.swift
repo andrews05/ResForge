@@ -76,7 +76,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResForgePlug
     // MARK: - Find/Replace
 
     @IBAction func showFind(_ sender: Any) {
-        findField.stringValue = self.sanitize(NSPasteboard(name: .findPboard).string(forType: .string)!)
+        findField.stringValue = self.sanitize(NSPasteboard(name: .findPboard).string(forType: .string) ?? "")
         findView.isHidden = false
         self.window?.makeFirstResponder(findField)
     }
@@ -174,7 +174,7 @@ class HexWindowController: NSWindowController, NSTextFieldDelegate, ResForgePlug
     private func findBytes() -> HFByteArray? {
         if findView.isHidden {
             // Always load from find pasteboard when view is hidden
-            findField.stringValue = self.sanitize(NSPasteboard(name: .findPboard).string(forType: .string)!)
+            findField.stringValue = self.sanitize(NSPasteboard(name: .findPboard).string(forType: .string) ?? "")
         }
         return self.byteArray(data: self.data(string: findField.stringValue))
     }
