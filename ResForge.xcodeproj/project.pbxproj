@@ -1862,7 +1862,7 @@
 				INFOPLIST_FILE = ResForge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MARKETING_VERSION = 0.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.andrewsimmonds.ResForge;
+				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.ResForge;
 				PRODUCT_NAME = ResForge;
 				SWIFT_OBJC_BRIDGING_HEADER = "ResForge/ResForge-Bridging-Header.h";
 			};
@@ -1879,7 +1879,7 @@
 				INFOPLIST_FILE = ResForge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MARKETING_VERSION = 0.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.andrewsimmonds.ResForge;
+				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.ResForge;
 				PRODUCT_NAME = ResForge;
 				SWIFT_OBJC_BRIDGING_HEADER = "ResForge/ResForge-Bridging-Header.h";
 			};

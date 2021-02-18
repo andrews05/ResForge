@@ -1,3 +1,3 @@
-"ResourceMap" = "Resource File (Data Fork)";
-"ResourceMapRF" = "Resource File (Resource Fork)";
-"ResourceMapExtended" = "Extended Resource File";
+"ResourceFile" = "Resource File (Data Fork)";
+"ResourceFileRF" = "Resource File (Resource Fork)";
+"ResourceFileExtended" = "Extended Resource File";

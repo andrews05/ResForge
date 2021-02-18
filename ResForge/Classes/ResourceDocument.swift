@@ -153,16 +153,11 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     override func write(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws {
         if saveOperation == .saveAsOperation {
             // Set fork according to typeName
-            if typeName == "ResourceMapRF" {
+            if typeName == "ResourceFileRF" {
                 format = kFormatClassic
                 fork = .rsrc
-                // Set default type/creator for resource fork only
-                if hfsType == 0 && hfsCreator == 0 {
-                    hfsType = OSType("rsrc")
-                    hfsCreator = OSType("ResK")
-                }
             } else {
-                format = typeName == "ResourceMapExtended" ? kFormatExtended : kFormatClassic
+                format = typeName == "ResourceFileExtended" ? kFormatExtended : kFormatClassic
                 fork = .data
                 // Clear type/creator for data fork (assume filename extension)
                 hfsType = 0

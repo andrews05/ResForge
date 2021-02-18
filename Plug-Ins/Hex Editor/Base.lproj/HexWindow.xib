@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,22 +25,22 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="387" y="534" width="471" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <value key="minSize" type="size" width="300" height="200"/>
             <view key="contentView" id="35">
-                <rect key="frame" x="0.0" y="0.0" width="471" height="360"/>
+                <rect key="frame" x="0.0" y="0.0" width="471" height="362"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bXx-Ol-8KL">
-                        <rect key="frame" x="0.0" y="0.0" width="471" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="471" height="362"/>
                         <subviews>
                             <view translatesAutoresizingMaskIntoConstraints="NO" id="fZT-bk-PLR">
-                                <rect key="frame" x="1" y="252" width="469" height="108"/>
+                                <rect key="frame" x="1" y="252" width="469" height="110"/>
                                 <subviews>
                                     <box boxType="custom" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="zIh-2V-Iso">
-                                        <rect key="frame" x="-1" y="0.0" width="471" height="109"/>
+                                        <rect key="frame" x="-1" y="0.0" width="471" height="111"/>
                                         <view key="contentView" id="mhf-0D-QIJ">
-                                            <rect key="frame" x="1" y="1" width="469" height="107"/>
+                                            <rect key="frame" x="1" y="1" width="469" height="109"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <button autoresizesSubviews="NO" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KrF-vx-D9a">
@@ -57,14 +57,14 @@ Gw
                                                     </connections>
                                                 </button>
                                                 <button autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TyO-Xc-qks">
-                                                    <rect key="frame" x="99" y="31" width="85" height="18"/>
+                                                    <rect key="frame" x="104" y="33" width="84" height="16"/>
                                                     <buttonCell key="cell" type="check" title="Ignore Case" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="yg5-MO-QLg">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="message" size="11"/>
                                                     </buttonCell>
                                                 </button>
                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ChZ-Or-y9h">
-                                                    <rect key="frame" x="59" y="80" width="402" height="19"/>
+                                                    <rect key="frame" x="59" y="82" width="402" height="19"/>
                                                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" bezelStyle="round" id="5QR-3k-g2q">
                                                         <font key="font" metaFont="message" size="11"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -76,7 +76,7 @@ Gw
                                                     </connections>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r5y-23-Gtl">
-                                                    <rect key="frame" x="59" y="56" width="402" height="19"/>
+                                                    <rect key="frame" x="59" y="58" width="402" height="19"/>
                                                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" bezelStyle="round" id="ObG-Bx-p5R">
                                                         <font key="font" metaFont="message" size="11"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -87,7 +87,7 @@ Gw
                                                     </connections>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Btc-bQ-udc">
-                                                    <rect key="frame" x="6" y="82" width="50" height="14"/>
+                                                    <rect key="frame" x="6" y="84" width="50" height="14"/>
                                                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="Find:" id="0gk-i0-kIJ">
                                                         <font key="font" metaFont="message" size="11"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -95,7 +95,7 @@ Gw
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6gr-4t-I9s">
-                                                    <rect key="frame" x="6" y="58" width="50" height="14"/>
+                                                    <rect key="frame" x="6" y="60" width="50" height="14"/>
                                                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="Replace:" id="Rzp-sn-std">
                                                         <font key="font" metaFont="message" size="11"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -103,14 +103,14 @@ Gw
                                                     </textFieldCell>
                                                 </textField>
                                                 <button autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChM-QY-Fjv">
-                                                    <rect key="frame" x="5" y="31" width="91" height="18"/>
+                                                    <rect key="frame" x="7" y="33" width="90" height="16"/>
                                                     <buttonCell key="cell" type="check" title="Wrap Around" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="orK-gr-YIR">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="message" size="11"/>
                                                     </buttonCell>
                                                 </button>
                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HfW-od-0Hl">
-                                                    <rect key="frame" x="196" y="31" width="44" height="18"/>
+                                                    <rect key="frame" x="203" y="33.5" width="43" height="15"/>
                                                     <buttonCell key="cell" type="radio" title="Text" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="plr-t5-syg">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="message" size="11"/>
@@ -120,7 +120,7 @@ Gw
                                                     </connections>
                                                 </button>
                                                 <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="x2d-Nv-EVS">
-                                                    <rect key="frame" x="245" y="31" width="43" height="18"/>
+                                                    <rect key="frame" x="253" y="33.5" width="42" height="15"/>
                                                     <buttonCell key="cell" type="radio" title="Hex" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="5qe-Kj-NSZ">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="message" size="11"/>
@@ -130,7 +130,7 @@ Gw
                                                     </connections>
                                                 </button>
                                                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WeE-Qh-55e">
-                                                    <rect key="frame" x="7" y="7" width="86" height="18"/>
+                                                    <rect key="frame" x="7" y="7" width="72" height="18"/>
                                                     <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" style="roundRect" trackingMode="momentary" id="H1P-Om-yx7">
                                                         <font key="font" metaFont="message" size="11"/>
                                                         <segments>
@@ -143,7 +143,7 @@ Gw
                                                     </connections>
                                                 </segmentedControl>
                                                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="70f-fL-Wis">
-                                                    <rect key="frame" x="103" y="7" width="93" height="18"/>
+                                                    <rect key="frame" x="89" y="7" width="79" height="18"/>
                                                     <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" style="roundRect" trackingMode="momentary" id="Dc3-L8-b8d">
                                                         <font key="font" metaFont="message" size="11"/>
                                                         <segments>
@@ -193,7 +193,6 @@ Gw
                                 <constraints>
                                     <constraint firstItem="zIh-2V-Iso" firstAttribute="leading" secondItem="fZT-bk-PLR" secondAttribute="leading" constant="-1" id="5pp-wT-DgL"/>
                                     <constraint firstAttribute="trailing" secondItem="zIh-2V-Iso" secondAttribute="trailing" constant="-1" id="BfI-iE-0RR"/>
-                                    <constraint firstAttribute="height" constant="108" id="OpQ-4n-RWb"/>
                                     <constraint firstAttribute="bottom" secondItem="zIh-2V-Iso" secondAttribute="bottom" id="PpH-X0-lLZ"/>
                                     <constraint firstItem="zIh-2V-Iso" firstAttribute="top" secondItem="fZT-bk-PLR" secondAttribute="top" constant="-1" id="T2c-fu-gWo"/>
                                 </constraints>
