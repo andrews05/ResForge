@@ -371,6 +371,7 @@ class ElementList {
         
         // offsets
         "BSKP": ElementBSKP<UInt8>.self,
+        "WSKP": ElementBSKP<UInt16>.self,
         "SKIP": ElementBSKP<UInt16>.self,
         "LSKP": ElementBSKP<UInt32>.self,
         "BSIZ": ElementBSKP<UInt8>.self,

@@ -2,7 +2,7 @@
 
 The following is a list of template field types that have been defined by various editors. ResForge currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
-* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (63 of 94)
+* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (64 of 95)
 * All of [Rezilla's additions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
 * ResForge's own additions (7)
 
@@ -107,10 +107,11 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 BSKP|Offset to SKPE in Byte, inclusive|1 byte||✓|✓|🟢
 WSKP|Offset to SKPE in Word, inclusive|2 bytes||✓|✓|🟢
-LSKP|Offset to SKPE in Byte, inclusive|4 bytes||✓|✓|🟢
+SKIP|Offset to SKPE in Word (same as WSKP)|2 bytes||✓|✓|🟢
+LSKP|Offset to SKPE in Long, inclusive|4 bytes||✓|✓|🟢
 BSIZ|Offset to SKPE in Byte, exclusive|1 byte||✓|✓|🟢
 WSIZ|Offset to SKPE in Word, exclusive|2 bytes||✓|✓|🟢
-LSIZ|Offset to SKPE in Byte, exclusive|4 bytes||✓|✓|🟢
+LSIZ|Offset to SKPE in Long, exclusive|4 bytes||✓|✓|🟢
 SKPE|End of Skip or Sizeof|0 bytes||✓|✓|🟢
 
 ### Counted Lists/Arrays
