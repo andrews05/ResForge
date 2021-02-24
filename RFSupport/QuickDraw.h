@@ -4,13 +4,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QuickDraw : NSObject
 
-+ (NSData * _Nullable)tiffFromPict:(NSData *)data;
++ (NSBitmapImageRep * _Nullable)repFromPict:(NSData *)data;
 + (NSData *)pictFromRep:(NSBitmapImageRep *)data;
-+ (NSData * _Nullable)tiffFromCicn:(NSData *)data;
++ (NSBitmapImageRep * _Nullable)repFromCicn:(NSData *)data;
 + (NSData *)cicnFromRep:(NSBitmapImageRep *)data;
-+ (NSData * _Nullable)tiffFromPpat:(NSData *)data;
++ (NSBitmapImageRep * _Nullable)repFromPpat:(NSData *)data;
 + (NSData *)ppatFromRep:(NSBitmapImageRep *)data;
-+ (NSData * _Nullable)tiffFromCrsr:(NSData *)data;
++ (NSBitmapImageRep * _Nullable)repFromCrsr:(NSData *)data;
 
 @end
 

@@ -1,48 +1,44 @@
 import Cocoa
 
 class Icons {
-    static func tiff(_ data: Data, width: Int, height: Int, depth: Int) -> Data {
+    static func rep(_ data: Data, width: Int, height: Int, depth: Int) -> NSBitmapImageRep? {
         if depth == 1 {
             return self.bwTiff(data, width: width, height: height)
         }
         return self.colorTiff(data, width: width, height: height, depth: depth)
     }
     
-    private static func bwTiff(_ data: Data, width: Int, height: Int) -> Data {
+    private static func bwTiff(_ data: Data, width: Int, height: Int) -> NSBitmapImageRep? {
         let bytesPerRow = width / 8
         let planeLength = bytesPerRow * height
         if data.count < planeLength {
-            return Data()
+            return nil
         }
         // Assume alpha if sufficient data
         let alpha = data.count >= planeLength*2
-        // Invert data
-        var plane = data.prefix(planeLength).map({ $0 ^ 0xff })
-
-        return plane.withUnsafeMutableBufferPointer { (planeBuffer) -> Data in
-            var mask = [UInt8](data)
-            return mask.withUnsafeMutableBufferPointer { (maskBuffer) -> Data in
-                var planes = [planeBuffer.baseAddress]
-                if alpha {
-                    planes.append(maskBuffer.baseAddress! + planeLength)
-                }
-                return NSBitmapImageRep(bitmapDataPlanes: &planes,
-                                        pixelsWide: width,
-                                        pixelsHigh: height,
-                                        bitsPerSample: 1,
-                                        samplesPerPixel: alpha ? 2 : 1,
-                                        hasAlpha: alpha,
-                                        isPlanar: true,
-                                        colorSpaceName: .deviceWhite,
-                                        bytesPerRow: bytesPerRow,
-                                        bitsPerPixel: 1)!.tiffRepresentation!
-            }
+        var plane = [UInt8](data)
+        // Invert bitmap plane
+        for i in 0..<planeLength {
+            plane[i] ^= 0xff
         }
+        
+        let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
+                                   pixelsWide: width,
+                                   pixelsHigh: height,
+                                   bitsPerSample: 1,
+                                   samplesPerPixel: alpha ? 2 : 1,
+                                   hasAlpha: alpha,
+                                   isPlanar: true,
+                                   colorSpaceName: .deviceWhite,
+                                   bytesPerRow: bytesPerRow,
+                                   bitsPerPixel: 1)!
+        rep.bitmapData!.assign(from: &plane, count: rep.bytesPerPlane * rep.numberOfPlanes)
+        return rep
     }
 
-    private static func colorTiff(_ data: Data, width: Int, height: Int, depth: Int) -> Data {
+    private static func colorTiff(_ data: Data, width: Int, height: Int, depth: Int) -> NSBitmapImageRep? {
         if data.count < (width * height * depth / 8) {
-            return Data()
+            return nil
         }
         
         var plane: [UInt8]
@@ -56,22 +52,21 @@ class Icons {
             // Map every byte to the full colour from the palette
             plane = data.flatMap({ clut8[Int($0)] })
         } else {
-            return Data()
+            return nil
         }
-
-        return plane.withUnsafeMutableBufferPointer { (planeBuffer) -> Data in
-            var planes = [planeBuffer.baseAddress]
-            return NSBitmapImageRep(bitmapDataPlanes: &planes,
-                                    pixelsWide: width,
-                                    pixelsHigh: height,
-                                    bitsPerSample: 8,
-                                    samplesPerPixel: 3,
-                                    hasAlpha: false,
-                                    isPlanar: false,
-                                    colorSpaceName: .deviceRGB,
-                                    bytesPerRow: width * 3,
-                                    bitsPerPixel: 0)!.tiffRepresentation!
-        }
+        
+        let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
+                                   pixelsWide: width,
+                                   pixelsHigh: height,
+                                   bitsPerSample: 8,
+                                   samplesPerPixel: 3,
+                                   hasAlpha: false,
+                                   isPlanar: false,
+                                   colorSpaceName: .deviceRGB,
+                                   bytesPerRow: width * 3,
+                                   bitsPerPixel: 0)!
+        rep.bitmapData!.assign(from: plane, count: rep.bytesPerPlane)
+        return rep
     }
     
     // Sourced from clut id 4 in the Mac OS System file

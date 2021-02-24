@@ -6,14 +6,14 @@
 
 @implementation QuickDraw
 
-+ (NSData *)tiffFromPict:(NSData *)data {
++ (NSBitmapImageRep *)repFromPict:(NSData *)data {
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
         auto surface = graphite::qd::pict(std::make_shared<graphite::data::data>(gData), 0, "").image_surface().lock();
         if (!surface) return nil;
         // Most software seems to ignore PICT alpha - we will too, as it can contain garbage data
-        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size() alpha:false];
+        return [QuickDraw repFromRaw:surface->raw() size:surface->size() alpha:false];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -25,12 +25,12 @@
     return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
 }
 
-+ (NSData *)tiffFromCicn:(NSData *)data {
++ (NSBitmapImageRep *)repFromCicn:(NSData *)data {
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
         auto surface = graphite::qd::cicn(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
-        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size() alpha:true];
+        return [QuickDraw repFromRaw:surface->raw() size:surface->size() alpha:true];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -42,12 +42,12 @@
     return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
 }
 
-+ (NSData *)tiffFromPpat:(NSData *)data {
++ (NSBitmapImageRep *)repFromPpat:(NSData *)data {
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
         auto surface = graphite::qd::ppat(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
-        return [QuickDraw tiffFromRaw:surface->raw() size:surface->size() alpha:false];
+        return [QuickDraw repFromRaw:surface->raw() size:surface->size() alpha:false];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -59,7 +59,7 @@
     return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
 }
 
-+ (NSData *)tiffFromCrsr:(NSData *)data {
++ (NSBitmapImageRep *)repFromCrsr:(NSData *)data {
     // Quick hack for parsing crsr resources - data is like a ppat but with a mask
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     // Clear the first byte to make graphite think it's a normal ppat
@@ -78,16 +78,15 @@
                 }
             }
         }
-        return [QuickDraw tiffFromRaw:raw size:surface->size() alpha:true];
+        return [QuickDraw repFromRaw:raw size:surface->size() alpha:true];
     } catch (const std::exception& e) {
         return nil;
     }
 }
 
 
-+ (NSData *)tiffFromRaw:(std::vector<uint32_t>)raw size:(graphite::qd::size)size alpha:(bool)alpha {
-    unsigned char *ptr = (unsigned char*)raw.data();
-    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&ptr
++ (NSBitmapImageRep *)repFromRaw:(std::vector<uint32_t>)raw size:(graphite::qd::size)size alpha:(bool)alpha {
+    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:nil
                                                                     pixelsWide:size.width()
                                                                     pixelsHigh:size.height()
                                                                  bitsPerSample:8
@@ -97,8 +96,9 @@
                                                                 colorSpaceName:NSDeviceRGBColorSpace
                                                                    bytesPerRow:size.width()*4
                                                                   bitsPerPixel:32];
+    memcpy(rep.bitmapData, raw.data(), rep.bytesPerPlane);
     rep.alpha = alpha;
-    return rep.TIFFRepresentation;
+    return rep;
 }
 
 + (std::shared_ptr<graphite::qd::surface>)surfaceFromRep:(NSBitmapImageRep *)rep {

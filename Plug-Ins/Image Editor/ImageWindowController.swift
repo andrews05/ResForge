@@ -193,7 +193,13 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResourceE
     }
     
     static func export(_ resource: Resource, to url: URL) -> Bool {
-        let data = self.imageData(for: resource) ?? Data()
+        let data: Data
+        switch resource.type {
+        case "PNG ", "icns":
+            data = resource.data
+        default:
+            data = self.image(for: resource)?.tiffRepresentation ?? Data()
+        }
         do {
             try data.write(to: url)
         } catch let error {
@@ -205,10 +211,12 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResourceE
     // MARK: - Preview Provider
     
     static func image(for resource: Resource) -> NSImage? {
-        guard let data = self.imageData(for: resource) else {
+        guard let rep = self.imageRep(for: resource) else {
             return nil
         }
-        return NSImage(data: data)
+        let image = NSImage()
+        image.addRepresentation(rep)
+        return image
     }
     
     static func previewSize(for resourceType: String) -> Int {
@@ -220,46 +228,49 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResourceE
         }
     }
     
-    private static func imageData(for resource: Resource!) -> Data? {
+    private static func imageRep(for resource: Resource!) -> NSImageRep? {
         let data = resource.data
         guard !data.isEmpty else {
-            return data
+            return nil
         }
         switch resource.type {
         case "PICT":
-            // See if system can decode it first (<10.15), else fallback to Graphite (less compatible)
-            return NSImage(data: data)?.tiffRepresentation ?? QuickDraw.tiff(fromPict: data)
+            // On macOS 10.15 and later we have to use Graphite to decode PICTs
+            if #available(macOS 10.15, *) {
+                return QuickDraw.rep(fromPict: data)
+            }
+            return NSPICTImageRep(data: data)
         case "cicn":
-            return QuickDraw.tiff(fromCicn: data)
+            return QuickDraw.rep(fromCicn: data)
         case "ppat":
-            return QuickDraw.tiff(fromPpat: data)
+            return QuickDraw.rep(fromPpat: data)
         case "crsr":
-            return QuickDraw.tiff(fromCrsr: data)
+            return QuickDraw.rep(fromCrsr: data)
         case "ICN#", "ICON":
-            return Icons.tiff(data, width: 32, height: 32, depth: 1)
+            return Icons.rep(data, width: 32, height: 32, depth: 1)
         case "ics#", "SICN", "CURS":
-            return Icons.tiff(data, width: 16, height: 16, depth: 1)
+            return Icons.rep(data, width: 16, height: 16, depth: 1)
         case "icm#":
-            return Icons.tiff(data, width: 16, height: 12, depth: 1)
+            return Icons.rep(data, width: 16, height: 12, depth: 1)
         case "icl4":
-            return Icons.tiff(data, width: 32, height: 32, depth: 4)
+            return Icons.rep(data, width: 32, height: 32, depth: 4)
         case "ics4":
-            return Icons.tiff(data, width: 16, height: 16, depth: 4)
+            return Icons.rep(data, width: 16, height: 16, depth: 4)
         case "icm4":
-            return Icons.tiff(data, width: 16, height: 12, depth: 4)
+            return Icons.rep(data, width: 16, height: 12, depth: 4)
         case "icl8":
-            return Icons.tiff(data, width: 32, height: 32, depth: 8)
+            return Icons.rep(data, width: 32, height: 32, depth: 8)
         case "ics8":
-            return Icons.tiff(data, width: 16, height: 16, depth: 8)
+            return Icons.rep(data, width: 16, height: 16, depth: 8)
         case "icm8":
-            return Icons.tiff(data, width: 16, height: 12, depth: 8)
+            return Icons.rep(data, width: 16, height: 12, depth: 8)
         case "PAT ":
-            return Icons.tiff(data, width: 8, height: 8, depth: 1)
+            return Icons.rep(data, width: 8, height: 8, depth: 1)
         case "PAT#":
             // This just stacks all the patterns vertically
-            return Icons.tiff(data[2...], width: 8, height: 8 * Int(data[1]), depth: 1)
+            return Icons.rep(data[2...], width: 8, height: 8 * Int(data[1]), depth: 1)
         default:
-            return data
+            return NSBitmapImageRep(data: data)
         }
     }
 }
