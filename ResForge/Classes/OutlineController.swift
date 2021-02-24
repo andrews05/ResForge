@@ -24,7 +24,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             return
         }
         // Use hex editor if holding option key
-        var editor: ResForgePlugin.Type?
+        var editor: ResourceEditor.Type?
         if NSApp.currentEvent!.modifierFlags.contains(.option) {
             editor = PluginRegistry.hexEditor
         }

@@ -236,13 +236,13 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         if filename == "" {
             filename = "\(resource.type) \(resource.id)"
         }
-        let editor = PluginRegistry.editors[resource.type]
+        let editor = PluginRegistry.exportProviders[resource.type]
         let ext = editor?.filenameExtension(for: resource.type) ?? resource.type.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         return (filename, ext)
     }
     
     private func export(resource: Resource, to url: URL) {
-        let editor = PluginRegistry.editors[resource.type]
+        let editor = PluginRegistry.exportProviders[resource.type]
         if editor?.export(resource, to: url) != true {
             do {
                 try resource.data.write(to: url)

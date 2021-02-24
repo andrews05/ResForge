@@ -1,9 +1,7 @@
 import RFSupport
 
-class KestrelTools: ResForgePluginPackage {
-    static let pluginClasses: [ResForgePlugin.Type] = [
-        AnimationWindowController.self
-    ]
+class KestrelTools: PlaceholderProvider {
+    static var supportedTypes = ["dësc"]
     
     static func placeholderName(for resource: Resource) -> String? {
         switch resource.type {

@@ -1,8 +1,8 @@
 import Cocoa
 import RFSupport
 
-class ImageWindowController: NSWindowController, NSMenuItemValidation, ResForgePlugin {
-    static let editedTypes = [
+class ImageWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor, PreviewProvider, ExportProvider {
+    static let supportedTypes = [
         "PICT",
         "PNG ",
         "cicn",
@@ -179,8 +179,9 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResForgeP
         }
     }
     
-    // MARK: -
-    static func filenameExtension(for resourceType: String) -> String? {
+    // MARK: - Export Provider
+    
+    static func filenameExtension(for resourceType: String) -> String {
         switch resourceType {
         case "PNG ":
             return "png"
@@ -201,6 +202,8 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResForgeP
         return true
     }
     
+    // MARK: - Preview Provider
+    
     static func image(for resource: Resource) -> NSImage? {
         guard let data = self.imageData(for: resource) else {
             return nil
@@ -208,7 +211,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResForgeP
         return NSImage(data: data)
     }
     
-    static func previewSize(for resourceType: String) -> Int? {
+    static func previewSize(for resourceType: String) -> Int {
         switch resourceType {
         case "PICT", "PNG ":
             return 100

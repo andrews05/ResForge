@@ -2,8 +2,8 @@ import AVKit
 import Cocoa
 import RFSupport
 
-class SoundWindowController: NSWindowController, NSMenuItemValidation, ResForgePlugin {
-    static let editedTypes = ["snd "]
+class SoundWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor, ExportProvider {
+    static let supportedTypes = ["snd "]
     
     let resource: Resource
     private let sound: SoundResource
@@ -157,7 +157,7 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResForgeP
     }
     
     // ResForgePlugin protocol export functions
-    static func filenameExtension(for resourceType: String) -> String? {
+    static func filenameExtension(for resourceType: String) -> String {
         return "aiff"
     }
     

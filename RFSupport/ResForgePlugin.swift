@@ -9,59 +9,59 @@ public extension FourCharCode {
     }
 }
 
-public protocol ResForgePlugin: class {
+/// An editor provides a window for editing or viewing resources of the supported types.
+public protocol ResourceEditor: NSWindowController {
     /// The list of resource types that this plugin supports.
-    static var editedTypes: [String] { get }
+    static var supportedTypes: [String] { get }
     
     var resource: Resource { get }
     init?(resource: Resource)
     
     func saveResource(_ sender: Any)
     func revertResource(_ sender: Any)
-    
-    /// You can return here the filename extension for your resource type. By default the host application substitutes the resource type if you do not implement this.
-    static func filenameExtension(for resourceType: String) -> String?
-    
-    /// Implement this if the plugin needs to control the data that gets written to disk on export. By default the host application writes the raw resource data.
-    /// The idea is that this export function is non-lossy, i.e. only override this if there is a format that is a 100% equivalent to your data.
-    static func export(_ resource: Resource, to url: URL) -> Bool
-
-    /// Return an NSImage representing the resource for use in grid view.
-    static func image(for resource: Resource) -> NSImage?
-    
-    /// Return the preferred preview size for grid view.
-    static func previewSize(for resourceType: String) -> Int?
-    
-    /// Return a placeholder name to show for a resource when it has no name.
-    static func placeholderName(for resource: Resource) -> String?
 }
 
-public protocol ResForgeTemplatePlugin: ResForgePlugin {
+/// A template editor is a special type of editor that it also given a template resource on initialization.
+public protocol TemplateEditor: ResourceEditor {
     init?(resource: Resource, template: Resource)
 }
 
-/// If your bundle consists of multiple editors for different types, the principal class should implement this to provide a list of all the plugin classes.
-public protocol ResForgePluginPackage {
-    static var pluginClasses: [ResForgePlugin.Type] { get }
+/// A preview provider allows the document to display a grid view for a supported resource type.
+public protocol PreviewProvider {
+    static var supportedTypes: [String] { get }
+    
+    /// Return the preferred preview size for grid view.
+    static func previewSize(for resourceType: String) -> Int
+    
+    /// Return an image representing the resource for use in grid view.
+    static func image(for resource: Resource) -> NSImage?
+}
+
+/// An export provider allows control over the file written for a resource when exported.
+public protocol ExportProvider {
+    static var supportedTypes: [String] { get }
+    
+    /// Return the filename extension for the resource type.
+    static func filenameExtension(for resourceType: String) -> String
+    
+    /// Write a file representing the resource to the given url. If false is returned, the resource's data will be written directly.
+    static func export(_ resource: Resource, to url: URL) -> Bool
+}
+
+/// A placeholder provider allows custom content to be shown as a placeholder in the list view when a resource has no name.
+public protocol PlaceholderProvider {
+    static var supportedTypes: [String] { get }
+    
+    /// Return a placeholder name to show for a resource, or nil to use a default name.
     static func placeholderName(for resource: Resource) -> String?
 }
 
-public protocol ResForgePluginManager: class {
-    func open(resource: Resource, using editor: ResForgePlugin.Type?, template: String?)
+
+/// The editor manager provides utility functions and is available on resources given to editors. It should not be implemented by plugins.
+public protocol ResForgeEditorManager: class {
+    func open(resource: Resource, using editor: ResourceEditor.Type?, template: String?)
     func allResources(ofType: String, currentDocumentOnly: Bool) -> [Resource]
     func findResource(ofType: String, id: Int, currentDocumentOnly: Bool) -> Resource?
     func findResource(ofType: String, name: String, currentDocumentOnly: Bool) -> Resource?
     func createResource(ofType: String, id: Int, name: String)
-}
-
-// Default implementations for optional functions
-public extension ResForgePlugin {
-    static func filenameExtension(for resourceType: String) -> String? { nil }
-    static func export(_ resource: Resource, to url: URL) -> Bool { false }
-    static func image(for resource: Resource) -> NSImage? { nil }
-    static func previewSize(for resourceType: String) -> Int? { nil }
-    static func placeholderName(for resource: Resource) -> String? { nil }
-}
-public extension ResForgePluginPackage {
-    static func placeholderName(for resource: Resource) -> String? { nil }
 }

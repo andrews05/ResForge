@@ -1,3 +1,4 @@
+import Cocoa
 import RFSupport
 
 enum RleError: Error {

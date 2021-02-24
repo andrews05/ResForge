@@ -105,7 +105,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             selectedResource = document.dataSource.selectionCount() == 1 ? document.dataSource.selectedResources().first : nil
         } else {
             currentDocument = nil
-            selectedResource = (mainWindow?.windowController as? ResForgePlugin)?.resource
+            selectedResource = (mainWindow?.windowController as? ResourceEditor)?.resource
         }
         self.update()
     }

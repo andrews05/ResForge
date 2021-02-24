@@ -18,7 +18,7 @@
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
 		492E912E2551373100195174 /* Rle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E912D2551373100195174 /* Rle.swift */; };
-		492E91CA2553ADB100195174 /* AnimationImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E91C92553ADB100195174 /* AnimationImporter.swift */; };
+		492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E91C92553ADB100195174 /* SpriteImporter.swift */; };
 		4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD50253BD1290044BC45 /* ElementPSTR.swift */; };
 		4935CD6D253C10210044BC45 /* ElementFCNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD6C253C10210044BC45 /* ElementFCNT.swift */; };
 		4935CD75253CEB3C0044BC45 /* ElementDVDR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */; };
@@ -125,8 +125,8 @@
 		49DA3A8B2550C65900821A7E /* rle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044062472064F0035C0FA /* rle.cpp */; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
 		49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1D24F377A400BE0F0F /* CollectionController.swift */; };
-		49EE73012550B99200BEABDB /* AnimationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49EE72AC2550A7F300BEABDB /* AnimationWindow.xib */; };
-		49EE73092550B9B400BEABDB /* AnimationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE72AA2550A7F300BEABDB /* AnimationWindowController.swift */; };
+		49EE73012550B99200BEABDB /* SpriteWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49EE72AC2550A7F300BEABDB /* SpriteWindow.xib */; };
+		49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */; };
 		49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE738F2550BC8D00BEABDB /* KestrelTools.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
@@ -329,7 +329,7 @@
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		492E912D2551373100195174 /* Rle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rle.swift; sourceTree = "<group>"; };
-		492E91C92553ADB100195174 /* AnimationImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationImporter.swift; sourceTree = "<group>"; };
+		492E91C92553ADB100195174 /* SpriteImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteImporter.swift; sourceTree = "<group>"; };
 		4935CD50253BD1290044BC45 /* ElementPSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPSTR.swift; sourceTree = "<group>"; };
 		4935CD6C253C10210044BC45 /* ElementFCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementFCNT.swift; sourceTree = "<group>"; };
 		4935CD74253CEB3C0044BC45 /* ElementDVDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDVDR.swift; sourceTree = "<group>"; };
@@ -465,9 +465,8 @@
 		49DA3A4B2550BD2800821A7E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
-		49EE72A92550A7F300BEABDB /* KestrelTools-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KestrelTools-Bridging-Header.h"; sourceTree = "<group>"; };
-		49EE72AA2550A7F300BEABDB /* AnimationWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationWindowController.swift; sourceTree = "<group>"; };
-		49EE72AD2550A7F300BEABDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AnimationWindow.xib; sourceTree = "<group>"; };
+		49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteWindowController.swift; sourceTree = "<group>"; };
+		49EE72AD2550A7F300BEABDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SpriteWindow.xib; sourceTree = "<group>"; };
 		49EE72D82550B79600BEABDB /* KestrelTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KestrelTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		49EE72DA2550B79600BEABDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49EE738F2550BC8D00BEABDB /* KestrelTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KestrelTools.swift; sourceTree = "<group>"; };
@@ -665,6 +664,17 @@
 			path = "Sound Editor";
 			sourceTree = "<group>";
 		};
+		496E7DE225E59344001C97CA /* Sprite Editor */ = {
+			isa = PBXGroup;
+			children = (
+				49EE72AC2550A7F300BEABDB /* SpriteWindow.xib */,
+				49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */,
+				492E91C92553ADB100195174 /* SpriteImporter.swift */,
+				492E912D2551373100195174 /* Rle.swift */,
+			);
+			path = "Sprite Editor";
+			sourceTree = "<group>";
+		};
 		497043F32472064F0035C0FA /* Graphite */ = {
 			isa = PBXGroup;
 			children = (
@@ -830,14 +840,10 @@
 		49EE72D92550B79600BEABDB /* KestrelTools */ = {
 			isa = PBXGroup;
 			children = (
-				49EE72AC2550A7F300BEABDB /* AnimationWindow.xib */,
 				49EE72DA2550B79600BEABDB /* Info.plist */,
 				497A93BD255BB49600900C7B /* Templates.rsrc */,
-				49EE72A92550A7F300BEABDB /* KestrelTools-Bridging-Header.h */,
 				49EE738F2550BC8D00BEABDB /* KestrelTools.swift */,
-				49EE72AA2550A7F300BEABDB /* AnimationWindowController.swift */,
-				492E91C92553ADB100195174 /* AnimationImporter.swift */,
-				492E912D2551373100195174 /* Rle.swift */,
+				496E7DE225E59344001C97CA /* Sprite Editor */,
 			);
 			path = KestrelTools;
 			sourceTree = "<group>";
@@ -1263,7 +1269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49EE73012550B99200BEABDB /* AnimationWindow.xib in Resources */,
+				49EE73012550B99200BEABDB /* SpriteWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1370,10 +1376,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492E91CA2553ADB100195174 /* AnimationImporter.swift in Sources */,
+				492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */,
 				492E912E2551373100195174 /* Rle.swift in Sources */,
-				49EE73092550B9B400BEABDB /* AnimationWindowController.swift in Sources */,
+				49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1533,12 +1539,12 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		49EE72AC2550A7F300BEABDB /* AnimationWindow.xib */ = {
+		49EE72AC2550A7F300BEABDB /* SpriteWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				49EE72AD2550A7F300BEABDB /* Base */,
 			);
-			name = AnimationWindow.xib;
+			name = SpriteWindow.xib;
 			sourceTree = "<group>";
 		};
 		B229EEEA15A4FB6F0032C12C /* MainMenu.xib */ = {
@@ -1749,7 +1755,6 @@
 				INFOPLIST_FILE = "Plug-Ins/KestrelTools/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.KestrelTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/KestrelTools/KestrelTools-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1760,7 +1765,6 @@
 				INFOPLIST_FILE = "Plug-Ins/KestrelTools/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.KestrelTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/KestrelTools/KestrelTools-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;

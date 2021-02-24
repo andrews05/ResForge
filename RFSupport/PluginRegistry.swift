@@ -1,35 +1,45 @@
 import Cocoa
 
 public class PluginRegistry {
-    public private(set) static var editors: [String: ResForgePlugin.Type] = [:]
-    public private(set) static var templateEditor: ResForgePlugin.Type! = nil
-    public private(set) static var hexEditor: ResForgePlugin.Type! = nil
-    public private(set) static var previewSizes: [String: Int] = [:]
-    public private(set) static var packages: [ResForgePluginPackage.Type] = []
+    public private(set) static var editors: [String: ResourceEditor.Type] = [:]
+    public private(set) static var hexEditor: ResourceEditor.Type! = nil
+    public private(set) static var templateEditor: TemplateEditor.Type! = nil
+    public private(set) static var previewProviders: [String: PreviewProvider.Type] = [:]
+    public private(set) static var exportProviders: [String: ExportProvider.Type] = [:]
+    public private(set) static var placeholderProviders: [String: PlaceholderProvider.Type] = [:]
     
-    /// Register a plugin bundle as an editor for types defined in its info.plist.
-    public static func register(_ plugin: Bundle) {
-        let pluginClasses: [ResForgePlugin.Type]
-        if let mainClass = plugin.principalClass as? ResForgePluginPackage.Type {
-            packages.append(mainClass)
-            pluginClasses = mainClass.pluginClasses
-        } else if let mainClass = plugin.principalClass as? ResForgePlugin.Type {
-            pluginClasses = [mainClass]
-        } else {
+    @objc public static func bundleLoaded(_ notification: Notification) {
+        // Iterate over the bundle's loaded classes and register them according to their implemented protocols
+        guard let classes = notification.userInfo?[NSLoadedClasses] as? [String] else {
             return
         }
-        for pluginClass in pluginClasses {
-            for type in pluginClass.editedTypes {
-                switch type {
-                case "Hex":
-                    Self.hexEditor = pluginClass
-                case "Template":
-                    Self.templateEditor = pluginClass
-                default:
-                    editors[type] = pluginClass
-                    if let previewSize = pluginClass.previewSize(for: type) {
-                        previewSizes[type] = previewSize
+        for className in classes {
+            let pluginClass: AnyClass? = NSClassFromString(className)
+            if let editor = pluginClass as? ResourceEditor.Type {
+                for type in editor.supportedTypes {
+                    if type == "*" {
+                        Self.hexEditor = editor
+                    } else {
+                        editors[type] = editor
                     }
+                }
+                if let editor = pluginClass as? TemplateEditor.Type {
+                    Self.templateEditor = editor
+                }
+            }
+            if let previewer = pluginClass as? PreviewProvider.Type {
+                for type in previewer.supportedTypes {
+                    previewProviders[type] = previewer
+                }
+            }
+            if let exporter = pluginClass as? ExportProvider.Type {
+                for type in exporter.supportedTypes {
+                    exportProviders[type] = exporter
+                }
+            }
+            if let placeholderer = pluginClass as? PlaceholderProvider.Type {
+                for type in placeholderer.supportedTypes {
+                    placeholderProviders[type] = placeholderer
                 }
             }
         }
@@ -37,13 +47,8 @@ public class PluginRegistry {
     
     /// Return a placeholder name to show for a resource when it has no name.
     public static func placeholderName(for resource: Resource) -> String {
-        if let placeholder = editors[resource.type]?.placeholderName(for: resource) {
+        if let placeholder = placeholderProviders[resource.type]?.placeholderName(for: resource) {
             return placeholder
-        }
-        for package in packages {
-            if let placeholder = package.placeholderName(for: resource) {
-                return placeholder
-            }
         }
         
         if resource.id == -16455 {

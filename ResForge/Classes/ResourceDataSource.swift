@@ -203,7 +203,8 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         let type = document.directory.allTypes[typeList.selectedRow-1]
         // Check if type actually changed, rather than just being reselected after a reload
         if resourcesView.currentType != type {
-            if let size = PluginRegistry.previewSizes[type] {
+            if let provider = PluginRegistry.previewProviders[type] {
+                let size = provider.previewSize(for: type)
                 let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
                 layout.itemSize = NSSize(width: size+8, height: size+40)
                 resourcesView = collectionController

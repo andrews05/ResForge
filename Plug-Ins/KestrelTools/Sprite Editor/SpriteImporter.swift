@@ -1,6 +1,6 @@
 import Cocoa
 
-enum AnimationImporterError: LocalizedError {
+enum SpriteImporterError: LocalizedError {
     case unsupportedFile
     case invalidX(Int)
     case invalidY(Int)
@@ -16,7 +16,7 @@ enum AnimationImporterError: LocalizedError {
     }
 }
 
-class AnimationImporter: NSObject, NSOpenSavePanelDelegate {
+class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     @IBOutlet var optionsView: NSView!
     @IBOutlet var xTiles: NSTextField!
     @IBOutlet var yTiles: NSTextField!
@@ -45,15 +45,15 @@ class AnimationImporter: NSObject, NSOpenSavePanelDelegate {
     
     func panel(_ sender: Any, validate url: URL) throws {
         guard image.isValid else {
-            throw AnimationImporterError.unsupportedFile
+            throw SpriteImporterError.unsupportedFile
         }
         let x = xTiles.integerValue
         guard x > 0, Int(image.size.width) % x == 0 else {
-            throw AnimationImporterError.invalidX(x)
+            throw SpriteImporterError.invalidX(x)
         }
         let y = yTiles.integerValue
         guard y > 0, Int(image.size.height) % y == 0 else {
-            throw AnimationImporterError.invalidY(y)
+            throw SpriteImporterError.invalidY(y)
         }
     }
     

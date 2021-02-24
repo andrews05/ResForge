@@ -1,8 +1,8 @@
 import Cocoa
 import RFSupport
 
-class EditorManager: NSObject, NSWindowDelegate, ResForgePluginManager {
-    private var editorWindows: [String: ResForgePlugin] = [:]
+class EditorManager: NSObject, NSWindowDelegate, ResForgeEditorManager {
+    private var editorWindows: [String: ResourceEditor] = [:]
     private weak var document: ResourceDocument!
     
     init(_ document: ResourceDocument) {
@@ -14,24 +14,20 @@ class EditorManager: NSObject, NSWindowDelegate, ResForgePluginManager {
     @objc func resourceRemoved(_ notification: Notification) {
         // Close any open editors without saving
         let resource = notification.userInfo!["resource"] as! Resource
-        for (_, value) in editorWindows where value.resource === resource {
-            if let plug = value as? NSWindowController {
-                plug.close()
-            }
+        for (_, plug) in editorWindows where plug.resource === resource {
+            plug.close()
         }
     }
     
     func closeAll(saving: Bool) -> Bool {
-        for (_, value) in editorWindows {
-            if let plug = value as? NSWindowController {
-                if saving {
-                    plug.window?.performClose(self)
-                } else {
-                    plug.close()
-                }
-                if plug.window?.isVisible ?? false {
-                    return false
-                }
+        for (_, plug) in editorWindows {
+            if saving {
+                plug.window?.performClose(self)
+            } else {
+                plug.close()
+            }
+            if plug.window?.isVisible ?? false {
+                return false
             }
         }
         return true
@@ -45,7 +41,7 @@ class EditorManager: NSObject, NSWindowDelegate, ResForgePluginManager {
             return false
         }
         if sender.isDocumentEdited {
-            let plug = sender.windowController as! ResForgePlugin
+            let plug = sender.windowController as! ResourceEditor
             if UserDefaults.standard.bool(forKey: kConfirmChanges) {
                 let alert = NSAlert()
                 alert.messageText = NSLocalizedString("Do you want to keep the changes you made to this resource?", comment: "")
@@ -72,7 +68,7 @@ class EditorManager: NSObject, NSWindowDelegate, ResForgePluginManager {
     }
     
     func windowWillClose(_ notification: Notification) {
-        let plug = (notification.object as! NSWindow).windowController as! ResForgePlugin
+        let plug = (notification.object as! NSWindow).windowController as! ResourceEditor
         for (key, value) in editorWindows where value === plug {
             editorWindows.removeValue(forKey: key)
         }
@@ -80,11 +76,11 @@ class EditorManager: NSObject, NSWindowDelegate, ResForgePluginManager {
     
     // MARK: - Protocol functions
     
-    func open(resource: Resource, using editor: ResForgePlugin.Type? = nil, template: String? = nil) {
+    func open(resource: Resource, using editor: ResourceEditor.Type? = nil, template: String? = nil) {
         // Work out editor to use
         var editor = editor ?? PluginRegistry.editors[resource.type] ?? PluginRegistry.templateEditor
         var tmplResource: Resource!
-        if editor is ResForgeTemplatePlugin.Type {
+        if editor is TemplateEditor.Type {
             // If template editor, find the template to use
             tmplResource = self.findResource(ofType: "TMPL", name: template ?? resource.type)
             // If no template, switch to hex editor
@@ -99,7 +95,7 @@ class EditorManager: NSObject, NSWindowDelegate, ResForgePluginManager {
         if plug == nil {
             // Set a reference to the manager on the resource. This allows the plugin to access the manager and call the protocol functions.
             resource.manager = self
-            if let editor = editor as? ResForgeTemplatePlugin.Type {
+            if let editor = editor as? TemplateEditor.Type {
                 plug = editor.init(resource: resource, template: tmplResource)
             } else {
                 plug = editor!.init(resource: resource)
@@ -109,7 +105,7 @@ class EditorManager: NSObject, NSWindowDelegate, ResForgePluginManager {
             }
             editorWindows[key] = plug
         }
-        if let plug = plug as? NSWindowController {
+        if let plug = plug {
             // We want to control the windowShouldClose function
             plug.window?.delegate = self
             plug.showWindow(self)

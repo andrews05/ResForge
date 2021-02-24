@@ -1,8 +1,8 @@
 import Cocoa
 import RFSupport
 
-class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResForgePlugin {
-    static let editedTypes = ["rlëD"]
+class SpriteWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor, PreviewProvider, ExportProvider {
+    static let supportedTypes = ["rlëD"]
     
     let resource: Resource
     private var rle: Rle!
@@ -14,7 +14,7 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResFo
     @IBOutlet var playButton: NSButton!
     @IBOutlet var exportButton: NSButton!
     @IBOutlet var frameCounter: NSTextField!
-    @IBOutlet var importPanel: AnimationImporter!
+    @IBOutlet var importPanel: SpriteImporter!
     
     private var playing = false {
         didSet {
@@ -28,7 +28,7 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResFo
     }
     
     override var windowNibName: String {
-        return "AnimationWindow"
+        return "SpriteWindow"
     }
 
     required init(resource: Resource) {
@@ -189,7 +189,7 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResFo
     }
     
     // MARK: -
-    static func filenameExtension(for resourceType: String) -> String? {
+    static func filenameExtension(for resourceType: String) -> String {
         return "tiff"
     }
     
@@ -230,7 +230,7 @@ class AnimationWindowController: NSWindowController, NSMenuItemValidation, ResFo
         }
     }
     
-    static func previewSize(for resourceType: String) -> Int? {
+    static func previewSize(for resourceType: String) -> Int {
         return 100
     }
 }

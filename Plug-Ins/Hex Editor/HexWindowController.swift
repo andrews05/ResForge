@@ -1,8 +1,8 @@
 import Cocoa
 import RFSupport
 
-class HexWindowController: NSWindowController, NSTextFieldDelegate, ResForgePlugin, HFTextViewDelegate {
-    static let editedTypes = ["Hex"]
+class HexWindowController: NSWindowController, NSTextFieldDelegate, ResourceEditor, HFTextViewDelegate {
+    static let supportedTypes = ["*"]
     
     let resource: Resource
     @IBOutlet var textView: HFTextView!

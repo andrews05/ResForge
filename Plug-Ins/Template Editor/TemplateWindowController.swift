@@ -1,8 +1,8 @@
 import Cocoa
 import RFSupport
 
-class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate, NSMenuItemValidation, ResForgeTemplatePlugin {
-    static let editedTypes = ["Template"]
+class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate, NSMenuItemValidation, TemplateEditor {
+    static let supportedTypes: [String] = []
     
     let resource: Resource
     private let template: Resource

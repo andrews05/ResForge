@@ -25,6 +25,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         
         SupportRegistry.scanForResources()
         // Load plugins
+        NotificationCenter.default.addObserver(PluginRegistry.self, selector: #selector(PluginRegistry.bundleLoaded(_:)), name: Bundle.didLoadNotification, object: nil)
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .allDomainsMask)
         if let plugins = Bundle.main.builtInPlugInsURL {
             self.scanForPlugins(folder: plugins)
@@ -67,7 +68,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
                 continue
             }
             SupportRegistry.scanForResources(in: plugin)
-            PluginRegistry.register(plugin)
+            plugin.load()
         }
     }
 }

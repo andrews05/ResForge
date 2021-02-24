@@ -81,7 +81,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     }
     
     public weak var document: NSDocument!
-    public weak var manager: ResForgePluginManager! // This isn't set until the resource is opened in an editor
+    public weak var manager: ResForgeEditorManager! // This isn't set until the resource is opened in an editor
     private var _preview: NSImage?
     
     public var defaultWindowTitle: String {
@@ -103,7 +103,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     /// Asynchonously fetch the resource's preview image. The image will be initially loaded on a background thread and cached for future use.
     public func preview(_ callback: @escaping (NSImage?) -> Void) {
         if _preview == nil && !data.isEmpty {
-            if let loader = PluginRegistry.editors[type]?.image {
+            if let loader = PluginRegistry.previewProviders[type]?.image {
                 DispatchQueue.global().async {
                     // If we fail to load a preview, show an x image instead - this prevents repeatedly trying to parse bad data
                     self._preview = loader(self) ?? NSImage(named: NSImage.stopProgressTemplateName)
@@ -121,9 +121,6 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     
     /// Return a placeholder name to show for when the resource has no name.
     public func placeholderName() -> String {
-        if let name = PluginRegistry.editors[type]?.placeholderName(for: self) {
-            return name
-        }
         return PluginRegistry.placeholderName(for: self)
     }
 
