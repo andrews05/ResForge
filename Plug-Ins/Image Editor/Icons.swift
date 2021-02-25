@@ -3,12 +3,12 @@ import Cocoa
 class Icons {
     static func rep(_ data: Data, width: Int, height: Int, depth: Int) -> NSBitmapImageRep? {
         if depth == 1 {
-            return self.bwTiff(data, width: width, height: height)
+            return self.bwRep(data, width: width, height: height)
         }
-        return self.colorTiff(data, width: width, height: height, depth: depth)
+        return self.colorRep(data, width: width, height: height, depth: depth)
     }
     
-    private static func bwTiff(_ data: Data, width: Int, height: Int) -> NSBitmapImageRep? {
+    private static func bwRep(_ data: Data, width: Int, height: Int) -> NSBitmapImageRep? {
         let bytesPerRow = width / 8
         let planeLength = bytesPerRow * height
         if data.count < planeLength {
@@ -36,7 +36,7 @@ class Icons {
         return rep
     }
 
-    private static func colorTiff(_ data: Data, width: Int, height: Int, depth: Int) -> NSBitmapImageRep? {
+    private static func colorRep(_ data: Data, width: Int, height: Int, depth: Int) -> NSBitmapImageRep? {
         if data.count < (width * height * depth / 8) {
             return nil
         }

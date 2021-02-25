@@ -104,7 +104,7 @@ class SpriteWindowController: NSWindowController, NSMenuItemValidation, Resource
             image.removeRepresentation(image.representations[0])
         }
         image.addRepresentation(frames[currentFrame])
-        imageView.setNeedsDisplay()
+        imageView.needsDisplay = true
         frameCounter.stringValue = "\(currentFrame+1)/\(frames.count)"
     }
     
