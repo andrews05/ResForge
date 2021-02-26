@@ -5,16 +5,77 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     static let supportedTypes = ["shän"]
     
     let resource: Resource
-    private var shan: Shan!
-    var baseFrames: [NSBitmapImageRep] = []
-    var glowFrames: [NSBitmapImageRep] = []
-    var lightFrames: [NSBitmapImageRep] = []
-    var currentFrame = 0
+    private var shan = Shan()
+    private(set) var baseFrames: [NSBitmapImageRep] = []
+    private(set) var altFrames: [NSBitmapImageRep] = []
+    private(set) var glowFrames: [NSBitmapImageRep] = []
+    private(set) var lightFrames: [NSBitmapImageRep] = []
+    private(set) var currentFrame = 0
     private var timer: Timer?
     @IBOutlet var shanView: ShanView!
-    @IBOutlet var imageSize: NSTextField!
     @IBOutlet var playButton: NSButton!
     @IBOutlet var frameCounter: NSTextField!
+    @IBOutlet var baseLink: NSButton!
+    @IBOutlet var altLink: NSButton!
+    @IBOutlet var glowLink: NSButton!
+    @IBOutlet var lightLink: NSButton!
+    
+    @objc var framesPerSet: Int16 {
+        get {
+            return shan.framesPerSet
+        }
+        set {
+            shan.framesPerSet = newValue
+        }
+    }
+    @objc var baseSets: Int16 {
+        get {
+            return shan.baseSets
+        }
+        set {
+            shan.baseSets = newValue
+        }
+    }
+    @objc var baseID: Int16 {
+        get {
+            return shan.baseID
+        }
+        set {
+            shan.baseID = newValue
+            baseFrames = self.loadRle(id: shan.baseID)
+            baseLink.title = self.rleInfo(frames: baseFrames)
+        }
+    }
+    @objc var altID: Int16 {
+        get {
+            return shan.altID
+        }
+        set {
+            shan.altID = newValue
+            altFrames = self.loadRle(id: shan.altID)
+            altLink.title = self.rleInfo(frames: altFrames)
+        }
+    }
+    @objc var glowID: Int16 {
+        get {
+            return shan.glowID
+        }
+        set {
+            shan.glowID = newValue
+            glowFrames = self.loadRle(id: shan.glowID)
+            glowLink.title = self.rleInfo(frames: glowFrames)
+        }
+    }
+    @objc var lightID: Int16 {
+        get {
+            return shan.lightID
+        }
+        set {
+            shan.lightID = newValue
+            lightFrames = self.loadRle(id: shan.lightID)
+            lightLink.title = self.rleInfo(frames: lightFrames)
+        }
+    }
     
     private var playing = false {
         didSet {
@@ -34,6 +95,7 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     required init(resource: Resource) {
         self.resource = resource
         super.init(window: nil)
+        self.loadShan()
         NotificationCenter.default.addObserver(self, selector: #selector(self.windowWillClose(_:)), name: NSWindow.willCloseNotification, object: self.window)
     }
 
@@ -45,7 +107,7 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
         super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle
         shanView.shanController = self
-        self.loadShan()
+        self.updateView()
     }
     
     @objc private func windowWillClose(_ notification: Notification) {
@@ -82,27 +144,37 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     // MARK: -
     
     private func loadShan() {
-        if !resource.data.isEmpty {
+        if resource.data.isEmpty {
+            shan.baseID = Int16(resource.id - 128 + 1000)
+        } else {
             do {
-                shan = try Shan(resource.data)
-                baseFrames = try self.loadRle(id: shan.base)
-                glowFrames = try self.loadRle(id: shan.glow)
-                lightFrames = try self.loadRle(id: shan.lights)
+                try shan.read(BinaryDataReader(resource.data))
             } catch {}
         }
-        self.updateView()
+        baseFrames = self.loadRle(id: shan.baseID)
+        altFrames = self.loadRle(id: shan.altID)
+        glowFrames = self.loadRle(id: shan.glowID)
+        lightFrames = self.loadRle(id: shan.lightID)
     }
     
-    private func loadRle(id: UInt16) throws -> [NSBitmapImageRep] {
-        guard let rleResource = resource.manager.findResource(ofType: "rlëD", id: Int(id), currentDocumentOnly: false) else {
+    private func loadRle(id: Int16) -> [NSBitmapImageRep] {
+        guard id > 0, let rleResource = resource.manager.findResource(ofType: "rlëD", id: Int(id), currentDocumentOnly: false) else {
             return []
         }
         var frames: [NSBitmapImageRep] = []
-        let rle = try Rle(rleResource.data)
-        for _ in 0..<rle.frameCount {
-            frames.append(try rle.readFrame())
+        do {
+            let rle = try Rle(rleResource.data)
+            for _ in 0..<rle.frameCount {
+                frames.append(try rle.readFrame())
+            }
+        } catch {
+            return []
         }
         return frames
+    }
+    
+    private func rleInfo(frames: [NSBitmapImageRep]) -> String {
+        return frames.isEmpty ? "not found" : "\(frames[0].pixelsWide)x\(frames[0].pixelsHigh), \(frames.count)"
     }
     
     @objc private func nextFrame() {
@@ -114,10 +186,6 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     private func updateView() {
         playing = false
         if !baseFrames.isEmpty {
-            let width = max(baseFrames[0].size.width, window!.contentMinSize.width)
-            let height = max(baseFrames[0].size.height, window!.contentMinSize.height)
-            self.window?.setContentSize(NSMakeSize(width, height))
-            imageSize.stringValue = "\(baseFrames[0].pixelsWide)x\(baseFrames[0].pixelsHigh)"
             playButton.isEnabled = baseFrames.count > 1
             currentFrame = -1
             if playButton.isEnabled {
@@ -127,9 +195,12 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
             }
         } else {
             playButton.isEnabled = false
-            imageSize.stringValue = resource.data.isEmpty ? "No data" : "Invalid data"
             frameCounter.stringValue = "-/-"
         }
+        baseLink.title = self.rleInfo(frames: baseFrames)
+        altLink.title = self.rleInfo(frames: altFrames)
+        glowLink.title = self.rleInfo(frames: glowFrames)
+        lightLink.title = self.rleInfo(frames: lightFrames)
     }
     
     // MARK: -
@@ -140,6 +211,7 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
 
     @IBAction func revertResource(_ sender: Any) {
         self.loadShan()
+        self.updateView()
         self.setDocumentEdited(false)
     }
 }
