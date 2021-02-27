@@ -5,76 +5,25 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     static let supportedTypes = ["shän"]
     
     let resource: Resource
-    private var shan = Shan()
-    private(set) var baseFrames: [NSBitmapImageRep] = []
-    private(set) var altFrames: [NSBitmapImageRep] = []
-    private(set) var glowFrames: [NSBitmapImageRep] = []
-    private(set) var lightFrames: [NSBitmapImageRep] = []
-    private(set) var currentFrame = 0
+    var shan = Shan()
+    var currentFrame = 0
     private var timer: Timer?
     @IBOutlet var shanView: ShanView!
     @IBOutlet var playButton: NSButton!
     @IBOutlet var frameCounter: NSTextField!
-    @IBOutlet var baseLink: NSButton!
-    @IBOutlet var altLink: NSButton!
-    @IBOutlet var glowLink: NSButton!
-    @IBOutlet var lightLink: NSButton!
     
-    @objc var framesPerSet: Int16 {
-        get {
-            return shan.framesPerSet
-        }
-        set {
-            shan.framesPerSet = newValue
-        }
-    }
-    @objc var baseSets: Int16 {
-        get {
-            return shan.baseSets
-        }
-        set {
-            shan.baseSets = newValue
-        }
-    }
-    @objc var baseID: Int16 {
-        get {
-            return shan.baseID
-        }
-        set {
-            shan.baseID = newValue
-            baseFrames = self.loadRle(id: shan.baseID)
-            baseLink.title = self.rleInfo(frames: baseFrames)
-        }
-    }
-    @objc var altID: Int16 {
-        get {
-            return shan.altID
-        }
-        set {
-            shan.altID = newValue
-            altFrames = self.loadRle(id: shan.altID)
-            altLink.title = self.rleInfo(frames: altFrames)
-        }
-    }
-    @objc var glowID: Int16 {
-        get {
-            return shan.glowID
-        }
-        set {
-            shan.glowID = newValue
-            glowFrames = self.loadRle(id: shan.glowID)
-            glowLink.title = self.rleInfo(frames: glowFrames)
-        }
-    }
-    @objc var lightID: Int16 {
-        get {
-            return shan.lightID
-        }
-        set {
-            shan.lightID = newValue
-            lightFrames = self.loadRle(id: shan.lightID)
-            lightLink.title = self.rleInfo(frames: lightFrames)
-        }
+    var layers: [SpriteLayer] = []
+    @IBOutlet var baseLayer: SpriteLayer!
+    @IBOutlet var altLayer: SpriteLayer!
+    @IBOutlet var engineLayer: SpriteLayer!
+    @IBOutlet var lightLayer: SpriteLayer!
+    @IBOutlet var weaponLayer: SpriteLayer!
+    @IBOutlet var shieldLayer: SpriteLayer!
+    
+    @objc dynamic var framesPerSet: Int16 = 0
+    @objc dynamic var baseSets: Int16 = 0
+    var totalFrames: Int {
+        return Int(framesPerSet * baseSets)
     }
     
     private var playing = false {
@@ -95,7 +44,6 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     required init(resource: Resource) {
         self.resource = resource
         super.init(window: nil)
-        self.loadShan()
         NotificationCenter.default.addObserver(self, selector: #selector(self.windowWillClose(_:)), name: NSWindow.willCloseNotification, object: self.window)
     }
 
@@ -106,8 +54,16 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     override func windowDidLoad() {
         super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle
-        shanView.shanController = self
-        self.updateView()
+        layers = [
+            baseLayer,
+            altLayer,
+            engineLayer,
+            lightLayer
+        ]
+        for i in 0..<layers.count {
+            layers[i].type = SpriteLayerType(rawValue: i)
+        }
+        self.load()
     }
     
     @objc private func windowWillClose(_ notification: Notification) {
@@ -133,7 +89,7 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
             playing = !playing
         } else if event.specialKey == .leftArrow {
             playing = false
-            currentFrame = (currentFrame+baseFrames.count-2) % baseFrames.count
+            currentFrame = (currentFrame+totalFrames-2) % totalFrames
             self.nextFrame()
         } else if event.specialKey == .rightArrow {
             playing = false
@@ -141,52 +97,34 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
         }
     }
     
+    override func didChangeValue(forKey key: String) {
+        super.didChangeValue(forKey: key)
+        self.setDocumentEdited(true)
+    }
+    
     // MARK: -
     
-    private func loadShan() {
+    private func load() {
         if resource.data.isEmpty {
-            shan.baseID = Int16(resource.id - 128 + 1000)
+            shan.baseSprite = Int16(resource.id - 128 + 1000)
         } else {
             do {
                 try shan.read(BinaryDataReader(resource.data))
             } catch {}
         }
-        baseFrames = self.loadRle(id: shan.baseID)
-        altFrames = self.loadRle(id: shan.altID)
-        glowFrames = self.loadRle(id: shan.glowID)
-        lightFrames = self.loadRle(id: shan.lightID)
-    }
-    
-    private func loadRle(id: Int16) -> [NSBitmapImageRep] {
-        guard id > 0, let rleResource = resource.manager.findResource(ofType: "rlëD", id: Int(id), currentDocumentOnly: false) else {
-            return []
+        framesPerSet = shan.framesPerSet
+        baseSets = shan.baseSets
+        for layer in layers {
+            layer.load()
         }
-        var frames: [NSBitmapImageRep] = []
-        do {
-            let rle = try Rle(rleResource.data)
-            for _ in 0..<rle.frameCount {
-                frames.append(try rle.readFrame())
-            }
-        } catch {
-            return []
-        }
-        return frames
-    }
-    
-    private func rleInfo(frames: [NSBitmapImageRep]) -> String {
-        return frames.isEmpty ? "not found" : "\(frames[0].pixelsWide)x\(frames[0].pixelsHigh), \(frames.count)"
-    }
-    
-    @objc private func nextFrame() {
-        currentFrame = (currentFrame + 1) % baseFrames.count
-        shanView.needsDisplay = true
-        frameCounter.stringValue = "\(currentFrame+1)/\(baseFrames.count)"
+        self.updateView()
+        self.setDocumentEdited(false)
     }
     
     private func updateView() {
         playing = false
-        if !baseFrames.isEmpty {
-            playButton.isEnabled = baseFrames.count > 1
+        if !baseLayer.frames.isEmpty {
+            playButton.isEnabled = totalFrames > 1
             currentFrame = -1
             if playButton.isEnabled {
                 playing = true
@@ -197,10 +135,12 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
             playButton.isEnabled = false
             frameCounter.stringValue = "-/-"
         }
-        baseLink.title = self.rleInfo(frames: baseFrames)
-        altLink.title = self.rleInfo(frames: altFrames)
-        glowLink.title = self.rleInfo(frames: glowFrames)
-        lightLink.title = self.rleInfo(frames: lightFrames)
+    }
+    
+    @objc private func nextFrame() {
+        currentFrame = (currentFrame + 1) % totalFrames
+        shanView.needsDisplay = true
+        frameCounter.stringValue = "\(currentFrame+1)/\(totalFrames)"
     }
     
     // MARK: -
@@ -210,8 +150,6 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     }
 
     @IBAction func revertResource(_ sender: Any) {
-        self.loadShan()
-        self.updateView()
-        self.setDocumentEdited(false)
+        self.load()
     }
 }

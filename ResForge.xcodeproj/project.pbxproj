@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		490D94AF25624FCF00F73544 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; };
+		4919415525E98E7000FFC3F8 /* SpriteLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4919415425E98E7000FFC3F8 /* SpriteLayer.swift */; };
 		491BC28B253B894200149D78 /* ElementOCNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491BC28A253B894200149D78 /* ElementOCNT.swift */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */; };
@@ -326,6 +327,7 @@
 
 /* Begin PBXFileReference section */
 		490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
+		4919415425E98E7000FFC3F8 /* SpriteLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteLayer.swift; sourceTree = "<group>"; };
 		491BC28A253B894200149D78 /* ElementOCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementOCNT.swift; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; };
 		491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; };
@@ -688,6 +690,7 @@
 			children = (
 				496E7E3225E6E947001C97CA /* ShanWindow.xib */,
 				496E7E3425E6E95C001C97CA /* ShanWindowController.swift */,
+				4919415425E98E7000FFC3F8 /* SpriteLayer.swift */,
 				496E7E4B25E6EE28001C97CA /* ShanView.swift */,
 				496E7E4325E6EA88001C97CA /* Shan.swift */,
 			);
@@ -1397,6 +1400,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4919415525E98E7000FFC3F8 /* SpriteLayer.swift in Sources */,
 				492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */,
 				496E7E4425E6EA88001C97CA /* Shan.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */,

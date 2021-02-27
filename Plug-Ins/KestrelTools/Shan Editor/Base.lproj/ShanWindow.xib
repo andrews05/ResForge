@@ -8,11 +8,11 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ShanWindowController" customModule="KestrelTools" customModuleProvider="target">
             <connections>
-                <outlet property="altLink" destination="XFC-oE-ayl" id="qF0-43-tdo"/>
-                <outlet property="baseLink" destination="lAH-QM-9x0" id="iY1-l2-cTN"/>
+                <outlet property="altLayer" destination="voQ-sS-cgL" id="3f5-gR-Thk"/>
+                <outlet property="baseLayer" destination="3hB-Gf-oKq" id="dzh-0a-KRi"/>
+                <outlet property="engineLayer" destination="YPf-Cu-YD2" id="K7L-zN-Caz"/>
                 <outlet property="frameCounter" destination="gx5-MO-Xlp" id="oNT-LT-Ebc"/>
-                <outlet property="glowLink" destination="CBi-O6-Uyr" id="4BO-lu-iNM"/>
-                <outlet property="lightLink" destination="7BM-PX-15g" id="mtH-QH-5q0"/>
+                <outlet property="lightLayer" destination="aL1-qs-j3R" id="C8g-qZ-ALr"/>
                 <outlet property="playButton" destination="e3j-NW-hCp" id="ixM-k6-9AM"/>
                 <outlet property="shanView" destination="ldy-h7-87K" id="va4-J4-HTd"/>
                 <outlet property="window" destination="17" id="22"/>
@@ -24,7 +24,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="556" width="813" height="535"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <value key="minSize" type="size" width="240" height="160"/>
             <view key="contentView" id="18">
                 <rect key="frame" x="0.0" y="0.0" width="813" height="535"/>
@@ -47,17 +47,9 @@ DQ
                     <customView id="ldy-h7-87K" customClass="ShanView" customModule="KestrelTools" customModuleProvider="target">
                         <rect key="frame" x="358" y="79" width="400" height="400"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <subviews>
-                            <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gx5-MO-Xlp">
-                                <rect key="frame" x="381" y="386" width="19" height="14"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="-/-" drawsBackground="YES" id="cXj-Eb-Rcj">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
+                        <connections>
+                            <outlet property="controller" destination="-2" id="WJw-4k-AmM"/>
+                        </connections>
                     </customView>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1kM-jP-408">
                         <rect key="frame" x="128" y="458" width="70" height="21"/>
@@ -71,7 +63,7 @@ DQ
                             </connections>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="baseID" id="unk-Hm-ABl"/>
+                            <binding destination="3hB-Gf-oKq" name="value" keyPath="spriteID" id="opu-8h-OTD"/>
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iGR-mj-8jy">
@@ -95,7 +87,7 @@ DQ
                             </connections>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="altID" id="DMM-O4-J8o"/>
+                            <binding destination="voQ-sS-cgL" name="value" keyPath="spriteID" id="DS0-Dz-Ic8"/>
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GDe-E9-24V">
@@ -119,7 +111,7 @@ DQ
                             </connections>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="framesPerSet" id="SFS-1h-YRh"/>
+                            <binding destination="-2" name="value" keyPath="framesPerSet" id="mLF-CU-IzD"/>
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vht-F6-2Us">
@@ -143,7 +135,7 @@ DQ
                             </connections>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="glowID" id="QMZ-Or-CCh"/>
+                            <binding destination="YPf-Cu-YD2" name="value" keyPath="spriteID" id="vhn-vW-PLK"/>
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3f6-ci-odz">
@@ -167,7 +159,7 @@ DQ
                             </connections>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="lightID" id="ckC-at-hu5"/>
+                            <binding destination="aL1-qs-j3R" name="value" keyPath="spriteID" id="xyP-4T-hzt"/>
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xyD-Ln-WKk">
@@ -180,7 +172,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YV7-mk-44g">
-                        <rect key="frame" x="220" y="497" width="43" height="16"/>
+                        <rect key="frame" x="215" y="497" width="43" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="# Sets" id="cHe-S0-PrD">
                             <font key="font" metaFont="system"/>
@@ -189,7 +181,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NnF-93-7yH">
-                        <rect key="frame" x="269" y="494" width="70" height="21"/>
+                        <rect key="frame" x="264" y="494" width="70" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Rkt-vV-Gw3">
                             <font key="font" metaFont="system"/>
@@ -200,7 +192,7 @@ DQ
                             </connections>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="baseSets" id="u3Q-0d-huE"/>
+                            <binding destination="-2" name="value" keyPath="baseSets" id="8JS-7o-6iI"/>
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAH-QM-9x0">
@@ -210,6 +202,9 @@ DQ
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystemBold"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="openSprite:" target="3hB-Gf-oKq" id="3QD-rQ-yzX"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XFC-oE-ayl">
                         <rect key="frame" x="206" y="430" width="108" height="19"/>
@@ -218,6 +213,9 @@ DQ
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystemBold"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="openSprite:" target="voQ-sS-cgL" id="iG8-wr-XzJ"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CBi-O6-Uyr">
                         <rect key="frame" x="206" y="401" width="108" height="19"/>
@@ -226,6 +224,9 @@ DQ
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystemBold"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="openSprite:" target="YPf-Cu-YD2" id="nrn-6I-XQX"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7BM-PX-15g">
                         <rect key="frame" x="206" y="372" width="108" height="19"/>
@@ -234,7 +235,19 @@ DQ
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystemBold"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="openSprite:" target="aL1-qs-j3R" id="G5l-Vj-Orw"/>
+                        </connections>
                     </button>
+                    <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gx5-MO-Xlp">
+                        <rect key="frame" x="599" y="498" width="19" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="-/-" drawsBackground="YES" id="cXj-Eb-Rcj">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <point key="canvasLocation" x="80.5" y="167.5"/>
@@ -246,9 +259,32 @@ DQ
                 <userDefinedRuntimeAttribute type="boolean" keyPath="allowsFloats" value="NO"/>
             </userDefinedRuntimeAttributes>
         </numberFormatter>
-        <userDefaultsController representsSharedInstance="YES" id="kRn-to-Mne"/>
+        <customObject id="3hB-Gf-oKq" userLabel="Base Layer" customClass="SpriteLayer" customModule="KestrelTools" customModuleProvider="target">
+            <connections>
+                <outlet property="controller" destination="-2" id="GI2-O4-5u7"/>
+                <outlet property="spriteLink" destination="lAH-QM-9x0" id="Wb3-et-DN8"/>
+            </connections>
+        </customObject>
+        <customObject id="voQ-sS-cgL" userLabel="Alt Layer" customClass="SpriteLayer" customModule="KestrelTools" customModuleProvider="target">
+            <connections>
+                <outlet property="controller" destination="-2" id="q9b-vR-pUX"/>
+                <outlet property="spriteLink" destination="XFC-oE-ayl" id="CRH-kf-8eM"/>
+            </connections>
+        </customObject>
+        <customObject id="YPf-Cu-YD2" userLabel="Engine Layer" customClass="SpriteLayer" customModule="KestrelTools" customModuleProvider="target">
+            <connections>
+                <outlet property="controller" destination="-2" id="lRh-0i-uAq"/>
+                <outlet property="spriteLink" destination="CBi-O6-Uyr" id="CKC-oX-RXi"/>
+            </connections>
+        </customObject>
+        <customObject id="aL1-qs-j3R" userLabel="Light Layer" customClass="SpriteLayer" customModule="KestrelTools" customModuleProvider="target">
+            <connections>
+                <outlet property="controller" destination="-2" id="fdz-zC-sJH"/>
+                <outlet property="spriteLink" destination="7BM-PX-15g" id="hCA-wH-Xki"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
-        <image name="NSFollowLinkFreestandingTemplate" width="14" height="14"/>
+        <image name="NSFollowLinkFreestandingTemplate" width="15" height="15"/>
     </resources>
 </document>
