@@ -1,6 +1,6 @@
 import Cocoa
 
-class ShanView: NSView {
+class ShanView: NSView, NSAnimationDelegate {
     @IBOutlet var controller: ShanWindowController!
     // This override ensures crisp rendering of 72-dpi images on retina displays.
     public override func draw(_ dirtyRect: NSRect) {

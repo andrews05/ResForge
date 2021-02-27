@@ -1,13 +1,14 @@
 import Cocoa
 import RFSupport
 
-class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor {
+class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor, NSAnimationDelegate {
     static let supportedTypes = ["shän"]
     
     let resource: Resource
     var shan = Shan()
     var currentFrame = 0
     private var timer: Timer?
+    private var animation: NSAnimation?
     @IBOutlet var shanView: ShanView!
     @IBOutlet var playButton: NSButton!
     @IBOutlet var frameCounter: NSTextField!
@@ -29,11 +30,6 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     private var playing = false {
         didSet {
             playButton.title = playing ? "Pause" : "Play"
-            timer?.invalidate()
-            if playing {
-                timer = Timer(timeInterval: 1/30, target: self, selector: #selector(nextFrame), userInfo: nil, repeats: true)
-                RunLoop.main.add(timer!, forMode: .default)
-            }
         }
     }
     
@@ -64,6 +60,8 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
             layers[i].type = SpriteLayerType(rawValue: i)
         }
         self.load()
+        timer = Timer(timeInterval: 1/30, target: self, selector: #selector(nextFrame), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer!, forMode: .common)
     }
     
     @objc private func windowWillClose(_ notification: Notification) {
@@ -138,9 +136,11 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     }
     
     @objc private func nextFrame() {
-        currentFrame = (currentFrame + 1) % totalFrames
+        if playing {
+            currentFrame = (currentFrame + 1) % totalFrames
+            frameCounter.stringValue = "\(currentFrame+1)/\(totalFrames)"
+        }
         shanView.needsDisplay = true
-        frameCounter.stringValue = "\(currentFrame+1)/\(totalFrames)"
     }
     
     // MARK: -
