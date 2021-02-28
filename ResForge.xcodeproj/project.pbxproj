@@ -46,6 +46,13 @@
 		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4953F5A92488795B0002340F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4953F5A82488795B0002340F /* AVKit.framework */; };
 		4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */; };
+		49640E7925EAE09B009FEC9B /* BaseLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E7825EAE09B009FEC9B /* BaseLayer.swift */; };
+		49640E8725EAE0A2009FEC9B /* AltLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E8625EAE0A2009FEC9B /* AltLayer.swift */; };
+		49640E9525EAE0AF009FEC9B /* EngineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E9425EAE0AF009FEC9B /* EngineLayer.swift */; };
+		49640E9D25EAE0B8009FEC9B /* LightLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E9C25EAE0B8009FEC9B /* LightLayer.swift */; };
+		49640EA525EAE0BF009FEC9B /* WeaponLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640EA425EAE0BF009FEC9B /* WeaponLayer.swift */; };
+		49640EAD25EAE0C6009FEC9B /* ShieldLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640EAC25EAE0C6009FEC9B /* ShieldLayer.swift */; };
+		49640EBC25EB7952009FEC9B /* NonBlankNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640EB425EB75CB009FEC9B /* NonBlankNumberFormatter.swift */; };
 		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
 		49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */; };
 		49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */; };
@@ -366,6 +373,13 @@
 		4953F5A0248874AA0002340F /* Sound Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sound Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4953F5A82488795B0002340F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenPanelDelegate.swift; sourceTree = "<group>"; };
+		49640E7825EAE09B009FEC9B /* BaseLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLayer.swift; sourceTree = "<group>"; };
+		49640E8625EAE0A2009FEC9B /* AltLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltLayer.swift; sourceTree = "<group>"; };
+		49640E9425EAE0AF009FEC9B /* EngineLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineLayer.swift; sourceTree = "<group>"; };
+		49640E9C25EAE0B8009FEC9B /* LightLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightLayer.swift; sourceTree = "<group>"; };
+		49640EA425EAE0BF009FEC9B /* WeaponLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponLayer.swift; sourceTree = "<group>"; };
+		49640EAC25EAE0C6009FEC9B /* ShieldLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldLayer.swift; sourceTree = "<group>"; };
+		49640EB425EB75CB009FEC9B /* NonBlankNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonBlankNumberFormatter.swift; sourceTree = "<group>"; };
 		49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDocument.swift; sourceTree = "<group>"; };
 		49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource-Conflict.swift"; sourceTree = "<group>"; };
 		49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDirectory.swift; sourceTree = "<group>"; };
@@ -690,9 +704,15 @@
 			children = (
 				496E7E3225E6E947001C97CA /* ShanWindow.xib */,
 				496E7E3425E6E95C001C97CA /* ShanWindowController.swift */,
-				4919415425E98E7000FFC3F8 /* SpriteLayer.swift */,
 				496E7E4B25E6EE28001C97CA /* ShanView.swift */,
 				496E7E4325E6EA88001C97CA /* Shan.swift */,
+				4919415425E98E7000FFC3F8 /* SpriteLayer.swift */,
+				49640E7825EAE09B009FEC9B /* BaseLayer.swift */,
+				49640E8625EAE0A2009FEC9B /* AltLayer.swift */,
+				49640E9425EAE0AF009FEC9B /* EngineLayer.swift */,
+				49640E9C25EAE0B8009FEC9B /* LightLayer.swift */,
+				49640EA425EAE0BF009FEC9B /* WeaponLayer.swift */,
+				49640EAC25EAE0C6009FEC9B /* ShieldLayer.swift */,
 			);
 			path = "Shan Editor";
 			sourceTree = "<group>";
@@ -865,6 +885,7 @@
 				49EE72DA2550B79600BEABDB /* Info.plist */,
 				497A93BD255BB49600900C7B /* Templates.rsrc */,
 				49EE738F2550BC8D00BEABDB /* KestrelTools.swift */,
+				49640EB425EB75CB009FEC9B /* NonBlankNumberFormatter.swift */,
 				496E7DE225E59344001C97CA /* Sprite Editor */,
 				496E7E3125E6E936001C97CA /* Shan Editor */,
 			);
@@ -1400,13 +1421,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49640E9D25EAE0B8009FEC9B /* LightLayer.swift in Sources */,
 				4919415525E98E7000FFC3F8 /* SpriteLayer.swift in Sources */,
 				492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */,
 				496E7E4425E6EA88001C97CA /* Shan.swift in Sources */,
+				49640EAD25EAE0C6009FEC9B /* ShieldLayer.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */,
+				49640EBC25EB7952009FEC9B /* NonBlankNumberFormatter.swift in Sources */,
+				49640EA525EAE0BF009FEC9B /* WeaponLayer.swift in Sources */,
 				496E7E4C25E6EE28001C97CA /* ShanView.swift in Sources */,
+				49640E8725EAE0A2009FEC9B /* AltLayer.swift in Sources */,
+				49640E7925EAE09B009FEC9B /* BaseLayer.swift in Sources */,
 				492E912E2551373100195174 /* Rle.swift in Sources */,
 				49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */,
+				49640E9525EAE0AF009FEC9B /* EngineLayer.swift in Sources */,
 				496E7E3525E6EA15001C97CA /* ShanWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

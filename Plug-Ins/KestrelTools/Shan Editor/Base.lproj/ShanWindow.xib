@@ -106,12 +106,10 @@ DQ
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <connections>
-                                <outlet property="formatter" destination="bhc-Ra-cbF" id="kIm-EL-Dfv"/>
-                            </connections>
                         </textFieldCell>
                         <connections>
                             <binding destination="-2" name="value" keyPath="framesPerSet" id="mLF-CU-IzD"/>
+                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="bNU-jW-4xG"/>
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vht-F6-2Us">
@@ -187,12 +185,10 @@ DQ
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <connections>
-                                <outlet property="formatter" destination="bhc-Ra-cbF" id="Ecu-yx-sSd"/>
-                            </connections>
                         </textFieldCell>
                         <connections>
                             <binding destination="-2" name="value" keyPath="baseSets" id="8JS-7o-6iI"/>
+                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="0eO-hL-YNS"/>
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAH-QM-9x0">
@@ -292,36 +288,108 @@ DQ
                             <binding destination="aL1-qs-j3R" name="value" keyPath="enabled" id="QL6-uQ-sX4"/>
                         </connections>
                     </button>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mRO-JK-1mz">
+                        <rect key="frame" x="25" y="265" width="137" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="Always on" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="A9h-nA-cli" id="cMy-RT-67J">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="h7M-sK-mLL">
+                                <items>
+                                    <menuItem title="Always on" state="on" id="A9h-nA-cli"/>
+                                    <menuItem title="Square-wave" id="AeM-5J-30Z"/>
+                                    <menuItem title="Triangle-wave" id="iRt-n1-5CY"/>
+                                    <menuItem title="Random pulsing" id="fZe-uo-lJd"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                        <connections>
+                            <binding destination="aL1-qs-j3R" name="selectedIndex" keyPath="blinkMode" id="yi1-tT-3Ut"/>
+                        </connections>
+                    </popUpButton>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UFa-7l-mh1">
+                        <rect key="frame" x="27" y="240" width="70" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="uYW-yU-FGV">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="aL1-qs-j3R" name="value" keyPath="blinkValueA" id="dg4-iD-vWu"/>
+                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="VBo-Mv-fly"/>
+                        </connections>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tbw-r3-Kbl">
+                        <rect key="frame" x="28" y="209" width="70" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="b3d-5c-nQv">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="aL1-qs-j3R" name="value" keyPath="blinkValueB" id="NMZ-B6-kvf"/>
+                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="hCd-Hy-Uuz"/>
+                        </connections>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1yi-Ru-nBM">
+                        <rect key="frame" x="28" y="178" width="70" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="uPQ-7u-qzZ">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="aL1-qs-j3R" name="value" keyPath="blinkValueC" id="wst-Z7-6yB"/>
+                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="5pU-wM-f2W"/>
+                        </connections>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WSc-9q-9gf">
+                        <rect key="frame" x="28" y="147" width="70" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="DkI-5g-bxh">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="aL1-qs-j3R" name="value" keyPath="blinkValueD" id="x7T-6A-qFE"/>
+                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="eCU-Sz-ryc"/>
+                        </connections>
+                    </textField>
                 </subviews>
             </view>
             <point key="canvasLocation" x="80.5" y="167.5"/>
         </window>
-        <numberFormatter formatterBehavior="custom10_4" numberStyle="decimal" allowsFloats="NO" usesGroupingSeparator="NO" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="5" id="bhc-Ra-cbF">
+        <numberFormatter formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="bhc-Ra-cbF" userLabel="Int16 Formatter" customClass="NonBlankNumberFormatter" customModule="KestrelTools" customModuleProvider="target">
             <real key="minimum" value="-32768"/>
             <real key="maximum" value="32767"/>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="boolean" keyPath="allowsFloats" value="NO"/>
-            </userDefinedRuntimeAttributes>
         </numberFormatter>
-        <customObject id="3hB-Gf-oKq" userLabel="Base Layer" customClass="SpriteLayer" customModule="KestrelTools" customModuleProvider="target">
+        <numberFormatter formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="vgo-7Z-Vj2" userLabel="Positive Int16 Formatter" customClass="NonBlankNumberFormatter" customModule="KestrelTools" customModuleProvider="target">
+            <real key="minimum" value="0.0"/>
+            <real key="maximum" value="32767"/>
+        </numberFormatter>
+        <customObject id="3hB-Gf-oKq" userLabel="Base Layer" customClass="BaseLayer" customModule="KestrelTools" customModuleProvider="target">
             <connections>
                 <outlet property="controller" destination="-2" id="GI2-O4-5u7"/>
                 <outlet property="spriteLink" destination="lAH-QM-9x0" id="Wb3-et-DN8"/>
             </connections>
         </customObject>
-        <customObject id="voQ-sS-cgL" userLabel="Alt Layer" customClass="SpriteLayer" customModule="KestrelTools" customModuleProvider="target">
+        <customObject id="voQ-sS-cgL" userLabel="Alt Layer" customClass="AltLayer" customModule="KestrelTools" customModuleProvider="target">
             <connections>
                 <outlet property="controller" destination="-2" id="q9b-vR-pUX"/>
                 <outlet property="spriteLink" destination="XFC-oE-ayl" id="CRH-kf-8eM"/>
             </connections>
         </customObject>
-        <customObject id="YPf-Cu-YD2" userLabel="Engine Layer" customClass="SpriteLayer" customModule="KestrelTools" customModuleProvider="target">
+        <customObject id="YPf-Cu-YD2" userLabel="Engine Layer" customClass="EngineLayer" customModule="KestrelTools" customModuleProvider="target">
             <connections>
                 <outlet property="controller" destination="-2" id="lRh-0i-uAq"/>
                 <outlet property="spriteLink" destination="CBi-O6-Uyr" id="CKC-oX-RXi"/>
             </connections>
         </customObject>
-        <customObject id="aL1-qs-j3R" userLabel="Light Layer" customClass="SpriteLayer" customModule="KestrelTools" customModuleProvider="target">
+        <customObject id="aL1-qs-j3R" userLabel="Light Layer" customClass="LightLayer" customModule="KestrelTools" customModuleProvider="target">
             <connections>
                 <outlet property="controller" destination="-2" id="fdz-zC-sJH"/>
                 <outlet property="spriteLink" destination="7BM-PX-15g" id="hCA-wH-Xki"/>

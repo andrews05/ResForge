@@ -14,12 +14,12 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     @IBOutlet var frameCounter: NSTextField!
     
     var layers: [SpriteLayer] = []
-    @IBOutlet var baseLayer: SpriteLayer!
-    @IBOutlet var altLayer: SpriteLayer!
-    @IBOutlet var engineLayer: SpriteLayer!
-    @IBOutlet var lightLayer: SpriteLayer!
-    @IBOutlet var weaponLayer: SpriteLayer!
-    @IBOutlet var shieldLayer: SpriteLayer!
+    @IBOutlet var baseLayer: BaseLayer!
+    @IBOutlet var altLayer: AltLayer!
+    @IBOutlet var engineLayer: EngineLayer!
+    @IBOutlet var lightLayer: LightLayer!
+    @IBOutlet var weaponLayer: WeaponLayer!
+    @IBOutlet var shieldLayer: ShieldLayer!
     
     @objc dynamic var framesPerSet: Int16 = 0
     @objc dynamic var baseSets: Int16 = 0
@@ -56,9 +56,6 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
             engineLayer,
             lightLayer
         ]
-        for i in 0..<layers.count {
-            layers[i].type = SpriteLayerType(rawValue: i)
-        }
         self.load()
         timer = Timer(timeInterval: 1/30, target: self, selector: #selector(nextFrame), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
@@ -113,7 +110,7 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
         framesPerSet = shan.framesPerSet
         baseSets = shan.baseSets
         for layer in layers {
-            layer.load()
+            layer.load(shan)
         }
         self.updateView()
         self.setDocumentEdited(false)
@@ -139,6 +136,9 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
         if playing {
             currentFrame = (currentFrame + 1) % totalFrames
             frameCounter.stringValue = "\(currentFrame+1)/\(totalFrames)"
+        }
+        for layer in layers {
+            layer.nextFrame()
         }
         shanView.needsDisplay = true
     }

@@ -1,17 +1,17 @@
 import RFSupport
 import Cocoa
 
-enum SpriteLayerType: Int {
-    case base, alt, engine, light, weapon, shield
-}
-
 class SpriteLayer: NSObject {
-    var type: SpriteLayerType!
     var frames: [NSBitmapImageRep] = []
     var alpha: CGFloat = 1
+    var operation: NSCompositingOperation { .plusLighter }
     @IBOutlet var controller: ShanWindowController!
     @IBOutlet var spriteLink: NSButton!
-    @objc var enabled = true
+    @objc var enabled = true {
+        didSet {
+            alpha = enabled ? 1 : 0
+        }
+    }
     @objc dynamic var spriteID: Int16 = 0 {
         didSet {
             self.loadRle()
@@ -19,23 +19,10 @@ class SpriteLayer: NSObject {
         }
     }
     
-    func load() {
-        switch type {
-        case .base:
-            spriteID = controller.shan.baseSprite
-        case .alt:
-            spriteID = controller.shan.altSprite
-        case .engine:
-            spriteID = controller.shan.engineSprite
-        case .light:
-            spriteID = controller.shan.lightSprite
-        case .weapon:
-            spriteID = controller.shan.weaponSprite
-        case .shield:
-            spriteID = controller.shan.shieldSprite
-        default:
-            break
-        }
+    func load(_ shan: Shan) {
+    }
+    
+    func nextFrame() {
     }
     
     func loadRle() {
@@ -67,32 +54,12 @@ class SpriteLayer: NSObject {
     }
     
     func draw(_ dirtyRect: NSRect) {
-        guard !frames.isEmpty else {
-            return
-        }
-        let fraction: CGFloat
-        if type == .engine {
-            if enabled && alpha < 1 {
-                alpha += 1/30
-            } else if !enabled && alpha > 0 {
-                alpha -= 1/30
-            }
-            fraction = alpha + CGFloat.random(in: -0.2..<0)
-        } else {
-            fraction = enabled ? 1 : 0
-        }
-        guard fraction > 0 else {
+        let alpha = self.alpha
+        guard alpha > 0 && !frames.isEmpty else {
             return
         }
         let bitmap = frames[controller.currentFrame % frames.count]
         let rect = NSMakeRect(dirtyRect.midX-(bitmap.size.width/2), dirtyRect.midY-(bitmap.size.height/2), bitmap.size.width, bitmap.size.height)
-        let operation: NSCompositingOperation
-        switch type {
-        case .base, .alt:
-            operation = .sourceOver
-        default:
-            operation = .plusLighter
-        }
-        bitmap.draw(in: rect, from: NSZeroRect, operation: operation, fraction: fraction, respectFlipped: true, hints: nil)
+        bitmap.draw(in: rect, from: NSZeroRect, operation: operation, fraction: alpha, respectFlipped: true, hints: nil)
     }
 }

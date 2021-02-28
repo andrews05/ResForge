@@ -32,6 +32,7 @@ struct Shan {
     var blinkValueA: Int16 = 0
     var blinkValueB: Int16 = 0
     var blinkValueC: Int16 = 0
+    var blinkValueD: Int16 = 0
     var shieldSprite: Int16 = -1
     var shieldMask: Int16 = -1
     var shieldWidth: Int16 = 0
@@ -69,6 +70,7 @@ struct Shan {
         blinkValueA = try reader.read()
         blinkValueB = try reader.read()
         blinkValueC = try reader.read()
+        blinkValueD = try reader.read()
         shieldSprite = try reader.read()
         shieldMask = try reader.read()
         shieldWidth = try reader.read()
