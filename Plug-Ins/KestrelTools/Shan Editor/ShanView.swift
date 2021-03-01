@@ -15,4 +15,6 @@ class ShanView: NSView, NSAnimationDelegate {
             layer.draw(dirtyRect)
         }
     }
+    
+    override var acceptsFirstResponder: Bool { true }
 }

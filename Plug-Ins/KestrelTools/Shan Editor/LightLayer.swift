@@ -1,11 +1,43 @@
 import Cocoa
 
 class LightLayer: SpriteLayer {
-    @objc dynamic var blinkMode: Int16 = 0
+    @IBOutlet var labelA: NSTextField!
+    @IBOutlet var labelB: NSTextField!
+    @IBOutlet var labelC: NSTextField!
+    @IBOutlet var labelD: NSTextField!
+    @objc dynamic var blinkMode: Int16 = 0 {
+        didSet {
+            hideValues = false
+            hideD = false
+            switch blinkMode {
+            case 1:
+                labelA.stringValue = "Off Time"
+                labelB.stringValue = "On Time"
+                labelC.stringValue = "Group Count"
+                labelD.stringValue = "Group Delay"
+            case 2:
+                labelA.stringValue = "Min (1-32)"
+                labelB.stringValue = "Up Speed"
+                labelC.stringValue = "Max (1-32)"
+                labelD.stringValue = "Down Speed"
+            case 3:
+                labelA.stringValue = "Min (1-32)"
+                labelB.stringValue = "Max (1-32)"
+                labelC.stringValue = "Delay"
+                hideD = true
+            default:
+                hideValues = true
+                hideD = true
+            }
+            controller.setDocumentEdited(true)
+        }
+    }
     @objc dynamic var blinkValueA: Int16 = 0
     @objc dynamic var blinkValueB: Int16 = 0
     @objc dynamic var blinkValueC: Int16 = 0
     @objc dynamic var blinkValueD: Int16 = 0
+    @objc dynamic var hideValues = true
+    @objc dynamic var hideD = true
     private var blinkFrame = 0
     private var blinkCount = 0
     private var blinkOn = true
@@ -13,6 +45,9 @@ class LightLayer: SpriteLayer {
     override func load(_ shan: Shan) {
         self.spriteID = shan.lightSprite
         blinkMode = shan.blinkMode
+        if blinkMode < 0 || blinkMode > 3 {
+            blinkMode = 0
+        }
         blinkValueA = shan.blinkValueA
         blinkValueB = shan.blinkValueB
         blinkValueC = shan.blinkValueC

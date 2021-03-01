@@ -7,6 +7,9 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     let resource: Resource
     var shan = Shan()
     var currentFrame = 0
+    var currentSet = 0
+    var frameCount = 0
+    var enabled = true
     private var timer: Timer?
     private var animation: NSAnimation?
     @IBOutlet var shanView: ShanView!
@@ -23,6 +26,8 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     
     @objc dynamic var framesPerSet: Int16 = 0
     @objc dynamic var baseSets: Int16 = 0
+    @objc dynamic var animationDelay: Int16 = 0
+    @objc dynamic var extraFrames: UInt16 = 0
     var totalFrames: Int {
         return Int(framesPerSet * baseSets)
     }
@@ -79,16 +84,19 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
         playing = !playing
     }
     
+    @IBAction func toggle(_ sender: Any) {
+        enabled = !enabled
+    }
+    
     override func keyDown(with event: NSEvent) {
         if event.characters == " " {
             playing = !playing
         } else if event.specialKey == .leftArrow {
             playing = false
-            currentFrame = (currentFrame+totalFrames-2) % totalFrames
-            self.nextFrame()
+            currentFrame = (currentFrame+totalFrames-1) % totalFrames
         } else if event.specialKey == .rightArrow {
             playing = false
-            self.nextFrame()
+            currentFrame = (currentFrame + 1) % totalFrames
         }
     }
     
@@ -109,6 +117,8 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
         }
         framesPerSet = shan.framesPerSet
         baseSets = shan.baseSets
+        animationDelay = shan.animationDelay
+        extraFrames = shan.flags & 0x000F
         for layer in layers {
             layer.load(shan)
         }
@@ -134,8 +144,51 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     
     @objc private func nextFrame() {
         if playing {
-            currentFrame = (currentFrame + 1) % totalFrames
-            frameCounter.stringValue = "\(currentFrame+1)/\(totalFrames)"
+            currentFrame = (currentFrame + 1) % Int(framesPerSet)
+            frameCounter.stringValue = "\(currentFrame+1)/\(framesPerSet)"
+        }
+        switch extraFrames {
+        case 1, 3:
+            // Banking, cycle through sets each full rotation
+            if !enabled {
+                currentSet = 0
+            } else if currentFrame == 0 && frameCount > 0 {
+                currentSet = (currentSet + 1) % Int(baseSets)
+                frameCount = 0
+            } else {
+                frameCount += 1
+            }
+        case 2:
+            // Folding, animate to last set and back again
+            if enabled && currentSet < (baseSets-1) {
+                frameCount += 1
+                if frameCount >= animationDelay {
+                    currentSet += 1
+                    frameCount = 0
+                }
+            } else if !enabled && currentSet > 0 {
+                frameCount += 1
+                if frameCount >= animationDelay {
+                    currentSet -= 1
+                    frameCount = 0
+                }
+            }
+        case 4:
+            // KeyCarried, toggle between 1st and 2nd set
+            currentSet = (enabled && baseSets > 0) ? 1 : 0
+        case 8:
+            // Animation, continuous cycle
+            if !enabled {
+                currentSet = 0
+            } else {
+                frameCount += 1
+                if frameCount >= animationDelay {
+                    currentSet = (currentSet + 1) % Int(baseSets)
+                    frameCount = 0
+                }
+            }
+        default:
+            currentSet = 0
         }
         for layer in layers {
             layer.nextFrame()

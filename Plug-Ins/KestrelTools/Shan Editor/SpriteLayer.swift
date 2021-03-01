@@ -5,17 +5,23 @@ class SpriteLayer: NSObject {
     var frames: [NSBitmapImageRep] = []
     var alpha: CGFloat = 1
     var operation: NSCompositingOperation { .plusLighter }
-    @IBOutlet var controller: ShanWindowController!
-    @IBOutlet var spriteLink: NSButton!
-    @objc var enabled = true {
+    var enabled = true {
         didSet {
             alpha = enabled ? 1 : 0
         }
     }
+    var currentFrame: NSBitmapImageRep? {
+        guard frames.count > 0 else {
+            return nil
+        }
+        let index = (Int(controller.framesPerSet) * controller.currentSet) + controller.currentFrame
+        return frames[index % frames.count]
+    }
+    @IBOutlet var controller: ShanWindowController!
+    @IBOutlet var spriteLink: NSButton!
     @objc dynamic var spriteID: Int16 = 0 {
         didSet {
             self.loadRle()
-            controller.setDocumentEdited(true)
         }
     }
     
@@ -53,13 +59,21 @@ class SpriteLayer: NSObject {
         }
     }
     
+    @IBAction func toggle(_ sender: Any) {
+        enabled = !enabled
+    }
+    
     func draw(_ dirtyRect: NSRect) {
         let alpha = self.alpha
-        guard alpha > 0 && !frames.isEmpty else {
+        guard alpha > 0, let bitmap = currentFrame else {
             return
         }
-        let bitmap = frames[controller.currentFrame % frames.count]
         let rect = NSMakeRect(dirtyRect.midX-(bitmap.size.width/2), dirtyRect.midY-(bitmap.size.height/2), bitmap.size.width, bitmap.size.height)
         bitmap.draw(in: rect, from: NSZeroRect, operation: operation, fraction: alpha, respectFlipped: true, hints: nil)
+    }
+    
+    override func didChangeValue(forKey key: String) {
+        super.didChangeValue(forKey: key)
+        controller.setDocumentEdited(true)
     }
 }
