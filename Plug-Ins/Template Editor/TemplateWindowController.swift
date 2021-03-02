@@ -203,10 +203,6 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         }
     }
     
-    @IBAction func cut(_ sender: Any) {}
-    @IBAction func copy(_ sender: Any) {}
-    @IBAction func paste(_ sender: Any) {}
-    
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         let element = dataList.item(atRow: dataList.row(for: self.window!.firstResponder as! NSView))
         switch menuItem.action {
@@ -224,7 +220,7 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
              #selector(self.revertResource(_:)):
             return self.window!.isDocumentEdited
         default:
-            return false
+            return true
         }
     }
     

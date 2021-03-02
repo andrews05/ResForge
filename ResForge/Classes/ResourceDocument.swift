@@ -203,14 +203,14 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             panel.prompt = NSLocalizedString("Choose", comment: "")
             panel.message = NSLocalizedString("Choose where to export the selected resources", comment: "")
             panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
-                if modalResponse == .OK {
+                if modalResponse == .OK, let saveDir = panel.url {
                     for resource in resources {
                         let filename = self.filenameForExport(resource: resource)
-                        var url = panel.url!.appendingPathComponent(filename.name).appendingPathExtension(filename.ext)
+                        var url = saveDir.appendingPathComponent(filename.name).appendingPathExtension(filename.ext)
                         // Ensure unique name
                         var i = 2
                         while FileManager.default.fileExists(atPath: url.path) {
-                            url = panel.url!.appendingPathComponent("\(filename.name) \(i)").appendingPathExtension(filename.ext)
+                            url = saveDir.appendingPathComponent("\(filename.name) \(i)").appendingPathExtension(filename.ext)
                             i = i + 1
                         }
                         self.export(resource: resource, to: url)
@@ -224,8 +224,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             let filename = self.filenameForExport(resource: resource)
             panel.nameFieldStringValue = "\(filename.name).\(filename.ext)"
             panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
-                if modalResponse == .OK {
-                    self.export(resource: resource, to: panel.url!)
+                if modalResponse == .OK, let url = panel.url {
+                    self.export(resource: resource, to: url)
                 }
             }
         }
@@ -242,11 +242,17 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     private func export(resource: Resource, to url: URL) {
-        let editor = PluginRegistry.exportProviders[resource.type]
-        if editor?.export(resource, to: url) != true {
-            do {
-                try resource.data.write(to: url)
-            } catch {}
+        do {
+            if resource.data.isEmpty {
+                try Data().write(to: url)
+            } else {
+                let editor = PluginRegistry.exportProviders[resource.type]
+                if try editor?.export(resource, to: url) != true {
+                    try resource.data.write(to: url)
+                }
+            }
+        } catch let error {
+            self.presentError(error)
         }
     }
     

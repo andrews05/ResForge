@@ -193,41 +193,19 @@ class SpriteWindowController: NSWindowController, NSMenuItemValidation, Resource
         return "tiff"
     }
     
-    static func export(_ resource: Resource, to url: URL) -> Bool {
-        var data = resource.data
-        switch resource.type {
-        case "rlëD":
-            do {
-                data = try Rle(data).readSheet().tiffRepresentation!
-            } catch {
-                data = Data()
-            }
-        default:
-            break
-        }
-        do {
-            try data.write(to: url)
-        } catch let error {
-            resource.document?.presentError(error)
-        }
+    static func export(_ resource: Resource, to url: URL) throws -> Bool {
+        let data = try Rle(resource.data).readSheet().tiffRepresentation!
+        try data.write(to: url)
         return true
     }
     
     static func image(for resource: Resource) -> NSImage? {
-        guard !resource.data.isEmpty else {
+        guard let frame = try? Rle(resource.data).readFrame() else {
             return nil
         }
-        switch resource.type {
-        case "rlëD":
-            guard let rle = try? Rle(resource.data),
-                  let frame = try? rle.readFrame()
-            else { return nil }
-            let image = NSImage(size: NSMakeSize(CGFloat(rle.frameWidth), CGFloat(rle.frameHeight)))
-            image.addRepresentation(frame)
-            return image
-        default:
-            return nil
-        }
+        let image = NSImage()
+        image.addRepresentation(frame)
+        return image
     }
     
     static func previewSize(for resourceType: String) -> Int {

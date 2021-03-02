@@ -122,12 +122,8 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     // MARK: -
     
     private func load() {
-        if resource.data.isEmpty {
-            shan.baseSprite = Int16(resource.id - 128 + 1000)
-        } else {
-            do {
-                try shan.read(BinaryDataReader(resource.data))
-            } catch {}
+        if !resource.data.isEmpty {
+            try? shan.read(BinaryDataReader(resource.data))
         }
         animationDelay = shan.animationDelay
         // Use first matching flag for extraFrames, in case multiple values have been set

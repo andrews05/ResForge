@@ -40,7 +40,7 @@ struct Shan {
     var flags = ShanFlags()
     var animationDelay: Int16 = 0
     var weaponDecay: Int16 = 0
-    var framesPerSet: Int16 = 72
+    var framesPerSet: Int16 = 0
     var blinkMode: Int16 = 0
     var blinkValueA: Int16 = 0
     var blinkValueB: Int16 = 0

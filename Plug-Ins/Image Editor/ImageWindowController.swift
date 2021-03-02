@@ -192,7 +192,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResourceE
         }
     }
     
-    static func export(_ resource: Resource, to url: URL) -> Bool {
+    static func export(_ resource: Resource, to url: URL) throws -> Bool {
         let data: Data
         switch resource.type {
         case "PNG ", "icns":
@@ -200,11 +200,7 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResourceE
         default:
             data = self.image(for: resource)?.tiffRepresentation ?? Data()
         }
-        do {
-            try data.write(to: url)
-        } catch let error {
-            resource.document?.presentError(error)
-        }
+        try data.write(to: url)
         return true
     }
     

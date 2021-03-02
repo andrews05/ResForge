@@ -106,9 +106,9 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResourceE
         }
         panel.allowedFileTypes = ["aiff"]
         panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
-            if returnCode.rawValue == NSFileHandlingPanelOKButton {
+            if returnCode == .OK, let url = panel.url {
                 do {
-                    try self.sound.export(to: panel.url!)
+                    try self.sound.export(to: url)
                 } catch let error {
                     self.presentError(error)
                 }
@@ -123,12 +123,12 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResourceE
         panel.isAccessoryViewDisclosed = true
         panel.prompt = "Import"
         panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
-            if returnCode == .OK {
+            if returnCode == .OK, let url = panel.url {
                 let format = self.selectFormat.selectedTag()
                 let channels = self.selectChannels.selectedTag()
                 let sampleRate = self.selectSampleRate.selectedTag()
                 do {
-                    try self.sound.load(url: panel.url!, format: UInt32(format), channels: UInt32(channels), sampleRate: Double(sampleRate))
+                    try self.sound.load(url: url, format: UInt32(format), channels: UInt32(channels), sampleRate: Double(sampleRate))
                     self.setDocumentEdited(true)
                 } catch let error {
                     self.presentError(error)
@@ -161,13 +161,8 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResourceE
         return "aiff"
     }
     
-    static func export(_ resource: Resource, to url: URL) -> Bool {
-        let sound = SoundResource(resource.data)
-        do {
-            try sound.export(to: url)
-        } catch let error {
-            resource.document.presentError(error)
-        }
+    static func export(_ resource: Resource, to url: URL) throws -> Bool {
+        try SoundResource(resource.data).export(to: url)
         return true
     }
 }
