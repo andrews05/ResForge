@@ -6,15 +6,21 @@ class EngineLayer: SpriteLayer {
         set { }
     }
     
+    override init() {
+        super.init()
+        self.enabled = false
+        super.alpha = 0
+    }
+    
     override func load(_ shan: Shan) {
         self.spriteID = shan.engineSprite
     }
     
     override func nextFrame() {
         if enabled && super.alpha < 1 {
-            super.alpha += 1/32
+            super.alpha += SpriteLayer.TransparencyStep
         } else if !enabled && super.alpha > 0 {
-            super.alpha -= 1/32
+            super.alpha -= SpriteLayer.TransparencyStep
         }
     }
 }

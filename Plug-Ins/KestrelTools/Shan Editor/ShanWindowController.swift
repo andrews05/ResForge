@@ -1,22 +1,23 @@
 import Cocoa
 import RFSupport
 
+enum ShanFrames: UInt16 {
+    case bankingWithGlow = 0x0003
+    case banking = 0x0001
+    case folding = 0x0002
+    case keyCarried = 0x0004
+    case animation = 0x0008
+}
+
 class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor, NSAnimationDelegate {
     static let supportedTypes = ["shän"]
     
     let resource: Resource
-    var shan = Shan()
-    var currentFrame = 0
-    var currentSet = 0
-    var frameCount = 0
-    var enabled = true
-    private var timer: Timer?
-    private var animation: NSAnimation?
     @IBOutlet var shanView: ShanView!
     @IBOutlet var playButton: NSButton!
     @IBOutlet var frameCounter: NSTextField!
-    
-    var layers: [SpriteLayer] = []
+    @IBOutlet var unfoldsCheckbox: NSButton!
+    @IBOutlet var bankGlowCheckbox: NSButton!
     @IBOutlet var baseLayer: BaseLayer!
     @IBOutlet var altLayer: AltLayer!
     @IBOutlet var engineLayer: EngineLayer!
@@ -24,14 +25,27 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     @IBOutlet var weaponLayer: WeaponLayer!
     @IBOutlet var shieldLayer: ShieldLayer!
     
-    @objc dynamic var framesPerSet: Int16 = 0
-    @objc dynamic var baseSets: Int16 = 0
+    @objc var enabled = true
+    @objc dynamic var framesPerSet: Int = 0
+    @objc dynamic var baseSets: Int = 0
     @objc dynamic var animationDelay: Int16 = 0
-    @objc dynamic var extraFrames: UInt16 = 0
-    var totalFrames: Int {
-        return Int(framesPerSet * baseSets)
+    @objc dynamic var extraFrames: UInt16 = 0 {
+        didSet {
+            unfoldsCheckbox.isHidden = extraFrames != ShanFlags.foldingFrames.rawValue
+            bankGlowCheckbox.isHidden = extraFrames != ShanFlags.bankingFrames.rawValue
+        }
     }
+    @objc dynamic var unfoldsToFire = false
+    @objc dynamic var glowOnBank = false
+    @objc dynamic var stopDisabled = false
     
+    private(set) var currentFrame = 0
+    private(set) var currentSet = 0
+    private(set) var layers: [SpriteLayer] = []
+    private var frameCount = 0
+    private var tickCount = 0
+    private var shan = Shan()
+    private var timer: Timer?
     private var playing = false {
         didSet {
             playButton.title = playing ? "Pause" : "Play"
@@ -59,7 +73,9 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
             baseLayer,
             altLayer,
             engineLayer,
-            lightLayer
+            lightLayer,
+            weaponLayer,
+            shieldLayer
         ]
         self.load()
         timer = Timer(timeInterval: 1/30, target: self, selector: #selector(nextFrame), userInfo: nil, repeats: true)
@@ -84,25 +100,23 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
         playing = !playing
     }
     
-    @IBAction func toggle(_ sender: Any) {
-        enabled = !enabled
-    }
-    
     override func keyDown(with event: NSEvent) {
         if event.characters == " " {
             playing = !playing
         } else if event.specialKey == .leftArrow {
             playing = false
-            currentFrame = (currentFrame+totalFrames-1) % totalFrames
+            currentFrame = (currentFrame + framesPerSet - 1) % framesPerSet
         } else if event.specialKey == .rightArrow {
             playing = false
-            currentFrame = (currentFrame + 1) % totalFrames
+            currentFrame = (currentFrame + 1) % framesPerSet
         }
     }
     
     override func didChangeValue(forKey key: String) {
         super.didChangeValue(forKey: key)
-        self.setDocumentEdited(true)
+        if key != "enabled" {
+            self.setDocumentEdited(true)
+        }
     }
     
     // MARK: -
@@ -115,51 +129,51 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
                 try shan.read(BinaryDataReader(resource.data))
             } catch {}
         }
-        framesPerSet = shan.framesPerSet
-        baseSets = shan.baseSets
         animationDelay = shan.animationDelay
-        extraFrames = shan.flags & 0x000F
+        // Use first matching flag for extraFrames, in case multiple values have been set
+        let frameFlags: [ShanFlags] = [
+            .bankingFrames,
+            .foldingFrames,
+            .keyCarriedFrames,
+            .animationFrames
+        ]
+        extraFrames = frameFlags.first(where: { shan.flags.contains($0) })?.rawValue ?? 0
+        unfoldsToFire = shan.flags.contains(.unfoldsToFire)
+        // Folding flag indicates glow on banking when combined with banking
+        glowOnBank = extraFrames == ShanFlags.bankingFrames.rawValue && shan.flags.contains(.foldingFrames)
+        stopDisabled = shan.flags.contains(.stopDisabled)
         for layer in layers {
             layer.load(shan)
         }
-        self.updateView()
+        framesPerSet = Int(shan.framesPerSet)
+        baseSets = Int(shan.baseSets)
+        playing = true
         self.setDocumentEdited(false)
     }
     
-    private func updateView() {
-        playing = false
-        if !baseLayer.frames.isEmpty {
-            playButton.isEnabled = totalFrames > 1
-            currentFrame = -1
-            if playButton.isEnabled {
-                playing = true
-            } else {
-                nextFrame()
-            }
-        } else {
-            playButton.isEnabled = false
-            frameCounter.stringValue = "-/-"
-        }
-    }
-    
     @objc private func nextFrame() {
-        if playing {
-            currentFrame = (currentFrame + 1) % Int(framesPerSet)
-            frameCounter.stringValue = "\(currentFrame+1)/\(framesPerSet)"
+        guard framesPerSet > 0 && baseSets > 0 else {
+            frameCounter.stringValue = "-/-"
+            return
         }
-        switch extraFrames {
-        case 1, 3:
-            // Banking, cycle through sets each full rotation
+        if playing {
+            // Rotate slower when fewer frames
+            if tickCount == 0 {
+                // For banking, cycle through sets each full rotation
+                if enabled && extraFrames == ShanFlags.bankingFrames.rawValue && currentFrame == framesPerSet-1 {
+                    currentSet = (currentSet + 1) % baseSets
+                }
+                currentFrame = (currentFrame + 1) % framesPerSet
+            }
+            tickCount = (tickCount + 1) % (72/framesPerSet+1)
+        }
+        switch ShanFlags(rawValue: extraFrames) {
+        case .bankingFrames:
             if !enabled {
                 currentSet = 0
-            } else if currentFrame == 0 && frameCount > 0 {
-                currentSet = (currentSet + 1) % Int(baseSets)
-                frameCount = 0
-            } else {
-                frameCount += 1
             }
-        case 2:
-            // Folding, animate to last set and back again
+        case .foldingFrames:
+            // Animate to last set and back again
             if enabled && currentSet < (baseSets-1) {
                 frameCount += 1
                 if frameCount >= animationDelay {
@@ -173,17 +187,17 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
                     frameCount = 0
                 }
             }
-        case 4:
-            // KeyCarried, toggle between 1st and 2nd set
+        case .keyCarriedFrames:
+            // Toggle between 1st and 2nd set
             currentSet = (enabled && baseSets > 0) ? 1 : 0
-        case 8:
-            // Animation, continuous cycle
+        case .animationFrames:
+            // Continuous cycle
             if !enabled {
                 currentSet = 0
             } else {
                 frameCount += 1
                 if frameCount >= animationDelay {
-                    currentSet = (currentSet + 1) % Int(baseSets)
+                    currentSet = (currentSet + 1) % baseSets
                     frameCount = 0
                 }
             }
@@ -193,6 +207,9 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
         for layer in layers {
             layer.nextFrame()
         }
+        let frameIndex = (currentSet * framesPerSet) + currentFrame
+        let total = framesPerSet * baseSets
+        frameCounter.stringValue = "\(frameIndex+1)/\(total)"
         shanView.needsDisplay = true
     }
     

@@ -2,23 +2,26 @@ import RFSupport
 import Cocoa
 
 class SpriteLayer: NSObject {
+    // Nova has 32 levels of transparency (0-31) so we generally step the alpha by this amount
+    static let TransparencyStep: CGFloat = 1/31
+    
     var frames: [NSBitmapImageRep] = []
-    var alpha: CGFloat = 1
     var operation: NSCompositingOperation { .plusLighter }
-    var enabled = true {
-        didSet {
-            alpha = enabled ? 1 : 0
-        }
-    }
+    var alpha: CGFloat = 1
     var currentFrame: NSBitmapImageRep? {
         guard frames.count > 0 else {
             return nil
         }
-        let index = (Int(controller.framesPerSet) * controller.currentSet) + controller.currentFrame
+        let index = (controller.framesPerSet * controller.currentSet) + controller.currentFrame
         return frames[index % frames.count]
     }
     @IBOutlet var controller: ShanWindowController!
     @IBOutlet var spriteLink: NSButton!
+    @objc var enabled = true {
+        didSet {
+            alpha = enabled ? 1 : 0
+        }
+    }
     @objc dynamic var spriteID: Int16 = 0 {
         didSet {
             self.loadRle()
@@ -59,10 +62,6 @@ class SpriteLayer: NSObject {
         }
     }
     
-    @IBAction func toggle(_ sender: Any) {
-        enabled = !enabled
-    }
-    
     func draw(_ dirtyRect: NSRect) {
         let alpha = self.alpha
         guard alpha > 0, let bitmap = currentFrame else {
@@ -74,6 +73,8 @@ class SpriteLayer: NSObject {
     
     override func didChangeValue(forKey key: String) {
         super.didChangeValue(forKey: key)
-        controller.setDocumentEdited(true)
+        if key != "enabled" {
+            controller.setDocumentEdited(true)
+        }
     }
 }

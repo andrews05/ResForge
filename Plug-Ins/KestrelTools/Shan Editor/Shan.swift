@@ -1,5 +1,18 @@
 import RFSupport
 
+struct ShanFlags: OptionSet {
+    let rawValue: UInt16
+    static let bankingFrames        = ShanFlags(rawValue: 0x0001)
+    static let foldingFrames        = ShanFlags(rawValue: 0x0002)
+    static let keyCarriedFrames     = ShanFlags(rawValue: 0x0004)
+    static let animationFrames      = ShanFlags(rawValue: 0x0008)
+    static let stopDisabled         = ShanFlags(rawValue: 0x0010)
+    static let hideAltDisabled      = ShanFlags(rawValue: 0x0020)
+    static let hideLightsDisabled   = ShanFlags(rawValue: 0x0040)
+    static let unfoldsToFire        = ShanFlags(rawValue: 0x0080)
+    static let pointingCorrection   = ShanFlags(rawValue: 0x0100)
+}
+
 struct Shan {
     var baseSprite: Int16 = -1
     var baseMask: Int16 = -1
@@ -24,7 +37,7 @@ struct Shan {
     var weaponMask: Int16 = -1
     var weaponWidth: Int16 = 0
     var weaponHeight: Int16 = 0
-    var flags: UInt16 = 0
+    var flags = ShanFlags()
     var animationDelay: Int16 = 0
     var weaponDecay: Int16 = 0
     var framesPerSet: Int16 = 72
@@ -62,7 +75,7 @@ struct Shan {
         weaponMask = try reader.read()
         weaponWidth = try reader.read()
         weaponHeight = try reader.read()
-        flags = try reader.read()
+        flags = ShanFlags(rawValue: try reader.read())
         animationDelay = try reader.read()
         weaponDecay = try reader.read()
         framesPerSet = try reader.read()

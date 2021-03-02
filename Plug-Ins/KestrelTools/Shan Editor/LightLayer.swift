@@ -38,6 +38,7 @@ class LightLayer: SpriteLayer {
     @objc dynamic var blinkValueD: Int16 = 0
     @objc dynamic var hideValues = true
     @objc dynamic var hideD = true
+    @objc dynamic var hideDisabled = false
     private var blinkFrame = 0
     private var blinkCount = 0
     private var blinkOn = true
@@ -52,6 +53,7 @@ class LightLayer: SpriteLayer {
         blinkValueB = shan.blinkValueB
         blinkValueC = shan.blinkValueC
         blinkValueD = shan.blinkValueD
+        hideDisabled = shan.flags.contains(.hideLightsDisabled)
     }
     
     override func nextFrame() {
@@ -93,14 +95,14 @@ class LightLayer: SpriteLayer {
             // blinkValueC = maximum intensity (1-32)
             // blinkValueD = intensity decrease per frame, x100
             if blinkOn {
-                if alpha < CGFloat(min(blinkValueC, 32)-1) / 31 {
-                    alpha += CGFloat(blinkValueB)/100/32
+                if alpha < CGFloat(min(blinkValueC, 32)-1) * SpriteLayer.TransparencyStep {
+                    alpha += CGFloat(blinkValueB)/100 * SpriteLayer.TransparencyStep
                 } else {
                     blinkOn = false
                 }
             } else {
-                if alpha > CGFloat(max(blinkValueA, 1)-1) / 31 {
-                    alpha -= CGFloat(blinkValueD)/100/32
+                if alpha > CGFloat(max(blinkValueA, 1)-1) * SpriteLayer.TransparencyStep {
+                    alpha -= CGFloat(blinkValueD)/100 * SpriteLayer.TransparencyStep
                 } else {
                     blinkOn = true
                 }
@@ -114,7 +116,7 @@ class LightLayer: SpriteLayer {
             if blinkFrame >= blinkValueC {
                 let minVal = max(min(blinkValueA, blinkValueB), 1)
                 let maxVal = min(max(blinkValueA, blinkValueB), 32)
-                alpha = CGFloat(Int16.random(in: minVal...maxVal)-1) / 31
+                alpha = CGFloat(Int16.random(in: minVal...maxVal)-1) * SpriteLayer.TransparencyStep
                 blinkFrame = 0
             }
         default:
