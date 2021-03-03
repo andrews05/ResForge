@@ -50,6 +50,24 @@ struct Shan {
     var shieldMask: Int16 = -1
     var shieldWidth: Int16 = 0
     var shieldHeight: Int16 = 0
+    var gunX: [Int16] = [0,0,0,0]
+    var gunY: [Int16] = [0,0,0,0]
+    var turretX: [Int16] = [0,0,0,0]
+    var turretY: [Int16] = [0,0,0,0]
+    var guidedX: [Int16] = [0,0,0,0]
+    var guidedY: [Int16] = [0,0,0,0]
+    var beamX: [Int16] = [0,0,0,0]
+    var beamY: [Int16] = [0,0,0,0]
+    var upCompressX: Int16 = 0
+    var upCompressY: Int16 = 0
+    var downCompressX: Int16 = 0
+    var downCompressY: Int16 = 0
+    var gunZ: [Int16] = [0,0,0,0]
+    var turretZ: [Int16] = [0,0,0,0]
+    var guidedZ: [Int16] = [0,0,0,0]
+    var beamZ: [Int16] = [0,0,0,0]
+    var unused1: UInt64 = 0
+    var unused2: UInt64 = 0
     
     mutating func read(_ reader: BinaryDataReader) throws {
         baseSprite = try reader.read()
@@ -88,5 +106,64 @@ struct Shan {
         shieldMask = try reader.read()
         shieldWidth = try reader.read()
         shieldHeight = try reader.read()
+        for i in 0..<gunX.count {
+            gunX[i] = try reader.read()
+        }
+        for i in 0..<gunY.count {
+            gunY[i] = try reader.read()
+        }
+        for i in 0..<turretX.count {
+            turretX[i] = try reader.read()
+        }
+        for i in 0..<turretY.count {
+            turretY[i] = try reader.read()
+        }
+        for i in 0..<guidedX.count {
+            guidedX[i] = try reader.read()
+        }
+        for i in 0..<guidedY.count {
+            guidedY[i] = try reader.read()
+        }
+        for i in 0..<beamX.count {
+            beamX[i] = try reader.read()
+        }
+        for i in 0..<beamY.count {
+            beamY[i] = try reader.read()
+        }
+        upCompressX = try reader.read()
+        upCompressY = try reader.read()
+        downCompressX = try reader.read()
+        downCompressY = try reader.read()
+        for i in 0..<gunZ.count {
+            gunZ[i] = try reader.read()
+        }
+        for i in 0..<turretZ.count {
+            turretZ[i] = try reader.read()
+        }
+        for i in 0..<guidedZ.count {
+            guidedZ[i] = try reader.read()
+        }
+        for i in 0..<beamZ.count {
+            beamZ[i] = try reader.read()
+        }
+    }
+    
+    struct Flags: OptionSet {
+        let rawValue: UInt16
+        static let bankingFrames        = Self(rawValue: 0x0001)
+        static let foldingFrames        = Self(rawValue: 0x0002)
+        static let keyCarriedFrames     = Self(rawValue: 0x0004)
+        static let animationFrames      = Self(rawValue: 0x0008)
+        static let stopDisabled         = Self(rawValue: 0x0010)
+        static let hideAltDisabled      = Self(rawValue: 0x0020)
+        static let hideLightsDisabled   = Self(rawValue: 0x0040)
+        static let unfoldsToFire        = Self(rawValue: 0x0080)
+        static let pointingCorrection   = Self(rawValue: 0x0100)
+    }
+    
+    struct ExitPoint {
+        var x: Int16 = 0
+        var y: Int16 = 0
+        var z: Int16 = 0
     }
 }

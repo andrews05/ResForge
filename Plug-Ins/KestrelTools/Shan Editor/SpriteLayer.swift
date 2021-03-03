@@ -45,7 +45,7 @@ class SpriteLayer: NSObject {
             for _ in 0..<rle.frameCount {
                 frames.append(try rle.readFrame())
             }
-            spriteLink.title = "\(rle.frameWidth)x\(rle.frameHeight), \(rle.frameCount)"
+            spriteLink.title = "\(rle.frameCount)@\(rle.frameWidth)x\(rle.frameHeight)"
         } catch {
             frames.removeAll()
             spriteLink.title = "error"

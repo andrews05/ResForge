@@ -1,14 +1,6 @@
 import Cocoa
 import RFSupport
 
-enum ShanFrames: UInt16 {
-    case bankingWithGlow = 0x0003
-    case banking = 0x0001
-    case folding = 0x0002
-    case keyCarried = 0x0004
-    case animation = 0x0008
-}
-
 class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor, NSAnimationDelegate {
     static let supportedTypes = ["shän"]
     
