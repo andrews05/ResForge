@@ -1,15 +1,12 @@
 import Cocoa
 
-class EngineLayer: SpriteLayer {
+class EngineLayer: ShieldLayer {
     override var alpha: CGFloat {
-        get { super.alpha + CGFloat.random(in: -0.2..<0) }
+        get {
+            // A rough approximation of Nova's engine flicker
+            return super.alpha + CGFloat.random(in: -0.2..<0)
+        }
         set { }
-    }
-    
-    override init() {
-        super.init()
-        self.enabled = false
-        super.alpha = 0
     }
     
     override func load(_ shan: Shan) {

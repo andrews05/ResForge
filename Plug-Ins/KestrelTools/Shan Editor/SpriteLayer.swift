@@ -2,8 +2,8 @@ import RFSupport
 import Cocoa
 
 class SpriteLayer: NSObject {
-    // Nova has 32 levels of transparency (0-31) so we generally step the alpha by this amount
-    static let TransparencyStep: CGFloat = 1/31
+    // Nova has 32 levels of transparency, generally given in the range 1-32. To keep things simple we allow 0-32.
+    static let TransparencyStep: CGFloat = 1/32
     
     var frames: [NSBitmapImageRep] = []
     var operation: NSCompositingOperation { .plusLighter }

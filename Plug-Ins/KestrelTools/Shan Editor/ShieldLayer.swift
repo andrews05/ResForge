@@ -7,10 +7,11 @@ class ShieldLayer: SpriteLayer {
         }
     }
     
+    // This layer should be initially disabled
     override init() {
         super.init()
         self.enabled = false
-        self.alpha = 0
+        super.alpha = 0
     }
     
     override func load(_ shan: Shan) {

@@ -95,13 +95,13 @@ class LightLayer: SpriteLayer {
             // blinkValueC = maximum intensity (1-32)
             // blinkValueD = intensity decrease per frame, x100
             if blinkOn {
-                if alpha < CGFloat(min(blinkValueC, 32)-1) * SpriteLayer.TransparencyStep {
+                if alpha < CGFloat(min(blinkValueC, 32)) * SpriteLayer.TransparencyStep {
                     alpha += CGFloat(blinkValueB)/100 * SpriteLayer.TransparencyStep
                 } else {
                     blinkOn = false
                 }
             } else {
-                if alpha > CGFloat(max(blinkValueA, 1)-1) * SpriteLayer.TransparencyStep {
+                if alpha > CGFloat(max(blinkValueA, 0)) * SpriteLayer.TransparencyStep {
                     alpha -= CGFloat(blinkValueD)/100 * SpriteLayer.TransparencyStep
                 } else {
                     blinkOn = true
@@ -114,9 +114,9 @@ class LightLayer: SpriteLayer {
             // blinkValueC = delay between intensity changes
             blinkFrame += 1
             if blinkFrame >= blinkValueC {
-                let minVal = max(min(blinkValueA, blinkValueB), 1)
-                let maxVal = min(max(blinkValueA, blinkValueB), 32)
-                alpha = CGFloat(Int16.random(in: minVal...maxVal)-1) * SpriteLayer.TransparencyStep
+                // Allow min/max to be swapped if necessary to form a valid range
+                let range = (min(blinkValueA, blinkValueB)...max(blinkValueA, blinkValueB)).clamped(to: 0...32)
+                alpha = CGFloat(Int16.random(in: range)) * SpriteLayer.TransparencyStep
                 blinkFrame = 0
             }
         default:
