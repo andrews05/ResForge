@@ -11,7 +11,7 @@ class LightLayer: SpriteLayer {
             hideD = false
             switch blinkMode {
             case 1:
-                labelA.stringValue = "Off Time"
+                labelA.stringValue = "Delay"
                 labelB.stringValue = "On Time"
                 labelC.stringValue = "Group Count"
                 labelD.stringValue = "Group Delay"
@@ -54,11 +54,8 @@ class LightLayer: SpriteLayer {
             // blinkValueB = light on-time
             // blinkValueC = number of blinks in a group
             // blinkValueD = delay between groups
-            if blinkCount >= blinkValueC && blinkTicks >= blinkValueD {
-                blinkTicks = 0
-                blinkCount = 0
-            }
             blinkTicks += 1
+            alpha = 0
             if blinkCount < blinkValueC {
                 if blinkOn {
                     alpha = 1
@@ -67,13 +64,16 @@ class LightLayer: SpriteLayer {
                         blinkTicks = 0
                     }
                 } else {
-                    alpha = 0
                     if blinkTicks >= blinkValueA {
                         blinkOn = true
                         blinkTicks = 0
                         blinkCount += 1
                     }
                 }
+            }
+            if blinkCount >= blinkValueC && blinkTicks >= blinkValueD {
+                blinkTicks = 0
+                blinkCount = 0
             }
         case 2:
             // Triangle-wave

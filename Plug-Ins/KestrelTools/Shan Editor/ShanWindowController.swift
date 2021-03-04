@@ -47,9 +47,9 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     @objc dynamic var pointingCorrection = false
     
     @objc var gunPoints = ExitPoints(.red)
-    @objc var turretPoints = ExitPoints(.cyan)
-    @objc var guidedPoints = ExitPoints(.magenta)
-    @objc var beamPoints = ExitPoints(.yellow)
+    @objc var turretPoints = ExitPoints(NSColor(red: 0, green: 0.75, blue: 1, alpha: 1))
+    @objc var guidedPoints = ExitPoints(.green)
+    @objc var beamPoints = ExitPoints(.orange)
     @objc dynamic var upCompressX: CGFloat = 100
     @objc dynamic var upCompressY: CGFloat = 100
     @objc dynamic var downCompressX: CGFloat = 100

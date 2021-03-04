@@ -23,7 +23,7 @@ class SpriteLayer: NSObject {
     }
     @objc dynamic var spriteID: Int16 = -1 {
         didSet {
-            self.loadRle()
+            self.checkRle()
         }
     }
     // These are only for PICT sprites and are unused here
@@ -35,21 +35,36 @@ class SpriteLayer: NSObject {
         // Subclasses override to perform any necessary calculations
     }
     
-    func loadRle() {
+    private func checkRle() {
         frames.removeAll()
-        guard spriteID > 0, let rleResource = controller.resource.manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) else {
+        guard spriteID > 0, let resource = controller.resource.manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) else {
             spriteLink.title = "not found"
             return
         }
-        do {
-            let rle = try Rle(rleResource.data)
-            for _ in 0..<rle.frameCount {
-                frames.append(try rle.readFrame())
+        if type(of: self) == BaseLayer.self {
+            spriteLink.title = self.loadRle(resource.data)
+        } else {
+            spriteLink.title = "loading…"
+            DispatchQueue.global().async {
+                let title = self.loadRle(resource.data)
+                DispatchQueue.main.async {
+                    self.spriteLink.title = title
+                }
             }
-            spriteLink.title = "\(rle.frameCount)@\(rle.frameWidth)x\(rle.frameHeight)"
+        }
+    }
+    
+    private func loadRle(_ data: Data) -> String {
+        do {
+            let rle = try Rle(data)
+            var frameList: [NSBitmapImageRep] = []
+            for _ in 0..<rle.frameCount {
+                frameList.append(try rle.readFrame())
+            }
+            frames = frameList
+            return "\(rle.frameCount)@\(rle.frameWidth)x\(rle.frameHeight)"
         } catch {
-            frames.removeAll()
-            spriteLink.title = "error"
+            return "error"
         }
     }
     
