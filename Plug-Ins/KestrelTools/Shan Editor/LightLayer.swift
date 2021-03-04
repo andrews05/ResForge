@@ -39,22 +39,9 @@ class LightLayer: SpriteLayer {
     @objc dynamic var hideValues = true
     @objc dynamic var hideD = true
     @objc dynamic var hideDisabled = false
-    private var blinkFrame = 0
+    private var blinkTicks = 0
     private var blinkCount = 0
     private var blinkOn = true
-    
-    override func load(_ shan: Shan) {
-        self.spriteID = shan.lightSprite
-        blinkMode = shan.blinkMode
-        if blinkMode < 0 || blinkMode > 3 {
-            blinkMode = 0
-        }
-        blinkValueA = shan.blinkValueA
-        blinkValueB = shan.blinkValueB
-        blinkValueC = shan.blinkValueC
-        blinkValueD = shan.blinkValueD
-        hideDisabled = shan.flags.contains(.hideLightsDisabled)
-    }
     
     override func nextFrame() {
         guard enabled else {
@@ -67,24 +54,24 @@ class LightLayer: SpriteLayer {
             // blinkValueB = light on-time
             // blinkValueC = number of blinks in a group
             // blinkValueD = delay between groups
-            alpha = 0
-            if blinkCount >= blinkValueC && blinkFrame >= blinkValueD {
-                blinkFrame = 0
+            if blinkCount >= blinkValueC && blinkTicks >= blinkValueD {
+                blinkTicks = 0
                 blinkCount = 0
             }
-            blinkFrame += 1
+            blinkTicks += 1
             if blinkCount < blinkValueC {
                 if blinkOn {
                     alpha = 1
-                    if blinkFrame >= blinkValueB {
-                        blinkFrame = 0
+                    if blinkTicks >= blinkValueB {
                         blinkOn = false
+                        blinkTicks = 0
                     }
                 } else {
-                    if blinkFrame >= blinkValueA {
-                        blinkFrame = 0
-                        blinkCount += 1
+                    alpha = 0
+                    if blinkTicks >= blinkValueA {
                         blinkOn = true
+                        blinkTicks = 0
+                        blinkCount += 1
                     }
                 }
             }
@@ -95,14 +82,14 @@ class LightLayer: SpriteLayer {
             // blinkValueC = maximum intensity (1-32)
             // blinkValueD = intensity decrease per frame, x100
             if blinkOn {
-                if alpha < CGFloat(min(blinkValueC, 32)) * SpriteLayer.TransparencyStep {
-                    alpha += CGFloat(blinkValueB)/100 * SpriteLayer.TransparencyStep
+                if alpha < CGFloat(min(blinkValueC, 32)) * Self.TransparencyStep {
+                    alpha += CGFloat(blinkValueB)/100 * Self.TransparencyStep
                 } else {
                     blinkOn = false
                 }
             } else {
-                if alpha > CGFloat(max(blinkValueA, 0)) * SpriteLayer.TransparencyStep {
-                    alpha -= CGFloat(blinkValueD)/100 * SpriteLayer.TransparencyStep
+                if alpha > CGFloat(max(blinkValueA, 0)) * Self.TransparencyStep {
+                    alpha -= CGFloat(blinkValueD)/100 * Self.TransparencyStep
                 } else {
                     blinkOn = true
                 }
@@ -112,12 +99,12 @@ class LightLayer: SpriteLayer {
             // blinkValueA = minimum intensity (1-32)
             // blinkValueB = maximum intensity (1-32)
             // blinkValueC = delay between intensity changes
-            blinkFrame += 1
-            if blinkFrame >= blinkValueC {
+            blinkTicks += 1
+            if blinkTicks >= blinkValueC {
                 // Allow min/max to be swapped if necessary to form a valid range
                 let range = (min(blinkValueA, blinkValueB)...max(blinkValueA, blinkValueB)).clamped(to: 0...32)
-                alpha = CGFloat(Int16.random(in: range)) * SpriteLayer.TransparencyStep
-                blinkFrame = 0
+                alpha = CGFloat(Int16.random(in: range)) * Self.TransparencyStep
+                blinkTicks = 0
             }
         default:
             alpha = 1

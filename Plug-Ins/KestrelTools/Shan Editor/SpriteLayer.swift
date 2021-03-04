@@ -1,4 +1,3 @@
-import RFSupport
 import Cocoa
 
 class SpriteLayer: NSObject {
@@ -22,16 +21,18 @@ class SpriteLayer: NSObject {
             alpha = enabled ? 1 : 0
         }
     }
-    @objc dynamic var spriteID: Int16 = 0 {
+    @objc dynamic var spriteID: Int16 = -1 {
         didSet {
             self.loadRle()
         }
     }
-    
-    func load(_ shan: Shan) {
-    }
+    // These are only for PICT sprites and are unused here
+    var maskID: Int16 = -1
+    var width: Int16 = 0
+    var height: Int16 = 0
     
     func nextFrame() {
+        // Subclasses override to perform any necessary calculations
     }
     
     func loadRle() {

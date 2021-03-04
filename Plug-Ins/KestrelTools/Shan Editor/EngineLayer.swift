@@ -9,15 +9,11 @@ class EngineLayer: ShieldLayer {
         set { }
     }
     
-    override func load(_ shan: Shan) {
-        self.spriteID = shan.engineSprite
-    }
-    
     override func nextFrame() {
         if enabled && super.alpha < 1 {
-            super.alpha += SpriteLayer.TransparencyStep
+            super.alpha += Self.TransparencyStep
         } else if !enabled && super.alpha > 0 {
-            super.alpha -= SpriteLayer.TransparencyStep
+            super.alpha -= Self.TransparencyStep
         }
     }
 }

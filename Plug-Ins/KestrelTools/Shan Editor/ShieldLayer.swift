@@ -14,13 +14,9 @@ class ShieldLayer: SpriteLayer {
         super.alpha = 0
     }
     
-    override func load(_ shan: Shan) {
-        self.spriteID = shan.shieldSprite
-    }
-    
     override func nextFrame() {
         if !enabled && alpha > 0 {
-            alpha -= SpriteLayer.TransparencyStep
+            alpha -= Self.TransparencyStep
         }
     }
 }

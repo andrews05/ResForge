@@ -2,7 +2,6 @@ import Cocoa
 
 class ShanView: NSView, NSAnimationDelegate {
     @IBOutlet var controller: ShanWindowController!
-    // This override ensures crisp rendering of 72-dpi images on retina displays.
     public override func draw(_ dirtyRect: NSRect) {
         guard controller.currentFrame >= 0 else {
             return
@@ -14,7 +13,15 @@ class ShanView: NSView, NSAnimationDelegate {
         for layer in controller.layers {
             layer.draw(dirtyRect)
         }
+        
+        // Calculate transform for exit points
+        var transform = AffineTransform(translationByX: dirtyRect.midX, byY: dirtyRect.midY)
+        let angle = CGFloat(controller.framesPerSet-controller.currentFrame)/CGFloat(controller.framesPerSet) * 360
+        let compress = 91...269 ~= angle ? (x: controller.downCompressX, y: controller.downCompressY) : (x: controller.upCompressX, y: controller.upCompressY)
+        transform.scale(x: compress.x > 0 ? compress.x/100 : 1, y: compress.y > 0 ? compress.y/100 : 1)
+        transform.rotate(byDegrees: angle)
+        for points in controller.pointLayers {
+            points.draw(transform)
+        }
     }
-    
-    override var acceptsFirstResponder: Bool { true }
 }
