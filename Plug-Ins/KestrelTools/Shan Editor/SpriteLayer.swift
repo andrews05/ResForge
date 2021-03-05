@@ -14,7 +14,7 @@ class SpriteLayer: NSObject {
         let index = (controller.framesPerSet * controller.currentSet) + controller.currentFrame
         return frames[index % frames.count]
     }
-    @IBOutlet var controller: ShanWindowController!
+    @IBOutlet weak var controller: ShanWindowController!
     @IBOutlet var spriteLink: NSButton!
     @objc var enabled = true {
         didSet {

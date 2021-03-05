@@ -9,8 +9,20 @@ public extension FourCharCode {
     }
 }
 
+/// The abstract editor provides default menu item validation for Save/Revert Resource. Do not extend this without also conforming to ResourceEditor.
+open class AbstractEditor: NSWindowController, NSMenuItemValidation {
+    public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        switch menuItem.identifier?.rawValue {
+        case "SaveResource", "RevertResource":
+            return self.window?.isDocumentEdited == true
+        default:
+            return true
+        }
+    }
+}
+
 /// An editor provides a window for editing or viewing resources of the supported types.
-public protocol ResourceEditor: NSWindowController {
+public protocol ResourceEditor: AbstractEditor {
     /// The list of resource types that this plugin supports.
     static var supportedTypes: [String] { get }
     

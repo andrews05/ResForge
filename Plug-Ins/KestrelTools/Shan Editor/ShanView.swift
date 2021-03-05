@@ -1,7 +1,7 @@
 import Cocoa
 
 class ShanView: NSView {
-    @IBOutlet var controller: ShanWindowController!
+    @IBOutlet weak var controller: ShanWindowController!
     private var fillColor = NSColor.black
     private var borderColor = NSColor.gray
     public override func draw(_ dirtyRect: NSRect) {

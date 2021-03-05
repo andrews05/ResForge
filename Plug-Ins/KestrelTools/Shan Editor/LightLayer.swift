@@ -1,10 +1,11 @@
 import Cocoa
 
 class LightLayer: SpriteLayer {
-    @IBOutlet var labelA: NSTextField!
-    @IBOutlet var labelB: NSTextField!
-    @IBOutlet var labelC: NSTextField!
-    @IBOutlet var labelD: NSTextField!
+    // These labels are also bound to the hide vars so 'weak' is needed to prevent ref cycles
+    @IBOutlet weak var labelA: NSTextField!
+    @IBOutlet weak var labelB: NSTextField!
+    @IBOutlet weak var labelC: NSTextField!
+    @IBOutlet weak var labelD: NSTextField!
     @objc dynamic var blinkMode: Int16 = 0 {
         didSet {
             hideValues = false

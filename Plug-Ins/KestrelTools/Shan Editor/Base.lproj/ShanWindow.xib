@@ -930,7 +930,7 @@
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="85" id="TNA-1z-mzE"/>
                         </constraints>
-                        <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" image="NSFollowLinkFreestandingTemplate" imagePosition="trailing" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DQ7-97-wNv">
+                        <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" image="NSFollowLinkFreestandingTemplate" imagePosition="right" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DQ7-97-wNv">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>

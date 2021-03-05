@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class HexWindowController: NSWindowController, NSTextFieldDelegate, ResourceEditor, HFTextViewDelegate {
+class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, HFTextViewDelegate {
     static let supportedTypes = ["*"]
     
     let resource: Resource

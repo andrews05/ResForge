@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class ImageWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor, PreviewProvider, ExportProvider {
+class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
     static let supportedTypes = [
         "PICT",
         "PNG ",
@@ -61,18 +61,6 @@ class ImageWindowController: NSWindowController, NSMenuItemValidation, ResourceE
         imageView.isEditable = ["PICT", "cicn", "ppat", "PNG "].contains(resource.type)
     
         self.loadImage()
-    }
-    
-    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        switch menuItem.action {
-        case #selector(saveResource(_:)),
-             #selector(revertResource(_:)):
-            return self.window!.isDocumentEdited
-        case #selector(paste(_:)):
-            return imageView.isEditable && NSPasteboard.general.canReadObject(forClasses: [NSImage.self], options: nil)
-        default:
-            return true
-        }
     }
     
     // MARK: -

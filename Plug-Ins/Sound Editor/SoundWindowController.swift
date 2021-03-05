@@ -2,7 +2,7 @@ import AVKit
 import Cocoa
 import RFSupport
 
-class SoundWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor, ExportProvider {
+class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
     static let supportedTypes = ["snd "]
     
     let resource: Resource
@@ -45,16 +45,6 @@ class SoundWindowController: NSWindowController, NSMenuItemValidation, ResourceE
         self.window?.title = self.resource.defaultWindowTitle
         self.loadInfo()
         sound.play()
-    }
-    
-    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        switch menuItem.action {
-        case #selector(saveResource(_:)),
-             #selector(revertResource(_:)):
-            return self.window!.isDocumentEdited
-        default:
-            return true
-        }
     }
     
     private func loadInfo() {

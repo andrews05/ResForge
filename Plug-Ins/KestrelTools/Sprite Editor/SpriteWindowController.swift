@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class SpriteWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor, PreviewProvider, ExportProvider {
+class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
     static let supportedTypes = ["rlëD"]
     
     let resource: Resource
@@ -50,16 +50,6 @@ class SpriteWindowController: NSWindowController, NSMenuItemValidation, Resource
     
     @objc private func windowWillClose(_ notification: Notification) {
         timer?.invalidate()
-    }
-    
-    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        switch menuItem.action {
-        case #selector(saveResource(_:)),
-             #selector(revertResource(_:)):
-            return self.window!.isDocumentEdited
-        default:
-            return true
-        }
     }
     
     @IBAction func playPause(_ sender: Any) {
@@ -216,7 +206,7 @@ class SpriteWindowController: NSWindowController, NSMenuItemValidation, Resource
 class AnimationBox: NSBox {
     // Toggle black background on click
     override func mouseDown(with event: NSEvent) {
-        self.borderColor = self.borderColor == .gridColor ? .quaternaryLabelColor : .gridColor
+        self.borderColor = self.borderColor == .gray ? .quaternaryLabelColor : .gray
         self.fillColor = self.fillColor == .black ? .gridColor : .black
     }
 }

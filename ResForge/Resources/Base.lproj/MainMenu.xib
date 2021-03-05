@@ -336,13 +336,13 @@ CA
                             <menuItem isSeparatorItem="YES" tag="6" id="425">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Save Resource" tag="7" keyEquivalent="s" id="429">
+                            <menuItem title="Save Resource" tag="7" keyEquivalent="s" identifier="SaveResource" id="429">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="saveResource:" target="-1" id="507"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Revert Resource" tag="8" keyEquivalent="r" id="426">
+                            <menuItem title="Revert Resource" tag="8" keyEquivalent="r" identifier="RevertResource" id="426">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="revertResource:" target="-1" id="494"/>
@@ -394,7 +394,7 @@ CA
         </menu>
         <customObject id="431" customClass="ApplicationDelegate" customModule="ResForge" customModuleProvider="target"/>
         <customView id="432">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="38"/>
+            <rect key="frame" x="0.0" y="-1" width="500" height="39"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZz-d2-V4c">
@@ -406,7 +406,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW9-Ng-yIh">
-                    <rect key="frame" x="106" y="6" width="187" height="25"/>
+                    <rect key="frame" x="107" y="7" width="185" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="xWq-2O-h1B"/>
                     </constraints>

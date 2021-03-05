@@ -14,7 +14,7 @@ struct ShanFlags: OptionSet {
     static let pointingCorrection   = Self(rawValue: 0x0100)
 }
 
-class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEditor, NSAnimationDelegate {
+class ShanWindowController: AbstractEditor, ResourceEditor {
     static let supportedTypes = ["shän"]
     
     let resource: Resource
@@ -120,16 +120,6 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     
     @objc private func windowWillClose(_ notification: Notification) {
         timer?.invalidate()
-    }
-    
-    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        switch menuItem.action {
-        case #selector(saveResource(_:)),
-             #selector(revertResource(_:)):
-            return self.window!.isDocumentEdited
-        default:
-            return true
-        }
     }
     
     override func keyDown(with event: NSEvent) {

@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate, NSMenuItemValidation, TemplateEditor {
+class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDataSource, NSOutlineViewDelegate {
     static let supportedTypes: [String] = []
     
     let resource: Resource
@@ -173,16 +173,6 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
     
     @IBAction func itemValueUpdated(_ sender: Any) {
         self.setDocumentEdited(true)
-    }
-    
-    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        switch menuItem.action {
-        case #selector(self.saveResource(_:)),
-             #selector(self.revertResource(_:)):
-            return self.window!.isDocumentEdited
-        default:
-            return true
-        }
     }
     
     @objc func windowDidBecomeKey(_ notification: Notification) {
