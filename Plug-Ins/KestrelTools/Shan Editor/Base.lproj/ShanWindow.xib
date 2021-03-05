@@ -35,7 +35,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="ldy-h7-87K" customClass="ShanView" customModule="KestrelTools" customModuleProvider="target">
-                        <rect key="frame" x="412" y="178" width="402" height="402"/>
+                        <rect key="frame" x="411" y="178" width="402" height="402"/>
                         <subviews>
                             <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gx5-MO-Xlp">
                                 <rect key="frame" x="383" y="387" width="18" height="14"/>
@@ -72,12 +72,10 @@
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        <connections>
-                                            <outlet property="formatter" destination="bhc-Ra-cbF" id="ez7-jx-5OY"/>
-                                        </connections>
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="3hB-Gf-oKq" name="value" keyPath="spriteID" id="opu-8h-OTD"/>
+                                        <outlet property="formatter" destination="bhc-Ra-cbF" id="Th3-ft-MaU"/>
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iGR-mj-8jy">
@@ -159,7 +157,7 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fDG-I6-37G">
+                                <textField toolTip="The inherent transparency of the base and alt sprites, from 0 (no transparency) to 32 (fully transparent)." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fDG-I6-37G">
                                     <rect key="frame" x="112" y="50" width="60" height="21"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="BKW-Nj-5Rf">
                                         <font key="font" metaFont="system"/>
@@ -168,10 +166,11 @@
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="-2" name="value" keyPath="baseTransparency" id="sdr-vV-a6h"/>
+                                        <outlet property="delegate" destination="6tQ-bz-NeX" id="fDa-o6-TLz"/>
                                         <outlet property="formatter" destination="vgo-7Z-Vj2" id="TNT-QY-AaB"/>
                                     </connections>
                                 </textField>
-                                <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cFp-HO-gjT">
+                                <button hidden="YES" toolTip="Always display ship's engine glow when it is banking." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cFp-HO-gjT">
                                     <rect key="frame" x="214" y="52" width="144" height="18"/>
                                     <buttonCell key="cell" type="check" title="Glow when banking" bezelStyle="regularSquare" imagePosition="left" inset="2" id="XWN-dK-diX">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -181,7 +180,7 @@
                                         <binding destination="-2" name="value" keyPath="glowOnBank" id="UIh-Ha-ZXk"/>
                                     </connections>
                                 </button>
-                                <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Lv0-1m-MYd">
+                                <button hidden="YES" toolTip="Ship unfolds when firing weapons, and folds back up when not firing." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Lv0-1m-MYd">
                                     <rect key="frame" x="252" y="52" width="106" height="18"/>
                                     <buttonCell key="cell" type="check" title="Unfold to fire" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Ked-ks-pgc">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -199,7 +198,7 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VBj-Sf-EMA">
+                                <textField toolTip="The number of frames for one rotation of this ship." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VBj-Sf-EMA">
                                     <rect key="frame" x="112" y="112" width="60" height="21"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="ocE-T2-XY5">
                                         <font key="font" metaFont="system"/>
@@ -207,7 +206,8 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="framesPerSet" id="mLF-CU-IzD"/>
+                                        <binding destination="-2" name="value" keyPath="framesPerSet" id="aPm-Iz-uNe"/>
+                                        <outlet property="delegate" destination="6tQ-bz-NeX" id="I3Y-6U-36f"/>
                                         <outlet property="formatter" destination="vgo-7Z-Vj2" id="bNU-jW-4xG"/>
                                     </connections>
                                 </textField>
@@ -228,10 +228,11 @@
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="-2" name="value" keyPath="setCount" id="WZa-3w-QtM"/>
+                                        <outlet property="delegate" destination="6tQ-bz-NeX" id="zXh-3Z-HgO"/>
                                         <outlet property="formatter" destination="vgo-7Z-Vj2" id="0eO-hL-YNS"/>
                                     </connections>
                                 </textField>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S8P-O6-qap">
+                                <textField toolTip="The delay between frames of the base and alt animations, in 30ths of a second." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S8P-O6-qap">
                                     <rect key="frame" x="112" y="19" width="60" height="21"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="oE1-7P-sar">
                                         <font key="font" metaFont="system"/>
@@ -240,6 +241,7 @@
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="-2" name="value" keyPath="animationDelay" id="XTd-8H-Pin"/>
+                                        <outlet property="delegate" destination="6tQ-bz-NeX" id="ivI-2P-jJN"/>
                                         <outlet property="formatter" destination="vgo-7Z-Vj2" id="1xp-bk-VOf"/>
                                     </connections>
                                 </textField>
@@ -251,9 +253,9 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w5i-Wr-itN">
-                                    <rect key="frame" x="248" y="21" width="110" height="18"/>
-                                    <buttonCell key="cell" type="check" title="Stop disabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="iu9-IS-5di">
+                                <button toolTip="Stop the ship's animations when it is disabled." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w5i-Wr-itN">
+                                    <rect key="frame" x="237" y="21" width="121" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Stop if disabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="iu9-IS-5di">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -335,12 +337,10 @@
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        <connections>
-                                            <outlet property="formatter" destination="bhc-Ra-cbF" id="7h5-qn-ofb"/>
-                                        </connections>
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="voQ-sS-cgL" name="value" keyPath="spriteID" id="DS0-Dz-Ic8"/>
+                                        <outlet property="formatter" destination="bhc-Ra-cbF" id="YXl-OO-BJq"/>
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GDe-E9-24V">
@@ -394,12 +394,13 @@
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="voQ-sS-cgL" name="value" keyPath="setCount" id="stb-dl-S3L"/>
+                                        <outlet property="delegate" destination="6tQ-bz-NeX" id="WbP-u5-La9"/>
                                         <outlet property="formatter" destination="vgo-7Z-Vj2" id="5Ft-jI-rjR"/>
                                     </connections>
                                 </textField>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l7i-Lt-Jml">
-                                    <rect key="frame" x="249" y="21" width="109" height="18"/>
-                                    <buttonCell key="cell" type="check" title="Hide disabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="hkD-E0-nBR">
+                                <button toolTip="Hide alt sprites when the ship is disabled." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l7i-Lt-Jml">
+                                    <rect key="frame" x="237" y="21" width="121" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Hide if disabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="hkD-E0-nBR">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -435,9 +436,9 @@
                         </constraints>
                     </box>
                     <box title="Engine Glow" translatesAutoresizingMaskIntoConstraints="NO" id="ulA-Wu-wTq">
-                        <rect key="frame" x="409" y="97" width="384" height="77"/>
+                        <rect key="frame" x="408" y="97" width="408" height="77"/>
                         <view key="contentView" id="xrI-Cv-AHy">
-                            <rect key="frame" x="3" y="3" width="378" height="59"/>
+                            <rect key="frame" x="3" y="3" width="402" height="59"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0kU-Xh-FGy">
@@ -449,12 +450,10 @@
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        <connections>
-                                            <outlet property="formatter" destination="bhc-Ra-cbF" id="3AN-1m-4vh"/>
-                                        </connections>
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="YPf-Cu-YD2" name="value" keyPath="spriteID" id="vhn-vW-PLK"/>
+                                        <outlet property="formatter" destination="bhc-Ra-cbF" id="na3-T2-Awy"/>
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3f6-ci-odz">
@@ -482,7 +481,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mQc-nY-sPT">
-                                    <rect key="frame" x="298" y="21" width="60" height="18"/>
+                                    <rect key="frame" x="322" y="21" width="60" height="18"/>
                                     <buttonCell key="cell" type="check" title="Show" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7fz-yg-8rr">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -505,9 +504,6 @@
                                 <constraint firstItem="CBi-O6-Uyr" firstAttribute="leading" secondItem="0kU-Xh-FGy" secondAttribute="trailing" constant="8" symbolic="YES" id="qFy-wt-lXf"/>
                             </constraints>
                         </view>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="378" id="T6G-lB-kk4"/>
-                        </constraints>
                     </box>
                     <box title="Running Lights" translatesAutoresizingMaskIntoConstraints="NO" id="Q0p-4b-ejv">
                         <rect key="frame" x="17" y="128" width="384" height="170"/>
@@ -524,12 +520,10 @@
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        <connections>
-                                            <outlet property="formatter" destination="bhc-Ra-cbF" id="B8u-te-YjV"/>
-                                        </connections>
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="aL1-qs-j3R" name="value" keyPath="spriteID" id="xyP-4T-hzt"/>
+                                        <outlet property="formatter" destination="bhc-Ra-cbF" id="J0W-7O-yhY"/>
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xyD-Ln-WKk">
@@ -567,7 +561,7 @@
                                     </connections>
                                 </button>
                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mRO-JK-1mz">
-                                    <rect key="frame" x="109" y="77" width="137" height="25"/>
+                                    <rect key="frame" x="109" y="77" width="124" height="25"/>
                                     <popUpButtonCell key="cell" type="push" title="No blinking" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="A9h-nA-cli" id="cMy-RT-67J">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
@@ -576,7 +570,7 @@
                                                 <menuItem title="No blinking" state="on" id="A9h-nA-cli"/>
                                                 <menuItem title="Square-wave" id="AeM-5J-30Z"/>
                                                 <menuItem title="Triangle-wave" id="iRt-n1-5CY"/>
-                                                <menuItem title="Random pulsing" id="fZe-uo-lJd"/>
+                                                <menuItem title="Random" id="fZe-uo-lJd"/>
                                             </items>
                                         </menu>
                                     </popUpButtonCell>
@@ -602,6 +596,7 @@
                                     <connections>
                                         <binding destination="aL1-qs-j3R" name="value" keyPath="blinkValueA" id="dg4-iD-vWu"/>
                                         <binding destination="aL1-qs-j3R" name="hidden" keyPath="hideValues" id="EMK-Gy-hEP"/>
+                                        <outlet property="delegate" destination="6tQ-bz-NeX" id="UFk-n7-C3I"/>
                                         <outlet property="formatter" destination="vgo-7Z-Vj2" id="VBo-Mv-fly"/>
                                     </connections>
                                 </textField>
@@ -615,6 +610,7 @@
                                     <connections>
                                         <binding destination="aL1-qs-j3R" name="value" keyPath="blinkValueB" id="NMZ-B6-kvf"/>
                                         <binding destination="aL1-qs-j3R" name="hidden" keyPath="hideValues" id="UW6-eq-abu"/>
+                                        <outlet property="delegate" destination="6tQ-bz-NeX" id="Dre-hT-njQ"/>
                                         <outlet property="formatter" destination="vgo-7Z-Vj2" id="hCd-Hy-Uuz"/>
                                     </connections>
                                 </textField>
@@ -628,6 +624,7 @@
                                     <connections>
                                         <binding destination="aL1-qs-j3R" name="value" keyPath="blinkValueD" id="x7T-6A-qFE"/>
                                         <binding destination="aL1-qs-j3R" name="hidden" keyPath="hideD" id="wAY-9S-gZF"/>
+                                        <outlet property="delegate" destination="6tQ-bz-NeX" id="LGj-3r-RWh"/>
                                         <outlet property="formatter" destination="vgo-7Z-Vj2" id="eCU-Sz-ryc"/>
                                     </connections>
                                 </textField>
@@ -664,9 +661,9 @@
                                         <binding destination="aL1-qs-j3R" name="hidden" keyPath="hideD" id="rTX-lf-I4H"/>
                                     </connections>
                                 </textField>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FWc-QO-iru">
-                                    <rect key="frame" x="249" y="83" width="109" height="18"/>
-                                    <buttonCell key="cell" type="check" title="Hide disabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="RZK-gO-4n7">
+                                <button toolTip="Hide running light sprites when the ship is disabled." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FWc-QO-iru">
+                                    <rect key="frame" x="237" y="83" width="121" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Hide if disabled" bezelStyle="regularSquare" imagePosition="left" inset="2" id="RZK-gO-4n7">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -684,6 +681,7 @@
                                     <connections>
                                         <binding destination="aL1-qs-j3R" name="value" keyPath="blinkValueC" id="wst-Z7-6yB"/>
                                         <binding destination="aL1-qs-j3R" name="hidden" keyPath="hideValues" id="Xt7-ji-c0k"/>
+                                        <outlet property="delegate" destination="6tQ-bz-NeX" id="DBo-s1-qD4"/>
                                         <outlet property="formatter" destination="vgo-7Z-Vj2" id="5pU-wM-f2W"/>
                                     </connections>
                                 </textField>
@@ -763,12 +761,10 @@
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        <connections>
-                                            <outlet property="formatter" destination="bhc-Ra-cbF" id="vHO-3Z-bff"/>
-                                        </connections>
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="i3w-Wq-7dL" name="value" keyPath="spriteID" id="Lvt-je-EJD"/>
+                                        <outlet property="formatter" destination="bhc-Ra-cbF" id="3Re-zS-R4y"/>
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gNE-Rc-et3">
@@ -805,7 +801,7 @@
                                         <binding destination="i3w-Wq-7dL" name="value" keyPath="enabled" id="WYU-Fo-HZh"/>
                                     </connections>
                                 </button>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5SZ-88-5Hg">
+                                <textField toolTip="The rate at which the weapon glow fades out to transparency. 10 is a good median number - lower numbers yield slower decays." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5SZ-88-5Hg">
                                     <rect key="frame" x="112" y="19" width="60" height="21"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="a5M-II-FcJ">
                                         <font key="font" metaFont="system"/>
@@ -814,6 +810,7 @@
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="i3w-Wq-7dL" name="value" keyPath="decay" id="zBJ-hE-DJP"/>
+                                        <outlet property="delegate" destination="6tQ-bz-NeX" id="z9W-7B-0aq"/>
                                         <outlet property="formatter" destination="vgo-7Z-Vj2" id="sZh-4t-VcG"/>
                                     </connections>
                                 </textField>
@@ -850,9 +847,9 @@
                         </constraints>
                     </box>
                     <box title="Shield Bubble" translatesAutoresizingMaskIntoConstraints="NO" id="RRQ-t9-SjX">
-                        <rect key="frame" x="409" y="16" width="384" height="77"/>
+                        <rect key="frame" x="408" y="16" width="408" height="77"/>
                         <view key="contentView" id="55V-Gl-f3O">
-                            <rect key="frame" x="3" y="3" width="378" height="59"/>
+                            <rect key="frame" x="3" y="3" width="402" height="59"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oCe-VM-kkg">
@@ -864,12 +861,10 @@
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        <connections>
-                                            <outlet property="formatter" destination="bhc-Ra-cbF" id="8KH-id-CTr"/>
-                                        </connections>
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="5Sz-mw-zeq" name="value" keyPath="spriteID" id="lVx-Mv-7Ol"/>
+                                        <outlet property="formatter" destination="bhc-Ra-cbF" id="ouj-qp-FWP"/>
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VxK-ur-5ox">
@@ -897,7 +892,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ona-UJ-PkL">
-                                    <rect key="frame" x="298" y="21" width="60" height="18"/>
+                                    <rect key="frame" x="322" y="21" width="60" height="18"/>
                                     <buttonCell key="cell" type="check" title="Show" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="LHz-cU-dmB">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -920,12 +915,9 @@
                                 <constraint firstItem="VxK-ur-5ox" firstAttribute="leading" secondItem="55V-Gl-f3O" secondAttribute="leading" constant="20" symbolic="YES" id="tSR-FO-pya"/>
                             </constraints>
                         </view>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="378" id="Fv3-ed-CrE"/>
-                        </constraints>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e3j-NW-hCp">
-                        <rect key="frame" x="572" y="588" width="82" height="32"/>
+                        <rect key="frame" x="571" y="588" width="82" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="TNA-1z-mzE"/>
                         </constraints>
@@ -950,6 +942,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point1.x" id="tSv-F6-jxe"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="Dyx-Rg-Bcy"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="cOX-JQ-t6g"/>
                                 </connections>
                             </textField>
@@ -963,6 +956,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point1.y" id="QWe-LU-UXP"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="HFu-pT-yUE"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="y0C-vn-juG"/>
                                 </connections>
                             </textField>
@@ -976,6 +970,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point1.z" id="Qww-OP-PC9"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="wR2-zp-Cj3"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="IHl-Qy-cnG"/>
                                 </connections>
                             </textField>
@@ -989,6 +984,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point2.x" id="W1u-Ym-vAJ"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="YJl-Hk-rI1"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="2wa-i3-6IF"/>
                                 </connections>
                             </textField>
@@ -1002,6 +998,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point2.y" id="nZL-ae-Emf"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="JUo-gU-uLF"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="Sqc-2R-LM6"/>
                                 </connections>
                             </textField>
@@ -1015,6 +1012,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point2.z" id="JgY-Bh-f2w"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="KsJ-st-rXP"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="nFK-Jd-77d"/>
                                 </connections>
                             </textField>
@@ -1028,6 +1026,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point3.x" id="dXS-so-v75"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="lLk-rn-8QD"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="AiR-6C-UNt"/>
                                 </connections>
                             </textField>
@@ -1041,6 +1040,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point3.y" id="Phy-Zm-OY2"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="Cha-sb-qbr"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="rjs-Ih-p7C"/>
                                 </connections>
                             </textField>
@@ -1054,6 +1054,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point3.z" id="tk7-eI-yqm"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="yhN-42-WAg"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="ylr-0a-Yjg"/>
                                 </connections>
                             </textField>
@@ -1067,6 +1068,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point4.x" id="a8Z-gV-Suo"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="m5t-wC-KBs"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="FPz-V1-kbf"/>
                                 </connections>
                             </textField>
@@ -1080,6 +1082,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point4.y" id="Sdx-gH-9rg"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="tJV-Mx-yw8"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="88o-ub-fR9"/>
                                 </connections>
                             </textField>
@@ -1093,6 +1096,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="gunPoints.point4.z" id="FB2-gH-L4g"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="GOb-Hl-AUk"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="Cdn-7q-8u5"/>
                                 </connections>
                             </textField>
@@ -1138,6 +1142,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point1.x" id="gRS-D5-pzJ"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="Yup-GI-H0C"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="z3k-fD-KDP"/>
                                 </connections>
                             </textField>
@@ -1151,6 +1156,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point1.y" id="C4o-xR-VeU"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="lP6-0d-QY8"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="sPK-5H-36u"/>
                                 </connections>
                             </textField>
@@ -1164,6 +1170,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point1.z" id="PzR-Rb-1LD"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="XtI-Hg-C9i"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="Mvu-lu-2Hq"/>
                                 </connections>
                             </textField>
@@ -1177,6 +1184,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point2.x" id="j0K-kW-e1I"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="uo7-X3-hxa"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="BiS-Vg-nS1"/>
                                 </connections>
                             </textField>
@@ -1190,6 +1198,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point2.y" id="oYq-HK-YBe"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="gXM-Mp-Lwd"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="tGM-cP-PbY"/>
                                 </connections>
                             </textField>
@@ -1203,6 +1212,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point2.z" id="7iT-lR-eDt"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="43K-mW-m4e"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="u3C-zt-RMK"/>
                                 </connections>
                             </textField>
@@ -1216,6 +1226,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point3.x" id="JOA-TX-GHf"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="Lhc-Gf-tNC"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="LC9-cF-cdn"/>
                                 </connections>
                             </textField>
@@ -1229,6 +1240,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point3.y" id="Fab-b9-U2u"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="NRb-hn-e90"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="QDu-o8-9di"/>
                                 </connections>
                             </textField>
@@ -1242,6 +1254,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point3.z" id="PGC-Aa-kDD"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="iJW-8h-ade"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="acG-FE-Z81"/>
                                 </connections>
                             </textField>
@@ -1255,6 +1268,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point4.x" id="ik7-iK-VVe"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="Cgn-UM-KWk"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="0uC-yO-Lec"/>
                                 </connections>
                             </textField>
@@ -1268,6 +1282,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point4.y" id="Ep3-s2-OXP"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="zaE-V7-H8l"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="zu8-Bs-kmu"/>
                                 </connections>
                             </textField>
@@ -1281,6 +1296,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="turretPoints.point4.z" id="krI-vG-ygN"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="rBY-Je-G5n"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="tJZ-dB-cgc"/>
                                 </connections>
                             </textField>
@@ -1305,6 +1321,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point1.x" id="Ueb-sB-9Kg"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="RSM-u8-Wuo"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="J8z-Bg-gGC"/>
                                 </connections>
                             </textField>
@@ -1318,6 +1335,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point1.y" id="Vi0-0c-mn7"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="IZA-Ub-31d"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="gAn-Sl-Zb2"/>
                                 </connections>
                             </textField>
@@ -1331,6 +1349,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point1.z" id="f6H-r1-Ra0"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="2vF-dE-czo"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="GDq-Cz-15t"/>
                                 </connections>
                             </textField>
@@ -1344,6 +1363,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point2.x" id="faU-ru-N2K"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="BQ6-cH-Nqm"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="u4I-o6-NkC"/>
                                 </connections>
                             </textField>
@@ -1357,6 +1377,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point2.y" id="ART-Us-wcz"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="IOJ-ju-0ue"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="lmg-dH-g5u"/>
                                 </connections>
                             </textField>
@@ -1370,6 +1391,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point2.z" id="V8U-UO-Cg0"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="uvu-tl-xjT"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="4gQ-is-3wW"/>
                                 </connections>
                             </textField>
@@ -1383,6 +1405,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point3.x" id="wWm-A4-5j7"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="OZ8-1T-2n6"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="YPU-Pa-7to"/>
                                 </connections>
                             </textField>
@@ -1396,6 +1419,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point3.y" id="5Lf-CP-TIS"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="VIC-kC-ifI"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="PfN-R2-ylw"/>
                                 </connections>
                             </textField>
@@ -1409,6 +1433,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point3.z" id="Y1y-Ps-c7s"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="iZl-rW-w25"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="cjU-H2-BJ6"/>
                                 </connections>
                             </textField>
@@ -1422,6 +1447,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point4.x" id="Eii-GU-qjp"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="mOL-aA-17q"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="ptK-zs-9Ws"/>
                                 </connections>
                             </textField>
@@ -1435,6 +1461,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point4.y" id="wgz-Z0-BXv"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="hq1-he-RAe"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="rVa-WK-H3Z"/>
                                 </connections>
                             </textField>
@@ -1448,6 +1475,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="guidedPoints.point4.z" id="9Ha-z0-LwS"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="7cH-9i-X77"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="Rl5-Ij-J6A"/>
                                 </connections>
                             </textField>
@@ -1472,6 +1500,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point1.x" id="v9e-rJ-02S"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="Wf5-OK-ZEo"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="Tek-5q-b1M"/>
                                 </connections>
                             </textField>
@@ -1485,6 +1514,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point1.y" id="OCt-zd-0Oc"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="S5Y-Sb-2H2"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="LOc-tk-26A"/>
                                 </connections>
                             </textField>
@@ -1498,6 +1528,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point1.z" id="Ogo-fl-HSj"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="8CS-bp-NdE"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="arz-MW-8O2"/>
                                 </connections>
                             </textField>
@@ -1511,6 +1542,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point2.x" id="eWv-6F-iJG"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="prJ-FY-AwE"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="vhf-zn-hzo"/>
                                 </connections>
                             </textField>
@@ -1524,6 +1556,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point2.y" id="PKi-gj-hxe"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="TrD-qW-yFH"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="Jb4-Zj-9d2"/>
                                 </connections>
                             </textField>
@@ -1537,6 +1570,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point2.z" id="S7E-VM-7Is"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="rT2-53-hx3"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="Pt1-8J-2sn"/>
                                 </connections>
                             </textField>
@@ -1550,6 +1584,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point3.x" id="4d2-NM-Mht"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="7xL-d8-Ji7"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="TOc-je-YJ6"/>
                                 </connections>
                             </textField>
@@ -1563,6 +1598,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point3.y" id="bbw-Fa-pWk"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="TC2-Ws-NyH"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="8bl-3K-7F6"/>
                                 </connections>
                             </textField>
@@ -1576,6 +1612,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point3.z" id="BNu-3p-kxp"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="JZf-pL-bPx"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="ENQ-oh-CQu"/>
                                 </connections>
                             </textField>
@@ -1589,6 +1626,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point4.x" id="vyt-Eu-Dh8"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="5V4-i4-STl"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="5DK-be-wG9"/>
                                 </connections>
                             </textField>
@@ -1602,6 +1640,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point4.y" id="R00-kS-5zH"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="z26-3C-JEN"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="eD7-VE-hp3"/>
                                 </connections>
                             </textField>
@@ -1615,6 +1654,7 @@
                                 </textFieldCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="beamPoints.point4.z" id="mYO-4i-KmJ"/>
+                                    <outlet property="delegate" destination="6tQ-bz-NeX" id="8WE-dG-lSz"/>
                                     <outlet property="formatter" destination="bhc-Ra-cbF" id="NEe-e0-i0W"/>
                                 </connections>
                             </textField>
@@ -1665,122 +1705,170 @@
                                 </view>
                                 <color key="borderColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </box>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="rQV-U4-IDM">
+                                <rect key="frame" x="0.0" y="24" width="178" height="67"/>
+                                <string key="toolTip">These fields are used to correct for the ship's perspective when calculating the weapon exit points. If the ship is pointing generally "up" then Up values are used; if the ship is pointing generally "down" then Down values are used. Values less that 100 will bring the exit points in closer to the ship and values greater than 100 will move the exit points farther out.</string>
+                                <subviews>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9oL-Rc-cHX">
+                                        <rect key="frame" x="74" y="25" width="50" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="CD1-xM-WmM"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Aei-ee-ClZ">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="upCompressX" id="xzR-xd-Bpw"/>
+                                            <outlet property="delegate" destination="6tQ-bz-NeX" id="2Vu-gW-4Wh"/>
+                                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="Ux3-t5-Gyw"/>
+                                        </connections>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pXn-bX-ZFr">
+                                        <rect key="frame" x="128" y="25" width="50" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="mlm-Of-X4R"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="eFc-FP-diK">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="upCompressY" id="koz-MN-F9E"/>
+                                            <outlet property="delegate" destination="6tQ-bz-NeX" id="5HL-c3-rzQ"/>
+                                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="6dW-vu-a28"/>
+                                        </connections>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9kk-Sd-6aX">
+                                        <rect key="frame" x="74" y="0.0" width="50" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="ukV-rV-jbY"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="bat-jw-vmk">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="downCompressX" id="2Lh-jZ-qNF"/>
+                                            <outlet property="delegate" destination="6tQ-bz-NeX" id="4Xu-T7-hzl"/>
+                                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="WDV-sd-oQV"/>
+                                        </connections>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wfa-lZ-FWY">
+                                        <rect key="frame" x="128" y="0.0" width="50" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="npk-xy-0I4"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Ffs-dd-tUV">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="downCompressY" id="HQu-jT-3VU"/>
+                                            <outlet property="delegate" destination="6tQ-bz-NeX" id="EVH-q1-Oua"/>
+                                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="axM-2E-uyR"/>
+                                        </connections>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ovv-om-0JF">
+                                        <rect key="frame" x="91" y="51" width="17" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="X" id="Ijz-6p-eeo">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CMZ-Oz-7PN">
+                                        <rect key="frame" x="145" y="51" width="17" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Y" id="5bI-ch-x2O">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XSf-If-66S">
+                                        <rect key="frame" x="2" y="28" width="66" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Up %" id="C0G-l7-D1F">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KWf-cc-kFR">
+                                        <rect key="frame" x="2" y="3" width="66" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Down %" id="Qb1-vI-cwN">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BIl-oR-8Qb">
+                                        <rect key="frame" x="2" y="51" width="66" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Compress" id="saV-Zw-anR">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="KWf-cc-kFR" firstAttribute="firstBaseline" secondItem="9kk-Sd-6aX" secondAttribute="firstBaseline" id="0XY-Vg-0Ao"/>
+                                    <constraint firstItem="CMZ-Oz-7PN" firstAttribute="centerX" secondItem="pXn-bX-ZFr" secondAttribute="centerX" id="5lJ-16-kNz"/>
+                                    <constraint firstItem="XSf-If-66S" firstAttribute="leading" secondItem="BIl-oR-8Qb" secondAttribute="leading" id="62V-ML-L4n"/>
+                                    <constraint firstItem="BIl-oR-8Qb" firstAttribute="trailing" secondItem="XSf-If-66S" secondAttribute="trailing" id="F4j-eL-s9c"/>
+                                    <constraint firstItem="pXn-bX-ZFr" firstAttribute="top" secondItem="CMZ-Oz-7PN" secondAttribute="bottom" constant="5" id="Fjs-n2-khi"/>
+                                    <constraint firstAttribute="bottom" secondItem="9kk-Sd-6aX" secondAttribute="bottom" id="Jdo-g6-DLZ"/>
+                                    <constraint firstItem="KWf-cc-kFR" firstAttribute="leading" secondItem="XSf-If-66S" secondAttribute="leading" id="MW9-T4-6Ex"/>
+                                    <constraint firstItem="9kk-Sd-6aX" firstAttribute="top" secondItem="9oL-Rc-cHX" secondAttribute="bottom" constant="4" id="Vgy-yM-AOP"/>
+                                    <constraint firstItem="9kk-Sd-6aX" firstAttribute="firstBaseline" secondItem="Wfa-lZ-FWY" secondAttribute="firstBaseline" id="aw4-vr-wLo"/>
+                                    <constraint firstItem="9oL-Rc-cHX" firstAttribute="top" secondItem="Ovv-om-0JF" secondAttribute="bottom" constant="5" id="awZ-Fa-S39"/>
+                                    <constraint firstItem="Wfa-lZ-FWY" firstAttribute="leading" secondItem="9kk-Sd-6aX" secondAttribute="trailing" constant="4" id="bYN-dX-KW7"/>
+                                    <constraint firstItem="9oL-Rc-cHX" firstAttribute="leading" secondItem="XSf-If-66S" secondAttribute="trailing" constant="8" symbolic="YES" id="dVi-zU-vCS"/>
+                                    <constraint firstItem="Ovv-om-0JF" firstAttribute="centerX" secondItem="9oL-Rc-cHX" secondAttribute="centerX" id="fBy-BL-3HU"/>
+                                    <constraint firstItem="9kk-Sd-6aX" firstAttribute="leading" secondItem="KWf-cc-kFR" secondAttribute="trailing" constant="8" symbolic="YES" id="hWD-dI-Rmz"/>
+                                    <constraint firstItem="pXn-bX-ZFr" firstAttribute="firstBaseline" secondItem="9oL-Rc-cHX" secondAttribute="firstBaseline" id="jUt-aP-GhM"/>
+                                    <constraint firstItem="XSf-If-66S" firstAttribute="firstBaseline" secondItem="9oL-Rc-cHX" secondAttribute="firstBaseline" id="mu1-fc-mJp"/>
+                                    <constraint firstItem="pXn-bX-ZFr" firstAttribute="leading" secondItem="9oL-Rc-cHX" secondAttribute="trailing" constant="4" id="nB8-Y3-P9z"/>
+                                    <constraint firstAttribute="trailing" secondItem="Wfa-lZ-FWY" secondAttribute="trailing" id="nfW-wX-iYb"/>
+                                    <constraint firstItem="BIl-oR-8Qb" firstAttribute="top" secondItem="rQV-U4-IDM" secondAttribute="top" id="q4U-Dy-W20"/>
+                                    <constraint firstAttribute="trailing" secondItem="pXn-bX-ZFr" secondAttribute="trailing" id="snY-Qk-EDc"/>
+                                    <constraint firstItem="BIl-oR-8Qb" firstAttribute="firstBaseline" secondItem="Ovv-om-0JF" secondAttribute="firstBaseline" id="yl8-kN-BBT"/>
+                                </constraints>
+                            </customView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rma-Yv-7iD">
+                                <rect key="frame" x="-2" y="-1" width="142" height="18"/>
+                                <string key="toolTip">Adjust ship's visual presentation to correct for the skew caused by graphics that are rendered highly off-axis from vertical. This uses the Compress Y fields to interpolate the proper sprite frame to display based on the ship's actual heading. Use this with caution, as it tends to cause very jerky ship rotation and is mostly included as a curiosity.</string>
+                                <buttonCell key="cell" type="check" title="Pointing correction" bezelStyle="regularSquare" imagePosition="left" inset="2" id="z88-cS-A4Y">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="-2" name="value" keyPath="pointingCorrection" id="Gbm-pI-D4D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="WVa-Ch-gHb" firstAttribute="firstBaseline" secondItem="Vql-vd-bfZ" secondAttribute="firstBaseline" id="48q-bK-j9h"/>
                             <constraint firstItem="Xrp-Hj-ffu" firstAttribute="leading" secondItem="Vql-vd-bfZ" secondAttribute="trailing" constant="8" symbolic="YES" id="6W1-A0-e2h"/>
                             <constraint firstItem="Vql-vd-bfZ" firstAttribute="leading" secondItem="WVa-Ch-gHb" secondAttribute="trailing" constant="8" symbolic="YES" id="CX3-h9-pfA"/>
+                            <constraint firstItem="rQV-U4-IDM" firstAttribute="leading" secondItem="4FK-JB-91U" secondAttribute="leading" id="LKM-lu-fSY"/>
                             <constraint firstAttribute="width" constant="178" id="PEp-po-DMe"/>
                             <constraint firstAttribute="trailing" secondItem="Xrp-Hj-ffu" secondAttribute="trailing" constant="2" id="Pqe-wg-Mah"/>
+                            <constraint firstAttribute="trailing" secondItem="rQV-U4-IDM" secondAttribute="trailing" id="QV6-RI-cOd"/>
                             <constraint firstItem="WVa-Ch-gHb" firstAttribute="top" secondItem="4FK-JB-91U" secondAttribute="top" id="Xio-WF-5TD"/>
                             <constraint firstItem="WVa-Ch-gHb" firstAttribute="leading" secondItem="4FK-JB-91U" secondAttribute="leading" id="Xyk-W7-z7V"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rma-Yv-7iD" secondAttribute="trailing" id="boQ-qS-kyB"/>
+                            <constraint firstItem="rma-Yv-7iD" firstAttribute="top" secondItem="rQV-U4-IDM" secondAttribute="bottom" constant="8" symbolic="YES" id="fdV-Cj-efZ"/>
                             <constraint firstItem="Vql-vd-bfZ" firstAttribute="firstBaseline" secondItem="Xrp-Hj-ffu" secondAttribute="firstBaseline" id="h3u-iP-w61"/>
+                            <constraint firstItem="rma-Yv-7iD" firstAttribute="leading" secondItem="4FK-JB-91U" secondAttribute="leading" id="ucv-se-IOO"/>
+                            <constraint firstAttribute="bottom" secondItem="rma-Yv-7iD" secondAttribute="bottom" id="vQV-du-Fjd"/>
                         </constraints>
                     </customView>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9oL-Rc-cHX">
-                        <rect key="frame" x="900" y="69" width="50" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="CD1-xM-WmM"/>
-                        </constraints>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Aei-ee-ClZ">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <binding destination="-2" name="value" keyPath="upCompressX" id="xzR-xd-Bpw"/>
-                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="Ux3-t5-Gyw"/>
-                        </connections>
-                    </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pXn-bX-ZFr">
-                        <rect key="frame" x="954" y="69" width="50" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="mlm-Of-X4R"/>
-                        </constraints>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="eFc-FP-diK">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <binding destination="-2" name="value" keyPath="upCompressY" id="koz-MN-F9E"/>
-                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="6dW-vu-a28"/>
-                        </connections>
-                    </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9kk-Sd-6aX">
-                        <rect key="frame" x="900" y="44" width="50" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="ukV-rV-jbY"/>
-                        </constraints>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="bat-jw-vmk">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <binding destination="-2" name="value" keyPath="downCompressX" id="2Lh-jZ-qNF"/>
-                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="WDV-sd-oQV"/>
-                        </connections>
-                    </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wfa-lZ-FWY">
-                        <rect key="frame" x="954" y="44" width="50" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="npk-xy-0I4"/>
-                        </constraints>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Ffs-dd-tUV">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <binding destination="-2" name="value" keyPath="downCompressY" id="HQu-jT-3VU"/>
-                            <outlet property="formatter" destination="vgo-7Z-Vj2" id="axM-2E-uyR"/>
-                        </connections>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ovv-om-0JF">
-                        <rect key="frame" x="917" y="95" width="17" height="16"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="X" id="Ijz-6p-eeo">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CMZ-Oz-7PN">
-                        <rect key="frame" x="971" y="95" width="17" height="16"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Y" id="5bI-ch-x2O">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XSf-If-66S">
-                        <rect key="frame" x="807" y="72" width="87" height="16"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Up Compress" id="C0G-l7-D1F">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KWf-cc-kFR">
-                        <rect key="frame" x="807" y="47" width="87" height="16"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Dn Compress" id="Qb1-vI-cwN">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rma-Yv-7iD">
-                        <rect key="frame" x="807" y="19" width="189" height="18"/>
-                        <buttonCell key="cell" type="check" title="Use for pointing correction" bezelStyle="regularSquare" imagePosition="left" inset="2" id="z88-cS-A4Y">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <binding destination="-2" name="value" keyPath="pointingCorrection" id="Gbm-pI-D4D"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dRj-wC-ewS">
-                        <rect key="frame" x="532" y="588" width="42" height="32"/>
+                        <rect key="frame" x="531" y="588" width="42" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="VmT-Zo-Xdw"/>
                         </constraints>
@@ -1794,49 +1882,31 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="pXn-bX-ZFr" firstAttribute="firstBaseline" secondItem="9oL-Rc-cHX" secondAttribute="firstBaseline" id="47k-Zf-0dJ"/>
-                    <constraint firstItem="Q0p-4b-ejv" firstAttribute="top" secondItem="5J3-Qc-8sF" secondAttribute="bottom" constant="7" id="6LD-Ce-wvO"/>
-                    <constraint firstAttribute="trailing" secondItem="Wfa-lZ-FWY" secondAttribute="trailing" constant="20" symbolic="YES" id="6tc-2x-ddc"/>
+                    <constraint firstItem="oYy-JQ-scS" firstAttribute="top" secondItem="Bkl-DK-dtS" secondAttribute="bottom" constant="8" symbolic="YES" id="1eW-Ef-vC3"/>
+                    <constraint firstItem="RRQ-t9-SjX" firstAttribute="top" secondItem="ulA-Wu-wTq" secondAttribute="bottom" constant="8" symbolic="YES" id="8Vq-Jo-2An"/>
                     <constraint firstItem="ldy-h7-87K" firstAttribute="top" secondItem="e3j-NW-hCp" secondAttribute="bottom" constant="15" id="8ag-ts-i6d"/>
                     <constraint firstItem="Q0p-4b-ejv" firstAttribute="leading" secondItem="18" secondAttribute="leading" constant="20" symbolic="YES" id="ALo-es-Usw"/>
-                    <constraint firstItem="KWf-cc-kFR" firstAttribute="leading" secondItem="XSf-If-66S" secondAttribute="leading" id="Bwd-OR-rON"/>
-                    <constraint firstItem="ldy-h7-87K" firstAttribute="leading" secondItem="h7l-Dv-U5O" secondAttribute="trailing" constant="14" id="GxU-rX-hmP"/>
+                    <constraint firstItem="RRQ-t9-SjX" firstAttribute="leading" secondItem="ulA-Wu-wTq" secondAttribute="leading" id="Fr3-69-ewP"/>
+                    <constraint firstItem="ldy-h7-87K" firstAttribute="leading" secondItem="h7l-Dv-U5O" secondAttribute="trailing" constant="13" id="GxU-rX-hmP"/>
                     <constraint firstItem="e3j-NW-hCp" firstAttribute="leading" secondItem="dRj-wC-ewS" secondAttribute="trailing" constant="12" symbolic="YES" id="HDI-KV-Sni"/>
+                    <constraint firstItem="Q0p-4b-ejv" firstAttribute="top" secondItem="oYy-JQ-scS" secondAttribute="bottom" constant="8" symbolic="YES" id="Ine-2T-aAc"/>
                     <constraint firstAttribute="bottom" secondItem="RRQ-t9-SjX" secondAttribute="bottom" constant="20" symbolic="YES" id="J1s-Xm-CPa"/>
                     <constraint firstAttribute="bottom" secondItem="GXg-OK-XtJ" secondAttribute="bottom" constant="20" symbolic="YES" id="LEY-Mg-fHz"/>
-                    <constraint firstItem="pXn-bX-ZFr" firstAttribute="top" secondItem="CMZ-Oz-7PN" secondAttribute="bottom" constant="5" id="Moc-Da-tjE"/>
                     <constraint firstItem="GXg-OK-XtJ" firstAttribute="leading" secondItem="18" secondAttribute="leading" constant="20" symbolic="YES" id="Nef-Rf-qsZ"/>
-                    <constraint firstAttribute="trailing" secondItem="pXn-bX-ZFr" secondAttribute="trailing" constant="20" symbolic="YES" id="O8O-uV-AeV"/>
                     <constraint firstItem="ldy-h7-87K" firstAttribute="centerX" secondItem="e3j-NW-hCp" secondAttribute="centerX" id="OVS-vL-ni8"/>
-                    <constraint firstItem="4FK-JB-91U" firstAttribute="leading" secondItem="ldy-h7-87K" secondAttribute="trailing" constant="12" id="OXu-qb-EYh"/>
+                    <constraint firstItem="4FK-JB-91U" firstAttribute="leading" secondItem="ldy-h7-87K" secondAttribute="trailing" constant="13" id="OXu-qb-EYh"/>
+                    <constraint firstItem="ulA-Wu-wTq" firstAttribute="leading" secondItem="gah-Qe-i7y" secondAttribute="trailing" constant="13" id="Otk-E4-OnV"/>
                     <constraint firstItem="Bkl-DK-dtS" firstAttribute="top" secondItem="18" secondAttribute="top" constant="20" symbolic="YES" id="RPE-1W-Jpw"/>
                     <constraint firstItem="e3j-NW-hCp" firstAttribute="top" secondItem="18" secondAttribute="top" constant="20" symbolic="YES" id="Rf1-74-MVP"/>
-                    <constraint firstItem="9kk-Sd-6aX" firstAttribute="top" secondItem="9oL-Rc-cHX" secondAttribute="bottom" constant="4" id="S49-XP-fow"/>
-                    <constraint firstItem="9oL-Rc-cHX" firstAttribute="top" secondItem="Ovv-om-0JF" secondAttribute="bottom" constant="5" id="SrW-IZ-v2f"/>
-                    <constraint firstItem="Ovv-om-0JF" firstAttribute="centerX" secondItem="9oL-Rc-cHX" secondAttribute="centerX" id="SyW-GL-YsP"/>
                     <constraint firstItem="Bkl-DK-dtS" firstAttribute="leading" secondItem="18" secondAttribute="leading" constant="20" symbolic="YES" id="Tc3-Ri-l7i"/>
-                    <constraint firstItem="pXn-bX-ZFr" firstAttribute="leading" secondItem="9oL-Rc-cHX" secondAttribute="trailing" constant="4" id="Tv5-lt-7VD"/>
-                    <constraint firstItem="GXg-OK-XtJ" firstAttribute="top" secondItem="gah-Qe-i7y" secondAttribute="bottom" constant="7" id="XWX-xs-ozY"/>
-                    <constraint firstItem="RRQ-t9-SjX" firstAttribute="top" secondItem="xrI-Cv-AHy" secondAttribute="bottom" constant="7" id="YKz-Qg-AAt"/>
-                    <constraint firstItem="ulA-Wu-wTq" firstAttribute="leading" secondItem="ldy-h7-87K" secondAttribute="leading" id="YYl-pO-Dc3"/>
                     <constraint firstItem="dRj-wC-ewS" firstAttribute="centerY" secondItem="e3j-NW-hCp" secondAttribute="centerY" id="ZJ7-Ia-7Lu"/>
-                    <constraint firstItem="9kk-Sd-6aX" firstAttribute="firstBaseline" secondItem="Wfa-lZ-FWY" secondAttribute="firstBaseline" id="acV-VJ-gBr"/>
-                    <constraint firstItem="oYy-JQ-scS" firstAttribute="top" secondItem="h7l-Dv-U5O" secondAttribute="bottom" constant="7" id="bo8-OY-9eW"/>
+                    <constraint firstItem="GXg-OK-XtJ" firstAttribute="top" secondItem="Q0p-4b-ejv" secondAttribute="bottom" constant="8" symbolic="YES" id="ZP3-HZ-pWS"/>
+                    <constraint firstItem="ulA-Wu-wTq" firstAttribute="width" secondItem="ldy-h7-87K" secondAttribute="width" id="bfX-3I-Cr7"/>
                     <constraint firstAttribute="bottom" secondItem="4FK-JB-91U" secondAttribute="bottom" constant="20" symbolic="YES" id="cL1-Hb-czs"/>
-                    <constraint firstItem="KWf-cc-kFR" firstAttribute="leading" secondItem="rma-Yv-7iD" secondAttribute="leading" id="cc3-fk-yjb"/>
                     <constraint firstItem="4FK-JB-91U" firstAttribute="top" secondItem="18" secondAttribute="top" constant="20" symbolic="YES" id="chP-qK-IGA"/>
-                    <constraint firstItem="Wfa-lZ-FWY" firstAttribute="leading" secondItem="9kk-Sd-6aX" secondAttribute="trailing" constant="4" id="f9L-dH-WdK"/>
+                    <constraint firstItem="RRQ-t9-SjX" firstAttribute="trailing" secondItem="ulA-Wu-wTq" secondAttribute="trailing" id="fHc-HM-z7H"/>
                     <constraint firstAttribute="trailing" secondItem="4FK-JB-91U" secondAttribute="trailing" constant="20" symbolic="YES" id="i4b-PZ-KZb"/>
-                    <constraint firstItem="9kk-Sd-6aX" firstAttribute="leading" secondItem="KWf-cc-kFR" secondAttribute="trailing" constant="8" symbolic="YES" id="izf-8g-ke9"/>
-                    <constraint firstItem="KWf-cc-kFR" firstAttribute="firstBaseline" secondItem="9kk-Sd-6aX" secondAttribute="firstBaseline" id="lkk-BH-41J"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rma-Yv-7iD" secondAttribute="trailing" constant="20" symbolic="YES" id="lu5-dP-54T"/>
-                    <constraint firstItem="rma-Yv-7iD" firstAttribute="top" secondItem="9kk-Sd-6aX" secondAttribute="bottom" constant="8" symbolic="YES" id="ml3-qi-eDA"/>
                     <constraint firstItem="oYy-JQ-scS" firstAttribute="leading" secondItem="18" secondAttribute="leading" constant="20" symbolic="YES" id="qag-ml-fVu"/>
-                    <constraint firstItem="CMZ-Oz-7PN" firstAttribute="centerX" secondItem="pXn-bX-ZFr" secondAttribute="centerX" id="qgm-Yj-a49"/>
-                    <constraint firstAttribute="bottom" secondItem="rma-Yv-7iD" secondAttribute="bottom" constant="20" symbolic="YES" id="tjh-Od-hTf"/>
-                    <constraint firstItem="9oL-Rc-cHX" firstAttribute="leading" secondItem="XSf-If-66S" secondAttribute="trailing" constant="8" symbolic="YES" id="tpB-WA-6vO"/>
-                    <constraint firstItem="ulA-Wu-wTq" firstAttribute="leading" secondItem="55V-Gl-f3O" secondAttribute="leading" id="u5r-ha-vEz"/>
-                    <constraint firstItem="XSf-If-66S" firstAttribute="firstBaseline" secondItem="9oL-Rc-cHX" secondAttribute="firstBaseline" id="yOU-SZ-8Fx"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="186" y="219.5"/>
@@ -1849,6 +1919,7 @@
             <real key="minimum" value="0.0"/>
             <real key="maximum" value="32767"/>
         </numberFormatter>
+        <customObject id="6tQ-bz-NeX" customClass="SteppingFieldDelegate" customModule="KestrelTools" customModuleProvider="target"/>
         <customObject id="3hB-Gf-oKq" userLabel="Base Layer" customClass="BaseLayer" customModule="KestrelTools" customModuleProvider="target">
             <connections>
                 <outlet property="controller" destination="-2" id="GI2-O4-5u7"/>

@@ -154,10 +154,6 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     
     // MARK: -
     
-    @IBAction func no(_ sender: Any) {
-        
-    }
-    
     @IBAction func forward(_ sender: Any) {
         forward = true
     }

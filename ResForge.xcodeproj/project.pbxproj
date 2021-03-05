@@ -55,6 +55,7 @@
 		49640F3925F201BD009FEC9B /* ShieldLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640EAC25EAE0C6009FEC9B /* ShieldLayer.swift */; };
 		49640F4025F201C0009FEC9B /* ExitPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E6725F02CF9001C97CA /* ExitPoints.swift */; };
 		49640F4725F201C9009FEC9B /* ShanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E4B25E6EE28001C97CA /* ShanView.swift */; };
+		49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */; };
 		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
 		49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */; };
 		49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */; };
@@ -380,6 +381,7 @@
 		49640EA425EAE0BF009FEC9B /* WeaponLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponLayer.swift; sourceTree = "<group>"; };
 		49640EAC25EAE0C6009FEC9B /* ShieldLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldLayer.swift; sourceTree = "<group>"; };
 		49640EB425EB75CB009FEC9B /* NonBlankNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonBlankNumberFormatter.swift; sourceTree = "<group>"; };
+		49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteppingFieldDelegate.swift; sourceTree = "<group>"; };
 		49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDocument.swift; sourceTree = "<group>"; };
 		49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource-Conflict.swift"; sourceTree = "<group>"; };
 		49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDirectory.swift; sourceTree = "<group>"; };
@@ -886,6 +888,7 @@
 				497A93BD255BB49600900C7B /* Templates.rsrc */,
 				49EE738F2550BC8D00BEABDB /* KestrelTools.swift */,
 				49640EB425EB75CB009FEC9B /* NonBlankNumberFormatter.swift */,
+				49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */,
 				496E7DE225E59344001C97CA /* Sprite Editor */,
 				496E7E3125E6E936001C97CA /* Shan Editor */,
 			);
@@ -1425,6 +1428,7 @@
 				49640F2425F201B6009FEC9B /* EngineLayer.swift in Sources */,
 				492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */,
 				49640F1625F201B1009FEC9B /* BaseLayer.swift in Sources */,
+				49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */,
 				49640F1D25F201B3009FEC9B /* AltLayer.swift in Sources */,
 				49640F4725F201C9009FEC9B /* ShanView.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */,
