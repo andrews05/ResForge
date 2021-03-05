@@ -175,47 +175,8 @@ class TemplateWindowController: NSWindowController, NSOutlineViewDataSource, NSO
         self.setDocumentEdited(true)
     }
     
-    @IBAction func createNewItem(_ sender: Any) {
-        let view = sender is NSButton ? sender as! NSView : self.window!.firstResponder as! NSView
-        let row = dataList.row(for: view)
-        if let element = dataList.item(atRow: row) as? ElementLSTB, element.allowsCreateListEntry() {
-            element.createListEntry()
-            dataList.reloadData()
-            let newHeader = dataList.view(atColumn: 0, row: row, makeIfNecessary: true)
-            self.window?.makeFirstResponder(newHeader)
-            self.setDocumentEdited(true)
-            // Expand the item and scroll the new content into view
-            dataList.expandItem(dataList.item(atRow: row), expandChildren: true)
-            let lastChild = dataList.rowView(atRow: dataList.row(forItem: element), makeIfNecessary: true)
-            lastChild?.scrollToVisible(lastChild!.bounds)
-            newHeader?.scrollToVisible(newHeader!.superview!.bounds)
-        }
-    }
-    
-    @IBAction func delete(_ sender: Any) {
-        let row = dataList.row(for: self.window!.firstResponder as! NSView)
-        if let element = dataList.item(atRow: row) as? ElementLSTB, element.allowsRemoveListEntry() {
-            element.removeListEntry()
-            dataList.reloadData()
-            let newHeader = dataList.view(atColumn: 0, row: row, makeIfNecessary: true)
-            self.window?.makeFirstResponder(newHeader)
-            self.setDocumentEdited(true)
-        }
-    }
-    
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        let element = dataList.item(atRow: dataList.row(for: self.window!.firstResponder as! NSView))
         switch menuItem.action {
-        case #selector(self.createNewItem(_:)):
-            if let element = element as? ElementLSTB, element.allowsCreateListEntry() {
-                return true
-            }
-            return false
-        case #selector(self.delete(_:)):
-            if let element = element as? ElementLSTB, element.allowsRemoveListEntry() {
-                return true
-            }
-            return false
         case #selector(self.saveResource(_:)),
              #selector(self.revertResource(_:)):
             return self.window!.isDocumentEdited

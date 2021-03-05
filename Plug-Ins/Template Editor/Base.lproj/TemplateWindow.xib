@@ -19,20 +19,20 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="406" y="385" width="460" height="400"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="213" height="107"/>
-            <view key="contentView" wantsLayer="YES" id="22">
-                <rect key="frame" x="0.0" y="0.0" width="460" height="395"/>
+            <view key="contentView" wantsLayer="YES" misplaced="YES" id="22">
+                <rect key="frame" x="0.0" y="0.0" width="463" height="390"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35">
-                        <rect key="frame" x="0.0" y="0.0" width="460" height="395"/>
+                        <rect key="frame" x="0.0" y="0.0" width="463" height="385"/>
                         <clipView key="contentView" id="ZgB-a4-tUl">
-                            <rect key="frame" x="0.0" y="0.0" width="460" height="395"/>
+                            <rect key="frame" x="0.0" y="0.0" width="463" height="385"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationMarkerFollowsCell="NO" outlineTableColumn="37" id="36" customClass="TabbableOutlineView" customModule="Template_Editor" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="460" height="390"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="463" height="380"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="6" height="0.0"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -51,11 +51,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="xI4-fZ-IZP" userLabel="Label">
-                                                    <rect key="frame" x="13" y="0.0" width="153" height="22"/>
+                                                    <rect key="frame" x="3" y="0.0" width="150" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FUM-Fz-dnU">
-                                                            <rect key="frame" x="0.0" y="2" width="153" height="15"/>
+                                                            <rect key="frame" x="0.0" y="2" width="150" height="15"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="XAc-fn-92z">
                                                                 <font key="font" metaFont="systemBold" size="12"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -73,11 +73,11 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="listLabel" id="hgb-pb-eOm" customClass="LabelView" customModule="Template_Editor" customModuleProvider="target">
-                                                    <rect key="frame" x="13" y="22" width="153" height="22"/>
+                                                    <rect key="frame" x="3" y="22" width="150" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3bN-4y-Fu0">
-                                                            <rect key="frame" x="0.0" y="2" width="153" height="15"/>
+                                                            <rect key="frame" x="0.0" y="2" width="150" height="15"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="List Label" id="i8r-wt-zIr">
                                                                 <font key="font" metaFont="systemBold" size="12"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -95,7 +95,7 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="listEndLabel" id="hbr-Yq-Ifg" userLabel="Button View" customClass="LabelView" customModule="Template_Editor" customModuleProvider="target">
-                                                    <rect key="frame" x="13" y="44" width="153" height="22"/>
+                                                    <rect key="frame" x="3" y="44" width="150" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ELL-5z-5Ng">
@@ -113,7 +113,7 @@
                                                                 <font key="font" metaFont="cellTitle"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <action selector="createNewItem:" target="-2" id="Ns0-tF-pVW"/>
+                                                                <action selector="createNewItem:" target="hbr-Yq-Ifg" id="SNu-gy-Ppy"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -129,11 +129,11 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="groupView" id="emB-cD-7ej">
-                                                    <rect key="frame" x="13" y="66" width="153" height="21"/>
+                                                    <rect key="frame" x="3" y="66" width="150" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="tXR-v5-Vmv">
-                                                            <rect key="frame" x="3" y="3" width="147" height="16"/>
+                                                            <rect key="frame" x="3" y="3" width="144" height="16"/>
                                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Group label" id="3vk-0d-0RL">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>

@@ -1,14 +1,16 @@
 import Cocoa
 
-class ShanView: NSView, NSAnimationDelegate {
+class ShanView: NSView {
     @IBOutlet var controller: ShanWindowController!
+    private var fillColor = NSColor.black
+    private var borderColor = NSColor.gray
     public override func draw(_ dirtyRect: NSRect) {
         guard controller.currentFrame >= 0 else {
             return
         }
         
         NSGraphicsContext.current?.cgContext.interpolationQuality = .none
-        NSColor.black.setFill()
+        fillColor.setFill()
         dirtyRect.fill()
         for layer in controller.layers {
             layer.draw(dirtyRect)
@@ -23,5 +25,14 @@ class ShanView: NSView, NSAnimationDelegate {
         for points in controller.pointLayers {
             points.draw(transform)
         }
+        
+        borderColor.setFill()
+        dirtyRect.frame()
+    }
+    
+    // Toggle black background on click
+    override func mouseDown(with event: NSEvent) {
+        self.borderColor = self.fillColor == .black ? .quaternaryLabelColor : .gray
+        self.fillColor = self.fillColor == .black ? .gridColor : .black
     }
 }

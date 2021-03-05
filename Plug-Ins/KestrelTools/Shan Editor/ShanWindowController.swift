@@ -19,7 +19,8 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     
     let resource: Resource
     @IBOutlet var shanView: ShanView!
-    @IBOutlet var playButton: NSButton!
+    @IBOutlet var forwardButton: NSButton!
+    @IBOutlet var reverseButton: NSButton!
     @IBOutlet var frameCounter: NSTextField!
     @IBOutlet var unfoldsCheckbox: NSButton!
     @IBOutlet var bankGlowCheckbox: NSButton!
@@ -48,8 +49,8 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     
     @objc var gunPoints = ExitPoints(.red)
     @objc var turretPoints = ExitPoints(NSColor(red: 0, green: 0.75, blue: 1, alpha: 1))
-    @objc var guidedPoints = ExitPoints(.green)
-    @objc var beamPoints = ExitPoints(.orange)
+    @objc var guidedPoints = ExitPoints(NSColor(red: 1, green: 0.75, blue: 0, alpha: 1))
+    @objc var beamPoints = ExitPoints(.green)
     @objc dynamic var upCompressX: CGFloat = 100
     @objc dynamic var upCompressY: CGFloat = 100
     @objc dynamic var downCompressX: CGFloat = 100
@@ -64,7 +65,14 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     private var timer: Timer?
     private var playing = false {
         didSet {
-            playButton.title = playing ? "Pause" : "Play"
+            forwardButton.title = playing && forward ? "Pause" : "Play"
+            (forward ? forwardButton : reverseButton)?.state = playing ? .on : .off
+        }
+    }
+    private var forward = true {
+        didSet {
+            playing = forward == oldValue ? !playing : true
+            (forward ? reverseButton : forwardButton)?.state = .off
         }
     }
     
@@ -128,11 +136,22 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
         if event.characters == " " {
             playing = !playing
         } else if event.specialKey == .leftArrow {
-            playing = false
-            currentFrame = (currentFrame + framesPerSet - 1) % framesPerSet
+            // If playing in the opposite direction then switch direction, else step by 1 frame
+            if playing && forward {
+                forward = false
+            } else {
+                forward = false
+                playing = false
+                currentFrame = (currentFrame + framesPerSet - 1) % framesPerSet
+            }
         } else if event.specialKey == .rightArrow {
-            playing = false
-            currentFrame = (currentFrame + 1) % framesPerSet
+            if playing && !forward {
+                forward = true
+            } else {
+                forward = true
+                playing = false
+                currentFrame = (currentFrame + 1) % framesPerSet
+            }
         }
     }
     
@@ -145,8 +164,12 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
     
     // MARK: -
     
-    @IBAction func playPause(_ sender: Any) {
-        playing = !playing
+    @IBAction func forward(_ sender: Any) {
+        forward = true
+    }
+    
+    @IBAction func reverse(_ sender: Any) {
+        forward = false
     }
     
     @objc private func nextFrame() {
@@ -158,8 +181,9 @@ class ShanWindowController: NSWindowController, NSMenuItemValidation, ResourceEd
             // Spin slower when fewer frames
             spinTicks = (spinTicks + 1) % (72/framesPerSet + 1)
             if spinTicks == 0 {
+                currentFrame += forward ? 1 : framesPerSet-1
+                currentFrame %= framesPerSet
                 // For banking, cycle through sets each full rotation
-                currentFrame = (currentFrame + 1) % framesPerSet
                 if enabled && extraFrames == ShanFlags.bankingFrames.rawValue && currentFrame == 0 {
                     currentSet = (currentSet + 1) % setCount
                 }

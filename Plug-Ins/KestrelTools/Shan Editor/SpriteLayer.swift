@@ -23,7 +23,19 @@ class SpriteLayer: NSObject {
     }
     @objc dynamic var spriteID: Int16 = -1 {
         didSet {
-            self.checkRle()
+            if spriteID != oldValue {
+                frames.removeAll()
+                guard spriteID > 0, let resource = controller.resource.manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) else {
+                    spriteLink.title = "not found"
+                    return
+                }
+                // Base sprite is loaded on the main thread, others are loaded in background
+                if type(of: self) == BaseLayer.self {
+                    spriteLink.title = self.loadRle(resource.data)
+                } else {
+                    self.loadRleAsync(resource.data)
+                }
+            }
         }
     }
     // These are only for PICT sprites and are unused here
@@ -33,25 +45,6 @@ class SpriteLayer: NSObject {
     
     func nextFrame() {
         // Subclasses override to perform any necessary calculations
-    }
-    
-    private func checkRle() {
-        frames.removeAll()
-        guard spriteID > 0, let resource = controller.resource.manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) else {
-            spriteLink.title = "not found"
-            return
-        }
-        if type(of: self) == BaseLayer.self {
-            spriteLink.title = self.loadRle(resource.data)
-        } else {
-            spriteLink.title = "loading…"
-            DispatchQueue.global().async {
-                let title = self.loadRle(resource.data)
-                DispatchQueue.main.async {
-                    self.spriteLink.title = title
-                }
-            }
-        }
     }
     
     private func loadRle(_ data: Data) -> String {
@@ -68,10 +61,24 @@ class SpriteLayer: NSObject {
         }
     }
     
+    private func loadRleAsync(_ data: Data) {
+        spriteLink.title = "loading…"
+        DispatchQueue.global().async {
+            let title = self.loadRle(data)
+            DispatchQueue.main.async {
+                self.spriteLink.title = title
+            }
+        }
+    }
+    
     @IBAction func openSprite(_ sender: Any) {
         if let manager = controller.resource.manager {
-            if let rleResource = manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) {
-                manager.open(resource: rleResource, using: nil, template: nil)
+            if let resource = manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) {
+                // If we found a resource but don't currently have any frames, try loading it again
+                if frames.isEmpty && !resource.data.isEmpty {
+                    self.loadRleAsync(resource.data)
+                }
+                manager.open(resource: resource, using: nil, template: nil)
             } else {
                 manager.createResource(ofType: "rlëD", id: Int(spriteID), name: "")
             }
