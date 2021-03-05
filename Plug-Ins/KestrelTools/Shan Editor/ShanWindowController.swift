@@ -65,7 +65,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     private var timer: Timer?
     private var playing = false {
         didSet {
-            forwardButton.title = playing && forward ? "Pause" : "Play"
+            forwardButton.title = playing && forward ? "Stop  ▶︎" : "Spin  ▶︎"
             (forward ? forwardButton : reverseButton)?.state = playing ? .on : .off
         }
     }
@@ -153,6 +153,10 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     }
     
     // MARK: -
+    
+    @IBAction func no(_ sender: Any) {
+        
+    }
     
     @IBAction func forward(_ sender: Any) {
         forward = true
@@ -380,4 +384,8 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
 // Allow the window to be first responder so it can respond to key events for playback
 class ShanWindowView: NSView {
     override var acceptsFirstResponder: Bool { true }
+    
+    override func mouseDown(with event: NSEvent) {
+        self.window?.makeFirstResponder(self)
+    }
 }

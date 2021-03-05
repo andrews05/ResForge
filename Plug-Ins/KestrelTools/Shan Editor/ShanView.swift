@@ -34,5 +34,6 @@ class ShanView: NSView {
     override func mouseDown(with event: NSEvent) {
         self.borderColor = self.fillColor == .black ? .quaternaryLabelColor : .gray
         self.fillColor = self.fillColor == .black ? .gridColor : .black
+        super.mouseDown(with: event)
     }
 }

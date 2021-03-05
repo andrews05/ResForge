@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		490D94AF25624FCF00F73544 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; };
-		4919415525E98E7000FFC3F8 /* SpriteLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4919415425E98E7000FFC3F8 /* SpriteLayer.swift */; };
 		491BC28B253B894200149D78 /* ElementOCNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491BC28A253B894200149D78 /* ElementOCNT.swift */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */; };
@@ -46,13 +45,16 @@
 		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4953F5A92488795B0002340F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4953F5A82488795B0002340F /* AVKit.framework */; };
 		4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */; };
-		49640E7925EAE09B009FEC9B /* BaseLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E7825EAE09B009FEC9B /* BaseLayer.swift */; };
-		49640E8725EAE0A2009FEC9B /* AltLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E8625EAE0A2009FEC9B /* AltLayer.swift */; };
-		49640E9525EAE0AF009FEC9B /* EngineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E9425EAE0AF009FEC9B /* EngineLayer.swift */; };
-		49640E9D25EAE0B8009FEC9B /* LightLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E9C25EAE0B8009FEC9B /* LightLayer.swift */; };
-		49640EA525EAE0BF009FEC9B /* WeaponLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640EA425EAE0BF009FEC9B /* WeaponLayer.swift */; };
-		49640EAD25EAE0C6009FEC9B /* ShieldLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640EAC25EAE0C6009FEC9B /* ShieldLayer.swift */; };
 		49640EBC25EB7952009FEC9B /* NonBlankNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640EB425EB75CB009FEC9B /* NonBlankNumberFormatter.swift */; };
+		49640F0F25F201AE009FEC9B /* SpriteLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4919415425E98E7000FFC3F8 /* SpriteLayer.swift */; };
+		49640F1625F201B1009FEC9B /* BaseLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E7825EAE09B009FEC9B /* BaseLayer.swift */; };
+		49640F1D25F201B3009FEC9B /* AltLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E8625EAE0A2009FEC9B /* AltLayer.swift */; };
+		49640F2425F201B6009FEC9B /* EngineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E9425EAE0AF009FEC9B /* EngineLayer.swift */; };
+		49640F2B25F201B8009FEC9B /* LightLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E9C25EAE0B8009FEC9B /* LightLayer.swift */; };
+		49640F3225F201BA009FEC9B /* WeaponLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640EA425EAE0BF009FEC9B /* WeaponLayer.swift */; };
+		49640F3925F201BD009FEC9B /* ShieldLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640EAC25EAE0C6009FEC9B /* ShieldLayer.swift */; };
+		49640F4025F201C0009FEC9B /* ExitPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E6725F02CF9001C97CA /* ExitPoints.swift */; };
+		49640F4725F201C9009FEC9B /* ShanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E4B25E6EE28001C97CA /* ShanView.swift */; };
 		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
 		49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */; };
 		49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */; };
@@ -65,8 +67,6 @@
 		496A52BE24F9B047006A12DF /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496A52BD24F9B047006A12DF /* CustomImageView.swift */; };
 		496E7E3525E6EA15001C97CA /* ShanWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E3425E6E95C001C97CA /* ShanWindowController.swift */; };
 		496E7E3C25E6EA17001C97CA /* ShanWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 496E7E3225E6E947001C97CA /* ShanWindow.xib */; };
-		496E7E4C25E6EE28001C97CA /* ShanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E4B25E6EE28001C97CA /* ShanView.swift */; };
-		496E7E6825F02CFA001C97CA /* ExitPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E6725F02CF9001C97CA /* ExitPoints.swift */; };
 		497A93C5255BB50800900C7B /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = 497A93BD255BB49600900C7B /* Templates.rsrc */; };
 		497A93DE255F371100900C7B /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 497A93E0255F371100900C7B /* SelectTemplate.xib */; };
 		497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BB1DB24F741E400858EF1 /* Icons.swift */; };
@@ -1421,21 +1421,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49640E9D25EAE0B8009FEC9B /* LightLayer.swift in Sources */,
-				4919415525E98E7000FFC3F8 /* SpriteLayer.swift in Sources */,
-				496E7E6825F02CFA001C97CA /* ExitPoints.swift in Sources */,
+				49640F0F25F201AE009FEC9B /* SpriteLayer.swift in Sources */,
+				49640F2425F201B6009FEC9B /* EngineLayer.swift in Sources */,
 				492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */,
-				49640EAD25EAE0C6009FEC9B /* ShieldLayer.swift in Sources */,
+				49640F1625F201B1009FEC9B /* BaseLayer.swift in Sources */,
+				49640F1D25F201B3009FEC9B /* AltLayer.swift in Sources */,
+				49640F4725F201C9009FEC9B /* ShanView.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */,
 				49640EBC25EB7952009FEC9B /* NonBlankNumberFormatter.swift in Sources */,
-				49640EA525EAE0BF009FEC9B /* WeaponLayer.swift in Sources */,
-				496E7E4C25E6EE28001C97CA /* ShanView.swift in Sources */,
-				49640E8725EAE0A2009FEC9B /* AltLayer.swift in Sources */,
-				49640E7925EAE09B009FEC9B /* BaseLayer.swift in Sources */,
 				492E912E2551373100195174 /* Rle.swift in Sources */,
 				49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */,
-				49640E9525EAE0AF009FEC9B /* EngineLayer.swift in Sources */,
 				496E7E3525E6EA15001C97CA /* ShanWindowController.swift in Sources */,
+				49640F4025F201C0009FEC9B /* ExitPoints.swift in Sources */,
+				49640F3925F201BD009FEC9B /* ShieldLayer.swift in Sources */,
+				49640F2B25F201B8009FEC9B /* LightLayer.swift in Sources */,
+				49640F3225F201BA009FEC9B /* WeaponLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
