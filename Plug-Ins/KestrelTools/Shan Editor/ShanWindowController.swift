@@ -94,7 +94,6 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
                 point.controller = self
             }
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.windowWillClose(_:)), name: NSWindow.willCloseNotification, object: self.window)
     }
 
     required init?(coder: NSCoder) {
@@ -118,7 +117,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
         RunLoop.main.add(timer!, forMode: .common)
     }
     
-    @objc private func windowWillClose(_ notification: Notification) {
+    @objc func windowWillClose(_ notification: Notification) {
         timer?.invalidate()
     }
     

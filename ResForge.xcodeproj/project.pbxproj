@@ -56,6 +56,7 @@
 		49640F4025F201C0009FEC9B /* ExitPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E6725F02CF9001C97CA /* ExitPoints.swift */; };
 		49640F4725F201C9009FEC9B /* ShanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E4B25E6EE28001C97CA /* ShanView.swift */; };
 		49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */; };
+		49640F5D25F36A77009FEC9B /* AbstractEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640F5C25F36A77009FEC9B /* AbstractEditor.swift */; };
 		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
 		49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */; };
 		49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */; };
@@ -382,6 +383,7 @@
 		49640EAC25EAE0C6009FEC9B /* ShieldLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldLayer.swift; sourceTree = "<group>"; };
 		49640EB425EB75CB009FEC9B /* NonBlankNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonBlankNumberFormatter.swift; sourceTree = "<group>"; };
 		49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteppingFieldDelegate.swift; sourceTree = "<group>"; };
+		49640F5C25F36A77009FEC9B /* AbstractEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractEditor.swift; sourceTree = "<group>"; };
 		49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDocument.swift; sourceTree = "<group>"; };
 		49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource-Conflict.swift"; sourceTree = "<group>"; };
 		49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDirectory.swift; sourceTree = "<group>"; };
@@ -869,6 +871,7 @@
 				491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */,
 				49AACD6324CE41A60081DD4A /* Resource.swift */,
 				49AACD6924CE57EB0081DD4A /* ResForgePlugin.swift */,
+				49640F5C25F36A77009FEC9B /* AbstractEditor.swift */,
 				49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */,
 				49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */,
 				49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */,
@@ -1406,6 +1409,7 @@
 				49AACD8824CE93520081DD4A /* ResForgePlugin.swift in Sources */,
 				49C5622B24D0D8D20072D659 /* MacRomanFormatter.swift in Sources */,
 				49964E1324D1034400BAB902 /* Resource.swift in Sources */,
+				49640F5D25F36A77009FEC9B /* AbstractEditor.swift in Sources */,
 				491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */,
 				4945DC642531826400856385 /* macroman.cpp in Sources */,
 				496A52BE24F9B047006A12DF /* CustomImageView.swift in Sources */,

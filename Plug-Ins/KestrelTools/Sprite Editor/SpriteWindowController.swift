@@ -34,7 +34,6 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     required init(resource: Resource) {
         self.resource = resource
         super.init(window: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.windowWillClose(_:)), name: NSWindow.willCloseNotification, object: self.window)
     }
 
     required init?(coder: NSCoder) {
@@ -48,7 +47,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         self.loadImage()
     }
     
-    @objc private func windowWillClose(_ notification: Notification) {
+    @objc func windowWillClose(_ notification: Notification) {
         timer?.invalidate()
     }
     

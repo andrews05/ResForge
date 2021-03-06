@@ -13,16 +13,15 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     
     override init() {
         NSApp.registerServicesMenuSendTypes([.string], returnTypes: [.string])
-    }
-    
-    func applicationDidFinishLaunching(_ notification: Notification) {
         UserDefaults.standard.register(defaults: [
             kConfirmChanges: false,
             kDeleteResourceWarning: true,
             kLaunchAction: kDisplayOpenPanel,
             kShowSidebar: true
         ])
-        
+    }
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
         SupportRegistry.scanForResources()
         // Load plugins
         NotificationCenter.default.addObserver(PluginRegistry.self, selector: #selector(PluginRegistry.bundleLoaded(_:)), name: Bundle.didLoadNotification, object: nil)

@@ -1,14 +1,14 @@
 import Cocoa
 import RFSupport
 
-class EditorManager: NSObject, NSWindowDelegate, ResForgeEditorManager {
+class EditorManager: ResForgeEditorManager {
     private var editorWindows: [String: ResourceEditor] = [:]
     private weak var document: ResourceDocument!
     
     init(_ document: ResourceDocument) {
         self.document = document
-        super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .DirectoryDidRemoveResource, object: document.directory)
+        NotificationCenter.default.addObserver(self, selector: #selector(windowWillClose(_:)), name: NSWindow.willCloseNotification, object: nil)
     }
     
     @objc func resourceRemoved(_ notification: Notification) {
@@ -16,6 +16,14 @@ class EditorManager: NSObject, NSWindowDelegate, ResForgeEditorManager {
         let resource = notification.userInfo!["resource"] as! Resource
         for (_, plug) in editorWindows where plug.resource === resource {
             plug.close()
+        }
+    }
+    
+    @objc func windowWillClose(_ notification: Notification) {
+        if let plug = (notification.object as? NSWindow)?.windowController as? ResourceEditor {
+            for (key, value) in editorWindows where value === plug {
+                editorWindows.removeValue(forKey: key)
+            }
         }
     }
     
@@ -31,47 +39,6 @@ class EditorManager: NSObject, NSWindowDelegate, ResForgeEditorManager {
             }
         }
         return true
-    }
-    
-    // This is called when closing editor windows. It provides a common save process, with confirmation
-    // according to the user preferences, so that plugins don't have to handle this themselves.
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
-        // Ensure any controls have ended editing
-        if !sender.makeFirstResponder(nil) {
-            return false
-        }
-        if sender.isDocumentEdited {
-            let plug = sender.windowController as! ResourceEditor
-            if UserDefaults.standard.bool(forKey: kConfirmChanges) {
-                let alert = NSAlert()
-                alert.messageText = NSLocalizedString("Do you want to keep the changes you made to this resource?", comment: "")
-                alert.informativeText = NSLocalizedString("Your changes cannot be saved later if you don't keep them.", comment: "")
-                alert.addButton(withTitle: NSLocalizedString("Keep", comment: ""))
-                alert.addButton(withTitle: NSLocalizedString("Don't Keep", comment: ""))
-                alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
-                alert.beginSheetModal(for: sender) { returnCode in
-                    switch (returnCode) {
-                    case .alertFirstButtonReturn: // keep
-                        plug.saveResource(alert)
-                        sender.close()
-                    case .alertSecondButtonReturn: // don't keep
-                        sender.close()
-                    default:
-                        break
-                    }
-                }
-                return false
-            }
-            plug.saveResource(sender)
-        }
-        return true
-    }
-    
-    func windowWillClose(_ notification: Notification) {
-        let plug = (notification.object as! NSWindow).windowController as! ResourceEditor
-        for (key, value) in editorWindows where value === plug {
-            editorWindows.removeValue(forKey: key)
-        }
     }
     
     // MARK: - Protocol functions
@@ -107,7 +74,7 @@ class EditorManager: NSObject, NSWindowDelegate, ResForgeEditorManager {
         }
         if let plug = plug {
             // We want to control the windowShouldClose function
-            plug.window?.delegate = self
+            plug.window?.delegate = plug
             plug.showWindow(self)
         }
     }

@@ -26,8 +26,6 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange(_:)), name: .ResourceDataDidChange, object: resource)
         NotificationCenter.default.addObserver(self, selector: #selector(self.templateDataDidChange(_:)), name: .ResourceDataDidChange, object: template)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.windowDidBecomeKey(_:)), name: NSWindow.didBecomeKeyNotification, object: self.window)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.windowDidResignKey(_:)), name: NSWindow.didResignKeyNotification, object: self.window)
     }
 
     required init(resource: Resource) {
@@ -97,18 +95,6 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
         return resourceCache[type]!
     }
     
-    @IBAction func saveResource(_ sender: Any) {
-        if self.window!.makeFirstResponder(dataList) {
-            resource.data = resourceStructure.getResourceData()
-            self.setDocumentEdited(false)
-        }
-    }
-    
-    @IBAction func revertResource(_ sender: Any) {
-        _ = self.load(data: resource.data)
-        self.setDocumentEdited(false)
-    }
-    
     // MARK: - OutlineView functions
     
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
@@ -171,16 +157,28 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     
     // MARK: - Menu functions
     
+    @IBAction func saveResource(_ sender: Any) {
+        if self.window!.makeFirstResponder(dataList) {
+            resource.data = resourceStructure.getResourceData()
+            self.setDocumentEdited(false)
+        }
+    }
+    
+    @IBAction func revertResource(_ sender: Any) {
+        _ = self.load(data: resource.data)
+        self.setDocumentEdited(false)
+    }
+    
     @IBAction func itemValueUpdated(_ sender: Any) {
         self.setDocumentEdited(true)
     }
     
-    @objc func windowDidBecomeKey(_ notification: Notification) {
+    func windowDidBecomeKey(_ notification: Notification) {
         let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
         createItem?.title = NSLocalizedString("Create List Entry", comment: "")
     }
     
-    @objc func windowDidResignKey(_ notification: Notification) {
+    func windowDidResignKey(_ notification: Notification) {
         let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
         createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
     }
