@@ -299,6 +299,9 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     }
 
     @IBAction func saveResource(_ sender: Any) {
+        guard self.window?.makeFirstResponder(self.window?.contentView) != false else {
+            return
+        }
         let writer = BinaryDataWriter()
         writer.write(baseLayer.spriteID)
         writer.write(baseLayer.maskID)
@@ -370,6 +373,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
         writer.write(0 as UInt64)
         writer.write(0 as UInt64)
         resource.data = writer.data
+        self.setDocumentEdited(false)
     }
 
     @IBAction func revertResource(_ sender: Any) {
