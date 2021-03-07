@@ -12,6 +12,7 @@ ResForge is a resource editor for macOS, capable of editing classic resource for
 * Image editor, supporting 'PICT', 'PNG ', 'cicn' & 'ppat' resources, plus view-only support for a variety of icons and other bitmaps.
 * Sound editor, supporting sampled 'snd ' resources.
 * Sprite editor, supporting 'rlëD' resources used by EV Nova.
+* Ship Animation editor, supporting 'shän' resources used by EV Nova.
 
 
 ## Getting Started
