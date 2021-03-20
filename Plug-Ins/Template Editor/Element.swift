@@ -46,7 +46,7 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     // Notify the controller when a field has been edited
     // Use control:textShouldEndEditing: rather than controlTextDidEndEditing: as it more accurately reflects when the value has actually changed
     func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
-        (control.window?.windowController as? TemplateWindowController)?.itemValueUpdated(control)
+        self.parentList.controller.itemValueUpdated(control)
         return true
     }
     

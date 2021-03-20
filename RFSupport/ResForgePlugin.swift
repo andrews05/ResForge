@@ -17,6 +17,7 @@ public protocol ResourceEditor: AbstractEditor {
     var resource: Resource { get }
     init?(resource: Resource)
     
+    // Implementers should declare these @IBAction
     func saveResource(_ sender: Any)
     func revertResource(_ sender: Any)
 }

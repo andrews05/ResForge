@@ -73,7 +73,7 @@ class EditorManager: ResForgeEditorManager {
             editorWindows[key] = plug
         }
         if let plug = plug {
-            // We want to control the windowShouldClose function
+            // Make sure the plug is the window's delegate
             plug.window?.delegate = plug
             plug.showWindow(self)
         }
