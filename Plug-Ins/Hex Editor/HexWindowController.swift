@@ -1,6 +1,11 @@
 import Cocoa
 import RFSupport
 
+struct HFDefaults {
+    static let fontSize = "HFDefaultFontSize"
+    static let statusBarMode = "HFStatusBarDefaultMode" // This is defined and used by HexFiend automatically, it's just here for reference
+}
+
 class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, HFTextViewDelegate {
     static let supportedTypes = ["*"]
     
@@ -23,6 +28,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
         self.resource = resource
         super.init(window: nil)
         
+        UserDefaults.standard.register(defaults: [HFDefaults.fontSize: 10])
         NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange(_:)), name: .ResourceDataDidChange, object: resource)
     }
     
@@ -43,7 +49,8 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
         textView.layoutRepresenter.addRepresenter(statusBarRepresenter)
         textView.controller.addRepresenter(lineCountingRepresenter)
         textView.controller.addRepresenter(statusBarRepresenter)
-        textView.controller.font = NSFont.userFixedPitchFont(ofSize: 10.0)!
+        let fontSize = UserDefaults.standard.integer(forKey: HFDefaults.fontSize)
+        textView.controller.font = NSFont.userFixedPitchFont(ofSize: CGFloat(fontSize))!
         textView.data = resource.data
         textView.controller.undoManager = self.window?.undoManager
         textView.layoutRepresenter.performLayout()
@@ -51,7 +58,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     }
     
     @objc func resourceDataDidChange(_ notification: NSNotification) {
-        if !self.window!.isDocumentEdited {
+        if self.window?.isDocumentEdited != false {
             textView.data = resource.data
             self.setDocumentEdited(false) // Will have been set to true by hexDidChangeProperties
         }
@@ -71,6 +78,24 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     @IBAction func revertResource(_ sender: Any) {
         textView.data = resource.data
         self.setDocumentEdited(false)
+    }
+    
+    // We can't catch keyDown events here so hidden buttons are placed in the window to trigger these with cmd+/-
+    @IBAction func sizeUp(_ sender: Any) {
+        self.adjustFontSize(1)
+    }
+    
+    @IBAction func sizeDown(_ sender: Any) {
+        self.adjustFontSize(-1)
+    }
+    
+    private func adjustFontSize(_ mod: CGFloat) {
+        let font = textView.controller.font
+        let size = font.pointSize + mod
+        if 9...16 ~= size {
+            textView.controller.font = NSFontManager.shared.convert(font, toSize: size)
+            UserDefaults.standard.set(Int(size), forKey: HFDefaults.fontSize)
+        }
     }
     
     // MARK: - Find/Replace
@@ -94,7 +119,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     }
 
     @IBAction func findWithSelection(_ sender: Any) {
-        let asHex = self.window!.firstResponder!.className == "HFRepresenterHexTextView"
+        let asHex = self.window?.firstResponder?.className == "HFRepresenterHexTextView"
         searchText.state = asHex ? .off : .on
         searchHex.state = asHex ? .on : .off
         let range = (textView.controller.selectedContentsRanges[0] as! HFRangeWrapper).hfRange()
