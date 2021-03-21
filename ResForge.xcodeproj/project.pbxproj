@@ -17,7 +17,7 @@
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
-		492D1E1326056AD10053DD27 /* PilotEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D1E1226056AD10053DD27 /* PilotEditor.swift */; };
+		492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D1E222606F53F0053DD27 /* PilotFilter.swift */; };
 		492E912E2551373100195174 /* Rle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E912D2551373100195174 /* Rle.swift */; };
 		492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E91C92553ADB100195174 /* SpriteImporter.swift */; };
 		4935CD51253BD1290044BC45 /* ElementPSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD50253BD1290044BC45 /* ElementPSTR.swift */; };
@@ -344,7 +344,7 @@
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
-		492D1E1226056AD10053DD27 /* PilotEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilotEditor.swift; sourceTree = "<group>"; };
+		492D1E222606F53F0053DD27 /* PilotFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilotFilter.swift; sourceTree = "<group>"; };
 		492E912D2551373100195174 /* Rle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rle.swift; sourceTree = "<group>"; };
 		492E91C92553ADB100195174 /* SpriteImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteImporter.swift; sourceTree = "<group>"; };
 		4935CD50253BD1290044BC45 /* ElementPSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPSTR.swift; sourceTree = "<group>"; };
@@ -896,7 +896,7 @@
 				49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */,
 				496E7DE225E59344001C97CA /* Sprite Editor */,
 				496E7E3125E6E936001C97CA /* Shan Editor */,
-				492D1E1226056AD10053DD27 /* PilotEditor.swift */,
+				492D1E222606F53F0053DD27 /* PilotFilter.swift */,
 			);
 			path = KestrelTools;
 			sourceTree = "<group>";
@@ -1436,9 +1436,9 @@
 				492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */,
 				49640F1625F201B1009FEC9B /* BaseLayer.swift in Sources */,
 				49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */,
-				492D1E1326056AD10053DD27 /* PilotEditor.swift in Sources */,
 				49640F1D25F201B3009FEC9B /* AltLayer.swift in Sources */,
 				49640F4725F201C9009FEC9B /* ShanView.swift in Sources */,
+				492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */,
 				49640EBC25EB7952009FEC9B /* NonBlankNumberFormatter.swift in Sources */,
 				492E912E2551373100195174 /* Rle.swift in Sources */,

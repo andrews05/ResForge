@@ -7,6 +7,7 @@ public class PluginRegistry {
     public private(set) static var previewProviders: [String: PreviewProvider.Type] = [:]
     public private(set) static var exportProviders: [String: ExportProvider.Type] = [:]
     public private(set) static var placeholderProviders: [String: PlaceholderProvider.Type] = [:]
+    public private(set) static var templateFilters: [String: TemplateFilter.Type] = [:]
     
     @objc public static func bundleLoaded(_ notification: Notification) {
         // Iterate over the bundle's loaded classes and register them according to their implemented protocols
@@ -40,6 +41,11 @@ public class PluginRegistry {
             if let placeholderer = pluginClass as? PlaceholderProvider.Type {
                 for type in placeholderer.supportedTypes {
                     placeholderProviders[type] = placeholderer
+                }
+            }
+            if let filter = pluginClass as? TemplateFilter.Type {
+                for type in filter.supportedTypes {
+                    templateFilters[type] = filter
                 }
             }
         }

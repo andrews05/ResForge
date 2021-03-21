@@ -20,7 +20,7 @@ class EditorManager: ResForgeEditorManager {
     }
     
     @objc func windowWillClose(_ notification: Notification) {
-        if let plug = (notification.object as? NSWindow)?.windowController as? ResourceEditor {
+        if let plug = (notification.object as? NSWindow)?.delegate as? ResourceEditor {
             for (key, value) in editorWindows where value === plug {
                 editorWindows.removeValue(forKey: key)
             }
@@ -63,7 +63,8 @@ class EditorManager: ResForgeEditorManager {
             // Set a reference to the manager on the resource. This allows the plugin to access the manager and call the protocol functions.
             resource.manager = self
             if let editor = editor as? TemplateEditor.Type {
-                plug = editor.init(resource: resource, template: tmplResource)
+                let filter = PluginRegistry.templateFilters[resource.type]
+                plug = editor.init(resource: resource, template: tmplResource, filter: filter)
             } else {
                 plug = editor!.init(resource: resource)
             }

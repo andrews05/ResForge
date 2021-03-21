@@ -6,7 +6,8 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     
     let resource: Resource
     private let template: Resource
-    private var resourceStructure: ElementList! = nil
+    private let filter: TemplateFilter.Type?
+    private var resourceStructure: ElementList!
     private var validStructure = false
     @IBOutlet var dataList: TabbableOutlineView!
     var resourceCache: [String: [Resource]] = [:] // Shared cache for RSID/CASR
@@ -15,9 +16,10 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
         return "TemplateWindow"
     }
     
-    required init?(resource: Resource, template: Resource) {
+    required init?(resource: Resource, template: Resource, filter: TemplateFilter.Type?) {
         self.resource = resource
         self.template = template
+        self.filter = filter
         super.init(window: nil)
         
         if !self.load(data: resource.data) {
@@ -59,10 +61,14 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     
     func load(data: Data) -> Bool {
         resourceStructure = ElementList(controller: self)
+        if let filter = filter {
+            resourceStructure.insert(ElementDVDR(type: "DVDR", label: "Filter Enabled: \(filter.name)"))
+        }
         validStructure = resourceStructure.readTemplate(data: template.data)
         if validStructure && !resource.data.isEmpty {
-            let reader = BinaryDataReader(resource.data)
             do {
+                let data = try filter?.filter(data: resource.data, for: resource.type) ?? resource.data
+                let reader = BinaryDataReader(data)
                 try resourceStructure.readData(from: reader)
                 if reader.remainingBytes > 0 {
                     // Show warning
@@ -158,9 +164,14 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     // MARK: - Menu functions
     
     @IBAction func saveResource(_ sender: Any) {
-        if self.window!.makeFirstResponder(dataList) {
-            resource.data = resourceStructure.getResourceData()
-            self.setDocumentEdited(false)
+        if self.window?.makeFirstResponder(dataList) != false {
+            do {
+                let data = resourceStructure.getResourceData()
+                resource.data = try filter?.unfilter(data: data, for: resource.type) ?? data
+                self.setDocumentEdited(false)
+            } catch let error {
+                NSApp.presentError(error)
+            }
         }
     }
     

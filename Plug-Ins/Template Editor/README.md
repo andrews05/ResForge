@@ -232,3 +232,5 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 FLTR|Declare Filtered Template (with comment)|0 bytes||✓||🔴
+
+Resorcerer’s original filters are incompatible with modern macOS, however ResForge does provide a filter interface for plugins and will apply appropriate filters automatically.

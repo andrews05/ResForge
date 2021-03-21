@@ -74,10 +74,13 @@ class ElementList {
     func insert(_ element: Element) {
         elements.insert(element, at: currentIndex)
         element.parentList = self
-        currentIndex += 1
-        if element.visible {
-            let visIndex = visibleElements.firstIndex(of: elements[currentIndex]) ?? visibleElements.endIndex
-            visibleElements.insert(element, at: visIndex)
+        // If the element list was previously empty then we haven't started configure yet
+        if elements.count > 1 {
+            currentIndex += 1
+            if element.visible {
+                let visIndex = visibleElements.firstIndex(of: elements[currentIndex]) ?? visibleElements.endIndex
+                visibleElements.insert(element, at: visIndex)
+            }
         }
     }
     

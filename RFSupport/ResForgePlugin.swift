@@ -22,9 +22,9 @@ public protocol ResourceEditor: AbstractEditor {
     func revertResource(_ sender: Any)
 }
 
-/// A template editor is a special type of editor that it also given a template resource on initialization.
+/// Template editors are additionally provided with a template resource and possibly a filter.
 public protocol TemplateEditor: ResourceEditor {
-    init?(resource: Resource, template: Resource)
+    init?(resource: Resource, template: Resource, filter: TemplateFilter.Type?)
 }
 
 /// A preview provider allows the document to display a grid view for a supported resource type.
@@ -55,6 +55,19 @@ public protocol PlaceholderProvider {
     
     /// Return a placeholder name to show for a resource, or nil to use a default name.
     static func placeholderName(for resource: Resource) -> String?
+}
+
+/// A template filter can modify data to allow it to be interpreted by a template.
+public protocol TemplateFilter {
+    static var supportedTypes: [String] { get }
+    /// The name of the filter that will be shown in the template editor.
+    static var name: String { get }
+    
+    /// Filter the data when reading into a template.
+    static func filter(data: Data, for resourceType: String) throws -> Data
+    
+    /// Reverse the filter for writing data back to the resource.
+    static func unfilter(data: Data, for resourceType: String) throws -> Data
 }
 
 
