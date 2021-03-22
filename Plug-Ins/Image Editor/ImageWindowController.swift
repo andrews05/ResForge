@@ -75,7 +75,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             widthConstraint.constant = max(image.size.width, window!.contentMinSize.width)
             heightConstraint.constant = max(image.size.height, window!.contentMinSize.height)
             self.window?.setContentSize(NSMakeSize(widthConstraint.constant, heightConstraint.constant))
-            imageSize.stringValue = String(format: "%dx%d", image.representations[0].pixelsWide, image.representations[0].pixelsHigh)
+            imageSize.stringValue = String(format: "%.0fx%.0f", image.size.width, image.size.height)
         } else if !resource.data.isEmpty {
             imageSize.stringValue = "Invalid or unsupported image format"
         } else if imageView.isEditable {
@@ -212,7 +212,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
     }
     
-    private static func imageRep(for resource: Resource!) -> NSImageRep? {
+    private static func imageRep(for resource: Resource) -> NSImageRep? {
         let data = resource.data
         guard !data.isEmpty else {
             return nil

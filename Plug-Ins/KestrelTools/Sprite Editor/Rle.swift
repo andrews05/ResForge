@@ -9,11 +9,11 @@ enum RleError: Error {
 typealias RleOp = UInt32
 extension RleOp {
     enum code: UInt32 {
-        case frameEnd       = 0x00000000
-        case lineStart      = 0x01000000
-        case pixels         = 0x02000000
-        case transparentRun = 0x03000000
-        case colourRun      = 0x04000000
+        case frameEnd   = 0x00000000
+        case lineStart  = 0x01000000
+        case pixels     = 0x02000000
+        case skip       = 0x03000000
+        case colorRun   = 0x04000000
     }
     var count: Int { Int(self & 0x00FFFFFF) / 2 }
     var code: RleOp.code? { RleOp.code(rawValue: self & 0xFF000000) }
@@ -148,7 +148,7 @@ class Rle {
                 }
                 x = 0
                 y += 1
-            case .transparentRun:
+            case .skip:
                 x += count
                 guard x <= frameWidth else {
                     throw RleError.invalid
@@ -165,7 +165,7 @@ class Rle {
                 if count % 2 != 0 {
                     try reader.advance(2)
                 }
-            case .colourRun:
+            case .colorRun:
                 x += count
                 guard x <= frameWidth else {
                     throw RleError.invalid
@@ -215,13 +215,13 @@ class Rle {
                     transparent += 1
                 } else {
                     if transparent != 0 {
-                        // Starting pixel data after transparency, write the transparent run
+                        // Starting pixel data after transparency, write the skip
                         if !pixels.isEmpty {
                             // We have previous unwritten pixel data, write this first
                             self.write(pixels: pixels)
                             pixels.removeAll()
                         }
-                        writer.write(RleOp(.transparentRun, count: transparent))
+                        writer.write(RleOp(.skip, count: transparent))
                         transparent = 0
                     }
                     let pixel =
