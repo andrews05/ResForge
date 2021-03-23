@@ -37,20 +37,34 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     }
     
     func windowWillClose(_ notification: Notification) {
-        // Cancel all editing on close (not sure how to just get the active field)
-        creator.abortEditing()
-        type.abortEditing()
-        rName.abortEditing()
-        rType.abortEditing()
-        rID.abortEditing()
+        // End editing on close, refresh if invalid
+        if self.window?.makeFirstResponder(nil) == false {
+            self.refresh()
+        }
     }
     
     func windowDidResignKey(_ notification: Notification) {
-        // End editing (accept changes) when clicking out of the window
-        self.window?.makeFirstResponder(nil)
+        // End editing, unless we're currently showing a validation error
+        if !(NSApp.keyWindow is NSPanel) && self.window?.makeFirstResponder(nil) == false {
+            self.refresh()
+        }
     }
     
-    private func update() {
+    override func showWindow(_ sender: Any?) {
+        super.showWindow(sender)
+        self.refresh()
+        // The key view loop can break when switching the content view - fix it manually
+        if self.window?.contentView == resourceView {
+            self.window?.makeFirstResponder(rName)
+        } else if self.window?.contentView == documentView {
+            self.window?.makeFirstResponder(creator)
+        }
+    }
+    
+    private func refresh() {
+        guard self.window?.isVisible == true else {
+            return
+        }
         if let resource = selectedResource {
             // set UI values
             self.window?.title = NSLocalizedString("Resource Info", comment: "")
@@ -107,7 +121,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             currentDocument = nil
             selectedResource = (mainWindow?.windowController as? ResourceEditor)?.resource
         }
-        self.update()
+        self.refresh()
     }
     
     @objc func mainWindowChanged(_ notification: Notification) {
@@ -118,7 +132,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
         if (notification.object as? NSWindow)?.windowController?.document === currentDocument {
             currentDocument = nil
             selectedResource = nil
-            self.update()
+            self.refresh()
         }
     }
     
@@ -127,13 +141,13 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             let resource = document.dataSource.selectionCount() == 1 ? document.dataSource.selectedResources().first : nil
             if resource !== selectedResource {
                 selectedResource = resource
-                self.update()
+                self.refresh()
             }
         }
     }
 
     @objc func propertiesChanged(_ notification: Notification) {
-        self.update()
+        self.refresh()
     }
     
     // Check for conflicts
@@ -148,6 +162,17 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             break
         }
         return true
+    }
+    
+    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        switch commandSelector {
+        case #selector(cancelOperation(_:)):
+            self.refresh()
+            self.window?.makeFirstResponder(control)
+            return true
+        default:
+            return false
+        }
     }
     
     func controlTextDidEndEditing(_ obj: Notification) {

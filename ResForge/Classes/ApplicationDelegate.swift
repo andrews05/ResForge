@@ -48,7 +48,12 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func showInfo(_ sender: Any) {
-        InfoWindowController.shared.showWindow(sender)
+        let info = InfoWindowController.shared
+        if info.window?.isKeyWindow == true {
+            info.close()
+        } else {
+            info.showWindow(sender)
+        }
     }
     
     @IBAction func showPrefs(_ sender: Any) {

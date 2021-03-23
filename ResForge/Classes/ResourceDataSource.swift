@@ -108,7 +108,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         } else {
             NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
         }
-        if (withUndo) {
+        if withUndo {
             document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
         }
     }

@@ -65,7 +65,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     }
     
     func hexTextView(_ view: HFTextView, didChangeProperties properties: HFControllerPropertyBits) {
-        if (properties.contains(.contentValue)) {
+        if properties.contains(.contentValue) {
             self.setDocumentEdited(true)
         }
     }
@@ -205,7 +205,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     }
     
     private func sanitize(_ string: String) -> String {
-        if (searchHex.state == .on) {
+        if searchHex.state == .on {
             let nonHexChars = NSCharacterSet(charactersIn: "0123456789ABCDEFabcdef").inverted;
             return string.components(separatedBy: nonHexChars).joined()
         }
@@ -213,7 +213,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     }
     
     private func data(string: String) -> Data {
-        if (searchHex.state == .on) {
+        if searchHex.state == .on {
             var hexString = string
             if hexString.count % 2 == 1 {
                 hexString = "0" + hexString
