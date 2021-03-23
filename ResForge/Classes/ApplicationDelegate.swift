@@ -14,10 +14,10 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     override init() {
         NSApp.registerServicesMenuSendTypes([.string], returnTypes: [.string])
         UserDefaults.standard.register(defaults: [
-            kConfirmChanges: false,
-            kDeleteResourceWarning: true,
-            kLaunchAction: kDisplayOpenPanel,
-            kShowSidebar: true
+            RFDefaults.confirmChanges: false,
+            RFDefaults.deleteResourceWarning: true,
+            RFDefaults.launchAction: RFDefaults.LaunchActions.displayOpenPanel,
+            RFDefaults.showSidebar: true
         ])
     }
     
@@ -35,11 +35,11 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
-        let launchAction = UserDefaults.standard.string(forKey: kLaunchAction)
+        let launchAction = UserDefaults.standard.string(forKey: RFDefaults.launchAction)
         switch launchAction {
-        case kOpenUntitledFile:
+        case RFDefaults.LaunchActions.openUntitledFile:
             return true
-        case kDisplayOpenPanel:
+        case RFDefaults.LaunchActions.displayOpenPanel:
             NSDocumentController.shared.openDocument(sender)
             return false
         default:

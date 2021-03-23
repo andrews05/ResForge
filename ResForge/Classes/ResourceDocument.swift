@@ -556,7 +556,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     @IBAction func delete(_ sender: Any) {
-        if UserDefaults.standard.bool(forKey: "DeleteResourceWarning") {
+        if UserDefaults.standard.bool(forKey: RFDefaults.deleteResourceWarning) {
             let alert = NSAlert()
             alert.messageText = NSLocalizedString("Are you sure you want to delete the selected resources?", comment: "")
             alert.addButton(withTitle: NSLocalizedString("Delete", comment: ""))

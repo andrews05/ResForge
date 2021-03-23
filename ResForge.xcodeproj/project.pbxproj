@@ -751,21 +751,21 @@
 		497043F82472064F0035C0FA /* quickdraw */ = {
 			isa = PBXGroup;
 			children = (
-				497043F92472064F0035C0FA /* geometry.cpp */,
-				497043FA2472064F0035C0FA /* clut.cpp */,
-				497043FB2472064F0035C0FA /* rle.hpp */,
 				497043FC2472064F0035C0FA /* cicn.cpp */,
+				497044072472064F0035C0FA /* cicn.hpp */,
+				497043FA2472064F0035C0FA /* clut.cpp */,
+				4970440B2472064F0035C0FA /* clut.hpp */,
+				497043F92472064F0035C0FA /* geometry.cpp */,
+				4970440A2472064F0035C0FA /* geometry.hpp */,
 				497043FD2472064F0035C0FA /* internal */,
 				497044042472064F0035C0FA /* pict.cpp */,
-				497044052472064F0035C0FA /* pixmap.cpp */,
-				497044062472064F0035C0FA /* rle.cpp */,
-				497044072472064F0035C0FA /* cicn.hpp */,
 				497044082472064F0035C0FA /* pict.hpp */,
+				497044052472064F0035C0FA /* pixmap.cpp */,
 				497044092472064F0035C0FA /* pixmap.hpp */,
-				4970440A2472064F0035C0FA /* geometry.hpp */,
-				4970440B2472064F0035C0FA /* clut.hpp */,
-				4943603F24C12DE100293E94 /* ppat.hpp */,
 				4943604024C12E0000293E94 /* ppat.cpp */,
+				4943603F24C12DE100293E94 /* ppat.hpp */,
+				497044062472064F0035C0FA /* rle.cpp */,
+				497043FB2472064F0035C0FA /* rle.hpp */,
 			);
 			path = quickdraw;
 			sourceTree = "<group>";
@@ -773,12 +773,12 @@
 		497043FD2472064F0035C0FA /* internal */ = {
 			isa = PBXGroup;
 			children = (
-				497043FE2472064F0035C0FA /* surface.hpp */,
-				497043FF2472064F0035C0FA /* packbits.hpp */,
 				497044002472064F0035C0FA /* color.cpp */,
-				497044012472064F0035C0FA /* packbits.cpp */,
 				497044022472064F0035C0FA /* color.hpp */,
+				497044012472064F0035C0FA /* packbits.cpp */,
+				497043FF2472064F0035C0FA /* packbits.hpp */,
 				497044032472064F0035C0FA /* surface.cpp */,
+				497043FE2472064F0035C0FA /* surface.hpp */,
 			);
 			path = internal;
 			sourceTree = "<group>";

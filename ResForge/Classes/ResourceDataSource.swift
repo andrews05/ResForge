@@ -12,7 +12,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     @IBOutlet var collectionController: CollectionController!
     @IBOutlet weak var document: ResourceDocument!
     
-    private(set) var useTypeList = UserDefaults.standard.bool(forKey: kShowSidebar)
+    private(set) var useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
     private var resourcesView: ResourcesView!
     
     override func awakeFromNib() {
@@ -134,7 +134,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         useTypeList = !useTypeList
         self.reload(selecting: self.selectedResources(), withUndo: false)
         self.updateSidebar()
-        UserDefaults.standard.set(useTypeList, forKey: kShowSidebar)
+        UserDefaults.standard.set(useTypeList, forKey: RFDefaults.showSidebar)
     }
     
     private func updateSidebar() {
