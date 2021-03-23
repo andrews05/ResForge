@@ -150,6 +150,23 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         return super.prepareSavePanel(savePanel)
     }
     
+    override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
+        if saveOperation == .saveOperation && fork == .rsrc {
+            // In place save of resource fork. We want to preserve all other aspects of the file, such as the data fork and finder flags.
+            // Relying on the default implementation can result in some oddities, so instead we'll just write out the resource fork directly.
+            // This isn't strictly "safe", although Graphite's writer will detect structural issues before actually writing the data.
+            let writeUrl = url.appendingPathComponent("..namedfork/rsrc")
+            try ResourceFile.write(directory.resources(), to: writeUrl, with: format)
+            try FileManager.default.setAttributes([.hfsTypeCode: hfsType, .hfsCreatorCode: hfsCreator], ofItemAtPath: url.path)
+        } else {
+            try super.writeSafely(to: url, ofType: typeName, for: saveOperation)
+        }
+        
+        // Update info window
+        NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
+        self.updateStatus()
+    }
+    
     override func write(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws {
         if saveOperation == .saveAsOperation {
             // Set fork according to typeName
@@ -160,13 +177,15 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 format = typeName == "ResourceFileExtended" ? kFormatExtended : kFormatClassic
                 fork = .data
                 // Clear type/creator for data fork (assume filename extension)
+                self.undoManager?.disableUndoRegistration()
                 hfsType = 0
                 hfsCreator = 0
+                self.undoManager?.enableUndoRegistration()
             }
         }
         
-        // Create file
-        // Note: Doesn't preserve any other FinderInfo properties from the old file
+        // Create file (this is important to be done first if we're writing the resource fork)
+        // Type codes should only be set if not blank, to avoid unnecessarily creating the FinderInfo
         var attrs: [FileAttributeKey: Any]?
         if hfsType != 0 || hfsCreator != 0 {
             attrs = [.hfsTypeCode: hfsType, .hfsCreatorCode: hfsCreator]
@@ -176,18 +195,6 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         // Write resources to file
         let writeUrl = fork == .rsrc ? url.appendingPathComponent("..namedfork/rsrc") : url
         try ResourceFile.write(directory.resources(), to: writeUrl, with: format)
-        
-        // If writing the resource fork, copy the data from the old file
-        if saveOperation == .saveOperation && fork == .rsrc {
-            let err = copyfile(absoluteOriginalContentsURL?.path.cString(using: .utf8), url.path.cString(using: .utf8), nil, copyfile_flags_t(COPYFILE_DATA))
-            if err != noErr {
-                throw NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
-            }
-        }
-        
-        // Update info window
-        NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
-        self.updateStatus()
     }
     
     // MARK: - Export
