@@ -67,6 +67,30 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     
     private func loadImage() {
         imageView.image = Self.image(for: resource)
+        if let image = imageView.image {
+            // Colour icons use the mask from the black & white version of the same icon - see if we can load it.
+            // Note this is only done within the viewer - preview and export should not access other resources.
+            let maskType: String?
+            switch resource.type {
+            case "icl4", "icl8":
+                maskType = "ICN#"
+            case "icm4", "icm8":
+                maskType = "icm#"
+            case "ics4", "ics8":
+                maskType = "ics#"
+            default:
+                maskType = nil
+            }
+            if let maskType = maskType,
+               let bw = resource.manager.findResource(ofType: maskType, id: resource.id, currentDocumentOnly: true),
+               let bwRep = Self.imageRep(for: bw) {
+                image.lockFocus()
+                NSGraphicsContext.current?.cgContext.interpolationQuality = .none
+                image.representations[0].draw()
+                bwRep.draw(in: image.alignmentRect, from: NSZeroRect, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
+                image.unlockFocus()
+            }
+        }
         self.updateView()
     }
     
