@@ -22,7 +22,7 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
         return "SoundWindow"
     }
     
-    required init(resource: Resource) {
+    required init(resource: Resource, manager: RFEditorManager) {
         UserDefaults.standard.register(defaults: ["SndFormat":k16BitBigEndianFormat])
         self.resource = resource
         sound = SoundResource(resource.data)

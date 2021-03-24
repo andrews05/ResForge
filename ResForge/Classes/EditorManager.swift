@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class EditorManager: ResForgeEditorManager {
+class EditorManager: RFEditorManager {
     private var editorWindows: [String: ResourceEditor] = [:]
     private weak var document: ResourceDocument!
     
@@ -60,13 +60,11 @@ class EditorManager: ResForgeEditorManager {
         let key = String(describing: resource).appending(String(describing: editor))
         var plug = editorWindows[key]
         if plug == nil {
-            // Set a reference to the manager on the resource. This allows the plugin to access the manager and call the protocol functions.
-            resource.manager = self
             if let editor = editor as? TemplateEditor.Type {
                 let filter = PluginRegistry.templateFilters[resource.type]
-                plug = editor.init(resource: resource, template: tmplResource, filter: filter)
+                plug = editor.init(resource: resource, manager: self, template: tmplResource, filter: filter)
             } else {
-                plug = editor!.init(resource: resource)
+                plug = editor!.init(resource: resource, manager: self)
             }
             if plug == nil {
                 return

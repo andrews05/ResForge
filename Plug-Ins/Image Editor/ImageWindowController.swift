@@ -26,6 +26,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     ]
     
     let resource: Resource
+    private let manager: RFEditorManager
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var imageSize: NSTextField!
@@ -36,8 +37,9 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         return "ImageWindow"
     }
 
-    required init(resource: Resource) {
+    required init(resource: Resource, manager: RFEditorManager) {
         self.resource = resource
+        self.manager = manager
         super.init(window: nil)
     }
 
@@ -82,7 +84,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
                 maskType = nil
             }
             if let maskType = maskType,
-               let bw = resource.manager.findResource(ofType: maskType, id: resource.id, currentDocumentOnly: true),
+               let bw = manager.findResource(ofType: maskType, id: resource.id, currentDocumentOnly: true),
                let bwRep = Self.imageRep(for: bw) {
                 image.lockFocus()
                 NSGraphicsContext.current?.cgContext.interpolationQuality = .none

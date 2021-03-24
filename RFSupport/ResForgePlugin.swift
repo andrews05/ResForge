@@ -15,7 +15,7 @@ public protocol ResourceEditor: AbstractEditor {
     static var supportedTypes: [String] { get }
     
     var resource: Resource { get }
-    init?(resource: Resource)
+    init?(resource: Resource, manager: RFEditorManager)
     
     // Implementers should declare these @IBAction
     func saveResource(_ sender: Any)
@@ -24,7 +24,7 @@ public protocol ResourceEditor: AbstractEditor {
 
 /// Template editors are additionally provided with a template resource and possibly a filter.
 public protocol TemplateEditor: ResourceEditor {
-    init?(resource: Resource, template: Resource, filter: TemplateFilter.Type?)
+    init?(resource: Resource, manager: RFEditorManager, template: Resource, filter: TemplateFilter.Type?)
 }
 
 /// A preview provider allows the document to display a grid view for a supported resource type.
@@ -71,8 +71,8 @@ public protocol TemplateFilter {
 }
 
 
-/// The editor manager provides utility functions and is available on resources given to editors. It should not be implemented by plugins.
-public protocol ResForgeEditorManager: class {
+/// The editor manager provides utility functions and is provided to editors on init. It should not be implemented by plugins.
+public protocol RFEditorManager: class {
     func open(resource: Resource, using editor: ResourceEditor.Type?, template: String?)
     func allResources(ofType: String, currentDocumentOnly: Bool) -> [Resource]
     func findResource(ofType: String, id: Int, currentDocumentOnly: Bool) -> Resource?

@@ -5,6 +5,7 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     static let supportedTypes: [String] = []
     
     let resource: Resource
+    let manager: RFEditorManager
     private let template: Resource
     private let filter: TemplateFilter.Type?
     private var resourceStructure: ElementList!
@@ -16,8 +17,9 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
         return "TemplateWindow"
     }
     
-    required init?(resource: Resource, template: Resource, filter: TemplateFilter.Type?) {
+    required init?(resource: Resource, manager: RFEditorManager, template: Resource, filter: TemplateFilter.Type?) {
         self.resource = resource
+        self.manager = manager
         self.template = template
         self.filter = filter
         super.init(window: nil)
@@ -30,8 +32,8 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
         NotificationCenter.default.addObserver(self, selector: #selector(self.templateDataDidChange(_:)), name: .ResourceDataDidChange, object: template)
     }
 
-    required init(resource: Resource) {
-        fatalError("init(resource:) has not been implemented")
+    required init(resource: Resource, manager: RFEditorManager) {
+        fatalError("init(resource:manager:) has not been implemented")
     }
 
     required init?(coder: NSCoder) {
@@ -92,7 +94,7 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     func resources(ofType type: String) -> [Resource] {
         if resourceCache[type] == nil {
             // Find resources in all documents and sort by name
-            var resources = resource.manager!.allResources(ofType: type, currentDocumentOnly: false).filter {
+            var resources = manager.allResources(ofType: type, currentDocumentOnly: false).filter {
                 !$0.name.isEmpty
             }
             resources.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }

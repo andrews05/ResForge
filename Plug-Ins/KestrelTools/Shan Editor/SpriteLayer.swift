@@ -25,7 +25,7 @@ class SpriteLayer: NSObject {
         didSet {
             if spriteID != oldValue {
                 frames.removeAll()
-                guard spriteID > 0, let resource = controller.resource.manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) else {
+                guard spriteID > 0, let resource = controller.manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) else {
                     spriteLink.title = "not found"
                     return
                 }
@@ -72,16 +72,14 @@ class SpriteLayer: NSObject {
     }
     
     @IBAction func openSprite(_ sender: Any) {
-        if let manager = controller.resource.manager {
-            if let resource = manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) {
-                // If we found a resource but don't currently have any frames, try loading it again
-                if frames.isEmpty && !resource.data.isEmpty {
-                    self.loadRleAsync(resource.data)
-                }
-                manager.open(resource: resource, using: nil, template: nil)
-            } else {
-                manager.createResource(ofType: "rlëD", id: Int(spriteID), name: "")
+        if let resource = controller.manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) {
+            // If we found a resource but don't currently have any frames, try loading it again
+            if frames.isEmpty && !resource.data.isEmpty {
+                self.loadRleAsync(resource.data)
             }
+            controller.manager.open(resource: resource, using: nil, template: nil)
+        } else {
+            controller.manager.createResource(ofType: "rlëD", id: Int(spriteID), name: "")
         }
     }
     

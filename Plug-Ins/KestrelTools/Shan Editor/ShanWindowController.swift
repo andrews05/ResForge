@@ -18,6 +18,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     static let supportedTypes = ["shän"]
     
     let resource: Resource
+    let manager: RFEditorManager
     @IBOutlet var shanView: ShanView!
     @IBOutlet var forwardButton: NSButton!
     @IBOutlet var reverseButton: NSButton!
@@ -80,8 +81,9 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
         return "ShanWindow"
     }
 
-    required init(resource: Resource) {
+    required init(resource: Resource, manager: RFEditorManager) {
         self.resource = resource
+        self.manager = manager
         pointLayers = [
             gunPoints,
             turretPoints,

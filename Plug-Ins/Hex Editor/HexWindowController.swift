@@ -24,7 +24,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
         return "HexWindow"
     }
     
-    required init(resource: Resource) {
+    required init(resource: Resource, manager: RFEditorManager) {
         self.resource = resource
         super.init(window: nil)
         

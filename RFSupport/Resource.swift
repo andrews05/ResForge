@@ -81,7 +81,6 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     }
     
     public weak var document: NSDocument!
-    public weak var manager: ResForgeEditorManager! // This isn't set until the resource is opened in an editor
     private var _preview: NSImage?
     
     public var defaultWindowTitle: String {
