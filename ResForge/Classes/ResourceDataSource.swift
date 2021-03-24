@@ -202,7 +202,8 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     func tableViewSelectionDidChange(_ notification: Notification) {
         let type = document.directory.allTypes[typeList.selectedRow-1]
         // Check if type actually changed, rather than just being reselected after a reload
-        if resourcesView.currentType != type {
+        let changed = resourcesView.currentType != type
+        if changed {
             if let provider = PluginRegistry.previewProviders[type] {
                 let size = provider.previewSize(for: type)
                 let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
@@ -216,9 +217,11 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
             }
         }
         resourcesView.reload(type: type)
-        // If the view changed we should make sure it is still first responder
-        scrollView.window?.makeFirstResponder(scrollView.documentView)
-        NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
+        if changed {
+            // If the view changed we should make sure it is still first responder
+            scrollView.window?.makeFirstResponder(scrollView.documentView)
+            NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
+        }
     }
 }
 

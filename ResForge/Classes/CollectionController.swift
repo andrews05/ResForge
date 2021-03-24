@@ -6,6 +6,14 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     @IBOutlet weak var document: ResourceDocument!
     private(set) var currentType: String?
     
+    override func awakeFromNib() {
+        collectionView.addObserver(self, forKeyPath: "selectionIndexPaths", options: [], context: nil)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
+    }
+    
     func reload(type: String?) {
         currentType = type!
         collectionView.reloadData()
@@ -18,9 +26,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
                 paths.insert([0, i])
             }
         }
-        collectionView.selectionIndexPaths = paths
-        collectionView.scrollToItems(at: paths, scrollPosition: .nearestHorizontalEdge)
-        NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
+        collectionView.selectItems(at: paths, scrollPosition: .nearestHorizontalEdge)
     }
     
     func selectionCount() -> Int {
@@ -62,14 +68,6 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     }
     
     // MARK: - Delegate functions
-    
-    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
-        NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
-    }
-    func collectionView(_ collectionView: NSCollectionView, didDeselectItemsAt indexPaths: Set<IndexPath>) {
-        NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
-    }
-    
     func collectionView(_ collectionView: NSCollectionView, pasteboardWriterForItemAt index: Int) -> NSPasteboardWriting? {
         return document.directory.filteredResources(type: currentType!)[index]
     }
@@ -117,6 +115,13 @@ class ResourceCollection: NSCollectionView {
         } else {
             super.keyDown(with: event)
         }
+    }
+    
+    // Override select to notify of change
+    override func selectItems(at indexPaths: Set<IndexPath>, scrollPosition: NSCollectionView.ScrollPosition) {
+        self.willChangeValue(for: \.selectionIndexPaths)
+        super.selectItems(at: indexPaths, scrollPosition: scrollPosition)
+        self.didChangeValue(for: \.selectionIndexPaths)
     }
     
     // Detect clicks only the image or text
