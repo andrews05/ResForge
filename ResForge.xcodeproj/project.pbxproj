@@ -113,7 +113,6 @@
 		49AACD8B24CE97CB0081DD4A /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49AACD8D24CE97CD0081DD4A /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49AACD9324CF6AB00081DD4A /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
-		49AACD9424CF6B180081DD4A /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49B9E66C253FF1AB00A266DE /* ElementCASR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B9E66B253FF1AB00A266DE /* ElementCASR.swift */; };
 		49B9E6742540042900A266DE /* RangeableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B9E6732540042900A266DE /* RangeableElement.swift */; };
 		49C3AC72253E6C7C0020037B /* ElementRSID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3AC71253E6C7C0020037B /* ElementRSID.swift */; };
@@ -304,16 +303,6 @@
 			dstSubfolderSpec = 7;
 			files = (
 				E119386509991DDD00A3A6EA /* Templates.rsrc in Copy Support Resources */,
-			);
-			name = "Copy Support Resources";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E15CFD86099995FD004929B6 /* Copy Support Resources */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "Support Resources";
-			dstSubfolderSpec = 7;
-			files = (
 			);
 			name = "Copy Support Resources";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,7 +514,6 @@
 		E18BF58C069FEA1400F076B8 /* ResForge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResForge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hexadecimal Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E18BF78B069FF23700F076B8 /* Font Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Font Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF94B06A00F8E00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF9D706A01A2200F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BFA3606A20B7A00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -587,14 +575,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49AACD9324CF6AB00081DD4A /* RFSupport.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF789069FF23700F076B8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				49AACD9424CF6B180081DD4A /* RFSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,7 +926,6 @@
 				E18BF58C069FEA1400F076B8 /* ResForge.app */,
 				E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */,
 				E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */,
-				E18BF78B069FF23700F076B8 /* Font Editor.plugin */,
 				B2FCA78A15A66ACE00696598 /* Image Editor.plugin */,
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
 				49AACD7B24CE931A0081DD4A /* RFSupport.framework */,
@@ -1022,13 +1001,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				492722AF24CFADD600819E32 /* RFSupport.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF786069FF23700F076B8 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1168,25 +1140,6 @@
 			productReference = E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		E18BF78A069FF23700F076B8 /* Font Editor */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E13F7EE508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Font Editor" */;
-			buildPhases = (
-				E18BF786069FF23700F076B8 /* Headers */,
-				E18BF787069FF23700F076B8 /* Resources */,
-				E15CFD86099995FD004929B6 /* Copy Support Resources */,
-				E18BF788069FF23700F076B8 /* Sources */,
-				E18BF789069FF23700F076B8 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Font Editor";
-			productName = "Font Editor";
-			productReference = E18BF78B069FF23700F076B8 /* Font Editor.plugin */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1245,7 +1198,6 @@
 				4953F594248874AA0002340F /* Sound Editor */,
 				49EE72D72550B79600BEABDB /* KestrelTools */,
 				49AACD7A24CE931A0081DD4A /* RFSupport */,
-				E18BF78A069FF23700F076B8 /* Font Editor */,
 			);
 		};
 /* End PBXProject section */
@@ -1365,13 +1317,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B27A65D015A677F00029141B /* TemplateWindow.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF787069FF23700F076B8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1542,13 +1487,6 @@
 				49D185682541309900EA380C /* ElementAWRD.swift in Sources */,
 				49D185A6254278EC00EA380C /* ElementHEXD.swift in Sources */,
 				49A432BA25436390000B1109 /* ElementDOUB.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E18BF788069FF23700F076B8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1965,36 +1903,6 @@
 			};
 			name = Release;
 		};
-		E13F7EE608F0411100E2A5CB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
-				INFOPLIST_FILE = "Plug-Ins/Font Editor/Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Font-Editor";
-				PRODUCT_NAME = "Font Editor";
-				WARNING_CFLAGS = "-Wmost";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = Debug;
-		};
-		E13F7EE708F0411100E2A5CB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
-				INFOPLIST_FILE = "Plug-Ins/Font Editor/Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Font-Editor";
-				PRODUCT_NAME = "Font Editor";
-				WARNING_CFLAGS = "-Wmost";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = Release;
-		};
 		E13F7F0608F0411100E2A5CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2144,15 +2052,6 @@
 			buildConfigurations = (
 				E13F7EDA08F0411100E2A5CB /* Debug */,
 				E13F7EDB08F0411100E2A5CB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		E13F7EE508F0411100E2A5CB /* Build configuration list for PBXNativeTarget "Font Editor" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E13F7EE608F0411100E2A5CB /* Debug */,
-				E13F7EE708F0411100E2A5CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

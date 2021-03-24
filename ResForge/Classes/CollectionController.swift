@@ -10,6 +10,10 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         collectionView.addObserver(self, forKeyPath: "selectionIndexPaths", options: [], context: nil)
     }
     
+    deinit {
+        collectionView.removeObserver(self, forKeyPath: "selectionIndexPaths")
+    }
+    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
     }
