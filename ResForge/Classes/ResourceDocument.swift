@@ -149,13 +149,25 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
-        if saveOperation == .saveOperation && fork == .rsrc {
+        if saveOperation == .saveOperation && fork == .rsrc, let fileURL = self.fileURL {
             // In place save of resource fork. We want to preserve all other aspects of the file, such as the data fork and finder flags.
             // Relying on the default implementation can result in some oddities, so instead we'll just write out the resource fork directly.
-            // This isn't strictly "safe", although Graphite's writer will detect structural issues before actually writing the data.
-            let writeUrl = url.appendingPathComponent("..namedfork/rsrc")
-            try ResourceFile.write(directory.resources(), to: writeUrl, with: format)
-            try FileManager.default.setAttributes([.hfsTypeCode: hfsType, .hfsCreatorCode: hfsCreator], ofItemAtPath: url.path)
+            // This isn't strictly "safe", although Graphite's writer will at least detect structural issues before writing any data.
+            // First we need to check if the file is being renamed for some reason and copy the existing file to the new location.
+            let moved = fileURL != url
+            if moved {
+                try FileManager.default.copyItem(at: fileURL, to: url)
+            }
+            do {
+                let writeUrl = url.appendingPathComponent("..namedfork/rsrc")
+                try ResourceFile.write(directory.resources(), to: writeUrl, with: format)
+                try FileManager.default.setAttributes([.hfsTypeCode: hfsType, .hfsCreatorCode: hfsCreator], ofItemAtPath: url.path)
+            } catch let error {
+                if moved {
+                    try? FileManager.default.removeItem(at: url)
+                }
+                throw error
+            }
         } else {
             try super.writeSafely(to: url, ofType: typeName, for: saveOperation)
         }
