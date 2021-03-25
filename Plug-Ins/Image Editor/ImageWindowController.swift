@@ -48,7 +48,6 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     }
     
     override func windowDidLoad() {
-        super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle
         // Interface builder doesn't allow setting the document view so we have to do it here and configure the constraints
         scrollView.documentView = imageView

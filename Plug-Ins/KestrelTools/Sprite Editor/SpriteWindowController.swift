@@ -41,7 +41,6 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
     
     override func windowDidLoad() {
-        super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle
         imageView.allowsCutCopyPaste = false
         self.loadImage()

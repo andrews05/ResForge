@@ -46,7 +46,6 @@
 		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4953F5A92488795B0002340F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4953F5A82488795B0002340F /* AVKit.framework */; };
 		4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */; };
-		49640EBC25EB7952009FEC9B /* NonBlankNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640EB425EB75CB009FEC9B /* NonBlankNumberFormatter.swift */; };
 		49640F0F25F201AE009FEC9B /* SpriteLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4919415425E98E7000FFC3F8 /* SpriteLayer.swift */; };
 		49640F1625F201B1009FEC9B /* BaseLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E7825EAE09B009FEC9B /* BaseLayer.swift */; };
 		49640F1D25F201B3009FEC9B /* AltLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E8625EAE0A2009FEC9B /* AltLayer.swift */; };
@@ -59,7 +58,7 @@
 		49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */; };
 		49640F5D25F36A77009FEC9B /* AbstractEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640F5C25F36A77009FEC9B /* AbstractEditor.swift */; };
 		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
-		49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */; };
+		49655DFA24DE6DA200D6AFF6 /* ResourceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* ResourceError.swift */; };
 		49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */; };
 		49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */; };
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
@@ -372,11 +371,10 @@
 		49640E9C25EAE0B8009FEC9B /* LightLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightLayer.swift; sourceTree = "<group>"; };
 		49640EA425EAE0BF009FEC9B /* WeaponLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponLayer.swift; sourceTree = "<group>"; };
 		49640EAC25EAE0C6009FEC9B /* ShieldLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldLayer.swift; sourceTree = "<group>"; };
-		49640EB425EB75CB009FEC9B /* NonBlankNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonBlankNumberFormatter.swift; sourceTree = "<group>"; };
 		49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteppingFieldDelegate.swift; sourceTree = "<group>"; };
 		49640F5C25F36A77009FEC9B /* AbstractEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractEditor.swift; sourceTree = "<group>"; };
 		49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDocument.swift; sourceTree = "<group>"; };
-		49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource-Conflict.swift"; sourceTree = "<group>"; };
+		49655DF924DE6DA200D6AFF6 /* ResourceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceError.swift; sourceTree = "<group>"; };
 		49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDirectory.swift; sourceTree = "<group>"; };
 		49655E3F24DFF26700D6AFF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Image Editor-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -872,7 +870,6 @@
 				49EE72DA2550B79600BEABDB /* Info.plist */,
 				497A93BD255BB49600900C7B /* Templates.rsrc */,
 				49EE738F2550BC8D00BEABDB /* KestrelTools.swift */,
-				49640EB425EB75CB009FEC9B /* NonBlankNumberFormatter.swift */,
 				49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */,
 				496E7DE225E59344001C97CA /* Sprite Editor */,
 				496E7E3125E6E936001C97CA /* Shan Editor */,
@@ -951,7 +948,7 @@
 				49DB6A1D24F377A400BE0F0F /* CollectionController.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
-				49655DF924DE6DA200D6AFF6 /* Resource-Conflict.swift */,
+				49655DF924DE6DA200D6AFF6 /* ResourceError.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1385,7 +1382,6 @@
 				49640F4725F201C9009FEC9B /* ShanView.swift in Sources */,
 				492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */,
-				49640EBC25EB7952009FEC9B /* NonBlankNumberFormatter.swift in Sources */,
 				492E912E2551373100195174 /* Rle.swift in Sources */,
 				49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */,
 				496E7E3525E6EA15001C97CA /* ShanWindowController.swift in Sources */,
@@ -1411,7 +1407,7 @@
 			files = (
 				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
-				49655DFA24DE6DA200D6AFF6 /* Resource-Conflict.swift in Sources */,
+				49655DFA24DE6DA200D6AFF6 /* ResourceError.swift in Sources */,
 				491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */,
 				49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */,
 				49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */,

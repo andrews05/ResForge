@@ -142,21 +142,6 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
     }
     
-    // Check for conflicts
-    func control(_ control: NSControl, isValidObject obj: Any?) -> Bool {
-        let textField = control as! NSTextField
-        let resource = outlineView.item(atRow: outlineView.row(for: textField)) as! Resource
-        switch textField.identifier?.rawValue {
-        case "type":
-            return resource.canSetType(obj as! String)
-        case "id":
-            return resource.canSetID(obj as! Int)
-        default:
-            break
-        }
-        return true
-    }
-    
     func controlTextDidEndEditing(_ obj: Notification) {
         let textField = obj.object as! NSTextField
         guard let resource = outlineView.item(atRow: outlineView.row(for: textField)) as? Resource else {
@@ -168,10 +153,6 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         switch textField.identifier?.rawValue {
         case "name":
             resource.name = textField.stringValue
-        case "type":
-            resource.type = textField.stringValue
-        case "id":
-            resource.id = textField.integerValue
         default:
             break
         }

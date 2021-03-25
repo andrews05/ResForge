@@ -37,7 +37,6 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     }
     
     override func windowDidLoad() {
-        super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle;
         findView.isHidden = true
         

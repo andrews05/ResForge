@@ -27,7 +27,7 @@ public struct ResAttributes: OptionSet, Hashable {
 }
 
 public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboardReading {
-    @objc public var type: String {
+    @objc dynamic public var type: String {
         didSet {
             if type != oldValue {
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
@@ -38,7 +38,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
     }
     
-    @objc public var id: Int {
+    @objc dynamic public var id: Int {
         didSet {
             if id != oldValue {
                 NotificationCenter.default.post(name: .ResourceIDDidChange, object: self, userInfo: ["oldValue":oldValue])
@@ -49,7 +49,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
     }
     
-    @objc public var name: String {
+    @objc dynamic public var name: String {
         didSet {
             if name != oldValue {
                 NotificationCenter.default.post(name: .ResourceNameDidChange, object: self, userInfo: ["oldValue":oldValue])

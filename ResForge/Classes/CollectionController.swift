@@ -6,18 +6,6 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     @IBOutlet weak var document: ResourceDocument!
     private(set) var currentType: String?
     
-    override func awakeFromNib() {
-        collectionView.addObserver(self, forKeyPath: "selectionIndexPaths", options: [], context: nil)
-    }
-    
-    deinit {
-        collectionView.removeObserver(self, forKeyPath: "selectionIndexPaths")
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
-    }
-    
     func reload(type: String?) {
         currentType = type!
         collectionView.reloadData()
@@ -121,7 +109,15 @@ class ResourceCollection: NSCollectionView {
         }
     }
     
-    // Override select to notify of change
+    // The delegate selection change callbacks are insufficient - best to trigger notification ourselves.
+    override func didChangeValue(forKey key: String) {
+        super.didChangeValue(forKey: key)
+        if key == "selectionIndexPaths", let document = (self.delegate as? CollectionController)?.document {
+            NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
+        }
+    }
+    
+    // Programmatic selection for some reason isn't KVO compliant - override to fix this.
     override func selectItems(at indexPaths: Set<IndexPath>, scrollPosition: NSCollectionView.ScrollPosition) {
         self.willChangeValue(for: \.selectionIndexPaths)
         super.selectItems(at: indexPaths, scrollPosition: scrollPosition)
@@ -148,6 +144,10 @@ class ResourceCollection: NSCollectionView {
         if self.selectionIndexPaths.count == 1, let item = self.item(at: self.selectionIndexPaths.first!) as? ResourceItem {
             item.endEditing()
         }
+        return true
+    }
+    
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
         return true
     }
 }

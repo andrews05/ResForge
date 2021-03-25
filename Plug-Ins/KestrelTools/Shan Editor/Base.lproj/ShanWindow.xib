@@ -2019,13 +2019,19 @@
             </view>
             <point key="canvasLocation" x="186" y="219.5"/>
         </window>
-        <numberFormatter formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="bhc-Ra-cbF" userLabel="Int16 Formatter" customClass="NonBlankNumberFormatter" customModule="KestrelTools" customModuleProvider="target">
+        <numberFormatter formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="bhc-Ra-cbF" userLabel="Int16 Formatter">
             <real key="minimum" value="-32768"/>
             <real key="maximum" value="32767"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="nil" keyPath="nilSymbol"/>
+            </userDefinedRuntimeAttributes>
         </numberFormatter>
-        <numberFormatter formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="vgo-7Z-Vj2" userLabel="Positive Int16 Formatter" customClass="NonBlankNumberFormatter" customModule="KestrelTools" customModuleProvider="target">
+        <numberFormatter formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="vgo-7Z-Vj2" userLabel="Positive Int16 Formatter">
             <real key="minimum" value="0.0"/>
             <real key="maximum" value="32767"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="nil" keyPath="nilSymbol"/>
+            </userDefinedRuntimeAttributes>
         </numberFormatter>
         <customObject id="6tQ-bz-NeX" customClass="SteppingFieldDelegate" customModule="KestrelTools" customModuleProvider="target"/>
         <customObject id="3hB-Gf-oKq" userLabel="Base Layer" customClass="BaseLayer" customModule="KestrelTools" customModuleProvider="target">

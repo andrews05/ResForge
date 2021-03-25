@@ -53,7 +53,6 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     }
         
     override func windowDidLoad() {
-        super.windowDidLoad()
         self.window?.title = resource.defaultWindowTitle
         dataList.expandItem(nil, expandChildren: true)
         if validStructure && resource.data.isEmpty {

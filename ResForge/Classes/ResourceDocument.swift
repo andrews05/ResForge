@@ -52,19 +52,17 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     private(set) lazy var createController = CreateResourceController(self)
     private var fork: FileFork!
     private var format: ResourceFileFormat = kFormatClassic
-    var hfsType: OSType = 0 {
+    @objc dynamic var hfsType: OSType = 0 {
         didSet {
             if hfsType != oldValue {
-                NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
                 self.undoManager?.setActionName(NSLocalizedString("Change File Type", comment: ""))
                 self.undoManager?.registerUndo(withTarget: self, handler: { $0.hfsType = oldValue })
             }
         }
     }
-    var hfsCreator: OSType = 0 {
+    @objc dynamic var hfsCreator: OSType = 0 {
         didSet {
             if hfsCreator != oldValue {
-                NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
                 self.undoManager?.setActionName(NSLocalizedString("Change File Creator", comment: ""))
                 self.undoManager?.registerUndo(withTarget: self, handler: { $0.hfsCreator = oldValue })
             }
