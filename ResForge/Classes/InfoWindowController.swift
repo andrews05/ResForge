@@ -140,7 +140,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     
     @IBAction func attributesChanged(_ sender: NSButton) {
 //        let att = ResAttributes(rawValue: sender.selectedTag())
-//        selectedResource?.attributes.formSymmetricDifference(att)
+//        (objectController.content as? Resource)?.attributes.formSymmetricDifference(att)
     }
 }
 
@@ -163,4 +163,17 @@ class FourCharCodeTransformer: ValueTransformer {
 
 extension NSValueTransformerName {
     static let fourCharCodeTransformerName = Self("FourCharCodeTransformer")
+}
+
+// These extensions allow the outline and collection views to change selection with a single click while the info window is key.
+// This makes it easier for the user to update multiple resources consecutively.
+extension NSOutlineView {
+    open override var needsPanelToBecomeKey: Bool {
+        return !(self.window?.isMainWindow == true && self.window?.isKeyWindow == false)
+    }
+}
+extension NSImageView {
+    open override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        return true
+    }
 }
