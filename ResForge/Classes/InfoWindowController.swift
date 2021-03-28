@@ -87,7 +87,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             
             // swap view
             self.window?.contentView = documentView
-            self.window?.initialFirstResponder = creator
+            self.window?.initialFirstResponder = type
         } else {
             self.window?.title = NSLocalizedString("Document Info", comment: "")
             self.window?.contentView = placeholderView
