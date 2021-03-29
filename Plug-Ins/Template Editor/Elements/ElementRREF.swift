@@ -39,6 +39,7 @@ class ElementRREF: Element {
         let button = NSButton(frame: frame)
         button.bezelStyle = .inline
         button.title = buttonLabel
+        button.font = .boldSystemFont(ofSize: 11)
         button.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
         button.imagePosition = .imageRight
         button.target = self

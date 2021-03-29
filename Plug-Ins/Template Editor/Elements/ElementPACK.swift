@@ -50,11 +50,12 @@ class ElementPACK: Element {
         var frame = view.frame
         for element in subElements {
             // When packing multiple elements, attempt to reduce the width
-            if subElements.count > 1, let element = element as? CaseableElement, element.cases != nil {
-                if let element = element as? RangeableElement, element.popupWidth == 180 {
-                    element.popupWidth = 120
-                } else if element.width > 180 {
+            if subElements.count > 1 {
+                if element.width > 180 {
                     element.width = 180
+                }
+                if let element = element as? RangeableElement {
+                    element.popupWidth = element.popupWidth > 180 ? 180 : 120
                 }
             }
             element.configure(view: view)

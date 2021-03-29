@@ -68,7 +68,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
     
     override func configure(view: NSView) {
         if bits == 1 {
-            ElementBOOL.configureRadios(view: view, for: self)
+            ElementBOOL.configureRadios(in: view, for: self)
         } else if bits == T.bitWidth {
             // Display as checkboxes
             var frame = view.frame

@@ -82,15 +82,16 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     // MARK: - Methods Subclasses Should Override
     
     /// Perform any configuration that may depend on other elements.
-    func configure() throws {}
+    func configure() throws {
+        // Throw if not a subclass (typically ending elements such as LSTE).
+        if Self.self == Element.self {
+            throw TemplateError.invalidStructure(self, NSLocalizedString("Not expected at this position.", comment: ""))
+        }
+    }
     
     /// Configure the view to display this element in the list.
     /// The default implementation creates a text field bound to a "value" property.
     func configure(view: NSView) {
-        // Element itself has no value - only do this for subclasses
-        guard Swift.type(of: self) != Element.self else {
-            return
-        }
         var frame = view.frame
         frame.size.height = CGFloat(rowHeight)
         if width != 0 {

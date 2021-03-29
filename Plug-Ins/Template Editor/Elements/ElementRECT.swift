@@ -31,7 +31,8 @@ class ElementRECT: Element {
     
     static func configure(fields: [String], in view: NSView, for element: Element) {
         var frame = view.frame
-        frame.size.width = 60-4
+        let width = element.width / CGFloat(fields.count)
+        frame.size.width = width - 4
         for key in fields {
             let field = NSTextField(frame: frame)
             field.placeholderString = key
@@ -39,7 +40,7 @@ class ElementRECT: Element {
             field.delegate = element
             field.bind(.value, to: element, withKeyPath: key, options: nil)
             view.addSubview(field)
-            frame.origin.x += 60
+            frame.origin.x += width
         }
     }
     

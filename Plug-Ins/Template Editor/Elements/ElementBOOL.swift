@@ -9,7 +9,7 @@ class ElementBOOL: CaseableElement {
     }
     
     override func configure(view: NSView) {
-        Self.configureRadios(view: view, for: self)
+        Self.configureRadios(in: view, for: self)
     }
     
     override func readData(from reader: BinaryDataReader) throws {
@@ -55,14 +55,15 @@ class ElementBOOL: CaseableElement {
         }
     }
     
-    static func configureRadios(view: NSView, for element: CaseableElement) {
+    static func configureRadios(in view: NSView, for element: CaseableElement) {
         if element.cases == nil {
             view.addSubview(Self.createCheckbox(with: view.frame, for: element))
             return
         }
         
         var frame = view.frame
-        frame.size.width = 120-4
+        let width = element.width / 2
+        frame.size.width = width - 4
         for caseEl in element.cases {
             let radio = NSButton(frame: frame)
             radio.setButtonType(.radio)
@@ -71,7 +72,7 @@ class ElementBOOL: CaseableElement {
             let options = (caseEl.value as! Bool) ? nil : [NSBindingOption.valueTransformerName: NSValueTransformerName.negateBooleanTransformerName]
             radio.bind(.value, to: element, withKeyPath: "value", options: options)
             view.addSubview(radio)
-            frame.origin.x += 120
+            frame.origin.x += width
         }
     }
     

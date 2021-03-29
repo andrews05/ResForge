@@ -30,7 +30,7 @@ class SpriteLayer: NSObject {
                     return
                 }
                 // Base sprite is loaded on the main thread, others are loaded in background
-                if type(of: self) == BaseLayer.self {
+                if Self.self == BaseLayer.self {
                     spriteLink.title = self.loadRle(resource.data)
                 } else {
                     self.loadRleAsync(resource.data)
