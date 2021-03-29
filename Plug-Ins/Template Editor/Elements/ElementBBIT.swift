@@ -22,8 +22,12 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
     }
     
     override func configure() throws {
-        if 2..<T.bitWidth ~= bits {
-            try super.configure() // Allow bitfields to configure cases
+        if bits == 1 {
+            // Single bit, configure like BOOL
+            try ElementBOOL.readRadioCases(for: self)
+        } else if bits < T.bitWidth {
+            // Allow bitfields to configure cases
+            try super.configure()
         }
         if !first {
             return
@@ -63,7 +67,9 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
     }
     
     override func configure(view: NSView) {
-        if bits == T.bitWidth {
+        if bits == 1 {
+            ElementBOOL.configureRadios(view: view, for: self)
+        } else if bits == T.bitWidth {
             // Display as checkboxes
             var frame = view.frame
             frame.origin.y += 1
@@ -77,8 +83,6 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
                     frame.origin.y += 20
                 }
             }
-        } else if bits == 1 {
-            view.addSubview(ElementBOOL.createCheckbox(with: view.frame, for: self))
         } else {
             super.configure(view: view)
             if let field = view.subviews.first as? NSTextField {

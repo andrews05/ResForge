@@ -1,12 +1,18 @@
-import Cocoa
+import RFSupport
 
 // Implements BFLG, WFLG, LFLG
-class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: ElementDBYT<T> {
-    override func configure() throws {
-        // No configuration required but make sure we don't collect CASEs
+class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: ElementBOOL {
+    var tValue: T = 0
+    @objc private var value: Bool {
+        get { tValue != 0 }
+        set { tValue = newValue ? 1 : 0 }
     }
     
-    override func configure(view: NSView) {
-        view.addSubview(ElementBOOL.createCheckbox(with: view.frame, for: self))
+    override func readData(from reader: BinaryDataReader) throws {
+        tValue = try reader.read()
+    }
+    
+    override func writeData(to writer: BinaryDataWriter) {
+        writer.write(tValue)
     }
 }

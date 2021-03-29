@@ -53,7 +53,7 @@ class ElementPACK: Element {
             if subElements.count > 1, let element = element as? CaseableElement, element.cases != nil {
                 if let element = element as? RangeableElement, element.popupWidth == 180 {
                     element.popupWidth = 120
-                } else {
+                } else if element.width > 180 {
                     element.width = 180
                 }
             }

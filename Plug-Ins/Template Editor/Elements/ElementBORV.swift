@@ -11,6 +11,7 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
     private var values: [T] = []
     
     override func configure() throws {
+        self.width = 120
         // Read hex values from the CASEs
         self.cases = []
         while let caseEl = self.parentList.pop("CASE") as? ElementCASE {

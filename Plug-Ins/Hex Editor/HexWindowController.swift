@@ -57,7 +57,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     }
     
     @objc func resourceDataDidChange(_ notification: NSNotification) {
-        if self.window?.isDocumentEdited != false {
+        if self.window?.isDocumentEdited != true {
             textView.data = resource.data
             self.setDocumentEdited(false) // Will have been set to true by hexDidChangeProperties
         }

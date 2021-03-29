@@ -41,7 +41,7 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     }
     
     @objc func resourceDataDidChange(_ notification: NSNotification) {
-        if !self.window!.isDocumentEdited {
+        if self.window?.isDocumentEdited != true {
             _ = self.load(data: resource.data)
         }
     }
