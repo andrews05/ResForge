@@ -36,6 +36,7 @@ class ElementCASE: Element {
         textField.isSelectable = true
         textField.stringValue = self.label
         textField.textColor = .secondaryLabelColor
+        textField.drawsBackground = false
         view.addSubview(textField)
     }
     
