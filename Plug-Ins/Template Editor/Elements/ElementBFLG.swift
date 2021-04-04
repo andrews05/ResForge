@@ -3,7 +3,7 @@ import RFSupport
 // Implements BFLG, WFLG, LFLG
 class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: ElementBOOL {
     var tValue: T = 0
-    @objc private var value: Bool {
+    @objc override var value: Bool {
         get { tValue != 0 }
         set { tValue = newValue ? 1 : 0 }
     }

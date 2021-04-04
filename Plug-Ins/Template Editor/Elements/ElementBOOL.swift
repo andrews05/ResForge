@@ -2,7 +2,7 @@ import Cocoa
 import RFSupport
 
 class ElementBOOL: CaseableElement {
-    @objc private var value: UInt8 = 0
+    @objc var value = false
     
     override func configure() throws {
         try Self.readRadioCases(for: self)
@@ -13,13 +13,11 @@ class ElementBOOL: CaseableElement {
     }
     
     override func readData(from reader: BinaryDataReader) throws {
-        value = try reader.read()
-        try reader.advance(1)
+        value = (try reader.read() as UInt16) >= 0x100
     }
     
     override func writeData(to writer: BinaryDataWriter) {
-        writer.write(value)
-        writer.advance(1)
+        writer.write(UInt16(value ? 0x100 : 0))
     }
     
     // MARK: -
