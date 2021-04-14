@@ -31,7 +31,7 @@ class Rle {
     let frameHeight: Int
     let frameCount: Int
     private var writer: BinaryDataWriter!
-    private var source: NSBitmapImageRep!
+    private var source: NSImageRep!
     private var currentFrame = 0
     
     var data: Data {
@@ -52,23 +52,7 @@ class Rle {
     }
     
     init(image: NSImage, gridX: Int, gridY: Int) {
-        // Create a new bitmap representation of the image in the layout that we need
-        let rep = image.representations[0]
-        source = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                  pixelsWide: rep.pixelsWide,
-                                  pixelsHigh: rep.pixelsHigh,
-                                  bitsPerSample: 8,
-                                  samplesPerPixel: 4,
-                                  hasAlpha: true,
-                                  isPlanar: false,
-                                  colorSpaceName: .deviceRGB,
-                                  bytesPerRow: rep.pixelsWide*4,
-                                  bitsPerPixel: 0)!
-        NSGraphicsContext.saveGraphicsState()
-        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: source)
-        rep.draw()
-        NSGraphicsContext.restoreGraphicsState()
-    
+        source = image.representations[0]
         frameWidth = source.pixelsWide / gridX
         frameHeight = source.pixelsHigh / gridY
         frameCount = gridX * gridY
@@ -201,16 +185,22 @@ class Rle {
                                      colorSpaceName: .deviceRGB,
                                      bytesPerRow: frameWidth*4,
                                      bitsPerPixel: 0)!
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: frame)
+        source.draw(in: NSRect(x: 0, y: 0, width: frameWidth, height: frameHeight),
+                    from: NSRect(x: originX, y: source.pixelsHigh-originY-frameHeight, width: frameWidth, height: frameHeight),
+                    operation: .copy,
+                    fraction: 1,
+                    respectFlipped: true,
+                    hints: nil)
+        
         var framePointer = frame.bitmapData!
-        let sourcePointer = source.bitmapData!
-        for y in originY..<(originY+frameHeight) {
+        for _ in 0..<frameHeight {
             writer.write(RleOp(.lineStart))
             let linePos = writer.position
             var transparent = 0
             var pixels: [UInt16] = []
-            for x in originX..<(originX+frameWidth) {
-                let p = (y*source.pixelsWide+x) * 4
-                if sourcePointer[p+3] == 0 {
+            for _ in 0..<frameWidth {
+                if framePointer[3] == 0 {
                     framePointer = framePointer.advanced(by: 4)
                     transparent += 1
                 } else {
@@ -224,10 +214,10 @@ class Rle {
                         writer.write(RleOp(.skip, count: transparent))
                         transparent = 0
                     }
-                    let pixel =
-                        UInt16(sourcePointer[p] & 0xF8) * 0x80 |
-                        UInt16(sourcePointer[p+1] & 0xF8) * 0x04 |
-                        UInt16(sourcePointer[p+2] & 0xF8) / 0x08
+                    var pixel: UInt16 = 0
+                    for i in 0...2 {
+                        pixel |= UInt16(framePointer[i] & 0xF8) << (7 - i*5)
+                    }
                     self.write(pixel, to: &framePointer)
                     pixels.append(pixel.bigEndian)
                 }
@@ -243,10 +233,12 @@ class Rle {
     }
     
     private func write(_ pixel: UInt16, to framePointer: inout UnsafeMutablePointer<UInt8>) {
-        // Division/multiplication is used here instead of bitshifts as it is much faster in unoptimised debug builds
-        framePointer[0] = UInt8((pixel & 0x7C00) / 0x80)
-        framePointer[1] = UInt8((pixel & 0x03E0) / 0x04)
-        framePointer[2] = UInt8((pixel & 0x001F) * 0x08)
+        // Extending 5-bits to 8-bits by adding zeros gives a very close result but is not technically correct.
+        // For an accurate result we need to actually calculate the fraction that the 5 bits represent out of 8 bits.
+        // Note division/multiplication is used here instead of bitshifts as it is much faster in unoptimised debug builds.
+        framePointer[0] = UInt8(((pixel / 0x400) & 0x1F) * 0xFF / 0x1F)
+        framePointer[1] = UInt8(((pixel /  0x20) & 0x1F) * 0xFF / 0x1F)
+        framePointer[2] = UInt8(((pixel /     1) & 0x1F) * 0xFF / 0x1F)
         framePointer[3] = 0xFF
         framePointer = framePointer.advanced(by: 4)
     }
