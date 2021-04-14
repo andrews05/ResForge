@@ -192,8 +192,32 @@ class Rle {
                     fraction: 1,
                     respectFlipped: true,
                     hints: nil)
-        
         var framePointer = frame.bitmapData!
+        
+        // A dithering implementation similar to QuickDraw.
+        // Half error is diffused right on even rows, left on odd rows. Other half is diffused down.
+        for y in 0..<frameHeight {
+            let even = y % 2 == 0
+            let row = even ? stride(from: 0, through: frameWidth-1, by: 1) : stride(from: frameWidth-1, through: 0, by: -1)
+            for x in row {
+                let p = y * frame.bytesPerRow + x * 4
+                for i in p...p+2 {
+                    // The error is the lower 3 bits of the value
+                    let error = (framePointer[i] & 0x07) / 2
+                    if error != 0 {
+                        if even && x+1 < frameWidth {
+                            framePointer[i+4] = self.safeAdd(framePointer[i+4], error)
+                        } else if !even && x > 0 {
+                            framePointer[i-4] = self.safeAdd(framePointer[i-4], error)
+                        }
+                        if y+1 < frameHeight {
+                            framePointer[i+frame.bytesPerRow] = self.safeAdd(framePointer[i+frame.bytesPerRow], error)
+                        }
+                    }
+                }
+            }
+        }
+        
         for _ in 0..<frameHeight {
             writer.write(RleOp(.lineStart))
             let linePos = writer.position
@@ -249,5 +273,15 @@ class Rle {
         if pixels.count % 2 != 0 {
             writer.advance(2)
         }
+    }
+    
+    private func safeAdd<T: FixedWidthInteger>(_ a: T, _ b: T) -> T {
+        let r = Int(a) + Int(b)
+        if r > T.max {
+            return T.max
+        } else if r < T.min {
+            return T.min
+        }
+        return T(r)
     }
 }
