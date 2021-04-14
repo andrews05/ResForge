@@ -125,11 +125,11 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     
     @IBAction func importImage(_ sender: Any) {
         playing = false
-        importPanel.beginSheetModal(for: self.window!) { [self] (image, gridX, gridY) in
+        importPanel.beginSheetModal(for: self.window!) { [self] (image, gridX, gridY, dither) in
             rle = Rle(image: image, gridX: gridX, gridY: gridY)
             frames = []
             for _ in 0..<rle.frameCount {
-                frames.append(rle.writeFrame())
+                frames.append(rle.writeFrame(dither))
             }
             self.updateView()
             self.setDocumentEdited(true)

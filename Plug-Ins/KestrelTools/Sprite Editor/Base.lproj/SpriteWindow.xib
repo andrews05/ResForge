@@ -122,11 +122,11 @@ DQ
             <point key="canvasLocation" x="139" y="146"/>
         </window>
         <customView id="aNb-jP-2g8">
-            <rect key="frame" x="0.0" y="0.0" width="340" height="90"/>
+            <rect key="frame" x="0.0" y="0.0" width="336" height="112"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZI-FJ-YgQ">
-                    <rect key="frame" x="158" y="38" width="24" height="16"/>
+                    <rect key="frame" x="156" y="60" width="24" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="EGr-gn-lgH"/>
                     </constraints>
@@ -137,7 +137,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0fS-UX-m9D">
-                    <rect key="frame" x="48" y="38" width="66" height="16"/>
+                    <rect key="frame" x="46" y="60" width="66" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Grid Tiles:" id="NFK-no-Cr6">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -145,7 +145,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VZx-Mt-eX1">
-                    <rect key="frame" x="120" y="35" width="40" height="21"/>
+                    <rect key="frame" x="118" y="57" width="40" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="B8g-hH-Ws9"/>
                     </constraints>
@@ -160,7 +160,7 @@ DQ
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ayH-bT-7vh">
-                    <rect key="frame" x="180" y="35" width="40" height="21"/>
+                    <rect key="frame" x="178" y="57" width="40" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="PWx-55-r5i"/>
                     </constraints>
@@ -175,7 +175,7 @@ DQ
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dng-lb-w6b">
-                    <rect key="frame" x="40" y="62" width="74" height="16"/>
+                    <rect key="frame" x="38" y="84" width="74" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Image Size:" id="QRF-LA-x3g">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -183,7 +183,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OwA-K4-9t2">
-                    <rect key="frame" x="118" y="62" width="104" height="16"/>
+                    <rect key="frame" x="116" y="84" width="104" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="-" id="gsz-cQ-f6l">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -191,7 +191,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ud9-wp-TP9">
-                    <rect key="frame" x="39" y="14" width="75" height="16"/>
+                    <rect key="frame" x="37" y="36" width="75" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Frame Size:" id="HGI-y5-5HR">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -199,7 +199,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eGM-3p-Sb3">
-                    <rect key="frame" x="118" y="14" width="104" height="16"/>
+                    <rect key="frame" x="116" y="36" width="104" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="-" id="Qh2-ux-AcR">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -207,30 +207,40 @@ DQ
                     </textFieldCell>
                 </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1P7-TE-QAJ">
-                    <rect key="frame" x="225" y="11" width="70" height="70"/>
+                    <rect key="frame" x="223" y="9" width="94" height="94"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="1P7-TE-QAJ" secondAttribute="height" multiplier="1:1" id="6NB-4V-Ol5"/>
                     </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="itk-lb-UdV"/>
                 </imageView>
+                <button toolTip="Reduces banding caused by color reduction." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Akv-6q-BsO">
+                    <rect key="frame" x="116" y="11" width="63" height="18"/>
+                    <buttonCell key="cell" type="check" title="Dither" bezelStyle="regularSquare" imagePosition="left" inset="2" id="nD9-7V-maP">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="1P7-TE-QAJ" firstAttribute="leading" secondItem="ayH-bT-7vh" secondAttribute="trailing" constant="8" symbolic="YES" id="3SC-3u-dds"/>
-                <constraint firstItem="1P7-TE-QAJ" firstAttribute="bottom" secondItem="ud9-wp-TP9" secondAttribute="bottom" id="4NX-51-DEJ"/>
+                <constraint firstItem="1P7-TE-QAJ" firstAttribute="bottom" secondItem="Akv-6q-BsO" secondAttribute="bottom" id="4NX-51-DEJ"/>
                 <constraint firstItem="dng-lb-w6b" firstAttribute="top" secondItem="aNb-jP-2g8" secondAttribute="top" constant="12" id="4ah-Ep-N9B"/>
                 <constraint firstItem="1P7-TE-QAJ" firstAttribute="leading" secondItem="OwA-K4-9t2" secondAttribute="trailing" constant="8" symbolic="YES" id="5em-7N-qMP"/>
                 <constraint firstItem="tZI-FJ-YgQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VZx-Mt-eX1" secondAttribute="trailing" id="Ajf-xd-I1a"/>
+                <constraint firstItem="1P7-TE-QAJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Akv-6q-BsO" secondAttribute="trailing" constant="8" symbolic="YES" id="Bui-QC-ZMy"/>
                 <constraint firstItem="1P7-TE-QAJ" firstAttribute="leading" secondItem="eGM-3p-Sb3" secondAttribute="trailing" constant="8" symbolic="YES" id="IRW-Uw-wom"/>
                 <constraint firstItem="0fS-UX-m9D" firstAttribute="top" secondItem="dng-lb-w6b" secondAttribute="bottom" constant="8" symbolic="YES" id="Jh4-5U-SWr"/>
                 <constraint firstItem="eGM-3p-Sb3" firstAttribute="firstBaseline" secondItem="ud9-wp-TP9" secondAttribute="firstBaseline" id="LI7-OO-WhZ"/>
                 <constraint firstItem="1P7-TE-QAJ" firstAttribute="top" secondItem="dng-lb-w6b" secondAttribute="top" id="Lio-Rc-SYh"/>
+                <constraint firstItem="Akv-6q-BsO" firstAttribute="leading" secondItem="eGM-3p-Sb3" secondAttribute="leading" id="MaL-Ua-T9S"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1P7-TE-QAJ" secondAttribute="trailing" constant="20" symbolic="YES" id="QL3-pQ-Tm6"/>
                 <constraint firstItem="VZx-Mt-eX1" firstAttribute="leading" secondItem="0fS-UX-m9D" secondAttribute="trailing" constant="8" symbolic="YES" id="RD5-yQ-m4g"/>
+                <constraint firstItem="Akv-6q-BsO" firstAttribute="top" secondItem="ud9-wp-TP9" secondAttribute="bottom" constant="8" symbolic="YES" id="Rb2-iF-uLN"/>
+                <constraint firstAttribute="bottom" secondItem="Akv-6q-BsO" secondAttribute="bottom" constant="12" id="VXf-36-ibV"/>
                 <constraint firstItem="tZI-FJ-YgQ" firstAttribute="firstBaseline" secondItem="ayH-bT-7vh" secondAttribute="firstBaseline" id="Vfj-gc-nic"/>
                 <constraint firstItem="ud9-wp-TP9" firstAttribute="trailing" secondItem="0fS-UX-m9D" secondAttribute="trailing" id="Zsr-aF-fTB"/>
                 <constraint firstItem="VZx-Mt-eX1" firstAttribute="firstBaseline" secondItem="tZI-FJ-YgQ" secondAttribute="firstBaseline" id="egQ-7x-sZU"/>
                 <constraint firstItem="ud9-wp-TP9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aNb-jP-2g8" secondAttribute="leading" constant="20" symbolic="YES" id="esO-HX-9gI"/>
-                <constraint firstAttribute="bottom" secondItem="ud9-wp-TP9" secondAttribute="bottom" constant="14" id="gum-cl-K3j"/>
                 <constraint firstItem="0fS-UX-m9D" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aNb-jP-2g8" secondAttribute="leading" constant="20" symbolic="YES" id="kw8-cU-tX0"/>
                 <constraint firstItem="ud9-wp-TP9" firstAttribute="top" secondItem="0fS-UX-m9D" secondAttribute="bottom" constant="8" symbolic="YES" id="lbO-Ra-ZV7"/>
                 <constraint firstItem="dng-lb-w6b" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aNb-jP-2g8" secondAttribute="leading" constant="20" symbolic="YES" id="lqH-M0-27P"/>
@@ -242,10 +252,11 @@ DQ
                 <constraint firstItem="OwA-K4-9t2" firstAttribute="firstBaseline" secondItem="dng-lb-w6b" secondAttribute="firstBaseline" id="wjd-xg-zPf"/>
                 <constraint firstItem="0fS-UX-m9D" firstAttribute="firstBaseline" secondItem="VZx-Mt-eX1" secondAttribute="firstBaseline" id="woa-p7-Nib"/>
             </constraints>
-            <point key="canvasLocation" x="-269" y="127"/>
+            <point key="canvasLocation" x="-271" y="140"/>
         </customView>
         <customObject id="5FK-bk-dmv" customClass="SpriteImporter" customModule="KestrelTools" customModuleProvider="target">
             <connections>
+                <outlet property="dither" destination="Akv-6q-BsO" id="IdU-Xk-9a7"/>
                 <outlet property="frameSize" destination="eGM-3p-Sb3" id="ZdH-MS-9VH"/>
                 <outlet property="imageSize" destination="OwA-K4-9t2" id="Vt6-6z-BVJ"/>
                 <outlet property="optionsView" destination="aNb-jP-2g8" id="zWY-Nf-jka"/>

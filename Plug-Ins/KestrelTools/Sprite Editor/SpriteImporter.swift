@@ -22,10 +22,11 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     @IBOutlet var yTiles: NSTextField!
     @IBOutlet var imageSize: NSTextField!
     @IBOutlet var frameSize: NSTextField!
+    @IBOutlet var dither: NSButton!
     @IBOutlet var preview: NSImageView!
     private var image: NSImage!
     
-    func beginSheetModal(for window: NSWindow, success: @escaping(NSImage, Int, Int) -> Void) {
+    func beginSheetModal(for window: NSWindow, success: @escaping(NSImage, Int, Int, Bool) -> Void) {
         imageSize.stringValue = "-"
         frameSize.stringValue = "-"
         image = nil
@@ -38,7 +39,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         panel.prompt = NSLocalizedString("Import", comment: "")
         panel.beginSheetModal(for: window) { [self] modalResponse in
             if modalResponse == .OK {
-                success(image, xTiles.integerValue, yTiles.integerValue)
+                success(image, xTiles.integerValue, yTiles.integerValue, dither.state == .on)
             }
         }
     }
