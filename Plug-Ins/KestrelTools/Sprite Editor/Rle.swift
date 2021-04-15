@@ -154,11 +154,15 @@ class Rle {
                 guard x <= frameWidth else {
                     throw RleError.invalid
                 }
-                let pixel = try reader.read() as UInt16
-                for _ in 0..<count {
-                    self.write(pixel, to: &framePointer)
+                let pixel2 = try reader.read() as UInt16
+                let pixel1 = try reader.read() as UInt16
+                for _ in 0..<count/2 {
+                    self.write(pixel1, to: &framePointer)
+                    self.write(pixel2, to: &framePointer)
                 }
-                try reader.advance(2)
+                if count % 2 == 1 {
+                    self.write(pixel1, to: &framePointer)
+                }
             case .frameEnd:
                 guard y == frameHeight else {
                     throw RleError.invalid
