@@ -237,8 +237,7 @@ class Rle {
     }
     
     private func dither(_ frame: NSBitmapImageRep) {
-        // A dithering implementation similar to QuickDraw.
-        // Half the error is diffused right on even rows, left on odd rows. Other half is diffused down.
+        // QuickDraw dithering algorithm.
         let rowBytes = frame.bytesPerRow // This is a computed property, only access it once.
         let framePointer = frame.bitmapData!
         for y in 0..<frameHeight {
@@ -247,16 +246,17 @@ class Rle {
             for x in row {
                 let p = y * rowBytes + x * 4
                 for i in p...p+2 {
-                    // The error is the lower 3 bits of the value
-                    let error = UInt(framePointer[i] & 0x07) / 2
+                    // The error is the lower 3 bits of the value.
+                    // Half is diffused right on even rows, left on odd rows. The remainder is diffused down.
+                    let error = UInt(framePointer[i] & 0x07)
                     if error != 0 {
                         if even && x+1 < frameWidth {
-                            framePointer[i+4] = UInt8(clamping: UInt(framePointer[i+4]) + error)
+                            framePointer[i+4] = UInt8(clamping: UInt(framePointer[i+4]) + error / 2)
                         } else if !even && x > 0 {
-                            framePointer[i-4] = UInt8(clamping: UInt(framePointer[i-4]) + error)
+                            framePointer[i-4] = UInt8(clamping: UInt(framePointer[i-4]) + error / 2)
                         }
                         if y+1 < frameHeight {
-                            framePointer[i+rowBytes] = UInt8(clamping: UInt(framePointer[i+rowBytes]) + error)
+                            framePointer[i+rowBytes] = UInt8(clamping: UInt(framePointer[i+rowBytes]) + (error+1) / 2)
                         }
                     }
                 }
