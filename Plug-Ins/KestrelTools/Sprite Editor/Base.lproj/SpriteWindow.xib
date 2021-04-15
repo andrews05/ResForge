@@ -23,27 +23,27 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="556" width="300" height="300"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="240" height="160"/>
             <view key="contentView" id="18">
                 <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box boxType="custom" borderType="line" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="wbE-5V-m6D" customClass="AnimationBox" customModule="KestrelTools" customModuleProvider="target">
-                        <rect key="frame" x="-1" y="-1" width="302" height="242"/>
+                        <rect key="frame" x="-1" y="-1" width="302" height="241"/>
                         <view key="contentView" id="oB5-be-VIo">
-                            <rect key="frame" x="1" y="1" width="300" height="240"/>
+                            <rect key="frame" x="1" y="1" width="300" height="239"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         </view>
                         <color key="borderColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="fillColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                     </box>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="19" customClass="CustomImageView" customModule="RFSupport">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="240"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="239"/>
                         <imageCell key="cell" selectable="YES" refusesFirstResponder="YES" alignment="left" id="20"/>
                     </imageView>
                     <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Idz-Rc-j82">
-                        <rect key="frame" x="0.0" y="226" width="59" height="14"/>
+                        <rect key="frame" x="0.0" y="225" width="59" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Image info" drawsBackground="YES" id="hdb-ib-th2">
                             <font key="font" metaFont="message" size="11"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -51,7 +51,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e3j-NW-hCp">
-                        <rect key="frame" x="13" y="253" width="82" height="32"/>
+                        <rect key="frame" x="14" y="252" width="80" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="g5R-Co-Aru"/>
                         </constraints>
@@ -67,7 +67,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C2f-Qi-BIY">
-                        <rect key="frame" x="213" y="253" width="74" height="32"/>
+                        <rect key="frame" x="206" y="252" width="80" height="32"/>
                         <buttonCell key="cell" type="push" title="Export" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="REi-Yh-F9s">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -77,7 +77,7 @@ DQ
                         </connections>
                     </button>
                     <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gx5-MO-Xlp">
-                        <rect key="frame" x="282" y="226" width="18" height="14"/>
+                        <rect key="frame" x="281" y="225" width="19" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="-/-" drawsBackground="YES" id="cXj-Eb-Rcj">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -85,7 +85,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YB7-64-pcw">
-                        <rect key="frame" x="140" y="253" width="75" height="32"/>
+                        <rect key="frame" x="126" y="252" width="80" height="32"/>
                         <buttonCell key="cell" type="push" title="Import" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fcc-Xc-XF6">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -122,11 +122,11 @@ DQ
             <point key="canvasLocation" x="139" y="146"/>
         </window>
         <customView id="aNb-jP-2g8">
-            <rect key="frame" x="0.0" y="0.0" width="336" height="112"/>
+            <rect key="frame" x="0.0" y="0.0" width="336" height="110"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZI-FJ-YgQ">
-                    <rect key="frame" x="156" y="60" width="24" height="16"/>
+                    <rect key="frame" x="156" y="58" width="24" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="EGr-gn-lgH"/>
                     </constraints>
@@ -137,7 +137,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0fS-UX-m9D">
-                    <rect key="frame" x="46" y="60" width="66" height="16"/>
+                    <rect key="frame" x="46" y="58" width="66" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Grid Tiles:" id="NFK-no-Cr6">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -145,7 +145,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VZx-Mt-eX1">
-                    <rect key="frame" x="118" y="57" width="40" height="21"/>
+                    <rect key="frame" x="118" y="55" width="40" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="B8g-hH-Ws9"/>
                     </constraints>
@@ -160,7 +160,7 @@ DQ
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ayH-bT-7vh">
-                    <rect key="frame" x="178" y="57" width="40" height="21"/>
+                    <rect key="frame" x="178" y="55" width="40" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="PWx-55-r5i"/>
                     </constraints>
@@ -175,7 +175,7 @@ DQ
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dng-lb-w6b">
-                    <rect key="frame" x="38" y="84" width="74" height="16"/>
+                    <rect key="frame" x="38" y="82" width="74" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Image Size:" id="QRF-LA-x3g">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -183,7 +183,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OwA-K4-9t2">
-                    <rect key="frame" x="116" y="84" width="104" height="16"/>
+                    <rect key="frame" x="116" y="82" width="104" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="-" id="gsz-cQ-f6l">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -191,7 +191,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ud9-wp-TP9">
-                    <rect key="frame" x="37" y="36" width="75" height="16"/>
+                    <rect key="frame" x="37" y="34" width="75" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Frame Size:" id="HGI-y5-5HR">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -199,7 +199,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eGM-3p-Sb3">
-                    <rect key="frame" x="116" y="36" width="104" height="16"/>
+                    <rect key="frame" x="116" y="34" width="104" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="-" id="Qh2-ux-AcR">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -207,15 +207,15 @@ DQ
                     </textFieldCell>
                 </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1P7-TE-QAJ">
-                    <rect key="frame" x="223" y="9" width="94" height="94"/>
+                    <rect key="frame" x="223" y="9" width="92" height="92"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="1P7-TE-QAJ" secondAttribute="height" multiplier="1:1" id="6NB-4V-Ol5"/>
                     </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="itk-lb-UdV"/>
                 </imageView>
                 <button toolTip="Reduces banding caused by color reduction." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Akv-6q-BsO">
-                    <rect key="frame" x="116" y="11" width="63" height="18"/>
-                    <buttonCell key="cell" type="check" title="Dither" bezelStyle="regularSquare" imagePosition="left" inset="2" id="nD9-7V-maP">
+                    <rect key="frame" x="116" y="10" width="60" height="18"/>
+                    <buttonCell key="cell" type="check" title="Dither" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nD9-7V-maP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>

@@ -44,10 +44,12 @@
         std::vector<char> buffer(first, first+resource.data.length);
         graphite::data::data data(std::make_shared<std::vector<char>>(buffer), resource.data.length);
         std::map<std::string, std::string> attributes;
-        NSString *attString = [resource.type substringFromIndex:5];
-        for (NSString *attribute in [attString componentsSeparatedByString:@":"]) {
-            NSArray<NSString *> *parts = [attribute componentsSeparatedByString:@"="];
-            attributes.insert(std::make_pair(std::string(parts[0].UTF8String), std::string(parts[1].UTF8String)));
+        if (resource.type.length > 5) {
+            NSString *attString = [resource.type substringFromIndex:5];
+            for (NSString *attribute in [attString componentsSeparatedByString:@":"]) {
+                NSArray<NSString *> *parts = [attribute componentsSeparatedByString:@"="];
+                attributes.insert(std::make_pair(std::string(parts[0].UTF8String), std::string(parts[1].UTF8String)));
+            }
         }
         gFile.add_resource(type, resource.id, name, std::make_shared<graphite::data::data>(data), attributes);
     }

@@ -126,11 +126,13 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     @IBAction func importImage(_ sender: Any) {
         playing = false
         importPanel.beginSheetModal(for: self.window!) { [self] (image, gridX, gridY, dither) in
+            let t = Date.timeIntervalSinceReferenceDate
             rle = Rle(image: image, gridX: gridX, gridY: gridY)
             frames = []
             for _ in 0..<rle.frameCount {
                 frames.append(rle.writeFrame(dither))
             }
+            print(Date.timeIntervalSinceReferenceDate - t)
             self.updateView()
             self.setDocumentEdited(true)
         }

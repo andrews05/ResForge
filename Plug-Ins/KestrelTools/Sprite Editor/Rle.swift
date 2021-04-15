@@ -224,9 +224,12 @@ class Rle {
                     }
                     var pixel: UInt16 = 0
                     for i in 0...2 {
-                        pixel |= UInt16(framePointer[i] & 0xF8) << (7 - i*5)
+                        let value = UInt16(framePointer[i] & 0xF8)
+                        pixel |= value << (7 - i*5)
+                        framePointer[i] = UInt8(value * 0xFF / 0xF8)
                     }
-                    self.write(pixel, to: &framePointer)
+                    framePointer[3] = 0xFF
+                    framePointer = framePointer.advanced(by: 4)
                     pixels.append(pixel.bigEndian)
                 }
             }
@@ -242,6 +245,7 @@ class Rle {
     
     private func dither(_ frame: NSBitmapImageRep) {
         // QuickDraw dithering algorithm.
+        // Half the error is diffused right on even rows, left on odd rows. The remainder is diffused down.
         let rowBytes = frame.bytesPerRow // This is a computed property, only access it once.
         let framePointer = frame.bitmapData!
         for y in 0..<frameHeight {
@@ -250,17 +254,20 @@ class Rle {
             for x in row {
                 let p = y * rowBytes + x * 4
                 for i in p...p+2 {
-                    // The error is the lower 3 bits of the value.
-                    // Half is diffused right on even rows, left on odd rows. The remainder is diffused down.
-                    let error = UInt(framePointer[i] & 0x07)
+                    // To perfectly replicate QuickDraw we would simply take the error as the lower 3 bits of the value.
+                    // This is not entirely accurate though and has the side-effect that repeat dithers will degrade the image.
+                    // Instead we clip the lower 3 bits, restore it to 8-bits the same way we would when decoding (see `write` function), then take the difference.
+                    let current = Int(framePointer[i])
+                    let new = (current & 0xF8) * 0xFF / 0xF8
+                    let error = current - new
                     if error != 0 {
                         if even && x+1 < frameWidth {
-                            framePointer[i+4] = UInt8(clamping: UInt(framePointer[i+4]) + error / 2)
+                            framePointer[i+4] = UInt8(clamping: Int(framePointer[i+4]) + error / 2)
                         } else if !even && x > 0 {
-                            framePointer[i-4] = UInt8(clamping: UInt(framePointer[i-4]) + error / 2)
+                            framePointer[i-4] = UInt8(clamping: Int(framePointer[i-4]) + error / 2)
                         }
                         if y+1 < frameHeight {
-                            framePointer[i+rowBytes] = UInt8(clamping: UInt(framePointer[i+rowBytes]) + (error+1) / 2)
+                            framePointer[i+rowBytes] = UInt8(clamping: Int(framePointer[i+rowBytes]) + (error+1) / 2)
                         }
                     }
                 }
@@ -269,12 +276,12 @@ class Rle {
     }
     
     private func write(_ pixel: UInt16, to framePointer: inout UnsafeMutablePointer<UInt8>) {
-        // Extending 5-bits to 8-bits by adding zeros gives a very close result but is not technically correct.
-        // For an accurate result we need to actually calculate the fraction that the 5 bits represent out of 8 bits.
-        // Note division/multiplication is used here instead of bitshifts as it is much faster in unoptimised debug builds.
+        // Restoring 5-bits to 8-bits by bitshifting gives a very close result but is not entirely accurate.
+        // The correct method is to calculate the fraction that the 5 bits represent out of 8 bits.
+        // Note: division is used here instead of bitshifts as it is much faster in unoptimised debug builds.
         framePointer[0] = UInt8(((pixel / 0x400) & 0x1F) * 0xFF / 0x1F)
         framePointer[1] = UInt8(((pixel /  0x20) & 0x1F) * 0xFF / 0x1F)
-        framePointer[2] = UInt8(((pixel /     1) & 0x1F) * 0xFF / 0x1F)
+        framePointer[2] = UInt8(((pixel        ) & 0x1F) * 0xFF / 0x1F)
         framePointer[3] = 0xFF
         framePointer = framePointer.advanced(by: 4)
     }
