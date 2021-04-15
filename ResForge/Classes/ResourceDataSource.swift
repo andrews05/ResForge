@@ -100,8 +100,8 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
             typeList.selectRowIndexes([i+1], byExtendingSelection: false)
         } else {
             resourcesView = outlineController
-            scrollView.documentView = outlineView
             resourcesView.reload(type: useTypeList ? "" : nil)
+            scrollView.documentView = outlineView
         }
         if let resources = resources {
             resourcesView.select(resources)
