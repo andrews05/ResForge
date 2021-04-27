@@ -154,6 +154,10 @@ class Rle {
                 guard x <= frameWidth else {
                     throw RleError.invalid
                 }
+                // The intention of this token is simply to repeat a single colour. But since the format is
+                // 4-byte aligned, it's technically possible to repeat two different 16-bit colour values.
+                // On big-endian machines this would presumably repeat them in order (untested), but on x86
+                // versions of EV Nova they appear to be swapped. Here we reproduce the same behaviour.
                 let pixel2 = try reader.read() as UInt16
                 let pixel1 = try reader.read() as UInt16
                 for _ in 0..<count/2 {
