@@ -168,9 +168,6 @@ class Rle {
                     self.write(pixel1, to: &framePointer)
                 }
             case .frameEnd:
-                guard y == frameHeight else {
-                    throw RleError.invalid
-                }
                 return
             default:
                 throw RleError.invalid
@@ -206,9 +203,10 @@ class Rle {
         }
         
         var framePointer = frame.bitmapData!
+        var lineCount = 0
+        var linePos = 0
         for _ in 0..<frameHeight {
-            writer.write(RleOp(.lineStart))
-            let linePos = writer.position
+            lineCount += 1
             var transparent = 0
             var pixels: [UInt16] = []
             for _ in 0..<frameWidth {
@@ -216,6 +214,15 @@ class Rle {
                     framePointer = framePointer.advanced(by: 4)
                     transparent += 1
                 } else {
+                    if lineCount != 0 {
+                        // First pixel data for this line, write the line start
+                        // Doing this only on demand allows us to omit trailing blank lines in the frame
+                        for _ in 0..<lineCount {
+                            writer.write(RleOp(.lineStart))
+                        }
+                        lineCount = 0
+                        linePos = writer.position
+                    }
                     if transparent != 0 {
                         // Starting pixel data after transparency, write the skip
                         if !pixels.isEmpty {
