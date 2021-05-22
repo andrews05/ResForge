@@ -3,7 +3,7 @@ import RFSupport
 
 class EditorManager: RFEditorManager {
     private var editorWindows: [String: ResourceEditor] = [:]
-    private weak var document: ResourceDocument!
+    private unowned var document: ResourceDocument
     
     init(_ document: ResourceDocument) {
         self.document = document

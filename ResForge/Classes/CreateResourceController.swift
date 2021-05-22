@@ -6,15 +6,15 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var nameView: NSTextField!
     @IBOutlet var idView: NSTextField!
     @IBOutlet var typeView: NSComboBox!
-    private weak var rDocument: ResourceDocument!
+    private unowned var rDocument: ResourceDocument
     
     override var windowNibName: NSNib.Name? {
         "CreateResource"
     }
     
     init(_ document: ResourceDocument) {
-        super.init(window: nil)
         self.rDocument = document
+        super.init(window: nil)
     }
     
     required init?(coder: NSCoder) {
