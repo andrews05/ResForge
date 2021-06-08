@@ -74,10 +74,11 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         frames.removeAll()
         if !resource.data.isEmpty {
             do {
-                rle = try Rle(resource.data)
+                rle = try Rle(resource.data, rewriteSize: 120)
                 for _ in 0..<rle.frameCount {
                     frames.append(try rle.readFrame())
                 }
+                self.setDocumentEdited(true)
             } catch {}
         }
         self.updateView()

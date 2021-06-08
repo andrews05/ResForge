@@ -31,13 +31,14 @@ class Rle {
     let frameCount: Int
     private var reader: BinaryDataReader!
     private var writer: BinaryDataWriter!
+    private var rewriteSize: Int?
     
     var data: Data {
         writer?.data ?? reader.data
     }
     
     // Init for reading
-    init(_ data: Data) throws {
+    init(_ data: Data, rewriteSize: Int?=nil) throws {
         reader = BinaryDataReader(data)
         frameWidth = Int(try reader.read() as UInt16)
         frameHeight = Int(try reader.read() as UInt16)
@@ -48,6 +49,17 @@ class Rle {
         try reader.advance(2) // Palette is ignored for 16-bit
         frameCount = Int(try reader.read() as UInt16)
         try reader.advance(6)
+        self.rewriteSize = rewriteSize
+        
+        if let rewriteSize, frameWidth < rewriteSize {
+            writer = BinaryDataWriter(capacity: 16)
+            writer.write(UInt16(rewriteSize))
+            writer.write(UInt16(rewriteSize))
+            writer.write(UInt16(16))
+            writer.advance(2)
+            writer.write(UInt16(frameCount))
+            writer.advance(6)
+        }
     }
     
     // Init for writing
@@ -118,6 +130,12 @@ class Rle {
         var y = 0
         var x = 0
         var framePointer = framePointer
+        if let rewriteSize {
+            for _ in 0..<((rewriteSize-frameHeight)/2) {
+                writer?.write(RleOp(.lineStart))
+            }
+        }
+        var foundPixels = false
         while true {
             let op = try reader.read() as RleOp
             let count = op.count
@@ -129,15 +147,29 @@ class Rle {
                 if y != 0 {
                     framePointer = framePointer.advanced(by: (lineAdvance-x)*4)
                 }
+                if !foundPixels || count != 0 {
+                    writer?.write(op)
+                }
                 x = 0
                 y += 1
             case .skip:
+                if let rewriteSize, x == 0 {
+                    writer?.write(RleOp(.skip, count: count + (rewriteSize-frameWidth)/2))
+                } else {
+                    writer?.write(op)
+                }
                 x += count
                 guard x <= frameWidth else {
                     throw RleError.invalid
                 }
                 framePointer = framePointer.advanced(by: count*4)
             case .pixels:
+                foundPixels = true
+                if let rewriteSize, x == 0 {
+                    writer?.data[writer.position-1] += 4
+                    writer?.write(RleOp(.skip, count: (rewriteSize-frameWidth)/2))
+                }
+                writer?.write(op)
                 x += count
                 guard x <= frameWidth else {
                     throw RleError.invalid
@@ -145,10 +177,12 @@ class Rle {
                 // Work directly with the bytes - this is much faster than reading the pixels one at a time
                 try reader.readData(length: count * 2).withUnsafeBytes { bytes in
                     for pixel in bytes.bindMemory(to: UInt16.self) {
+                        writer?.write(pixel, bigEndian: false)
                         self.draw(UInt16(bigEndian: pixel), to: &framePointer)
                     }
                 }
                 if count % 2 != 0 {
+                    writer?.advance(2)
                     try reader.advance(2)
                 }
             case .colorRun:
@@ -165,6 +199,7 @@ class Rle {
                     self.draw(pixels[i%2], to: &framePointer)
                 }
             case .frameEnd:
+                writer?.write(op)
                 return
             default:
                 throw RleError.invalid
