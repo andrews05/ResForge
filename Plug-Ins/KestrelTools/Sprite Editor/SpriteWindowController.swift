@@ -125,17 +125,19 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     
     @IBAction func importImage(_ sender: Any) {
         playing = false
-        importPanel.beginSheetModal(for: self.window!) { [self] (image, gridX, gridY, dither) in
-            let t = Date.timeIntervalSinceReferenceDate
-            rle = Rle(image: image, gridX: gridX, gridY: gridY)
-            frames = []
-            for _ in 0..<rle.frameCount {
-                frames.append(rle.writeFrame(dither))
-            }
-            print(Date.timeIntervalSinceReferenceDate - t)
+        importPanel.beginSheetModal(for: self.window!, sheetCallback: { [self] (image, gridX, gridY, dither) in
+            let rep = image.representations[0]
+            rle = Rle(width: rep.pixelsWide / gridX, height: rep.pixelsHigh / gridY, count: gridX * gridY)
+            frames = rle.writeSheet(image, dither: dither)
             self.updateView()
             self.setDocumentEdited(true)
-        }
+        }, framesCallback: { [self] (images, dither) in
+            let rep = images[0].representations[0]
+            rle = Rle(width: rep.pixelsWide, height: rep.pixelsHigh, count: images.count)
+            frames = rle.writeFrames(images, dither: dither)
+            self.updateView()
+            self.setDocumentEdited(true)
+        })
     }
     
     @IBAction func exportImage(_ sender: Any) {

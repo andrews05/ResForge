@@ -26,18 +26,17 @@ extension RleOp {
 }
 
 class Rle {
-    private var reader: BinaryDataReader!
     let frameWidth: Int
     let frameHeight: Int
     let frameCount: Int
+    private var reader: BinaryDataReader!
     private var writer: BinaryDataWriter!
-    private var source: NSImageRep!
-    private var currentFrame = 0
     
     var data: Data {
         writer?.data ?? reader.data
     }
     
+    // Init for reading
     init(_ data: Data) throws {
         reader = BinaryDataReader(data)
         frameWidth = Int(try reader.read() as UInt16)
@@ -51,11 +50,11 @@ class Rle {
         try reader.advance(6)
     }
     
-    init(image: NSImage, gridX: Int, gridY: Int) {
-        source = image.representations[0]
-        frameWidth = source.pixelsWide / gridX
-        frameHeight = source.pixelsHigh / gridY
-        frameCount = gridX * gridY
+    // Init for writing
+    init(width: Int, height: Int, count: Int) {
+        frameWidth = width
+        frameHeight = height
+        frameCount = count
         
         writer = BinaryDataWriter(capacity: 16)
         writer.write(UInt16(frameWidth))
@@ -175,29 +174,58 @@ class Rle {
         }
     }
     
-    func writeFrame(_ dither: Bool = false) -> NSBitmapImageRep {
-        let gridX = source.pixelsWide / frameWidth
-        let originX = currentFrame % gridX * frameWidth
-        let originY = currentFrame / gridX * frameHeight
-        currentFrame += 1
-        let frame = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                     pixelsWide: frameWidth,
-                                     pixelsHigh: frameHeight,
-                                     bitsPerSample: 8,
-                                     samplesPerPixel: 4,
-                                     hasAlpha: true,
-                                     isPlanar: false,
-                                     colorSpaceName: .deviceRGB,
-                                     bytesPerRow: frameWidth*4,
-                                     bitsPerPixel: 0)!
-        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: frame)
-        source.draw(in: NSRect(x: 0, y: 0, width: frameWidth, height: frameHeight),
-                    from: NSRect(x: originX, y: source.pixelsHigh-originY-frameHeight, width: frameWidth, height: frameHeight),
-                    operation: .copy,
-                    fraction: 1,
-                    respectFlipped: true,
-                    hints: nil)
-        
+    func writeSheet(_ image: NSImage, dither: Bool = false) -> [NSBitmapImageRep] {
+        let rep = image.representations[0]
+        // Reset the resolution
+        rep.size = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
+        var frames: [NSBitmapImageRep] = []
+        for i in 0..<frameCount {
+            let gridX = rep.pixelsWide / frameWidth
+            let originX = i % gridX * frameWidth
+            let originY = i / gridX * frameHeight
+            let frame = self.newFrame()
+            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: frame)
+            rep.draw(in: NSRect(x: 0, y: 0, width: frameWidth, height: frameHeight),
+                     from: NSRect(x: originX, y: rep.pixelsHigh-originY-frameHeight, width: frameWidth, height: frameHeight),
+                     operation: .copy,
+                     fraction: 1,
+                     respectFlipped: true,
+                     hints: nil)
+            self.writeFrame(frame, dither: dither)
+            frames.append(frame)
+        }
+        return frames
+    }
+    
+    func writeFrames(_ images: [NSImage], dither: Bool = false) -> [NSBitmapImageRep] {
+        var frames: [NSBitmapImageRep] = []
+        for image in images {
+            let rep = image.representations[0]
+            // Reset the resolution
+            rep.size = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
+            let frame = self.newFrame()
+            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: frame)
+            rep.draw()
+            self.writeFrame(frame, dither: dither)
+            frames.append(frame)
+        }
+        return frames
+    }
+    
+    private func newFrame() -> NSBitmapImageRep {
+        return NSBitmapImageRep(bitmapDataPlanes: nil,
+                                pixelsWide: frameWidth,
+                                pixelsHigh: frameHeight,
+                                bitsPerSample: 8,
+                                samplesPerPixel: 4,
+                                hasAlpha: true,
+                                isPlanar: false,
+                                colorSpaceName: .deviceRGB,
+                                bytesPerRow: frameWidth*4,
+                                bitsPerPixel: 32)!
+    }
+    
+    private func writeFrame(_ frame: NSBitmapImageRep, dither: Bool = false) {
         if dither {
             self.dither(frame)
         }
@@ -251,7 +279,6 @@ class Rle {
             }
         }
         writer.write(RleOp(.frameEnd))
-        return frame
     }
     
     private func dither(_ frame: NSBitmapImageRep) {
