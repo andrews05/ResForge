@@ -178,9 +178,9 @@ class Rle {
         let rep = image.representations[0]
         // Reset the resolution
         rep.size = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
+        let gridX = rep.pixelsWide / frameWidth
         var frames: [NSBitmapImageRep] = []
         for i in 0..<frameCount {
-            let gridX = rep.pixelsWide / frameWidth
             let originX = i % gridX * frameWidth
             let originY = i / gridX * frameHeight
             let frame = self.newFrame()
