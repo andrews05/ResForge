@@ -6,6 +6,8 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var nameView: NSTextField!
     @IBOutlet var idView: NSTextField!
     @IBOutlet var typeView: NSComboBox!
+    @IBOutlet var attributesHolder: NSView!
+    @IBOutlet var attributesEditor: AttributesEditor!
     private unowned var rDocument: ResourceDocument
     
     override var windowNibName: NSNib.Name? {
@@ -21,8 +23,9 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func show(type: String? = nil, id: Int? = nil, name: String? = nil) {
+    func show(type: String? = nil, id: Int? = nil, name: String? = nil, attributes: [String: String] = [:]) {
         _ = self.window
+        attributesHolder.isHidden = rDocument.format != kFormatExtended
         // Add all types currently in the document
         var suggestions = rDocument.directory.allTypes
         // Common types?
@@ -37,6 +40,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         typeView.objectValue = type
         idView.objectValue = id
         nameView.objectValue = name
+        attributesEditor.attributes = attributes
         // The last non-nil value provided will receive focus
         if let type = type {
             if let id = id {
@@ -75,7 +79,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     
     @IBAction func hide(_ sender: AnyObject) {
         if sender === createButton {
-            let resource = Resource(type: typeView.stringValue, id: idView.integerValue, name: nameView.stringValue)
+            let resource = Resource(type: typeView.stringValue, id: idView.integerValue, name: nameView.stringValue, typeAttributes: attributesEditor.attributes)
             rDocument.dataSource.reload {
                 rDocument.directory.add(resource)
                 return [resource]

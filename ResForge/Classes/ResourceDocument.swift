@@ -51,7 +51,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     private(set) lazy var editorManager = EditorManager(self)
     private(set) lazy var createController = CreateResourceController(self)
     private var fork: FileFork!
-    private var format: ResourceFileFormat = kFormatClassic
+    private(set) var format: ResourceFileFormat = kFormatClassic
     @objc dynamic var hfsType: OSType = 0 {
         didSet {
             if hfsType != oldValue {
@@ -506,7 +506,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     @IBAction func createNewItem(_ sender: Any) {
         // Pass type and id of currently selected item
         if let resource = dataSource.selectedResources().first {
-            createController.show(type: resource.type, id: resource.id)
+            createController.show(type: resource.type, id: resource.id, attributes: resource.typeAttributes)
         } else {
             createController.show(type: dataSource.selectedType())
         }

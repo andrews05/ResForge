@@ -67,12 +67,14 @@
 		4968C03B24C6808200716AB9 /* EditorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* EditorManager.swift */; };
 		4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03E24C78D7400716AB9 /* SupportRegistry.swift */; };
 		496A52BE24F9B047006A12DF /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496A52BD24F9B047006A12DF /* CustomImageView.swift */; };
+		496A8766267D98AB0058CD9B /* ResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496A875B267D87830058CD9B /* ResourceType.swift */; };
 		496E7E3525E6EA15001C97CA /* ShanWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E3425E6E95C001C97CA /* ShanWindowController.swift */; };
 		496E7E3C25E6EA17001C97CA /* ShanWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 496E7E3225E6E947001C97CA /* ShanWindow.xib */; };
 		497A93C5255BB50800900C7B /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = 497A93BD255BB49600900C7B /* Templates.rsrc */; };
 		497A93DE255F371100900C7B /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 497A93E0255F371100900C7B /* SelectTemplate.xib */; };
 		497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BB1DB24F741E400858EF1 /* Icons.swift */; };
 		499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499216ED24CB914F0054A390 /* CreateResourceController.swift */; };
+		4992491A26C3B527005F69A7 /* AttributesEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4992491926C3B527005F69A7 /* AttributesEditor.swift */; };
 		49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
 		49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043F92472064F0035C0FA /* geometry.cpp */; };
 		49964DE424D0EB4900BAB902 /* clut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FA2472064F0035C0FA /* clut.cpp */; };
@@ -384,6 +386,7 @@
 		4968C03424C66D8B00716AB9 /* EditorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorManager.swift; sourceTree = "<group>"; };
 		4968C03E24C78D7400716AB9 /* SupportRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportRegistry.swift; sourceTree = "<group>"; };
 		496A52BD24F9B047006A12DF /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
+		496A875B267D87830058CD9B /* ResourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceType.swift; sourceTree = "<group>"; };
 		496E7E3325E6E947001C97CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShanWindow.xib; sourceTree = "<group>"; };
 		496E7E3425E6E95C001C97CA /* ShanWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShanWindowController.swift; sourceTree = "<group>"; };
 		496E7E4B25E6EE28001C97CA /* ShanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShanView.swift; sourceTree = "<group>"; };
@@ -444,6 +447,7 @@
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
 		499216EF24CCD2250054A390 /* ResourceFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceFile.h; sourceTree = "<group>"; };
 		499216F024CCD2250054A390 /* ResourceFile.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceFile.mm; sourceTree = "<group>"; };
+		4992491926C3B527005F69A7 /* AttributesEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEditor.swift; sourceTree = "<group>"; };
 		49964E1524D10ED900BAB902 /* AttributesFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesFormatter.swift; sourceTree = "<group>"; };
 		49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDataSource.swift; sourceTree = "<group>"; };
 		4996B8F425DB6AC80027FA39 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -849,6 +853,7 @@
 				49AACD7E24CE931A0081DD4A /* Info.plist */,
 				49AACD7D24CE931A0081DD4A /* RFSupport.h */,
 				491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */,
+				496A875B267D87830058CD9B /* ResourceType.swift */,
 				49AACD6324CE41A60081DD4A /* Resource.swift */,
 				49AACD6924CE57EB0081DD4A /* ResForgePlugin.swift */,
 				49640F5C25F36A77009FEC9B /* AbstractEditor.swift */,
@@ -949,6 +954,7 @@
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
 				49655DF924DE6DA200D6AFF6 /* ResourceError.swift */,
+				4992491926C3B527005F69A7 /* AttributesEditor.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1358,6 +1364,7 @@
 				491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */,
 				4945DC642531826400856385 /* macroman.cpp in Sources */,
 				496A52BE24F9B047006A12DF /* CustomImageView.swift in Sources */,
+				496A8766267D98AB0058CD9B /* ResourceType.swift in Sources */,
 				49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */,
 				49964DE924D0EB5D00BAB902 /* color.cpp in Sources */,
 				49964DFD24D0EC2300BAB902 /* type.cpp in Sources */,
@@ -1420,6 +1427,7 @@
 				49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */,
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
 				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
+				4992491A26C3B527005F69A7 /* AttributesEditor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1936,7 +1944,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
@@ -1978,7 +1986,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				SDKROOT = macosx;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SWIFT_COMPILATION_MODE = wholemodule;

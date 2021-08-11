@@ -17,17 +17,18 @@
     if (format) *format = (ResourceFileFormat)gFile.current_format();
     NSMutableArray *resources = [NSMutableArray new];
     for (auto typeList : gFile.types()) {
-        auto typeString = typeList->code();
-        // Type attributes are a feature of the extended format. For preliminary support, just combine these into the type code.
+        NSString *type = [NSString stringWithUTF8String:typeList->code().c_str()];
+        NSMutableDictionary *typeAtts = [NSMutableDictionary new];
         for (auto attribute : typeList->attributes()) {
-            typeString += ":" + attribute.first + "=" + attribute.second;
+            NSString *key = [NSString stringWithUTF8String:attribute.first.c_str()];
+            NSString *val = [NSString stringWithUTF8String:attribute.second.c_str()];
+            typeAtts[key] = val;
         }
-        NSString *type = [NSString stringWithUTF8String:typeString.c_str()];
         for (auto resource : typeList->resources()) {
             // create the resource & add it to the array
             NSString    *name = [NSString stringWithUTF8String:resource->name().c_str()];
             NSData      *data = [NSData dataWithBytes:resource->data()->get()->data()+resource->data()->start() length:resource->data()->size()];
-            Resource *r = [[Resource alloc] initWithType:type id:resource->id() name:name attributes:0 data:data];
+            Resource *r = [[Resource alloc] initWithType:type id:resource->id() name:name attributes:0 data:data typeAttributes:typeAtts];
             [resources addObject:r];
         }
     }
@@ -39,17 +40,15 @@
     graphite::rsrc::file gFile = graphite::rsrc::file();
     for (Resource *resource in resources) {
         std::string name(resource.name.UTF8String);
-        std::string type([resource.type substringToIndex:4].UTF8String);
+        std::string type(resource.type.UTF8String);
         char *first = (char *)resource.data.bytes; // Bytes pointer should only be accessed once
         std::vector<char> buffer(first, first+resource.data.length);
         graphite::data::data data(std::make_shared<std::vector<char>>(buffer), resource.data.length);
         std::map<std::string, std::string> attributes;
-        if (resource.type.length > 5) {
-            NSString *attString = [resource.type substringFromIndex:5];
-            for (NSString *attribute in [attString componentsSeparatedByString:@":"]) {
-                NSArray<NSString *> *parts = [attribute componentsSeparatedByString:@"="];
-                attributes.insert(std::make_pair(std::string(parts[0].UTF8String), std::string(parts[1].UTF8String)));
-            }
+        for (NSString *att in resource.typeAttributes) {
+            auto key = std::string(att.UTF8String);
+            auto val = std::string(resource.typeAttributes[att].UTF8String);
+            attributes.insert(std::make_pair(key, val));
         }
         gFile.add_resource(type, resource.id, name, std::make_shared<graphite::data::data>(data), attributes);
     }

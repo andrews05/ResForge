@@ -38,6 +38,17 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
     }
     
+    @objc public var typeAttributes: [String: String] {
+        didSet {
+            if typeAttributes != oldValue {
+//                NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
+                NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+                document?.undoManager?.setActionName(NSLocalizedString("Change Type Attributes", comment: ""))
+                document?.undoManager?.registerUndo(withTarget: self, handler: { $0.typeAttributes = oldValue })
+            }
+        }
+    }
+    
     @objc dynamic public var id: Int {
         didSet {
             if id != oldValue {
@@ -91,8 +102,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         return name
     }
     
-    @objc public init(type: String, id: Int, name: String = "", attributes: Int = 0, data: Data = Data()) {
+    @objc public init(type: String, id: Int, name: String = "", attributes: Int = 0, data: Data = Data(), typeAttributes: [String: String] = [:]) {
         self.type = type
+        self.typeAttributes = typeAttributes
         self.id = id
         self.name = name
         self.attributes = ResAttributes(rawValue: attributes)
@@ -129,6 +141,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     
     public required init?(coder: NSCoder) {
         type = coder.decodeObject(of: NSString.self, forKey: "type")! as String
+        typeAttributes = coder.decodeObject(of: NSDictionary.self, forKey: "typeAttributes")! as! [String:String]
         id = coder.decodeInteger(forKey: "id")
         name = coder.decodeObject(of: NSString.self, forKey: "name")! as String
         attributes = ResAttributes(rawValue: coder.decodeInteger(forKey: "attributes"))
@@ -137,6 +150,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     
     public func encode(with coder: NSCoder) {
         coder.encode(type, forKey: "type")
+        coder.encode(typeAttributes, forKey: "typeAttributes")
         coder.encode(id, forKey: "id")
         coder.encode(name, forKey: "name")
         coder.encode(attributes.rawValue, forKey: "attributes")
