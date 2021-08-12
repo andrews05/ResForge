@@ -17,7 +17,8 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     @IBOutlet var rType: NSTextField!
     @IBOutlet var rID: NSTextField!
     @IBOutlet var rSize: NSTextField!
-    @IBOutlet var attributesMatrix: NSMatrix!
+    @IBOutlet var typeAttsHolder: NSView!
+    @IBOutlet var rTypeAtts: AttributesEditor!
     
     @IBOutlet var objectController: NSObjectController!
     
@@ -55,12 +56,8 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             self.window?.title = NSLocalizedString("Resource Info", comment: "")
             
             rSize.integerValue = resource.data.count
-//            attributesMatrix.cell(withTag: ResAttributes.changed.rawValue)?.state    = resource.attributes.contains(.changed) ? .on : .off
-//            attributesMatrix.cell(withTag: ResAttributes.preload.rawValue)?.state    = resource.attributes.contains(.preload) ? .on : .off
-//            attributesMatrix.cell(withTag: ResAttributes.protected.rawValue)?.state  = resource.attributes.contains(.protected) ? .on : .off
-//            attributesMatrix.cell(withTag: ResAttributes.locked.rawValue)?.state     = resource.attributes.contains(.locked) ? .on : .off
-//            attributesMatrix.cell(withTag: ResAttributes.purgeable.rawValue)?.state  = resource.attributes.contains(.purgeable) ? .on : .off
-//            attributesMatrix.cell(withTag: ResAttributes.sysHeap.rawValue)?.state    = resource.attributes.contains(.sysHeap) ? .on : .off
+            typeAttsHolder.isHidden = (resource.document as? ResourceDocument)?.format != kFormatExtended
+            rTypeAtts.attributes = resource.typeAttributes
             
             // swap view
             self.window?.contentView = resourceView
@@ -96,11 +93,18 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     
     private func setMainWindow(_ mainWindow: NSWindow?) {
         if let document = mainWindow?.windowController?.document as? ResourceDocument {
-            objectController.content = document.dataSource.selectionCount() == 1 ? document.dataSource.selectedResources().first : document
+            objectController.content = self.object(for: document)
         } else {
             objectController.content = (mainWindow?.windowController as? ResourceEditor)?.resource
         }
         self.refresh()
+    }
+    
+    private func object(for document: ResourceDocument) -> AnyObject {
+        if document.dataSource.selectionCount() == 1 {
+            return document.dataSource.selectedResources().first ?? document
+        }
+        return document
     }
     
     @objc func mainWindowChanged(_ notification: Notification) {
@@ -116,7 +120,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     
     @objc func selectedResourceChanged(_ notification: Notification) {
         if let document = notification.object as? ResourceDocument, document === NSApp.mainWindow?.windowController?.document {
-            let object = document.dataSource.selectionCount() == 1 ? document.dataSource.selectedResources().first : document
+            let object = self.object(for: document)
             if object !== objectController.content as AnyObject {
                 objectController.content = object
                 self.refresh()
@@ -138,9 +142,10 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
         }
     }
     
-    @IBAction func attributesChanged(_ sender: NSButton) {
-//        let att = ResAttributes(rawValue: sender.selectedTag())
-//        (objectController.content as? Resource)?.attributes.formSymmetricDifference(att)
+    @IBAction func applyAttributes(_ sender: NSButton) {
+        if self.window?.makeFirstResponder(nil) != false {
+            (objectController.content as? Resource)?.typeAttributes = rTypeAtts.attributes
+        }
     }
 }
 

@@ -28,7 +28,7 @@
             // create the resource & add it to the array
             NSString    *name = [NSString stringWithUTF8String:resource->name().c_str()];
             NSData      *data = [NSData dataWithBytes:resource->data()->get()->data()+resource->data()->start() length:resource->data()->size()];
-            Resource *r = [[Resource alloc] initWithType:type id:resource->id() name:name attributes:0 data:data typeAttributes:typeAtts];
+            Resource *r = [[Resource alloc] initWithType:type id:resource->id() name:name data:data typeAttributes:typeAtts];
             [resources addObject:r];
         }
     }

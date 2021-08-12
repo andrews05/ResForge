@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -434,40 +434,6 @@
                     </subviews>
                     <connections>
                         <outlet property="textField" destination="psp-Kr-AgB" id="65E-ZR-yvJ"/>
-                    </connections>
-                </tableCellView>
-            </prototypeCellViews>
-        </tableColumn>
-        <tableColumn identifier="attributes" editable="NO" width="171" minWidth="60" maxWidth="1000" id="151">
-            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Attributes">
-                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-            </tableHeaderCell>
-            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="162">
-                <font key="font" metaFont="system"/>
-                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-            </textFieldCell>
-            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="attributes"/>
-            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-            <prototypeCellViews>
-                <tableCellView id="gmz-ay-IdC">
-                    <rect key="frame" x="501" y="1" width="171" height="17"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <subviews>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yhj-1S-gC4">
-                            <rect key="frame" x="0.0" y="0.0" width="171" height="17"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" id="tyX-cn-uDW">
-                                <customFormatter key="formatter" id="tQd-3F-qvW" customClass="AttributesFormatter" customModule="ResForge" customModuleProvider="target"/>
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                    </subviews>
-                    <connections>
-                        <outlet property="textField" destination="yhj-1S-gC4" id="9uI-u3-Ut8"/>
                     </connections>
                 </tableCellView>
             </prototypeCellViews>

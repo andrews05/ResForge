@@ -1,18 +1,22 @@
 import Cocoa
 
-class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate {
-    @IBOutlet var addButton: NSButton!
+class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate {
+    @IBOutlet var addButton: NSButton?
+    @IBOutlet var applyButton: NSButton?
+    
     @objc dynamic var rows: [TypeAttribute] = []
     var attributes: [String: String] {
         get {
-            rows.reduce(into: [:]) {
+            applyButton?.isHidden = true
+            return rows.reduce(into: [:]) {
                 if !$1.key.isEmpty && !$1.value.isEmpty {
                     $0[$1.key] = $1.value
                 }
             }
         }
         set {
-            rows = newValue.map { TypeAttribute(key: $0, value: $1) }
+            rows = newValue.map { TypeAttribute(self.keyField($0), self.valueField($1)) }
+            applyButton?.isHidden = true
         }
     }
     
@@ -29,6 +33,20 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate {
         } else {
             rows.removeAll()
         }
+    }
+    
+    func keyField(_ key: String = "") -> NSTextField {
+        let field = self.valueField(key, width: 100)
+        field.formatter = AttributeNameFormatter.shared
+        return field
+    }
+    
+    func valueField(_ value: String = "", width: CGFloat = 120) -> NSTextField {
+        let field = NSTextField(frame: NSMakeRect(0, 0, width, 20))
+        field.stringValue = value
+        field.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+        field.delegate = self
+        return field
     }
     
     // MARK: Delegate Functions
@@ -50,16 +68,21 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate {
     func ruleEditor(_ editor: NSRuleEditor, displayValueForCriterion criterion: Any, inRow row: Int) -> Any {
         switch criterion as? String {
         case "key":
-            return TypeAttribute.keyField()
+            return self.keyField()
         case "=":
             return "="
         default:
-            return TypeAttribute.valueField()
+            return self.valueField()
         }
     }
     
     func ruleEditorRowsDidChange(_ notification: Notification) {
-        addButton.image = NSImage(named: rows.isEmpty ? NSImage.addTemplateName : NSImage.removeTemplateName)
+        addButton?.image = NSImage(named: rows.isEmpty ? NSImage.addTemplateName : NSImage.removeTemplateName)
+        applyButton?.isHidden = false
+    }
+    
+    func controlTextDidChange(_ obj: Notification) {
+        applyButton?.isHidden = false
     }
 }
 
@@ -84,21 +107,8 @@ class TypeAttribute: NSObject {
         }
     }
     
-    init(key: String, value: String) {
-        displayValues = [Self.keyField(key), "=", Self.valueField(value)]
-    }
-    
-    static func keyField(_ key: String = "") -> NSTextField {
-        let field = Self.valueField(key)
-        field.formatter = AttributeNameFormatter.shared
-        return field
-    }
-    
-    static func valueField(_ value: String = "") -> NSTextField {
-        let field = NSTextField(frame: NSMakeRect(0, 0, 80, 20))
-        field.stringValue = value
-        field.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
-        return field
+    init(_ key: NSTextField, _ value: NSTextField) {
+        displayValues = [key, "=", value]
     }
 }
 

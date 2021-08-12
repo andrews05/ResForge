@@ -5,7 +5,6 @@ public extension Notification.Name {
     static let ResourceNameDidChange        = Self("ResourceNameDidChange")
     static let ResourceTypeDidChange        = Self("ResourceTypeDidChange")
     static let ResourceIDDidChange          = Self("ResourceIDDidChange")
-    static let ResourceAttributesDidChange  = Self("ResourceAttributesDidChange")
     static let ResourceDataDidChange        = Self("ResourceDataDidChange")
 }
 
@@ -13,20 +12,9 @@ public extension NSPasteboard.PasteboardType {
     static let RKResource = Self("com.resforge.resource")
 }
 
-public struct ResAttributes: OptionSet, Hashable {
-    public let rawValue: Int
-    public static let changed   = Self(rawValue: 2)
-    public static let preload   = Self(rawValue: 4)
-    public static let protected = Self(rawValue: 8)
-    public static let locked    = Self(rawValue: 16)
-    public static let purgeable = Self(rawValue: 32)
-    public static let sysHeap   = Self(rawValue: 64)
-    public init(rawValue: Int) {
-        self.rawValue = rawValue
-    }
-}
-
 public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboardReading {
+    public var attributes = 0 // Not supported
+    
     @objc dynamic public var type: String {
         didSet {
             if type != oldValue {
@@ -71,17 +59,6 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
     }
     
-    public var attributes: ResAttributes {
-        didSet {
-            if attributes != oldValue {
-                NotificationCenter.default.post(name: .ResourceAttributesDidChange, object: self, userInfo: ["oldValue":oldValue])
-                NotificationCenter.default.post(name: .ResourceDidChange, object: self)
-                document?.undoManager?.setActionName(NSLocalizedString("Change Attributes", comment: ""))
-                document?.undoManager?.registerUndo(withTarget: self, handler: { $0.attributes = oldValue })
-            }
-        }
-    }
-    
     @objc public var data: Data {
         didSet {
             _preview = nil
@@ -102,12 +79,11 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         return name
     }
     
-    @objc public init(type: String, id: Int, name: String = "", attributes: Int = 0, data: Data = Data(), typeAttributes: [String: String] = [:]) {
+    @objc public init(type: String, id: Int, name: String = "", data: Data = Data(), typeAttributes: [String: String] = [:]) {
         self.type = type
         self.typeAttributes = typeAttributes
         self.id = id
         self.name = name
-        self.attributes = ResAttributes(rawValue: attributes)
         self.data = data
     }
     
@@ -144,7 +120,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         typeAttributes = coder.decodeObject(of: NSDictionary.self, forKey: "typeAttributes")! as! [String:String]
         id = coder.decodeInteger(forKey: "id")
         name = coder.decodeObject(of: NSString.self, forKey: "name")! as String
-        attributes = ResAttributes(rawValue: coder.decodeInteger(forKey: "attributes"))
+        attributes = coder.decodeInteger(forKey: "attributes")
         data = coder.decodeObject(of: NSData.self, forKey: "data")! as Data
     }
     
@@ -153,7 +129,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         coder.encode(typeAttributes, forKey: "typeAttributes")
         coder.encode(id, forKey: "id")
         coder.encode(name, forKey: "name")
-        coder.encode(attributes.rawValue, forKey: "attributes")
+        coder.encode(attributes, forKey: "attributes")
         coder.encode(data, forKey: "data")
     }
     

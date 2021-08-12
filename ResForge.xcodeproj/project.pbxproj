@@ -97,7 +97,6 @@
 		49964DFD24D0EC2300BAB902 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044212472064F0035C0FA /* type.cpp */; };
 		49964E1324D1034400BAB902 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
 		49964E1424D10A1000BAB902 /* ResourceFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 499216F024CCD2250054A390 /* ResourceFile.mm */; };
-		49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1524D10ED900BAB902 /* AttributesFormatter.swift */; };
 		49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */; };
 		4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4996B90725DB6C2F0027FA39 /* Credits.rtf */; };
 		49A4328E25429785000B1109 /* ElementKHBT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A4328D25429785000B1109 /* ElementKHBT.swift */; };
@@ -448,7 +447,6 @@
 		499216EF24CCD2250054A390 /* ResourceFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceFile.h; sourceTree = "<group>"; };
 		499216F024CCD2250054A390 /* ResourceFile.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceFile.mm; sourceTree = "<group>"; };
 		4992491926C3B527005F69A7 /* AttributesEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEditor.swift; sourceTree = "<group>"; };
-		49964E1524D10ED900BAB902 /* AttributesFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesFormatter.swift; sourceTree = "<group>"; };
 		49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDataSource.swift; sourceTree = "<group>"; };
 		4996B8F425DB6AC80027FA39 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4996B91125DB6C870027FA39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
@@ -940,7 +938,7 @@
 			isa = PBXGroup;
 			children = (
 				49F6C76124C577440078EB55 /* ApplicationDelegate.swift */,
-				49964E1524D10ED900BAB902 /* AttributesFormatter.swift */,
+				4992491926C3B527005F69A7 /* AttributesEditor.swift */,
 				4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */,
 				49F6C76024C577430078EB55 /* PrefsController.swift */,
 				4968C03424C66D8B00716AB9 /* EditorManager.swift */,
@@ -954,7 +952,6 @@
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
 				49655DF924DE6DA200D6AFF6 /* ResourceError.swift */,
-				4992491926C3B527005F69A7 /* AttributesEditor.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1423,7 +1420,6 @@
 				4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
 				49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */,
-				49964E1624D10ED900BAB902 /* AttributesFormatter.swift in Sources */,
 				49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */,
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
 				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
