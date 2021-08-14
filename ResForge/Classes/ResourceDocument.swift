@@ -134,7 +134,6 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             directory.reset()
             directory.add(resources)
             dataSource?.reload()
-            self.updateStatus()
             self.undoManager?.enableUndoRegistration()
         } else {
             throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: nil)
@@ -540,7 +539,6 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     @IBAction func toggleSidebar(_ sender: Any) {
         dataSource.toggleSidebar()
         self.updateSidebarMenuTitle()
-        self.updateStatus()
     }
     
     // MARK: - Edit Operations

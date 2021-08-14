@@ -56,7 +56,6 @@ class ResourceDirectory {
         filtered.removeValue(forKey: resource.type)
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.remove(resource) })
         NotificationCenter.default.post(name: .DirectoryDidAddResource, object: self, userInfo: ["resource": resource])
-        document.updateStatus()
     }
     
     /// Remove a single resource.
@@ -65,7 +64,6 @@ class ResourceDirectory {
         filtered.removeValue(forKey: resource.type)
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.add(resource) })
         NotificationCenter.default.post(name: .DirectoryDidRemoveResource, object: self, userInfo: ["resource": resource])
-        document.updateStatus()
     }
     
     /// Get the resources for the given type that match the current filter.
