@@ -56,7 +56,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             self.window?.title = NSLocalizedString("Resource Info", comment: "")
             
             rSize.integerValue = resource.data.count
-            typeAttsHolder.isHidden = (resource.document as? ResourceDocument)?.format != kFormatExtended
+            typeAttsHolder.isHidden = (resource.document as? ResourceDocument)?.format != .extended
             rTypeAtts.attributes = resource.typeAttributes
             
             // swap view

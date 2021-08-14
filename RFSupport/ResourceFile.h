@@ -5,11 +5,11 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-    kFormatClassic,
-    kFormatExtended,
-    kFormatRez
-} ResourceFileFormat;
+typedef NS_ENUM(NSInteger, ResourceFileFormat) {
+    kResourceFileFormatClassic,
+    kResourceFileFormatExtended,
+    kResourceFileFormatRez
+};
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ResourceFile : NSObject
 
 + (NSArray<Resource *> * _Nullable)readFromURL:(NSURL *)url format:(ResourceFileFormat * _Nullable)format error:(NSError ** _Nullable)outError;
-+ (BOOL)writeResources:(NSArray<Resource *> *)resources toURL:(NSURL *)url withFormat:(ResourceFileFormat)format error:(NSError ** _Nullable)outError;
++ (BOOL)writeResources:(NSArray<Resource *> *)resources toURL:(NSURL *)url asFormat:(ResourceFileFormat)format error:(NSError ** _Nullable)outError;
 
 @end
 

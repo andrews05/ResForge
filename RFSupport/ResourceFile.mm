@@ -35,7 +35,7 @@
     return resources;
 }
 
-+ (BOOL)writeResources:(NSArray<Resource *> *)resources toURL:(NSURL *)url withFormat:(ResourceFileFormat)format error:(NSError **)outError
++ (BOOL)writeResources:(NSArray<Resource *> *)resources toURL:(NSURL *)url asFormat:(ResourceFileFormat)format error:(NSError **)outError
 {
     graphite::rsrc::file gFile = graphite::rsrc::file();
     for (Resource *resource in resources) {

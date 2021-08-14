@@ -25,7 +25,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     
     func show(type: String? = nil, id: Int? = nil, name: String? = nil, attributes: [String: String] = [:]) {
         _ = self.window
-        attributesHolder.isHidden = rDocument.format != kFormatExtended
+        attributesHolder.isHidden = rDocument.format != .extended
         // Add all types currently in the document
         var suggestions = rDocument.directory.allTypes
         // Common types?

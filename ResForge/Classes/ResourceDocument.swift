@@ -32,13 +32,13 @@ enum FileFork {
 extension ResourceFileFormat {
     var name: String {
         switch self {
-        case kFormatClassic:
+        case .classic:
             return NSLocalizedString("Resource File", comment: "")
-        case kFormatExtended:
+        case .extended:
             return NSLocalizedString("Extended Resource File", comment: "")
-        case kFormatRez:
+        case .rez:
             return NSLocalizedString("Rez File", comment: "")
-        default:
+        @unknown default:
             return ""
         }
     }
@@ -51,7 +51,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     private(set) lazy var editorManager = EditorManager(self)
     private(set) lazy var createController = CreateResourceController(self)
     private var fork: FileFork!
-    private(set) var format: ResourceFileFormat = kFormatClassic
+    private(set) var format: ResourceFileFormat = .classic
     @objc dynamic var hfsType: OSType = 0 {
         didSet {
             if hfsType != oldValue {
@@ -159,7 +159,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
             do {
                 let writeUrl = url.appendingPathComponent("..namedfork/rsrc")
-                try ResourceFile.write(directory.resources(), to: writeUrl, with: format)
+                try ResourceFile.write(directory.resources(), to: writeUrl, as: format)
                 try FileManager.default.setAttributes([.hfsTypeCode: hfsType, .hfsCreatorCode: hfsCreator], ofItemAtPath: url.path)
             } catch let error {
                 if moved {
@@ -180,10 +180,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         if saveOperation == .saveAsOperation {
             // Set fork according to typeName
             if typeName == "ResourceFileRF" {
-                format = kFormatClassic
+                format = .classic
                 fork = .rsrc
             } else {
-                format = typeName == "ResourceFileExtended" ? kFormatExtended : kFormatClassic
+                format = typeName == "ResourceFileExtended" ? .extended : .classic
                 fork = .data
                 // Clear type/creator for data fork (assume filename extension)
                 self.undoManager?.disableUndoRegistration()
@@ -203,7 +203,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         
         // Write resources to file
         let writeUrl = fork == .rsrc ? url.appendingPathComponent("..namedfork/rsrc") : url
-        try ResourceFile.write(directory.resources(), to: writeUrl, with: format)
+        try ResourceFile.write(directory.resources(), to: writeUrl, as: format)
     }
     
     // MARK: - Export
@@ -443,7 +443,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         if let fork = fork {
             var formatName = format.name
-            if format == kFormatClassic || fork == .rsrc {
+            if format == .classic || fork == .rsrc {
                 formatName += " (\(fork.name))"
             }
             status = "\(formatName) — \(status)"
