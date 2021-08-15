@@ -1,4 +1,5 @@
 import Cocoa
+import RFSupport
 
 class SpriteLayer: NSObject {
     // Nova has 32 levels of transparency, generally given in the range 1-32. To keep things simple we allow 0-32.
@@ -25,7 +26,8 @@ class SpriteLayer: NSObject {
         didSet {
             if spriteID != oldValue {
                 frames.removeAll()
-                guard spriteID > 0, let resource = controller.manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) else {
+                let type = ResourceType("rlëD", controller.resource.typeAttributes)
+                guard spriteID > 0, let resource = controller.manager.findResource(type: type, id: Int(spriteID), currentDocumentOnly: false) else {
                     spriteLink.title = "not found"
                     return
                 }
@@ -72,14 +74,15 @@ class SpriteLayer: NSObject {
     }
     
     @IBAction func openSprite(_ sender: Any) {
-        if let resource = controller.manager.findResource(ofType: "rlëD", id: Int(spriteID), currentDocumentOnly: false) {
+        let type = ResourceType("rlëD", controller.resource.typeAttributes)
+        if let resource = controller.manager.findResource(type: type, id: Int(spriteID), currentDocumentOnly: false) {
             // If we found a resource but don't currently have any frames, try loading it again
             if frames.isEmpty && !resource.data.isEmpty {
                 self.loadRleAsync(resource.data)
             }
             controller.manager.open(resource: resource, using: nil, template: nil)
         } else {
-            controller.manager.createResource(ofType: "rlëD", id: Int(spriteID), name: "")
+            controller.manager.createResource(type: type, id: Int(spriteID), name: "")
         }
     }
     

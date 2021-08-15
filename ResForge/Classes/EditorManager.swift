@@ -45,11 +45,11 @@ class EditorManager: RFEditorManager {
     
     func open(resource: Resource, using editor: ResourceEditor.Type? = nil, template: String? = nil) {
         // Work out editor to use
-        var editor = editor ?? PluginRegistry.editors[resource.type] ?? PluginRegistry.templateEditor
+        var editor = editor ?? PluginRegistry.editors[resource.typeCode] ?? PluginRegistry.templateEditor
         var tmplResource: Resource!
         if editor is TemplateEditor.Type {
             // If template editor, find the template to use
-            tmplResource = self.findResource(ofType: "TMPL", name: template ?? resource.type)
+            tmplResource = self.findResource(type: ResourceType("TMPL"), name: template ?? resource.typeCode)
             // If no template, switch to hex editor
             if tmplResource == nil {
                 editor = PluginRegistry.hexEditor
@@ -61,7 +61,7 @@ class EditorManager: RFEditorManager {
         var plug = editorWindows[key]
         if plug == nil {
             if let editor = editor as? TemplateEditor.Type {
-                let filter = PluginRegistry.templateFilters[resource.type]
+                let filter = PluginRegistry.templateFilters[resource.typeCode]
                 plug = editor.init(resource: resource, manager: self, template: tmplResource, filter: filter)
             } else {
                 plug = editor!.init(resource: resource, manager: self)
@@ -78,7 +78,7 @@ class EditorManager: RFEditorManager {
         }
     }
     
-    func allResources(ofType type: String, currentDocumentOnly: Bool = false) -> [Resource] {
+    func allResources(ofType type: ResourceType, currentDocumentOnly: Bool = false) -> [Resource] {
         var resources = document.directory.resources(ofType: type)
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
@@ -89,7 +89,7 @@ class EditorManager: RFEditorManager {
         return resources
     }
 
-    func findResource(ofType type: String, id: Int, currentDocumentOnly: Bool = false) -> Resource? {
+    func findResource(type: ResourceType, id: Int, currentDocumentOnly: Bool = false) -> Resource? {
         if let resource = document.directory.findResource(type: type, id: id) {
             return resource
         }
@@ -104,7 +104,7 @@ class EditorManager: RFEditorManager {
         return SupportRegistry.directory.findResource(type: type, id: id)
     }
 
-    func findResource(ofType type: String, name: String, currentDocumentOnly: Bool = false) -> Resource? {
+    func findResource(type: ResourceType, name: String, currentDocumentOnly: Bool = false) -> Resource? {
         if let resource = document.directory.findResource(type: type, name: name) {
             return resource
         }
@@ -119,7 +119,7 @@ class EditorManager: RFEditorManager {
         return SupportRegistry.directory.findResource(type: type, name: name)
     }
     
-    func createResource(ofType: String, id: Int, name: String) {
-        document.createController.show(type: ofType, id: id, name: name)
+    func createResource(type: ResourceType, id: Int, name: String) {
+        document.createController.show(type: type, id: id, name: name)
     }
 }

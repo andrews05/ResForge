@@ -4,9 +4,9 @@ import RFSupport
 class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionViewDataSource, ResourcesView {
     @IBOutlet var collectionView: NSCollectionView!
     @IBOutlet weak var document: ResourceDocument!
-    private(set) var currentType: String?
+    private(set) var currentType: ResourceType?
     
-    func reload(type: String?) {
+    func reload(type: ResourceType?) {
         currentType = type!
         collectionView.reloadData()
     }
@@ -39,8 +39,8 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         }
     }
     
-    func selectedType() -> String? {
-        return currentType == "" ? nil : currentType
+    func selectedType() -> ResourceType? {
+        return currentType?.code == "" ? nil : currentType
     }
     
     func updated(resource: Resource, oldIndex: Int, newIndex: Int) {

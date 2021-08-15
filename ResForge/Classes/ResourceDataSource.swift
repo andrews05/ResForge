@@ -100,7 +100,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
             typeList.selectRowIndexes([i+1], byExtendingSelection: false)
         } else {
             resourcesView = outlineController
-            resourcesView.reload(type: useTypeList ? "" : nil)
+            resourcesView.reload(type: useTypeList ? ResourceType("") : nil)
             scrollView.documentView = outlineView
         }
         if let resources = resources {
@@ -124,7 +124,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
     }
     
     /// Return the currently selected type.
-    func selectedType() -> String? {
+    func selectedType() -> ResourceType? {
         return resourcesView.selectedType()
     }
 
@@ -171,7 +171,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
             let type = document.directory.allTypes[row-1]
             let count = String(document.directory.resourcesByType[type]!.count)
             let view = tableView.makeView(withIdentifier: identifier, owner: nil) as! NSTableCellView
-            view.textField?.stringValue = type
+            view.textField?.stringValue = type.description
             (view.subviews.last as? NSButton)?.title = count
             if #available(OSX 11.0, *) {
                 // Remove leading/trailing spacing on macOS 11
@@ -204,8 +204,8 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         // Check if type actually changed, rather than just being reselected after a reload
         let changed = resourcesView.currentType != type
         if changed {
-            if let provider = PluginRegistry.previewProviders[type] {
-                let size = provider.previewSize(for: type)
+            if let provider = PluginRegistry.previewProviders[type.code] {
+                let size = provider.previewSize(for: type.code)
                 let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
                 layout.itemSize = NSSize(width: size+8, height: size+40)
                 resourcesView = collectionController
@@ -240,10 +240,10 @@ class SourceCount: NSButton {
 // Common interface for the OutlineController and CollectionController
 protocol ResourcesView {
     /// Get the currently displayed type.
-    var currentType: String? { get }
+    var currentType: ResourceType? { get }
     
     /// Reload the data in the view.
-    func reload(type: String?)
+    func reload(type: ResourceType?)
     
     /// Select the given resources.
     func select(_ resources: [Resource])
@@ -255,7 +255,7 @@ protocol ResourcesView {
     func selectedResources(deep: Bool) -> [Resource]
     
     /// Return the currently selcted type.
-    func selectedType() -> String?
+    func selectedType() -> ResourceType?
     
     /// Notify the view that a resource has been updated..
     func updated(resource: Resource, oldIndex: Int, newIndex: Int)

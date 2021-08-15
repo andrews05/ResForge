@@ -132,12 +132,7 @@ class ElementCASR: CaseableElement {
     }
     
     @IBAction func openResource(_ sender: Any) {
-        let manager = self.parentList.controller.manager
-        if let resource = manager.findResource(ofType: resType, id: value, currentDocumentOnly: false) {
-            manager.open(resource: resource, using: nil, template: nil)
-        } else {
-            manager.createResource(ofType: resType, id: value, name: "")
-        }
+        self.parentList.controller.openOrCreateResource(typeCode: resType, id: value)
     }
     
     override var formatter: Formatter? {

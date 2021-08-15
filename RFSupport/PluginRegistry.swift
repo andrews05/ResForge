@@ -53,7 +53,7 @@ public class PluginRegistry {
     
     /// Return a placeholder name to show for a resource when it has no name.
     public static func placeholderName(for resource: Resource) -> String {
-        if let placeholder = placeholderProviders[resource.type]?.placeholderName(for: resource) {
+        if let placeholder = placeholderProviders[resource.typeCode]?.placeholderName(for: resource) {
             return placeholder
         }
         
@@ -62,7 +62,7 @@ public class PluginRegistry {
             return NSLocalizedString("Custom Icon", comment: "")
         }
         
-        switch resource.type {
+        switch resource.typeCode {
         case "carb":
             if resource.id == 0 {
                 return NSLocalizedString("Carbon Identifier", comment: "")

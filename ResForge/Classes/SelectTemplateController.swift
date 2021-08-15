@@ -1,4 +1,5 @@
 import Cocoa
+import RFSupport
 
 class SelectTemplateController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var typeList: NSComboBox!
@@ -9,18 +10,18 @@ class SelectTemplateController: NSWindowController, NSTextFieldDelegate {
         "SelectTemplate"
     }
     
-    func show(_ document: ResourceDocument, type: String, complete: @escaping (String) -> Void) {
+    func show(_ document: ResourceDocument, typeCode: String, complete: @escaping (String) -> Void) {
         _ = self.window
         let docs = NSDocumentController.shared.documents as! [ResourceDocument]
         var names = docs.flatMap {
-            $0.directory.resources(ofType: "TMPL").map({ $0.name })
+            $0.directory.resources(ofType: ResourceType("TMPL")).map({ $0.name })
         }
-        names.append(contentsOf: SupportRegistry.directory.resources(ofType: "TMPL").map({ $0.name }))
+        names.append(contentsOf: SupportRegistry.directory.resources(ofType: ResourceType("TMPL")).map({ $0.name }))
         templates = Set(names) // Remove any duplicates
         typeList.addItems(withObjectValues: templates.sorted())
         
-        if templates.contains(type) {
-            typeList.stringValue = type
+        if templates.contains(typeCode) {
+            typeList.stringValue = typeCode
             openButton.isEnabled = true
         }
         document.windowForSheet?.beginSheet(self.window!) { modalResponse in

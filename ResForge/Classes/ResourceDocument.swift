@@ -250,10 +250,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     private func filenameForExport(resource: Resource) -> (name: String, ext: String) {
         var filename = resource.name.replacingOccurrences(of: "/", with: ":")
         if filename == "" {
-            filename = "\(resource.type) \(resource.id)"
+            filename = "\(resource.typeCode) \(resource.id)"
         }
-        let editor = PluginRegistry.exportProviders[resource.type]
-        let ext = editor?.filenameExtension(for: resource.type) ?? resource.type.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        let editor = PluginRegistry.exportProviders[resource.typeCode]
+        let ext = editor?.filenameExtension(for: resource.typeCode) ?? resource.typeCode.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         return (filename, ext)
     }
     
@@ -262,7 +262,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             if resource.data.isEmpty {
                 try Data().write(to: url)
             } else {
-                let editor = PluginRegistry.exportProviders[resource.type]
+                let editor = PluginRegistry.exportProviders[resource.typeCode]
                 if try editor?.export(resource, to: url) != true {
                     try resource.data.write(to: url)
                 }
@@ -506,7 +506,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     @IBAction func createNewItem(_ sender: Any) {
         // Pass type and id of currently selected item
         if let resource = dataSource.selectedResources().first {
-            createController.show(type: resource.type, id: resource.id, attributes: resource.typeAttributes)
+            createController.show(type: resource.type, id: resource.id)
         } else {
             createController.show(type: dataSource.selectedType())
         }
@@ -523,7 +523,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         guard !resources.isEmpty else {
             return
         }
-        SelectTemplateController().show(self, type: resources.first!.type) { template in
+        SelectTemplateController().show(self, typeCode: resources.first!.typeCode) { template in
             for resource in resources {
                 self.editorManager.open(resource: resource, using: PluginRegistry.templateEditor, template: template)
             }
@@ -605,7 +605,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                             alert.showsSuppressionButton = resources.count > 1
                             alert.suppressionButton?.title = NSLocalizedString("Apply to all", comment: "")
                         }
-                        alert.messageText = String(format: NSLocalizedString("A resource of type '%@' with ID %ld already exists.", comment: ""), resource.type, resource.id)
+                        alert.messageText = String(format: NSLocalizedString("A resource of type '%@' with ID %ld already exists.", comment: ""), resource.typeCode, resource.id)
                         // TODO: Do this in a non-blocking way?
                         alert.beginSheetModal(for: self.windowForSheet!) { modalResponse in
                             NSApp.stopModal(withCode: modalResponse)

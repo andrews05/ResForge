@@ -4,7 +4,7 @@ import RFSupport
 class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate, ResourcesView {
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet weak var document: ResourceDocument!
-    private(set) var currentType: String? = nil
+    private(set) var currentType: ResourceType? = nil
     private var inlineUpdate = false // Flag to prevent reloading items when editing inline
     
     override func awakeFromNib() {
@@ -39,7 +39,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         }
     }
     
-    func reload(type: String?) {
+    func reload(type: ResourceType?) {
         currentType = type
         outlineView.reloadData()
     }
@@ -64,7 +64,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         } else if deep {
             var resources: [Resource] = []
             for item in outlineView.selectedItems {
-                if let item = item as? String {
+                if let item = item as? ResourceType {
                     resources.append(contentsOf: document.directory.resourcesByType[item]!)
                 } else if let item = item as? Resource, !resources.contains(item) {
                     resources.append(item)
@@ -76,12 +76,12 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         }
     }
     
-    func selectedType() -> String? {
-        if currentType == nil {
-            let item = outlineView.item(atRow: outlineView.selectedRow)
-            return item as? String ?? (item as? Resource)?.type
+    func selectedType() -> ResourceType? {
+        if let type = currentType {
+            return type.code == "" ? nil : type
         } else {
-            return currentType == "" ? nil : currentType
+            let item = outlineView.item(atRow: outlineView.selectedRow)
+            return item as? ResourceType ?? (item as? Resource)?.type
         }
     }
     
@@ -106,29 +106,27 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         if let resource = item as? Resource {
             view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
             switch tableColumn!.identifier.rawValue {
+            case "id":
+                view.textField?.integerValue = resource.id
             case "name":
                 view.textField?.stringValue = resource.name
                 view.textField?.placeholderString = resource.placeholderName()
-            case "type":
-                view.textField?.stringValue = resource.type
-            case "id":
-                view.textField?.integerValue = resource.id
             case "size":
                 view.textField?.integerValue = resource.data.count
-            case "attributes":
-                view.textField?.objectValue = resource.attributes
             default:
                 return nil
             }
             return view
-        } else if let type = item as? String {
-            let identifier = tableColumn!.identifier.rawValue.appending("Group")
-            switch identifier {
-            case "idGroup":
-                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(identifier), owner: self) as! NSTableCellView
-                view.textField?.stringValue = type
-            case "sizeGroup":
-                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(identifier), owner: self) as! NSTableCellView
+        } else if let type = item as? ResourceType {
+            switch  tableColumn!.identifier.rawValue {
+            case "id":
+                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("idGroup"), owner: self) as! NSTableCellView
+                view.textField?.stringValue = type.code
+            case "name":
+                view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
+                view.textField?.stringValue = type.attributesDisplay
+            case "size":
+                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("sizeGroup"), owner: self) as! NSTableCellView
                 view.textField?.integerValue = document.directory.resourcesByType[type]!.count
             default:
                 return nil
@@ -162,7 +160,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     // MARK: - DataSource functions
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if let type = item as? String ?? currentType {
+        if let type = item as? ResourceType ?? currentType {
             return document.directory.filteredResources(type: type)[index]
         } else {
             return document.directory.filteredTypes()[index]
@@ -170,11 +168,11 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
     
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        return item is String
+        return item is ResourceType
     }
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if let type = item as? String ?? currentType {
+        if let type = item as? ResourceType ?? currentType {
             return document.directory.filteredResources(type: type).count
         } else {
             return document.directory.filteredTypes().count

@@ -9,9 +9,9 @@ extension Notification.Name {
 
 class ResourceDirectory {
     private(set) weak var document: ResourceDocument!
-    private(set) var resourcesByType: [String: [Resource]] = [:]
-    private(set) var allTypes: [String] = []
-    private var filtered: [String: [Resource]] = [:]
+    private(set) var resourcesByType: [ResourceType: [Resource]] = [:]
+    private(set) var allTypes: [ResourceType] = []
+    private var filtered: [ResourceType: [Resource]] = [:]
     var filter = "" {
         didSet {
             filtered = [:]
@@ -67,7 +67,7 @@ class ResourceDirectory {
     }
     
     /// Get the resources for the given type that match the current filter.
-    func filteredResources(type: String) -> [Resource] {
+    func filteredResources(type: ResourceType) -> [Resource] {
         if filter.isEmpty {
             return resourcesByType[type] ?? []
         }
@@ -82,12 +82,12 @@ class ResourceDirectory {
     }
     
     /// Get all types that contain resources matching the current filter.
-    func filteredTypes() -> [String] {
+    func filteredTypes() -> [ResourceType] {
         if filter.isEmpty {
             return allTypes
         }
         _ = allTypes.map(self.filteredResources)
-        return filtered.filter({ !$1.isEmpty }).keys.sorted(by: { $0.localizedCompare($1) == .orderedAscending })
+        return filtered.filter({ !$1.isEmpty }).keys.sorted(by: { $0.code.localizedCompare($1.code) == .orderedAscending })
     }
     
     private func addToTypedList(_ resource: Resource) {
@@ -95,13 +95,13 @@ class ResourceDirectory {
         if resourcesByType[resource.type] == nil {
             resourcesByType[resource.type] = [resource]
             allTypes.append(resource.type)
-            allTypes.sort(by: { $0.localizedCompare($1) == .orderedAscending })
+            allTypes.sort(by: { $0.code.localizedCompare($1.code) == .orderedAscending })
         } else {
             resourcesByType[resource.type]!.insert(resource, using: sortDescriptors)
         }
     }
     
-    private func removeFromTypedList(_ resource: Resource, type: String? = nil) {
+    private func removeFromTypedList(_ resource: Resource, type: ResourceType? = nil) {
         let type = type ?? resource.type
         resourcesByType[type]?.removeFirst(resource)
         if resourcesByType[type]?.count == 0 {
@@ -118,7 +118,7 @@ class ResourceDirectory {
         else {
             return
         }
-        let oldType = notification.userInfo!["oldValue"] as! String
+        let oldType = notification.userInfo!["oldValue"] as! ResourceType
         self.removeFromTypedList(resource, type: oldType)
         self.addToTypedList(resource)
         filtered.removeValue(forKey: oldType)
@@ -152,11 +152,11 @@ class ResourceDirectory {
         return Array(resourcesByType.values.joined())
     }
 
-    func resources(ofType type: String) -> [Resource] {
+    func resources(ofType type: ResourceType) -> [Resource] {
         return resourcesByType[type] ?? []
     }
     
-    func findResource(type: String, id: Int) -> Resource? {
+    func findResource(type: ResourceType, id: Int) -> Resource? {
         if let resources = resourcesByType[type] {
             for resource in resources where resource.id == id {
                 return resource
@@ -165,7 +165,7 @@ class ResourceDirectory {
         return nil
     }
     
-    func findResource(type: String, name: String) -> Resource? {
+    func findResource(type: ResourceType, name: String) -> Resource? {
         if let resources = resourcesByType[type] {
             for resource in resources where resource.name == name {
                 return resource
@@ -175,7 +175,7 @@ class ResourceDirectory {
     }
 
     /// Return an unused resource ID for a new resource of specified type.
-    func uniqueID(for type: String, starting: Int = 128) -> Int {
+    func uniqueID(for type: ResourceType, starting: Int = 128) -> Int {
         // Get a sorted list of used ids
         let used = self.resources(ofType: type).map({ $0.id }).sorted()
         // Find the index of the starting id

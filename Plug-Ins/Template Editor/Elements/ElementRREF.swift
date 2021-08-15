@@ -1,4 +1,5 @@
 import Cocoa
+import RFSupport
 
 // RREF is a static reference to another resource based on this one's id
 // The parameters are determined from the label, in the format "Display Label='TNAM' offset Button Label"
@@ -48,11 +49,6 @@ class ElementRREF: Element {
     }
     
     @IBAction func openResource(_ sender: Any) {
-        let manager = self.parentList.controller.manager
-        if let resource = manager.findResource(ofType: resType, id: id, currentDocumentOnly: false) {
-            manager.open(resource: resource, using: nil, template: nil)
-        } else {
-            manager.createResource(ofType: resType, id: id, name: "")
-        }
+        self.parentList.controller.openOrCreateResource(typeCode: resType, id: id)
     }
 }

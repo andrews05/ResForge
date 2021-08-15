@@ -68,7 +68,7 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
         validStructure = resourceStructure.readTemplate(data: template.data)
         if validStructure && !resource.data.isEmpty {
             do {
-                let data = try filter?.filter(data: resource.data, for: resource.type) ?? resource.data
+                let data = try filter?.filter(data: resource.data, for: resource.typeCode) ?? resource.data
                 let reader = BinaryDataReader(data)
                 try resourceStructure.readData(from: reader)
                 if reader.remainingBytes > 0 {
@@ -88,18 +88,29 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
         return true
     }
     
+    // MARK: - Helper functions
+    
     // This function is used by RSID/CASR to get resources for the combo box, caching them by type to improve performance.
     // Note that the cache is on the window controller instance rather than static, to ensure the resources aren't retained indefinitely.
     func resources(ofType type: String) -> [Resource] {
         if resourceCache[type] == nil {
             // Find resources in all documents and sort by name
-            var resources = manager.allResources(ofType: type, currentDocumentOnly: false).filter {
+            var resources = manager.allResources(ofType: ResourceType(type, resource.typeAttributes), currentDocumentOnly: false).filter {
                 !$0.name.isEmpty
             }
             resources.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
             resourceCache[type] = resources
         }
         return resourceCache[type]!
+    }
+    
+    func openOrCreateResource(typeCode: String, id: Int) {
+        let type = ResourceType(typeCode, resource.typeAttributes)
+        if let resource = manager.findResource(type: type, id: id, currentDocumentOnly: false) {
+            manager.open(resource: resource, using: nil, template: nil)
+        } else {
+            manager.createResource(type: type, id: id, name: "")
+        }
     }
     
     // MARK: - OutlineView functions
@@ -168,7 +179,7 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
         if self.window?.makeFirstResponder(dataList) != false {
             do {
                 let data = resourceStructure.getResourceData()
-                resource.data = try filter?.unfilter(data: data, for: resource.type) ?? data
+                resource.data = try filter?.unfilter(data: data, for: resource.typeCode) ?? data
                 self.setDocumentEdited(false)
             } catch let error {
                 NSApp.presentError(error)

@@ -143,8 +143,16 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     }
     
     @IBAction func applyAttributes(_ sender: NSButton) {
-        if self.window?.makeFirstResponder(nil) != false {
-            (objectController.content as? Resource)?.typeAttributes = rTypeAtts.attributes
+        // Make sure the type/id fields are committed before saving attributes
+        if self.window?.makeFirstResponder(nil) != false, let resource = objectController.content as? Resource {
+            do {
+                let attributes = rTypeAtts.attributes
+                try resource.checkConflict(typeAttributes: attributes)
+                resource.typeAttributes = attributes
+                rTypeAtts.attributes = attributes
+            } catch let error {
+                self.window?.presentError(error)
+            }
         }
     }
 }

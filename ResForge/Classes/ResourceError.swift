@@ -3,15 +3,21 @@ import RFSupport
 
 // Extend the Resource class to validate type and id by checking for conflicts
 extension Resource {
-    @objc func validateType(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
-        try self.checkConflict(type: ioValue.pointee as! String, id: id)
+    @objc func validateTypeCode(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
+        try self.checkConflict(typeCode: ioValue.pointee as? String)
+    }
+    
+    @objc func validateTypeAttributes(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
+        try self.checkConflict(typeAttributes: ioValue.pointee as? [String: String])
     }
     
     @objc func validateId(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
-        try self.checkConflict(type: type, id: ioValue.pointee as! Int)
+        try self.checkConflict(id: ioValue.pointee as? Int)
     }
     
-    private func checkConflict(type: String, id: Int) throws {
+    func checkConflict(typeCode: String? = nil, typeAttributes: [String: String]? = nil, id: Int? = nil) throws {
+        let type = ResourceType(typeCode ?? self.typeCode, typeAttributes ?? self.typeAttributes)
+        let id = id ?? self.id
         if (type != self.type || id != self.id) && (document as? ResourceDocument)?.directory.findResource(type: type, id: id) != nil {
             throw ResourceError.conflict(type, id)
         }
@@ -19,11 +25,11 @@ extension Resource {
 }
 
 enum ResourceError: LocalizedError {
-    case conflict(String, Int)
+    case conflict(ResourceType, Int)
     var errorDescription: String? {
         switch self {
         case let .conflict(type, id):
-            return String(format: NSLocalizedString("A resource of type ‘%@’ with ID %ld already exists.", comment: ""), type, id)
+            return String(format: NSLocalizedString("A resource of type ‘%@’ with ID %ld already exists.", comment: ""), type.code, id)
         }
     }
     var recoverySuggestion: String? {

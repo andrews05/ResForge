@@ -28,7 +28,7 @@
             // create the resource & add it to the array
             NSString    *name = [NSString stringWithUTF8String:resource->name().c_str()];
             NSData      *data = [NSData dataWithBytes:resource->data()->get()->data()+resource->data()->start() length:resource->data()->size()];
-            Resource *r = [[Resource alloc] initWithType:type id:resource->id() name:name data:data typeAttributes:typeAtts];
+            Resource *r = [[Resource alloc] initWithTypeCode:type typeAttributes:typeAtts id:resource->id() name:name data:data];
             [resources addObject:r];
         }
     }
@@ -40,7 +40,7 @@
     graphite::rsrc::file gFile = graphite::rsrc::file();
     for (Resource *resource in resources) {
         std::string name(resource.name.UTF8String);
-        std::string type(resource.type.UTF8String);
+        std::string type(resource.typeCode.UTF8String);
         char *first = (char *)resource.data.bytes; // Bytes pointer should only be accessed once
         std::vector<char> buffer(first, first+resource.data.length);
         graphite::data::data data(std::make_shared<std::vector<char>>(buffer), resource.data.length);

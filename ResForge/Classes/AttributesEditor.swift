@@ -7,7 +7,6 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
     @objc dynamic var rows: [TypeAttribute] = []
     var attributes: [String: String] {
         get {
-            applyButton?.isHidden = true
             return rows.reduce(into: [:]) {
                 if !$1.key.isEmpty && !$1.value.isEmpty {
                     $0[$1.key] = $1.value

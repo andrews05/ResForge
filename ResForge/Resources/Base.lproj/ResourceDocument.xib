@@ -397,47 +397,6 @@
                 <outlet property="document" destination="-2" id="oZ5-YA-qgn"/>
             </connections>
         </customObject>
-        <tableColumn identifier="type" width="60" minWidth="60" maxWidth="60" id="148">
-            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Type">
-                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
-            </tableHeaderCell>
-            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="159">
-                <font key="font" metaFont="system"/>
-                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            </textFieldCell>
-            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-            <prototypeCellViews>
-                <tableCellView id="k4V-Fn-Wun">
-                    <rect key="frame" x="211" y="1" width="60" height="0.0"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <subviews>
-                        <textField identifier="type" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="psp-Kr-AgB">
-                            <rect key="frame" x="0.0" y="-17" width="60" height="17"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" id="EYt-ng-gRb">
-                                <customFormatter key="formatter" id="0F4-tn-FwS" customClass="MacRomanFormatter" customModule="RFSupport">
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
-                                            <integer key="value" value="4"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="boolean" keyPath="exactLengthRequired" value="YES"/>
-                                        <userDefinedRuntimeAttribute type="boolean" keyPath="valueRequired" value="YES"/>
-                                    </userDefinedRuntimeAttributes>
-                                </customFormatter>
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                    </subviews>
-                    <connections>
-                        <outlet property="textField" destination="psp-Kr-AgB" id="65E-ZR-yvJ"/>
-                    </connections>
-                </tableCellView>
-            </prototypeCellViews>
-        </tableColumn>
         <collectionView selectable="YES" allowsMultipleSelection="YES" id="XSg-qL-KmL" customClass="ResourceCollection" customModule="ResForge" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="250" height="158"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>

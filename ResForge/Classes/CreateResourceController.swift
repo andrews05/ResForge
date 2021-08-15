@@ -9,6 +9,9 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var attributesHolder: NSView!
     @IBOutlet var attributesEditor: AttributesEditor!
     private unowned var rDocument: ResourceDocument
+    private var currentType: ResourceType {
+        ResourceType(typeView.stringValue, attributesEditor.attributes)
+    }
     
     override var windowNibName: NSNib.Name? {
         "CreateResource"
@@ -23,10 +26,10 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func show(type: String? = nil, id: Int? = nil, name: String? = nil, attributes: [String: String] = [:]) {
+    func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil) {
         _ = self.window
         // Add all types currently in the document
-        var suggestions = rDocument.directory.allTypes
+        var suggestions = rDocument.directory.allTypes.map { $0.code }
         // Common types?
         for value in ["PICT", "snd ", "STR ", "STR#", "TMPL", "vers"] {
             if !suggestions.contains(value) {
@@ -36,17 +39,19 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         typeView.removeAllItems()
         typeView.addItems(withObjectValues: suggestions)
         
-        typeView.objectValue = type
+        var type = type
+        typeView.objectValue = type?.code
         idView.objectValue = id
         nameView.objectValue = name
         if rDocument.format == .extended {
             attributesHolder.isHidden = false
-            attributesEditor.attributes = attributes
         } else {
             attributesHolder.isHidden = true
+            type?.attributes = [:]
         }
         // The last non-nil value provided will receive focus
         if let type = type {
+            attributesEditor.attributes = type.attributes
             if let id = id {
                 idView.integerValue = rDocument.directory.uniqueID(for: type, starting: id)
                 self.window?.makeFirstResponder(name == nil ? idView : nameView)
@@ -67,7 +72,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         if obj.object as AnyObject === typeView {
             // If valid type, get a unique id
             if typeView.objectValue != nil {
-                idView.integerValue = rDocument.directory.uniqueID(for: typeView.stringValue)
+                idView.integerValue = rDocument.directory.uniqueID(for: self.currentType)
                 createButton.isEnabled = true
             }
         } else {
@@ -75,7 +80,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             // Accessing the control value will force validation of the field, causing problems when trying to enter a negative id.
             // To workaround this, check the field editor for a negative symbol before checking the value.
             if typeView.objectValue != nil && (obj.userInfo!["NSFieldEditor"] as! NSText).string != "-" && idView.objectValue != nil {
-                let resource = rDocument.directory.findResource(type: typeView.stringValue, id: idView.integerValue)
+                let resource = rDocument.directory.findResource(type: self.currentType, id: idView.integerValue)
                 createButton.isEnabled = resource == nil
             }
         }
@@ -83,7 +88,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     
     @IBAction func hide(_ sender: AnyObject) {
         if sender === createButton {
-            let resource = Resource(type: typeView.stringValue, id: idView.integerValue, name: nameView.stringValue, typeAttributes: attributesEditor.attributes)
+            let resource = Resource(type: self.currentType, id: idView.integerValue, name: nameView.stringValue)
             rDocument.dataSource.reload {
                 rDocument.directory.add(resource)
                 return [resource]

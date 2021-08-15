@@ -59,7 +59,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         heightConstraint = NSLayoutConstraint(item: imageView!, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         scrollView.addConstraints([widthConstraint,heightConstraint,l,r,t,b])
         imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
-        imageView.isEditable = ["PICT", "cicn", "ppat", "PNG "].contains(resource.type)
+        imageView.isEditable = ["PICT", "cicn", "ppat", "PNG "].contains(resource.typeCode)
     
         self.loadImage()
     }
@@ -72,7 +72,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             // Colour icons use the mask from the black & white version of the same icon - see if we can load it.
             // Note this is only done within the viewer - preview and export should not access other resources.
             let maskType: String?
-            switch resource.type {
+            switch resource.typeCode {
             case "icl4", "icl8":
                 maskType = "ICN#"
             case "icm4", "icm8":
@@ -83,7 +83,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
                 maskType = nil
             }
             if let maskType = maskType,
-               let bw = manager.findResource(ofType: maskType, id: resource.id, currentDocumentOnly: true),
+               let bw = manager.findResource(type: ResourceType(maskType, resource.typeAttributes), id: resource.id, currentDocumentOnly: true),
                let bwRep = Self.imageRep(for: bw) {
                 image.lockFocus()
                 NSGraphicsContext.current?.cgContext.interpolationQuality = .none
@@ -134,7 +134,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     
     @IBAction func changedImage(_ sender: Any) {
         let rep: NSBitmapImageRep
-        switch resource.type {
+        switch resource.typeCode {
         case "PICT":
             rep = self.bitmapRep(flatten: true)
         case "cicn":
@@ -154,7 +154,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             return
         }
         let rep = self.bitmapRep()
-        switch resource.type {
+        switch resource.typeCode {
         case "PICT":
             resource.data = QuickDraw.pict(from: rep)
         case "cicn":
@@ -207,7 +207,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     
     static func export(_ resource: Resource, to url: URL) throws -> Bool {
         let data: Data
-        switch resource.type {
+        switch resource.typeCode {
         case "PNG ", "icns":
             data = resource.data
         default:
@@ -242,7 +242,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         guard !data.isEmpty else {
             return nil
         }
-        switch resource.type {
+        switch resource.typeCode {
         case "PICT":
             // On macOS 10.15 and later we have to use Graphite to decode PICTs
             if #available(macOS 10.15, *) {

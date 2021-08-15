@@ -321,7 +321,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.type" id="Epo-f4-OGX">
+                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.typeCode" id="0Ti-bH-0oZ">
                                     <dictionary key="options">
                                         <string key="NSNoSelectionPlaceholder">Required</string>
                                         <string key="NSNotApplicablePlaceholder">Required</string>
@@ -428,7 +428,7 @@
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="applyAttributes:" target="-2" id="xuH-fF-O80"/>
+                                            <action selector="applyAttributes:" target="-2" id="zpo-JQ-UVx"/>
                                         </connections>
                                     </button>
                                 </subviews>

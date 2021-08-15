@@ -4,7 +4,7 @@ class KestrelTools: PlaceholderProvider {
     static var supportedTypes = ["dësc"]
     
     static func placeholderName(for resource: Resource) -> String? {
-        switch resource.type {
+        switch resource.typeCode {
         case "dësc":
             let end = min(100, resource.data.firstIndex(of: 0) ?? 0)
             if end == 0 {
