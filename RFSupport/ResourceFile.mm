@@ -45,6 +45,11 @@
         std::vector<char> buffer(first, first+resource.data.length);
         graphite::data::data data(std::make_shared<std::vector<char>>(buffer), resource.data.length);
         std::map<std::string, std::string> attributes;
+        if (format != kResourceFileFormatExtended && resource.typeAttributes.count != 0) {
+            NSString *message = NSLocalizedString(@"Type attributes are not compatible with the requested file format.", "");
+            *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:@{NSLocalizedFailureReasonErrorKey:message}];
+            return NO;
+        }
         for (NSString *att in resource.typeAttributes) {
             auto key = std::string(att.UTF8String);
             auto val = std::string(resource.typeAttributes[att].UTF8String);

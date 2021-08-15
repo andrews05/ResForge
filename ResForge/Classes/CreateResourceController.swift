@@ -25,7 +25,6 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     
     func show(type: String? = nil, id: Int? = nil, name: String? = nil, attributes: [String: String] = [:]) {
         _ = self.window
-        attributesHolder.isHidden = rDocument.format != .extended
         // Add all types currently in the document
         var suggestions = rDocument.directory.allTypes
         // Common types?
@@ -40,7 +39,12 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         typeView.objectValue = type
         idView.objectValue = id
         nameView.objectValue = name
-        attributesEditor.attributes = attributes
+        if rDocument.format == .extended {
+            attributesHolder.isHidden = false
+            attributesEditor.attributes = attributes
+        } else {
+            attributesHolder.isHidden = true
+        }
         // The last non-nil value provided will receive focus
         if let type = type {
             if let id = id {

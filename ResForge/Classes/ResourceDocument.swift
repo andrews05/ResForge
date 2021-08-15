@@ -588,6 +588,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             var alert: NSAlert!
             var modalResponse: NSApplication.ModalResponse?
             for resource in resources {
+                // Clear type attributes if not extended format
+                if format != .extended {
+                    resource.typeAttributes = [:]
+                }
                 if let conflicted = directory.findResource(type: resource.type, id: resource.id) {
                     // Resource slot is occupied, ask user what to do
                     if modalResponse == nil {
