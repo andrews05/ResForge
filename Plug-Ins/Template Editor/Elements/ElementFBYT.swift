@@ -12,10 +12,10 @@ class ElementFBYT: Element {
             length = 2
         case "FLNG":
             length = 4
-        case "FLLG":
+        case "FQWD":
             length = 8
         default:
-            length = Int(type.suffix(3), radix: 16)!
+            length = Element.variableTypeValue(type)
         }
         super.init(type: type, label: label, tooltip: tooltip)
         self.visible = false

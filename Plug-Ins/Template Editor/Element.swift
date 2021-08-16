@@ -79,6 +79,11 @@ class Element: ValueTransformer, NSTextFieldDelegate {
         return topLevel && self.parentList.peek(1) == nil
     }
     
+    // Get the value of the hex suffix of a variable Xnnn type
+    static func variableTypeValue(_ type: String) -> Int {
+        return Int(type.suffix(3), radix: 16)!
+    }
+    
     // MARK: - Methods Subclasses Should Override
     
     /// Perform any configuration that may depend on other elements.

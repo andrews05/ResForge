@@ -13,7 +13,7 @@ class ElementHEXD: Element {
             }
         } else {
             // Hnnn
-            length = Int(self.type.suffix(3), radix: 16)!
+            length = Element.variableTypeValue(type)
             data = Data(count: length)
             self.setRowHeight()
         }

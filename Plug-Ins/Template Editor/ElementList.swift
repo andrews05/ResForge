@@ -215,7 +215,7 @@ class ElementList {
         if elType == nil && type.range(of: "[A-Z](?!000)[0-9][0-9A-F]{2}", options: .regularExpression) != nil {
             if type.first == "R" {
                 // Rnnn psuedo-element repeats the following element n times
-                let count = Int(type.suffix(3), radix: 16)!
+                let count = Element.variableTypeValue(type)
                 let offset = Int(label.split(separator: "=").last!) ?? 1
                 guard var el = try self.readElement(from: reader) else {
                     throw TemplateError.corrupt
@@ -248,15 +248,15 @@ class ElementList {
         "DBYT": ElementDBYT<Int8>.self,     // signed ints
         "DWRD": ElementDBYT<Int16>.self,
         "DLNG": ElementDBYT<Int32>.self,
-//        "DLLG": ElementDBYT<Int64>.self,    // (ResForge)
+        "DQWD": ElementDBYT<Int64>.self,    // (ResForge)
         "UBYT": ElementDBYT<UInt8>.self,    // unsigned ints
         "UWRD": ElementDBYT<UInt16>.self,
         "ULNG": ElementDBYT<UInt32>.self,
-//        "ULLG": ElementDBYT<UInt64>.self,   // (ResForge)
+        "UQWD": ElementDBYT<UInt64>.self,   // (ResForge)
         "HBYT": ElementHBYT<UInt8>.self,    // hex byte/word/long
         "HWRD": ElementHBYT<UInt16>.self,
         "HLNG": ElementHBYT<UInt32>.self,
-//        "HLLG": ElementHBYT<UInt64>.self,   // (ResForge)
+        "HQWD": ElementHBYT<UInt64>.self,   // (ResForge)
 
         // multiple fields
         "RECT": ElementRECT.self,           // QuickDraw rect
@@ -270,7 +270,7 @@ class ElementList {
         "FBYT": ElementFBYT.self,           // filler ints
         "FWRD": ElementFBYT.self,
         "FLNG": ElementFBYT.self,
-        "FLLG": ElementFBYT.self,
+        "FQWD": ElementFBYT.self,           // (ResForge)
         "F"   : ElementFBYT.self,           // Fnnn
 
         // fractions
@@ -278,19 +278,19 @@ class ElementList {
         "DOUB": ElementDOUB.self,           // double precision float
 
         // strings
-        "PSTR": ElementPSTR<UInt8>.self,
+        "PSTR": ElementPSTR<UInt8>.self,    // Pascal string
         "BSTR": ElementPSTR<UInt8>.self,
         "WSTR": ElementPSTR<UInt16>.self,
         "LSTR": ElementPSTR<UInt32>.self,
         "OSTR": ElementPSTR<UInt8>.self,
         "ESTR": ElementPSTR<UInt8>.self,
-        "CSTR": ElementPSTR<UInt32>.self,
-        "OCST": ElementPSTR<UInt32>.self,
-        "ECST": ElementPSTR<UInt32>.self,
-        "TXTS": ElementPSTR<UInt32>.self,
         "P"   : ElementPSTR<UInt8>.self,    // Pnnn
-        "C"   : ElementPSTR<UInt32>.self,   // Cnnn
-        "T"   : ElementPSTR<UInt32>.self,   // Tnnn
+        "CSTR": ElementCSTR.self,           // C string
+        "OCST": ElementCSTR.self,
+        "ECST": ElementCSTR.self,
+        "C"   : ElementCSTR.self,           // Cnnn
+        "TXTS": ElementTXTS.self,           // sized text dump
+        "T"   : ElementTXTS.self,           // Tnnn
         "CHAR": ElementCHAR.self,
         "TNAM": ElementTNAM.self,
 
@@ -303,14 +303,18 @@ class ElementList {
         "BB"  : ElementBBIT<UInt8>.self,    // BBnn bit field
         "BF"  : ElementBBIT<UInt8>.self,    // BFnn fill bits (ResForge)
         "WBIT": ElementBBIT<UInt16>.self,
-        "WB"  : ElementBBIT<UInt16>.self,   // WBnn
-        "WF"  : ElementBBIT<UInt16>.self,   // WFnn (ResForge)
+        "WB"  : ElementBBIT<UInt16>.self,
+        "WF"  : ElementBBIT<UInt16>.self,
         "LBIT": ElementBBIT<UInt32>.self,
-        "LB"  : ElementBBIT<UInt32>.self,   // LBnn
-        "LF"  : ElementBBIT<UInt32>.self,   // LFnn (ResForge)
+        "LB"  : ElementBBIT<UInt32>.self,
+        "LF"  : ElementBBIT<UInt32>.self,
+        "QBIT": ElementBBIT<UInt64>.self,   // (ResForge)
+        "QB"  : ElementBBIT<UInt64>.self,
+        "QF"  : ElementBBIT<UInt64>.self,
         "BORV": ElementBORV<UInt8>.self,    // OR-value (Rezilla)
         "WORV": ElementBORV<UInt16>.self,
         "LORV": ElementBORV<UInt32>.self,
+        "QORV": ElementBORV<UInt64>.self,   // (ResForge)
 
         // hex dumps
         "HEXD": ElementHEXD.self,
@@ -347,15 +351,15 @@ class ElementList {
         "KBYT": ElementKBYT<Int8>.self,     // signed keys
         "KWRD": ElementKBYT<Int16>.self,
         "KLNG": ElementKBYT<Int32>.self,
-//        "KLLG": ElementKBYT<Int64>.self,    // (ResForge)
+        "KQWD": ElementKBYT<Int64>.self,    // (ResForge)
         "KUBT": ElementKBYT<UInt8>.self,    // unsigned keys
         "KUWD": ElementKBYT<UInt16>.self,
         "KULG": ElementKBYT<UInt32>.self,
-//        "KULL": ElementKBYT<UInt64>.self,   // (ResForge)
+        "KUQD": ElementKBYT<UInt64>.self,   // (ResForge)
         "KHBT": ElementKHBT<UInt8>.self,    // hex keys
         "KHWD": ElementKHBT<UInt16>.self,
         "KHLG": ElementKHBT<UInt32>.self,
-//        "KHLL": ElementKHBT<UInt64>.self,   // (ResForge)
+        "KHQD": ElementKHBT<UInt64>.self,   // (ResForge)
         "KCHR": ElementKCHR.self,           // string keys
         "KTYP": ElementKTYP.self,
         "KRID": ElementKRID.self,           // key on ID of the resource
