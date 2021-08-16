@@ -42,6 +42,19 @@ extension ResourceFileFormat {
             return ""
         }
     }
+    var minID: Int {
+        self == .extended ? Int(Int32.min) : Int(Int16.min)
+    }
+    var maxID: Int {
+        self == .extended ? Int(Int32.max) : Int(Int16.max)
+    }
+    var idFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.allowsFloats = false
+        formatter.minimum = minID as NSNumber
+        formatter.maximum = maxID as NSNumber
+        return formatter
+    }
 }
 
 class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate {
@@ -51,7 +64,14 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     private(set) lazy var editorManager = EditorManager(self)
     private(set) lazy var createController = CreateResourceController(self)
     private var fork: FileFork!
-    private(set) var format: ResourceFileFormat = .classic
+    private(set) var format: ResourceFileFormat = .classic {
+        didSet {
+            idFormatter.minimum = format.minID as NSNumber
+            idFormatter.maximum = format.maxID as NSNumber
+        }
+    }
+    lazy var idFormatter: NumberFormatter = format.idFormatter
+    
     @objc dynamic var hfsType: OSType = 0 {
         didSet {
             if hfsType != oldValue {

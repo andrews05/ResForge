@@ -22,6 +22,11 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         super.init(window: nil)
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        idView.formatter = rDocument.idFormatter
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

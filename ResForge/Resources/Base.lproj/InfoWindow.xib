@@ -335,13 +335,6 @@
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wc5-m9-c69">
                             <rect key="frame" x="84" y="48" width="76" height="21"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="KqN-ja-2ZS">
-                                <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="BLG-5h-lCM">
-                                    <real key="minimum" value="-32768"/>
-                                    <real key="maximum" value="32767"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="nil" keyPath="nilSymbol"/>
-                                    </userDefinedRuntimeAttributes>
-                                </numberFormatter>
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

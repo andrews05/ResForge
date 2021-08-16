@@ -184,8 +184,9 @@ class ResourceDirectory {
         }
         // Keep incrementing the id until we find an unused one
         var id = starting
+        let max = document.format.maxID
         while i != used.endIndex && id == used[i] {
-            if id == Int16.max {
+            if id == max {
                 id = min(used[0], 128)
                 i = 0
             } else {
