@@ -1,6 +1,6 @@
 import RFSupport
 
-// Implements FBYT, FWRD, FLNG, FLLG, Fnnn
+// Implements FBYT, FWRD, FLNG, Fnnn
 class ElementFBYT: Element {
     let length: Int
     
@@ -12,8 +12,6 @@ class ElementFBYT: Element {
             length = 2
         case "FLNG":
             length = 4
-        case "FQWD":
-            length = 8
         default:
             length = Element.variableTypeValue(type)
         }

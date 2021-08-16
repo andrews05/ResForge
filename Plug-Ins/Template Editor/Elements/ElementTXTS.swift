@@ -19,11 +19,8 @@ class ElementTXTS: ElementCSTR {
     override func readData(from reader: BinaryDataReader) throws {
         let length = min(reader.remainingBytes, maxLength)
         
-        if length > 0 {
-            value = try reader.readString(length: length, encoding: .macOSRoman)
-        }
-        
-        try self.readPadding(from: reader, length: length)
+        value = try reader.readString(length: length, encoding: .macOSRoman)
+        try reader.advance(padding.length(length))
     }
     
     override func writeData(to writer: BinaryDataWriter) {
@@ -32,7 +29,6 @@ class ElementTXTS: ElementCSTR {
         }
         
         try? writer.writeString(value, encoding: .macOSRoman)
-        
-        self.writePadding(to: writer, length: value.count)
+        writer.advance(padding.length(value.count))
     }
 }

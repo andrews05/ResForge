@@ -6,6 +6,19 @@ enum StringPadding {
     case odd
     case even
     case fixed(_ count: Int)
+    
+    func length(_ currentLength: Int) -> Int {
+        switch self {
+        case .none:
+            return 0
+        case .odd:
+            return (currentLength+1) % 2
+        case .even:
+            return currentLength % 2
+        case let .fixed(count):
+            return count - currentLength
+        }
+    }
 }
 
 // Implements CSTR, OCST, ECST, Cnnn
@@ -21,7 +34,7 @@ class ElementCSTR: CaseableElement {
     }
     
     func configurePadding() throws {
-        switch self.type {
+        switch type {
         case "CSTR":
             padding = .none
         case "OCST":
@@ -84,13 +97,9 @@ class ElementCSTR: CaseableElement {
         let end = reader.data[reader.position...].firstIndex(of: 0) ?? reader.data.endIndex
         let length = min(end - reader.position, maxLength)
         
-        if length > 0 {
-            value = try reader.readString(length: length, encoding: .macOSRoman)
-        }
-        
+        value = try reader.readString(length: length, encoding: .macOSRoman)
         // Advance over null-terminator and any additional padding
-        try reader.advance(1)
-        try self.readPadding(from: reader, length: length + 1)
+        try reader.advance(1 + padding.length(length + 1))
     }
     
     override func writeData(to writer: BinaryDataWriter) {
@@ -100,35 +109,7 @@ class ElementCSTR: CaseableElement {
         
         // Error shouldn't happen because the formatter won't allow non-MacRoman characters
         try? writer.writeString(value, encoding: .macOSRoman)
-        
-        writer.advance(1)
-        self.writePadding(to: writer, length: value.count + 1)
-    }
-    
-    func readPadding(from reader: BinaryDataReader, length: Int) throws {
-        switch padding {
-        case .odd:
-            try reader.advance((length+1) % 2)
-        case .even:
-            try reader.advance(length % 2)
-        case let .fixed(count):
-            try reader.advance(count - length)
-        default:
-            break
-        }
-    }
-    
-    func writePadding(to writer: BinaryDataWriter, length: Int) {
-        switch padding {
-        case .odd:
-            writer.advance((length+1) % 2)
-        case .even:
-            writer.advance(length % 2)
-        case let .fixed(count):
-            writer.advance(count - length)
-        default:
-            break
-        }
+        writer.advance(1 + padding.length(value.count + 1))
     }
     
     override var formatter: Formatter? {

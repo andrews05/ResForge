@@ -36,6 +36,8 @@
 		4945DCB9253248DA00856385 /* ElementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DCB8253248DA00856385 /* ElementList.swift */; };
 		494BE3CE26CA506700A68264 /* ElementPSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494BE3CD26CA506700A68264 /* ElementPSTR.swift */; };
 		494BE3D026CA587300A68264 /* ElementTXTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494BE3CF26CA587300A68264 /* ElementTXTS.swift */; };
+		494BE3D526CB11F200A68264 /* ElementUSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494BE3D326CB11D300A68264 /* ElementUSTR.swift */; };
+		494BE3D726CB19FD00A68264 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */; };
 		494D05FD253FAB5D00F5A789 /* ElementHBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D05FC253FAB5D00F5A789 /* ElementHBYT.swift */; };
 		494D060B2540C43F00F5A789 /* ElementPACK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D060A2540C43F00F5A789 /* ElementPACK.swift */; };
 		494D06132540CB3600F5A789 /* ElementBORV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D06122540CB3600F5A789 /* ElementBORV.swift */; };
@@ -119,7 +121,6 @@
 		49C3AC72253E6C7C0020037B /* ElementRSID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3AC71253E6C7C0020037B /* ElementRSID.swift */; };
 		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
-		49C5622B24D0D8D20072D659 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */; };
 		49C8D0F825C75610001266FC /* ElementBNDN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C8D0F725C75610001266FC /* ElementBNDN.swift */; };
 		49C8D10025C795BA001266FC /* ElementBSKP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C8D0FF25C795BA001266FC /* ElementBSKP.swift */; };
 		49CF9AE025D1D80B009A217C /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF9ADF25D1D80B009A217C /* DataView.swift */; };
@@ -357,6 +358,8 @@
 		4945DD062532DAE500856385 /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		494BE3CD26CA506700A68264 /* ElementPSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPSTR.swift; sourceTree = "<group>"; };
 		494BE3CF26CA587300A68264 /* ElementTXTS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTXTS.swift; sourceTree = "<group>"; };
+		494BE3D326CB11D300A68264 /* ElementUSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUSTR.swift; sourceTree = "<group>"; };
+		494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; };
 		494D05FC253FAB5D00F5A789 /* ElementHBYT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHBYT.swift; sourceTree = "<group>"; };
 		494D060A2540C43F00F5A789 /* ElementPACK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPACK.swift; sourceTree = "<group>"; };
 		494D06122540CB3600F5A789 /* ElementBORV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBORV.swift; sourceTree = "<group>"; };
@@ -467,7 +470,6 @@
 		49B9E66B253FF1AB00A266DE /* ElementCASR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCASR.swift; sourceTree = "<group>"; };
 		49B9E6732540042900A266DE /* RangeableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeableElement.swift; sourceTree = "<group>"; };
 		49C3AC71253E6C7C0020037B /* ElementRSID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRSID.swift; sourceTree = "<group>"; };
-		49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; };
 		49C8D0F625C64BA7001266FC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		49C8D0F725C75610001266FC /* ElementBNDN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBNDN.swift; sourceTree = "<group>"; };
 		49C8D0FF25C795BA001266FC /* ElementBSKP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBSKP.swift; sourceTree = "<group>"; };
@@ -640,6 +642,7 @@
 				4935CD50253BD1290044BC45 /* ElementCSTR.swift */,
 				494BE3CD26CA506700A68264 /* ElementPSTR.swift */,
 				494BE3CF26CA587300A68264 /* ElementTXTS.swift */,
+				494BE3D326CB11D300A68264 /* ElementUSTR.swift */,
 				494D061A2540CEC200F5A789 /* ElementBOOL.swift */,
 				494D062E2540FC0A00F5A789 /* ElementBFLG.swift */,
 				49D1854B2541007400EA380C /* ElementBBIT.swift */,
@@ -860,7 +863,7 @@
 				49640F5C25F36A77009FEC9B /* AbstractEditor.swift */,
 				49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */,
 				49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */,
-				49C5622A24D0D8D20072D659 /* MacRomanFormatter.swift */,
+				494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */,
 				496A52BD24F9B047006A12DF /* CustomImageView.swift */,
 				499216EF24CCD2250054A390 /* ResourceFile.h */,
 				499216F024CCD2250054A390 /* ResourceFile.mm */,
@@ -1358,9 +1361,9 @@
 				49964DE624D0EB5100BAB902 /* pict.cpp in Sources */,
 				49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */,
 				49AACD8824CE93520081DD4A /* ResForgePlugin.swift in Sources */,
-				49C5622B24D0D8D20072D659 /* MacRomanFormatter.swift in Sources */,
 				49964E1324D1034400BAB902 /* Resource.swift in Sources */,
 				49640F5D25F36A77009FEC9B /* AbstractEditor.swift in Sources */,
+				494BE3D726CB19FD00A68264 /* MacRomanFormatter.swift in Sources */,
 				491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */,
 				4945DC642531826400856385 /* macroman.cpp in Sources */,
 				496A52BE24F9B047006A12DF /* CustomImageView.swift in Sources */,
@@ -1490,6 +1493,7 @@
 				4951AB5A25341CB4009A8285 /* Element.swift in Sources */,
 				49D185682541309900EA380C /* ElementAWRD.swift in Sources */,
 				49D185A6254278EC00EA380C /* ElementHEXD.swift in Sources */,
+				494BE3D526CB11F200A68264 /* ElementUSTR.swift in Sources */,
 				49A432BA25436390000B1109 /* ElementDOUB.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

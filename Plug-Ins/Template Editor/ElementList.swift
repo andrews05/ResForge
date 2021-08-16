@@ -270,7 +270,6 @@ class ElementList {
         "FBYT": ElementFBYT.self,           // filler ints
         "FWRD": ElementFBYT.self,
         "FLNG": ElementFBYT.self,
-        "FQWD": ElementFBYT.self,           // (ResForge)
         "F"   : ElementFBYT.self,           // Fnnn
 
         // fractions
@@ -289,6 +288,8 @@ class ElementList {
         "OCST": ElementCSTR.self,
         "ECST": ElementCSTR.self,
         "C"   : ElementCSTR.self,           // Cnnn
+        "USTR": ElementUSTR.self,           // UTF-8 string (ResForge)
+        "U"   : ElementUSTR.self,           // Unnn (ResForge)
         "TXTS": ElementTXTS.self,           // sized text dump
         "T"   : ElementTXTS.self,           // Tnnn
         "CHAR": ElementCHAR.self,

@@ -3,7 +3,8 @@ import RFSupport
 // Implements PSTR, BSTR, WSTR, LSTR, OSTR, ESTR, Pnnn
 class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: ElementCSTR {
     override func configurePadding() throws {
-        switch self.type {
+        maxLength = Int(T.max)
+        switch type {
         case "PSTR", "BSTR", "WSTR", "LSTR":
             padding = .none
         case "OSTR":
@@ -23,11 +24,8 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: ElementCSTR {
             throw TemplateError.dataMismatch(self)
         }
         
-        if length > 0 {
-            value = try reader.readString(length: length, encoding: .macOSRoman)
-        }
-        
-        try self.readPadding(from: reader, length: length + T.bitWidth/8)
+        value = try reader.readString(length: length, encoding: .macOSRoman)
+        try reader.advance(padding.length(length + T.bitWidth/8))
     }
     
     override func writeData(to writer: BinaryDataWriter) {
@@ -35,10 +33,8 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: ElementCSTR {
             value = String(value.prefix(maxLength))
         }
         
-        let length = value.count
-        writer.write(T(length))
+        writer.write(T(value.count))
         try? writer.writeString(value, encoding: .macOSRoman)
-        
-        self.writePadding(to: writer, length: length + T.bitWidth/8)
+        writer.advance(padding.length(value.count + T.bitWidth/8))
     }
 }

@@ -1,8 +1,16 @@
 import Foundation
 
-public enum BinaryDataReaderError: Error {
+public enum BinaryDataReaderError: LocalizedError {
     case insufficientData
     case stringDecodeFailure
+    public var errorDescription: String? {
+        switch self {
+        case .insufficientData:
+            return NSLocalizedString("Insufficient data available.", comment: "")
+        case .stringDecodeFailure:
+            return NSLocalizedString("Unable to decode string in the requested encoding.", comment: "")
+        }
+    }
 }
 
 public class BinaryDataReader {
@@ -69,6 +77,9 @@ public class BinaryDataReader {
     }
     
     public func readString(length: Int, encoding: String.Encoding = .utf8) throws -> String {
+        guard length != 0 else {
+            return ""
+        }
         guard length <= remainingBytes else {
             throw BinaryDataReaderError.insufficientData
         }
