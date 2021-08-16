@@ -35,15 +35,17 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
     }
     
     func keyField(_ key: String = "") -> NSTextField {
-        let field = self.valueField(key, width: 100)
+        let field = self.valueField(key, width: 200)
         field.formatter = AttributeNameFormatter.shared
         return field
     }
     
-    func valueField(_ value: String = "", width: CGFloat = 120) -> NSTextField {
+    func valueField(_ value: String = "", width: CGFloat = 220) -> NSTextField {
         let field = NSTextField(frame: NSMakeRect(0, 0, width, 20))
         field.stringValue = value
         field.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+        field.usesSingleLineMode = true
+        field.lineBreakMode = .byTruncatingTail
         field.delegate = self
         return field
     }

@@ -171,7 +171,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
             let type = document.directory.allTypes[row-1]
             let count = String(document.directory.resourcesByType[type]!.count)
             let view = tableView.makeView(withIdentifier: identifier, owner: nil) as! NSTableCellView
-            view.textField?.stringValue = type.description
+            view.textField?.stringValue = type.code
             (view.subviews.last as? NSButton)?.title = count
             if #available(OSX 11.0, *) {
                 // Remove leading/trailing spacing on macOS 11

@@ -12,12 +12,9 @@ public extension NSPasteboard.PasteboardType {
     static let RKResource = Self("com.resforge.resource")
 }
 
-public struct ResourceType: Hashable, CustomStringConvertible {
+public struct ResourceType: Hashable {
     public var code: String
     public var attributes: [String: String]
-    public var description: String {
-        attributes.reduce(code, { "\($0):\($1.0)=\($1.1)" })
-    }
     public var attributesDisplay: String {
         attributes.map({ "\($0.0)=\($0.1)" }).joined(separator: ", ")
     }
