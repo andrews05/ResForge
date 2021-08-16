@@ -103,14 +103,13 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         let hasData = values.fileSize! > 0
         let hasRsrc = (values.totalFileSize! - values.fileSize!) > 0
         
-        // Work out which fork to parse
-        // Note: If we are reverting the document, fork will already be set and we won't be able to get it from the open panel again
+        // Work out which fork to parse. If we are opening the document for the first time, attempt to get fork from the open panel.
         if fork == nil {
             fork = (NSDocumentController.shared as! OpenPanelDelegate).getSelectedFork()
         }
         var resources: [Resource]?
         if let fork = fork {
-            // If fork was sepcified in open panel, try this fork only
+            // If fork has been set, try this fork only
             if fork == .data && hasData {
                 resources = try ResourceFile.read(from: url, format: &format)
             } else if fork == .rsrc && hasRsrc {
@@ -197,6 +196,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     override func write(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws {
+        var format = format
+        var fork = fork
+        var hfsType = hfsType
+        var hfsCreator = hfsCreator
         if saveOperation == .saveAsOperation {
             // Set fork according to typeName
             if typeName == "ResourceFileRF" {
@@ -206,10 +209,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 format = typeName == "ResourceFileExtended" ? .extended : .classic
                 fork = .data
                 // Clear type/creator for data fork (assume filename extension)
-                self.undoManager?.disableUndoRegistration()
                 hfsType = 0
                 hfsCreator = 0
-                self.undoManager?.enableUndoRegistration()
             }
         }
         
@@ -224,6 +225,14 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         // Write resources to file
         let writeUrl = fork == .rsrc ? url.appendingPathComponent("..namedfork/rsrc") : url
         try ResourceFile.write(directory.resources(), to: writeUrl, as: format)
+        
+        // Save any properties that may have changed (only do this after successful write)
+        self.undoManager?.disableUndoRegistration()
+        self.format = format
+        self.fork = fork
+        self.hfsType = hfsType
+        self.hfsCreator = hfsCreator
+        self.undoManager?.enableUndoRegistration()
     }
     
     // MARK: - Export
@@ -611,6 +620,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 // Clear type attributes if not extended format
                 if format != .extended {
                     resource.typeAttributes = [:]
+                    resource.id = Int(Int16(clamping: resource.id))
                 }
                 if let conflicted = directory.findResource(type: resource.type, id: resource.id) {
                     // Resource slot is occupied, ask user what to do

@@ -83,10 +83,14 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         } else {
             // If valid type and id, check for conflict
             // Accessing the control value will force validation of the field, causing problems when trying to enter a negative id.
-            // To workaround this, check the field editor for a negative symbol before checking the value.
-            if typeView.objectValue != nil && (obj.userInfo!["NSFieldEditor"] as! NSText).string != "-" && idView.objectValue != nil {
-                let resource = rDocument.directory.findResource(type: self.currentType, id: idView.integerValue)
-                createButton.isEnabled = resource == nil
+            // To workaround this, get the value from the field editor and manually run it through the formatter.
+            if typeView.objectValue != nil, let value = (obj.userInfo?["NSFieldEditor"] as? NSText)?.string {
+                var id: AnyObject?
+                idView.formatter!.getObjectValue(&id, for: value, errorDescription: nil)
+                if let id = id as? Int {
+                    let resource = rDocument.directory.findResource(type: self.currentType, id: id)
+                    createButton.isEnabled = resource == nil
+                }
             }
         }
     }

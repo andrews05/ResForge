@@ -40,7 +40,7 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
         return field
     }
     
-    func valueField(_ value: String = "", width: CGFloat = 220) -> NSTextField {
+    func valueField(_ value: String = "", width: CGFloat = 225) -> NSTextField {
         let field = NSTextField(frame: NSMakeRect(0, 0, width, 20))
         field.stringValue = value
         field.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
