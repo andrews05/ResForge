@@ -635,7 +635,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                             alert.showsSuppressionButton = resources.count > 1
                             alert.suppressionButton?.title = NSLocalizedString("Apply to all", comment: "")
                         }
-                        alert.messageText = String(format: NSLocalizedString("A resource of type '%@' with ID %ld already exists.", comment: ""), resource.typeCode, resource.id)
+                        alert.messageText = String(format: NSLocalizedString("A resource of type ‘%@’ with ID %ld already exists.", comment: ""), resource.typeCode, resource.id)
                         // TODO: Do this in a non-blocking way?
                         alert.beginSheetModal(for: self.windowForSheet!) { modalResponse in
                             NSApp.stopModal(withCode: modalResponse)

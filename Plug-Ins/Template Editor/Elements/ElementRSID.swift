@@ -96,7 +96,7 @@ class ElementRSID<T: FixedWidthInteger>: ElementDBYT<T>, ComboBoxLink {
 }
 
 // Add a link button at the end of the combo box to open the referenced resource
-@objc protocol ComboBoxLink {
+@objc protocol ComboBoxLink where Self: Element {
     func openResource(_ sender: Any)
 }
 extension ComboBoxLink {
@@ -111,7 +111,7 @@ extension ComboBoxLink {
         button.bezelStyle = .inline
         button.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
         button.imageScaling = .scaleProportionallyDown
-        button.target = self as AnyObject
+        button.target = self
         button.action = #selector(openResource(_:))
         comboBox.superview?.addSubview(button)
     }
