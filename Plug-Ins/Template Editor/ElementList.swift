@@ -346,7 +346,8 @@ class ElementList {
         // option lists
         "CASE": ElementCASE.self,           // single option for preceding element
         "CASR": ElementCASR.self,           // option range for preceding element (ResForge)
-        "RSID": ElementRSID.self,           // resouce id (signed word) - type and offset in label
+        "RSID": ElementRSID<Int16>.self,    // resouce id - type and offset in label
+        "LRID": ElementRSID<Int32>.self,    // long resouce id, for extended format (ResForge)
 
         // key selectors
         "KBYT": ElementKBYT<Int8>.self,     // signed keys

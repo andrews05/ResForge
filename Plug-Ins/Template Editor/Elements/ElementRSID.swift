@@ -9,8 +9,10 @@ import Cocoa
  * If limit is specified the list will only show resources between offset and offset+limit
  * E.g. "Extension scope info 'scop' -27136 +2" will show 'scop' resources between -27136 and -27134
  * If the resource type cannot be determined from the label, it will look for a preceding TNAM element to determine the type
+ *
+ * Implements RSID, LRID
  */
-class ElementRSID: ElementDBYT<Int16> {
+class ElementRSID<T: FixedWidthInteger>: ElementDBYT<T>, ComboBoxLink {
     @objc private var resType: String! {
         didSet {
             self.loadCases()
@@ -50,7 +52,7 @@ class ElementRSID: ElementDBYT<Int16> {
     
     override func configure(view: NSView) {
         super.configure(view: view)
-        Self.configureLinkButton(comboBox: view.subviews.last as! NSComboBox, for: self)
+        self.configureLinkButton(comboBox: view.subviews.last as! NSComboBox)
     }
     
     private func loadCases() {
@@ -75,24 +77,7 @@ class ElementRSID: ElementDBYT<Int16> {
         return offset == 0 ? String(resID) : "\(resID) (#\(resID+offset))"
     }
     
-    static func configureLinkButton(comboBox: NSComboBox, for element: Element) {
-        // Add a link button at the end of the combo box to open the referenced resource
-        var frame = comboBox.frame
-        frame.origin.x += frame.size.width - 35
-        frame.origin.y += 7
-        frame.size.width = 12
-        frame.size.height = 12
-        let button = NSButton(frame: frame)
-        button.isBordered = false
-        button.bezelStyle = .inline
-        button.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
-        button.imageScaling = .scaleProportionallyDown
-        button.target = element
-        button.action = #selector(openResource(_:))
-        comboBox.superview?.addSubview(button)
-    }
-    
-    @IBAction func openResource(_ sender: Any) {
+    func openResource(_ sender: Any) {
         let id = Int(self.tValue)+offset
         self.parentList.controller.openOrCreateResource(typeCode: resType, id: id)
     }
@@ -110,12 +95,32 @@ class ElementRSID: ElementDBYT<Int16> {
     }
 }
 
-// Allow space for a link button
+// Add a link button at the end of the combo box to open the referenced resource
+@objc protocol ComboBoxLink {
+    func openResource(_ sender: Any)
+}
+extension ComboBoxLink {
+    func configureLinkButton(comboBox: NSComboBox) {
+        var frame = comboBox.frame
+        frame.origin.x += frame.size.width - 35
+        frame.origin.y += 7
+        frame.size.width = 12
+        frame.size.height = 12
+        let button = NSButton(frame: frame)
+        button.isBordered = false
+        button.bezelStyle = .inline
+        button.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
+        button.imageScaling = .scaleProportionallyDown
+        button.target = self as AnyObject
+        button.action = #selector(openResource(_:))
+        comboBox.superview?.addSubview(button)
+    }
+}
 extension NSComboBoxCell {
     open override func drawingRect(forBounds rect: NSRect) -> NSRect {
         var r = super.drawingRect(forBounds: rect)
         let source = (self.dataSource as? NSComboBox)?.dataSource
-        if source is ElementRSID || source is ElementCASR {
+        if source is ComboBoxLink {
             r.size.width -= 15
         }
         return r

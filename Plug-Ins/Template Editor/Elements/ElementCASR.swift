@@ -12,7 +12,7 @@ import Cocoa
  * A CASR may also be just a single value like a CASE, in which case no text field will be shown for this option
  * Note that you cannot associate both CASEs and CASRs to the same element
  */
-class ElementCASR: CaseableElement {
+class ElementCASR: CaseableElement, ComboBoxLink {
     @objc var value: Int {
         get {
             parentElement.displayValue
@@ -108,7 +108,7 @@ class ElementCASR: CaseableElement {
         if resType != nil {
             self.loadCases()
             super.configure(view: view)
-            ElementRSID.configureLinkButton(comboBox: view.subviews.last as! NSComboBox, for: self)
+            self.configureLinkButton(comboBox: view.subviews.last as! NSComboBox)
         } else {
             super.configure(view: view)
         }
@@ -131,7 +131,7 @@ class ElementCASR: CaseableElement {
         }
     }
     
-    @IBAction func openResource(_ sender: Any) {
+    func openResource(_ sender: Any) {
         self.parentList.controller.openOrCreateResource(typeCode: resType, id: value)
     }
     
