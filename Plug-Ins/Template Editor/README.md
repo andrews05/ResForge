@@ -4,7 +4,7 @@ The following is a list of template field types that have been defined by variou
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
 * Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (64 of 95)
 * All of [Rezilla's additions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
-* ResForge's own additions (7)
+* ResForge's own additions (20)
 
 ### Key
 
@@ -23,12 +23,15 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 DBYT|Signed Decimal Byte|1 byte|✓|✓|✓|🟢
 DWRD|Signed Decimal Word|2 bytes|✓|✓|✓|🟢
 DLNG|Signed Decimal Long|4 bytes|✓|✓|✓|🟢
+DQWD|Signed Decimal Quad Word|8 bytes||||🟢
 UBYT|Unsigned Decimal Byte|1 byte||✓|✓|🟢
 UWRD|Unsigned Decimal Word|2 bytes||✓|✓|🟢
 ULNG|Unsigned Decimal Long|4 bytes||✓|✓|🟢
+UQWD|Unsigned Decimal Quad Word|8 bytes||||🟢
 HBYT|Hex Byte|1 byte|✓|✓|✓|🟢
 HWRD|Hex Word|2 bytes|✓|✓|✓|🟢
 HLNG|Hex Long|4 bytes|✓|✓|✓|🟢
+HQWD|Hex Quad Word|8 bytes||||🟢
 
 ### Bit and Bit Field Types
 
@@ -43,6 +46,9 @@ WFnn|Fill Bits Within a Word|_nn_ bits||||🟢
 LBIT|Bit Within a Long|1 bit||✓|✓|🟢
 LBnn|Bit Field Within a Long|_nn_ bits||✓|✓|🟢
 LFnn|Fill Bits Within a Long|_nn_ bits||||🟢
+QBIT|Bit Within a Quad|1 bit||||🟢
+QBnn|Bit Field Within a Quad|_nn_ bits||||🟢
+QFnn|Fill Bits Within a Quad|_nn_ bits||||🟢
 BOOL|Boolean Word|2 bytes|✓|✓|✓|🟢
 BFLAG|Byte Boolean Flag (low-order bit)|1 byte||✓|✓|🟢
 WFLAG|Word Boolean Flag (low-order bit)|2 bytes||✓|✓|🟢
@@ -50,6 +56,7 @@ LFLAG|Long Boolean Flag (low-order bit)|4 bytes||✓|✓|🟢
 BORV|OR Byte Value|1 byte|||✓|🟢
 WORV|OR Word Value|2 bytes|||✓|🟢
 LORV|OR Long Value|4 bytes|||✓|🟢
+QORV|OR Quad Value|8 bytes||||🟢
 
 ### Floating and Fixed Point Field Types
 
@@ -68,7 +75,7 @@ FWID|4:12 Fixed Point Font Width|2 bytes||✓||🟡
 FXYZ|1:15 Fixed Point Colour Component|2 bytes||✓||🟡
 
 
-### ASCII Text String Field Types
+### Text String Field Types
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
@@ -82,9 +89,11 @@ OCST|Odd-Padded C String|1 or more|✓|✓|✓|🟢
 BSTR|Byte Length String (same as PSTR)|1 to 256||✓|✓|🟢
 WSTR|Word Length String|2 to 64KB|✓|✓|✓|🟢
 LSTR|Long Length String|4 to 4MB|✓|✓|✓|🟢
+USTR|Null-Terminated UTF-8 String|1 or more||||🟢
 TXTS|Sized Text Dump|any||✓||🟢
 Pnmm|Pascal String with Fixed Padding|$_nmm_ bytes|✓|✓|✓|🟢
 Cnmm|C String with Fixed Padding|$_nmm_ bytes|✓|✓|✓|🟢
+Unmm|UTF-8 String with Fixed Padding|$_nmm_ bytes||||🟢
 Tnmm|Text with Fixed Padding|$_nmm_ bytes||✓|✓|🟢
 
 ### Hexadecimal Dump Field Types
@@ -139,12 +148,15 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 KBYT|Signed Decimal Byte Key|1 byte||✓|✓|🟢
 KWRD|Signed Decimal Word Key|2 bytes||✓|✓|🟢
 KLNG|Signed Decimal Long Key|4 bytes||✓|✓|🟢
+KQWD|Signed Decimal Quad Key|8 bytes||||🟢
 KUBT|Unsigned Decimal Byte Key|1 byte||✓|✓|🟢
 KUWD|Unsigned Decimal Word Key|2 bytes||✓|✓|🟢
 KULG|Unsigned Decimal Long Key|4 bytes||✓|✓|🟢
+KUQD|Unsigned Decimal Quad Key|8 bytes||||🟢
 KHBT|Unsigned Hex Byte Key|1 byte||✓|✓|🟢
 KHWD|Unsigned Hex Word Key|2 bytes||✓|✓|🟢
 KHLG|Unsigned Hex Long Key|4 bytes||✓|✓|🟢
+KHQD|Unsigned Hex Quad Key|8 bytes||||🟢
 KCHR|Single ASCII Character Key|1 byte||✓|✓|🟢
 KNAM|Four-Character Type Key|4 bytes||✓|✓|🟢
 KRID|Key on Current Resource ID|0 bytes||✓|✓|🟢
@@ -169,6 +181,7 @@ Fnmm|Fill Bytes|$_nmm_ bytes||✓|✓|🟢
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 RSID|Signed Resource ID Integer|2 bytes||✓|✓|🟢
+LRID|Long Resource ID|4 bytes||||🟢
 CHAR|ASCII Character|1 byte|✓|✓|✓|🟢
 TNAM|Type Name|4 bytes|✓|✓|✓|🟢
 DATE|Macintosh System Date/Time (seconds)|4 bytes||✓|✓|🟢
