@@ -12,6 +12,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     @IBOutlet weak var document: ResourceDocument!
     
     private(set) var useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
+    private(set) var currentType: ResourceType?
     private var resourcesView: ResourcesView!
     
     override func awakeFromNib() {
@@ -62,7 +63,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         if let filter = filter {
             document.directory.filter = filter
         }
-        resourcesView.reload(type: resourcesView.currentType)
+        resourcesView.reload()
         if selection.count != 0 {
             resourcesView.select(selection)
         }
@@ -92,14 +93,14 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     /// Reload the view and select the given resources.
     func reload(selecting resources: [Resource]? = nil, withUndo: Bool = true) {
         typeList.reloadData()
-        if useTypeList,
-            // When showing the sidebar (withUndo = false), select the first available type if nothing else selected
-            let type = resources?.first?.type ?? resourcesView.selectedType() ?? (withUndo ? nil : document.directory.allTypes.first),
-            let i = document.directory.allTypes.firstIndex(of: type) {
-            typeList.selectRowIndexes([i+1], byExtendingSelection: false)
+        if useTypeList, !document.directory.allTypes.isEmpty {
+            // Select the first available type if nothing else selected (-1 becomes 1)
+            let i = abs(typeList.row(forItem: resources?.first?.type ?? currentType))
+            typeList.selectRowIndexes([i], byExtendingSelection: false)
         } else {
             resourcesView = outlineController
-            resourcesView.reload(type: useTypeList ? ResourceType("") : nil)
+            currentType = nil
+            resourcesView.reload()
             scrollView.documentView = outlineView
         }
         if let resources = resources {
@@ -131,14 +132,14 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     func toggleSidebar() {
         useTypeList = !useTypeList
-        self.reload(selecting: self.selectedResources(), withUndo: false)
         self.updateSidebar()
+        self.reload(selecting: self.selectedResources(), withUndo: false)
         UserDefaults.standard.set(useTypeList, forKey: RFDefaults.showSidebar)
     }
     
     private func updateSidebar() {
-        outlineView.indentationPerLevel = useTypeList ? 0 : 4
-        outlineView.tableColumns[0].width = useTypeList ? 50 : 70
+        outlineView.indentationPerLevel = useTypeList ? 0 : 1
+        outlineView.tableColumns[0].width = useTypeList ? 60 : 70
         splitView.setPosition(useTypeList ? 110 : 0, ofDividerAt: 0)
     }
     
@@ -202,20 +203,20 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         return false
     }
     
-    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
-        return item is ResourceType
-    }
-    
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
         return !(item is ResourceType)
     }
     
+    // Prevent deselection (using the allowsEmptySelection property results in undesirable selection changes)
+    func outlineView(_ outlineView: NSOutlineView, selectionIndexesForProposedSelection proposedSelectionIndexes: IndexSet) -> IndexSet {
+        return proposedSelectionIndexes.isEmpty || proposedSelectionIndexes == [0] ? outlineView.selectedRowIndexes : proposedSelectionIndexes
+    }
+    
     func outlineViewSelectionDidChange(_ notification: Notification) {
-        let type = typeList.selectedItems.first as? ResourceType ?? ResourceType("")
+        let type = typeList.selectedItem as? ResourceType
         // Check if type actually changed, rather than just being reselected after a reload
-        let changed = resourcesView.currentType != type
-        if changed {
-            if let provider = PluginRegistry.previewProviders[type.code] {
+        if currentType != type {
+            if let type = type, let provider = PluginRegistry.previewProviders[type.code] {
                 let size = provider.previewSize(for: type.code)
                 let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
                 layout.itemSize = NSSize(width: size+8, height: size+40)
@@ -226,12 +227,13 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
                 scrollView.documentView = outlineView
                 outlineView.scrollToBeginningOfDocument(self)
             }
-        }
-        resourcesView.reload(type: type)
-        if changed {
+            currentType = type
+            resourcesView.reload()
             // If the view changed we should make sure it is still first responder
             scrollView.window?.makeFirstResponder(scrollView.documentView)
             NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
+        } else {
+            resourcesView.reload()
         }
     }
 }
@@ -250,11 +252,8 @@ class SourceCount: NSButton {
 
 // Common interface for the OutlineController and CollectionController
 protocol ResourcesView {
-    /// Get the currently displayed type.
-    var currentType: ResourceType? { get }
-    
     /// Reload the data in the view.
-    func reload(type: ResourceType?)
+    func reload()
     
     /// Select the given resources.
     func select(_ resources: [Resource])
@@ -268,6 +267,6 @@ protocol ResourcesView {
     /// Return the currently selcted type.
     func selectedType() -> ResourceType?
     
-    /// Notify the view that a resource has been updated..
+    /// Notify the view that a resource has been updated.
     func updated(resource: Resource, oldIndex: Int, newIndex: Int)
 }

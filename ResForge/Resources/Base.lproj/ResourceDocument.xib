@@ -136,7 +136,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="364" height="379"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" autosaveName="" rowSizeStyle="automatic" headerView="164" viewBased="YES" outlineTableColumn="149" id="145">
+                                        <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" autosaveName="" rowSizeStyle="automatic" headerView="164" viewBased="YES" indentationPerLevel="1" outlineTableColumn="149" id="145">
                                             <rect key="frame" x="0.0" y="0.0" width="364" height="356"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -387,6 +387,7 @@
         </customObject>
         <customObject id="KZo-Ug-Xhc" customClass="OutlineController" customModule="ResForge" customModuleProvider="target">
             <connections>
+                <outlet property="dataSource" destination="32" id="BwU-t4-Reo"/>
                 <outlet property="document" destination="-2" id="v0M-hs-4Ud"/>
                 <outlet property="outlineView" destination="145" id="xnq-a5-pCf"/>
             </connections>
@@ -394,6 +395,7 @@
         <customObject id="bpN-Hx-BgR" customClass="CollectionController" customModule="ResForge" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="XSg-qL-KmL" id="tda-kJ-ynm"/>
+                <outlet property="dataSource" destination="32" id="3ut-MY-Gub"/>
                 <outlet property="document" destination="-2" id="oZ5-YA-qgn"/>
             </connections>
         </customObject>

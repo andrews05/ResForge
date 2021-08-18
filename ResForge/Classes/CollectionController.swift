@@ -4,17 +4,16 @@ import RFSupport
 class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionViewDataSource, ResourcesView {
     @IBOutlet var collectionView: NSCollectionView!
     @IBOutlet weak var document: ResourceDocument!
-    private(set) var currentType: ResourceType?
+    @IBOutlet weak var dataSource: ResourceDataSource!
     
-    func reload(type: ResourceType?) {
-        currentType = type!
+    func reload() {
         collectionView.reloadData()
     }
     
     func select(_ resources: [Resource]) {
         var paths: Set<IndexPath> = Set()
-        for resource in resources where resource.type == currentType {
-            if let i = document.directory.filteredResources(type: currentType!).firstIndex(of: resource) {
+        for resource in resources where resource.type == dataSource.currentType {
+            if let i = document.directory.filteredResources(type: dataSource.currentType!).firstIndex(of: resource) {
                 paths.insert([0, i])
             }
         }
@@ -33,14 +32,14 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
             }
             // If the ResourceItem doesn't exist (offscreen), look it up in the directory
             // Note: If the filtered list has just changed, we can't guarantee the correct selection will be returned
-            let list = document.directory.filteredResources(type: currentType!)
+            let list = document.directory.filteredResources(type: dataSource.currentType!)
             let idx = $0.last!
             return list.indices.contains(idx) ? list[idx] : nil
         }
     }
     
     func selectedType() -> ResourceType? {
-        return currentType?.code == "" ? nil : currentType
+        return dataSource.currentType
     }
     
     func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
@@ -61,7 +60,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     
     // MARK: - Delegate functions
     func collectionView(_ collectionView: NSCollectionView, pasteboardWriterForItemAt index: Int) -> NSPasteboardWriting? {
-        return document.directory.filteredResources(type: currentType!)[index]
+        return document.directory.filteredResources(type: dataSource.currentType!)[index]
     }
     
     // Don't hide original items when dragging
@@ -74,7 +73,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     // MARK: - DataSource functions
     
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let type = currentType {
+        if let type = dataSource.currentType {
             return document.directory.filteredResources(type: type).count
         } else {
             return 0
@@ -82,7 +81,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        let resource = document.directory.filteredResources(type: currentType!)[indexPath.last!]
+        let resource = document.directory.filteredResources(type: dataSource.currentType!)[indexPath.last!]
         let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier("ResourceItem"), for: indexPath) as! ResourceItem
         view.configure(resource)
         return view

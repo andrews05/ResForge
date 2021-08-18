@@ -4,7 +4,7 @@ import RFSupport
 class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFieldDelegate, ResourcesView {
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet weak var document: ResourceDocument!
-    private(set) var currentType: ResourceType? = nil
+    @IBOutlet weak var dataSource: ResourceDataSource!
     private var inlineUpdate = false // Flag to prevent reloading items when editing inline
     
     override func awakeFromNib() {
@@ -39,8 +39,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         }
     }
     
-    func reload(type: ResourceType?) {
-        currentType = type
+    func reload() {
         outlineView.reloadData()
     }
     
@@ -59,7 +58,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
     
     func selectedResources(deep: Bool = false) -> [Resource] {
-        if currentType != nil {
+        if dataSource.currentType != nil {
             return outlineView.selectedItems as! [Resource]
         } else if deep {
             var resources: [Resource] = []
@@ -77,8 +76,8 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
     
     func selectedType() -> ResourceType? {
-        if let type = currentType {
-            return type.code == "" ? nil : type
+        if let type = dataSource.currentType {
+            return type
         } else {
             let item = outlineView.item(atRow: outlineView.selectedRow)
             return item as? ResourceType ?? (item as? Resource)?.type
@@ -86,7 +85,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
     
     func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
-        let parent = currentType == nil ? resource.type : nil
+        let parent = dataSource.currentType == nil ? resource.type : nil
         if inlineUpdate {
             // The resource has been edited inline, perform the move async to ensure the first responder has been properly updated
             DispatchQueue.main.async { [self] in
@@ -160,7 +159,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     // MARK: - DataSource functions
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if let type = item as? ResourceType ?? currentType {
+        if let type = item as? ResourceType ?? dataSource.currentType {
             return document.directory.filteredResources(type: type)[index]
         } else {
             return document.directory.filteredTypes()[index]
@@ -172,7 +171,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if let type = item as? ResourceType ?? currentType {
+        if let type = item as? ResourceType ?? dataSource.currentType {
             return document.directory.filteredResources(type: type).count
         } else {
             return document.directory.filteredTypes().count
@@ -191,8 +190,11 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
 }
 
 extension NSOutlineView {
+    var selectedItem: Any? {
+        self.item(atRow: self.selectedRow)
+    }
     var selectedItems: [Any] {
-        return self.selectedRowIndexes.map {
+        self.selectedRowIndexes.map {
             self.item(atRow: $0)!
         }
     }
