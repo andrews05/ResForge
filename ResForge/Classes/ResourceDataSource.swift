@@ -9,6 +9,8 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     @IBOutlet var collectionView: NSCollectionView!
     @IBOutlet var outlineController: OutlineController!
     @IBOutlet var collectionController: CollectionController!
+    @IBOutlet var attributesHolder: NSView!
+    @IBOutlet var attributesDisplay: NSTextField!
     @IBOutlet weak var document: ResourceDocument!
     
     private(set) var useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
@@ -138,6 +140,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     private func updateSidebar() {
+        if !useTypeList {
+            attributesHolder.isHidden = true
+        }
         outlineView.indentationPerLevel = useTypeList ? 0 : 1
         outlineView.tableColumns[0].width = useTypeList ? 60 : 70
         splitView.setPosition(useTypeList ? 110 : 0, ofDividerAt: 0)
@@ -172,6 +177,8 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             let count = String(document.directory.resourcesByType[type]!.count)
             view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: nil) as! NSTableCellView
             view.textField?.stringValue = type.code
+            // Show a + indicator when the type has attributes
+            (view.subviews[1] as? NSTextField)?.stringValue = type.attributes.isEmpty ? "" : "+"
             (view.subviews.last as? NSButton)?.title = count
         } else {
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: nil) as! NSTableCellView
@@ -213,10 +220,12 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     func outlineViewSelectionDidChange(_ notification: Notification) {
-        let type = typeList.selectedItem as? ResourceType
+        let type = typeList.selectedItem as! ResourceType
         // Check if type actually changed, rather than just being reselected after a reload
         if currentType != type {
-            if let type = type, let provider = PluginRegistry.previewProviders[type.code] {
+            attributesHolder.isHidden = type.attributes.isEmpty
+            attributesDisplay.stringValue = type.attributesDisplay
+            if let provider = PluginRegistry.previewProviders[type.code] {
                 let size = provider.previewSize(for: type.code)
                 let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
                 layout.itemSize = NSSize(width: size+8, height: size+40)

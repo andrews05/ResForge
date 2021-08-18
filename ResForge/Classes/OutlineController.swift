@@ -117,15 +117,14 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             }
             return view
         } else if let type = item as? ResourceType {
-            switch  tableColumn!.identifier.rawValue {
-            case "id":
-                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("idGroup"), owner: self) as! NSTableCellView
+            let identifier = "\(tableColumn!.identifier.rawValue)Group"
+            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(identifier), owner: self) as! NSTableCellView
+            switch identifier {
+            case "idGroup":
                 view.textField?.stringValue = type.code
-            case "name":
-                view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
+            case "nameGroup":
                 view.textField?.stringValue = type.attributesDisplay
-            case "size":
-                view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("sizeGroup"), owner: self) as! NSTableCellView
+            case "sizeGroup":
                 view.textField?.integerValue = document.directory.resourcesByType[type]!.count
             default:
                 return nil

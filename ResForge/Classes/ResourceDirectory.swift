@@ -87,7 +87,12 @@ class ResourceDirectory {
             return allTypes
         }
         _ = allTypes.map(self.filteredResources)
-        return filtered.filter({ !$1.isEmpty }).keys.sorted(by: { $0.code.localizedCompare($1.code) == .orderedAscending })
+        return filtered.filter({ !$1.isEmpty }).keys.sorted(by: self.typeSort(_:_:))
+    }
+    
+    private func typeSort(_ a: ResourceType, _ b: ResourceType) -> Bool {
+        let compare = a.code.localizedCompare(b.code)
+        return compare == .orderedSame ? a.attributes.count < b.attributes.count : compare == .orderedAscending
     }
     
     private func addToTypedList(_ resource: Resource) {
@@ -95,7 +100,7 @@ class ResourceDirectory {
         if resourcesByType[resource.type] == nil {
             resourcesByType[resource.type] = [resource]
             allTypes.append(resource.type)
-            allTypes.sort(by: { $0.code.localizedCompare($1.code) == .orderedAscending })
+            allTypes.sort(by: self.typeSort(_:_:))
         } else {
             resourcesByType[resource.type]!.insert(resource, using: sortDescriptors)
         }
