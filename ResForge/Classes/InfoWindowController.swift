@@ -55,7 +55,6 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
         if let resource = objectController.content as? Resource {
             self.window?.title = NSLocalizedString("Resource Info", comment: "")
             
-            rID.formatter = (resource.document as? ResourceDocument)?.idFormatter
             rSize.integerValue = resource.data.count
             typeAttsHolder.isHidden = (resource.document as? ResourceDocument)?.format != .extended
             rTypeAtts.attributes = resource.typeAttributes

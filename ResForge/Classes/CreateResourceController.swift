@@ -24,7 +24,6 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        idView.formatter = rDocument.idFormatter
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +42,10 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         }
         typeView.removeAllItems()
         typeView.addItems(withObjectValues: suggestions)
+        if let formatter = idView.formatter as? NumberFormatter {
+            formatter.minimum = rDocument.format.minID as NSNumber
+            formatter.maximum = rDocument.format.maxID as NSNumber
+        }
         
         var type = type
         typeView.objectValue = type?.code

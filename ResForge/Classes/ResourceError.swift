@@ -22,6 +22,14 @@ extension Resource {
             throw ResourceError.conflict(type, id)
         }
     }
+    
+    // Used for formatter binding
+    @objc var minID: Int {
+        (document as? ResourceDocument)?.format.minID ?? 0
+    }
+    @objc var maxID: Int {
+        (document as? ResourceDocument)?.format.maxID ?? 0
+    }
 }
 
 enum ResourceError: LocalizedError {

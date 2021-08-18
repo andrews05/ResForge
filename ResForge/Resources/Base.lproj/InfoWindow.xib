@@ -335,12 +335,27 @@
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wc5-m9-c69">
                             <rect key="frame" x="84" y="48" width="76" height="21"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="KqN-ja-2ZS">
+                                <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="v3Q-OX-zMG">
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="nil" keyPath="nilSymbol"/>
+                                    </userDefinedRuntimeAttributes>
+                                </numberFormatter>
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.id" id="l8l-PR-YPi">
+                                <binding destination="Ivl-3s-tDS" name="maxValue" keyPath="selection.maxID" id="aWK-zq-95C">
+                                    <dictionary key="options">
+                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="Ivl-3s-tDS" name="minValue" keyPath="selection.minID" previousBinding="aWK-zq-95C" id="uxM-tT-sbW">
+                                    <dictionary key="options">
+                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.id" previousBinding="uxM-tT-sbW" id="mFS-bA-rSL">
                                     <dictionary key="options">
                                         <string key="NSNoSelectionPlaceholder">Required</string>
                                         <string key="NSNotApplicablePlaceholder">Required</string>
