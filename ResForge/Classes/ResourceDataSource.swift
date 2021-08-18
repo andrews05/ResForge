@@ -1,10 +1,9 @@
 import Cocoa
 import RFSupport
 
-class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, NSSplitViewDelegate {
+class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSSplitViewDelegate {
     @IBOutlet var splitView: NSSplitView!
-    @IBOutlet var typeList: NSTableView!
-    @IBOutlet var typeCell: NSTableCellView!
+    @IBOutlet var typeList: NSOutlineView!
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var collectionView: NSCollectionView!
@@ -166,41 +165,53 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
         return true
     }
     
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        if let identifier = tableColumn?.identifier {
-            let type = document.directory.allTypes[row-1]
+    func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+        let view: NSTableCellView
+        if let type = item as? ResourceType {
             let count = String(document.directory.resourcesByType[type]!.count)
-            let view = tableView.makeView(withIdentifier: identifier, owner: nil) as! NSTableCellView
+            view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: nil) as! NSTableCellView
             view.textField?.stringValue = type.code
             (view.subviews.last as? NSButton)?.title = count
-            if #available(OSX 11.0, *) {
-                // Remove leading/trailing spacing on macOS 11
-                for constraint in view.constraints {
-                    if constraint.firstAttribute == .leading || constraint.firstAttribute == .trailing {
-                        constraint.constant = 0
-                    }
+        } else {
+            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: nil) as! NSTableCellView
+        }
+        if #available(OSX 11.0, *) {
+            // Remove leading/trailing spacing on macOS 11
+            for constraint in view.constraints {
+                if constraint.firstAttribute == .leading || constraint.firstAttribute == .trailing {
+                    constraint.constant = 0
                 }
             }
-            return view
-        } else {
-            return tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: nil) as! NSTableCellView
         }
+        return view
     }
     
-    func numberOfRows(in tableView: NSTableView) -> Int {
+    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         return document.directory.allTypes.count + 1
     }
     
-    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        return row != 0
+    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        if index == 0 {
+            return "Types"
+        } else {
+            return document.directory.allTypes[index-1]
+        }
     }
     
-    func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
-        return row == 0
+    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+        return false
     }
     
-    func tableViewSelectionDidChange(_ notification: Notification) {
-        let type = document.directory.allTypes[typeList.selectedRow-1]
+    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
+        return item is ResourceType
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
+        return !(item is ResourceType)
+    }
+    
+    func outlineViewSelectionDidChange(_ notification: Notification) {
+        let type = typeList.selectedItems.first as? ResourceType ?? ResourceType("")
         // Check if type actually changed, rather than just being reselected after a reload
         let changed = resourcesView.currentType != type
         if changed {
@@ -226,7 +237,7 @@ class ResourceDataSource: NSObject, NSTableViewDelegate, NSTableViewDataSource, 
 }
 
 // Prevent the source list from becoming first responder
-class SourceList: NSTableView {
+class SourceList: NSOutlineView {
     override var acceptsFirstResponder: Bool { false }
 }
 
