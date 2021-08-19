@@ -47,19 +47,18 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             formatter.maximum = rDocument.format.maxID as NSNumber
         }
         
-        var type = type
         typeView.objectValue = type?.code
         idView.objectValue = id
         nameView.objectValue = name
         if rDocument.format == .extended {
             attributesHolder.isHidden = false
+            attributesEditor.attributes = type?.attributes ?? [:]
         } else {
             attributesHolder.isHidden = true
-            type?.attributes = [:]
+            attributesEditor.attributes = [:]
         }
         // The last non-nil value provided will receive focus
         if let type = type {
-            attributesEditor.attributes = type.attributes
             if let id = id {
                 idView.integerValue = rDocument.directory.uniqueID(for: type, starting: id)
                 self.window?.makeFirstResponder(name == nil ? idView : nameView)

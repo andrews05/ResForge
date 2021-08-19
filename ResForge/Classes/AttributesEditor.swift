@@ -1,20 +1,33 @@
 import Cocoa
 
+/*
+ * NSRuleEditor provides a great interface for type attributes but has proven difficult to work with.
+ * In particular, providing the initial data is not easy, especially as the "rows" binding appears to be buggy (and crashy).
+ * Here we store row values in property each time a row is added, which are subsequently accessed by the delegate function.
+ */
 class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate {
     @IBOutlet var addButton: NSButton?
     @IBOutlet var applyButton: NSButton?
     
-    @objc dynamic var rows: [TypeAttribute] = []
+    private var currentRowValues = [String: NSTextField]()
     var attributes: [String: String] {
         get {
-            return rows.reduce(into: [:]) {
-                if !$1.key.isEmpty && !$1.value.isEmpty {
-                    $0[$1.key] = $1.value
+            var atts = [String: String]()
+            for i in 0..<self.numberOfRows {
+                let values = self.displayValues(forRow: i)
+                let key = (values[0] as! NSTextField).stringValue
+                let value = (values[2] as! NSTextField).stringValue
+                if !key.isEmpty && !value.isEmpty {
+                    atts[key] = value
                 }
             }
+            return atts
         }
         set {
-            rows = newValue.map { TypeAttribute(self.keyField($0), self.valueField($1)) }
+            self.clear(self)
+            for (key, value) in newValue {
+                self.insertRow(at: self.numberOfRows, key: key, value: value, makeFirstResponder: false)
+            }
             applyButton?.isHidden = true
         }
     }
@@ -22,25 +35,42 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
     override func awakeFromNib() {
         super.awakeFromNib()
         self.delegate = self
-        self.rowClass = TypeAttribute.self
-        self.bind(NSBindingName(rawValue: "rows"), to: self, withKeyPath: "rows", options: nil)
     }
     
     @IBAction func addOrClear(_ sender: Any) {
-        if rows.isEmpty {
+        if self.numberOfRows == 0 {
             self.addRow(sender)
         } else {
-            rows.removeAll()
+            self.clear(sender)
         }
     }
     
-    func keyField(_ key: String = "") -> NSTextField {
+    @IBAction func clear(_ sender: Any) {
+        self.removeRows(at: IndexSet(0..<self.numberOfRows), includeSubrows: true)
+    }
+    
+    override func insertRow(at rowIndex: Int, with rowType: NSRuleEditor.RowType, asSubrowOfRow parentRow: Int, animate shouldAnimate: Bool) {
+        self.insertRow(at: rowIndex)
+    }
+    
+    private func insertRow(at rowIndex: Int, key: String = "", value: String = "", makeFirstResponder: Bool = true) {
+        let keyField = self.keyField(key)
+        currentRowValues = ["key": keyField, "val": self.valueField(value)]
+        super.insertRow(at: rowIndex, with: .simple, asSubrowOfRow: -1, animate: false)
+        if makeFirstResponder {
+            DispatchQueue.main.async {
+                self.window?.makeFirstResponder(keyField)
+            }
+        }
+    }
+    
+    private func keyField(_ key: String) -> NSTextField {
         let field = self.valueField(key, width: 200)
         field.formatter = AttributeNameFormatter.shared
         return field
     }
     
-    func valueField(_ value: String = "", width: CGFloat = 225) -> NSTextField {
+    private func valueField(_ value: String, width: CGFloat = 225) -> NSTextField {
         let field = NSTextField(frame: NSMakeRect(0, 0, width, 20))
         field.stringValue = value
         field.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
@@ -67,49 +97,16 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
     }
     
     func ruleEditor(_ editor: NSRuleEditor, displayValueForCriterion criterion: Any, inRow row: Int) -> Any {
-        switch criterion as? String {
-        case "key":
-            return self.keyField()
-        case "=":
-            return "="
-        default:
-            return self.valueField()
-        }
+        return currentRowValues[criterion as! String] ?? criterion
     }
     
     func ruleEditorRowsDidChange(_ notification: Notification) {
-        addButton?.image = NSImage(named: rows.isEmpty ? NSImage.addTemplateName : NSImage.removeTemplateName)
+        addButton?.image = NSImage(named: self.numberOfRows == 0 ? NSImage.addTemplateName : NSImage.removeTemplateName)
         applyButton?.isHidden = false
     }
     
     func controlTextDidChange(_ obj: Notification) {
         applyButton?.isHidden = false
-    }
-}
-
-class TypeAttribute: NSObject {
-    @objc var rowType = NSRuleEditor.RowType.simple
-    @objc var subrows: [Any] = []
-    @objc var criteria = ["key", "=", "val"]
-    @objc var displayValues: [Any] = []
-    var key: String {
-        (displayValues[0] as! NSTextField).stringValue
-    }
-    var value: String {
-        (displayValues[2] as! NSTextField).stringValue
-    }
-    
-    override init() {
-        super.init()
-        DispatchQueue.main.async {
-            if let field = self.displayValues[0] as? NSTextField {
-                field.window?.makeFirstResponder(field)
-            }
-        }
-    }
-    
-    init(_ key: NSTextField, _ value: NSTextField) {
-        displayValues = [key, "=", value]
     }
 }
 
