@@ -16,7 +16,7 @@ public struct ResourceType: Hashable {
     public var code: String
     public var attributes: [String: String]
     public var attributesDisplay: String {
-        attributes.map({ "\($0.0)=\($0.1)" }).joined(separator: ", ")
+        attributes.map({ "\($0.0) = \($0.1)" }).joined(separator: ", ")
     }
     
     public init(_ code: String, _ attributes: [String: String] = [:]) {

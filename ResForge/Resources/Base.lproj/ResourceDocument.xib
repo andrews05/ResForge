@@ -90,10 +90,10 @@
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hK2-jc-2bQ">
-                                                                    <rect key="frame" x="39" y="3" width="12" height="14"/>
+                                                                    <rect key="frame" x="39" y="3" width="11" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="+" id="dRD-LF-9mc">
-                                                                        <font key="font" metaFont="systemSemibold" size="11"/>
-                                                                        <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                                        <font key="font" metaFont="system" size="11"/>
+                                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
@@ -153,20 +153,30 @@
                                                     <rect key="frame" x="1" y="1" width="354" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wkZ-ip-cVa">
-                                                            <rect key="frame" x="8" y="4" width="56" height="16"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Attributes" id="Dow-wd-Xzm">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JmV-fP-9o5">
+                                                            <rect key="frame" x="4" y="6" width="11" height="14"/>
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="+" id="e9n-2Z-w6i">
                                                                 <font key="font" metaFont="system" size="11"/>
+                                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wkZ-ip-cVa">
+                                                            <rect key="frame" x="15" y="4" width="56" height="16"/>
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Attributes" id="Dow-wd-Xzm">
+                                                                <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstItem="JmV-fP-9o5" firstAttribute="leading" secondItem="OaQ-rG-HRp" secondAttribute="leading" constant="6" id="7kJ-yv-CiM"/>
+                                                        <constraint firstItem="wkZ-ip-cVa" firstAttribute="leading" secondItem="JmV-fP-9o5" secondAttribute="trailing" constant="4" id="Do7-M8-AOT"/>
                                                         <constraint firstItem="wkZ-ip-cVa" firstAttribute="top" secondItem="OaQ-rG-HRp" secondAttribute="top" constant="4" id="DvX-Gg-gWM"/>
-                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wkZ-ip-cVa" secondAttribute="trailing" constant="10" id="N4i-VB-OlO"/>
+                                                        <constraint firstItem="JmV-fP-9o5" firstAttribute="firstBaseline" secondItem="wkZ-ip-cVa" secondAttribute="firstBaseline" id="FsK-1P-OEs"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wkZ-ip-cVa" secondAttribute="trailing" constant="6" id="N4i-VB-OlO"/>
                                                         <constraint firstAttribute="bottom" secondItem="wkZ-ip-cVa" secondAttribute="bottom" constant="4" id="TNo-z4-Q1i"/>
-                                                        <constraint firstItem="wkZ-ip-cVa" firstAttribute="leading" secondItem="OaQ-rG-HRp" secondAttribute="leading" constant="10" id="xy4-X4-ceI"/>
                                                     </constraints>
                                                 </view>
                                                 <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
@@ -306,7 +316,7 @@
                                                                                         </userDefinedRuntimeAttribute>
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </customFormatter>
-                                                                                <font key="font" metaFont="system" size="11"/>
+                                                                                <font key="font" metaFont="smallSystem"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
