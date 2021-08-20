@@ -14,7 +14,7 @@ public enum BinaryDataReaderError: LocalizedError {
 }
 
 public class BinaryDataReader {
-    private(set) public var data: Data
+    public var data: Data
     public var bigEndian: Bool
     private(set) public var position: Int
     public var remainingBytes: Int {

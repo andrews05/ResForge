@@ -6,7 +6,7 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     
     let resource: Resource
     let manager: RFEditorManager
-    private let template: Resource
+    let template: Resource
     private let filter: TemplateFilter.Type?
     private var resourceStructure: ElementList!
     private var validStructure = false
@@ -132,6 +132,7 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
                 let textField = (view as! NSTableCellView).textField!
                 textField.stringValue = item.displayLabel
                 textField.alignment = item is ElementLSTB ? .left : .right
+                textField.allowsDefaultTighteningForTruncation = true
             }
             view.toolTip = item.tooltip
         } else {

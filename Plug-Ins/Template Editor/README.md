@@ -4,7 +4,7 @@ The following is a list of template field types that have been defined by variou
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
 * Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (64 of 95)
 * All of [Rezilla's additions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
-* ResForge's own additions (20)
+* ResForge's own additions (21)
 
 ### Key
 
@@ -67,7 +67,7 @@ DOUB|Double Precision Float|8 bytes||✓||🟢
 EXTN|Extended 80-bit SANE Float|10 bytes||✓||🔴
 XT96|Extended 96-bit SANE Float|12 bytes||✓||🔴
 UNIV|THINK C Universal 96-bit Float|12 bytes||✓||🔴
-DBDB|PowerPC Double Double|16 bytes||✓||🔴
+DBDB|PowerPC Double Double|16 bytes||✓||🟡
 FIXD|16:16 Fixed Point Number|4 bytes||✓||🟡
 FRAC|2:30 Fixed Point Number|4 bytes||✓||🟡
 SFRC|0:16 Fixed Point Small Fraction|2 bytes||✓||🟡
@@ -139,7 +139,6 @@ LSTS|Begin Sized List Item|0 bytes||✓||🟢
 LSTZ|Begin List Item, Ending in Zero Byte|0 bytes|✓|✓|✓|🟢
 LSTE|End of any List Item|0 or 1 bytes|✓|✓|✓|🟢
 SELF|List Item is Entire TMPL|any||✓||🔴
-Rnmm|Repeat Following Field $_nmm_ Times|0 bytes||||🟢
 
 ### Key Values for Subsequent Variant Items
 
@@ -206,20 +205,17 @@ BIGE|Use Little-Endian Data Parsing|0 bytes||✓||🟢
 BNDN|Use Big-Endian Data Parsing (hidden)|0 bytes||✓||🟢
 LNDN|Use Little-Endian Data Parsing (hidden)|0 bytes||✓||🟢
 
-### Symbolic Constants
+### Cosmetic and Structural Control
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 CASE|Symbolic and/or Default Value|0 bytes||✓|✓|🟢
 CASR|Symbolic Value Range|0 bytes||||🟢
-
-### Cosmetic and Layout Control
-
-Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
-----|-----------|----|-------|----------|-------|--------
 DVDR|Divider Line with Comment|0 bytes||✓|✓|🟢
 RREF|Static Resource Reference|0 bytes||||🟢
 PACK|Combine Other Fields|0 bytes||||🟢
+Rnmm|Repeat Following Field $_nmm_ Times|0 bytes||||🟢
+TMPL|Insert Named Template|0 bytes||||🟢
 
 ### Inserting or Deleting Data in Existing Resources
 

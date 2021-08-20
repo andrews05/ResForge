@@ -209,6 +209,22 @@ class ElementList {
         }
         let type = typeCode.stringValue
         
+        if type == "TMPL" {
+            // Insert another template's data
+            let el = Element(type: type, label: label)!
+            guard !label.isEmpty else {
+                throw TemplateError.invalidStructure(el, "Template name must not be blank.")
+            }
+            guard label != controller.template.name else {
+                throw TemplateError.invalidStructure(el, "Cannot include self.")
+            }
+            guard let template = controller.manager.findResource(type: ResourceType("TMPL"), name: label, currentDocumentOnly: false) else {
+                throw TemplateError.invalidStructure(el, "Template could not be found.")
+            }
+            reader.data.insert(contentsOf: template.data, at: reader.position)
+            return try self.readElement(from: reader)
+        }
+        
         var elType = Self.fieldRegistry[type]
         
         // check for Xnnn type - currently using resorcerer's nmm restriction to reserve all-alpha types (e.g. FACE) for potential future use
@@ -335,7 +351,6 @@ class ElementList {
         "ZCNT": ElementOCNT<Int16>.self,
         "LZCT": ElementOCNT<Int32>.self,
         "FCNT": ElementFCNT.self,           // fixed count with count in label (why didn't they choose Lnnn?)
-        "R"   : Element.self,               // single-element repeat (ResForge) (never initialised but included here for reference)
         // list begin/end
         "LSTB": ElementLSTB.self,
         "LSTS": ElementLSTB.self,
@@ -398,6 +413,10 @@ class ElementList {
         "DVDR": ElementDVDR.self,           // divider
         "RREF": ElementRREF.self,           // static reference to another resource (ResForge)
         "PACK": ElementPACK.self,           // pack other elements together (ResForge)
+        
+        // psuedo-elements - these are handled by the parser and are never initialised but included here for reference
+        "R"   : Element.self,               // single-element repeat (ResForge)
+        "TMPL": Element.self,               // include another template (ResForge)
 
         // and some faked ones just to increase compatibility
         "SFRC": ElementDBYT<UInt16>.self,   // 0.16 fixed fraction
@@ -405,6 +424,7 @@ class ElementList {
         "FWID": ElementDBYT<UInt16>.self,   // 4.12 fixed fraction
         "FRAC": ElementDBYT<UInt32>.self,   // 2.30 fixed fraction
         "FIXD": ElementDBYT<UInt32>.self,   // 16.16 fixed fraction
+        "DBDB": ElementDBYT<UInt64>.self,   // double double
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
         "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)
