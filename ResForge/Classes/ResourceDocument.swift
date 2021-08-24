@@ -677,7 +677,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             for resource in resources {
                 directory.remove(resource)
             }
-            return nil
+            return []
         }
         self.undoManager?.setActionName(NSLocalizedString(resources.count == 1 ? "Delete Resource" : "Delete Resources", comment: ""))
     }

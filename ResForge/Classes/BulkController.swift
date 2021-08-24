@@ -1,55 +1,71 @@
 import Cocoa
 import RFSupport
 
-class BulkController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource {
-    private var resources: [Resource] = []
+class BulkController: OutlineController {
     private var elements: [TemplateField] = []
     private var resource: Resource!
     private var rowData: [Any?] = []
-    private(set) var table = NSOutlineView(frame: NSMakeRect(0, 0, 500, 500))
     private let idCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("id"))
     private let nameCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("name"))
     
-    init?(type: ResourceType, manager: RFEditorManager) {
-        guard let template = manager.findResource(type: ResourceType("TMPS"), name: type.code, currentDocumentOnly: false) else {
+    init?(document: ResourceDocument) {
+        guard let type = document.dataSource.currentType,
+              let template = document.editorManager.findResource(type: ResourceType("TMPS"), name: type.code)
+        else {
             return nil
         }
         do {
-            elements = try PluginRegistry.templateEditor.parseSimpleTemplate(template, manager: manager)
+            elements = try PluginRegistry.templateEditor.parseSimpleTemplate(template, manager: document.editorManager)
         } catch {
             return nil
         }
+        
         super.init()
-        resources = manager.allResources(ofType: type, currentDocumentOnly: true)
+        self.outlineView = NSOutlineView(frame: NSMakeRect(0, 0, 500, 500))
+        self.document = document
+        self.dataSource = document.dataSource
+        
         idCol.headerCell.title = "ID"
         idCol.width = 60
-        table.addTableColumn(idCol)
+        outlineView.addTableColumn(idCol)
         nameCol.headerCell.title = "Name"
         nameCol.width = 150
-        table.addTableColumn(nameCol)
+        outlineView.addTableColumn(nameCol)
         for (i, element) in elements.enumerated() where element.visible {
             let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
             column.headerCell.title = element.displayLabel
             column.width = element.width == 0 ? 150 : min(element.width, 150)
-            table.addTableColumn(column)
+            outlineView.addTableColumn(column)
         }
-        table.indentationPerLevel = 0
-        table.rowHeight = 19
-        table.usesAlternatingRowBackgroundColors = true
-        table.delegate = self
-        table.dataSource = self
+        outlineView.indentationPerLevel = 0
+        outlineView.rowHeight = 19
+        outlineView.usesAlternatingRowBackgroundColors = true
+        outlineView.allowsMultipleSelection = true
+        outlineView.focusRingType = .none
+        outlineView.delegate = self
+        outlineView.dataSource = self
+        outlineView.target = self
+        outlineView.doubleAction = #selector(doubleClickItems(_:))
     }
     
-    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        return resources.count
+    private func load(resource: Resource) {
+        if resource !== self.resource {
+            self.resource = resource
+            let reader = BinaryDataReader(resource.data)
+            rowData.removeAll()
+            for element in elements {
+                try? element.readData(from: reader)
+                rowData.append(element.visible ? element.value(forKey: "value") : nil)
+            }
+        }
     }
     
-    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        return resources[index]
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        return false
+    override func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
+        if !inlineUpdate {
+            outlineView.beginUpdates()
+            outlineView.moveItem(at: oldIndex, inParent: nil, to: newIndex, inParent: nil)
+            outlineView.endUpdates()
+        }
     }
     
     func outlineView(_ outlineView: NSOutlineView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, item: Any) {
@@ -72,18 +88,6 @@ class BulkController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource {
         return tableColumn != idCol
     }
     
-    private func load(resource: Resource) {
-        if resource !== self.resource {
-            self.resource = resource
-            let reader = BinaryDataReader(resource.data)
-            rowData.removeAll()
-            for element in elements {
-                try? element.readData(from: reader)
-                rowData.append(element.visible ? element.value(forKey: "value") : nil)
-            }
-        }
-    }
-    
     func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {
         let resource = item as! Resource
         if tableColumn == idCol {
@@ -99,6 +103,7 @@ class BulkController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource {
     
     func outlineView(_ outlineView: NSOutlineView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, byItem item: Any?) {
         let resource = item as! Resource
+        inlineUpdate = true
         if tableColumn == nameCol {
             resource.name = object as! String
         } else if let tableColumn = tableColumn {
@@ -112,23 +117,6 @@ class BulkController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource {
             }
             resource.data = writer.data
         }
+        inlineUpdate = false
     }
-    
-//    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-//        if rowData[row] == nil {
-//            let reader = BinaryDataReader(resources[row].data)
-//            var values: [Any] = []
-//            for element in elements {
-//                try? element.readData(from: reader)
-//                let value = element.value(forKey: "value")!
-//                values.append(value)
-//            }
-//            rowData[row] = values
-//        }
-//        let i = Int(tableColumn!.identifier.rawValue)!
-//        let view = NSTextField()
-//        view.objectValue = rowData[row]![i]
-//        view.formatter = elements[i].formatter
-//        return view
-//    }
 }

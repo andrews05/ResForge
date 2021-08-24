@@ -146,6 +146,7 @@
 		49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */; };
 		49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE738F2550BC8D00BEABDB /* KestrelTools.swift */; };
 		49F2EAA526D50F4B0020D70E /* BulkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7A3B926D0E59100EF885F /* BulkController.swift */; };
+		49F2EAAB26D5AB5E0020D70E /* StandardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F2EAAA26D5AB5E0020D70E /* StandardController.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		49FE7B49253A7E7700D2219D /* CaseableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE7B48253A7E7700D2219D /* CaseableElement.swift */; };
@@ -497,6 +498,7 @@
 		49EE72D82550B79600BEABDB /* KestrelTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KestrelTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		49EE72DA2550B79600BEABDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49EE738F2550BC8D00BEABDB /* KestrelTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KestrelTools.swift; sourceTree = "<group>"; };
+		49F2EAAA26D5AB5E0020D70E /* StandardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardController.swift; sourceTree = "<group>"; };
 		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
 		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStatus.swift; sourceTree = "<group>"; };
@@ -959,6 +961,7 @@
 				49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */,
 				49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */,
 				49DB6A1B24F375A100BE0F0F /* OutlineController.swift */,
+				49F2EAAA26D5AB5E0020D70E /* StandardController.swift */,
 				49E7A3B926D0E59100EF885F /* BulkController.swift */,
 				49DB6A1D24F377A400BE0F0F /* CollectionController.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
@@ -1422,6 +1425,7 @@
 			files = (
 				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
 				49F2EAA526D50F4B0020D70E /* BulkController.swift in Sources */,
+				49F2EAAB26D5AB5E0020D70E /* StandardController.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
 				49655DFA24DE6DA200D6AFF6 /* ResourceError.swift in Sources */,
 				491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */,

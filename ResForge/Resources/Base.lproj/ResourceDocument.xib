@@ -478,7 +478,7 @@
                 <outlet property="typeList" destination="u10-wc-uhV" id="23Z-LS-Zzh"/>
             </connections>
         </customObject>
-        <customObject id="KZo-Ug-Xhc" customClass="OutlineController" customModule="ResForge" customModuleProvider="target">
+        <customObject id="KZo-Ug-Xhc" customClass="StandardController" customModule="ResForge" customModuleProvider="target">
             <connections>
                 <outlet property="dataSource" destination="32" id="BwU-t4-Reo"/>
                 <outlet property="document" destination="-2" id="v0M-hs-4Ud"/>

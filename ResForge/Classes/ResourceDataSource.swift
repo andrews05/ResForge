@@ -16,7 +16,6 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     private(set) var useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
     private(set) var currentType: ResourceType?
     private var resourcesView: ResourcesView!
-    private var bulk: BulkController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -77,11 +76,12 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     func toggleBulkMode() {
-        if let type = currentType,
-           let bulk = BulkController(type: type, manager: document.editorManager) {
-            self.bulk = bulk
-            scrollView.documentView = bulk.table
-//            table.reloadData()
+        if currentType != nil, let bulk = BulkController(document: document) {
+            let selected = self.selectedResources()
+            resourcesView = bulk
+            scrollView.documentView = bulk.outlineView
+            resourcesView.select(selected)
+            scrollView.window?.makeFirstResponder(scrollView.documentView)
         }
     }
     
@@ -90,7 +90,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     /// Reload the data source after performing a given operation. The resources returned from the operation will be selected.
     ///
     /// This function is important for managing undo operations when adding/removing resources. It creates an undo group and ensures that the data source is always reloaded after the operation is peformed, even when undoing/redoing.
-    func reload(after operation: () -> [Resource]?) {
+    func reload(after operation: () -> [Resource]) {
         document.undoManager?.beginUndoGrouping()
         self.willReload()
         self.reload(selecting: operation())
@@ -98,16 +98,16 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     /// Register intent to reload the data source before performing changes.
-    private func willReload(_ resources: [Resource]? = nil) {
+    private func willReload(_ resources: [Resource] = []) {
         document.undoManager?.registerUndo(withTarget: self, handler: { $0.reload(selecting: resources) })
     }
     
     /// Reload the view and select the given resources.
-    func reload(selecting resources: [Resource]? = nil, withUndo: Bool = true) {
+    func reload(selecting resources: [Resource] = [], withUndo: Bool = true) {
         typeList.reloadData()
         if useTypeList, !document.directory.allTypes.isEmpty {
             // Select the first available type if nothing else selected (-1 becomes 1)
-            let i = abs(typeList.row(forItem: resources?.first?.type ?? currentType))
+            let i = abs(typeList.row(forItem: resources.first?.type ?? currentType))
             typeList.selectRowIndexes([i], byExtendingSelection: false)
         } else {
             resourcesView = outlineController
@@ -115,11 +115,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             resourcesView.reload()
             scrollView.documentView = outlineView
         }
-        if let resources = resources {
-            resourcesView.select(resources)
-        } else {
-            NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
-        }
+        resourcesView.select(resources)
         if withUndo {
             document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
         }
