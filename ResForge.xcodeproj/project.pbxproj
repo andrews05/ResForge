@@ -141,9 +141,11 @@
 		49DA3A8B2550C65900821A7E /* rle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044062472064F0035C0FA /* rle.cpp */; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
 		49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1D24F377A400BE0F0F /* CollectionController.swift */; };
+		49E7A3C626D2058400EF885F /* ElementRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7A3C426D2055E00EF885F /* ElementRegistry.swift */; };
 		49EE73012550B99200BEABDB /* SpriteWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49EE72AC2550A7F300BEABDB /* SpriteWindow.xib */; };
 		49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */; };
 		49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE738F2550BC8D00BEABDB /* KestrelTools.swift */; };
+		49F2EAA526D50F4B0020D70E /* BulkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7A3B926D0E59100EF885F /* BulkController.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		49FE7B49253A7E7700D2219D /* CaseableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE7B48253A7E7700D2219D /* CaseableElement.swift */; };
@@ -488,6 +490,8 @@
 		49DA3A4B2550BD2800821A7E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
+		49E7A3B926D0E59100EF885F /* BulkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkController.swift; sourceTree = "<group>"; };
+		49E7A3C426D2055E00EF885F /* ElementRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRegistry.swift; sourceTree = "<group>"; };
 		49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteWindowController.swift; sourceTree = "<group>"; };
 		49EE72AD2550A7F300BEABDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SpriteWindow.xib; sourceTree = "<group>"; };
 		49EE72D82550B79600BEABDB /* KestrelTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KestrelTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -597,6 +601,7 @@
 				4945DC232531689900856385 /* LabelView.swift */,
 				49CF9ADF25D1D80B009A217C /* DataView.swift */,
 				494180ED2545575B008CBABE /* TemplateError.swift */,
+				49E7A3C426D2055E00EF885F /* ElementRegistry.swift */,
 				4945DCB8253248DA00856385 /* ElementList.swift */,
 				4945DD062532DAE500856385 /* Element.swift */,
 				49FE7B48253A7E7700D2219D /* CaseableElement.swift */,
@@ -954,6 +959,7 @@
 				49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */,
 				49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */,
 				49DB6A1B24F375A100BE0F0F /* OutlineController.swift */,
+				49E7A3B926D0E59100EF885F /* BulkController.swift */,
 				49DB6A1D24F377A400BE0F0F /* CollectionController.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
@@ -1415,6 +1421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
+				49F2EAA526D50F4B0020D70E /* BulkController.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
 				49655DFA24DE6DA200D6AFF6 /* ResourceError.swift in Sources */,
 				491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */,
@@ -1456,6 +1463,7 @@
 				4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */,
 				49D1858625422AA300EA380C /* ElementPNT.swift in Sources */,
 				4935CD6D253C10210044BC45 /* ElementFCNT.swift in Sources */,
+				49E7A3C626D2058400EF885F /* ElementRegistry.swift in Sources */,
 				49C3AC72253E6C7C0020037B /* ElementRSID.swift in Sources */,
 				4951AB4D25341BBE009A8285 /* ElementDBYT.swift in Sources */,
 				4945DC512531745600856385 /* LabelView.swift in Sources */,

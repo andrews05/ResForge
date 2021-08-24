@@ -16,6 +16,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     private(set) var useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
     private(set) var currentType: ResourceType?
     private var resourcesView: ResourcesView!
+    private var bulk: BulkController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -72,6 +73,15 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         if self.selectionCount() == 0 {
             // No selection was made, we need to post a notification anyway
             NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
+        }
+    }
+    
+    func toggleBulkMode() {
+        if let type = currentType,
+           let bulk = BulkController(type: type, manager: document.editorManager) {
+            self.bulk = bulk
+            scrollView.documentView = bulk.table
+//            table.reloadData()
         }
     }
     

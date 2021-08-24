@@ -92,7 +92,7 @@
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hK2-jc-2bQ">
                                                                     <rect key="frame" x="39" y="3" width="11" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="+" id="dRD-LF-9mc">
-                                                                        <font key="font" metaFont="system" size="11"/>
+                                                                        <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
@@ -156,7 +156,7 @@
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JmV-fP-9o5">
                                                             <rect key="frame" x="4" y="6" width="11" height="14"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="+" id="e9n-2Z-w6i">
-                                                                <font key="font" metaFont="system" size="11"/>
+                                                                <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
@@ -309,13 +309,6 @@
                                                                             <rect key="frame" x="2" y="-16" width="186" height="15"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" id="1e9-Xq-HQi">
-                                                                                <customFormatter key="formatter" id="Lz0-jS-5oN" customClass="MacRomanFormatter" customModule="RFSupport">
-                                                                                    <userDefinedRuntimeAttributes>
-                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
-                                                                                            <integer key="value" value="255"/>
-                                                                                        </userDefinedRuntimeAttribute>
-                                                                                    </userDefinedRuntimeAttributes>
-                                                                                </customFormatter>
                                                                                 <font key="font" metaFont="smallSystem"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

@@ -11,11 +11,11 @@ class BulkController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource {
     private let nameCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("name"))
     
     init?(type: ResourceType, manager: RFEditorManager) {
-        guard let template = manager.findResource(type: ResourceType("TMPB"), name: type.code, currentDocumentOnly: false) else {
+        guard let template = manager.findResource(type: ResourceType("TMPS"), name: type.code, currentDocumentOnly: false) else {
             return nil
         }
         do {
-            elements = try TemplateWindowController.parseBasicTemplate(template, manager: manager)
+            elements = try PluginRegistry.templateEditor.parseSimpleTemplate(template, manager: manager)
         } catch {
             return nil
         }
@@ -30,7 +30,7 @@ class BulkController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource {
         for (i, element) in elements.enumerated() where element.visible {
             let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
             column.headerCell.title = element.displayLabel
-            column.width = element is ElementCSTR ? 150 : 60
+            column.width = element.width == 0 ? 150 : min(element.width, 150)
             table.addTableColumn(column)
         }
         table.indentationPerLevel = 0
