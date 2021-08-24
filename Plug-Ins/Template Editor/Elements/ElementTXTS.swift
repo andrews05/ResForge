@@ -21,7 +21,8 @@ class ElementTXTS: ElementCSTR {
     }
     
     override func readData(from reader: BinaryDataReader) throws {
-        let length = min(reader.remainingBytes, maxLength)
+        let end = reader.data[reader.position...].firstIndex(of: 0) ?? reader.data.endIndex
+        let length = min(end - reader.position, maxLength)
         
         value = try reader.readString(length: length, encoding: .macOSRoman)
         try reader.advance(padding.length(length))
