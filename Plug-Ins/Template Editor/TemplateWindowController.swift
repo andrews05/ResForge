@@ -17,6 +17,10 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
         return "TemplateWindow"
     }
     
+    class func parseSimpleTemplate(_ template: Resource, manager: RFEditorManager) throws -> [TemplateField] {
+        return try ElementRegistry.parseTemplate(template, manager: manager, simple: true)
+    }
+    
     required init?(resource: Resource, manager: RFEditorManager, template: Resource, filter: TemplateFilter.Type?) {
         self.resource = resource
         self.manager = manager
@@ -65,7 +69,7 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
         if let filter = filter {
             resourceStructure.insert(ElementDVDR(type: "DVDR", label: "Filter Enabled: \(filter.name)"))
         }
-        validStructure = resourceStructure.readTemplate(data: template.data)
+        validStructure = resourceStructure.readTemplate(template)
         if validStructure && !resource.data.isEmpty {
             do {
                 let data = try filter?.filter(data: resource.data, for: resource.typeCode) ?? resource.data

@@ -67,7 +67,7 @@ DOUB|Double Precision Float|8 bytes||✓||🟢
 EXTN|Extended 80-bit SANE Float|10 bytes||✓||🔴
 XT96|Extended 96-bit SANE Float|12 bytes||✓||🔴
 UNIV|THINK C Universal 96-bit Float|12 bytes||✓||🔴
-DBDB|PowerPC Double Double|16 bytes||✓||🟡
+DBDB|PowerPC Double Double|16 bytes||✓||🔴
 FIXD|16:16 Fixed Point Number|4 bytes||✓||🟡
 FRAC|2:30 Fixed Point Number|4 bytes||✓||🟡
 SFRC|0:16 Fixed Point Small Fraction|2 bytes||✓||🟡

@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class Element: ValueTransformer, NSTextFieldDelegate {
+class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
     static var sharedFormatters: [String: Formatter] = [:]
     
     /// Type code of this field.
