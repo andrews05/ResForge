@@ -27,13 +27,20 @@ class ElementCSTR: CaseableElement {
     var maxLength = Int(UInt32.max)
     var padding = StringPadding.none
     
-    override func configure() throws {
-        try super.configure()
-        try self.configurePadding()
-        self.width = (self.cases == nil && maxLength > 32) ? 0 : 240
+    required init(type: String, label: String, tooltip: String? = nil) {
+        super.init(type: type, label: label, tooltip: tooltip)
+        self.configurePadding()
+        self.width = 240
     }
     
-    func configurePadding() throws {
+    override func configure() throws {
+        try super.configure()
+        if self.cases == nil && maxLength > 32 {
+            self.width = 0
+        }
+    }
+    
+    func configurePadding() {
         switch type {
         case "CSTR":
             padding = .none

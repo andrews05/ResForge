@@ -2,18 +2,22 @@ import RFSupport
 
 // Implements TXTS, Tnnn
 class ElementTXTS: ElementCSTR {
-    override func configurePadding() throws {
+    override func configurePadding() {
         switch self.type {
         case "TXTS":
-            guard self.isAtEnd() else {
-                throw TemplateError.unboundedElement(self)
-            }
             padding = .none
         default:
             let nnn = Element.variableTypeValue(type)
             padding = .fixed(nnn)
             maxLength = nnn
         }
+    }
+    
+    override func configure() throws {
+        guard self.type != "TXTS" || self.isAtEnd() else {
+            throw TemplateError.unboundedElement(self)
+        }
+        try super.configure()
     }
     
     override func readData(from reader: BinaryDataReader) throws {

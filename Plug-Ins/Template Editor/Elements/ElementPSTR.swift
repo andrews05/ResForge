@@ -2,7 +2,7 @@ import RFSupport
 
 // Implements PSTR, BSTR, WSTR, LSTR, OSTR, ESTR, Pnnn
 class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: ElementCSTR {
-    override func configurePadding() throws {
+    override func configurePadding() {
         maxLength = Int(T.max)
         switch type {
         case "PSTR", "BSTR", "WSTR", "LSTR":

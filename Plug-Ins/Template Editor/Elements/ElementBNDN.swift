@@ -5,7 +5,7 @@ import RFSupport
 class ElementBNDN: Element, GroupElement {
     private let bigEndian: Bool
     
-    required init!(type: String, label: String, tooltip: String? = nil) {
+    required init(type: String, label: String, tooltip: String? = nil) {
         bigEndian = type.first == "B"
         super.init(type: type, label: label, tooltip: tooltip)
         self.rowHeight = 18

@@ -4,9 +4,9 @@ import RFSupport
 class ElementREAL: CaseableElement {
     @objc private var value: Float = 0
     
-    override func configure() throws {
+    required init(type: String, label: String, tooltip: String? = nil) {
+        super.init(type: type, label: label, tooltip: tooltip)
         self.width = 90
-        try super.configure()
     }
     
     override func readData(from reader: BinaryDataReader) throws {

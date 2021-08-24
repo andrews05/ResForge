@@ -9,7 +9,8 @@ class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
         set { tValue = newValue as! T }
     }
     
-    override func configure() throws {
+    required init(type: String, label: String, tooltip: String? = nil) {
+        super.init(type: type, label: label, tooltip: tooltip)
         switch T.bitWidth/8 {
         case 4:
             self.width = 90
@@ -18,7 +19,6 @@ class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
         default:
             break
         }
-        try super.configure()
     }
     
     override func readData(from reader: BinaryDataReader) throws {

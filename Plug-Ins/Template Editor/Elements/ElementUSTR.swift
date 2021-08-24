@@ -3,7 +3,7 @@ import RFSupport
 
 // Implements USTR, Unnn
 class ElementUSTR: ElementCSTR {
-    override func configurePadding() throws {
+    override func configurePadding() {
         switch type {
         case "USTR":
             padding = .none
