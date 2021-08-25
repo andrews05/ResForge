@@ -42,19 +42,29 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         return dataSource.currentType
     }
     
-    func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
-        let old: IndexPath = [0, oldIndex]
-        let new: IndexPath = [0, newIndex]
-        // Collection view doesn't retain selection when reloading - we need to keep track of it ourselves
-        let selected = collectionView.selectionIndexPaths.contains(old)
-        if old == new {
-            collectionView.reloadItems(at: [new])
-        } else {
-            collectionView.animator().moveItem(at: old, to: new)
-            collectionView.animator().reloadItems(at: [new])
-        }
-        if selected {
-            collectionView.selectItems(at: [new], scrollPosition: .nearestHorizontalEdge)
+    func updated(resource: Resource, oldIndex: Int?) {
+        let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
+        if let oldIndex = oldIndex {
+            let old: IndexPath = [0, oldIndex]
+            if let newIndex = newIndex {
+                let new: IndexPath = [0, newIndex]
+                // Collection view doesn't retain selection when reloading - we need to keep track of it ourselves
+                let selected = collectionView.selectionIndexPaths.contains(old)
+                if old == new {
+                    collectionView.reloadItems(at: [new])
+                } else {
+                    collectionView.animator().moveItem(at: old, to: new)
+                    collectionView.animator().reloadItems(at: [new])
+                }
+                if selected {
+                    collectionView.selectItems(at: [new], scrollPosition: .nearestHorizontalEdge)
+                }
+            } else {
+                collectionView.animator().deleteItems(at: [old])
+            }
+        } else if let newIndex = newIndex {
+            let new: IndexPath = [0, newIndex]
+            collectionView.animator().insertItems(at: [new])
         }
     }
     

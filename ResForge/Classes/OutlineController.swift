@@ -79,55 +79,31 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         }
     }
     
-    func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
-        let parent = dataSource.currentType == nil ? resource.type : nil
-        if inlineUpdate {
-            // The resource has been edited inline, perform the move async to ensure the first responder has been properly updated
-            DispatchQueue.main.async { [self] in
-                outlineView.moveItem(at: oldIndex, inParent: parent, to: newIndex, inParent: parent)
-                outlineView.scrollRowToVisible(outlineView.selectedRow)
-            }
-        } else {
-            outlineView.moveItem(at: oldIndex, inParent: parent, to: newIndex, inParent: parent)
-            outlineView.reloadItem(resource)
-        }
+    func updated(resource: Resource, oldIndex: Int?) {
+        // Should be overriden by sub-classes
     }
     
-    // MARK: - Delegate functions
+    func updateRow(oldIndex: Int?, newIndex: Int?, parent: Any?) {
+        if let oldIndex = oldIndex {
+            if let newIndex = newIndex {
+                outlineView.moveItem(at: oldIndex, inParent: parent, to: newIndex, inParent: parent)
+            } else {
+                outlineView.removeItems(at: IndexSet([oldIndex]), inParent: parent)
+            }
+        } else if let newIndex = newIndex {
+            outlineView.insertItems(at: IndexSet([newIndex]), inParent: parent)
+        }
+    }
     
     func outlineViewSelectionDidChange(_ notification: Notification) {
         NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
-    }
-    
-    // MARK: - DataSource functions
-    
-    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if let type = item as? ResourceType ?? dataSource.currentType {
-            return document.directory.filteredResources(type: type)[index]
-        } else {
-            return document.directory.filteredTypes()[index]
-        }
     }
     
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
         return item is ResourceType
     }
     
-    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if let type = item as? ResourceType ?? dataSource.currentType {
-            return document.directory.filteredResources(type: type).count
-        } else {
-            return document.directory.filteredTypes().count
-        }
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
-        document.directory.sortDescriptors = outlineView.sortDescriptors
-        outlineView.reloadData()
-    }
-    
     func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
-        // This currently doesn't allow dragging an entire type collection (can still copy/paste it though)
         return item as? Resource
     }
 }

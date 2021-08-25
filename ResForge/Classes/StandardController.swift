@@ -13,6 +13,21 @@ class StandardController: OutlineController, NSTextFieldDelegate {
         }
     }
     
+    override func updated(resource: Resource, oldIndex: Int?) {
+        let parent = dataSource.currentType == nil ? resource.type : nil
+        let newIndex = document.directory.filteredResources(type: resource.type, sorted: true).firstIndex(of: resource)
+        if inlineUpdate {
+            // The resource has been edited inline, perform the move async to ensure the first responder has been properly updated
+            DispatchQueue.main.async { [self] in
+                self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: parent)
+                outlineView.scrollRowToVisible(outlineView.selectedRow)
+            }
+        } else {
+            self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: parent)
+            outlineView.reloadItem(resource)
+        }
+    }
+    
     // MARK: - Delegate functions
     
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
@@ -64,5 +79,28 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             break
         }
         inlineUpdate = false
+    }
+    
+    // MARK: - DataSource functions
+    
+    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        if let type = item as? ResourceType ?? dataSource.currentType {
+            return document.directory.filteredResources(type: type, sorted: true)[index]
+        } else {
+            return document.directory.filteredTypes()[index]
+        }
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+        if let type = item as? ResourceType ?? dataSource.currentType {
+            return document.directory.filteredResources(type: type, sorted: true).count
+        } else {
+            return document.directory.filteredTypes().count
+        }
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
+        document.directory.sortDescriptors = outlineView.sortDescriptors
+        outlineView.reloadData()
     }
 }

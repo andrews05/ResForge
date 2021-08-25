@@ -7,7 +7,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet var collectionView: NSCollectionView!
-    @IBOutlet var outlineController: OutlineController!
+    @IBOutlet var outlineController: StandardController!
     @IBOutlet var collectionController: CollectionController!
     @IBOutlet var attributesHolder: NSView!
     @IBOutlet var attributesDisplay: NSTextField!
@@ -15,7 +15,14 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     private(set) var useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
     private(set) var currentType: ResourceType?
-    private var resourcesView: ResourcesView!
+    private var resourcesView: ResourcesView! {
+        didSet {
+            if oldValue !== resourcesView {
+                // Reset the filter cache
+                document.directory.filter = document.directory.filter
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,13 +50,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     @objc func resourceDidUpdate(_ notification: Notification) {
         let resource = notification.userInfo!["resource"] as! Resource
-        if !useTypeList || resource.type == resourcesView.selectedType() {
-            if document.directory.filter.isEmpty {
-                resourcesView.updated(resource: resource, oldIndex: notification.userInfo!["oldIndex"] as! Int, newIndex: notification.userInfo!["newIndex"] as! Int)
-            } else {
-                // If filter is active we need to refresh it
-                self.updateFilter()
-            }
+        if !useTypeList || resource.type == currentType {
+            let oldIndex = notification.userInfo!["oldIndex"] as? Int
+            resourcesView.updated(resource: resource, oldIndex: oldIndex)
         }
     }
     
@@ -66,13 +69,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             document.directory.filter = filter
         }
         resourcesView.reload()
-        if selection.count != 0 {
-            resourcesView.select(selection)
-        }
-        if self.selectionCount() == 0 {
-            // No selection was made, we need to post a notification anyway
-            NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
-        }
+        resourcesView.select(selection)
     }
     
     func toggleBulkMode() {
@@ -266,7 +263,7 @@ class SourceCount: NSButton {
 }
 
 // Common interface for the OutlineController and CollectionController
-protocol ResourcesView {
+protocol ResourcesView: AnyObject {
     /// Reload the data in the view.
     func reload()
     
@@ -283,5 +280,5 @@ protocol ResourcesView {
     func selectedType() -> ResourceType?
     
     /// Notify the view that a resource has been updated.
-    func updated(resource: Resource, oldIndex: Int, newIndex: Int)
+    func updated(resource: Resource, oldIndex: Int?)
 }

@@ -60,13 +60,16 @@ class BulkController: OutlineController {
         }
     }
     
-    override func updated(resource: Resource, oldIndex: Int, newIndex: Int) {
-        if !inlineUpdate {
+    override func updated(resource: Resource, oldIndex: Int?) {
+        let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
+        if !inlineUpdate || newIndex == nil {
             outlineView.beginUpdates()
-            outlineView.moveItem(at: oldIndex, inParent: nil, to: newIndex, inParent: nil)
+            self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: nil)
             outlineView.endUpdates()
         }
     }
+    
+    // MARK: - Delegate functions
     
     func outlineView(_ outlineView: NSOutlineView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, item: Any) {
         guard let cell = cell as? NSTextFieldCell else {
@@ -74,18 +77,26 @@ class BulkController: OutlineController {
         }
         if tableColumn == idCol {
             cell.alignment = .right
+            cell.isEditable = false
         } else if tableColumn == nameCol {
             let formatter = MacRomanFormatter()
             formatter.stringLength = 255
             cell.formatter = formatter
+            cell.placeholderString = NSLocalizedString("Untitled Resource", comment: "")
         } else if let tableColumn = tableColumn {
             let element = elements[Int(tableColumn.identifier.rawValue)!]
             cell.formatter = element.formatter
         }
     }
     
-    func outlineView(_ outlineView: NSOutlineView, shouldEdit tableColumn: NSTableColumn?, item: Any) -> Bool {
-        return tableColumn != idCol
+    // MARK: - Data Source functions
+    
+    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        return document.directory.filteredResources(type: dataSource.currentType!)[index]
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+        return document.directory.filteredResources(type: dataSource.currentType!).count
     }
     
     func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {

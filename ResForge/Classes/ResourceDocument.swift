@@ -450,14 +450,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         if count > 0 {
             let selected = dataSource.selectedResources()
             if !selected.isEmpty || !directory.filter.isEmpty {
-                let matching: Int
-                if dataSource.useTypeList {
-                    matching = directory.filteredResources(type: dataSource.selectedType()!).count
-                } else if directory.filter.isEmpty {
-                    matching = count
-                } else {
-                    matching = directory.allTypes.flatMap(directory.filteredResources).count
-                }
+                let matching = directory.filteredCount(type: dataSource.currentType)
                 if selected.isEmpty {
                     status += ", \(matching) matching filter"
                 } else if !dataSource.useTypeList && directory.filter.isEmpty {

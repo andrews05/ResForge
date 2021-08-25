@@ -19,9 +19,6 @@ class ResourceDirectory {
     }
     var sortDescriptors: [NSSortDescriptor] = [] {
         didSet {
-            for type in allTypes {
-                resourcesByType[type]?.sort(using: sortDescriptors)
-            }
             filtered = [:]
         }
     }
@@ -67,16 +64,22 @@ class ResourceDirectory {
     }
     
     /// Get the resources for the given type that match the current filter.
-    func filteredResources(type: ResourceType) -> [Resource] {
-        if filter.isEmpty {
+    func filteredResources(type: ResourceType, sorted: Bool = false) -> [Resource] {
+        if filter.isEmpty && !sorted {
             return resourcesByType[type] ?? []
         }
-        let id = Int(filter)
         // Maintain a cache of the filtered resources
-        if filtered[type] == nil, let resouces = resourcesByType[type] {
-            filtered[type] = resouces.filter {
-                return $0.id == id || $0.name.localizedCaseInsensitiveContains(filter)
+        if filtered[type] == nil, var resouces = resourcesByType[type] {
+            if !filter.isEmpty {
+                let id = Int(filter)
+                resouces = resouces.filter {
+                    return $0.id == id || $0.name.localizedCaseInsensitiveContains(filter)
+                }
             }
+            if sorted {
+                resouces.sort(using: sortDescriptors)
+            }
+            filtered[type] = resouces
         }
         return filtered[type] ?? []
     }
@@ -86,8 +89,18 @@ class ResourceDirectory {
         if filter.isEmpty {
             return allTypes
         }
-        _ = allTypes.map(self.filteredResources)
+        _ = allTypes.map { self.filteredResources(type: $0, sorted: true) }
         return filtered.filter({ !$1.isEmpty }).keys.sorted(by: self.typeSort(_:_:))
+    }
+    
+    /// Get the count of resources matching the current filter.
+    func filteredCount(type: ResourceType? = nil) -> Int {
+        let list = filter.isEmpty ? resourcesByType : filtered
+        if let type = type {
+            return list[type]?.count ?? 0
+        } else {
+            return list.reduce(0) { $0 + $1.value.count }
+        }
     }
     
     private func typeSort(_ a: ResourceType, _ b: ResourceType) -> Bool {
@@ -102,7 +115,8 @@ class ResourceDirectory {
             allTypes.append(resource.type)
             allTypes.sort(by: self.typeSort(_:_:))
         } else {
-            resourcesByType[resource.type]!.insert(resource, using: sortDescriptors)
+            resourcesByType[resource.type]!.append(resource)
+            resourcesByType[resource.type]!.sort { $0.id < $1.id }
         }
     }
     
@@ -134,23 +148,22 @@ class ResourceDirectory {
         guard
             let document = document,
             let resource = notification.object as? Resource,
-            resource.document === document,
-            let idx = resourcesByType[resource.type]!.firstIndex(of: resource)
+            resource.document === document
         else {
             return
         }
-        resourcesByType[resource.type]!.sort(using: sortDescriptors)
-        let newIdx = resourcesByType[resource.type]!.firstIndex(of: resource)!
+        let list = filtered[resource.type] ?? resourcesByType[resource.type]!
+        let idx = list.firstIndex(of: resource)
+        resourcesByType[resource.type]!.sort { $0.id < $1.id }
         filtered.removeValue(forKey: resource.type)
         NotificationCenter.default.post(name: .DirectoryDidUpdateResource, object: self, userInfo: [
             "resource": resource,
-            "oldIndex": idx,
-            "newIndex": newIdx
+            "oldIndex": idx as Any
         ])
     }
     
     var count: Int {
-        resourcesByType.flatMap { $1 }.count
+        resourcesByType.reduce(0) { $0 + $1.value.count }
     }
     
     func resources() -> [Resource] {
@@ -227,25 +240,6 @@ extension Array where Element: Equatable {
     mutating func sort(using descriptors: [NSSortDescriptor]) {
         if !descriptors.isEmpty {
             self.sort(by: descriptors.compare)
-        }
-    }
-    
-    /// Insert an element into the sorted array at the position appropriate for the given NSSortDescriptors.
-    mutating func insert(_ newElement: Element, using descriptors: [NSSortDescriptor]) {
-        if !descriptors.isEmpty {
-            var slice : SubSequence = self[...]
-            // Perform a binary search
-            while !slice.isEmpty {
-                let middle = slice.index(slice.startIndex, offsetBy: slice.count / 2)
-                if descriptors.compare(slice[middle], newElement) {
-                    slice = slice[index(after: middle)...]
-                } else {
-                    slice = slice[..<middle]
-                }
-            }
-            self.insert(newElement, at: slice.startIndex)
-        } else {
-            self.append(newElement)
         }
     }
     
