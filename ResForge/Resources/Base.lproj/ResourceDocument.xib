@@ -469,10 +469,8 @@
                 <outlet property="attributesDisplay" destination="wkZ-ip-cVa" id="5uv-Dm-rjK"/>
                 <outlet property="attributesHolder" destination="Gn3-yc-Oy0" id="oCf-sd-fo4"/>
                 <outlet property="collectionController" destination="bpN-Hx-BgR" id="Szf-ze-LIG"/>
-                <outlet property="collectionView" destination="XSg-qL-KmL" id="c0I-fZ-ZmU"/>
                 <outlet property="document" destination="-2" id="121"/>
                 <outlet property="outlineController" destination="KZo-Ug-Xhc" id="Aov-yV-BjU"/>
-                <outlet property="outlineView" destination="145" id="154"/>
                 <outlet property="scrollView" destination="146" id="QYq-XB-rik"/>
                 <outlet property="splitView" destination="P36-7u-Lzi" id="BCv-y2-KAq"/>
                 <outlet property="typeList" destination="u10-wc-uhV" id="23Z-LS-Zzh"/>

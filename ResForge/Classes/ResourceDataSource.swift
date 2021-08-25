@@ -5,21 +5,36 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     @IBOutlet var splitView: NSSplitView!
     @IBOutlet var typeList: NSOutlineView!
     @IBOutlet var scrollView: NSScrollView!
-    @IBOutlet var outlineView: NSOutlineView!
-    @IBOutlet var collectionView: NSCollectionView!
     @IBOutlet var outlineController: StandardController!
     @IBOutlet var collectionController: CollectionController!
     @IBOutlet var attributesHolder: NSView!
     @IBOutlet var attributesDisplay: NSTextField!
     @IBOutlet weak var document: ResourceDocument!
     
-    private(set) var useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
-    private(set) var currentType: ResourceType?
+    private(set) var useTypeList = false {
+        didSet {
+            splitView.setPosition(useTypeList ? 110 : 0, ofDividerAt: 0)
+            self.reload(selecting: self.selectedResources(), withUndo: false)
+        }
+    }
+    private(set) var currentType: ResourceType? {
+        didSet {
+            attributesHolder.isHidden = currentType?.attributes.isEmpty ?? true
+            attributesDisplay.objectValue = currentType?.attributesDisplay
+        }
+    }
     private var resourcesView: ResourcesView! {
         didSet {
+            let view = resourcesView.prepareView()
             if oldValue !== resourcesView {
                 // Reset the filter cache
                 document.directory.filter = document.directory.filter
+                resourcesView.reload()
+                scrollView.documentView = view
+                (view as? NSOutlineView)?.scrollToBeginningOfDocument(self)
+                scrollView.window?.makeFirstResponder(view)
+            } else {
+                resourcesView.reload()
             }
         }
     }
@@ -28,13 +43,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         super.awakeFromNib()
         NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resourceDidUpdate(_:)), name: .DirectoryDidUpdateResource, object: document.directory)
-
-        resourcesView = outlineController
-        if useTypeList {
-            // Attempt to select first type by default
-            typeList.selectRowIndexes([1], byExtendingSelection: false)
-        }
-        self.updateSidebar()
+        useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
     }
     
     @objc func resourceTypeDidChange(_ notification: Notification) {
@@ -76,9 +85,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         if currentType != nil, let bulk = BulkController(document: document) {
             let selected = self.selectedResources()
             resourcesView = bulk
-            scrollView.documentView = bulk.outlineView
             resourcesView.select(selected)
-            scrollView.window?.makeFirstResponder(scrollView.documentView)
         }
     }
     
@@ -107,10 +114,8 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             let i = abs(typeList.row(forItem: resources.first?.type ?? currentType))
             typeList.selectRowIndexes([i], byExtendingSelection: false)
         } else {
-            resourcesView = outlineController
             currentType = nil
-            resourcesView.reload()
-            scrollView.documentView = outlineView
+            resourcesView = outlineController
         }
         resourcesView.select(resources)
         if withUndo {
@@ -125,7 +130,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     /// Return a flat list of all resources in the current selection, optionally including resources within selected type lists.
     func selectedResources(deep: Bool = false) -> [Resource] {
-        return resourcesView.selectedResources(deep: deep)
+        return resourcesView?.selectedResources(deep: deep) ?? []
     }
     
     /// Return the currently selected type.
@@ -137,18 +142,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     func toggleSidebar() {
         useTypeList = !useTypeList
-        self.updateSidebar()
-        self.reload(selecting: self.selectedResources(), withUndo: false)
         UserDefaults.standard.set(useTypeList, forKey: RFDefaults.showSidebar)
-    }
-    
-    private func updateSidebar() {
-        if !useTypeList {
-            attributesHolder.isHidden = true
-        }
-        outlineView.indentationPerLevel = useTypeList ? 0 : 1
-        outlineView.tableColumns[0].width = useTypeList ? 60 : 70
-        splitView.setPosition(useTypeList ? 110 : 0, ofDividerAt: 0)
     }
     
     // Prevent dragging the divider
@@ -226,23 +220,12 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         let type = typeList.selectedItem as! ResourceType
         // Check if type actually changed, rather than just being reselected after a reload
         if currentType != type {
-            attributesHolder.isHidden = type.attributes.isEmpty
-            attributesDisplay.stringValue = type.attributesDisplay
-            if let provider = PluginRegistry.previewProviders[type.code] {
-                let size = provider.previewSize(for: type.code)
-                let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
-                layout.itemSize = NSSize(width: size+8, height: size+40)
+            currentType = type
+            if PluginRegistry.previewProviders[type.code] != nil {
                 resourcesView = collectionController
-                scrollView.documentView = collectionView
             } else {
                 resourcesView = outlineController
-                scrollView.documentView = outlineView
-                outlineView.scrollToBeginningOfDocument(self)
             }
-            currentType = type
-            resourcesView.reload()
-            // If the view changed we should make sure it is still first responder
-            scrollView.window?.makeFirstResponder(scrollView.documentView)
             NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
         } else {
             resourcesView.reload()
@@ -264,6 +247,8 @@ class SourceCount: NSButton {
 
 // Common interface for the OutlineController and CollectionController
 protocol ResourcesView: AnyObject {
+    func prepareView() -> NSView
+    
     /// Reload the data in the view.
     func reload()
     

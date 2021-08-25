@@ -13,6 +13,13 @@ class StandardController: OutlineController, NSTextFieldDelegate {
         }
     }
     
+    override func prepareView() -> NSView {
+        let typed = dataSource.currentType != nil
+        outlineView.indentationPerLevel = typed ? 0 : 1
+        outlineView.tableColumns[0].width = typed ? 60 : 70
+        return outlineView
+    }
+    
     override func updated(resource: Resource, oldIndex: Int?) {
         let parent = dataSource.currentType == nil ? resource.type : nil
         let newIndex = document.directory.filteredResources(type: resource.type, sorted: true).firstIndex(of: resource)

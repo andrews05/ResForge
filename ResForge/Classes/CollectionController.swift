@@ -6,6 +6,15 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     @IBOutlet weak var document: ResourceDocument!
     @IBOutlet weak var dataSource: ResourceDataSource!
     
+    func prepareView() -> NSView {
+        if let type = dataSource.currentType {
+            let size = PluginRegistry.previewProviders[type.code]!.previewSize(for: type.code)
+            let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
+            layout.itemSize = NSSize(width: size+8, height: size+40)
+        }
+        return collectionView
+    }
+    
     func reload() {
         collectionView.reloadData()
     }

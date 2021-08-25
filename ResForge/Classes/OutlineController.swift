@@ -28,6 +28,10 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         }
     }
     
+    func prepareView() -> NSView {
+        return outlineView
+    }
+    
     func reload() {
         outlineView.reloadData()
     }
