@@ -19,7 +19,12 @@ class ResourceDirectory {
     }
     var sortDescriptors: [NSSortDescriptor] = [] {
         didSet {
-            filtered = [:]
+            if sortDescriptors.count == 1 && sortDescriptors[0].key == "id" && sortDescriptors[0].ascending {
+                sortDescriptors = []
+            }
+            if sortDescriptors != oldValue {
+                filtered = [:]
+            }
         }
     }
     
@@ -64,8 +69,8 @@ class ResourceDirectory {
     }
     
     /// Get the resources for the given type that match the current filter.
-    func filteredResources(type: ResourceType, sorted: Bool = false) -> [Resource] {
-        if filter.isEmpty && !sorted {
+    func filteredResources(type: ResourceType) -> [Resource] {
+        if filter.isEmpty && sortDescriptors.isEmpty {
             return resourcesByType[type] ?? []
         }
         // Maintain a cache of the filtered resources
@@ -76,9 +81,7 @@ class ResourceDirectory {
                     return $0.id == id || $0.name.localizedCaseInsensitiveContains(filter)
                 }
             }
-            if sorted {
-                resouces.sort(using: sortDescriptors)
-            }
+            resouces.sort(using: sortDescriptors)
             filtered[type] = resouces
         }
         return filtered[type] ?? []
@@ -89,8 +92,9 @@ class ResourceDirectory {
         if filter.isEmpty {
             return allTypes
         }
-        _ = allTypes.map { self.filteredResources(type: $0, sorted: true) }
-        return filtered.filter({ !$1.isEmpty }).keys.sorted(by: self.typeSort(_:_:))
+        return allTypes.compactMap {
+            self.filteredResources(type: $0).isEmpty ? nil : $0
+        }
     }
     
     /// Get the count of resources matching the current filter.
@@ -103,20 +107,16 @@ class ResourceDirectory {
         }
     }
     
-    private func typeSort(_ a: ResourceType, _ b: ResourceType) -> Bool {
-        let compare = a.code.localizedCompare(b.code)
-        return compare == .orderedSame ? a.attributes.count < b.attributes.count : compare == .orderedAscending
-    }
-    
     private func addToTypedList(_ resource: Resource) {
         resource.document = document
         if resourcesByType[resource.type] == nil {
             resourcesByType[resource.type] = [resource]
-            allTypes.append(resource.type)
-            allTypes.sort(by: self.typeSort(_:_:))
+            allTypes.insert(resource.type) {
+                let compare = $0.code.localizedCompare($1.code)
+                return compare == .orderedSame ? $0.attributes.count < $1.attributes.count : compare == .orderedAscending
+            }
         } else {
-            resourcesByType[resource.type]!.append(resource)
-            resourcesByType[resource.type]!.sort { $0.id < $1.id }
+            resourcesByType[resource.type]!.insert(resource) { $0.id < $1.id }
         }
     }
     
@@ -194,8 +194,8 @@ class ResourceDirectory {
 
     /// Return an unused resource ID for a new resource of specified type.
     func uniqueID(for type: ResourceType, starting: Int = 128) -> Int {
-        // Get a sorted list of used ids
-        let used = self.resources(ofType: type).map({ $0.id }).sorted()
+        // Get a list of used ids (these will be in order)
+        let used = self.resources(ofType: type).map({ $0.id })
         // Find the index of the starting id
         guard var i = used.firstIndex(where: { $0 == starting }) else {
             return starting
@@ -205,6 +205,7 @@ class ResourceDirectory {
         let max = document.format.maxID
         while i != used.endIndex && id == used[i] {
             if id == max {
+                // WARN: This wraps back to 128 - if there are no unused ids (unlikely) then it will loop infinitely
                 id = min(used[0], 128)
                 i = 0
             } else {
@@ -241,6 +242,21 @@ extension Array where Element: Equatable {
         if !descriptors.isEmpty {
             self.sort(by: descriptors.compare)
         }
+    }
+    
+    /// Insert an element into the sorted array at the position appropriate for the given comparator function.
+    mutating func insert(_ newElement: Element, by comparator: (_ a: Self.Element, _ b: Self.Element) -> Bool) {
+        var slice : SubSequence = self[...]
+        // Perform a binary search
+        while !slice.isEmpty {
+            let middle = slice.index(slice.startIndex, offsetBy: slice.count / 2)
+            if comparator(slice[middle], newElement) {
+                slice = slice[index(after: middle)...]
+            } else {
+                slice = slice[..<middle]
+            }
+        }
+        self.insert(newElement, at: slice.startIndex)
     }
     
     /// Remove the first occurence of a given element.

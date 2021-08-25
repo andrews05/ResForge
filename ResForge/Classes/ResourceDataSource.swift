@@ -26,15 +26,12 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     private var resourcesView: ResourcesView! {
         didSet {
             let view = resourcesView.prepareView()
+            resourcesView.reload()
             if oldValue !== resourcesView {
-                // Reset the filter cache
-                document.directory.filter = document.directory.filter
-                resourcesView.reload()
                 scrollView.documentView = view
-                (view as? NSOutlineView)?.scrollToBeginningOfDocument(self)
                 scrollView.window?.makeFirstResponder(view)
-            } else {
-                resourcesView.reload()
+                // The outline header interferes with the scroll position, make sure we return to top
+                (view as? NSOutlineView)?.scrollToBeginningOfDocument(self)
             }
         }
     }
@@ -247,6 +244,7 @@ class SourceCount: NSButton {
 
 // Common interface for the OutlineController and CollectionController
 protocol ResourcesView: AnyObject {
+    /// Prepare the view to be displayed within the scroll view.
     func prepareView() -> NSView
     
     /// Reload the data in the view.

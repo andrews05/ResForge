@@ -4,12 +4,10 @@ import RFSupport
 class StandardController: OutlineController, NSTextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
+        // Default sort resources by id
         // Note: awakeFromNib is re-triggered each time a cell is created - be careful not to re-sort each time
         if outlineView.sortDescriptors.isEmpty {
-            // Default sort resources by id
             outlineView.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-        } else if document.directory.sortDescriptors.isEmpty {
-            document.directory.sortDescriptors = outlineView.sortDescriptors
         }
     }
     
@@ -17,12 +15,13 @@ class StandardController: OutlineController, NSTextFieldDelegate {
         let typed = dataSource.currentType != nil
         outlineView.indentationPerLevel = typed ? 0 : 1
         outlineView.tableColumns[0].width = typed ? 60 : 70
+        document.directory.sortDescriptors = outlineView.sortDescriptors
         return outlineView
     }
     
     override func updated(resource: Resource, oldIndex: Int?) {
         let parent = dataSource.currentType == nil ? resource.type : nil
-        let newIndex = document.directory.filteredResources(type: resource.type, sorted: true).firstIndex(of: resource)
+        let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
         if inlineUpdate {
             // The resource has been edited inline, perform the move async to ensure the first responder has been properly updated
             DispatchQueue.main.async { [self] in
@@ -92,7 +91,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         if let type = item as? ResourceType ?? dataSource.currentType {
-            return document.directory.filteredResources(type: type, sorted: true)[index]
+            return document.directory.filteredResources(type: type)[index]
         } else {
             return document.directory.filteredTypes()[index]
         }
@@ -100,7 +99,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         if let type = item as? ResourceType ?? dataSource.currentType {
-            return document.directory.filteredResources(type: type, sorted: true).count
+            return document.directory.filteredResources(type: type).count
         } else {
             return document.directory.filteredTypes().count
         }

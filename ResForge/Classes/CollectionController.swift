@@ -11,6 +11,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
             let size = PluginRegistry.previewProviders[type.code]!.previewSize(for: type.code)
             let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
             layout.itemSize = NSSize(width: size+8, height: size+40)
+            document.directory.sortDescriptors = []
         }
         return collectionView
     }

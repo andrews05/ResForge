@@ -60,6 +60,11 @@ class BulkController: OutlineController {
         }
     }
     
+    override func prepareView() -> NSView {
+        document.directory.sortDescriptors = []
+        return outlineView
+    }
+    
     override func updated(resource: Resource, oldIndex: Int?) {
         let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
         if !inlineUpdate || newIndex == nil {
