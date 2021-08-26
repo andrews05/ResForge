@@ -498,7 +498,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 return true
             }
             menuItem.title = NSLocalizedString("Enter Bulk Data Mode", comment: "")
-            if let type = dataSource.currentType, editorManager.findResource(type: PluginRegistry.simpleTemplateType, name: type.code) != nil {
+            if let type = dataSource.currentType, editorManager.findResource(type: PluginRegistry.basicTemplateType, name: type.code) != nil {
                 return true
             }
             return false

@@ -7,7 +7,7 @@ enum BulkError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .templateError:
-            return NSLocalizedString("Invalid simple template.", comment: "")
+            return NSLocalizedString("Invalid basic template.", comment: "")
         }
     }
     
@@ -50,10 +50,10 @@ class BulkController: OutlineController {
     }
     
     override func prepareView() throws -> NSView {
-        let template = document.editorManager.findResource(type: PluginRegistry.simpleTemplateType,
+        let template = document.editorManager.findResource(type: PluginRegistry.basicTemplateType,
                                                            name: document.dataSource.currentType!.code)!
         do {
-            elements = try PluginRegistry.templateEditor.parseSimpleTemplate(template, manager: document.editorManager)
+            elements = try PluginRegistry.templateEditor.parseBasicTemplate(template, manager: document.editorManager)
         } catch let error {
             throw BulkError.templateError(error)
         }

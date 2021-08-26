@@ -15,7 +15,7 @@ enum TemplateError: LocalizedError, RecoverableError {
         case .corrupt:
             return NSLocalizedString("Corrupt or insufficient data.", comment: "")
         case let .unknownElement(type):
-            return String(format: NSLocalizedString("Unknown element type ‘%@’.", comment: ""), type)
+            return String(format: NSLocalizedString("Unsupported element type ‘%@’.", comment: ""), type)
         case let .unclosedElement(element):
             return "\(element.type) “\(element.label)”: ".appendingFormat(NSLocalizedString("Closing ‘%@’ element not found.", comment: ""), element.endType)
         case let .unboundedElement(element):

@@ -3,15 +3,15 @@ import RFSupport
 class TemplateParser {
     private let template: Resource
     private let manager: RFEditorManager
-    private let simple: Bool
+    private let basic: Bool
     private let registry: [String: Element.Type]
     private let reader: BinaryDataReader
     
-    init(template: Resource, manager: RFEditorManager, simple: Bool = false) {
+    init(template: Resource, manager: RFEditorManager, basic: Bool = false) {
         self.template = template
         self.manager = manager
-        self.simple = simple
-        self.registry = simple ? Self.simpleRegistry : Self.fullRegistry
+        self.basic = basic
+        self.registry = basic ? Self.basicRegistry : Self.fullRegistry
         self.reader = BinaryDataReader(template.data)
     }
     
@@ -37,7 +37,7 @@ class TemplateParser {
             guard let template = manager.findResource(type: PluginRegistry.templateType, name: element.label, currentDocumentOnly: false) else {
                 throw TemplateError.invalidStructure(element, "Template could not be found.")
             }
-            return try TemplateParser(template: template, manager: manager, simple: simple).parse()
+            return try TemplateParser(template: template, manager: manager, basic: basic).parse()
         case "R":
             // Rnnn psuedo-element repeats the following element n times
             let count = Element.variableTypeValue(element.type)
@@ -54,8 +54,8 @@ class TemplateParser {
             }
             return elements
         case "RECT", "PNT ":
-            // In simple mode, expand to multiple DWRDs
-            if !simple {
+            // In basic mode, expand to multiple DWRDs
+            if !basic {
                 fallthrough
             }
             let fields = type == "RECT" ? ["T", "L", "B", "R"] : ["X", "Y"]
@@ -95,8 +95,8 @@ class TemplateParser {
         throw TemplateError.unknownElement(type)
     }
     
-    // Simple types that can be represented by (e.g.) csv
-    static let simpleRegistry: [String: Element.Type] = [
+    // basic types that can be represented by (e.g.) csv
+    static let basicRegistry: [String: Element.Type] = [
         // integers
         "DBYT": ElementDBYT<Int8>.self,     // signed ints
         "DWRD": ElementDBYT<Int16>.self,
@@ -155,7 +155,7 @@ class TemplateParser {
         "R"   : Element.self,               // single-element repeat (ResForge)
     ]
     
-    static let fullRegistry: [String: Element.Type] = simpleRegistry.merging([
+    static let fullRegistry: [String: Element.Type] = basicRegistry.merging([
         // strings
         "TXTS": ElementTXTS.self,           // sized text dump
 

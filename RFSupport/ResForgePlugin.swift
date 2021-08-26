@@ -25,7 +25,7 @@ public protocol ResourceEditor: AbstractEditor {
 /// Template editors are additionally provided with a template resource and possibly a filter.
 public protocol TemplateEditor: ResourceEditor {
     init?(resource: Resource, manager: RFEditorManager, template: Resource, filter: TemplateFilter.Type?)
-    static func parseSimpleTemplate(_ template: Resource, manager: RFEditorManager) throws -> [TemplateField]
+    static func parseBasicTemplate(_ template: Resource, manager: RFEditorManager) throws -> [TemplateField]
 }
 
 public protocol TemplateField: NSObject {
