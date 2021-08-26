@@ -7,9 +7,11 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var outlineController: StandardController!
     @IBOutlet var collectionController: CollectionController!
+    lazy var bulkController = BulkController(document: document)
     @IBOutlet var attributesHolder: NSView!
     @IBOutlet var attributesDisplay: NSTextField!
     @IBOutlet weak var document: ResourceDocument!
+    private var resourcesView: ResourcesView!
     
     var isBulkMode: Bool {
         resourcesView is BulkController
@@ -24,18 +26,6 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         didSet {
             attributesHolder.isHidden = currentType?.attributes.isEmpty ?? true
             attributesDisplay.objectValue = currentType?.attributesDisplay
-        }
-    }
-    private var resourcesView: ResourcesView! {
-        didSet {
-            let view = resourcesView.prepareView()
-            resourcesView.reload()
-            if oldValue !== resourcesView {
-                scrollView.documentView = view
-                scrollView.window?.makeFirstResponder(view)
-                // The outline header interferes with the scroll position, make sure we return to top
-                (view as? NSOutlineView)?.scrollToBeginningOfDocument(self)
-            }
         }
     }
     
@@ -81,26 +71,38 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         resourcesView.select(selection)
     }
     
-    private func setDefaultView() {
-        if let type = currentType, PluginRegistry.previewProviders[type.code] != nil {
-            resourcesView = collectionController
-        } else {
-            resourcesView = outlineController
+    private func setView(_ rView: ResourcesView? = nil) {
+        var rView = rView
+        if rView == nil {
+            if let type = currentType, PluginRegistry.previewProviders[type.code] != nil {
+                rView = collectionController
+            } else {
+                rView = outlineController
+            }
+        }
+        do {
+            let view = try rView!.prepareView()
+            rView!.reload()
+            if rView !== resourcesView {
+                resourcesView = rView
+                scrollView.documentView = view
+                scrollView.window?.makeFirstResponder(view)
+                // The outline header interferes with the scroll position, make sure we return to top
+                (view as? NSOutlineView)?.scrollToBeginningOfDocument(self)
+            }
+        } catch let error {
+            document.presentError(error)
         }
     }
     
     func toggleBulkMode() {
+        let selected = self.selectedResources()
         if isBulkMode {
-            self.setDefaultView()
+            self.setView()
         } else if currentType != nil {
-            do {
-                let selected = self.selectedResources()
-                resourcesView = try BulkController(document: document)
-                resourcesView.select(selected)
-            } catch let error {
-                document.presentError(error)
-            }
+            self.setView(bulkController)
         }
+        resourcesView.select(selected)
     }
     
     // MARK: - Resource management
@@ -235,7 +237,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         // Check if type actually changed, rather than just being reselected after a reload
         if currentType != type {
             currentType = type
-            self.setDefaultView()
+            self.setView()
             NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
         } else {
             resourcesView.reload()
@@ -258,7 +260,7 @@ class SourceCount: NSButton {
 // Common interface for the OutlineController and CollectionController
 protocol ResourcesView: AnyObject {
     /// Prepare the view to be displayed within the scroll view.
-    func prepareView() -> NSView
+    func prepareView() throws -> NSView
     
     /// Reload the data in the view.
     func reload()

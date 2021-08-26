@@ -28,7 +28,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         }
     }
     
-    func prepareView() -> NSView {
+    func prepareView() throws -> NSView {
         return outlineView
     }
     

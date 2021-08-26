@@ -25,16 +25,7 @@ class BulkController: OutlineController {
     private let idCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("id"))
     private let nameCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("name"))
     
-    init(document: ResourceDocument) throws {
-        let template = document.editorManager.findResource(type: PluginRegistry.simpleTemplateType,
-                                                           name: document.dataSource.currentType!.code)!
-        
-        do {
-            elements = try PluginRegistry.templateEditor.parseSimpleTemplate(template, manager: document.editorManager)
-        } catch let error {
-            throw BulkError.templateError(error)
-        }
-        
+    init(document: ResourceDocument) {
         super.init()
         self.outlineView = NSOutlineView(frame: NSMakeRect(0, 0, 500, 500))
         self.document = document
@@ -42,16 +33,10 @@ class BulkController: OutlineController {
         
         idCol.headerCell.title = "ID"
         idCol.width = 58
-        outlineView.addTableColumn(idCol)
         nameCol.headerCell.title = "Name"
         nameCol.width = 150
+        outlineView.addTableColumn(idCol)
         outlineView.addTableColumn(nameCol)
-        for (i, element) in elements.enumerated() where element.visible {
-            let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
-            column.headerCell.title = element.displayLabel
-            column.width = element.width == 0 ? 150 : min(element.width, 150)
-            outlineView.addTableColumn(column)
-        }
         outlineView.indentationPerLevel = 0
         outlineView.rowHeight = 17
         outlineView.intercellSpacing = NSSize(width: 7, height: 2)
@@ -62,6 +47,45 @@ class BulkController: OutlineController {
         outlineView.dataSource = self
         outlineView.target = self
         outlineView.doubleAction = #selector(doubleClickItems(_:))
+    }
+    
+    override func prepareView() throws -> NSView {
+        let template = document.editorManager.findResource(type: PluginRegistry.simpleTemplateType,
+                                                           name: document.dataSource.currentType!.code)!
+        do {
+            elements = try PluginRegistry.templateEditor.parseSimpleTemplate(template, manager: document.editorManager)
+        } catch let error {
+            throw BulkError.templateError(error)
+        }
+        
+        for column in outlineView.tableColumns {
+            if column != idCol && column != nameCol {
+                outlineView.removeTableColumn(column)
+            }
+        }
+        for (i, element) in elements.enumerated() where element.visible {
+            let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
+            column.headerCell.title = element.displayLabel
+            column.width = element.width == 0 ? 150 : min(element.width, 150)
+            outlineView.addTableColumn(column)
+        }
+        document.directory.sortDescriptors = []
+        return outlineView
+    }
+    
+    override func reload() {
+        rows.removeAll()
+        outlineView.reloadData()
+    }
+    
+    override func updated(resource: Resource, oldIndex: Int?) {
+        let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
+        if !inlineUpdate || newIndex == nil {
+            rows.removeValue(forKey: resource.id)
+            outlineView.beginUpdates()
+            self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: nil)
+            outlineView.endUpdates()
+        }
     }
     
     private func load(resource: Resource) {
@@ -84,26 +108,6 @@ class BulkController: OutlineController {
                 }
             }
             rows[resource.id] = rowData
-        }
-    }
-    
-    override func prepareView() -> NSView {
-        document.directory.sortDescriptors = []
-        return outlineView
-    }
-    
-    override func reload() {
-        rows.removeAll()
-        outlineView.reloadData()
-    }
-    
-    override func updated(resource: Resource, oldIndex: Int?) {
-        let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
-        if !inlineUpdate || newIndex == nil {
-            rows.removeValue(forKey: resource.id)
-            outlineView.beginUpdates()
-            self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: nil)
-            outlineView.endUpdates()
         }
     }
     
