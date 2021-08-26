@@ -24,16 +24,14 @@ class HexFormatter<T: FixedWidthInteger & UnsignedInteger>: Formatter {
     override func string(for obj: Any?) -> String? {
         // Prefix with $ when not editing
         if let obj = obj as? NSNumber {
-            let format = String(format: "$%%0%uX", charCount)
-            return String(format: format, obj.intValue)
+            return String(format: "$%0\(charCount)llX", obj.intValue)
         }
         return nil
     }
     
     override func editingString(for obj: Any) -> String? {
         if let obj = obj as? NSNumber {
-            let format = String(format: "%%0%uX", charCount)
-            return String(format: format, obj.intValue)
+            return String(format: "%0\(charCount)llX", obj.intValue)
         }
         return nil
     }
