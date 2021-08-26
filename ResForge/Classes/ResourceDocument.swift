@@ -493,6 +493,11 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             #selector(exportResources(_:)):
             return dataSource.selectionCount() > 0
         case #selector(toggleBulkMode(_:)):
+            if dataSource.isBulkMode {
+                menuItem.title = NSLocalizedString("Exit Bulk Data Mode", comment: "")
+                return true
+            }
+            menuItem.title = NSLocalizedString("Enter Bulk Data Mode", comment: "")
             if let type = dataSource.currentType, editorManager.findResource(type: PluginRegistry.simpleTemplateType, name: type.code) != nil {
                 return true
             }

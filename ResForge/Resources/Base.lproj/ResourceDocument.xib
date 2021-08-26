@@ -189,7 +189,7 @@
                                             <constraint firstItem="Q4E-xX-ZRY" firstAttribute="leading" secondItem="Gn3-yc-Oy0" secondAttribute="leading" constant="-1" id="ler-nK-wgK"/>
                                         </constraints>
                                     </customView>
-                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" findBarPosition="aboveHorizontalRuler" id="146">
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" findBarPosition="aboveHorizontalRuler" id="146">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="353"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <clipView key="contentView" id="wBO-8u-DWd">

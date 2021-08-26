@@ -128,19 +128,6 @@
                                     <action selector="showInfo:" target="-1" id="496"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="378">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Page Setup…" enabled="NO" keyEquivalent="P" id="369">
-                                <connections>
-                                    <action selector="runPageLayout:" target="-1" id="463"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Print..." enabled="NO" keyEquivalent="p" id="370">
-                                <connections>
-                                    <action selector="printDocument:" target="-1" id="464"/>
-                                </connections>
-                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -279,7 +266,7 @@ CA
                                     <action selector="toggleSidebar:" target="-1" id="WYc-Vb-CcA"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Enable Bulk Data Mode" tag="1" keyEquivalent="b" id="YyK-nA-1Rm">
+                            <menuItem title="Enter Bulk Data Mode" tag="1" keyEquivalent="b" id="YyK-nA-1Rm">
                                 <connections>
                                     <action selector="toggleBulkMode:" target="-1" id="6eg-iu-KpL"/>
                                 </connections>

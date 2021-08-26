@@ -11,6 +11,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     @IBOutlet var attributesDisplay: NSTextField!
     @IBOutlet weak var document: ResourceDocument!
     
+    var isBulkMode: Bool {
+        resourcesView is BulkController
+    }
     private(set) var useTypeList = false {
         didSet {
             splitView.setPosition(useTypeList ? 110 : 0, ofDividerAt: 0)
@@ -87,7 +90,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     func toggleBulkMode() {
-        if resourcesView is BulkController {
+        if isBulkMode {
             self.setDefaultView()
         } else if currentType != nil {
             do {

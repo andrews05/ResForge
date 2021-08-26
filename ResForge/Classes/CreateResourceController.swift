@@ -105,7 +105,9 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
                 return [resource]
             }
             rDocument.undoManager?.setActionName(NSLocalizedString("Create Resource", comment: ""))
-            rDocument.editorManager.open(resource: resource)
+            if !rDocument.dataSource.isBulkMode {
+                rDocument.editorManager.open(resource: resource)
+            }
         }
         self.window?.sheetParent?.endSheet(self.window!)
     }

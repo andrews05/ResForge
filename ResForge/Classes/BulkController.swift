@@ -21,8 +21,7 @@ enum BulkError: LocalizedError {
 
 class BulkController: OutlineController {
     private var elements: [TemplateField] = []
-    private var resource: Resource!
-    private var rowData: [Any?] = []
+    private var rows: [Int: [Any?]] = [:]
     private let idCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("id"))
     private let nameCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("name"))
     
@@ -42,7 +41,7 @@ class BulkController: OutlineController {
         self.dataSource = document.dataSource
         
         idCol.headerCell.title = "ID"
-        idCol.width = 60
+        idCol.width = 58
         outlineView.addTableColumn(idCol)
         nameCol.headerCell.title = "Name"
         nameCol.width = 150
@@ -66,14 +65,25 @@ class BulkController: OutlineController {
     }
     
     private func load(resource: Resource) {
-        if resource !== self.resource {
-            self.resource = resource
+        if rows[resource.id] == nil {
             let reader = BinaryDataReader(resource.data)
-            rowData.removeAll()
+            var rowData: [Any?] = []
             for element in elements {
-                try? element.readData(from: reader)
-                rowData.append(element.visible ? element.value(forKey: "value") : nil)
+                do {
+                    try element.readData(from: reader)
+                    rowData.append(element.visible ? element.value(forKey: "value") : nil)
+                } catch {
+                    // Insufficient data, set a default value
+                    if element.visible {
+                        let value: Any = element.value(forKey: "value") is NSNumber ? 0 : ""
+                        element.setValue(value, forKey: "value")
+                        rowData.append(value)
+                    } else {
+                        rowData.append(nil)
+                    }
+                }
             }
+            rows[resource.id] = rowData
         }
     }
     
@@ -82,9 +92,15 @@ class BulkController: OutlineController {
         return outlineView
     }
     
+    override func reload() {
+        rows.removeAll()
+        outlineView.reloadData()
+    }
+    
     override func updated(resource: Resource, oldIndex: Int?) {
         let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
         if !inlineUpdate || newIndex == nil {
+            rows.removeValue(forKey: resource.id)
             outlineView.beginUpdates()
             self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: nil)
             outlineView.endUpdates()
@@ -124,12 +140,12 @@ class BulkController: OutlineController {
     func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {
         let resource = item as! Resource
         if tableColumn == idCol {
-            return resource.id
+            return String(resource.id)
         } else if tableColumn == nameCol {
             return resource.name
         } else if let tableColumn = tableColumn {
             self.load(resource: resource)
-            return rowData[Int(tableColumn.identifier.rawValue)!]
+            return rows[resource.id]![Int(tableColumn.identifier.rawValue)!]
         }
         return nil
     }
@@ -140,12 +156,13 @@ class BulkController: OutlineController {
         if tableColumn == nameCol {
             resource.name = object as! String
         } else if let tableColumn = tableColumn {
-            self.load(resource: resource)
-            let column = Int(tableColumn.identifier.rawValue)!
-            rowData[column] = object
-            elements[column].setValue(object, forKey: "value")
+            rows[resource.id]![Int(tableColumn.identifier.rawValue)!] = object
+            let rowData = rows[resource.id]!
             let writer = BinaryDataWriter()
-            for element in elements {
+            for (i, element) in elements.enumerated() {
+                if element.visible {
+                    element.setValue(rowData[i], forKey: "value")
+                }
                 element.writeData(to: writer)
             }
             resource.data = writer.data
