@@ -49,7 +49,7 @@ class EditorManager: RFEditorManager {
         var tmplResource: Resource!
         if editor is TemplateEditor.Type {
             // If template editor, find the template to use
-            tmplResource = self.findResource(type: ResourceType("TMPL"), name: template ?? resource.typeCode)
+            tmplResource = self.findResource(type: PluginRegistry.templateType, name: template ?? resource.typeCode)
             // If no template, switch to hex editor
             if tmplResource == nil {
                 editor = PluginRegistry.hexEditor

@@ -1,6 +1,24 @@
 import Cocoa
 import RFSupport
 
+enum BulkError: LocalizedError {
+    case templateError(Error)
+    
+    var errorDescription: String? {
+        switch self {
+        case .templateError:
+            return NSLocalizedString("Invalid simple template.", comment: "")
+        }
+    }
+    
+    var recoverySuggestion: String? {
+        switch self {
+        case .templateError(let e):
+            return e.localizedDescription
+        }
+    }
+}
+
 class BulkController: OutlineController {
     private var elements: [TemplateField] = []
     private var resource: Resource!
@@ -8,16 +26,14 @@ class BulkController: OutlineController {
     private let idCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("id"))
     private let nameCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("name"))
     
-    init?(document: ResourceDocument) {
-        guard let type = document.dataSource.currentType,
-              let template = document.editorManager.findResource(type: ResourceType("TMPS"), name: type.code)
-        else {
-            return nil
-        }
+    init(document: ResourceDocument) throws {
+        let template = document.editorManager.findResource(type: PluginRegistry.simpleTemplateType,
+                                                           name: document.dataSource.currentType!.code)!
+        
         do {
             elements = try PluginRegistry.templateEditor.parseSimpleTemplate(template, manager: document.editorManager)
-        } catch {
-            return nil
+        } catch let error {
+            throw BulkError.templateError(error)
         }
         
         super.init()
@@ -38,7 +54,8 @@ class BulkController: OutlineController {
             outlineView.addTableColumn(column)
         }
         outlineView.indentationPerLevel = 0
-        outlineView.rowHeight = 19
+        outlineView.rowHeight = 17
+        outlineView.intercellSpacing = NSSize(width: 7, height: 2)
         outlineView.usesAlternatingRowBackgroundColors = true
         outlineView.allowsMultipleSelection = true
         outlineView.focusRingType = .none

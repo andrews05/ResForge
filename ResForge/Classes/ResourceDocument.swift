@@ -14,7 +14,6 @@ extension NSToolbarItem.Identifier {
     static let exportResources  = Self("exportResources")
     static let showInfo         = Self("showInfo")
     static let searchField      = Self("searchField")
-    static let editBulk         = Self("editBulk")
 }
 
 enum FileFork {
@@ -298,7 +297,6 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             .deleteResource,
             .editResource,
             .editHex,
-            .editBulk,
             .exportResources,
             .showInfo,
             .searchField,
@@ -313,7 +311,6 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             .space,
             .addResource,
             .editResource,
-            .editBulk,
             .exportResources,
             .showInfo,
             .flexibleSpace,
@@ -395,13 +392,6 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
             item.target = NSApp.delegate
             item.action = #selector(ApplicationDelegate.showInfo(_:))
-        case .editBulk:
-            item.label = NSLocalizedString("Edit Bulk", comment: "")
-            if #available(OSX 11.0, *) {
-                item.image = NSImage(systemSymbolName: "rectangle.split.3x3", accessibilityDescription: nil)
-            }
-            item.action = #selector(toggleBulkMode(_:))
-            item.isEnabled = true
         default:
             break
         }
@@ -502,6 +492,11 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             #selector(openResourcesAsHex(_:)),
             #selector(exportResources(_:)):
             return dataSource.selectionCount() > 0
+        case #selector(toggleBulkMode(_:)):
+            if let type = dataSource.currentType, editorManager.findResource(type: PluginRegistry.simpleTemplateType, name: type.code) != nil {
+                return true
+            }
+            return false
         default:
             // Auto validation of save menu item isn't working for existing documents - force override
             if menuItem.identifier?.rawValue == "save" {

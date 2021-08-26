@@ -78,11 +78,25 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         resourcesView.select(selection)
     }
     
+    private func setDefaultView() {
+        if let type = currentType, PluginRegistry.previewProviders[type.code] != nil {
+            resourcesView = collectionController
+        } else {
+            resourcesView = outlineController
+        }
+    }
+    
     func toggleBulkMode() {
-        if currentType != nil, let bulk = BulkController(document: document) {
-            let selected = self.selectedResources()
-            resourcesView = bulk
-            resourcesView.select(selected)
+        if resourcesView is BulkController {
+            self.setDefaultView()
+        } else if currentType != nil {
+            do {
+                let selected = self.selectedResources()
+                resourcesView = try BulkController(document: document)
+                resourcesView.select(selected)
+            } catch let error {
+                document.presentError(error)
+            }
         }
     }
     
@@ -218,11 +232,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         // Check if type actually changed, rather than just being reselected after a reload
         if currentType != type {
             currentType = type
-            if PluginRegistry.previewProviders[type.code] != nil {
-                resourcesView = collectionController
-            } else {
-                resourcesView = outlineController
-            }
+            self.setDefaultView()
             NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
         } else {
             resourcesView.reload()
