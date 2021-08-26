@@ -492,14 +492,26 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             #selector(openResourcesAsHex(_:)),
             #selector(exportResources(_:)):
             return dataSource.selectionCount() > 0
+        case #selector(toggleSidebar(_:)):
+            menuItem.title = NSLocalizedString(dataSource.useTypeList ? "Hide Sidebar" : "Show Sidebar", comment: "")
+            return true
         case #selector(toggleBulkMode(_:)):
             if dataSource.isBulkMode {
                 menuItem.title = NSLocalizedString("Exit Bulk Data Mode", comment: "")
                 return true
             }
-            menuItem.title = NSLocalizedString("Enter Bulk Data Mode", comment: "")
-            if let type = dataSource.currentType, editorManager.findResource(type: PluginRegistry.basicTemplateType, name: type.code) != nil {
-                return true
+            menuItem.title = NSLocalizedString("Bulk Data Mode", comment: "")
+            if let type = dataSource.currentType {
+                return dataSource.bulkController.supports(type: type)
+            }
+            return false
+        case #selector(exportCSV(_:)):
+            if #available(OSX 10.14, *) {
+                if let type = dataSource.currentType {
+                    menuItem.title = NSLocalizedString("Export ‘\(type.code)’ to CSV…", comment: "")
+                    return dataSource.bulkController.supports(type: type)
+                }
+                menuItem.title = NSLocalizedString("Export to CSV…", comment: "")
             }
             return false
         default:
@@ -509,15 +521,6 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
             return super.validateMenuItem(menuItem)
         }
-    }
-    
-    func windowDidBecomeKey(_ notification: Notification) {
-        self.updateSidebarMenuTitle()
-    }
-    
-    private func updateSidebarMenuTitle() {
-        let item = NSApp.mainMenu?.item(withTitle: "View")?.submenu?.item(withTag: 1)
-        item?.title = NSLocalizedString(dataSource.useTypeList ? "Hide Sidebar" : "Show Sidebar", comment: "")
     }
     
     // MARK: - Document Management
@@ -555,13 +558,34 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
     }
     
+    @IBAction func toggleSidebar(_ sender: Any) {
+        dataSource.toggleSidebar()
+    }
+    
     @IBAction func toggleBulkMode(_ sender: Any) {
         dataSource.toggleBulkMode()
     }
     
-    @IBAction func toggleSidebar(_ sender: Any) {
-        dataSource.toggleSidebar()
-        self.updateSidebarMenuTitle()
+    @IBAction func exportCSV(_ sender: Any) {
+        guard #available(OSX 10.14, *), let type = dataSource.currentType else {
+            return
+        }
+        do {
+            _ = try dataSource.bulkController.loadTemplate()
+        } catch let error {
+            self.presentError(error)
+        }
+        let panel = NSSavePanel()
+        panel.nameFieldStringValue = "\(type.code).csv"
+        panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
+            if modalResponse == .OK, let url = panel.url {
+                do {
+                    try self.dataSource.bulkController.exportCSV(to: url)
+                } catch let error {
+                    self.presentError(error)
+                }
+            }
+        }
     }
     
     // MARK: - Edit Operations

@@ -260,15 +260,21 @@ CA
                 <menuItem title="View" id="IlK-qQ-PMQ">
                     <menu key="submenu" title="View" id="hYa-qi-crD">
                         <items>
-                            <menuItem title="Show Sidebar" tag="1" id="348">
+                            <menuItem title="Show Sidebar" id="348">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="toggleSidebar:" target="-1" id="WYc-Vb-CcA"/>
+                                    <action selector="toggleSidebar:" target="-1" id="LHa-zh-Qhc"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Enter Bulk Data Mode" tag="1" keyEquivalent="b" id="YyK-nA-1Rm">
+                            <menuItem title="Bulk Data Mode" keyEquivalent="b" id="YyK-nA-1Rm">
                                 <connections>
                                     <action selector="toggleBulkMode:" target="-1" id="6eg-iu-KpL"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Export to CSV…" id="xjG-hF-0zM">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportCSV:" target="-1" id="W8R-lw-GTf"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="342">

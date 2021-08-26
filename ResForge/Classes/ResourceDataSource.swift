@@ -131,7 +131,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             typeList.selectRowIndexes([i], byExtendingSelection: false)
         } else {
             currentType = nil
-            resourcesView = outlineController
+            setView()
         }
         resourcesView.select(resources)
         if withUndo {

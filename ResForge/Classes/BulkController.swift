@@ -1,4 +1,5 @@
 import Cocoa
+import CreateML
 import RFSupport
 
 enum BulkError: LocalizedError {
@@ -51,30 +52,17 @@ class BulkController: OutlineController {
     }
     
     override func prepareView() throws -> NSView {
-        let template = document.editorManager.findResource(type: PluginRegistry.basicTemplateType,
-                                                           name: document.dataSource.currentType!.code)!
-        do {
-            elements = try PluginRegistry.templateEditor.parseBasicTemplate(template, manager: document.editorManager)
-        } catch let error {
-            throw BulkError.templateError(error)
-        }
-        
+        try self.loadTemplate()
         for column in outlineView.tableColumns {
             if column != idCol && column != nameCol {
                 outlineView.removeTableColumn(column)
             }
         }
-        defaults = []
-        for (i, element) in elements.enumerated() {
-            if element.visible {
-                let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
-                column.headerCell.title = element.displayLabel
-                column.width = element.width == 0 ? 150 : min(element.width, 150)
-                outlineView.addTableColumn(column)
-                defaults.append(element.value(forKey: "value"))
-            } else {
-                defaults.append(nil)
-            }
+        for (i, element) in elements.enumerated() where element.visible {
+            let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
+            column.headerCell.title = element.displayLabel
+            column.width = element.width == 0 ? 150 : min(element.width, 150)
+            outlineView.addTableColumn(column)
         }
         document.directory.sortDescriptors = []
         return outlineView
@@ -95,20 +83,48 @@ class BulkController: OutlineController {
         }
     }
     
-    private func load(resource: Resource) {
-        if rows[resource.id] == nil {
-            let reader = BinaryDataReader(resource.data)
-            var rowData: [Any?] = []
-            for element in elements {
-                do {
-                    try element.readData(from: reader)
-                    rowData.append(element.visible ? element.value(forKey: "value") : nil)
-                } catch {
-                    // Insufficient data, set a default value
-                    rowData.append(defaults[rowData.endIndex])
-                }
+    func supports(type: ResourceType) -> Bool {
+        let template = document.editorManager.findResource(type: PluginRegistry.basicTemplateType, name: type.code)
+        return template != nil
+    }
+    
+    func loadTemplate() throws {
+        let template = document.editorManager.findResource(type: PluginRegistry.basicTemplateType,
+                                                           name: dataSource.currentType!.code)!
+        do {
+            elements = try PluginRegistry.templateEditor.parseBasicTemplate(template, manager: document.editorManager)
+        } catch let error {
+            throw BulkError.templateError(error)
+        }
+        defaults = elements.map {
+            $0.visible ? $0.value(forKey: "value") : nil
+        }
+    }
+    
+    func exportCSV(to url: URL) throws {
+        guard #available(OSX 10.14, *) else {
+            return
+        }
+        // MLDataTable is an easy built-in option for working with csv
+        var table = MLDataTable()
+        let rows = document.directory.resources(ofType: dataSource.currentType!).map(self.read(resource:))
+        for (i, element) in elements.enumerated() where element.visible {
+            let column = rows.map { element.formatter!.string(for: $0[i])! }
+            table.addColumn(MLDataColumn(column), named: element.displayLabel)
+        }
+        try table.writeCSV(to: url)
+    }
+    
+    private func read(resource: Resource) -> [Any?] {
+        let reader = BinaryDataReader(resource.data)
+        return elements.enumerated().map { (i, element) in
+            do {
+                try element.readData(from: reader)
+                return element.visible ? element.value(forKey: "value") : nil
+            } catch {
+                // Insufficient data, set a default value
+                return defaults[i]
             }
-            rows[resource.id] = rowData
         }
     }
     
@@ -149,8 +165,8 @@ class BulkController: OutlineController {
         } else if tableColumn == nameCol {
             return resource.name
         } else if let tableColumn = tableColumn {
-            self.load(resource: resource)
-            return rows[resource.id]![Int(tableColumn.identifier.rawValue)!]
+            let rowData = rows[resource.id] ?? self.read(resource: resource)
+            return rowData[Int(tableColumn.identifier.rawValue)!]
         }
         return nil
     }
