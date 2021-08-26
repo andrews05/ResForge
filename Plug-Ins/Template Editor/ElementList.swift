@@ -42,8 +42,8 @@ class ElementList {
     
     func readTemplate(_ template: Resource) -> Bool {
         do {
-            let parsed = try ElementRegistry.parseTemplate(template, manager: controller.manager)
-            elements.append(contentsOf: parsed)
+            let parser = TemplateParser(template: template, manager: controller.manager)
+            elements.append(contentsOf: try parser.parse())
             try self.configure()
             return true
         } catch let error {

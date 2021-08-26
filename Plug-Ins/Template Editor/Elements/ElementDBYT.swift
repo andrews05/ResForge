@@ -15,7 +15,7 @@ class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
         case 4:
             self.width = 90
         case 8:
-            self.width = 120
+            self.width = 150
         default:
             break
         }

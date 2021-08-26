@@ -18,7 +18,7 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     }
     
     class func parseSimpleTemplate(_ template: Resource, manager: RFEditorManager) throws -> [TemplateField] {
-        return try ElementRegistry.parseTemplate(template, manager: manager, simple: true)
+        return try TemplateParser(template: template, manager: manager, simple: true).parse()
     }
     
     required init?(resource: Resource, manager: RFEditorManager, template: Resource, filter: TemplateFilter.Type?) {

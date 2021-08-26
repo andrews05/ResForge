@@ -1,49 +1,78 @@
 import RFSupport
 
-class ElementRegistry {
-    static func parseTemplate(_ template: Resource, manager: RFEditorManager, simple: Bool = false) throws -> [Element] {
+class TemplateParser {
+    private let template: Resource
+    private let manager: RFEditorManager
+    private let simple: Bool
+    private let registry: [String: Element.Type]
+    private let reader: BinaryDataReader
+    
+    init(template: Resource, manager: RFEditorManager, simple: Bool = false) {
+        self.template = template
+        self.manager = manager
+        self.simple = simple
+        self.registry = simple ? Self.simpleRegistry : Self.fullRegistry
+        self.reader = BinaryDataReader(template.data)
+    }
+    
+    func parse() throws -> [Element] {
         var elements: [Element] = []
-        let reader = BinaryDataReader(template.data)
-        let registry = simple ? Self.simpleRegistry : Self.fullRegistry
         while reader.position < reader.data.endIndex {
-            let (element, type) = try Self.readElement(from: reader, registry: registry)
-            
-            if type == "TMPL" {
-                // Insert another template's data
-                guard !element.label.isEmpty else {
-                    throw TemplateError.invalidStructure(element, "Template name must not be blank.")
-                }
-                guard element.label != template.name else {
-                    throw TemplateError.invalidStructure(element, "Cannot include self.")
-                }
-                guard let template = manager.findResource(type: ResourceType("TMPL"), name: element.label, currentDocumentOnly: false) else {
-                    throw TemplateError.invalidStructure(element, "Template could not be found.")
-                }
-                try elements.append(contentsOf: Self.parseTemplate(template, manager: manager, simple: simple))
-                continue
-            }
-            
-            if type == "R" {
-                // Rnnn psuedo-element repeats the following element n times
-                let count = Element.variableTypeValue(element.type)
-                let offset = Int(element.label.split(separator: "=").last!) ?? 1
-                var (el, _) = try Self.readElement(from: reader, registry: registry)
-                let l = el.label
-                for i in 0..<count {
-                    // Replace * symbol with index
-                    let label = l.replacingOccurrences(of: "*", with: String(i+offset))
-                    el = Swift.type(of: el).init(type: el.type, label: label, tooltip: el.tooltip)!
-                    elements.append(el)
-                }
-                continue
-            }
-            
-            elements.append(element)
+            elements.append(contentsOf: try self.process())
         }
         return elements
     }
     
-    static func readElement(from reader: BinaryDataReader, registry: [String: Element.Type]) throws -> (Element, String) {
+    private func process() throws -> [Element] {
+        let (element, type) = try self.readElement()
+        switch type {
+        case "TMPL":
+            // Insert another template's data
+            guard !element.label.isEmpty else {
+                throw TemplateError.invalidStructure(element, "Template name must not be blank.")
+            }
+            guard element.label != template.name else {
+                throw TemplateError.invalidStructure(element, "Cannot include self.")
+            }
+            guard let template = manager.findResource(type: PluginRegistry.templateType, name: element.label, currentDocumentOnly: false) else {
+                throw TemplateError.invalidStructure(element, "Template could not be found.")
+            }
+            return try TemplateParser(template: template, manager: manager, simple: simple).parse()
+        case "R":
+            // Rnnn psuedo-element repeats the following element n times
+            let count = Element.variableTypeValue(element.type)
+            let offset = Int(element.label.split(separator: "=").last!) ?? 1
+            let els = try self.process()
+            var elements: [Element] = []
+            for i in 0..<count {
+                for el in els {
+                    // Replace * symbol with index
+                    let label = el.label.replacingOccurrences(of: "*", with: String(i+offset))
+                    let newEl = Swift.type(of: el).init(type: el.type, label: label, tooltip: el.tooltip)!
+                    elements.append(newEl)
+                }
+            }
+            return elements
+        case "RECT", "PNT ":
+            // In simple mode, expand to multiple DWRDs
+            if !simple {
+                fallthrough
+            }
+            let fields = type == "RECT" ? ["T", "L", "B", "R"] : ["X", "Y"]
+            let dwrd = registry["DWRD"]!
+            var elements: [Element] = []
+            for f in fields {
+                // Replace * symbol with index
+                let newEl = dwrd.init(type: "DWRD", label: "\(element.label) \(f)", tooltip: element.tooltip)!
+                elements.append(newEl)
+            }
+            return elements
+        default:
+            return [element]
+        }
+    }
+    
+    private func readElement() throws -> (Element, String) {
         guard let label = try? reader.readPString(),
               let type = try? reader.readString(length: 4, encoding: .macOSRoman)
         else {
@@ -81,6 +110,10 @@ class ElementRegistry {
         "HWRD": ElementHBYT<UInt16>.self,
         "HLNG": ElementHBYT<UInt32>.self,
         "HQWD": ElementHBYT<UInt64>.self,   // (ResForge)
+        
+        // multiple fields
+        "RECT": ElementRECT.self,           // QuickDraw rect
+        "PNT ": ElementPNT.self,            // QuickDraw point
         
         // fractions
         "REAL": ElementREAL.self,           // single precision float
@@ -123,10 +156,6 @@ class ElementRegistry {
     ]
     
     static let fullRegistry: [String: Element.Type] = simpleRegistry.merging([
-        // multiple fields
-        "RECT": ElementRECT.self,           // QuickDraw rect
-        "PNT ": ElementPNT.self,            // QuickDraw point
-        
         // strings
         "TXTS": ElementTXTS.self,           // sized text dump
 
