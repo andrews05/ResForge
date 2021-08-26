@@ -195,7 +195,7 @@ class ResourceDirectory {
     /// Return an unused resource ID for a new resource of specified type.
     func uniqueID(for type: ResourceType, starting: Int = 128) -> Int {
         // Get a list of used ids (these will be in order)
-        let used = self.resources(ofType: type).map({ $0.id })
+        let used = self.resources(ofType: type).map(\.id)
         // Find the index of the starting id
         guard var i = used.firstIndex(where: { $0 == starting }) else {
             return starting

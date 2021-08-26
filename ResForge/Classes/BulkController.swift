@@ -21,6 +21,7 @@ enum BulkError: LocalizedError {
 
 class BulkController: OutlineController {
     private var elements: [TemplateField] = []
+    private var defaults: [Any?] = []
     private var rows: [Int: [Any?]] = [:]
     private let idCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("id"))
     private let nameCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("name"))
@@ -63,11 +64,17 @@ class BulkController: OutlineController {
                 outlineView.removeTableColumn(column)
             }
         }
-        for (i, element) in elements.enumerated() where element.visible {
-            let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
-            column.headerCell.title = element.displayLabel
-            column.width = element.width == 0 ? 150 : min(element.width, 150)
-            outlineView.addTableColumn(column)
+        defaults = []
+        for (i, element) in elements.enumerated() {
+            if element.visible {
+                let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
+                column.headerCell.title = element.displayLabel
+                column.width = element.width == 0 ? 150 : min(element.width, 150)
+                outlineView.addTableColumn(column)
+                defaults.append(element.value(forKey: "value"))
+            } else {
+                defaults.append(nil)
+            }
         }
         document.directory.sortDescriptors = []
         return outlineView
@@ -98,13 +105,7 @@ class BulkController: OutlineController {
                     rowData.append(element.visible ? element.value(forKey: "value") : nil)
                 } catch {
                     // Insufficient data, set a default value
-                    if element.visible {
-                        let value: Any = element.value(forKey: "value") is NSNumber ? 0 : ""
-                        element.setValue(value, forKey: "value")
-                        rowData.append(value)
-                    } else {
-                        rowData.append(nil)
-                    }
+                    rowData.append(defaults[rowData.endIndex])
                 }
             }
             rows[resource.id] = rowData

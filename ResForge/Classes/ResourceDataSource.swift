@@ -72,17 +72,10 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     private func setView(_ rView: ResourcesView? = nil) {
-        var rView = rView
-        if rView == nil {
-            if let type = currentType, PluginRegistry.previewProviders[type.code] != nil {
-                rView = collectionController
-            } else {
-                rView = outlineController
-            }
-        }
+        let rView = rView ?? self.defaultView()
         do {
-            let view = try rView!.prepareView()
-            rView!.reload()
+            let view = try rView.prepareView()
+            rView.reload()
             if rView !== resourcesView {
                 resourcesView = rView
                 scrollView.documentView = view
@@ -93,6 +86,13 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         } catch let error {
             document.presentError(error)
         }
+    }
+    
+    private func defaultView() -> ResourcesView {
+        if let type = currentType, PluginRegistry.previewProviders[type.code] != nil {
+            return collectionController
+        }
+        return outlineController
     }
     
     func toggleBulkMode() {
