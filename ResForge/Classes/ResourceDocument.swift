@@ -501,15 +501,12 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 return true
             }
             menuItem.title = NSLocalizedString("Show Bulk Data View", comment: "")
-            if let type = dataSource.currentType {
-                return dataSource.bulkController.supports(type: type)
-            }
-            return false
+            return editorManager.template(for: dataSource.currentType, basic: true) != nil
         case #selector(exportCSV(_:)):
             if #available(OSX 10.14, *) {
                 if let type = dataSource.currentType {
                     menuItem.title = NSLocalizedString("Export ‘\(type.code)’ to CSV…", comment: "")
-                    return dataSource.bulkController.supports(type: type)
+                    return editorManager.template(for: type, basic: true) != nil
                 }
                 menuItem.title = NSLocalizedString("Export to CSV…", comment: "")
             }
@@ -534,7 +531,12 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
     }
     
-    @IBAction func openResources(_ sender: NSObject) {
+    @IBAction func openResources(_ sender: Any) {
+        // Use hex editor if holding option key
+        if NSApp.currentEvent?.modifierFlags.contains(.option) == true {
+            self.openResourcesAsHex(sender)
+            return
+        }
         for resource in dataSource.selectedResources() {
             editorManager.open(resource: resource)
         }
@@ -542,10 +544,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     
     @IBAction func openResourcesInTemplate(_ sender: Any) {
         let resources = dataSource.selectedResources()
-        guard !resources.isEmpty else {
+        guard let type = resources.first?.type else {
             return
         }
-        SelectTemplateController().show(self, typeCode: resources.first!.typeCode) { template in
+        SelectTemplateController().show(self, type: type) { template in
             for resource in resources {
                 self.editorManager.open(resource: resource, using: PluginRegistry.templateEditor, template: template)
             }
@@ -572,7 +574,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             return
         }
         do {
-            _ = try dataSource.bulkController.loadTemplate()
+            try dataSource.bulkController.loadTemplate()
         } catch let error {
             self.presentError(error)
         }

@@ -80,7 +80,7 @@ class SpriteLayer: NSObject {
             if frames.isEmpty && !resource.data.isEmpty {
                 self.loadRleAsync(resource.data)
             }
-            controller.manager.open(resource: resource, using: nil, template: nil)
+            controller.manager.open(resource: resource)
         } else {
             controller.manager.createResource(type: type, id: Int(spriteID), name: "")
         }

@@ -56,7 +56,7 @@ enum TemplateError: LocalizedError, RecoverableError {
     func attemptRecovery(optionIndex recoveryOptionIndex: Int) -> Bool {
         if recoveryOptionIndex == 1, case let .dataMismatch(element) = self {
             let controller = element.parentList.controller!
-            controller.manager.open(resource: controller.resource, using: PluginRegistry.hexEditor, template: "")
+            controller.manager.open(resource: controller.resource, using: PluginRegistry.hexEditor)
         }
         return false
     }

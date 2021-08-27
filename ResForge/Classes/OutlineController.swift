@@ -12,20 +12,11 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         guard outlineView.clickedRow != -1 else {
             return
         }
-        // Use hex editor if holding option key
-        var editor: ResourceEditor.Type?
-        if NSApp.currentEvent!.modifierFlags.contains(.option) {
-            editor = PluginRegistry.hexEditor
+        for item in outlineView.selectedItems where item is ResourceType {
+            // Expand the type list
+            outlineView.expandItem(item)
         }
-        
-        for item in outlineView.selectedItems {
-            if let resource = item as? Resource {
-                document.editorManager.open(resource: resource, using: editor)
-            } else {
-                // Expand the type list
-                outlineView.expandItem(item)
-            }
-        }
+        document.openResources(sender)
     }
     
     func prepareView() throws -> NSView {

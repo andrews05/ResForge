@@ -33,15 +33,11 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil) {
         _ = self.window
         // Add all types currently in the document
-        var suggestions = rDocument.directory.allTypes.map { $0.code }
+        var suggestions = Set(rDocument.directory.allTypes.map(\.code))
         // Common types?
-        for value in ["PICT", "snd ", "STR ", "STR#", "TMPL", "vers"] {
-            if !suggestions.contains(value) {
-                suggestions.append(value)
-            }
-        }
+        suggestions.formUnion(["PICT", "snd ", "STR ", "STR#", "TMPL"])
         typeView.removeAllItems()
-        typeView.addItems(withObjectValues: suggestions)
+        typeView.addItems(withObjectValues: suggestions.sorted())
         if let formatter = idView.formatter as? NumberFormatter {
             formatter.minimum = rDocument.format.minID as NSNumber
             formatter.maximum = rDocument.format.maxID as NSNumber

@@ -206,11 +206,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     }
     
     @objc private func doubleClick() {
-        let document = self.view.window!.delegate as! ResourceDocument
-        // Use hex editor if holding option key
-        if NSApp.currentEvent!.modifierFlags.contains(.option) {
-            document.openResourcesAsHex(self)
-        } else {
+        if let document = self.view.window?.delegate as? ResourceDocument {
             document.openResources(self)
         }
     }

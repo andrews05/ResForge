@@ -41,30 +41,39 @@ class EditorManager: RFEditorManager {
         return true
     }
     
+    func template(for type: ResourceType?, basic: Bool = false) -> Resource? {
+        guard let type = type else {
+            return nil
+        }
+        return self.findResource(type: basic ? PluginRegistry.basicTemplateType : PluginRegistry.templateType, name: type.code)
+    }
+    
     // MARK: - Protocol functions
     
-    func open(resource: Resource, using editor: ResourceEditor.Type? = nil, template: String? = nil) {
-        // Work out editor to use
-        var editor = editor ?? PluginRegistry.editors[resource.typeCode] ?? PluginRegistry.templateEditor
-        var tmplResource: Resource!
-        if editor is TemplateEditor.Type {
-            // If template editor, find the template to use
-            tmplResource = self.findResource(type: PluginRegistry.templateType, name: template ?? resource.typeCode)
-            // If no template, switch to hex editor
-            if tmplResource == nil {
-                editor = PluginRegistry.hexEditor
-            }
+    func open(resource: Resource) {
+        if let editor = PluginRegistry.editors[resource.typeCode] {
+            self.open(resource: resource, using: editor, template: nil)
+        } else if let template = self.template(for: resource.type) {
+            self.open(resource: resource, using: PluginRegistry.templateEditor, template: template)
+        } else {
+            self.open(resource: resource, using: PluginRegistry.hexEditor, template: nil)
         }
-        
+    }
+    
+    func open(resource: Resource, using editor: ResourceEditor.Type) {
+        self.open(resource: resource, using: editor, template: nil)
+    }
+    
+    func open(resource: Resource, using editor: ResourceEditor.Type, template: Resource?) {
         // Keep track of opened resources so we don't open them multiple times
         let key = String(describing: resource).appending(String(describing: editor))
         var plug = editorWindows[key]
         if plug == nil {
-            if let editor = editor as? TemplateEditor.Type {
+            if let editor = editor as? TemplateEditor.Type, let template = template {
                 let filter = PluginRegistry.templateFilters[resource.typeCode]
-                plug = editor.init(resource: resource, manager: self, template: tmplResource, filter: filter)
+                plug = editor.init(resource: resource, manager: self, template: template, filter: filter)
             } else {
-                plug = editor!.init(resource: resource, manager: self)
+                plug = editor.init(resource: resource, manager: self)
             }
             if plug == nil {
                 return

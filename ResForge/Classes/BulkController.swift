@@ -83,14 +83,10 @@ class BulkController: OutlineController {
         }
     }
     
-    func supports(type: ResourceType) -> Bool {
-        let template = document.editorManager.findResource(type: PluginRegistry.basicTemplateType, name: type.code)
-        return template != nil
-    }
-    
     func loadTemplate() throws {
-        let template = document.editorManager.findResource(type: PluginRegistry.basicTemplateType,
-                                                           name: dataSource.currentType!.code)!
+        guard let template = document.editorManager.template(for: dataSource.currentType, basic: true) else {
+            return
+        }
         do {
             elements = try PluginRegistry.templateEditor.parseBasicTemplate(template, manager: document.editorManager)
         } catch let error {

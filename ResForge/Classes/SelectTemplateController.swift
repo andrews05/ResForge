@@ -4,29 +4,30 @@ import RFSupport
 class SelectTemplateController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var typeList: NSComboBox!
     @IBOutlet var openButton: NSButton!
-    private var templates: Set<String>!
+    private var templates: [String: Resource] = [:]
     
     override var windowNibName: NSNib.Name? {
         "SelectTemplate"
     }
     
-    func show(_ document: ResourceDocument, typeCode: String, complete: @escaping (String) -> Void) {
+    func show(_ document: ResourceDocument, type: ResourceType, complete: @escaping (Resource) -> Void) {
         _ = self.window
-        let docs = NSDocumentController.shared.documents as! [ResourceDocument]
-        var names = docs.flatMap {
-            $0.directory.resources(ofType: PluginRegistry.templateType).map({ $0.name })
+        var allTemplates = document.editorManager.allResources(ofType: PluginRegistry.templateType)
+        allTemplates.append(contentsOf: SupportRegistry.directory.resources(ofType: PluginRegistry.templateType))
+        for template in allTemplates {
+            if templates[template.name] == nil {
+                templates[template.name] = template
+            }
         }
-        names.append(contentsOf: SupportRegistry.directory.resources(ofType: PluginRegistry.templateType).map({ $0.name }))
-        templates = Set(names) // Remove any duplicates
-        typeList.addItems(withObjectValues: templates.sorted())
+        typeList.addItems(withObjectValues: templates.keys.sorted())
         
-        if templates.contains(typeCode) {
-            typeList.stringValue = typeCode
+        if templates[type.code] != nil {
+            typeList.stringValue = type.code
             openButton.isEnabled = true
         }
         document.windowForSheet?.beginSheet(self.window!) { modalResponse in
-            if modalResponse == .OK {
-                complete(self.typeList.stringValue)
+            if modalResponse == .OK, let template = self.templates[self.typeList.stringValue] {
+                complete(template)
             }
         }
     }
@@ -34,7 +35,7 @@ class SelectTemplateController: NSWindowController, NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
         // The text must be one of the options in the list.
         // (A popup menu might seem more appropriate but we want the convenience of being able to type it in.)
-        openButton.isEnabled = templates.contains(typeList.stringValue)
+        openButton.isEnabled = templates[typeList.stringValue] != nil
     }
     
     @IBAction func hide(_ sender: AnyObject) {

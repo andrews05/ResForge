@@ -111,7 +111,7 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     func openOrCreateResource(typeCode: String, id: Int) {
         let type = ResourceType(typeCode, resource.typeAttributes)
         if let resource = manager.findResource(type: type, id: id, currentDocumentOnly: false) {
-            manager.open(resource: resource, using: nil, template: nil)
+            manager.open(resource: resource)
         } else {
             manager.createResource(type: type, id: id, name: "")
         }
