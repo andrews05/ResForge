@@ -263,7 +263,7 @@ CA
                             <menuItem title="Show Sidebar" id="348">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="toggleSidebar:" target="-1" id="LHa-zh-Qhc"/>
+                                    <action selector="toggleTypes:" target="-1" id="Ao8-P5-ytl"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Bulk Data Mode" keyEquivalent="b" id="YyK-nA-1Rm">

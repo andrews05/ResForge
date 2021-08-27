@@ -399,9 +399,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     func toolbarWillAddItem(_ notification: Notification) {
-        // Set the sidebar toggle target to self
+        // Set the correct avtion
         if let addedItem = notification.userInfo?["item"] as? NSToolbarItem, addedItem.itemIdentifier == .toggleSidebar {
-            addedItem.target = self
+            addedItem.action = #selector(toggleTypes(_:))
         }
     }
     
@@ -492,15 +492,15 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             #selector(openResourcesAsHex(_:)),
             #selector(exportResources(_:)):
             return dataSource.selectionCount() > 0
-        case #selector(toggleSidebar(_:)):
+        case #selector(toggleTypes(_:)):
             menuItem.title = NSLocalizedString(dataSource.useTypeList ? "Hide Sidebar" : "Show Sidebar", comment: "")
             return true
         case #selector(toggleBulkMode(_:)):
             if dataSource.isBulkMode {
-                menuItem.title = NSLocalizedString("Exit Bulk Data Mode", comment: "")
+                menuItem.title = NSLocalizedString("Show Standard View", comment: "")
                 return true
             }
-            menuItem.title = NSLocalizedString("Bulk Data Mode", comment: "")
+            menuItem.title = NSLocalizedString("Show Bulk Data View", comment: "")
             if let type = dataSource.currentType {
                 return dataSource.bulkController.supports(type: type)
             }
@@ -558,7 +558,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
     }
     
-    @IBAction func toggleSidebar(_ sender: Any) {
+    // INFO: This is *not* named toggleSidebar in order to avoid a responder conflict
+    @IBAction func toggleTypes(_ sender: Any) {
         dataSource.toggleSidebar()
     }
     
