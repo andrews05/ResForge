@@ -19,7 +19,10 @@ class SelectTemplateController: NSWindowController, NSTextFieldDelegate {
                 templates[template.name] = template
             }
         }
-        typeList.addItems(withObjectValues: templates.keys.sorted())
+        let sorted = templates.keys.sorted {
+            $0.localizedCompare($1) == .orderedAscending
+        }
+        typeList.addItems(withObjectValues: sorted)
         
         if templates[type.code] != nil {
             typeList.stringValue = type.code
