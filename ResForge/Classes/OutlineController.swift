@@ -7,18 +7,6 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     var currentType: ResourceType?
     var inlineUpdate = false // Flag to prevent reloading items when editing inline
     
-    @IBAction func doubleClickItems(_ sender: Any) {
-        // Ignore double-clicks in table header
-        guard outlineView.clickedRow != -1 else {
-            return
-        }
-        for item in outlineView.selectedItems where item is ResourceType {
-            // Expand the type list
-            outlineView.expandItem(item)
-        }
-        document.openResources(sender)
-    }
-    
     func prepareView(type: ResourceType?) throws -> NSView {
         currentType = type
         return outlineView

@@ -32,7 +32,6 @@ enum BulkError: LocalizedError {
 }
 
 class BulkController: OutlineController {
-    private var type: ResourceType!
     private var elements: [TemplateField] = []
     private var defaults: [Any?] = []
     private var rows: [Int: [Any?]] = [:]
@@ -60,6 +59,18 @@ class BulkController: OutlineController {
         outlineView.dataSource = self
         outlineView.target = self
         outlineView.doubleAction = #selector(doubleClickItems(_:))
+    }
+    
+    @IBAction func doubleClickItems(_ sender: Any) {
+        // Ignore double-clicks in table header
+        guard outlineView.clickedRow != -1 else {
+            return
+        }
+        if outlineView.clickedColumn == -1 || outlineView.tableColumns[outlineView.clickedColumn] == idCol {
+            document.openResources(sender)
+        } else {
+            outlineView.editColumn(outlineView.clickedColumn, row: outlineView.clickedRow, with: nil, select: false)
+        }
     }
     
     override func prepareView(type: ResourceType!) throws -> NSView {
@@ -214,6 +225,7 @@ class BulkController: OutlineController {
             return resource.name
         } else if let tableColumn = tableColumn {
             let rowData = rows[resource.id] ?? self.read(resource: resource)
+            rows[resource.id] = rowData
             return rowData[Int(tableColumn.identifier.rawValue)!]
         }
         return nil

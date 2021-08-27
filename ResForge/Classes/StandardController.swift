@@ -2,6 +2,18 @@ import Cocoa
 import RFSupport
 
 class StandardController: OutlineController, NSTextFieldDelegate {
+    @IBAction func doubleClickItems(_ sender: Any) {
+        // Ignore double-clicks in table header
+        guard outlineView.clickedRow != -1 else {
+            return
+        }
+        for item in outlineView.selectedItems where item is ResourceType {
+            // Expand the type list
+            outlineView.expandItem(item)
+        }
+        document.openResources(sender)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Default sort resources by id
