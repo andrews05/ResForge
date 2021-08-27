@@ -4,23 +4,35 @@ import RFSupport
 
 enum BulkError: LocalizedError {
     case templateError(Error)
+    case templateNotFound(ResourceType)
+    case invalidValue(String, Int)
+    case missingValue(String, Int)
     
     var errorDescription: String? {
         switch self {
         case .templateError:
             return NSLocalizedString("Invalid basic template.", comment: "")
+        case let .templateNotFound(type):
+            return String(format: NSLocalizedString("Could not find ‘%@’ resource for type ‘%@’.", comment: ""), PluginRegistry.basicTemplateType.code, type.code)
+        case let .invalidValue(column, row):
+            return String(format: NSLocalizedString("Invalid value for “%@” on row %d.", comment: ""), column, row)
+        case let .missingValue(column, row):
+            return String(format: NSLocalizedString("Missing value for “%@” on row %d.", comment: ""), column, row)
         }
     }
     
     var recoverySuggestion: String? {
         switch self {
-        case .templateError(let e):
-            return e.localizedDescription
+        case let .templateError(error):
+            return error.localizedDescription
+        default:
+            return nil
         }
     }
 }
 
 class BulkController: OutlineController {
+    private var type: ResourceType!
     private var elements: [TemplateField] = []
     private var defaults: [Any?] = []
     private var rows: [Int: [Any?]] = [:]
@@ -31,7 +43,6 @@ class BulkController: OutlineController {
         super.init()
         self.outlineView = NSOutlineView(frame: NSMakeRect(0, 0, 500, 500))
         self.document = document
-        self.dataSource = document.dataSource
         
         idCol.headerCell.title = "ID"
         idCol.width = 58
@@ -51,8 +62,8 @@ class BulkController: OutlineController {
         outlineView.doubleAction = #selector(doubleClickItems(_:))
     }
     
-    override func prepareView() throws -> NSView {
-        try self.loadTemplate()
+    override func prepareView(type: ResourceType!) throws -> NSView {
+        try self.loadTemplate(type: type)
         for column in outlineView.tableColumns {
             if column != idCol && column != nameCol {
                 outlineView.removeTableColumn(column)
@@ -83,15 +94,16 @@ class BulkController: OutlineController {
         }
     }
     
-    func loadTemplate() throws {
-        guard let template = document.editorManager.template(for: dataSource.currentType, basic: true) else {
-            return
+    func loadTemplate(type: ResourceType) throws {
+        guard let template = document.editorManager.template(for: type, basic: true) else {
+            throw BulkError.templateNotFound(type)
         }
         do {
             elements = try PluginRegistry.templateEditor.parseBasicTemplate(template, manager: document.editorManager)
         } catch let error {
             throw BulkError.templateError(error)
         }
+        currentType = type
         defaults = elements.map {
             $0.visible ? $0.value(forKey: "value") : nil
         }
@@ -103,12 +115,60 @@ class BulkController: OutlineController {
         }
         // MLDataTable is an easy built-in option for working with csv
         var table = MLDataTable()
-        let rows = document.directory.resources(ofType: dataSource.currentType!).map(self.read(resource:))
+        let resources = document.directory.resources(ofType: currentType!)
+        table.addColumn(MLDataColumn(resources.map(\.id)), named: "ID")
+        table.addColumn(MLDataColumn(resources.map(\.name)), named: "Name")
+        let rows = resources.map(self.read(resource:))
         for (i, element) in elements.enumerated() where element.visible {
             let column = rows.map { element.formatter!.string(for: $0[i])! }
             table.addColumn(MLDataColumn(column), named: element.displayLabel)
         }
         try table.writeCSV(to: url)
+    }
+    
+    func importCSV(from url: URL) throws -> [Resource] {
+        guard #available(OSX 10.14, *) else {
+            return []
+        }
+        var resources: [Resource] = []
+        let table = try MLDataTable(contentsOf: url, options: MLDataTable.ParsingOptions(skipInitialSpaces: false, missingValues: []))
+        for (i, row) in table.rows.enumerated() {
+            guard let id = row["ID"]?.intValue else {
+                throw BulkError.invalidValue("ID", i)
+            }
+            guard let name = row["Name"]?.stringValue else {
+                throw BulkError.invalidValue("Name", i)
+            }
+            let resource = Resource(type: currentType!, id: id, name: name)
+            let writer = BinaryDataWriter()
+            for element in elements {
+                if element.visible {
+                    let string: String
+                    switch row[element.displayLabel] {
+                    case nil:
+                        throw BulkError.missingValue(element.displayLabel, i)
+                    case let .string(v):
+                        string = v
+                    case let .int(v):
+                        string = String(v)
+                    case let .double(v):
+                        string = String(v)
+                    default:
+                        string = ""
+                    }
+                    var error: NSString?
+                    var value: AnyObject?
+                    guard element.formatter!.getObjectValue(&value, for: string, errorDescription: &error) else {
+                        throw BulkError.invalidValue(element.displayLabel, i)
+                    }
+                    element.setValue(value, forKey: "value")
+                }
+                element.writeData(to: writer)
+            }
+            resource.data = writer.data
+            resources.append(resource)
+        }
+        return resources
     }
     
     private func read(resource: Resource) -> [Any?] {
@@ -145,14 +205,6 @@ class BulkController: OutlineController {
     }
     
     // MARK: - Data Source functions
-    
-    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        return document.directory.filteredResources(type: dataSource.currentType!)[index]
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        return document.directory.filteredResources(type: dataSource.currentType!).count
-    }
     
     func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {
         let resource = item as! Resource

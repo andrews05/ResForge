@@ -11,16 +11,16 @@ class StandardController: OutlineController, NSTextFieldDelegate {
         }
     }
     
-    override func prepareView() -> NSView {
-        let typed = dataSource.currentType != nil
-        outlineView.indentationPerLevel = typed ? 0 : 1
-        outlineView.tableColumns[0].width = typed ? 60 : 70
+    override func prepareView(type: ResourceType?) -> NSView {
+        currentType = type
+        outlineView.indentationPerLevel = type == nil ? 1 : 0
+        outlineView.tableColumns[0].width = type == nil ? 70 : 60
         document.directory.sortDescriptors = outlineView.sortDescriptors
         return outlineView
     }
     
     override func updated(resource: Resource, oldIndex: Int?) {
-        let parent = dataSource.currentType == nil ? resource.type : nil
+        let parent = currentType == nil ? resource.type : nil
         let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
         if inlineUpdate {
             // The resource has been edited inline, perform the move async to ensure the first responder has been properly updated
@@ -88,22 +88,6 @@ class StandardController: OutlineController, NSTextFieldDelegate {
     }
     
     // MARK: - DataSource functions
-    
-    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if let type = item as? ResourceType ?? dataSource.currentType {
-            return document.directory.filteredResources(type: type)[index]
-        } else {
-            return document.directory.filteredTypes()[index]
-        }
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if let type = item as? ResourceType ?? dataSource.currentType {
-            return document.directory.filteredResources(type: type).count
-        } else {
-            return document.directory.filteredTypes().count
-        }
-    }
     
     func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
         document.directory.sortDescriptors = outlineView.sortDescriptors

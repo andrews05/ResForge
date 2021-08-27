@@ -4,7 +4,7 @@ import RFSupport
 class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, ResourcesView {
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet weak var document: ResourceDocument!
-    @IBOutlet weak var dataSource: ResourceDataSource!
+    var currentType: ResourceType?
     var inlineUpdate = false // Flag to prevent reloading items when editing inline
     
     @IBAction func doubleClickItems(_ sender: Any) {
@@ -19,7 +19,8 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         document.openResources(sender)
     }
     
-    func prepareView() throws -> NSView {
+    func prepareView(type: ResourceType?) throws -> NSView {
+        currentType = type
         return outlineView
     }
     
@@ -48,7 +49,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
     
     func selectedResources(deep: Bool = false) -> [Resource] {
-        if dataSource.currentType != nil {
+        if currentType != nil {
             return outlineView.selectedItems as! [Resource]
         } else if deep {
             var resources: [Resource] = []
@@ -66,7 +67,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
     
     func selectedType() -> ResourceType? {
-        if let type = dataSource.currentType {
+        if let type = currentType {
             return type
         } else {
             let item = outlineView.item(atRow: outlineView.selectedRow)
@@ -92,6 +93,24 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     
     func outlineViewSelectionDidChange(_ notification: Notification) {
         NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
+    }
+    
+    // MARK: - Data Source functions
+    
+    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        if let type = item as? ResourceType ?? currentType {
+            return document.directory.filteredResources(type: type)[index]
+        } else {
+            return document.directory.filteredTypes()[index]
+        }
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+        if let type = item as? ResourceType ?? currentType {
+            return document.directory.filteredResources(type: type).count
+        } else {
+            return document.directory.filteredTypes().count
+        }
     }
     
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {

@@ -74,7 +74,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     private func setView(_ rView: ResourcesView? = nil) {
         let rView = rView ?? self.defaultView()
         do {
-            let view = try rView.prepareView()
+            let view = try rView.prepareView(type: currentType)
             rView.reload()
             if rView !== resourcesView {
                 resourcesView = rView
@@ -260,7 +260,7 @@ class SourceCount: NSButton {
 // Common interface for the OutlineController and CollectionController
 protocol ResourcesView: AnyObject {
     /// Prepare the view to be displayed within the scroll view.
-    func prepareView() throws -> NSView
+    func prepareView(type: ResourceType?) throws -> NSView
     
     /// Reload the data in the view.
     func reload()

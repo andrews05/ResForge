@@ -478,7 +478,6 @@
         </customObject>
         <customObject id="KZo-Ug-Xhc" customClass="StandardController" customModule="ResForge" customModuleProvider="target">
             <connections>
-                <outlet property="dataSource" destination="32" id="BwU-t4-Reo"/>
                 <outlet property="document" destination="-2" id="v0M-hs-4Ud"/>
                 <outlet property="outlineView" destination="145" id="xnq-a5-pCf"/>
             </connections>
@@ -486,7 +485,6 @@
         <customObject id="bpN-Hx-BgR" customClass="CollectionController" customModule="ResForge" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="XSg-qL-KmL" id="tda-kJ-ynm"/>
-                <outlet property="dataSource" destination="32" id="3ut-MY-Gub"/>
                 <outlet property="document" destination="-2" id="oZ5-YA-qgn"/>
             </connections>
         </customObject>

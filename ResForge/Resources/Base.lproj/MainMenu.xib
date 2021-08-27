@@ -277,6 +277,12 @@ CA
                                     <action selector="exportCSV:" target="-1" id="W8R-lw-GTf"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Import from CSV…" id="ec6-zg-IIS">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="importCSV:" target="-1" id="LtK-Dw-kEm"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="342">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
