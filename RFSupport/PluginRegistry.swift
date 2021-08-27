@@ -1,9 +1,6 @@
 import Cocoa
 
 public class PluginRegistry {
-    public static let templateType = ResourceType("TMPL")
-    public static let basicTemplateType = ResourceType("TMPB")
-    
     public private(set) static var editors: [String: ResourceEditor.Type] = [:]
     public private(set) static var hexEditor: ResourceEditor.Type! = nil
     public private(set) static var templateEditor: TemplateEditor.Type! = nil

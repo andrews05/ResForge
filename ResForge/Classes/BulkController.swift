@@ -5,19 +5,16 @@ import RFSupport
 enum BulkError: LocalizedError {
     case templateError(Error)
     case templateNotFound(ResourceType)
-    case invalidValue(String, Int)
-    case missingValue(String, Int)
+    case invalidValue(String, Int, String?=nil)
     
     var errorDescription: String? {
         switch self {
         case .templateError:
             return NSLocalizedString("Invalid basic template.", comment: "")
         case let .templateNotFound(type):
-            return String(format: NSLocalizedString("Could not find ‘%@’ resource for type ‘%@’.", comment: ""), PluginRegistry.basicTemplateType.code, type.code)
-        case let .invalidValue(column, row):
+            return String(format: NSLocalizedString("Could not find ‘%@’ resource for type ‘%@’.", comment: ""), ResourceType.BasicTemplate.code, type.code)
+        case let .invalidValue(column, row, _):
             return String(format: NSLocalizedString("Invalid value for “%@” on row %d.", comment: ""), column, row)
-        case let .missingValue(column, row):
-            return String(format: NSLocalizedString("Missing value for “%@” on row %d.", comment: ""), column, row)
         }
     }
     
@@ -25,6 +22,8 @@ enum BulkError: LocalizedError {
         switch self {
         case let .templateError(error):
             return error.localizedDescription
+        case let .invalidValue(_, _, message):
+            return message
         default:
             return nil
         }
@@ -45,6 +44,7 @@ class BulkController: OutlineController {
         
         idCol.headerCell.title = "ID"
         idCol.width = 58
+        idCol.isEditable = false
         nameCol.headerCell.title = "Name"
         nameCol.width = 150
         outlineView.addTableColumn(idCol)
@@ -83,7 +83,8 @@ class BulkController: OutlineController {
         for (i, element) in elements.enumerated() where element.visible {
             let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
             column.headerCell.title = element.displayLabel
-            column.width = element.width == 0 ? 150 : min(element.width, 150)
+            column.sizeToFit()
+            column.width = max(min(element.width, 150), column.width)
             outlineView.addTableColumn(column)
         }
         document.directory.sortDescriptors = []
@@ -142,6 +143,7 @@ class BulkController: OutlineController {
             return []
         }
         var resources: [Resource] = []
+        // FIXME: Disabling skipInitialSpaces doesn't actually work
         let table = try MLDataTable(contentsOf: url, options: MLDataTable.ParsingOptions(skipInitialSpaces: false, missingValues: []))
         for (i, row) in table.rows.enumerated() {
             guard let id = row["ID"]?.intValue else {
@@ -154,23 +156,13 @@ class BulkController: OutlineController {
             let writer = BinaryDataWriter()
             for element in elements {
                 if element.visible {
-                    let string: String
-                    switch row[element.displayLabel] {
-                    case nil:
-                        throw BulkError.missingValue(element.displayLabel, i)
-                    case let .string(v):
-                        string = v
-                    case let .int(v):
-                        string = String(v)
-                    case let .double(v):
-                        string = String(v)
-                    default:
-                        string = ""
+                    guard let string = row[element.displayLabel]?.stringValue else {
+                        throw BulkError.invalidValue(element.displayLabel, i)
                     }
                     var error: NSString?
                     var value: AnyObject?
                     guard element.formatter!.getObjectValue(&value, for: string, errorDescription: &error) else {
-                        throw BulkError.invalidValue(element.displayLabel, i)
+                        throw BulkError.invalidValue(element.displayLabel, i, error as String?)
                     }
                     element.setValue(value, forKey: "value")
                 }
@@ -203,7 +195,6 @@ class BulkController: OutlineController {
         }
         if tableColumn == idCol {
             cell.alignment = .right
-            cell.isEditable = false
         } else if tableColumn == nameCol {
             let formatter = MacRomanFormatter()
             formatter.stringLength = 255
@@ -249,5 +240,22 @@ class BulkController: OutlineController {
             resource.data = writer.data
         }
         inlineUpdate = false
+    }
+}
+
+// Extension to force a string value from MLDataValue
+@available(OSX 10.14, *)
+extension MLDataValue {
+    var stringValue: String? {
+        switch self {
+        case let .string(v):
+            return v
+        case let .int(v):
+            return String(v)
+        case let .double(v):
+            return String(v)
+        default:
+            return ""
+        }
     }
 }

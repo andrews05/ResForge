@@ -1,11 +1,11 @@
 import Cocoa
 
 public extension Notification.Name {
-    static let ResourceDidChange            = Self("ResourceDidChange")
-    static let ResourceNameDidChange        = Self("ResourceNameDidChange")
-    static let ResourceTypeDidChange        = Self("ResourceTypeDidChange")
-    static let ResourceIDDidChange          = Self("ResourceIDDidChange")
-    static let ResourceDataDidChange        = Self("ResourceDataDidChange")
+    static let ResourceDidChange        = Self("ResourceDidChange")
+    static let ResourceNameDidChange    = Self("ResourceNameDidChange")
+    static let ResourceTypeDidChange    = Self("ResourceTypeDidChange")
+    static let ResourceIDDidChange      = Self("ResourceIDDidChange")
+    static let ResourceDataDidChange    = Self("ResourceDataDidChange")
 }
 
 public extension NSPasteboard.PasteboardType {
@@ -13,6 +13,9 @@ public extension NSPasteboard.PasteboardType {
 }
 
 public struct ResourceType: Hashable {
+    public static let Template = Self("TMPL")
+    public static let BasicTemplate = Self("TMPB")
+    
     public var code: String
     public var attributes: [String: String]
     public var attributesDisplay: String {

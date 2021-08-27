@@ -45,7 +45,7 @@ class EditorManager: RFEditorManager {
         guard let type = type else {
             return nil
         }
-        return self.findResource(type: basic ? PluginRegistry.basicTemplateType : PluginRegistry.templateType, name: type.code)
+        return self.findResource(type: basic ? ResourceType.BasicTemplate : ResourceType.Template, name: type.code)
     }
     
     // MARK: - Protocol functions

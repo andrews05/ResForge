@@ -34,7 +34,7 @@ class TemplateParser {
             guard element.label != template.name else {
                 throw TemplateError.invalidStructure(element, "Cannot include self.")
             }
-            guard let template = manager.findResource(type: PluginRegistry.templateType, name: element.label, currentDocumentOnly: false) else {
+            guard let template = manager.findResource(type: ResourceType.Template, name: element.label, currentDocumentOnly: false) else {
                 throw TemplateError.invalidStructure(element, "Template could not be found.")
             }
             return try TemplateParser(template: template, manager: manager, basic: basic).parse()
