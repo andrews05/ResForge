@@ -1,8 +1,24 @@
 import Foundation
 import RFSupport
 
-class SupportRegistry {
-    static let directory = ResourceDirectory()
+class SupportRegistry: ResourceDirectory {
+    static let directory = SupportRegistry()
+    
+    // The support registry is where most templates are found and since the directory doesn't
+    // change after app launch we can keep an index of resources by name for faster template lookups
+    private var nameIndex: [ResourceType: [String: Resource]] = [:]
+    
+    override func findResource(type: ResourceType, name: String) -> Resource? {
+        if nameIndex[type] == nil {
+            guard let resources = resourcesByType[type] else {
+                return nil
+            }
+            nameIndex[type] = resources.reduce(into: [:]) {
+                $0[$1.name] = $1
+            }
+        }
+        return nameIndex[type]?[name]
+    }
     
     static func scanForResources() {
         Self.scanForResources(in: Bundle.main)
