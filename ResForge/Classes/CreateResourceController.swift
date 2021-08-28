@@ -100,11 +100,11 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     @IBAction func hide(_ sender: AnyObject) {
         if sender === createButton {
             let resource = Resource(type: self.currentType, id: idView.integerValue, name: nameView.stringValue)
-            rDocument.dataSource.reload {
+            let actionName = NSLocalizedString("Create Resource", comment: "")
+            rDocument.dataSource.reload(actionName: actionName) {
                 rDocument.directory.add(resource)
                 return [resource]
             }
-            rDocument.undoManager?.setActionName(NSLocalizedString("Create Resource", comment: ""))
             if !rDocument.dataSource.isBulkMode {
                 rDocument.editorManager.open(resource: resource)
             }

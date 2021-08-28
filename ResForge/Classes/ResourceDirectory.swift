@@ -12,6 +12,7 @@ class ResourceDirectory {
     private(set) var resourcesByType: [ResourceType: [Resource]] = [:]
     private(set) var allTypes: [ResourceType] = []
     private var filtered: [ResourceType: [Resource]] = [:]
+    var ignoreChanges = false
     var filter = "" {
         didSet {
             filtered = [:]
@@ -56,7 +57,7 @@ class ResourceDirectory {
     func add(_ resource: Resource) {
         self.addToTypedList(resource)
         filtered.removeValue(forKey: resource.type)
-        document.undoManager?.registerUndo(withTarget: self, handler: { $0.remove(resource) })
+        document.undoManager?.registerUndo(withTarget: self) { $0.remove(resource) }
         NotificationCenter.default.post(name: .DirectoryDidAddResource, object: self, userInfo: ["resource": resource])
     }
     
@@ -64,7 +65,7 @@ class ResourceDirectory {
     func remove(_ resource: Resource) {
         self.removeFromTypedList(resource)
         filtered.removeValue(forKey: resource.type)
-        document.undoManager?.registerUndo(withTarget: self, handler: { $0.add(resource) })
+        document.undoManager?.registerUndo(withTarget: self) { $0.add(resource) }
         NotificationCenter.default.post(name: .DirectoryDidRemoveResource, object: self, userInfo: ["resource": resource])
     }
     
@@ -133,11 +134,11 @@ class ResourceDirectory {
         guard
             let document = document,
             let resource = notification.object as? Resource,
-            resource.document === document
+            resource.document === document,
+            let oldType = notification.userInfo?["oldValue"] as? ResourceType
         else {
             return
         }
-        let oldType = notification.userInfo!["oldValue"] as! ResourceType
         self.removeFromTypedList(resource, type: oldType)
         self.addToTypedList(resource)
         filtered.removeValue(forKey: oldType)
@@ -146,15 +147,16 @@ class ResourceDirectory {
     
     @objc func resourceDidChange(_ notification: Notification) {
         guard
+            !ignoreChanges,
             let document = document,
             let resource = notification.object as? Resource,
-            resource.document === document
+            resource.document === document,
+            let list = filtered[resource.type] ?? resourcesByType[resource.type]
         else {
             return
         }
-        let list = filtered[resource.type] ?? resourcesByType[resource.type]!
         let idx = list.firstIndex(of: resource)
-        resourcesByType[resource.type]!.sort { $0.id < $1.id }
+        resourcesByType[resource.type]?.sort { $0.id < $1.id }
         filtered.removeValue(forKey: resource.type)
         NotificationCenter.default.post(name: .DirectoryDidUpdateResource, object: self, userInfo: [
             "resource": resource,
@@ -175,21 +177,11 @@ class ResourceDirectory {
     }
     
     func findResource(type: ResourceType, id: Int) -> Resource? {
-        if let resources = resourcesByType[type] {
-            for resource in resources where resource.id == id {
-                return resource
-            }
-        }
-        return nil
+        return resourcesByType[type]?.first() { $0.id == id }
     }
     
     func findResource(type: ResourceType, name: String) -> Resource? {
-        if let resources = resourcesByType[type] {
-            for resource in resources where resource.name == name {
-                return resource
-            }
-        }
-        return nil
+        return resourcesByType[type]?.first() { $0.name == name }
     }
 
     /// Return an unused resource ID for a new resource of specified type.

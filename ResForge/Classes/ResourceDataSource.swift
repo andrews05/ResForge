@@ -19,7 +19,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     private(set) var useTypeList = false {
         didSet {
             splitView.setPosition(useTypeList ? 110 : 0, ofDividerAt: 0)
-            self.reload(selecting: self.selectedResources(), withUndo: false)
+            self.reload(selecting: self.selectedResources())
         }
     }
     private(set) var currentType: ResourceType? {
@@ -34,6 +34,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resourceDidUpdate(_:)), name: .DirectoryDidUpdateResource, object: document.directory)
         useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
+        typeList.registerForDraggedTypes([.RKResource])
     }
     
     @objc func resourceTypeDidChange(_ notification: Notification) {
@@ -44,7 +45,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         else {
             return
         }
-        self.reload(selecting: [resource], withUndo: false)
+        self.reload(selecting: [resource])
     }
     
     @objc func resourceDidUpdate(_ notification: Notification) {
@@ -110,20 +111,24 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     /// Reload the data source after performing a given operation. The resources returned from the operation will be selected.
     ///
     /// This function is important for managing undo operations when adding/removing resources. It creates an undo group and ensures that the data source is always reloaded after the operation is peformed, even when undoing/redoing.
-    func reload(after operation: () -> [Resource]) {
+    func reload(actionName: String, after operation: () -> [Resource]) {
         document.undoManager?.beginUndoGrouping()
-        self.willReload()
-        self.reload(selecting: operation())
+        self.willReload(actionName: actionName)
+        self.reload(selecting: operation(), actionName: actionName)
         document.undoManager?.endUndoGrouping()
     }
     
     /// Register intent to reload the data source before performing changes.
-    private func willReload(_ resources: [Resource] = []) {
-        document.undoManager?.registerUndo(withTarget: self, handler: { $0.reload(selecting: resources) })
+    private func willReload(_ resources: [Resource] = [], actionName: String) {
+        document.directory.ignoreChanges = true
+        document.undoManager?.registerUndo(withTarget: self) {
+            $0.reload(selecting: resources, actionName: actionName)
+        }
+        document.undoManager?.setActionName(actionName)
     }
     
     /// Reload the view and select the given resources.
-    func reload(selecting resources: [Resource] = [], withUndo: Bool = true) {
+    func reload(selecting resources: [Resource] = [], actionName: String? = nil) {
         typeList.reloadData()
         if useTypeList, !document.directory.allTypes.isEmpty {
             // Select the first available type if nothing else selected (-1 becomes 1)
@@ -134,8 +139,12 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             setView()
         }
         resourcesView.select(resources)
-        if withUndo {
-            document.undoManager?.registerUndo(withTarget: self, handler: { $0.willReload(resources) })
+        if let actionName = actionName {
+            document.directory.ignoreChanges = false
+            document.undoManager?.registerUndo(withTarget: self) {
+                $0.willReload(resources, actionName: actionName)
+            }
+            document.undoManager?.setActionName(actionName)
         }
     }
     
@@ -230,6 +239,43 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     // Prevent deselection (using the allowsEmptySelection property results in undesirable selection changes)
     func outlineView(_ outlineView: NSOutlineView, selectionIndexesForProposedSelection proposedSelectionIndexes: IndexSet) -> IndexSet {
         return proposedSelectionIndexes.isEmpty || proposedSelectionIndexes == [0] ? outlineView.selectedRowIndexes : proposedSelectionIndexes
+    }
+    
+    // Allow changing type by drag and drop onto a different type
+    func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
+        if let type = item as? ResourceType, type != currentType
+            && (info.draggingSource as? NSView)?.enclosingScrollView === scrollView {
+            return .move
+        }
+        return []
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
+        guard let type = item as? ResourceType,
+              var resources = info.draggingPasteboard.readObjects(forClasses: [Resource.self], options: nil) as? [Resource]
+        else {
+            return false
+        }
+        // The pasteboard objects are not the original resources, we have to look them up
+        resources = resources.compactMap {
+            document.directory.findResource(type: $0.type, id: $0.id)
+        }
+        guard !resources.isEmpty else {
+            return false
+        }
+        let alert = NSAlert()
+        alert.messageText = NSLocalizedString("Are you sure you want to change the type of the selected resources?", comment: "")
+        alert.informativeText = String(format: NSLocalizedString("Current type: %@\nNew type: %@", comment: ""), resources[0].type.description, type.description)
+        alert.addButton(withTitle: NSLocalizedString("Change Type", comment: ""))
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
+        alert.beginSheetModal(for: document.windowForSheet!) { modalResponse in
+            if modalResponse == .alertFirstButtonReturn {
+                DispatchQueue.main.async {
+                    self.document.changeTypes(resources: resources, type: type)
+                }
+            }
+        }
+        return true
     }
     
     func outlineViewSelectionDidChange(_ notification: Notification) {

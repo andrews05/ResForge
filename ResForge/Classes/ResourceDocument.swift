@@ -614,9 +614,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             if modalResponse == .OK, let url = panel.url {
                 do {
                     let resources = try self.dataSource.bulkController.importCSV(from: url)
+                    let actionName = NSLocalizedString(resources.count == 1 ? "Import Resource" : "Import Resources", comment: "")
                     // Allow the sheet to disappear before continuing
                     DispatchQueue.main.async {
-                        self.add(resources: resources)
+                        self.add(resources: resources, actionName: actionName)
                     }
                 } catch let error {
                     self.presentError(error)
@@ -663,14 +664,14 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
     }
     
-    func add(resources: [Resource]) {
+    func add(resources: [Resource], actionName: String? = nil) {
         guard !resources.isEmpty else {
             return
         }
-        dataSource.reload {
+        let actionName = actionName ?? NSLocalizedString(resources.count == 1 ? "Paste Resource" : "Paste Resources", comment: "")
+        dataSource.reload(actionName: actionName) {
             var added: [Resource] = []
-            var alert: NSAlert!
-            var modalResponse: NSApplication.ModalResponse?
+            var resolver: ConflictResolver!
             for resource in resources {
                 // Clear type attributes if not extended format
                 if format != .extended {
@@ -678,61 +679,51 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                     resource.id = Int(Int16(clamping: resource.id))
                 }
                 if let conflicted = directory.findResource(type: resource.type, id: resource.id) {
-                    // Resource slot is occupied, ask user what to do
-                    if modalResponse == nil {
-                        if alert == nil {
-                            alert = NSAlert()
-                            alert.informativeText = NSLocalizedString("Do you wish to assign the new resource a unique ID, overwrite the existing resource, or skip this resource?", comment: "")
-                            alert.addButton(withTitle: NSLocalizedString("Unique ID", comment: ""))
-                            alert.addButton(withTitle: NSLocalizedString("Overwrite", comment: ""))
-                            alert.addButton(withTitle: NSLocalizedString("Skip", comment: ""))
-                            // Show apply to all checkbox when there are multiple resources
-                            alert.showsSuppressionButton = resources.count > 1
-                            alert.suppressionButton?.title = NSLocalizedString("Apply to all", comment: "")
-                        }
-                        alert.messageText = String(format: NSLocalizedString("A resource of type ‘%@’ with ID %ld already exists.", comment: ""), resource.typeCode, resource.id)
-                        // TODO: Do this in a non-blocking way?
-                        alert.beginSheetModal(for: self.windowForSheet!) { modalResponse in
-                            NSApp.stopModal(withCode: modalResponse)
-                        }
-                        modalResponse = NSApp.runModal(for: alert.window)
+                    resolver = resolver ?? ConflictResolver(document: self)
+                    if !resolver.resolve(resource, conflicted: conflicted, multiple: resources.count > 1) {
+                        continue
                     }
-                    switch (modalResponse!) {
-                    case .alertFirstButtonReturn: // unique id
-                        resource.id = directory.uniqueID(for: resource.type, starting: resource.id)
-                        directory.add(resource)
-                        added.append(resource)
-                    case .alertSecondButtonReturn: // overwrite
-                        directory.remove(conflicted)
-                        directory.add(resource)
-                        added.append(resource)
-                    default:
-                        break
-                    }
-                    // If suppression button was not checked, clear the response (otherwise remember it for next time)
-                    if alert.suppressionButton?.state == .off {
-                        modalResponse = nil
-                    }
-                } else {
-                    directory.add(resource)
-                    added.append(resource)
                 }
+                directory.add(resource)
+                added.append(resource)
             }
             return added
         }
-        self.undoManager?.setActionName(NSLocalizedString(resources.count == 1 ? "Paste Resource" : "Paste Resources", comment: ""))
+    }
+    
+    func changeTypes(resources: [Resource], type: ResourceType) {
+        guard !resources.isEmpty else {
+            return
+        }
+        let actionName = NSLocalizedString(resources.count == 1 ? "Change Type" : "Change Types", comment: "")
+        dataSource.reload(actionName: actionName) {
+            var added: [Resource] = []
+            var resolver: ConflictResolver!
+            for resource in resources {
+                if let conflicted = directory.findResource(type: type, id: resource.id) {
+                    resolver = resolver ?? ConflictResolver(document: self)
+                    if !resolver.resolve(resource, conflicted: conflicted, multiple: resources.count > 1) {
+                        continue
+                    }
+                }
+                resource.typeCode = type.code
+                resource.typeAttributes = type.attributes
+                added.append(resource)
+            }
+            return added
+        }
     }
     
     func remove(resources: [Resource]) {
         guard !resources.isEmpty else {
             return
         }
-        dataSource.reload {
+        let actionName = NSLocalizedString(resources.count == 1 ? "Delete Resource" : "Delete Resources", comment: "")
+        dataSource.reload(actionName: actionName) {
             for resource in resources {
                 directory.remove(resource)
             }
             return []
         }
-        self.undoManager?.setActionName(NSLocalizedString(resources.count == 1 ? "Delete Resource" : "Delete Resources", comment: ""))
     }
 }

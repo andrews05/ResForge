@@ -12,12 +12,15 @@ public extension NSPasteboard.PasteboardType {
     static let RKResource = Self("com.resforge.resource")
 }
 
-public struct ResourceType: Hashable {
+public struct ResourceType: Hashable, CustomStringConvertible {
     public static let Template = Self("TMPL")
     public static let BasicTemplate = Self("TMPB")
     
     public var code: String
     public var attributes: [String: String]
+    public var description: String {
+        return attributes.isEmpty ? code : "\(code) + \(attributesDisplay)"
+    }
     public var attributesDisplay: String {
         attributes.map({ "\($0.0) = \($0.1)" }).joined(separator: ", ")
     }
@@ -45,7 +48,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 document?.undoManager?.setActionName(NSLocalizedString("Change Type", comment: ""))
-                document?.undoManager?.registerUndo(withTarget: self, handler: { $0.typeCode = oldValue.code })
+                document?.undoManager?.registerUndo(withTarget: self) { $0.typeCode = oldValue.code }
             }
         }
     }
@@ -61,7 +64,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 document?.undoManager?.setActionName(NSLocalizedString("Change Type Attributes", comment: ""))
-                document?.undoManager?.registerUndo(withTarget: self, handler: { $0.typeAttributes = oldValue.attributes })
+                document?.undoManager?.registerUndo(withTarget: self) { $0.typeAttributes = oldValue.attributes }
             }
         }
     }
@@ -72,7 +75,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
                 NotificationCenter.default.post(name: .ResourceIDDidChange, object: self, userInfo: ["oldValue":oldValue])
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 document?.undoManager?.setActionName(NSLocalizedString("Change ID", comment: ""))
-                document?.undoManager?.registerUndo(withTarget: self, handler: { $0.id = oldValue })
+                document?.undoManager?.registerUndo(withTarget: self) { $0.id = oldValue }
             }
         }
     }
@@ -83,7 +86,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
                 NotificationCenter.default.post(name: .ResourceNameDidChange, object: self, userInfo: ["oldValue":oldValue])
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 document?.undoManager?.setActionName(NSLocalizedString("Change Name", comment: ""))
-                document?.undoManager?.registerUndo(withTarget: self, handler: { $0.name = oldValue })
+                document?.undoManager?.registerUndo(withTarget: self) { $0.name = oldValue }
             }
         }
     }

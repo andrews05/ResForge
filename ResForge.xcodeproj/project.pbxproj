@@ -141,6 +141,7 @@
 		49DA3A8B2550C65900821A7E /* rle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044062472064F0035C0FA /* rle.cpp */; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
 		49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1D24F377A400BE0F0F /* CollectionController.swift */; };
+		49E56F7C26DA22FB005FA18B /* ConflictResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */; };
 		49E7A3C626D2058400EF885F /* TemplateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7A3C426D2055E00EF885F /* TemplateParser.swift */; };
 		49EE73012550B99200BEABDB /* SpriteWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49EE72AC2550A7F300BEABDB /* SpriteWindow.xib */; };
 		49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */; };
@@ -491,6 +492,7 @@
 		49DA3A4B2550BD2800821A7E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
+		49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConflictResolver.swift; sourceTree = "<group>"; };
 		49E7A3B926D0E59100EF885F /* BulkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkController.swift; sourceTree = "<group>"; };
 		49E7A3C426D2055E00EF885F /* TemplateParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateParser.swift; sourceTree = "<group>"; };
 		49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteWindowController.swift; sourceTree = "<group>"; };
@@ -959,6 +961,7 @@
 				49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */,
 				49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */,
 				49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */,
+				49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */,
 				49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */,
 				49DB6A1B24F375A100BE0F0F /* OutlineController.swift */,
 				49F2EAAA26D5AB5E0020D70E /* StandardController.swift */,
@@ -1440,6 +1443,7 @@
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
 				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
 				4992491A26C3B527005F69A7 /* AttributesEditor.swift in Sources */,
+				49E56F7C26DA22FB005FA18B /* ConflictResolver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
