@@ -588,6 +588,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             self.presentError(error)
         }
         let panel = NSSavePanel()
+        panel.allowedFileTypes = ["csv"]
         panel.nameFieldStringValue = "\(type.code).csv"
         panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
             if modalResponse == .OK, let url = panel.url {
@@ -610,6 +611,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             self.presentError(error)
         }
         let panel = NSOpenPanel()
+        panel.allowedFileTypes = ["csv"]
         panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
             if modalResponse == .OK, let url = panel.url {
                 do {

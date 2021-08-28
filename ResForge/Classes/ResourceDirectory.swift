@@ -12,7 +12,6 @@ class ResourceDirectory {
     private(set) var resourcesByType: [ResourceType: [Resource]] = [:]
     private(set) var allTypes: [ResourceType] = []
     private var filtered: [ResourceType: [Resource]] = [:]
-    var ignoreChanges = false
     var filter = "" {
         didSet {
             filtered = [:]
@@ -147,7 +146,6 @@ class ResourceDirectory {
     
     @objc func resourceDidChange(_ notification: Notification) {
         guard
-            !ignoreChanges,
             let document = document,
             let resource = notification.object as? Resource,
             resource.document === document,

@@ -12,6 +12,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     @IBOutlet var attributesDisplay: NSTextField!
     @IBOutlet weak var document: ResourceDocument!
     private var resourcesView: ResourcesView!
+    private var ignoreChanges = false
     
     var isBulkMode: Bool {
         resourcesView is BulkController
@@ -39,6 +40,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     @objc func resourceTypeDidChange(_ notification: Notification) {
         guard
+            !ignoreChanges,
             let document = document,
             let resource = notification.object as? Resource,
             resource.document === document
@@ -49,11 +51,15 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     @objc func resourceDidUpdate(_ notification: Notification) {
-        let resource = notification.userInfo!["resource"] as! Resource
-        if !useTypeList || resource.type == currentType {
-            let oldIndex = notification.userInfo!["oldIndex"] as? Int
-            resourcesView.updated(resource: resource, oldIndex: oldIndex)
+        guard
+            !ignoreChanges,
+            let resource = notification.userInfo?["resource"] as? Resource,
+            !useTypeList || resource.type == currentType
+        else {
+            return
         }
+        let oldIndex = notification.userInfo?["oldIndex"] as? Int
+        resourcesView.updated(resource: resource, oldIndex: oldIndex)
     }
     
     @IBAction func filter(_ sender: Any) {
@@ -81,9 +87,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
                 resourcesView = rView
                 scrollView.documentView = view
                 scrollView.window?.makeFirstResponder(view)
-                // The outline header interferes with the scroll position, make sure we return to top
-                (view as? NSOutlineView)?.scrollToBeginningOfDocument(self)
             }
+            // The outline header interferes with the scroll position, make sure we return to top
+            (view as? NSOutlineView)?.scrollToBeginningOfDocument(self)
         } catch let error {
             document.presentError(error)
         }
@@ -120,7 +126,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     /// Register intent to reload the data source before performing changes.
     private func willReload(_ resources: [Resource] = [], actionName: String) {
-        document.directory.ignoreChanges = true
+        ignoreChanges = true
         document.undoManager?.registerUndo(withTarget: self) {
             $0.reload(selecting: resources, actionName: actionName)
         }
@@ -140,7 +146,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         }
         resourcesView.select(resources)
         if let actionName = actionName {
-            document.directory.ignoreChanges = false
+            ignoreChanges = false
             document.undoManager?.registerUndo(withTarget: self) {
                 $0.willReload(resources, actionName: actionName)
             }

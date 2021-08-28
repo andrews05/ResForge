@@ -142,11 +142,12 @@ class BulkController: OutlineController {
         guard #available(OSX 10.14, *) else {
             return []
         }
+        let idRange = document.format.minID...document.format.maxID
         var resources: [Resource] = []
         // FIXME: Disabling skipInitialSpaces doesn't actually work
         let table = try MLDataTable(contentsOf: url, options: MLDataTable.ParsingOptions(skipInitialSpaces: false, missingValues: []))
         for (i, row) in table.rows.enumerated() {
-            guard let id = row["ID"]?.intValue else {
+            guard let id = row["ID"]?.intValue, idRange ~= id  else {
                 throw BulkError.invalidValue("ID", i)
             }
             guard let name = row["Name"]?.stringValue else {

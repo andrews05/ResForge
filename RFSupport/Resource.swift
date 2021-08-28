@@ -46,7 +46,6 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             if oldValue.code != newValue {
                 type.code = newValue
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
-                NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 document?.undoManager?.setActionName(NSLocalizedString("Change Type", comment: ""))
                 document?.undoManager?.registerUndo(withTarget: self) { $0.typeCode = oldValue.code }
             }
@@ -62,7 +61,6 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             if oldValue.attributes != newValue {
                 type.attributes = newValue
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
-                NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 document?.undoManager?.setActionName(NSLocalizedString("Change Type Attributes", comment: ""))
                 document?.undoManager?.registerUndo(withTarget: self) { $0.typeAttributes = oldValue.attributes }
             }
