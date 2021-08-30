@@ -48,7 +48,6 @@
 		4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB6125341D3E009A8285 /* ElementLSTB.swift */; };
 		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
 		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4953F5A92488795B0002340F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4953F5A82488795B0002340F /* AVKit.framework */; };
 		4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */; };
 		49640F0F25F201AE009FEC9B /* SpriteLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4919415425E98E7000FFC3F8 /* SpriteLayer.swift */; };
 		49640F1625F201B1009FEC9B /* BaseLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640E7825EAE09B009FEC9B /* BaseLayer.swift */; };
@@ -135,7 +134,6 @@
 		49D1859E254264BD00EA380C /* ElementWCOL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D1859D254264BD00EA380C /* ElementWCOL.swift */; };
 		49D185A6254278EC00EA380C /* ElementHEXD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D185A5254278EC00EA380C /* ElementHEXD.swift */; };
 		49D185AE25427D8B00EA380C /* ElementBHEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D185AD25427D8B00EA380C /* ElementBHEX.swift */; };
-		49DA3A4C2550BD2800821A7E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DA3A4B2550BD2800821A7E /* Cocoa.framework */; };
 		49DA3A4D2550BD2E00821A7E /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49DA3A572550BD9000821A7E /* KestrelTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 49EE72D82550B79600BEABDB /* KestrelTools.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49DA3A8B2550C65900821A7E /* rle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044062472064F0035C0FA /* rle.cpp */; };
@@ -374,7 +372,6 @@
 		4953F5922488740F0002340F /* SoundWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundWindow.xib; sourceTree = "<group>"; };
 		4953F593248874260002340F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4953F5A0248874AA0002340F /* Sound Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sound Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4953F5A82488795B0002340F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenPanelDelegate.swift; sourceTree = "<group>"; };
 		49640E7825EAE09B009FEC9B /* BaseLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLayer.swift; sourceTree = "<group>"; };
 		49640E8625EAE0A2009FEC9B /* AltLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltLayer.swift; sourceTree = "<group>"; };
@@ -489,7 +486,6 @@
 		49D1859D254264BD00EA380C /* ElementWCOL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementWCOL.swift; sourceTree = "<group>"; };
 		49D185A5254278EC00EA380C /* ElementHEXD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHEXD.swift; sourceTree = "<group>"; };
 		49D185AD25427D8B00EA380C /* ElementBHEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBHEX.swift; sourceTree = "<group>"; };
-		49DA3A4B2550BD2800821A7E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
 		49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConflictResolver.swift; sourceTree = "<group>"; };
@@ -537,7 +533,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49AACD8B24CE97CB0081DD4A /* RFSupport.framework in Frameworks */,
-				4953F5A92488795B0002340F /* AVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,7 +548,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49DA3A4D2550BD2E00821A7E /* RFSupport.framework in Frameworks */,
-				49DA3A4C2550BD2800821A7E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -928,7 +922,6 @@
 				4996B8E725DB6A3A0027FA39 /* ResForge */,
 				49AACD7C24CE931A0081DD4A /* RFSupport */,
 				F57CEE0B0189C95101A8010B /* Plug-Ins */,
-				F5B588490156D40B01000001 /* Frameworks */,
 				F5B588110156D30301000001 /* Products */,
 				497043F32472064F0035C0FA /* Graphite */,
 				490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */,
@@ -988,15 +981,6 @@
 				497A93E0255F371100900C7B /* SelectTemplate.xib */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		F5B588490156D40B01000001 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				49DA3A4B2550BD2800821A7E /* Cocoa.framework */,
-				4953F5A82488795B0002340F /* AVKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		F5EF839F020C08E601A80001 /* Hex Editor */ = {
