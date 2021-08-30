@@ -1,5 +1,5 @@
 import Cocoa
-import CreateML
+import CSV
 import RFSupport
 
 enum BulkError: LocalizedError {
@@ -122,42 +122,37 @@ class BulkController: OutlineController {
     }
     
     func exportCSV(to url: URL) throws {
-        guard #available(OSX 10.14, *) else {
-            return
-        }
-        // MLDataTable is an easy built-in option for working with csv
-        var table = MLDataTable()
         let resources = document.directory.resources(ofType: currentType!)
-        table.addColumn(MLDataColumn(resources.map(\.id)), named: "ID")
-        table.addColumn(MLDataColumn(resources.map(\.name)), named: "Name")
-        let rows = resources.map(self.read(resource:))
-        for (i, element) in elements.enumerated() where element.visible {
-            let column = rows.map { element.formatter!.string(for: $0[i])! }
-            table.addColumn(MLDataColumn(column), named: element.displayLabel)
+        let writer = try CSVWriter(stream: OutputStream(url: url, append: false)!)
+        let headers = elements.filter(\.visible).map(\.displayLabel)
+        try writer.write(row: ["ID", "Name"] + headers)
+        for resource in resources {
+            let data: [String] = self.read(resource: resource).enumerated().compactMap { (i, value) in
+                let element = elements[i]
+                return element.visible ? element.formatter!.string(for: value) : nil
+            }
+            try writer.write(row: [String(resource.id), resource.name] + data)
         }
-        try table.writeCSV(to: url)
+        writer.stream.close()
     }
     
     func importCSV(from url: URL) throws -> [Resource] {
-        guard #available(OSX 10.14, *) else {
-            return []
-        }
         let idRange = document.format.minID...document.format.maxID
         var resources: [Resource] = []
-        // FIXME: Disabling skipInitialSpaces doesn't actually work
-        let table = try MLDataTable(contentsOf: url, options: MLDataTable.ParsingOptions(skipInitialSpaces: false, missingValues: []))
-        for (i, row) in table.rows.enumerated() {
-            guard let id = row["ID"]?.intValue, idRange ~= id  else {
+        let record = try CSVReader(stream: InputStream(url: url)!, hasHeaderRow: true)
+        var i = 1
+        while record.next() != nil {
+            guard let v = record["ID"], let id = Int(v), idRange ~= id  else {
                 throw BulkError.invalidValue("ID", i)
             }
-            guard let name = row["Name"]?.stringValue else {
+            guard let name = record["Name"] else {
                 throw BulkError.invalidValue("Name", i)
             }
             let resource = Resource(type: currentType!, id: id, name: name)
             let writer = BinaryDataWriter()
             for element in elements {
                 if element.visible {
-                    guard let string = row[element.displayLabel]?.stringValue else {
+                    guard let string = record[element.displayLabel] else {
                         throw BulkError.invalidValue(element.displayLabel, i)
                     }
                     var error: NSString?
@@ -171,6 +166,7 @@ class BulkController: OutlineController {
             }
             resource.data = writer.data
             resources.append(resource)
+            i += 1
         }
         return resources
     }
@@ -241,22 +237,5 @@ class BulkController: OutlineController {
             resource.data = writer.data
         }
         inlineUpdate = false
-    }
-}
-
-// Extension to force a string value from MLDataValue
-@available(OSX 10.14, *)
-extension MLDataValue {
-    var stringValue: String? {
-        switch self {
-        case let .string(v):
-            return v
-        case let .int(v):
-            return String(v)
-        case let .double(v):
-            return String(v)
-        default:
-            return ""
-        }
     }
 }
