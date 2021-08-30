@@ -92,7 +92,7 @@ class EditorManager: RFEditorManager {
         if !currentDocumentOnly {
             let docs = NSDocumentController.shared.documents as! [ResourceDocument]
             for doc in docs where doc !== document {
-                resources.append(contentsOf: doc.directory.resources(ofType: type))
+                resources += doc.directory.resources(ofType: type)
             }
         }
         return resources

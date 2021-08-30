@@ -503,22 +503,18 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             menuItem.title = NSLocalizedString("Show Bulk Data View", comment: "")
             return editorManager.template(for: dataSource.currentType, basic: true) != nil
         case #selector(exportCSV(_:)):
-            if #available(OSX 10.14, *) {
-                if let type = dataSource.currentType {
-                    menuItem.title = NSLocalizedString("Export ‘\(type.code)’ to CSV…", comment: "")
-                    return editorManager.template(for: type, basic: true) != nil
-                }
-                menuItem.title = NSLocalizedString("Export to CSV…", comment: "")
+            if let type = dataSource.currentType {
+                menuItem.title = NSLocalizedString("Export ‘\(type.code)’ to CSV…", comment: "")
+                return editorManager.template(for: type, basic: true) != nil
             }
+            menuItem.title = NSLocalizedString("Export to CSV…", comment: "")
             return false
         case #selector(importCSV(_:)):
-            if #available(OSX 10.14, *) {
-                if let type = dataSource.currentType {
-                    menuItem.title = NSLocalizedString("Import ‘\(type.code)’ from CSV…", comment: "")
-                    return editorManager.template(for: type, basic: true) != nil
-                }
-                menuItem.title = NSLocalizedString("Import from CSV…", comment: "")
+            if let type = dataSource.currentType {
+                menuItem.title = NSLocalizedString("Import ‘\(type.code)’ from CSV…", comment: "")
+                return editorManager.template(for: type, basic: true) != nil
             }
+            menuItem.title = NSLocalizedString("Import from CSV…", comment: "")
             return false
         default:
             // Auto validation of save menu item isn't working for existing documents - force override
@@ -579,7 +575,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     @IBAction func exportCSV(_ sender: Any) {
-        guard #available(OSX 10.14, *), let type = dataSource.currentType else {
+        guard let type = dataSource.currentType else {
             return
         }
         do {
@@ -602,7 +598,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     @IBAction func importCSV(_ sender: Any) {
-        guard #available(OSX 10.14, *), let type = dataSource.currentType else {
+        guard let type = dataSource.currentType else {
             return
         }
         do {

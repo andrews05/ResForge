@@ -43,7 +43,7 @@ class ElementList {
     func readTemplate(_ template: Resource) -> Bool {
         do {
             let parser = TemplateParser(template: template, manager: controller.manager)
-            elements.append(contentsOf: try parser.parse())
+            elements += try parser.parse()
             try self.configure()
             return true
         } catch let error {

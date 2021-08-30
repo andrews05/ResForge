@@ -18,7 +18,7 @@ class TemplateParser {
     func parse() throws -> [Element] {
         var elements: [Element] = []
         while reader.position < reader.data.endIndex {
-            elements.append(contentsOf: try self.process())
+            elements += try self.process()
         }
         return elements
     }

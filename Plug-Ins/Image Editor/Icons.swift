@@ -45,12 +45,12 @@ class Icons {
         if depth == 4 {
             plane = []
             for byte in data {
-                plane.append(contentsOf: clut4[Int(byte >> 4)])
-                plane.append(contentsOf: clut4[Int(byte & 0x0f)])
+                plane += clut4[Int(byte >> 4)]
+                plane += clut4[Int(byte & 0x0f)]
             }
         } else if depth == 8 {
             // Map every byte to the full colour from the palette
-            plane = data.flatMap({ clut8[Int($0)] })
+            plane = data.flatMap { clut8[Int($0)] }
         } else {
             return nil
         }

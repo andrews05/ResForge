@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -46,6 +46,7 @@
 		4951AB4D25341BBE009A8285 /* ElementDBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB4C25341BBE009A8285 /* ElementDBYT.swift */; };
 		4951AB5A25341CB4009A8285 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DD062532DAE500856385 /* Element.swift */; };
 		4951AB6225341D3E009A8285 /* ElementLSTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4951AB6125341D3E009A8285 /* ElementLSTB.swift */; };
+		4952BD4C26DD9356005DB6EB /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 4952BD4B26DD9356005DB6EB /* CSV */; };
 		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
 		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */; };
@@ -563,6 +564,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4952BD4C26DD9356005DB6EB /* CSV in Frameworks */,
 				49AACD8224CE931A0081DD4A /* RFSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1099,6 +1101,9 @@
 				49DA3A562550BD7C00821A7E /* PBXTargetDependency */,
 			);
 			name = ResForge;
+			packageProductDependencies = (
+				4952BD4B26DD9356005DB6EB /* CSV */,
+			);
 			productInstallPath = "$(USER_APPS_DIR)";
 			productName = "ResKnife Cocoa";
 			productReference = E18BF58C069FEA1400F076B8 /* ResForge.app */;
@@ -1183,6 +1188,9 @@
 				en,
 			);
 			mainGroup = F5B588100156D2A601000001;
+			packageReferences = (
+				4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */,
+			);
 			productRefGroup = F5B588110156D30301000001 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -2074,6 +2082,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yaslab/CSV.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4952BD4B26DD9356005DB6EB /* CSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */;
+			productName = CSV;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5B5880F0156D2A601000001 /* Project object */;
 }
