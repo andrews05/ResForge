@@ -108,6 +108,22 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
         return item as? Resource
     }
+    
+    func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
+        self.setSorter()
+        outlineView.reloadData()
+    }
+    
+    func setSorter() {
+        guard let descriptor = outlineView.sortDescriptors.first else {
+            return
+        }
+        if descriptor == outlineView.outlineTableColumn?.sortDescriptorPrototype {
+            document.directory.sorter = nil
+        } else {
+            document.directory.sorter = descriptor.compare
+        }
+    }
 }
 
 extension NSOutlineView {
@@ -118,5 +134,12 @@ extension NSOutlineView {
         self.selectedRowIndexes.map {
             self.item(atRow: $0)!
         }
+    }
+}
+
+extension NSSortDescriptor {
+    /// Returns true if the two objects are in ascending order.
+    func compare(_ a: Any, _ b: Any) -> Bool {
+        return self.compare(a, to: b) == .orderedAscending
     }
 }

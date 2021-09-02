@@ -18,8 +18,8 @@ class StandardController: OutlineController, NSTextFieldDelegate {
         super.awakeFromNib()
         // Default sort resources by id
         // Note: awakeFromNib is re-triggered each time a cell is created - be careful not to re-sort each time
-        if outlineView.sortDescriptors.isEmpty {
-            outlineView.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        if outlineView.sortDescriptors.isEmpty, let descriptor = outlineView.outlineTableColumn?.sortDescriptorPrototype {
+            outlineView.sortDescriptors = [descriptor]
         }
     }
     
@@ -27,7 +27,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
         currentType = type
         outlineView.indentationPerLevel = type == nil ? 1 : 0
         outlineView.tableColumns[0].width = type == nil ? 70 : 60
-        document.directory.sortDescriptors = outlineView.sortDescriptors
+        self.setSorter()
         return outlineView
     }
     
@@ -97,12 +97,5 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             break
         }
         inlineUpdate = false
-    }
-    
-    // MARK: - DataSource functions
-    
-    func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
-        document.directory.sortDescriptors = outlineView.sortDescriptors
-        outlineView.reloadData()
     }
 }

@@ -14,16 +14,13 @@ class ResourceDirectory {
     private var filtered: [ResourceType: [Resource]] = [:]
     var filter = "" {
         didSet {
-            filtered = [:]
+            filtered.removeAll()
         }
     }
-    var sortDescriptors: [NSSortDescriptor] = [] {
+    var sorter: ((_ a: Resource, _ b: Resource) -> Bool)? {
         didSet {
-            if sortDescriptors.count == 1 && sortDescriptors[0].key == "id" && sortDescriptors[0].ascending {
-                sortDescriptors = []
-            }
-            if sortDescriptors != oldValue {
-                filtered = [:]
+            if sorter != nil || oldValue != nil {
+                filtered.removeAll()
             }
         }
     }
@@ -49,7 +46,7 @@ class ResourceDirectory {
         for resource in resources {
             self.addToTypedList(resource)
         }
-        filtered = [:]
+        filtered.removeAll()
     }
     
     /// Add a single resource.
@@ -70,7 +67,7 @@ class ResourceDirectory {
     
     /// Get the resources for the given type that match the current filter.
     func filteredResources(type: ResourceType) -> [Resource] {
-        if filter.isEmpty && sortDescriptors.isEmpty {
+        if filter.isEmpty && sorter == nil {
             return resourcesByType[type] ?? []
         }
         // Maintain a cache of the filtered resources
@@ -78,10 +75,12 @@ class ResourceDirectory {
             if !filter.isEmpty {
                 let id = Int(filter)
                 resouces = resouces.filter {
-                    return $0.id == id || $0.name.localizedCaseInsensitiveContains(filter)
+                    $0.id == id || $0.name.localizedCaseInsensitiveContains(filter)
                 }
             }
-            resouces.sort(using: sortDescriptors)
+            if let sorter = sorter {
+                resouces.sort(by: sorter)
+            }
             filtered[type] = resouces
         }
         return filtered[type] ?? []
@@ -89,10 +88,7 @@ class ResourceDirectory {
     
     /// Get all types that contain resources matching the current filter.
     func filteredTypes() -> [ResourceType] {
-        if filter.isEmpty {
-            return allTypes
-        }
-        return allTypes.compactMap {
+        return filter.isEmpty ? allTypes : allTypes.compactMap {
             self.filteredResources(type: $0).isEmpty ? nil : $0
         }
     }
@@ -116,14 +112,14 @@ class ResourceDirectory {
                 return compare == .orderedSame ? $0.attributes.count < $1.attributes.count : compare == .orderedAscending
             }
         } else {
-            resourcesByType[resource.type]!.insert(resource) { $0.id < $1.id }
+            resourcesByType[resource.type]?.insert(resource) { $0.id < $1.id }
         }
     }
     
     private func removeFromTypedList(_ resource: Resource, type: ResourceType? = nil) {
         let type = type ?? resource.type
         resourcesByType[type]?.removeFirst(resource)
-        if resourcesByType[type]?.count == 0 {
+        if resourcesByType[type]?.isEmpty == true {
             resourcesByType.removeValue(forKey: type)
             allTypes.removeFirst(type)
         }
@@ -207,36 +203,11 @@ class ResourceDirectory {
     }
 }
 
-// MARK: - Sorted Array extensions
-
-extension Array where Element: NSSortDescriptor {
-    /// Compare two elements using all the descriptors in this array.
-    func compare<T>(_ a: T, _ b: T) -> Bool {
-        for descriptor in self {
-            switch descriptor.compare(a, to: b) {
-            case .orderedAscending:
-                return true
-            case .orderedDescending:
-                return false
-            default:
-                continue
-            }
-        }
-        return false
-    }
-}
-
+// Sorted Array extension
 extension Array where Element: Equatable {
-    /// Sort the array using an array of NSSortDescriptors, such as those obtained from an NSTableView.
-    mutating func sort(using descriptors: [NSSortDescriptor]) {
-        if !descriptors.isEmpty {
-            self.sort(by: descriptors.compare)
-        }
-    }
-    
     /// Insert an element into the sorted array at the position appropriate for the given comparator function.
     mutating func insert(_ newElement: Element, by comparator: (_ a: Self.Element, _ b: Self.Element) -> Bool) {
-        var slice : SubSequence = self[...]
+        var slice: SubSequence = self[...]
         // Perform a binary search
         while !slice.isEmpty {
             let middle = slice.index(slice.startIndex, offsetBy: slice.count / 2)

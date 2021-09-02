@@ -44,9 +44,11 @@ class BulkController: OutlineController {
         
         idCol.headerCell.title = "ID"
         idCol.width = 58
+        idCol.sortDescriptorPrototype = NSSortDescriptor(key: "id", ascending: true)
         idCol.isEditable = false
         nameCol.headerCell.title = "Name"
         nameCol.width = 150
+        nameCol.sortDescriptorPrototype = NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
         outlineView.addTableColumn(idCol)
         outlineView.addTableColumn(nameCol)
         outlineView.indentationPerLevel = 0
@@ -85,9 +87,11 @@ class BulkController: OutlineController {
             column.headerCell.title = element.displayLabel
             column.sizeToFit()
             column.width = max(min(element.width, 150), column.width)
+            column.sortDescriptorPrototype = NSSortDescriptor(key: String(i), ascending: true)
             outlineView.addTableColumn(column)
         }
-        document.directory.sortDescriptors = []
+        outlineView.sortDescriptors = [idCol.sortDescriptorPrototype!]
+        document.directory.sorter = nil
         return outlineView
     }
     
@@ -237,5 +241,35 @@ class BulkController: OutlineController {
             resource.data = writer.data
         }
         inlineUpdate = false
+    }
+    
+    override func setSorter() {
+        guard let descriptor = outlineView.sortDescriptors.first else {
+            return
+        }
+        if descriptor == outlineView.outlineTableColumn?.sortDescriptorPrototype {
+            document.directory.sorter = nil
+        } else if descriptor.key == "id" || descriptor.key == "name" {
+            document.directory.sorter = descriptor.compare
+        } else if let key = descriptor.key {
+            // Create a sorter function for the custom column
+            let columnIdx = outlineView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: key))
+            let column = outlineView.tableColumns[columnIdx]
+            let order: ComparisonResult = descriptor.ascending ? .orderedAscending : .orderedDescending
+            document.directory.sorter = { [weak self] in
+                guard let self = self,
+                      let a = self.outlineView(self.outlineView, objectValueFor: column, byItem: $0),
+                      let b = self.outlineView(self.outlineView, objectValueFor: column, byItem: $1)
+                else {
+                    return false
+                }
+                if let a = a as? String, let b = b as? String {
+                    return a.localizedStandardCompare(b) == order
+                } else if let a = a as? NSNumber, let b = b as? NSNumber {
+                    return a.compare(b) == order
+                }
+                return false
+            }
+        }
     }
 }
