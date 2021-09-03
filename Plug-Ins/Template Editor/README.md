@@ -1,10 +1,12 @@
 # Template Editor
 
-The following is a list of template field types that have been defined by various editors. ResForge currently supports:
+This document outlines all template field types that have been defined by various editors. ResForge currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
 * Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (64 of 95)
 * All of [Rezilla's additions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
 * ResForge's own additions (21)
+
+In addition to standard TMPL resources, ResForge also supports "basic" templates in the form of TMPB resources. These templates operate on a reduced set of field types and enable the bulk data view and CSV import/export for the associated resource type.
 
 ### Key
 
@@ -16,22 +18,24 @@ The following is a list of template field types that have been defined by variou
 
 🔴 Not Yet Supported
 
+🅱️ Permitted in TMPB
+
 ### Decimal and Hex Integer Field Types
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
-DBYT|Signed Decimal Byte|1 byte|✓|✓|✓|🟢
-DWRD|Signed Decimal Word|2 bytes|✓|✓|✓|🟢
-DLNG|Signed Decimal Long|4 bytes|✓|✓|✓|🟢
-DQWD|Signed Decimal Quad Word|8 bytes||||🟢
-UBYT|Unsigned Decimal Byte|1 byte||✓|✓|🟢
-UWRD|Unsigned Decimal Word|2 bytes||✓|✓|🟢
-ULNG|Unsigned Decimal Long|4 bytes||✓|✓|🟢
-UQWD|Unsigned Decimal Quad Word|8 bytes||||🟢
-HBYT|Hex Byte|1 byte|✓|✓|✓|🟢
-HWRD|Hex Word|2 bytes|✓|✓|✓|🟢
-HLNG|Hex Long|4 bytes|✓|✓|✓|🟢
-HQWD|Hex Quad Word|8 bytes||||🟢
+DBYT|Signed Decimal Byte|1 byte|✓|✓|✓|🟢 🅱️
+DWRD|Signed Decimal Word|2 bytes|✓|✓|✓|🟢 🅱️
+DLNG|Signed Decimal Long|4 bytes|✓|✓|✓|🟢 🅱️
+DQWD|Signed Decimal Quad Word|8 bytes||||🟢 🅱️
+UBYT|Unsigned Decimal Byte|1 byte||✓|✓|🟢 🅱️
+UWRD|Unsigned Decimal Word|2 bytes||✓|✓|🟢 🅱️
+ULNG|Unsigned Decimal Long|4 bytes||✓|✓|🟢 🅱️
+UQWD|Unsigned Decimal Quad Word|8 bytes||||🟢 🅱️
+HBYT|Hex Byte|1 byte|✓|✓|✓|🟢 🅱️
+HWRD|Hex Word|2 bytes|✓|✓|✓|🟢 🅱️
+HLNG|Hex Long|4 bytes|✓|✓|✓|🟢 🅱️
+HQWD|Hex Quad Word|8 bytes||||🟢 🅱️
 
 ### Bit and Bit Field Types
 
@@ -62,8 +66,8 @@ QORV|OR Quad Value|8 bytes||||🟢
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
-REAL|Single Precision Float|4 bytes||✓||🟢
-DOUB|Double Precision Float|8 bytes||✓||🟢
+REAL|Single Precision Float|4 bytes||✓||🟢 🅱️
+DOUB|Double Precision Float|8 bytes||✓||🟢 🅱️
 EXTN|Extended 80-bit SANE Float|10 bytes||✓||🔴
 XT96|Extended 96-bit SANE Float|12 bytes||✓||🔴
 UNIV|THINK C Universal 96-bit Float|12 bytes||✓||🔴
@@ -75,26 +79,26 @@ FWID|4:12 Fixed Point Font Width|2 bytes||✓||🟡
 FXYZ|1:15 Fixed Point Colour Component|2 bytes||✓||🟡
 
 
-### Text String Field Types
+### Text and String Field Types
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
-PSTR|Pascal String|1 to 256|✓|✓|✓|🟢
-ESTR|Even-Padded Pascal String|2 to 256|✓|✓|✓|🟢
+PSTR|Pascal String|1 to 256|✓|✓|✓|🟢 🅱️
+ESTR|Even-Padded Pascal String|2 to 256|✓|✓|✓|🟢 🅱️
 PPST|Even Pascal String (pad included)|2 to 256||✓|✓|🔴
-OSTR|Odd-Padded Pascal String|1 to 255|✓|✓|✓|🟢
-CSTR|Null-Terminated C String|1 or more|✓|✓|✓|🟢
-ECST|Even-Padded C String|2 or more|✓|✓|✓|🟢
-OCST|Odd-Padded C String|1 or more|✓|✓|✓|🟢
-BSTR|Byte Length String (same as PSTR)|1 to 256||✓|✓|🟢
-WSTR|Word Length String|2 to 64KB|✓|✓|✓|🟢
-LSTR|Long Length String|4 to 4MB|✓|✓|✓|🟢
-USTR|Null-Terminated UTF-8 String|1 or more||||🟢
+OSTR|Odd-Padded Pascal String|1 to 255|✓|✓|✓|🟢 🅱️
+CSTR|Null-Terminated C String|1 or more|✓|✓|✓|🟢 🅱️
+ECST|Even-Padded C String|2 or more|✓|✓|✓|🟢 🅱️
+OCST|Odd-Padded C String|1 or more|✓|✓|✓|🟢 🅱️
+BSTR|Byte Length String (same as PSTR)|1 to 256||✓|✓|🟢 🅱️
+WSTR|Word Length String|2 to 64KB|✓|✓|✓|🟢 🅱️
+LSTR|Long Length String|4 to 4MB|✓|✓|✓|🟢 🅱️
+USTR|Null-Terminated UTF-8 String|1 or more||||🟢 🅱️
 TXTS|Sized Text Dump|any||✓||🟢
-Pnmm|Pascal String with Fixed Padding|$_nmm_ bytes|✓|✓|✓|🟢
-Cnmm|C String with Fixed Padding|$_nmm_ bytes|✓|✓|✓|🟢
-Unmm|UTF-8 String with Fixed Padding|$_nmm_ bytes||||🟢
-Tnmm|Text with Fixed Padding|$_nmm_ bytes||✓|✓|🟢
+Pnmm|Pascal String with Fixed Padding|$_nmm_ bytes|✓|✓|✓|🟢 🅱️
+Cnmm|C String with Fixed Padding|$_nmm_ bytes|✓|✓|✓|🟢 🅱️
+Unmm|UTF-8 String with Fixed Padding|$_nmm_ bytes||||🟢 🅱️
+Tnmm|Text with Fixed Padding|$_nmm_ bytes||✓|✓|🟢 🅱️
 
 ### Hexadecimal Dump Field Types
 
@@ -166,14 +170,14 @@ KEYE|End of Keyed Item|0 bytes||✓|✓|🟢
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
-AWRD|Align to 2-byte boundary|0 to 1|✓|✓|✓|🟢
-ALNG|Align to 4-byte boundary|0 to 3|✓|✓|✓|🟢
-AL08|Align to 8-byte boundary|0 to 7||✓|✓|🟢
-AL16|Align to 16-byte boundary|0 to 15||✓|✓|🟢
-FBYT|Fill Byte|1 byte|✓|✓|✓|🟢
-FWRD|Fill Word|2 bytes|✓|✓|✓|🟢
-FLNG|Fill Long|4 bytes|✓|✓|✓|🟢
-Fnmm|Fill Bytes|$_nmm_ bytes||✓|✓|🟢
+AWRD|Align to 2-byte boundary|0 to 1|✓|✓|✓|🟢 🅱️
+ALNG|Align to 4-byte boundary|0 to 3|✓|✓|✓|🟢 🅱️
+AL08|Align to 8-byte boundary|0 to 7||✓|✓|🟢 🅱️
+AL16|Align to 16-byte boundary|0 to 15||✓|✓|🟢 🅱️
+FBYT|Fill Byte|1 byte|✓|✓|✓|🟢 🅱️
+FWRD|Fill Word|2 bytes|✓|✓|✓|🟢 🅱️
+FLNG|Fill Long|4 bytes|✓|✓|✓|🟢 🅱️
+Fnmm|Fill Bytes|$_nmm_ bytes||✓|✓|🟢 🅱️
 
 ### Miscellaneous Graphic and System Field Types
 
@@ -181,15 +185,15 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 RSID|Signed Resource ID Integer|2 bytes||✓|✓|🟢
 LRID|Long Resource ID|4 bytes||||🟢
-CHAR|ASCII Character|1 byte|✓|✓|✓|🟢
-TNAM|Type Name|4 bytes|✓|✓|✓|🟢
+CHAR|ASCII Character|1 byte|✓|✓|✓|🟢 🅱️
+TNAM|Type Name|4 bytes|✓|✓|✓|🟢 🅱️
 DATE|Macintosh System Date/Time (seconds)|4 bytes||✓|✓|🟢
 MDAT|Modification Date/Time (seconds)|4 bytes||✓|✓|🟢
 SCPC|MacOS System Script Code|2 bytes||✓|✓|🟡
 LNGC|MacOS System Language Code|2 bytes||✓|✓|🟡
 RGNC|MacOS System Region Code|2 bytes||✓|✓|🟡
-PNT|QuickDraw Point|4 bytes||✓|✓|🟢
-RECT|QuickDraw Rectangle|8 bytes|✓|✓|✓|🟢
+PNT|QuickDraw Point|4 bytes||✓|✓|🟢 🅱️
+RECT|QuickDraw Rectangle|8 bytes|✓|✓|✓|🟢 🅱️
 COLR|QuickDraw Color RGB Triplet|6 bytes||✓|✓|🟢
 WCOL|15-bit Color|2 bytes|||✓|🟢
 LCOL|24-bit Color|4 bytes|||✓|🟢
@@ -200,12 +204,12 @@ CODE|680x0 Disassembled Code Dump|any||✓||🟡
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
-LTLE|Use Big-Endian Data Parsing|0 bytes||✓||🟢
-BIGE|Use Little-Endian Data Parsing|0 bytes||✓||🟢
-BNDN|Use Big-Endian Data Parsing (hidden)|0 bytes||✓||🟢
-LNDN|Use Little-Endian Data Parsing (hidden)|0 bytes||✓||🟢
+LTLE|Use Big-Endian Data Parsing|0 bytes||✓||🟢 🅱️
+BIGE|Use Little-Endian Data Parsing|0 bytes||✓||🟢 🅱️
+BNDN|Use Big-Endian Data Parsing (hidden)|0 bytes||✓||🟢 🅱️
+LNDN|Use Little-Endian Data Parsing (hidden)|0 bytes||✓||🟢 🅱️
 
-### Cosmetic and Structural Control
+### Meta and Psuedo Field Types
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
@@ -214,7 +218,7 @@ CASR|Symbolic Value Range|0 bytes||||🟢
 DVDR|Divider Line with Comment|0 bytes||✓|✓|🟢
 RREF|Static Resource Reference|0 bytes||||🟢
 PACK|Combine Other Fields|0 bytes||||🟢
-Rnmm|Repeat Following Field $_nmm_ Times|0 bytes||||🟢
+Rnmm|Repeat Following Field $_nmm_ Times|0 bytes||||🟢 🅱️
 TMPL|Insert Named Template|0 bytes||||🟢
 
 ### Inserting or Deleting Data in Existing Resources
