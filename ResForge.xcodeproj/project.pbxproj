@@ -163,7 +163,7 @@
 		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
 		B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E119386509991DDD00A3A6EA /* Templates.rsrc in Copy Support Resources */ = {isa = PBXBuildFile; fileRef = E119383D09991C5100A3A6EA /* Templates.rsrc */; };
-		E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		E1EAB19A06A20F1A0041EE35 /* Hex Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF5A6069FEA1400F076B8 /* Hex Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -321,7 +321,7 @@
 				49DA3A572550BD9000821A7E /* KestrelTools.plugin in Copy Plugins */,
 				4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */,
-				E1EAB19A06A20F1A0041EE35 /* Hexadecimal Editor.plugin in Copy Plugins */,
+				E1EAB19A06A20F1A0041EE35 /* Hex Editor.plugin in Copy Plugins */,
 				E1F0B65B06AD62B1007D3469 /* Template Editor.plugin in Copy Plugins */,
 			);
 			name = "Copy Plugins";
@@ -521,7 +521,7 @@
 		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E119383D09991C5100A3A6EA /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		E18BF58C069FEA1400F076B8 /* ResForge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResForge.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hexadecimal Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E18BF5A6069FEA1400F076B8 /* Hex Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hex Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Template Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF94B06A00F8E00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF9D706A01A2200F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -934,7 +934,7 @@
 			isa = PBXGroup;
 			children = (
 				E18BF58C069FEA1400F076B8 /* ResForge.app */,
-				E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */,
+				E18BF5A6069FEA1400F076B8 /* Hex Editor.plugin */,
 				E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */,
 				B2FCA78A15A66ACE00696598 /* Image Editor.plugin */,
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
@@ -1124,7 +1124,7 @@
 			);
 			name = "Hex Editor";
 			productName = "Hex Editor Cocoa";
-			productReference = E18BF5A6069FEA1400F076B8 /* Hexadecimal Editor.plugin */;
+			productReference = E18BF5A6069FEA1400F076B8 /* Hex Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		E18BF69E069FEA1800F076B8 /* Template Editor */ = {
@@ -1836,8 +1836,8 @@
 				);
 				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Hexadecimal-Editor";
-				PRODUCT_NAME = "Hexadecimal Editor";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Hex-Editor";
+				PRODUCT_NAME = "Hex Editor";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -1854,8 +1854,8 @@
 				);
 				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Hexadecimal-Editor";
-				PRODUCT_NAME = "Hexadecimal Editor";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Hex-Editor";
+				PRODUCT_NAME = "Hex Editor";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
