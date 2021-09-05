@@ -71,7 +71,7 @@ class BulkController: OutlineController {
         if outlineView.clickedColumn == -1 || outlineView.tableColumns[outlineView.clickedColumn] == idCol {
             document.openResources(sender)
         } else {
-            outlineView.editColumn(outlineView.clickedColumn, row: outlineView.clickedRow, with: nil, select: false)
+            outlineView.editColumn(outlineView.clickedColumn, row: outlineView.clickedRow, with: nil, select: true)
         }
     }
     
