@@ -183,10 +183,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     override func write(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws {
-        var format = format
-        var fork = fork
-        var hfsType = hfsType
-        var hfsCreator = hfsCreator
+        var format = self.format
+        var fork = self.fork
+        var hfsType = self.hfsType
+        var hfsCreator = self.hfsCreator
         if saveOperation == .saveAsOperation {
             // Set fork according to typeName
             if typeName == "ResourceFileRF" {
