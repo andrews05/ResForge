@@ -246,7 +246,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         case "PICT":
             // On macOS 10.15 and later we have to use Graphite to decode PICTs
             if #available(macOS 10.15, *) {
-                return QuickDraw.rep(fromPict: data)
+                return QuickDraw.rep(fromPict: data) ?? Self.pngRep(fromPict: data)
             }
             return NSPICTImageRep(data: data)
         case "cicn":
@@ -281,5 +281,23 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         default:
             return NSBitmapImageRep(data: data)
         }
+    }
+    
+    private static func pngRep(fromPict data: Data) -> NSBitmapImageRep? {
+        // Check the data for a PNG signature at the typical offset - the data can then be decoded natively
+        guard data.count > 218 else {
+            return nil
+        }
+        // Extended header is 2 bytes longer
+        let offset = data[17] == 0xFE ? 214 : 212
+        let data = data[offset...]
+        guard data.starts(with: [0x89, 0x50, 0x4E, 0x47]), let rep = NSBitmapImageRep(data: data) else {
+            return nil
+        }
+        // Older QuickTime versions (<6.5) stored data as non-standard RGBX
+        // We need disable the alpha but first need to ensure the image has been decoded by accessing the bitmapData
+        _ = rep.bitmapData
+        rep.hasAlpha = false
+        return rep
     }
 }
