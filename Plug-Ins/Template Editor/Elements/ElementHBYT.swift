@@ -9,11 +9,9 @@ class ElementHBYT<T: FixedWidthInteger & UnsignedInteger>: ElementDBYT<T> {
 
 class HexFormatter<T: FixedWidthInteger & UnsignedInteger>: Formatter {
     private let charCount: Int
-    private let invalidChars: CharacterSet
     
     override init() {
         charCount = T.bitWidth/4
-        invalidChars = CharacterSet(charactersIn: "0123456789ABCDEFabcdef").inverted
         super.init()
     }
     
@@ -22,16 +20,8 @@ class HexFormatter<T: FixedWidthInteger & UnsignedInteger>: Formatter {
     }
     
     override func string(for obj: Any?) -> String? {
-        // Prefix with $ when not editing
         if let obj = obj as? NSNumber {
-            return String(format: "$%0\(charCount)llX", obj.intValue)
-        }
-        return nil
-    }
-    
-    override func editingString(for obj: Any) -> String? {
-        if let obj = obj as? NSNumber {
-            return String(format: "%0\(charCount)llX", obj.intValue)
+            return String(format: "0x%0\(charCount)llX", obj.intValue)
         }
         return nil
     }
@@ -55,39 +45,6 @@ class HexFormatter<T: FixedWidthInteger & UnsignedInteger>: Formatter {
             return false
         }
         obj?.pointee = value as NSNumber
-        return true
-    }
-    
-    override func isPartialStringValid(_ partialStringPtr: AutoreleasingUnsafeMutablePointer<NSString>,
-                                       proposedSelectedRange proposedSelRangePtr: NSRangePointer?,
-                                       originalString origString: String,
-                                       originalSelectedRange origSelRange: NSRange,
-                                       errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
-        // Reject input with non-hex chars
-        let components = partialStringPtr.pointee.components(separatedBy: invalidChars)
-        if components.count > 1 {
-            partialStringPtr.pointee = origString as NSString
-            proposedSelRangePtr?.pointee = origSelRange
-            NSSound.beep()
-            return false
-        }
-        if partialStringPtr.pointee.length > charCount {
-            // If a range is selected then characters in that range will be removed so adjust the insert length accordingly
-            let insertLength = charCount - origString.count + origSelRange.length
-            
-            // Assemble the string
-            let prefix = origString.prefix(origSelRange.location)
-            let insert = partialStringPtr.pointee.substring(with: NSMakeRange(origSelRange.location, insertLength))
-            let suffix = origString.dropFirst(origSelRange.location + origSelRange.length)
-            partialStringPtr.pointee = "\(prefix)\(insert)\(suffix)" as NSString
-            
-            // Fix-up the proposed selection range
-            proposedSelRangePtr?.pointee.location = origSelRange.location + insertLength
-            proposedSelRangePtr?.pointee.length = 0
-            NSSound.beep()
-            return false
-        }
-        
         return true
     }
 }
