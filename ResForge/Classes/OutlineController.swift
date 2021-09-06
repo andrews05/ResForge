@@ -110,8 +110,10 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
     
     func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
+        let selected = self.selectedResources()
         self.setSorter()
         outlineView.reloadData()
+        self.select(selected)
     }
     
     func setSorter() {
