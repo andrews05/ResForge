@@ -2,7 +2,7 @@
 
 This document outlines all template field types that have been defined by various editors. ResForge currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
-* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (64 of 95)
+* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (65 of 95)
 * All of [Rezilla's additions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
 * ResForge's own additions (21)
 
@@ -204,8 +204,8 @@ CODE|680x0 Disassembled Code Dump|any||✓||🟡
 
 Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
-LTLE|Use Big-Endian Data Parsing|0 bytes||✓||🟢 🅱️
-BIGE|Use Little-Endian Data Parsing|0 bytes||✓||🟢 🅱️
+LTLE|Use Big-Endian Data Parsing|0 bytes||✓||🟢
+BIGE|Use Little-Endian Data Parsing|0 bytes||✓||🟢
 BNDN|Use Big-Endian Data Parsing (hidden)|0 bytes||✓||🟢 🅱️
 LNDN|Use Little-Endian Data Parsing (hidden)|0 bytes||✓||🟢 🅱️
 

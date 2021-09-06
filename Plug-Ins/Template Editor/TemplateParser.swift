@@ -236,7 +236,6 @@ class TemplateParser {
 
         // dates
         "DATE": ElementDATE.self,           // 4-byte date (seconds since 1 Jan 1904)
-        "MDAT": ElementDATE.self,
 
         // colours
         "COLR": ElementCOLR.self,           // 6-byte QuickDraw colour
@@ -268,7 +267,8 @@ class TemplateParser {
         // and some faked ones just to increase compatibility
         "SFRC": ElementDBYT<UInt16>.self,   // 0.16 fixed fraction
         "FXYZ": ElementDBYT<UInt16>.self,   // 1.15 fixed fraction
-        "FWID": ElementDBYT<UInt16>.self,   // 4.12 fixed fraction
+        "FWID": ElementDBYT<UInt16>.self,   // 4.12 fixed fraction,
+        "MDAT": ElementDATE.self,           // Modification date (same as DATE but Resorcerer will update on save)
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
         "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)
