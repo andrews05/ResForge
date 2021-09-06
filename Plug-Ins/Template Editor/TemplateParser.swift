@@ -118,6 +118,8 @@ class TemplateParser {
         // fractions
         "REAL": ElementREAL.self,           // single precision float
         "DOUB": ElementDOUB.self,           // double precision float
+        "FIXD": ElementFIXD.self,           // 16:16 fixed precision
+        "FRAC": ElementFIXD.self,           // 2:30 fixed precision
         
         // strings
         "PSTR": ElementPSTR<UInt8>.self,    // Pascal string
@@ -267,8 +269,6 @@ class TemplateParser {
         "SFRC": ElementDBYT<UInt16>.self,   // 0.16 fixed fraction
         "FXYZ": ElementDBYT<UInt16>.self,   // 1.15 fixed fraction
         "FWID": ElementDBYT<UInt16>.self,   // 4.12 fixed fraction
-        "FRAC": ElementDBYT<UInt32>.self,   // 2.30 fixed fraction
-        "FIXD": ElementDBYT<UInt32>.self,   // 16.16 fixed fraction
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
         "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)

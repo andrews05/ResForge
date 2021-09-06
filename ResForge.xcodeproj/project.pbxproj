@@ -70,6 +70,7 @@
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
 		4968C03B24C6808200716AB9 /* EditorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03424C66D8B00716AB9 /* EditorManager.swift */; };
 		4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03E24C78D7400716AB9 /* SupportRegistry.swift */; };
+		496932CA26E5E357008B458B /* ElementFIXD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496932C926E5E357008B458B /* ElementFIXD.swift */; };
 		496A52BE24F9B047006A12DF /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496A52BD24F9B047006A12DF /* CustomImageView.swift */; };
 		496E7E3525E6EA15001C97CA /* ShanWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E3425E6E95C001C97CA /* ShanWindowController.swift */; };
 		496E7E3C25E6EA17001C97CA /* ShanWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 496E7E3225E6E947001C97CA /* ShanWindow.xib */; };
@@ -392,6 +393,7 @@
 		4966750024BE5C8D00251406 /* QuickDraw.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QuickDraw.mm; sourceTree = "<group>"; };
 		4968C03424C66D8B00716AB9 /* EditorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorManager.swift; sourceTree = "<group>"; };
 		4968C03E24C78D7400716AB9 /* SupportRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportRegistry.swift; sourceTree = "<group>"; };
+		496932C926E5E357008B458B /* ElementFIXD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementFIXD.swift; sourceTree = "<group>"; };
 		496A52BD24F9B047006A12DF /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		496E7E3325E6E947001C97CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShanWindow.xib; sourceTree = "<group>"; };
 		496E7E3425E6E95C001C97CA /* ShanWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShanWindowController.swift; sourceTree = "<group>"; };
@@ -635,6 +637,7 @@
 				49D1858525422AA300EA380C /* ElementPNT.swift */,
 				49A432C125436672000B1109 /* ElementREAL.swift */,
 				49A432B925436390000B1109 /* ElementDOUB.swift */,
+				496932C926E5E357008B458B /* ElementFIXD.swift */,
 				49D185752542160600EA380C /* ElementCHAR.swift */,
 				49FE7B58253AC5F400D2219D /* ElementTNAM.swift */,
 				49D1858D254249D900EA380C /* ElementDATE.swift */,
@@ -1489,6 +1492,7 @@
 				49B9E66C253FF1AB00A266DE /* ElementCASR.swift in Sources */,
 				49D1857E2542280300EA380C /* ElementRECT.swift in Sources */,
 				49A432C225436672000B1109 /* ElementREAL.swift in Sources */,
+				496932CA26E5E357008B458B /* ElementFIXD.swift in Sources */,
 				49A432B22542C0CF000B1109 /* ElementKRID.swift in Sources */,
 				494D062F2540FC0A00F5A789 /* ElementBFLG.swift in Sources */,
 				49A4328E25429785000B1109 /* ElementKHBT.swift in Sources */,
