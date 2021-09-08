@@ -14,9 +14,9 @@ class ConflictResolver {
     
     init(document: ResourceDocument) {
         self.document = document
-        alert.informativeText = NSLocalizedString("Do you wish to assign the new resource a unique ID, overwrite the existing resource, or skip this resource?", comment: "")
+        alert.informativeText = NSLocalizedString("Do you wish to assign the new resource a unique ID, replace the existing resource, or skip this resource?", comment: "")
         alert.addButton(withTitle: NSLocalizedString("Unique ID", comment: ""))
-        alert.addButton(withTitle: NSLocalizedString("Overwrite", comment: ""))
+        alert.addButton(withTitle: NSLocalizedString("Replace", comment: ""))
         alert.addButton(withTitle: NSLocalizedString("Skip", comment: ""))
         alert.suppressionButton?.title = NSLocalizedString("Apply to all", comment: "")
     }
