@@ -6,7 +6,7 @@
 
 @implementation QuickDraw
 
-+ (NSBitmapImageRep *)repFromPict:(NSData *)data {
++ (NSBitmapImageRep *)repFromPict:(NSData *)data error:(NSError **)outError {
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
@@ -15,6 +15,8 @@
         // Most software seems to ignore PICT alpha - we will too, as it can contain garbage data
         return [QuickDraw repFromRaw:surface->raw() size:surface->size() alpha:false];
     } catch (const std::exception& e) {
+        NSString *message = [NSString stringWithUTF8String:e.what()];
+        *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError userInfo:@{NSLocalizedDescriptionKey:message}];
         return nil;
     }
 }

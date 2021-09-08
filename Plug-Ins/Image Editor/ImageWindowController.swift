@@ -244,11 +244,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
         switch resource.typeCode {
         case "PICT":
-            // On macOS 10.15 and later we have to use Graphite to decode PICTs
-            if #available(macOS 10.15, *) {
-                return QuickDraw.rep(fromPict: data) ?? Self.pngRep(fromPict: data)
-            }
-            return NSPICTImageRep(data: data)
+            return self.rep(fromPict: data)
         case "cicn":
             return QuickDraw.rep(fromCicn: data)
         case "ppat":
@@ -283,21 +279,27 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
     }
     
-    private static func pngRep(fromPict data: Data) -> NSBitmapImageRep? {
-        // Check the data for a PNG signature at the typical offset - the data can then be decoded natively
-        guard data.count > 218 else {
-            return nil
+    private static func rep(fromPict data: Data) -> NSImageRep? {
+        // On systems earlier than 10.15 we can handle the pict natively
+        guard #available(macOS 10.15, *) else {
+            return NSPICTImageRep(data: data)
         }
-        // Extended header is 2 bytes longer
-        let offset = data[17] == 0xFE ? 214 : 212
-        let data = data[offset...]
-        guard data.starts(with: [0x89, 0x50, 0x4E, 0x47]), let rep = NSBitmapImageRep(data: data) else {
-            return nil
+        do {
+            return try QuickDraw.rep(fromPict: data)
+        } catch let error {
+            // If the error is because of an unsupported QuickTime compressor, attempt to decode it
+            // natively from the offset indicated. This should work for e.g. PNG or JPEG.
+            if let range = error.localizedDescription.range(of: "(?<=offset )[0-9]+", options: .regularExpression),
+               let offset = Int(error.localizedDescription[range]),
+               data.count > offset,
+               let rep = NSBitmapImageRep(data: data[offset...]) {
+                // Older QuickTime versions (<6.5) stored png data as non-standard RGBX
+                // We need to disable the alpha, but first ensure the image has been decoded by accessing the bitmapData
+                _ = rep.bitmapData
+                rep.hasAlpha = false
+                return rep
+            }
         }
-        // Older QuickTime versions (<6.5) stored data as non-standard RGBX
-        // We need disable the alpha but first need to ensure the image has been decoded by accessing the bitmapData
-        _ = rep.bitmapData
-        rep.hasAlpha = false
-        return rep
+        return nil
     }
 }
