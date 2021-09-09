@@ -98,12 +98,16 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     // Note that the cache is on the window controller instance rather than static, to ensure the resources aren't retained indefinitely.
     func resources(ofType type: String) -> [Resource] {
         if resourceCache[type] == nil {
-            // Find resources in all documents and sort by name
-            var resources = manager.allResources(ofType: ResourceType(type, resource.typeAttributes), currentDocumentOnly: false).filter {
-                !$0.name.isEmpty
+            // Find resources in all documents, deduplicate and sort by name
+            let allResources = manager.allResources(ofType: ResourceType(type, resource.typeAttributes), currentDocumentOnly: false)
+            let resources: [Int: Resource] = allResources.reduce(into: [:]) { (result, resource) in
+                if result[resource.id] == nil && !resource.name.isEmpty {
+                    result[resource.id] = resource
+                }
             }
-            resources.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
-            resourceCache[type] = resources
+            resourceCache[type] = resources.values.sorted {
+                $0.name.localizedStandardCompare($1.name) == .orderedAscending
+            }
         }
         return resourceCache[type]!
     }

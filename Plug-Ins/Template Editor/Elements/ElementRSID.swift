@@ -64,11 +64,9 @@ class ElementRSID<T: FixedWidthInteger>: ElementDBYT<T>, ComboBoxLink {
         let resources = self.parentList.controller.resources(ofType: resType)
         for resource in resources where range?.contains(resource.id) != false {
             let resID = resource.id - offset
-            if self.caseMap[resID] == nil {
-                let idDisplay = self.resIDDisplay(resID)
-                self.cases.append(ElementCASE(value: resource.id, displayValue: "\(resource.name) = \(idDisplay)"))
-                self.caseMap[resID] = "\(idDisplay) = \(resource.name)"
-            }
+            let idDisplay = self.resIDDisplay(resID)
+            self.cases.append(ElementCASE(value: resource.id, displayValue: "\(resource.name) = \(idDisplay)"))
+            self.caseMap[resID] = "\(idDisplay) = \(resource.name)"
         }
     }
     

@@ -124,10 +124,8 @@ class ElementCASR: CaseableElement, ComboBoxLink {
         self.caseMap = [:]
         let resources = self.parentList.controller.resources(ofType: resType)
         for resource in resources where min...max ~= resource.id {
-            if self.caseMap[resource.id] == nil {
-                self.cases.append(ElementCASE(value: resource.id, displayValue: "\(resource.name) = \(resource.id)"))
-                self.caseMap[resource.id] = "\(resource.id) = \(resource.name)"
-            }
+            self.cases.append(ElementCASE(value: resource.id, displayValue: "\(resource.name) = \(resource.id)"))
+            self.caseMap[resource.id] = "\(resource.id) = \(resource.name)"
         }
     }
     
