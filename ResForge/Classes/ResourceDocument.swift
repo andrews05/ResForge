@@ -53,6 +53,7 @@ extension ResourceFileFormat {
 class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate {
     @IBOutlet var dataSource: ResourceDataSource!
     @IBOutlet var statusText: NSTextField!
+    private var searchField: NSSearchField!
     private(set) lazy var directory = ResourceDirectory(self)
     private(set) lazy var editorManager = EditorManager(self)
     private(set) lazy var createController = CreateResourceController(self)
@@ -322,16 +323,27 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         return defaults
     }
     
+    // Get a system symbol if on 11.0 or later, otherwise a standard image
+    private func symbolImage(named name: String) -> NSImage? {
+        if #available(OSX 11.0, *) {
+            return NSImage(systemSymbolName: name, accessibilityDescription: nil)
+        }
+        return NSImage(named: name)
+    }
+    
     func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
         // Create the toolbar items. On macOS 11 we use the special search toolbar item as well as the system symbol images.
         let item: NSToolbarItem
         if itemIdentifier == .searchField {
             if #available(OSX 11.0, *) {
-                item = NSSearchToolbarItem(itemIdentifier: itemIdentifier)
-                (item as! NSSearchToolbarItem).preferredWidthForSearchField = 180
+                let searchItem = NSSearchToolbarItem(itemIdentifier: itemIdentifier)
+                searchItem.preferredWidthForSearchField = 180
+                searchField = searchItem.searchField
+                item = searchItem
             } else {
                 item = NSToolbarItem(itemIdentifier: itemIdentifier)
-                item.view = NSSearchField()
+                searchField = NSSearchField()
+                item.view = searchField
                 item.label = NSLocalizedString("Search", comment: "")
                 item.minSize = NSMakeSize(120, 0)
                 item.maxSize = NSMakeSize(180, 0)
@@ -353,29 +365,17 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             item.action = #selector(createNewItem(_:))
         case .deleteResource:
             item.label = NSLocalizedString("Delete", comment: "")
-            if #available(OSX 11.0, *) {
-                item.image = NSImage(systemSymbolName: "trash", accessibilityDescription: nil)
-            } else {
-                item.image = NSImage(named: "trash")
-            }
+            item.image = self.symbolImage(named: "trash")
             item.action = #selector(delete(_:))
             item.isEnabled = false
         case .editResource:
             item.label = NSLocalizedString("Edit", comment: "")
-            if #available(OSX 11.0, *) {
-                item.image = NSImage(systemSymbolName: "square.and.pencil", accessibilityDescription: nil)
-            } else {
-                item.image = NSImage(named: "square.and.pencil")
-            }
+            item.image = self.symbolImage(named: "square.and.pencil")
             item.action = #selector(openResources(_:))
             item.isEnabled = false
         case .editHex:
             item.label = NSLocalizedString("Edit Hex", comment: "")
-            if #available(OSX 11.0, *) {
-                item.image = NSImage(systemSymbolName: "rectangle.and.pencil.and.ellipsis", accessibilityDescription: nil)
-            } else {
-                item.image = NSImage(named: "rectangle.and.pencil.and.ellipsis")
-            }
+            item.image = self.symbolImage(named: "rectangle.and.pencil.and.ellipsis")
             item.action = #selector(openResourcesAsHex(_:))
             item.isEnabled = false
         case .exportResources:
@@ -385,11 +385,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             item.isEnabled = false
         case .showInfo:
             item.label = NSLocalizedString("Show Info", comment: "")
-            if #available(OSX 11.0, *) {
-                item.image = NSImage(systemSymbolName: "info.circle", accessibilityDescription: nil)
-            } else {
-                item.image = NSImage(named: "info.circle")
-            }
+            item.image = self.symbolImage(named: "info.circle")
             item.target = NSApp.delegate
             item.action = #selector(ApplicationDelegate.showInfo(_:))
         default:
@@ -418,6 +414,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 }
             }
         }
+    }
+    
+    @IBAction func showFind(_ sender: Any) {
+        self.windowForSheet?.makeFirstResponder(searchField)
     }
     
     // MARK: - Window Management
@@ -492,6 +492,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             #selector(openResourcesAsHex(_:)),
             #selector(exportResources(_:)):
             return dataSource.selectionCount() > 0
+        case #selector(showFind(_:)):
+            return windowForSheet?.toolbar?.isVisible == true
         case #selector(toggleTypes(_:)):
             menuItem.title = NSLocalizedString(dataSource.useTypeList ? "Hide Sidebar" : "Show Sidebar", comment: "")
             return true
