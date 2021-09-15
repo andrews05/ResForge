@@ -28,8 +28,8 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
         } else {
             outlineView.selectRowIndexes(rowSet, byExtendingSelection: false)
+            outlineView.scrollRowToVisible(outlineView.selectedRow)
         }
-        outlineView.scrollRowToVisible(outlineView.selectedRow)
     }
     
     func selectionCount() -> Int {
