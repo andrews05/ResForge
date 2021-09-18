@@ -119,7 +119,6 @@ class TemplateParser {
         "REAL": ElementREAL.self,           // single precision float
         "DOUB": ElementDOUB.self,           // double precision float
         "FIXD": ElementFIXD.self,           // 16:16 fixed precision
-        "FRAC": ElementFIXD.self,           // 2:30 fixed precision
         
         // strings
         "PSTR": ElementPSTR<UInt8>.self,    // Pascal string
@@ -265,6 +264,7 @@ class TemplateParser {
         "TMPL": Element.self,               // include another template (ResForge)
 
         // and some faked ones just to increase compatibility
+        "FRAC": ElementDBYT<UInt32>.self,   // 2:30 fixed precision
         "SFRC": ElementDBYT<UInt16>.self,   // 0.16 fixed fraction
         "FXYZ": ElementDBYT<UInt16>.self,   // 1.15 fixed fraction
         "FWID": ElementDBYT<UInt16>.self,   // 4.12 fixed fraction,
