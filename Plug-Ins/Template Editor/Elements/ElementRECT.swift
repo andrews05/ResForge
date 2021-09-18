@@ -7,6 +7,17 @@ class ElementRECT: Element {
     @objc private var bottom: Int16 = 0
     @objc private var right: Int16 = 0
     
+    required init(type: String, label: String) {
+        super.init(type: type, label: label)
+        let values = meta.components(separatedBy: ",")
+        if values.count == 4 {
+            top = Int16(values[0]) ?? top
+            left = Int16(values[1]) ?? left
+            bottom = Int16(values[2]) ?? bottom
+            right = Int16(values[3]) ?? right
+        }
+    }
+    
     override func configure() throws {
         self.width = 240
     }

@@ -5,6 +5,17 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
     var cases: [ElementCASE]!
     var caseMap: [AnyHashable: String]!
     
+    required init!(type: String, label: String) {
+        super.init(type: type, label: label)
+        // Attempt to set a default value from the meta value
+        if !meta.isEmpty, let formatter = self.formatter {
+            var value: AnyObject?
+            if formatter.getObjectValue(&value, for: meta, errorDescription: nil) {
+                self.setValue(value, forKey: "value")
+            }
+        }
+    }
+    
     override func configure() throws {
         // Read CASE elements
         while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
