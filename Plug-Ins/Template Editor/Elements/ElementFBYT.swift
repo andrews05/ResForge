@@ -4,7 +4,7 @@ import RFSupport
 class ElementFBYT: Element {
     let length: Int
     
-    required init(type: String, label: String, tooltip: String? = nil) {
+    required init(type: String, label: String) {
         switch type {
         case "FBYT":
             length = 1
@@ -15,7 +15,7 @@ class ElementFBYT: Element {
         default:
             length = Element.variableTypeValue(type)
         }
-        super.init(type: type, label: label, tooltip: tooltip)
+        super.init(type: type, label: label)
         self.visible = false
     }
     

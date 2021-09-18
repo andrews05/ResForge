@@ -26,22 +26,19 @@ class ElementPACK: Element {
     }
     
     override func configure() throws {
-        let components = self.label.components(separatedBy: "=")
-        if components.count == 2 {
-            for label in components[1].components(separatedBy: ",") {
-                guard let element = self.parentList.next(withLabel: label) else {
-                    throw TemplateError.invalidStructure(self, NSLocalizedString("A named element was not found.", comment: ""))
-                }
-                guard !(element is GroupElement) || ["PACK", "CASE", "CASR"].contains(element.type) else {
-                    let message = String(format: NSLocalizedString("Cannot pack element of type ‘%@’.", comment: ""), element.type)
-                    throw TemplateError.invalidStructure(self, message)
-                }
-                element.visible = false
-                subElements.append(element)
-            }
-        }
-        if subElements.isEmpty {
+        if meta.isEmpty {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No elements to pack.", comment: ""))
+        }
+        for label in meta.components(separatedBy: ",") {
+            guard let element = self.parentList.next(withLabel: label) else {
+                throw TemplateError.invalidStructure(self, NSLocalizedString("A named element was not found.", comment: ""))
+            }
+            guard !(element is GroupElement) || ["PACK", "CASE", "CASR"].contains(element.type) else {
+                let message = String(format: NSLocalizedString("Cannot pack element of type ‘%@’.", comment: ""), element.type)
+                throw TemplateError.invalidStructure(self, message)
+            }
+            element.visible = false
+            subElements.append(element)
         }
     }
     

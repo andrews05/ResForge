@@ -4,11 +4,15 @@ class ElementFCNT: Element, GroupElement, CounterElement {
     var count: Int
     private let groupLabel: String
     
-    required init(type: String, label: String, tooltip: String? = nil) {
-        // Read count from label - hex value denoted by leading '$'
+    required init(type: String, label: String) {
+        // Read count from label - hex value denoted by leading '$' or '0x'
         let scanner = Scanner(string: label)
         if label.first == "$" {
             scanner.scanLocation = 1
+            var value: UInt32 = 0
+            scanner.scanHexInt32(&value)
+            count = Int(value)
+        } else if label.starts(with: "0x") {
             var value: UInt32 = 0
             scanner.scanHexInt32(&value)
             count = Int(value)
@@ -19,7 +23,7 @@ class ElementFCNT: Element, GroupElement, CounterElement {
         }
         // Remove count from label
         groupLabel = label.dropFirst(scanner.scanLocation).trimmingCharacters(in: .whitespaces)
-        super.init(type: type, label: label, tooltip: tooltip)
+        super.init(type: type, label: label)
         // Hide if no remaining label
         self.visible = !groupLabel.isEmpty
     }

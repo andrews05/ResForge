@@ -2,16 +2,18 @@ import Cocoa
 import RFSupport
 
 class ElementCASE: Element {
-    var displayValue: String = ""
     @objc var value: AnyHashable!
     
-    required init(type: String, label: String, tooltip: String? = nil) {
-        super.init(type: type, label: label, tooltip: tooltip)
+    required init(type: String, label: String) {
+        super.init(type: type, label: label)
+        if meta.isEmpty {
+            meta = displayLabel
+        }
     }
     
     init(value: AnyHashable, displayValue: String) {
-        super.init(type: "CASE", label: displayValue, tooltip: "")
-        self.displayValue = displayValue
+        super.init(type: "CASE", label: "")
+        self.meta = displayValue
         self.value = value
     }
     
@@ -41,17 +43,16 @@ class ElementCASE: Element {
     }
     
     func configure(for element: Element) throws {
-        displayValue = String(label.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false).last!)
         if let formatter = element.formatter {
             var errorString: NSString? = nil
             var ioValue: AnyObject?
-            formatter.getObjectValue(&ioValue, for: displayValue, errorDescription: &errorString)
+            formatter.getObjectValue(&ioValue, for: meta, errorDescription: &errorString)
             if let errorString = errorString {
                 throw TemplateError.invalidStructure(self, errorString as String)
             }
             value = ioValue as? AnyHashable
         } else {
-            value = displayValue
+            value = meta
         }
     }
 }

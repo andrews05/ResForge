@@ -9,8 +9,8 @@ class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
         set { tValue = newValue as! T }
     }
     
-    required init(type: String, label: String, tooltip: String? = nil) {
-        super.init(type: type, label: label, tooltip: tooltip)
+    required init(type: String, label: String) {
+        super.init(type: type, label: label)
         switch T.bitWidth/8 {
         case 4:
             self.width = 90

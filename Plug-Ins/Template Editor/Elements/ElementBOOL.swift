@@ -32,8 +32,7 @@ class ElementBOOL: CaseableElement {
                 element.caseMap = [:]
                 element.width = 240
             }
-            let caseVal = caseEl.label.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false).last!.lowercased()
-            switch caseVal {
+            switch caseEl.meta {
             case "1", "on":
                 caseEl.value = true
             case "0", "off":
@@ -78,9 +77,7 @@ class ElementBOOL: CaseableElement {
         let checkbox = NSButton(frame: frame)
         checkbox.setButtonType(.switch)
         checkbox.bezelStyle = .regularSquare
-        // Use the second part of the label as the checkbox title
-        let split = element.label.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false)
-        checkbox.title = split.count == 2 ? String(split[1]) : "\0"
+        checkbox.title = element.meta.isEmpty ? "\0" : element.meta
         checkbox.action = #selector(TemplateWindowController.itemValueUpdated(_:))
         checkbox.bind(.value, to: element, withKeyPath: "value", options: nil)
         if frame.width > 20 {

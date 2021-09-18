@@ -5,9 +5,9 @@ import RFSupport
 class ElementBNDN: Element, GroupElement {
     private let bigEndian: Bool
     
-    required init(type: String, label: String, tooltip: String? = nil) {
+    required init(type: String, label: String) {
         bigEndian = type.first == "B"
-        super.init(type: type, label: label, tooltip: tooltip)
+        super.init(type: type, label: label)
         self.rowHeight = 18
         self.visible = !type.hasSuffix("NDN")
     }

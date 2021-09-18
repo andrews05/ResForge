@@ -8,10 +8,10 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element {
     private var lengthBytes: Int
     @objc dynamic var value = -1
     
-    required init(type: String, label: String, tooltip: String? = nil) {
+    required init(type: String, label: String) {
         skipLengthBytes = !type.hasSuffix("SIZ")
         lengthBytes = T.bitWidth / 8
-        super.init(type: type, label: label, tooltip: tooltip)
+        super.init(type: type, label: label)
         self.endType = "SKPE"
     }
     

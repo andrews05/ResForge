@@ -41,14 +41,14 @@ class TemplateParser {
         case "R":
             // Rnnn psuedo-element repeats the following element n times
             let count = Element.variableTypeValue(element.type)
-            let offset = Int(element.label.split(separator: "=").last!) ?? 1
+            let offset = Int(element.meta) ?? 1
             let els = try self.process()
             var elements: [Element] = []
             for i in 0..<count {
                 for el in els {
                     // Replace * symbol with index
                     let label = el.label.replacingOccurrences(of: "*", with: String(i+offset))
-                    let newEl = Swift.type(of: el).init(type: el.type, label: label, tooltip: el.tooltip)!
+                    let newEl = Swift.type(of: el).init(type: el.type, label: label)!
                     elements.append(newEl)
                 }
             }
@@ -63,7 +63,7 @@ class TemplateParser {
             var elements: [Element] = []
             for f in fields {
                 // Replace * symbol with index
-                let newEl = dwrd.init(type: "DWRD", label: "\(element.label) \(f)", tooltip: element.tooltip)!
+                let newEl = dwrd.init(type: "DWRD", label: "\(element.label) \(f)")!
                 elements.append(newEl)
             }
             return elements

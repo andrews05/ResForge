@@ -27,8 +27,8 @@ class ElementCSTR: CaseableElement {
     var maxLength = Int(UInt32.max)
     var padding = StringPadding.none
     
-    required init(type: String, label: String, tooltip: String? = nil) {
-        super.init(type: type, label: label, tooltip: tooltip)
+    required init(type: String, label: String) {
+        super.init(type: type, label: label)
         self.configurePadding()
         self.width = 240
     }

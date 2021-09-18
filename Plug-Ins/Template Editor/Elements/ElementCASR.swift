@@ -45,11 +45,10 @@ class ElementCASR: CaseableElement, ComboBoxLink {
         let range = (_formatter.minimum as! Int)...(_formatter.maximum as! Int)
         
         // Determine parameters from label
-        let components = self.label.components(separatedBy: "=")
         var hasMin = false
         var hasMax = false
-        if components.count > 1 {
-            let scanner = Scanner(string: components[1])
+        if !meta.isEmpty {
+            let scanner = Scanner(string: meta)
             hasMin = scanner.scanInt(&min)
             guard !hasMin || range ~= min else {
                 throw TemplateError.invalidStructure(self, NSLocalizedString("Minimum value out of range for field type.", comment: ""))

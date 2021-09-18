@@ -9,11 +9,9 @@ class ElementRREF: Element {
     private var buttonLabel: String!
     
     override func configure() throws {
-        let split = self.label.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false)
-        let scanner = Scanner(string: String(split.last!))
+        let scanner = Scanner(string: meta)
         var resType: NSString?
-        guard split.count == 2,
-              scanner.scanString("'", into: nil),
+        guard scanner.scanString("'", into: nil),
               scanner.scanUpTo("'", into: &resType),
               scanner.scanString("'", into: nil),
               resType?.length == 4

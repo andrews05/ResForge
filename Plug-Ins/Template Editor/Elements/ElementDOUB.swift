@@ -4,8 +4,8 @@ import RFSupport
 class ElementDOUB: CaseableElement {
     @objc private var value: Double = 0
     
-    required init(type: String, label: String, tooltip: String? = nil) {
-        super.init(type: type, label: label, tooltip: tooltip)
+    required init(type: String, label: String) {
+        super.init(type: type, label: label)
         self.width = 180
     }
     

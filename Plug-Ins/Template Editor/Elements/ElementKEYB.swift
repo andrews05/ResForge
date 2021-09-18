@@ -4,8 +4,8 @@ import RFSupport
 class ElementKEYB: Element {
     var subElements: ElementList!
     
-    required init(type: String, label: String, tooltip: String? = nil) {
-        super.init(type: type, label: label, tooltip: tooltip)
+    required init(type: String, label: String) {
+        super.init(type: type, label: label)
         self.visible = false
         self.endType = "KEYE"
     }

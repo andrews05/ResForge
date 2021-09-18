@@ -4,7 +4,7 @@ import RFSupport
 class ElementAWRD: Element {
     let alignment: Int
     
-    required init(type: String, label: String, tooltip: String? = nil) {
+    required init(type: String, label: String) {
         switch type {
         case "AWRD":
             alignment = 2
@@ -13,7 +13,7 @@ class ElementAWRD: Element {
         default:
             alignment = Int(type.suffix(2))!
         }
-        super.init(type: type, label: label, tooltip: tooltip)
+        super.init(type: type, label: label)
         self.visible = false
     }
     

@@ -8,10 +8,12 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
     let type: String
     /// Label ("name") of this field.
     let label: String
-    /// Descriptive tooltip of this field, derived from subsequent lines of the label.
+    /// Descriptive tooltip of this field (derived from subsequent lines of the label).
     var tooltip: String
     /// The label to display, if different from the template label.
     var displayLabel: String
+    /// Meta information for the element (the part of the label following the first "=").
+    var meta: String
     /// Type code of an ending element if this element marks the start of a section.
     var endType: String!
     /// The list of the template field containing us, or the template window's list.
@@ -21,26 +23,18 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
     var width: CGFloat = 60 // Default for many types
 
     
-    required init!(type: String, label: String, tooltip: String? = nil) {
+    required init!(type: String, label: String) {
         self.type = type
-        if let tooltip = tooltip {
-            self.label = label
-            self.tooltip = tooltip
-        } else {
-           let lines = label.split(separator: "\n", maxSplits: 1, omittingEmptySubsequences: false)
-           if lines.count == 2 {
-                self.label = String(lines[0])
-                self.tooltip = String(lines[1])
-            } else {
-                self.label = label
-                self.tooltip = ""
-            }
-        }
-        displayLabel = self.label.components(separatedBy: "=")[0]
+        self.label = label
+        let lines = label.split(separator: "\n", maxSplits: 1, omittingEmptySubsequences: false)
+        tooltip = lines.count == 2 ? String(lines[1]) : ""
+        let parts = lines[0].split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false)
+        displayLabel = String(parts[0])
+        meta = parts.count == 2 ? String(parts[1]) : ""
     }
     
     func copy() -> Self {
-        return Self.init(type: type, label: label, tooltip: tooltip)
+        return Self.init(type: type, label: label)
     }
     
     // Notify the controller when a field has been edited

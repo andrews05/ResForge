@@ -1,8 +1,8 @@
 import Cocoa
 
 class ElementDVDR: Element, GroupElement {
-    required init(type: String, label: String, tooltip: String? = nil) {
-        super.init(type: type, label: label, tooltip: "")
+    required init(type: String, label: String) {
+        super.init(type: type, label: label)
         if label.isEmpty {
             self.rowHeight = 1
         } else {

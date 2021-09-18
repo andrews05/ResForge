@@ -28,9 +28,9 @@ class ElementLSTB: Element {
         }
     }
     
-    required init(type: String, label: String, tooltip: String? = nil) {
+    required init(type: String, label: String) {
         zeroTerminated = type == "LSTZ"
-        super.init(type: type, label: label, tooltip: tooltip)
+        super.init(type: type, label: label)
         self.rowHeight = 18
         self.endType = "LSTE"
     }

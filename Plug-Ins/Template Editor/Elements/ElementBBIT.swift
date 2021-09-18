@@ -9,7 +9,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
     private var bitList: [ElementBBIT] = []
     private var first = true
     
-    required init!(type: String, label: String, tooltip: String? = nil) {
+    required init!(type: String, label: String) {
         if !type.hasSuffix("BIT") {
             // XXnn - bit field or fill bits
             bits = Int(type.suffix(2))!
@@ -17,7 +17,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
                 return nil
             }
         }
-        super.init(type: type, label: label, tooltip: tooltip)
+        super.init(type: type, label: label)
         self.visible = type.dropFirst().first != "F"
     }
     

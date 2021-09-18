@@ -18,14 +18,14 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
                 throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
             }
             cases.append(caseEl)
-            if caseEl.displayLabel == caseEl.displayValue {
+            if caseEl.displayLabel == caseEl.meta {
                 // Value matches title, use as-is
-                caseMap[caseEl.value] = caseEl.displayValue
+                caseMap[caseEl.value] = caseEl.meta
             } else {
                 // Cases will show as "title = value" in the options list to allow searching by title
                 // Text field will display as "value = title" for consistency when there's no matching case
-                caseMap[caseEl.value] = "\(caseEl.displayValue) = \(caseEl.displayLabel)"
-                caseEl.displayValue = "\(caseEl.displayLabel) = \(caseEl.displayValue)"
+                caseMap[caseEl.value] = "\(caseEl.meta) = \(caseEl.displayLabel)"
+                caseEl.meta = "\(caseEl.displayLabel) = \(caseEl.meta)"
             }
         }
     }
@@ -85,12 +85,12 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
         // Use insensitive completion, except for TNAM
         let options: NSString.CompareOptions = self.type == "TNAM" ? [] : .caseInsensitive
         return self.cases.first {
-            $0.displayValue.commonPrefix(with: string, options: options).count == string.count
-        }?.displayValue
+            $0.meta.commonPrefix(with: string, options: options).count == string.count
+        }?.meta
     }
     
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
-        return index < self.cases.endIndex ? self.cases[index].displayValue : nil
+        return index < self.cases.endIndex ? self.cases[index].meta : nil
     }
     
     func numberOfItems(in comboBox: NSComboBox) -> Int {

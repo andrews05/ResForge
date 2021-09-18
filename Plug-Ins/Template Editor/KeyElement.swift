@@ -39,7 +39,7 @@ class KeyElement: Element {
             // Allow one KEYB to be used for multiple CASEs
             let vals = keyB.label.components(separatedBy: ",")
             for value in vals {
-                let caseEl = self.cases.first(where: { $0.displayValue == value })
+                let caseEl = self.cases.first(where: { $0.meta == value })
                 // A value of "*" that doesn't match a CASE will be a wildcard, used when the existing data doesn't match any cases
                 guard caseEl != nil || value == "*" else {
                     throw TemplateError.invalidStructure(keyB, NSLocalizedString("No corresponding ‘CASE’ element.", comment: ""))
