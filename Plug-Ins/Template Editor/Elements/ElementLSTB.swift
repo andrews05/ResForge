@@ -2,7 +2,7 @@ import Cocoa
 import RFSupport
 
 // Implements LSTB, LSTZ, LSTC, LSTS
-class ElementLSTB: Element {
+class ElementLSTB: Element, CollectionElement {
     weak var counter: CounterElement?
     var fixedCount: Bool = false
     private let zeroTerminated: Bool
@@ -113,16 +113,15 @@ class ElementLSTB: Element {
     
     // MARK: -
     
-    override var hasSubElements: Bool {
-        singleElement?.hasSubElements ?? (tail != self)
+    var subElementCount: Int {
+        if let single = singleElement {
+            return (single as? CollectionElement)?.subElementCount ?? 0
+        }
+        return tail == self ? 0 : subElements.count
     }
     
-    override var subElementCount: Int {
-        singleElement?.subElementCount ?? subElements.count
-    }
-    
-    override func subElement(at index: Int) -> Element {
-        return singleElement?.subElement(at: index) ?? subElements.element(at: index)
+    func subElement(at index: Int) -> Element {
+        return (singleElement as? CollectionElement)?.subElement(at: index) ?? subElements.element(at: index)
     }
     
     func allowsCreateListEntry() -> Bool {

@@ -2,7 +2,7 @@ import Cocoa
 import RFSupport
 
 // Abstract Element subclass that handles key elements
-class KeyElement: Element {
+class KeyElement: Element, CollectionElement {
     @objc private var cases: [ElementCASE] = []
     private(set) var caseMap: [AnyHashable: ElementCASE] = [:]
     private(set) var keyedSections: [ElementCASE?: ElementKEYB]!
@@ -110,25 +110,21 @@ class KeyElement: Element {
         return oldSection
     }
     
-    
-    override var hasSubElements: Bool {
-        return true
-    }
-    
-    override var subElementCount: Int {
-        return currentSection?.subElementCount ?? 0
-    }
-    
-    override func subElement(at index: Int) -> Element {
-        return currentSection.subElement(at: index)
-    }
-    
-    
     override func transformedValue(_ value: Any?) -> Any? {
         return caseMap[value as! AnyHashable] ?? value
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any? {
         return (value as! ElementCASE).value
+    }
+    
+    // MARK: -
+    
+    var subElementCount: Int {
+        currentSection?.subElementCount ?? 0
+    }
+    
+    func subElement(at index: Int) -> Element {
+        return currentSection.subElement(at: index)
     }
 }

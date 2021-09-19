@@ -42,29 +42,40 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
     }
     
     override func configure(view: NSView) {
-        if cases == nil {
-            super.configure(view: view)
-            return
-        }
-        
         var frame = view.frame
-        if self.width != 0 {
-            frame.size.width = self.width - 1
+        if cases == nil {
+            // Standard text field
+            frame.size.height = CGFloat(rowHeight)
+            if width != 0 {
+                frame.size.width = width - 4
+            }
+            let textField = NSTextField(frame: frame)
+            textField.formatter = formatter
+            textField.delegate = self
+            textField.placeholderString = type
+            textField.lineBreakMode = .byTruncatingTail
+            textField.allowsDefaultTighteningForTruncation = true
+            textField.bind(.value, to: self, withKeyPath: "value")
+            view.addSubview(textField)
+        } else {
+            // Combo box with CASE suggestions
+            if width != 0 {
+                frame.size.width = width - 1
+            }
+            frame.size.height = 26
+            frame.origin.y -= 2
+            let combo = NSComboBox(frame: frame)
+            combo.completes = true
+            combo.numberOfVisibleItems = 10
+            combo.delegate = self
+            combo.placeholderString = type
+            combo.usesDataSource = true
+            combo.dataSource = self
+            // The formatter isn't directly compatible with the values displayed by the combo box
+            // Use a combination of value transformation with immediate validation to run the formatter manually
+            combo.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self, .validatesImmediately: formatter != nil])
+            view.addSubview(combo)
         }
-        frame.size.height = 26
-        frame.origin.y -= 2
-        let combo = NSComboBox(frame: frame)
-        combo.isEditable = true
-        combo.completes = true
-        combo.numberOfVisibleItems = 10
-        combo.delegate = self
-        combo.placeholderString = self.type
-        combo.usesDataSource = true
-        combo.dataSource = self
-        // The formatter isn't directly compatible with the values displayed by the combo box
-        // Use a combination of value transformation with immediate validation to run the formatter manually
-        combo.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self, .validatesImmediately: self.formatter != nil])
-        view.addSubview(combo)
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
@@ -86,6 +97,7 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
         }
     }
     
+    // MARK: - Combo box functions
     
     func comboBoxSelectionDidChange(_ notification: Notification) {
         // Notify the controller that the value changed

@@ -113,7 +113,6 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
     override var formatter: Formatter? {
         if Element.sharedFormatters[type] == nil {
             let formatter = NumberFormatter()
-            formatter.hasThousandSeparators = true
             formatter.minimum = 0
             formatter.maximum = (1 << bits) - 1 as NSNumber
             formatter.nilSymbol = "\0"

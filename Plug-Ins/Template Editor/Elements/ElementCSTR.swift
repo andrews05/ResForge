@@ -72,9 +72,9 @@ class ElementCSTR: CaseableElement {
         }
     }
     
-    override func controlTextDidChange(_ obj: Notification) {
-        if self.width == 0 {
-            self.autoRowHeight(obj.object as! NSTextField)
+    func controlTextDidChange(_ obj: Notification) {
+        if self.width == 0, let field = obj.object as? NSTextField {
+            self.autoRowHeight(field)
         }
     }
     
@@ -89,7 +89,7 @@ class ElementCSTR: CaseableElement {
             if height != self.rowHeight {
                 self.rowHeight = height
                 // In case we're not our own row...
-                (outline.item(atRow: index) as! Element).rowHeight = height
+                (outline.item(atRow: index) as? Element)?.rowHeight = height
                 // Notify the outline view without animating
                 NSAnimationContext.beginGrouping()
                 NSAnimationContext.current.duration = 0

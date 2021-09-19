@@ -58,9 +58,6 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
         return false
     }
     
-    // This is required here for subclasses to override
-    func controlTextDidChange(_ obj: Notification) {}
-    
     // Check if this element is at the end of either the template, a sized/skip section, or a keyed section which is itself at the end.
     // I.E. Check that there is no more data to be read after this.
     func isAtEnd() -> Bool {
@@ -78,7 +75,7 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
         return Int(type.suffix(3), radix: 16)!
     }
     
-    // MARK: - Methods Subclasses Should Override
+    // MARK: - Functions subclasses should override
     
     /// Perform any configuration that may depend on other elements.
     func configure() throws {
@@ -89,33 +86,7 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
     }
     
     /// Configure the view to display this element in the list.
-    /// The default implementation creates a text field bound to a "value" property.
-    func configure(view: NSView) {
-        var frame = view.frame
-        frame.size.height = CGFloat(rowHeight)
-        if width != 0 {
-            frame.size.width = width - 4
-        }
-        let textField = NSTextField(frame: frame)
-        textField.formatter = formatter
-        textField.delegate = self
-        textField.placeholderString = type
-        textField.lineBreakMode = .byTruncatingTail
-        textField.allowsDefaultTighteningForTruncation = true
-        textField.bind(.value, to: self, withKeyPath: "value", options: nil)
-        view.addSubview(textField)
-    }
-    
-    // Items that have sub-items (like lists or keyed-sections) should implement these:
-    var hasSubElements: Bool {
-        false
-    }
-    var subElementCount: Int {
-        0
-    }
-    func subElement(at index: Int) -> Element {
-        return self // This is invalid but the function shouldn't be called here
-    }
+    func configure(view: NSView) {}
     
     /// Read the value of the field from the stream.
     func readData(from reader: BinaryDataReader) throws {}
@@ -137,6 +108,13 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
     }
 }
 
+/// An element that may contain child elements.
+protocol CollectionElement where Self: Element {
+    var subElementCount: Int { get }
+    func subElement(at index: Int) -> Element
+}
+
+/// An element that is displayed as a group row in the outline view.
 protocol GroupElement where Self: Element {
     func configureGroup(view: NSTableCellView)
 }

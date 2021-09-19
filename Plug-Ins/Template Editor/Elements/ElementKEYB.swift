@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementKEYB: Element {
+class ElementKEYB: Element, CollectionElement {
     var subElements: ElementList!
     
     required init(type: String, label: String) {
@@ -30,11 +30,11 @@ class ElementKEYB: Element {
         subElements.writeData(to: writer)
     }
     
-    override var subElementCount: Int {
-        return subElements.count
+    var subElementCount: Int {
+        subElements.count
     }
     
-    override func subElement(at index: Int) -> Element {
+    func subElement(at index: Int) -> Element {
         return subElements.element(at: index)
     }
 }

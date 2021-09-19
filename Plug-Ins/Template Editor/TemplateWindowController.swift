@@ -157,21 +157,21 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     }
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if let item = item as? Element {
+        if let item = item as? CollectionElement {
             return item.subElementCount
         }
         return Int(resourceStructure.count)
     }
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if let item = item as? Element {
+        if let item = item as? CollectionElement {
             return item.subElement(at: index)
         }
         return resourceStructure.element(at: index)
     }
     
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        return (item as! Element).hasSubElements
+        return item is CollectionElement
     }
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {

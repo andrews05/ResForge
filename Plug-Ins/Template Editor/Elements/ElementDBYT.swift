@@ -31,7 +31,6 @@ class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
     
     override class var formatter: Formatter? {
         let formatter = NumberFormatter()
-        formatter.hasThousandSeparators = true
         formatter.minimum = T.min as? NSNumber
         formatter.maximum = T.max as? NSNumber
         formatter.allowsFloats = false
