@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-// Implements DBYT, DWRD, DLNG, DLLG, UBYT, UWRD, ULNG, ULLG
+// Implements DBYT, DWRD, DLNG, DQWD, UBYT, UWRD, ULNG, UQWD
 class ElementDBYT<T: FixedWidthInteger>: RangeableElement {
     var tValue: T = 0
     @objc private var value: NSNumber {

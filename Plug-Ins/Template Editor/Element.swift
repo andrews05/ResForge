@@ -14,8 +14,6 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
     var displayLabel: String
     /// Meta information for the element (the part of the label following the first "=").
     var meta: String
-    /// Type code of an ending element if this element marks the start of a section.
-    var endType: String!
     /// The list of the template field containing us, or the template window's list.
     weak var parentList: ElementList!
     var rowHeight: Double = 22
@@ -62,10 +60,10 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
     // I.E. Check that there is no more data to be read after this.
     func isAtEnd() -> Bool {
         let topLevel: Bool
-        if let parent = self.parentList.parentElement {
+        if let parent = self.parentList.parentElement as? CollectionElement {
             topLevel = parent.endType == "SKPE" || (parent.endType == "KEYE" && parent.isAtEnd())
         } else {
-            topLevel = true
+            topLevel = self.parentList.parentElement == nil
         }
         return topLevel && self.parentList.peek(1) == nil
     }
@@ -110,6 +108,7 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
 
 /// An element that may contain child elements.
 protocol CollectionElement where Self: Element {
+    var endType: String { get }
     var subElementCount: Int { get }
     func subElement(at index: Int) -> Element
 }

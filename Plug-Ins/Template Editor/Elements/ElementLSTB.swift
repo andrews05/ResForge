@@ -3,6 +3,7 @@ import RFSupport
 
 // Implements LSTB, LSTZ, LSTC, LSTS
 class ElementLSTB: Element, CollectionElement {
+    let endType = "LSTE"
     weak var counter: CounterElement?
     var fixedCount: Bool = false
     private let zeroTerminated: Bool
@@ -32,7 +33,6 @@ class ElementLSTB: Element, CollectionElement {
         zeroTerminated = type == "LSTZ"
         super.init(type: type, label: label)
         self.rowHeight = 18
-        self.endType = "LSTE"
     }
     
     override func copy() -> Self {

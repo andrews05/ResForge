@@ -3,6 +3,8 @@ import RFSupport
 
 // Abstract Element subclass that handles key elements
 class KeyElement: Element, CollectionElement {
+    // KeyElement acts as a proxy CollectionElement for KEYB - it does not actually have an endType but requires this for conformance.
+    let endType = ""
     @objc private var cases: [ElementCASE] = []
     private(set) var caseMap: [AnyHashable: ElementCASE] = [:]
     private(set) var keyedSections: [ElementCASE?: ElementKEYB]!

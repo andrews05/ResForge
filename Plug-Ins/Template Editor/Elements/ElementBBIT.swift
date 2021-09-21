@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-// Implements BBIT/BBnn/BFnn, WBIT/WBnn/WFnn, LBIT/LBnn/LFnn
+// Implements BBIT/BBnn/BFnn, WBIT/WBnn/WFnn, LBIT/LBnn/LFnn, QBIT/QBnn/QFnn
 class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
     @objc private var value: UInt = 0
     private var bits = 1

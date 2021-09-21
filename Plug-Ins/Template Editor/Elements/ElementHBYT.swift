@@ -1,6 +1,6 @@
 import Cocoa
 
-// Implements HBYT, HWRD, HLNG, HLLG
+// Implements HBYT, HWRD, HLNG, HQWD
 class ElementHBYT<T: FixedWidthInteger & UnsignedInteger>: ElementDBYT<T> {
     override class var formatter: Formatter? {
         return HexFormatter<T>()

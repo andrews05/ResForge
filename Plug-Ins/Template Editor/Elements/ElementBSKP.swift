@@ -3,6 +3,7 @@ import RFSupport
 
 // Implements BSKP, SKIP, LSKP, BSIZ, WSIZ, LSIZ
 class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element, CollectionElement {
+    let endType = "SKPE"
     private var subElements: ElementList!
     private var skipLengthBytes: Bool
     private var lengthBytes: Int
@@ -12,7 +13,6 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element, CollectionEl
         skipLengthBytes = !type.hasSuffix("SIZ")
         lengthBytes = T.bitWidth / 8
         super.init(type: type, label: label)
-        self.endType = "SKPE"
     }
     
     override func configure() throws {

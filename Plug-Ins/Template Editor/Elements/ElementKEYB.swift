@@ -2,12 +2,12 @@ import Foundation
 import RFSupport
 
 class ElementKEYB: Element, CollectionElement {
+    let endType = "KEYE"
     var subElements: ElementList!
     
     required init(type: String, label: String) {
         super.init(type: type, label: label)
         self.visible = false
-        self.endType = "KEYE"
     }
     
     override func copy() -> Self {

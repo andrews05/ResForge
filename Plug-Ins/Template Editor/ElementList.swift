@@ -153,14 +153,14 @@ class ElementList {
     }
     
     // Create a new ElementList by extracting all elements following the current one up until a given type
-    func subList(for startElement: Element) throws -> ElementList {
+    func subList(for startElement: CollectionElement) throws -> ElementList {
         let list = ElementList(controller: controller, parent: startElement)
         var nesting = 0
         while true {
             guard let element = self.pop() else {
                 throw TemplateError.unclosedElement(startElement)
             }
-            if element.endType == startElement.endType {
+            if (element as? CollectionElement)?.endType == startElement.endType {
                 nesting += 1
             } else if element.type == startElement.endType {
                 if nesting == 0 {

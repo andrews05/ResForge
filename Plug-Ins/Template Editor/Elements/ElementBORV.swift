@@ -6,6 +6,8 @@ import RFSupport
  * In Rezilla it is displayed as a multiple select popup menu
  * In ResForge we display it as a list of checkboxes (because we don't have enough checkbox types already!)
  * The main difference from BBITs is it allows a custom ordering of the bits (it also gives a slightly more compact display)
+ *
+ * Implements BORV, WORV, LORV, QORV
  */
 class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
     private var values: [T] = []

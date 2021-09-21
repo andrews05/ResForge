@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-// Implements KBYT, KWRD, KLNG, KLLG, KUBT, KUWD, KULG, KULL
+// Implements KBYT, KWRD, KLNG, KQWD, KUBT, KUWD, KULG, KUQD
 class ElementKBYT<T: FixedWidthInteger>: KeyElement {
     private var tValue: T = 0
     @objc private var value: NSNumber {

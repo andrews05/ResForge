@@ -4,7 +4,7 @@ import RFSupport
 enum TemplateError: LocalizedError, RecoverableError {
     case corrupt
     case unknownElement(String)
-    case unclosedElement(Element)
+    case unclosedElement(CollectionElement)
     case unboundedElement(Element)
     case invalidStructure(Element, String)
     case dataMismatch(Element)
@@ -18,13 +18,11 @@ enum TemplateError: LocalizedError, RecoverableError {
             return String(format: NSLocalizedString("Unsupported element type ‘%@’.", comment: ""), type)
         case let .unclosedElement(element):
             return "\(element.type) “\(element.label)”: ".appendingFormat(NSLocalizedString("Closing ‘%@’ element not found.", comment: ""), element.endType)
+        case let .unboundedElement(element as CollectionElement):
+            let message = String(format: NSLocalizedString("Closing ‘%@’ must be last element in template or sized section.", comment: ""), element.endType)
+            return "\(element.type) “\(element.label)”: ".appending(message)
         case let .unboundedElement(element):
-            let message: String
-            if let endType = element.endType {
-                message = String(format: NSLocalizedString("Closing ‘%@’ must be last element in template or sized section.", comment: ""), endType)
-            } else {
-                message = NSLocalizedString("Must be last element in template or sized section.", comment: "")
-            }
+            let message = NSLocalizedString("Must be last element in template or sized section.", comment: "")
             return "\(element.type) “\(element.label)”: ".appending(message)
         case let .invalidStructure(element, message):
             return "\(element.type) “\(element.label)”: ".appending(message)
