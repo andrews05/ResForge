@@ -13,7 +13,7 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
     /// The label to display, if different from the template label.
     var displayLabel: String
     /// Meta information for the element (the part of the label following the first "=").
-    var meta: String
+    var metaValue: String?
     /// The list of the template field containing us, or the template window's list.
     weak var parentList: ElementList!
     var rowHeight: Double = 22
@@ -28,7 +28,9 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
         tooltip = lines.count == 2 ? String(lines[1]) : ""
         let parts = lines[0].split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false)
         displayLabel = String(parts[0])
-        meta = parts.count == 2 ? String(parts[1]) : ""
+        if parts.count == 2 {
+            metaValue = String(parts[1])
+        }
     }
     
     func copy() -> Self {

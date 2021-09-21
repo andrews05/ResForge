@@ -9,7 +9,7 @@ class ElementRREF: Element {
     private var buttonLabel: String!
     
     override func configure() throws {
-        let scanner = Scanner(string: meta)
+        let scanner = Scanner(string: metaValue ?? "")
         var resType: NSString?
         guard scanner.scanString("'", into: nil),
               scanner.scanUpTo("'", into: &resType),

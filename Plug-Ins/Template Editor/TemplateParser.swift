@@ -41,7 +41,8 @@ class TemplateParser {
         case "R":
             // Rnnn psuedo-element repeats the following element n times
             let count = Element.variableTypeValue(element.type)
-            let offset = Int(element.meta) ?? 1
+            // The metaValue may be used as the starting index
+            let offset = Int(element.metaValue ?? "") ?? 1
             let els = try self.process()
             var elements: [Element] = []
             for i in 0..<count {

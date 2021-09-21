@@ -26,10 +26,10 @@ class ElementPACK: Element {
     }
     
     override func configure() throws {
-        if meta.isEmpty {
+        guard let metaValue = metaValue, !metaValue.isEmpty else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No elements to pack.", comment: ""))
         }
-        for label in meta.components(separatedBy: ",") {
+        for label in metaValue.components(separatedBy: ",") {
             guard let element = self.parentList.next(withLabel: label) else {
                 throw TemplateError.invalidStructure(self, NSLocalizedString("A named element was not found.", comment: ""))
             }

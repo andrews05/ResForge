@@ -32,7 +32,7 @@ class ElementBOOL: CaseableElement {
                 element.caseMap = [:]
                 element.width = 240
             }
-            switch caseEl.meta {
+            switch caseEl.displayValue {
             case "1", "on":
                 caseEl.value = true
             case "0", "off":
@@ -77,7 +77,7 @@ class ElementBOOL: CaseableElement {
         let checkbox = NSButton(frame: frame)
         checkbox.setButtonType(.switch)
         checkbox.bezelStyle = .regularSquare
-        checkbox.title = element.meta.isEmpty ? "\0" : element.meta
+        checkbox.title = element.metaValue ?? "\0" // Null character prevents clickable frame from taking up the whole width
         checkbox.action = #selector(TemplateWindowController.itemValueUpdated(_:))
         checkbox.bind(.value, to: element, withKeyPath: "value", options: nil)
         if frame.width > 20 {

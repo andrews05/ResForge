@@ -10,7 +10,7 @@ class ElementKRID: KeyElement, GroupElement {
         // Read CASEs
         while let el = self.parentList.pop("CASE") as? ElementCASE {
             try el.configure(for: self)
-            if el.meta == rID {
+            if el.displayValue == rID {
                 caseEl = el
             }
         }

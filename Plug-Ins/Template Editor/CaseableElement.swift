@@ -8,9 +8,9 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
     required init!(type: String, label: String) {
         super.init(type: type, label: label)
         // Attempt to set a default value from the meta value
-        if !meta.isEmpty, let formatter = self.formatter {
+        if let metaValue = metaValue, let formatter = self.formatter {
             var value: AnyObject?
-            if formatter.getObjectValue(&value, for: meta, errorDescription: nil) {
+            if formatter.getObjectValue(&value, for: metaValue, errorDescription: nil) {
                 self.setValue(value, forKey: "value")
             }
         }
@@ -29,14 +29,14 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
                 throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
             }
             cases.append(caseEl)
-            if caseEl.displayLabel == caseEl.meta {
+            if caseEl.displayLabel == caseEl.displayValue {
                 // Value matches title, use as-is
-                caseMap[caseEl.value] = caseEl.meta
+                caseMap[caseEl.value] = caseEl.displayValue
             } else {
                 // Cases will show as "title = value" in the options list to allow searching by title
                 // Text field will display as "value = title" for consistency when there's no matching case
-                caseMap[caseEl.value] = "\(caseEl.meta) = \(caseEl.displayLabel)"
-                caseEl.meta = "\(caseEl.displayLabel) = \(caseEl.meta)"
+                caseMap[caseEl.value] = "\(caseEl.displayValue) = \(caseEl.displayLabel)"
+                caseEl.metaValue = "\(caseEl.displayLabel) = \(caseEl.displayValue)"
             }
         }
     }
@@ -108,12 +108,12 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
         // Use insensitive completion, except for TNAM
         let options: NSString.CompareOptions = self.type == "TNAM" ? [] : .caseInsensitive
         return self.cases.first {
-            $0.meta.commonPrefix(with: string, options: options).count == string.count
-        }?.meta
+            $0.displayValue.commonPrefix(with: string, options: options).count == string.count
+        }?.displayValue
     }
     
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
-        return index < self.cases.endIndex ? self.cases[index].meta : nil
+        return index < self.cases.endIndex ? self.cases[index].displayValue : nil
     }
     
     func numberOfItems(in comboBox: NSComboBox) -> Int {
