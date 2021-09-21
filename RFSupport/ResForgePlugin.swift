@@ -1,14 +1,5 @@
 import Cocoa
 
-public extension FourCharCode {
-    var stringValue: String {
-        return UTCreateStringForOSType(self).takeRetainedValue() as String
-    }
-    init(_ string: String) {
-        self = UTGetOSTypeFromString(string as CFString)
-    }
-}
-
 /// An editor provides a window for editing or viewing resources of the supported types.
 public protocol ResourceEditor: AbstractEditor {
     /// The list of resource types that this plugin supports.

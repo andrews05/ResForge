@@ -42,13 +42,11 @@ class ElementCASE: Element {
     
     func configure(for element: Element) throws {
         if let formatter = element.formatter {
-            var errorString: NSString? = nil
-            var ioValue: AnyObject?
-            formatter.getObjectValue(&ioValue, for: displayValue, errorDescription: &errorString)
-            if let errorString = errorString {
-                throw TemplateError.invalidStructure(self, errorString as String)
+            do {
+                value = try formatter.getObjectValue(for: displayValue) as? AnyHashable
+            } catch let error {
+                throw TemplateError.invalidStructure(self, error.localizedDescription)
             }
-            value = ioValue as? AnyHashable
         } else {
             value = displayValue
         }

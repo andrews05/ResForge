@@ -159,12 +159,12 @@ class BulkController: OutlineController {
                     guard let string = record[element.displayLabel] else {
                         throw BulkError.invalidValue(element.displayLabel, i)
                     }
-                    var error: NSString?
-                    var value: AnyObject?
-                    guard element.formatter!.getObjectValue(&value, for: string, errorDescription: &error) else {
-                        throw BulkError.invalidValue(element.displayLabel, i, error as String?)
+                    do {
+                        let value = try element.formatter!.getObjectValue(for: string)
+                        element.setValue(value, forKey: "value")
+                    } catch let error {
+                        throw BulkError.invalidValue(element.displayLabel, i, error.localizedDescription)
                     }
-                    element.setValue(value, forKey: "value")
                 }
                 element.writeData(to: writer)
             }

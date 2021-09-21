@@ -87,9 +87,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             // Accessing the control value will force validation of the field, causing problems when trying to enter a negative id.
             // To workaround this, get the value from the field editor and manually run it through the formatter.
             if typeView.objectValue != nil, let value = (obj.userInfo?["NSFieldEditor"] as? NSText)?.string {
-                var id: AnyObject?
-                idView.formatter!.getObjectValue(&id, for: value, errorDescription: nil)
-                if let id = id as? Int {
+                if let id = try? idView.formatter!.getObjectValue(for: value) as? Int {
                     let resource = rDocument.directory.findResource(type: self.currentType, id: id)
                     createButton.isEnabled = resource == nil
                 }

@@ -8,11 +8,8 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
     required init!(type: String, label: String) {
         super.init(type: type, label: label)
         // Attempt to set a default value from the meta value
-        if let metaValue = metaValue, let formatter = self.formatter {
-            var value: AnyObject?
-            if formatter.getObjectValue(&value, for: metaValue, errorDescription: nil) {
-                self.setValue(value, forKey: "value")
-            }
+        if let metaValue = metaValue, let value = try? formatter?.getObjectValue(for: metaValue) {
+            self.setValue(value, forKey: "value")
         }
     }
     
@@ -90,11 +87,7 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
     // This is a key-value validation function for the specific key of "value"
     @objc func validateValue(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
         // Here we validate the value with the formatter and can raise an error
-        var errorString: NSString? = nil
-        self.formatter?.getObjectValue(ioValue, for: ioValue.pointee as! String, errorDescription: &errorString)
-        if let errorString = errorString {
-            throw NSError(domain: NSCocoaErrorDomain, code: NSKeyValueValidationError, userInfo: [NSLocalizedDescriptionKey: errorString])
-        }
+        ioValue.pointee = try formatter?.getObjectValue(for: ioValue.pointee as! String)
     }
     
     // MARK: - Combo box functions
