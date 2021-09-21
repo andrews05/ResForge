@@ -15,7 +15,7 @@ class RangeableElement: CaseableElement {
     
     override func configure() throws {
         // Read CASR elements - UInt64 not supported as it could overflow our Int64
-        if self.type != "ULLG" {
+        if self.type != "UQWD" {
             while let casr = self.parentList.pop("CASR") as? ElementCASR {
                 if casrs == nil {
                     casrs = []
