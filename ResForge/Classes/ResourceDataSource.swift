@@ -258,7 +258,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         guard let type = item as? ResourceType,
-              var resources = info.draggingPasteboard.readObjects(forClasses: [Resource.self], options: nil) as? [Resource]
+              var resources = info.draggingPasteboard.readObjects(forClasses: [Resource.self]) as? [Resource]
         else {
             return false
         }

@@ -183,7 +183,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         guard imageView.isEditable else {
             return
         }
-        guard let images = NSPasteboard.general.readObjects(forClasses: [NSImage.self], options: nil) else {
+        guard let images = NSPasteboard.general.readObjects(forClasses: [NSImage.self]) else {
             return
         }
         if !images.isEmpty {

@@ -79,7 +79,7 @@ class ElementBOOL: CaseableElement {
         checkbox.bezelStyle = .regularSquare
         checkbox.title = element.metaValue ?? "\0" // Null character prevents clickable frame from taking up the whole width
         checkbox.action = #selector(TemplateWindowController.itemValueUpdated(_:))
-        checkbox.bind(.value, to: element, withKeyPath: "value", options: nil)
+        checkbox.bind(.value, to: element, withKeyPath: "value")
         if frame.width > 20 {
             checkbox.autoresizingMask = .width
         }

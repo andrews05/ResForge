@@ -71,7 +71,7 @@ class KeyElement: Element, CollectionElement {
         let keySelect = NSPopUpButton(frame: frame)
         keySelect.target = self
         keySelect.action = #selector(keyChanged(_:))
-        keySelect.bind(.content, to: self, withKeyPath: "cases", options: nil)
+        keySelect.bind(.content, to: self, withKeyPath: "cases")
         keySelect.bind(.selectedObject, to: self, withKeyPath: "value", options: [.valueTransformer: self])
         view.addSubview(keySelect)
     }

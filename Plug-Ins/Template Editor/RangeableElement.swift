@@ -50,8 +50,8 @@ class RangeableElement: CaseableElement {
             let select = NSPopUpButton(frame: frame)
             select.target = self
             select.action = #selector(caseChanged(_:))
-            select.bind(.content, to: self, withKeyPath: "casrs", options: nil)
-            select.bind(.selectedObject, to: self, withKeyPath: "currentCase", options: nil)
+            select.bind(.content, to: self, withKeyPath: "casrs")
+            select.bind(.selectedObject, to: self, withKeyPath: "currentCase")
             view.addSubview(select)
             frame = view.frame
             frame.origin.x += popupWidth

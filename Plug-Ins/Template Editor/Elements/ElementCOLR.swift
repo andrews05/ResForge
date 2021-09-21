@@ -26,7 +26,7 @@ class ElementCOLR: Element {
         frame.size.width = self.width-4
         let well = NSColorWell(frame: frame)
         well.action = #selector(TemplateWindowController.itemValueUpdated(_:))
-        well.bind(.value, to: self, withKeyPath: "value", options: nil)
+        well.bind(.value, to: self, withKeyPath: "value")
         view.addSubview(well)
     }
     

@@ -469,7 +469,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        if let resources = sender.draggingPasteboard.readObjects(forClasses: [Resource.self], options: nil) as? [Resource] {
+        if let resources = sender.draggingPasteboard.readObjects(forClasses: [Resource.self]) as? [Resource] {
             self.add(resources: resources)
             return true
         }
@@ -645,7 +645,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     
     @IBAction func paste(_ sender: Any) {
         let pb = NSPasteboard(name: .generalPboard)
-        self.add(resources: pb.readObjects(forClasses: [Resource.self], options: nil) as! [Resource])
+        self.add(resources: pb.readObjects(forClasses: [Resource.self]) as! [Resource])
     }
     
     @IBAction func delete(_ sender: Any) {
