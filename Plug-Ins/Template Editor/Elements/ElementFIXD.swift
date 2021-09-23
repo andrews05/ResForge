@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementFIXD: CaseableElement {
+class ElementFIXD: ComboElement {
     static let fixed1 = Double(1 << 16)
     
     private var intValue: Int32 = 0

@@ -12,7 +12,7 @@ import Cocoa
  * A CASR may also be just a single value like a CASE, in which case no text field will be shown for this option
  * Note that you cannot associate both CASEs and CASRs to the same element
  */
-class ElementCASR: CaseableElement, ComboBoxLink {
+class ElementCASR: ComboElement, ComboBoxLink {
     @objc var value: Int {
         get {
             parentElement.displayValue
@@ -27,7 +27,7 @@ class ElementCASR: CaseableElement, ComboBoxLink {
     private var invert = false
     private var resType: String!
     private var _formatter: NumberFormatter!
-    weak var parentElement: RangeableElement!
+    weak var parentElement: RangedElement!
     
     override var description: String {
         self.displayLabel
@@ -37,7 +37,7 @@ class ElementCASR: CaseableElement, ComboBoxLink {
         throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a supported element.", comment: ""))
     }
     
-    func configure(for element: RangeableElement) throws {
+    func configure(for element: RangedElement) throws {
         self.parentElement = element
         self.parentList = element.parentList // Required to trigger itemValueUpdated
         self.width = element.width
@@ -123,8 +123,11 @@ class ElementCASR: CaseableElement, ComboBoxLink {
         self.caseMap = [:]
         let resources = self.parentList.controller.resources(ofType: resType)
         for resource in resources where min...max ~= resource.id {
-            self.cases.append(ElementCASE(value: resource.id, displayValue: "\(resource.name) = \(resource.id)"))
-            self.caseMap[resource.id] = "\(resource.id) = \(resource.name)"
+            let caseEl = ElementCASE(value: resource.id,
+                                     displayLabel: "\(resource.id) = \(resource.name)",
+                                     displayValue: "\(resource.name) = \(resource.id)")
+            self.cases.append(caseEl)
+            self.caseMap[resource.id] = caseEl
         }
     }
     

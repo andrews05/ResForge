@@ -9,10 +9,11 @@ class ElementCASE: Element {
         super.init(type: type, label: label)
     }
     
-    init(value: AnyHashable, displayValue: String) {
+    init(value: AnyHashable, displayLabel: String, displayValue: String) {
         super.init(type: "CASE", label: "")
-        self.metaValue = displayValue
         self.value = value
+        self.displayLabel = displayLabel
+        self.metaValue = displayValue
     }
     
     // For key elements, the case's description is used in the popup menu

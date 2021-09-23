@@ -1,7 +1,7 @@
 import Cocoa
 
 // Abstract Element subclass that handles CASR elements
-class RangeableElement: CaseableElement {
+class RangedElement: ComboElement {
     var displayValue = 0 {
         didSet {
             if currentCase != nil {

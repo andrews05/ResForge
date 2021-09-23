@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementTNAM: CaseableElement {
+class ElementTNAM: ComboElement {
     private var tValue: FourCharCode = 0
     // This is marked as dynamic so that RSID can bind to it and receive changes
     @objc dynamic private var value: String {

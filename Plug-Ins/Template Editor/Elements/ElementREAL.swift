@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementREAL: CaseableElement {
+class ElementREAL: ComboElement {
     @objc private var value: Float = 0
     
     required init(type: String, label: String) {

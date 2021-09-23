@@ -2,12 +2,10 @@ import Cocoa
 import RFSupport
 
 // Abstract Element subclass that handles key elements
-class KeyElement: Element, CollectionElement {
+class KeyElement: CasedElement, CollectionElement {
     // KeyElement acts as a proxy CollectionElement for KEYB - it does not actually have an endType but requires this for conformance.
     let endType = ""
-    @objc private var cases: [ElementCASE] = []
-    private(set) var caseMap: [AnyHashable: ElementCASE] = [:]
-    private(set) var keyedSections: [ElementCASE?: ElementKEYB]!
+    private var keyedSections: [ElementCASE?: ElementKEYB] = [:]
     var currentSection: ElementKEYB!
     
     override func configure() throws {
@@ -22,9 +20,9 @@ class KeyElement: Element, CollectionElement {
     }
     
     func readCases() throws {
-        keyedSections = [:]
+        cases = []
         // Read CASEs
-        while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
+        while let caseEl = self.nextCase() {
             try caseEl.configure(for: self)
             guard caseMap[caseEl.value] == nil else {
                 throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))

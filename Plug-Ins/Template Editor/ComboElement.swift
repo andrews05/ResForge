@@ -1,10 +1,7 @@
 import Cocoa
 
-// Abstract Element subclass that handles CASE elements
-class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
-    var cases: [ElementCASE]!
-    var caseMap: [AnyHashable: String]!
-    
+// Abstract Element subclass for basic TextFields or ComboBoxes
+class ComboElement: CasedElement, NSComboBoxDelegate, NSComboBoxDataSource {
     required init!(type: String, label: String) {
         super.init(type: type, label: label)
         // Attempt to set a default value from the meta value
@@ -15,26 +12,24 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
     
     override func configure() throws {
         // Read CASE elements
-        while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
+        while let caseEl = self.nextCase() {
             if cases == nil {
                 cases = []
-                caseMap = [:]
                 self.width = 240
             }
             try caseEl.configure(for: self)
             guard caseMap[caseEl.value] == nil else {
                 throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
             }
-            cases.append(caseEl)
-            if caseEl.displayLabel == caseEl.displayValue {
-                // Value matches title, use as-is
-                caseMap[caseEl.value] = caseEl.displayValue
-            } else {
+            if caseEl.displayLabel != caseEl.displayValue {
                 // Cases will show as "title = value" in the options list to allow searching by title
                 // Text field will display as "value = title" for consistency when there's no matching case
-                caseMap[caseEl.value] = "\(caseEl.displayValue) = \(caseEl.displayLabel)"
-                caseEl.metaValue = "\(caseEl.displayLabel) = \(caseEl.displayValue)"
+                let displayValue = caseEl.displayValue
+                caseEl.metaValue = "\(caseEl.displayLabel) = \(displayValue)"
+                caseEl.displayLabel = "\(displayValue) = \(caseEl.displayLabel)"
             }
+            cases.append(caseEl)
+            caseMap[caseEl.value] = caseEl
         }
     }
     
@@ -76,7 +71,7 @@ class CaseableElement: Element, NSComboBoxDelegate, NSComboBoxDataSource {
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
-        return caseMap[value as! AnyHashable] ?? self.formatter?.string(for: value) ?? value
+        return caseMap[value as! AnyHashable]?.displayLabel ?? self.formatter?.string(for: value) ?? value
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any? {

@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementDOUB: CaseableElement {
+class ElementDOUB: ComboElement {
     @objc private var value: Double = 0
     
     required init(type: String, label: String) {

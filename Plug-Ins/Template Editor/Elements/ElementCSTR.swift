@@ -22,7 +22,7 @@ enum StringPadding {
 }
 
 // Implements CSTR, OCST, ECST, Cnnn
-class ElementCSTR: CaseableElement {
+class ElementCSTR: ComboElement {
     @objc var value = ""
     var maxLength = Int(UInt32.max)
     var padding = StringPadding.none

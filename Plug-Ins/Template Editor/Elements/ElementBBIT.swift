@@ -2,7 +2,7 @@ import Cocoa
 import RFSupport
 
 // Implements BBIT/BBnn/BFnn, WBIT/WBnn/WFnn, LBIT/LBnn/LFnn, QBIT/QBnn/QFnn
-class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
+class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
     @objc private var value: UInt = 0
     private var bits = 1
     private var position = 0
@@ -24,7 +24,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
     override func configure() throws {
         if bits == 1 {
             // Single bit, configure like BOOL
-            try ElementBOOL.readRadioCases(for: self)
+            try ElementBOOL.readCases(for: self)
         } else if bits < T.bitWidth {
             // Allow bitfields to configure cases
             try super.configure()
@@ -68,7 +68,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangeableElement {
     
     override func configure(view: NSView) {
         if bits == 1 {
-            ElementBOOL.configureRadios(in: view, for: self)
+            ElementBOOL.configure(view: view, for: self)
         } else if bits == T.bitWidth {
             // Display as checkboxes
             var frame = view.frame

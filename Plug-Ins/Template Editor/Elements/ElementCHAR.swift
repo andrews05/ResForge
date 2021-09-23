@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementCHAR: CaseableElement {
+class ElementCHAR: ComboElement {
     private var tValue: UInt8 = 0
     @objc private var value: String {
         get {

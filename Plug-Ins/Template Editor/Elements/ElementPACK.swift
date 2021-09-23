@@ -51,7 +51,7 @@ class ElementPACK: Element {
                 if element.width > 180 {
                     element.width = 180
                 }
-                if let element = element as? RangeableElement {
+                if let element = element as? RangedElement {
                     element.popupWidth = element.popupWidth > 180 ? 180 : 120
                 }
             }
