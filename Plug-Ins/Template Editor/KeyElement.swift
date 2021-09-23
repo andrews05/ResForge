@@ -9,7 +9,7 @@ class KeyElement: CasedElement, CollectionElement {
     var currentSection: ElementKEYB!
     
     override func configure() throws {
-        try self.readCases()
+        try self.readSections()
         self.width = 240
         
         // Set initial value to first case
@@ -19,16 +19,8 @@ class KeyElement: CasedElement, CollectionElement {
         self.parentList.insert(currentSection, after: self)
     }
     
-    func readCases() throws {
-        // Read CASEs
-        while let caseEl = self.nextCase() {
-            try caseEl.configure(for: self)
-            guard caseMap[caseEl.value] == nil else {
-                throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
-            }
-            self.cases.append(caseEl)
-            self.caseMap[caseEl.value] = caseEl
-        }
+    func readSections() throws {
+        try self.readCases()
         if self.cases.isEmpty {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ elements found.", comment: ""))
         }

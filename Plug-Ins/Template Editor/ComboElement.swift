@@ -11,24 +11,16 @@ class ComboElement: CasedElement, NSComboBoxDelegate, NSComboBoxDataSource {
     }
     
     override func configure() throws {
-        // Read CASE elements
-        while let caseEl = self.nextCase() {
-            try caseEl.configure(for: self)
-            guard caseMap[caseEl.value] == nil else {
-                throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
-            }
-            if caseEl.displayLabel != caseEl.displayValue {
-                // Cases will show as "title = value" in the options list to allow searching by title
-                // Text field will display as "value = title" for consistency when there's no matching case
-                let displayValue = caseEl.displayValue
-                caseEl.metaValue = "\(caseEl.displayLabel) = \(displayValue)"
-                caseEl.displayLabel = "\(displayValue) = \(caseEl.displayLabel)"
-            }
-            cases.append(caseEl)
-            caseMap[caseEl.value] = caseEl
-        }
+        try self.readCases()
         if !cases.isEmpty {
             self.width = 240
+        }
+        for caseEl in cases where caseEl.displayLabel != caseEl.displayValue {
+            // Cases will show as "title = value" in the options list to allow searching by title
+            // Text field will display as "value = title" for consistency when there's no matching case
+            let displayValue = caseEl.displayValue
+            caseEl.metaValue = "\(caseEl.displayLabel) = \(displayValue)"
+            caseEl.displayLabel = "\(displayValue) = \(caseEl.displayLabel)"
         }
     }
     

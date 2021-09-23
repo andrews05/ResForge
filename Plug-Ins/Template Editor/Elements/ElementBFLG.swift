@@ -30,8 +30,8 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     // Bit type elements will normally display as a checkbox but can be provided with CASEs to create radios instead.
     static func readCases(for element: CasedElement) throws {
         var valid = true
-        while let caseEl = element.nextCase() {
-            switch caseEl.displayValue {
+        while let caseEl = element.parentList.pop("CASE") as? ElementCASE {
+            switch caseEl.displayValue.lowercased() {
             case "1", "on":
                 caseEl.value = true
             case "0", "off":

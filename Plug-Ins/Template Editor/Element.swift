@@ -110,11 +110,19 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
 
 /// An element that may have associated CASE elements.
 class CasedElement: Element {
+    // This is marked as @objc so that KeyElement can bind to it
     @objc var cases: [ElementCASE] = []
     var caseMap: [AnyHashable: ElementCASE] = [:]
     
-    func nextCase() -> ElementCASE? {
-        return self.parentList.pop("CASE") as? ElementCASE
+    func readCases() throws {
+        while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
+            try caseEl.configure(for: self)
+            guard caseMap[caseEl.value] == nil else {
+                throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
+            }
+            cases.append(caseEl)
+            caseMap[caseEl.value] = caseEl
+        }
     }
 }
 
