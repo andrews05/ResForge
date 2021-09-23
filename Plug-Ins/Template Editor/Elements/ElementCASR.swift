@@ -106,21 +106,18 @@ class ElementCASR: ComboElement, ComboBoxLink {
         }
         if resType != nil {
             self.loadCases()
-            super.configure(view: view)
-            self.configureLinkButton(comboBox: view.subviews.last as! NSComboBox)
+            self.configureComboLink(view: view)
         } else {
-            super.configure(view: view)
+            self.configureTextField(view: view)
         }
     }
     
     private func loadCases() {
-        guard self.cases == nil else {
+        guard self.cases.isEmpty else {
             return
         }
         // If a resType has been given this will become a combo box for resource selection
         self.width = parentElement.casrs.count > 1 ? 180 : 240
-        self.cases = []
-        self.caseMap = [:]
         let resources = self.parentList.controller.resources(ofType: resType)
         for resource in resources where min...max ~= resource.id {
             let caseEl = ElementCASE(value: resource.id,

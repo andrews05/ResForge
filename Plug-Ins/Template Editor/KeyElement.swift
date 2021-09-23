@@ -20,7 +20,6 @@ class KeyElement: CasedElement, CollectionElement {
     }
     
     func readCases() throws {
-        cases = []
         // Read CASEs
         while let caseEl = self.nextCase() {
             try caseEl.configure(for: self)

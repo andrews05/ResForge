@@ -29,13 +29,8 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     
     // Bit type elements will normally display as a checkbox but can be provided with CASEs to create radios instead.
     static func readCases(for element: CasedElement) throws {
-        element.width = 120
         var valid = true
         while let caseEl = element.nextCase() {
-            if element.cases == nil {
-                element.cases = []
-                element.width = 240
-            }
             switch caseEl.displayValue {
             case "1", "on":
                 caseEl.value = true
@@ -51,13 +46,14 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
             element.cases.append(caseEl)
             element.caseMap[caseEl.value] = caseEl
         }
-        if !valid || (element.cases != nil && element.cases.count != 2) {
+        if !valid || (!element.cases.isEmpty && element.cases.count != 2) {
             throw TemplateError.invalidStructure(element, NSLocalizedString("CASE list must contain exactly two values: 1/On and 0/Off.", comment: ""))
         }
+        element.width = element.cases.isEmpty ? 120 : 240
     }
     
     static func configure(view: NSView, for element: CasedElement) {
-        if element.cases == nil {
+        if element.cases.isEmpty {
             view.addSubview(Self.createCheckbox(with: view.frame, for: element))
             return
         }

@@ -13,7 +13,7 @@ import Cocoa
  * Implements RSID, LRID
  */
 class ElementRSID<T: FixedWidthInteger>: ElementDBYT<T>, ComboBoxLink {
-    @objc private var resType: String! {
+    @objc private var resType = "" {
         didSet {
             self.loadCases()
         }
@@ -24,6 +24,11 @@ class ElementRSID<T: FixedWidthInteger>: ElementDBYT<T>, ComboBoxLink {
     private var fixedMap: [AnyHashable: ElementCASE] = [:]
     
     override func configure() throws {
+        try super.configure()
+        self.width = 240
+        fixedCases = self.cases
+        fixedMap = self.caseMap
+        
         // Determine parameters from label
         let regex = try! NSRegularExpression(pattern: "(?:.*[‘'](.{4})['’])?(?:.*?(-?[0-9]+) *[+]([0-9]+)?)?", options: [])
         let result = regex.firstMatch(in: label, options: [], range: NSMakeRange(0, label.count))
@@ -36,32 +41,19 @@ class ElementRSID<T: FixedWidthInteger>: ElementDBYT<T>, ComboBoxLink {
             }
             self.bind(NSBindingName("resType"), to: tnam, withKeyPath: "value")
         }
-        if let nsr = result?.range(at: 2), let r = Range(nsr, in: label) {
-            offset = Int(label[r])!
+        if let nsr = result?.range(at: 2), let r = Range(nsr, in: label), let i = Int(label[r]) {
+            offset = i
         }
-        if let nsr = result?.range(at: 3), let r = Range(nsr, in: label) {
-            range = offset...(offset + Int(label[r])!)
+        if let nsr = result?.range(at: 3), let r = Range(nsr, in: label), let i = Int(label[r]) {
+            range = offset...(offset + i)
         }
-        
-        try super.configure()
-        self.width = 240
-        if cases == nil {
-            cases = []
-        }
-        fixedCases = self.cases
-        fixedMap = self.caseMap
-        self.loadCases()
     }
     
     override func configure(view: NSView) {
-        super.configure(view: view)
-        self.configureLinkButton(comboBox: view.subviews.last as! NSComboBox)
+        self.configureComboLink(view: view)
     }
     
     private func loadCases() {
-        guard cases != nil else {
-            return
-        }
         self.cases = fixedCases
         self.caseMap = fixedMap
         let resources = self.parentList.controller.resources(ofType: resType)
@@ -100,11 +92,13 @@ class ElementRSID<T: FixedWidthInteger>: ElementDBYT<T>, ComboBoxLink {
 }
 
 // Add a link button at the end of the combo box to open the referenced resource
-@objc protocol ComboBoxLink where Self: Element {
+@objc protocol ComboBoxLink where Self: ComboElement {
     func openResource(_ sender: Any)
 }
 extension ComboBoxLink {
-    func configureLinkButton(comboBox: NSComboBox) {
+    func configureComboLink(view: NSView) {
+        self.configureComboBox(view: view)
+        let comboBox = view.subviews.last as! NSComboBox
         var frame = comboBox.frame
         frame.origin.x += frame.size.width - 35
         frame.origin.y += 7
@@ -117,7 +111,7 @@ extension ComboBoxLink {
         button.imageScaling = .scaleProportionallyDown
         button.target = self
         button.action = #selector(openResource(_:))
-        comboBox.superview?.addSubview(button)
+        view.addSubview(button)
     }
 }
 extension NSComboBoxCell {

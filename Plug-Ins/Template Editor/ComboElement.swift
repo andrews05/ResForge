@@ -13,10 +13,6 @@ class ComboElement: CasedElement, NSComboBoxDelegate, NSComboBoxDataSource {
     override func configure() throws {
         // Read CASE elements
         while let caseEl = self.nextCase() {
-            if cases == nil {
-                cases = []
-                self.width = 240
-            }
             try caseEl.configure(for: self)
             guard caseMap[caseEl.value] == nil else {
                 throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
@@ -31,43 +27,53 @@ class ComboElement: CasedElement, NSComboBoxDelegate, NSComboBoxDataSource {
             cases.append(caseEl)
             caseMap[caseEl.value] = caseEl
         }
+        if !cases.isEmpty {
+            self.width = 240
+        }
     }
     
     override func configure(view: NSView) {
-        var frame = view.frame
-        if cases == nil {
-            // Standard text field
-            frame.size.height = CGFloat(rowHeight)
-            if width != 0 {
-                frame.size.width = width - 4
-            }
-            let textField = NSTextField(frame: frame)
-            textField.formatter = formatter
-            textField.delegate = self
-            textField.placeholderString = type
-            textField.lineBreakMode = .byTruncatingTail
-            textField.allowsDefaultTighteningForTruncation = true
-            textField.bind(.value, to: self, withKeyPath: "value")
-            view.addSubview(textField)
+        if cases.isEmpty {
+            self.configureTextField(view: view)
         } else {
-            // Combo box with CASE suggestions
-            if width != 0 {
-                frame.size.width = width - 1
-            }
-            frame.size.height = 26
-            frame.origin.y -= 2
-            let combo = NSComboBox(frame: frame)
-            combo.completes = true
-            combo.numberOfVisibleItems = 10
-            combo.delegate = self
-            combo.placeholderString = type
-            combo.usesDataSource = true
-            combo.dataSource = self
-            // The formatter isn't directly compatible with the values displayed by the combo box
-            // Use a combination of value transformation with immediate validation to run the formatter manually
-            combo.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self, .validatesImmediately: formatter != nil])
-            view.addSubview(combo)
+            self.configureComboBox(view: view)
         }
+    }
+    
+    func configureTextField(view: NSView) {
+        var frame = view.frame
+        frame.size.height = CGFloat(rowHeight)
+        if width != 0 {
+            frame.size.width = width - 4
+        }
+        let textField = NSTextField(frame: frame)
+        textField.formatter = formatter
+        textField.delegate = self
+        textField.placeholderString = type
+        textField.lineBreakMode = .byTruncatingTail
+        textField.allowsDefaultTighteningForTruncation = true
+        textField.bind(.value, to: self, withKeyPath: "value")
+        view.addSubview(textField)
+    }
+    
+    func configureComboBox(view: NSView) {
+        var frame = view.frame
+        if width != 0 {
+            frame.size.width = width - 1
+        }
+        frame.size.height = 26
+        frame.origin.y -= 2
+        let combo = NSComboBox(frame: frame)
+        combo.completes = true
+        combo.numberOfVisibleItems = 10
+        combo.delegate = self
+        combo.placeholderString = type
+        combo.usesDataSource = true
+        combo.dataSource = self
+        // The formatter isn't directly compatible with the values displayed by the combo box
+        // Use a combination of value transformation with immediate validation to run the formatter manually
+        combo.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self, .validatesImmediately: formatter != nil])
+        view.addSubview(combo)
     }
     
     override func transformedValue(_ value: Any?) -> Any? {

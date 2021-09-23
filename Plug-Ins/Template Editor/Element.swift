@@ -110,7 +110,7 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
 
 /// An element that may have associated CASE elements.
 class CasedElement: Element {
-    @objc var cases: [ElementCASE]!
+    @objc var cases: [ElementCASE] = []
     var caseMap: [AnyHashable: ElementCASE] = [:]
     
     func nextCase() -> ElementCASE? {
