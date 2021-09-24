@@ -35,7 +35,7 @@ class ElementCSTR: ComboElement {
     
     override func configure() throws {
         try super.configure()
-        if self.cases == nil && maxLength > 32 {
+        if self.cases.isEmpty && maxLength > 32 {
             self.width = 0
         }
     }

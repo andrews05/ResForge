@@ -11,7 +11,7 @@ class ElementTNAM: ComboElement {
     
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
-        value = value // Trigger bindings
+        value = String(value) // Trigger binding update
     }
     
     override func writeData(to writer: BinaryDataWriter) {
