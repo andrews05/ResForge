@@ -12,7 +12,7 @@ import Cocoa
  * A CASR may also be just a single value like a CASE, in which case no text field will be shown for this option
  * Note that you cannot associate both CASEs and CASRs to the same element
  */
-class ElementCASR: ComboElement, ComboBoxLink {
+class ElementCASR: CasedElement, ComboBoxLink {
     @objc var value: Int {
         get {
             parentElement.displayValue
@@ -21,12 +21,11 @@ class ElementCASR: ComboElement, ComboBoxLink {
             parentElement.displayValue = newValue
         }
     }
-    private(set) var min = Int.min
-    private(set) var max = Int.max
+    private(set) var min = 0
+    private(set) var max = 0
     private var offset = 0
     private var invert = false
     private var resType: String!
-    private var _formatter: NumberFormatter!
     weak var parentElement: RangedElement!
     
     override var description: String {
@@ -37,12 +36,37 @@ class ElementCASR: ComboElement, ComboBoxLink {
         throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a supported element.", comment: ""))
     }
     
+    override func configure(view: NSView) {
+        if min == max {
+            self.width = 0
+        } else if resType != nil {
+            self.loadCases()
+            self.configureComboLink(view: view)
+        } else {
+            self.configureTextField(view: view)
+        }
+    }
+    
+    override var formatter: Formatter {
+        sharedFormatter("\(min):\(max)") {
+            let formatter = NumberFormatter()
+            formatter.minimum = min as NSNumber
+            formatter.maximum = max as NSNumber
+            formatter.allowsFloats = false
+            formatter.nilSymbol = "\0"
+            return formatter
+        }
+    }
+    
+    // MARK: -
+    
     func configure(for element: RangedElement) throws {
         self.parentElement = element
         self.parentList = element.parentList // Required to trigger itemValueUpdated
         self.width = element.width
-        _formatter = element.formatter?.copy() as? NumberFormatter
-        let range = (_formatter.minimum as! Int)...(_formatter.maximum as! Int)
+        min = (element.formatter as? NumberFormatter)?.minimum as? Int ?? 0
+        max = (element.formatter as? NumberFormatter)?.maximum as? Int ?? 0
+        let range = min...max
         
         // Determine parameters from label
         var hasMin = false
@@ -91,25 +115,6 @@ class ElementCASR: ComboElement, ComboBoxLink {
         guard max >= min else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Maximum must be greater than minimum.", comment: ""))
         }
-        if hasMin {
-            _formatter.minimum = min as NSNumber
-        }
-        if hasMax {
-            _formatter.maximum = max as NSNumber
-        }
-    }
-    
-    override func configure(view: NSView) {
-        if min == max {
-            self.width = 0
-            return
-        }
-        if resType != nil {
-            self.loadCases()
-            self.configureComboLink(view: view)
-        } else {
-            self.configureTextField(view: view)
-        }
     }
     
     private func loadCases() {
@@ -130,10 +135,6 @@ class ElementCASR: ComboElement, ComboBoxLink {
     
     func openResource(_ sender: Any) {
         self.parentList.controller.openOrCreateResource(typeCode: resType, id: value)
-    }
-    
-    override var formatter: Formatter? {
-        return _formatter
     }
     
     func matches(value: Int) -> Bool {

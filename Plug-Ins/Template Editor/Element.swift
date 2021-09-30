@@ -93,37 +93,6 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
     
     /// Write the value of the field to the stream.
     func writeData(to writer: BinaryDataWriter) {}
-    
-    /// Obtain a formatter for this element's data.
-    var formatter: Formatter? {
-        if Self.sharedFormatters[type] == nil {
-            Self.sharedFormatters[type] = Self.formatter
-        }
-        return Self.sharedFormatters[type]
-    }
-    
-    /// Create a shared formatter for this element's data.
-    class var formatter: Formatter? {
-        nil
-    }
-}
-
-/// An element that may have associated CASE elements.
-class CasedElement: Element {
-    // This is marked as @objc so that KeyElement can bind to it
-    @objc var cases: [ElementCASE] = []
-    var caseMap: [AnyHashable: ElementCASE] = [:]
-    
-    func readCases() throws {
-        while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
-            try caseEl.configure(for: self)
-            guard caseMap[caseEl.value] == nil else {
-                throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
-            }
-            cases.append(caseEl)
-            caseMap[caseEl.value] = caseEl
-        }
-    }
 }
 
 /// An element that may contain child elements.
@@ -136,4 +105,17 @@ protocol CollectionElement where Self: Element {
 /// An element that is displayed as a group row in the outline view.
 protocol GroupElement where Self: Element {
     func configureGroup(view: NSTableCellView)
+}
+
+/// An element that can format a value.
+protocol FormattedElement: ValueField where Self: Element {
+}
+extension FormattedElement {
+    /// Get the shared formatter for the given key, providing the implementation if it doesn't already exist.
+    func sharedFormatter(_ key: String? = nil, formatter: () -> Formatter) -> Formatter {
+        let key = key ?? type
+        let formatter = Self.sharedFormatters[key] ?? formatter()
+        Self.sharedFormatters[key] = formatter
+        return formatter
+    }
 }

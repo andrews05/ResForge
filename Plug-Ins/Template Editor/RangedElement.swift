@@ -1,7 +1,7 @@
 import Cocoa
 
 // Abstract Element subclass that handles CASR elements
-class RangedElement: ComboElement {
+class RangedElement: CasedElement {
     var displayValue = 0 {
         didSet {
             if currentCase != nil {
@@ -66,7 +66,7 @@ class RangedElement: ComboElement {
     }
     
     private func loadValue() {
-        let value = self.value(forKey: "value") as! Int
+        let value = self.defaultValue() as! Int
         if let matchedCase = casrs.first(where: { $0.matches(value: value) }) {
             // Set displayValue before currentCase to avoid re-setting the base value
             displayValue = matchedCase.normalise(value)

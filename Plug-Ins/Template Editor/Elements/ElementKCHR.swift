@@ -21,7 +21,7 @@ class ElementKCHR: KeyElement {
         writer.write(tValue)
     }
     
-    override class var formatter: Formatter? {
-        return ElementCHAR.formatter
+    override var formatter: Formatter {
+        self.sharedFormatter("CHAR") { MacRomanFormatter(stringLength: 1, exactLengthRequired: true) }
     }
 }

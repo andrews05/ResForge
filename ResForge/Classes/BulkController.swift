@@ -82,7 +82,7 @@ class BulkController: OutlineController {
                 outlineView.removeTableColumn(column)
             }
         }
-        for (i, element) in elements.enumerated() where element.visible {
+        for case let (i, element as ValueField) in elements.enumerated() {
             let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
             column.headerCell.title = element.displayLabel
             column.sizeToFit()
@@ -121,19 +121,20 @@ class BulkController: OutlineController {
         }
         currentType = type
         defaults = elements.map {
-            $0.visible ? $0.value(forKey: "value") : nil
+            ($0 as? ValueField)?.defaultValue()
         }
     }
     
     func exportCSV(to url: URL) throws {
         let resources = document.directory.resources(ofType: currentType!)
         let writer = try CSVWriter(stream: OutputStream(url: url, append: false)!)
-        let headers = elements.filter(\.visible).map(\.displayLabel)
+        let headers = elements.compactMap {
+            ($0 as? ValueField)?.displayLabel
+        }
         try writer.write(row: ["ID", "Name"] + headers)
         for resource in resources {
             let data: [String] = self.read(resource: resource).enumerated().compactMap { (i, value) in
-                let element = elements[i]
-                return element.visible ? element.formatter!.string(for: value) : nil
+                (elements[i] as? ValueField)?.formatter.string(for: value)
             }
             try writer.write(row: [String(resource.id), resource.name] + data)
         }
@@ -155,12 +156,12 @@ class BulkController: OutlineController {
             let resource = Resource(type: currentType!, id: id, name: name)
             let writer = BinaryDataWriter()
             for element in elements {
-                if element.visible {
+                if let element = element as? ValueField {
                     guard let string = record[element.displayLabel] else {
                         throw BulkError.invalidValue(element.displayLabel, i)
                     }
                     do {
-                        let value = try element.formatter!.getObjectValue(for: string)
+                        let value = try element.formatter.getObjectValue(for: string)
                         element.setValue(value, forKey: "value")
                     } catch let error {
                         throw BulkError.invalidValue(element.displayLabel, i, error.localizedDescription)
@@ -180,7 +181,7 @@ class BulkController: OutlineController {
         return elements.enumerated().map { (i, element) in
             do {
                 try element.readData(from: reader)
-                return element.visible ? element.value(forKey: "value") : nil
+                return (element as? ValueField)?.value(forKey: "value")
             } catch {
                 // Insufficient data, set a default value
                 return defaults[i]
@@ -203,7 +204,7 @@ class BulkController: OutlineController {
             cell.placeholderString = NSLocalizedString("Untitled Resource", comment: "")
         } else if let tableColumn = tableColumn {
             let element = elements[Int(tableColumn.identifier.rawValue)!]
-            cell.formatter = element.formatter
+            cell.formatter = (element as? ValueField)?.formatter
         }
     }
     
@@ -233,9 +234,7 @@ class BulkController: OutlineController {
             let rowData = rows[resource.id]!
             let writer = BinaryDataWriter()
             for (i, element) in elements.enumerated() {
-                if element.visible {
-                    element.setValue(rowData[i], forKey: "value")
-                }
+                (element as? ValueField)?.setValue(rowData[i], forKey: "value")
                 element.writeData(to: writer)
             }
             resource.data = writer.data

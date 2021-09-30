@@ -12,11 +12,11 @@ class KeyElement: CasedElement, CollectionElement {
         try self.readSections()
         self.width = 240
         
-        // Set initial value to first case
-        let caseEl = self.cases.first!
-        currentSection = keyedSections[caseEl]
-        self.setValue(caseEl.value, forKey: "value")
-        self.parentList.insert(currentSection, after: self)
+        // Set initial state
+        if let value = self.defaultValue(), let section = keyedSections[caseMap[value]] {
+            currentSection = section
+            self.parentList.insert(currentSection, after: self)
+        }
     }
     
     func readSections() throws {

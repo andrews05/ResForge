@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementREAL: ComboElement {
+class ElementREAL: CasedElement {
     @objc private var value: Float = 0
     
     required init(type: String, label: String) {
@@ -17,14 +17,16 @@ class ElementREAL: ComboElement {
         writer.write(value.bitPattern)
     }
     
-    override class var formatter: Formatter? {
-        let formatter = NumberFormatter()
-        formatter.hasThousandSeparators = false
-        formatter.numberStyle = .scientific
-        formatter.maximumSignificantDigits = 7
-        formatter.minimum = 0
-        formatter.maximum = Float.greatestFiniteMagnitude as NSNumber
-        formatter.nilSymbol = "\0"
-        return formatter
+    override var formatter: Formatter {
+        self.sharedFormatter() {
+            let formatter = NumberFormatter()
+            formatter.hasThousandSeparators = false
+            formatter.numberStyle = .scientific
+            formatter.maximumSignificantDigits = 7
+            formatter.minimum = 0
+            formatter.maximum = Float.greatestFiniteMagnitude as NSNumber
+            formatter.nilSymbol = "\0"
+            return formatter
+        }
     }
 }

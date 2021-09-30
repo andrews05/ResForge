@@ -5,6 +5,13 @@ public class MacRomanFormatter: Formatter {
     @IBInspectable public var valueRequired: Bool = false
     @IBInspectable public var exactLengthRequired: Bool = false
     
+    public convenience init(stringLength: Int = 0, valueRequired: Bool = false, exactLengthRequired: Bool = false) {
+        self.init()
+        self.stringLength = stringLength
+        self.valueRequired = valueRequired
+        self.exactLengthRequired = exactLengthRequired
+    }
+    
     public override func string(for obj: Any?) -> String? {
         return obj as? String
     }

@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementCHAR: ComboElement {
+class ElementCHAR: CasedElement {
     private var tValue: UInt8 = 0
     @objc private var value: String {
         get {
@@ -20,10 +20,7 @@ class ElementCHAR: ComboElement {
         writer.write(tValue)
     }
     
-    override class var formatter: Formatter? {
-        let formatter = MacRomanFormatter()
-        formatter.stringLength = 1
-        formatter.exactLengthRequired = true
-        return formatter
+    override var formatter: Formatter {
+        self.sharedFormatter() { MacRomanFormatter(stringLength: 1, exactLengthRequired: true) }
     }
 }

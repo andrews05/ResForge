@@ -1,4 +1,5 @@
 import Cocoa
+import RFSupport
 
 /*
  * RSID allows selecting a resource id of a given type
@@ -12,7 +13,12 @@ import Cocoa
  *
  * Implements RSID, LRID
  */
-class ElementRSID<T: FixedWidthInteger>: ElementDBYT<T>, ComboBoxLink {
+class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxLink {
+    var tValue: T = 0
+    @objc private var value: NSNumber {
+        get { tValue as! NSNumber }
+        set { tValue = newValue as! T }
+    }
     @objc private var resType = "" {
         didSet {
             self.loadCases()
@@ -55,6 +61,18 @@ class ElementRSID<T: FixedWidthInteger>: ElementDBYT<T>, ComboBoxLink {
         self.configureComboLink(view: view)
     }
     
+    override func readData(from reader: BinaryDataReader) throws {
+        tValue = try reader.read()
+    }
+    
+    override func writeData(to writer: BinaryDataWriter) {
+        writer.write(tValue)
+    }
+    
+    override var formatter: Formatter {
+        return self.sharedFormatter("INT\(T.bitWidth)") { IntFormatter<T>() }
+    }
+    
     private func loadCases() {
         self.cases = fixedCases
         self.caseMap = fixedMap
@@ -94,7 +112,7 @@ class ElementRSID<T: FixedWidthInteger>: ElementDBYT<T>, ComboBoxLink {
 }
 
 // Add a link button at the end of the combo box to open the referenced resource
-@objc protocol ComboBoxLink where Self: ComboElement {
+@objc protocol ComboBoxLink where Self: CasedElement {
     func openResource(_ sender: Any)
 }
 extension ComboBoxLink {

@@ -2,6 +2,7 @@ import Cocoa
 import RFSupport
 
 class ElementRECT: Element {
+    static let formatter = IntFormatter<Int16>()
     @objc private var top: Int16 = 0
     @objc private var left: Int16 = 0
     @objc private var bottom: Int16 = 0
@@ -36,15 +37,11 @@ class ElementRECT: Element {
         for key in fields {
             let field = NSTextField(frame: frame)
             field.placeholderString = key
-            field.formatter = element.formatter
+            field.formatter = Self.formatter
             field.delegate = element
             field.bind(.value, to: element, withKeyPath: key)
             view.addSubview(field)
             frame.origin.x += width
         }
-    }
-    
-    override class var formatter: Formatter? {
-        return ElementDBYT<Int16>.formatter
     }
 }

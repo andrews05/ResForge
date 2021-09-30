@@ -10,6 +10,7 @@
 		490D94AF25624FCF00F73544 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; };
 		491BC28B253B894200149D78 /* ElementOCNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491BC28A253B894200149D78 /* ElementOCNT.swift */; };
+		491D2C352702AF110098CA5D /* CasedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D2C342702AF110098CA5D /* CasedElement.swift */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */; };
 		492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */; };
@@ -151,7 +152,6 @@
 		49F2EAAB26D5AB5E0020D70E /* StandardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F2EAAA26D5AB5E0020D70E /* StandardController.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
-		49FE7B49253A7E7700D2219D /* ComboElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE7B48253A7E7700D2219D /* ComboElement.swift */; };
 		49FE7B51253A7EBA00D2219D /* ElementCASE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE7B50253A7EBA00D2219D /* ElementCASE.swift */; };
 		49FE7B59253AC5F400D2219D /* ElementTNAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE7B58253AC5F400D2219D /* ElementTNAM.swift */; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
@@ -335,6 +335,7 @@
 		490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
 		4919415425E98E7000FFC3F8 /* SpriteLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteLayer.swift; sourceTree = "<group>"; };
 		491BC28A253B894200149D78 /* ElementOCNT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementOCNT.swift; sourceTree = "<group>"; };
+		491D2C342702AF110098CA5D /* CasedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasedElement.swift; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; };
 		491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; };
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
@@ -508,7 +509,6 @@
 		49F6C75D24C577270078EB55 /* ResForge-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ResForge-Bridging-Header.h"; sourceTree = "<group>"; };
 		49F6C76024C577430078EB55 /* PrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsController.swift; sourceTree = "<group>"; };
 		49F6C76124C577440078EB55 /* ApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDelegate.swift; sourceTree = "<group>"; };
-		49FE7B48253A7E7700D2219D /* ComboElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboElement.swift; sourceTree = "<group>"; };
 		49FE7B50253A7EBA00D2219D /* ElementCASE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCASE.swift; sourceTree = "<group>"; };
 		49FE7B58253AC5F400D2219D /* ElementTNAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTNAM.swift; sourceTree = "<group>"; };
 		550B9046189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -608,7 +608,7 @@
 				49E7A3C426D2055E00EF885F /* TemplateParser.swift */,
 				4945DCB8253248DA00856385 /* ElementList.swift */,
 				4945DD062532DAE500856385 /* Element.swift */,
-				49FE7B48253A7E7700D2219D /* ComboElement.swift */,
+				491D2C342702AF110098CA5D /* CasedElement.swift */,
 				49B9E6732540042900A266DE /* RangedElement.swift */,
 				4935CD88253D32110044BC45 /* KeyElement.swift */,
 				4951AB4B25341B97009A8285 /* Elements */,
@@ -1478,8 +1478,8 @@
 				493CA127254295BF00893F98 /* ElementRREF.swift in Sources */,
 				49A4329E25429D84000B1109 /* ElementKTYP.swift in Sources */,
 				49D1854C2541007400EA380C /* ElementBBIT.swift in Sources */,
+				491D2C352702AF110098CA5D /* CasedElement.swift in Sources */,
 				494180EE2545575B008CBABE /* TemplateError.swift in Sources */,
-				49FE7B49253A7E7700D2219D /* ComboElement.swift in Sources */,
 				49B9E6742540042900A266DE /* RangedElement.swift in Sources */,
 				49CF9AE025D1D80B009A217C /* DataView.swift in Sources */,
 				49C8D0F825C75610001266FC /* ElementBNDN.swift in Sources */,

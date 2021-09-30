@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementDOUB: ComboElement {
+class ElementDOUB: CasedElement {
     @objc private var value: Double = 0
     
     required init(type: String, label: String) {
@@ -17,13 +17,15 @@ class ElementDOUB: ComboElement {
         writer.write(value.bitPattern)
     }
     
-    override class var formatter: Formatter? {
-        let formatter = NumberFormatter()
-        formatter.hasThousandSeparators = false
-        formatter.numberStyle = .scientific
-        formatter.minimum = 0
-        formatter.maximum = Double.greatestFiniteMagnitude as NSNumber
-        formatter.nilSymbol = "\0"
-        return formatter
+    override var formatter: Formatter {
+        self.sharedFormatter() {
+            let formatter = NumberFormatter()
+            formatter.hasThousandSeparators = false
+            formatter.numberStyle = .scientific
+            formatter.minimum = 0
+            formatter.maximum = Double.greatestFiniteMagnitude as NSNumber
+            formatter.nilSymbol = "\0"
+            return formatter
+        }
     }
 }

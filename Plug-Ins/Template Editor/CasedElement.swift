@@ -1,17 +1,14 @@
 import Cocoa
 
-// Abstract Element subclass for basic TextFields or ComboBoxes
-class ComboElement: CasedElement, NSComboBoxDelegate, NSComboBoxDataSource {
-    required init!(type: String, label: String) {
-        super.init(type: type, label: label)
-        // Attempt to set a default value from the meta value
-        if let metaValue = metaValue, let value = try? formatter?.getObjectValue(for: metaValue) {
-            self.setValue(value, forKey: "value")
-        }
-    }
+// Abstract Element subclass for fields with associated CASE elements
+class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDataSource {
+    // This is marked as @objc so that KeyElement can bind to it
+    @objc var cases: [ElementCASE] = []
+    var caseMap: [AnyHashable: ElementCASE] = [:]
     
     override func configure() throws {
         try self.readCases()
+        _ = self.defaultValue()
         if !cases.isEmpty {
             self.width = 240
         }
@@ -29,6 +26,39 @@ class ComboElement: CasedElement, NSComboBoxDelegate, NSComboBoxDataSource {
             self.configureTextField(view: view)
         } else {
             self.configureComboBox(view: view)
+        }
+    }
+    
+    // All subclasses must provide a formatter to format case values.
+    // We can't enforce this easily so we just have a default implementation which triggers a fatal error.
+    var formatter: Formatter {
+        fatalError("Formatter not implemented.")
+    }
+    
+    func defaultValue() -> AnyHashable? {
+        // Attempt to get a default value from the first case or the meta value
+        if let value = cases.first?.value ?? self.parseMetaValue()  {
+            self.setValue(value, forKey: "value")
+            return value
+        }
+        return self.value(forKey: "value") as? AnyHashable
+    }
+    
+    private func parseMetaValue() -> AnyHashable? {
+        if let metaValue = metaValue {
+            return try? formatter.getObjectValue(for: metaValue) as? AnyHashable
+        }
+        return nil
+    }
+    
+    func readCases() throws {
+        while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
+            try caseEl.configure(for: self)
+            guard caseMap[caseEl.value] == nil else {
+                throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
+            }
+            cases.append(caseEl)
+            caseMap[caseEl.value] = caseEl
         }
     }
     
@@ -64,12 +94,12 @@ class ComboElement: CasedElement, NSComboBoxDelegate, NSComboBoxDataSource {
         combo.dataSource = self
         // The formatter isn't directly compatible with the values displayed by the combo box
         // Use a combination of value transformation with immediate validation to run the formatter manually
-        combo.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self, .validatesImmediately: formatter != nil])
+        combo.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self, .validatesImmediately: true])
         view.addSubview(combo)
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
-        return caseMap[value as! AnyHashable]?.displayLabel ?? self.formatter?.string(for: value) ?? value
+        return caseMap[value as! AnyHashable]?.displayLabel ?? self.formatter.string(for: value) ?? value
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any? {
@@ -80,7 +110,7 @@ class ComboElement: CasedElement, NSComboBoxDelegate, NSComboBoxDataSource {
     // This is a key-value validation function for the specific key of "value"
     @objc func validateValue(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
         // Here we validate the value with the formatter and can raise an error
-        ioValue.pointee = try formatter?.getObjectValue(for: ioValue.pointee as! String)
+        ioValue.pointee = try formatter.getObjectValue(for: ioValue.pointee as! String)
     }
     
     // MARK: - Combo box functions

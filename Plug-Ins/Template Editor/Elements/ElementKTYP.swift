@@ -17,7 +17,7 @@ class ElementKTYP: KeyElement {
         writer.write(tValue)
     }
     
-    override class var formatter: Formatter? {
-        return ElementTNAM.formatter
+    override var formatter: Formatter {
+        self.sharedFormatter("TNAM") { MacRomanFormatter(stringLength: 4, exactLengthRequired: true) }
     }
 }

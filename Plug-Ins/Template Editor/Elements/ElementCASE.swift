@@ -5,12 +5,8 @@ class ElementCASE: Element {
     @objc var value: AnyHashable!
     var displayValue: String { metaValue ?? displayLabel }
     
-    required init(type: String, label: String) {
-        super.init(type: type, label: label)
-    }
-    
-    init(value: AnyHashable, displayLabel: String, displayValue: String) {
-        super.init(type: "CASE", label: "")
+    convenience init(value: AnyHashable, displayLabel: String, displayValue: String) {
+        self.init(type: "CASE", label: "")
         self.value = value
         self.displayLabel = displayLabel
         self.metaValue = displayValue
@@ -41,15 +37,11 @@ class ElementCASE: Element {
         view.addSubview(textField)
     }
     
-    func configure(for element: Element) throws {
-        if let formatter = element.formatter {
-            do {
-                value = try formatter.getObjectValue(for: displayValue) as? AnyHashable
-            } catch let error {
-                throw TemplateError.invalidStructure(self, error.localizedDescription)
-            }
-        } else {
-            value = displayValue
+    func configure(for element: FormattedElement) throws {
+        do {
+            value = try element.formatter.getObjectValue(for: displayValue) as? AnyHashable
+        } catch let error {
+            throw TemplateError.invalidStructure(self, error.localizedDescription)
         }
     }
 }

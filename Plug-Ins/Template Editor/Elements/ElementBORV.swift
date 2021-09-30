@@ -14,18 +14,16 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
     
     override func configure() throws {
         self.width = 120
-        // Read hex values from the CASEs
-        self.cases = []
-        while let caseEl = self.parentList.pop("CASE") as? ElementCASE {
-            try caseEl.configure(for: self)
-            self.cases.append(caseEl)
-            // Store the value in our list while setting the element to 0/1, which will be used for the checkbox state
-            let value = caseEl.value as! T
-            values.append(value)
-            caseEl.value = (tValue & value) == value ? 1 : 0
-        }
+        _ = self.defaultValue()
+        try self.readCases()
         if self.cases.isEmpty {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ elements found.", comment: ""))
+        }
+        for caseEl in cases {
+            // Store the value in our list while setting the element to true/false for the checkbox state
+            let value = caseEl.value as! T
+            values.append(value)
+            caseEl.value = (tValue & value) == value
         }
         self.rowHeight = Double(self.cases.count * 20) + 2
     }
@@ -45,14 +43,14 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
         for (i, caseEl) in self.cases.enumerated() {
-            caseEl.value = (tValue & values[i]) == values[i] ? 1 : 0
+            caseEl.value = (tValue & values[i]) == values[i]
         }
     }
     
     override func writeData(to writer: BinaryDataWriter) {
         tValue = 0
         for (i, caseEl) in self.cases.enumerated() {
-            if caseEl.value as! T != 0 {
+            if caseEl.value as! Bool {
                 tValue |= values[i]
             }
         }

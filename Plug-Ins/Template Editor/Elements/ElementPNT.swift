@@ -22,8 +22,4 @@ class ElementPNT: Element {
         writer.write(x)
         writer.write(y)
     }
-    
-    override class var formatter: Formatter? {
-        return ElementDBYT<Int16>.formatter
-    }
 }

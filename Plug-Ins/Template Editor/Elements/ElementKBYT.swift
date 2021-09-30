@@ -18,7 +18,8 @@ class ElementKBYT<T: FixedWidthInteger>: KeyElement {
         writer.write(tValue)
     }
     
-    override class var formatter: Formatter? {
-        return ElementDBYT<T>.formatter
+    override var formatter: Formatter {
+        let key = T.isSigned ? "INT" : "UINT"
+        return self.sharedFormatter("\(key)\(T.bitWidth)") { IntFormatter<T>() }
     }
 }

@@ -1,27 +1,18 @@
 import Cocoa
 
 class ElementKRID: KeyElement, GroupElement {
-    private var caseEl: ElementCASE!
-    
     override func configure() throws {
         self.rowHeight = 18
-        // Get the current resource id
-        let rID = String(self.parentList.controller.resource.id)
         // Read CASEs
-        while let el = self.parentList.pop("CASE") as? ElementCASE {
-            try el.configure(for: self)
-            if el.displayValue == rID {
-                caseEl = el
-            }
-        }
-        guard caseEl != nil else {
+        try self.readCases()
+        guard let caseEl = caseMap[parentList.controller.resource.id] else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ for this resource id.", comment: ""))
         }
         // Read KEYBs
         while let keyB = self.parentList.pop("KEYB") as? ElementKEYB {
             keyB.subElements = try parentList.subList(for: keyB)
             let vals = keyB.label.components(separatedBy: ",")
-            if vals.contains(rID) {
+            if vals.contains(caseEl.displayValue) {
                 self.currentSection = keyB
             }
         }
@@ -31,9 +22,14 @@ class ElementKRID: KeyElement, GroupElement {
         self.currentSection.parentList = self.parentList
         self.parentList.insert(self.currentSection)
         try self.currentSection.subElements.configure()
+        self.displayLabel += ": \(caseEl.displayLabel)"
     }
     
     func configureGroup(view: NSTableCellView) {
-        view.textField?.stringValue = "\(self.displayLabel): \(caseEl.displayLabel)"
+        view.textField?.stringValue = self.displayLabel
+    }
+    
+    override var formatter: Formatter {
+        self.sharedFormatter("INT16") { IntFormatter<Int16>() }
     }
 }

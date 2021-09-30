@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementTNAM: ComboElement {
+class ElementTNAM: CasedElement {
     private var tValue: FourCharCode = 0
     // This is marked as dynamic so that RSID can bind to it and receive changes
     @objc dynamic private var value: String {
@@ -18,10 +18,7 @@ class ElementTNAM: ComboElement {
         writer.write(tValue)
     }
     
-    override class var formatter: Formatter? {
-        let formatter = MacRomanFormatter()
-        formatter.stringLength = 4
-        formatter.exactLengthRequired = true
-        return formatter
+    override var formatter: Formatter {
+        self.sharedFormatter() { MacRomanFormatter(stringLength: 4, exactLengthRequired: true) }
     }
 }

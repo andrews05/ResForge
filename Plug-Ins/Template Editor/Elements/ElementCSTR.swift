@@ -22,7 +22,7 @@ enum StringPadding {
 }
 
 // Implements CSTR, OCST, ECST, Cnnn
-class ElementCSTR: ComboElement {
+class ElementCSTR: CasedElement {
     @objc var value = ""
     var maxLength = Int(UInt32.max)
     var padding = StringPadding.none
@@ -119,12 +119,7 @@ class ElementCSTR: ComboElement {
         writer.advance(1 + padding.length(value.count + 1))
     }
     
-    override var formatter: Formatter? {
-        if Element.sharedFormatters[type] == nil {
-            let formatter = MacRomanFormatter()
-            formatter.stringLength = maxLength
-            Element.sharedFormatters[type] = formatter
-        }
-        return Element.sharedFormatters[type]
+    override var formatter: Formatter {
+        self.sharedFormatter() { MacRomanFormatter(stringLength: maxLength) }
     }
 }

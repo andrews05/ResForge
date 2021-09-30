@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementFIXD: ComboElement {
+class ElementFIXD: CasedElement {
     static let fixed1 = Double(1 << 16)
     
     private var intValue: Int32 = 0
@@ -23,14 +23,16 @@ class ElementFIXD: ComboElement {
         writer.write(intValue)
     }
     
-    override class var formatter: Formatter? {
-        let formatter = NumberFormatter()
-        formatter.hasThousandSeparators = false
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 5
-        formatter.minimum = Double(Int32.min) / Self.fixed1 as NSNumber
-        formatter.maximum = Double(Int32.max) / Self.fixed1 as NSNumber
-        formatter.nilSymbol = "\0"
-        return formatter
+    override var formatter: Formatter {
+        self.sharedFormatter() {
+            let formatter = NumberFormatter()
+            formatter.hasThousandSeparators = false
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 5
+            formatter.minimum = Double(Int32.min) / Self.fixed1 as NSNumber
+            formatter.maximum = Double(Int32.max) / Self.fixed1 as NSNumber
+            formatter.nilSymbol = "\0"
+            return formatter
+        }
     }
 }

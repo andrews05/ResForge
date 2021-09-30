@@ -29,12 +29,22 @@ class ElementDBYT<T: FixedWidthInteger>: RangedElement {
         writer.write(tValue)
     }
     
-    override class var formatter: Formatter? {
-        let formatter = NumberFormatter()
-        formatter.minimum = T.min as? NSNumber
-        formatter.maximum = T.max as? NSNumber
-        formatter.allowsFloats = false
-        formatter.nilSymbol = "\0"
-        return formatter
+    override var formatter: Formatter {
+        let key = T.isSigned ? "INT" : "UINT"
+        return self.sharedFormatter("\(key)\(T.bitWidth)") { IntFormatter<T>() }
+    }
+}
+
+class IntFormatter<T: FixedWidthInteger>: NumberFormatter {
+    override init() {
+        super.init()
+        minimum = T.min as? NSNumber
+        maximum = T.max as? NSNumber
+        allowsFloats = false
+        nilSymbol = "\0"
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

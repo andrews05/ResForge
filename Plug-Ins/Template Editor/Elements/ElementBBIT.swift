@@ -9,7 +9,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
     private var bitList: [ElementBBIT] = []
     private var first = true
     
-    required init!(type: String, label: String) {
+    required init?(type: String, label: String) {
         if !type.hasSuffix("BIT") {
             // XXnn - bit field or fill bits
             bits = Int(type.suffix(2))!
@@ -110,14 +110,14 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
         }
     }
     
-    override var formatter: Formatter? {
-        if Element.sharedFormatters[type] == nil {
+    override var formatter: Formatter {
+        self.sharedFormatter("UINT\(bits)") {
             let formatter = NumberFormatter()
             formatter.minimum = 0
             formatter.maximum = (1 << bits) - 1 as NSNumber
+            formatter.allowsFloats = false
             formatter.nilSymbol = "\0"
-            Element.sharedFormatters[type] = formatter
+            return formatter
         }
-        return Element.sharedFormatters[type]
     }
 }

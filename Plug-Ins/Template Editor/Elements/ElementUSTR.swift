@@ -44,18 +44,18 @@ class ElementUSTR: ElementCSTR {
         writer.advance(1 + padding.length(value.utf8.count + 1))
     }
     
-    override var formatter: Formatter? {
-        if Element.sharedFormatters[type] == nil {
-            let formatter = UTF8BytesFormatter()
-            formatter.maxBytes = maxLength
-            Element.sharedFormatters[type] = formatter
-        }
-        return Element.sharedFormatters[type]
+    override var formatter: Formatter {
+        self.sharedFormatter() { UTF8BytesFormatter(maxBytes: maxLength) }
     }
 }
 
 class UTF8BytesFormatter: Formatter {
     var maxBytes = 0
+    
+    convenience init(maxBytes: Int = 0) {
+        self.init()
+        self.maxBytes = maxBytes
+    }
     
     override func string(for obj: Any?) -> String? {
         return obj as? String

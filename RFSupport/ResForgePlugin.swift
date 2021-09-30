@@ -20,12 +20,14 @@ public protocol TemplateEditor: ResourceEditor {
 }
 
 public protocol TemplateField: NSObject {
-    var displayLabel: String { get }
-    var visible: Bool { get }
-    var width: CGFloat { get }
-    var formatter: Formatter? { get }
     func readData(from reader: BinaryDataReader) throws
     func writeData(to writer: BinaryDataWriter)
+}
+public protocol ValueField: TemplateField {
+    var displayLabel: String { get }
+    var width: CGFloat { get }
+    var formatter: Formatter { get }
+    func defaultValue() -> AnyHashable?
 }
 
 /// A preview provider allows the document to display a grid view for a supported resource type.
