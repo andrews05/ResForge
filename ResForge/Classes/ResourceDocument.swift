@@ -148,7 +148,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
-        if savePanel.nameFieldStringValue == self.defaultDraftName() {
+        if format != .rez && savePanel.nameFieldStringValue == self.defaultDraftName() {
             savePanel.nameFieldStringValue = self.defaultDraftName().appending(".rsrc")
         }
         return super.prepareSavePanel(savePanel)
@@ -189,17 +189,19 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         var hfsType = self.hfsType
         var hfsCreator = self.hfsCreator
         if saveOperation == .saveAsOperation {
-            // Set fork according to typeName
-            if typeName == "ResourceFileRF" {
+            // Set format according to typeName
+            switch typeName {
+            case "Extended Resource File":
+                format = .extended
+            case "com.resforge.rez-file":
+                format = .rez
+            default:
                 format = .classic
-                fork = .rsrc
-            } else {
-                format = typeName == "ResourceFileExtended" ? .extended : .classic
-                fork = .data
-                // Clear type/creator for data fork (assume filename extension)
-                hfsType = 0
-                hfsCreator = 0
             }
+            fork = .data
+            // Clear type/creator on save as
+            hfsType = 0
+            hfsCreator = 0
         }
         
         // Create file (this is important to be done first if we're writing the resource fork)
@@ -452,7 +454,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         if let fork = fork {
             var formatName = format.name
-            if format == .classic || fork == .rsrc {
+            if fork == .rsrc {
                 formatName += " (\(fork.name))"
             }
             status = "\(formatName) — \(status)"

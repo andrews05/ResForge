@@ -65,7 +65,6 @@
 		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
 		49655DFA24DE6DA200D6AFF6 /* ResourceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* ResourceError.swift */; };
 		49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */; };
-		49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */; };
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
@@ -388,7 +387,6 @@
 		49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDocument.swift; sourceTree = "<group>"; };
 		49655DF924DE6DA200D6AFF6 /* ResourceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceError.swift; sourceTree = "<group>"; };
 		49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDirectory.swift; sourceTree = "<group>"; };
-		49655E3F24DFF26700D6AFF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Image Editor-Bridging-Header.h"; sourceTree = "<group>"; };
 		496674FD24BBC7CE00251406 /* ImageWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWindowController.swift; sourceTree = "<group>"; };
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
@@ -979,7 +977,6 @@
 			isa = PBXGroup;
 			children = (
 				4996B90725DB6C2F0027FA39 /* Credits.rtf */,
-				49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */,
 				B229EEEA15A4FB6F0032C12C /* MainMenu.xib */,
 				B229EEEC15A4FB6F0032C12C /* CreateResource.xib */,
 				B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */,
@@ -1308,7 +1305,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */,
-				49655E4024DFF26700D6AFF6 /* InfoPlist.strings in Resources */,
 				B229EEF515A4FB6F0032C12C /* MainMenu.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResource.xib in Resources */,
 				559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */,
@@ -1545,14 +1541,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		49655E3E24DFF26700D6AFF6 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				49655E3F24DFF26700D6AFF6 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		496E7E3225E6E947001C97CA /* ShanWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
