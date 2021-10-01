@@ -10,7 +10,7 @@ class ElementLSTB: Element, CollectionElement {
     private var subElements: ElementList!
     private var entries: [Element]!
     private weak var tail: ElementLSTB!
-    private var singleElement: Element?
+    private(set) var singleElement: Element?
     
     override var displayLabel: String {
         get {

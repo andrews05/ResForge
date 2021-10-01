@@ -132,14 +132,21 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
                 view = DataView(frame: NSMakeRect(0, 2, tableColumn.width, CGFloat(item.rowHeight)))
                 item.configure(view: view)
             } else {
-                // Use the focusable list label for elements that allow creating entries
-                if let item = item as? ElementLSTB, item.allowsCreateListEntry() {
-                    identifier = NSUserInterfaceItemIdentifier(item.allowsRemoveListEntry() ? "listLabel" : "listEndLabel")
+                var alignment = NSTextAlignment.right
+                if let item = item as? ElementLSTB {
+                    if item.allowsCreateListEntry() {
+                        // Use the focusable list label for elements that allow creating entries
+                        identifier = NSUserInterfaceItemIdentifier(item.allowsRemoveListEntry() ? "listLabel" : "listEndLabel")
+                        alignment = .left
+                    } else if item.singleElement == nil {
+                        // Fixed count list labels should also be aligned left
+                        alignment = .left
+                    }
                 }
                 view = outlineView.makeView(withIdentifier: identifier, owner: self)!
                 let textField = (view as! NSTableCellView).textField!
                 textField.stringValue = item.displayLabel
-                textField.alignment = item is ElementLSTB ? .left : .right
+                textField.alignment = alignment
                 textField.allowsDefaultTighteningForTruncation = true
             }
             view.toolTip = item.tooltip
