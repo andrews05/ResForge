@@ -258,6 +258,7 @@ class TemplateParser {
 
         // cosmetic
         "DVDR": ElementDVDR.self,           // divider
+        "TTIP": ElementCASE.self,
         "RREF": ElementRREF.self,           // static reference to another resource (ResForge)
         "PACK": ElementPACK.self,           // pack other elements together (ResForge)
         
@@ -265,14 +266,8 @@ class TemplateParser {
         "TMPL": Element.self,               // include another template (ResForge)
 
         // and some faked ones just to increase compatibility
-        "FRAC": ElementDBYT<UInt32>.self,   // 2:30 fixed precision
-        "SFRC": ElementDBYT<UInt16>.self,   // 0.16 fixed fraction
-        "FXYZ": ElementDBYT<UInt16>.self,   // 1.15 fixed fraction
-        "FWID": ElementDBYT<UInt16>.self,   // 4.12 fixed fraction,
-        "MDAT": ElementDATE.self,           // Modification date (same as DATE but Resorcerer will update on save)
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
         "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)
-        "CODE": ElementHEXD.self            // 680x0 Disassembled Code Dump
     ]) { $1 }
 }

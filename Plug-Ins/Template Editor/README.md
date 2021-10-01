@@ -14,9 +14,9 @@ In addition to standard TMPL resources, ResForge also supports "basic" templates
 
 🔵 Read-Only
 
-🟡 Faked (interpreted as a different type)
+🟡 Compatibility Shim (interpreted as a more generic type)
 
-🔴 Not Yet Supported
+🔴 Not Supported
 
 🅱️ Permitted in TMPB
 
@@ -73,10 +73,10 @@ XT96|Extended 96-bit SANE Float|12 bytes||✓||🔴
 UNIV|THINK C Universal 96-bit Float|12 bytes||✓||🔴
 DBDB|PowerPC Double Double|16 bytes||✓||🔴
 FIXD|16:16 Fixed Point Number|4 bytes||✓||🟢 🅱️
-FRAC|2:30 Fixed Point Number|4 bytes||✓||🟡
-SFRC|0:16 Fixed Point Small Fraction|2 bytes||✓||🟡
-FWID|4:12 Fixed Point Font Width|2 bytes||✓||🟡
-FXYZ|1:15 Fixed Point Colour Component|2 bytes||✓||🟡
+FRAC|2:30 Fixed Point Number|4 bytes||✓||🔴
+SFRC|0:16 Fixed Point Small Fraction|2 bytes||✓||🔴
+FWID|4:12 Fixed Point Font Width|2 bytes||✓||🔴
+FXYZ|1:15 Fixed Point Colour Component|2 bytes||✓||🔴
 
 
 ### Text and String Field Types
@@ -188,7 +188,7 @@ LRID|Long Resource ID|4 bytes||||🟢
 CHAR|ASCII Character|1 byte|✓|✓|✓|🟢 🅱️
 TNAM|Type Name|4 bytes|✓|✓|✓|🟢 🅱️
 DATE|Macintosh System Date/Time (seconds)|4 bytes||✓|✓|🟢
-MDAT|Modification Date/Time (seconds)|4 bytes||✓|✓|🟡
+MDAT|Modification Date/Time (seconds)|4 bytes||✓|✓|🔴
 SCPC|MacOS System Script Code|2 bytes||✓|✓|🟡
 LNGC|MacOS System Language Code|2 bytes||✓|✓|🟡
 RGNC|MacOS System Region Code|2 bytes||✓|✓|🟡
@@ -198,7 +198,7 @@ COLR|QuickDraw Color RGB Triplet|6 bytes||✓|✓|🟢
 WCOL|15-bit Color|2 bytes|||✓|🟢
 LCOL|24-bit Color|4 bytes|||✓|🟢
 CLUT|Color Lookup Table Hex Dump|any||✓||🔴
-CODE|680x0 Disassembled Code Dump|any||✓||🟡
+CODE|680x0 Disassembled Code Dump|any||✓||🔴
 
 ### Big and Little-Endian Parsing
 
