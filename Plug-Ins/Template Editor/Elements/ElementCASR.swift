@@ -64,8 +64,8 @@ class ElementCASR: CasedElement, ComboBoxLink {
         self.parentElement = element
         self.parentList = element.parentList // Required to trigger itemValueUpdated
         self.width = element.width
-        min = (element.formatter as? NumberFormatter)?.minimum as? Int ?? 0
-        max = (element.formatter as? NumberFormatter)?.maximum as? Int ?? 0
+        min = (element.formatter as? NumberFormatter)?.minimum as? Int ?? Int.min
+        max = (element.formatter as? NumberFormatter)?.maximum as? Int ?? Int.max
         let range = min...max
         
         // Determine parameters from label

@@ -14,21 +14,21 @@ class RangedElement: CasedElement {
     var popupWidth: CGFloat = 240
     
     override func configure() throws {
-        // Read CASR elements - UInt64 not supported as it could overflow our Int64
-        if self.type != "UQWD" {
-            while let casr = self.parentList.pop("CASR") as? ElementCASR {
-                if casrs == nil {
-                    casrs = []
-                }
-                try casr.configure(for: self)
-                casrs.append(casr)
-                if casr.min != casr.max {
-                    popupWidth = 180 // Shrink pop-up menu if any CASR needs a field
-                }
+        // Read CASR elements
+        while let casr = self.parentList.pop("CASR") as? ElementCASR {
+            if casrs == nil {
+                casrs = []
+            }
+            try casr.configure(for: self)
+            casrs.append(casr)
+            if casr.min != casr.max {
+                popupWidth = 180 // Shrink pop-up menu if any CASR needs a field
             }
         }
         if casrs == nil {
             try super.configure()
+        } else {
+            _ = self.defaultValue()
         }
     }
     
@@ -66,8 +66,8 @@ class RangedElement: CasedElement {
     }
     
     private func loadValue() {
-        let value = self.defaultValue() as! Int
-        if let matchedCase = casrs.first(where: { $0.matches(value: value) }) {
+        if let value = self.value(forKey: "value") as? Int,
+           let matchedCase = casrs.first(where: { $0.matches(value: value) }) {
             // Set displayValue before currentCase to avoid re-setting the base value
             displayValue = matchedCase.normalise(value)
             currentCase = matchedCase
