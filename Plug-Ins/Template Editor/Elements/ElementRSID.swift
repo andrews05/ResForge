@@ -4,7 +4,7 @@ import RFSupport
 /*
  * RSID allows selecting a resource id of a given type
  * The parameters are specified in the label
- * Resource type is a 4-char code enclosed in single (or smart) quotes, or parentheses
+ * Resource type is a 4-char code enclosed in single (or smart) quotes
  * Offset is a number followed by a + (a value of zero refers to this id)
  * Limit is a number immediately following the +
  * If limit is specified the list will only show resources between offset and offset+limit
@@ -31,7 +31,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
     
     override func configure() throws {
         // Determine parameters from label
-        let regex = try! NSRegularExpression(pattern: "(?:.*['‘(](.{4})['’)])?(?:.*?(-?[0-9]+) *[+]([0-9]+)?)?", options: [])
+        let regex = try! NSRegularExpression(pattern: "(?:.*['‘](.{4})['’])?(?:.*?(-?[0-9]+) *[+]([0-9]+)?)?", options: [])
         let result = regex.firstMatch(in: label, options: [], range: NSMakeRange(0, label.count))
         if let nsr = result?.range(at: 2), let r = Range(nsr, in: label), let i = Int(label[r]) {
             offset = i
