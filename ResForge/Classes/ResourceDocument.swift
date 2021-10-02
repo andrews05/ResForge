@@ -95,7 +95,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         if fork == nil {
             fork = (NSDocumentController.shared as! OpenPanelDelegate).getSelectedFork()
         }
-        var resources: [Resource]?
+        let resources: [Resource]
         if let fork = fork {
             // If fork has been set, try this fork only
             if fork == .data && hasData {
@@ -106,45 +106,31 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 // Fork is empty
                 resources = []
             }
-        } else {
-            // If resource fork exists, try it first
-            if hasRsrc {
-                do {
-                    resources = try ResourceFile.read(from: rsrcURL, format: &format)
-                    fork = .rsrc
-                } catch {}
-            }
-            // If failed, try data fork
-            if resources == nil && hasData {
-                do {
-                    resources = try ResourceFile.read(from: url, format: &format)
-                    fork = .data
-                } catch {}
-            }
-            // If still failed, find an empty fork
-            if resources == nil && !hasData {
-                resources = []
-                fork = .data
-            } else if resources == nil && !hasRsrc {
-                resources = []
+        } else if hasRsrc {
+            // If resource fork exists, try it first with fallback to data fork
+            do {
+                resources = try ResourceFile.read(from: rsrcURL, format: &format)
                 fork = .rsrc
+            } catch {
+                resources = hasData ? try ResourceFile.read(from: url, format: &format) : []
+                fork = .data
             }
+        } else {
+            // Use data fork (don't fallback to empty resource fork as this could be unexpected)
+            resources = hasData ? try ResourceFile.read(from: url, format: &format) : []
+            fork = .data
         }
         
-        if let resources = resources {
-            // Get type and creator - make sure undo registration is disabled while configuring
-            let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
-            self.undoManager?.disableUndoRegistration()
-            _ = editorManager.closeAll(saving: false)
-            hfsType = attrs[.hfsTypeCode] as! OSType
-            hfsCreator = attrs[.hfsCreatorCode] as! OSType
-            directory.reset()
-            directory.add(resources)
-            dataSource?.reload()
-            self.undoManager?.enableUndoRegistration()
-        } else {
-            throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: nil)
-        }
+        // Get type and creator - make sure undo registration is disabled while configuring
+        let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
+        self.undoManager?.disableUndoRegistration()
+        _ = editorManager.closeAll(saving: false)
+        hfsType = attrs[.hfsTypeCode] as! OSType
+        hfsCreator = attrs[.hfsCreatorCode] as! OSType
+        directory.reset()
+        directory.add(resources)
+        dataSource?.reload()
+        self.undoManager?.enableUndoRegistration()
     }
     
     override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
