@@ -14,7 +14,7 @@ class ElementKCHR: KeyElement {
     
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
-        _ = self.setCase(self.caseMap[value])
+        _ = self.setCase(caseMap[value])
     }
     
     override func writeData(to writer: BinaryDataWriter) {

@@ -7,6 +7,9 @@ class KeyElement: CasedElement, CollectionElement {
     let endType = ""
     private var keyedSections: [ElementCASE?: ElementKEYB] = [:]
     var currentSection: ElementKEYB!
+    @objc var cases: [ElementCASE] {
+        caseMap.values.elements
+    }
     
     override func configure() throws {
         try self.readSections()
@@ -21,7 +24,7 @@ class KeyElement: CasedElement, CollectionElement {
     
     func readSections() throws {
         try self.readCases()
-        if self.cases.isEmpty {
+        if caseMap.isEmpty {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ elements found.", comment: ""))
         }
         // Read KEYBs
@@ -30,7 +33,7 @@ class KeyElement: CasedElement, CollectionElement {
             // Allow one KEYB to be used for multiple CASEs
             let vals = keyB.label.components(separatedBy: ",")
             for value in vals {
-                let caseEl = self.cases.first { $0.displayValue == value }
+                let caseEl = caseMap.values.first { $0.displayValue == value }
                 // A value of "*" that doesn't match a CASE will be a wildcard, used when the existing data doesn't match any cases
                 guard caseEl != nil || value == "*" else {
                     throw TemplateError.invalidStructure(keyB, NSLocalizedString("No corresponding ‘CASE’ element.", comment: ""))
@@ -44,7 +47,7 @@ class KeyElement: CasedElement, CollectionElement {
             keyB.subElements = try parentList.subList(for: keyB)
             keyBs.append(keyB)
         }
-        for caseEl in self.cases where keyedSections[caseEl] == nil {
+        for caseEl in caseMap.values where keyedSections[caseEl] == nil {
             throw TemplateError.invalidStructure(caseEl, NSLocalizedString("No corresponding ‘KEYB’ element.", comment: ""))
         }
         // Configure the KEYBs only after all of them are detached from the parent list
@@ -66,7 +69,7 @@ class KeyElement: CasedElement, CollectionElement {
     }
     
     @IBAction func keyChanged(_ sender: NSPopUpButton) {
-        let oldSection = self.setCase(cases[sender.indexOfSelectedItem])
+        let oldSection = self.setCase(caseMap.values[sender.indexOfSelectedItem])
         if oldSection != currentSection {
             if let oldSection = oldSection {
                 // Check if the section sizes match and attempt to copy the data

@@ -10,29 +10,25 @@ import RFSupport
  * Implements BORV, WORV, LORV, QORV
  */
 class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
-    private var values: [T] = []
-    
     override func configure() throws {
         self.width = 120
         _ = self.defaultValue()
         try self.readCases()
-        if self.cases.isEmpty {
+        if caseMap.isEmpty {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ elements found.", comment: ""))
         }
-        for caseEl in cases {
-            // Store the value in our list while setting the element to true/false for the checkbox state
-            let value = caseEl.value as! T
-            values.append(value)
+        for case let (value as T, caseEl) in caseMap {
+            // Set the element to true/false for the checkbox state
             caseEl.value = (tValue & value) == value
         }
-        self.rowHeight = Double(self.cases.count * 20) + 2
+        self.rowHeight = Double(caseMap.count * 20) + 2
     }
     
     override func configure(view: NSView) {
         var frame = view.frame
         frame.origin.y += 1
         frame.size.height = 20
-        for caseEl in self.cases {
+        for caseEl in caseMap.values {
             let checkbox = ElementBOOL.createCheckbox(with: frame, for: caseEl)
             checkbox.title = caseEl.displayLabel
             view.addSubview(checkbox)
@@ -42,16 +38,16 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
     
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
-        for (i, caseEl) in self.cases.enumerated() {
-            caseEl.value = (tValue & values[i]) == values[i]
+        for case let (value as T, caseEl) in caseMap {
+            caseEl.value = (tValue & value) == value
         }
     }
     
     override func writeData(to writer: BinaryDataWriter) {
         tValue = 0
-        for (i, caseEl) in self.cases.enumerated() {
+        for case let (value as T, caseEl) in caseMap {
             if caseEl.value as! Bool {
-                tValue |= values[i]
+                tValue |= value
             }
         }
         writer.write(tValue)

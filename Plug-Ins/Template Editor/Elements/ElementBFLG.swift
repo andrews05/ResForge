@@ -43,17 +43,16 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
                 valid = false
                 break
             }
-            element.cases.append(caseEl)
             element.caseMap[caseEl.value] = caseEl
         }
-        if !valid || (!element.cases.isEmpty && element.cases.count != 2) {
+        if !valid || (!element.caseMap.isEmpty && element.caseMap.count != 2) {
             throw TemplateError.invalidStructure(element, NSLocalizedString("CASE list must contain exactly two values: 1/On and 0/Off.", comment: ""))
         }
-        element.width = element.cases.isEmpty ? 120 : 240
+        element.width = element.caseMap.isEmpty ? 120 : 240
     }
     
     static func configure(view: NSView, for element: CasedElement) {
-        if element.cases.isEmpty {
+        if element.caseMap.isEmpty {
             view.addSubview(Self.createCheckbox(with: view.frame, for: element))
             return
         }
@@ -61,12 +60,12 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         var frame = view.frame
         let width = element.width / 2
         frame.size.width = width - 4
-        for caseEl in element.cases {
+        for case let (value as Bool, caseEl) in element.caseMap {
             let radio = NSButton(frame: frame)
             radio.setButtonType(.radio)
             radio.title = caseEl.displayLabel
             radio.action = #selector(TemplateWindowController.itemValueUpdated(_:))
-            let options = (caseEl.value as! Bool) ? nil : [NSBindingOption.valueTransformerName: NSValueTransformerName.negateBooleanTransformerName]
+            let options = value ? nil : [NSBindingOption.valueTransformerName: NSValueTransformerName.negateBooleanTransformerName]
             radio.bind(.value, to: element, withKeyPath: "value", options: options)
             view.addSubview(radio)
             frame.origin.x += width

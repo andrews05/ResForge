@@ -1,4 +1,5 @@
 import Cocoa
+import OrderedCollections
 import RFSupport
 
 /*
@@ -26,8 +27,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
     }
     private var offset: Int = 0
     private var range: ClosedRange<Int>?
-    private var fixedCases: [ElementCASE] = []
-    private var fixedMap: [AnyHashable: ElementCASE] = [:]
+    private var fixedMap: OrderedDictionary<AnyHashable, ElementCASE> = [:]
     
     override func configure() throws {
         // Determine parameters from label
@@ -42,8 +42,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
         
         try super.configure()
         self.width = 240
-        fixedCases = self.cases
-        fixedMap = self.caseMap
+        fixedMap = caseMap
         
         // Setting the resType will load the cases so we need to do this last
         if let nsr = result?.range(at: 1), let r = Range(nsr, in: label) {
@@ -74,8 +73,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
     }
     
     private func loadCases() {
-        self.cases = fixedCases
-        self.caseMap = fixedMap
+        caseMap = fixedMap
         let resources = self.parentList.controller.resources(ofType: resType)
         for resource in resources where range?.contains(resource.id) != false {
             let resID = resource.id - offset
@@ -83,8 +81,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
             let caseEl = ElementCASE(value: resource.id,
                                      displayLabel: "\(idDisplay) = \(resource.name)",
                                      displayValue: "\(resource.name) = \(idDisplay)")
-            self.cases.append(caseEl)
-            self.caseMap[resID] = caseEl
+            caseMap[resID] = caseEl
         }
     }
     
@@ -99,7 +96,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
-        return self.caseMap[value as! AnyHashable]?.displayLabel ?? self.resIDDisplay(value as! Int)
+        return caseMap[value as! AnyHashable]?.displayLabel ?? self.resIDDisplay(value as! Int)
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any? {

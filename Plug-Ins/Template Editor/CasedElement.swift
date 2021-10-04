@@ -1,18 +1,17 @@
 import Cocoa
+import OrderedCollections
 
 // Abstract Element subclass for fields with associated CASE elements
 class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDataSource {
-    // This is marked as @objc so that KeyElement can bind to it
-    @objc var cases: [ElementCASE] = []
-    var caseMap: [AnyHashable: ElementCASE] = [:]
+    var caseMap: OrderedDictionary<AnyHashable, ElementCASE> = [:]
     
     override func configure() throws {
         try self.readCases()
         _ = self.defaultValue()
-        if !cases.isEmpty {
+        if !caseMap.isEmpty {
             self.width = 240
         }
-        for caseEl in cases where caseEl.displayLabel != caseEl.displayValue {
+        for caseEl in caseMap.values where caseEl.displayLabel != caseEl.displayValue {
             // Cases will show as "title = value" in the options list to allow searching by title
             // Text field will display as "value = title" for consistency when there's no matching case
             let displayValue = caseEl.displayValue
@@ -22,7 +21,7 @@ class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDat
     }
     
     override func configure(view: NSView) {
-        if cases.isEmpty {
+        if caseMap.isEmpty {
             self.configureTextField(view: view)
         } else {
             self.configureComboBox(view: view)
@@ -37,7 +36,7 @@ class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDat
     
     func defaultValue() -> AnyHashable? {
         // Attempt to get a default value from the first case or the meta value
-        if let value = cases.first?.value ?? self.parseMetaValue()  {
+        if let value = caseMap.keys.first ?? self.parseMetaValue()  {
             self.setValue(value, forKey: "value")
             return value
         }
@@ -57,7 +56,6 @@ class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDat
             guard caseMap[caseEl.value] == nil else {
                 throw TemplateError.invalidStructure(caseEl, NSLocalizedString("Duplicate value.", comment: ""))
             }
-            cases.append(caseEl)
             caseMap[caseEl.value] = caseEl
         }
     }
@@ -123,16 +121,16 @@ class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDat
     func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
         // Use insensitive completion, except for TNAM
         let options: NSString.CompareOptions = self.type == "TNAM" ? [] : .caseInsensitive
-        return self.cases.first {
+        return caseMap.values.first {
             $0.displayValue.commonPrefix(with: string, options: options).count == string.count
         }?.displayValue
     }
     
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
-        return index < self.cases.endIndex ? self.cases[index].displayValue : nil
+        return index < caseMap.values.endIndex ? caseMap.values[index].displayValue : nil
     }
     
     func numberOfItems(in comboBox: NSComboBox) -> Int {
-        return self.cases.count
+        return caseMap.count
     }
 }

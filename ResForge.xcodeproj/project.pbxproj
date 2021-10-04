@@ -29,6 +29,7 @@
 		4935CD9F253E25890044BC45 /* ElementKBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4935CD9E253E25890044BC45 /* ElementKBYT.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		493CA127254295BF00893F98 /* ElementRREF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CA126254295BF00893F98 /* ElementRREF.swift */; };
+		493CC3B6270AE9FA00A9173E /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 493CC3B5270AE9FA00A9173E /* OrderedCollections */; };
 		494180EE2545575B008CBABE /* TemplateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494180ED2545575B008CBABE /* TemplateError.swift */; };
 		4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC152531671400856385 /* TabbableOutlineView.swift */; };
 		4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DBF2253142AE00856385 /* TemplateWindowController.swift */; };
@@ -584,6 +585,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493CC3B6270AE9FA00A9173E /* OrderedCollections in Frameworks */,
 				49AACD9324CF6AB00081DD4A /* RFSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,6 +628,13 @@
 				490D94A625624F5D00F73544 /* hexf */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		493CC3B4270AE9FA00A9173E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4951AB4B25341B97009A8285 /* Elements */ = {
@@ -931,6 +940,7 @@
 				F5B588110156D30301000001 /* Products */,
 				497043F32472064F0035C0FA /* Graphite */,
 				490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */,
+				493CC3B4270AE9FA00A9173E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1145,6 +1155,9 @@
 			dependencies = (
 			);
 			name = "Template Editor";
+			packageProductDependencies = (
+				493CC3B5270AE9FA00A9173E /* OrderedCollections */,
+			);
 			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
 			productName = "Template Editor Cocoa";
 			productReference = E18BF6C8069FEA1900F076B8 /* Template Editor.plugin */;
@@ -1193,6 +1206,7 @@
 			mainGroup = F5B588100156D2A601000001;
 			packageReferences = (
 				4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */,
+				493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = F5B588110156D30301000001 /* Products */;
 			projectDirPath = "";
@@ -2080,6 +2094,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yaslab/CSV.swift.git";
@@ -2091,6 +2113,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		493CC3B5270AE9FA00A9173E /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
 		4952BD4B26DD9356005DB6EB /* CSV */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */;
