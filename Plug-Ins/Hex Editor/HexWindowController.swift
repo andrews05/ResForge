@@ -100,7 +100,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     // MARK: - Find/Replace
 
     @IBAction func showFind(_ sender: Any) {
-        findField.stringValue = self.sanitize(NSPasteboard(name: .findPboard).string(forType: .string) ?? "")
+        findField.stringValue = self.sanitize(NSPasteboard(name: .find).string(forType: .string) ?? "")
         findView.isHidden = false
         self.window?.makeFirstResponder(findField)
     }
@@ -129,7 +129,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
             findField.stringValue = String(data: data, encoding: .macOSRoman)!
         }
         // Save the string in the find pasteboard
-        let pasteboard = NSPasteboard(name: .findPboard)
+        let pasteboard = NSPasteboard(name: .find)
         pasteboard.clearContents()
         pasteboard.setString(findField.stringValue, forType: .string)
     }
@@ -189,7 +189,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
         field.stringValue = self.sanitize(field.stringValue)
         if field == findField {
             // Save the string in the find pasteboard
-            let pasteboard = NSPasteboard(name: .findPboard)
+            let pasteboard = NSPasteboard(name: .find)
             pasteboard.clearContents()
             pasteboard.setString(findField.stringValue, forType: .string)
         }
@@ -198,7 +198,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     private func findBytes() -> HFByteArray? {
         if findView.isHidden {
             // Always load from find pasteboard when view is hidden
-            findField.stringValue = self.sanitize(NSPasteboard(name: .findPboard).string(forType: .string) ?? "")
+            findField.stringValue = self.sanitize(NSPasteboard(name: .find).string(forType: .string) ?? "")
         }
         return self.byteArray(data: self.data(string: findField.stringValue))
     }

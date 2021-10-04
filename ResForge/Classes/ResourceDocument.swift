@@ -112,11 +112,11 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 resources = try ResourceFile.read(from: rsrcURL, format: &format)
                 fork = .rsrc
             } catch {
-                resources = hasData ? try ResourceFile.read(from: url, format: &format) : []
+                resources = try ResourceFile.read(from: url, format: &format)
                 fork = .data
             }
         } else {
-            // Use data fork (don't fallback to empty resource fork as this could be unexpected)
+            // Use data fork, defaulting to empty only if both forks are empty
             resources = hasData ? try ResourceFile.read(from: url, format: &format) : []
             fork = .data
         }
@@ -618,7 +618,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     
     @IBAction func cut(_ sender: Any) {
         let resources = dataSource.selectedResources(deep: true)
-        let pb = NSPasteboard.init(name: .generalPboard)
+        let pb = NSPasteboard.init(name: .general)
         pb.declareTypes([.RKResource], owner: self)
         pb.writeObjects(resources)
         self.remove(resources: resources)
@@ -626,13 +626,13 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     @IBAction func copy(_ sender: Any) {
-        let pb = NSPasteboard(name: .generalPboard)
+        let pb = NSPasteboard(name: .general)
         pb.declareTypes([.RKResource], owner: self)
         pb.writeObjects(dataSource.selectedResources(deep: true))
     }
     
     @IBAction func paste(_ sender: Any) {
-        let pb = NSPasteboard(name: .generalPboard)
+        let pb = NSPasteboard(name: .general)
         self.add(resources: pb.readObjects(forClasses: [Resource.self]) as! [Resource])
     }
     
