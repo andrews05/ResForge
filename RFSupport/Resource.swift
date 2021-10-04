@@ -172,7 +172,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     }
     
     public func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
-        return NSKeyedArchiver.archivedData(withRootObject: self)
+        return try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: true)
     }
     
     public static func readableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {

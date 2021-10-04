@@ -5,9 +5,9 @@ import RFSupport
 class KeyElement: CasedElement, CollectionElement {
     // KeyElement acts as a proxy CollectionElement for KEYB - it does not actually have an endType but requires this for conformance.
     let endType = ""
-    private var keyedSections: [ElementCASE?: ElementKEYB] = [:]
+    private var keyedSections: [AnyHashable?: ElementKEYB] = [:]
     var currentSection: ElementKEYB!
-    @objc var cases: [ElementCASE] {
+    @objc private var cases: [ElementCASE] {
         caseMap.values.elements
     }
     
@@ -16,7 +16,7 @@ class KeyElement: CasedElement, CollectionElement {
         self.width = 240
         
         // Set initial state
-        if let value = self.defaultValue(), let section = keyedSections[caseMap[value]] {
+        if let value = self.defaultValue(), let section = keyedSections[value] {
             currentSection = section
             self.parentList.insert(currentSection, after: self)
         }
@@ -33,21 +33,21 @@ class KeyElement: CasedElement, CollectionElement {
             // Allow one KEYB to be used for multiple CASEs
             let vals = keyB.label.components(separatedBy: ",")
             for value in vals {
-                let caseEl = caseMap.values.first { $0.displayValue == value }
+                let key = caseMap.first(where: { $0.value.displayValue == value })?.key
                 // A value of "*" that doesn't match a CASE will be a wildcard, used when the existing data doesn't match any cases
-                guard caseEl != nil || value == "*" else {
+                guard key != nil || value == "*" else {
                     throw TemplateError.invalidStructure(keyB, NSLocalizedString("No corresponding ‘CASE’ element.", comment: ""))
                 }
-                guard keyedSections[caseEl] == nil else {
+                guard keyedSections[key] == nil else {
                     throw TemplateError.invalidStructure(keyB, NSLocalizedString("Duplicate value.", comment: ""))
                 }
-                keyedSections[caseEl] = keyB
+                keyedSections[key] = keyB
             }
             keyB.parentList = self.parentList
             keyB.subElements = try parentList.subList(for: keyB)
             keyBs.append(keyB)
         }
-        for caseEl in caseMap.values where keyedSections[caseEl] == nil {
+        for (value, caseEl) in caseMap where keyedSections[value] == nil {
             throw TemplateError.invalidStructure(caseEl, NSLocalizedString("No corresponding ‘KEYB’ element.", comment: ""))
         }
         // Configure the KEYBs only after all of them are detached from the parent list
@@ -69,7 +69,10 @@ class KeyElement: CasedElement, CollectionElement {
     }
     
     @IBAction func keyChanged(_ sender: NSPopUpButton) {
-        let oldSection = self.setCase(caseMap.values[sender.indexOfSelectedItem])
+        guard sender.indexOfSelectedItem < caseMap.keys.endIndex else {
+            return
+        }
+        let oldSection = self.setCase(caseMap.keys[sender.indexOfSelectedItem])
         if oldSection != currentSection {
             if let oldSection = oldSection {
                 // Check if the section sizes match and attempt to copy the data
@@ -88,8 +91,8 @@ class KeyElement: CasedElement, CollectionElement {
         self.parentList.controller.itemValueUpdated(sender)
     }
     
-    func setCase(_ element: ElementCASE?) -> ElementKEYB? {
-        let newSection = keyedSections[element]
+    func setCase(_ value: AnyHashable) -> ElementKEYB? {
+        let newSection = keyedSections[value] ?? keyedSections[nil]
         if newSection == currentSection {
             return currentSection
         }
