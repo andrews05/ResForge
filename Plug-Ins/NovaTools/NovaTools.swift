@@ -1,6 +1,6 @@
 import RFSupport
 
-class KestrelTools: PlaceholderProvider {
+class NovaTools: PlaceholderProvider {
     static var supportedTypes = ["dësc"]
     
     static func placeholderName(for resource: Resource) -> String? {

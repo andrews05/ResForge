@@ -19,6 +19,6 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NSPrincipalClass</key>
-	<string>${SWIFT_MODULE_NAME}.KestrelTools</string>
+	<string>${SWIFT_MODULE_NAME}.NovaTools</string>
 </dict>
 </plist>

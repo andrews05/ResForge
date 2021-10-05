@@ -1,8 +1,9 @@
+import Foundation
 import RFSupport
 
 class PilotFilter: TemplateFilter {
-    static var supportedTypes = ["NpïL"]
-    static var name = "Pilot Decrypter"
+    static let supportedTypes = ["NpïL"]
+    static let name = "Pilot Decrypter"
     
     static func filter(data: Data, for resourceType: String) -> Data {
         var magic: UInt32 = 0xB36A210F

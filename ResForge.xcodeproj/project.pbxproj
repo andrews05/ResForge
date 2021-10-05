@@ -139,7 +139,7 @@
 		49D185A6254278EC00EA380C /* ElementHEXD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D185A5254278EC00EA380C /* ElementHEXD.swift */; };
 		49D185AE25427D8B00EA380C /* ElementBHEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D185AD25427D8B00EA380C /* ElementBHEX.swift */; };
 		49DA3A4D2550BD2E00821A7E /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
-		49DA3A572550BD9000821A7E /* KestrelTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 49EE72D82550B79600BEABDB /* KestrelTools.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		49DA3A572550BD9000821A7E /* NovaTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 49EE72D82550B79600BEABDB /* NovaTools.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49DA3A8B2550C65900821A7E /* rle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044062472064F0035C0FA /* rle.cpp */; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
 		49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1D24F377A400BE0F0F /* CollectionController.swift */; };
@@ -147,7 +147,7 @@
 		49E7A3C626D2058400EF885F /* TemplateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7A3C426D2055E00EF885F /* TemplateParser.swift */; };
 		49EE73012550B99200BEABDB /* SpriteWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49EE72AC2550A7F300BEABDB /* SpriteWindow.xib */; };
 		49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */; };
-		49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE738F2550BC8D00BEABDB /* KestrelTools.swift */; };
+		49EE73902550BC8D00BEABDB /* NovaTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE738F2550BC8D00BEABDB /* NovaTools.swift */; };
 		49F2EAA526D50F4B0020D70E /* BulkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7A3B926D0E59100EF885F /* BulkController.swift */; };
 		49F2EAAB26D5AB5E0020D70E /* StandardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F2EAAA26D5AB5E0020D70E /* StandardController.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
@@ -320,7 +320,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				49DA3A572550BD9000821A7E /* KestrelTools.plugin in Copy Plugins */,
+				49DA3A572550BD9000821A7E /* NovaTools.plugin in Copy Plugins */,
 				4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */,
 				E1EAB19A06A20F1A0041EE35 /* Hex Editor.plugin in Copy Plugins */,
@@ -498,9 +498,9 @@
 		49E7A3C426D2055E00EF885F /* TemplateParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateParser.swift; sourceTree = "<group>"; };
 		49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteWindowController.swift; sourceTree = "<group>"; };
 		49EE72AD2550A7F300BEABDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SpriteWindow.xib; sourceTree = "<group>"; };
-		49EE72D82550B79600BEABDB /* KestrelTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KestrelTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		49EE72D82550B79600BEABDB /* NovaTools.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovaTools.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		49EE72DA2550B79600BEABDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		49EE738F2550BC8D00BEABDB /* KestrelTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KestrelTools.swift; sourceTree = "<group>"; };
+		49EE738F2550BC8D00BEABDB /* NovaTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTools.swift; sourceTree = "<group>"; };
 		49F2EAAA26D5AB5E0020D70E /* StandardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardController.swift; sourceTree = "<group>"; };
 		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
 		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
@@ -891,18 +891,18 @@
 			path = RFSupport;
 			sourceTree = "<group>";
 		};
-		49EE72D92550B79600BEABDB /* KestrelTools */ = {
+		49EE72D92550B79600BEABDB /* NovaTools */ = {
 			isa = PBXGroup;
 			children = (
 				49EE72DA2550B79600BEABDB /* Info.plist */,
 				497A93BD255BB49600900C7B /* Templates.rsrc */,
-				49EE738F2550BC8D00BEABDB /* KestrelTools.swift */,
+				49EE738F2550BC8D00BEABDB /* NovaTools.swift */,
 				49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */,
 				496E7DE225E59344001C97CA /* Sprite Editor */,
 				496E7E3125E6E936001C97CA /* Shan Editor */,
 				492D1E222606F53F0053DD27 /* PilotFilter.swift */,
 			);
-			path = KestrelTools;
+			path = NovaTools;
 			sourceTree = "<group>";
 		};
 		B2FCA77C15A669C800696598 /* Image Editor */ = {
@@ -920,7 +920,7 @@
 		F57CEE0B0189C95101A8010B /* Plug-Ins */ = {
 			isa = PBXGroup;
 			children = (
-				49EE72D92550B79600BEABDB /* KestrelTools */,
+				49EE72D92550B79600BEABDB /* NovaTools */,
 				F5EF839F020C08E601A80001 /* Hex Editor */,
 				3D0B38A504DEF41E005AED5E /* Template Editor */,
 				B2FCA77C15A669C800696598 /* Image Editor */,
@@ -953,7 +953,7 @@
 				B2FCA78A15A66ACE00696598 /* Image Editor.plugin */,
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
 				49AACD7B24CE931A0081DD4A /* RFSupport.framework */,
-				49EE72D82550B79600BEABDB /* KestrelTools.plugin */,
+				49EE72D82550B79600BEABDB /* NovaTools.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1059,9 +1059,9 @@
 			productReference = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		49EE72D72550B79600BEABDB /* KestrelTools */ = {
+		49EE72D72550B79600BEABDB /* NovaTools */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49EE72DB2550B79600BEABDB /* Build configuration list for PBXNativeTarget "KestrelTools" */;
+			buildConfigurationList = 49EE72DB2550B79600BEABDB /* Build configuration list for PBXNativeTarget "NovaTools" */;
 			buildPhases = (
 				49EE72D42550B79600BEABDB /* Sources */,
 				49EE72D52550B79600BEABDB /* Frameworks */,
@@ -1072,9 +1072,9 @@
 			);
 			dependencies = (
 			);
-			name = KestrelTools;
+			name = NovaTools;
 			productName = KestrelTools;
-			productReference = 49EE72D82550B79600BEABDB /* KestrelTools.plugin */;
+			productReference = 49EE72D82550B79600BEABDB /* NovaTools.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		B2FCA78915A66ACE00696598 /* Image Editor */ = {
@@ -1223,7 +1223,7 @@
 				E18BF69E069FEA1800F076B8 /* Template Editor */,
 				B2FCA78915A66ACE00696598 /* Image Editor */,
 				4953F594248874AA0002340F /* Sound Editor */,
-				49EE72D72550B79600BEABDB /* KestrelTools */,
+				49EE72D72550B79600BEABDB /* NovaTools */,
 				49AACD7A24CE931A0081DD4A /* RFSupport */,
 			);
 		};
@@ -1411,7 +1411,7 @@
 				49640F1D25F201B3009FEC9B /* AltLayer.swift in Sources */,
 				49640F4725F201C9009FEC9B /* ShanView.swift in Sources */,
 				492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */,
-				49EE73902550BC8D00BEABDB /* KestrelTools.swift in Sources */,
+				49EE73902550BC8D00BEABDB /* NovaTools.swift in Sources */,
 				492E912E2551373100195174 /* Rle.swift in Sources */,
 				49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */,
 				496E7E3525E6EA15001C97CA /* ShanWindowController.swift in Sources */,
@@ -1534,7 +1534,7 @@
 		};
 		49DA3A562550BD7C00821A7E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 49EE72D72550B79600BEABDB /* KestrelTools */;
+			target = 49EE72D72550B79600BEABDB /* NovaTools */;
 			targetProxy = 49DA3A552550BD7C00821A7E /* PBXContainerItemProxy */;
 		};
 		B2FCA79B15A66B4A00696598 /* PBXTargetDependency */ = {
@@ -1792,8 +1792,8 @@
 		49EE72DC2550B79600BEABDB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/KestrelTools/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.KestrelTools;
+				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.NovaTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -1802,8 +1802,8 @@
 		49EE72DD2550B79600BEABDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "Plug-Ins/KestrelTools/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.KestrelTools;
+				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.NovaTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -2037,7 +2037,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		49EE72DB2550B79600BEABDB /* Build configuration list for PBXNativeTarget "KestrelTools" */ = {
+		49EE72DB2550B79600BEABDB /* Build configuration list for PBXNativeTarget "NovaTools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49EE72DC2550B79600BEABDB /* Debug */,
