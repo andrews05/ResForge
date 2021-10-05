@@ -14,21 +14,21 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
         self.width = 120
         _ = self.defaultValue()
         try self.readCases()
-        if caseMap.isEmpty {
+        if cases.isEmpty {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ elements found.", comment: ""))
         }
-        for case let (value as T, caseEl) in caseMap {
+        for case let (value as T, caseEl) in cases {
             // Set the element to true/false for the checkbox state
             caseEl.value = (tValue & value) == value
         }
-        self.rowHeight = Double(caseMap.count * 20) + 2
+        self.rowHeight = Double(cases.count * 20) + 2
     }
     
     override func configure(view: NSView) {
         var frame = view.frame
         frame.origin.y += 1
         frame.size.height = 20
-        for caseEl in caseMap.values {
+        for caseEl in cases.values {
             let checkbox = ElementBOOL.createCheckbox(with: frame, for: caseEl)
             checkbox.title = caseEl.displayLabel
             view.addSubview(checkbox)
@@ -38,14 +38,14 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
     
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
-        for case let (value as T, caseEl) in caseMap {
+        for case let (value as T, caseEl) in cases {
             caseEl.value = (tValue & value) == value
         }
     }
     
     override func writeData(to writer: BinaryDataWriter) {
         tValue = 0
-        for case let (value as T, caseEl) in caseMap {
+        for case let (value as T, caseEl) in cases {
             if caseEl.value as! Bool {
                 tValue |= value
             }

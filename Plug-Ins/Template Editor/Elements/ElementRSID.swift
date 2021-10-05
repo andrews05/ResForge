@@ -42,7 +42,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
         
         try super.configure()
         self.width = 240
-        fixedMap = caseMap
+        fixedMap = cases
         
         // Setting the resType will load the cases so we need to do this last
         if let nsr = result?.range(at: 1), let r = Range(nsr, in: label) {
@@ -73,7 +73,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
     }
     
     private func loadCases() {
-        caseMap = fixedMap
+        cases = fixedMap
         let resources = self.parentList.controller.resources(ofType: resType)
         for resource in resources where range?.contains(resource.id) != false {
             let resID = resource.id - offset
@@ -81,7 +81,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
             let caseEl = ElementCASE(value: resource.id,
                                      displayLabel: "\(idDisplay) = \(resource.name)",
                                      displayValue: "\(resource.name) = \(idDisplay)")
-            caseMap[resID] = caseEl
+            cases[resID] = caseEl
         }
     }
     
@@ -96,7 +96,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
-        return caseMap[value as! AnyHashable]?.displayLabel ?? self.resIDDisplay(value as! Int)
+        return cases[value as! AnyHashable]?.displayLabel ?? self.resIDDisplay(value as! Int)
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any? {

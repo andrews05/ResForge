@@ -35,7 +35,7 @@ class ElementCSTR: CasedElement {
     
     override func configure() throws {
         try super.configure()
-        if caseMap.isEmpty && maxLength > 32 {
+        if cases.isEmpty && maxLength > 32 {
             self.width = 0
         }
     }

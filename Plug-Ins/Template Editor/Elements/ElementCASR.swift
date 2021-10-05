@@ -118,7 +118,7 @@ class ElementCASR: CasedElement, ComboBoxLink {
     }
     
     private func loadCases() {
-        guard caseMap.isEmpty else {
+        guard cases.isEmpty else {
             return
         }
         // If a resType has been given this will become a combo box for resource selection
@@ -128,7 +128,7 @@ class ElementCASR: CasedElement, ComboBoxLink {
             let caseEl = ElementCASE(value: resource.id,
                                      displayLabel: "\(resource.id) = \(resource.name)",
                                      displayValue: "\(resource.name) = \(resource.id)")
-            self.caseMap[resource.id] = caseEl
+            self.cases[resource.id] = caseEl
         }
     }
     

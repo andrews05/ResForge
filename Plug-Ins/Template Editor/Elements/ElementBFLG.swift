@@ -39,20 +39,20 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
             default:
                 valid = false
             }
-            if !valid || element.caseMap[caseEl.value] != nil {
+            if !valid || element.cases[caseEl.value] != nil {
                 valid = false
                 break
             }
-            element.caseMap[caseEl.value] = caseEl
+            element.cases[caseEl.value] = caseEl
         }
-        if !valid || (!element.caseMap.isEmpty && element.caseMap.count != 2) {
+        if !valid || (!element.cases.isEmpty && element.cases.count != 2) {
             throw TemplateError.invalidStructure(element, NSLocalizedString("CASE list must contain exactly two values: 1/On and 0/Off.", comment: ""))
         }
-        element.width = element.caseMap.isEmpty ? 120 : 240
+        element.width = element.cases.isEmpty ? 120 : 240
     }
     
     static func configure(view: NSView, for element: CasedElement) {
-        if element.caseMap.isEmpty {
+        if element.cases.isEmpty {
             view.addSubview(Self.createCheckbox(with: view.frame, for: element))
             return
         }
@@ -60,7 +60,7 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         var frame = view.frame
         let width = element.width / 2
         frame.size.width = width - 4
-        for case let (value as Bool, caseEl) in element.caseMap {
+        for case let (value as Bool, caseEl) in element.cases {
             let radio = NSButton(frame: frame)
             radio.setButtonType(.radio)
             radio.title = caseEl.displayLabel

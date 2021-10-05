@@ -5,7 +5,7 @@ class ElementKRID: KeyElement, GroupElement {
         self.rowHeight = 18
         // Read CASEs
         try self.readCases()
-        guard let caseEl = caseMap[parentList.controller.resource.id] else {
+        guard let caseEl = cases[parentList.controller.resource.id] else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ for this resource id.", comment: ""))
         }
         // Read KEYBs

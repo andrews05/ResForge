@@ -7,8 +7,8 @@ class KeyElement: CasedElement, CollectionElement {
     let endType = ""
     private var keyedSections: [AnyHashable?: ElementKEYB] = [:]
     var currentSection: ElementKEYB!
-    @objc private var cases: [ElementCASE] {
-        caseMap.values.elements
+    @objc private var caseList: [ElementCASE] {
+        cases.values.elements
     }
     
     override func configure() throws {
@@ -24,7 +24,7 @@ class KeyElement: CasedElement, CollectionElement {
     
     func readSections() throws {
         try self.readCases()
-        if caseMap.isEmpty {
+        if cases.isEmpty {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ elements found.", comment: ""))
         }
         // Read KEYBs
@@ -33,7 +33,7 @@ class KeyElement: CasedElement, CollectionElement {
             // Allow one KEYB to be used for multiple CASEs
             let vals = keyB.label.components(separatedBy: ",")
             for value in vals {
-                let key = caseMap.first(where: { $0.value.displayValue == value })?.key
+                let key = cases.first(where: { $0.value.displayValue == value })?.key
                 // A value of "*" that doesn't match a CASE will be a wildcard, used when the existing data doesn't match any cases
                 guard key != nil || value == "*" else {
                     throw TemplateError.invalidStructure(keyB, NSLocalizedString("No corresponding ‘CASE’ element.", comment: ""))
@@ -47,7 +47,7 @@ class KeyElement: CasedElement, CollectionElement {
             keyB.subElements = try parentList.subList(for: keyB)
             keyBs.append(keyB)
         }
-        for (value, caseEl) in caseMap where keyedSections[value] == nil {
+        for (value, caseEl) in cases where keyedSections[value] == nil {
             throw TemplateError.invalidStructure(caseEl, NSLocalizedString("No corresponding ‘KEYB’ element.", comment: ""))
         }
         // Configure the KEYBs only after all of them are detached from the parent list
@@ -63,16 +63,16 @@ class KeyElement: CasedElement, CollectionElement {
         let keySelect = NSPopUpButton(frame: frame)
         keySelect.target = self
         keySelect.action = #selector(keyChanged(_:))
-        keySelect.bind(.content, to: self, withKeyPath: "cases")
+        keySelect.bind(.content, to: self, withKeyPath: "caseList")
         keySelect.bind(.selectedObject, to: self, withKeyPath: "value", options: [.valueTransformer: self])
         view.addSubview(keySelect)
     }
     
     @IBAction func keyChanged(_ sender: NSPopUpButton) {
-        guard sender.indexOfSelectedItem < caseMap.keys.endIndex else {
+        guard sender.indexOfSelectedItem < cases.keys.endIndex else {
             return
         }
-        let oldSection = self.setCase(caseMap.keys[sender.indexOfSelectedItem])
+        let oldSection = self.setCase(cases.keys[sender.indexOfSelectedItem])
         if oldSection != currentSection {
             if let oldSection = oldSection {
                 // Check if the section sizes match and attempt to copy the data
@@ -108,7 +108,7 @@ class KeyElement: CasedElement, CollectionElement {
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
-        return caseMap[value as! AnyHashable] ?? value
+        return cases[value as! AnyHashable] ?? value
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any? {
