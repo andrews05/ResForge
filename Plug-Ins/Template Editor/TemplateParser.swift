@@ -258,7 +258,6 @@ class TemplateParser {
 
         // cosmetic
         "DVDR": ElementDVDR.self,           // divider
-        "TTIP": ElementCASE.self,
         "RREF": ElementRREF.self,           // static reference to another resource (ResForge)
         "PACK": ElementPACK.self,           // pack other elements together (ResForge)
         

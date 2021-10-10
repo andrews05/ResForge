@@ -30,6 +30,7 @@
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		493CA127254295BF00893F98 /* ElementRREF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CA126254295BF00893F98 /* ElementRREF.swift */; };
 		493CC3B6270AE9FA00A9173E /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 493CC3B5270AE9FA00A9173E /* OrderedCollections */; };
+		493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CC3DF271228FA00A9173E /* SpobFilter.swift */; };
 		494180EE2545575B008CBABE /* TemplateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494180ED2545575B008CBABE /* TemplateError.swift */; };
 		4945DC3725316EF900856385 /* TabbableOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DC152531671400856385 /* TabbableOutlineView.swift */; };
 		4945DC4A25316FF300856385 /* TemplateWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4945DBF2253142AE00856385 /* TemplateWindowController.swift */; };
@@ -354,6 +355,7 @@
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
 		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
 		493CA126254295BF00893F98 /* ElementRREF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRREF.swift; sourceTree = "<group>"; };
+		493CC3DF271228FA00A9173E /* SpobFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpobFilter.swift; sourceTree = "<group>"; };
 		494180ED2545575B008CBABE /* TemplateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateError.swift; sourceTree = "<group>"; };
 		4943603F24C12DE100293E94 /* ppat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ppat.hpp; sourceTree = "<group>"; };
 		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
@@ -901,6 +903,7 @@
 				496E7DE225E59344001C97CA /* Sprite Editor */,
 				496E7E3125E6E936001C97CA /* Shan Editor */,
 				492D1E222606F53F0053DD27 /* PilotFilter.swift */,
+				493CC3DF271228FA00A9173E /* SpobFilter.swift */,
 			);
 			path = NovaTools;
 			sourceTree = "<group>";
@@ -1410,6 +1413,7 @@
 				49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */,
 				49640F1D25F201B3009FEC9B /* AltLayer.swift in Sources */,
 				49640F4725F201C9009FEC9B /* ShanView.swift in Sources */,
+				493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */,
 				492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* NovaTools.swift in Sources */,
 				492E912E2551373100195174 /* Rle.swift in Sources */,
