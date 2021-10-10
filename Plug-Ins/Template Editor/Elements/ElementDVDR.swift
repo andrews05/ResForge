@@ -6,7 +6,7 @@ class ElementDVDR: Element, GroupElement {
         if label.isEmpty {
             self.rowHeight = 1
         } else {
-            self.rowHeight = Double(label.components(separatedBy: "\n").count * 17) + 1
+            self.rowHeight = Double(label.components(separatedBy: "\n").count * 15) + 1
         }
     }
     

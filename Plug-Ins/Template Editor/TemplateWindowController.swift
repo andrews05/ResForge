@@ -152,7 +152,11 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
             view.toolTip = item.tooltip
         } else {
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("groupView"), owner: self)!
-            (item as! GroupElement).configureGroup(view: view as! NSTableCellView)
+            let cell = view as! NSTableCellView
+            cell.textField?.lineBreakMode = .byClipping
+            // Font can only be changed on 10.15 and earlier. This standardises the line height across system versions:
+            cell.textField?.font = NSFont.systemFont(ofSize: 12)
+            (item as! GroupElement).configureGroup(view: cell)
             if item is CounterElement {
                 // Match indentation of list headers with that in TabbableOutlineView
                 let indent = outlineView.level(forItem: item) * 16
