@@ -131,6 +131,13 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
             if identifier.rawValue == "data" {
                 view = DataView(frame: NSMakeRect(0, 2, tableColumn.width, CGFloat(item.rowHeight)))
                 item.configure(view: view)
+                if !item.subtext.isEmpty {
+                    let subtext = NSTextField(labelWithString: item.subtext)
+                    subtext.font = .systemFont(ofSize: 12)
+                    subtext.textColor = .secondaryLabelColor
+                    subtext.setFrameOrigin(NSPoint(x: item.width - 2, y: 6))
+                    view.addSubview(subtext)
+                }
             } else {
                 var alignment = NSTextAlignment.right
                 if let item = item as? ElementLSTB {
@@ -149,7 +156,6 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
                 textField.alignment = alignment
                 textField.allowsDefaultTighteningForTruncation = true
             }
-            view.toolTip = item.tooltip
         } else {
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("groupView"), owner: self)!
             let cell = view as! NSTableCellView

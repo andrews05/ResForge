@@ -75,8 +75,9 @@ class ElementLSTB: Element, CollectionElement {
     private func checkSingleElement() {
         if subElements != nil && subElements.count == 1 {
             singleElement = subElements.element(at: 0)
-            self.tooltip = singleElement!.tooltip
-            self.rowHeight = 22
+            self.subtext = singleElement!.subtext
+            self.width = singleElement!.width
+            self.rowHeight = singleElement!.rowHeight
         }
     }
     

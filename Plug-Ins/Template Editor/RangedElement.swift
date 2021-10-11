@@ -2,6 +2,17 @@ import Cocoa
 
 // Abstract Element subclass that handles CASR elements
 class RangedElement: CasedElement {
+    override var subtext: String {
+        get {
+            if let casr = currentCase, !casr.subtext.isEmpty {
+                return casr.subtext
+            }
+            return super.subtext
+        }
+        set {
+            super.subtext = newValue
+        }
+    }
     var displayValue = 0 {
         didSet {
             if currentCase != nil {

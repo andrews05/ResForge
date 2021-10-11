@@ -8,8 +8,8 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
     let type: String
     /// Label ("name") of this field.
     let label: String
-    /// Descriptive tooltip of this field (derived from subsequent lines of the label).
-    var tooltip: String
+    /// Additional info about this field (derived from subsequent lines of the label).
+    var subtext: String
     /// The label to display, if different from the template label.
     var displayLabel: String
     /// Meta information for the element (the part of the label following the first "=").
@@ -25,7 +25,7 @@ class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
         self.type = type
         self.label = label
         let lines = label.split(separator: "\n", maxSplits: 1, omittingEmptySubsequences: false)
-        tooltip = lines.count == 2 ? String(lines[1]) : ""
+        subtext = lines.count == 2 ? String(lines[1]) : ""
         let parts = lines[0].split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false)
         displayLabel = String(parts[0])
         if parts.count == 2 {

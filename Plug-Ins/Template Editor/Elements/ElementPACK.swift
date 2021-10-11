@@ -61,5 +61,6 @@ class ElementPACK: Element {
             view.frame = frame
         }
         view.frame = orig
+        width = frame.origin.x
     }
 }
