@@ -8,7 +8,7 @@ class ElementBNDN: Element, GroupElement {
     required init(type: String, label: String) {
         bigEndian = type.first == "B"
         super.init(type: type, label: label)
-        self.rowHeight = 18
+        self.rowHeight = 16
         self.visible = !type.hasSuffix("NDN")
     }
     

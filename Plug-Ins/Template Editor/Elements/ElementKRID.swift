@@ -2,7 +2,7 @@ import Cocoa
 
 class ElementKRID: KeyElement, GroupElement {
     override func configure() throws {
-        self.rowHeight = 18
+        self.rowHeight = 16
         // Read CASEs
         try self.readCases()
         guard let caseEl = cases[parentList.controller.resource.id] else {

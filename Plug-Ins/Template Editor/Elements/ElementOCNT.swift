@@ -19,7 +19,7 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
     }
     
     override func configure() throws {
-        self.rowHeight = 18
+        self.rowHeight = 16
         lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB
         guard lstc != nil else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Following ‘LSTC’ element not found.", comment: ""))
