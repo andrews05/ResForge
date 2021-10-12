@@ -12,8 +12,7 @@ class SelectTemplateController: NSWindowController, NSTextFieldDelegate {
     
     func show(_ document: ResourceDocument, type: ResourceType, complete: @escaping (Resource) -> Void) {
         _ = self.window
-        var allTemplates = document.editorManager.allResources(ofType: ResourceType.Template)
-        allTemplates += SupportRegistry.directory.resources(ofType: ResourceType.Template)
+        let allTemplates = document.editorManager.allResources(ofType: ResourceType.Template)
         for template in allTemplates {
             if templates[template.name] == nil {
                 templates[template.name] = template

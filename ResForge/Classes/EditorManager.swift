@@ -94,6 +94,7 @@ class EditorManager: RFEditorManager {
             for doc in docs where doc !== document {
                 resources += doc.directory.resources(ofType: type)
             }
+            resources += SupportRegistry.directory.resources(ofType: type)
         }
         return resources
     }
