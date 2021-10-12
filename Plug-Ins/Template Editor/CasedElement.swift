@@ -81,8 +81,8 @@ class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDat
         if width != 0 {
             frame.size.width = width - 1
         }
-        frame.size.height = 26
-        frame.origin.y -= 2
+        frame.size.height = 24
+        frame.origin.y -= 1
         let combo = NSComboBox(frame: frame)
         combo.completes = true
         combo.numberOfVisibleItems = 10

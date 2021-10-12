@@ -79,13 +79,13 @@ class ElementCSTR: CasedElement {
     }
     
     private func autoRowHeight(_ field: NSTextField) {
-        guard let outline = self.parentList.controller?.dataList else {
+        guard let outline = self.parentList?.controller?.dataList else {
             return
         }
         let index = outline.row(for: field)
         if index != -1 {
             let frame = field.cell!.expansionFrame(withFrame: NSMakeRect(0, 0, field.frame.size.width-4, 0), in: field)
-            let height = Double(frame.height) + 6
+            let height = Double(frame.height) + 7
             if height != self.rowHeight {
                 self.rowHeight = height
                 // In case we're not our own row...

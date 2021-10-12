@@ -118,7 +118,7 @@ extension ComboBoxLink {
         let comboBox = view.subviews.last as! NSComboBox
         var frame = comboBox.frame
         frame.origin.x += frame.size.width - 35
-        frame.origin.y += 7
+        frame.origin.y += 6
         frame.size.width = 12
         frame.size.height = 12
         let button = NSButton(frame: frame)
