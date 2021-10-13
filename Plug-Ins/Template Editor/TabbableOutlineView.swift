@@ -68,4 +68,9 @@ class TabbableOutlineView: NSOutlineView {
         }
         return superFrame
     }
+    
+    // Add bottom padding
+    override func setFrameSize(_ newSize: NSSize) {
+        super.setFrameSize(NSSize(width: newSize.width, height: newSize.height+5))
+    }
 }

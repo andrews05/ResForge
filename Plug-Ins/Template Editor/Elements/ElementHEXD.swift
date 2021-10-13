@@ -22,9 +22,9 @@ class ElementHEXD: Element {
     
     override func configure(view: NSView) {
         var frame = view.frame
-        frame.origin.y += 2
+        frame.origin.y += 5
         frame.size.width = self.width - 4
-        frame.size.height = CGFloat(self.rowHeight) - 5
+        frame.size.height = CGFloat(self.rowHeight) - 9
         let textField = NSTextField(frame: frame)
         textField.isBezeled = false
         textField.isEditable = false
@@ -41,8 +41,8 @@ class ElementHEXD: Element {
     }
     
     private func setRowHeight() {
-        // 16 bytes per line, 17pt line height
-        self.rowHeight = (ceil(Double(length) / 24) * 17) + 5
+        // 24 bytes per line, 13pt line height (minimum height 22)
+        self.rowHeight = (ceil(Double(length) / 24) * 13) + 9
     }
     
     override func readData(from reader: BinaryDataReader) throws {
