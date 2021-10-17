@@ -544,7 +544,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         SelectTemplateController().show(self, type: type) { template in
             for resource in resources {
-                self.editorManager.open(resource: resource, using: PluginRegistry.templateEditor, template: template)
+                self.editorManager.open(resource: resource, using: TemplateEditor.self, template: template)
             }
         }
     }

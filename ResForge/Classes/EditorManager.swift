@@ -54,7 +54,7 @@ class EditorManager: RFEditorManager {
         if let editor = PluginRegistry.editors[resource.typeCode] {
             self.open(resource: resource, using: editor, template: nil)
         } else if let template = self.template(for: resource.type) {
-            self.open(resource: resource, using: PluginRegistry.templateEditor, template: template)
+            self.open(resource: resource, using: TemplateEditor.self, template: template)
         } else {
             self.open(resource: resource, using: PluginRegistry.hexEditor, template: nil)
         }

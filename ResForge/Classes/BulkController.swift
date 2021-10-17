@@ -31,7 +31,7 @@ enum BulkError: LocalizedError {
 }
 
 class BulkController: OutlineController {
-    private var elements: [TemplateField] = []
+    private var elements: [Element] = []
     private var defaults: [Any?] = []
     private var rows: [Int: [Any?]] = [:]
     private let idCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("id"))
@@ -82,7 +82,7 @@ class BulkController: OutlineController {
                 outlineView.removeTableColumn(column)
             }
         }
-        for case let (i, element as ValueField) in elements.enumerated() {
+        for case let (i, element as FormattedElement) in elements.enumerated() {
             let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
             column.headerCell.title = element.displayLabel
             column.sizeToFit()
@@ -115,13 +115,13 @@ class BulkController: OutlineController {
             throw BulkError.templateNotFound(type)
         }
         do {
-            elements = try PluginRegistry.templateEditor.parseBasicTemplate(template, manager: document.editorManager)
+            elements = try TemplateParser(template: template, manager: document.editorManager, basic: true).parse()
         } catch let error {
             throw BulkError.templateError(error)
         }
         currentType = type
         defaults = elements.map {
-            ($0 as? ValueField)?.defaultValue()
+            ($0 as? FormattedElement)?.defaultValue()
         }
     }
     
@@ -129,12 +129,12 @@ class BulkController: OutlineController {
         let resources = document.directory.resources(ofType: currentType!)
         let writer = try CSVWriter(stream: OutputStream(url: url, append: false)!)
         let headers = elements.compactMap {
-            ($0 as? ValueField)?.displayLabel
+            ($0 as? FormattedElement)?.displayLabel
         }
         try writer.write(row: ["ID", "Name"] + headers)
         for resource in resources {
             let data: [String] = self.read(resource: resource).enumerated().compactMap { (i, value) in
-                (elements[i] as? ValueField)?.formatter.string(for: value)
+                (elements[i] as? FormattedElement)?.formatter.string(for: value)
             }
             try writer.write(row: [String(resource.id), resource.name] + data)
         }
@@ -156,7 +156,7 @@ class BulkController: OutlineController {
             let resource = Resource(type: currentType!, id: id, name: name)
             let writer = BinaryDataWriter()
             for element in elements {
-                if let element = element as? ValueField {
+                if let element = element as? FormattedElement {
                     guard let string = record[element.displayLabel] else {
                         throw BulkError.invalidValue(element.displayLabel, i)
                     }
@@ -181,7 +181,7 @@ class BulkController: OutlineController {
         return elements.enumerated().map { (i, element) in
             do {
                 try element.readData(from: reader)
-                return (element as? ValueField)?.value(forKey: "value")
+                return (element as? FormattedElement)?.value(forKey: "value")
             } catch {
                 // Insufficient data, set a default value
                 return defaults[i]
@@ -204,7 +204,7 @@ class BulkController: OutlineController {
             cell.placeholderString = NSLocalizedString("Untitled Resource", comment: "")
         } else if let tableColumn = tableColumn {
             let element = elements[Int(tableColumn.identifier.rawValue)!]
-            cell.formatter = (element as? ValueField)?.formatter
+            cell.formatter = (element as? FormattedElement)?.formatter
         }
     }
     
@@ -234,7 +234,7 @@ class BulkController: OutlineController {
             let rowData = rows[resource.id]!
             let writer = BinaryDataWriter()
             for (i, element) in elements.enumerated() {
-                (element as? ValueField)?.setValue(rowData[i], forKey: "value")
+                (element as? FormattedElement)?.setValue(rowData[i], forKey: "value")
                 element.writeData(to: writer)
             }
             resource.data = writer.data

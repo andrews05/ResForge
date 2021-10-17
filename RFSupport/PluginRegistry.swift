@@ -3,7 +3,6 @@ import Cocoa
 public class PluginRegistry {
     public private(set) static var editors: [String: ResourceEditor.Type] = [:]
     public private(set) static var hexEditor: ResourceEditor.Type! = nil
-    public private(set) static var templateEditor: TemplateEditor.Type! = nil
     public private(set) static var previewProviders: [String: PreviewProvider.Type] = [:]
     public private(set) static var exportProviders: [String: ExportProvider.Type] = [:]
     public private(set) static var placeholderProviders: [String: PlaceholderProvider.Type] = [:]
@@ -23,9 +22,6 @@ public class PluginRegistry {
                     } else {
                         editors[type] = editor
                     }
-                }
-                if let editor = pluginClass as? TemplateEditor.Type {
-                    Self.templateEditor = editor
                 }
             }
             if let previewer = pluginClass as? PreviewProvider.Type {

@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class Element: ValueTransformer, NSTextFieldDelegate, TemplateField {
+class Element: ValueTransformer, NSTextFieldDelegate {
     static var sharedFormatters: [String: Formatter] = [:]
     
     /// Type code of this field.
@@ -108,7 +108,9 @@ protocol GroupElement where Self: Element {
 }
 
 /// An element that can format a value.
-protocol FormattedElement: ValueField where Self: Element {
+protocol FormattedElement where Self: Element {
+    var formatter: Formatter { get }
+    func defaultValue() -> AnyHashable?
 }
 extension FormattedElement {
     /// Get the shared formatter for the given key, providing the implementation if it doesn't already exist.

@@ -64,7 +64,7 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
             let radio = NSButton(frame: frame)
             radio.setButtonType(.radio)
             radio.title = caseEl.displayLabel
-            radio.action = #selector(TemplateWindowController.itemValueUpdated(_:))
+            radio.action = #selector(TemplateEditor.itemValueUpdated(_:))
             let options = value ? nil : [NSBindingOption.valueTransformerName: NSValueTransformerName.negateBooleanTransformerName]
             radio.bind(.value, to: element, withKeyPath: "value", options: options)
             view.addSubview(radio)
@@ -77,7 +77,7 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         checkbox.setButtonType(.switch)
         checkbox.bezelStyle = .regularSquare
         checkbox.title = element.metaValue ?? "\0" // Null character prevents clickable frame from taking up the whole width
-        checkbox.action = #selector(TemplateWindowController.itemValueUpdated(_:))
+        checkbox.action = #selector(TemplateEditor.itemValueUpdated(_:))
         checkbox.bind(.value, to: element, withKeyPath: "value")
         if frame.width > 20 {
             checkbox.autoresizingMask = .width

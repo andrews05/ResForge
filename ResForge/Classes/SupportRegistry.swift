@@ -39,7 +39,7 @@ class SupportRegistry: ResourceDirectory {
     }
     
     static func scanForResources(in bundle: Bundle) {
-        guard let items = bundle.urls(forResourcesWithExtension: "rsrc", subdirectory: "Support Resources") else {
+        guard let items = bundle.urls(forResourcesWithExtension: "rsrc", subdirectory: nil) else {
             return
         }
         for item in items {

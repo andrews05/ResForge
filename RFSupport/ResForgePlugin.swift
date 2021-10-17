@@ -13,23 +13,6 @@ public protocol ResourceEditor: AbstractEditor {
     func revertResource(_ sender: Any)
 }
 
-/// Template editors are additionally provided with a template resource and possibly a filter.
-public protocol TemplateEditor: ResourceEditor {
-    init?(resource: Resource, manager: RFEditorManager, template: Resource, filter: TemplateFilter.Type?)
-    static func parseBasicTemplate(_ template: Resource, manager: RFEditorManager) throws -> [TemplateField]
-}
-
-public protocol TemplateField: NSObject {
-    func readData(from reader: BinaryDataReader) throws
-    func writeData(to writer: BinaryDataWriter)
-}
-public protocol ValueField: TemplateField {
-    var displayLabel: String { get }
-    var width: CGFloat { get }
-    var formatter: Formatter { get }
-    func defaultValue() -> AnyHashable?
-}
-
 /// A preview provider allows the document to display a grid view for a supported resource type.
 public protocol PreviewProvider {
     static var supportedTypes: [String] { get }

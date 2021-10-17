@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDataSource, NSOutlineViewDelegate {
+class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, NSOutlineViewDelegate {
     static let supportedTypes: [String] = []
     
     let resource: Resource
@@ -15,10 +15,6 @@ class TemplateWindowController: AbstractEditor, TemplateEditor, NSOutlineViewDat
     
     override var windowNibName: String {
         return "TemplateWindow"
-    }
-    
-    class func parseBasicTemplate(_ template: Resource, manager: RFEditorManager) throws -> [TemplateField] {
-        return try TemplateParser(template: template, manager: manager, basic: true).parse()
     }
     
     required init?(resource: Resource, manager: RFEditorManager, template: Resource, filter: TemplateFilter.Type?) {

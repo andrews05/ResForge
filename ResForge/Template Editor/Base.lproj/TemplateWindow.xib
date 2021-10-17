@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TemplateWindowController" customModule="Template_Editor" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="TemplateEditor" customModule="ResForge" customModuleProvider="target">
             <connections>
                 <outlet property="dataList" destination="36" id="Ori-2P-GdO"/>
                 <outlet property="window" destination="21" id="33"/>
@@ -32,7 +32,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="560" height="400"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationMarkerFollowsCell="NO" outlineTableColumn="37" id="36" customClass="TabbableOutlineView" customModule="Template_Editor" customModuleProvider="target">
+                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationMarkerFollowsCell="NO" outlineTableColumn="37" id="36" customClass="TabbableOutlineView" customModule="ResForge" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="560" height="400"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="6" height="0.0"/>
@@ -73,7 +73,7 @@
                                                         <outlet property="textField" destination="FUM-Fz-dnU" id="1TB-9j-8jy"/>
                                                     </connections>
                                                 </tableCellView>
-                                                <tableCellView identifier="listLabel" id="hgb-pb-eOm" customClass="LabelView" customModule="Template_Editor" customModuleProvider="target">
+                                                <tableCellView identifier="listLabel" id="hgb-pb-eOm" customClass="LabelView" customModule="ResForge" customModuleProvider="target">
                                                     <rect key="frame" x="13" y="22" width="153" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -95,7 +95,7 @@
                                                         <outlet property="textField" destination="3bN-4y-Fu0" id="War-Ee-myD"/>
                                                     </connections>
                                                 </tableCellView>
-                                                <tableCellView identifier="listEndLabel" id="hbr-Yq-Ifg" userLabel="Button View" customClass="LabelView" customModule="Template_Editor" customModuleProvider="target">
+                                                <tableCellView identifier="listEndLabel" id="hbr-Yq-Ifg" userLabel="Button View" customClass="LabelView" customModule="ResForge" customModuleProvider="target">
                                                     <rect key="frame" x="13" y="44" width="153" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -136,7 +136,7 @@
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="tXR-v5-Vmv">
                                                             <rect key="frame" x="3" y="3" width="147" height="15"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Group label" id="3vk-0d-0RL">
-                                                                <font key="font" metaFont="system" size="12"/>
+                                                                <font key="font" metaFont="cellTitle"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>

@@ -3,7 +3,7 @@ import RFSupport
 
 class ElementList {
     private(set) weak var parentElement: Element?
-    private(set) weak var controller: TemplateWindowController!
+    private(set) weak var controller: TemplateEditor!
     private var elements: [Element] = []
     private var visibleElements: [Element] = []
     private var currentIndex = 0
@@ -12,7 +12,7 @@ class ElementList {
         return visibleElements.count
     }
     
-    init(controller: TemplateWindowController, parent: Element? = nil) {
+    init(controller: TemplateEditor, parent: Element? = nil) {
         parentElement = parent
         self.controller = controller
     }

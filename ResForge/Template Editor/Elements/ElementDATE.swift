@@ -26,7 +26,7 @@ class ElementDATE: Element {
         picker.timeZone = TimeZone(secondsFromGMT: 0)
         picker.font = NSFont.systemFont(ofSize: 12)
         picker.drawsBackground = true
-        picker.action = #selector(TemplateWindowController.itemValueUpdated(_:))
+        picker.action = #selector(TemplateEditor.itemValueUpdated(_:))
         picker.bind(.value, to: self, withKeyPath: "value")
         view.addSubview(picker)
     }
