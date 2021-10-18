@@ -1,74 +1,102 @@
 import Cocoa
 import RFSupport
 
-class GalaxyWindowController: AbstractEditor, ResourceEditor {
-    static let supportedTypes = ["sÿst"]
+/*
+ * The galaxy editor is a bit hacky. It relies on a set of 2048 dummy 'glxÿ' resources within the
+ * support file (one for each possible sÿst) which are opened using RREF links in the sÿst template.
+ * The GalaxyStub is the registered editor for this type but all it does is hand over to the shared
+ * GalaxyWindowController, passing the id of the glxÿ resource as the id of the system to center on.
+ */
+class GalaxyStub: AbstractEditor, ResourceEditor {
+    static let supportedTypes = ["glxÿ"]
+    let resource: Resource
+    
+    required init?(resource: Resource, manager: RFEditorManager) {
+        GalaxyWindowController.shared.show(systemID: resource.id, manager: manager)
+        return nil
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func saveResource(_ sender: Any) {}
+    func revertResource(_ sender: Any) {}
+}
+
+class GalaxyWindowController: NSWindowController, NSWindowDelegate {
+    static var shared = GalaxyWindowController()
     
     @IBOutlet var clipView: NSClipView!
     @IBOutlet var galaxyView: GalaxyView!
-    let resource: Resource
-    let manager: RFEditorManager
-    var systems: [Int: Resource] = [:]
-    var points: [Int: NSPoint] = [:]
+    var centerID = 0
+    var systems: [Int: (name: String, pos: NSPoint)] = [:]
     var links: [(Int, Int)] = []
+    var nebulae: [Int: (name: String, area: NSRect)] = [:]
+    var nebImages: [Int: NSImage] = [:]
     
     override var windowNibName: String {
         return "GalaxyWindow"
     }
-
-    required init(resource: Resource, manager: RFEditorManager) {
-        self.resource = resource
-        self.manager = manager
-        systems = manager.allResources(ofType: resource.type, currentDocumentOnly: true).reduce(into: systems) { (result, resource) in
-            if result[resource.id] == nil {
-                result[resource.id] = resource
+    
+    func show(systemID: Int, manager: RFEditorManager) {
+        window?.makeKeyAndOrderFront(self)
+        centerID = systemID
+        systems = [:]
+        links = []
+        nebulae = [:]
+        nebImages = [:]
+        
+        let systs = manager.allResources(ofType: ResourceType("sÿst"), currentDocumentOnly: false)
+        for system in systs {
+            guard systems[system.id] == nil else {
+                continue
             }
-        }
-        for system in systems.values {
             let reader = BinaryDataReader(system.data)
             do {
-                let x: Int16 = try reader.read()
-                let y: Int16 = try reader.read()
-                points[system.id] = NSPoint(x: Int(x), y: Int(y))
+                let point = NSPoint(
+                    x: CGFloat(try reader.read() as Int16),
+                    y: CGFloat(try reader.read() as Int16)
+                )
+                systems[system.id] = (system.name, point)
                 for _ in 0..<16 {
                     let id = Int(try reader.read() as Int16)
                     links.append((system.id, id))
                 }
             } catch {}
         }
-        var linkMap: [NSPoint: [NSPoint]] = [:]
-        super.init(window: nil)
-        // Filter out invalid or duplicate links
-        links = links.filter {
-            guard var from = points[$0.0], var to = points[$0.1] else {
-                return false
+        
+        let nebus = manager.allResources(ofType: ResourceType("nëbu"), currentDocumentOnly: false)
+        for nebu in nebus {
+            guard nebulae[nebu.id] == nil else {
+                continue
             }
-            if from > to {
-                swap(&from, &to)
-            }
-            if linkMap[from]?.contains(to) == true {
-                return false
-            }
-            linkMap[from, default: []].append(to)
-            return true
+            let reader = BinaryDataReader(nebu.data)
+            do {
+                let rect = NSRect(
+                    x: CGFloat(try reader.read() as Int16),
+                    y: CGFloat(try reader.read() as Int16),
+                    width: CGFloat(try reader.read() as Int16),
+                    height: CGFloat(try reader.read() as Int16)
+                )
+                nebulae[nebu.id] = (nebu.name, rect)
+                let first = (nebu.id - 128) * 7 + 9500
+                for id in (first..<first+7).reversed() {
+                    if let pict = manager.findResource(type: ResourceType("PICT"), id: id, currentDocumentOnly: false) {
+                        pict.preview {
+                            self.nebImages[nebu.id] = $0
+                            self.galaxyView.needsDisplay = true
+                        }
+                    }
+                }
+            } catch {}
         }
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func windowDidLoad() {
-        // Center the view
-        galaxyView.scroll(NSPoint(x: galaxyView.frame.midX-clipView.frame.midX, y: galaxyView.frame.midY-clipView.frame.midY))
-    }
-
-    @IBAction func saveResource(_ sender: Any) {
-        self.setDocumentEdited(false)
-    }
-
-    @IBAction func revertResource(_ sender: Any) {
-        self.setDocumentEdited(false)
+        
+        var point = galaxyView.transform.transform(systems[centerID]?.pos ?? NSZeroPoint)
+        point.x -= clipView.frame.midX
+        point.y = galaxyView.frame.height - point.y - clipView.frame.midY
+        galaxyView.scroll(point)
+        galaxyView.needsDisplay = true
     }
 }
 
