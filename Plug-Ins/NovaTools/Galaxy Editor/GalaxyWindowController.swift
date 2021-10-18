@@ -5,14 +5,14 @@ import RFSupport
  * The galaxy editor is a bit hacky. It relies on a set of 2048 dummy 'glxÿ' resources within the
  * support file (one for each possible sÿst) which are opened using RREF links in the sÿst template.
  * The GalaxyStub is the registered editor for this type but all it does is hand over to the shared
- * GalaxyWindowController, passing the id of the glxÿ resource as the id of the system to center on.
+ * GalaxyWindowController, passing the id of the glxÿ resource as the id of the system to highlight.
  */
 class GalaxyStub: AbstractEditor, ResourceEditor {
     static let supportedTypes = ["glxÿ"]
     let resource: Resource
     
     required init?(resource: Resource, manager: RFEditorManager) {
-        GalaxyWindowController.shared.show(systemID: resource.id, manager: manager)
+        GalaxyWindowController.shared.show(targetID: resource.id, manager: manager)
         return nil
     }
     
@@ -29,7 +29,7 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
     
     @IBOutlet var clipView: NSClipView!
     @IBOutlet var galaxyView: GalaxyView!
-    var centerID = 0
+    var targetID = 0
     var systems: [Int: (name: String, pos: NSPoint)] = [:]
     var links: [(Int, Int)] = []
     var nebulae: [Int: (name: String, area: NSRect)] = [:]
@@ -39,9 +39,9 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
         return "GalaxyWindow"
     }
     
-    func show(systemID: Int, manager: RFEditorManager) {
+    func show(targetID: Int, manager: RFEditorManager) {
         window?.makeKeyAndOrderFront(self)
-        centerID = systemID
+        self.targetID = targetID
         systems = [:]
         links = []
         nebulae = [:]
@@ -80,6 +80,7 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
                     height: CGFloat(try reader.read() as Int16)
                 )
                 nebulae[nebu.id] = (nebu.name, rect)
+                // Find the largest available image
                 let first = (nebu.id - 128) * 7 + 9500
                 for id in (first..<first+7).reversed() {
                     if let pict = manager.findResource(type: ResourceType("PICT"), id: id, currentDocumentOnly: false) {
@@ -92,21 +93,10 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
             } catch {}
         }
         
-        var point = galaxyView.transform.transform(systems[centerID]?.pos ?? NSZeroPoint)
+        var point = galaxyView.transform.transform(systems[targetID]?.pos ?? NSZeroPoint)
         point.x -= clipView.frame.midX
         point.y = galaxyView.frame.height - point.y - clipView.frame.midY
         galaxyView.scroll(point)
         galaxyView.needsDisplay = true
-    }
-}
-
-extension NSPoint: Hashable, Comparable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(x)
-        hasher.combine(y)
-    }
-    
-    public static func < (lhs: CGPoint, rhs: CGPoint) -> Bool {
-        lhs.x < rhs.x && lhs.y < rhs.y
     }
 }
