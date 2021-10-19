@@ -63,12 +63,17 @@ class GalaxyView: NSView {
         // Hyperlinks
         NSColor.darkGray.setStroke()
         let path = NSBezierPath()
-        for link in controller.links {
-            guard let from = points[link.0], let to = points[link.1] else {
+        for (fromID, system) in controller.systems {
+            guard let from = points[fromID] else {
                 continue
             }
-            path.move(to: from)
-            path.line(to: to)
+            for id in system.links {
+                guard let to = points[id] else {
+                    continue
+                }
+                path.move(to: from)
+                path.line(to: to)
+            }
         }
         path.lineWidth = 1.2
         path.stroke()

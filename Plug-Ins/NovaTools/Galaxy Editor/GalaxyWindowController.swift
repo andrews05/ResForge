@@ -30,8 +30,7 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
     @IBOutlet var clipView: NSClipView!
     @IBOutlet var galaxyView: GalaxyView!
     var targetID = 0
-    var systems: [Int: (name: String, pos: NSPoint)] = [:]
-    var links: [(Int, Int)] = []
+    var systems: [Int: (name: String, pos: NSPoint, links: [Int])] = [:]
     var nebulae: [Int: (name: String, area: NSRect)] = [:]
     var nebImages: [Int: NSImage] = [:]
     
@@ -39,11 +38,55 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
         return "GalaxyWindow"
     }
     
+    override func awakeFromNib() {
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .ResourceDidChange, object: nil)
+    }
+    
+    @objc func resourceChanged(_ notification: Notification) {
+        guard let resource = notification.object as? Resource else {
+            return
+        }
+        if resource.typeCode == "sÿst" {
+            self.read(system: resource)
+            galaxyView.needsDisplay = true
+        } else if resource.typeCode == "nebü" {
+            self.read(nebula: resource)
+            galaxyView.needsDisplay = true
+        }
+    }
+    
+    private func read(system: Resource) {
+        let reader = BinaryDataReader(system.data)
+        do {
+            let point = NSPoint(
+                x: CGFloat(try reader.read() as Int16),
+                y: CGFloat(try reader.read() as Int16)
+            )
+            systems[system.id] = (system.name, point, [])
+            for _ in 0..<16 {
+                let id = Int(try reader.read() as Int16)
+                systems[system.id]?.links.append(id)
+            }
+        } catch {}
+    }
+    
+    private func read(nebula: Resource) {
+        let reader = BinaryDataReader(nebula.data)
+        do {
+            let rect = NSRect(
+                x: CGFloat(try reader.read() as Int16),
+                y: CGFloat(try reader.read() as Int16),
+                width: CGFloat(try reader.read() as Int16),
+                height: CGFloat(try reader.read() as Int16)
+            )
+            nebulae[nebula.id] = (nebula.name, rect)
+        } catch {}
+    }
+    
     func show(targetID: Int, manager: RFEditorManager) {
         window?.makeKeyAndOrderFront(self)
         self.targetID = targetID
         systems = [:]
-        links = []
         nebulae = [:]
         nebImages = [:]
         
@@ -52,45 +95,25 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
             guard systems[system.id] == nil else {
                 continue
             }
-            let reader = BinaryDataReader(system.data)
-            do {
-                let point = NSPoint(
-                    x: CGFloat(try reader.read() as Int16),
-                    y: CGFloat(try reader.read() as Int16)
-                )
-                systems[system.id] = (system.name, point)
-                for _ in 0..<16 {
-                    let id = Int(try reader.read() as Int16)
-                    links.append((system.id, id))
-                }
-            } catch {}
+            self.read(system: system)
         }
         
         let nebus = manager.allResources(ofType: ResourceType("nëbu"), currentDocumentOnly: false)
-        for nebu in nebus {
-            guard nebulae[nebu.id] == nil else {
+        for nebula in nebus {
+            guard nebulae[nebula.id] == nil else {
                 continue
             }
-            let reader = BinaryDataReader(nebu.data)
-            do {
-                let rect = NSRect(
-                    x: CGFloat(try reader.read() as Int16),
-                    y: CGFloat(try reader.read() as Int16),
-                    width: CGFloat(try reader.read() as Int16),
-                    height: CGFloat(try reader.read() as Int16)
-                )
-                nebulae[nebu.id] = (nebu.name, rect)
-                // Find the largest available image
-                let first = (nebu.id - 128) * 7 + 9500
-                for id in (first..<first+7).reversed() {
-                    if let pict = manager.findResource(type: ResourceType("PICT"), id: id, currentDocumentOnly: false) {
-                        pict.preview {
-                            self.nebImages[nebu.id] = $0
-                            self.galaxyView.needsDisplay = true
-                        }
+            self.read(nebula: nebula)
+            // Find the largest available image
+            let first = (nebula.id - 128) * 7 + 9500
+            for id in (first..<first+7).reversed() {
+                if let pict = manager.findResource(type: ResourceType("PICT"), id: id, currentDocumentOnly: false) {
+                    pict.preview {
+                        self.nebImages[nebula.id] = $0
+                        self.galaxyView.needsDisplay = true
                     }
                 }
-            } catch {}
+            }
         }
         
         var point = galaxyView.transform.transform(systems[targetID]?.pos ?? NSZeroPoint)
