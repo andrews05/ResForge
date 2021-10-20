@@ -9,7 +9,7 @@ class ShanView: NSView {
             return
         }
         
-        NSGraphicsContext.current?.cgContext.interpolationQuality = .none
+        NSGraphicsContext.current?.imageInterpolation = .none
         fillColor.setFill()
         dirtyRect.fill()
         for layer in controller.layers {

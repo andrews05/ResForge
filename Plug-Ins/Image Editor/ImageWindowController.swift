@@ -86,7 +86,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
                let bw = manager.findResource(type: ResourceType(maskType, resource.typeAttributes), id: resource.id, currentDocumentOnly: true),
                let bwRep = Self.imageRep(for: bw) {
                 image.lockFocus()
-                NSGraphicsContext.current?.cgContext.interpolationQuality = .none
+                NSGraphicsContext.current?.imageInterpolation = .none
                 image.representations[0].draw()
                 bwRep.draw(in: image.alignmentRect, from: NSZeroRect, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
                 image.unlockFocus()
