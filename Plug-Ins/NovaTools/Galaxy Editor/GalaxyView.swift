@@ -107,6 +107,16 @@ class GalaxyView: NSView {
         layer?.contents = image
     }
     
+    // Drag to scroll
+    override func mouseDragged(with event: NSEvent) {
+        if let clipView = superview as? NSClipView {
+            var origin = clipView.bounds.origin
+            origin.x -= event.deltaX
+            origin.y += event.deltaY
+            self.scroll(origin)
+        }
+    }
+    
     @IBAction func zoomIn(_ sender: Any) {
         zoomLevel = min(zoomLevel+1, 6)
     }
