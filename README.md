@@ -12,15 +12,14 @@ ResForge is a resource editor for macOS, capable of editing classic resource for
 * Template-driven bulk data view, with CSV import/export.
 * Image editor, supporting 'PICT', 'PNG ', 'cicn' & 'ppat' resources, plus view-only support for a variety of icons and other bitmaps.
 * Sound editor, supporting sampled 'snd ' resources.
-* Sprite editor, supporting 'rlëD' resources used by EV Nova.
-* Ship Animation editor, supporting 'shän' resources used by EV Nova.
+* Tools for EV Nova, including a sprite (rlëD) editor, a ship animation (shän editor) and a galaxy viewer.
 
 
 ## Getting Started
 
 ### System Requirements
 
-ResForge is compatible with macOS 10.12 or later, including macOS 11. The universal binary runs natively on both 64-bit Intel and Apple Silicon.
+ResForge is compatible with macOS 10.14 or later and runs natively on both 64-bit Intel and Apple Silicon.
 
 ### Installation
 
