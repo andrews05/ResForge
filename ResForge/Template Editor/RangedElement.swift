@@ -15,8 +15,8 @@ class RangedElement: CasedElement {
     }
     var displayValue = 0 {
         didSet {
-            if currentCase != nil {
-                self.setValue(currentCase.deNormalise(displayValue), forKey: "value")
+            if let casr = currentCase {
+                self.setValue(casr.deNormalise(displayValue), forKey: "value")
             }
         }
     }
@@ -38,8 +38,9 @@ class RangedElement: CasedElement {
         }
         if casrs == nil {
             try super.configure()
-        } else {
-            _ = self.defaultValue()
+        } else if let value = self.defaultValue() as? Int, self.casr(for: value) == nil {
+            // If the default value didn't match a case, set value to min of first case
+            self.setValue(casrs[0].deNormalise(casrs[0].min), forKey: "value")
         }
     }
     
@@ -77,19 +78,22 @@ class RangedElement: CasedElement {
     }
     
     private func loadValue() {
-        if let value = self.value(forKey: "value") as? Int,
-           let matchedCase = casrs.first(where: { $0.matches(value: value) }) {
+        if let value = self.value(forKey: "value") as? Int {
+            // If the data does not match a case we still want to preserve the value:
+            // When multiple cases exists, create a dummy case for the menu, else force the value into the singular case.
+            let casr = self.casr(for: value) ?? (casrs.count > 1 ? ElementCASR(value: value) : casrs[0])
             // Set displayValue before currentCase to avoid re-setting the base value
-            displayValue = matchedCase.normalise(value)
-            currentCase = matchedCase
-        } else {
-            // Force value to min of first case
-            currentCase = casrs[0]
-            displayValue = currentCase.min
+            displayValue = casr.normalise(value)
+            currentCase = casr
         }
     }
     
+    private func casr(for value: Int) -> ElementCASR? {
+        return casrs.first(where: { $0.matches(value: value) })
+    }
+    
     @IBAction func caseChanged(_ sender: NSPopUpButton) {
+        // Adjust the current display value to fit the new range
         if displayValue < currentCase.min {
             displayValue = currentCase.min
         } else if displayValue > currentCase.max {

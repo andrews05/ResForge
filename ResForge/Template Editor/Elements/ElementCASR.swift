@@ -25,11 +25,18 @@ class ElementCASR: CasedElement, ComboBoxLink {
     private(set) var max = 0
     private var offset = 0
     private var invert = false
-    private var resType: String!
+    private var resType: String?
     weak var parentElement: RangedElement!
     
     override var description: String {
         self.displayLabel
+    }
+    
+    convenience init(value: Int) {
+        self.init(type: "CASR", label: "")
+        min = value
+        max = value
+        displayLabel = String(value)
     }
     
     override func configure() throws {
@@ -39,8 +46,9 @@ class ElementCASR: CasedElement, ComboBoxLink {
     override func configure(view: NSView) {
         if min == max {
             self.width = 0
-        } else if resType != nil {
-            self.loadCases()
+        } else if let resType = resType {
+            // If a resType has been given this will become a combo box for resource selection
+            self.loadCases(resType)
             self.configureComboLink(view: view)
         } else {
             self.configureTextField(view: view)
@@ -117,11 +125,10 @@ class ElementCASR: CasedElement, ComboBoxLink {
         }
     }
     
-    private func loadCases() {
+    private func loadCases(_ resType: String) {
         guard cases.isEmpty else {
             return
         }
-        // If a resType has been given this will become a combo box for resource selection
         self.width = parentElement.casrs.count > 1 ? 180 : 240
         let resources = self.parentList.controller.resources(ofType: resType)
         for resource in resources where min...max ~= resource.id {
@@ -133,7 +140,9 @@ class ElementCASR: CasedElement, ComboBoxLink {
     }
     
     func openResource(_ sender: Any) {
-        self.parentList.controller.openOrCreateResource(typeCode: resType, id: value)
+        if let resType = resType {
+            self.parentList.controller.openOrCreateResource(typeCode: resType, id: value)
+        }
     }
     
     func matches(value: Int) -> Bool {
