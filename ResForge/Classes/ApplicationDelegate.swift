@@ -3,6 +3,8 @@ import RFSupport
 
 @NSApplicationMain
 class ApplicationDelegate: NSObject, NSApplicationDelegate {
+    static let githubURL = "https://github.com/andrews05/ResForge"
+    
     // Don't configure prefs controller until needed
     private lazy var prefsController: NSWindowController = {
         ValueTransformer.setValueTransformer(LaunchActionTransformer(), forName: .launchActionTransformerName)
@@ -58,6 +60,12 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func showPrefs(_ sender: Any) {
         self.prefsController.showWindow(sender)
+    }
+    
+    @IBAction func viewWebsite(_ sender: Any) {
+        if let url = URL(string: Self.githubURL) {
+            NSWorkspace.shared.open(url)
+        }
     }
     
     private func scanForPlugins(folder: URL) {
