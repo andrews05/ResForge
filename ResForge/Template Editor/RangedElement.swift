@@ -78,18 +78,17 @@ class RangedElement: CasedElement {
     }
     
     private func loadValue() {
-        if let value = self.value(forKey: "value") as? Int {
-            // If the data does not match a case we still want to preserve the value:
-            // When multiple cases exists, create a dummy case for the menu, else force the value into the singular case.
-            let casr = self.casr(for: value) ?? (casrs.count > 1 ? ElementCASR(value: value) : casrs[0])
-            // Set displayValue before currentCase to avoid re-setting the base value
-            displayValue = casr.normalise(value)
-            currentCase = casr
-        }
+        let value = self.value(forKey: "value") as? Int ?? 0
+        // If the data does not match a case we still want to preserve the value:
+        // When multiple cases exist, create a dummy case for the menu, else force the value into the singular case.
+        let casr = self.casr(for: value) ?? (casrs.count > 1 ? ElementCASR(value: value) : casrs[0])
+        // Set displayValue before currentCase to avoid re-setting the base value
+        displayValue = casr.normalise(value)
+        currentCase = casr
     }
     
     private func casr(for value: Int) -> ElementCASR? {
-        return casrs.first(where: { $0.matches(value: value) })
+        return casrs.first() { $0.matches(value: value) }
     }
     
     @IBAction func caseChanged(_ sender: NSPopUpButton) {
