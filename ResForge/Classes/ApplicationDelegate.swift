@@ -24,15 +24,16 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        SupportRegistry.scanForResources()
-        // Load plugins
+        // Load support resources and plugins
         NotificationCenter.default.addObserver(PluginRegistry.self, selector: #selector(PluginRegistry.bundleLoaded(_:)), name: Bundle.didLoadNotification, object: nil)
-        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .allDomainsMask)
+        SupportRegistry.scanForResources(in: Bundle.main)
         if let plugins = Bundle.main.builtInPlugInsURL {
-            self.scanForPlugins(folder: plugins)
+            self.scanForPlugins(in: plugins)
         }
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .allDomainsMask)
         for url in appSupport {
-            self.scanForPlugins(folder: url.appendingPathComponent("ResForge/Plugins"))
+            self.scanForPlugins(in: url.appendingPathComponent("ResForge/Plugins"))
+            SupportRegistry.scanForResources(in: url.appendingPathComponent("ResForge/Support Resources"))
         }
     }
     
@@ -68,7 +69,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    private func scanForPlugins(folder: URL) {
+    private func scanForPlugins(in folder: URL) {
         let items: [URL]
         do {
             items = try FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
