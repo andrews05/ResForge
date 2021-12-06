@@ -75,7 +75,7 @@ class ResourceDirectory {
             if !filter.isEmpty {
                 let id = Int(filter)
                 resouces = resouces.filter {
-                    $0.id == id || $0.name.localizedCaseInsensitiveContains(filter)
+                    $0.id == id || $0.name.localizedStandardContains(filter)
                 }
             }
             if let sorter = sorter {

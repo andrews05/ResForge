@@ -39,7 +39,7 @@ class SupportRegistry {
         } catch {
             return
         }
-        for item in items where item.pathExtension == "rsrc" {
+        for item in items.sorted(by: { $0.path.localizedStandardCompare($1.path) == .orderedAscending }) {
             Self.load(resourceFile: item)
         }
     }
