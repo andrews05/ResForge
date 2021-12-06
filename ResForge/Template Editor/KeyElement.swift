@@ -31,7 +31,7 @@ class KeyElement: CasedElement, CollectionElement {
         var keyBs: [ElementKEYB] = []
         while let keyB = self.parentList.pop("KEYB") as? ElementKEYB {
             // Allow one KEYB to be used for multiple CASEs
-            let vals = keyB.label.components(separatedBy: ",")
+            let vals = (keyB.metaValue ?? keyB.displayLabel).components(separatedBy: ",")
             for value in vals {
                 let key = cases.first(where: { $0.value.displayValue == value })?.key
                 // A value of "*" that doesn't match a CASE will be a wildcard, used when the existing data doesn't match any cases
