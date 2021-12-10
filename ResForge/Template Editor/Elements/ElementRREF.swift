@@ -1,11 +1,15 @@
 import Cocoa
 import RFSupport
 
-// RREF is a static reference to another resource based on this one's id
-// The parameters are determined from the label, in the format "Display Label='TNAM' offset Button Label"
+/*
+ * RREF is a static reference to another resource
+ * The parameters are determined from the label, in the format "Display Label='TNAM' offset Button Label"
+ * If offset is prefixed with # then the referenced id will equal the offset
+ * Otherwise the referenced id will equal the current resource's id plus the offset
+ */
 class ElementRREF: Element {
     private var resType: String!
-    private var id: Int!
+    private var id = 0
     private var buttonLabel: String!
     
     override func configure() throws {
@@ -20,11 +24,14 @@ class ElementRREF: Element {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Could not determine resource type from label.", comment: ""))
         }
         self.resType = resType as String?
-        var offset = 0
-        scanner.scanInt(&offset)
-        id = self.parentList.controller.resource.id + offset
+        if scanner.scanString("#", into: nil) {
+            scanner.scanInt(&id)
+        } else {
+            scanner.scanInt(&id)
+            id += self.parentList.controller.resource.id
+        }
         if scanner.isAtEnd {
-            buttonLabel = "\(self.resType!) #\(self.id!)"
+            buttonLabel = "\(self.resType!) #\(self.id)"
         } else {
             buttonLabel = scanner.string.dropFirst(scanner.scanLocation).trimmingCharacters(in: .whitespaces)
         }
