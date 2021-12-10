@@ -86,13 +86,19 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
     }
     
     private func resIDDisplay(_ resID: Int) -> String {
-        // If an offset is used, the value will be displayed as "value (#actual id)"
-        return offset == 0 ? String(resID) : "\(resID) (#\(resID+offset))"
+        let id = resID + offset
+        if offset != 0 && range?.contains(id) != false {
+            // If an offset is used, the value will be displayed as "value (#actual id)"
+            return "\(resID) (#\(id))"
+        }
+        return String(resID)
     }
     
     func openResource(_ sender: Any) {
-        let id = Int(self.tValue)+offset
-        self.parentList.controller.openOrCreateResource(typeCode: resType, id: id)
+        let id = Int(self.tValue) + offset
+        if range?.contains(id) != false {
+            self.parentList.controller.openOrCreateResource(typeCode: resType, id: id)
+        }
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
