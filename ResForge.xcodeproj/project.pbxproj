@@ -90,6 +90,7 @@
 		49AACD8D24CE97CD0081DD4A /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
+		49CC15922764218800E5605A /* LinkingComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CC15912764218800E5605A /* LinkingComboBox.swift */; };
 		49D6D349271BAA9F002DEA97 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 49D6D348271BAA9F002DEA97 /* OrderedCollections */; };
 		49D6D383271BAAB4002DEA97 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D34E271BAAAC002DEA97 /* LabelView.swift */; };
 		49D6D384271BAAB4002DEA97 /* ElementPSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D35E271BAAAD002DEA97 /* ElementPSTR.swift */; };
@@ -404,6 +405,7 @@
 		49AACD7B24CE931A0081DD4A /* RFSupport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RFSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49AACD7D24CE931A0081DD4A /* RFSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RFSupport.h; sourceTree = "<group>"; };
 		49AACD7E24CE931A0081DD4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49CC15912764218800E5605A /* LinkingComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingComboBox.swift; sourceTree = "<group>"; };
 		49D6D34B271BAAAB002DEA97 /* TemplateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateError.swift; sourceTree = "<group>"; };
 		49D6D34C271BAAAB002DEA97 /* CasedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasedElement.swift; sourceTree = "<group>"; };
 		49D6D34D271BAAAB002DEA97 /* ElementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementList.swift; sourceTree = "<group>"; };
@@ -792,6 +794,7 @@
 				49D6D350271BAAAC002DEA97 /* Templates.rsrc */,
 				49D6D353271BAAAC002DEA97 /* TemplateEditor.swift */,
 				49D6D357271BAAAC002DEA97 /* TabbableOutlineView.swift */,
+				49CC15912764218800E5605A /* LinkingComboBox.swift */,
 				49D6D34E271BAAAC002DEA97 /* LabelView.swift */,
 				49D6D358271BAAAD002DEA97 /* DataView.swift */,
 				49D6D34B271BAAAB002DEA97 /* TemplateError.swift */,
@@ -1419,6 +1422,7 @@
 				49D6D394271BAAB4002DEA97 /* ElementKHBT.swift in Sources */,
 				49D6D3B0271BAAB4002DEA97 /* ElementFBYT.swift in Sources */,
 				4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */,
+				49CC15922764218800E5605A /* LinkingComboBox.swift in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
 				49D6D388271BAAB4002DEA97 /* TemplateEditor.swift in Sources */,
 				49D6D3A0271BAAB4002DEA97 /* ElementAWRD.swift in Sources */,

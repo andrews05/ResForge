@@ -14,7 +14,7 @@ import RFSupport
  *
  * Implements RSID, LRID
  */
-class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxLink {
+class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingComboBoxDelegate {
     var tValue: T = 0
     @objc private var value: NSNumber {
         get { tValue as! NSNumber }
@@ -28,6 +28,9 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
     private var offset: Int = 0
     private var range: ClosedRange<Int>?
     private var fixedMap: OrderedDictionary<AnyHashable, ElementCASE> = [:]
+    var showsLink: Bool {
+        return range?.contains(Int(tValue) + offset) != false
+    }
     
     override func configure() throws {
         // Determine parameters from label
@@ -54,10 +57,6 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
             }
             self.bind(NSBindingName("resType"), to: tnam, withKeyPath: "value")
         }
-    }
-    
-    override func configure(view: NSView) {
-        self.configureComboLink(view: view)
     }
     
     override func readData(from reader: BinaryDataReader) throws {
@@ -94,11 +93,9 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
         return String(resID)
     }
     
-    func openResource(_ sender: Any) {
-        let id = Int(self.tValue) + offset
-        if range?.contains(id) != false {
-            self.parentList.controller.openOrCreateResource(typeCode: resType, id: id)
-        }
+    func followLink(_ sender: Any) {
+        let id = Int(tValue) + offset
+        self.parentList.controller.openOrCreateResource(typeCode: resType, id: id)
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
@@ -111,39 +108,5 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, ComboBoxL
             value = value?.components(separatedBy: " (#").first
         }
         return value ?? ""
-    }
-}
-
-// Add a link button at the end of the combo box to open the referenced resource
-@objc protocol ComboBoxLink where Self: CasedElement {
-    func openResource(_ sender: Any)
-}
-extension ComboBoxLink {
-    func configureComboLink(view: NSView) {
-        self.configureComboBox(view: view)
-        let comboBox = view.subviews.last as! NSComboBox
-        var frame = comboBox.frame
-        frame.origin.x += frame.size.width - 35
-        frame.origin.y += 6
-        frame.size.width = 12
-        frame.size.height = 12
-        let button = NSButton(frame: frame)
-        button.isBordered = false
-        button.bezelStyle = .inline
-        button.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
-        button.imageScaling = .scaleProportionallyDown
-        button.target = self
-        button.action = #selector(openResource(_:))
-        view.addSubview(button)
-    }
-}
-extension NSComboBoxCell {
-    open override func drawingRect(forBounds rect: NSRect) -> NSRect {
-        var r = super.drawingRect(forBounds: rect)
-        let source = (self.dataSource as? NSComboBox)?.dataSource
-        if source is ComboBoxLink {
-            r.size.width -= 15
-        }
-        return r
     }
 }

@@ -83,7 +83,7 @@ class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDat
         }
         frame.size.height = 24
         frame.origin.y -= 1
-        let combo = NSComboBox(frame: frame)
+        let combo = (self is LinkingComboBoxDelegate) ? LinkingComboBox(frame: frame) : NSComboBox(frame: frame)
         combo.completes = true
         combo.numberOfVisibleItems = 10
         combo.delegate = self
