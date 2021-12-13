@@ -30,7 +30,7 @@ class LinkingComboBox: NSComboBox {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layout() {
+    override func draw(_ dirtyRect: NSRect) {
         if linkButton.isHidden == showsLink {
             // Toggle the button visibility
             linkButton.isHidden = !linkButton.isHidden
@@ -41,7 +41,7 @@ class LinkingComboBox: NSComboBox {
                 clip.frame = frame
             }
         }
-        super.layout()
+        super.draw(dirtyRect)
     }
     
     @objc private func followLink(_ sender: Any) {
