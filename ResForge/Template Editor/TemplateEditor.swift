@@ -102,7 +102,8 @@ class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, N
                 }
             }
             resourceCache[type] = resources.values.sorted {
-                $0.name.localizedStandardCompare($1.name) == .orderedAscending
+                let order = $0.name.localizedStandardCompare($1.name)
+                return order == .orderedSame ? $0.id < $1.id : order == .orderedAscending
             }
         }
         return resourceCache[type]!
