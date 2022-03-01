@@ -22,6 +22,15 @@ class ElementUSTR: ElementCSTR {
         }
     }
     
+    // For USTR only, insert new line with return key instead of ending editing (this would otherwise require opt+return)
+    override func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        if type == "USTR" && commandSelector == #selector(NSTextView.insertNewline(_:)) {
+            textView.insertNewlineIgnoringFieldEditor(nil)
+            return true
+        }
+        return super.control(control, textView: textView, doCommandBy: commandSelector)
+    }
+    
     override func readData(from reader: BinaryDataReader) throws {
         let end = reader.data[reader.position...].firstIndex(of: 0) ?? reader.data.endIndex
         let length = min(end - reader.position, maxLength)

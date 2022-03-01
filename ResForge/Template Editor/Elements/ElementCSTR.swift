@@ -78,6 +78,15 @@ class ElementCSTR: CasedElement {
         }
     }
     
+    // For CSTR only, insert carriage return with return key instead of ending editing (this would otherwise require ctrl+opt+return)
+    override func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        if type == "CSTR" && commandSelector == #selector(NSTextView.insertNewline(_:)) {
+            textView.insertText(String(UnicodeScalar(NSCarriageReturnCharacter)!), replacementRange: textView.selectedRange())
+            return true
+        }
+        return super.control(control, textView: textView, doCommandBy: commandSelector)
+    }
+    
     private func autoRowHeight(_ field: NSTextField) {
         guard let outline = self.parentList?.controller?.dataList else {
             return
