@@ -263,9 +263,9 @@ class Rle {
                     }
                     var pixel: UInt16 = 0
                     for i in 0...2 {
-                        let value = UInt16(framePointer[i] & 0xF8)
-                        pixel |= value << (7 - i*5)
-                        framePointer[i] = UInt8(value * 0xFF / 0xF8)
+                        let value = framePointer[i] & 0xF8
+                        pixel |= UInt16(value) << (7 - i*5)
+                        framePointer[i] = value | (value / 0x20)
                     }
                     framePointer[3] = 0xFF
                     framePointer = framePointer.advanced(by: 4)
@@ -294,10 +294,8 @@ class Rle {
                 for i in p...p+2 {
                     // To perfectly replicate QuickDraw we would simply take the error as the lower 3 bits of the value.
                     // This is not entirely accurate though and has the side-effect that repeat dithers will degrade the image.
-                    // Instead we clip the lower 3 bits, restore it to 8-bits the same way we would when decoding (see `write` function), then take the difference.
-                    let current = Int(framePointer[i])
-                    let new = (current & 0xF8) * 0xFF / 0xF8
-                    let error = current - new
+                    // To fix this we subtract from that the upper 3 bits (see 5-bit restoration in `write` function).
+                    let error = Int(framePointer[i] & 0x7) - Int(framePointer[i] / 0x20)
                     if error != 0 {
                         if even && x+1 < frameWidth {
                             framePointer[i+4] = UInt8(clamping: Int(framePointer[i+4]) + error / 2)
@@ -314,12 +312,14 @@ class Rle {
     }
     
     private func write(_ pixel: UInt16, to framePointer: inout UnsafeMutablePointer<UInt8>) {
-        // Restoring 5-bits to 8-bits by bitshifting gives a very close result but is not entirely accurate.
-        // The correct method is to calculate the fraction that the 5 bits represent out of 8 bits.
         // Note: division is used here instead of bitshifts as it is much faster in unoptimised debug builds.
-        framePointer[0] = UInt8(((pixel / 0x400) & 0x1F) * 0xFF / 0x1F)
-        framePointer[1] = UInt8(((pixel /  0x20) & 0x1F) * 0xFF / 0x1F)
-        framePointer[2] = UInt8(((pixel        ) & 0x1F) * 0xFF / 0x1F)
+        let r = UInt8((pixel & 0x7C00) / 0x80)
+        let g = UInt8((pixel & 0x03E0) / 0x04)
+        let b = UInt8((pixel & 0x001F) * 0x08)
+        // To accurately restore 5-bits to 8-bits (and match QuickDraw output), copy the upper 3 bits to the lower 3 bits.
+        framePointer[0] = r | (r / 0x20)
+        framePointer[1] = g | (g / 0x20)
+        framePointer[2] = b | (b / 0x20)
         framePointer[3] = 0xFF
         framePointer = framePointer.advanced(by: 4)
     }
