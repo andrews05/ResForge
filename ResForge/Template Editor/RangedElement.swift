@@ -69,6 +69,7 @@ class RangedElement: CasedElement {
             frame.origin.x += popupWidth
             view.frame = frame
             currentCase.configure(view: view)
+            select.nextKeyView = view.subviews.last
             self.width = popupWidth + currentCase.width
             view.frame = orig
         } else {
@@ -102,7 +103,6 @@ class RangedElement: CasedElement {
         }
         let outline = self.parentList.controller.dataList!
         // Item isn't necessarily self
-        // FIXME: This breaks the key view loop for the row, but reloading entire data is too inefficient.
         outline.reloadItem(outline.item(atRow: outline.row(for: sender)))
         self.parentList.controller.itemValueUpdated(sender)
     }

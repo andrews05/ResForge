@@ -55,7 +55,9 @@ class ElementPACK: Element {
                     element.popupWidth = element.popupWidth > 180 ? 180 : 120
                 }
             }
+            let prev = view.subviews.last
             element.configure(view: view)
+            prev?.nextKeyView = view.subviews.last
             frame.origin.x += element.width
             frame.size.width -= element.width
             view.frame = frame
