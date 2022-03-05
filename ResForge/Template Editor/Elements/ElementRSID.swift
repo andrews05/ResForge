@@ -59,6 +59,10 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
         }
     }
     
+    override func configure(view: NSView) {
+        self.configureComboBox(view: view)
+    }
+    
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
     }
