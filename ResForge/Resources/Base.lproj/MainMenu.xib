@@ -331,10 +331,10 @@ CA
                                     <action selector="openResourcesAsHex:" target="-1" id="500"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Export…" tag="6" id="uyA-9M-2HY">
+                            <menuItem title="Export…" tag="6" identifier="exportResource" id="uyA-9M-2HY">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="exportResources:" target="-1" id="K26-n0-cc3"/>
+                                    <action selector="exportResource:" target="-1" id="K26-n0-cc3"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" tag="6" id="425">

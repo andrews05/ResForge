@@ -140,26 +140,6 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         })
     }
     
-    @IBAction func exportImage(_ sender: Any) {
-        let panel = NSSavePanel()
-        if self.resource.name.isEmpty {
-            panel.nameFieldStringValue = "Frame sheet \(resource.id)"
-        } else {
-            panel.nameFieldStringValue = self.resource.name
-        }
-        panel.allowedFileTypes = ["tiff"]
-        panel.beginSheetModal(for: self.window!) { returnCode in
-            if returnCode == .OK {
-                do {
-                    let data = try self.rle.readSheet().tiffRepresentation!
-                    try data.write(to: panel.url!)
-                } catch {
-                    self.presentError(error)
-                }
-            }
-        }
-    }
-
     @IBAction func saveResource(_ sender: Any) {
         guard let rle = rle else {
             return

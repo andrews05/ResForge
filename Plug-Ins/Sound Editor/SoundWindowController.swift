@@ -86,25 +86,6 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
         sound.playing ? sound.stop() : sound.play()
     }
     
-    @IBAction func exportSound(_ sender: Any) {
-        let panel = NSSavePanel()
-        if self.resource.name.isEmpty {
-            panel.nameFieldStringValue = "Sound \(resource.id)"
-        } else {
-            panel.nameFieldStringValue = self.resource.name
-        }
-        panel.allowedFileTypes = ["aiff"]
-        panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
-            if returnCode == .OK, let url = panel.url {
-                do {
-                    try self.sound.export(to: url)
-                } catch let error {
-                    self.presentError(error)
-                }
-            }
-        })
-    }
-    
     @IBAction func importSound(_ sender: Any) {
         let panel = NSOpenPanel()
         panel.allowedFileTypes = ["public.audio"]

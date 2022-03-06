@@ -213,7 +213,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     
     // MARK: - Export
     
-    @IBAction func exportResources(_ sender: Any) {
+    @IBAction func exportResource(_ sender: Any) {
         let resources = dataSource.selectedResources(deep: true)
         if resources.count > 1 {
             // Multiple resources, choose a directory to export to
@@ -369,7 +369,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         case .exportResources:
             item.label = NSLocalizedString("Export", comment: "")
             item.image = NSImage(named: NSImage.shareTemplateName)
-            item.action = #selector(exportResources(_:))
+            item.action = #selector(exportResource(_:))
             item.isEnabled = false
         case .showInfo:
             item.label = NSLocalizedString("Show Info", comment: "")
@@ -478,7 +478,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             #selector(openResources(_:)),
             #selector(openResourcesInTemplate(_:)),
             #selector(openResourcesAsHex(_:)),
-            #selector(exportResources(_:)):
+            #selector(exportResource(_:)):
             return dataSource.selectionCount() > 0
         case #selector(showFind(_:)):
             return windowForSheet?.toolbar?.isVisible == true

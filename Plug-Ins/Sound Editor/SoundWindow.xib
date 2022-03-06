@@ -41,7 +41,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="exportSound:" target="-2" id="Mcv-4F-lSX"/>
+                            <action selector="exportResource:" target="-2" id="HPl-xC-S9f"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I6o-Jo-YiD">

@@ -40,10 +40,36 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
         }
     }
     
+    @IBAction func exportResource(_ sender: Any) {
+        guard let plug = self as? ResourceEditor,
+              let exporter = type(of: self) as? ExportProvider.Type else {
+            return
+        }
+        let resource = plug.resource
+        let panel = NSSavePanel()
+        if resource.name.isEmpty {
+            panel.nameFieldStringValue = "\(resource.typeCode) \(resource.id)"
+        } else {
+            panel.nameFieldStringValue = resource.name
+        }
+        panel.allowedFileTypes = [exporter.filenameExtension(for: resource.typeCode)]
+        panel.beginSheetModal(for: self.window!) { returnCode in
+            if returnCode == .OK {
+                do {
+                    try _ = exporter.export(plug.resource, to: panel.url!)
+                } catch {
+                    self.presentError(error)
+                }
+            }
+        }
+    }
+    
     public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.identifier?.rawValue {
         case "saveResource", "revertResource", "save":
             return self.window?.isDocumentEdited == true
+        case "exportResources":
+            return self is ExportProvider
         default:
             return true
         }
