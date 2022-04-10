@@ -6,14 +6,14 @@
 
 @implementation QuickDraw
 
-+ (NSBitmapImageRep *)repFromPict:(NSData *)data error:(NSError **)outError {
++ (NSBitmapImageRep *)repFromPict:(NSData *)data format:(uint32_t *)format error:(NSError **)outError {
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
-        auto surface = graphite::qd::pict(std::make_shared<graphite::data::data>(gData), 0, "").image_surface().lock();
-        if (!surface) return nil;
-        // Most software seems to ignore PICT alpha - we will too, as it can contain garbage data
-        return [QuickDraw repFromRaw:surface->raw() size:surface->size() alpha:false];
+        auto pict = graphite::qd::pict(std::make_shared<graphite::data::data>(gData), 0, "");
+        *format = pict.format();
+        auto surface = pict.image_surface().lock();
+        return [QuickDraw repFromRaw:surface->raw() size:surface->size()];
     } catch (const std::exception& e) {
         NSString *message = [NSString stringWithUTF8String:e.what()];
         *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError userInfo:@{NSLocalizedDescriptionKey:message}];
@@ -32,7 +32,7 @@
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
         auto surface = graphite::qd::cicn(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
-        return [QuickDraw repFromRaw:surface->raw() size:surface->size() alpha:true];
+        return [QuickDraw repFromRaw:surface->raw() size:surface->size()];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -49,7 +49,7 @@
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
         auto surface = graphite::qd::ppat(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
-        return [QuickDraw repFromRaw:surface->raw() size:surface->size() alpha:false];
+        return [QuickDraw repFromRaw:surface->raw() size:surface->size()];
     } catch (const std::exception& e) {
         return nil;
     }
@@ -80,14 +80,14 @@
                 }
             }
         }
-        return [QuickDraw repFromRaw:raw size:surface->size() alpha:true];
+        return [QuickDraw repFromRaw:raw size:surface->size()];
     } catch (const std::exception& e) {
         return nil;
     }
 }
 
 
-+ (NSBitmapImageRep *)repFromRaw:(std::vector<uint32_t>)raw size:(graphite::qd::size)size alpha:(bool)alpha {
++ (NSBitmapImageRep *)repFromRaw:(std::vector<uint32_t>)raw size:(graphite::qd::size)size {
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:nil
                                                                     pixelsWide:size.width()
                                                                     pixelsHigh:size.height()
@@ -99,7 +99,6 @@
                                                                    bytesPerRow:size.width()*4
                                                                   bitsPerPixel:32];
     memcpy(rep.bitmapData, raw.data(), rep.bytesPerPlane);
-    rep.alpha = alpha;
     return rep;
 }
 

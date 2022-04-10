@@ -67,8 +67,12 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     // MARK: -
     
     private func loadImage() {
-        imageView.image = Self.image(for: resource)
-        if let image = imageView.image {
+        imageView.image = nil
+        var format: UInt32 = 0
+        if let rep = Self.imageRep(for: resource, format: &format) {
+            let image = NSImage()
+            image.addRepresentation(rep)
+            imageView.image = image
             // Colour icons use the mask from the black & white version of the same icon - see if we can load it.
             // Note this is only done within the viewer - preview and export should not access other resources.
             let maskType: String?
@@ -84,7 +88,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             }
             if let maskType = maskType,
                let bw = manager.findResource(type: ResourceType(maskType, resource.typeAttributes), id: resource.id, currentDocumentOnly: true),
-               let bwRep = Self.imageRep(for: bw) {
+               let bwRep = Self.imageRep(for: bw, format: &format) {
                 image.lockFocus()
                 NSGraphicsContext.current?.imageInterpolation = .none
                 image.representations[0].draw()
@@ -93,6 +97,19 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             }
         }
         self.updateView()
+        switch format {
+        case 0:
+            break
+        case 1:
+            imageSize.stringValue += " (Monochrome)"
+        case 2, 4, 8:
+            imageSize.stringValue += " (\(format)-bit Indexed)"
+        case 16, 24, 32:
+            imageSize.stringValue += " (\(format)-bit RGB)"
+        default:
+            let type = format.stringValue.trimmingCharacters(in: .whitespaces).uppercased()
+            imageSize.stringValue += " (\(type))"
+        }
     }
     
     private func updateView() {
@@ -157,6 +174,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         switch resource.typeCode {
         case "PICT":
             resource.data = QuickDraw.pict(from: rep)
+            imageSize.stringValue += " (24-bit RGB)"
         case "cicn":
             resource.data = QuickDraw.cicn(from: rep)
         case "ppat":
@@ -220,7 +238,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     // MARK: - Preview Provider
     
     static func image(for resource: Resource) -> NSImage? {
-        guard let rep = self.imageRep(for: resource) else {
+        var format: UInt32 = 0
+        guard let rep = self.imageRep(for: resource, format: &format) else {
             return nil
         }
         let image = NSImage()
@@ -237,14 +256,14 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
     }
     
-    private static func imageRep(for resource: Resource) -> NSImageRep? {
+    private static func imageRep(for resource: Resource, format: inout UInt32) -> NSImageRep? {
         let data = resource.data
         guard !data.isEmpty else {
             return nil
         }
         switch resource.typeCode {
         case "PICT":
-            return self.rep(fromPict: data)
+            return self.rep(fromPict: data, format: &format)
         case "cicn":
             return QuickDraw.rep(fromCicn: data)
         case "ppat":
@@ -279,13 +298,13 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
     }
     
-    private static func rep(fromPict data: Data) -> NSImageRep? {
+    private static func rep(fromPict data: Data, format: inout UInt32) -> NSImageRep? {
         // On systems earlier than 10.15 we can handle the pict natively
         guard #available(macOS 10.15, *) else {
             return NSPICTImageRep(data: data)
         }
         do {
-            return try QuickDraw.rep(fromPict: data)
+            return try QuickDraw.rep(fromPict: data, format: &format)
         } catch let error {
             // If the error is because of an unsupported QuickTime compressor, attempt to decode it
             // natively from the offset indicated. This should work for e.g. PNG or JPEG.
@@ -297,6 +316,9 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
                 // We need to disable the alpha, but first ensure the image has been decoded by accessing the bitmapData
                 _ = rep.bitmapData
                 rep.hasAlpha = false
+                if let cRange = error.localizedDescription.range(of: "(?<=')....(?=')", options: .regularExpression) {
+                    format = UInt32(String(error.localizedDescription[cRange]))
+                }
                 return rep
             }
         }
