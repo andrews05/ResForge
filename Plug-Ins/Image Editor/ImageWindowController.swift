@@ -30,6 +30,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var imageSize: NSTextField!
+    @IBOutlet var imageFormat: NSTextField!
+    private var format: UInt32 = 0
     private var widthConstraint: NSLayoutConstraint!
     private var heightConstraint: NSLayoutConstraint!
     
@@ -68,7 +70,6 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     
     private func loadImage() {
         imageView.image = nil
-        var format: UInt32 = 0
         if let rep = Self.imageRep(for: resource, format: &format) {
             let image = NSImage()
             image.addRepresentation(rep)
@@ -97,27 +98,28 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             }
         }
         self.updateView()
-        switch format {
-        case 0:
-            break
-        case 1:
-            imageSize.stringValue += " (Monochrome)"
-        case 2, 4, 8:
-            imageSize.stringValue += " (\(format)-bit Indexed)"
-        case 16, 24, 32:
-            imageSize.stringValue += " (\(format)-bit RGB)"
-        default:
-            let type = format.stringValue.trimmingCharacters(in: .whitespaces).uppercased()
-            imageSize.stringValue += " (\(type))"
-        }
     }
     
     private func updateView() {
+        imageFormat.isHidden = true
         if let image = imageView.image {
             widthConstraint.constant = max(image.size.width, window!.contentMinSize.width)
             heightConstraint.constant = max(image.size.height, window!.contentMinSize.height)
             self.window?.setContentSize(NSMakeSize(widthConstraint.constant, heightConstraint.constant))
             imageSize.stringValue = String(format: "%.0fx%.0f", image.size.width, image.size.height)
+            imageFormat.isHidden = format == 0
+            switch format {
+            case 0:
+                break
+            case 1:
+                imageFormat.stringValue = "Monochrome"
+            case 2, 4, 8:
+                imageFormat.stringValue = "\(format)-bit Indexed"
+            case 16, 24, 32:
+                imageFormat.stringValue = "\(format)-bit RGB"
+            default:
+                imageFormat.stringValue = format.stringValue.trimmingCharacters(in: .whitespaces).uppercased()
+            }
         } else if !resource.data.isEmpty {
             imageSize.stringValue = "Invalid or unsupported image format"
         } else if imageView.isEditable {
@@ -154,6 +156,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         switch resource.typeCode {
         case "PICT":
             rep = self.bitmapRep(flatten: true)
+            format = 24
         case "cicn":
             rep = self.bitmapRep(palette: true)
         case "ppat":
@@ -174,7 +177,6 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         switch resource.typeCode {
         case "PICT":
             resource.data = QuickDraw.pict(from: rep)
-            imageSize.stringValue += " (24-bit RGB)"
         case "cicn":
             resource.data = QuickDraw.cicn(from: rep)
         case "ppat":

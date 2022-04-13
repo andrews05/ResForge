@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="PictWindowController" customModule="Image_Editor" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="ImageWindowController" customModule="Image_Editor" customModuleProvider="target">
             <connections>
+                <outlet property="imageFormat" destination="UZR-6N-f7A" id="NqM-vT-EWM"/>
                 <outlet property="imageSize" destination="Idz-Rc-j82" id="g5Y-Vm-wsW"/>
                 <outlet property="imageView" destination="19" id="21"/>
                 <outlet property="scrollView" destination="PtH-kU-h2h" id="H0x-kR-Ai3"/>
@@ -56,13 +57,24 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="UZR-6N-f7A">
+                        <rect key="frame" x="246" y="226" width="74" height="14"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Image format" drawsBackground="YES" id="Etq-ms-etx">
+                            <font key="font" metaFont="message" size="11"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="PtH-kU-h2h" secondAttribute="trailing" id="EvW-dZ-3nV"/>
                     <constraint firstItem="PtH-kU-h2h" firstAttribute="top" secondItem="18" secondAttribute="top" id="FJ2-HP-YCk"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Idz-Rc-j82" secondAttribute="trailing" id="NcJ-HJ-Rpa"/>
+                    <constraint firstItem="UZR-6N-f7A" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="18" secondAttribute="leading" id="RAp-Qs-QKU"/>
                     <constraint firstItem="Idz-Rc-j82" firstAttribute="top" secondItem="18" secondAttribute="top" id="To8-Ni-Dfl"/>
+                    <constraint firstItem="UZR-6N-f7A" firstAttribute="top" secondItem="18" secondAttribute="top" id="dkC-pH-rR9"/>
                     <constraint firstItem="PtH-kU-h2h" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="i7r-0i-0QW"/>
+                    <constraint firstAttribute="trailing" secondItem="UZR-6N-f7A" secondAttribute="trailing" id="nGg-Dy-Glt"/>
                     <constraint firstItem="Idz-Rc-j82" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="rRT-KN-Ney"/>
                     <constraint firstAttribute="bottom" secondItem="PtH-kU-h2h" secondAttribute="bottom" id="uj4-vb-8rd"/>
                 </constraints>
