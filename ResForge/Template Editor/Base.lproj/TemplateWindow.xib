@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,22 +18,22 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="406" y="385" width="560" height="400"/>
+            <rect key="contentRect" x="406" y="385" width="540" height="400"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <value key="minSize" type="size" width="220" height="100"/>
-            <value key="maxSize" type="size" width="560" height="10000"/>
+            <value key="maxSize" type="size" width="540" height="10000"/>
             <view key="contentView" wantsLayer="YES" id="22">
-                <rect key="frame" x="0.0" y="0.0" width="560" height="400"/>
+                <rect key="frame" x="0.0" y="0.0" width="540" height="400"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="400"/>
                         <clipView key="contentView" id="ZgB-a4-tUl">
-                            <rect key="frame" x="0.0" y="0.0" width="560" height="400"/>
+                            <rect key="frame" x="0.0" y="0.0" width="540" height="400"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationMarkerFollowsCell="NO" outlineTableColumn="37" id="36" customClass="TabbableOutlineView" customModule="ResForge" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="560" height="400"/>
+                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" tableStyle="plain" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationMarkerFollowsCell="NO" outlineTableColumn="37" id="36" customClass="TabbableOutlineView" customModule="ResForge" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="540" height="400"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="6" height="0.0"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -52,7 +52,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="xI4-fZ-IZP" userLabel="Label">
-                                                    <rect key="frame" x="13" y="0.0" width="153" height="22"/>
+                                                    <rect key="frame" x="3" y="0.0" width="153" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FUM-Fz-dnU">
@@ -74,7 +74,7 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="listLabel" id="hgb-pb-eOm" customClass="LabelView" customModule="ResForge" customModuleProvider="target">
-                                                    <rect key="frame" x="13" y="22" width="153" height="22"/>
+                                                    <rect key="frame" x="3" y="22" width="153" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3bN-4y-Fu0">
@@ -96,7 +96,7 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="listEndLabel" id="hbr-Yq-Ifg" userLabel="Button View" customClass="LabelView" customModule="ResForge" customModuleProvider="target">
-                                                    <rect key="frame" x="13" y="44" width="153" height="22"/>
+                                                    <rect key="frame" x="3" y="44" width="153" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ELL-5z-5Ng">
@@ -130,7 +130,7 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="groupView" id="emB-cD-7ej">
-                                                    <rect key="frame" x="13" y="66" width="153" height="20"/>
+                                                    <rect key="frame" x="3" y="66" width="153" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="tXR-v5-Vmv">
@@ -194,7 +194,7 @@
             <connections>
                 <outlet property="initialFirstResponder" destination="36" id="46"/>
             </connections>
-            <point key="canvasLocation" x="140" y="145"/>
+            <point key="canvasLocation" x="130" y="145"/>
         </window>
     </objects>
 </document>
