@@ -123,6 +123,7 @@ class ResourceDirectory {
             resourcesByType.removeValue(forKey: type)
             allTypes.removeFirst(type)
         }
+        resource.document = nil
     }
     
     @objc func resourceTypeDidChange(_ notification: Notification) {

@@ -82,7 +82,7 @@ class SpriteLayer: NSObject {
             }
             controller.manager.open(resource: resource)
         } else {
-            controller.manager.createResource(type: type, id: Int(spriteID), name: "")
+            controller.manager.createResource(type: type, id: Int(spriteID))
         }
     }
     

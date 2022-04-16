@@ -109,12 +109,28 @@ class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, N
         return resourceCache[type]!
     }
     
-    func openOrCreateResource(typeCode: String, id: Int) {
+    func openOrCreateResource(typeCode: String, id: Int, callback: ((Resource) -> Void)? = nil) {
         let type = ResourceType(typeCode, resource.typeAttributes)
         if let resource = manager.findResource(type: type, id: id, currentDocumentOnly: false) {
             manager.open(resource: resource)
+            callback?(resource)
         } else {
-            manager.createResource(type: type, id: id, name: "")
+            manager.createResource(type: type, id: id) { [weak self] resource in
+                guard let self = self else { return }
+                if let resource = resource {
+                    // Reset the cache for this type
+                    if self.resourceCache[resource.typeCode] != nil && !resource.name.isEmpty {
+                        self.resourceCache.removeValue(forKey: resource.typeCode)
+                    }
+                    // Callback only if the id and type match what was requested
+                    if let callback = callback, resource.id == id && resource.typeCode == typeCode {
+                        callback(resource)
+                    }
+                } else {
+                    // Cancelled, return focus to template window
+                    self.window?.makeKeyAndOrderFront(self)
+                }
+            }
         }
     }
     

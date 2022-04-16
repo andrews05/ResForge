@@ -129,7 +129,7 @@ class EditorManager: RFEditorManager {
         return SupportRegistry.directory.findResource(type: type, name: name)
     }
     
-    func createResource(type: ResourceType, id: Int, name: String) {
-        document.createController.show(type: type, id: id, name: name)
+    func createResource(type: ResourceType, id: Int, name: String, callback: ((Resource?) -> Void)? = nil) {
+        document.createController.show(type: type, id: id, name: name, callback: callback)
     }
 }

@@ -9,6 +9,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var attributesHolder: NSView!
     @IBOutlet var attributesEditor: AttributesEditor!
     private unowned var rDocument: ResourceDocument
+    private var callback: ((Resource?) -> Void)?
     private var currentType: ResourceType {
         ResourceType(typeView.stringValue, attributesEditor.attributes)
     }
@@ -30,7 +31,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil) {
+    func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil, callback: ((Resource?) -> Void)? = nil) {
         _ = self.window
         // Add all types currently open
         let docs = NSDocumentController.shared.documents as! [ResourceDocument]
@@ -71,6 +72,7 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             self.window?.makeFirstResponder(typeView)
             createButton.isEnabled = false
         }
+        self.callback = callback
         rDocument.windowForSheet?.beginSheet(self.window!)
     }
     
@@ -106,7 +108,11 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             if !rDocument.dataSource.isBulkMode {
                 rDocument.editorManager.open(resource: resource)
             }
+            self.callback?(resource)
+        } else {
+            self.callback?(nil)
         }
+        self.callback = nil
         self.window?.sheetParent?.endSheet(self.window!)
     }
 }
