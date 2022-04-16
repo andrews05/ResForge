@@ -8,34 +8,35 @@ import RFSupport
  * Otherwise the referenced id will equal the current resource's id plus the offset
  */
 class ElementRREF: Element {
-    private var resType: String!
+    private var resType = ""
     private var id = 0
-    private var buttonLabel: String!
+    private var buttonLabel = ""
     
     override func configure() throws {
-        var resType: NSString?
+        var typeCode: NSString?
         guard let metaValue = metaValue,
               case let scanner = Scanner(string: metaValue),
               scanner.scanString("'", into: nil),
-              scanner.scanUpTo("'", into: &resType),
+              scanner.scanUpTo("'", into: &typeCode),
               scanner.scanString("'", into: nil),
-              resType?.length == 4
+              let typeCode = typeCode,
+              typeCode.length == 4
         else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Could not determine resource type from label.", comment: ""))
         }
-        self.resType = resType as String?
+        resType = typeCode as String
         if scanner.scanString("#", into: nil) {
             scanner.scanInt(&id)
         } else {
             scanner.scanInt(&id)
-            id += self.parentList.controller.resource.id
+            id += parentList.controller.resource.id
         }
         if scanner.isAtEnd {
-            buttonLabel = "\(self.resType!) #\(self.id)"
+            buttonLabel = "\(resType) #\(id)"
         } else {
             buttonLabel = scanner.string.dropFirst(scanner.scanLocation).trimmingCharacters(in: .whitespaces)
         }
-        self.width = 120
+        width = 120
     }
     
     override func configure(view: NSView) {
@@ -47,7 +48,14 @@ class ElementRREF: Element {
         button.bezelStyle = .inline
         button.title = buttonLabel
         button.font = .boldSystemFont(ofSize: 11)
-        button.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
+        // Show add icon if resource does not exist, otherwise follow link icon
+        let resource = parentList.controller.manager.findResource(type: ResourceType(resType), id: id, currentDocumentOnly: false)
+        button.image = NSImage(named: resource == nil ? NSImage.touchBarAddDetailTemplateName : NSImage.followLinkFreestandingTemplateName)
+        if resource == nil {
+            // The add icon isn't strictly supposed to be used outside of the touch bar -
+            // It works fine on macOS 11 but for appropriate sizing on 10.14 we need to set the size explicitly (default is 18x30)
+            button.image?.size = NSSize(width: 14, height: 23)
+        }
         button.imagePosition = .imageRight
         button.target = self
         button.action = #selector(openResource(_:))
@@ -55,6 +63,11 @@ class ElementRREF: Element {
     }
     
     @IBAction func openResource(_ sender: Any) {
-        self.parentList.controller.openOrCreateResource(typeCode: resType, id: id)
+        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { resource in
+            // Update button image
+            if let button = sender as? NSButton {
+                button.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
+            }
+        }
     }
 }
