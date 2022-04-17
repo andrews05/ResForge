@@ -301,15 +301,11 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     }
     
     private static func rep(fromPict data: Data, format: inout UInt32) -> NSImageRep? {
-        // On systems earlier than 10.15 we can handle the pict natively
-        guard #available(macOS 10.15, *) else {
-            return NSPICTImageRep(data: data)
-        }
         do {
             return try QuickDraw.rep(fromPict: data, format: &format)
         } catch let error {
             // If the error is because of an unsupported QuickTime compressor, attempt to decode it
-            // natively from the offset indicated. This should work for e.g. PNG or JPEG.
+            // natively from the offset indicated. This should work for e.g. PNG, JPEG, GIF, TIFF.
             if let range = error.localizedDescription.range(of: "(?<=offset )[0-9]+", options: .regularExpression),
                let offset = Int(error.localizedDescription[range]),
                data.count > offset,
@@ -323,6 +319,10 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
                 }
                 return rep
             }
+        }
+        // On systems earlier than 10.15 we can fallback to the native handler
+        guard #available(macOS 10.15, *) else {
+            return NSPICTImageRep(data: data)
         }
         return nil
     }
