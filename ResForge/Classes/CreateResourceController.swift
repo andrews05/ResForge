@@ -49,7 +49,13 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         }
         
         typeView.objectValue = type?.code
-        idView.objectValue = id
+        if let type = type {
+            idView.integerValue = rDocument.directory.uniqueID(for: type, starting: id ?? 128)
+            createButton.isEnabled = true
+        } else {
+            idView.objectValue = id
+            createButton.isEnabled = false
+        }
         nameView.objectValue = name
         if rDocument.format == .extended {
             attributesHolder.isHidden = false
@@ -58,20 +64,8 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             attributesHolder.isHidden = true
             attributesEditor.attributes = [:]
         }
-        // The last non-nil value provided will receive focus
-        if let type = type {
-            if let id = id {
-                idView.integerValue = rDocument.directory.uniqueID(for: type, starting: id)
-                self.window?.makeFirstResponder(name == nil ? idView : nameView)
-            } else {
-                idView.integerValue = rDocument.directory.uniqueID(for: type)
-                self.window?.makeFirstResponder(typeView)
-            }
-            createButton.isEnabled = true
-        } else {
-            self.window?.makeFirstResponder(typeView)
-            createButton.isEnabled = false
-        }
+        // Focus the name field if a value is provided, otherwise the type field
+        self.window?.makeFirstResponder(name == nil ? typeView : nameView)
         self.callback = callback
         rDocument.windowForSheet?.beginSheet(self.window!)
     }
