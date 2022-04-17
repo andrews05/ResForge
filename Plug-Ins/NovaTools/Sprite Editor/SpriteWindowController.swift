@@ -125,19 +125,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     
     @IBAction func importImage(_ sender: Any) {
         playing = false
-        importPanel.beginSheetModal(for: self.window!, sheetCallback: { [self] (image, gridX, gridY, dither) in
-            let rep = image.representations[0]
-            rle = Rle(width: rep.pixelsWide / gridX, height: rep.pixelsHigh / gridY, count: gridX * gridY)
-            frames = rle.writeSheet(image, dither: dither)
-            self.updateView()
-            self.setDocumentEdited(true)
-        }, framesCallback: { [self] (images, dither) in
-            let rep = images[0].representations[0]
-            rle = Rle(width: rep.pixelsWide, height: rep.pixelsHigh, count: images.count)
-            frames = rle.writeFrames(images, dither: dither)
-            self.updateView()
-            self.setDocumentEdited(true)
-        })
+        importPanel.beginSheetModal(for: self.window!, sheetCallback: self.importSheet, framesCallback: self.importFrames)
     }
     
     @IBAction func saveResource(_ sender: Any) {
@@ -158,6 +146,29 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
             NSPasteboard.general.clearContents()
             NSPasteboard.general.writeObjects([image])
         }
+    }
+    
+    @IBAction func paste(_ sender: Any) {
+        guard let image = NSPasteboard.general.readObjects(forClasses: [NSImage.self])?.first as? NSImage else {
+            return
+        }
+        importPanel.beginSheetModal(for: window!, with: image, sheetCallback: self.importSheet)
+    }
+    
+    private func importSheet(image: NSImage, gridX: Int, gridY: Int, dither: Bool) {
+        let rep = image.representations[0]
+        rle = Rle(width: rep.pixelsWide / gridX, height: rep.pixelsHigh / gridY, count: gridX * gridY)
+        frames = rle.writeSheet(image, dither: dither)
+        self.updateView()
+        self.setDocumentEdited(true)
+    }
+    
+    private func importFrames(images: [NSImage], dither: Bool) {
+        let rep = images[0].representations[0]
+        rle = Rle(width: rep.pixelsWide, height: rep.pixelsHigh, count: images.count)
+        frames = rle.writeFrames(images, dither: dither)
+        self.updateView()
+        self.setDocumentEdited(true)
     }
     
     // MARK: -

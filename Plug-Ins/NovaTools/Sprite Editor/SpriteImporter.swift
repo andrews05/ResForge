@@ -54,15 +54,28 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         }
     }
     
-    private func reset() {
-        directory = true
-        image = nil
-        images = nil
-        imageSize.stringValue = "-"
-        xTiles.isEnabled = false
-        yTiles.isEnabled = false
-        frameSize.stringValue = "-"
-        preview.image = nil
+    func beginSheetModal(for window: NSWindow,
+                         with image: NSImage,
+                         sheetCallback: @escaping(NSImage, Int, Int, Bool) -> Void) {
+        self.setImage(image)
+        self.updateGrid(self)
+        // The width of the options view will change when used in the open panel - reset it to an appropriate value
+        optionsView.setFrameSize(NSSize(width: 300, height: optionsView.frame.height))
+        let alert = NSAlert()
+        alert.accessoryView = optionsView
+        // The alert requires an icon but the default app icon doesn't make sense here so just use the given image
+        alert.icon = image
+        alert.messageText = ""
+        let importButton = alert.addButton(withTitle: NSLocalizedString("Import", comment: ""))
+        // The preview image will be nil when the grid is invalid - use this to control the enabled state of the import button
+        importButton.bind(.enabled, to: preview!, withKeyPath: "image", options: [.valueTransformerName: NSValueTransformerName.isNotNilTransformerName])
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
+        alert.beginSheetModal(for: window) { [self] modalResponse in
+            if modalResponse == .alertFirstButtonReturn {
+                sheetCallback(image, xTiles.integerValue, yTiles.integerValue, dither.state == .on)
+            }
+        }
+        optionsView.window?.recalculateKeyViewLoop()
     }
     
     func panel(_ sender: Any, validate url: URL) throws {
@@ -101,17 +114,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             if (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true {
                 panel.prompt = NSLocalizedString("Import Folder", comment: "")
             } else {
-                directory = false
-                if let image = NSImage(contentsOf: url), image.isValid {
-                    self.image = image
-                    let width = image.representations[0].pixelsWide
-                    let height = image.representations[0].pixelsHigh
-                    imageSize.stringValue = "\(width) x \(height)"
-                    xTiles.isEnabled = true
-                    yTiles.isEnabled = true
-                } else {
-                    imageSize.stringValue = "unsupported"
-                }
+                self.setImage(NSImage(contentsOf: url))
                 panel.prompt = NSLocalizedString("Import Image", comment: "")
             }
         }
@@ -139,5 +142,31 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         preview.image?.lockFocus()
         image.draw(at: NSZeroPoint, from: NSMakeRect(0, image.size.height-size.height, size.width, size.height), operation: .copy, fraction: 1)
         preview.image?.unlockFocus()
+    }
+    
+    private func reset() {
+        directory = true
+        image = nil
+        images = nil
+        imageSize.stringValue = "-"
+        xTiles.isEnabled = false
+        yTiles.isEnabled = false
+        frameSize.stringValue = "-"
+        preview.image = nil
+    }
+    
+    private func setImage(_ image: NSImage?) {
+        directory = false
+        guard let image = image,
+              let rep = image.representations.first,
+              rep.pixelsWide > 0 && rep.pixelsHigh > 0
+        else {
+            imageSize.stringValue = "unsupported"
+            return
+        }
+        self.image = image
+        imageSize.stringValue = "\(rep.pixelsWide) x \(rep.pixelsHigh)"
+        xTiles.isEnabled = true
+        yTiles.isEnabled = true
     }
 }
