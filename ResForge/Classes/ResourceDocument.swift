@@ -264,13 +264,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     
     private func export(resource: Resource, to url: URL) {
         do {
-            if resource.data.isEmpty {
-                try Data().write(to: url)
+            if !resource.data.isEmpty, let exporter = PluginRegistry.exportProviders[resource.typeCode] {
+                try exporter.export(resource, to: url)
             } else {
-                let editor = PluginRegistry.exportProviders[resource.typeCode]
-                if try editor?.export(resource, to: url) != true {
-                    try resource.data.write(to: url)
-                }
+                try resource.data.write(to: url)
             }
         } catch let error {
             self.presentError(error)

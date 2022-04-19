@@ -131,8 +131,7 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
         return "aiff"
     }
     
-    static func export(_ resource: Resource, to url: URL) throws -> Bool {
+    static func export(_ resource: Resource, to url: URL) throws {
         try SoundResource(resource.data).export(to: url)
-        return true
     }
 }

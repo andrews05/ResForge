@@ -91,7 +91,7 @@ class KeyElement: CasedElement, CollectionElement {
         self.parentList.controller.itemValueUpdated(sender)
     }
     
-    func setCase(_ value: AnyHashable) -> ElementKEYB? {
+    @discardableResult func setCase(_ value: AnyHashable) -> ElementKEYB? {
         let newSection = keyedSections[value] ?? keyedSections[nil]
         if newSection == currentSection {
             return currentSection

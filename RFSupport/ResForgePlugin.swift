@@ -31,8 +31,8 @@ public protocol ExportProvider {
     /// Return the filename extension for the resource type.
     static func filenameExtension(for resourceType: String) -> String
     
-    /// Write a file representing the resource to the given url. If false is returned, the resource's data will be written directly.
-    static func export(_ resource: Resource, to url: URL) throws -> Bool
+    /// Write a file representing the resource to the given url.
+    static func export(_ resource: Resource, to url: URL) throws
 }
 
 /// A placeholder provider allows custom content to be shown as a placeholder in the list view when a resource has no name.

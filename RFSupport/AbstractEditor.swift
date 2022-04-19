@@ -56,7 +56,7 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
         panel.beginSheetModal(for: self.window!) { returnCode in
             if returnCode == .OK {
                 do {
-                    try _ = exporter.export(plug.resource, to: panel.url!)
+                    try exporter.export(plug.resource, to: panel.url!)
                 } catch {
                     self.presentError(error)
                 }

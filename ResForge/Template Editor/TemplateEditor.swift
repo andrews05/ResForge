@@ -42,13 +42,13 @@ class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, N
     
     @objc func resourceDataDidChange(_ notification: NSNotification) {
         if self.window?.isDocumentEdited != true {
-            _ = self.load(data: resource.data)
+            self.load(data: resource.data)
         }
     }
     
     @objc func templateDataDidChange(_ notification: NSNotification) {
         // Reload the template while keeping the current data
-        _ = self.load(data: resourceStructure.getResourceData())
+        self.load(data: resourceStructure.getResourceData())
         dataList.expandItem(nil, expandChildren: true)
     }
         
@@ -60,7 +60,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, N
         }
     }
     
-    func load(data: Data) -> Bool {
+    @discardableResult func load(data: Data) -> Bool {
         resourceStructure = ElementList(controller: self)
         if let filter = filter {
             resourceStructure.insert(ElementDVDR(type: "DVDR", label: "Filter Enabled: \(filter.name)"))
@@ -224,7 +224,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, N
     }
     
     @IBAction func revertResource(_ sender: Any) {
-        _ = self.load(data: resource.data)
+        self.load(data: resource.data)
         self.setDocumentEdited(false)
     }
     

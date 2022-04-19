@@ -222,7 +222,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
     }
     
-    static func export(_ resource: Resource, to url: URL) throws -> Bool {
+    static func export(_ resource: Resource, to url: URL) throws {
         let data: Data
         switch resource.typeCode {
         case "PNG ", "icns":
@@ -231,7 +231,6 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             data = self.image(for: resource)?.tiffRepresentation ?? Data()
         }
         try data.write(to: url)
-        return true
     }
     
     // MARK: - Preview Provider

@@ -176,10 +176,9 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         return "tiff"
     }
     
-    static func export(_ resource: Resource, to url: URL) throws -> Bool {
+    static func export(_ resource: Resource, to url: URL) throws {
         let data = try Rle(resource.data).readSheet().tiffRepresentation!
         try data.write(to: url)
-        return true
     }
     
     static func image(for resource: Resource) -> NSImage? {
