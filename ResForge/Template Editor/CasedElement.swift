@@ -115,6 +115,7 @@ class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDat
     
     func comboBoxSelectionDidChange(_ notification: Notification) {
         // Notify the controller that the value changed
+        // (The selection change notification doesn't strictly mean that the value changed but it will suffice)
         self.parentList.controller.itemValueUpdated(notification.object!)
     }
     

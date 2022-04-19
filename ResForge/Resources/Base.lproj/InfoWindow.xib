@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -338,6 +338,7 @@
                                 <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="v3Q-OX-zMG">
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="nil" keyPath="nilSymbol"/>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="allowsFloats" value="NO"/>
                                     </userDefinedRuntimeAttributes>
                                 </numberFormatter>
                                 <font key="font" metaFont="system"/>
@@ -345,6 +346,14 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.id" previousBinding="uxM-tT-sbW" id="mFS-bA-rSL">
+                                    <dictionary key="options">
+                                        <string key="NSNoSelectionPlaceholder">Required</string>
+                                        <string key="NSNotApplicablePlaceholder">Required</string>
+                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                        <bool key="NSValidatesImmediately" value="YES"/>
+                                    </dictionary>
+                                </binding>
                                 <binding destination="Ivl-3s-tDS" name="maxValue" keyPath="selection.maxID" id="aWK-zq-95C">
                                     <dictionary key="options">
                                         <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
@@ -353,14 +362,6 @@
                                 <binding destination="Ivl-3s-tDS" name="minValue" keyPath="selection.minID" previousBinding="aWK-zq-95C" id="uxM-tT-sbW">
                                     <dictionary key="options">
                                         <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.id" previousBinding="uxM-tT-sbW" id="mFS-bA-rSL">
-                                    <dictionary key="options">
-                                        <string key="NSNoSelectionPlaceholder">Required</string>
-                                        <string key="NSNotApplicablePlaceholder">Required</string>
-                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
-                                        <bool key="NSValidatesImmediately" value="YES"/>
                                     </dictionary>
                                 </binding>
                                 <outlet property="delegate" destination="-2" id="Umh-bA-jLw"/>

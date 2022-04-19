@@ -1,7 +1,13 @@
 import Cocoa
 import RFSupport
 
-class CreateResourceController: NSWindowController, NSTextFieldDelegate {
+// The create resource implementation is designed around the following desired behaviours:
+// 1. Create button should be disabled whenever the type or id is invalid, including while typing.
+// 2. Most formatter errors should not be displayed but still prevent leaving the field.
+// 3. A valid id should be generated whenever changing the type, or clearing the id field.
+// 4. If an id is generated on pressing enter, this should not also create the resource as it may be confusing.
+
+class CreateResourceController: NSWindowController, NSComboBoxDelegate {
     @IBOutlet var createButton: NSButton!
     @IBOutlet var nameView: NSTextField!
     @IBOutlet var idView: NSTextField!
@@ -13,6 +19,16 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
     private var currentType: ResourceType {
         ResourceType(typeView.stringValue, attributesEditor.attributes)
     }
+    
+    // The type and id use bindings with continuous updates and formatters that always return a value.
+    @objc dynamic private var rType: String? {
+        didSet {
+            // Generate an id when valid. We need to check the length as the formatter isn't enforcing a minimum.
+            rID = rType?.count == 4 ? rDocument.directory.uniqueID(for: currentType) as NSNumber : nil
+        }
+    }
+    @objc dynamic private var rID: NSNumber?
+    @objc dynamic private var rName: String?
     
     override var windowNibName: NSNib.Name? {
         "CreateResource"
@@ -48,15 +64,11 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
             formatter.maximum = rDocument.format.maxID as NSNumber
         }
         
-        typeView.objectValue = type?.code
-        if let type = type {
-            idView.integerValue = rDocument.directory.uniqueID(for: type, starting: id ?? 128)
-            createButton.isEnabled = true
-        } else {
-            idView.objectValue = id
-            createButton.isEnabled = false
+        rType = type?.code ?? rType
+        if let type = type, let id = id {
+            rID = rDocument.directory.uniqueID(for: type, starting: id) as NSNumber
         }
-        nameView.objectValue = name
+        rName = name
         if rDocument.format == .extended {
             attributesHolder.isHidden = false
             attributesEditor.attributes = type?.attributes ?? [:]
@@ -70,30 +82,21 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         rDocument.windowForSheet?.beginSheet(self.window!)
     }
     
-    func controlTextDidChange(_ obj: Notification) {
-        createButton.isEnabled = false
-        if obj.object as AnyObject === typeView {
-            // If valid type, get a unique id
-            if typeView.objectValue != nil {
-                idView.integerValue = rDocument.directory.uniqueID(for: self.currentType)
-                createButton.isEnabled = true
-            }
-        } else {
-            // If valid type and id, check for conflict
-            // Accessing the control value will force validation of the field, causing problems when trying to enter a negative id.
-            // To workaround this, get the value from the field editor and manually run it through the formatter.
-            if typeView.objectValue != nil, let value = (obj.userInfo?["NSFieldEditor"] as? NSText)?.string {
-                if let id = try? idView.formatter!.getObjectValue(for: value) as? Int {
-                    let resource = rDocument.directory.findResource(type: self.currentType, id: id)
-                    createButton.isEnabled = resource == nil
-                }
-            }
-        }
-    }
-    
     @IBAction func hide(_ sender: AnyObject) {
         if sender === createButton {
-            let resource = Resource(type: self.currentType, id: idView.integerValue, name: nameView.stringValue)
+            // Safety check for invalid inputs (e.g. invalid MacRoman)
+            guard window?.makeFirstResponder(nil) != false else {
+                return
+            }
+            // Check for conflict
+            let type = currentType
+            let id = idView.integerValue
+            if rDocument.directory.findResource(type: type, id: id) != nil {
+                window?.presentError(ResourceError.conflict(type, id))
+                return
+            }
+            // Create the resource
+            let resource = Resource(type: type, id: id, name: nameView.stringValue)
             let actionName = NSLocalizedString("Create Resource", comment: "")
             rDocument.dataSource.reload(actionName: actionName) {
                 rDocument.directory.add(resource)
@@ -108,5 +111,43 @@ class CreateResourceController: NSWindowController, NSTextFieldDelegate {
         }
         self.callback = nil
         self.window?.sheetParent?.endSheet(self.window!)
+    }
+    
+    // Prevent leaving a field in an invalid state. The resID being nil should indicate this.
+    func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
+        if fieldEditor.string.isEmpty {
+            // Trigger id generation
+            rType = rType ?? nil
+        }
+        return rID != nil
+    }
+    
+    // There's no way to know when the popup menu is open or not so we need to keep track of this manually.
+    private var popupOpen = false
+    func comboBoxWillPopUp(_ notification: Notification) {
+        popupOpen = true
+    }
+    func comboBoxWillDismiss(_ notification: Notification) {
+        popupOpen = false
+    }
+    
+    // Detect enter key presses when the menu is open or the field is blank, which can cause a new id to be generated.
+    // We want to trigger end of editing as normal but not create the resource.
+    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        if commandSelector == #selector(insertNewline(_:)) && (popupOpen || textView.string.isEmpty) {
+            window?.makeFirstResponder(control)
+            return true
+        }
+        return false
+    }
+}
+
+/// A number formatter that always returns nil for invalid values rather than reporting errors.
+class SilentNumberFormatter: NumberFormatter {
+    override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?,
+                                 for string: String,
+                                 errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
+        super.getObjectValue(obj, for: string, errorDescription: nil)
+        return true
     }
 }
