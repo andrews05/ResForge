@@ -123,7 +123,7 @@ DQ
         </window>
         <customView id="aNb-jP-2g8">
             <rect key="frame" x="0.0" y="0.0" width="320" height="112"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZI-FJ-YgQ">
                     <rect key="frame" x="148" y="60" width="24" height="16"/>
@@ -155,7 +155,11 @@ DQ
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="updateGrid:" target="5FK-bk-dmv" id="ixY-FI-kV7"/>
+                        <binding destination="5FK-bk-dmv" name="value" keyPath="gridX" id="Spo-ph-sCS">
+                            <dictionary key="options">
+                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                            </dictionary>
+                        </binding>
                         <outlet property="formatter" destination="bhc-Ra-cbF" id="Ij1-Am-viZ"/>
                     </connections>
                 </textField>
@@ -170,7 +174,11 @@ DQ
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="updateGrid:" target="5FK-bk-dmv" id="qKM-8R-kLk"/>
+                        <binding destination="5FK-bk-dmv" name="value" keyPath="gridY" id="S0P-qA-I0g">
+                            <dictionary key="options">
+                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                            </dictionary>
+                        </binding>
                         <outlet property="formatter" destination="bhc-Ra-cbF" id="znD-4w-RpY"/>
                     </connections>
                 </textField>
@@ -233,7 +241,7 @@ DQ
                 <constraint firstItem="eGM-3p-Sb3" firstAttribute="firstBaseline" secondItem="ud9-wp-TP9" secondAttribute="firstBaseline" id="LI7-OO-WhZ"/>
                 <constraint firstItem="1P7-TE-QAJ" firstAttribute="top" secondItem="dng-lb-w6b" secondAttribute="top" id="Lio-Rc-SYh"/>
                 <constraint firstItem="Akv-6q-BsO" firstAttribute="leading" secondItem="eGM-3p-Sb3" secondAttribute="leading" id="MaL-Ua-T9S"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1P7-TE-QAJ" secondAttribute="trailing" id="QL3-pQ-Tm6"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1P7-TE-QAJ" secondAttribute="trailing" constant="2" id="QL3-pQ-Tm6"/>
                 <constraint firstItem="VZx-Mt-eX1" firstAttribute="leading" secondItem="0fS-UX-m9D" secondAttribute="trailing" constant="8" symbolic="YES" id="RD5-yQ-m4g"/>
                 <constraint firstItem="Akv-6q-BsO" firstAttribute="top" secondItem="ud9-wp-TP9" secondAttribute="bottom" constant="8" symbolic="YES" id="Rb2-iF-uLN"/>
                 <constraint firstAttribute="bottom" secondItem="Akv-6q-BsO" secondAttribute="bottom" constant="12" id="VXf-36-ibV"/>
@@ -270,6 +278,7 @@ DQ
             <real key="maximum" value="100"/>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="boolean" keyPath="allowsFloats" value="NO"/>
+                <userDefinedRuntimeAttribute type="nil" keyPath="nilSymbol"/>
             </userDefinedRuntimeAttributes>
         </numberFormatter>
     </objects>

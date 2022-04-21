@@ -27,6 +27,12 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     @IBOutlet var frameSize: NSTextField!
     @IBOutlet var dither: NSButton!
     @IBOutlet var preview: NSImageView!
+    @objc private var gridX = 6 {
+        didSet { self.updateGrid(self) }
+    }
+    @objc private var gridY = 6 {
+        didSet { self.updateGrid(self) }
+    }
     private var directory = true
     private var image: NSImage?
     private var images: [NSImage]?
@@ -61,18 +67,24 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         self.updateGrid(self)
         // The width of the options view will change when used in the open panel - reset it to an appropriate value
         optionsView.setFrameSize(NSSize(width: 300, height: optionsView.frame.height))
+        optionsView.isHidden = false
         let alert = NSAlert()
         alert.accessoryView = optionsView
-        // The alert requires an icon but the default app icon doesn't make sense here so just use the given image
-        alert.icon = image
-        alert.messageText = ""
+        if #available(macOS 11, *) {
+            // We don't really want an icon but the alert necessarily has one - on macOS 11 we can use the given image
+            alert.icon = image
+            alert.messageText = ""
+        } else {
+            // On older systems the default app icon works better but we do need a title
+            alert.messageText = NSLocalizedString("Import sprite sheet", comment: "")
+        }
         let importButton = alert.addButton(withTitle: NSLocalizedString("Import", comment: ""))
         // The preview image will be nil when the grid is invalid - use this to control the enabled state of the import button
         importButton.bind(.enabled, to: preview!, withKeyPath: "image", options: [.valueTransformerName: NSValueTransformerName.isNotNilTransformerName])
         alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
         alert.beginSheetModal(for: window) { [self] modalResponse in
             if modalResponse == .alertFirstButtonReturn {
-                sheetCallback(image, xTiles.integerValue, yTiles.integerValue, dither.state == .on)
+                sheetCallback(image, gridX, gridY, dither.state == .on)
             }
         }
         optionsView.window?.recalculateKeyViewLoop()
@@ -96,13 +108,11 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             guard let image = image else {
                 throw SpriteImporterError.unsupportedFile
             }
-            let x = xTiles.integerValue
-            guard x > 0, image.representations[0].pixelsWide % x == 0 else {
-                throw SpriteImporterError.invalidX(x)
+            guard gridX > 0, image.representations[0].pixelsWide % gridX == 0 else {
+                throw SpriteImporterError.invalidX(gridX)
             }
-            let y = yTiles.integerValue
-            guard y > 0, image.representations[0].pixelsHigh % y == 0 else {
-                throw SpriteImporterError.invalidY(y)
+            guard gridY > 0, image.representations[0].pixelsHigh % gridX == 0 else {
+                throw SpriteImporterError.invalidY(gridY)
             }
         }
     }
@@ -129,15 +139,13 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         }
         let width = image.representations[0].pixelsWide
         let height = image.representations[0].pixelsHigh
-        let x = xTiles.integerValue
-        let y = yTiles.integerValue
-        guard x > 0, width % x == 0, y > 0, height % y == 0 else {
+        guard gridX > 0, width % gridX == 0, gridY > 0, height % gridY == 0 else {
             frameSize.stringValue = "grid mismatch"
             preview.image = nil
             return
         }
-        frameSize.stringValue = "\(width/x) x \(height/y)"
-        let size = NSMakeSize(image.size.width/CGFloat(x), image.size.height/CGFloat(y))
+        frameSize.stringValue = "\(width/gridX) x \(height/gridY)"
+        let size = NSMakeSize(image.size.width/CGFloat(gridX), image.size.height/CGFloat(gridY))
         preview.image = NSImage(size: size)
         preview.image?.lockFocus()
         image.draw(at: NSZeroPoint, from: NSMakeRect(0, image.size.height-size.height, size.width, size.height), operation: .copy, fraction: 1)
