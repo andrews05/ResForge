@@ -35,12 +35,6 @@ public class BinaryDataWriter {
         }
     }
     
-    public func writeRaw<T: FixedWidthInteger>(_ values: [T]) {
-        values.withUnsafeBufferPointer {
-            data.append($0)
-        }
-    }
-    
     public func writeString(_ value: String, encoding: String.Encoding = .utf8) throws {
         guard let encoded = value.data(using: encoding) else {
             throw BinaryDataWriterError.stringEncodeFailure
