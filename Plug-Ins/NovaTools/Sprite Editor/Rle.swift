@@ -142,8 +142,11 @@ class Rle {
                 guard x <= frameWidth else {
                     throw RleError.invalid
                 }
-                for pixel in try reader.readRaw(count: count) as [UInt16] {
-                    self.write(UInt16(bigEndian: pixel), to: &framePointer)
+                // Work directly with the bytes - this is much faster than reading the pixels one at a time
+                try reader.readData(length: count * 2).withUnsafeBytes { bytes in
+                    for pixel in bytes.bindMemory(to: UInt16.self) {
+                        self.draw(UInt16(bigEndian: pixel), to: &framePointer)
+                    }
                 }
                 if count % 2 != 0 {
                     try reader.advance(2)
@@ -156,15 +159,10 @@ class Rle {
                 // The intention of this token is simply to repeat a single colour. But since the format is
                 // 4-byte aligned, it's technically possible to repeat two different 16-bit colour values.
                 // On big-endian machines this would presumably repeat them in order (untested), but on x86
-                // versions of EV Nova they appear to be swapped. Here we reproduce the same behaviour.
-                let pixel2 = try reader.read() as UInt16
-                let pixel1 = try reader.read() as UInt16
-                for _ in 0..<count/2 {
-                    self.write(pixel1, to: &framePointer)
-                    self.write(pixel2, to: &framePointer)
-                }
-                if count % 2 == 1 {
-                    self.write(pixel1, to: &framePointer)
+                // versions of EV Nova they appear to be swapped. Here we reproduce the x86 behaviour.
+                let pixels: [UInt16] = [try reader.read(), try reader.read()]
+                for i in 1...count {
+                    self.draw(pixels[i%2], to: &framePointer)
                 }
             case .frameEnd:
                 return
@@ -233,10 +231,10 @@ class Rle {
         var framePointer = frame.bitmapData!
         var lineCount = 0
         var linePos = 0
+        var pixels: [UInt16] = []
         for _ in 0..<frameHeight {
             lineCount += 1
             var transparent = 0
-            var pixels: [UInt16] = []
             for _ in 0..<frameWidth {
                 if framePointer[3] == 0 {
                     framePointer = framePointer.advanced(by: 4)
@@ -255,25 +253,22 @@ class Rle {
                         // Starting pixel data after transparency, write the skip
                         if !pixels.isEmpty {
                             // We have previous unwritten pixel data, write this first
-                            self.write(pixels: pixels)
-                            pixels.removeAll()
+                            self.write(bigEndianPixels: pixels)
+                            pixels.removeAll(keepingCapacity: true)
                         }
                         writer.write(RleOp(.skip, count: transparent))
                         transparent = 0
                     }
-                    var pixel: UInt16 = 0
-                    for i in 0...2 {
-                        let value = framePointer[i] & 0xF8
-                        pixel |= UInt16(value) << (7 - i*5)
-                        framePointer[i] = value | (value / 0x20)
-                    }
-                    framePointer[3] = 0xFF
-                    framePointer = framePointer.advanced(by: 4)
+                    let pixel = UInt16(framePointer[0] & 0xF8) * 0x80
+                              + UInt16(framePointer[1] & 0xF8) * 0x04
+                              + UInt16(framePointer[2] & 0xF8) / 0x08
+                    self.draw(pixel, to: &framePointer)
                     pixels.append(pixel.bigEndian)
                 }
             }
             if !pixels.isEmpty {
-                self.write(pixels: pixels)
+                self.write(bigEndianPixels: pixels)
+                pixels.removeAll(keepingCapacity: true)
                 // Rewrite the line length
                 writer.write(RleOp(.lineStart, bytes: writer.position-linePos), at: linePos-4)
             }
@@ -294,7 +289,7 @@ class Rle {
                 for i in p...p+2 {
                     // To perfectly replicate QuickDraw we would simply take the error as the lower 3 bits of the value.
                     // This is not entirely accurate though and has the side-effect that repeat dithers will degrade the image.
-                    // To fix this we subtract from that the upper 3 bits (see 5-bit restoration in `write` function).
+                    // To fix this we subtract from that the upper 3 bits (see 5-bit restoration in `draw` function).
                     let error = Int(framePointer[i] & 0x7) - Int(framePointer[i] / 0x20)
                     if error != 0 {
                         if even && x+1 < frameWidth {
@@ -311,7 +306,7 @@ class Rle {
         }
     }
     
-    private func write(_ pixel: UInt16, to framePointer: inout UnsafeMutablePointer<UInt8>) {
+    private func draw(_ pixel: UInt16, to framePointer: inout UnsafeMutablePointer<UInt8>) {
         // Note: division is used here instead of bitshifts as it is much faster in unoptimised debug builds.
         let r = UInt8((pixel & 0x7C00) / 0x80)
         let g = UInt8((pixel & 0x03E0) / 0x04)
@@ -324,9 +319,12 @@ class Rle {
         framePointer = framePointer.advanced(by: 4)
     }
     
-    private func write(pixels: [UInt16]) {
+    private func write(bigEndianPixels pixels: [UInt16]) {
         writer.write(RleOp(.pixels, count: pixels.count))
-        writer.writeRaw(pixels)
+        // Append the bytes directly to the data - this is much faster than writing the pixels one at a time
+        pixels.withUnsafeBufferPointer {
+            writer.data.append($0)
+        }
         if pixels.count % 2 != 0 {
             writer.advance(2)
         }
