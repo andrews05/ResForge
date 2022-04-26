@@ -19,12 +19,11 @@ class ElementRREF: Element {
               scanner.scanString("'", into: nil),
               scanner.scanUpTo("'", into: &typeCode),
               scanner.scanString("'", into: nil),
-              let typeCode = typeCode,
-              typeCode.length == 4
+              typeCode?.length == 4
         else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Could not determine resource type from label.", comment: ""))
         }
-        resType = typeCode as String
+        resType = typeCode! as String
         if scanner.scanString("#", into: nil) {
             scanner.scanInt(&id)
         } else {
