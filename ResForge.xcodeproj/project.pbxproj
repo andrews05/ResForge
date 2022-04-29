@@ -1851,7 +1851,7 @@
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = ResForge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.ResForge;
 				PRODUCT_NAME = ResForge;
 				SWIFT_OBJC_BRIDGING_HEADER = "ResForge/ResForge-Bridging-Header.h";
@@ -1868,7 +1868,7 @@
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = ResForge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.ResForge;
 				PRODUCT_NAME = ResForge;
 				SWIFT_OBJC_BRIDGING_HEADER = "ResForge/ResForge-Bridging-Header.h";
