@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -10,6 +10,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ResourceDocument" customModule="ResForge" customModuleProvider="target">
             <connections>
                 <outlet property="dataSource" destination="32" id="120"/>
+                <outlet property="importPanel" destination="80x-YU-7Ai" id="k60-Aq-5SC"/>
                 <outlet property="statusText" destination="8F9-Fo-UGC" id="Jnt-Qo-hHy"/>
                 <outlet property="window" destination="5" id="8"/>
             </connections>
@@ -502,5 +503,62 @@
             </connections>
             <point key="canvasLocation" x="142" y="548"/>
         </collectionView>
+        <customView id="NJ7-dE-jnk">
+            <rect key="frame" x="0.0" y="0.0" width="431" height="54"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f5X-FS-nA9">
+                    <rect key="frame" x="18" y="28" width="38" height="16"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Type:" id="r2D-MF-7nV">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jdg-6c-adz">
+                    <rect key="frame" x="59" y="21" width="87" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="1lc-0J-hmx"/>
+                    </constraints>
+                    <popUpButtonCell key="cell" type="push" title="TMPB" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="iyv-47-u8x" id="auW-VP-huj">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" autoenablesItems="NO" id="9dr-vh-1uu">
+                            <items>
+                                <menuItem title="TMPB" state="on" id="iyv-47-u8x">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="BwV-QO-fCM">
+                    <rect key="frame" x="148" y="12" width="265" height="32"/>
+                    <textFieldCell key="cell" selectable="YES" title="CSV import/export requires a valid ‘TMPB’ resource for the desired type." id="bFg-rM-w93">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="jdg-6c-adz" firstAttribute="leading" secondItem="f5X-FS-nA9" secondAttribute="trailing" constant="8" symbolic="YES" id="MVa-BJ-05c"/>
+                <constraint firstAttribute="bottom" secondItem="BwV-QO-fCM" secondAttribute="bottom" constant="12" id="ciK-vR-WBj"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BwV-QO-fCM" secondAttribute="trailing" constant="20" symbolic="YES" id="dQp-xA-eCh"/>
+                <constraint firstItem="BwV-QO-fCM" firstAttribute="leading" secondItem="jdg-6c-adz" secondAttribute="trailing" constant="8" symbolic="YES" id="gUM-6e-bp6"/>
+                <constraint firstItem="f5X-FS-nA9" firstAttribute="leading" secondItem="NJ7-dE-jnk" secondAttribute="leading" constant="20" symbolic="YES" id="gxU-0Z-VwV"/>
+                <constraint firstItem="jdg-6c-adz" firstAttribute="baseline" secondItem="f5X-FS-nA9" secondAttribute="baseline" id="mbH-2O-LWB"/>
+                <constraint firstItem="BwV-QO-fCM" firstAttribute="firstBaseline" secondItem="f5X-FS-nA9" secondAttribute="firstBaseline" id="pRH-Ex-NhJ"/>
+                <constraint firstItem="BwV-QO-fCM" firstAttribute="top" secondItem="NJ7-dE-jnk" secondAttribute="top" constant="10" id="qoR-Es-vP4"/>
+            </constraints>
+            <point key="canvasLocation" x="110" y="716"/>
+        </customView>
+        <customObject id="80x-YU-7Ai" customClass="ImportPanel" customModule="ResForge" customModuleProvider="target">
+            <connections>
+                <outlet property="accessoryView" destination="NJ7-dE-jnk" id="VhW-1E-L9t"/>
+                <outlet property="document" destination="-2" id="Fwt-og-ElX"/>
+                <outlet property="typeSelect" destination="jdg-6c-adz" id="Ru5-xd-o51"/>
+            </connections>
+        </customObject>
     </objects>
 </document>

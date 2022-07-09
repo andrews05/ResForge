@@ -167,6 +167,7 @@
 		49EE73902550BC8D00BEABDB /* NovaTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE738F2550BC8D00BEABDB /* NovaTools.swift */; };
 		49F2EAA526D50F4B0020D70E /* BulkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7A3B926D0E59100EF885F /* BulkController.swift */; };
 		49F2EAAB26D5AB5E0020D70E /* StandardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F2EAAA26D5AB5E0020D70E /* StandardController.swift */; };
+		49F416EB2879330400404BA1 /* ImportPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F416E22879330400404BA1 /* ImportPanel.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
@@ -489,6 +490,7 @@
 		49EE72DA2550B79600BEABDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49EE738F2550BC8D00BEABDB /* NovaTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTools.swift; sourceTree = "<group>"; };
 		49F2EAAA26D5AB5E0020D70E /* StandardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardController.swift; sourceTree = "<group>"; };
+		49F416E22879330400404BA1 /* ImportPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPanel.swift; sourceTree = "<group>"; };
 		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
 		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStatus.swift; sourceTree = "<group>"; };
@@ -979,6 +981,7 @@
 				49DB6A1D24F377A400BE0F0F /* CollectionController.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
+				49F416E22879330400404BA1 /* ImportPanel.swift */,
 				49655DF924DE6DA200D6AFF6 /* ResourceError.swift */,
 			);
 			path = Classes;
@@ -1455,6 +1458,7 @@
 				4968C03B24C6808200716AB9 /* EditorManager.swift in Sources */,
 				49D6D398271BAAB4002DEA97 /* ElementBORV.swift in Sources */,
 				49D6D3A4271BAAB4002DEA97 /* ElementFCNT.swift in Sources */,
+				49F416EB2879330400404BA1 /* ImportPanel.swift in Sources */,
 				49D6D3A2271BAAB4002DEA97 /* ElementKBYT.swift in Sources */,
 				49D6D39A271BAAB4002DEA97 /* ElementBHEX.swift in Sources */,
 				49D6D3AD271BAAB4002DEA97 /* ElementBOOL.swift in Sources */,

@@ -58,7 +58,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
         if let type = currentType {
             return type
         } else {
-            let item = outlineView.item(atRow: outlineView.selectedRow)
+            let item = outlineView.selectedItem
             return item as? ResourceType ?? (item as? Resource)?.type
         }
     }

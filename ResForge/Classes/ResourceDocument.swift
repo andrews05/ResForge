@@ -53,6 +53,7 @@ extension ResourceFileFormat {
 class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate {
     @IBOutlet var dataSource: ResourceDataSource!
     @IBOutlet var statusText: NSTextField!
+    @IBOutlet var importPanel: ImportPanel!
     private var searchField: NSSearchField!
     private(set) lazy var directory = ResourceDirectory(self)
     private(set) lazy var editorManager = EditorManager(self)
@@ -490,18 +491,11 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             menuItem.title = NSLocalizedString("Show Bulk Data View", comment: "")
             return editorManager.template(for: dataSource.currentType, basic: true) != nil
         case #selector(exportCSV(_:)):
-            if let type = dataSource.currentType {
+            if let type = dataSource.selectedType() {
                 menuItem.title = NSLocalizedString("Export ‘\(type.code)’ to CSV…", comment: "")
                 return editorManager.template(for: type, basic: true) != nil
             }
             menuItem.title = NSLocalizedString("Export to CSV…", comment: "")
-            return false
-        case #selector(importCSV(_:)):
-            if let type = dataSource.currentType {
-                menuItem.title = NSLocalizedString("Import ‘\(type.code)’ from CSV…", comment: "")
-                return editorManager.template(for: type, basic: true) != nil
-            }
-            menuItem.title = NSLocalizedString("Import from CSV…", comment: "")
             return false
         default:
             // Auto validation of save menu item isn't working for existing documents - force override
@@ -562,7 +556,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     @IBAction func exportCSV(_ sender: Any) {
-        guard let type = dataSource.currentType else {
+        guard let type = dataSource.selectedType() else {
             return
         }
         do {
@@ -585,28 +579,17 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     @IBAction func importCSV(_ sender: Any) {
-        guard let type = dataSource.currentType else {
-            return
-        }
-        do {
-            try dataSource.bulkController.loadTemplate(type: type)
-        } catch let error {
-            self.presentError(error)
-        }
-        let panel = NSOpenPanel()
-        panel.allowedFileTypes = ["csv"]
-        panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
-            if modalResponse == .OK, let url = panel.url {
-                do {
-                    let resources = try self.dataSource.bulkController.importCSV(from: url)
-                    let actionName = NSLocalizedString(resources.count == 1 ? "Import Resource" : "Import Resources", comment: "")
-                    // Allow the sheet to disappear before continuing
-                    DispatchQueue.main.async {
-                        self.add(resources: resources, actionName: actionName)
-                    }
-                } catch let error {
-                    self.presentError(error)
+        importPanel.show() { (url, type) in
+            do {
+                try self.dataSource.bulkController.loadTemplate(type: type)
+                let resources = try self.dataSource.bulkController.importCSV(from: url)
+                let actionName = NSLocalizedString(resources.count == 1 ? "Import Resource" : "Import Resources", comment: "")
+                // Allow the sheet to disappear before continuing
+                DispatchQueue.main.async {
+                    self.add(resources: resources, actionName: actionName)
                 }
+            } catch let error {
+                self.presentError(error)
             }
         }
     }

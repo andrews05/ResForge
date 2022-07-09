@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -12,7 +12,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="-3" userLabel="Application"/>
         <menu title="Application" systemMenu="main" id="335">
             <items>
                 <menuItem title="ResForge" id="350">
@@ -121,6 +121,21 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="367">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Import from CSV…" id="ec6-zg-IIS">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="importCSV:" target="-1" id="LtK-Dw-kEm"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Export to CSV…" id="xjG-hF-0zM">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportCSV:" target="-1" id="W8R-lw-GTf"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Q5j-fK-722">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Show Info…" keyEquivalent="i" id="379">
@@ -271,18 +286,6 @@ CA
                                     <action selector="toggleBulkMode:" target="-1" id="6eg-iu-KpL"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Export to CSV…" id="xjG-hF-0zM">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="exportCSV:" target="-1" id="W8R-lw-GTf"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Import from CSV…" id="ec6-zg-IIS">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="importCSV:" target="-1" id="LtK-Dw-kEm"/>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="342">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -399,11 +402,11 @@ CA
         </menu>
         <customObject id="431" customClass="ApplicationDelegate" customModule="ResForge" customModuleProvider="target"/>
         <customView id="432">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="38"/>
+            <rect key="frame" x="0.0" y="0.0" width="431" height="38"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZz-d2-V4c">
-                    <rect key="frame" x="18" y="13" width="85" height="16"/>
+                    <rect key="frame" x="18" y="12" width="85" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fork to open:" id="q6V-9a-MRp">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -411,7 +414,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW9-Ng-yIh">
-                    <rect key="frame" x="106" y="6" width="187" height="25"/>
+                    <rect key="frame" x="106" y="5" width="187" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="xWq-2O-h1B"/>
                     </constraints>
@@ -439,13 +442,13 @@ CA
             </subviews>
             <constraints>
                 <constraint firstItem="tZz-d2-V4c" firstAttribute="leading" secondItem="432" secondAttribute="leading" constant="20" symbolic="YES" id="9aR-9f-XGG"/>
-                <constraint firstItem="NW9-Ng-yIh" firstAttribute="top" secondItem="432" secondAttribute="top" constant="8" id="Gtc-oz-f2l"/>
-                <constraint firstAttribute="bottom" secondItem="NW9-Ng-yIh" secondAttribute="bottom" constant="10" id="OEn-jb-bPN"/>
+                <constraint firstAttribute="bottom" secondItem="tZz-d2-V4c" secondAttribute="bottom" constant="12" id="BBw-82-8qs"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NW9-Ng-yIh" secondAttribute="trailing" constant="20" symbolic="YES" id="Og2-yR-vYj"/>
+                <constraint firstItem="tZz-d2-V4c" firstAttribute="top" secondItem="432" secondAttribute="top" constant="10" id="cxB-Xe-Yqf"/>
                 <constraint firstItem="NW9-Ng-yIh" firstAttribute="leading" secondItem="tZz-d2-V4c" secondAttribute="trailing" constant="8" symbolic="YES" id="hyU-bs-Ii7"/>
                 <constraint firstItem="NW9-Ng-yIh" firstAttribute="baseline" secondItem="tZz-d2-V4c" secondAttribute="baseline" id="jto-Vc-Rfo"/>
             </constraints>
-            <point key="canvasLocation" x="3" y="361"/>
+            <point key="canvasLocation" x="139.5" y="275"/>
         </customView>
         <customObject id="448" customClass="OpenPanelDelegate" customModule="ResForge" customModuleProvider="target">
             <connections>
