@@ -178,6 +178,10 @@ class TemplateParser {
         "QBIT": ElementBBIT<UInt64>.self,   // (ResForge)
         "QB"  : ElementBBIT<UInt64>.self,
         "QF"  : ElementBBIT<UInt64>.self,
+        "BB08": ElementBB08<UInt8>.self,    // 8-bit checkbox grid (ResForge override of BBnn)
+        "WB16": ElementBB08<UInt16>.self,
+        "LB32": ElementBB08<UInt32>.self,
+        "QB64": ElementBB08<UInt64>.self,
         "BORV": ElementBORV<UInt8>.self,    // OR-value (Rezilla)
         "WORV": ElementBORV<UInt16>.self,
         "LORV": ElementBORV<UInt32>.self,

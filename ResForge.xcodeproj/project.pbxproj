@@ -168,6 +168,7 @@
 		49F2EAA526D50F4B0020D70E /* BulkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7A3B926D0E59100EF885F /* BulkController.swift */; };
 		49F2EAAB26D5AB5E0020D70E /* StandardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F2EAAA26D5AB5E0020D70E /* StandardController.swift */; };
 		49F416EB2879330400404BA1 /* ImportPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F416E22879330400404BA1 /* ImportPanel.swift */; };
+		49F416ED287A982600404BA1 /* ElementBB08.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F416EC287A982600404BA1 /* ElementBB08.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
@@ -491,6 +492,7 @@
 		49EE738F2550BC8D00BEABDB /* NovaTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTools.swift; sourceTree = "<group>"; };
 		49F2EAAA26D5AB5E0020D70E /* StandardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardController.swift; sourceTree = "<group>"; };
 		49F416E22879330400404BA1 /* ImportPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPanel.swift; sourceTree = "<group>"; };
+		49F416EC287A982600404BA1 /* ElementBB08.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBB08.swift; sourceTree = "<group>"; };
 		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
 		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStatus.swift; sourceTree = "<group>"; };
@@ -872,6 +874,7 @@
 				49D6D360271BAAAD002DEA97 /* ElementBOOL.swift */,
 				49D6D37E271BAAB0002DEA97 /* ElementBFLG.swift */,
 				49D6D36A271BAAAE002DEA97 /* ElementBBIT.swift */,
+				49F416EC287A982600404BA1 /* ElementBB08.swift */,
 				49D6D367271BAAAE002DEA97 /* ElementBORV.swift */,
 				49D6D369271BAAAE002DEA97 /* ElementOCNT.swift */,
 				49D6D365271BAAAE002DEA97 /* ElementFCNT.swift */,
@@ -1488,6 +1491,7 @@
 				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
 				49D6D396271BAAB4002DEA97 /* ElementList.swift in Sources */,
 				49D6D3AA271BAAB4002DEA97 /* TabbableOutlineView.swift in Sources */,
+				49F416ED287A982600404BA1 /* ElementBB08.swift in Sources */,
 				49D6D38C271BAAB4002DEA97 /* ElementRREF.swift in Sources */,
 				4992491A26C3B527005F69A7 /* AttributesEditor.swift in Sources */,
 				49E56F7C26DA22FB005FA18B /* ConflictResolver.swift in Sources */,
