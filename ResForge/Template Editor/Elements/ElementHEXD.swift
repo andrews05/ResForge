@@ -29,6 +29,7 @@ class ElementHEXD: Element {
         textField.isBezeled = false
         textField.isEditable = false
         textField.isSelectable = true
+        textField.drawsBackground = false
         textField.font = NSFont.userFixedPitchFont(ofSize: 11)
         if let data = data {
             var count = 0
