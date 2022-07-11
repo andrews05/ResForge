@@ -17,7 +17,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
     private unowned var rDocument: ResourceDocument
     private var callback: ((Resource?) -> Void)?
     private var currentType: ResourceType {
-        ResourceType(typeView.stringValue, attributesEditor.attributes)
+        ResourceType(rType ?? "", attributesEditor.attributes)
     }
     
     // The type and id use bindings with continuous updates and formatters that always return a value.
@@ -63,12 +63,6 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
             formatter.minimum = rDocument.format.minID as NSNumber
             formatter.maximum = rDocument.format.maxID as NSNumber
         }
-        
-        rType = type?.code ?? rType
-        if let type = type, let id = id {
-            rID = rDocument.directory.uniqueID(for: type, starting: id) as NSNumber
-        }
-        rName = name
         if rDocument.format == .extended {
             attributesHolder.isHidden = false
             attributesEditor.attributes = type?.attributes ?? [:]
@@ -76,6 +70,12 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
             attributesHolder.isHidden = true
             attributesEditor.attributes = [:]
         }
+
+        rType = type?.code ?? rType
+        if let type = type, let id = id {
+            rID = rDocument.directory.uniqueID(for: type, starting: id) as NSNumber
+        }
+        rName = name
         // Focus the name field if a value is provided, otherwise the type field
         self.window?.makeFirstResponder(name == nil ? typeView : nameView)
         self.callback = callback
