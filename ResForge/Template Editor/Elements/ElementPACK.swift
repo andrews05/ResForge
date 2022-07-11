@@ -12,13 +12,7 @@ class ElementPACK: Element {
     // The row height needs to be the maximum of all child elements - calculate this dynamically in case they change (e.g. PSTR)
     override var rowHeight: Double {
         get {
-            var rowHeight = super.rowHeight
-            for element in subElements {
-                if element.rowHeight > super.rowHeight {
-                    rowHeight = element.rowHeight
-                }
-            }
-            return rowHeight
+            return subElements.map(\.rowHeight).max() ?? super.rowHeight
         }
         set {
             super.rowHeight = newValue
