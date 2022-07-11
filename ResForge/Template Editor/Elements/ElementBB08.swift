@@ -26,6 +26,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         textField.isBezeled = false
         textField.isEditable = false
         textField.isSelectable = true
+        textField.drawsBackground = false
         textField.font = NSFont.userFixedPitchFont(ofSize: 12)
         textField.formatter = formatter
         textField.bind(.value, to: self, withKeyPath: "value")
@@ -35,20 +36,20 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         frame.origin.y += 15
         frame.size.width = 20
         frame.size.height = 20
-        for i in 1...T.bitWidth {
+        for i in 0..<T.bitWidth {
             let checkbox = NSButton(frame: frame)
             checkbox.setButtonType(.switch)
             checkbox.bezelStyle = .regularSquare
-            // We can't easily bind all the checkboxes, so just set the initial state and use the tag/action to update
-            checkbox.tag = T.bitWidth - i
+            // We can't easily bind all the checkboxes, so just set the initial state and use the action & tag to update
             checkbox.target = self
             checkbox.action = #selector(self.toggleBit(_:))
+            checkbox.tag = i
             if (value & (1 << checkbox.tag)) != 0 {
                 checkbox.state = .on
             }
             view.addSubview(checkbox)
             frame.origin.x += 20
-            if i % 8 == 0 {
+            if i % 8 == 7 {
                 frame.origin.x = view.frame.origin.x
                 frame.origin.y += 20
             }
