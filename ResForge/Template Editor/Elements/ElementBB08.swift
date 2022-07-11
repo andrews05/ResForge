@@ -21,28 +21,35 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         // Create hex representation
         var frame = view.frame
         frame.origin.y += 4
+        frame.size.width = 134
         frame.size.height = 14
-        let textField = NSTextField(frame: frame)
-        textField.isBezeled = false
-        textField.isEditable = false
-        textField.isSelectable = true
-        textField.drawsBackground = false
+        let textField = NSTextField(labelWithString: "")
+        textField.frame = frame
         textField.font = NSFont.userFixedPitchFont(ofSize: 12)
         textField.formatter = formatter
         textField.bind(.value, to: self, withKeyPath: "value")
         view.addSubview(textField)
+
+        // Create bit number view
+        frame.origin.x += 134
+        frame.size.width = 24
+        let bitNum = NSTextField(labelWithString: "")
+        bitNum.frame = frame
+        bitNum.font = NSFont.userFixedPitchFont(ofSize: 12)
+        bitNum.alignment = .right
+        bitNum.textColor = .secondaryLabelColor
+        view.addSubview(bitNum)
         
         // Create checkboxes
+        frame.origin.x = view.frame.origin.x
         frame.origin.y += 15
         frame.size.width = 20
         frame.size.height = 20
         for i in 0..<T.bitWidth {
-            let checkbox = NSButton(frame: frame)
-            checkbox.setButtonType(.switch)
-            checkbox.bezelStyle = .regularSquare
-            // We can't easily bind all the checkboxes, so just set the initial state and use the action & tag to update
-            checkbox.target = self
-            checkbox.action = #selector(self.toggleBit(_:))
+            // We can't easily bind all the checkboxes, so just use the action to update
+            let checkbox = BitButton(checkboxWithTitle: "", target: self, action: #selector(self.toggleBit(_:)))
+            checkbox.textField = bitNum
+            checkbox.frame = frame
             checkbox.tag = i
             if (value & (1 << checkbox.tag)) != 0 {
                 checkbox.state = .on
@@ -71,5 +78,27 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     
     override var formatter: Formatter {
         self.sharedFormatter("HEX\(T.bitWidth)") { HexFormatter<T>() }
+    }
+}
+
+// NSButton subclass that shows tag number in an NSTextField on hover
+class BitButton: NSButton {
+    weak var textField: NSTextField?
+
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        for trackingArea in self.trackingAreas {
+            self.removeTrackingArea(trackingArea)
+        }
+        let tracking = NSTrackingArea(rect: bounds, options: [.mouseEnteredAndExited, .activeAlways], owner: self, userInfo: nil)
+        self.addTrackingArea(tracking)
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        textField?.integerValue = tag + 1
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        textField?.stringValue = ""
     }
 }
