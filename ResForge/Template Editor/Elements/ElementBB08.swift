@@ -99,6 +99,10 @@ class BitButton: NSButton {
     }
 
     override func mouseExited(with event: NSEvent) {
-        textField?.stringValue = ""
+        DispatchQueue.main.async { [self] in
+            if let textField = textField, textField.integerValue == tag + 1 {
+                textField.stringValue = ""
+            }
+        }
     }
 }
