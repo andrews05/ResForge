@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSBitmapImageRep * _Nullable)repFromPpat:(NSData *)data;
 + (NSData *)ppatFromRep:(NSBitmapImageRep *)data;
 + (NSBitmapImageRep * _Nullable)repFromCrsr:(NSData *)data;
++ (NSData *)rlexFromReps:(NSArray<NSBitmapImageRep *> *)data;
++ (NSArray<NSBitmapImageRep *> * _Nullable)repsFromRlex:(NSData *)data;
 
 @end
 

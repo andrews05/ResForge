@@ -14,21 +14,22 @@
         *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:nil];
         return nil;
     }
-    if (format) *format = (ResourceFileFormat)gFile.current_format();
+    if (format) *format = (ResourceFileFormat)gFile.format();
     NSMutableArray *resources = [NSMutableArray new];
-    for (auto typeList : gFile.types()) {
-        NSString *type = [NSString stringWithUTF8String:typeList->code().c_str()];
+    for (auto hash : gFile.types()) {
+        auto type = gFile.type(hash);
+        NSString *typeCode = [NSString stringWithUTF8String:type->code().c_str()];
         NSMutableDictionary *typeAtts = [NSMutableDictionary new];
-        for (auto attribute : typeList->attributes()) {
-            NSString *key = [NSString stringWithUTF8String:attribute.first.c_str()];
-            NSString *val = [NSString stringWithUTF8String:attribute.second.c_str()];
+        for (auto attribute : type->attributes()) {
+            NSString *key = [NSString stringWithUTF8String:attribute.second.name().c_str()];
+            NSString *val = [NSString stringWithUTF8String:attribute.second.string_value().c_str()];
             typeAtts[key] = val;
         }
-        for (auto resource : typeList->resources()) {
+        for (auto resource : *type) {
             // create the resource & add it to the array
             NSString    *name = [NSString stringWithUTF8String:resource->name().c_str()];
-            NSData      *data = [NSData dataWithBytes:resource->data()->get()->data()+resource->data()->start() length:resource->data()->size()];
-            Resource *r = [[Resource alloc] initWithTypeCode:type typeAttributes:typeAtts id:resource->id() name:name data:data];
+            NSData      *data = [NSData dataWithBytes:resource->data().get<void *>() length:resource->data().size()];
+            Resource *r = [[Resource alloc] initWithTypeCode:typeCode typeAttributes:typeAtts id:resource->id() name:name data:data];
             [resources addObject:r];
         }
     }
@@ -41,10 +42,8 @@
     for (Resource *resource in resources) {
         std::string name(resource.name.UTF8String);
         std::string type(resource.typeCode.UTF8String);
-        char *first = (char *)resource.data.bytes; // Bytes pointer should only be accessed once
-        std::vector<char> buffer(first, first+resource.data.length);
-        graphite::data::data data(std::make_shared<std::vector<char>>(buffer), resource.data.length);
-        std::map<std::string, std::string> attributes;
+        graphite::data::block data(resource.data.bytes, resource.data.length, false);
+        std::unordered_map<std::string, std::string> attributes;
         if (format != kResourceFileFormatExtended && resource.typeAttributes.count != 0) {
             NSString *message = NSLocalizedString(@"Type attributes are not compatible with the requested file format.", "");
             *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:@{NSLocalizedFailureReasonErrorKey:message}];
@@ -55,10 +54,10 @@
             auto val = std::string(resource.typeAttributes[att].UTF8String);
             attributes.insert(std::make_pair(key, val));
         }
-        gFile.add_resource(type, resource.id, name, std::make_shared<graphite::data::data>(data), attributes);
+        gFile.add_resource(type, resource.id, name, data, attributes);
     }
     try {
-        gFile.write(url.fileSystemRepresentation, (graphite::rsrc::file::format)format);
+        gFile.write(url.fileSystemRepresentation, (enum graphite::rsrc::file::format)format);
     } catch (const std::exception& e) {
         NSString *message = [NSString stringWithUTF8String:e.what()];
         *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:@{NSLocalizedFailureReasonErrorKey:message}];
