@@ -4,7 +4,7 @@ import RFSupport
 class ImportPanel: NSObject, NSOpenSavePanelDelegate {
     @IBOutlet var accessoryView: NSView!
     @IBOutlet var typeSelect: NSPopUpButton!
-    @IBOutlet var document: ResourceDocument!
+    @IBOutlet weak var document: ResourceDocument!
     
     func show(callback: @escaping(URL, ResourceType) -> Void) {
         let type = document.dataSource.selectedType()
