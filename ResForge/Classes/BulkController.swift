@@ -255,10 +255,9 @@ class BulkController: OutlineController {
             let columnIdx = outlineView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: key))
             let column = outlineView.tableColumns[columnIdx]
             let order: ComparisonResult = descriptor.ascending ? .orderedAscending : .orderedDescending
-            document.directory.sorter = { [weak self] in
-                guard let self = self,
-                      let a = self.outlineView(self.outlineView, objectValueFor: column, byItem: $0),
-                      let b = self.outlineView(self.outlineView, objectValueFor: column, byItem: $1)
+            document.directory.sorter = { [unowned self] in
+                guard let a = self.outlineView(outlineView, objectValueFor: column, byItem: $0),
+                      let b = self.outlineView(outlineView, objectValueFor: column, byItem: $1)
                 else {
                     return false
                 }
