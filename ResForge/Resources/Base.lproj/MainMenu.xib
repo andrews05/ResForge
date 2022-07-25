@@ -289,12 +289,12 @@ CA
                             <menuItem isSeparatorItem="YES" id="BV2-eA-LYH">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Zoom In" keyEquivalent="+" id="7lY-Ed-OO9">
+                            <menuItem title="Zoom In" hidden="YES" keyEquivalent="+" allowsKeyEquivalentWhenHidden="YES" id="7lY-Ed-OO9">
                                 <connections>
                                     <action selector="zoomIn:" target="-1" id="lNz-Na-Nk0"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Zoom Out" keyEquivalent="-" id="tGR-pm-KOH">
+                            <menuItem title="Zoom Out" hidden="YES" keyEquivalent="-" allowsKeyEquivalentWhenHidden="YES" id="tGR-pm-KOH">
                                 <connections>
                                     <action selector="zoomOut:" target="-1" id="9pB-Dn-uiL"/>
                                 </connections>
