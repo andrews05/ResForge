@@ -79,12 +79,11 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
         self.setDocumentEdited(false)
     }
     
-    // We can't catch keyDown events here so hidden buttons are placed in the window to trigger these with cmd+/-
-    @IBAction func sizeUp(_ sender: Any) {
+    @IBAction func zoomIn(_ sender: Any) {
         self.adjustFontSize(1)
     }
     
-    @IBAction func sizeDown(_ sender: Any) {
+    @IBAction func zoomOut(_ sender: Any) {
         self.adjustFontSize(-1)
     }
     

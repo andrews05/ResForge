@@ -42,6 +42,14 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .ResourceDidChange, object: nil)
     }
     
+    @IBAction func zoomIn(_ sender: Any) {
+        galaxyView.zoomIn(sender)
+    }
+    
+    @IBAction func zoomOut(_ sender: Any) {
+        galaxyView.zoomOut(sender)
+    }
+    
     @objc func resourceChanged(_ notification: Notification) {
         guard let resource = notification.object as? Resource else {
             return

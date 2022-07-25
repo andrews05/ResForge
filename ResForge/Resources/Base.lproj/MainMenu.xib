@@ -12,7 +12,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="Application" systemMenu="main" id="335">
             <items>
                 <menuItem title="ResForge" id="350">
@@ -284,6 +284,19 @@ CA
                             <menuItem title="Bulk Data Mode" keyEquivalent="b" id="YyK-nA-1Rm">
                                 <connections>
                                     <action selector="toggleBulkMode:" target="-1" id="6eg-iu-KpL"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="BV2-eA-LYH">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Zoom In" keyEquivalent="+" id="7lY-Ed-OO9">
+                                <connections>
+                                    <action selector="zoomIn:" target="-1" id="lNz-Na-Nk0"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom Out" keyEquivalent="-" id="tGR-pm-KOH">
+                                <connections>
+                                    <action selector="zoomOut:" target="-1" id="9pB-Dn-uiL"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="342">
