@@ -13,6 +13,9 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     private var frames: [NSBitmapImageRep] = []
     private var currentFrame = 0
     private var timer: Timer?
+    private var writeableType: WriteableSprite.Type? {
+        return Self.typeMap[resource.typeCode] as? WriteableSprite.Type
+    }
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var imageSize: NSTextField!
     @IBOutlet var playButton: NSButton!
@@ -48,7 +51,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     override func windowDidLoad() {
         self.window?.title = resource.defaultWindowTitle
         imageView.allowsCutCopyPaste = false
-        importButton.isHidden = !(Self.typeMap[resource.typeCode].self is WriteableSprite.Type)
+        importButton.isHidden = writeableType == nil
         self.loadImage()
     }
     
@@ -159,14 +162,16 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
     
     @IBAction func paste(_ sender: Any) {
-        guard let image = NSPasteboard.general.readObjects(forClasses: [NSImage.self])?.first as? NSImage else {
+        guard writeableType != nil,
+              let image = NSPasteboard.general.readObjects(forClasses: [NSImage.self])?.first as? NSImage
+        else {
             return
         }
         importPanel.beginSheetModal(for: window!, with: image, sheetCallback: self.importSheet)
     }
     
     private func importSheet(image: NSImage, gridX: Int, gridY: Int, dither: Bool) {
-        guard let spriteType = Self.typeMap[resource.typeCode] as? WriteableSprite.Type else {
+        guard let spriteType = writeableType else {
             return
         }
         let rep = image.representations[0]
@@ -178,7 +183,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
     
     private func importFrames(images: [NSImage], dither: Bool) {
-        guard let spriteType = Self.typeMap[resource.typeCode] as? WriteableSprite.Type else {
+        guard let spriteType = writeableType else {
             return
         }
         let rep = images[0].representations[0]

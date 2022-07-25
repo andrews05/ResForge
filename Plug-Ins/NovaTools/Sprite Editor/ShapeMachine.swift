@@ -36,7 +36,7 @@ final class ShapeMachine: Sprite {
         let xOffset = shape.frameWidth  / 2 - shape.x
         let yOffset = shape.frameHeight / 2 - shape.y
         let advance = (yOffset * frame.pixelsWide + xOffset) * 4
-        try self.readFrame(to: frame.bitmapData!.advanced(by: advance), shape: shape, lineAdvance: frame.pixelsWide)
+        try shape.draw(to: frame.bitmapData!.advanced(by: advance), lineAdvance: frame.pixelsWide)
         return frame
     }
     
@@ -70,27 +70,10 @@ final class ShapeMachine: Sprite {
                 let xOffset = x * frameWidth  + frameWidth  / 2 - shape.x
                 let yOffset = y * frameHeight + frameHeight / 2 - shape.y
                 let advance = (yOffset * sheet.pixelsWide + xOffset) * 4
-                try self.readFrame(to: framePointer.advanced(by: advance), shape: shape, lineAdvance: sheet.pixelsWide)
+                try shape.draw(to: framePointer.advanced(by: advance), lineAdvance: sheet.pixelsWide)
             }
         }
         return sheet
-    }
-    
-    private func readFrame(to framePointer: UnsafeMutablePointer<UInt8>, shape: Shape, lineAdvance: Int) throws {
-        var framePointer = framePointer
-        let data = shape.data
-        for y in 0..<shape.height {
-            for x in 0..<shape.width {
-                let pixel = data[data.startIndex + y * shape.width + x]
-                let rgb = Self.clut[Int(pixel)]
-                framePointer[0] = rgb[0]
-                framePointer[1] = rgb[1]
-                framePointer[2] = rgb[2]
-                framePointer[3] = pixel == 0 ? 0 : 0xFF
-                framePointer = framePointer.advanced(by: 4)
-            }
-            framePointer = framePointer.advanced(by: (lineAdvance - shape.width) * 4)
-        }
     }
     
     private func readShape() throws -> Shape {
@@ -106,7 +89,49 @@ final class ShapeMachine: Sprite {
         }
         return shape
     }
+}
+
+struct Shape {
+    let width: Int
+    let height: Int
+    let x: Int
+    let y: Int
+    let frameWidth: Int
+    let frameHeight: Int
+    let data: Data
     
+    init(reader: BinaryDataReader) throws {
+        // Read size
+        width = Int(try reader.read() as UInt16)
+        height = Int(try reader.read() as UInt16)
+        guard width > 0, height > 0 else {
+            throw SpriteError.invalid
+        }
+        // Read center point
+        x = Int(try reader.read() as Int16)
+        y = Int(try reader.read() as Int16)
+        // Calculate size of frame when centered on center point
+        frameWidth = max(x, width - x) * 2
+        frameHeight = max(y, height - y) * 2
+        data = try reader.readData(length: width * height)
+    }
+
+    func draw(to framePointer: UnsafeMutablePointer<UInt8>, lineAdvance: Int) throws {
+        var framePointer = framePointer
+        for y in 0..<height {
+            for x in 0..<width {
+                let pixel = data[data.startIndex + y * width + x]
+                let rgb = Self.clut[Int(pixel)]
+                framePointer[0] = rgb[0]
+                framePointer[1] = rgb[1]
+                framePointer[2] = rgb[2]
+                framePointer[3] = pixel == 0 ? 0 : 0xFF
+                framePointer = framePointer.advanced(by: 4)
+            }
+            framePointer = framePointer.advanced(by: (lineAdvance - width) * 4)
+        }
+    }
+
     // Ares' primary colour table
     static let clut: [[UInt8]] = [
         [255, 255, 255],
@@ -366,30 +391,4 @@ final class ShapeMachine: Sprite {
         [48, 0, 0],
         [0, 0, 0],
     ]
-}
-
-struct Shape {
-    let width: Int
-    let height: Int
-    let x: Int
-    let y: Int
-    let frameWidth: Int
-    let frameHeight: Int
-    let data: Data
-    
-    init(reader: BinaryDataReader) throws {
-        // Read size
-        width = Int(try reader.read() as UInt16)
-        height = Int(try reader.read() as UInt16)
-        guard width > 0, height > 0 else {
-            throw SpriteError.invalid
-        }
-        // Read center point
-        x = Int(try reader.read() as Int16)
-        y = Int(try reader.read() as Int16)
-        // Calculate size of frame when centered on center point
-        frameWidth = max(x, width - x) * 2
-        frameHeight = max(y, height - y) * 2
-        data = try reader.readData(length: width * height)
-    }
 }
