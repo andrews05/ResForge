@@ -44,12 +44,12 @@ public class BinaryDataReader {
         self.position = position
     }
     
-    public func push(_ position: Int) throws {
+    public func pushPosition(_ position: Int) throws {
         posStack.append(self.position)
         try self.setPosition(position)
     }
     
-    public func pop() throws {
+    public func popPosition() throws {
         // It is an error to call this without prior push
         try self.setPosition(posStack.popLast()!)
     }

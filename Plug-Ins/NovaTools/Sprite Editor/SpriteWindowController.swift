@@ -87,7 +87,6 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
                 for _ in 0..<sprite.frameCount {
                     frames.append(try sprite.readFrame())
                 }
-//                frames = try sprite.readFrames()
             } catch {}
         }
         self.updateView()

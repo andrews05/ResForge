@@ -24,17 +24,17 @@ final class ShapeMachine: Sprite {
     func readFrame() throws -> NSBitmapImageRep {
         let shape = try self.readShape()
         let frame = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                     pixelsWide: shape.maxWidth,
-                                     pixelsHigh: shape.maxHeight,
+                                     pixelsWide: shape.frameWidth,
+                                     pixelsHigh: shape.frameHeight,
                                      bitsPerSample: 8,
                                      samplesPerPixel: 4,
                                      hasAlpha: true,
                                      isPlanar: false,
                                      colorSpaceName: .deviceRGB,
-                                     bytesPerRow: shape.maxWidth*4,
+                                     bytesPerRow: shape.frameWidth*4,
                                      bitsPerPixel: 0)!
-        let xOffset = shape.maxWidth  / 2 - shape.x
-        let yOffset = shape.maxHeight / 2 - shape.y
+        let xOffset = shape.frameWidth  / 2 - shape.x
+        let yOffset = shape.frameHeight / 2 - shape.y
         let advance = (yOffset * frame.pixelsWide + xOffset) * 4
         try self.readFrame(to: frame.bitmapData!.advanced(by: advance), shape: shape, lineAdvance: frame.pixelsWide)
         return frame
@@ -94,17 +94,20 @@ final class ShapeMachine: Sprite {
     }
     
     private func readShape() throws -> Shape {
+        try reader.pushPosition(Int(try reader.read() as UInt32))
         let shape = try Shape(reader: reader)
+        try reader.popPosition()
         // Update our max size as necessary
-        if shape.maxWidth > frameWidth {
-            frameWidth = shape.maxWidth
+        if shape.frameWidth > frameWidth {
+            frameWidth = shape.frameWidth
         }
-        if shape.maxHeight > frameHeight {
-            frameHeight = shape.maxHeight
+        if shape.frameHeight > frameHeight {
+            frameHeight = shape.frameHeight
         }
         return shape
     }
     
+    // Ares' primary colour table
     static let clut: [[UInt8]] = [
         [255, 255, 255],
         [32, 0, 0],
@@ -370,12 +373,11 @@ struct Shape {
     let height: Int
     let x: Int
     let y: Int
-    let maxWidth: Int
-    let maxHeight: Int
+    let frameWidth: Int
+    let frameHeight: Int
     let data: Data
     
     init(reader: BinaryDataReader) throws {
-        try reader.push(Int(try reader.read() as UInt32))
         // Read size
         width = Int(try reader.read() as UInt16)
         height = Int(try reader.read() as UInt16)
@@ -385,10 +387,9 @@ struct Shape {
         // Read center point
         x = Int(try reader.read() as Int16)
         y = Int(try reader.read() as Int16)
-        // Calculate max size centered on center point
-        maxWidth = max(x, width - x) * 2
-        maxHeight = max(y, height - y) * 2
+        // Calculate size of frame when centered on center point
+        frameWidth = max(x, width - x) * 2
+        frameHeight = max(y, height - y) * 2
         data = try reader.readData(length: width * height)
-        try reader.pop()
     }
 }
