@@ -51,7 +51,7 @@ class SpriteLayer: NSObject {
     
     private func loadRle(_ data: Data) -> String {
         do {
-            let rle = try Rle(data)
+            let rle = try SpriteWorld(data)
             var frameList: [NSBitmapImageRep] = []
             for _ in 0..<rle.frameCount {
                 frameList.append(try rle.readFrame())

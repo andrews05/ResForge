@@ -2,10 +2,14 @@ import Cocoa
 import RFSupport
 
 class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
-    static let supportedTypes = ["rlëD"]
+    static let supportedTypes = ["rlëD", "SMIV"]
+    private static let typeMap: [String: Sprite.Type] = [
+        "rlëD": SpriteWorld.self,
+        "SMIV": ShapeMachine.self,
+    ]
     
     let resource: Resource
-    private var rle: Rle!
+    private var sprite: Sprite!
     private var frames: [NSBitmapImageRep] = []
     private var currentFrame = 0
     private var timer: Timer?
@@ -13,6 +17,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     @IBOutlet var imageSize: NSTextField!
     @IBOutlet var playButton: NSButton!
     @IBOutlet var exportButton: NSButton!
+    @IBOutlet var importButton: NSButton!
     @IBOutlet var frameCounter: NSTextField!
     @IBOutlet var importPanel: SpriteImporter!
     
@@ -43,6 +48,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     override func windowDidLoad() {
         self.window?.title = resource.defaultWindowTitle
         imageView.allowsCutCopyPaste = false
+        importButton.isHidden = !(Self.typeMap[resource.typeCode].self is WriteableSprite.Type)
         self.loadImage()
     }
     
@@ -70,14 +76,18 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     // MARK: -
     
     private func loadImage() {
-        rle = nil
+        sprite = nil
         frames.removeAll()
+        guard let spriteType = Self.typeMap[resource.typeCode] else {
+            return
+        }
         if !resource.data.isEmpty {
             do {
-                rle = try Rle(resource.data)
-                for _ in 0..<rle.frameCount {
-                    frames.append(try rle.readFrame())
+                sprite = try spriteType.init(resource.data)
+                for _ in 0..<sprite.frameCount {
+                    frames.append(try sprite.readFrame())
                 }
+//                frames = try sprite.readFrames()
             } catch {}
         }
         self.updateView()
@@ -92,6 +102,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
             image.removeRepresentation(image.representations[0])
         }
         image.addRepresentation(frames[currentFrame])
+        image.size = frames[currentFrame].size
         imageView.needsDisplay = true
         frameCounter.stringValue = "\(currentFrame+1)/\(frames.count)"
     }
@@ -99,11 +110,11 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     private func updateView() {
         playing = false
         if !frames.isEmpty {
-            imageView.image = NSImage(size: frames[0].size)
-            let width = max(frames[0].size.width, window!.contentMinSize.width)
-            let height = max(frames[0].size.height, window!.contentMinSize.height)
-            self.window?.setContentSize(NSMakeSize(width, height))
-            imageSize.stringValue = "\(frames[0].pixelsWide)x\(frames[0].pixelsHigh)"
+            // Shrink the window
+            window?.setContentSize(window!.contentMinSize)
+            // Expand to fit
+            imageView.image = NSImage(size: NSSize(width: sprite.frameWidth, height: sprite.frameHeight))
+            imageSize.stringValue = "\(sprite.frameWidth)x\(sprite.frameHeight)"
             playButton.isEnabled = frames.count > 1
             exportButton.isEnabled = true
             currentFrame = -1
@@ -129,10 +140,10 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
     
     @IBAction func saveResource(_ sender: Any) {
-        guard let rle = rle else {
+        guard let sprite = sprite else {
             return
         }
-        resource.data = rle.data
+        resource.data = sprite.data
         self.setDocumentEdited(false)
     }
 
@@ -156,17 +167,25 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
     
     private func importSheet(image: NSImage, gridX: Int, gridY: Int, dither: Bool) {
+        guard let spriteType = Self.typeMap[resource.typeCode] as? WriteableSprite.Type else {
+            return
+        }
         let rep = image.representations[0]
-        rle = Rle(width: rep.pixelsWide / gridX, height: rep.pixelsHigh / gridY, count: gridX * gridY)
-        frames = rle.writeSheet(image, dither: dither)
+        let newSprite = spriteType.init(width: rep.pixelsWide / gridX, height: rep.pixelsHigh / gridY, count: gridX * gridY)
+        sprite = newSprite
+        frames = newSprite.writeSheet(image, dither: dither)
         self.updateView()
         self.setDocumentEdited(true)
     }
     
     private func importFrames(images: [NSImage], dither: Bool) {
+        guard let spriteType = Self.typeMap[resource.typeCode] as? WriteableSprite.Type else {
+            return
+        }
         let rep = images[0].representations[0]
-        rle = Rle(width: rep.pixelsWide, height: rep.pixelsHigh, count: images.count)
-        frames = rle.writeFrames(images, dither: dither)
+        let newSprite = spriteType.init(width: rep.pixelsWide, height: rep.pixelsHigh, count: images.count)
+        sprite = newSprite
+        frames = newSprite.writeFrames(images, dither: dither)
         self.updateView()
         self.setDocumentEdited(true)
     }
@@ -177,12 +196,18 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
     
     static func export(_ resource: Resource, to url: URL) throws {
-        let data = try Rle(resource.data).readSheet().tiffRepresentation!
+        guard let spriteType = typeMap[resource.typeCode],
+              let data = try spriteType.init(resource.data).readSheet().tiffRepresentation
+        else {
+            throw SpriteError.unsupported
+        }
         try data.write(to: url)
     }
     
     static func image(for resource: Resource) -> NSImage? {
-        guard let frame = try? Rle(resource.data).readFrame() else {
+        guard let spriteType = typeMap[resource.typeCode],
+              let frame = try? spriteType.init(resource.data).readFrame()
+        else {
             return nil
         }
         let image = NSImage()

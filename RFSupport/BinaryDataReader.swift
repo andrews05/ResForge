@@ -20,6 +20,8 @@ public class BinaryDataReader {
     public var remainingBytes: Int {
         data.endIndex - position
     }
+    
+    private var posStack = [Int]()
 
     public init(_ data: Data, bigEndian: Bool = true) {
         self.data = data
@@ -40,6 +42,16 @@ public class BinaryDataReader {
             throw BinaryDataReaderError.insufficientData
         }
         self.position = position
+    }
+    
+    public func push(_ position: Int) throws {
+        posStack.append(self.position)
+        try self.setPosition(position)
+    }
+    
+    public func pop() throws {
+        // It is an error to call this without prior push
+        try self.setPosition(posStack.popLast()!)
     }
     
     public func read<T: FixedWidthInteger>(bigEndian: Bool? = nil) throws -> T {

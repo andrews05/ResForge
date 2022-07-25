@@ -1,31 +1,8 @@
 import Cocoa
 import RFSupport
 
-enum RleError: Error {
-    case invalid
-    case unsupported
-}
-
-typealias RleOp = UInt32
-extension RleOp {
-    enum code: UInt32 {
-        case frameEnd   = 0x00000000
-        case lineStart  = 0x01000000
-        case pixels     = 0x02000000
-        case skip       = 0x03000000
-        case colorRun   = 0x04000000
-    }
-    var count: Int { Int(self & 0x00FFFFFF) / 2 }
-    var code: RleOp.code? { RleOp.code(rawValue: self & 0xFF000000) }
-    init(_ code: RleOp.code, count: Int) {
-        self = code.rawValue | UInt32(count*2)
-    }
-    init(_ code: RleOp.code, bytes: Int = 0) {
-        self = code.rawValue | UInt32(bytes)
-    }
-}
-
-class Rle {
+// SpriteWorld RLE sprite, as seen in EV Nova
+final class SpriteWorld: WriteableSprite {
     let frameWidth: Int
     let frameHeight: Int
     let frameCount: Int
@@ -41,9 +18,12 @@ class Rle {
         reader = BinaryDataReader(data)
         frameWidth = Int(try reader.read() as UInt16)
         frameHeight = Int(try reader.read() as UInt16)
+        guard frameWidth > 0, frameHeight > 0 else {
+            throw SpriteError.invalid
+        }
         let depth = try reader.read() as UInt16
         guard depth == 16 else {
-            throw RleError.unsupported
+            throw SpriteError.unsupported
         }
         try reader.advance(2) // Palette is ignored for 16-bit
         frameCount = Int(try reader.read() as UInt16)
@@ -119,28 +99,29 @@ class Rle {
         var x = 0
         var framePointer = framePointer
         while true {
-            let op = try reader.read() as RleOp
-            let count = op.count
-            switch op.code {
+            guard let op = RleOp(rawValue: try reader.read()) else {
+                throw SpriteError.invalid
+            }
+            switch op {
             case .lineStart:
                 guard y < frameHeight else {
-                    throw RleError.invalid
+                    throw SpriteError.invalid
                 }
                 if y != 0 {
                     framePointer = framePointer.advanced(by: (lineAdvance-x)*4)
                 }
                 x = 0
                 y += 1
-            case .skip:
+            case let .skip(count):
                 x += count
                 guard x <= frameWidth else {
-                    throw RleError.invalid
+                    throw SpriteError.invalid
                 }
                 framePointer = framePointer.advanced(by: count*4)
-            case .pixels:
+            case let .pixels(count):
                 x += count
                 guard x <= frameWidth else {
-                    throw RleError.invalid
+                    throw SpriteError.invalid
                 }
                 // Work directly with the bytes - this is much faster than reading the pixels one at a time
                 try reader.readData(length: count * 2).withUnsafeBytes { bytes in
@@ -151,10 +132,10 @@ class Rle {
                 if count % 2 != 0 {
                     try reader.advance(2)
                 }
-            case .colorRun:
+            case let .colorRun(count):
                 x += count
                 guard x <= frameWidth else {
-                    throw RleError.invalid
+                    throw SpriteError.invalid
                 }
                 // The intention of this token is simply to repeat a single colour. But since the format is
                 // 4-byte aligned, it's technically possible to repeat two different 16-bit colour values.
@@ -166,8 +147,6 @@ class Rle {
                 }
             case .frameEnd:
                 return
-            default:
-                throw RleError.invalid
             }
         }
     }
@@ -244,7 +223,7 @@ class Rle {
                         // First pixel data for this line, write the line start
                         // Doing this only on demand allows us to omit trailing blank lines in the frame
                         for _ in 0..<lineCount {
-                            writer.write(RleOp(.lineStart))
+                            writer.write(RleOp.lineStart(0).rawValue)
                         }
                         lineCount = 0
                         linePos = writer.position
@@ -256,7 +235,7 @@ class Rle {
                             self.write(bigEndianPixels: pixels)
                             pixels.removeAll(keepingCapacity: true)
                         }
-                        writer.write(RleOp(.skip, count: transparent))
+                        writer.write(RleOp.skip(transparent).rawValue)
                         transparent = 0
                     }
                     let pixel = UInt16(framePointer[0] & 0xF8) * 0x80
@@ -270,10 +249,10 @@ class Rle {
                 self.write(bigEndianPixels: pixels)
                 pixels.removeAll(keepingCapacity: true)
                 // Rewrite the line length
-                writer.write(RleOp(.lineStart, bytes: writer.position-linePos), at: linePos-4)
+                writer.write(RleOp.lineStart(writer.position-linePos).rawValue, at: linePos-4)
             }
         }
-        writer.write(RleOp(.frameEnd))
+        writer.write(RleOp.frameEnd.rawValue)
     }
     
     private func dither(_ frame: NSBitmapImageRep) {
@@ -320,13 +299,54 @@ class Rle {
     }
     
     private func write(bigEndianPixels pixels: [UInt16]) {
-        writer.write(RleOp(.pixels, count: pixels.count))
+        writer.write(RleOp.pixels(pixels.count).rawValue)
         // Append the bytes directly to the data - this is much faster than writing the pixels one at a time
         pixels.withUnsafeBufferPointer {
             writer.data.append($0)
         }
         if pixels.count % 2 != 0 {
             writer.advance(2)
+        }
+    }
+}
+
+enum RleOp: RawRepresentable {
+    case frameEnd
+    case lineStart(Int)
+    case pixels(Int)
+    case skip(Int)
+    case colorRun(Int)
+    
+    init?(rawValue: UInt32) {
+        let bytes = Int(rawValue & 0x00FFFFFF)
+        switch rawValue >> 24 {
+        case 0:
+            self = .frameEnd
+        case 1:
+            self = .lineStart(bytes)
+        case 2:
+            self = .pixels(bytes / 2)
+        case 3:
+            self = .skip(bytes / 2)
+        case 4:
+            self = .colorRun(bytes / 2)
+        default:
+            return nil
+        }
+    }
+    
+    var rawValue: UInt32 {
+        switch self {
+        case .frameEnd:
+            return 0
+        case let .lineStart(bytes):
+            return 1 << 24 | UInt32(bytes)
+        case let .pixels(count):
+            return 2 << 24 | UInt32(count * 2)
+        case let .skip(count):
+            return 3 << 24 | UInt32(count * 2)
+        case let .colorRun(count):
+            return 4 << 24 | UInt32(count * 2)
         }
     }
 }

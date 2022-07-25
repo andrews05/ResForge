@@ -11,13 +11,14 @@
 		490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */; };
+		4925B579288D2B1300F21D15 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4925B578288D2B1300F21D15 /* Sprite.swift */; };
 		492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */; };
 		492722AF24CFADD600819E32 /* RFSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 49AACD7D24CE931A0081DD4A /* RFSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
 		492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D1E222606F53F0053DD27 /* PilotFilter.swift */; };
-		492E912E2551373100195174 /* Rle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E912D2551373100195174 /* Rle.swift */; };
+		492E912E2551373100195174 /* SpriteWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E912D2551373100195174 /* SpriteWorld.swift */; };
 		492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E91C92553ADB100195174 /* SpriteImporter.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CC3DF271228FA00A9173E /* SpobFilter.swift */; };
@@ -97,6 +98,7 @@
 		49AB3C2A27D69388003B3536 /* raw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C2127D69388003B3536 /* raw.cpp */; };
 		49AB3C2B27D69388003B3536 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C2227D69388003B3536 /* animation.cpp */; };
 		49AB3C2C27D69388003B3536 /* imagedesc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 49AB3C2327D69388003B3536 /* imagedesc.hpp */; };
+		49AB8985288C9C2E0013B883 /* ShapeMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AB8984288C9C2E0013B883 /* ShapeMachine.swift */; };
 		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49CC15922764218800E5605A /* LinkingComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CC15912764218800E5605A /* LinkingComboBox.swift */; };
@@ -307,11 +309,12 @@
 		4919415425E98E7000FFC3F8 /* SpriteLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteLayer.swift; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; };
 		491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; };
+		4925B578288D2B1300F21D15 /* Sprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		492D1E222606F53F0053DD27 /* PilotFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilotFilter.swift; sourceTree = "<group>"; };
-		492E912D2551373100195174 /* Rle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rle.swift; sourceTree = "<group>"; };
+		492E912D2551373100195174 /* SpriteWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteWorld.swift; sourceTree = "<group>"; };
 		492E91C92553ADB100195174 /* SpriteImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteImporter.swift; sourceTree = "<group>"; };
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
@@ -425,6 +428,7 @@
 		49AB3C2127D69388003B3536 /* raw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = raw.cpp; sourceTree = "<group>"; };
 		49AB3C2227D69388003B3536 /* animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation.cpp; sourceTree = "<group>"; };
 		49AB3C2327D69388003B3536 /* imagedesc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = imagedesc.hpp; sourceTree = "<group>"; };
+		49AB8984288C9C2E0013B883 /* ShapeMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeMachine.swift; sourceTree = "<group>"; };
 		49CC15912764218800E5605A /* LinkingComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingComboBox.swift; sourceTree = "<group>"; };
 		49D6D34B271BAAAB002DEA97 /* TemplateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateError.swift; sourceTree = "<group>"; };
 		49D6D34C271BAAAB002DEA97 /* CasedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasedElement.swift; sourceTree = "<group>"; };
@@ -610,7 +614,9 @@
 				49EE72AC2550A7F300BEABDB /* SpriteWindow.xib */,
 				49EE72AA2550A7F300BEABDB /* SpriteWindowController.swift */,
 				492E91C92553ADB100195174 /* SpriteImporter.swift */,
-				492E912D2551373100195174 /* Rle.swift */,
+				4925B578288D2B1300F21D15 /* Sprite.swift */,
+				492E912D2551373100195174 /* SpriteWorld.swift */,
+				49AB8984288C9C2E0013B883 /* ShapeMachine.swift */,
 			);
 			path = "Sprite Editor";
 			sourceTree = "<group>";
@@ -1391,14 +1397,16 @@
 				49640F2425F201B6009FEC9B /* EngineLayer.swift in Sources */,
 				492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */,
 				49640F1625F201B1009FEC9B /* BaseLayer.swift in Sources */,
+				4925B579288D2B1300F21D15 /* Sprite.swift in Sources */,
 				49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */,
 				49640F1D25F201B3009FEC9B /* AltLayer.swift in Sources */,
 				49640F4725F201C9009FEC9B /* ShanView.swift in Sources */,
 				493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */,
 				492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* NovaTools.swift in Sources */,
-				492E912E2551373100195174 /* Rle.swift in Sources */,
+				492E912E2551373100195174 /* SpriteWorld.swift in Sources */,
 				4976D2832718CE9C00322DDF /* GalaxyWindowController.swift in Sources */,
+				49AB8985288C9C2E0013B883 /* ShapeMachine.swift in Sources */,
 				49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */,
 				496E7E3525E6EA15001C97CA /* ShanWindowController.swift in Sources */,
 				49640F4025F201C0009FEC9B /* ExitPoints.swift in Sources */,

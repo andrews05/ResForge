@@ -12,6 +12,7 @@
                 <outlet property="frameCounter" destination="gx5-MO-Xlp" id="oNT-LT-Ebc"/>
                 <outlet property="imageSize" destination="Idz-Rc-j82" id="g5Y-Vm-wsW"/>
                 <outlet property="imageView" destination="19" id="YAm-A5-vRc"/>
+                <outlet property="importButton" destination="C2f-Qi-BIY" id="lUd-s8-DvJ"/>
                 <outlet property="importPanel" destination="5FK-bk-dmv" id="0F0-qM-Lgp"/>
                 <outlet property="playButton" destination="e3j-NW-hCp" id="ixM-k6-9AM"/>
                 <outlet property="window" destination="17" id="22"/>
@@ -67,7 +68,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C2f-Qi-BIY">
-                        <rect key="frame" x="213" y="253" width="74" height="32"/>
+                        <rect key="frame" x="141" y="253" width="74" height="32"/>
                         <buttonCell key="cell" type="push" title="Import" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="REi-Yh-F9s">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -85,7 +86,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YB7-64-pcw">
-                        <rect key="frame" x="141" y="253" width="74" height="32"/>
+                        <rect key="frame" x="213" y="253" width="74" height="32"/>
                         <buttonCell key="cell" type="push" title="Export" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fcc-Xc-XF6">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -97,11 +98,13 @@ DQ
                 </subviews>
                 <constraints>
                     <constraint firstItem="19" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="1EJ-rh-qFT"/>
-                    <constraint firstAttribute="trailing" secondItem="C2f-Qi-BIY" secondAttribute="trailing" constant="20" symbolic="YES" id="1m9-d7-SBV"/>
                     <constraint firstItem="gx5-MO-Xlp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="18" secondAttribute="leading" id="4yZ-W9-8DN"/>
                     <constraint firstItem="e3j-NW-hCp" firstAttribute="leading" secondItem="18" secondAttribute="leading" constant="20" symbolic="YES" id="53a-03-dgM"/>
+                    <constraint firstAttribute="trailing" secondItem="YB7-64-pcw" secondAttribute="trailing" constant="20" symbolic="YES" id="5Zg-Oo-6uy"/>
                     <constraint firstItem="e3j-NW-hCp" firstAttribute="top" secondItem="18" secondAttribute="top" constant="20" symbolic="YES" id="82T-IK-rVa"/>
                     <constraint firstItem="C2f-Qi-BIY" firstAttribute="top" secondItem="18" secondAttribute="top" constant="20" symbolic="YES" id="Fpu-ma-fqn"/>
+                    <constraint firstItem="YB7-64-pcw" firstAttribute="leading" secondItem="C2f-Qi-BIY" secondAttribute="trailing" constant="12" symbolic="YES" id="INf-tY-nKs"/>
+                    <constraint firstItem="C2f-Qi-BIY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="e3j-NW-hCp" secondAttribute="trailing" constant="12" symbolic="YES" id="NDz-up-Qc1"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Idz-Rc-j82" secondAttribute="trailing" id="NcJ-HJ-Rpa"/>
                     <constraint firstItem="wbE-5V-m6D" firstAttribute="top" secondItem="19" secondAttribute="top" constant="-1" id="PfR-Sw-1YH"/>
                     <constraint firstItem="Idz-Rc-j82" firstAttribute="top" secondItem="e3j-NW-hCp" secondAttribute="bottom" constant="20" symbolic="YES" id="To8-Ni-Dfl"/>
@@ -109,11 +112,9 @@ DQ
                     <constraint firstItem="19" firstAttribute="top" secondItem="e3j-NW-hCp" secondAttribute="bottom" constant="20" symbolic="YES" id="YpW-Ae-7z6"/>
                     <constraint firstAttribute="trailing" secondItem="19" secondAttribute="trailing" id="ZOj-Lf-r1Y"/>
                     <constraint firstItem="YB7-64-pcw" firstAttribute="top" secondItem="18" secondAttribute="top" constant="20" symbolic="YES" id="ab6-YP-zKH"/>
-                    <constraint firstItem="YB7-64-pcw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="e3j-NW-hCp" secondAttribute="trailing" constant="12" symbolic="YES" id="dnE-la-OPH"/>
                     <constraint firstAttribute="trailing" secondItem="gx5-MO-Xlp" secondAttribute="trailing" id="gM0-cg-nWi"/>
                     <constraint firstItem="wbE-5V-m6D" firstAttribute="trailing" secondItem="19" secondAttribute="trailing" constant="1" id="hH2-ys-85Z"/>
                     <constraint firstItem="wbE-5V-m6D" firstAttribute="bottom" secondItem="19" secondAttribute="bottom" constant="1" id="jOD-4k-Xah"/>
-                    <constraint firstItem="C2f-Qi-BIY" firstAttribute="leading" secondItem="YB7-64-pcw" secondAttribute="trailing" constant="12" symbolic="YES" id="oPm-y1-ngd"/>
                     <constraint firstItem="Idz-Rc-j82" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="rRT-KN-Ney"/>
                     <constraint firstAttribute="bottom" secondItem="19" secondAttribute="bottom" id="rnA-R2-6tO"/>
                     <constraint firstItem="gx5-MO-Xlp" firstAttribute="top" secondItem="e3j-NW-hCp" secondAttribute="bottom" constant="20" symbolic="YES" id="w7A-fR-PmO"/>
