@@ -111,7 +111,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             guard gridX > 0, image.representations[0].pixelsWide % gridX == 0 else {
                 throw SpriteImporterError.invalidX(gridX)
             }
-            guard gridY > 0, image.representations[0].pixelsHigh % gridX == 0 else {
+            guard gridY > 0, image.representations[0].pixelsHigh % gridY == 0 else {
                 throw SpriteImporterError.invalidY(gridY)
             }
         }
