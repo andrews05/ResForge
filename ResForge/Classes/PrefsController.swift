@@ -1,6 +1,7 @@
 import Cocoa
 
-class PrefsController: NSWindowController {
+class PrefsController: NSWindowController, NSWindowDelegate, NSTableViewDataSource {
+    @IBOutlet var favoriteTable: NSTableView!
     @IBOutlet var favoriteTypes: NSArrayController!
 
     override var windowNibName: NSNib.Name? {
@@ -15,12 +16,36 @@ class PrefsController: NSWindowController {
         window?.center()
     }
 
+    func windowWillClose(_ notification: Notification) {
+        window?.makeFirstResponder(nil)
+    }
+
     @IBAction func add(_ sender: Any) {
-        favoriteTypes.addObject("xxxx")
+        window?.makeFirstResponder(nil)
+        favoriteTypes.addObject("")
+        favoriteTable.editColumn(0, row: favoriteTypes.selectionIndex, with: nil, select: true)
     }
 
     @IBAction func remove(_ sender: Any) {
-        favoriteTypes.remove(contentsOf: favoriteTypes.selectedObjects)
+        favoriteTable.abortEditing()
+        favoriteTypes.remove(atArrangedObjectIndexes: favoriteTypes.selectionIndexes)
+    }
+
+    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+        (favoriteTypes.arrangedObjects as? [Any])?[row]
+    }
+
+    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
+        favoriteTypes.remove(atArrangedObjectIndex: row)
+        // Don't insert if invalid
+        if let object = object as? String {
+            // Detect duplicates
+            if let idx = (favoriteTypes.arrangedObjects as? [String])?.firstIndex(of: object) {
+                favoriteTypes.setSelectionIndex(idx)
+            } else {
+                favoriteTypes.insert(object, atArrangedObjectIndex: row)
+            }
+        }
     }
 }
 

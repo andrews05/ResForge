@@ -52,8 +52,9 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         // Add all types currently open
         let docs = NSDocumentController.shared.documents as! [ResourceDocument]
         var suggestions = Set(docs.flatMap { $0.directory.allTypes.map(\.code) })
-        // Common types?
-        suggestions.formUnion(["PICT", "snd ", "STR ", "STR#", "TMPL"])
+        if let favorites = UserDefaults.standard.array(forKey: RFDefaults.favoriteTypes) as? [String] {
+            suggestions.formUnion(favorites)
+        }
         let sorted = suggestions.sorted {
             $0.localizedCompare($1) == .orderedAscending
         }
