@@ -56,6 +56,7 @@ struct RFDefaults {
     static let deleteResourceWarning = "DeleteResourceWarning"
     static let launchAction = "LaunchAction"
     static let showSidebar = "ShowSidebar"
+    static let thumbnailSize = "ThumbnailSize"
     static let favoriteTypes = "FavoriteTypes"
 
     enum LaunchAction: String, CaseIterable {
@@ -70,6 +71,7 @@ struct RFDefaults {
             deleteResourceWarning: true,
             launchAction: LaunchAction.DisplayOpenPanel.rawValue,
             showSidebar: true,
+            thumbnailSize: 100,
             favoriteTypes: [
                 "PICT",
                 "snd ",

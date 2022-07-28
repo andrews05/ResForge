@@ -218,10 +218,6 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         image.addRepresentation(frame)
         return image
     }
-    
-    static func previewSize(for resourceType: String) -> Int {
-        return 100
-    }
 }
 
 class AnimationBox: NSBox {

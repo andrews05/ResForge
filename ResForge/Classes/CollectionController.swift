@@ -2,16 +2,14 @@ import Cocoa
 import RFSupport
 
 class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionViewDataSource, ResourcesView {
-    @IBOutlet var collectionView: NSCollectionView!
+    @IBOutlet var collectionView: ResourceCollection!
     @IBOutlet weak var document: ResourceDocument!
     private var currentType: ResourceType!
     
     func prepareView(type: ResourceType?) -> NSView {
         if let type = type {
             currentType = type
-            let size = PluginRegistry.previewProviders[type.code]!.previewSize(for: type.code)
-            let layout = collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
-            layout.itemSize = NSSize(width: size+8, height: size+40)
+            collectionView.maxSize = PluginRegistry.previewProviders[type.code]!.maxThumbnailSize(for: type.code)
             document.directory.sorter = nil
         }
         return collectionView
@@ -110,6 +108,44 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
 }
 
 class ResourceCollection: NSCollectionView {
+    private static let zoomLevels = [64, 100, 160, 256]
+    private static var preferredSize = UserDefaults.standard.integer(forKey: RFDefaults.thumbnailSize) {
+        didSet {
+            UserDefaults.standard.set(preferredSize, forKey: RFDefaults.thumbnailSize)
+        }
+    }
+    // Some resource types, like small icons, may prefer to limit their max size
+    var maxSize: Int! {
+        didSet {
+            if maxSize == nil {
+                maxSize = Self.zoomLevels.last
+            }
+            self.updateSize()
+        }
+    }
+    private var currentSize = 0
+    
+    private func updateSize() {
+        currentSize = max(0, min(maxSize, Self.preferredSize))
+        let layout = collectionViewLayout as! NSCollectionViewFlowLayout
+        layout.itemSize = NSSize(width: currentSize+8, height: currentSize+40)
+    }
+    
+    @IBAction func zoomIn(_ sender: Any) {
+        if currentSize < maxSize,
+           let newSize = Self.zoomLevels.first(where: { $0 > currentSize }) {
+            Self.preferredSize = newSize
+            self.updateSize()
+        }
+    }
+    
+    @IBAction func zoomOut(_ sender: Any) {
+        if let newSize = Self.zoomLevels.last(where: { $0 < currentSize }) {
+            Self.preferredSize = newSize
+            self.updateSize()
+        }
+    }
+    
     // The collection view doesn't seem to have sensible key handling.
     // We need to handle home/end manually, as well as arrows keys when selection is empty,
     // pass on delete and pageup/dn to the next responder, then accept everything else.

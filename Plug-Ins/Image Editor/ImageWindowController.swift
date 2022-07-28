@@ -245,10 +245,10 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         return image
     }
     
-    static func previewSize(for resourceType: String) -> Int {
+    static func maxThumbnailSize(for resourceType: String) -> Int? {
         switch resourceType {
         case "PICT", "PNG ":
-            return 100
+            return nil
         default:
             return 64
         }

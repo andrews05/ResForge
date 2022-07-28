@@ -17,11 +17,16 @@ public protocol ResourceEditor: AbstractEditor {
 public protocol PreviewProvider {
     static var supportedTypes: [String] { get }
     
-    /// Return the preferred preview size for grid view.
-    static func previewSize(for resourceType: String) -> Int
+    /// Return the max thumbnail size for grid view.
+    static func maxThumbnailSize(for resourceType: String) -> Int?
     
     /// Return an image representing the resource for use in grid view.
     static func image(for resource: Resource) -> NSImage?
+}
+public extension PreviewProvider {
+    static func maxThumbnailSize(for resourceType: String) -> Int? {
+        return nil
+    }
 }
 
 /// An export provider allows control over the file written for a resource when exported.
