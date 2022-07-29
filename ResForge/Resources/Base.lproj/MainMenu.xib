@@ -281,6 +281,12 @@ CA
                                     <action selector="toggleTypes:" target="-1" id="Ao8-P5-ytl"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Enable Thumbnails" state="on" id="shm-AT-kLs">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleThumbnails:" target="-1" id="Kc3-aR-2b4"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Bulk Data Mode" keyEquivalent="b" id="YyK-nA-1Rm">
                                 <connections>
                                     <action selector="toggleBulkMode:" target="-1" id="6eg-iu-KpL"/>

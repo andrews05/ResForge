@@ -2,6 +2,11 @@ import Cocoa
 import RFSupport
 
 class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSSplitViewDelegate {
+    static var enableThumbnails = UserDefaults.standard.bool(forKey: RFDefaults.enableThumbnails) {
+        didSet {
+            UserDefaults.standard.set(enableThumbnails, forKey: RFDefaults.enableThumbnails)
+        }
+    }
     @IBOutlet var splitView: NSSplitView!
     @IBOutlet var typeList: NSOutlineView!
     @IBOutlet var scrollView: NSScrollView!
@@ -78,7 +83,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         resourcesView.select(selection)
     }
     
-    private func setView(_ rView: ResourcesView? = nil) {
+    func setView(_ rView: ResourcesView? = nil) {
         let rView = rView ?? self.defaultView()
         do {
             let view = try rView.prepareView(type: currentType)
@@ -96,7 +101,9 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     private func defaultView() -> ResourcesView {
-        if let type = currentType, PluginRegistry.previewProviders[type.code] != nil {
+        if Self.enableThumbnails,
+           let type = currentType,
+           PluginRegistry.previewProviders[type.code] != nil {
             return collectionController
         }
         return outlineController

@@ -483,6 +483,12 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         case #selector(toggleTypes(_:)):
             menuItem.title = NSLocalizedString(dataSource.useTypeList ? "Hide Sidebar" : "Show Sidebar", comment: "")
             return true
+        case #selector(toggleThumbnails(_:)):
+            menuItem.state = ResourceDataSource.enableThumbnails ? .on : .off
+            if let type = dataSource.currentType {
+                return PluginRegistry.previewProviders[type.code] != nil
+            }
+            return false
         case #selector(toggleBulkMode(_:)):
             if dataSource.isBulkMode {
                 menuItem.title = NSLocalizedString("Show Standard View", comment: "")
@@ -553,6 +559,11 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     
     @IBAction func toggleBulkMode(_ sender: Any) {
         dataSource.toggleBulkMode()
+    }
+    
+    @IBAction func toggleThumbnails(_ sender: Any) {
+        ResourceDataSource.enableThumbnails = !ResourceDataSource.enableThumbnails
+        dataSource.setView()
     }
     
     @IBAction func exportCSV(_ sender: Any) {
