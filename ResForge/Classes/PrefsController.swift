@@ -75,11 +75,37 @@ struct RFDefaults {
             enableThumbnails: true,
             thumbnailSize: 100,
             favoriteTypes: [
+                // Common types?
                 "PICT",
                 "snd ",
                 "STR ",
                 "STR#",
                 "TMPL",
+                // EV Nova types - these are annoying to type so keep them here as defaults
+                "bööm",
+                "chär",
+                "cölr",
+                "crön",
+                "dësc",
+                "düde",
+                "flët",
+                "gövt",
+                "ïntf",
+                "jünk",
+                "mïsn",
+                "nëbu",
+                "oütf",
+                "öops",
+                "përs",
+                "ränk",
+                "rlëD",
+                "röid",
+                "shän",
+                "shïp",
+                "spïn",
+                "spöb",
+                "sÿst",
+                "wëap",
             ]
         ])
     }
