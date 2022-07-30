@@ -275,21 +275,28 @@ CA
                 <menuItem title="View" id="IlK-qQ-PMQ">
                     <menu key="submenu" title="View" id="hYa-qi-crD">
                         <items>
+                            <menuItem title="as List" state="on" tag="1" keyEquivalent="1" id="shm-AT-kLs">
+                                <connections>
+                                    <action selector="switchView:" target="-1" id="fsZ-zb-Dhy"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="as Thumbnails" tag="2" keyEquivalent="2" id="IM0-1L-nXO">
+                                <connections>
+                                    <action selector="switchView:" target="-1" id="xdc-C6-BsD"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="as Data Table" tag="3" keyEquivalent="3" id="YyK-nA-1Rm">
+                                <connections>
+                                    <action selector="switchView:" target="-1" id="YtY-Xo-X9h"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="ySb-1Z-28i">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
                             <menuItem title="Show Sidebar" id="348">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="toggleTypes:" target="-1" id="Ao8-P5-ytl"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Enable Thumbnails" state="on" id="shm-AT-kLs">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="toggleThumbnails:" target="-1" id="Kc3-aR-2b4"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Bulk Data Mode" keyEquivalent="b" id="YyK-nA-1Rm">
-                                <connections>
-                                    <action selector="toggleBulkMode:" target="-1" id="6eg-iu-KpL"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="BV2-eA-LYH">

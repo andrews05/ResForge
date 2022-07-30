@@ -483,19 +483,23 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         case #selector(toggleTypes(_:)):
             menuItem.title = NSLocalizedString(dataSource.useTypeList ? "Hide Sidebar" : "Show Sidebar", comment: "")
             return true
-        case #selector(toggleThumbnails(_:)):
-            menuItem.state = ResourceDataSource.enableThumbnails ? .on : .off
-            if let type = dataSource.currentType {
-                return PluginRegistry.previewProviders[type.code] != nil
+        case #selector(switchView(_:)):
+            switch menuItem.tag {
+            case 1:
+                menuItem.state = dataSource.resourcesView is StandardController ? .on : .off
+                return dataSource.useTypeList
+            case 2:
+                menuItem.state = dataSource.resourcesView is CollectionController ? .on : .off
+                if let type = dataSource.currentType {
+                    return dataSource.useTypeList && PluginRegistry.previewProviders[type.code] != nil
+                }
+                return false
+            case 3:
+                menuItem.state = dataSource.resourcesView is BulkController ? .on : .off
+                return editorManager.template(for: dataSource.currentType, basic: true) != nil
+            default:
+                return false
             }
-            return false
-        case #selector(toggleBulkMode(_:)):
-            if dataSource.isBulkMode {
-                menuItem.title = NSLocalizedString("Show Standard View", comment: "")
-                return true
-            }
-            menuItem.title = NSLocalizedString("Show Bulk Data View", comment: "")
-            return editorManager.template(for: dataSource.currentType, basic: true) != nil
         case #selector(exportCSV(_:)):
             if let type = dataSource.selectedType() {
                 menuItem.title = NSLocalizedString("Export ‘\(type.code)’ to CSV…", comment: "")
@@ -557,13 +561,21 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         dataSource.toggleSidebar()
     }
     
-    @IBAction func toggleBulkMode(_ sender: Any) {
-        dataSource.toggleBulkMode()
-    }
-    
-    @IBAction func toggleThumbnails(_ sender: Any) {
-        ResourceDataSource.enableThumbnails = !ResourceDataSource.enableThumbnails
-        dataSource.setView()
+    @IBAction func switchView(_ sender: NSMenuItem) {
+        let view: ResourcesView
+        switch sender.tag {
+        case 1:
+            view = dataSource.outlineController
+        case 2:
+            view = dataSource.collectionController
+        case 3:
+            view = dataSource.bulkController
+        default:
+            return
+        }
+        if view !== dataSource.resourcesView {
+            dataSource.setView(view, retainSelection: true)
+        }
     }
     
     @IBAction func exportCSV(_ sender: Any) {

@@ -2,11 +2,6 @@ import Cocoa
 import RFSupport
 
 class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSSplitViewDelegate {
-    static var enableThumbnails = UserDefaults.standard.bool(forKey: RFDefaults.enableThumbnails) {
-        didSet {
-            UserDefaults.standard.set(enableThumbnails, forKey: RFDefaults.enableThumbnails)
-        }
-    }
     @IBOutlet var splitView: NSSplitView!
     @IBOutlet var typeList: NSOutlineView!
     @IBOutlet var scrollView: NSScrollView!
@@ -16,7 +11,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     @IBOutlet var attributesHolder: NSView!
     @IBOutlet var attributesDisplay: NSTextField!
     @IBOutlet weak var document: ResourceDocument!
-    private var resourcesView: ResourcesView!
+    private(set) var resourcesView: ResourcesView!
     private var ignoreChanges = false
     
     var isBulkMode: Bool {
@@ -83,7 +78,8 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
         resourcesView.select(selection)
     }
     
-    func setView(_ rView: ResourcesView? = nil) {
+    func setView(_ rView: ResourcesView? = nil, retainSelection: Bool = false) {
+        let selected = retainSelection ? self.selectedResources() : []
         let rView = rView ?? self.defaultView()
         do {
             let view = try rView.prepareView(type: currentType)
@@ -95,28 +91,19 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             }
             // The outline header interferes with the scroll position, make sure we return to top
             (view as? NSOutlineView)?.scrollToBeginningOfDocument(self)
+            if retainSelection {
+                resourcesView.select(selected)
+            }
         } catch let error {
             document.presentError(error)
         }
     }
     
     private func defaultView() -> ResourcesView {
-        if Self.enableThumbnails,
-           let type = currentType,
-           PluginRegistry.previewProviders[type.code] != nil {
+        if let type = currentType, PluginRegistry.previewProviders[type.code] != nil {
             return collectionController
         }
         return outlineController
-    }
-    
-    func toggleBulkMode() {
-        let selected = self.selectedResources()
-        if isBulkMode {
-            self.setView()
-        } else if currentType != nil {
-            self.setView(bulkController)
-        }
-        resourcesView.select(selected)
     }
     
     // MARK: - Resource management
