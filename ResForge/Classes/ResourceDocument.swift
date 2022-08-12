@@ -310,11 +310,13 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     // Get a system symbol if on 11.0 or later, otherwise a standard image
-    private func symbolImage(named name: String) -> NSImage? {
+    private func symbolImage(named name: String, fallback: String? = nil) -> NSImage? {
         if #available(OSX 11.0, *) {
             return NSImage(systemSymbolName: name, accessibilityDescription: nil)
         }
-        return NSImage(named: name)
+        let image = NSImage(named: fallback ?? name)
+        image?.isTemplate = true
+        return image
     }
     
     func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
@@ -331,6 +333,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 searchField = NSSearchField()
                 item.view = searchField
                 item.label = NSLocalizedString("Search", comment: "")
+                item.paletteLabel = item.label
                 item.minSize = NSMakeSize(120, 0)
                 item.maxSize = NSMakeSize(180, 0)
             }
@@ -351,7 +354,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             item.action = #selector(createNewItem(_:))
         case .deleteResource:
             item.label = NSLocalizedString("Delete", comment: "")
-            item.image = self.symbolImage(named: "trash")
+            item.image = self.symbolImage(named: "trash", fallback: "NSToolbarDelete")
             item.action = #selector(delete(_:))
             item.isEnabled = false
         case .editResource:
@@ -371,17 +374,18 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             item.isEnabled = false
         case .showInfo:
             item.label = NSLocalizedString("Show Info", comment: "")
-            item.image = self.symbolImage(named: "info.circle")
+            item.image = self.symbolImage(named: "info.circle", fallback: "NSToolbarGetInfo")
             item.target = NSApp.delegate
             item.action = #selector(ApplicationDelegate.showInfo(_:))
         default:
             break
         }
+        item.paletteLabel = item.label
         return item
     }
     
     func toolbarWillAddItem(_ notification: Notification) {
-        // Set the correct avtion
+        // Set the correct action
         if let addedItem = notification.userInfo?["item"] as? NSToolbarItem, addedItem.itemIdentifier == .toggleSidebar {
             addedItem.action = #selector(toggleTypes(_:))
         }
