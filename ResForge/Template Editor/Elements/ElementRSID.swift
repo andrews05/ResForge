@@ -32,6 +32,10 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
         return range?.contains(Int(tValue) + offset) != false
     }
     
+    deinit {
+        self.unbind(NSBindingName("resType"))
+    }
+    
     override func configure() throws {
         // Determine parameters from label
         let regex = try! NSRegularExpression(pattern: "(?:.*['‘](.{4})['’])?(?:.*?(-?[0-9]+) *[+]([0-9]+)?)?", options: [])
