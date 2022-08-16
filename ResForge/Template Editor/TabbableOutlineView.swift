@@ -17,7 +17,7 @@ class TabbableOutlineView: NSOutlineView {
         while i != row {
             if i != -1, var view = self.view(atColumn: 1, row: i, makeIfNecessary: true) {
                 if !view.canBecomeKeyView {
-                    view = view.subviews.last { $0.canBecomeKeyView } ?? self.view(atColumn: 0, row: i, makeIfNecessary: true)!
+                    view = view.subviews.last { $0.canBecomeKeyView } ?? self.view(atColumn: 0, row: i, makeIfNecessary: true) ?? view
                 }
                 if view.canBecomeKeyView {
                     self.window?.makeFirstResponder(view)
@@ -42,9 +42,8 @@ class TabbableOutlineView: NSOutlineView {
         }
         while i != row {
             if i != self.numberOfRows, var view = self.view(atColumn: 0, row: i, makeIfNecessary: true) {
-                if !view.canBecomeKeyView {
-                    view = self.view(atColumn: 1, row: i, makeIfNecessary: true)!
-                    view = view.subviews.first { $0.canBecomeKeyView } ?? view
+                if !view.canBecomeKeyView, let cell = self.view(atColumn: 1, row: i, makeIfNecessary: true) {
+                    view = cell.subviews.first { $0.canBecomeKeyView } ?? cell
                 }
                 if view.canBecomeKeyView {
                     self.window?.makeFirstResponder(view)
