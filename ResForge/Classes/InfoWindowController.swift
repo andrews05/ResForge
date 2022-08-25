@@ -136,9 +136,10 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     }
     
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        // Discard editing on escape - this would otherwise close the window immediately
         switch commandSelector {
         case #selector(cancelOperation(_:)):
-            control.abortEditing()
+            objectController.discardEditing()
             return true
         default:
             return false

@@ -150,10 +150,10 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     
     public required init?(coder: NSCoder) {
         guard
-            let typeCode = coder.decodeObject(of: NSString.self, forKey: "typeCode") as? String,
+            let typeCode = coder.decodeObject(of: NSString.self, forKey: "typeCode") as String?,
             let typeAttributes = coder.decodeObject(of: [NSDictionary.self, NSString.self], forKey: "typeAttributes") as? [String:String],
-            let name = coder.decodeObject(of: NSString.self, forKey: "name") as? String,
-            let data = coder.decodeObject(of: NSData.self, forKey: "data") as? Data
+            let name = coder.decodeObject(of: NSString.self, forKey: "name") as String?,
+            let data = coder.decodeObject(of: NSData.self, forKey: "data") as Data?
         else {
             return nil
         }
