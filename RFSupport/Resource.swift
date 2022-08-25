@@ -149,13 +149,19 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     public static var supportsSecureCoding = true
     
     public required init?(coder: NSCoder) {
-        let typeCode = coder.decodeObject(of: NSString.self, forKey: "typeCode")! as String
-        let typeAttributes = coder.decodeObject(of: NSDictionary.self, forKey: "typeAttributes")! as! [String:String]
+        guard
+            let typeCode = coder.decodeObject(of: NSString.self, forKey: "typeCode") as? String,
+            let typeAttributes = coder.decodeObject(of: [NSDictionary.self, NSString.self], forKey: "typeAttributes") as? [String:String],
+            let name = coder.decodeObject(of: NSString.self, forKey: "name") as? String,
+            let data = coder.decodeObject(of: NSData.self, forKey: "data") as? Data
+        else {
+            return nil
+        }
         type = ResourceType(typeCode, typeAttributes)
         id = coder.decodeInteger(forKey: "id")
-        name = coder.decodeObject(of: NSString.self, forKey: "name")! as String
+        self.name = name
         attributes = coder.decodeInteger(forKey: "attributes")
-        data = coder.decodeObject(of: NSData.self, forKey: "data")! as Data
+        self.data = data
     }
     
     public func encode(with coder: NSCoder) {
