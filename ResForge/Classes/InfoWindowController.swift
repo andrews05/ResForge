@@ -39,13 +39,18 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     }
     
     func windowDidResignKey(_ notification: Notification) {
-        self.window?.makeFirstResponder(self.window)
+        window?.makeFirstResponder(window)
+    }
+    
+    func windowWillClose(_ notification: Notification) {
+        // Suppress all errors when closing
+        try? objectController.commitEditingWithoutPresentingError()
     }
     
     override func showWindow(_ sender: Any?) {
         super.showWindow(sender)
         self.refresh()
-        self.window?.makeFirstResponder(self.window?.initialFirstResponder)
+        window?.makeFirstResponder(window?.initialFirstResponder)
     }
     
     private func refresh() {
@@ -53,25 +58,24 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             return
         }
         if let resource = objectController.content as? Resource {
-            self.window?.title = NSLocalizedString("Resource Info", comment: "")
+            window?.title = NSLocalizedString("Resource Info", comment: "")
             
             rSize.integerValue = resource.data.count
             typeAttsHolder.isHidden = (resource.document as? ResourceDocument)?.format != .extended
             rTypeAtts.attributes = resource.typeAttributes
             
-            // swap view
-            self.window?.contentView = resourceView
-            self.window?.initialFirstResponder = rName
+            window?.contentView = resourceView
+            window?.initialFirstResponder = rName
         } else if let document = objectController.content as? ResourceDocument {
-            self.window?.title = NSLocalizedString("Document Info", comment: "")
+            window?.title = NSLocalizedString("Document Info", comment: "")
             
             dataSize.integerValue = 0
             rsrcSize.integerValue = 0
             
-            // get sizes of forks as they are on disk
             if let url = document.fileURL {
                 iconView.image = NSWorkspace.shared.icon(forFile: url.path)
                 nameView.stringValue = url.lastPathComponent
+                // Read fork sizes
                 do {
                     let values = try url.resourceValues(forKeys: [.fileSizeKey, .totalFileSizeKey])
                     dataSize.integerValue = values.fileSize!
@@ -82,12 +86,11 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
                 nameView.stringValue = document.displayName
             }
             
-            // swap view
-            self.window?.contentView = documentView
-            self.window?.initialFirstResponder = type
+            window?.contentView = documentView
+            window?.initialFirstResponder = type
         } else {
-            self.window?.title = NSLocalizedString("Document Info", comment: "")
-            self.window?.contentView = placeholderView
+            window?.title = NSLocalizedString("Document Info", comment: "")
+            window?.contentView = placeholderView
         }
     }
     
@@ -142,16 +145,22 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
         }
     }
     
+    func control(_ control: NSControl, didFailToFormatString string: String, errorDescription error: String?) -> Bool {
+        // Suppress formatter errors
+        try? objectController.commitEditingWithoutPresentingError()
+        return true
+    }
+    
     @IBAction func applyAttributes(_ sender: NSButton) {
         // Make sure the type/id fields are committed before saving attributes
-        if self.window?.makeFirstResponder(nil) != false, let resource = objectController.content as? Resource {
+        if window?.makeFirstResponder(nil) != false, let resource = objectController.content as? Resource {
             do {
                 let attributes = rTypeAtts.attributes
                 try resource.checkConflict(typeAttributes: attributes)
                 resource.typeAttributes = attributes
                 rTypeAtts.attributes = attributes
             } catch let error {
-                self.window?.presentError(error)
+                window?.presentError(error)
             }
         }
     }
@@ -182,7 +191,7 @@ extension NSValueTransformerName {
 // This makes it easier for the user to update multiple resources consecutively.
 extension NSOutlineView {
     open override var needsPanelToBecomeKey: Bool {
-        return !(self.window?.isMainWindow == true && self.window?.isKeyWindow == false)
+        return !(window?.isMainWindow == true && window?.isKeyWindow == false)
     }
 }
 extension NSImageView {
