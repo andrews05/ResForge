@@ -26,11 +26,13 @@ class ElementCSTR: CasedElement {
     @objc var value = ""
     var maxLength = Int(UInt32.max)
     var padding = StringPadding.none
+    var insertLineBreaks = false
     
     required init(type: String, label: String) {
         super.init(type: type, label: label)
         self.configurePadding()
         self.width = 240
+        insertLineBreaks = maxLength > 256
     }
     
     override func configure() throws {
@@ -78,10 +80,10 @@ class ElementCSTR: CasedElement {
         }
     }
     
-    // For CSTR only, insert carriage return with return key instead of ending editing (this would otherwise require ctrl+opt+return)
+    // Insert new line with return key instead of ending editing (this would otherwise require opt+return)
     override func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
-        if type == "CSTR" && commandSelector == #selector(NSTextView.insertNewline(_:)) {
-            textView.insertText(String(UnicodeScalar(NSCarriageReturnCharacter)!), replacementRange: textView.selectedRange())
+        if insertLineBreaks && commandSelector == #selector(NSTextView.insertNewline(_:)) {
+            textView.insertNewlineIgnoringFieldEditor(nil)
             return true
         }
         return super.control(control, textView: textView, doCommandBy: commandSelector)
@@ -129,6 +131,8 @@ class ElementCSTR: CasedElement {
     }
     
     override var formatter: Formatter {
-        self.sharedFormatter() { MacRomanFormatter(stringLength: maxLength) }
+        self.sharedFormatter() {
+            MacRomanFormatter(stringLength: maxLength, convertLineEndings: insertLineBreaks)
+        }
     }
 }

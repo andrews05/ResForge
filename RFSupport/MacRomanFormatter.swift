@@ -4,12 +4,14 @@ public class MacRomanFormatter: Formatter {
     @IBInspectable public var stringLength: Int = 0
     @IBInspectable public var valueRequired: Bool = false
     @IBInspectable public var exactLengthRequired: Bool = false
+    @IBInspectable public var convertLineEndings: Bool = false
     
-    public convenience init(stringLength: Int = 0, valueRequired: Bool = false, exactLengthRequired: Bool = false) {
+    public convenience init(stringLength: Int = 0, valueRequired: Bool = false, exactLengthRequired: Bool = false, convertLineEndings: Bool = false) {
         self.init()
         self.stringLength = stringLength
         self.valueRequired = valueRequired
         self.exactLengthRequired = exactLengthRequired
+        self.convertLineEndings = convertLineEndings
     }
     
     public override func string(for obj: Any?) -> String? {
@@ -32,7 +34,12 @@ public class MacRomanFormatter: Formatter {
             error?.pointee = NSLocalizedString("The value contains invalid characters for Mac OS Roman encoding.", comment: "") as NSString
             return false
         }
-        obj?.pointee = string as AnyObject
+        if convertLineEndings {
+            // Convert LF to CR
+            obj?.pointee = string.replacingOccurrences(of: "\n", with: "\r") as AnyObject
+        } else {
+            obj?.pointee = string as AnyObject
+        }
         return true
     }
     
