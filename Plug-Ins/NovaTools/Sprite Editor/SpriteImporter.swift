@@ -20,9 +20,9 @@ enum SpriteImporterError: LocalizedError {
 }
 
 class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
-    @IBOutlet var optionsView: NSView!
-    @IBOutlet var xTiles: NSTextField!
-    @IBOutlet var yTiles: NSTextField!
+    @IBOutlet weak var optionsView: NSView!
+    @IBOutlet weak var xTiles: NSTextField!
+    @IBOutlet weak var yTiles: NSTextField!
     @IBOutlet var imageSize: NSTextField!
     @IBOutlet var frameSize: NSTextField!
     @IBOutlet var dither: NSButton!
