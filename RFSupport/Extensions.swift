@@ -36,7 +36,7 @@ public extension Formatter {
         var object: AnyObject?
         var errorString: NSString? = nil
         guard getObjectValue(&object, for: string, errorDescription: &errorString) else {
-            throw NSError(domain: NSCocoaErrorDomain, code: NSKeyValueValidationError, userInfo: [NSLocalizedDescriptionKey: errorString as Any])
+            throw CocoaError(.keyValueValidation, userInfo: [NSLocalizedDescriptionKey: errorString as Any])
         }
         return object
     }
