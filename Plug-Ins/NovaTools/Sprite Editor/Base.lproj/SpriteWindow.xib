@@ -156,8 +156,9 @@ DQ
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="5FK-bk-dmv" name="value" keyPath="gridX" id="Spo-ph-sCS">
+                        <binding destination="5FK-bk-dmv" name="value" keyPath="gridX" id="yqz-ln-O2c">
                             <dictionary key="options">
+                                <bool key="NSAlwaysPresentsApplicationModalAlerts" value="YES"/>
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
                         </binding>
@@ -175,8 +176,9 @@ DQ
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="5FK-bk-dmv" name="value" keyPath="gridY" id="S0P-qA-I0g">
+                        <binding destination="5FK-bk-dmv" name="value" keyPath="gridY" id="mzk-hU-BlB">
                             <dictionary key="options">
+                                <bool key="NSAlwaysPresentsApplicationModalAlerts" value="YES"/>
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
                         </binding>

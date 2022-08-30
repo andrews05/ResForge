@@ -52,7 +52,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         panel.beginSheetModal(for: window) { [self] modalResponse in
             if modalResponse == .OK {
                 if let image = image {
-                    sheetCallback(image, xTiles.integerValue, yTiles.integerValue, dither.state == .on)
+                    sheetCallback(image, gridX, gridY, dither.state == .on)
                 } else if let images = images {
                     framesCallback(images, dither.state == .on)
                 }
@@ -131,7 +131,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         self.updateGrid(self)
     }
     
-    @IBAction func updateGrid(_ sender: Any) {
+    private func updateGrid(_ sender: Any) {
         guard let image = image else {
             frameSize.stringValue = "-"
             preview.image = nil
