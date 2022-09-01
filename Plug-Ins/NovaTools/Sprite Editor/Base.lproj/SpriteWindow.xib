@@ -156,6 +156,11 @@ DQ
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="5FK-bk-dmv" name="enabled" keyPath="directory" id="PbY-BJ-CxW">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="5FK-bk-dmv" name="value" keyPath="gridX" id="yqz-ln-O2c">
                             <dictionary key="options">
                                 <bool key="NSAlwaysPresentsApplicationModalAlerts" value="YES"/>
@@ -176,6 +181,11 @@ DQ
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="5FK-bk-dmv" name="enabled" keyPath="directory" id="yN8-DA-ZrV">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="5FK-bk-dmv" name="value" keyPath="gridY" id="mzk-hU-BlB">
                             <dictionary key="options">
                                 <bool key="NSAlwaysPresentsApplicationModalAlerts" value="YES"/>
@@ -272,8 +282,6 @@ DQ
                 <outlet property="imageSize" destination="OwA-K4-9t2" id="Vt6-6z-BVJ"/>
                 <outlet property="optionsView" destination="aNb-jP-2g8" id="zWY-Nf-jka"/>
                 <outlet property="preview" destination="1P7-TE-QAJ" id="BaR-MF-W1X"/>
-                <outlet property="xTiles" destination="VZx-Mt-eX1" id="zY3-6j-3Ud"/>
-                <outlet property="yTiles" destination="ayH-bT-7vh" id="L6V-qp-mha"/>
             </connections>
         </customObject>
         <numberFormatter formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="bhc-Ra-cbF">

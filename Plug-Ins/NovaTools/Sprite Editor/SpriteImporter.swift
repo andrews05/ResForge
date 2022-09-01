@@ -21,19 +21,17 @@ enum SpriteImporterError: LocalizedError {
 
 class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     @IBOutlet weak var optionsView: NSView!
-    @IBOutlet weak var xTiles: NSTextField!
-    @IBOutlet weak var yTiles: NSTextField!
     @IBOutlet var imageSize: NSTextField!
     @IBOutlet var frameSize: NSTextField!
     @IBOutlet var dither: NSButton!
     @IBOutlet var preview: NSImageView!
     @objc private var gridX = 6 {
-        didSet { self.updateGrid(self) }
+        didSet { self.updateGrid() }
     }
     @objc private var gridY = 6 {
-        didSet { self.updateGrid(self) }
+        didSet { self.updateGrid() }
     }
-    private var directory = true
+    @objc dynamic private var directory = true
     private var image: NSImage?
     private var images: [NSImage]?
     
@@ -64,7 +62,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
                          with image: NSImage,
                          sheetCallback: @escaping(NSImage, Int, Int, Bool) -> Void) {
         self.setImage(image)
-        self.updateGrid(self)
+        self.updateGrid()
         // The width of the options view will change when used in the open panel - reset it to an appropriate value
         optionsView.setFrameSize(NSSize(width: 300, height: optionsView.frame.height))
         optionsView.isHidden = false
@@ -128,10 +126,10 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
                 panel.prompt = NSLocalizedString("Import Image", comment: "")
             }
         }
-        self.updateGrid(self)
+        self.updateGrid()
     }
     
-    private func updateGrid(_ sender: Any) {
+    private func updateGrid() {
         guard let image = image else {
             frameSize.stringValue = "-"
             preview.image = nil
@@ -157,8 +155,6 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         image = nil
         images = nil
         imageSize.stringValue = "-"
-        xTiles.isEnabled = false
-        yTiles.isEnabled = false
         frameSize.stringValue = "-"
         preview.image = nil
     }
@@ -174,7 +170,5 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         }
         self.image = image
         imageSize.stringValue = "\(rep.pixelsWide) x \(rep.pixelsHigh)"
-        xTiles.isEnabled = true
-        yTiles.isEnabled = true
     }
 }
