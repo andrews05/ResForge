@@ -2,19 +2,20 @@ import Cocoa
 import RFSupport
 
 // SpriteWorld RLE sprite, as seen in EV Nova
-final class SpriteWorld: WriteableSprite {
+class SpriteWorld: WriteableSprite {
+    class var depth: Int { 16 }
     let frameWidth: Int
     let frameHeight: Int
     let frameCount: Int
-    private var reader: BinaryDataReader!
-    private var writer: BinaryDataWriter!
+    var reader: BinaryDataReader!
+    var writer: BinaryDataWriter!
     
     var data: Data {
         writer?.data ?? reader.data
     }
     
     // Init for reading
-    init(_ data: Data) throws {
+    required init(_ data: Data) throws {
         reader = BinaryDataReader(data)
         frameWidth = Int(try reader.read() as UInt16)
         frameHeight = Int(try reader.read() as UInt16)
@@ -22,16 +23,16 @@ final class SpriteWorld: WriteableSprite {
             throw SpriteError.invalid
         }
         let depth = try reader.read() as UInt16
-        guard depth == 16 else {
+        guard depth == Self.depth else {
             throw SpriteError.unsupported
         }
-        try reader.advance(2) // Palette is ignored for 16-bit
+        try reader.advance(2) // Palette is only for 8-bit
         frameCount = Int(try reader.read() as UInt16)
         try reader.advance(6)
     }
     
     // Init for writing
-    init(width: Int, height: Int, count: Int) {
+    required init(width: Int, height: Int, count: Int) {
         frameWidth = width
         frameHeight = height
         frameCount = count
@@ -39,7 +40,7 @@ final class SpriteWorld: WriteableSprite {
         writer = BinaryDataWriter(capacity: 16)
         writer.write(UInt16(frameWidth))
         writer.write(UInt16(frameHeight))
-        writer.write(UInt16(16))
+        writer.write(UInt16(Self.depth))
         writer.advance(2)
         writer.write(UInt16(frameCount))
         writer.advance(6)
@@ -94,7 +95,7 @@ final class SpriteWorld: WriteableSprite {
         return sheet
     }
     
-    private func readFrame(to framePointer: UnsafeMutablePointer<UInt8>, lineAdvance: Int) throws {
+    func readFrame(to framePointer: UnsafeMutablePointer<UInt8>, lineAdvance: Int) throws {
         var y = 0
         var x = 0
         var framePointer = framePointer
@@ -202,7 +203,7 @@ final class SpriteWorld: WriteableSprite {
                                 bitsPerPixel: 32)!
     }
     
-    private func writeFrame(_ frame: NSBitmapImageRep, dither: Bool = false) {
+    func writeFrame(_ frame: NSBitmapImageRep, dither: Bool = false) {
         if dither {
             self.dither(frame)
         }

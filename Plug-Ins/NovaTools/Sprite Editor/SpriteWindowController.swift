@@ -2,9 +2,10 @@ import Cocoa
 import RFSupport
 
 class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
-    static let supportedTypes = ["rlëD", "SMIV"]
+    static let supportedTypes = ["rlëD", "rlëX", "SMIV"]
     private static let typeMap: [String: Sprite.Type] = [
         "rlëD": SpriteWorld.self,
+        "rlëX": RleX.self,
         "SMIV": ShapeMachine.self,
     ]
     
@@ -52,6 +53,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         self.window?.title = resource.defaultWindowTitle
         imageView.allowsCutCopyPaste = false
         importButton.isHidden = writeableType == nil
+        importPanel.dither.isHidden = resource.typeCode != "rlëD"
         self.loadImage()
     }
     
