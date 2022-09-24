@@ -89,9 +89,11 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         if !resource.data.isEmpty {
             do {
                 sprite = try spriteType.init(resource.data)
+                let t = Date.timeIntervalSinceReferenceDate
                 for _ in 0..<sprite.frameCount {
                     frames.append(try sprite.readFrame())
                 }
+                print(Date.timeIntervalSinceReferenceDate - t)
             } catch {}
         }
         self.updateView()
@@ -179,7 +181,9 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         let rep = image.representations[0]
         let newSprite = spriteType.init(width: rep.pixelsWide / gridX, height: rep.pixelsHigh / gridY, count: gridX * gridY)
         sprite = newSprite
+        let t = Date.timeIntervalSinceReferenceDate
         frames = newSprite.writeSheet(image, dither: dither)
+        print(Date.timeIntervalSinceReferenceDate - t)
         self.updateView()
         self.setDocumentEdited(true)
     }
@@ -202,12 +206,14 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
     
     static func export(_ resource: Resource, to url: URL) throws {
+        let t = Date.timeIntervalSinceReferenceDate
         guard let spriteType = typeMap[resource.typeCode],
               let data = try spriteType.init(resource.data).readSheet().tiffRepresentation
         else {
             throw SpriteError.unsupported
         }
         try data.write(to: url)
+        print(Date.timeIntervalSinceReferenceDate - t)
     }
     
     static func image(for resource: Resource) -> NSImage? {
