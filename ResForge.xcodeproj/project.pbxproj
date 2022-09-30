@@ -53,6 +53,8 @@
 		4976D2832718CE9C00322DDF /* GalaxyWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4976D2702718CAFF00322DDF /* GalaxyWindowController.swift */; };
 		4976D28E2718CEA100322DDF /* GalaxyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4976D2642718CAD500322DDF /* GalaxyWindow.xib */; };
 		4976D2992718CEA400322DDF /* GalaxyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4976D2772718CC4B00322DDF /* GalaxyView.swift */; };
+		497782D428E16AFF006E18EB /* RleX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497782D328E16AFF006E18EB /* RleX.swift */; };
+		497782D528E16C6E006E18EB /* rleX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 495B96DD2899FD7C009EB9DD /* rleX.cpp */; };
 		497A93DE255F371100900C7B /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 497A93E0255F371100900C7B /* SelectTemplate.xib */; };
 		497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BB1DB24F741E400858EF1 /* Icons.swift */; };
 		499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499216ED24CB914F0054A390 /* CreateResourceController.swift */; };
@@ -326,6 +328,7 @@
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
 		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
 		493CC3DF271228FA00A9173E /* SpobFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpobFilter.swift; sourceTree = "<group>"; };
+		493FD72B28E434AC007E2362 /* simd.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = simd.hpp; sourceTree = "<group>"; };
 		494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; };
 		4953F5922488740F0002340F /* SoundWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundWindow.xib; sourceTree = "<group>"; };
 		4953F593248874260002340F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -361,6 +364,7 @@
 		4976D2642718CAD500322DDF /* GalaxyWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalaxyWindow.xib; sourceTree = "<group>"; };
 		4976D2702718CAFF00322DDF /* GalaxyWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyWindowController.swift; sourceTree = "<group>"; };
 		4976D2772718CC4B00322DDF /* GalaxyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyView.swift; sourceTree = "<group>"; };
+		497782D328E16AFF006E18EB /* RleX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RleX.swift; sourceTree = "<group>"; };
 		497A93BD255BB49600900C7B /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		497A93DF255F371100900C7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SelectTemplate.xib; sourceTree = "<group>"; };
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
@@ -680,6 +684,7 @@
 				4925B578288D2B1300F21D15 /* Sprite.swift */,
 				492E912D2551373100195174 /* SpriteWorld.swift */,
 				49AB8984288C9C2E0013B883 /* ShapeMachine.swift */,
+				497782D328E16AFF006E18EB /* RleX.swift */,
 			);
 			path = "Sprite Editor";
 			sourceTree = "<group>";
@@ -1086,6 +1091,7 @@
 				49F418F7287EA37800404BA1 /* endianess.hpp */,
 				49F418F6287EA37800404BA1 /* reader.cpp */,
 				49F418F3287EA37800404BA1 /* reader.hpp */,
+				493FD72B28E434AC007E2362 /* simd.hpp */,
 				49F418F9287EA37800404BA1 /* writer.cpp */,
 				49F418F2287EA37800404BA1 /* writer.hpp */,
 			);
@@ -1591,6 +1597,7 @@
 				49F41925287EB60B00404BA1 /* depth_2_bpp.cpp in Sources */,
 				49F4190F287EA3A200404BA1 /* manager.cpp in Sources */,
 				49F41920287EB5C200404BA1 /* result.cpp in Sources */,
+				497782D528E16C6E006E18EB /* rleX.cpp in Sources */,
 				49640F5D25F36A77009FEC9B /* AbstractEditor.swift in Sources */,
 				49F4190D287EA39A00404BA1 /* writer.cpp in Sources */,
 				49F4190B287EA39600404BA1 /* attribute.cpp in Sources */,
@@ -1633,6 +1640,7 @@
 				49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */,
 				49640F1D25F201B3009FEC9B /* AltLayer.swift in Sources */,
 				49640F4725F201C9009FEC9B /* ShanView.swift in Sources */,
+				497782D428E16AFF006E18EB /* RleX.swift in Sources */,
 				493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */,
 				492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* NovaTools.swift in Sources */,
@@ -2013,6 +2021,7 @@
 				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.NovaTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Image Editor/Image Editor-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -2023,6 +2032,7 @@
 				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.NovaTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Image Editor/Image Editor-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;

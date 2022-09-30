@@ -2,10 +2,11 @@ import Cocoa
 import RFSupport
 
 class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
-    static let supportedTypes = ["rlëD", "SMIV"]
+    static let supportedTypes = ["rlëD", "SMIV", "rlëX"]
     private static let typeMap: [String: Sprite.Type] = [
         "rlëD": SpriteWorld.self,
         "SMIV": ShapeMachine.self,
+        "rlëX": RleX.self,
     ]
     
     let resource: Resource
