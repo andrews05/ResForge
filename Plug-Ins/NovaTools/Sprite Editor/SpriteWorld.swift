@@ -89,7 +89,7 @@ class SpriteWorld: WriteableSprite {
         for y in 0..<gridY {
             for x in 0..<gridX {
                 let advance = (y*frameHeight*sheet.pixelsWide + x*frameWidth) * 4
-                try self.readFrame(to: framePointer.advanced(by: advance), lineAdvance: sheet.pixelsWide)
+                try self.readFrame(to: framePointer+advance, lineAdvance: sheet.pixelsWide)
             }
         }
         return sheet
@@ -109,7 +109,7 @@ class SpriteWorld: WriteableSprite {
                     throw SpriteError.invalid
                 }
                 if y != 0 {
-                    framePointer = framePointer.advanced(by: (lineAdvance-x)*4)
+                    framePointer += (lineAdvance-x) * 4
                 }
                 x = 0
                 y += 1
@@ -118,7 +118,7 @@ class SpriteWorld: WriteableSprite {
                 guard x <= frameWidth else {
                     throw SpriteError.invalid
                 }
-                framePointer = framePointer.advanced(by: count*4)
+                framePointer += count * 4
             case let .pixels(count):
                 x += count
                 guard x <= frameWidth else {
@@ -217,7 +217,7 @@ class SpriteWorld: WriteableSprite {
             var transparent = 0
             for _ in 0..<frameWidth {
                 if framePointer[3] == 0 {
-                    framePointer = framePointer.advanced(by: 4)
+                    framePointer += 4
                     transparent += 1
                 } else {
                     if lineCount != 0 {
@@ -233,8 +233,7 @@ class SpriteWorld: WriteableSprite {
                         // Starting pixel data after transparency, write the skip
                         if !pixels.isEmpty {
                             // We have previous unwritten pixel data, write this first
-                            self.write(bigEndianPixels: pixels)
-                            pixels.removeAll(keepingCapacity: true)
+                            self.write(bigEndianPixels: &pixels)
                         }
                         writer.write(RleOp.skip(transparent).rawValue)
                         transparent = 0
@@ -247,8 +246,7 @@ class SpriteWorld: WriteableSprite {
                 }
             }
             if !pixels.isEmpty {
-                self.write(bigEndianPixels: pixels)
-                pixels.removeAll(keepingCapacity: true)
+                self.write(bigEndianPixels: &pixels)
                 // Rewrite the line length
                 writer.write(RleOp.lineStart(writer.position-linePos).rawValue, at: linePos-4)
             }
@@ -296,18 +294,19 @@ class SpriteWorld: WriteableSprite {
         framePointer[1] = g | (g / 0x20)
         framePointer[2] = b | (b / 0x20)
         framePointer[3] = 0xFF
-        framePointer = framePointer.advanced(by: 4)
+        framePointer += 4
     }
     
-    private func write(bigEndianPixels pixels: [UInt16]) {
+    private func write(bigEndianPixels pixels: inout [UInt16]) {
         writer.write(RleOp.pixels(pixels.count).rawValue)
+        if pixels.count % 2 != 0 {
+            pixels.append(0)
+        }
         // Append the bytes directly to the data - this is much faster than writing the pixels one at a time
         pixels.withUnsafeBufferPointer {
             writer.data.append($0)
         }
-        if pixels.count % 2 != 0 {
-            writer.advance(2)
-        }
+        pixels.removeAll(keepingCapacity: true)
     }
 }
 
