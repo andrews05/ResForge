@@ -86,6 +86,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             }
         }
         optionsView.window?.recalculateKeyViewLoop()
+        optionsView.window?.makeFirstResponder(optionsView.nextValidKeyView)
     }
     
     func panel(_ sender: Any, validate url: URL) throws {
