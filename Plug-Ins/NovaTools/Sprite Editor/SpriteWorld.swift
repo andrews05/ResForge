@@ -47,16 +47,7 @@ class SpriteWorld: WriteableSprite {
     }
     
     func readFrame() throws -> NSBitmapImageRep {
-        let frame = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                     pixelsWide: frameWidth,
-                                     pixelsHigh: frameHeight,
-                                     bitsPerSample: 8,
-                                     samplesPerPixel: 4,
-                                     hasAlpha: true,
-                                     isPlanar: false,
-                                     colorSpaceName: .deviceRGB,
-                                     bytesPerRow: frameWidth*4,
-                                     bitsPerPixel: 0)!
+        let frame = self.newFrame()
         try self.readFrame(to: frame.bitmapData!, lineAdvance: frameWidth)
         return frame
     }
@@ -66,28 +57,11 @@ class SpriteWorld: WriteableSprite {
             reader = BinaryDataReader(self.data)
         }
         try reader.setPosition(16)
-        var gridX = 6
-        if frameCount <= gridX {
-            gridX = frameCount
-        } else {
-            while frameCount % gridX != 0 {
-                gridX += 1
-            }
-        }
-        let gridY = frameCount / gridX
-        let sheet = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                     pixelsWide: frameWidth * gridX,
-                                     pixelsHigh: frameHeight * gridY,
-                                     bitsPerSample: 8,
-                                     samplesPerPixel: 4,
-                                     hasAlpha: true,
-                                     isPlanar: false,
-                                     colorSpaceName: .deviceRGB,
-                                     bytesPerRow: frameWidth * gridX * 4,
-                                     bitsPerPixel: 0)!
+        let grid = self.sheetGrid()
+        let sheet = self.newFrame(frameWidth * grid.x, frameHeight * grid.y)
         let framePointer = sheet.bitmapData!
-        for y in 0..<gridY {
-            for x in 0..<gridX {
+        for y in 0..<grid.y {
+            for x in 0..<grid.x {
                 let advance = (y*frameHeight*sheet.pixelsWide + x*frameWidth) * 4
                 try self.readFrame(to: framePointer+advance, lineAdvance: sheet.pixelsWide)
             }
@@ -188,19 +162,6 @@ class SpriteWorld: WriteableSprite {
             frames.append(frame)
         }
         return frames
-    }
-    
-    private func newFrame() -> NSBitmapImageRep {
-        return NSBitmapImageRep(bitmapDataPlanes: nil,
-                                pixelsWide: frameWidth,
-                                pixelsHigh: frameHeight,
-                                bitsPerSample: 8,
-                                samplesPerPixel: 4,
-                                hasAlpha: true,
-                                isPlanar: false,
-                                colorSpaceName: .deviceRGB,
-                                bytesPerRow: frameWidth*4,
-                                bitsPerPixel: 32)!
     }
     
     func writeFrame(_ frame: NSBitmapImageRep, dither: Bool = false) {

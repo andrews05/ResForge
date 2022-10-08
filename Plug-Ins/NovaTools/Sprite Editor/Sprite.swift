@@ -28,3 +28,31 @@ protocol WriteableSprite: Sprite {
     
     func writeFrames(_ images: [NSImage], dither: Bool) -> [NSBitmapImageRep]
 }
+
+// Utility functions helpful for implementers
+extension Sprite {
+    func sheetGrid() -> (x: Int, y: Int) {
+        var gridX = 6
+        if frameCount <= gridX {
+            gridX = frameCount
+        } else {
+            while frameCount % gridX != 0 {
+                gridX += 1
+            }
+        }
+        return (gridX, frameCount / gridX)
+    }
+    
+    func newFrame(_ pixelsWide: Int? = nil, _ pixelsHigh: Int? = nil) -> NSBitmapImageRep {
+        return NSBitmapImageRep(bitmapDataPlanes: nil,
+                                pixelsWide: pixelsWide ?? frameWidth,
+                                pixelsHigh: pixelsHigh ?? frameHeight,
+                                bitsPerSample: 8,
+                                samplesPerPixel: 4,
+                                hasAlpha: true,
+                                isPlanar: false,
+                                colorSpaceName: .deviceRGB,
+                                bytesPerRow: (pixelsWide ?? frameWidth) * 4,
+                                bitsPerPixel: 0)!
+    }
+}

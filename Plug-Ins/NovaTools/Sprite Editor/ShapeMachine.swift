@@ -23,54 +23,28 @@ final class ShapeMachine: Sprite {
     
     func readFrame() throws -> NSBitmapImageRep {
         let shape = try self.readShape()
-        let frame = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                     pixelsWide: shape.frameWidth,
-                                     pixelsHigh: shape.frameHeight,
-                                     bitsPerSample: 8,
-                                     samplesPerPixel: 4,
-                                     hasAlpha: true,
-                                     isPlanar: false,
-                                     colorSpaceName: .deviceRGB,
-                                     bytesPerRow: shape.frameWidth*4,
-                                     bitsPerPixel: 0)!
+        let frame = self.newFrame(shape.frameWidth, shape.frameHeight)
         let xOffset = shape.frameWidth  / 2 - shape.x
         let yOffset = shape.frameHeight / 2 - shape.y
         let advance = (yOffset * frame.pixelsWide + xOffset) * 4
-        try shape.draw(to: frame.bitmapData!.advanced(by: advance), lineAdvance: frame.pixelsWide)
+        try shape.draw(to: frame.bitmapData!+advance, lineAdvance: frame.pixelsWide)
         return frame
     }
     
     func readSheet() throws -> NSBitmapImageRep {
-        var gridX = 6
-        if frameCount <= gridX {
-            gridX = frameCount
-        } else {
-            while frameCount % gridX != 0 {
-                gridX += 1
-            }
-        }
-        let gridY = frameCount / gridX
         try reader.setPosition(8)
         // Read all shapes first so we know the maximum frame size
         let shapes = try (0..<frameCount).map { _ in try self.readShape() }
-        let sheet = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                     pixelsWide: frameWidth * gridX,
-                                     pixelsHigh: frameHeight * gridY,
-                                     bitsPerSample: 8,
-                                     samplesPerPixel: 4,
-                                     hasAlpha: true,
-                                     isPlanar: false,
-                                     colorSpaceName: .deviceRGB,
-                                     bytesPerRow: frameWidth * gridX * 4,
-                                     bitsPerPixel: 0)!
+        let grid = self.sheetGrid()
+        let sheet = self.newFrame(frameWidth * grid.x, frameHeight * grid.y)
         let framePointer = sheet.bitmapData!
-        for y in 0..<gridY {
-            for x in 0..<gridX {
-                let shape = shapes[y*gridX + x]
+        for y in 0..<grid.y {
+            for x in 0..<grid.x {
+                let shape = shapes[y*grid.x + x]
                 let xOffset = x * frameWidth  + frameWidth  / 2 - shape.x
                 let yOffset = y * frameHeight + frameHeight / 2 - shape.y
                 let advance = (yOffset * sheet.pixelsWide + xOffset) * 4
-                try shape.draw(to: framePointer.advanced(by: advance), lineAdvance: sheet.pixelsWide)
+                try shape.draw(to: framePointer+advance, lineAdvance: sheet.pixelsWide)
             }
         }
         return sheet
@@ -126,9 +100,9 @@ struct Shape {
                 framePointer[1] = rgb[1]
                 framePointer[2] = rgb[2]
                 framePointer[3] = pixel == 0 ? 0 : 0xFF
-                framePointer = framePointer.advanced(by: 4)
+                framePointer += 4
             }
-            framePointer = framePointer.advanced(by: (lineAdvance - width) * 4)
+            framePointer += (lineAdvance - width) * 4
         }
     }
 
