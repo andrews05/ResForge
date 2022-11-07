@@ -22,8 +22,8 @@ public class BinaryDataWriter {
     
     public func write<T: FixedWidthInteger>(_ value: T, bigEndian: Bool? = nil) {
         let val = bigEndian ?? self.bigEndian ? value.bigEndian : value.littleEndian
-        withUnsafeBytes(of: val) {
-            data.append($0.bindMemory(to: T.self))
+        withUnsafePointer(to: val) {
+            data.append(UnsafeBufferPointer(start: $0, count: 1))
         }
     }
     

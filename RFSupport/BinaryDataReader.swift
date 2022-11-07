@@ -29,6 +29,7 @@ public class BinaryDataReader {
         self.bigEndian = bigEndian
     }
     
+    @inline(__always)
     public func advance(_ count: Int) throws {
         guard count <= remainingBytes else {
             throw BinaryDataReaderError.insufficientData
@@ -50,23 +51,21 @@ public class BinaryDataReader {
     }
     
     public func popPosition() throws {
-        // It is an error to call this without prior push
+        assert(!posStack.isEmpty, "position stack is empty")
         try self.setPosition(posStack.popLast()!)
     }
     
     public func read<T: FixedWidthInteger>(bigEndian: Bool? = nil) throws -> T {
         let length = T.bitWidth / 8
-        let val = try self.readData(length: length).withUnsafeBytes {
-            $0.bindMemory(to: T.self)[0]
+        try self.advance(length)
+        let val = data.withUnsafeBytes {
+            $0.loadUnaligned(fromByteOffset: position-length, as: T.self)
         }
         return bigEndian ?? self.bigEndian ? T(bigEndian: val) : T(littleEndian: val)
     }
     
     public func readData(length: Int) throws -> Data {
-        guard length <= remainingBytes else {
-            throw BinaryDataReaderError.insufficientData
-        }
-        position += length
+        try self.advance(length)
         return data[(position-length)..<position]
     }
     
