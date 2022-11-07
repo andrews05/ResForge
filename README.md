@@ -27,7 +27,7 @@ Download the latest version of ResForge from the [Releases](https://github.com/a
 
 ### Building
 
-To build ResForge yourself you will need to have Xcode 12 or later installed.
+To build ResForge yourself you will need to have Xcode 14.1 or later installed.
 
 Make sure to use the `--recurse-submodules` option when cloning the repository, or use `git submodule update --init` to initialise an existing copy.
 
