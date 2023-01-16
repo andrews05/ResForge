@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="favoriteTable" destination="Rsk-Zj-biq" id="F2j-03-Rtg"/>
                 <outlet property="favoriteTypes" destination="CZk-Tk-2fq" id="x4n-zh-Nll"/>
+                <outlet property="launchActions" destination="vK3-Br-fhK" id="qit-IL-RXn"/>
                 <outlet property="window" destination="5" id="iZx-Y7-AYb"/>
             </connections>
         </customObject>
@@ -20,108 +21,103 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="277" y="484" width="440" height="224"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
-            <view key="contentView" autoresizesSubviews="NO" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="440" height="224"/>
-                <autoresizingMask key="autoresizingMask"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <view key="contentView" autoresizesSubviews="NO" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6">
+                <rect key="frame" x="0.0" y="0.0" width="436" height="228"/>
                 <subviews>
-                    <box autoresizesSubviews="NO" title="Data Protection" translatesAutoresizingMaskIntoConstraints="NO" id="10">
-                        <rect key="frame" x="17" y="119" width="286" height="85"/>
+                    <box title="Data Protection" translatesAutoresizingMaskIntoConstraints="NO" id="10">
+                        <rect key="frame" x="17" y="120" width="282" height="88"/>
                         <view key="contentView" id="KKp-nW-NBY">
-                            <rect key="frame" x="3" y="3" width="280" height="65"/>
+                            <rect key="frame" x="4" y="5" width="274" height="66"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <matrix autoresizesSubviews="NO" mode="track" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15">
-                                    <rect key="frame" x="10" y="10" width="260" height="46"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="cellSize" width="247" height="20"/>
-                                    <size key="intercellSpacing" width="4" height="6"/>
-                                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="46">
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MeL-b0-sie">
+                                    <rect key="frame" x="10" y="37" width="252" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Confirm changes when closing editor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Gwn-Hw-R8r">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
-                                    <cells>
-                                        <column>
-                                            <buttonCell type="check" title="Confirm changes when closing editor" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="18">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="qp1-NG-sRe" name="value" keyPath="values.ConfirmChanges" id="4eC-Nm-0kV"/>
-                                                </connections>
-                                            </buttonCell>
-                                            <buttonCell type="check" title="Confirm when deleting resources" bezelStyle="regularSquare" imagePosition="left" alignment="left" tag="1" inset="2" id="19">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                                <connections>
-                                                    <binding destination="qp1-NG-sRe" name="value" keyPath="values.DeleteResourceWarning" id="5Km-Aq-JHQ"/>
-                                                </connections>
-                                            </buttonCell>
-                                        </column>
-                                    </cells>
-                                </matrix>
+                                    <connections>
+                                        <binding destination="qp1-NG-sRe" name="value" keyPath="values.ConfirmChanges" id="fq6-w5-jrl"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q0u-Gl-gdY">
+                                    <rect key="frame" x="10" y="11" width="227" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Confirm when deleting resources" bezelStyle="regularSquare" imagePosition="left" inset="2" id="cYT-7e-OLo">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="qp1-NG-sRe" name="value" keyPath="values.DeleteResourceWarning" id="bsD-I0-mAq"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="15" firstAttribute="leading" secondItem="KKp-nW-NBY" secondAttribute="leading" constant="10" id="N32-pg-Epe"/>
-                                <constraint firstAttribute="trailing" secondItem="15" secondAttribute="trailing" constant="10" id="gMk-9F-T2c"/>
-                                <constraint firstAttribute="bottom" secondItem="15" secondAttribute="bottom" constant="10" id="snI-GP-aoM"/>
+                                <constraint firstItem="q0u-Gl-gdY" firstAttribute="leading" secondItem="MeL-b0-sie" secondAttribute="leading" id="1Ch-GC-aNK"/>
+                                <constraint firstItem="MeL-b0-sie" firstAttribute="top" secondItem="KKp-nW-NBY" secondAttribute="top" constant="12" id="4Hh-To-ZoZ"/>
+                                <constraint firstAttribute="bottom" secondItem="q0u-Gl-gdY" secondAttribute="bottom" constant="12" id="IRH-XD-3Wq"/>
+                                <constraint firstItem="MeL-b0-sie" firstAttribute="leading" secondItem="KKp-nW-NBY" secondAttribute="leading" constant="12" id="gxN-Cv-HFx"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="q0u-Gl-gdY" secondAttribute="trailing" constant="12" id="lZy-4r-3Ys"/>
+                                <constraint firstItem="q0u-Gl-gdY" firstAttribute="top" secondItem="MeL-b0-sie" secondAttribute="bottom" constant="10" id="plt-nt-VjG"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MeL-b0-sie" secondAttribute="trailing" constant="12" id="tXh-67-DM4"/>
                             </constraints>
                         </view>
-                        <constraints>
-                            <constraint firstItem="15" firstAttribute="top" secondItem="10" secondAttribute="top" constant="26" id="dcT-MA-QjI"/>
-                        </constraints>
                         <font key="titleFont" metaFont="system"/>
                     </box>
-                    <box autoresizesSubviews="NO" title="Launch Action" translatesAutoresizingMaskIntoConstraints="NO" id="31">
-                        <rect key="frame" x="17" y="16" width="286" height="99"/>
+                    <box title="Launch Action" translatesAutoresizingMaskIntoConstraints="NO" id="31">
+                        <rect key="frame" x="17" y="16" width="282" height="100"/>
                         <view key="contentView" id="vK3-Br-fhK">
-                            <rect key="frame" x="3" y="3" width="280" height="79"/>
+                            <rect key="frame" x="4" y="5" width="274" height="78"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <matrix autoresizesSubviews="NO" verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="33">
-                                    <rect key="frame" x="10" y="10" width="260" height="59"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="cellSize" width="247" height="18"/>
-                                    <size key="intercellSpacing" width="4" height="2"/>
-                                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="47">
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kn1-lZ-eXz">
+                                    <rect key="frame" x="10" y="51" width="95" height="18"/>
+                                    <buttonCell key="cell" type="radio" title="Do Nothing" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="i72-t1-gCD">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
-                                    <cells>
-                                        <column>
-                                            <buttonCell type="radio" title="Do Nothing" imagePosition="left" alignment="left" state="on" inset="2" id="36">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <buttonCell type="radio" title="Create New Document" imagePosition="left" alignment="left" tag="1" inset="2" id="37">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <buttonCell type="radio" title="Display Open Dialog" imagePosition="left" alignment="left" tag="2" inset="2" id="38">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </column>
-                                    </cells>
                                     <connections>
-                                        <binding destination="qp1-NG-sRe" name="selectedIndex" keyPath="values.LaunchAction" id="VdW-Qj-cy4">
-                                            <dictionary key="options">
-                                                <string key="NSValueTransformerName">LaunchActionTransformer</string>
-                                            </dictionary>
-                                        </binding>
+                                        <action selector="setLaunchAction:" target="-2" id="xoB-zV-aIZ"/>
                                     </connections>
-                                </matrix>
+                                </button>
+                                <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="sKi-sr-R0b">
+                                    <rect key="frame" x="10" y="30" width="163" height="18"/>
+                                    <buttonCell key="cell" type="radio" title="Create New Document" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0Y5-SZ-cZ9">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="setLaunchAction:" target="-2" id="qer-hK-Gg9"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="NX4-OD-hyo">
+                                    <rect key="frame" x="10" y="9" width="149" height="18"/>
+                                    <buttonCell key="cell" type="radio" title="Display Open Dialog" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Nrt-RH-rVq">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="setLaunchAction:" target="-2" id="tHf-8a-q0s"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="33" firstAttribute="top" secondItem="vK3-Br-fhK" secondAttribute="top" constant="10" id="XTc-IG-tNC"/>
-                                <constraint firstAttribute="trailing" secondItem="33" secondAttribute="trailing" constant="10" id="iK3-Br-fjk"/>
-                                <constraint firstItem="33" firstAttribute="leading" secondItem="vK3-Br-fhK" secondAttribute="leading" constant="10" id="w6h-xB-b7v"/>
-                                <constraint firstAttribute="bottom" secondItem="33" secondAttribute="bottom" constant="10" id="zJP-dM-DXc"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kn1-lZ-eXz" secondAttribute="trailing" constant="12" id="3ww-54-7xE"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NX4-OD-hyo" secondAttribute="trailing" constant="12" id="977-Ss-46d"/>
+                                <constraint firstItem="NX4-OD-hyo" firstAttribute="leading" secondItem="Kn1-lZ-eXz" secondAttribute="leading" id="AgV-P1-W93"/>
+                                <constraint firstItem="Kn1-lZ-eXz" firstAttribute="top" secondItem="vK3-Br-fhK" secondAttribute="top" constant="10" id="BHa-BI-BVH"/>
+                                <constraint firstAttribute="bottom" secondItem="NX4-OD-hyo" secondAttribute="bottom" constant="10" id="FMZ-We-qXp"/>
+                                <constraint firstItem="NX4-OD-hyo" firstAttribute="top" secondItem="sKi-sr-R0b" secondAttribute="bottom" constant="5" id="JZg-M9-swz"/>
+                                <constraint firstItem="sKi-sr-R0b" firstAttribute="leading" secondItem="Kn1-lZ-eXz" secondAttribute="leading" id="OI2-7G-eGo"/>
+                                <constraint firstItem="Kn1-lZ-eXz" firstAttribute="leading" secondItem="vK3-Br-fhK" secondAttribute="leading" constant="12" id="UKL-o1-iaN"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sKi-sr-R0b" secondAttribute="trailing" constant="12" id="j2X-Rr-vld"/>
+                                <constraint firstItem="sKi-sr-R0b" firstAttribute="top" secondItem="Kn1-lZ-eXz" secondAttribute="bottom" constant="5" id="z3g-Qc-wSy"/>
                             </constraints>
                         </view>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kBp-Of-rHm">
-                        <rect key="frame" x="318" y="188" width="92" height="16"/>
+                        <rect key="frame" x="314" y="192" width="92" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Favorite Types" id="2af-7Q-1gP">
                             <font key="font" usesAppearanceFont="YES"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -129,19 +125,19 @@
                         </textFieldCell>
                     </textField>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIS-iN-Vam">
-                        <rect key="frame" x="320" y="40" width="100" height="143"/>
+                        <rect key="frame" x="316" y="40" width="100" height="147"/>
                         <clipView key="contentView" id="MpM-Cc-P5k">
-                            <rect key="frame" x="1" y="1" width="98" height="141"/>
+                            <rect key="frame" x="1" y="1" width="98" height="145"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" id="Rsk-Zj-biq">
-                                    <rect key="frame" x="0.0" y="0.0" width="98" height="141"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="98" height="145"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn width="86" minWidth="40" maxWidth="1000" id="6AI-JE-K5G">
+                                        <tableColumn width="57" minWidth="40" maxWidth="1000" id="6AI-JE-K5G">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Favorite Types">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -179,12 +175,12 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="tq3-wl-Zps">
-                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                            <rect key="frame" x="83" y="1" width="16" height="3"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eYO-eF-IJK">
-                        <rect key="frame" x="320" y="19" width="26" height="23"/>
+                        <rect key="frame" x="316" y="19" width="26" height="23"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="DXp-P1-gMx"/>
                             <constraint firstAttribute="width" constant="26" id="u9E-5S-WTW"/>
@@ -198,7 +194,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1AT-1O-9kd">
-                        <rect key="frame" x="345" y="19" width="26" height="23"/>
+                        <rect key="frame" x="341" y="19" width="26" height="23"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3tT-Xn-COZ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -212,7 +208,7 @@ CA
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cOB-EU-zgN">
-                        <rect key="frame" x="370" y="19" width="50" height="23"/>
+                        <rect key="frame" x="366" y="19" width="50" height="23"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" enabled="NO" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VEz-6T-EGE">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -221,6 +217,7 @@ CA
                 </subviews>
                 <constraints>
                     <constraint firstItem="cOB-EU-zgN" firstAttribute="trailing" secondItem="cIS-iN-Vam" secondAttribute="trailing" id="0Y2-ft-13z"/>
+                    <constraint firstItem="31" firstAttribute="trailing" secondItem="10" secondAttribute="trailing" id="2Lf-f5-dEh"/>
                     <constraint firstItem="cIS-iN-Vam" firstAttribute="leading" secondItem="10" secondAttribute="trailing" constant="20" id="5mW-4N-2bK"/>
                     <constraint firstItem="1AT-1O-9kd" firstAttribute="height" secondItem="eYO-eF-IJK" secondAttribute="height" id="7OJ-vZ-raB"/>
                     <constraint firstItem="eYO-eF-IJK" firstAttribute="top" secondItem="cIS-iN-Vam" secondAttribute="bottom" constant="-1" id="Dcv-Gp-l0k"/>
@@ -233,7 +230,6 @@ CA
                     <constraint firstItem="cIS-iN-Vam" firstAttribute="leading" secondItem="kBp-Of-rHm" secondAttribute="leading" id="WJ5-an-fEw"/>
                     <constraint firstItem="31" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" id="YN6-SN-tPq"/>
                     <constraint firstAttribute="trailing" secondItem="cIS-iN-Vam" secondAttribute="trailing" constant="20" symbolic="YES" id="Z6n-LF-Zic"/>
-                    <constraint firstItem="31" firstAttribute="trailing" secondItem="KKp-nW-NBY" secondAttribute="trailing" id="aDg-JE-wMt"/>
                     <constraint firstItem="10" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="bPT-16-gya"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kBp-Of-rHm" secondAttribute="trailing" constant="20" symbolic="YES" id="ekW-Ru-Q1q"/>
                     <constraint firstItem="cOB-EU-zgN" firstAttribute="height" secondItem="eYO-eF-IJK" secondAttribute="height" id="gFG-GE-vR0"/>
@@ -258,7 +254,7 @@ CA
         </arrayController>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSAddTemplate" width="18" height="17"/>
+        <image name="NSRemoveTemplate" width="18" height="5"/>
     </resources>
 </document>

@@ -1,6 +1,7 @@
 import Cocoa
 
 class PrefsController: NSWindowController, NSWindowDelegate, NSTableViewDataSource {
+    @IBOutlet var launchActions: NSView!
     @IBOutlet var favoriteTable: NSTableView!
     @IBOutlet var favoriteTypes: NSArrayController!
 
@@ -8,16 +9,21 @@ class PrefsController: NSWindowController, NSWindowDelegate, NSTableViewDataSour
         "PrefsWindow"
     }
 
-    override func windowWillLoad() {
-        ValueTransformer.setValueTransformer(LaunchActionTransformer(), forName: .launchActionTransformerName)
-    }
-
     override func windowDidLoad() {
+        if let launchAction = UserDefaults.standard.value(forKey: RFDefaults.launchAction) as? String,
+           let tag = RFDefaults.LaunchAction.index(of: launchAction),
+           let button = launchActions.viewWithTag(tag) as? NSButton {
+            button.state = .on
+        }
         window?.center()
     }
 
     func windowWillClose(_ notification: Notification) {
         window?.makeFirstResponder(nil)
+    }
+    
+    @IBAction func setLaunchAction(_ sender: NSButton) {
+        UserDefaults.standard.set(RFDefaults.LaunchAction.allCases[sender.tag].rawValue, forKey: RFDefaults.launchAction)
     }
 
     @IBAction func add(_ sender: Any) {
@@ -114,27 +120,4 @@ extension RawRepresentable where Self: CaseIterable, RawValue: Equatable {
     static func index(of rawValue: RawValue) -> AllCases.Index? {
         return allCases.firstIndex { $0.rawValue == rawValue }
     }
-}
-
-// Transform launch action matrix index to string constants
-class LaunchActionTransformer: ValueTransformer {
-    static override func transformedValueClass() -> AnyClass {
-        return NSNumber.self
-    }
-    
-    static override func allowsReverseTransformation() -> Bool {
-        return true
-    }
-    
-    override func transformedValue(_ value: Any?) -> Any? {
-        return RFDefaults.LaunchAction.index(of: value as! String)
-    }
-    
-    override func reverseTransformedValue(_ value: Any?) -> Any? {
-        return RFDefaults.LaunchAction.allCases[value as! Int].rawValue
-    }
-}
-
-extension NSValueTransformerName {
-    static let launchActionTransformerName = Self("LaunchActionTransformer")
 }
