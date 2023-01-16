@@ -38,8 +38,16 @@ extension ResourceFileFormat {
             return NSLocalizedString("Extended Resource File", comment: "")
         case .rez:
             return NSLocalizedString("Rez File", comment: "")
-        @unknown default:
-            return ""
+        }
+    }
+    var typeName: String {
+        switch self {
+        case .classic:
+            return "Resource File"
+        case .extended:
+            return "Extended Resource File"
+        case .rez:
+            return "com.resforge.rez-file"
         }
     }
     var minID: Int {
@@ -47,6 +55,17 @@ extension ResourceFileFormat {
     }
     var maxID: Int {
         self == .extended ? Int(Int32.max) : Int(Int16.max)
+    }
+    
+    init(typeName: String) {
+        switch typeName {
+        case Self.extended.typeName:
+            self = .extended
+        case Self.rez.typeName:
+            self = .rez
+        default:
+            self = .classic
+        }
     }
 }
 
@@ -126,6 +145,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
         self.undoManager?.disableUndoRegistration()
         _ = editorManager.closeAll(saving: false)
+        fileType = format.typeName
         hfsType = attrs[.hfsTypeCode] as! OSType
         hfsCreator = attrs[.hfsCreatorCode] as! OSType
         directory.reset()
@@ -135,9 +155,15 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
+        // We want to make the format's filename extension simply a "suggestion" and not force it in any manner, but the standard behaviour
+        // makes this difficult to achieve nicely. The `allowsOtherFileTypes` property isn't sufficient as it still prompts the user to
+        // confirm and only works if the user has entered an extension known by the system.
+        // The current solution is to define mock UTIs with no extension in the info.plist and manually append ".rsrc" here as a suggestion.
         if format != .rez && savePanel.nameFieldStringValue == self.defaultDraftName() {
-            savePanel.nameFieldStringValue = self.defaultDraftName().appending(".rsrc")
+            savePanel.nameFieldStringValue.append(".rsrc")
         }
+        savePanel.isExtensionHidden = false
+        savePanel.allowsOtherFileTypes = true
         return super.prepareSavePanel(savePanel)
     }
     
@@ -177,14 +203,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         var hfsCreator = self.hfsCreator
         if saveOperation == .saveAsOperation {
             // Set format according to typeName
-            switch typeName {
-            case "Extended Resource File":
-                format = .extended
-            case "com.resforge.rez-file":
-                format = .rez
-            default:
-                format = .classic
-            }
+            format = .init(typeName: typeName)
             fork = .data
             // Clear type/creator on save as
             hfsType = 0

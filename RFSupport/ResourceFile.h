@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, ResourceFileFormat) {
+typedef NS_CLOSED_ENUM(NSInteger, ResourceFileFormat) {
     kResourceFileFormatClassic,
     kResourceFileFormatExtended,
     kResourceFileFormatRez
