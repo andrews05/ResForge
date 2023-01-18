@@ -41,13 +41,27 @@ extension ResourceFileFormat {
         }
     }
     var typeName: String {
+        // We want to make the format's filename extension simply a "suggestion" and not force it in any manner, but the
+        // standard behaviour makes this difficult to achieve nicely. NSSavePanel.allowsOtherFileTypes isn't sufficient as
+        // it still prompts the user to confirm and only works if the user has entered an extension known by the system.
+        // The current solution is to use the following system UTIs that have no extension.
         switch self {
         case .classic:
-            return "Resource File"
+            return "public.data"
         case .extended:
-            return "Extended Resource File"
+            return "public.item"
         case .rez:
             return "com.resforge.rez-file"
+        }
+    }
+    var filenameExtension: String {
+        switch self {
+        case .classic:
+            return "rsrc"
+        case .extended:
+            return "rsrx"
+        case .rez:
+            return "rez"
         }
     }
     var minID: Int {
@@ -155,13 +169,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
-        // We want to make the format's filename extension simply a "suggestion" and not force it in any manner, but the standard behaviour
-        // makes this difficult to achieve nicely. The `allowsOtherFileTypes` property isn't sufficient as it still prompts the user to
-        // confirm and only works if the user has entered an extension known by the system.
-        // The current solution is to define mock UTIs with no extension in the info.plist and manually append ".rsrc" here as a suggestion.
-        if format != .rez && savePanel.nameFieldStringValue == self.defaultDraftName() {
-            savePanel.nameFieldStringValue.append(".rsrc")
-        }
+        // Since the UTIs we use for saving have no extension we should manually append the default as a suggestion.
+        // Unfortunately we can't apply this when the user changes the selected format.
+        savePanel.nameFieldStringValue.append(".\(format.filenameExtension)")
         savePanel.isExtensionHidden = false
         savePanel.allowsOtherFileTypes = true
         return super.prepareSavePanel(savePanel)

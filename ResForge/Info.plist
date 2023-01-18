@@ -13,22 +13,10 @@
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
-			<key>NSDocumentClass</key>
-			<string>$(PRODUCT_MODULE_NAME).ResourceDocument</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconSystemGenerated</key>
-			<integer>1</integer>
-			<key>CFBundleTypeName</key>
-			<string>Unknown document</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSHandlerRank</key>
-			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>public.data</string>
 				<string>com.resforge.resource-file</string>
+				<string>public.data</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).ResourceDocument</string>
@@ -40,6 +28,11 @@
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.resforge.extended-resource-file</string>
+				<string>public.item</string>
+			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).ResourceDocument</string>
 		</dict>
@@ -105,6 +98,30 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>rsrc</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Extended Resource File</string>
+			<key>UTTypeIcons</key>
+			<dict>
+				<key>UTTypeIconBadgeName</key>
+				<string>Document Image</string>
+				<key>UTTypeIconText</key>
+				<string>rsrx</string>
+			</dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.resforge.extended-resource-file</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>rsrx</string>
 				</array>
 			</dict>
 		</dict>
