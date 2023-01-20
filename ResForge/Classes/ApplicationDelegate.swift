@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-@NSApplicationMain
+@main
 class ApplicationDelegate: NSObject, NSApplicationDelegate {
     static let githubURL = "https://github.com/andrews05/ResForge"
     
@@ -24,6 +24,14 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
             self.scanForPlugins(in: url.appendingPathComponent("ResForge/Plugins"))
             SupportRegistry.scanForResources(in: url.appendingPathComponent("ResForge/Support Resources"))
         }
+    }
+    
+    func application(_ sender: NSApplication, openFile filename: String) -> Bool {
+        // Abort open panel when opening a document by other means
+        if sender.modalWindow is NSOpenPanel {
+            sender.abortModal()
+        }
+        return false
     }
     
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
