@@ -20,20 +20,35 @@ enum SpriteImporterError: LocalizedError {
 }
 
 class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
+    // Retain grid dimensions for the lifetime of the app
+    private static var GRID_X = 6
+    private static var GRID_Y = 6
     @IBOutlet weak var optionsView: NSView!
     @IBOutlet var imageSize: NSTextField!
     @IBOutlet var frameSize: NSTextField!
     @IBOutlet var dither: NSButton!
     @IBOutlet var preview: NSImageView!
-    @objc private var gridX = 6 {
-        didSet { self.updateGrid() }
+    @objc private var gridX = GRID_X {
+        didSet {
+            Self.GRID_X = gridX
+            self.updateGrid()
+        }
     }
-    @objc private var gridY = 6 {
-        didSet { self.updateGrid() }
+    @objc private var gridY = GRID_Y {
+        didSet {
+            Self.GRID_Y = gridY
+            self.updateGrid()
+        }
     }
     @objc dynamic private var directory = true
     private var image: NSImage?
     private var images: [NSImage]?
+    
+    override init() {
+        gridX = Self.GRID_X
+        gridY = Self.GRID_Y
+        super.init()
+    }
     
     func beginSheetModal(for window: NSWindow,
                          sheetCallback: @escaping(NSImage, Int, Int, Bool) -> Void,
