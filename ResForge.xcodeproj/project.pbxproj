@@ -158,7 +158,6 @@
 		49D6D3B7271BAB15002DEA97 /* Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 497A93BD255BB49600900C7B /* Templates.rsrc */; };
 		49D6D3BB271BAC2C002DEA97 /* ElementKCHR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D3BA271BAC2B002DEA97 /* ElementKCHR.swift */; };
 		49D6D3C1271BAC80002DEA97 /* ElementFIXD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D3C0271BAC80002DEA97 /* ElementFIXD.swift */; };
-		49D9152828D31AA800F84FF1 /* RleX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9152728D31AA800F84FF1 /* RleX.swift */; };
 		49DA3A4D2550BD2E00821A7E /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49DA3A572550BD9000821A7E /* NovaTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 49EE72D82550B79600BEABDB /* NovaTools.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49DA3A8B2550C65900821A7E /* rle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044062472064F0035C0FA /* rle.cpp */; };
@@ -486,7 +485,6 @@
 		49D6D382271BAAB3002DEA97 /* ElementUSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUSTR.swift; sourceTree = "<group>"; };
 		49D6D3BA271BAC2B002DEA97 /* ElementKCHR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKCHR.swift; sourceTree = "<group>"; };
 		49D6D3C0271BAC80002DEA97 /* ElementFIXD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementFIXD.swift; sourceTree = "<group>"; };
-		49D9152728D31AA800F84FF1 /* RleX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RleX.swift; sourceTree = "<group>"; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
 		49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConflictResolver.swift; sourceTree = "<group>"; };
@@ -619,7 +617,6 @@
 				4925B578288D2B1300F21D15 /* Sprite.swift */,
 				492E912D2551373100195174 /* SpriteWorld.swift */,
 				49AB8984288C9C2E0013B883 /* ShapeMachine.swift */,
-				49D9152728D31AA800F84FF1 /* RleX.swift */,
 			);
 			path = "Sprite Editor";
 			sourceTree = "<group>";
@@ -1404,7 +1401,6 @@
 				49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */,
 				49640F1D25F201B3009FEC9B /* AltLayer.swift in Sources */,
 				49640F4725F201C9009FEC9B /* ShanView.swift in Sources */,
-				49D9152828D31AA800F84FF1 /* RleX.swift in Sources */,
 				493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */,
 				492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */,
 				49EE73902550BC8D00BEABDB /* NovaTools.swift in Sources */,
