@@ -95,10 +95,10 @@ class ResourceDirectory {
     
     /// Get the count of resources matching the current filter.
     func filteredCount(type: ResourceType? = nil) -> Int {
-        let list = filter.isEmpty ? resourcesByType : filtered
         if let type = type {
-            return list[type]?.count ?? 0
+            return self.filteredResources(type: type).count
         } else {
+            let list = filter.isEmpty ? resourcesByType : filtered
             return list.reduce(0) { $0 + $1.value.count }
         }
     }

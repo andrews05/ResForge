@@ -95,7 +95,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         if let type = item as? ResourceType ?? currentType {
-            return document.directory.filteredResources(type: type).count
+            return document.directory.filteredCount(type: type)
         } else {
             return document.directory.filteredTypes().count
         }

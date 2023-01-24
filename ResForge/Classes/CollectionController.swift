@@ -93,7 +93,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         if let type = currentType {
-            return document.directory.filteredResources(type: type).count
+            return document.directory.filteredCount(type: type)
         } else {
             return 0
         }
