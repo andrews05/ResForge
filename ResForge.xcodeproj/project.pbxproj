@@ -1163,7 +1163,7 @@
 		F5B5880F0156D2A601000001 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					4953F594248874AA0002340F = {
 						LastSwiftMigration = 1150;
@@ -1652,6 +1652,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Plug-Ins/Sound Editor/Info.plist";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Sound-Editor";
@@ -1664,6 +1665,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Plug-Ins/Sound Editor/Info.plist";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Sound-Editor";
@@ -1694,6 +1696,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1746,6 +1749,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1778,6 +1782,7 @@
 		49EE72DC2550B79600BEABDB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.NovaTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1788,6 +1793,7 @@
 		49EE72DD2550B79600BEABDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.NovaTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1799,6 +1805,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Plug-Ins/Image Editor/Info.plist";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Image-Editor";
@@ -1812,6 +1819,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "Plug-Ins/Image Editor/Info.plist";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Image-Editor";
@@ -1825,6 +1833,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -1843,6 +1852,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -1864,10 +1874,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ResForge;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = ResForge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1.3.2;
+				MARKETING_VERSION = 1.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.ResForge;
 				PRODUCT_NAME = ResForge;
 				SWIFT_OBJC_BRIDGING_HEADER = "ResForge/ResForge-Bridging-Header.h";
@@ -1881,10 +1892,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ResForge;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = ResForge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1.3.2;
+				MARKETING_VERSION = 1.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.ResForge;
 				PRODUCT_NAME = ResForge;
 				SWIFT_OBJC_BRIDGING_HEADER = "ResForge/ResForge-Bridging-Header.h";
@@ -1912,6 +1924,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1959,6 +1972,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
