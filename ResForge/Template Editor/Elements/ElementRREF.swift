@@ -62,9 +62,9 @@ class ElementRREF: Element {
     }
     
     @IBAction func openResource(_ sender: Any) {
-        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { resource in
+        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
             // Update button image
-            if let button = sender as? NSButton {
+            if let button = sender as? NSButton, resource.id == self?.id {
                 button.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
             }
         }

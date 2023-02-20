@@ -13,7 +13,7 @@ import Cocoa
  * Note that you cannot associate both CASEs and CASRs to the same element
  */
 class ElementCASR: CasedElement, LinkingComboBoxDelegate {
-    @objc var value: Int {
+    @objc dynamic var value: Int {
         get {
             parentElement.displayValue
         }
@@ -126,8 +126,8 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         }
     }
     
-    private func loadCases(_ resType: String) {
-        guard cases.isEmpty else {
+    private func loadCases(_ resType: String, forceReload: Bool=false) {
+        guard forceReload || cases.isEmpty else {
             return
         }
         self.width = parentElement.casrs.count > 1 ? 180 : 240
@@ -141,8 +141,21 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
     }
     
     func followLink(_ sender: Any) {
-        if let resType = resType {
-            self.parentList.controller.openOrCreateResource(typeCode: resType, id: value)
+        guard let resType = resType else {
+            return
+        }
+        let id = value
+        self.parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
+            guard let self = self else { return }
+            // If this is new resource with a valid id, reload the cases
+            if isNew && self.min...self.max ~= resource.id {
+                self.loadCases(resType, forceReload: true)
+                self.value = resource.id
+                // Check if the value actually changed
+                if resource.id != id  {
+                    self.parentList.controller.itemValueUpdated(sender)
+                }
+            }
         }
     }
     

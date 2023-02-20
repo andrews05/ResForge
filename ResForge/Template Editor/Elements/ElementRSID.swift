@@ -16,7 +16,7 @@ import RFSupport
  */
 class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingComboBoxDelegate {
     var tValue: T = 0
-    @objc private var value: NSNumber {
+    @objc dynamic private var value: NSNumber {
         get { tValue as! NSNumber }
         set { tValue = newValue as! T }
     }
@@ -103,7 +103,19 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
     
     func followLink(_ sender: Any) {
         let id = Int(tValue) + offset
-        self.parentList.controller.openOrCreateResource(typeCode: resType, id: id)
+        self.parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
+            guard let self = self else { return }
+            let resID = resource.id - self.offset
+            // If this is new resource with a valid id, reload the cases
+            if isNew && self.range?.contains(resID) != false {
+                self.loadCases()
+                self.value = resID as NSNumber
+                // Check if the value actually changed
+                if resource.id != id  {
+                    self.parentList.controller.itemValueUpdated(sender)
+                }
+            }
+        }
     }
     
     override func transformedValue(_ value: Any?) -> Any? {
