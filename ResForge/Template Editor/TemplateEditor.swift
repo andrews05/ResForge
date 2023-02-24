@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, NSOutlineViewDelegate {
+class TemplateEditor: AbstractEditor, ResourceEditor {
     static let supportedTypes: [String] = []
     
     let resource: Resource
@@ -62,6 +62,9 @@ class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, N
     
     @discardableResult func load(data: Data) -> Bool {
         resourceStructure = ElementList(controller: self)
+        if UserDefaults.standard.bool(forKey: RFDefaults.editNameInTemplate) {
+            resourceStructure.insert(ElementRNAM(type: "RNAM", label: "Resource Name"))
+        }
         if let filter = filter {
             resourceStructure.insert(ElementDVDR(type: "DVDR", label: "Filter Enabled: \(filter.name)"))
         }
@@ -135,8 +138,41 @@ class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, N
         }
     }
     
-    // MARK: - OutlineView functions
+    // MARK: - Menu functions
     
+    @IBAction func saveResource(_ sender: Any) {
+        if self.window?.makeFirstResponder(dataList) != false {
+            do {
+                let data = resourceStructure.getResourceData()
+                resource.data = try filter?.unfilter(data: data, for: resource.typeCode) ?? data
+                self.setDocumentEdited(false)
+            } catch let error {
+                NSApp.presentError(error)
+            }
+        }
+    }
+    
+    @IBAction func revertResource(_ sender: Any) {
+        self.load(data: resource.data)
+        self.setDocumentEdited(false)
+    }
+    
+    @IBAction func itemValueUpdated(_ sender: Any) {
+        self.setDocumentEdited(true)
+    }
+    
+    func windowDidBecomeKey(_ notification: Notification) {
+        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
+        createItem?.title = NSLocalizedString("Create List Entry", comment: "")
+    }
+    
+    func windowDidResignKey(_ notification: Notification) {
+        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
+        createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
+    }
+}
+
+extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         let item = item as! Element
         let view: NSView
@@ -184,6 +220,16 @@ class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, N
         return view
     }
     
+    func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
+        guard item is ElementRNAM else {
+            return nil
+        }
+        let view = NSTableRowView()
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.quaternaryLabelColor.cgColor
+        return view
+    }
+    
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         if let item = item as? CollectionElement {
             return item.subElementCount
@@ -208,38 +254,5 @@ class TemplateEditor: AbstractEditor, ResourceEditor, NSOutlineViewDataSource, N
     
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
         return item is GroupElement
-    }
-    
-    // MARK: - Menu functions
-    
-    @IBAction func saveResource(_ sender: Any) {
-        if self.window?.makeFirstResponder(dataList) != false {
-            do {
-                let data = resourceStructure.getResourceData()
-                resource.data = try filter?.unfilter(data: data, for: resource.typeCode) ?? data
-                self.setDocumentEdited(false)
-            } catch let error {
-                NSApp.presentError(error)
-            }
-        }
-    }
-    
-    @IBAction func revertResource(_ sender: Any) {
-        self.load(data: resource.data)
-        self.setDocumentEdited(false)
-    }
-    
-    @IBAction func itemValueUpdated(_ sender: Any) {
-        self.setDocumentEdited(true)
-    }
-    
-    func windowDidBecomeKey(_ notification: Notification) {
-        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
-        createItem?.title = NSLocalizedString("Create List Entry", comment: "")
-    }
-    
-    func windowDidResignKey(_ notification: Notification) {
-        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
-        createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
     }
 }

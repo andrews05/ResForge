@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		490C682429A9571400FF3EAF /* ElementRNAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490C682329A9571400FF3EAF /* ElementRNAM.swift */; };
 		490D94AF25624FCF00F73544 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
@@ -305,6 +306,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		490C682329A9571400FF3EAF /* ElementRNAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRNAM.swift; sourceTree = "<group>"; };
 		490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
 		4919415425E98E7000FFC3F8 /* SpriteLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteLayer.swift; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; };
@@ -899,6 +901,7 @@
 				49D6D375271BAAAF002DEA97 /* ElementKRID.swift */,
 				49D6D374271BAAAF002DEA97 /* ElementBNDN.swift */,
 				49D6D381271BAAB0002DEA97 /* ElementBSKP.swift */,
+				490C682329A9571400FF3EAF /* ElementRNAM.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -1500,6 +1503,7 @@
 				49D6D396271BAAB4002DEA97 /* ElementList.swift in Sources */,
 				49D6D3AA271BAAB4002DEA97 /* TabbableOutlineView.swift in Sources */,
 				49F416ED287A982600404BA1 /* ElementBB08.swift in Sources */,
+				490C682429A9571400FF3EAF /* ElementRNAM.swift in Sources */,
 				49D6D38C271BAAB4002DEA97 /* ElementRREF.swift in Sources */,
 				4992491A26C3B527005F69A7 /* AttributesEditor.swift in Sources */,
 				49E56F7C26DA22FB005FA18B /* ConflictResolver.swift in Sources */,
