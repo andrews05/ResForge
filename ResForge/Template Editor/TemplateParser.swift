@@ -63,7 +63,6 @@ class TemplateParser {
             let dwrd = registry["DWRD"]!
             var elements: [Element] = []
             for f in fields {
-                // Replace * symbol with index
                 let newEl = dwrd.init(type: "DWRD", label: "\(element.label) \(f)")!
                 elements.append(newEl)
             }
