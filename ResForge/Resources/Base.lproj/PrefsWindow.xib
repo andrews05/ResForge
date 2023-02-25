@@ -221,13 +221,13 @@ CA
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p9m-q6-RUq">
-                                    <rect key="frame" x="10" y="11" width="239" height="18"/>
-                                    <buttonCell key="cell" type="check" title="Include resource name as first field" bezelStyle="regularSquare" imagePosition="left" inset="2" id="9jd-6o-GAI">
+                                    <rect key="frame" x="10" y="11" width="247" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Always show field for resource name" bezelStyle="regularSquare" imagePosition="left" inset="2" id="9jd-6o-GAI">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="qp1-NG-sRe" name="value" keyPath="values.EditNameInTemplate" id="X5k-JP-xmf"/>
+                                        <binding destination="qp1-NG-sRe" name="value" keyPath="values.ResourceNameAlwaysInTemplate" id="Lno-ty-sBB"/>
                                     </connections>
                                 </button>
                             </subviews>

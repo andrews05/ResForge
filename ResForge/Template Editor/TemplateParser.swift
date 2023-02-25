@@ -260,9 +260,10 @@ class TemplateParser {
         "LTLE": ElementBNDN.self,           // Little-endian (visible)
 
         // cosmetic
-        "DVDR": ElementDVDR.self,           // divider
+        "DVDR": ElementDVDR.self,           // divider/comment
         "RREF": ElementRREF.self,           // static reference to another resource (ResForge)
         "PACK": ElementPACK.self,           // pack other elements together (ResForge)
+        "RNAM": ElementRNAM.self,           // the resource's name (ResForge)
         
         // psuedo-elements (handled by parser)
         "TMPL": Element.self,               // include another template (ResForge)

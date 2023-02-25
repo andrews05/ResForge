@@ -40,10 +40,25 @@ class ElementList {
         configured = true
     }
     
-    func readTemplate(_ template: Resource) -> Bool {
+    func readTemplate(_ template: Resource, filterName: String?) -> Bool {
         do {
-            let parser = TemplateParser(template: template, manager: controller.manager)
-            elements += try parser.parse()
+            var parsed = try TemplateParser(template: template, manager: controller.manager).parse()
+            // Check for RNAM element or create if required
+            var rnam = parsed.first as? ElementRNAM
+            if rnam != nil {
+                // Pop the RNAM off in case we need to add a filter notice in between
+                parsed.remove(at: 0)
+            } else if UserDefaults.standard.bool(forKey: RFDefaults.resourceNameAlwaysInTemplate) {
+                rnam = ElementRNAM(type: "RNAM", label: "Resource Name")
+            }
+            if let rnam = rnam {
+                rnam.value = controller.resource.name
+                elements.append(rnam)
+            }
+            if let filterName = filterName {
+                elements.append(ElementDVDR(type: "DVDR", label: "Filter Enabled: \(filterName)"))
+            }
+            elements += parsed
             try self.configure()
             return true
         } catch let error {
@@ -70,13 +85,10 @@ class ElementList {
     func insert(_ element: Element) {
         elements.insert(element, at: currentIndex)
         element.parentList = self
-        // If the element list was previously empty then we haven't started configure yet
-        if elements.count > 1 {
-            currentIndex += 1
-            if element.visible {
-                let visIndex = visibleElements.firstIndex(of: elements[currentIndex]) ?? visibleElements.endIndex
-                visibleElements.insert(element, at: visIndex)
-            }
+        currentIndex += 1
+        if element.visible {
+            let visIndex = visibleElements.firstIndex(of: elements[currentIndex]) ?? visibleElements.endIndex
+            visibleElements.insert(element, at: visIndex)
         }
     }
     

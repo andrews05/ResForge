@@ -62,13 +62,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     
     @discardableResult func load(data: Data) -> Bool {
         resourceStructure = ElementList(controller: self)
-        if UserDefaults.standard.bool(forKey: RFDefaults.editNameInTemplate) {
-            resourceStructure.insert(ElementRNAM(type: "RNAM", label: "Resource Name"))
-        }
-        if let filter = filter {
-            resourceStructure.insert(ElementDVDR(type: "DVDR", label: "Filter Enabled: \(filter.name)"))
-        }
-        validStructure = resourceStructure.readTemplate(template)
+        validStructure = resourceStructure.readTemplate(template, filterName: filter?.name)
         if validStructure && !resource.data.isEmpty {
             do {
                 let data = try filter?.filter(data: resource.data, for: resource.typeCode) ?? resource.data
@@ -221,6 +215,7 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
     }
     
     func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
+        // RNAM field should be visually distinct
         guard item is ElementRNAM else {
             return nil
         }

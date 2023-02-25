@@ -220,6 +220,7 @@ RREF|Static Resource Reference|0 bytes||||🟢
 PACK|Combine Other Fields|0 bytes||||🟢
 Rnmm|Repeat Following Field $_nmm_ Times|0 bytes||||🟢 🅱️
 TMPL|Insert Named Template|0 bytes||||🟢
+RNAM|The Resource’s Name|0 bytes||||🟢
 
 ### Inserting or Deleting Data in Existing Resources
 

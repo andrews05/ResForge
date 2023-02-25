@@ -8,6 +8,7 @@ class ElementRNAM: ElementCSTR {
         guard parentList.parentElement == nil && parentList.element(at: 0) == self else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Must be first element in template.", comment: ""))
         }
+        try super.configure()
     }
     
     override func configurePadding() {
