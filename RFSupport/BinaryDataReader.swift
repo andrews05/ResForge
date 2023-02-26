@@ -59,7 +59,7 @@ public class BinaryDataReader {
         let length = T.bitWidth / 8
         try self.advance(length)
         let val = data.withUnsafeBytes {
-            $0.loadUnaligned(fromByteOffset: position-length, as: T.self)
+            $0.loadUnaligned(fromByteOffset: position-length-data.startIndex, as: T.self)
         }
         return bigEndian ?? self.bigEndian ? T(bigEndian: val) : T(littleEndian: val)
     }
