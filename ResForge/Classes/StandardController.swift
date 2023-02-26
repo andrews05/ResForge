@@ -2,6 +2,10 @@ import Cocoa
 import RFSupport
 
 class StandardController: OutlineController, NSTextFieldDelegate {
+    static let Color_New = NSColor(red: 0.156, green: 0.803, blue: 0.256, alpha: 1)
+    static let Color_AttributesModified = NSColor(red: 1, green: 0.582, blue: 0, alpha: 1)
+    static let Color_DataModified = NSColor(red: 0.333, green: 0.746, blue: 0.942, alpha: 1)
+    
     @IBAction func doubleClickItems(_ sender: Any) {
         // Ignore double-clicks in table header
         guard outlineView.clickedRow != -1 else {
@@ -55,6 +59,11 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             switch tableColumn!.identifier.rawValue {
             case "id":
                 view.textField?.integerValue = resource.id
+                if resource.isNew {
+                    view.imageView?.image = NSImage(named: "NSMenuItemBullet")!.tint(color: Self.Color_New)
+                } else {
+                    view.imageView?.image = nil
+                }
             case "name":
                 view.textField?.stringValue = resource.name
                 view.textField?.placeholderString = resource.placeholderName()
@@ -97,5 +106,16 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             break
         }
         inlineUpdate = false
+    }
+}
+
+extension NSImage {
+    func tint(color: NSColor) -> NSImage {
+        return NSImage(size: size, flipped: false) { (rect) -> Bool in
+            color.set()
+            rect.fill()
+            self.draw(in: rect, from: NSRect(origin: .zero, size: self.size), operation: .destinationIn, fraction: 1.0)
+            return true
+        }
     }
 }

@@ -36,6 +36,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     public var attributes = 0 // Not supported
     public private(set) var type: ResourceType
     private var _preview: NSImage?
+    public var _revision: Int? // Used to track new resources
 
     @objc dynamic public var typeCode: String {
         get {

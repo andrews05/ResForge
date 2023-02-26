@@ -93,6 +93,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     private(set) lazy var createController = CreateResourceController(self)
     private var fork: FileFork!
     private(set) var format: ResourceFileFormat = .classic
+    private(set) var revision = 0 // Used to track new resources
     
     @objc dynamic var hfsType: OSType = 0 {
         didSet {
@@ -164,6 +165,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         hfsCreator = attrs[.hfsCreatorCode] as! OSType
         directory.reset()
         directory.add(resources)
+        for resource in resources {
+            resource._revision = revision
+        }
         dataSource?.reload()
         self.undoManager?.enableUndoRegistration()
     }
@@ -178,6 +182,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
     
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
+        let resources = directory.resources()
+        
         if saveOperation == .saveOperation && fork == .rsrc, let fileURL = self.fileURL {
             // In place save of resource fork. We want to preserve all other aspects of the file, such as the data fork and finder flags.
             // Relying on the default implementation can result in some oddities, so instead we'll just write out the resource fork directly.
@@ -189,7 +195,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
             do {
                 let writeUrl = url.appendingPathComponent("..namedfork/rsrc")
-                try ResourceFile.write(directory.resources(), to: writeUrl, as: format)
+                try ResourceFile.write(resources, to: writeUrl, as: format)
                 try FileManager.default.setAttributes([.hfsTypeCode: hfsType, .hfsCreatorCode: hfsCreator], ofItemAtPath: url.path)
             } catch let error {
                 if moved {
@@ -201,6 +207,11 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             try super.writeSafely(to: url, ofType: typeName, for: saveOperation)
         }
         
+        revision += 1
+        for resource in resources {
+            resource._revision = revision
+        }
+        dataSource.reload(selecting: dataSource.selectedResources())
         // Update info window
         NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
         self.updateStatus()

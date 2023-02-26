@@ -30,6 +30,11 @@ extension Resource {
     @objc var maxID: Int {
         (document as? ResourceDocument)?.format.maxID ?? 0
     }
+    
+    // If the revision doesn't match the document's then the resource was not present at last save and is therefore "new"
+    var isNew: Bool {
+        _revision != (document as? ResourceDocument)?.revision
+    }
 }
 
 enum ResourceError: LocalizedError {
