@@ -115,7 +115,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
             manager.createResource(type: type, id: id) { [weak self] resource in
                 // Return focus to template window
                 self?.window?.makeKeyAndOrderFront(self)
-                guard let self = self, let resource = resource else {
+                guard let self, let resource else {
                     return
                 }
                 // The resource window should remain frontmost with this template immediately behind
@@ -170,7 +170,7 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         let item = item as! Element
         let view: NSView
-        if let tableColumn = tableColumn {
+        if let tableColumn {
             var identifier = tableColumn.identifier
             if identifier.rawValue == "data" {
                 view = DataView(frame: NSMakeRect(0, 2, tableColumn.width, CGFloat(item.rowHeight)))
@@ -214,15 +214,12 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
         return view
     }
     
-    func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
+    func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
         // RNAM field should be visually distinct
-        guard item is ElementRNAM else {
-            return nil
+        guard outlineView.item(atRow: row) is ElementRNAM else {
+            return
         }
-        let view = NSTableRowView()
-        view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.quaternaryLabelColor.cgColor
-        return view
+        rowView.backgroundColor = .alternatingContentBackgroundColors[1]
     }
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {

@@ -44,18 +44,13 @@ class ElementList {
         do {
             var parsed = try TemplateParser(template: template, manager: controller.manager).parse()
             // Check for RNAM element or create if required
-            var rnam = parsed.first as? ElementRNAM
-            if rnam != nil {
+            if parsed.first is ElementRNAM {
                 // Pop the RNAM off in case we need to add a filter notice in between
-                parsed.remove(at: 0)
+                elements.append(parsed.remove(at: 0))
             } else if UserDefaults.standard.bool(forKey: RFDefaults.resourceNameAlwaysInTemplate) {
-                rnam = ElementRNAM(type: "RNAM", label: "Resource Name")
+                elements.append(ElementRNAM(type: "RNAM", label: "Resource Name"))
             }
-            if let rnam = rnam {
-                rnam.value = controller.resource.name
-                elements.append(rnam)
-            }
-            if let filterName = filterName {
+            if let filterName {
                 elements.append(ElementDVDR(type: "DVDR", label: "Filter Enabled: \(filterName)"))
             }
             elements += parsed
@@ -131,7 +126,7 @@ class ElementList {
             return nil
         }
         let element = elements[i]
-        if let type = type, element.type != type {
+        if let type, element.type != type {
             return nil
         }
         elements.remove(at: i)
@@ -148,10 +143,7 @@ class ElementList {
         if let element = elements[0..<currentIndex].last(where: { $0.type == type }) {
             return element
         }
-        if let parent = parentElement {
-            return parent.parentList.previous(ofType: type)
-        }
-        return nil
+        return parentElement?.parentList.previous(ofType: type)
     }
     
     // Search for the next visible element with the given display label
