@@ -104,7 +104,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
     func followLink(_ sender: Any) {
         let id = Int(tValue) + offset
         self.parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
-            guard let self = self else { return }
+            guard let self else { return }
             let resID = resource.id - self.offset
             // If this is new resource with a valid id, reload the cases
             if isNew && self.range?.contains(resID) != false {

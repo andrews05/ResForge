@@ -69,7 +69,7 @@ class EditorManager: RFEditorManager {
         let key = String(describing: resource).appending(String(describing: editor))
         var plug = editorWindows[key]
         if plug == nil {
-            if let editor = editor as? TemplateEditor.Type, let template = template {
+            if let editor = editor as? TemplateEditor.Type, let template {
                 let filter = PluginRegistry.templateFilters[resource.typeCode]
                 plug = editor.init(resource: resource, manager: self, template: template, filter: filter)
             } else {
@@ -80,7 +80,7 @@ class EditorManager: RFEditorManager {
             }
             editorWindows[key] = plug
         }
-        if let plug = plug {
+        if let plug {
             // Make sure the plug is the window's delegate
             plug.window?.delegate = plug
             plug.showWindow(self)
@@ -129,7 +129,19 @@ class EditorManager: RFEditorManager {
         return SupportRegistry.directory.findResource(type: type, name: name)
     }
     
-    func createResource(type: ResourceType, id: Int, name: String, callback: ((Resource?) -> Void)? = nil) {
-        document.createController.show(type: type, id: id, name: name, callback: callback)
+    func createResource(type: ResourceType, id: Int, name: String, callback: ((Resource) -> Void)? = nil) {
+        // The create modal will bring the document window to the front
+        // Remember the current main window so we can restore it afterward
+        let window = NSApp.mainWindow
+        document.createController.show(type: type, id: id, name: name) { [weak self] resource in
+            window?.makeKeyAndOrderFront(nil)
+            if let resource {
+                self?.open(resource: resource)
+                // Only callback if the type was not changed
+                if resource.type == type {
+                    callback?(resource)
+                }
+            }
+        }
     }
 }

@@ -47,7 +47,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil, callback: ((Resource?) -> Void)? = nil) {
+    func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil, selectOnCreate: Bool = true, callback: ((Resource?) -> Void)? = nil) {
         _ = self.window
         // Add all types currently open
         let docs = NSDocumentController.shared.documents as! [ResourceDocument]
@@ -73,12 +73,20 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         }
 
         rType = type?.code ?? rType
-        if let type = type, let id = id {
+        if let type, let id {
             rID = rDocument.directory.uniqueID(for: type, starting: id) as NSNumber
         }
         rName = name
-        // Focus the name field if a value is provided, otherwise the type field
-        self.window?.makeFirstResponder(name == nil ? typeView : nameView)
+        if name == nil {
+            // Focus no name provided, focus the type field
+            self.window?.makeFirstResponder(typeView)
+        } else if id == 0 || id == -1 {
+            // Else if provided id is 0 or -1, focus the id field
+            self.window?.makeFirstResponder(idView)
+        } else {
+            // Else focus name the field
+            self.window?.makeFirstResponder(nameView)
+        }
         self.callback = callback
         rDocument.windowForSheet?.beginSheet(self.window!)
     }
@@ -99,11 +107,13 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
             // Create the resource
             let resource = Resource(type: type, id: id, name: nameView.stringValue)
             let actionName = NSLocalizedString("Create Resource", comment: "")
+            // If a callback is provided, don't automatically select and open the new resource
+            let selectAndOpen = callback == nil
             rDocument.dataSource.reload(actionName: actionName) {
                 rDocument.directory.add(resource)
-                return [resource]
+                return selectAndOpen ? [resource] : []
             }
-            if !rDocument.dataSource.isBulkMode {
+            if selectAndOpen && !rDocument.dataSource.isBulkMode {
                 rDocument.editorManager.open(resource: resource)
             }
             self.callback?(resource)

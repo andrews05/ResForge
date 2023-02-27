@@ -113,21 +113,12 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
             callback?(resource, false)
         } else {
             manager.createResource(type: type, id: id) { [weak self] resource in
-                // Return focus to template window
-                self?.window?.makeKeyAndOrderFront(self)
-                guard let self, let resource else {
-                    return
-                }
-                // The resource window should remain frontmost with this template immediately behind
-                self.manager.open(resource: resource)
+                guard let self else { return }
                 // Reset the cache for this type
                 if self.resourceCache[resource.typeCode] != nil && !resource.name.isEmpty {
                     self.resourceCache.removeValue(forKey: resource.typeCode)
                 }
-                // Callback only if the type matches what was requested
-                if resource.typeCode == typeCode {
-                    callback?(resource, true)
-                }
+                callback?(resource, true)
             }
         }
     }

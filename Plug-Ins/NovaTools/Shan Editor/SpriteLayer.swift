@@ -82,7 +82,9 @@ class SpriteLayer: NSObject {
             }
             controller.manager.open(resource: resource)
         } else {
-            controller.manager.createResource(type: type, id: Int(spriteID))
+            controller.manager.createResource(type: type, id: Int(spriteID)) { [weak self] resource in
+                self?.spriteID = Int16(resource.id)
+            }
         }
     }
     

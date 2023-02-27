@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, NSSplitViewDelegate {
+class ResourceDataSource: NSObject {
     @IBOutlet var splitView: NSSplitView!
     @IBOutlet var typeList: NSOutlineView!
     @IBOutlet var scrollView: NSScrollView!
@@ -71,7 +71,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     /// Reload the resources view, attempting to preserve the current selection.
     private func updateFilter(_ filter: String? = nil) {
         let selection = self.selectedResources()
-        if let filter = filter {
+        if let filter {
             document.directory.filter = filter
         }
         resourcesView.reload()
@@ -100,7 +100,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     }
     
     private func defaultView() -> ResourcesView {
-        if let type = currentType, PluginRegistry.previewProviders[type.code] != nil {
+        if let currentType, PluginRegistry.previewProviders[currentType.code] != nil {
             return collectionController
         }
         return outlineController
@@ -139,7 +139,7 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
             setView()
         }
         resourcesView.select(resources)
-        if let actionName = actionName {
+        if let actionName {
             ignoreChanges = false
             document.undoManager?.registerUndo(withTarget: self) {
                 $0.willReload(resources, actionName: actionName)
@@ -162,9 +162,10 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     func selectedType() -> ResourceType? {
         return resourcesView.selectedType()
     }
+}
 
-    // MARK: - Sidebar functions
-    
+// Sidebar control
+extension ResourceDataSource: NSSplitViewDelegate {
     func toggleSidebar() {
         useTypeList = !useTypeList
         UserDefaults.standard.set(useTypeList, forKey: RFDefaults.showSidebar)
@@ -192,7 +193,10 @@ class ResourceDataSource: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSour
     func splitView(_ splitView: NSSplitView, shouldHideDividerAt dividerIndex: Int) -> Bool {
         return true
     }
-    
+}
+
+// Sidebar type list
+extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         let view: NSTableCellView
         if let type = item as? ResourceType {

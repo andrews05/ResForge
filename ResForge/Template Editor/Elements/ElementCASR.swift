@@ -47,7 +47,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
     override func configure(view: NSView) {
         if min == max {
             self.width = 0
-        } else if let resType = resType {
+        } else if let resType {
             // If a resType has been given this will become a combo box for resource selection
             self.loadCases(resType)
             self.configureComboBox(view: view)
@@ -80,7 +80,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         // Determine parameters from label
         var hasMin = false
         var hasMax = false
-        if let metaValue = metaValue {
+        if let metaValue {
             let scanner = Scanner(string: metaValue)
             hasMin = scanner.scanInt(&min)
             guard !hasMin || range ~= min else {
@@ -141,12 +141,12 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
     }
     
     func followLink(_ sender: Any) {
-        guard let resType = resType else {
+        guard let resType else {
             return
         }
         let id = value
         self.parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
-            guard let self = self else { return }
+            guard let self else { return }
             // If this is new resource with a valid id, reload the cases
             if isNew && self.min...self.max ~= resource.id {
                 self.loadCases(resType, forceReload: true)
