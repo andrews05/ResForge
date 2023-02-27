@@ -48,7 +48,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
         }
         
         try super.configure()
-        self.width = 240
+        width = 240
         fixedMap = cases
         
         // Setting the resType will load the cases so we need to do this last
@@ -56,7 +56,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
             resType = String(label[r])
         } else {
             // See if we can bind to a preceding TNAM field
-            guard let tnam = self.parentList.previous(ofType: "TNAM") else {
+            guard let tnam = parentList.previous(ofType: "TNAM") else {
                 throw TemplateError.invalidStructure(self, "Could not determine resource type.")
             }
             self.bind(NSBindingName("resType"), to: tnam, withKeyPath: "value")
@@ -81,7 +81,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
     
     private func loadCases() {
         cases = fixedMap
-        let resources = self.parentList.controller.resources(ofType: resType)
+        let resources = parentList.controller.resources(ofType: resType)
         for resource in resources where range?.contains(resource.id) != false {
             let resID = resource.id - offset
             let idDisplay = self.resIDDisplay(resID)
@@ -103,16 +103,15 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
     
     func followLink(_ sender: Any) {
         let id = Int(tValue) + offset
-        self.parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
-            guard let self else { return }
-            let resID = resource.id - self.offset
+        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [self] resource, isNew in
+            let resID = resource.id - offset
             // If this is new resource with a valid id, reload the cases
-            if isNew && self.range?.contains(resID) != false {
+            if isNew && range?.contains(resID) != false {
                 self.loadCases()
-                self.value = resID as NSNumber
+                value = resID as NSNumber
                 // Check if the value actually changed
                 if resource.id != id  {
-                    self.parentList.controller.itemValueUpdated(sender)
+                    parentList.controller.itemValueUpdated(sender)
                 }
             }
         }

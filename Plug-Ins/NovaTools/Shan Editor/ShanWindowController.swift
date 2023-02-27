@@ -33,7 +33,15 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     @IBOutlet var shieldLayer: ShieldLayer!
     
     @objc var enabled = true
-    @objc dynamic var framesPerSet = 0
+    @objc dynamic var framesPerSet = 0 {
+        didSet {
+            // Try to automatically determine setCount if it hasn't been set yet
+            let baseFrames = baseLayer.frames.count
+            if setCount == 1 && baseFrames != 0 && framesPerSet != 0 && baseFrames % framesPerSet == 0 {
+                setCount = baseFrames / framesPerSet
+            }
+        }
+    }
     @objc dynamic var setCount = 1
     @objc dynamic var baseTransparency: Int16 = 0
     @objc dynamic var animationDelay: Int16 = 0

@@ -46,7 +46,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
     
     override func configure(view: NSView) {
         if min == max {
-            self.width = 0
+            width = 0
         } else if let resType {
             // If a resType has been given this will become a combo box for resource selection
             self.loadCases(resType)
@@ -70,9 +70,9 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
     // MARK: -
     
     func configure(for element: RangedElement) throws {
-        self.parentElement = element
-        self.parentList = element.parentList // Required to trigger itemValueUpdated
-        self.width = element.width
+        parentElement = element
+        parentList = element.parentList // Required to trigger itemValueUpdated
+        width = element.width
         min = (element.formatter as? NumberFormatter)?.minimum as? Int ?? Int.min
         max = (element.formatter as? NumberFormatter)?.maximum as? Int ?? Int.max
         let range = min...max
@@ -130,13 +130,13 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         guard forceReload || cases.isEmpty else {
             return
         }
-        self.width = parentElement.casrs.count > 1 ? 180 : 240
-        let resources = self.parentList.controller.resources(ofType: resType)
+        width = parentElement.casrs.count > 1 ? 180 : 240
+        let resources = parentList.controller.resources(ofType: resType)
         for resource in resources where min...max ~= resource.id {
             let caseEl = ElementCASE(value: resource.id,
                                      displayLabel: "\(resource.id) = \(resource.name)",
                                      displayValue: "\(resource.name) = \(resource.id)")
-            self.cases[resource.id] = caseEl
+            cases[resource.id] = caseEl
         }
     }
     
@@ -145,15 +145,14 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
             return
         }
         let id = value
-        self.parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
-            guard let self else { return }
+        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [self] resource, isNew in
             // If this is new resource with a valid id, reload the cases
-            if isNew && self.min...self.max ~= resource.id {
+            if isNew && min...max ~= resource.id {
                 self.loadCases(resType, forceReload: true)
-                self.value = resource.id
+                value = resource.id
                 // Check if the value actually changed
                 if resource.id != id  {
-                    self.parentList.controller.itemValueUpdated(sender)
+                    parentList.controller.itemValueUpdated(sender)
                 }
             }
         }

@@ -112,8 +112,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
             manager.open(resource: resource)
             callback?(resource, false)
         } else {
-            manager.createResource(type: type, id: id) { [weak self] resource in
-                guard let self else { return }
+            manager.createResource(type: type, id: id) { resource in
                 // Reset the cache for this type
                 if self.resourceCache[resource.typeCode] != nil && !resource.name.isEmpty {
                     self.resourceCache.removeValue(forKey: resource.typeCode)

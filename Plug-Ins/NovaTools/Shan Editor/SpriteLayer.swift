@@ -67,8 +67,12 @@ class SpriteLayer: NSObject {
         spriteLink.title = "loading…"
         DispatchQueue.global().async {
             let title = self.loadRle(data)
-            DispatchQueue.main.async {
-                self.spriteLink.title = title
+            DispatchQueue.main.async { [self] in
+                spriteLink.title = title
+                // If this is the base layer and framePerSet has not been set yet, set it automatically
+                if Self.self == BaseLayer.self && controller.framesPerSet == 0 && controller.setCount != 0 {
+                    controller.framesPerSet = frames.count / controller.setCount
+                }
             }
         }
     }
@@ -82,10 +86,23 @@ class SpriteLayer: NSObject {
             }
             controller.manager.open(resource: resource)
         } else {
-            controller.manager.createResource(type: type, id: Int(spriteID)) { [weak self] resource in
-                self?.spriteID = Int16(resource.id)
+            controller.manager.createResource(type: type, id: Int(spriteID)) { resource in
+                let newID = Int16(resource.id)
+                if self.spriteID != newID {
+                    self.spriteID = newID
+                }
+                // The resource will be empty on initial creation - add an observer to load it when the data changes
+                NotificationCenter.default.addObserver(self, selector: #selector(self.rleCreated(_:)), name: .ResourceDataDidChange, object: resource)
             }
         }
+    }
+    
+    @objc private func rleCreated(_ notification: Notification) {
+        NotificationCenter.default.removeObserver(self, name: .ResourceDataDidChange, object: nil)
+        guard let resource = notification.object as? Resource, resource.id == spriteID else {
+            return
+        }
+        self.loadRleAsync(resource.data)
     }
     
     func draw(_ dirtyRect: NSRect) {
