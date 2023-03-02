@@ -28,6 +28,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         textField.font = NSFont.userFixedPitchFont(ofSize: 12)
         textField.formatter = formatter
         textField.bind(.value, to: self, withKeyPath: "value")
+        textField.isSelectable = true
         view.addSubview(textField)
 
         // Create bit number view
@@ -40,6 +41,12 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         bitNum.textColor = .secondaryLabelColor
         view.addSubview(bitNum)
         
+        // Create action button
+        frame.origin.x = view.frame.origin.x + 142
+        frame.size.width = 14
+        let actionButton = self.createActionButton(at: frame)
+        view.addSubview(actionButton)
+        
         // Create checkboxes
         frame.origin.x = view.frame.origin.x
         frame.origin.y += 15
@@ -49,6 +56,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
             // We can't easily bind all the checkboxes, so just use the action to update
             let checkbox = BitButton(checkboxWithTitle: "", target: self, action: #selector(self.toggleBit(_:)))
             checkbox.textField = bitNum
+            checkbox.actionButton = actionButton
             checkbox.frame = frame
             checkbox.tag = i
             if (value & (1 << checkbox.tag)) != 0 {
@@ -79,11 +87,66 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     override var formatter: Formatter {
         self.sharedFormatter("HEX\(T.bitWidth)") { HexFormatter<T>() }
     }
+    
+    // MARK: - Action Button
+    
+    private func createActionButton(at frame: NSRect) -> NSButton {
+        let copy = NSMenuItem(title: NSLocalizedString("Copy", comment: ""), action: #selector(self.copy(_:)), keyEquivalent: "")
+        copy.target = self
+        let paste = NSMenuItem(title: NSLocalizedString("Paste and Replace", comment: ""), action: #selector(self.paste(_:)), keyEquivalent: "")
+        paste.target = self
+        let pasteCombine = NSMenuItem(title: NSLocalizedString("Paste and Combine", comment: ""), action: #selector(self.pasteAndCombine(_:)), keyEquivalent: "")
+        pasteCombine.target = self
+        let actions = NSMenu()
+        actions.items = [copy, paste, pasteCombine]
+        let actionButton = NSButton(frame: frame)
+        actionButton.isBordered = false
+        actionButton.bezelStyle = .inline
+        actionButton.image = NSImage(named: NSImage.actionTemplateName)
+        actionButton.menu = actions
+        actionButton.target = self
+        actionButton.action = #selector(self.actionMenu(_:))
+        return actionButton
+    }
+    
+    @IBAction private func actionMenu(_ sender: NSButton) {
+        guard let menu = sender.menu, let view = sender.superview else {
+            return
+        }
+        let location = NSPoint(x: sender.frame.maxX - menu.size.width, y: sender.frame.maxY + 8)
+        menu.popUp(positioning: nil, at: location, in: view)
+    }
+    
+    @IBAction private func copy(_ sender: Any) {
+        NSPasteboard.general.clearContents()
+        let charCount = T.bitWidth / 4
+        NSPasteboard.general.writeObjects([String(format: "0x%0\(charCount)llX", value) as NSString])
+    }
+    
+    @IBAction private func paste(_ sender: Any) {
+        if let newValue = readValueFromPasteboard() {
+            value = UInt(newValue)
+        }
+    }
+    
+    @IBAction private func pasteAndCombine(_ sender: Any) {
+        if let newValue = readValueFromPasteboard() {
+            value |= UInt(newValue)
+        }
+    }
+    
+    private func readValueFromPasteboard() -> T? {
+        guard let stringValue = NSPasteboard.general.readObjects(forClasses: [NSString.self])?.first as? String else {
+            return nil
+        }
+        return T(stringValue) ?? T(stringValue.dropFirst(2), radix: 16)
+    }
 }
 
 // NSButton subclass that shows tag number in an NSTextField on hover
 class BitButton: NSButton {
     weak var textField: NSTextField?
+    weak var actionButton: NSButton?
 
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
@@ -96,12 +159,14 @@ class BitButton: NSButton {
 
     override func mouseEntered(with event: NSEvent) {
         textField?.integerValue = tag + 1
+        actionButton?.isHidden = true
     }
 
     override func mouseExited(with event: NSEvent) {
         DispatchQueue.main.async { [self] in
-            if let textField = textField, textField.integerValue == tag + 1 {
+            if let textField, textField.integerValue == tag + 1 {
                 textField.stringValue = ""
+                actionButton?.isHidden = false
             }
         }
     }
