@@ -5,6 +5,7 @@ import RFSupport
 // These types would otherwise be equivalent to UBYT etc so we do a special case here to instead display a grid of checkboxes.
 class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     @objc dynamic private var value: UInt = 0
+    weak var checkboxes: NSView?
     
     required init(type: String, label: String) {
         super.init(type: type, label: label)
@@ -47,9 +48,19 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         let actionButton = self.createActionButton(at: frame)
         view.addSubview(actionButton)
         
-        // Create checkboxes
+        // Create checkboxes holder
+        // This allows us to keep a weak reference to the collection
         frame.origin.x = view.frame.origin.x
         frame.origin.y += 15
+        frame.size.width = 20 * 8
+        frame.size.height = 20 * CGFloat(T.bitWidth / 8)
+        let checkboxes = NSView(frame: frame)
+        view.addSubview(checkboxes)
+        self.checkboxes = checkboxes
+        
+        // Create checkboxes
+        frame.origin.x = 0
+        frame.origin.y = frame.height - 20
         frame.size.width = 20
         frame.size.height = 20
         for i in 0..<T.bitWidth {
@@ -59,14 +70,14 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
             checkbox.actionButton = actionButton
             checkbox.frame = frame
             checkbox.tag = i
-            if (value & (1 << checkbox.tag)) != 0 {
+            if value & (1 << i) != 0 {
                 checkbox.state = .on
             }
-            view.addSubview(checkbox)
+            checkboxes.addSubview(checkbox)
             frame.origin.x += 20
             if i % 8 == 7 {
-                frame.origin.x = view.frame.origin.x
-                frame.origin.y += 20
+                frame.origin.x = 0
+                frame.origin.y -= 20
             }
         }
     }
@@ -93,9 +104,9 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     private func createActionButton(at frame: NSRect) -> NSButton {
         let copy = NSMenuItem(title: NSLocalizedString("Copy", comment: ""), action: #selector(self.copy(_:)), keyEquivalent: "")
         copy.target = self
-        let paste = NSMenuItem(title: NSLocalizedString("Paste and Replace", comment: ""), action: #selector(self.paste(_:)), keyEquivalent: "")
+        let paste = NSMenuItem(title: NSLocalizedString("Paste", comment: ""), action: #selector(self.paste(_:)), keyEquivalent: "")
         paste.target = self
-        let pasteCombine = NSMenuItem(title: NSLocalizedString("Paste and Combine", comment: ""), action: #selector(self.pasteAndCombine(_:)), keyEquivalent: "")
+        let pasteCombine = NSMenuItem(title: NSLocalizedString("Paste and Merge", comment: ""), action: #selector(self.pasteAndMerge(_:)), keyEquivalent: "")
         pasteCombine.target = self
         let actions = NSMenu()
         actions.items = [copy, paste, pasteCombine]
@@ -117,29 +128,47 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         menu.popUp(positioning: nil, at: location, in: view)
     }
     
+    // Copy the current value using the formatter
     @IBAction private func copy(_ sender: Any) {
-        NSPasteboard.general.clearContents()
-        let charCount = T.bitWidth / 4
-        NSPasteboard.general.writeObjects([String(format: "0x%0\(charCount)llX", value) as NSString])
+        if let stringValue = formatter.string(for: value) {
+            NSPasteboard.general.clearContents()
+            NSPasteboard.general.writeObjects([stringValue as NSString])
+        }
     }
     
+    // Paste a new value
     @IBAction private func paste(_ sender: Any) {
         if let newValue = readValueFromPasteboard() {
-            value = UInt(newValue)
+            self.setValue(newValue)
         }
     }
     
-    @IBAction private func pasteAndCombine(_ sender: Any) {
+    // Paste a new value using bitwise OR
+    @IBAction private func pasteAndMerge(_ sender: Any) {
         if let newValue = readValueFromPasteboard() {
-            value |= UInt(newValue)
+            self.setValue(value | newValue)
         }
     }
     
-    private func readValueFromPasteboard() -> T? {
+    private func readValueFromPasteboard() -> UInt? {
         guard let stringValue = NSPasteboard.general.readObjects(forClasses: [NSString.self])?.first as? String else {
             return nil
         }
-        return T(stringValue) ?? T(stringValue.dropFirst(2), radix: 16)
+        return try? formatter.getObjectValue(for: stringValue) as? UInt
+    }
+    
+    private func setValue(_ newValue: UInt) {
+        guard newValue != value else {
+            return
+        }
+        value = newValue
+        parentList.controller.itemValueUpdated(self)
+        // Update the checkbox states
+        if let checkboxes = checkboxes?.subviews as? [NSButton] {
+            for checkbox in checkboxes {
+                checkbox.state = value & (1 << checkbox.tag) == 0 ? .off : .on
+            }
+        }
     }
 }
 
