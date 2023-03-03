@@ -14,13 +14,15 @@ class LinkingComboBox: NSComboBox {
     }
     
     override init(frame frameRect: NSRect) {
-        let buttonFrame = NSRect(x: frameRect.size.width - 35, y: 6, width: 12, height: 12)
+        let buttonFrame = NSRect(x: frameRect.size.width - 36, y: 6, width: 12, height: 12)
         linkButton = NSButton(frame: buttonFrame)
         super.init(frame: frameRect)
         linkButton.isBordered = false
         linkButton.bezelStyle = .inline
         linkButton.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
-        linkButton.imageScaling = .scaleProportionallyDown
+        if #unavailable(macOS 11) {
+            linkButton.imageScaling = .scaleProportionallyDown
+        }
         linkButton.target = self
         linkButton.action = #selector(followLink(_:))
         self.addSubview(linkButton)
