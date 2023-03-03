@@ -227,7 +227,7 @@ CA
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="qp1-NG-sRe" name="value" keyPath="values.ResourceNameAlwaysInTemplate" id="Lno-ty-sBB"/>
+                                        <binding destination="qp1-NG-sRe" name="value" keyPath="values.ResourceNameInTemplate" id="Anl-5f-jue"/>
                                     </connections>
                                 </button>
                             </subviews>

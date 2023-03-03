@@ -47,7 +47,7 @@ class ElementList {
             if parsed.first is ElementRNAM {
                 // Pop the RNAM off in case we need to add a filter notice in between
                 elements.append(parsed.remove(at: 0))
-            } else if UserDefaults.standard.bool(forKey: RFDefaults.resourceNameAlwaysInTemplate) {
+            } else if UserDefaults.standard.bool(forKey: RFDefaults.resourceNameInTemplate) {
                 elements.append(ElementRNAM(type: "RNAM", label: "Resource Name"))
             }
             if let filterName {

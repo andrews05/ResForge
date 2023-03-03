@@ -64,7 +64,7 @@ struct RFDefaults {
     static let showSidebar = "ShowSidebar"
     static let thumbnailSize = "ThumbnailSize"
     static let favoriteTypes = "FavoriteTypes"
-    static let resourceNameAlwaysInTemplate = "ResourceNameAlwaysInTemplate"
+    static let resourceNameInTemplate = "ResourceNameInTemplate"
 
     enum LaunchAction: String, CaseIterable {
         case None
@@ -79,7 +79,7 @@ struct RFDefaults {
             launchAction: LaunchAction.DisplayOpenPanel.rawValue,
             showSidebar: true,
             thumbnailSize: 100,
-            resourceNameAlwaysInTemplate: false,
+            resourceNameInTemplate: false,
             favoriteTypes: [
                 // Common types?
                 "PICT",
