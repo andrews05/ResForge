@@ -209,7 +209,7 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
         guard outlineView.item(atRow: row) is ElementRNAM else {
             return
         }
-        rowView.backgroundColor = .alternatingContentBackgroundColors[1]
+        rowView.backgroundColor = .controlAccentColor.withAlphaComponent(0.15)
     }
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
