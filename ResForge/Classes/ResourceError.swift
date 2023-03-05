@@ -33,7 +33,16 @@ extension Resource {
     
     // If the revision doesn't match the document's then the resource was not present at last save and is therefore "new"
     var isNew: Bool {
-        _revision != (document as? ResourceDocument)?.revision
+        _state.revision != (document as? ResourceDocument)?.revision
+    }
+    
+    var isPropertiesModified: Bool {
+        (_state.type != nil && _state.type != type) ||
+        (_state.id != nil && _state.id != id) ||
+        (_state.name != nil && _state.name != name)
+    }
+    var isDataModified: Bool {
+        _state.data != nil
     }
 }
 

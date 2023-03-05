@@ -166,7 +166,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         directory.reset()
         directory.add(resources)
         for resource in resources {
-            resource._revision = revision
+            resource._state.revision = revision
         }
         dataSource?.reload()
         self.undoManager?.enableUndoRegistration()
@@ -209,7 +209,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         
         revision += 1
         for resource in resources {
-            resource._revision = revision
+            resource._state.revision = revision
         }
         dataSource.reload(selecting: dataSource.selectedResources())
         // Update info window

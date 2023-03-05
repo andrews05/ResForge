@@ -32,11 +32,26 @@ public struct ResourceType: Hashable, CustomStringConvertible {
 }
 
 public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboardReading {
+    public struct State {
+        public var type: ResourceType?
+        public var id: Int?
+        public var name: String?
+        public var data: Data?
+        public var revision: Int? {
+            didSet {
+                type = nil
+                id = nil
+                name = nil
+                data = nil
+            }
+        }
+    }
+    
     public weak var document: NSDocument!
     public var attributes = 0 // Not supported
     public private(set) var type: ResourceType
     private var _preview: NSImage?
-    public var _revision: Int? // Used to track new resources
+    public var _state = State() // Used to track new resources
 
     @objc dynamic public var typeCode: String {
         get {
@@ -46,6 +61,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             let oldValue = type
             if oldValue.code != newValue {
                 type.code = newValue
+                if _state.revision != nil && _state.type == nil {
+                    _state.type = oldValue
+                }
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
                 document?.undoManager?.setActionName(NSLocalizedString("Change Type", comment: ""))
                 document?.undoManager?.registerUndo(withTarget: self) { $0.typeCode = oldValue.code }
@@ -61,6 +79,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             let oldValue = type
             if oldValue.attributes != newValue {
                 type.attributes = newValue
+                if _state.revision != nil && _state.type == nil {
+                    _state.type = oldValue
+                }
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
                 document?.undoManager?.setActionName(NSLocalizedString("Change Type Attributes", comment: ""))
                 document?.undoManager?.registerUndo(withTarget: self) { $0.typeAttributes = oldValue.attributes }
@@ -71,6 +92,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     @objc dynamic public var id: Int {
         didSet {
             if id != oldValue {
+                if _state.revision != nil && _state.id == nil {
+                    _state.id = oldValue
+                }
                 NotificationCenter.default.post(name: .ResourceIDDidChange, object: self, userInfo: ["oldValue":oldValue])
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 document?.undoManager?.setActionName(NSLocalizedString("Change ID", comment: ""))
@@ -82,6 +106,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     @objc dynamic public var name: String {
         didSet {
             if name != oldValue {
+                if _state.revision != nil && _state.name == nil {
+                    _state.name = oldValue
+                }
                 NotificationCenter.default.post(name: .ResourceNameDidChange, object: self, userInfo: ["oldValue":oldValue])
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 document?.undoManager?.setActionName(NSLocalizedString("Change Name", comment: ""))
@@ -93,6 +120,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     @objc public var data: Data {
         didSet {
             _preview = nil
+            if _state.revision != nil && _state.data == nil {
+                _state.data = oldValue
+            }
             NotificationCenter.default.post(name: .ResourceDataDidChange, object: self)
             NotificationCenter.default.post(name: .ResourceDidChange, object: self)
             document?.updateChangeCount(.changeDone)

@@ -3,8 +3,8 @@ import RFSupport
 
 class StandardController: OutlineController, NSTextFieldDelegate {
     static let Color_New = NSColor(red: 0.156, green: 0.803, blue: 0.256, alpha: 1)
-    static let Color_AttributesModified = NSColor(red: 1, green: 0.582, blue: 0, alpha: 1)
     static let Color_DataModified = NSColor(red: 0.333, green: 0.746, blue: 0.942, alpha: 1)
+    static let Color_PropertiesModified = NSColor(red: 1, green: 0.582, blue: 0, alpha: 1)
     
     @IBAction func doubleClickItems(_ sender: Any) {
         // Ignore double-clicks in table header
@@ -61,6 +61,10 @@ class StandardController: OutlineController, NSTextFieldDelegate {
                 view.textField?.integerValue = resource.id
                 if resource.isNew {
                     view.imageView?.image = NSImage(named: "NSMenuItemBullet")!.tint(color: Self.Color_New)
+                } else if resource.isDataModified {
+                    view.imageView?.image = NSImage(named: "NSMenuItemBullet")!.tint(color: Self.Color_DataModified)
+                } else if resource.isPropertiesModified {
+                    view.imageView?.image = NSImage(named: "NSMenuItemBullet")!.tint(color: Self.Color_PropertiesModified)
                 } else {
                     view.imageView?.image = nil
                 }
