@@ -42,19 +42,26 @@ class ElementList {
     
     func readTemplate(_ template: Resource, filterName: String?) -> Bool {
         do {
-            var parsed = try TemplateParser(template: template, manager: controller.manager).parse()
-            // Check for RNAM element or create if required
-            if parsed.first is ElementRNAM {
-                // Pop the RNAM off in case we need to add a filter notice in between
-                elements.append(parsed.remove(at: 0))
-            } else if UserDefaults.standard.bool(forKey: RFDefaults.resourceNameInTemplate) {
-                elements.append(ElementRNAM(type: "RNAM", label: "Resource Name"))
+            elements = try TemplateParser(template: template, manager: controller.manager).parse()
+            // Check if we need to prepend an RNAM element.
+            let includeName = UserDefaults.standard.bool(forKey: RFDefaults.resourceNameInTemplate)
+            if includeName && !(elements.first is ElementRNAM) {
+                elements.insert(ElementRNAM(type: "RNAM", label: "Resource Name"), at: 0)
             }
-            if let filterName {
-                elements.append(ElementDVDR(type: "DVDR", label: "Filter Enabled: \(filterName)"))
-            }
-            elements += parsed
+            // Configure all elements.
             try self.configure()
+            // If RNAM not enabled, make sure any existing one is removed. Do this after configure to account for CASEs.
+            if !includeName && elements.first is ElementRNAM {
+                elements.removeFirst()
+                visibleElements.removeFirst()
+            }
+            // If a filter is used, insert a notice - it should come after the RNAM if present.
+            if let filterName {
+                let filterNotice = ElementDVDR(type: "DVDR", label: "Filter Enabled: \(filterName)")
+                let idx = includeName ? 1 : 0
+                elements.insert(filterNotice, at: idx)
+                visibleElements.insert(filterNotice, at: idx)
+            }
             return true
         } catch let error {
             let element = ElementDVDR(type: "DVDR", label: "Template Error\n\(error.localizedDescription)")
