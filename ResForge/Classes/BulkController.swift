@@ -104,6 +104,8 @@ class BulkController: OutlineController {
         let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
         if !inlineUpdate || newIndex == nil {
             rows.removeValue(forKey: resource.id)
+        }
+        if oldIndex != newIndex {
             outlineView.beginUpdates()
             self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: nil)
             outlineView.endUpdates()
