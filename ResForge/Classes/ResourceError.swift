@@ -31,18 +31,33 @@ extension Resource {
         (document as? ResourceDocument)?.format.maxID ?? 0
     }
     
+    // MARK: - State Tracking
+    
     // If the revision doesn't match the document's then the resource was not present at last save and is therefore "new"
     var isNew: Bool {
         _state.revision != (document as? ResourceDocument)?.revision
     }
     
+    // For basic properties, check if the value is actually different from the original
     var isPropertiesModified: Bool {
         (_state.type != nil && _state.type != type) ||
         (_state.id != nil && _state.id != id) ||
         (_state.name != nil && _state.name != name)
     }
+    
+    // For data, only check if the value was ever changed
     var isDataModified: Bool {
         _state.data != nil
+    }
+    
+    /// Revert data to last saved state.
+    public func revertData() {
+        if let data = _state.data {
+            _state.disableTracking = true
+            _state.data = nil
+            self.data = data
+            _state.disableTracking = false
+        }
     }
 }
 

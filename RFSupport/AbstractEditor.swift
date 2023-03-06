@@ -66,7 +66,10 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
     
     public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.identifier?.rawValue {
-        case "saveResource", "revertResource", "save":
+        case "revertResource":
+            menuItem.title = NSLocalizedString("Revert Resource", comment: "")
+            fallthrough
+        case "saveResource", "save":
             return self.window?.isDocumentEdited == true
         case "exportResources":
             return self is ExportProvider

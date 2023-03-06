@@ -32,6 +32,8 @@ public struct ResourceType: Hashable, CustomStringConvertible {
 }
 
 public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboardReading {
+    // The resource state tracks original values for the resource's properties.
+    // It is used to determine whether the resource is new/modified/etc.
     public struct State {
         public var type: ResourceType?
         public var id: Int?
@@ -45,13 +47,14 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
                 data = nil
             }
         }
+        public var disableTracking = false
     }
     
     public weak var document: NSDocument!
     public var attributes = 0 // Not supported
     public private(set) var type: ResourceType
     private var _preview: NSImage?
-    public var _state = State() // Used to track new resources
+    public var _state = State()
 
     @objc dynamic public var typeCode: String {
         get {
@@ -61,7 +64,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             let oldValue = type
             if oldValue.code != newValue {
                 type.code = newValue
-                if _state.revision != nil && _state.type == nil {
+                if !_state.disableTracking && _state.revision != nil && _state.type == nil {
                     _state.type = oldValue
                 }
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
@@ -79,7 +82,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             let oldValue = type
             if oldValue.attributes != newValue {
                 type.attributes = newValue
-                if _state.revision != nil && _state.type == nil {
+                if !_state.disableTracking && _state.revision != nil && _state.type == nil {
                     _state.type = oldValue
                 }
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue":oldValue])
@@ -92,7 +95,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     @objc dynamic public var id: Int {
         didSet {
             if id != oldValue {
-                if _state.revision != nil && _state.id == nil {
+                if !_state.disableTracking && _state.revision != nil && _state.id == nil {
                     _state.id = oldValue
                 }
                 NotificationCenter.default.post(name: .ResourceIDDidChange, object: self, userInfo: ["oldValue":oldValue])
@@ -106,7 +109,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     @objc dynamic public var name: String {
         didSet {
             if name != oldValue {
-                if _state.revision != nil && _state.name == nil {
+                if !_state.disableTracking && _state.revision != nil && _state.name == nil {
                     _state.name = oldValue
                 }
                 NotificationCenter.default.post(name: .ResourceNameDidChange, object: self, userInfo: ["oldValue":oldValue])
@@ -120,7 +123,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     @objc public var data: Data {
         didSet {
             _preview = nil
-            if _state.revision != nil && _state.data == nil {
+            if !_state.disableTracking && _state.revision != nil && _state.data == nil {
                 _state.data = oldValue
             }
             NotificationCenter.default.post(name: .ResourceDataDidChange, object: self)

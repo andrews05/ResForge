@@ -522,6 +522,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             #selector(openResourcesAsHex(_:)),
             #selector(exportResource(_:)):
             return dataSource.selectionCount() > 0
+        case #selector(revertResource(_:)):
+            menuItem.title = NSLocalizedString("Revert Resource Content", comment: "")
+            return dataSource.selectedResources(deep: true).filter(\.isDataModified).count > 0
         case #selector(showFind(_:)):
             return windowForSheet?.toolbar?.isVisible == true
         case #selector(toggleTypes(_:)):
@@ -696,6 +699,12 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
         } else {
             self.remove(resources: dataSource.selectedResources(deep: true))
+        }
+    }
+    
+    @IBAction func revertResource(_ sender: Any) {
+        for resource in dataSource.selectedResources(deep: true) {
+            resource.revertData()
         }
     }
     
