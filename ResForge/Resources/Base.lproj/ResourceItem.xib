@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -82,6 +82,10 @@
                         <outlet property="delegate" destination="6" id="y6s-Zu-yT1"/>
                     </connections>
                 </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xX2-IZ-qd9">
+                    <rect key="frame" x="27" y="14" width="16" height="16"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusAvailable" id="DRy-TA-ytT"/>
+                </imageView>
             </subviews>
             <constraints>
                 <constraint firstItem="sdy-Z7-HX9" firstAttribute="top" secondItem="wRp-cn-dhz" secondAttribute="bottom" id="7am-Sa-2rz"/>
@@ -95,15 +99,18 @@
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sdy-Z7-HX9" secondAttribute="trailing" id="eqb-FO-Dmg"/>
                 <constraint firstItem="sdy-Z7-HX9" firstAttribute="centerX" secondItem="7" secondAttribute="centerX" id="gi8-1T-79c"/>
                 <constraint firstAttribute="bottom" secondItem="sdy-Z7-HX9" secondAttribute="bottom" id="hFL-UB-mM7"/>
+                <constraint firstItem="xX2-IZ-qd9" firstAttribute="centerY" secondItem="wRp-cn-dhz" secondAttribute="centerY" id="kLY-nb-i3n"/>
+                <constraint firstItem="wRp-cn-dhz" firstAttribute="leading" secondItem="xX2-IZ-qd9" secondAttribute="trailing" constant="2" id="rJ9-ee-Xya"/>
                 <constraint firstItem="wRp-cn-dhz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7" secondAttribute="leading" id="u3b-su-5Kj"/>
             </constraints>
-            <point key="canvasLocation" x="197.5" y="190.5"/>
+            <point key="canvasLocation" x="197" y="190"/>
         </view>
         <collectionViewItem id="6" customClass="ResourceItem" customModule="ResForge" customModuleProvider="target">
             <connections>
                 <outlet property="imageBox" destination="Gtn-p1-9T1" id="NkQ-j5-Oy2"/>
                 <outlet property="imageView" destination="17" id="AKB-dJ-mlP"/>
                 <outlet property="nameField" destination="sdy-Z7-HX9" id="CoT-60-EaI"/>
+                <outlet property="statusIcon" destination="xX2-IZ-qd9" id="Yqd-vM-8rB"/>
                 <outlet property="textBox" destination="wRp-cn-dhz" id="w8r-Cq-PTe"/>
                 <outlet property="textField" destination="KKS-Bl-Sd6" id="bMi-iU-eTd"/>
                 <outlet property="view" destination="7" id="9"/>
@@ -111,6 +118,7 @@
         </collectionViewItem>
     </objects>
     <resources>
+        <image name="NSStatusAvailable" width="16" height="16"/>
         <image name="NSStopProgressTemplate" width="14" height="13"/>
     </resources>
 </document>

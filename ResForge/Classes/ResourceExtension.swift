@@ -1,4 +1,4 @@
-import Foundation
+import Cocoa
 import RFSupport
 
 extension Resource {
@@ -52,7 +52,7 @@ extension Resource {
     }
     
     /// Reset the tracked state.
-    public func resetState() {
+    func resetState() {
         _state.type = nil
         _state.id = nil
         _state.name = nil
@@ -61,12 +61,32 @@ extension Resource {
     }
     
     /// Revert data to last saved state.
-    public func revertData() {
+    func revertData() {
         if let data = _state.data {
             _state.disableTracking = true
             _state.data = nil
             self.data = data
             _state.disableTracking = false
+        }
+    }
+    
+    /// Returns an icon indicating the resource's current status.
+    func statusIcon() -> NSImage? {
+        let color: NSColor
+        if isNew {
+            color = NSColor(red: 0.156, green: 0.803, blue: 0.256, alpha: 1)
+        } else if isDataModified {
+            // Data modified takes precedence over properties modified
+            color = NSColor(red: 0.265, green: 0.615, blue: 0.997, alpha: 1)
+        } else if isPropertiesModified {
+            color = NSColor(red: 0.999, green: 0.665, blue: 0.277, alpha: 1)
+        } else {
+            return nil
+        }
+        return NSImage(size: NSSize(width: 9, height: 9), flipped: false) {
+            color.set()
+            NSBezierPath(ovalIn: $0).fill()
+            return true
         }
     }
 }

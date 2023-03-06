@@ -212,6 +212,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     @IBOutlet var imageBox: NSBox!
     @IBOutlet var textBox: NSBox!
     @IBOutlet var nameField: NSTextField!
+    @IBOutlet var statusIcon: NSImageView!
     private(set) var resource: Resource!
     
     override var isSelected: Bool {
@@ -253,6 +254,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
         imageView?.image = nil
         textField?.stringValue = String(resource.id)
         nameField.stringValue = resource.name
+        statusIcon.image = resource.statusIcon()
         self.endEditing()
         resource.preview {
             // Check the resource is still the same, in case we got reconfigured with a different resource while waiting

@@ -2,10 +2,6 @@ import Cocoa
 import RFSupport
 
 class StandardController: OutlineController, NSTextFieldDelegate {
-    static let StatusNew = NSColor(red: 0.156, green: 0.803, blue: 0.256, alpha: 1)
-    static let StatusDataModified = NSColor(red: 0.333, green: 0.746, blue: 0.942, alpha: 1)
-    static let StatusPropertiesModified = NSColor(red: 1, green: 0.582, blue: 0, alpha: 1)
-    
     @IBAction func doubleClickItems(_ sender: Any) {
         // Ignore double-clicks in table header
         guard outlineView.clickedRow != -1 else {
@@ -60,17 +56,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             switch tableColumn!.identifier.rawValue {
             case "id":
                 view.textField?.integerValue = resource.id
-                // Show a coloured marker in the id column to indicate the resource's status
-                // Data modified takes precedence over properties modified
-                if resource.isNew {
-                    view.imageView?.image = self.statusIcon(color: Self.StatusNew)
-                } else if resource.isDataModified {
-                    view.imageView?.image = self.statusIcon(color: Self.StatusDataModified)
-                } else if resource.isPropertiesModified {
-                    view.imageView?.image = self.statusIcon(color: Self.StatusPropertiesModified)
-                } else {
-                    view.imageView?.image = nil
-                }
+                view.imageView?.image = resource.statusIcon()
             case "name":
                 view.textField?.stringValue = resource.name
                 view.textField?.placeholderString = resource.placeholderName()
@@ -112,13 +98,5 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             break
         }
         inlineUpdate = false
-    }
-    
-    private func statusIcon(color: NSColor) -> NSImage {
-        return NSImage(size: NSSize(width: 9, height: 9), flipped: false) {
-            color.set()
-            NSBezierPath(ovalIn: $0).fill()
-            return true
-        }
     }
 }
