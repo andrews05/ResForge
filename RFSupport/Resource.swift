@@ -39,14 +39,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         public var id: Int?
         public var name: String?
         public var data: Data?
-        public var revision: Int? {
-            didSet {
-                type = nil
-                id = nil
-                name = nil
-                data = nil
-            }
-        }
+        public var revision: Int?
         public var disableTracking = false
     }
     

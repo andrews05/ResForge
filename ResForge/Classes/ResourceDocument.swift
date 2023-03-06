@@ -165,8 +165,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         hfsCreator = attrs[.hfsCreatorCode] as! OSType
         directory.reset()
         directory.add(resources)
+        revision = 0
         for resource in resources {
-            resource._state.revision = revision
+            resource.resetState()
         }
         dataSource?.reload()
         self.undoManager?.enableUndoRegistration()
@@ -209,7 +210,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         
         revision += 1
         for resource in resources {
-            resource._state.revision = revision
+            resource.resetState()
         }
         dataSource.reload(selecting: dataSource.selectedResources())
         // Update info window

@@ -41,7 +41,7 @@
 		49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */; };
 		49640F5D25F36A77009FEC9B /* AbstractEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640F5C25F36A77009FEC9B /* AbstractEditor.swift */; };
 		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
-		49655DFA24DE6DA200D6AFF6 /* ResourceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* ResourceError.swift */; };
+		49655DFA24DE6DA200D6AFF6 /* ResourceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* ResourceExtension.swift */; };
 		49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */; };
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */; };
@@ -338,7 +338,7 @@
 		49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteppingFieldDelegate.swift; sourceTree = "<group>"; };
 		49640F5C25F36A77009FEC9B /* AbstractEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractEditor.swift; sourceTree = "<group>"; };
 		49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDocument.swift; sourceTree = "<group>"; };
-		49655DF924DE6DA200D6AFF6 /* ResourceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceError.swift; sourceTree = "<group>"; };
+		49655DF924DE6DA200D6AFF6 /* ResourceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceExtension.swift; sourceTree = "<group>"; };
 		49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDirectory.swift; sourceTree = "<group>"; };
 		496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Image Editor-Bridging-Header.h"; sourceTree = "<group>"; };
 		496674FD24BBC7CE00251406 /* ImageWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWindowController.swift; sourceTree = "<group>"; };
@@ -994,7 +994,7 @@
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
 				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
 				49F416E22879330400404BA1 /* ImportPanel.swift */,
-				49655DF924DE6DA200D6AFF6 /* ResourceError.swift */,
+				49655DF924DE6DA200D6AFF6 /* ResourceExtension.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1449,7 +1449,7 @@
 				49D6D3AF271BAAB4002DEA97 /* ElementREAL.swift in Sources */,
 				49D6D391271BAAB4002DEA97 /* ElementCOLR.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
-				49655DFA24DE6DA200D6AFF6 /* ResourceError.swift in Sources */,
+				49655DFA24DE6DA200D6AFF6 /* ResourceExtension.swift in Sources */,
 				49D6D39C271BAAB4002DEA97 /* ElementDVDR.swift in Sources */,
 				491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */,
 				49D6D3A8271BAAB4002DEA97 /* ElementDBYT.swift in Sources */,

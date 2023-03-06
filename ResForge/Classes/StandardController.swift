@@ -2,9 +2,9 @@ import Cocoa
 import RFSupport
 
 class StandardController: OutlineController, NSTextFieldDelegate {
-    static let Color_New = NSColor(red: 0.156, green: 0.803, blue: 0.256, alpha: 1)
-    static let Color_DataModified = NSColor(red: 0.333, green: 0.746, blue: 0.942, alpha: 1)
-    static let Color_PropertiesModified = NSColor(red: 1, green: 0.582, blue: 0, alpha: 1)
+    static let StatusNew = NSColor(red: 0.156, green: 0.803, blue: 0.256, alpha: 1)
+    static let StatusDataModified = NSColor(red: 0.333, green: 0.746, blue: 0.942, alpha: 1)
+    static let StatusPropertiesModified = NSColor(red: 1, green: 0.582, blue: 0, alpha: 1)
     
     @IBAction func doubleClickItems(_ sender: Any) {
         // Ignore double-clicks in table header
@@ -30,7 +30,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
     override func prepareView(type: ResourceType?) -> NSView {
         currentType = type
         outlineView.indentationPerLevel = type == nil ? 1 : 0
-        outlineView.tableColumns[0].width = type == nil ? 70 : 60
+        outlineView.tableColumns[0].width = type == nil ? 76 : 66
         self.setSorter()
         return outlineView
     }
@@ -42,6 +42,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             // The resource has been edited inline, perform the move async to ensure the first responder has been properly updated
             DispatchQueue.main.async { [self] in
                 self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: parent)
+                outlineView.reloadItem(resource)
                 outlineView.scrollRowToVisible(outlineView.selectedRow)
             }
         } else {
@@ -59,12 +60,14 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             switch tableColumn!.identifier.rawValue {
             case "id":
                 view.textField?.integerValue = resource.id
+                // Show a coloured marker in the id column to indicate the resource's status
+                // Data modified takes precedence over properties modified
                 if resource.isNew {
-                    view.imageView?.image = NSImage(named: "NSMenuItemBullet")!.tint(color: Self.Color_New)
+                    view.imageView?.image = self.statusIcon(color: Self.StatusNew)
                 } else if resource.isDataModified {
-                    view.imageView?.image = NSImage(named: "NSMenuItemBullet")!.tint(color: Self.Color_DataModified)
+                    view.imageView?.image = self.statusIcon(color: Self.StatusDataModified)
                 } else if resource.isPropertiesModified {
-                    view.imageView?.image = NSImage(named: "NSMenuItemBullet")!.tint(color: Self.Color_PropertiesModified)
+                    view.imageView?.image = self.statusIcon(color: Self.StatusPropertiesModified)
                 } else {
                     view.imageView?.image = nil
                 }
@@ -101,7 +104,6 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             // This can happen if the resource was updated by some other means while the field was in edit mode
             return
         }
-        // We don't need to reload the item after changing values here
         inlineUpdate = true
         switch textField.identifier?.rawValue {
         case "name":
@@ -111,14 +113,11 @@ class StandardController: OutlineController, NSTextFieldDelegate {
         }
         inlineUpdate = false
     }
-}
-
-extension NSImage {
-    func tint(color: NSColor) -> NSImage {
-        return NSImage(size: size, flipped: false) { (rect) -> Bool in
+    
+    private func statusIcon(color: NSColor) -> NSImage {
+        return NSImage(size: NSSize(width: 9, height: 9), flipped: false) {
             color.set()
-            rect.fill()
-            self.draw(in: rect, from: NSRect(origin: .zero, size: self.size), operation: .destinationIn, fraction: 1.0)
+            NSBezierPath(ovalIn: $0).fill()
             return true
         }
     }

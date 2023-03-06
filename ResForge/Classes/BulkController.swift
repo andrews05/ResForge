@@ -43,7 +43,7 @@ class BulkController: OutlineController {
         self.document = document
         
         idCol.headerCell.title = "ID"
-        idCol.width = 58
+        idCol.width = 64
         idCol.sortDescriptorPrototype = NSSortDescriptor(key: "id", ascending: true)
         idCol.isEditable = false
         nameCol.headerCell.title = "Name"

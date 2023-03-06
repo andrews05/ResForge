@@ -1,8 +1,17 @@
 import Foundation
 import RFSupport
 
-// Extend the Resource class to validate type and id by checking for conflicts
 extension Resource {
+    // Used for formatter binding
+    @objc var minID: Int {
+        (document as? ResourceDocument)?.format.minID ?? 0
+    }
+    @objc var maxID: Int {
+        (document as? ResourceDocument)?.format.maxID ?? 0
+    }
+    
+    // MARK: - Type/ID Validation
+    
     @objc func validateTypeCode(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
         try self.checkConflict(typeCode: ioValue.pointee as? String)
     }
@@ -23,14 +32,6 @@ extension Resource {
         }
     }
     
-    // Used for formatter binding
-    @objc var minID: Int {
-        (document as? ResourceDocument)?.format.minID ?? 0
-    }
-    @objc var maxID: Int {
-        (document as? ResourceDocument)?.format.maxID ?? 0
-    }
-    
     // MARK: - State Tracking
     
     // If the revision doesn't match the document's then the resource was not present at last save and is therefore "new"
@@ -48,6 +49,15 @@ extension Resource {
     // For data, only check if the value was ever changed
     var isDataModified: Bool {
         _state.data != nil
+    }
+    
+    /// Reset the tracked state.
+    public func resetState() {
+        _state.type = nil
+        _state.id = nil
+        _state.name = nil
+        _state.data = nil
+        _state.revision = (document as? ResourceDocument)?.revision
     }
     
     /// Revert data to last saved state.
