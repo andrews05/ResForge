@@ -103,13 +103,15 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     
     private func createActionButton(at frame: NSRect) -> NSButton {
         let copy = NSMenuItem(title: NSLocalizedString("Copy", comment: ""), action: #selector(self.copy(_:)), keyEquivalent: "")
-        copy.target = self
         let paste = NSMenuItem(title: NSLocalizedString("Paste", comment: ""), action: #selector(self.paste(_:)), keyEquivalent: "")
-        paste.target = self
         let pasteCombine = NSMenuItem(title: NSLocalizedString("Paste and Merge", comment: ""), action: #selector(self.pasteAndMerge(_:)), keyEquivalent: "")
+        let clear = NSMenuItem(title: NSLocalizedString("Clear", comment: ""), action: #selector(self.clear(_:)), keyEquivalent: "")
+        copy.target = self
+        paste.target = self
         pasteCombine.target = self
+        clear.target = self
         let actions = NSMenu()
-        actions.items = [copy, paste, pasteCombine]
+        actions.items = [copy, paste, pasteCombine, clear]
         let actionButton = NSButton(frame: frame)
         actionButton.isBordered = false
         actionButton.bezelStyle = .inline
@@ -124,7 +126,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         guard let menu = sender.menu, let view = sender.superview else {
             return
         }
-        let location = NSPoint(x: sender.frame.maxX - menu.size.width, y: sender.frame.maxY + 8)
+        let location = NSPoint(x: sender.frame.minX, y: sender.frame.maxY + 6)
         menu.popUp(positioning: nil, at: location, in: view)
     }
     
@@ -148,6 +150,11 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         if let newValue = readValueFromPasteboard() {
             self.setValue(value | newValue)
         }
+    }
+    
+    // Clear all bits
+    @IBAction private func clear(_ sender: Any) {
+        self.setValue(0)
     }
     
     private func readValueFromPasteboard() -> UInt? {
