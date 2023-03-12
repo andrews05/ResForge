@@ -3,7 +3,7 @@ import RFSupport
 
 class TemplateEditor: AbstractEditor, ResourceEditor {
     static let supportedTypes: [String] = []
-    
+
     let resource: Resource
     let manager: RFEditorManager
     let template: Resource
@@ -12,22 +12,22 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     private var validStructure = false
     @IBOutlet var dataList: TabbableOutlineView!
     var resourceCache: [String: [Resource]] = [:] // Shared cache for RSID/CASR
-    
+
     override var windowNibName: String {
         return "TemplateWindow"
     }
-    
+
     required init?(resource: Resource, manager: RFEditorManager, template: Resource, filter: TemplateFilter.Type?) {
         self.resource = resource
         self.manager = manager
         self.template = template
         self.filter = filter
         super.init(window: nil)
-        
+
         if !self.load(data: resource.data) {
             return nil
         }
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange(_:)), name: .ResourceDataDidChange, object: resource)
         NotificationCenter.default.addObserver(self, selector: #selector(self.templateDataDidChange(_:)), name: .ResourceDataDidChange, object: template)
     }
@@ -39,19 +39,19 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc func resourceDataDidChange(_ notification: NSNotification) {
         if self.window?.isDocumentEdited != true {
             self.load(data: resource.data)
         }
     }
-    
+
     @objc func templateDataDidChange(_ notification: NSNotification) {
         // Reload the template while keeping the current data
         self.load(data: resourceStructure.getResourceData())
         dataList.expandItem(nil, expandChildren: true)
     }
-        
+
     override func windowDidLoad() {
         self.window?.title = resource.defaultWindowTitle
         dataList.expandItem(nil, expandChildren: true)
@@ -59,7 +59,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
             self.setDocumentEdited(true)
         }
     }
-    
+
     @discardableResult func load(data: Data) -> Bool {
         resourceStructure = ElementList(controller: self)
         validStructure = resourceStructure.readTemplate(template, filterName: filter?.name)
@@ -84,9 +84,9 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
         dataList?.expandItem(nil, expandChildren: true)
         return true
     }
-    
+
     // MARK: - Helper functions
-    
+
     // This function is used by RSID/CASR to get resources for the combo box, caching them by type to improve performance.
     // Note that the cache is on the window controller instance rather than static, to ensure the resources aren't retained indefinitely.
     func resources(ofType type: String) -> [Resource] {
@@ -105,7 +105,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
         }
         return resourceCache[type]!
     }
-    
+
     func openOrCreateResource(typeCode: String, id: Int, callback: ((Resource, Bool) -> Void)? = nil) {
         let type = ResourceType(typeCode, resource.typeAttributes)
         if let resource = manager.findResource(type: type, id: id, currentDocumentOnly: false) {
@@ -121,9 +121,9 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
             }
         }
     }
-    
+
     // MARK: - Menu functions
-    
+
     @IBAction func saveResource(_ sender: Any) {
         if self.window?.makeFirstResponder(dataList) != false {
             do {
@@ -135,21 +135,21 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
             }
         }
     }
-    
+
     @IBAction func revertResource(_ sender: Any) {
         self.load(data: resource.data)
         self.setDocumentEdited(false)
     }
-    
+
     @IBAction func itemValueUpdated(_ sender: Any) {
         self.setDocumentEdited(true)
     }
-    
+
     func windowDidBecomeKey(_ notification: Notification) {
         let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
         createItem?.title = NSLocalizedString("Create List Entry", comment: "")
     }
-    
+
     func windowDidResignKey(_ notification: Notification) {
         let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
         createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
@@ -163,7 +163,7 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
         if let tableColumn {
             var identifier = tableColumn.identifier
             if identifier.rawValue == "data" {
-                view = DataView(frame: NSMakeRect(0, 2, tableColumn.width, CGFloat(item.rowHeight)))
+                view = DataView(frame: NSRect(x: 0, y: 2, width: tableColumn.width, height: CGFloat(item.rowHeight)))
                 item.configure(view: view)
                 if !item.subtext.isEmpty {
                     let subtext = NSTextField(labelWithString: item.subtext)
@@ -203,7 +203,7 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
         }
         return view
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
         // RNAM field should be visually distinct
         guard outlineView.item(atRow: row) is ElementRNAM else {
@@ -211,29 +211,29 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
         }
         rowView.backgroundColor = .controlAccentColor.withAlphaComponent(0.15)
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         if let item = item as? CollectionElement {
             return item.subElementCount
         }
         return Int(resourceStructure.count)
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         if let item = item as? CollectionElement {
             return item.subElement(at: index)
         }
         return resourceStructure.element(at: index)
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
         return item is CollectionElement
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
         return CGFloat((item as! Element).rowHeight) + 4
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
         return item is GroupElement
     }

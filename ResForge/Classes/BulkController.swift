@@ -6,7 +6,7 @@ enum BulkError: LocalizedError {
     case templateError(Error)
     case templateNotFound(ResourceType)
     case invalidValue(String, Int, String?=nil)
-    
+
     var errorDescription: String? {
         switch self {
         case .templateError:
@@ -17,7 +17,7 @@ enum BulkError: LocalizedError {
             return String(format: NSLocalizedString("Invalid value for “%@” on row %d.", comment: ""), column, row)
         }
     }
-    
+
     var recoverySuggestion: String? {
         switch self {
         case let .templateError(error):
@@ -36,12 +36,12 @@ class BulkController: OutlineController {
     private var rows: [Int: [Any?]] = [:]
     private let idCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("id"))
     private let nameCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("name"))
-    
+
     init(document: ResourceDocument) {
         super.init()
-        self.outlineView = NSOutlineView(frame: NSMakeRect(0, 0, 500, 500))
+        self.outlineView = NSOutlineView(frame: NSRect(x: 0, y: 0, width: 500, height: 500))
         self.document = document
-        
+
         idCol.headerCell.title = "ID"
         idCol.width = 64
         idCol.sortDescriptorPrototype = NSSortDescriptor(key: "id", ascending: true)
@@ -62,7 +62,7 @@ class BulkController: OutlineController {
         outlineView.target = self
         outlineView.doubleAction = #selector(doubleClickItems(_:))
     }
-    
+
     @IBAction func doubleClickItems(_ sender: Any) {
         // Ignore double-clicks in table header
         guard outlineView.clickedRow != -1 else {
@@ -74,7 +74,7 @@ class BulkController: OutlineController {
             outlineView.editColumn(outlineView.clickedColumn, row: outlineView.clickedRow, with: nil, select: true)
         }
     }
-    
+
     override func prepareView(type: ResourceType!) throws -> NSView {
         try self.loadTemplate(type: type)
         for column in outlineView.tableColumns {
@@ -94,12 +94,12 @@ class BulkController: OutlineController {
         document.directory.sorter = nil
         return outlineView
     }
-    
+
     override func reload() {
         rows.removeAll()
         outlineView.reloadData()
     }
-    
+
     override func updated(resource: Resource, oldIndex: Int?) {
         let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
         if !inlineUpdate || newIndex == nil {
@@ -111,7 +111,7 @@ class BulkController: OutlineController {
             outlineView.endUpdates()
         }
     }
-    
+
     func loadTemplate(type: ResourceType) throws {
         guard let template = document.editorManager.template(for: type, basic: true) else {
             throw BulkError.templateNotFound(type)
@@ -126,7 +126,7 @@ class BulkController: OutlineController {
             ($0 as? FormattedElement)?.defaultValue()
         }
     }
-    
+
     func exportCSV(to url: URL) throws {
         let resources = document.directory.resources(ofType: currentType!)
         let writer = try CSVWriter(stream: OutputStream(url: url, append: false)!)
@@ -142,7 +142,7 @@ class BulkController: OutlineController {
         }
         writer.stream.close()
     }
-    
+
     func importCSV(from url: URL) throws -> [Resource] {
         let idRange = document.format.minID...document.format.maxID
         var resources: [Resource] = []
@@ -177,7 +177,7 @@ class BulkController: OutlineController {
         }
         return resources
     }
-    
+
     private func read(resource: Resource) -> [Any?] {
         let reader = BinaryDataReader(resource.data)
         return elements.enumerated().map { (i, element) in
@@ -190,9 +190,9 @@ class BulkController: OutlineController {
             }
         }
     }
-    
+
     // MARK: - Delegate functions
-    
+
     func outlineView(_ outlineView: NSOutlineView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, item: Any) {
         guard let cell = cell as? NSTextFieldCell else {
             return
@@ -209,9 +209,9 @@ class BulkController: OutlineController {
             cell.formatter = (element as? FormattedElement)?.formatter
         }
     }
-    
+
     // MARK: - Data Source functions
-    
+
     func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {
         let resource = item as! Resource
         if tableColumn == idCol {
@@ -225,7 +225,7 @@ class BulkController: OutlineController {
         }
         return nil
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, byItem item: Any?) {
         let resource = item as! Resource
         inlineUpdate = true
@@ -243,7 +243,7 @@ class BulkController: OutlineController {
         }
         inlineUpdate = false
     }
-    
+
     override func setSorter() {
         guard let descriptor = outlineView.sortDescriptors.first else {
             return

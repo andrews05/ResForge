@@ -5,19 +5,19 @@ class LabelView: NSTableCellView {
     override var acceptsFirstResponder: Bool {
         return true
     }
-    
+
     override func mouseDown(with event: NSEvent) {
         self.window?.makeFirstResponder(self)
     }
-    
+
     override var focusRingMaskBounds: NSRect {
         return self.textField!.frame
     }
-    
+
     override func drawFocusRingMask() {
         self.focusRingMaskBounds.fill()
     }
-    
+
     @IBAction func createNewItem(_ sender: Any) {
         guard let dataList = self.superview?.superview as? NSOutlineView, let window = self.window else {
             return
@@ -36,7 +36,7 @@ class LabelView: NSTableCellView {
             newHeader?.scrollToVisible(newHeader!.superview!.bounds)
         }
     }
-    
+
     @IBAction func delete(_ sender: Any) {
         guard let dataList = self.superview?.superview as? NSOutlineView, let window = self.window else {
             return

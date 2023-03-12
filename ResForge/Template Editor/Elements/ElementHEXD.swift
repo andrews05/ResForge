@@ -5,7 +5,7 @@ import RFSupport
 class ElementHEXD: Element {
     var data: Data?
     var length = 0
-    
+
     override func configure() throws {
         if self.type == "HEXD" || self.type == "HEXS" || self.type == "CODE" {
             guard self.isAtEnd() else {
@@ -19,7 +19,7 @@ class ElementHEXD: Element {
         }
         self.width = 360
     }
-    
+
     override func configure(view: NSView) {
         var frame = view.frame
         frame.origin.y += 5
@@ -40,12 +40,12 @@ class ElementHEXD: Element {
         }
         view.addSubview(textField)
     }
-    
+
     private func setRowHeight() {
         // 24 bytes per line, 13pt line height (minimum height 22)
         self.rowHeight = (ceil(Double(length) / 24) * 13) + 9
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         let remainder = reader.remainingBytes
         if self.type == "HEXD" || self.type == "HEXS" || self.type == "CODE" {
@@ -60,7 +60,7 @@ class ElementHEXD: Element {
             data = try reader.readData(length: length)
         }
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         if let data = self.data {
             writer.data.append(data)

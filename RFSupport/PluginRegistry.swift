@@ -7,7 +7,7 @@ public class PluginRegistry {
     public private(set) static var exportProviders: [String: ExportProvider.Type] = [:]
     public private(set) static var placeholderProviders: [String: PlaceholderProvider.Type] = [:]
     public private(set) static var templateFilters: [String: TemplateFilter.Type] = [:]
-    
+
     @objc public static func bundleLoaded(_ notification: Notification) {
         // Iterate over the bundle's loaded classes and register them according to their implemented protocols
         guard let classes = notification.userInfo?[NSLoadedClasses] as? [String] else {
@@ -46,18 +46,18 @@ public class PluginRegistry {
             }
         }
     }
-    
+
     /// Return a placeholder name to show for a resource when it has no name.
     public static func placeholderName(for resource: Resource) -> String {
         if let placeholder = placeholderProviders[resource.typeCode]?.placeholderName(for: resource) {
             return placeholder
         }
-        
+
         if resource.id == -16455 {
             // don't bother checking type since there are too many icon types
             return NSLocalizedString("Custom Icon", comment: "")
         }
-        
+
         switch resource.typeCode {
         case "carb":
             if resource.id == 0 {

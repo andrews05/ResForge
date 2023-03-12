@@ -23,7 +23,7 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
         }
         self.rowHeight = Double(cases.count * 20) + 2
     }
-    
+
     override func configure(view: NSView) {
         var frame = view.frame
         frame.origin.y += 1
@@ -35,14 +35,14 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
             frame.origin.y += 20
         }
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
         for case let (value as T, caseEl) in cases {
             caseEl.value = (tValue & value) == value
         }
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         tValue = 0
         for case let (value as T, caseEl) in cases {

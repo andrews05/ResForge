@@ -5,7 +5,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     @IBOutlet var collectionView: ResourceCollection!
     @IBOutlet weak var document: ResourceDocument!
     private var currentType: ResourceType!
-    
+
     func prepareView(type: ResourceType?) -> NSView {
         if let type = type {
             currentType = type
@@ -14,11 +14,11 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         }
         return collectionView
     }
-    
+
     func reload() {
         collectionView.reloadData()
     }
-    
+
     func select(_ resources: [Resource]) {
         var paths: Set<IndexPath> = Set()
         for resource in resources where resource.type == currentType {
@@ -28,11 +28,11 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         }
         collectionView.selectItems(at: paths, scrollPosition: .nearestHorizontalEdge)
     }
-    
+
     func selectionCount() -> Int {
         return collectionView.selectionIndexes.count
     }
-    
+
     func selectedResources(deep: Bool = false) -> [Resource] {
         return collectionView.selectionIndexPaths.compactMap {
             // First attempt to get the resource from the ResourceItem
@@ -46,11 +46,11 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
             return list.indices.contains(idx) ? list[idx] : nil
         }
     }
-    
+
     func selectedType() -> ResourceType? {
         return currentType
     }
-    
+
     func updated(resource: Resource, oldIndex: Int?) {
         let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
         if let oldIndex = oldIndex {
@@ -76,21 +76,21 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
             collectionView.animator().insertItems(at: [new])
         }
     }
-    
+
     // MARK: - Delegate functions
     func collectionView(_ collectionView: NSCollectionView, pasteboardWriterForItemAt index: Int) -> NSPasteboardWriting? {
         return document.directory.filteredResources(type: currentType)[index]
     }
-    
+
     // Don't hide original items when dragging
     func collectionView(_ collectionView: NSCollectionView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forItemsAt indexes: Set<IndexPath>) {
         for i in indexes {
             collectionView.item(at: i)?.view.isHidden = false
         }
     }
-    
+
     // MARK: - DataSource functions
-    
+
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         if let type = currentType {
             return document.directory.filteredCount(type: type)
@@ -98,7 +98,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
             return 0
         }
     }
-    
+
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let resource = document.directory.filteredResources(type: currentType)[indexPath.last!]
         let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier("ResourceItem"), for: indexPath) as! ResourceItem
@@ -124,13 +124,13 @@ class ResourceCollection: NSCollectionView {
         }
     }
     private var currentSize = 0
-    
+
     private func updateSize() {
         currentSize = max(0, min(maxSize, Self.preferredSize))
         let layout = collectionViewLayout as! NSCollectionViewFlowLayout
         layout.itemSize = NSSize(width: currentSize+8, height: currentSize+40)
     }
-    
+
     @IBAction func zoomIn(_ sender: Any) {
         if currentSize < maxSize,
            let newSize = Self.zoomLevels.first(where: { $0 > currentSize }) {
@@ -138,33 +138,33 @@ class ResourceCollection: NSCollectionView {
             self.updateSize()
         }
     }
-    
+
     @IBAction func zoomOut(_ sender: Any) {
         if let newSize = Self.zoomLevels.last(where: { $0 < currentSize }) {
             Self.preferredSize = newSize
             self.updateSize()
         }
     }
-    
+
     // The collection view doesn't seem to have sensible key handling.
     // We need to handle home/end manually, as well as arrows keys when selection is empty,
     // pass on delete and pageup/dn to the next responder, then accept everything else.
     override func keyDown(with event: NSEvent) {
         if event.specialKey == .home {
-            self.scroll(NSZeroPoint)
+            self.scroll(.zero)
         } else if event.specialKey == .end {
-            self.scroll(NSMakePoint(self.frame.width, self.frame.height))
+            self.scroll(NSPoint(x: self.frame.width, y: self.frame.height))
         } else if (event.specialKey == .downArrow || event.specialKey == .rightArrow) && self.selectionIndexPaths.isEmpty {
-            self.selectItems(at: [[0, 0]], scrollPosition: [.top,.left])
+            self.selectItems(at: [[0, 0]], scrollPosition: [.top, .left])
         } else if (event.specialKey == .upArrow || event.specialKey == .leftArrow) && self.selectionIndexPaths.isEmpty {
-            self.selectItems(at: [[0, self.numberOfItems(inSection: 0)-1]], scrollPosition: [.bottom,.right])
+            self.selectItems(at: [[0, self.numberOfItems(inSection: 0)-1]], scrollPosition: [.bottom, .right])
         } else if event.specialKey == .delete || event.specialKey == .pageUp || event.specialKey == .pageDown {
             self.nextResponder?.keyDown(with: event)
         } else {
             super.keyDown(with: event)
         }
     }
-    
+
     // The delegate selection change callbacks are insufficient - best to trigger notification ourselves.
     override func didChangeValue(forKey key: String) {
         super.didChangeValue(forKey: key)
@@ -172,20 +172,20 @@ class ResourceCollection: NSCollectionView {
             NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
         }
     }
-    
+
     // Programmatic selection for some reason isn't KVO compliant - override to fix this.
     override func selectItems(at indexPaths: Set<IndexPath>, scrollPosition: NSCollectionView.ScrollPosition) {
         self.willChangeValue(for: \.selectionIndexPaths)
         super.selectItems(at: indexPaths, scrollPosition: scrollPosition)
         self.didChangeValue(for: \.selectionIndexPaths)
     }
-    
+
     // Detect clicks only the image or text
     override func hitTest(_ point: NSPoint) -> NSView? {
         let view = super.hitTest(point)
         return view is NSImageView || view is NSTextField ? view : self
     }
-    
+
     override func insertNewline(_ sender: Any?) {
         // Begin editing the selected item when enter is pressed
         if self.selectionIndexPaths.count == 1 {
@@ -194,7 +194,7 @@ class ResourceCollection: NSCollectionView {
             item.beginEditing()
         }
     }
-    
+
     override func becomeFirstResponder() -> Bool {
         // Stop editing the selected item as soon as first responder returns to us
         if self.selectionIndexPaths.count == 1, let item = self.item(at: self.selectionIndexPaths.first!) as? ResourceItem {
@@ -202,7 +202,7 @@ class ResourceCollection: NSCollectionView {
         }
         return true
     }
-    
+
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
         return true
     }
@@ -214,13 +214,13 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     @IBOutlet var nameField: NSTextField!
     @IBOutlet var statusIcon: NSImageView!
     private(set) var resource: Resource!
-    
+
     override var isSelected: Bool {
         didSet {
             self.highlight(isSelected)
         }
     }
-    
+
     override var highlightState: NSCollectionViewItem.HighlightState {
         didSet {
             if !isSelected || highlightState == .forDeselection {
@@ -228,7 +228,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
             }
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let clicker = NSClickGestureRecognizer(target: self, action: #selector(doubleClick))
@@ -236,19 +236,19 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
         clicker.delaysPrimaryMouseButtonEvents = false
         self.view.addGestureRecognizer(clicker)
     }
-    
+
     private func highlight(_ on: Bool) {
         imageBox.fillColor = on ? .secondarySelectedControlColor : .clear
         textBox.fillColor = on ? .alternateSelectedControlColor : .clear
         textField?.textColor = on ? .alternateSelectedControlTextColor : .controlTextColor
     }
-    
+
     @objc private func doubleClick() {
         if let document = self.view.window?.delegate as? ResourceDocument {
             document.openResources(self)
         }
     }
-    
+
     func configure(_ resource: Resource) {
         self.resource = resource
         imageView?.image = nil
@@ -263,24 +263,24 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
             }
         }
     }
-    
+
     func beginEditing() {
         nameField.isHidden = false
         nameField.isEditable = true
         nameField.alignment = .center
         self.view.window?.makeFirstResponder(nameField)
     }
-    
+
     func endEditing() {
         nameField.isHidden = resource.name.isEmpty
         nameField.isEditable = false
         nameField.alignment = .natural
     }
-    
+
     func controlTextDidEndEditing(_ obj: Notification) {
         resource.name = nameField.stringValue
     }
-    
+
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         switch commandSelector {
         case #selector(cancelOperation(_:)):

@@ -7,7 +7,7 @@ class Icons {
         }
         return self.colorRep(data, width: width, height: height, depth: depth)
     }
-    
+
     private static func bwRep(_ data: Data, width: Int, height: Int) -> NSBitmapImageRep? {
         let bytesPerRow = width / 8
         let planeLength = bytesPerRow * height
@@ -21,7 +21,7 @@ class Icons {
         for i in 0..<planeLength {
             plane[i] ^= 0xff
         }
-        
+
         let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
                                    pixelsWide: width,
                                    pixelsHigh: height,
@@ -40,7 +40,7 @@ class Icons {
         if data.count < (width * height * depth / 8) {
             return nil
         }
-        
+
         var plane: [UInt8]
         if depth == 4 {
             plane = []
@@ -54,7 +54,7 @@ class Icons {
         } else {
             return nil
         }
-        
+
         let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
                                    pixelsWide: width,
                                    pixelsHigh: height,
@@ -68,7 +68,7 @@ class Icons {
         rep.bitmapData!.assign(from: plane, count: rep.bytesPerPlane)
         return rep
     }
-    
+
     // Sourced from clut id 4 in the Mac OS System file
     static let clut4: [[UInt8]] = [
         [255, 255, 255],
@@ -88,7 +88,7 @@ class Icons {
         [64, 64, 64],
         [0, 0, 0]
     ]
-    
+
     // Sourced from clut id 8 in the Mac OS System file
     static let clut8: [[UInt8]] = [
         [255, 255, 255],

@@ -3,7 +3,7 @@ import RFSupport
 
 class Element: ValueTransformer, NSTextFieldDelegate {
     static var sharedFormatters: [String: Formatter] = [:]
-    
+
     /// Type code of this field.
     let type: String
     /// Label ("name") of this field.
@@ -20,7 +20,6 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     var visible: Bool = true
     var width: CGFloat = 60 // Default for many types
 
-    
     required init!(type: String, label: String) {
         self.type = type
         self.label = label
@@ -32,18 +31,18 @@ class Element: ValueTransformer, NSTextFieldDelegate {
             metaValue = String(parts[1])
         }
     }
-    
+
     func copy() -> Self {
         return Self.init(type: type, label: label)
     }
-    
+
     // Notify the controller when a field has been edited
     // Use control:textShouldEndEditing: rather than controlTextDidEndEditing: as it more accurately reflects when the value has actually changed
     func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
         self.parentList?.controller.itemValueUpdated(control)
         return true
     }
-    
+
     // Allow tabbing between rows
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         let outline = parentList.controller.dataList
@@ -57,7 +56,7 @@ class Element: ValueTransformer, NSTextFieldDelegate {
         }
         return false
     }
-    
+
     // Check if this element is at the end of either the template, a sized/skip section, or a keyed section which is itself at the end.
     // I.E. Check that there is no more data to be read after this.
     func isAtEnd() -> Bool {
@@ -69,14 +68,14 @@ class Element: ValueTransformer, NSTextFieldDelegate {
         }
         return topLevel && self.parentList.peek(1) == nil
     }
-    
+
     // Get the value of the hex suffix of a variable Xnnn type
     static func variableTypeValue(_ type: String) -> Int {
         return Int(type.suffix(3), radix: 16)!
     }
-    
+
     // MARK: - Functions subclasses should override
-    
+
     /// Perform any configuration that may depend on other elements.
     func configure() throws {
         // Throw if not a subclass (typically ending elements such as LSTE).
@@ -84,13 +83,13 @@ class Element: ValueTransformer, NSTextFieldDelegate {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Not expected at this position.", comment: ""))
         }
     }
-    
+
     /// Configure the view to display this element in the list.
     func configure(view: NSView) {}
-    
+
     /// Read the value of the field from the stream.
     func readData(from reader: BinaryDataReader) throws {}
-    
+
     /// Write the value of the field to the stream.
     func writeData(to writer: BinaryDataWriter) {}
 }

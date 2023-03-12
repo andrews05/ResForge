@@ -9,11 +9,11 @@ class SpriteWorld: WriteableSprite {
     let frameCount: Int
     var reader: BinaryDataReader!
     var writer: BinaryDataWriter!
-    
+
     var data: Data {
         writer?.data ?? reader.data
     }
-    
+
     // Init for reading
     required init(_ data: Data) throws {
         reader = BinaryDataReader(data)
@@ -30,13 +30,13 @@ class SpriteWorld: WriteableSprite {
         frameCount = Int(try reader.read() as UInt16)
         try reader.advance(6)
     }
-    
+
     // Init for writing
     required init(width: Int, height: Int, count: Int) {
         frameWidth = width
         frameHeight = height
         frameCount = count
-        
+
         writer = BinaryDataWriter(capacity: 16)
         writer.write(UInt16(frameWidth))
         writer.write(UInt16(frameHeight))
@@ -45,13 +45,13 @@ class SpriteWorld: WriteableSprite {
         writer.write(UInt16(frameCount))
         writer.advance(6)
     }
-    
+
     func readFrame() throws -> NSBitmapImageRep {
         let frame = self.newFrame()
         try self.readFrame(to: frame.bitmapData!, lineAdvance: frameWidth)
         return frame
     }
-    
+
     func readSheet() throws -> NSBitmapImageRep {
         if reader == nil {
             reader = BinaryDataReader(self.data)
@@ -68,7 +68,7 @@ class SpriteWorld: WriteableSprite {
         }
         return sheet
     }
-    
+
     func readFrame(to framePointer: UnsafeMutablePointer<UInt8>, lineAdvance: Int) throws {
         var y = 0
         var x = 0
@@ -127,7 +127,7 @@ class SpriteWorld: WriteableSprite {
             }
         }
     }
-    
+
     func writeSheet(_ image: NSImage, dither: Bool = false) -> [NSBitmapImageRep] {
         let rep = image.representations[0]
         // Reset the resolution
@@ -150,7 +150,7 @@ class SpriteWorld: WriteableSprite {
         }
         return frames
     }
-    
+
     func writeFrames(_ images: [NSImage], dither: Bool = false) -> [NSBitmapImageRep] {
         var frames: [NSBitmapImageRep] = []
         for image in images {
@@ -165,12 +165,12 @@ class SpriteWorld: WriteableSprite {
         }
         return frames
     }
-    
+
     func writeFrame(_ frame: NSBitmapImageRep, dither: Bool = false) {
         if dither {
             self.dither(frame)
         }
-        
+
         var framePointer = frame.bitmapData!
         var lineCount = 0
         var linePos = 0
@@ -216,7 +216,7 @@ class SpriteWorld: WriteableSprite {
         }
         writer.write(RleOp.frameEnd.rawValue)
     }
-    
+
     private func dither(_ frame: NSBitmapImageRep) {
         // QuickDraw dithering algorithm.
         // Half the error is diffused right on even rows, left on odd rows. The remainder is diffused down.
@@ -246,7 +246,7 @@ class SpriteWorld: WriteableSprite {
             }
         }
     }
-    
+
     private func draw(_ pixel: UInt16, to framePointer: inout UnsafeMutablePointer<UInt8>) {
         // Note: division is used here instead of bitshifts as it is much faster in unoptimised debug builds.
         let r = UInt8((pixel & 0x7C00) / 0x80)
@@ -259,7 +259,7 @@ class SpriteWorld: WriteableSprite {
         framePointer[3] = 0xFF
         framePointer += 4
     }
-    
+
     private func write(bigEndianPixels pixels: inout [UInt16]) {
         writer.write(RleOp.pixels(pixels.count).rawValue)
         if pixels.count % 2 != 0 {
@@ -279,7 +279,7 @@ enum RleOp: RawRepresentable {
     case pixels(Int)
     case skip(Int)
     case colorRun(Int)
-    
+
     init?(rawValue: UInt32) {
         let bytes = Int(rawValue & 0x00FFFFFF)
         switch rawValue >> 24 {
@@ -297,7 +297,7 @@ enum RleOp: RawRepresentable {
             return nil
         }
     }
-    
+
     var rawValue: UInt32 {
         switch self {
         case .frameEnd:

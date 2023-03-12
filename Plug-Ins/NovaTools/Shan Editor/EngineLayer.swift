@@ -8,7 +8,7 @@ class EngineLayer: ShieldLayer {
         }
         set { }
     }
-    
+
     override func nextFrame() {
         if enabled && super.alpha < 1 {
             super.alpha += Self.TransparencyStep

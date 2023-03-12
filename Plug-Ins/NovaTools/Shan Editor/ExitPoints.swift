@@ -8,7 +8,7 @@ class ExitPoints: NSObject {
     @objc var point4 = ExitPoint()
     let points: [ExitPoint]
     private let color: NSColor
-    
+
     init(_ color: NSColor) {
         points = [
             point1,
@@ -18,7 +18,7 @@ class ExitPoints: NSObject {
         ]
         self.color = color
     }
-    
+
     func draw(_ transform: AffineTransform) {
         guard enabled else {
             return
@@ -42,7 +42,7 @@ class ExitPoint: NSObject {
     @objc dynamic var x: CGFloat = 0
     @objc dynamic var y: CGFloat = 0
     @objc dynamic var z: CGFloat = 0
-    
+
     override func didChangeValue(forKey key: String) {
         super.didChangeValue(forKey: key)
         controller?.setDocumentEdited(true)

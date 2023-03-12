@@ -7,12 +7,12 @@ class LinkingComboBox: NSComboBox {
         get { LinkingComboBoxCell.self }
         set { }
     }
-    
+
     private let linkButton: NSButton
     var showsLink: Bool {
         (delegate as? LinkingComboBoxDelegate)?.showsLink == true
     }
-    
+
     override init(frame frameRect: NSRect) {
         let buttonFrame = NSRect(x: frameRect.size.width - 36, y: 6, width: 12, height: 12)
         linkButton = NSButton(frame: buttonFrame)
@@ -27,11 +27,11 @@ class LinkingComboBox: NSComboBox {
         linkButton.action = #selector(followLink(_:))
         self.addSubview(linkButton)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         if linkButton.isHidden == showsLink {
             // Toggle the button visibility
@@ -45,7 +45,7 @@ class LinkingComboBox: NSComboBox {
         }
         super.draw(dirtyRect)
     }
-    
+
     @objc private func followLink(_ sender: Any) {
         (delegate as? LinkingComboBoxDelegate)?.followLink(sender)
     }

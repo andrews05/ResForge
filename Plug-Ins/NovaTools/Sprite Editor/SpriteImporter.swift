@@ -9,9 +9,9 @@ enum SpriteImporterError: LocalizedError {
         switch self {
         case .unsupportedFile:
             return NSLocalizedString("Unsupported file type.", comment: "")
-        case .invalidX(_):
+        case .invalidX:
             return NSLocalizedString("Grid X tiles does not fit the image width.", comment: "")
-        case .invalidY(_):
+        case .invalidY:
             return NSLocalizedString("Grid Y tiles does not fit the image height.", comment: "")
         case .noImages:
             return NSLocalizedString("No images found in the selected folder.", comment: "")
@@ -43,13 +43,13 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     @objc dynamic private var directory = true
     private var image: NSImage?
     private var images: [NSImage]?
-    
+
     override init() {
         gridX = Self.GRID_X
         gridY = Self.GRID_Y
         super.init()
     }
-    
+
     func beginSheetModal(for window: NSWindow,
                          sheetCallback: @escaping(NSImage, Int, Int, Bool) -> Void,
                          framesCallback: @escaping([NSImage], Bool) -> Void) {
@@ -72,7 +72,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             }
         }
     }
-    
+
     func beginSheetModal(for window: NSWindow,
                          with image: NSImage,
                          sheetCallback: @escaping(NSImage, Int, Int, Bool) -> Void) {
@@ -103,7 +103,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         optionsView.window?.recalculateKeyViewLoop()
         optionsView.window?.makeFirstResponder(optionsView.nextValidKeyView)
     }
-    
+
     func panel(_ sender: Any, validate url: URL) throws {
         if directory {
             var items = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
@@ -130,7 +130,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             }
         }
     }
-    
+
     func panelSelectionDidChange(_ sender: Any?) {
         self.reset()
         let panel = sender as! NSOpenPanel
@@ -144,7 +144,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         }
         self.updateGrid()
     }
-    
+
     private func updateGrid() {
         guard let image = image else {
             frameSize.stringValue = "-"
@@ -159,13 +159,13 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             return
         }
         frameSize.stringValue = "\(width/gridX) x \(height/gridY)"
-        let size = NSMakeSize(image.size.width/CGFloat(gridX), image.size.height/CGFloat(gridY))
+        let size = NSSize(width: image.size.width/CGFloat(gridX), height: image.size.height/CGFloat(gridY))
         preview.image = NSImage(size: size)
         preview.image?.lockFocus()
-        image.draw(at: NSZeroPoint, from: NSMakeRect(0, image.size.height-size.height, size.width, size.height), operation: .copy, fraction: 1)
+        image.draw(at: .zero, from: NSRect(x: 0, y: image.size.height-size.height, width: size.width, height: size.height), operation: .copy, fraction: 1)
         preview.image?.unlockFocus()
     }
-    
+
     private func reset() {
         directory = true
         image = nil
@@ -174,7 +174,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         frameSize.stringValue = "-"
         preview.image = nil
     }
-    
+
     private func setImage(_ image: NSImage?) {
         directory = false
         guard let image = image,

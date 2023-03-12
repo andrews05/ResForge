@@ -8,13 +8,13 @@ class ElementDATE: Element {
         get { Date(timeIntervalSinceReferenceDate: Double(tValue) - Self.hfsToRef) }
         set { tValue = UInt32(newValue.timeIntervalSinceReferenceDate + Self.hfsToRef) }
     }
-    
+
     override func configure() throws {
         self.width = 240
         self.value = Date()
         self.tValue += UInt32(TimeZone.current.secondsFromGMT())
     }
-    
+
     override func configure(view: NSView) {
         var frame = view.frame
         frame.origin.y -= 1
@@ -30,11 +30,11 @@ class ElementDATE: Element {
         picker.bind(.value, to: self, withKeyPath: "value")
         view.addSubview(picker)
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(tValue)
     }

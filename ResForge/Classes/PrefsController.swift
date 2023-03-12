@@ -21,7 +21,7 @@ class PrefsController: NSWindowController, NSWindowDelegate, NSTableViewDataSour
     func windowWillClose(_ notification: Notification) {
         window?.makeFirstResponder(nil)
     }
-    
+
     @IBAction func setLaunchAction(_ sender: NSButton) {
         UserDefaults.standard.set(RFDefaults.LaunchAction.allCases[sender.tag].rawValue, forKey: RFDefaults.launchAction)
     }

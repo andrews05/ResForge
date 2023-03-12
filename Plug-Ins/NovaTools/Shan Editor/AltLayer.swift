@@ -12,7 +12,7 @@ class AltLayer: BaseLayer {
     @objc dynamic var hideDisabled = false
     private var currentSet = 0
     private var setTicks = 0
-    
+
     override func nextFrame() {
         if enabled && setCount > 0 {
             setTicks += 1

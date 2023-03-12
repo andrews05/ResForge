@@ -43,7 +43,7 @@ class LightLayer: SpriteLayer {
     private var blinkTicks = 0
     private var blinkCount = 0
     private var blinkOn = true
-    
+
     override func nextFrame() {
         guard enabled else {
             return

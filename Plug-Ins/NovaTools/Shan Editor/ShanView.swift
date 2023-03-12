@@ -8,14 +8,14 @@ class ShanView: NSView {
         guard controller.currentFrame >= 0 else {
             return
         }
-        
+
         NSGraphicsContext.current?.imageInterpolation = .none
         fillColor.setFill()
         dirtyRect.fill()
         for layer in controller.layers {
             layer.draw(dirtyRect)
         }
-        
+
         // Calculate transform for exit points
         var transform = AffineTransform(translationByX: dirtyRect.midX, byY: dirtyRect.midY)
         let angle = CGFloat(controller.framesPerSet-controller.currentFrame)/CGFloat(controller.framesPerSet) * 360
@@ -25,11 +25,11 @@ class ShanView: NSView {
         for points in controller.pointLayers {
             points.draw(transform)
         }
-        
+
         borderColor.setFill()
         dirtyRect.frame()
     }
-    
+
     // Toggle black background on click
     override func mouseDown(with event: NSEvent) {
         self.borderColor = self.fillColor == .black ? .quaternaryLabelColor : .gray

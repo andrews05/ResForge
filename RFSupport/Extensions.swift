@@ -19,7 +19,7 @@ public extension FourCharCode {
         guard string != "" else {
             return
         }
-        var bytes: [UInt8] = [0,0,0,0]
+        var bytes: [UInt8] = [0, 0, 0, 0]
         let max = Swift.min(string.count, 4)
         var used = 0
         var range = string.startIndex..<string.endIndex
@@ -34,7 +34,7 @@ public extension FourCharCode {
 public extension Formatter {
     func getObjectValue(for string: String) throws -> AnyObject? {
         var object: AnyObject?
-        var errorString: NSString? = nil
+        var errorString: NSString?
         guard getObjectValue(&object, for: string, errorDescription: &errorString) else {
             throw CocoaError(.keyValueValidation, userInfo: [NSLocalizedDescriptionKey: errorString as Any])
         }

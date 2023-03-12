@@ -10,22 +10,21 @@ protocol Sprite {
     var frameHeight: Int { get }
     var frameCount: Int { get }
     var data: Data { get }
-    
-    
+
     // Init for reading
     init(_ data: Data) throws
-    
+
     func readFrame() throws -> NSBitmapImageRep
-    
+
     func readSheet() throws -> NSBitmapImageRep
 }
 
 protocol WriteableSprite: Sprite {
     // Init for writing
     init(width: Int, height: Int, count: Int)
-    
+
     func writeSheet(_ image: NSImage, dither: Bool) -> [NSBitmapImageRep]
-    
+
     func writeFrames(_ images: [NSImage], dither: Bool) -> [NSBitmapImageRep]
 }
 
@@ -42,7 +41,7 @@ extension Sprite {
         }
         return (gridX, frameCount / gridX)
     }
-    
+
     func newFrame(_ pixelsWide: Int? = nil, _ pixelsHigh: Int? = nil) -> NSBitmapImageRep {
         return NSBitmapImageRep(bitmapDataPlanes: nil,
                                 pixelsWide: pixelsWide ?? frameWidth,

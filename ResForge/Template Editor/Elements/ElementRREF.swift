@@ -11,7 +11,7 @@ class ElementRREF: Element {
     private var resType = ""
     private var id = 0
     private var buttonLabel = ""
-    
+
     override func configure() throws {
         var typeCode: NSString?
         guard let metaValue = metaValue,
@@ -37,7 +37,7 @@ class ElementRREF: Element {
         }
         width = 120
     }
-    
+
     override func configure(view: NSView) {
         var frame = view.frame
         frame.origin.y += 1
@@ -60,9 +60,9 @@ class ElementRREF: Element {
         button.action = #selector(openResource(_:))
         view.addSubview(button)
     }
-    
+
     @IBAction func openResource(_ sender: Any) {
-        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
+        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, _ in
             // Update button image
             if let button = sender as? NSButton, resource.id == self?.id {
                 button.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)

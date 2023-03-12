@@ -3,7 +3,7 @@ import RFSupport
 // Implements WCOL, LCOL
 class ElementWCOL<T: FixedWidthInteger & UnsignedInteger>: ElementCOLR {
     private var bits = 0
-    
+
     override func configure() throws {
         switch T.bitWidth {
         case 16:
@@ -17,14 +17,14 @@ class ElementWCOL<T: FixedWidthInteger & UnsignedInteger>: ElementCOLR {
         }
         mask = (1 << bits) - 1
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         let tmp = UInt(try reader.read() as T)
         r = UInt16(tmp >> (bits*2) & mask)
         g = UInt16(tmp >> bits & mask)
         b = UInt16(tmp & mask)
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         var tmp: T = 0
         tmp |= T(r) << (bits*2)

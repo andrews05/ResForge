@@ -13,7 +13,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
         }
         document.openResources(sender)
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Default sort resources by id
@@ -22,7 +22,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             outlineView.sortDescriptors = [descriptor]
         }
     }
-    
+
     override func prepareView(type: ResourceType?) -> NSView {
         currentType = type
         outlineView.indentationPerLevel = type == nil ? 1 : 0
@@ -30,7 +30,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
         self.setSorter()
         return outlineView
     }
-    
+
     override func updated(resource: Resource, oldIndex: Int?) {
         let parent = currentType == nil ? resource.type : nil
         let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
@@ -46,9 +46,9 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             outlineView.reloadItem(resource)
         }
     }
-    
+
     // MARK: - Delegate functions
-    
+
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         let view: NSTableCellView
         if let resource = item as? Resource {
@@ -83,7 +83,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
         }
         return nil
     }
-    
+
     func controlTextDidEndEditing(_ obj: Notification) {
         let textField = obj.object as! NSTextField
         guard let resource = outlineView.item(atRow: outlineView.row(for: textField)) as? Resource else {

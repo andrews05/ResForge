@@ -31,7 +31,7 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
         }
         return true
     }
-    
+
     @IBAction func saveDocument(_ sender: Any) {
         // Ensure any controls have ended editing, then save both the resource and the document
         if let editor = self as? ResourceEditor, editor.window?.makeFirstResponder(nil) != false {
@@ -39,7 +39,7 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
             editor.resource.document?.save(sender)
         }
     }
-    
+
     @IBAction func exportResource(_ sender: Any) {
         guard let plug = self as? ResourceEditor,
               let exporter = type(of: self) as? ExportProvider.Type else {
@@ -63,7 +63,7 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
             }
         }
     }
-    
+
     public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.identifier?.rawValue {
         case "revertResource":

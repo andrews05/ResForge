@@ -23,7 +23,7 @@ class RangedElement: CasedElement {
     @objc private(set) var casrs: [ElementCASR]!
     @objc private var currentCase: ElementCASR!
     var popupWidth: CGFloat = 240
-    
+
     override func configure() throws {
         // Read CASR elements
         while let casr = self.parentList.pop("CASR") as? ElementCASR {
@@ -43,13 +43,13 @@ class RangedElement: CasedElement {
             self.setValue(casrs[0].deNormalise(casrs[0].min), forKey: "value")
         }
     }
-    
+
     override func configure(view: NSView) {
         if casrs == nil {
             super.configure(view: view)
             return
         }
-        
+
         if currentCase == nil {
             self.loadValue()
         }
@@ -77,7 +77,7 @@ class RangedElement: CasedElement {
             self.width = currentCase.width
         }
     }
-    
+
     private func loadValue() {
         let value = self.value(forKey: "value") as? Int ?? 0
         // If the data does not match a case we still want to preserve the value:
@@ -87,11 +87,11 @@ class RangedElement: CasedElement {
         displayValue = casr.normalise(value)
         currentCase = casr
     }
-    
+
     private func casr(for value: Int) -> ElementCASR? {
-        return casrs.first() { $0.matches(value: value) }
+        return casrs.first { $0.matches(value: value) }
     }
-    
+
     @IBAction func caseChanged(_ sender: NSPopUpButton) {
         // Adjust the current display value to fit the new range
         if displayValue < currentCase.min {

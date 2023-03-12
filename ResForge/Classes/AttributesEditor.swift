@@ -8,7 +8,7 @@ import Cocoa
 class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate {
     @IBOutlet var addButton: NSButton?
     @IBOutlet var applyButton: NSButton?
-    
+
     private var currentRowValues = [String: NSTextField]()
     var attributes: [String: String] {
         get {
@@ -31,12 +31,12 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
             applyButton?.isHidden = true
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.delegate = self
     }
-    
+
     @IBAction func addOrClear(_ sender: Any) {
         if self.numberOfRows == 0 {
             self.addRow(sender)
@@ -44,15 +44,15 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
             self.clear(sender)
         }
     }
-    
+
     @IBAction func clear(_ sender: Any) {
         self.removeRows(at: IndexSet(0..<self.numberOfRows), includeSubrows: true)
     }
-    
+
     override func insertRow(at rowIndex: Int, with rowType: NSRuleEditor.RowType, asSubrowOfRow parentRow: Int, animate shouldAnimate: Bool) {
         self.insertRow(at: rowIndex)
     }
-    
+
     private func insertRow(at rowIndex: Int, key: String = "", value: String = "", makeFirstResponder: Bool = true) {
         let keyField = self.keyField(key)
         currentRowValues = ["key": keyField, "val": self.valueField(value)]
@@ -63,15 +63,15 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
             }
         }
     }
-    
+
     private func keyField(_ key: String) -> NSTextField {
         let field = self.valueField(key, width: 200)
         field.formatter = AttributeNameFormatter.shared
         return field
     }
-    
+
     private func valueField(_ value: String, width: CGFloat = 225) -> NSTextField {
-        let field = NSTextField(frame: NSMakeRect(0, 0, width, 20))
+        let field = NSTextField(frame: NSRect(x: 0, y: 0, width: width, height: 20))
         field.stringValue = value
         field.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
         field.usesSingleLineMode = true
@@ -79,12 +79,12 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
         field.delegate = self
         return field
     }
-    
+
     // MARK: Delegate Functions
     func ruleEditor(_ editor: NSRuleEditor, numberOfChildrenForCriterion criterion: Any?, with rowType: NSRuleEditor.RowType) -> Int {
         return (criterion as? String) == "val" ? 0 : 1
     }
-    
+
     func ruleEditor(_ editor: NSRuleEditor, child index: Int, forCriterion criterion: Any?, with rowType: NSRuleEditor.RowType) -> Any {
         switch criterion as? String {
         case "key":
@@ -95,16 +95,16 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
             return "key"
         }
     }
-    
+
     func ruleEditor(_ editor: NSRuleEditor, displayValueForCriterion criterion: Any, inRow row: Int) -> Any {
         return currentRowValues[criterion as! String] ?? criterion
     }
-    
+
     func ruleEditorRowsDidChange(_ notification: Notification) {
         addButton?.image = NSImage(named: self.numberOfRows == 0 ? NSImage.addTemplateName : NSImage.removeTemplateName)
         applyButton?.isHidden = false
     }
-    
+
     func controlTextDidChange(_ obj: Notification) {
         applyButton?.isHidden = false
     }
@@ -112,13 +112,13 @@ class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate 
 
 class AttributeNameFormatter: Formatter {
     static var shared = AttributeNameFormatter()
-    
+
     let disallowed = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_").inverted
-    
+
     override func string(for obj: Any?) -> String? {
         return obj as? String
     }
-    
+
     override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?,
                                  for string: String,
                                  errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
@@ -133,7 +133,7 @@ class AttributeNameFormatter: Formatter {
         obj?.pointee = string as AnyObject
         return true
     }
-    
+
     override func isPartialStringValid(_ partialStringPtr: AutoreleasingUnsafeMutablePointer<NSString>,
                                        proposedSelectedRange proposedSelRangePtr: NSRangePointer?,
                                        originalString origString: String,
@@ -143,14 +143,14 @@ class AttributeNameFormatter: Formatter {
             // Perform the removal
             let len = partialStringPtr.pointee.length
             partialStringPtr.pointee = partialStringPtr.pointee.components(separatedBy: disallowed).joined() as NSString
-            
+
             // Fix-up the proposed selection range
             proposedSelRangePtr?.pointee.location -= len - partialStringPtr.pointee.length
             proposedSelRangePtr?.pointee.length = 0
             NSSound.beep()
             return false
         }
-        
+
         return true
     }
 }

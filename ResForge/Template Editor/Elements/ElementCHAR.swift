@@ -11,16 +11,16 @@ class ElementCHAR: CasedElement {
             tValue = newValue.data(using: .macOSRoman)?.first ?? 0
         }
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(tValue)
     }
-    
+
     override var formatter: Formatter {
-        self.sharedFormatter() { MacRomanFormatter(stringLength: 1, exactLengthRequired: true) }
+        self.sharedFormatter { MacRomanFormatter(stringLength: 1, exactLengthRequired: true) }
     }
 }

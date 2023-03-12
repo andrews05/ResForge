@@ -3,20 +3,20 @@ import RFSupport
 
 class SupportRegistry {
     static let directory = SupportRegistry()
-    
+
     private(set) var resourcesByType: [ResourceType: [Resource]] = [:]
     // The support registry is where most templates are found and since the directory doesn't
     // change after app launch we can keep an index of resources by name for faster template lookups
     private var nameIndex: [ResourceType: [String: Resource]] = [:]
-    
+
     func resources(ofType type: ResourceType) -> [Resource] {
         return resourcesByType[type] ?? []
     }
-    
+
     func findResource(type: ResourceType, id: Int) -> Resource? {
-        return resourcesByType[type]?.first() { $0.id == id }
+        return resourcesByType[type]?.first { $0.id == id }
     }
-    
+
     func findResource(type: ResourceType, name: String) -> Resource? {
         if nameIndex[type] == nil {
             guard let resources = resourcesByType[type] else {
@@ -31,7 +31,7 @@ class SupportRegistry {
         }
         return nameIndex[type]?[name]
     }
-    
+
     static func scanForResources(in folder: URL) {
         let items: [URL]
         do {
@@ -43,7 +43,7 @@ class SupportRegistry {
             Self.load(resourceFile: item)
         }
     }
-    
+
     static func scanForResources(in bundle: Bundle) {
         guard let items = bundle.urls(forResourcesWithExtension: "rsrc", subdirectory: nil) else {
             return
@@ -52,7 +52,7 @@ class SupportRegistry {
             Self.load(resourceFile: item)
         }
     }
-    
+
     private static func load(resourceFile: URL) {
         do {
             let resources = try ResourceFile.read(from: resourceFile, format: nil)
@@ -63,7 +63,7 @@ class SupportRegistry {
                 map[resource.type, default: []].append(resource)
             }
             for (rType, resources) in byType {
-                let resources = resources.sorted() { $0.id < $1.id }
+                let resources = resources.sorted { $0.id < $1.id }
                 directory.resourcesByType[rType, default: []].insert(contentsOf: resources, at: 0)
             }
         } catch {}

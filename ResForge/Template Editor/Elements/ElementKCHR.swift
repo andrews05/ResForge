@@ -11,16 +11,16 @@ class ElementKCHR: KeyElement {
             tValue = newValue.data(using: .macOSRoman)?.first ?? 0
         }
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
         self.setCase(value)
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(tValue)
     }
-    
+
     override var formatter: Formatter {
         self.sharedFormatter("CHAR") { MacRomanFormatter(stringLength: 1, exactLengthRequired: true) }
     }

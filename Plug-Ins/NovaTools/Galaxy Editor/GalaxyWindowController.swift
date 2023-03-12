@@ -10,46 +10,46 @@ import RFSupport
 class GalaxyStub: AbstractEditor, ResourceEditor {
     static let supportedTypes = ["glxÿ"]
     let resource: Resource
-    
+
     required init?(resource: Resource, manager: RFEditorManager) {
         GalaxyWindowController.shared.show(targetID: resource.id, manager: manager)
         return nil
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func saveResource(_ sender: Any) {}
     func revertResource(_ sender: Any) {}
 }
 
 class GalaxyWindowController: NSWindowController, NSWindowDelegate {
     static var shared = GalaxyWindowController()
-    
+
     @IBOutlet var clipView: NSClipView!
     @IBOutlet var galaxyView: GalaxyView!
     var targetID = 0
     var systems: [Int: (name: String, pos: NSPoint, links: [Int])] = [:]
     var nebulae: [Int: (name: String, area: NSRect)] = [:]
     var nebImages: [Int: NSImage] = [:]
-    
+
     override var windowNibName: String {
         return "GalaxyWindow"
     }
-    
+
     override func awakeFromNib() {
         NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .ResourceDidChange, object: nil)
     }
-    
+
     @IBAction func zoomIn(_ sender: Any) {
         galaxyView.zoomIn(sender)
     }
-    
+
     @IBAction func zoomOut(_ sender: Any) {
         galaxyView.zoomOut(sender)
     }
-    
+
     @objc func resourceChanged(_ notification: Notification) {
         guard let resource = notification.object as? Resource else {
             return
@@ -62,7 +62,7 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
             galaxyView.needsDisplay = true
         }
     }
-    
+
     private func read(system: Resource) {
         let reader = BinaryDataReader(system.data)
         do {
@@ -77,7 +77,7 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
             }
         } catch {}
     }
-    
+
     private func read(nebula: Resource) {
         let reader = BinaryDataReader(nebula.data)
         do {
@@ -90,14 +90,14 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
             nebulae[nebula.id] = (nebula.name, rect)
         } catch {}
     }
-    
+
     func show(targetID: Int, manager: RFEditorManager) {
         window?.makeKeyAndOrderFront(self)
         self.targetID = targetID
         systems = [:]
         nebulae = [:]
         nebImages = [:]
-        
+
         let systs = manager.allResources(ofType: ResourceType("sÿst"), currentDocumentOnly: false)
         for system in systs {
             guard systems[system.id] == nil else {
@@ -105,7 +105,7 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
             }
             self.read(system: system)
         }
-        
+
         let nebus = manager.allResources(ofType: ResourceType("nëbu"), currentDocumentOnly: false)
         for nebula in nebus {
             guard nebulae[nebula.id] == nil else {
@@ -123,8 +123,8 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
                 }
             }
         }
-        
-        var point = galaxyView.transform.transform(systems[targetID]?.pos ?? NSZeroPoint)
+
+        var point = galaxyView.transform.transform(systems[targetID]?.pos ?? .zero)
         point.x -= clipView.frame.midX
         point.y = galaxyView.frame.height - point.y - clipView.frame.midY
         galaxyView.scroll(point)

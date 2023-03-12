@@ -19,7 +19,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
     private var currentType: ResourceType {
         ResourceType(rType ?? "", attributesEditor.attributes)
     }
-    
+
     // The type and id use bindings with continuous updates and formatters that always return a value.
     @objc dynamic private var rType: String? {
         didSet {
@@ -29,24 +29,24 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
     }
     @objc dynamic private var rID: NSNumber?
     @objc dynamic private var rName: String?
-    
+
     override var windowNibName: NSNib.Name? {
         "CreateResource"
     }
-    
+
     init(_ document: ResourceDocument) {
         self.rDocument = document
         super.init(window: nil)
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil, selectOnCreate: Bool = true, callback: ((Resource?) -> Void)? = nil) {
         _ = self.window
         // Add all types currently open
@@ -90,7 +90,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         self.callback = callback
         rDocument.windowForSheet?.beginSheet(self.window!)
     }
-    
+
     @IBAction func hide(_ sender: AnyObject) {
         if sender === createButton {
             // Safety check for invalid inputs (e.g. invalid MacRoman)
@@ -123,7 +123,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         self.callback = nil
         self.window?.sheetParent?.endSheet(self.window!)
     }
-    
+
     // Prevent leaving a field in an invalid state. The resID being nil should indicate this.
     func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
         if fieldEditor.string.isEmpty {
@@ -132,7 +132,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         }
         return rID != nil
     }
-    
+
     // There's no way to know when the popup menu is open or not so we need to keep track of this manually.
     private var popupOpen = false
     func comboBoxWillPopUp(_ notification: Notification) {
@@ -141,7 +141,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
     func comboBoxWillDismiss(_ notification: Notification) {
         popupOpen = false
     }
-    
+
     // Detect enter key presses when the menu is open or the field is blank, which can cause a new id to be generated.
     // We want to trigger end of editing as normal but not create the resource.
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {

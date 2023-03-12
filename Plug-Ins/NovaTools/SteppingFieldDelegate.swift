@@ -16,7 +16,7 @@ class SteppingFieldDelegate: NSObject, NSTextFieldDelegate {
             return false
         }
         // To propagate the change to a bound value we first need to trigger a user change
-        textView.insertText("", replacementRange: NSMakeRange(0, 0))
+        textView.insertText("", replacementRange: NSRange())
         // Then commit the change
         textView.insertNewline(self)
         return true

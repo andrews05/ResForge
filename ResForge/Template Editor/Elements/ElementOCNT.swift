@@ -17,7 +17,7 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
             value = T(newValue)
         }
     }
-    
+
     override func configure() throws {
         self.rowHeight = 16
         lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB
@@ -26,16 +26,16 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
         }
         lstc.counter = self
     }
-    
+
     func configureGroup(view: NSTableCellView) {
         // Element will show as a group row - we need to combine the counter into the label
         view.textField?.bind(.value, to: self, withKeyPath: "count", options: [.valueTransformer: self])
     }
-    
+
     override func transformedValue(_ value: Any?) -> Any? {
         return "\(self.displayLabel) = \(value!)"
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         if T.isSigned {
             value = try reader.read() + 1
@@ -49,7 +49,7 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
             self.parentList.insert(lstc.createNext(), before: lstc)
         }
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         if T.isSigned {
             writer.write(value - 1)

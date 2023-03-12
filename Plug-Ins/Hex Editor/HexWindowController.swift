@@ -8,10 +8,10 @@ struct HFDefaults {
 
 class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, HFTextViewDelegate {
     static let supportedTypes = ["*"]
-    
+
     let resource: Resource
     @IBOutlet var textView: HFTextView!
-    
+
     @IBOutlet var findView: NSView!
     @IBOutlet var findField: NSTextField!
     @IBOutlet var replaceField: NSTextField!
@@ -23,27 +23,27 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     override var windowNibName: String {
         return "HexWindow"
     }
-    
+
     required init(resource: Resource, manager: RFEditorManager) {
         self.resource = resource
         super.init(window: nil)
-        
+
         UserDefaults.standard.register(defaults: [HFDefaults.fontSize: 10])
         NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange(_:)), name: .ResourceDataDidChange, object: resource)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func windowDidLoad() {
-        self.window?.title = resource.defaultWindowTitle;
+        self.window?.title = resource.defaultWindowTitle
         findView.isHidden = true
-        
+
         let lineCountingRepresenter = HFLineCountingRepresenter()
         lineCountingRepresenter.lineNumberFormat = .hexadecimal
         let statusBarRepresenter = HFStatusBarRepresenter()
-        
+
         textView.layoutRepresenter.addRepresenter(lineCountingRepresenter)
         textView.layoutRepresenter.addRepresenter(statusBarRepresenter)
         textView.controller.addRepresenter(lineCountingRepresenter)
@@ -55,38 +55,38 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
         textView.layoutRepresenter.performLayout()
         textView.delegate = self
     }
-    
+
     @objc func resourceDataDidChange(_ notification: NSNotification) {
         if self.window?.isDocumentEdited != true {
             textView.data = resource.data
             self.setDocumentEdited(false) // Will have been set to true by hexDidChangeProperties
         }
     }
-    
+
     func hexTextView(_ view: HFTextView, didChangeProperties properties: HFControllerPropertyBits) {
         if properties.contains(.contentValue) {
             self.setDocumentEdited(true)
         }
     }
-    
+
     @IBAction func saveResource(_ sender: Any) {
         resource.data = textView.data!
         self.setDocumentEdited(false)
     }
-    
+
     @IBAction func revertResource(_ sender: Any) {
         textView.data = resource.data
         self.setDocumentEdited(false)
     }
-    
+
     @IBAction func zoomIn(_ sender: Any) {
         self.adjustFontSize(1)
     }
-    
+
     @IBAction func zoomOut(_ sender: Any) {
         self.adjustFontSize(-1)
     }
-    
+
     private func adjustFontSize(_ mod: CGFloat) {
         let font = textView.controller.font
         let size = font.pointSize + mod
@@ -95,7 +95,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
             UserDefaults.standard.set(Int(size), forKey: HFDefaults.fontSize)
         }
     }
-    
+
     // MARK: - Find/Replace
 
     @IBAction func showFind(_ sender: Any) {
@@ -132,26 +132,25 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
         pasteboard.clearContents()
         pasteboard.setString(findField.stringValue, forType: .string)
     }
-    
+
     @IBAction func scrollToSelection(_ sender: Any) {
         let selection = (textView.controller.selectedContentsRanges[0] as! HFRangeWrapper).hfRange()
         textView.controller.maximizeVisibility(ofContentsRange: selection)
         textView.controller.pulseSelection()
     }
-    
 
     @IBAction func findAction(_ sender: Any) {
         if !findView.isHidden && !self.find(self.findBytes()) {
             NSSound.beep()
         }
     }
-        
+
     @IBAction func find(_ sender: NSSegmentedControl) {
         if !self.find(self.findBytes(), forwards: sender.selectedTag() == 1) {
             NSSound.beep()
         }
     }
-        
+
     @IBAction func replace(_ sender: NSSegmentedControl) {
         let data = self.data(string: replaceField.stringValue)
         if sender.selectedTag() == 0 {
@@ -165,23 +164,23 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
                 return
             }
             // start from top
-            textView.controller.selectedContentsRanges = [HFRangeWrapper.withRange(HFRangeMake(0,0))]
+            textView.controller.selectedContentsRanges = [HFRangeWrapper.withRange(HFRangeMake(0, 0))]
             while self.find(findBytes, noWrap: true) {
                 self.replace(data)
             }
         }
     }
-        
+
     @IBAction func hideFind(_ sender: Any) {
         findView.isHidden = true
     }
-    
+
     @IBAction func toggleType(_ sender: Any) {
         ignoreCase.isEnabled = searchText.state == .on
         findField.stringValue = self.sanitize(findField.stringValue)
         replaceField.stringValue = self.sanitize(replaceField.stringValue)
     }
-    
+
     // NSTextFieldDelegate
     func controlTextDidChange(_ obj: Notification) {
         let field = obj.object as! NSTextField
@@ -193,7 +192,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
             pasteboard.setString(findField.stringValue, forType: .string)
         }
     }
-    
+
     private func findBytes() -> HFByteArray? {
         if findView.isHidden {
             // Always load from find pasteboard when view is hidden
@@ -201,15 +200,15 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
         }
         return self.byteArray(data: self.data(string: findField.stringValue))
     }
-    
+
     private func sanitize(_ string: String) -> String {
         if searchHex.state == .on {
-            let nonHexChars = NSCharacterSet(charactersIn: "0123456789ABCDEFabcdef").inverted;
+            let nonHexChars = NSCharacterSet(charactersIn: "0123456789ABCDEFabcdef").inverted
             return string.components(separatedBy: nonHexChars).joined()
         }
         return string
     }
-    
+
     private func data(string: String) -> Data {
         if searchHex.state == .on {
             var hexString = string
@@ -221,27 +220,27 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
             return string.data(using: .macOSRoman)!
         }
     }
-    
+
     private func byteArray(data: Data) -> HFByteArray? {
         if data.isEmpty {
             return nil
         }
         let byteArray = HFBTreeByteArray()
-        byteArray.insertByteSlice(HFSharedMemoryByteSlice(unsharedData: data), in:HFRangeMake(0,0))
+        byteArray.insertByteSlice(HFSharedMemoryByteSlice(unsharedData: data), in: HFRangeMake(0, 0))
         return byteArray
     }
-    
+
     private func find(_ findBytes: HFByteArray?, forwards: Bool = true, noWrap: Bool = false) -> Bool {
         guard var findBytes = findBytes else {
             return false
         }
-        
+
         let controller = textView.controller
         let wrap = noWrap ? false : wrapAround.state == .on
         let startRange = HFRangeMake(0, controller.minimumSelectionLocation())
         let endRange = HFRangeMake(controller.maximumSelectionLocation(), controller.contentsLength()-controller.maximumSelectionLocation())
         var range = forwards ? endRange : startRange
-        
+
         var idx = UInt64.max
         if ignoreCase.state == .on && searchText.state == .on {
             // Case-insensitive search is difficult and inefficient - string indices don't necessarily equal byte indices
@@ -271,7 +270,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
             range = forwards ? startRange : endRange
             idx = controller.byteArray.indexOfBytesEqual(to: findBytes, in: range, searchingForwards: forwards, trackingProgress: nil)
         }
-        
+
         if idx == UInt64.max {
             return false
         }
@@ -283,7 +282,7 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
         }
         return true
     }
-    
+
     private func replace(_ replaceData: Data) {
         if replaceData.isEmpty {
             textView.controller.deleteSelection()

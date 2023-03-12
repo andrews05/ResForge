@@ -6,18 +6,18 @@ import RFSupport
 class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     @objc dynamic private var value: UInt = 0
     weak var checkboxes: NSView?
-    
+
     required init(type: String, label: String) {
         super.init(type: type, label: label)
         width = 180
         rowHeight = Double(T.bitWidth/8 * 20) + 21
     }
-    
+
     override func configure() throws {
         // Cases not actually supported but we still want to allow default values
         _ = self.defaultValue()
     }
-    
+
     override func configure(view: NSView) {
         // Create hex representation
         var frame = view.frame
@@ -41,13 +41,13 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         bitNum.alignment = .right
         bitNum.textColor = .secondaryLabelColor
         view.addSubview(bitNum)
-        
+
         // Create action button
         frame.origin.x = view.frame.origin.x + 142
         frame.size.width = 14
         let actionButton = self.createActionButton(at: frame)
         view.addSubview(actionButton)
-        
+
         // Create checkboxes holder
         // This allows us to keep a weak reference to the collection
         frame.origin.x = view.frame.origin.x
@@ -57,7 +57,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         let checkboxes = NSView(frame: frame)
         view.addSubview(checkboxes)
         self.checkboxes = checkboxes
-        
+
         // Create checkboxes
         frame.origin.x = 0
         frame.origin.y = frame.height - 20
@@ -86,21 +86,21 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         value ^= 1 << sender.tag
         parentList.controller.itemValueUpdated(sender)
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         value = UInt(try reader.read() as T)
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(T(value))
     }
-    
+
     override var formatter: Formatter {
         self.sharedFormatter("HEX\(T.bitWidth)") { HexFormatter<T>() }
     }
-    
+
     // MARK: - Action Button
-    
+
     private func createActionButton(at frame: NSRect) -> NSButton {
         let copy = NSMenuItem(title: NSLocalizedString("Copy", comment: ""), action: #selector(self.copy(_:)), keyEquivalent: "")
         let paste = NSMenuItem(title: NSLocalizedString("Paste", comment: ""), action: #selector(self.paste(_:)), keyEquivalent: "")
@@ -121,7 +121,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         actionButton.action = #selector(self.actionMenu(_:))
         return actionButton
     }
-    
+
     @IBAction private func actionMenu(_ sender: NSButton) {
         guard let menu = sender.menu, let view = sender.superview else {
             return
@@ -129,7 +129,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         let location = NSPoint(x: sender.frame.minX, y: sender.frame.maxY + 6)
         menu.popUp(positioning: nil, at: location, in: view)
     }
-    
+
     // Copy the current value using the formatter
     @IBAction private func copy(_ sender: Any) {
         if let stringValue = formatter.string(for: value) {
@@ -137,33 +137,33 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
             NSPasteboard.general.writeObjects([stringValue as NSString])
         }
     }
-    
+
     // Paste a new value
     @IBAction private func paste(_ sender: Any) {
         if let newValue = readValueFromPasteboard() {
             self.setValue(newValue)
         }
     }
-    
+
     // Paste a new value using bitwise OR
     @IBAction private func pasteAndMerge(_ sender: Any) {
         if let newValue = readValueFromPasteboard() {
             self.setValue(value | newValue)
         }
     }
-    
+
     // Clear all bits
     @IBAction private func clear(_ sender: Any) {
         self.setValue(0)
     }
-    
+
     private func readValueFromPasteboard() -> UInt? {
         guard let stringValue = NSPasteboard.general.readObjects(forClasses: [NSString.self])?.first as? String else {
             return nil
         }
         return try? formatter.getObjectValue(for: stringValue) as? UInt
     }
-    
+
     private func setValue(_ newValue: UInt) {
         guard newValue != value else {
             return

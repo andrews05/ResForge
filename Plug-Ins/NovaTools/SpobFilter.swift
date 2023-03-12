@@ -20,7 +20,7 @@ import RFSupport
 class SpobFilter: TemplateFilter {
     static let supportedTypes = ["spöb"]
     static let name = "Defense Fleet Demangler"
-    
+
     static func filter(data: Data, for resourceType: String) -> Data {
         guard data.endIndex >= 32, (data[30] != 0 || data[31] != 0) else {
             return data
@@ -39,7 +39,7 @@ class SpobFilter: TemplateFilter {
         data[31] = UInt8((defCount & 0x0F) << 4 + waveSize)
         return data
     }
-    
+
     static func unfilter(data: Data, for resourceType: String) -> Data {
         guard data.endIndex >= 32, (data[30] != 0 || data[31] != 0) else {
             return data

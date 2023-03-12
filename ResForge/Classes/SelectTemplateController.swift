@@ -5,11 +5,11 @@ class SelectTemplateController: NSWindowController, NSTextFieldDelegate {
     @IBOutlet var typeList: NSComboBox!
     @IBOutlet var openButton: NSButton!
     private var templates: [String: Resource] = [:]
-    
+
     override var windowNibName: NSNib.Name? {
         "SelectTemplate"
     }
-    
+
     func show(_ document: ResourceDocument, type: ResourceType, complete: @escaping (Resource) -> Void) {
         _ = self.window
         let allTemplates = document.editorManager.allResources(ofType: ResourceType.Template)
@@ -22,7 +22,7 @@ class SelectTemplateController: NSWindowController, NSTextFieldDelegate {
             $0.localizedCompare($1) == .orderedAscending
         }
         typeList.addItems(withObjectValues: sorted)
-        
+
         if templates[type.code] != nil {
             typeList.stringValue = type.code
             openButton.isEnabled = true
@@ -33,13 +33,13 @@ class SelectTemplateController: NSWindowController, NSTextFieldDelegate {
             }
         }
     }
-    
+
     func controlTextDidChange(_ obj: Notification) {
         // The text must be one of the options in the list.
         // (A popup menu might seem more appropriate but we want the convenience of being able to type it in.)
         openButton.isEnabled = templates[typeList.stringValue] != nil
     }
-    
+
     @IBAction func hide(_ sender: AnyObject) {
         self.window?.sheetParent?.endSheet(self.window!, returnCode: sender === openButton ? .OK : .cancel)
     }

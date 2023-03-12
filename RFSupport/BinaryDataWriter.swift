@@ -15,18 +15,18 @@ public class BinaryDataWriter {
         self.data = Data(capacity: capacity)
         self.bigEndian = bigEndian
     }
-    
+
     public func advance(_ count: Int) {
         data.append(Data(count: count))
     }
-    
+
     public func write<T: FixedWidthInteger>(_ value: T, bigEndian: Bool? = nil) {
         let val = bigEndian ?? self.bigEndian ? value.bigEndian : value.littleEndian
         withUnsafePointer(to: val) {
             data.append(UnsafeBufferPointer(start: $0, count: 1))
         }
     }
-    
+
     public func write<T: FixedWidthInteger>(_ value: T, at position: Int, bigEndian: Bool? = nil) {
         let end = position + T.bitWidth/8
         let val = bigEndian ?? self.bigEndian ? value.bigEndian : value.littleEndian
@@ -34,36 +34,22 @@ public class BinaryDataWriter {
             data.replaceSubrange(position..<end, with: $0)
         }
     }
-    
+
     public func writeString(_ value: String, encoding: String.Encoding = .utf8) throws {
         guard let encoded = value.data(using: encoding) else {
             throw BinaryDataWriterError.stringEncodeFailure
         }
         data.append(encoded)
     }
-    
+
     public func writeStruct(_ value: Any, bigEndian: Bool? = nil) throws {
         let mirror = Mirror(reflecting: value)
         if mirror.displayStyle != .struct {
             throw BinaryDataWriterError.notAStruct
         }
         for (_, value) in mirror.children {
-            if value is Int8 {
-                self.write(value as! Int8, bigEndian: bigEndian)
-            } else if value is Int16 {
-                self.write(value as! Int16, bigEndian: bigEndian)
-            } else if value is Int32 {
-                self.write(value as! Int32, bigEndian: bigEndian)
-            } else if value is Int64 {
-                self.write(value as! Int64, bigEndian: bigEndian)
-            } else if value is UInt8 {
-                self.write(value as! UInt8, bigEndian: bigEndian)
-            } else if value is UInt16 {
-                self.write(value as! UInt16, bigEndian: bigEndian)
-            } else if value is UInt32 {
-                self.write(value as! UInt32, bigEndian: bigEndian)
-            } else if value is UInt64 {
-                self.write(value as! UInt64, bigEndian: bigEndian)
+            if let value = value as? (any FixedWidthInteger) {
+                self.write(value, bigEndian: bigEndian)
             } else {
                 try self.writeStruct(value)
             }

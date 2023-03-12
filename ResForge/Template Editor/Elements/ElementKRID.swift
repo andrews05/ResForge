@@ -24,11 +24,11 @@ class ElementKRID: KeyElement, GroupElement {
         try self.currentSection.subElements.configure()
         self.displayLabel += ": \(caseEl.displayLabel)"
     }
-    
+
     func configureGroup(view: NSTableCellView) {
         view.textField?.stringValue = self.displayLabel
     }
-    
+
     override var formatter: Formatter {
         self.sharedFormatter("INT16") { IntFormatter<Int16>() }
     }

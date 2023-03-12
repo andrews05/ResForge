@@ -14,16 +14,16 @@ class GalaxyView: NSView {
             }
         }
     }
-    
+
     override var wantsUpdateLayer: Bool {
         true
     }
-    
+
     override func awakeFromNib() {
         transform.translate(x: frame.midX, y: frame.midY)
         transform.scale(zoomLevels[zoomLevel])
     }
-    
+
     override func updateLayer() {
         let points = controller.systems.mapValues {
             transform.transform($0.pos)
@@ -34,17 +34,17 @@ class GalaxyView: NSView {
                 pointNames[point, default: []].append(system.name)
             }
         }
-        
+
         let image = NSImage(size: frame.size)
         image.lockFocusFlipped(true)
-        
+
         // Center lines
         NSColor.black.setFill()
         frame.fill()
         NSColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1).setFill()
         NSRect(x: frame.midX, y: 0, width: 1, height: frame.height).frame()
         NSRect(x: 0, y: frame.midY, width: frame.height, height: 1).frame()
-        
+
         // Nebulae
         let font = NSFont.systemFont(ofSize: 11)
         for (id, nebu) in controller.nebulae {
@@ -59,7 +59,7 @@ class GalaxyView: NSView {
                 nebu.name.draw(with: rect, attributes: [.foregroundColor: NSColor.lightGray, .font: font])
             }
         }
-        
+
         // Hyperlinks
         NSColor.darkGray.setStroke()
         let path = NSBezierPath()
@@ -77,7 +77,7 @@ class GalaxyView: NSView {
         }
         path.lineWidth = 1.2
         path.stroke()
-        
+
         // Systems - show in purple if multiple systems at one point
         NSColor.black.setFill()
         for (point, names) in pointNames {
@@ -87,14 +87,14 @@ class GalaxyView: NSView {
             (names.count == 1 ? NSColor.blue : NSColor.purple).setStroke()
             path.stroke()
         }
-        
+
         // Highlight the target system
         if let point = points[controller.targetID] {
             NSColor.cyan.setFill()
             let rect = NSRect(x: point.x-2, y: point.y-2, width: 4, height: 4)
             NSBezierPath(ovalIn: rect).fill()
         }
-        
+
         // System names - show first name only
         if zoomLevel >= 3 {
             for (point, names) in pointNames {
@@ -102,11 +102,11 @@ class GalaxyView: NSView {
                 names[0].draw(with: rect, attributes: [.foregroundColor: NSColor.white, .font: font])
             }
         }
-        
+
         image.unlockFocus()
         layer?.contents = image
     }
-    
+
     // Drag to scroll
     override func mouseDragged(with event: NSEvent) {
         if let clipView = superview as? NSClipView {
@@ -116,11 +116,11 @@ class GalaxyView: NSView {
             self.scroll(origin)
         }
     }
-    
+
     @IBAction func zoomIn(_ sender: Any) {
         zoomLevel = min(zoomLevel+1, 6)
     }
-    
+
     @IBAction func zoomOut(_ sender: Any) {
         zoomLevel = max(zoomLevel-1, 0)
     }

@@ -31,26 +31,26 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
     var showsLink: Bool {
         return range?.contains(Int(tValue) + offset) != false
     }
-    
+
     deinit {
         self.unbind(NSBindingName("resType"))
     }
-    
+
     override func configure() throws {
         // Determine parameters from label
         let regex = try! NSRegularExpression(pattern: "(?:.*['‘](.{4})['’])?(?:.*?(-?[0-9]+) *[+]([0-9]+)?)?", options: [])
-        let result = regex.firstMatch(in: label, options: [], range: NSMakeRange(0, label.count))
+        let result = regex.firstMatch(in: label, options: [], range: NSRange(location: 0, length: label.count))
         if let nsr = result?.range(at: 2), let r = Range(nsr, in: label), let i = Int(label[r]) {
             offset = i
         }
         if let nsr = result?.range(at: 3), let r = Range(nsr, in: label), let i = Int(label[r]) {
             range = offset...(offset + i)
         }
-        
+
         try super.configure()
         width = 240
         fixedMap = cases
-        
+
         // Setting the resType will load the cases so we need to do this last
         if let nsr = result?.range(at: 1), let r = Range(nsr, in: label) {
             resType = String(label[r])
@@ -62,23 +62,23 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
             self.bind(NSBindingName("resType"), to: tnam, withKeyPath: "value")
         }
     }
-    
+
     override func configure(view: NSView) {
         self.configureComboBox(view: view)
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(tValue)
     }
-    
+
     override var formatter: Formatter {
         return self.sharedFormatter("INT\(T.bitWidth)") { IntFormatter<T>() }
     }
-    
+
     private func loadCases() {
         cases = fixedMap
         let resources = parentList.controller.resources(ofType: resType)
@@ -91,7 +91,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
             cases[resID] = caseEl
         }
     }
-    
+
     private func resIDDisplay(_ resID: Int) -> String {
         let id = resID + offset
         if offset != 0 && range?.contains(id) != false {
@@ -100,7 +100,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
         }
         return String(resID)
     }
-    
+
     func followLink(_ sender: Any) {
         let id = Int(tValue) + offset
         parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [self] resource, isNew in
@@ -110,17 +110,17 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
                 self.loadCases()
                 value = resID as NSNumber
                 // Check if the value actually changed
-                if resource.id != id  {
+                if resource.id != id {
                     parentList.controller.itemValueUpdated(sender)
                 }
             }
         }
     }
-    
+
     override func transformedValue(_ value: Any?) -> Any? {
         return cases[value as! AnyHashable]?.displayLabel ?? self.resIDDisplay(value as! Int)
     }
-    
+
     override func reverseTransformedValue(_ value: Any?) -> Any? {
         var value = super.reverseTransformedValue(value) as? String
         if offset != 0 {

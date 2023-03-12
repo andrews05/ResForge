@@ -16,7 +16,7 @@ struct ShanFlags: OptionSet {
 
 class ShanWindowController: AbstractEditor, ResourceEditor {
     static let supportedTypes = ["shän"]
-    
+
     let resource: Resource
     let manager: RFEditorManager
     @IBOutlet var shanView: ShanView!
@@ -31,7 +31,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     @IBOutlet var lightLayer: LightLayer!
     @IBOutlet var weaponLayer: WeaponLayer!
     @IBOutlet var shieldLayer: ShieldLayer!
-    
+
     @objc var enabled = true
     @objc dynamic var framesPerSet = 0 {
         didSet {
@@ -55,7 +55,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     @objc dynamic var glowOnBank = false
     @objc dynamic var stopDisabled = false
     @objc dynamic var pointingCorrection = false
-    
+
     @objc var gunPoints = ExitPoints(.red)
     @objc var turretPoints = ExitPoints(NSColor(red: 0, green: 0.75, blue: 1, alpha: 1))
     @objc var guidedPoints = ExitPoints(NSColor(red: 1, green: 0.75, blue: 0, alpha: 1))
@@ -64,7 +64,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     @objc dynamic var upCompressY: CGFloat = 100
     @objc dynamic var downCompressX: CGFloat = 100
     @objc dynamic var downCompressY: CGFloat = 100
-    
+
     private(set) var currentFrame = 0
     private(set) var currentSet = 0
     private(set) var layers: [SpriteLayer] = []
@@ -84,7 +84,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
             (forward ? reverseButton : forwardButton)?.state = .off
         }
     }
-    
+
     override var windowNibName: String {
         return "ShanWindow"
     }
@@ -109,7 +109,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func windowDidLoad() {
         self.window?.title = resource.defaultWindowTitle
         layers = [
@@ -125,11 +125,11 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
         timer = Timer(timeInterval: 1/30, target: self, selector: #selector(nextFrame), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
     }
-    
+
     @objc func windowWillClose(_ notification: Notification) {
         timer?.invalidate()
     }
-    
+
     override func keyDown(with event: NSEvent) {
         if event.characters == " " {
             playing = !playing
@@ -152,24 +152,24 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
             }
         }
     }
-    
+
     override func didChangeValue(forKey key: String) {
         super.didChangeValue(forKey: key)
         if key != "enabled" {
             self.setDocumentEdited(true)
         }
     }
-    
+
     // MARK: -
-    
+
     @IBAction func forward(_ sender: Any) {
         forward = true
     }
-    
+
     @IBAction func reverse(_ sender: Any) {
         forward = false
     }
-    
+
     @objc private func nextFrame() {
         guard framesPerSet > 0 && setCount > 0 else {
             frameCounter.stringValue = "-/-"
@@ -225,9 +225,9 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
         frameCounter.stringValue = "\(frameIndex+1)/\(framesPerSet*setCount)"
         shanView.needsDisplay = true
     }
-    
+
     // MARK: -
-    
+
     private func load() {
         guard !resource.data.isEmpty else {
             return
@@ -251,7 +251,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
                 layer.width = try reader.read()
                 layer.height =  try reader.read()
             }
-            
+
             let flags = ShanFlags(rawValue: try reader.read())
             // Use first matching flag for extraFrames, in case multiple values have been set
             let frameFlags: [ShanFlags] = [
@@ -268,12 +268,12 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
             lightLayer.hideDisabled = flags.contains(.hideLightsDisabled)
             unfoldsToFire = flags.contains(.unfoldsToFire)
             pointingCorrection = flags.contains(.pointingCorrection)
-            
+
             animationDelay = try reader.read()
             weaponLayer.decay = try reader.read()
             framesPerSet = Int(try reader.read() as Int16)
             lightLayer.blinkMode = try reader.read()
-            if (!(0...3 ~= lightLayer.blinkMode)) {
+            if !(0...3 ~= lightLayer.blinkMode) {
                 lightLayer.blinkMode = 0
             }
             lightLayer.blinkValueA = try reader.read()
@@ -301,7 +301,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
                     point.z = CGFloat(try reader.read() as Int16)
                 }
             }
-            
+
             self.setDocumentEdited(false)
         } catch {}
     }
@@ -378,8 +378,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
             }
         }
         // Extra 16 bytes at end of resource
-        writer.write(0 as UInt64)
-        writer.write(0 as UInt64)
+        writer.advance(16)
         resource.data = writer.data
         self.setDocumentEdited(false)
     }
@@ -392,7 +391,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
 // Allow the window to be first responder so it can respond to key events for playback
 class ShanWindowView: NSView {
     override var acceptsFirstResponder: Bool { true }
-    
+
     override func mouseDown(with event: NSEvent) {
         self.window?.makeFirstResponder(self)
     }

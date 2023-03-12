@@ -8,18 +8,18 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element, CollectionEl
     private var skipLengthBytes: Bool
     private var lengthBytes: Int
     @objc dynamic var value = -1
-    
+
     required init(type: String, label: String) {
         skipLengthBytes = !type.hasSuffix("SIZ")
         lengthBytes = T.bitWidth / 8
         super.init(type: type, label: label)
     }
-    
+
     override func configure() throws {
         subElements = try self.parentList.subList(for: self)
         try subElements.configure()
     }
-    
+
     override func configure(view: NSView) {
         var frame = view.frame
         frame.origin.y += 3
@@ -30,7 +30,7 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element, CollectionEl
         textField.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self])
         view.addSubview(textField)
     }
-    
+
     override func transformedValue(_ value: Any?) -> Any? {
         let value = value as! Int
         if value == -1 {
@@ -39,7 +39,7 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element, CollectionEl
             return "\(value) " + NSLocalizedString("(recalculated on save)", comment: "")
         }
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         value = Int(try reader.read() as T)
         var length = value
@@ -66,7 +66,7 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element, CollectionEl
             throw BinaryDataReaderError.insufficientData
         }
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         var position = writer.position
         writer.advance(lengthBytes)
@@ -81,11 +81,11 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element, CollectionEl
     }
 
     // MARK: -
-    
+
     var subElementCount: Int {
         subElements.count
     }
-    
+
     func subElement(at index: Int) -> Element {
         return subElements.element(at: index)
     }

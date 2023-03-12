@@ -8,7 +8,7 @@ import Cocoa
  */
 class ElementPACK: Element {
     private var subElements: [Element] = []
-    
+
     // The row height needs to be the maximum of all child elements - calculate this dynamically in case they change (e.g. PSTR)
     override var rowHeight: Double {
         get {
@@ -18,7 +18,7 @@ class ElementPACK: Element {
             super.rowHeight = newValue
         }
     }
-    
+
     override func configure() throws {
         guard let metaValue = metaValue, !metaValue.isEmpty else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No elements to pack.", comment: ""))
@@ -35,7 +35,7 @@ class ElementPACK: Element {
             subElements.append(element)
         }
     }
-    
+
     override func configure(view: NSView) {
         let orig = view.frame
         var frame = view.frame

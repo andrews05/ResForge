@@ -11,7 +11,7 @@ class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
     override var defaultType: String? {
         ResourceFileFormat.classic.typeName
     }
-    
+
     func getSelectedFork() -> FileFork? {
         if !useSelectedFork {
             return nil
@@ -20,7 +20,7 @@ class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
         useSelectedFork = false
         return Self.forks[forkIndex]
     }
-    
+
     override func runModalOpenPanel(_ openPanel: NSOpenPanel, forTypes types: [String]?) -> Int {
         openPanel.delegate = self
         openPanel.accessoryView = accessoryView
@@ -28,7 +28,7 @@ class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
         openPanel.isAccessoryViewDisclosed = forkIndex != 0
         forkSelect.item(at: 1)?.title = FileFork.data.name
         forkSelect.item(at: 2)?.title = FileFork.rsrc.name
-        
+
         let response = super.runModalOpenPanel(openPanel, forTypes: types)
         if response == NSApplication.ModalResponse.OK.rawValue {
             // We're opening a file from the open panel, set the flag
@@ -36,7 +36,7 @@ class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
         }
         return response
     }
-    
+
     func panelSelectionDidChange(_ sender: Any?) {
         guard let url = (sender as! NSOpenPanel).url else {
             forkSelect.item(at: 1)?.title = FileFork.data.name

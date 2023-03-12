@@ -8,7 +8,7 @@ class ElementHBYT<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         get { tValue as! NSNumber }
         set { tValue = newValue as! T }
     }
-    
+
     required init(type: String, label: String) {
         super.init(type: type, label: label)
         switch T.bitWidth/8 {
@@ -20,15 +20,15 @@ class ElementHBYT<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
             break
         }
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(tValue)
     }
-    
+
     override var formatter: Formatter {
         self.sharedFormatter("HEX\(T.bitWidth)") { HexFormatter<T>() }
     }
@@ -36,23 +36,23 @@ class ElementHBYT<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
 
 class HexFormatter<T: FixedWidthInteger & UnsignedInteger>: Formatter {
     private let charCount: Int
-    
+
     override init() {
         charCount = T.bitWidth/4
         super.init()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func string(for obj: Any?) -> String? {
         if let obj = obj as? NSNumber {
             return String(format: "0x%0\(charCount)llX", obj.intValue)
         }
         return nil
     }
-    
+
     override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?,
                                  for string: String,
                                  errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {

@@ -24,23 +24,23 @@ class ResourceDirectory {
             }
         }
     }
-    
+
     init() {
         document = nil
     }
-    
+
     init(_ document: ResourceDocument) {
         self.document = document
         NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
     }
-    
+
     /// Remove all resources.
     func reset() {
         resourcesByType.removeAll()
         allTypes.removeAll()
     }
-    
+
     /// Add an array of resources with no notification or undo registration.
     func add(_ resources: [Resource]) {
         for resource in resources {
@@ -48,7 +48,7 @@ class ResourceDirectory {
         }
         filtered.removeAll()
     }
-    
+
     /// Add a single resource.
     func add(_ resource: Resource) {
         self.addToTypedList(resource)
@@ -56,7 +56,7 @@ class ResourceDirectory {
         document.undoManager?.registerUndo(withTarget: self) { $0.remove(resource) }
         NotificationCenter.default.post(name: .DirectoryDidAddResource, object: self, userInfo: ["resource": resource])
     }
-    
+
     /// Remove a single resource.
     func remove(_ resource: Resource) {
         self.removeFromTypedList(resource)
@@ -64,7 +64,7 @@ class ResourceDirectory {
         document.undoManager?.registerUndo(withTarget: self) { $0.add(resource) }
         NotificationCenter.default.post(name: .DirectoryDidRemoveResource, object: self, userInfo: ["resource": resource])
     }
-    
+
     /// Get the resources for the given type that match the current filter.
     func filteredResources(type: ResourceType) -> [Resource] {
         if filter.isEmpty && sorter == nil {
@@ -85,14 +85,14 @@ class ResourceDirectory {
         }
         return filtered[type] ?? []
     }
-    
+
     /// Get all types that contain resources matching the current filter.
     func filteredTypes() -> [ResourceType] {
         return filter.isEmpty ? allTypes : allTypes.compactMap {
             self.filteredResources(type: $0).isEmpty ? nil : $0
         }
     }
-    
+
     /// Get the count of resources matching the current filter.
     func filteredCount(type: ResourceType? = nil) -> Int {
         if let type = type {
@@ -102,7 +102,7 @@ class ResourceDirectory {
             return list.reduce(0) { $0 + $1.value.count }
         }
     }
-    
+
     private func addToTypedList(_ resource: Resource) {
         resource.document = document
         if resourcesByType[resource.type] == nil {
@@ -115,7 +115,7 @@ class ResourceDirectory {
             resourcesByType[resource.type]?.insert(resource) { $0.id < $1.id }
         }
     }
-    
+
     private func removeFromTypedList(_ resource: Resource, type: ResourceType? = nil) {
         let type = type ?? resource.type
         resourcesByType[type]?.removeFirst(resource)
@@ -125,7 +125,7 @@ class ResourceDirectory {
         }
         resource.document = nil
     }
-    
+
     @objc func resourceTypeDidChange(_ notification: Notification) {
         guard
             let document = document,
@@ -140,7 +140,7 @@ class ResourceDirectory {
         filtered.removeValue(forKey: oldType)
         filtered.removeValue(forKey: resource.type)
     }
-    
+
     @objc func resourceDidChange(_ notification: Notification) {
         guard
             let document = document,
@@ -158,11 +158,11 @@ class ResourceDirectory {
             "oldIndex": idx as Any
         ])
     }
-    
+
     var count: Int {
         resourcesByType.reduce(0) { $0 + $1.value.count }
     }
-    
+
     func resources() -> [Resource] {
         return Array(resourcesByType.values.joined())
     }
@@ -170,13 +170,13 @@ class ResourceDirectory {
     func resources(ofType type: ResourceType) -> [Resource] {
         return resourcesByType[type] ?? []
     }
-    
+
     func findResource(type: ResourceType, id: Int) -> Resource? {
-        return resourcesByType[type]?.first() { $0.id == id }
+        return resourcesByType[type]?.first { $0.id == id }
     }
-    
+
     func findResource(type: ResourceType, name: String) -> Resource? {
-        return resourcesByType[type]?.first() { $0.name == name }
+        return resourcesByType[type]?.first { $0.name == name }
     }
 
     /// Return an unused resource ID for a new resource of specified type.
@@ -196,8 +196,8 @@ class ResourceDirectory {
                 id = min(used[0], 128)
                 i = 0
             } else {
-                id = id+1
-                i = i+1
+                id += 1
+                i += 1
             }
         }
         return id
@@ -220,7 +220,7 @@ extension Array where Element: Equatable {
         }
         self.insert(newElement, at: slice.startIndex)
     }
-    
+
     /// Remove the first occurence of a given element.
     mutating func removeFirst(_ item: Element) {
         if let i = self.firstIndex(of: item) {

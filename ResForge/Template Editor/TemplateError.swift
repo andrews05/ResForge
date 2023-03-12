@@ -9,7 +9,7 @@ enum TemplateError: LocalizedError, RecoverableError {
     case invalidStructure(Element, String)
     case dataMismatch(Element)
     case truncate
-    
+
     var errorDescription: String? {
         switch self {
         case .corrupt:
@@ -32,7 +32,7 @@ enum TemplateError: LocalizedError, RecoverableError {
             return NSLocalizedString("The resource contains more data than will fit the template.", comment: "")
         }
     }
-    
+
     var recoverySuggestion: String? {
         switch self {
         case .truncate:
@@ -41,7 +41,7 @@ enum TemplateError: LocalizedError, RecoverableError {
             return nil
         }
     }
-    
+
     var recoveryOptions: [String] {
         switch self {
         case .dataMismatch:
@@ -50,7 +50,7 @@ enum TemplateError: LocalizedError, RecoverableError {
             return []
         }
     }
-    
+
     func attemptRecovery(optionIndex recoveryOptionIndex: Int) -> Bool {
         if recoveryOptionIndex == 1, case let .dataMismatch(element) = self {
             let controller = element.parentList.controller!

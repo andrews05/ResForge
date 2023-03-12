@@ -4,7 +4,7 @@ import RFSupport
 class SpriteLayer: NSObject {
     // Nova has 32 levels of transparency, generally given in the range 1-32. To keep things simple we allow 0-32.
     static let TransparencyStep: CGFloat = 1/32
-    
+
     var frames: [NSBitmapImageRep] = []
     var operation: NSCompositingOperation { .plusLighter }
     var alpha: CGFloat = 1
@@ -44,11 +44,11 @@ class SpriteLayer: NSObject {
     var maskID: Int16 = -1
     var width: Int16 = 0
     var height: Int16 = 0
-    
+
     func nextFrame() {
         // Subclasses override to perform any necessary calculations
     }
-    
+
     private func loadRle(_ data: Data) -> String {
         do {
             let rle = try SpriteWorld(data)
@@ -62,7 +62,7 @@ class SpriteLayer: NSObject {
             return "error"
         }
     }
-    
+
     private func loadRleAsync(_ data: Data) {
         spriteLink.title = "loading…"
         DispatchQueue.global().async {
@@ -76,7 +76,7 @@ class SpriteLayer: NSObject {
             }
         }
     }
-    
+
     @IBAction func openSprite(_ sender: Any) {
         let type = ResourceType("rlëD", controller.resource.typeAttributes)
         if let resource = controller.manager.findResource(type: type, id: Int(spriteID), currentDocumentOnly: false) {
@@ -96,7 +96,7 @@ class SpriteLayer: NSObject {
             }
         }
     }
-    
+
     @objc private func rleCreated(_ notification: Notification) {
         NotificationCenter.default.removeObserver(self, name: .ResourceDataDidChange, object: nil)
         guard let resource = notification.object as? Resource, resource.id == spriteID else {
@@ -104,16 +104,16 @@ class SpriteLayer: NSObject {
         }
         self.loadRleAsync(resource.data)
     }
-    
+
     func draw(_ dirtyRect: NSRect) {
         let alpha = self.alpha
         guard alpha > 0, let bitmap = currentFrame else {
             return
         }
-        let rect = NSMakeRect(dirtyRect.midX-(bitmap.size.width/2), dirtyRect.midY-(bitmap.size.height/2), bitmap.size.width, bitmap.size.height)
-        bitmap.draw(in: rect, from: NSZeroRect, operation: operation, fraction: alpha, respectFlipped: true, hints: nil)
+        let rect = NSRect(x: dirtyRect.midX-(bitmap.size.width/2), y: dirtyRect.midY-(bitmap.size.height/2), width: bitmap.size.width, height: bitmap.size.height)
+        bitmap.draw(in: rect, from: .zero, operation: operation, fraction: alpha, respectFlipped: true, hints: nil)
     }
-    
+
     override func didChangeValue(forKey key: String) {
         super.didChangeValue(forKey: key)
         if key != "enabled" {

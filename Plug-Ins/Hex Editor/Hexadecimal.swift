@@ -4,8 +4,8 @@ extension String {
     enum ExtendedEncoding {
         case hexadecimal
     }
-    
-    func data(using encoding:ExtendedEncoding) -> Data?  {
+
+    func data(using encoding: ExtendedEncoding) -> Data? {
         guard self.count % 2 == 0 else { return nil }
         var newData = Data(capacity: self.count/2)
         var indexIsEven = true

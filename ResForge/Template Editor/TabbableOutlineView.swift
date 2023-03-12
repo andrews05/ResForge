@@ -28,7 +28,7 @@ class TabbableOutlineView: NSOutlineView {
             i = i == -1 ? self.numberOfRows-1 : i-1
         }
     }
-    
+
     @objc func selectNextKeyView(_ sender: Any) {
         let view = self.window!.firstResponder as! NSView
         if self.numberOfRows == 0 || view.nextValidKeyView != nil {
@@ -54,12 +54,12 @@ class TabbableOutlineView: NSOutlineView {
             i = i == self.numberOfRows ? 0 : i+1
         }
     }
-    
+
     // Don't draw the disclosure triangles
     override func frameOfOutlineCell(atRow row: Int) -> NSRect {
-        return NSZeroRect
+        return .zero
     }
-    
+
     // Manually manage indentation for list headers
     override func frameOfCell(atColumn column: Int, row: Int) -> NSRect {
         var superFrame = super.frameOfCell(atColumn: column, row: row)
@@ -70,7 +70,7 @@ class TabbableOutlineView: NSOutlineView {
         }
         return superFrame
     }
-    
+
     // Add bottom padding
     override func setFrameSize(_ newSize: NSSize) {
         super.setFrameSize(NSSize(width: newSize.width, height: newSize.height+5))

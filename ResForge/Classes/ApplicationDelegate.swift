@@ -4,14 +4,14 @@ import RFSupport
 @main
 class ApplicationDelegate: NSObject, NSApplicationDelegate {
     static let githubURL = "https://github.com/andrews05/ResForge"
-    
+
     private lazy var prefsController = PrefsController()
-    
+
     override init() {
         NSApp.registerServicesMenuSendTypes([.string], returnTypes: [.string])
         RFDefaults.register()
     }
-    
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Load support resources and plugins
         NotificationCenter.default.addObserver(PluginRegistry.self, selector: #selector(PluginRegistry.bundleLoaded(_:)), name: Bundle.didLoadNotification, object: nil)
@@ -25,7 +25,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
             SupportRegistry.scanForResources(in: url.appendingPathComponent("ResForge/Support Resources"))
         }
     }
-    
+
     func application(_ sender: NSApplication, openFile filename: String) -> Bool {
         // Abort open panel when opening a document by other means
         if sender.modalWindow is NSOpenPanel {
@@ -33,7 +33,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         }
         return false
     }
-    
+
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
         let launchAction = UserDefaults.standard.string(forKey: RFDefaults.launchAction)
         switch launchAction {
@@ -46,7 +46,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
             return false
         }
     }
-    
+
     @IBAction func showInfo(_ sender: Any) {
         let info = InfoWindowController.shared
         if info.window?.isKeyWindow == true {
@@ -55,17 +55,17 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
             info.showWindow(sender)
         }
     }
-    
+
     @IBAction func showPrefs(_ sender: Any) {
         self.prefsController.showWindow(sender)
     }
-    
+
     @IBAction func viewWebsite(_ sender: Any) {
         if let url = URL(string: Self.githubURL) {
             NSWorkspace.shared.open(url)
         }
     }
-    
+
     private func scanForPlugins(in folder: URL) {
         let items: [URL]
         do {

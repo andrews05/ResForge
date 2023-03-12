@@ -28,22 +28,22 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
     private var resType: String?
     weak var parentElement: RangedElement!
     let showsLink = true
-    
+
     override var description: String {
         self.displayLabel
     }
-    
+
     convenience init(value: Int) {
         self.init(type: "CASR", label: "")
         min = value
         max = value
         displayLabel = String(value)
     }
-    
+
     override func configure() throws {
         throw TemplateError.invalidStructure(self, NSLocalizedString("Not associated to a supported element.", comment: ""))
     }
-    
+
     override func configure(view: NSView) {
         if min == max {
             width = 0
@@ -55,7 +55,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
             self.configureTextField(view: view)
         }
     }
-    
+
     override var formatter: Formatter {
         sharedFormatter("\(min):\(max)") {
             let formatter = NumberFormatter()
@@ -66,9 +66,9 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
             return formatter
         }
     }
-    
+
     // MARK: -
-    
+
     func configure(for element: RangedElement) throws {
         parentElement = element
         parentList = element.parentList // Required to trigger itemValueUpdated
@@ -76,7 +76,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         min = (element.formatter as? NumberFormatter)?.minimum as? Int ?? Int.min
         max = (element.formatter as? NumberFormatter)?.maximum as? Int ?? Int.max
         let range = min...max
-        
+
         // Determine parameters from label
         var hasMin = false
         var hasMax = false
@@ -125,7 +125,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Maximum must be greater than minimum.", comment: ""))
         }
     }
-    
+
     private func loadCases(_ resType: String, forceReload: Bool=false) {
         guard forceReload || cases.isEmpty else {
             return
@@ -139,7 +139,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
             cases[resource.id] = caseEl
         }
     }
-    
+
     func followLink(_ sender: Any) {
         guard let resType else {
             return
@@ -151,22 +151,22 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
                 self.loadCases(resType, forceReload: true)
                 value = resource.id
                 // Check if the value actually changed
-                if resource.id != id  {
+                if resource.id != id {
                     parentList.controller.itemValueUpdated(sender)
                 }
             }
         }
     }
-    
+
     func matches(value: Int) -> Bool {
         let value = self.normalise(value)
         return min...max ~= value
     }
-    
+
     func normalise(_ value: Int) -> Int {
         return (invert ? -value : value) - offset
     }
-    
+
     func deNormalise(_ value: Int) -> Int {
         let value = value + offset
         return invert ? -value : value

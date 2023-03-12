@@ -6,7 +6,7 @@ class ElementCOLR: Element {
     var g: UInt16 = 0
     var b: UInt16 = 0
     var mask: UInt = 0xFFFF
-    
+
     @objc private var value: NSColor {
         get {
             return NSColor(red: CGFloat(r) / CGFloat(mask),
@@ -20,7 +20,7 @@ class ElementCOLR: Element {
             b = UInt16(round(newValue.blueComponent * CGFloat(mask)))
         }
     }
-    
+
     override func configure(view: NSView) {
         var frame = view.frame
         frame.size.width = self.width-4
@@ -29,13 +29,13 @@ class ElementCOLR: Element {
         well.bind(.value, to: self, withKeyPath: "value")
         view.addSubview(well)
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         r = try reader.read()
         g = try reader.read()
         b = try reader.read()
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(r)
         writer.write(g)

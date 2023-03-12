@@ -5,7 +5,7 @@ class ImportPanel: NSObject, NSOpenSavePanelDelegate {
     @IBOutlet var accessoryView: NSView!
     @IBOutlet var typeSelect: NSPopUpButton!
     @IBOutlet weak var document: ResourceDocument!
-    
+
     func show(callback: @escaping(URL, ResourceType) -> Void) {
         let type = document.dataSource.selectedType()
         let types = document.editorManager.allResources(ofType: .BasicTemplate)
@@ -27,14 +27,14 @@ class ImportPanel: NSObject, NSOpenSavePanelDelegate {
             }
         }
     }
-    
+
     func panelSelectionDidChange(_ sender: Any?) {
         guard let url = (sender as! NSOpenPanel).url else {
             return
         }
         self.select(type: url.deletingPathExtension().lastPathComponent)
     }
-    
+
     @discardableResult private func select(type: String?) -> Bool {
         if let type = type, let item = typeSelect.item(withTitle: type) {
             typeSelect.select(item)
@@ -43,4 +43,3 @@ class ImportPanel: NSObject, NSOpenSavePanelDelegate {
         return false
     }
 }
-

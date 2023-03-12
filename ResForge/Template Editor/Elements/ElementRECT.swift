@@ -7,29 +7,29 @@ class ElementRECT: Element {
     @objc private var left: Int16 = 0
     @objc private var bottom: Int16 = 0
     @objc private var right: Int16 = 0
-    
+
     override func configure() throws {
         self.width = 240
     }
-    
+
     override func configure(view: NSView) {
         Self.configure(fields: ["top", "left", "bottom", "right"], in: view, for: self)
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         top = try reader.read()
         left = try reader.read()
         bottom = try reader.read()
         right = try reader.read()
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(top)
         writer.write(left)
         writer.write(bottom)
         writer.write(right)
     }
-    
+
     static func configure(fields: [String], in view: NSView, for element: Element) {
         var frame = view.frame
         let width = element.width / CGFloat(fields.count)

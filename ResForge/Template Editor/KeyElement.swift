@@ -10,18 +10,18 @@ class KeyElement: CasedElement, CollectionElement {
     @objc private var caseList: [ElementCASE] {
         cases.values.elements
     }
-    
+
     override func configure() throws {
         try self.readSections()
         self.width = 240
-        
+
         // Set initial state
         if let value = self.defaultValue(), let section = keyedSections[value] {
             currentSection = section
             self.parentList.insert(currentSection, after: self)
         }
     }
-    
+
     func readSections() throws {
         try self.readCases()
         if cases.isEmpty {
@@ -55,7 +55,7 @@ class KeyElement: CasedElement, CollectionElement {
             try keyB.subElements.configure()
         }
     }
-    
+
     override func configure(view: NSView) {
         var frame = view.frame
         frame.size.width = self.width-1
@@ -67,7 +67,7 @@ class KeyElement: CasedElement, CollectionElement {
         keySelect.bind(.selectedObject, to: self, withKeyPath: "value", options: [.valueTransformer: self])
         view.addSubview(keySelect)
     }
-    
+
     @IBAction func keyChanged(_ sender: NSPopUpButton) {
         guard sender.indexOfSelectedItem < cases.keys.endIndex else {
             return
@@ -90,7 +90,7 @@ class KeyElement: CasedElement, CollectionElement {
         }
         self.parentList.controller.itemValueUpdated(sender)
     }
-    
+
     @discardableResult func setCase(_ value: AnyHashable) -> ElementKEYB? {
         let newSection = keyedSections[value] ?? keyedSections[nil]
         if newSection == currentSection {
@@ -106,21 +106,21 @@ class KeyElement: CasedElement, CollectionElement {
         }
         return oldSection
     }
-    
+
     override func transformedValue(_ value: Any?) -> Any? {
         return cases[value as! AnyHashable] ?? value
     }
-    
+
     override func reverseTransformedValue(_ value: Any?) -> Any? {
         return (value as! ElementCASE).value
     }
-    
+
     // MARK: -
-    
+
     var subElementCount: Int {
         currentSection?.subElementCount ?? 0
     }
-    
+
     func subElement(at index: Int) -> Element {
         return currentSection.subElement(at: index)
     }

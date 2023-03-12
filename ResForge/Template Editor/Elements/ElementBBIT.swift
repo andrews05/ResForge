@@ -8,7 +8,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
     private var position = 0
     private var bitList: [ElementBBIT] = []
     private var first = true
-    
+
     required init?(type: String, label: String) {
         if !type.hasSuffix("BIT") {
             // XXnn - bit field or fill bits
@@ -20,7 +20,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
         super.init(type: type, label: label)
         visible = type.dropFirst().first != "F"
     }
-    
+
     override func configure() throws {
         if bits == 1 {
             // Single bit, configure like BOOL
@@ -55,7 +55,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
             bitList.append(bbit)
         }
     }
-    
+
     override func configure(view: NSView) {
         if bits == 1 {
             ElementBOOL.configure(view: view, for: self)
@@ -66,7 +66,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
             }
         }
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         if first {
             let completeValue = UInt(try reader.read() as T)
@@ -75,7 +75,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
             }
         }
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         if first {
             var completeValue: T = 0
@@ -85,7 +85,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
             writer.write(completeValue)
         }
     }
-    
+
     override var formatter: Formatter {
         self.sharedFormatter("UINT\(bits)") {
             let formatter = NumberFormatter()

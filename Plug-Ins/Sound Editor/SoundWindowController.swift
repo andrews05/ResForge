@@ -4,7 +4,7 @@ import RFSupport
 
 class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
     static let supportedTypes = ["snd "]
-    
+
     let resource: Resource
     private let sound: SoundResource
     @IBOutlet var playButton: NSButton!
@@ -21,9 +21,9 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
     override var windowNibName: String {
         return "SoundWindow"
     }
-    
+
     required init(resource: Resource, manager: RFEditorManager) {
-        UserDefaults.standard.register(defaults: ["SndFormat":k16BitBigEndianFormat])
+        UserDefaults.standard.register(defaults: ["SndFormat": k16BitBigEndianFormat])
         self.resource = resource
         sound = SoundResource(resource.data)
         super.init(window: nil)
@@ -31,11 +31,11 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
         NotificationCenter.default.addObserver(self, selector: #selector(self.soundDidPlayStop), name: .SoundDidStartPlaying, object: sound)
         NotificationCenter.default.addObserver(self, selector: #selector(self.soundDidPlayStop), name: .SoundDidStopPlaying, object: sound)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     deinit {
         sound.stop()
     }
@@ -45,7 +45,7 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
         self.loadInfo()
         sound.play()
     }
-    
+
     private func loadInfo() {
         if sound.format != 0 {
             self.format.stringValue = SoundResource.formatNames[sound.format] ?? NSFileTypeForHFSTypeCode(OSType(sound.format))
@@ -64,7 +64,7 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
         playButton.isEnabled = sound.valid
         exportButton.isEnabled = sound.valid
     }
-    
+
     private func stringFromSeconds(_ seconds: Double) -> String {
         if seconds < 10 {
             return String(format: "%0.2fs", seconds)
@@ -75,7 +75,7 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
         let s = Int(round(seconds))
         return String(format: "%02ld:%02ld", s / 60, s % 60)
     }
-    
+
     @objc func soundDidPlayStop(_ notification: Notification) {
         DispatchQueue.main.async {
             self.playButton.title = self.sound.playing ? "Stop" : "Play"
@@ -85,7 +85,7 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
     @IBAction func playSound(_ sender: Any) {
         sound.playing ? sound.stop() : sound.play()
     }
-    
+
     @IBAction func importSound(_ sender: Any) {
         let panel = NSOpenPanel()
         panel.allowedFileTypes = ["public.audio"]
@@ -125,12 +125,12 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
         self.loadInfo()
         self.setDocumentEdited(false)
     }
-    
+
     // ResForgePlugin protocol export functions
     static func filenameExtension(for resourceType: String) -> String {
         return "aiff"
     }
-    
+
     static func export(_ resource: Resource, to url: URL) throws {
         try SoundResource(resource.data).export(to: url)
     }

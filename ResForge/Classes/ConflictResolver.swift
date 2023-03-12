@@ -11,7 +11,7 @@ class ConflictResolver {
     private let document: ResourceDocument
     private var resolution: ConflictResolution?
     private var alert = NSAlert()
-    
+
     init(document: ResourceDocument) {
         self.document = document
         alert.informativeText = NSLocalizedString("Do you wish to assign the new resource a unique ID, replace the existing resource, or skip this resource?", comment: "")
@@ -20,7 +20,7 @@ class ConflictResolver {
         alert.addButton(withTitle: NSLocalizedString("Skip", comment: ""))
         alert.suppressionButton?.title = NSLocalizedString("Apply to all", comment: "")
     }
-    
+
     func resolve(_ resource: Resource, conflicted: Resource, multiple: Bool) -> Bool {
         if let resolution = resolution {
             return resolve(resource, conficted: conflicted, resolution: resolution)
@@ -44,7 +44,7 @@ class ConflictResolver {
         }
         return self.resolve(resource, conficted: conflicted, resolution: resolution)
     }
-    
+
     private func resolve(_ resource: Resource, conficted: Resource, resolution: ConflictResolution) -> Bool {
         switch resolution {
         case .unique:

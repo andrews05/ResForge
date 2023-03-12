@@ -4,7 +4,7 @@ import RFSupport
 class PilotFilter: TemplateFilter {
     static let supportedTypes = ["NpïL"]
     static let name = "Pilot Decrypter"
-    
+
     static func filter(data: Data, for resourceType: String) -> Data {
         var magic: UInt32 = 0xB36A210F
         // Work through 4 bytes at a time by converting to [UInt32] and back
@@ -21,7 +21,7 @@ class PilotFilter: TemplateFilter {
         }
         return newData
     }
-    
+
     static func unfilter(data: Data, for resourceType: String) -> Data {
         // Encryption and decryption are the same
         return Self.filter(data: data, for: resourceType)

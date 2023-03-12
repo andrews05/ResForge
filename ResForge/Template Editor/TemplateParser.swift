@@ -6,7 +6,7 @@ class TemplateParser {
     private let basic: Bool
     private let registry: [String: Element.Type]
     private let reader: BinaryDataReader
-    
+
     init(template: Resource, manager: RFEditorManager, basic: Bool = false) {
         self.template = template
         self.manager = manager
@@ -14,7 +14,7 @@ class TemplateParser {
         self.registry = basic ? Self.basicRegistry : Self.fullRegistry
         self.reader = BinaryDataReader(template.data)
     }
-    
+
     func parse() throws -> [Element] {
         var elements: [Element] = []
         while reader.position < reader.data.endIndex {
@@ -22,7 +22,7 @@ class TemplateParser {
         }
         return elements
     }
-    
+
     private func process() throws -> [Element] {
         let (element, type) = try self.readElement()
         switch type {
@@ -71,7 +71,7 @@ class TemplateParser {
             return [element]
         }
     }
-    
+
     private func readElement() throws -> (Element, String) {
         guard let label = try? reader.readPString(),
               let type = try? reader.readString(length: 4, encoding: .macOSRoman)
@@ -79,7 +79,7 @@ class TemplateParser {
             throw TemplateError.corrupt
         }
         var baseType = type
-        
+
         // check for Xnnn type - currently using resorcerer's nmm restriction to reserve all-alpha types (e.g. FACE) for potential future use
         if registry[baseType] == nil && type.range(of: "[A-Z](?!000)[0-9][0-9A-F]{2}", options: .regularExpression) != nil {
             baseType = String(type.prefix(1))
@@ -88,13 +88,13 @@ class TemplateParser {
         if registry[baseType] == nil && type.range(of: "[A-Z]{2}(?!00)[0-9]{2}", options: .regularExpression) != nil {
             baseType = String(type.prefix(2))
         }
-        
+
         if let elType = registry[baseType], let el = elType.init(type: type, label: label) {
             return (el, baseType)
         }
         throw TemplateError.unknownElement(type)
     }
-    
+
     // basic types that can be represented by (e.g.) csv
     static let basicRegistry: [String: Element.Type] = [
         // integers
@@ -110,16 +110,16 @@ class TemplateParser {
         "HWRD": ElementHBYT<UInt16>.self,
         "HLNG": ElementHBYT<UInt32>.self,
         "HQWD": ElementHBYT<UInt64>.self,   // (ResForge)
-        
+
         // multiple fields
         "RECT": ElementRECT.self,           // QuickDraw rect
         "PNT ": ElementPNT.self,            // QuickDraw point
-        
+
         // fractions
         "REAL": ElementREAL.self,           // single precision float
         "DOUB": ElementDOUB.self,           // double precision float
         "FIXD": ElementFIXD.self,           // 16:16 fixed precision
-        
+
         // strings
         "PSTR": ElementPSTR<UInt8>.self,    // Pascal string
         "BSTR": ElementPSTR<UInt8>.self,
@@ -137,7 +137,7 @@ class TemplateParser {
         "T"   : ElementTXTS.self,           // Tnnn
         "CHAR": ElementCHAR.self,
         "TNAM": ElementTNAM.self,
-        
+
         // align & fill
         "AWRD": ElementAWRD.self,           // alignment ints
         "ALNG": ElementAWRD.self,
@@ -147,15 +147,15 @@ class TemplateParser {
         "FWRD": ElementFBYT.self,
         "FLNG": ElementFBYT.self,
         "F"   : ElementFBYT.self,           // Fnnn
-        
+
         // byte order
         "BNDN": ElementBNDN.self,           // Big-endian (hidden)
         "LNDN": ElementBNDN.self,           // Little-endian (hidden)
-        
+
         // psuedo-elements (handled by parser)
         "R"   : Element.self,               // single-element repeat (ResForge)
     ]
-    
+
     static let fullRegistry: [String: Element.Type] = basicRegistry.merging([
         // strings
         "TXTS": ElementTXTS.self,           // sized text dump
@@ -244,7 +244,7 @@ class TemplateParser {
         "COLR": ElementCOLR.self,           // 6-byte QuickDraw colour
         "WCOL": ElementWCOL<UInt16>.self,   // 2-byte (15-bit) colour (Rezilla)
         "LCOL": ElementWCOL<UInt32>.self,   // 4-byte (24-bit) colour (Rezilla)
-        
+
         // offsets
         "BSKP": ElementBSKP<UInt8>.self,
         "WSKP": ElementBSKP<UInt16>.self,
@@ -254,7 +254,7 @@ class TemplateParser {
         "WSIZ": ElementBSKP<UInt16>.self,
         "LSIZ": ElementBSKP<UInt32>.self,
         "SKPE": Element.self,
-        
+
         // byte order
         "BIGE": ElementBNDN.self,           // Big-endian (visible)
         "LTLE": ElementBNDN.self,           // Little-endian (visible)
@@ -264,7 +264,7 @@ class TemplateParser {
         "RREF": ElementRREF.self,           // static reference to another resource (ResForge)
         "PACK": ElementPACK.self,           // pack other elements together (ResForge)
         "RNAM": ElementRNAM.self,           // the resource's name (ResForge)
-        
+
         // psuedo-elements (handled by parser)
         "TMPL": Element.self,               // include another template (ResForge)
 

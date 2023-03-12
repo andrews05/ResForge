@@ -24,7 +24,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         "PAT ",
         "PAT#"
     ]
-    
+
     let resource: Resource
     private let manager: RFEditorManager
     @IBOutlet var imageView: NSImageView!
@@ -34,7 +34,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     private var format: UInt32 = 0
     private var widthConstraint: NSLayoutConstraint!
     private var heightConstraint: NSLayoutConstraint!
-    
+
     override var windowNibName: String {
         return "ImageWindow"
     }
@@ -48,7 +48,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func windowDidLoad() {
         self.window?.title = resource.defaultWindowTitle
         // Interface builder doesn't allow setting the document view so we have to do it here and configure the constraints
@@ -59,15 +59,15 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         let b = NSLayoutConstraint(item: imageView!, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .bottom, multiplier: 1, constant: 0)
         widthConstraint = NSLayoutConstraint(item: imageView!, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         heightConstraint = NSLayoutConstraint(item: imageView!, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
-        scrollView.addConstraints([widthConstraint,heightConstraint,l,r,t,b])
+        scrollView.addConstraints([widthConstraint, heightConstraint, l, r, t, b])
         imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
         imageView.isEditable = ["PICT", "cicn", "ppat", "PNG "].contains(resource.typeCode)
-    
+
         self.loadImage()
     }
-    
+
     // MARK: -
-    
+
     private func loadImage() {
         imageView.image = nil
         if let rep = Self.imageRep(for: resource, format: &format) {
@@ -93,19 +93,19 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
                 image.lockFocus()
                 NSGraphicsContext.current?.imageInterpolation = .none
                 image.representations[0].draw()
-                bwRep.draw(in: image.alignmentRect, from: NSZeroRect, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
+                bwRep.draw(in: image.alignmentRect, from: .zero, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
                 image.unlockFocus()
             }
         }
         self.updateView()
     }
-    
+
     private func updateView() {
         imageFormat.isHidden = true
         if let image = imageView.image {
             widthConstraint.constant = max(image.size.width, window!.contentMinSize.width)
             heightConstraint.constant = max(image.size.height, window!.contentMinSize.height)
-            self.window?.setContentSize(NSMakeSize(widthConstraint.constant, heightConstraint.constant))
+            self.window?.setContentSize(NSSize(width: widthConstraint.constant, height: heightConstraint.constant))
             imageSize.stringValue = String(format: "%.0fx%.0f", image.size.width, image.size.height)
             imageFormat.isHidden = format == 0
             switch format {
@@ -128,7 +128,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             imageSize.stringValue = "Can't edit resources of this type"
         }
     }
-    
+
     private func bitmapRep(flatten: Bool=false, palette: Bool=false) -> NSBitmapImageRep {
         let image = imageView.image!
         var rep = image.representations[0] as? NSBitmapImageRep ?? NSBitmapImageRep(data: image.tiffRepresentation!)!
@@ -148,9 +148,9 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         image.addRepresentation(rep)
         return rep
     }
-    
+
     // MARK: -
-    
+
     @IBAction func changedImage(_ sender: Any) {
         let rep: NSBitmapImageRep
         switch resource.typeCode {
@@ -191,14 +191,14 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         self.loadImage()
         self.setDocumentEdited(false)
     }
-    
+
     @IBAction func copy(_ sender: Any) {
         if let image = imageView.image {
             NSPasteboard.general.clearContents()
             NSPasteboard.general.writeObjects([image])
         }
     }
-    
+
     @IBAction func paste(_ sender: Any) {
         guard imageView.isEditable,
               let image = NSPasteboard.general.readObjects(forClasses: [NSImage.self])?.first as? NSImage
@@ -208,9 +208,9 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         imageView.image = image
         self.changedImage(sender)
     }
-    
+
     // MARK: - Export Provider
-    
+
     static func filenameExtension(for resourceType: String) -> String {
         switch resourceType {
         case "PNG ":
@@ -221,7 +221,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             return "tiff"
         }
     }
-    
+
     static func export(_ resource: Resource, to url: URL) throws {
         let data: Data
         switch resource.typeCode {
@@ -232,9 +232,9 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
         try data.write(to: url)
     }
-    
+
     // MARK: - Preview Provider
-    
+
     static func image(for resource: Resource) -> NSImage? {
         var format: UInt32 = 0
         guard let rep = self.imageRep(for: resource, format: &format) else {
@@ -244,7 +244,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         image.addRepresentation(rep)
         return image
     }
-    
+
     static func maxThumbnailSize(for resourceType: String) -> Int? {
         switch resourceType {
         case "PICT", "PNG ":
@@ -253,7 +253,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             return 64
         }
     }
-    
+
     private static func imageRep(for resource: Resource, format: inout UInt32) -> NSImageRep? {
         let data = resource.data
         guard !data.isEmpty else {
@@ -295,7 +295,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             return NSBitmapImageRep(data: data)
         }
     }
-    
+
     private static func rep(fromPict data: Data, format: inout UInt32) -> NSImageRep? {
         do {
             return try QuickDraw.rep(fromPict: data, format: &format)

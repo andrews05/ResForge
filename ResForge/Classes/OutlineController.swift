@@ -6,16 +6,16 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     @IBOutlet weak var document: ResourceDocument!
     var currentType: ResourceType?
     var inlineUpdate = false // Flag to prevent reloading items when editing inline
-    
+
     func prepareView(type: ResourceType?) throws -> NSView {
         currentType = type
         return outlineView
     }
-    
+
     func reload() {
         outlineView.reloadData()
     }
-    
+
     func select(_ resources: [Resource]) {
         let rows = resources.compactMap { resource -> Int? in
             outlineView.expandItem(resource.type)
@@ -31,11 +31,11 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             outlineView.scrollRowToVisible(outlineView.selectedRow)
         }
     }
-    
+
     func selectionCount() -> Int {
         return outlineView.numberOfSelectedRows
     }
-    
+
     func selectedResources(deep: Bool = false) -> [Resource] {
         if currentType != nil {
             return outlineView.selectedItems as! [Resource]
@@ -53,7 +53,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             return outlineView.selectedItems.compactMap({ $0 as? Resource })
         }
     }
-    
+
     func selectedType() -> ResourceType? {
         if let type = currentType {
             return type
@@ -62,11 +62,11 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             return item as? ResourceType ?? (item as? Resource)?.type
         }
     }
-    
+
     func updated(resource: Resource, oldIndex: Int?) {
         // Should be overriden by sub-classes
     }
-    
+
     func updateRow(oldIndex: Int?, newIndex: Int?, parent: Any?) {
         if let oldIndex = oldIndex {
             if let newIndex = newIndex {
@@ -78,13 +78,13 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             outlineView.insertItems(at: IndexSet([newIndex]), inParent: parent)
         }
     }
-    
+
     func outlineViewSelectionDidChange(_ notification: Notification) {
         NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
     }
-    
+
     // MARK: - Data Source functions
-    
+
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         if let type = item as? ResourceType ?? currentType {
             return document.directory.filteredResources(type: type)[index]
@@ -92,7 +92,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             return document.directory.filteredTypes()[index]
         }
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         if let type = item as? ResourceType ?? currentType {
             return document.directory.filteredCount(type: type)
@@ -100,22 +100,22 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             return document.directory.filteredTypes().count
         }
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
         return item is ResourceType
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
         return item as? Resource
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
         let selected = self.selectedResources()
         self.setSorter()
         outlineView.reloadData()
         self.select(selected)
     }
-    
+
     func setSorter() {
         guard let descriptor = outlineView.sortDescriptors.first else {
             return

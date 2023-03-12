@@ -3,7 +3,7 @@ import Cocoa
 class ElementFCNT: Element, GroupElement, CounterElement {
     var count: Int
     private let groupLabel: String
-    
+
     required init(type: String, label: String) {
         // Read count from label - hex value denoted by leading '$' or '0x'
         let scanner = Scanner(string: label)
@@ -27,7 +27,7 @@ class ElementFCNT: Element, GroupElement, CounterElement {
         // Hide if no remaining label
         self.visible = !groupLabel.isEmpty
     }
-    
+
     override func configure() throws {
         self.rowHeight = 16
         guard let lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB else {
@@ -37,7 +37,7 @@ class ElementFCNT: Element, GroupElement, CounterElement {
         lstc.visible = false
         lstc.fixedCount = true
     }
-    
+
     func configureGroup(view: NSTableCellView) {
         view.textField?.stringValue = "\(self.groupLabel) = \(self.count)"
     }

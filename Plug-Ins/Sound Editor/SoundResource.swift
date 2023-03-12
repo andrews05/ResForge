@@ -13,10 +13,10 @@ class SoundResource {
     private(set) var valid = false
     private(set) var playing = false
     private var streamDesc: AudioStreamBasicDescription!
-    private var queueRef: AudioQueueRef? = nil
-    private var bufferRef: AudioQueueBufferRef? = nil
+    private var queueRef: AudioQueueRef?
+    private var bufferRef: AudioQueueBufferRef?
     private var numPackets: UInt32 = 0
-    
+
     static var formatNames = [
         k8BitOffsetBinaryFormat: "8-bit Linear PCM",
         k16BitBigEndianFormat: "16-bit Linear PCM",
@@ -30,7 +30,7 @@ class SoundResource {
     init(_ data: Data) {
         self.load(data: data)
     }
-    
+
     deinit {
         if bufferRef != nil {
             AudioQueueFreeBuffer(queueRef!, bufferRef!)
@@ -39,7 +39,7 @@ class SoundResource {
             AudioQueueDispose(queueRef!, true)
         }
     }
-    
+
     private func getStreamDescription(format: UInt32, channels: UInt32, sampleRate: Double) -> AudioStreamBasicDescription {
         var streamDesc = AudioStreamBasicDescription()
         streamDesc.mSampleRate = sampleRate
@@ -74,7 +74,7 @@ class SoundResource {
             AudioQueueDispose(queueRef!, true)
             queueRef = nil
         }
-        err = AudioQueueNewOutput(&streamDesc, {_,_,_ in }, nil, nil, nil, 0, &queueRef)
+        err = AudioQueueNewOutput(&streamDesc, {_, _, _ in }, nil, nil, nil, 0, &queueRef)
         try err.throwError()
         err = AudioQueueAllocateBuffer(queueRef!, byteSize, &bufferRef)
         try err.throwError()
@@ -134,7 +134,7 @@ class SoundResource {
         } else {
             return false
         }
-        
+
         let header = SoundHeader(
             samplePtr: try reader.read(),
             length: try reader.read(),
@@ -144,14 +144,14 @@ class SoundResource {
             encode: try reader.read(),
             baseFrequency: try reader.read()
         )
-        
+
         let format: UInt32
         let numChannels: UInt32
         if header.encode == stdSH {
             format = k8BitOffsetBinaryFormat
             numChannels = 1
             numPackets = header.length
-        } else if (header.encode == extSH) {
+        } else if header.encode == extSH {
             let extHeader = ExtSoundHeader(
                 numFrames: try reader.read(),
                 AIFFSampleRate: extended80(
@@ -170,7 +170,7 @@ class SoundResource {
             format = extHeader.sampleSize == 8 ? k8BitOffsetBinaryFormat : k16BitBigEndianFormat
             numChannels = header.length
             numPackets = extHeader.numFrames
-        } else if (header.encode == cmpSH) {
+        } else if header.encode == cmpSH {
             let cmpHeader = CmpSoundHeader(
                 numFrames: try reader.read(),
                 AIFFSampleRate: extended80(
@@ -198,15 +198,15 @@ class SoundResource {
             numChannels = header.length
             numPackets = cmpHeader.numFrames
         } else {
-            return false;
-        }
-        
-        // Construct stream description
-        streamDesc = getStreamDescription(format:format, channels:numChannels, sampleRate:FixedToDouble(header.sampleRate));
-        if (streamDesc.mBytesPerPacket == 0) {
             return false
         }
-        
+
+        // Construct stream description
+        streamDesc = getStreamDescription(format: format, channels: numChannels, sampleRate: FixedToDouble(header.sampleRate))
+        if streamDesc.mBytesPerPacket == 0 {
+            return false
+        }
+
         // Setup audio queue
         var byteSize = numPackets * streamDesc.mBytesPerPacket
         let bytesRemaining = UInt32(data.count - reader.position)
@@ -219,7 +219,7 @@ class SoundResource {
         bufferRef!.pointee.mAudioDataByteSize = byteSize
         return true
     }
-    
+
     func load(data: Data) {
         self.stop()
         do {
@@ -229,14 +229,14 @@ class SoundResource {
             streamDesc = nil
         }
     }
-    
+
     func load(url: URL, format: UInt32, channels: UInt32, sampleRate: Double) throws {
         var err: OSStatus
         var fRef: ExtAudioFileRef?
         var propSize: UInt32
         var fileFrames: Int64 = 0
         var inStreamDesc = AudioStreamBasicDescription()
-        
+
         self.stop()
 
         // Open file and get info
@@ -248,7 +248,7 @@ class SoundResource {
         propSize = UInt32(MemoryLayout.size(ofValue: inStreamDesc))
         err = ExtAudioFileGetProperty(fRef!, kExtAudioFileProperty_FileDataFormat, &propSize, &inStreamDesc)
         try err.throwError()
-        
+
         // Configure output info and audio buffer
         streamDesc = getStreamDescription(format: format, channels: (channels == 0 ? inStreamDesc.mChannelsPerFrame : channels), sampleRate: (sampleRate == 0 ? inStreamDesc.mSampleRate : sampleRate))
         // Calculate frame count
@@ -265,7 +265,7 @@ class SoundResource {
                 mData: bufferRef!.pointee.mAudioData
             )
         )
-        
+
         if format == k16BitBigEndianFormat {
             // If importing to a PCM format the ExtAudioFile can perform any necessary conversion
             err = ExtAudioFileSetProperty(fRef!, kExtAudioFileProperty_ClientDataFormat, propSize, &streamDesc)
@@ -295,7 +295,7 @@ class SoundResource {
         bufferRef!.pointee.mAudioDataByteSize = bufferList.mBuffers.mDataByteSize
         self.valid = true
     }
-    
+
     func data() throws -> Data {
         let byteSize = Int(bufferRef!.pointee.mAudioDataByteSize)
         let capacity = MemoryLayout<SndListResource>.stride +
@@ -303,7 +303,7 @@ class SoundResource {
             MemoryLayout<ExtSoundHeader>.stride +
             byteSize
         let writer = BinaryDataWriter(capacity: capacity)
-        
+
         let list = SndListResource(
             format: firstSoundFormat,
             numModifiers: 1,
@@ -319,7 +319,7 @@ class SoundResource {
             )
         )
         try writer.writeStruct(list)
-        
+
         var header = SoundHeader(
             samplePtr: 0, // 0 = after header
             length: numPackets,
@@ -367,12 +367,12 @@ class SoundResource {
             )
             try writer.writeStruct(cmpHeader)
         }
-        
+
         let buff = bufferRef!.pointee.mAudioData.assumingMemoryBound(to: UInt8.self)
         writer.data.append(UnsafeBufferPointer(start: buff, count: byteSize))
         return writer.data
     }
-    
+
     func play() {
         guard let queueRef = queueRef else {
             return
@@ -380,16 +380,16 @@ class SoundResource {
         AudioQueueReset(queueRef)
         AudioQueueEnqueueBuffer(queueRef, bufferRef!, 0, nil)
         AudioQueueStart(queueRef, nil)
-        AudioQueueStop(queueRef, false);
+        AudioQueueStop(queueRef, false)
     }
-    
+
     func stop() {
         guard let queueRef = queueRef else {
             return
         }
         AudioQueueStop(queueRef, true)
     }
-    
+
     func export(to url: URL) throws {
         guard let bufferRef = bufferRef else {
             return
@@ -405,7 +405,6 @@ class SoundResource {
         try err.throwError()
     }
 
-    
     var format: AudioFormatID {
         if streamDesc == nil {
             return 0
@@ -433,7 +432,7 @@ class SoundResource {
     var sampleRate: Double {
         return streamDesc.mSampleRate
     }
-    
+
     var duration: Double {
         if numPackets == 0 {
             return 0

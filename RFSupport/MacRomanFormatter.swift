@@ -5,7 +5,7 @@ public class MacRomanFormatter: Formatter {
     @IBInspectable public var valueRequired: Bool = false
     @IBInspectable public var exactLengthRequired: Bool = false
     @IBInspectable public var convertLineEndings: Bool = false
-    
+
     public convenience init(stringLength: Int = 0, valueRequired: Bool = false, exactLengthRequired: Bool = false, convertLineEndings: Bool = false) {
         self.init()
         self.stringLength = stringLength
@@ -13,11 +13,11 @@ public class MacRomanFormatter: Formatter {
         self.exactLengthRequired = exactLengthRequired
         self.convertLineEndings = convertLineEndings
     }
-    
+
     public override func string(for obj: Any?) -> String? {
         return obj as? String
     }
-    
+
     public override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?,
                                         for string: String,
                                         errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
@@ -42,7 +42,7 @@ public class MacRomanFormatter: Formatter {
         }
         return true
     }
-    
+
     public override func isPartialStringValid(_ partialStringPtr: AutoreleasingUnsafeMutablePointer<NSString>,
                                               proposedSelectedRange proposedSelRangePtr: NSRangePointer?,
                                               originalString origString: String,
@@ -56,14 +56,14 @@ public class MacRomanFormatter: Formatter {
             // Perform the replacement
             let insert = partialStringPtr.pointee.substring(with: range)
             partialStringPtr.pointee = (origString as NSString).replacingCharacters(in: origSelRange, with: insert) as NSString
-            
+
             // Fix-up the proposed selection range
             proposedSelRangePtr?.pointee.location = range.location + range.length
             proposedSelRangePtr?.pointee.length = 0
             NSSound.beep()
             return false
         }
-        
+
         return true
     }
 }

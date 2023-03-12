@@ -9,7 +9,7 @@ class ElementDVDR: Element, GroupElement {
             self.rowHeight = Double(label.components(separatedBy: "\n").count * 15) + 1
         }
     }
-    
+
     func configureGroup(view: NSTableCellView) {
         view.textField?.stringValue = self.label
     }

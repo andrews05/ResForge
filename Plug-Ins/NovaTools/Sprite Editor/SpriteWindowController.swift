@@ -7,7 +7,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         "rlëD": SpriteWorld.self,
         "SMIV": ShapeMachine.self,
     ]
-    
+
     let resource: Resource
     private var sprite: Sprite!
     private var frames: [NSBitmapImageRep] = []
@@ -23,7 +23,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     @IBOutlet var importButton: NSButton!
     @IBOutlet var frameCounter: NSTextField!
     @IBOutlet var importPanel: SpriteImporter!
-    
+
     private var playing = false {
         didSet {
             playButton.title = playing ? "Pause" : "Play"
@@ -34,7 +34,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
             }
         }
     }
-    
+
     override var windowNibName: String {
         return "SpriteWindow"
     }
@@ -47,7 +47,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func windowDidLoad() {
         self.window?.title = resource.defaultWindowTitle
         imageView.allowsCutCopyPaste = false
@@ -55,15 +55,15 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         importPanel.dither.isHidden = resource.typeCode != "rlëD"
         self.loadImage()
     }
-    
+
     @objc func windowWillClose(_ notification: Notification) {
         timer?.invalidate()
     }
-    
+
     @IBAction func playPause(_ sender: Any) {
         playing = !playing
     }
-    
+
     override func keyDown(with event: NSEvent) {
         if event.characters == " " {
             playing = !playing
@@ -76,9 +76,9 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
             self.nextFrame()
         }
     }
-    
+
     // MARK: -
-    
+
     private func loadImage() {
         sprite = nil
         frames.removeAll()
@@ -95,7 +95,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         }
         self.updateView()
     }
-    
+
     @objc private func nextFrame() {
         guard let image = imageView.image else {
             return
@@ -109,7 +109,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         imageView.needsDisplay = true
         frameCounter.stringValue = "\(currentFrame+1)/\(frames.count)"
     }
-    
+
     private func updateView() {
         playing = false
         if !frames.isEmpty {
@@ -134,14 +134,14 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
             frameCounter.stringValue = "-/-"
         }
     }
-    
+
     // MARK: -
-    
+
     @IBAction func importImage(_ sender: Any) {
         playing = false
         importPanel.beginSheetModal(for: self.window!, sheetCallback: self.importSheet, framesCallback: self.importFrames)
     }
-    
+
     @IBAction func saveResource(_ sender: Any) {
         guard let sprite = sprite else {
             return
@@ -154,14 +154,14 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         self.loadImage()
         self.setDocumentEdited(false)
     }
-    
+
     @IBAction func copy(_ sender: Any) {
         if let image = imageView.image {
             NSPasteboard.general.clearContents()
             NSPasteboard.general.writeObjects([image])
         }
     }
-    
+
     @IBAction func paste(_ sender: Any) {
         guard writeableType != nil,
               let image = NSPasteboard.general.readObjects(forClasses: [NSImage.self])?.first as? NSImage
@@ -170,7 +170,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         }
         importPanel.beginSheetModal(for: window!, with: image, sheetCallback: self.importSheet)
     }
-    
+
     private func importSheet(image: NSImage, gridX: Int, gridY: Int, dither: Bool) {
         guard let spriteType = writeableType else {
             return
@@ -182,7 +182,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         self.updateView()
         self.setDocumentEdited(true)
     }
-    
+
     private func importFrames(images: [NSImage], dither: Bool) {
         guard let spriteType = writeableType else {
             return
@@ -194,12 +194,12 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         self.updateView()
         self.setDocumentEdited(true)
     }
-    
+
     // MARK: -
     static func filenameExtension(for resourceType: String) -> String {
         return "tiff"
     }
-    
+
     static func export(_ resource: Resource, to url: URL) throws {
         guard let spriteType = typeMap[resource.typeCode],
               let data = try spriteType.init(resource.data).readSheet().tiffRepresentation
@@ -208,7 +208,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         }
         try data.write(to: url)
     }
-    
+
     static func image(for resource: Resource) -> NSImage? {
         guard let spriteType = typeMap[resource.typeCode],
               let frame = try? spriteType.init(resource.data).readFrame()

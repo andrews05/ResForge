@@ -70,7 +70,7 @@ extension ResourceFileFormat {
     var maxID: Int {
         self == .extended ? Int(Int32.max) : Int(Int16.max)
     }
-    
+
     init(typeName: String) {
         switch typeName {
         case Self.extended.typeName:
@@ -94,7 +94,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     private var fork: FileFork!
     private(set) var format: ResourceFileFormat = .classic
     private(set) var revision = 0 // Used to track new resources
-    
+
     @objc dynamic var hfsType: OSType = 0 {
         didSet {
             if hfsType != oldValue {
@@ -115,17 +115,17 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     override var windowNibName: String {
         return "ResourceDocument"
     }
-    
+
     // MARK: - File Management
-    
+
     override func read(from url: URL, ofType typeName: String) throws {
         let rsrcURL = url.appendingPathComponent("..namedfork/rsrc")
-        
+
         // Find out which forks have data
         let values = try url.resourceValues(forKeys: [.fileSizeKey, .totalFileSizeKey])
         let hasData = values.fileSize! > 0
         let hasRsrc = (values.totalFileSize! - values.fileSize!) > 0
-        
+
         // Work out which fork to parse. If we are opening the document for the first time, attempt to get fork from the open panel.
         if fork == nil {
             fork = (NSDocumentController.shared as! OpenPanelDelegate).getSelectedFork()
@@ -155,7 +155,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             resources = hasData ? try ResourceFile.read(from: url, format: &format) : []
             fork = .data
         }
-        
+
         // Get type and creator - make sure undo registration is disabled while configuring
         let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
         self.undoManager?.disableUndoRegistration()
@@ -172,7 +172,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         dataSource?.reload()
         self.undoManager?.enableUndoRegistration()
     }
-    
+
     override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
         // Since the UTIs we use for saving have no extension we should manually append the default as a suggestion.
         // Unfortunately we can't apply this when the user changes the selected format.
@@ -181,10 +181,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         savePanel.allowsOtherFileTypes = true
         return super.prepareSavePanel(savePanel)
     }
-    
+
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
         let resources = directory.resources()
-        
+
         if saveOperation == .saveOperation && fork == .rsrc, let fileURL = self.fileURL {
             // In place save of resource fork. We want to preserve all other aspects of the file, such as the data fork and finder flags.
             // Relying on the default implementation can result in some oddities, so instead we'll just write out the resource fork directly.
@@ -207,7 +207,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         } else {
             try super.writeSafely(to: url, ofType: typeName, for: saveOperation)
         }
-        
+
         revision += 1
         for resource in resources {
             resource.resetState()
@@ -217,7 +217,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
         self.updateStatus()
     }
-    
+
     override func write(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws {
         var format = self.format
         var fork = self.fork
@@ -231,7 +231,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             hfsType = 0
             hfsCreator = 0
         }
-        
+
         // Create file (this is important to be done first if we're writing the resource fork)
         // Type codes should only be set if not blank, to avoid unnecessarily creating the FinderInfo
         var attrs: [FileAttributeKey: Any]?
@@ -239,11 +239,11 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             attrs = [.hfsTypeCode: hfsType, .hfsCreatorCode: hfsCreator]
         }
         FileManager.default.createFile(atPath: url.path, contents: nil, attributes: attrs)
-        
+
         // Write resources to file
         let writeUrl = fork == .rsrc ? url.appendingPathComponent("..namedfork/rsrc") : url
         try ResourceFile.write(directory.resources(), to: writeUrl, as: format)
-        
+
         // Save any properties that may have changed (only do this after successful write)
         self.undoManager?.disableUndoRegistration()
         self.format = format
@@ -252,9 +252,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         self.hfsCreator = hfsCreator
         self.undoManager?.enableUndoRegistration()
     }
-    
+
     // MARK: - Export
-    
+
     @IBAction func exportResource(_ sender: Any) {
         let resources = dataSource.selectedResources(deep: true)
         if resources.count > 1 {
@@ -274,7 +274,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                         var i = 2
                         while FileManager.default.fileExists(atPath: url.path) {
                             url = saveDir.appendingPathComponent("\(filename.name) \(i)").appendingPathExtension(filename.ext)
-                            i = i + 1
+                            i += 1
                         }
                         self.export(resource: resource, to: url)
                     }
@@ -293,7 +293,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
         }
     }
-    
+
     private func filenameForExport(resource: Resource) -> (name: String, ext: String) {
         var filename = resource.name.replacingOccurrences(of: "/", with: ":")
         if filename == "" {
@@ -303,7 +303,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         let ext = editor?.filenameExtension(for: resource.typeCode) ?? resource.typeCode.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         return (filename, ext)
     }
-    
+
     private func export(resource: Resource, to url: URL) {
         do {
             if !resource.data.isEmpty, let exporter = PluginRegistry.exportProviders[resource.typeCode] {
@@ -315,9 +315,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             self.presentError(error)
         }
     }
-    
+
     // MARK: - Toolbar Management
-    
+
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
         return [
             .toggleSidebar,
@@ -332,7 +332,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             .flexibleSpace
         ]
     }
-    
+
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
         var defaults: [NSToolbarItem.Identifier] = [
             .toggleSidebar,
@@ -349,7 +349,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         return defaults
     }
-    
+
     // Get a system symbol if on 11.0 or later, otherwise a standard image
     private func symbolImage(named name: String, fallback: String? = nil) -> NSImage? {
         if #available(OSX 11.0, *) {
@@ -359,7 +359,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         image?.isTemplate = true
         return image
     }
-    
+
     func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
         // Create the toolbar items. On macOS 11 we use the special search toolbar item as well as the system symbol images.
         let item: NSToolbarItem
@@ -375,16 +375,16 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 item.view = searchField
                 item.label = NSLocalizedString("Search", comment: "")
                 item.paletteLabel = item.label
-                item.minSize = NSMakeSize(120, 0)
-                item.maxSize = NSMakeSize(180, 0)
+                item.minSize = NSSize(width: 120, height: 0)
+                item.maxSize = NSSize(width: 180, height: 0)
             }
             item.action = #selector(ResourceDataSource.filter(_:))
             item.target = dataSource
             return item
         }
-        
+
         item = NSToolbarItem(itemIdentifier: itemIdentifier)
-        let button = NSButton(frame: NSMakeRect(0, 0, 36, 0))
+        let button = NSButton(frame: NSRect(x: 0, y: 0, width: 36, height: 0))
         button.bezelStyle = .texturedRounded
         item.view = button
         item.target = self
@@ -424,14 +424,14 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         item.paletteLabel = item.label
         return item
     }
-    
+
     func toolbarWillAddItem(_ notification: Notification) {
         // Set the correct action
         if let addedItem = notification.userInfo?["item"] as? NSToolbarItem, addedItem.itemIdentifier == .toggleSidebar {
             addedItem.action = #selector(toggleTypes(_:))
         }
     }
-    
+
     @objc func validateToolbarItems(_ notification: Notification) {
         updateStatus()
         if let toolbar = windowControllers.first?.window?.toolbar {
@@ -446,13 +446,13 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
         }
     }
-    
+
     @IBAction func showFind(_ sender: Any) {
         self.windowForSheet?.makeFirstResponder(searchField)
     }
-    
+
     // MARK: - Window Management
-    
+
     override func windowControllerDidLoadNib(_ windowController: NSWindowController) {
         windowController.window?.registerForDraggedTypes([.RKResource])
         self.updateStatus()
@@ -461,7 +461,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             (statusText.superview?.superview as? NSBox)?.fillColor = .windowBackgroundColor
         }
     }
-    
+
     func updateStatus() {
         guard let statusText = statusText else {
             return
@@ -490,7 +490,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         statusText.stringValue = status
     }
-    
+
     func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         // Can't drag to self
         if (sender.draggingSource as? NSView)?.window?.delegate === self {
@@ -498,7 +498,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         return .copy
     }
-    
+
     func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         if let resources = sender.draggingPasteboard.readObjects(forClasses: [Resource.self]) as? [Resource] {
             self.add(resources: resources)
@@ -506,13 +506,13 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         return false
     }
-    
+
     override func canClose(withDelegate delegate: Any, shouldClose shouldCloseSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
         if editorManager.closeAll(saving: true) {
             super.canClose(withDelegate: delegate, shouldClose: shouldCloseSelector, contextInfo: contextInfo)
         }
     }
-    
+
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.action {
         case #selector(cut(_:)),
@@ -563,7 +563,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             return super.validateMenuItem(menuItem)
         }
     }
-    
+
     // MARK: - Document Management
 
     @IBAction func createNewItem(_ sender: Any) {
@@ -574,7 +574,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             createController.show(type: dataSource.selectedType())
         }
     }
-    
+
     @IBAction func openResources(_ sender: Any) {
         // Use hex editor if holding option key
         if NSApp.currentEvent?.modifierFlags.contains(.option) == true {
@@ -585,7 +585,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             editorManager.open(resource: resource)
         }
     }
-    
+
     @IBAction func openResourcesInTemplate(_ sender: Any) {
         let resources = dataSource.selectedResources()
         guard let type = resources.first?.type else {
@@ -597,18 +597,18 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
         }
     }
-    
+
     @IBAction func openResourcesAsHex(_ sender: Any) {
         for resource in dataSource.selectedResources() {
             editorManager.open(resource: resource, using: PluginRegistry.hexEditor)
         }
     }
-    
+
     // INFO: This is *not* named toggleSidebar in order to avoid a responder conflict
     @IBAction func toggleTypes(_ sender: Any) {
         dataSource.toggleSidebar()
     }
-    
+
     @IBAction func switchView(_ sender: NSMenuItem) {
         let view: ResourcesView
         switch sender.tag {
@@ -625,7 +625,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             dataSource.setView(view, retainSelection: true)
         }
     }
-    
+
     @IBAction func exportCSV(_ sender: Any) {
         guard let type = dataSource.selectedType() else {
             return
@@ -648,9 +648,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
         }
     }
-    
+
     @IBAction func importCSV(_ sender: Any) {
-        importPanel.show() { (url, type) in
+        importPanel.show { (url, type) in
             do {
                 try self.dataSource.bulkController.loadTemplate(type: type)
                 let resources = try self.dataSource.bulkController.importCSV(from: url)
@@ -664,9 +664,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
         }
     }
-    
+
     // MARK: - Edit Operations
-    
+
     @IBAction func cut(_ sender: Any) {
         let resources = dataSource.selectedResources(deep: true)
         let pb = NSPasteboard.init(name: .general)
@@ -675,18 +675,18 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         self.remove(resources: resources)
         self.undoManager?.setActionName(NSLocalizedString(resources.count == 1 ? "Cut Resource" : "Cut Resources", comment: ""))
     }
-    
+
     @IBAction func copy(_ sender: Any) {
         let pb = NSPasteboard(name: .general)
         pb.declareTypes([.RKResource], owner: self)
         pb.writeObjects(dataSource.selectedResources(deep: true))
     }
-    
+
     @IBAction func paste(_ sender: Any) {
         let pb = NSPasteboard(name: .general)
         self.add(resources: pb.readObjects(forClasses: [Resource.self]) as! [Resource])
     }
-    
+
     @IBAction func delete(_ sender: Any) {
         if UserDefaults.standard.bool(forKey: RFDefaults.deleteResourceWarning) {
             let alert = NSAlert()
@@ -702,13 +702,13 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             self.remove(resources: dataSource.selectedResources(deep: true))
         }
     }
-    
+
     @IBAction func revertResource(_ sender: Any) {
         for resource in dataSource.selectedResources(deep: true) {
             resource.revertData()
         }
     }
-    
+
     func add(resources: [Resource], actionName: String? = nil) {
         guard !resources.isEmpty else {
             return
@@ -735,7 +735,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             return added
         }
     }
-    
+
     func changeTypes(resources: [Resource], type: ResourceType) {
         guard !resources.isEmpty else {
             return
@@ -758,7 +758,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             return added
         }
     }
-    
+
     func remove(resources: [Resource]) {
         guard !resources.isEmpty else {
             return

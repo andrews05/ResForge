@@ -13,7 +13,7 @@ class ResourceDataSource: NSObject {
     @IBOutlet weak var document: ResourceDocument!
     private(set) var resourcesView: ResourcesView!
     private var ignoreChanges = false
-    
+
     var isBulkMode: Bool {
         resourcesView is BulkController
     }
@@ -29,7 +29,7 @@ class ResourceDataSource: NSObject {
             attributesDisplay.objectValue = currentType?.attributesDisplay
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
@@ -37,7 +37,7 @@ class ResourceDataSource: NSObject {
         useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
         typeList.registerForDraggedTypes([.RKResource])
     }
-    
+
     @objc func resourceTypeDidChange(_ notification: Notification) {
         guard
             !ignoreChanges,
@@ -49,7 +49,7 @@ class ResourceDataSource: NSObject {
         }
         self.reload(selecting: [resource])
     }
-    
+
     @objc func resourceDidUpdate(_ notification: Notification) {
         guard
             !ignoreChanges,
@@ -61,13 +61,13 @@ class ResourceDataSource: NSObject {
         let oldIndex = notification.userInfo?["oldIndex"] as? Int
         resourcesView.updated(resource: resource, oldIndex: oldIndex)
     }
-    
+
     @IBAction func filter(_ sender: Any) {
         if let field = sender as? NSSearchField {
             self.updateFilter(field.stringValue)
         }
     }
-    
+
     /// Reload the resources view, attempting to preserve the current selection.
     private func updateFilter(_ filter: String? = nil) {
         let selection = self.selectedResources()
@@ -77,7 +77,7 @@ class ResourceDataSource: NSObject {
         resourcesView.reload()
         resourcesView.select(selection)
     }
-    
+
     func setView(_ rView: ResourcesView? = nil, retainSelection: Bool = false) {
         let selected = retainSelection ? self.selectedResources() : []
         let rView = rView ?? self.defaultView()
@@ -98,16 +98,16 @@ class ResourceDataSource: NSObject {
             document.presentError(error)
         }
     }
-    
+
     private func defaultView() -> ResourcesView {
         if let currentType, PluginRegistry.previewProviders[currentType.code] != nil {
             return collectionController
         }
         return outlineController
     }
-    
+
     // MARK: - Resource management
-    
+
     /// Reload the data source after performing a given operation. The resources returned from the operation will be selected.
     ///
     /// This function is important for managing undo operations when adding/removing resources. It creates an undo group and ensures that the data source is always reloaded after the operation is peformed, even when undoing/redoing.
@@ -117,7 +117,7 @@ class ResourceDataSource: NSObject {
         self.reload(selecting: operation(), actionName: actionName)
         document.undoManager?.endUndoGrouping()
     }
-    
+
     /// Register intent to reload the data source before performing changes.
     private func willReload(_ resources: [Resource] = [], actionName: String) {
         ignoreChanges = true
@@ -126,7 +126,7 @@ class ResourceDataSource: NSObject {
         }
         document.undoManager?.setActionName(actionName)
     }
-    
+
     /// Reload the view and select the given resources.
     func reload(selecting resources: [Resource] = [], actionName: String? = nil) {
         typeList.reloadData()
@@ -147,17 +147,17 @@ class ResourceDataSource: NSObject {
             document.undoManager?.setActionName(actionName)
         }
     }
-    
+
     /// Return the number of selected items.
     func selectionCount() -> Int {
         return resourcesView.selectionCount()
     }
-    
+
     /// Return a flat list of all resources in the current selection, optionally including resources within selected type lists.
     func selectedResources(deep: Bool = false) -> [Resource] {
         return resourcesView?.selectedResources(deep: deep) ?? []
     }
-    
+
     /// Return the currently selected type.
     func selectedType() -> ResourceType? {
         return resourcesView.selectedType()
@@ -170,17 +170,17 @@ extension ResourceDataSource: NSSplitViewDelegate {
         useTypeList = !useTypeList
         UserDefaults.standard.set(useTypeList, forKey: RFDefaults.showSidebar)
     }
-    
+
     // Prevent dragging the divider
     func splitView(_ splitView: NSSplitView, effectiveRect proposedEffectiveRect: NSRect, forDrawnRect drawnRect: NSRect, ofDividerAt dividerIndex: Int) -> NSRect {
-        return NSZeroRect
+        return .zero
     }
-    
+
     // Sidebar width should remain fixed
     func splitView(_ splitView: NSSplitView, shouldAdjustSizeOfSubview view: NSView) -> Bool {
         return splitView.subviews[1] === view
     }
-    
+
     // Allow sidebar to collapse
     func splitView(_ splitView: NSSplitView, constrainMinCoordinate proposedMinimumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
         return 2
@@ -188,7 +188,7 @@ extension ResourceDataSource: NSSplitViewDelegate {
     func splitView(_ splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
         return splitView.subviews[0] === subview
     }
-    
+
     // Hide divider when sidebar collapsed
     func splitView(_ splitView: NSSplitView, shouldHideDividerAt dividerIndex: Int) -> Bool {
         return true
@@ -219,11 +219,11 @@ extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
         }
         return view
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         return document.directory.allTypes.count + 1
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         if index == 0 {
             return "Types"
@@ -231,20 +231,20 @@ extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
             return document.directory.allTypes[index-1]
         }
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
         return false
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
         return !(item is ResourceType)
     }
-    
+
     // Prevent deselection (using the allowsEmptySelection property results in undesirable selection changes)
     func outlineView(_ outlineView: NSOutlineView, selectionIndexesForProposedSelection proposedSelectionIndexes: IndexSet) -> IndexSet {
         return proposedSelectionIndexes.isEmpty || proposedSelectionIndexes == [0] ? outlineView.selectedRowIndexes : proposedSelectionIndexes
     }
-    
+
     // Allow changing type by drag and drop onto a different type
     func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
         if let type = item as? ResourceType, type != currentType
@@ -253,7 +253,7 @@ extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
         }
         return []
     }
-    
+
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         guard let type = item as? ResourceType,
               var resources = info.draggingPasteboard.readObjects(forClasses: [Resource.self]) as? [Resource]
@@ -281,7 +281,7 @@ extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
         }
         return true
     }
-    
+
     func outlineViewSelectionDidChange(_ notification: Notification) {
         let type = typeList.selectedItem as! ResourceType
         // Check if type actually changed, rather than just being reselected after a reload
@@ -311,22 +311,22 @@ class SourceCount: NSButton {
 protocol ResourcesView: AnyObject {
     /// Prepare the view to be displayed within the scroll view.
     func prepareView(type: ResourceType?) throws -> NSView
-    
+
     /// Reload the data in the view.
     func reload()
-    
+
     /// Select the given resources.
     func select(_ resources: [Resource])
-    
+
     /// Return the number of selected items.
     func selectionCount() -> Int
-    
+
     /// Return a flat list of all resources in the current selection, optionally including resources within selected type lists.
     func selectedResources(deep: Bool) -> [Resource]
-    
+
     /// Return the currently selcted type.
     func selectedType() -> ResourceType?
-    
+
     /// Notify the view that a resource has been updated.
     func updated(resource: Resource, oldIndex: Int?)
 }

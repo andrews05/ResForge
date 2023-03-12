@@ -2,7 +2,7 @@ import RFSupport
 
 class NovaTools: PlaceholderProvider {
     static var supportedTypes = ["dësc"]
-    
+
     static func placeholderName(for resource: Resource) -> String? {
         switch resource.typeCode {
         case "dësc":

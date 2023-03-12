@@ -11,19 +11,19 @@ class ElementList {
     var count: Int {
         return visibleElements.count
     }
-    
+
     init(controller: TemplateEditor, parent: Element? = nil) {
         parentElement = parent
         self.controller = controller
     }
-    
+
     func copy() throws -> ElementList {
         let list = ElementList(controller: controller, parent: parentElement)
         list.elements = elements.map({ $0.copy() as Element })
         try list.configure()
         return list
     }
-    
+
     func configure() throws {
         guard !configured else {
             return
@@ -39,7 +39,7 @@ class ElementList {
         }
         configured = true
     }
-    
+
     func readTemplate(_ template: Resource, filterName: String?) -> Bool {
         do {
             elements = try TemplateParser(template: template, manager: controller.manager).parse()
@@ -70,15 +70,15 @@ class ElementList {
             return false
         }
     }
-    
+
     func getResourceData() -> Data {
         let writer = BinaryDataWriter()
         self.writeData(to: writer)
         return writer.data
     }
-    
+
     // MARK: -
-    
+
     func element(at index: Int) -> Element {
         return visibleElements[index]
     }
@@ -93,7 +93,7 @@ class ElementList {
             visibleElements.insert(element, at: visIndex)
         }
     }
-    
+
     // Insert a new element before/after a given element
     func insert(_ element: Element, before: Element) {
         elements.insert(element, at: elements.firstIndex(of: before)!)
@@ -102,7 +102,7 @@ class ElementList {
             visibleElements.insert(element, at: visibleElements.firstIndex(of: before)!)
         }
     }
-    
+
     func insert(_ element: Element, after: Element) {
         elements.insert(element, at: elements.firstIndex(of: after)! + 1)
         element.parentList = self
@@ -110,22 +110,22 @@ class ElementList {
             visibleElements.insert(element, at: visibleElements.firstIndex(of: element)! + 1)
         }
     }
-    
+
     func remove(_ element: Element) {
         elements.removeAll(where: { $0 == element })
         visibleElements.removeAll(where: { $0 == element })
     }
-    
+
     // MARK: -
-    
+
     // The following methods may be used by elements while reading their sub elements
-    
+
     // Peek at an element in the list without removing it
     func peek(_ n: Int) -> Element? {
         let i = currentIndex + n
         return i < elements.endIndex ? elements[i] : nil
     }
-    
+
     // Pop the next element out of the list
     func pop(_ type: String? = nil) -> Element? {
         let i = currentIndex + 1
@@ -139,12 +139,12 @@ class ElementList {
         elements.remove(at: i)
         return element
     }
-    
+
     // Search for an element of a given type following the current one
     func next(ofType type: String) -> Element? {
         return elements[(currentIndex+1)...].first(where: { $0.type == type })
     }
-    
+
     // Search for an element of a given type preceding the current one, travsersing up the hierarchy if necessary
     func previous(ofType type: String) -> Element? {
         if let element = elements[0..<currentIndex].last(where: { $0.type == type }) {
@@ -152,7 +152,7 @@ class ElementList {
         }
         return parentElement?.parentList.previous(ofType: type)
     }
-    
+
     // Search for the next visible element with the given display label
     func next(withLabel label: String) -> Element? {
         for el in elements[(currentIndex+1)...] where el.visible {
@@ -162,7 +162,7 @@ class ElementList {
         }
         return nil
     }
-    
+
     // Create a new ElementList by extracting all elements following the current one up until a given type
     func subList(for startElement: CollectionElement) throws -> ElementList {
         let list = ElementList(controller: controller, parent: startElement)
@@ -183,12 +183,12 @@ class ElementList {
         }
         return list
     }
-    
+
     // MARK: -
-    
+
     func readData(from reader: BinaryDataReader) throws {
         let bigEndian = reader.bigEndian
-        currentIndex = 0;
+        currentIndex = 0
         // Don't use for loop here as the list may be modified while reading
         while currentIndex < elements.count && reader.position < reader.data.endIndex {
             try elements[currentIndex].readData(from: reader)
@@ -197,7 +197,7 @@ class ElementList {
         // Always restore original endianness at the end of any sublist
         reader.bigEndian = bigEndian
     }
-    
+
     func writeData(to writer: BinaryDataWriter) {
         let bigEndian = writer.bigEndian
         for element in elements {

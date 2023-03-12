@@ -11,7 +11,7 @@ extension OSStatus {
     }
 
     func detailedErrorMessage() -> String? {
-        switch(self) {
+        switch self {
         // Audio errors
         case kAudio_BadFilePathError:      return "Bad File Path Error"
         case kAudio_FileNotFoundError:     return "File Not Found Error"
@@ -106,7 +106,7 @@ extension OSStatus {
         // Audio Converter errors
         case kAudioConverterErr_InvalidOutputSize:
             return "The byte size is not an integer multiple of the frame size."
-            
+
         // Audio Format errors
         case kAudioFormatUnsupportedPropertyError:
             return "The specified property is not supported."
@@ -118,7 +118,7 @@ extension OSStatus {
         default: return nil
         }
     }
-    
+
     func throwError() throws {
         if self != noErr {
             let message = self.detailedErrorMessage()

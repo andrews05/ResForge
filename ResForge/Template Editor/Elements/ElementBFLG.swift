@@ -8,25 +8,25 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         get { tValue != 0 }
         set { tValue = newValue ? 1 : 0 }
     }
-    
+
     override func configure() throws {
         try Self.readCases(for: self)
     }
-    
+
     override func configure(view: NSView) {
         Self.configure(view: view, for: self)
     }
-    
+
     override func readData(from reader: BinaryDataReader) throws {
         tValue = try reader.read()
     }
-    
+
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(tValue)
     }
-    
+
     // MARK: -
-    
+
     // Bit type elements will normally display as a checkbox but can be provided with CASEs to create radios instead.
     static func readCases(for element: CasedElement) throws {
         var valid = true
@@ -50,13 +50,13 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         }
         element.width = element.cases.isEmpty ? 120 : 240
     }
-    
+
     static func configure(view: NSView, for element: CasedElement) {
         if element.cases.isEmpty {
             view.addSubview(Self.createCheckbox(with: view.frame, for: element))
             return
         }
-        
+
         var frame = view.frame
         let width = element.width / 2
         frame.size.width = width - 4
@@ -71,7 +71,7 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
             frame.origin.x += width
         }
     }
-    
+
     static func createCheckbox(with frame: NSRect, for element: Element) -> NSButton {
         let checkbox = NSButton(frame: frame)
         checkbox.setButtonType(.switch)

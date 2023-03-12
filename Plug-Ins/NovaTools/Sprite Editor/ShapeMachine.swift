@@ -7,11 +7,11 @@ final class ShapeMachine: Sprite {
     var frameHeight = 0
     let frameCount: Int
     private let reader: BinaryDataReader
-    
+
     var data: Data {
         reader.data
     }
-    
+
     init(_ data: Data) throws {
         reader = BinaryDataReader(data)
         let size = try reader.read() as UInt32
@@ -20,7 +20,7 @@ final class ShapeMachine: Sprite {
         }
         frameCount = Int(try reader.read() as UInt32)
     }
-    
+
     func readFrame() throws -> NSBitmapImageRep {
         let shape = try self.readShape()
         let frame = self.newFrame(shape.frameWidth, shape.frameHeight)
@@ -30,7 +30,7 @@ final class ShapeMachine: Sprite {
         try shape.draw(to: frame.bitmapData!+advance, lineAdvance: frame.pixelsWide)
         return frame
     }
-    
+
     func readSheet() throws -> NSBitmapImageRep {
         try reader.setPosition(8)
         // Read all shapes first so we know the maximum frame size
@@ -49,7 +49,7 @@ final class ShapeMachine: Sprite {
         }
         return sheet
     }
-    
+
     private func readShape() throws -> Shape {
         try reader.pushPosition(Int(try reader.read() as UInt32))
         let shape = try Shape(reader: reader)
@@ -73,7 +73,7 @@ struct Shape {
     let frameWidth: Int
     let frameHeight: Int
     let data: Data
-    
+
     init(reader: BinaryDataReader) throws {
         // Read size
         width = Int(try reader.read() as UInt16)

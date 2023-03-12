@@ -20,7 +20,7 @@ public class BinaryDataReader {
     public var remainingBytes: Int {
         data.endIndex - position
     }
-    
+
     private var posStack = [Int]()
 
     public init(_ data: Data, bigEndian: Bool = true) {
@@ -28,7 +28,7 @@ public class BinaryDataReader {
         self.position = data.startIndex
         self.bigEndian = bigEndian
     }
-    
+
     @inline(__always)
     public func advance(_ count: Int) throws {
         guard count <= remainingBytes else {
@@ -36,7 +36,7 @@ public class BinaryDataReader {
         }
         position += count
     }
-    
+
     public func setPosition(_ position: Int) throws {
         let position = data.startIndex + position
         guard position <= data.endIndex else {
@@ -44,17 +44,17 @@ public class BinaryDataReader {
         }
         self.position = position
     }
-    
+
     public func pushPosition(_ position: Int) throws {
         posStack.append(self.position)
         try self.setPosition(position)
     }
-    
+
     public func popPosition() throws {
         assert(!posStack.isEmpty, "position stack is empty")
         try self.setPosition(posStack.popLast()!)
     }
-    
+
     public func read<T: FixedWidthInteger>(bigEndian: Bool? = nil) throws -> T {
         let length = T.bitWidth / 8
         try self.advance(length)
@@ -63,12 +63,12 @@ public class BinaryDataReader {
         }
         return bigEndian ?? self.bigEndian ? T(bigEndian: val) : T(littleEndian: val)
     }
-    
+
     public func readData(length: Int) throws -> Data {
         try self.advance(length)
         return data[(position-length)..<position]
     }
-    
+
     public func readString(length: Int, encoding: String.Encoding = .utf8) throws -> String {
         guard length != 0 else {
             return ""
@@ -79,7 +79,7 @@ public class BinaryDataReader {
         }
         return string
     }
-    
+
     // Since Pascal strings are common in resources, this function is included here as a convenience
     public func readPString(encoding: String.Encoding = .macOSRoman) throws -> String {
         let length = Int(try self.read() as UInt8)
