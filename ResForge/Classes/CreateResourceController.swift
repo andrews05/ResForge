@@ -47,7 +47,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil, selectOnCreate: Bool = true, callback: ((Resource?) -> Void)? = nil) {
+    func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil, callback: ((Resource?) -> Void)? = nil) {
         _ = self.window
         // Add all types currently open
         let docs = NSDocumentController.shared.documents as! [ResourceDocument]
