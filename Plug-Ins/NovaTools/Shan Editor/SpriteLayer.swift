@@ -87,6 +87,8 @@ class SpriteLayer: NSObject {
             controller.manager.open(resource: resource)
         } else {
             controller.manager.createResource(type: type, id: Int(spriteID)) { resource in
+                // Update the field if the resource was created with a different id,
+                // but avoid marking the window as dirty if it is the same
                 let newID = Int16(resource.id)
                 if self.spriteID != newID {
                     self.spriteID = newID
