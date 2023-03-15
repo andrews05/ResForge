@@ -61,12 +61,12 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     // I.E. Check that there is no more data to be read after this.
     func isAtEnd() -> Bool {
         let topLevel: Bool
-        if let parent = self.parentList.parentElement as? CollectionElement {
+        if let parent = parentList.parentElement as? CollectionElement {
             topLevel = parent.endType == "SKPE" || (parent.endType == "KEYE" && parent.isAtEnd())
         } else {
-            topLevel = self.parentList.parentElement == nil
+            topLevel = parentList.parentElement == nil
         }
-        return topLevel && self.parentList.peek(1) == nil
+        return topLevel && parentList.peek(1) == nil
     }
 
     // Get the value of the hex suffix of a variable Xnnn type

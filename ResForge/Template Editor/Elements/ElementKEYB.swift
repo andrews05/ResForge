@@ -7,7 +7,7 @@ class ElementKEYB: Element, CollectionElement {
 
     required init(type: String, label: String) {
         super.init(type: type, label: label)
-        self.visible = false
+        visible = false
     }
 
     override func copy() -> Self {

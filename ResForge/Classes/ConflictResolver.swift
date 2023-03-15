@@ -22,7 +22,7 @@ class ConflictResolver {
     }
 
     func resolve(_ resource: Resource, conflicted: Resource, multiple: Bool) -> Bool {
-        if let resolution = resolution {
+        if let resolution {
             return resolve(resource, conficted: conflicted, resolution: resolution)
         }
         alert.messageText = String(format: NSLocalizedString("A resource of type ‘%@’ with ID %ld already exists.", comment: ""), conflicted.typeCode, conflicted.id)

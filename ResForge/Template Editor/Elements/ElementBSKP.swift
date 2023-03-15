@@ -16,7 +16,7 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element, CollectionEl
     }
 
     override func configure() throws {
-        subElements = try self.parentList.subList(for: self)
+        subElements = try parentList.subList(for: self)
         try subElements.configure()
     }
 

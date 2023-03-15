@@ -11,7 +11,7 @@ import RFSupport
  */
 class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
     override func configure() throws {
-        self.width = 120
+        width = 120
         _ = self.defaultValue()
         try self.readCases()
         if cases.isEmpty {
@@ -21,7 +21,7 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
             // Set the element to true/false for the checkbox state
             caseEl.value = (tValue & value) == value
         }
-        self.rowHeight = Double(cases.count * 20) + 2
+        rowHeight = Double(cases.count * 20) + 2
     }
 
     override func configure(view: NSView) {

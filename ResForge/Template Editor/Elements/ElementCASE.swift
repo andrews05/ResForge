@@ -14,14 +14,14 @@ class ElementCASE: Element {
 
     // For key elements, the case's description is used in the popup menu
     override var description: String {
-        self.displayLabel
+        displayLabel
     }
 
     // Configure will only be called if the CASE is not associated to a supported element.
     // If this happens we will just show the label as a help tip below the previous element.
     override func configure() throws {
-        self.displayLabel = ""
-        self.rowHeight = 16
+        displayLabel = ""
+        rowHeight = 16
     }
 
     override func configure(view: NSView) {
@@ -31,7 +31,7 @@ class ElementCASE: Element {
         textField.isBezeled = false
         textField.isEditable = false
         textField.isSelectable = true
-        textField.stringValue = self.label
+        textField.stringValue = label
         textField.textColor = .secondaryLabelColor
         textField.drawsBackground = false
         view.addSubview(textField)

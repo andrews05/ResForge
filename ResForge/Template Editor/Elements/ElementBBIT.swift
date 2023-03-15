@@ -38,7 +38,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
         var i = 0
         while pos > 0 {
             i += 1
-            let next = self.parentList.peek(i)
+            let next = parentList.peek(i)
             // Skip over cosmetic items
             if let next = next, ["CASE", "CASR", "DVDR", "RREF", "PACK"].contains(next.type) {
                 continue

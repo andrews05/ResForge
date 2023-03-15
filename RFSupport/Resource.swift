@@ -126,7 +126,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     }
 
     public var defaultWindowTitle: String {
-        if let document = document {
+        if let document {
             let title = document.displayName.appending(": \(typeCode) \(id)")
             return name.isEmpty ? title : title.appending(" '\(name)'")
         }

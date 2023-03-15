@@ -7,7 +7,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     private var currentType: ResourceType!
 
     func prepareView(type: ResourceType?) -> NSView {
-        if let type = type {
+        if let type {
             currentType = type
             collectionView.maxSize = PluginRegistry.previewProviders[type.code]!.maxThumbnailSize(for: type.code)
             document.directory.sorter = nil
@@ -53,9 +53,9 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
 
     func updated(resource: Resource, oldIndex: Int?) {
         let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
-        if let oldIndex = oldIndex {
+        if let oldIndex {
             let old: IndexPath = [0, oldIndex]
-            if let newIndex = newIndex {
+            if let newIndex {
                 let new: IndexPath = [0, newIndex]
                 // Collection view doesn't retain selection when reloading - we need to keep track of it ourselves
                 let selected = collectionView.selectionIndexPaths.contains(old)
@@ -71,7 +71,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
             } else {
                 collectionView.animator().deleteItems(at: [old])
             }
-        } else if let newIndex = newIndex {
+        } else if let newIndex {
             let new: IndexPath = [0, newIndex]
             collectionView.animator().insertItems(at: [new])
         }
@@ -92,8 +92,8 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     // MARK: - DataSource functions
 
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let type = currentType {
-            return document.directory.filteredCount(type: type)
+        if let currentType {
+            return document.directory.filteredCount(type: currentType)
         } else {
             return 0
         }

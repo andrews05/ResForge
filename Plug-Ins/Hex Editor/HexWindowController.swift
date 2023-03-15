@@ -251,13 +251,13 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
             let options: NSString.CompareOptions = forwards ? .caseInsensitive : [.caseInsensitive, .backwards]
             var text = String(data: controller.data(for: range), encoding: .macOSRoman)!
             var textRange = text.range(of: findField.stringValue, options: options)
-            if let textRange = textRange {
+            if let textRange {
                 findBytes = self.byteArray(data: text[textRange].data(using: .macOSRoman)!)!
             } else if wrap {
                 range = forwards ? startRange : endRange
                 text = String(data: controller.data(for: range), encoding: .macOSRoman)!
                 textRange = text.range(of: findField.stringValue, options: options)
-                if let textRange = textRange {
+                if let textRange {
                     findBytes = self.byteArray(data: text[textRange].data(using: .macOSRoman)!)!
                 }
             }

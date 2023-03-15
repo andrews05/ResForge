@@ -9,7 +9,7 @@ class ElementRECT: Element {
     @objc private var right: Int16 = 0
 
     override func configure() throws {
-        self.width = 240
+        width = 240
     }
 
     override func configure(view: NSView) {

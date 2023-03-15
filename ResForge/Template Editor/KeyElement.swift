@@ -13,12 +13,12 @@ class KeyElement: CasedElement, CollectionElement {
 
     override func configure() throws {
         try self.readSections()
-        self.width = 240
+        width = 240
 
         // Set initial state
         if let value = self.defaultValue(), let section = keyedSections[value] {
             currentSection = section
-            self.parentList.insert(currentSection, after: self)
+            parentList.insert(currentSection, after: self)
         }
     }
 
@@ -29,7 +29,7 @@ class KeyElement: CasedElement, CollectionElement {
         }
         // Read KEYBs
         var keyBs: [ElementKEYB] = []
-        while let keyB = self.parentList.pop("KEYB") as? ElementKEYB {
+        while let keyB = parentList.pop("KEYB") as? ElementKEYB {
             // Allow one KEYB to be used for multiple CASEs
             let vals = (keyB.metaValue ?? keyB.displayLabel).components(separatedBy: ",")
             for value in vals {
@@ -43,7 +43,7 @@ class KeyElement: CasedElement, CollectionElement {
                 }
                 keyedSections[key] = keyB
             }
-            keyB.parentList = self.parentList
+            keyB.parentList = parentList
             keyB.subElements = try parentList.subList(for: keyB)
             keyBs.append(keyB)
         }
@@ -58,7 +58,7 @@ class KeyElement: CasedElement, CollectionElement {
 
     override func configure(view: NSView) {
         var frame = view.frame
-        frame.size.width = self.width-1
+        frame.size.width = width-1
         frame.size.height = 24
         let keySelect = NSPopUpButton(frame: frame)
         keySelect.target = self
@@ -74,7 +74,7 @@ class KeyElement: CasedElement, CollectionElement {
         }
         let oldSection = self.setCase(cases.keys[sender.indexOfSelectedItem])
         if oldSection != currentSection {
-            if let oldSection = oldSection {
+            if let oldSection {
                 // Check if the section sizes match and attempt to copy the data
                 let oldData = oldSection.subElements.getResourceData()
                 let newData = currentSection.subElements.getResourceData()
@@ -83,12 +83,12 @@ class KeyElement: CasedElement, CollectionElement {
                 }
             }
             // Reload the view - note the outline item isn't necessarily self
-            let outline = self.parentList.controller.dataList!
+            let outline = parentList.controller.dataList!
             let item = outline.item(atRow: outline.row(for: sender))
             outline.reloadItem(item, reloadChildren: true)
             outline.expandItem(item, expandChildren: true)
         }
-        self.parentList.controller.itemValueUpdated(sender)
+        parentList.controller.itemValueUpdated(sender)
     }
 
     @discardableResult func setCase(_ value: AnyHashable) -> ElementKEYB? {
@@ -97,11 +97,11 @@ class KeyElement: CasedElement, CollectionElement {
             return currentSection
         }
         let oldSection = currentSection
-        if let oldSection = oldSection {
+        if let oldSection {
             self.parentList.remove(oldSection)
         }
         currentSection = newSection
-        if let newSection = newSection {
+        if let newSection {
             self.parentList.insert(newSection, after: self)
         }
         return oldSection

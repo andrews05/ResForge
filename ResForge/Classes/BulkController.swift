@@ -204,7 +204,7 @@ class BulkController: OutlineController {
             formatter.stringLength = 255
             cell.formatter = formatter
             cell.placeholderString = NSLocalizedString("Untitled Resource", comment: "")
-        } else if let tableColumn = tableColumn {
+        } else if let tableColumn {
             let element = elements[Int(tableColumn.identifier.rawValue)!]
             cell.formatter = (element as? FormattedElement)?.formatter
         }
@@ -218,7 +218,7 @@ class BulkController: OutlineController {
             return String(resource.id)
         } else if tableColumn == nameCol {
             return resource.name
-        } else if let tableColumn = tableColumn {
+        } else if let tableColumn {
             let rowData = rows[resource.id] ?? self.read(resource: resource)
             rows[resource.id] = rowData
             return rowData[Int(tableColumn.identifier.rawValue)!]
@@ -231,7 +231,7 @@ class BulkController: OutlineController {
         inlineUpdate = true
         if tableColumn == nameCol {
             resource.name = object as! String
-        } else if let tableColumn = tableColumn {
+        } else if let tableColumn {
             rows[resource.id]![Int(tableColumn.identifier.rawValue)!] = object
             let rowData = rows[resource.id]!
             let writer = BinaryDataWriter()

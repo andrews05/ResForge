@@ -32,7 +32,7 @@ class ElementLSTB: Element, CollectionElement {
     required init(type: String, label: String) {
         zeroTerminated = type == "LSTZ"
         super.init(type: type, label: label)
-        self.rowHeight = 18
+        rowHeight = 18
     }
 
     override func copy() -> Self {
@@ -45,10 +45,10 @@ class ElementLSTB: Element, CollectionElement {
     }
 
     override func configure() throws {
-        guard type != "LSTC" || counter != nil  else {
+        guard type != "LSTC" || counter != nil else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Preceeding count element not found.", comment: ""))
         }
-        subElements = try self.parentList.subList(for: self)
+        subElements = try parentList.subList(for: self)
         if type == "LSTB" || type == "LSTS" {
             guard self.isAtEnd() else {
                 throw TemplateError.unboundedElement(self)
@@ -61,7 +61,7 @@ class ElementLSTB: Element, CollectionElement {
         if fixedCount {
             // Fixed count list, create all the entries now
             for _ in 0..<counter!.count {
-                self.parentList.insert(self.createNext())
+                parentList.insert(self.createNext())
             }
         }
     }
@@ -75,9 +75,9 @@ class ElementLSTB: Element, CollectionElement {
     private func checkSingleElement() {
         if subElements != nil && subElements.count == 1 {
             singleElement = subElements.element(at: 0)
-            self.subtext = singleElement!.subtext
-            self.width = singleElement!.width
-            self.rowHeight = singleElement!.rowHeight
+            subtext = singleElement!.subtext
+            width = singleElement!.width
+            rowHeight = singleElement!.rowHeight
         }
     }
 
@@ -98,7 +98,7 @@ class ElementLSTB: Element, CollectionElement {
                     break
                 }
                 let list = self.createNext()
-                self.parentList.insert(list)
+                parentList.insert(list)
                 try list.subElements.readData(from: reader)
             }
         }
@@ -115,8 +115,8 @@ class ElementLSTB: Element, CollectionElement {
     // MARK: -
 
     var subElementCount: Int {
-        if let single = singleElement {
-            return (single as? CollectionElement)?.subElementCount ?? 0
+        if let singleElement {
+            return (singleElement as? CollectionElement)?.subElementCount ?? 0
         }
         return tail == self ? 0 : subElements.count
     }

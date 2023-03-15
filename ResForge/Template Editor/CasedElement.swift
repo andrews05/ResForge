@@ -9,7 +9,7 @@ class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDat
         try self.readCases()
         _ = self.defaultValue()
         if !cases.isEmpty {
-            self.width = 240
+            width = 240
         }
         for caseEl in cases.values where caseEl.displayLabel != caseEl.displayValue {
             // Cases will show as "title = value" in the options list to allow searching by title
@@ -44,7 +44,7 @@ class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDat
     }
 
     private func parseMetaValue() -> AnyHashable? {
-        if let metaValue = metaValue {
+        if let metaValue {
             return try? formatter.getObjectValue(for: metaValue) as? AnyHashable
         }
         return nil
@@ -116,12 +116,12 @@ class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDat
     func comboBoxSelectionDidChange(_ notification: Notification) {
         // Notify the controller that the value changed
         // (The selection change notification doesn't strictly mean that the value changed but it will suffice)
-        self.parentList.controller.itemValueUpdated(notification.object!)
+        parentList.controller.itemValueUpdated(notification.object!)
     }
 
     func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
         // Use insensitive completion, except for TNAM
-        let options: NSString.CompareOptions = self.type == "TNAM" ? [] : .caseInsensitive
+        let options: NSString.CompareOptions = type == "TNAM" ? [] : .caseInsensitive
         return cases.values.first {
             $0.displayValue.commonPrefix(with: string, options: options).count == string.count
         }?.displayValue

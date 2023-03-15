@@ -87,7 +87,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             default:
                 maskType = nil
             }
-            if let maskType = maskType,
+            if let maskType,
                let bw = manager.findResource(type: ResourceType(maskType, resource.typeAttributes), id: resource.id, currentDocumentOnly: true),
                let bwRep = Self.imageRep(for: bw, format: &format) {
                 image.lockFocus()

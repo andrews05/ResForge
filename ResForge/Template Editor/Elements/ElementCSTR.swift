@@ -31,14 +31,14 @@ class ElementCSTR: CasedElement {
     required init(type: String, label: String) {
         super.init(type: type, label: label)
         self.configurePadding()
-        self.width = 240
+        width = 240
         insertLineBreaks = maxLength > 256
     }
 
     override func configure() throws {
         try super.configure()
         if cases.isEmpty && maxLength > 32 {
-            self.width = 0
+            width = 0
         }
     }
 
@@ -65,7 +65,7 @@ class ElementCSTR: CasedElement {
         if maxLength < UInt32.max {
             textField.placeholderString = "\(type) (\(maxLength) characters)"
         }
-        if self.width == 0 {
+        if width == 0 {
             textField.lineBreakMode = .byWordWrapping
             DispatchQueue.main.async {
                 textField.autoresizingMask = [.width, .height]
@@ -75,7 +75,7 @@ class ElementCSTR: CasedElement {
     }
 
     func controlTextDidChange(_ obj: Notification) {
-        if self.width == 0, let field = obj.object as? NSTextField {
+        if width == 0, let field = obj.object as? NSTextField {
             self.autoRowHeight(field)
         }
     }
@@ -90,15 +90,15 @@ class ElementCSTR: CasedElement {
     }
 
     private func autoRowHeight(_ field: NSTextField) {
-        guard let outline = self.parentList?.controller?.dataList else {
+        guard let outline = parentList?.controller?.dataList else {
             return
         }
         let index = outline.row(for: field)
         if index != -1 {
             let frame = field.cell!.expansionFrame(withFrame: NSRect(x: 0, y: 0, width: field.frame.size.width-4, height: 0), in: field)
             let height = Double(frame.height) + 7
-            if height != self.rowHeight {
-                self.rowHeight = height
+            if height != rowHeight {
+                rowHeight = height
                 // In case we're not our own row...
                 (outline.item(atRow: index) as? Element)?.rowHeight = height
                 // Notify the outline view without animating

@@ -64,9 +64,9 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         panel.message = NSLocalizedString("Choose sprite sheet or folder of frames to import", comment: "")
         panel.beginSheetModal(for: window) { [self] modalResponse in
             if modalResponse == .OK {
-                if let image = image {
+                if let image {
                     sheetCallback(image, gridX, gridY, dither.state == .on)
-                } else if let images = images {
+                } else if let images {
                     framesCallback(images, dither.state == .on)
                 }
             }
@@ -119,7 +119,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             }
             self.images = images
         } else {
-            guard let image = image else {
+            guard let image else {
                 throw SpriteImporterError.unsupportedFile
             }
             guard gridX > 0, image.representations[0].pixelsWide % gridX == 0 else {
@@ -146,7 +146,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     }
 
     private func updateGrid() {
-        guard let image = image else {
+        guard let image else {
             frameSize.stringValue = "-"
             preview.image = nil
             return
@@ -177,7 +177,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
 
     private func setImage(_ image: NSImage?) {
         directory = false
-        guard let image = image,
+        guard let image,
               let rep = image.representations.first,
               rep.pixelsWide > 0 && rep.pixelsHigh > 0
         else {

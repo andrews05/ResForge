@@ -2,7 +2,7 @@ import Cocoa
 import RFSupport
 
 class ElementDATE: Element {
-    static var hfsToRef: Double = 2082844800+978307200 // Seconds between 1904 and 2001
+    static let hfsToRef: Double = 2082844800+978307200 // Seconds between 1904 and 2001
     private var tValue: UInt32 = 0
     @objc private var value: Date {
         get { Date(timeIntervalSinceReferenceDate: Double(tValue) - Self.hfsToRef) }
@@ -10,15 +10,15 @@ class ElementDATE: Element {
     }
 
     override func configure() throws {
-        self.width = 240
-        self.value = Date()
-        self.tValue += UInt32(TimeZone.current.secondsFromGMT())
+        width = 240
+        value = Date()
+        tValue += UInt32(TimeZone.current.secondsFromGMT())
     }
 
     override func configure(view: NSView) {
         var frame = view.frame
         frame.origin.y -= 1
-        frame.size.width = self.width-4
+        frame.size.width = width-4
         frame.size.height = 24
         let picker = NSDatePicker(frame: frame)
         picker.minDate = Date(timeIntervalSinceReferenceDate: -Self.hfsToRef)

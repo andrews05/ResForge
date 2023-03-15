@@ -36,7 +36,7 @@ class ImportPanel: NSObject, NSOpenSavePanelDelegate {
     }
 
     @discardableResult private func select(type: String?) -> Bool {
-        if let type = type, let item = typeSelect.item(withTitle: type) {
+        if let type, let item = typeSelect.item(withTitle: type) {
             typeSelect.select(item)
             return true
         }

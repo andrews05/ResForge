@@ -19,8 +19,8 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
     }
 
     override func configure() throws {
-        self.rowHeight = 16
-        lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB
+        rowHeight = 16
+        lstc = parentList.next(ofType: "LSTC") as? ElementLSTB
         guard lstc != nil else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Following ‘LSTC’ element not found.", comment: ""))
         }
@@ -33,7 +33,7 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
     }
 
     override func transformedValue(_ value: Any?) -> Any? {
-        return "\(self.displayLabel) = \(value!)"
+        return "\(displayLabel) = \(value!)"
     }
 
     override func readData(from reader: BinaryDataReader) throws {
@@ -46,7 +46,7 @@ class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
             value = try reader.read()
         }
         for _ in 0..<count {
-            self.parentList.insert(lstc.createNext(), before: lstc)
+            parentList.insert(lstc.createNext(), before: lstc)
         }
     }
 

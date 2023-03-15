@@ -13,9 +13,9 @@ class ElementHBYT<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         super.init(type: type, label: label)
         switch T.bitWidth/8 {
         case 4:
-            self.width = 90
+            width = 90
         case 8:
-            self.width = 150
+            width = 150
         default:
             break
         }

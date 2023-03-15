@@ -42,7 +42,7 @@ class EditorManager: RFEditorManager {
     }
 
     func template(for type: ResourceType?, basic: Bool = false) -> Resource? {
-        guard let type = type else {
+        guard let type else {
             return nil
         }
         return self.findResource(type: basic ? ResourceType.BasicTemplate : ResourceType.Template, name: type.code)

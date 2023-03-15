@@ -374,7 +374,7 @@ class SoundResource {
     }
 
     func play() {
-        guard let queueRef = queueRef else {
+        guard let queueRef else {
             return
         }
         AudioQueueReset(queueRef)
@@ -384,14 +384,14 @@ class SoundResource {
     }
 
     func stop() {
-        guard let queueRef = queueRef else {
+        guard let queueRef else {
             return
         }
         AudioQueueStop(queueRef, true)
     }
 
     func export(to url: URL) throws {
-        guard let bufferRef = bufferRef else {
+        guard let bufferRef else {
             return
         }
         var err: OSStatus

@@ -14,7 +14,7 @@ class ElementAWRD: Element {
             alignment = Int(type.suffix(2))!
         }
         super.init(type: type, label: label)
-        self.visible = false
+        visible = false
     }
 
     private func align(_ pos: Int) -> Int {

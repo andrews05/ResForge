@@ -143,7 +143,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
 
     @IBAction func saveResource(_ sender: Any) {
-        guard let sprite = sprite else {
+        guard let sprite else {
             return
         }
         resource.data = sprite.data
@@ -172,11 +172,11 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
 
     private func importSheet(image: NSImage, gridX: Int, gridY: Int, dither: Bool) {
-        guard let spriteType = writeableType else {
+        guard let writeableType else {
             return
         }
         let rep = image.representations[0]
-        let newSprite = spriteType.init(width: rep.pixelsWide / gridX, height: rep.pixelsHigh / gridY, count: gridX * gridY)
+        let newSprite = writeableType.init(width: rep.pixelsWide / gridX, height: rep.pixelsHigh / gridY, count: gridX * gridY)
         sprite = newSprite
         frames = newSprite.writeSheet(image, dither: dither)
         self.updateView()
@@ -184,11 +184,11 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
 
     private func importFrames(images: [NSImage], dither: Bool) {
-        guard let spriteType = writeableType else {
+        guard let writeableType else {
             return
         }
         let rep = images[0].representations[0]
-        let newSprite = spriteType.init(width: rep.pixelsWide, height: rep.pixelsHigh, count: images.count)
+        let newSprite = writeableType.init(width: rep.pixelsWide, height: rep.pixelsHigh, count: images.count)
         sprite = newSprite
         frames = newSprite.writeFrames(images, dither: dither)
         self.updateView()

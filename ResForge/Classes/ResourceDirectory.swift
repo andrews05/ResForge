@@ -78,7 +78,7 @@ class ResourceDirectory {
                     $0.id == id || $0.name.localizedStandardContains(filter)
                 }
             }
-            if let sorter = sorter {
+            if let sorter {
                 resouces.sort(by: sorter)
             }
             filtered[type] = resouces
@@ -95,7 +95,7 @@ class ResourceDirectory {
 
     /// Get the count of resources matching the current filter.
     func filteredCount(type: ResourceType? = nil) -> Int {
-        if let type = type {
+        if let type {
             return self.filteredResources(type: type).count
         } else {
             let list = filter.isEmpty ? resourcesByType : filtered

@@ -16,7 +16,7 @@ class ElementFBYT: Element {
             length = Element.variableTypeValue(type)
         }
         super.init(type: type, label: label)
-        self.visible = false
+        visible = false
     }
 
     override func readData(from reader: BinaryDataReader) throws {

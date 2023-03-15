@@ -14,7 +14,7 @@ class ElementRREF: Element {
 
     override func configure() throws {
         var typeCode: NSString?
-        guard let metaValue = metaValue,
+        guard let metaValue,
               case let scanner = Scanner(string: metaValue),
               scanner.scanString("'", into: nil),
               scanner.scanUpTo("'", into: &typeCode),
@@ -41,7 +41,7 @@ class ElementRREF: Element {
     override func configure(view: NSView) {
         var frame = view.frame
         frame.origin.y += 1
-        frame.size.width = self.width - 4
+        frame.size.width = width - 4
         frame.size.height = 19
         let button = NSButton(frame: frame)
         button.bezelStyle = .inline

@@ -7,7 +7,7 @@ class ElementHEXD: Element {
     var length = 0
 
     override func configure() throws {
-        if self.type == "HEXD" || self.type == "HEXS" || self.type == "CODE" {
+        if type == "HEXD" || type == "HEXS" || type == "CODE" {
             guard self.isAtEnd() else {
                 throw TemplateError.unboundedElement(self)
             }
@@ -17,21 +17,21 @@ class ElementHEXD: Element {
             data = Data(count: length)
             self.setRowHeight()
         }
-        self.width = 360
+        width = 360
     }
 
     override func configure(view: NSView) {
         var frame = view.frame
         frame.origin.y += 5
-        frame.size.width = self.width - 4
-        frame.size.height = CGFloat(self.rowHeight) - 9
+        frame.size.width = width - 4
+        frame.size.height = CGFloat(rowHeight) - 9
         let textField = NSTextField(frame: frame)
         textField.isBezeled = false
         textField.isEditable = false
         textField.isSelectable = true
         textField.drawsBackground = false
         textField.font = NSFont.userFixedPitchFont(ofSize: 11)
-        if let data = data {
+        if let data {
             var count = 0
             textField.stringValue = data.map {
                 count += 1
@@ -43,12 +43,12 @@ class ElementHEXD: Element {
 
     private func setRowHeight() {
         // 24 bytes per line, 13pt line height (minimum height 22)
-        self.rowHeight = (ceil(Double(length) / 24) * 13) + 9
+        rowHeight = (ceil(Double(length) / 24) * 13) + 9
     }
 
     override func readData(from reader: BinaryDataReader) throws {
         let remainder = reader.remainingBytes
-        if self.type == "HEXD" || self.type == "HEXS" || self.type == "CODE" {
+        if type == "HEXD" || type == "HEXS" || type == "CODE" {
             length = remainder
         }
         self.setRowHeight()
@@ -62,7 +62,7 @@ class ElementHEXD: Element {
     }
 
     override func writeData(to writer: BinaryDataWriter) {
-        if let data = self.data {
+        if let data {
             writer.data.append(data)
         } else {
             writer.advance(length)

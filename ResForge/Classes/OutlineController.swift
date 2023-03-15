@@ -55,8 +55,8 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
 
     func selectedType() -> ResourceType? {
-        if let type = currentType {
-            return type
+        if let currentType {
+            return currentType
         } else {
             let item = outlineView.selectedItem
             return item as? ResourceType ?? (item as? Resource)?.type
@@ -68,13 +68,13 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
 
     func updateRow(oldIndex: Int?, newIndex: Int?, parent: Any?) {
-        if let oldIndex = oldIndex {
-            if let newIndex = newIndex {
+        if let oldIndex {
+            if let newIndex {
                 outlineView.moveItem(at: oldIndex, inParent: parent, to: newIndex, inParent: parent)
             } else {
                 outlineView.removeItems(at: IndexSet([oldIndex]), inParent: parent)
             }
-        } else if let newIndex = newIndex {
+        } else if let newIndex {
             outlineView.insertItems(at: IndexSet([newIndex]), inParent: parent)
         }
     }

@@ -23,7 +23,7 @@ class ElementCOLR: Element {
 
     override func configure(view: NSView) {
         var frame = view.frame
-        frame.size.width = self.width-4
+        frame.size.width = width-4
         let well = NSColorWell(frame: frame)
         well.action = #selector(TemplateEditor.itemValueUpdated(_:))
         well.bind(.value, to: self, withKeyPath: "value")

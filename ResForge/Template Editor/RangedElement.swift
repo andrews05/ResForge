@@ -4,8 +4,8 @@ import Cocoa
 class RangedElement: CasedElement {
     override var subtext: String {
         get {
-            if let casr = currentCase, !casr.subtext.isEmpty {
-                return casr.subtext
+            if let currentCase, !currentCase.subtext.isEmpty {
+                return currentCase.subtext
             }
             return super.subtext
         }
@@ -15,8 +15,8 @@ class RangedElement: CasedElement {
     }
     var displayValue = 0 {
         didSet {
-            if let casr = currentCase {
-                self.setValue(casr.deNormalise(displayValue), forKey: "value")
+            if let currentCase {
+                self.setValue(currentCase.deNormalise(displayValue), forKey: "value")
             }
         }
     }
@@ -26,7 +26,7 @@ class RangedElement: CasedElement {
 
     override func configure() throws {
         // Read CASR elements
-        while let casr = self.parentList.pop("CASR") as? ElementCASR {
+        while let casr = parentList.pop("CASR") as? ElementCASR {
             if casrs == nil {
                 casrs = []
             }
@@ -70,11 +70,11 @@ class RangedElement: CasedElement {
             view.frame = frame
             currentCase.configure(view: view)
             select.nextKeyView = view.subviews.last
-            self.width = popupWidth + currentCase.width
+            width = popupWidth + currentCase.width
             view.frame = orig
         } else {
             currentCase.configure(view: view)
-            self.width = currentCase.width
+            width = currentCase.width
         }
     }
 
@@ -101,9 +101,9 @@ class RangedElement: CasedElement {
         } else {
             displayValue = +displayValue // Still need to trigger didSet
         }
-        let outline = self.parentList.controller.dataList!
+        let outline = parentList.controller.dataList!
         // Item isn't necessarily self
         outline.reloadItem(outline.item(atRow: outline.row(for: sender)))
-        self.parentList.controller.itemValueUpdated(sender)
+        parentList.controller.itemValueUpdated(sender)
     }
 }

@@ -20,11 +20,11 @@ class ElementPACK: Element {
     }
 
     override func configure() throws {
-        guard let metaValue = metaValue, !metaValue.isEmpty else {
+        guard let metaValue, !metaValue.isEmpty else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No elements to pack.", comment: ""))
         }
         for label in metaValue.components(separatedBy: ",") {
-            guard let element = self.parentList.next(withLabel: label) else {
+            guard let element = parentList.next(withLabel: label) else {
                 throw TemplateError.invalidStructure(self, NSLocalizedString("A named element was not found.", comment: ""))
             }
             guard !(element is GroupElement) && !["PACK", "CASE", "CASR"].contains(element.type) else {

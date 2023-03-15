@@ -25,12 +25,12 @@ class ElementFCNT: Element, GroupElement, CounterElement {
         groupLabel = label.dropFirst(scanner.scanLocation).trimmingCharacters(in: .whitespaces)
         super.init(type: type, label: label)
         // Hide if no remaining label
-        self.visible = !groupLabel.isEmpty
+        visible = !groupLabel.isEmpty
     }
 
     override func configure() throws {
-        self.rowHeight = 16
-        guard let lstc = self.parentList.next(ofType: "LSTC") as? ElementLSTB else {
+        rowHeight = 16
+        guard let lstc = parentList.next(ofType: "LSTC") as? ElementLSTB else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Following ‘LSTC’ element not found.", comment: ""))
         }
         lstc.counter = self
@@ -39,6 +39,6 @@ class ElementFCNT: Element, GroupElement, CounterElement {
     }
 
     func configureGroup(view: NSTableCellView) {
-        view.textField?.stringValue = "\(self.groupLabel) = \(self.count)"
+        view.textField?.stringValue = "\(groupLabel) = \(count)"
     }
 }

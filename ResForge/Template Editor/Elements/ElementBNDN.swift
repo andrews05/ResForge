@@ -8,19 +8,19 @@ class ElementBNDN: Element, GroupElement {
     required init(type: String, label: String) {
         bigEndian = type.first == "B"
         super.init(type: type, label: label)
-        self.rowHeight = 16
-        self.visible = !type.hasSuffix("NDN")
+        rowHeight = 16
+        visible = !type.hasSuffix("NDN")
     }
 
     func configureGroup(view: NSTableCellView) {
-        view.textField?.stringValue = self.displayLabel
+        view.textField?.stringValue = displayLabel
     }
 
     override func readData(from reader: BinaryDataReader) throws {
-        reader.bigEndian = self.bigEndian
+        reader.bigEndian = bigEndian
     }
 
     override func writeData(to writer: BinaryDataWriter) {
-        writer.bigEndian = self.bigEndian
+        writer.bigEndian = bigEndian
     }
 }

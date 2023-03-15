@@ -131,7 +131,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             fork = (NSDocumentController.shared as! OpenPanelDelegate).getSelectedFork()
         }
         let resources: [Resource]
-        if let fork = fork {
+        if let fork {
             // If fork has been set, try this fork only
             if fork == .data && hasData {
                 resources = try ResourceFile.read(from: url, format: &format)
@@ -463,7 +463,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
 
     func updateStatus() {
-        guard let statusText = statusText else {
+        guard let statusText else {
             return
         }
         let count = directory.count
@@ -481,7 +481,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 }
             }
         }
-        if let fork = fork {
+        if let fork {
             var formatName = format.name
             if fork == .rsrc {
                 formatName += " (\(fork.name))"
