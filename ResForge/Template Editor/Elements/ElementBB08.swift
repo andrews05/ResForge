@@ -3,9 +3,21 @@ import RFSupport
 
 // Implements BB08, WB16, LB32, QB64
 // These types would otherwise be equivalent to UBYT etc so we do a special case here to instead display a grid of checkboxes.
+// The meta value may be either a default value or an id reference to STR# resource containing names for each bit (e.g. "#128")
 class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
-    @objc dynamic private var value: UInt = 0
+    @objc private var value: UInt = 0 {
+        didSet {
+            // The field is not bound to the value so we need to update it manually
+            valueField?.objectValue = value
+            // Keep a copy of the formatted value in the placeholder string so it can be restored when necessary
+            valueField?.placeholderString = valueField?.stringValue
+            // Always restore the colour
+            valueField?.textColor = .labelColor
+        }
+    }
+    weak var valueField: NSTextField?
     weak var checkboxes: NSView?
+    private var bitNames: [String] = []
 
     required init(type: String, label: String) {
         super.init(type: type, label: label)
@@ -16,6 +28,22 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     override func configure() throws {
         // Cases not actually supported but we still want to allow default values
         _ = self.defaultValue()
+        
+        // Check for an id reference and try to load names from a STR#
+        var listID = 0
+        if let metaValue,
+           case let scanner = Scanner(string: metaValue),
+           scanner.scanString("#", into: nil),
+           scanner.scanInt(&listID),
+           let list = parentList.controller.manager.findResource(type: ResourceType("STR#"), id: listID, currentDocumentOnly: false) {
+            let reader = BinaryDataReader(list.data)
+            do {
+                try reader.advance(2)
+                for _ in 0..<T.bitWidth {
+                    bitNames.append(try reader.readPString())
+                }
+            } catch {}
+        }
     }
 
     override func configure(view: NSView) {
@@ -24,15 +52,16 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         frame.origin.y += 4
         frame.size.width = 134
         frame.size.height = 14
-        let textField = NSTextField(labelWithString: "")
-        textField.frame = frame
-        textField.font = NSFont.userFixedPitchFont(ofSize: 12)
-        textField.formatter = formatter
-        textField.bind(.value, to: self, withKeyPath: "value")
-        textField.isSelectable = true
-        view.addSubview(textField)
+        let valueField = NSTextField(labelWithString: "")
+        valueField.frame = frame
+        valueField.font = NSFont.userFixedPitchFont(ofSize: 12)
+        valueField.formatter = formatter
+        valueField.objectValue = value
+        valueField.placeholderString = valueField.stringValue
+        view.addSubview(valueField)
+        self.valueField = valueField
 
-        // Create bit number view
+        // Create bit number view, shown on hover of a checkbox
         frame.origin.x += 134
         frame.size.width = 24
         let bitNum = NSTextField(labelWithString: "")
@@ -47,6 +76,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         frame.size.width = 14
         let actionButton = self.createActionButton(at: frame)
         view.addSubview(actionButton)
+        valueField.menu = actionButton.menu
 
         // Create checkboxes holder
         // This allows us to keep a weak reference to the collection
@@ -66,10 +96,14 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         for i in 0..<T.bitWidth {
             // We can't easily bind all the checkboxes, so just use the action to update
             let checkbox = BitButton(checkboxWithTitle: "", target: self, action: #selector(self.toggleBit(_:)))
-            checkbox.textField = bitNum
+            checkbox.numberField = bitNum
+            checkbox.labelField = valueField
             checkbox.actionButton = actionButton
             checkbox.frame = frame
             checkbox.tag = i
+            if i < bitNames.endIndex {
+                checkbox.title = bitNames[i]
+            }
             if value & (1 << i) != 0 {
                 checkbox.state = .on
             }
@@ -179,10 +213,11 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     }
 }
 
-// NSButton subclass that shows tag number in an NSTextField on hover
+// NSButton subclass that shows info about the bit on hover
 class BitButton: NSButton {
-    weak var textField: NSTextField?
+    weak var numberField: NSTextField?
     weak var actionButton: NSButton?
+    weak var labelField: NSTextField?
 
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
@@ -194,15 +229,23 @@ class BitButton: NSButton {
     }
 
     override func mouseEntered(with event: NSEvent) {
-        textField?.integerValue = tag + 1
+        // Show the bit number in place of the action button
+        numberField?.integerValue = tag + 1
         actionButton?.isHidden = true
+        // The label field will show the name of the bit if we have one, else the formatted value
+        labelField?.objectValue = title.isEmpty ? 1 << tag : title
+        labelField?.textColor = .secondaryLabelColor
     }
 
     override func mouseExited(with event: NSEvent) {
+        // In case we hovered onto an adjacent bit, prevent flicker by deferring the action
+        // Then we can tell if we need to restore the view by checking if the bit number still matches
         DispatchQueue.main.async { [self] in
-            if let textField, textField.integerValue == tag + 1 {
-                textField.stringValue = ""
+            if numberField?.integerValue == tag + 1 {
+                numberField?.stringValue = ""
                 actionButton?.isHidden = false
+                labelField?.objectValue = labelField?.placeholderString
+                labelField?.textColor = .labelColor
             }
         }
     }
