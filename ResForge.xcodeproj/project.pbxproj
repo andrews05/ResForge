@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4907D2DB29C420640003702A /* NCBSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2DA29C420640003702A /* NCBSet.swift */; };
+		4907D2DD29C423660003702A /* ElementNCB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2DC29C423660003702A /* ElementNCB.swift */; };
+		4907D2F029C50AFE0003702A /* Parsing in Frameworks */ = {isa = PBXBuildFile; productRef = 4907D2EF29C50AFE0003702A /* Parsing */; };
 		490C682429A9571400FF3EAF /* ElementRNAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490C682329A9571400FF3EAF /* ElementRNAM.swift */; };
 		490D94AF25624FCF00F73544 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; };
@@ -306,6 +309,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4907D2DA29C420640003702A /* NCBSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCBSet.swift; sourceTree = "<group>"; };
+		4907D2DC29C423660003702A /* ElementNCB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementNCB.swift; sourceTree = "<group>"; };
 		490C682329A9571400FF3EAF /* ElementRNAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRNAM.swift; sourceTree = "<group>"; };
 		490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
 		4919415425E98E7000FFC3F8 /* SpriteLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteLayer.swift; sourceTree = "<group>"; };
@@ -561,6 +566,7 @@
 				4952BD4C26DD9356005DB6EB /* CSV in Frameworks */,
 				49AACD8224CE931A0081DD4A /* RFSupport.framework in Frameworks */,
 				49D6D349271BAA9F002DEA97 /* OrderedCollections in Frameworks */,
+				4907D2F029C50AFE0003702A /* Parsing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,6 +582,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4907D2D929C420490003702A /* NCB */ = {
+			isa = PBXGroup;
+			children = (
+				4907D2DA29C420640003702A /* NCBSet.swift */,
+				4907D2DC29C423660003702A /* ElementNCB.swift */,
+			);
+			path = NCB;
+			sourceTree = "<group>";
+		};
 		490D948E25624F5D00F73544 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -852,6 +867,7 @@
 				49D6D351271BAAAC002DEA97 /* RangedElement.swift */,
 				49D6D355271BAAAC002DEA97 /* KeyElement.swift */,
 				49D6D35B271BAAAD002DEA97 /* Elements */,
+				4907D2D929C420490003702A /* NCB */,
 			);
 			path = "Template Editor";
 			sourceTree = "<group>";
@@ -1136,6 +1152,7 @@
 			packageProductDependencies = (
 				4952BD4B26DD9356005DB6EB /* CSV */,
 				49D6D348271BAA9F002DEA97 /* OrderedCollections */,
+				4907D2EF29C50AFE0003702A /* Parsing */,
 			);
 			productInstallPath = "$(USER_APPS_DIR)";
 			productName = "ResKnife Cocoa";
@@ -1201,6 +1218,8 @@
 			packageReferences = (
 				4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */,
 				493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */,
+				4907D2EE29C50AFE0003702A /* XCRemoteSwiftPackageReference "swift-parsing" */,
+				4907D2F129C512A00003702A /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 			);
 			productRefGroup = F5B588110156D30301000001 /* Products */;
 			projectDirPath = "";
@@ -1448,6 +1467,7 @@
 				49D6D399271BAAB4002DEA97 /* KeyElement.swift in Sources */,
 				49D6D3AF271BAAB4002DEA97 /* ElementREAL.swift in Sources */,
 				49D6D391271BAAB4002DEA97 /* ElementCOLR.swift in Sources */,
+				4907D2DB29C420640003702A /* NCBSet.swift in Sources */,
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
 				49655DFA24DE6DA200D6AFF6 /* ResourceExtension.swift in Sources */,
 				49D6D39C271BAAB4002DEA97 /* ElementDVDR.swift in Sources */,
@@ -1496,6 +1516,7 @@
 				49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */,
 				499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */,
 				49D6D39F271BAAB4002DEA97 /* ElementWCOL.swift in Sources */,
+				4907D2DD29C423660003702A /* ElementNCB.swift in Sources */,
 				49D6D3AE271BAAB4002DEA97 /* ElementPACK.swift in Sources */,
 				49D6D3A5271BAAB4002DEA97 /* ElementDOUB.swift in Sources */,
 				49D6D3A7271BAAB4002DEA97 /* TemplateError.swift in Sources */,
@@ -2065,6 +2086,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4907D2EE29C50AFE0003702A /* XCRemoteSwiftPackageReference "swift-parsing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-parsing";
+			requirement = {
+				kind = exactVersion;
+				version = 0.9.2;
+			};
+		};
+		4907D2F129C512A00003702A /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-case-paths";
+			requirement = {
+				kind = exactVersion;
+				version = 0.9.2;
+			};
+		};
 		493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
@@ -2084,6 +2121,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4907D2EF29C50AFE0003702A /* Parsing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4907D2EE29C50AFE0003702A /* XCRemoteSwiftPackageReference "swift-parsing" */;
+			productName = Parsing;
+		};
 		4952BD4B26DD9356005DB6EB /* CSV */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */;

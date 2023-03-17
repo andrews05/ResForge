@@ -81,7 +81,7 @@ class TemplateParser {
         var baseType = type
 
         // check for Xnnn type - currently using resorcerer's nmm restriction to reserve all-alpha types (e.g. FACE) for potential future use
-        if registry[baseType] == nil && type.range(of: "[A-Z](?!000)[0-9][0-9A-F]{2}", options: .regularExpression) != nil {
+        if registry[baseType] == nil && type.range(of: "[A-Za-z](?!000)[0-9][0-9A-F]{2}", options: .regularExpression) != nil {
             baseType = String(type.prefix(1))
         }
         // check for XXnn type
@@ -272,5 +272,7 @@ class TemplateParser {
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
         "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)
+
+        "n"   : ElementNCB.self,
     ]) { $1 }
 }
