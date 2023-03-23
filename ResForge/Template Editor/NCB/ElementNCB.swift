@@ -2,10 +2,20 @@ import Cocoa
 
 // The NCB element performs parsing of a Nova Control Bit string and displays the result in a popover
 class ElementNCB: ElementCSTR {
+    let expressionType: NCBExpression.Type
+
+    required init(type: String, label: String) {
+        // Determine test or set from label
+        let isTest = label.uppercased().contains("TEST")
+        expressionType = isTest ? NCBTestExpression.self : NCBSetExpression.self
+        super.init(type: type, label: label)
+    }
+
     override func configure(view: NSView) {
         super.configure(view: view)
         let textField = view.subviews.last as! NSTextField
-        textField.placeholderString = "NCB Set Expression (\(maxLength) characters)"
+        let type = expressionType == NCBTestExpression.self ? "Test" : "Set"
+        textField.placeholderString = "NCB \(type) Expression (\(maxLength) characters)"
 
         // Overlay an info button on the right end of the field
         let infoButton = NSButton(frame: NSRect(x: textField.frame.maxX - 18, y: 7, width: 12, height: 12))
@@ -23,22 +33,25 @@ class ElementNCB: ElementCSTR {
     }
 
     @objc private func showInfo(_ sender: NSButton) {
-        if let control = sender.previousKeyView {
+        if let control = sender.previousKeyView as? NSControl {
             self.showPopover(control)
         }
     }
 
     override func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
-        if commandSelector == #selector(NSTextView.insertNewline(_:)), let editor = control.currentEditor() {
-            // Commit the current value
-            control.endEditing(editor)
+        if commandSelector == #selector(NSTextView.insertNewline(_:)) {
             self.showPopover(control)
             return true
         }
         return super.control(control, textView: textView, doCommandBy: commandSelector)
     }
 
-    private func showPopover(_ control: NSView) {
+    private func showPopover(_ control: NSControl) {
+        // Commit the current value
+        if let editor = control.currentEditor() {
+            control.endEditing(editor)
+        }
+
         let field = self.popoverTextField()
 
         // Calculate field dimensions, allowing 8px padding on all sides
@@ -64,19 +77,21 @@ class ElementNCB: ElementCSTR {
         let field = NSTextField(labelWithString: "")
         if value.isEmpty {
             // When no value, show list of all operators
-            let ops = NCBSetOp.allCases.map(\.usage).joined(separator: "\n")
-            field.stringValue = "\(ops)\n\(NCBSetRandom.usage)\n\n<required value> [optional value]"
+            field.stringValue = expressionType.usage
         } else {
             // Parse the value
             do {
-                let parsed = try NCBSetParser.parse(value.uppercased())
-                field.stringValue = parsed.map {
-                    $0.description(manager: parentList.controller.manager)
-                }.joined(separator: "\n")
+                let parsed = try expressionType.parse(value.uppercased())
+                field.stringValue = parsed.description(manager: parentList.controller.manager)
             } catch let err {
                 // If multiple failures occur, only show the first one (index 1 after splitting)
                 let errors = "\(err)".components(separatedBy: "\n\n")
-                field.stringValue = errors.endIndex > 1 ? errors[1] : errors[0]
+                let message = errors.endIndex > 1 ? errors[1] : errors[0]
+                // Filter out duplicate expectations
+                var unique = Set<Substring>()
+                field.stringValue = message.split(separator: "\n").filter {
+                    unique.insert($0).inserted
+                }.joined(separator: "\n")
                 field.font = .userFixedPitchFont(ofSize: 12)
             }
         }

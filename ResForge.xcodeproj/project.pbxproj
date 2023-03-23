@@ -10,6 +10,7 @@
 		4907D2DB29C420640003702A /* NCBSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2DA29C420640003702A /* NCBSet.swift */; };
 		4907D2DD29C423660003702A /* ElementNCB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2DC29C423660003702A /* ElementNCB.swift */; };
 		4907D2F029C50AFE0003702A /* Parsing in Frameworks */ = {isa = PBXBuildFile; productRef = 4907D2EF29C50AFE0003702A /* Parsing */; };
+		4907D2FD29CC4B290003702A /* NCBExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2FC29CC4B290003702A /* NCBExpression.swift */; };
 		490C682429A9571400FF3EAF /* ElementRNAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490C682329A9571400FF3EAF /* ElementRNAM.swift */; };
 		490D94AF25624FCF00F73544 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; };
@@ -22,6 +23,7 @@
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
 		492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D1E222606F53F0053DD27 /* PilotFilter.swift */; };
+		492D5F1429CBC13A00A2668C /* NCBTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D5F1329CBC13A00A2668C /* NCBTest.swift */; };
 		492E912E2551373100195174 /* SpriteWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E912D2551373100195174 /* SpriteWorld.swift */; };
 		492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E91C92553ADB100195174 /* SpriteImporter.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
@@ -311,6 +313,7 @@
 /* Begin PBXFileReference section */
 		4907D2DA29C420640003702A /* NCBSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCBSet.swift; sourceTree = "<group>"; };
 		4907D2DC29C423660003702A /* ElementNCB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementNCB.swift; sourceTree = "<group>"; };
+		4907D2FC29CC4B290003702A /* NCBExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCBExpression.swift; sourceTree = "<group>"; };
 		490C682329A9571400FF3EAF /* ElementRNAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRNAM.swift; sourceTree = "<group>"; };
 		490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
 		4919415425E98E7000FFC3F8 /* SpriteLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteLayer.swift; sourceTree = "<group>"; };
@@ -321,6 +324,7 @@
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		492D1E222606F53F0053DD27 /* PilotFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilotFilter.swift; sourceTree = "<group>"; };
+		492D5F1329CBC13A00A2668C /* NCBTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCBTest.swift; sourceTree = "<group>"; };
 		492E912D2551373100195174 /* SpriteWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteWorld.swift; sourceTree = "<group>"; };
 		492E91C92553ADB100195174 /* SpriteImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteImporter.swift; sourceTree = "<group>"; };
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -585,8 +589,10 @@
 		4907D2D929C420490003702A /* NCB */ = {
 			isa = PBXGroup;
 			children = (
-				4907D2DA29C420640003702A /* NCBSet.swift */,
 				4907D2DC29C423660003702A /* ElementNCB.swift */,
+				4907D2FC29CC4B290003702A /* NCBExpression.swift */,
+				4907D2DA29C420640003702A /* NCBSet.swift */,
+				492D5F1329CBC13A00A2668C /* NCBTest.swift */,
 			);
 			path = NCB;
 			sourceTree = "<group>";
@@ -1471,6 +1477,7 @@
 				49F6C76324C579820078EB55 /* PrefsController.swift in Sources */,
 				49655DFA24DE6DA200D6AFF6 /* ResourceExtension.swift in Sources */,
 				49D6D39C271BAAB4002DEA97 /* ElementDVDR.swift in Sources */,
+				492D5F1429CBC13A00A2668C /* NCBTest.swift in Sources */,
 				491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */,
 				49D6D3A8271BAAB4002DEA97 /* ElementDBYT.swift in Sources */,
 				49D6D386271BAAB4002DEA97 /* ElementTNAM.swift in Sources */,
@@ -1496,6 +1503,7 @@
 				49D6D3A2271BAAB4002DEA97 /* ElementKBYT.swift in Sources */,
 				49D6D39A271BAAB4002DEA97 /* ElementBHEX.swift in Sources */,
 				49D6D3AD271BAAB4002DEA97 /* ElementBOOL.swift in Sources */,
+				4907D2FD29CC4B290003702A /* NCBExpression.swift in Sources */,
 				49D6D3B3271BAAB4002DEA97 /* ElementLSTB.swift in Sources */,
 				49D6D3A6271BAAB4002DEA97 /* TemplateParser.swift in Sources */,
 				49D6D397271BAAB4002DEA97 /* ElementBBIT.swift in Sources */,

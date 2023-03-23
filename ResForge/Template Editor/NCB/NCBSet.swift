@@ -1,17 +1,35 @@
-import Foundation
 import Parsing
 import RFSupport
 
-/// Parses a full NCB set string
-let NCBSetParser = Many {
-    OneOf {
-        NCBSetValue.parser.map { $0 as NCBSet }
-        NCBSetRandom.parser.map { $0 as NCBSet }
+/// Parses a full NCB set expression
+struct NCBSetExpression: NCBExpression {
+    static let parser = Many {
+        OneOf {
+            NCBSetValue.parser.map { $0 as NCBSet }
+            NCBSetRandom.parser.map { $0 as NCBSet }
+        }
+    } separator: {
+        Whitespace(1...)
+    } terminator: {
+        End()
+    }.map(Self.init)
+
+    static func parse(_ input: String) throws -> Self {
+        try parser.parse(input)
     }
-} separator: {
-    Whitespace(1...)
-} terminator: {
-    End()
+
+    static let usage = {
+        let ops = NCBSetOp.allCases.map(\.usage).joined(separator: "\n")
+        return "\(ops)\n\(NCBSetRandom.usage)\n\n<required value> [optional value]"
+    }()
+
+    let ops: [NCBSet]
+
+    func description(manager: RFEditorManager) -> String {
+        ops.map {
+            $0.description(manager: manager)
+        }.joined(separator: "\n")
+    }
 }
 
 protocol NCBSet {
@@ -21,13 +39,15 @@ protocol NCBSet {
 /// An NCB set operation with associated value
 struct NCBSetValue: NCBSet {
     static let parser = OneOf {
-        Parse(Self.init) {
-            NCBSetOp.parser()
-            Digits()
-        }
-        // Leave op does not require a value
-        NCBSetOp.leave.rawValue.map {
-            Self(op: .leave, value: nil)
+        for op in NCBSetOp.allCases {
+            Parse(Self.init) {
+                op.rawValue.map { op }
+                if op.valueRequired {
+                    Digits().map { $0 as Int? }
+                } else {
+                    Optionally { Digits() }
+                }
+            }
         }
     }
 
