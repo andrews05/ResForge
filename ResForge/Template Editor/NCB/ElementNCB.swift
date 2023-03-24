@@ -18,7 +18,7 @@ class ElementNCB: ElementCSTR {
         textField.placeholderString = "NCB \(type) Expression (\(maxLength) characters)"
 
         // Overlay an info button on the right end of the field
-        let infoButton = NSButton(frame: NSRect(x: textField.frame.maxX - 18, y: 7, width: 12, height: 12))
+        let infoButton = NSButton(frame: NSRect(x: textField.frame.maxX - 16, y: 7, width: 12, height: 12))
         infoButton.isBordered = false
         infoButton.bezelStyle = .inline
         if #available(macOS 11, *) {

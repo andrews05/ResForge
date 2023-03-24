@@ -41,6 +41,7 @@ ResForge includes a plug-in architecture, allowing custom editors to be created 
 * [Graphite](https://github.com/TheDiamondProject/Graphite) - Provides reading/writing of resource files, as well 'PICT', 'cicn' and 'ppat' resources. 
 * [HexFiend](https://github.com/HexFiend/HexFiend) - Powers the hexadecimal editor.
 * [CSV.swift](https://github.com/yaslab/CSV.swift) - Provides reading/writing of CSV files.
+* [swift-parsing](https://github.com/pointfreeco/swift-parsing) - Provides parsing of custom DSLs.
 
 
 ## Contributing

@@ -273,6 +273,8 @@ class TemplateParser {
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
         "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)
 
-        "n"   : ElementNCB.self,
+        // custom elements that should be in plugins, but we don't support that yet
+        // these are considered non-standard and contain at least one character that is not uppercase ascii
+        "n"   : ElementNCB.self,            // Nova Control Bit string
     ]) { $1 }
 }
