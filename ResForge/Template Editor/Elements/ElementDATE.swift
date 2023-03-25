@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class ElementDATE: Element {
+class ElementDATE: BaseElement {
     static let hfsToRef: Double = 2082844800+978307200 // Seconds between 1904 and 2001
     private var tValue: UInt32 = 0
     @objc private var value: Date {

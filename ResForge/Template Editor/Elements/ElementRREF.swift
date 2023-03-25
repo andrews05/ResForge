@@ -7,7 +7,7 @@ import RFSupport
  * If offset is prefixed with # then the referenced id will equal the offset
  * Otherwise the referenced id will equal the current resource's id plus the offset
  */
-class ElementRREF: Element {
+class ElementRREF: BaseElement {
     private var resType = ""
     private var id = 0
     private var buttonLabel = ""

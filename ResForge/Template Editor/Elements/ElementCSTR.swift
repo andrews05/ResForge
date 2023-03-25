@@ -52,7 +52,7 @@ class ElementCSTR: CasedElement {
             padding = .even
         default:
             // Assume Xnnn for anything else
-            let nnn = Element.variableTypeValue(type)
+            let nnn = BaseElement.variableTypeValue(type)
             // Use resorcerer's more consistent n = datalength rather than resedit's n = stringlength
             padding = .fixed(nnn)
             maxLength = nnn-1
@@ -100,7 +100,7 @@ class ElementCSTR: CasedElement {
             if height != rowHeight {
                 rowHeight = height
                 // In case we're not our own row...
-                (outline.item(atRow: index) as? Element)?.rowHeight = height
+                (outline.item(atRow: index) as? BaseElement)?.rowHeight = height
                 // Notify the outline view without animating
                 NSAnimationContext.beginGrouping()
                 NSAnimationContext.current.duration = 0

@@ -2,24 +2,24 @@ import Cocoa
 import RFSupport
 
 class ElementList {
-    private(set) weak var parentElement: Element?
+    private(set) weak var parentElement: BaseElement?
     private(set) weak var controller: TemplateEditor!
-    private var elements: [Element] = []
-    private var visibleElements: [Element] = []
+    private var elements: [BaseElement] = []
+    private var visibleElements: [BaseElement] = []
     private var currentIndex = 0
     private var configured = false
     var count: Int {
         return visibleElements.count
     }
 
-    init(controller: TemplateEditor, parent: Element? = nil) {
+    init(controller: TemplateEditor, parent: BaseElement? = nil) {
         parentElement = parent
         self.controller = controller
     }
 
     func copy() throws -> ElementList {
         let list = ElementList(controller: controller, parent: parentElement)
-        list.elements = elements.map({ $0.copy() as Element })
+        list.elements = elements.map({ $0.copy() as BaseElement })
         try list.configure()
         return list
     }
@@ -79,12 +79,12 @@ class ElementList {
 
     // MARK: -
 
-    func element(at index: Int) -> Element {
+    func element(at index: Int) -> BaseElement {
         return visibleElements[index]
     }
 
     // Insert a new element before the current element during read/configure
-    func insert(_ element: Element) {
+    func insert(_ element: BaseElement) {
         elements.insert(element, at: currentIndex)
         element.parentList = self
         currentIndex += 1
@@ -95,7 +95,7 @@ class ElementList {
     }
 
     // Insert a new element before/after a given element
-    func insert(_ element: Element, before: Element) {
+    func insert(_ element: BaseElement, before: BaseElement) {
         elements.insert(element, at: elements.firstIndex(of: before)!)
         element.parentList = self
         if element.visible {
@@ -103,7 +103,7 @@ class ElementList {
         }
     }
 
-    func insert(_ element: Element, after: Element) {
+    func insert(_ element: BaseElement, after: BaseElement) {
         elements.insert(element, at: elements.firstIndex(of: after)! + 1)
         element.parentList = self
         if element.visible {
@@ -111,7 +111,7 @@ class ElementList {
         }
     }
 
-    func remove(_ element: Element) {
+    func remove(_ element: BaseElement) {
         elements.removeAll(where: { $0 == element })
         visibleElements.removeAll(where: { $0 == element })
     }
@@ -121,13 +121,13 @@ class ElementList {
     // The following methods may be used by elements while reading their sub elements
 
     // Peek at an element in the list without removing it
-    func peek(_ n: Int) -> Element? {
+    func peek(_ n: Int) -> BaseElement? {
         let i = currentIndex + n
         return i < elements.endIndex ? elements[i] : nil
     }
 
     // Pop the next element out of the list
-    func pop(_ type: String? = nil) -> Element? {
+    func pop(_ type: String? = nil) -> BaseElement? {
         let i = currentIndex + 1
         if i >= elements.endIndex {
             return nil
@@ -141,12 +141,12 @@ class ElementList {
     }
 
     // Search for an element of a given type following the current one
-    func next(ofType type: String) -> Element? {
+    func next(ofType type: String) -> BaseElement? {
         return elements[(currentIndex+1)...].first(where: { $0.type == type })
     }
 
     // Search for an element of a given type preceding the current one, travsersing up the hierarchy if necessary
-    func previous(ofType type: String) -> Element? {
+    func previous(ofType type: String) -> BaseElement? {
         if let element = elements[0..<currentIndex].last(where: { $0.type == type }) {
             return element
         }
@@ -154,7 +154,7 @@ class ElementList {
     }
 
     // Search for the next visible element with the given display label
-    func next(withLabel label: String) -> Element? {
+    func next(withLabel label: String) -> BaseElement? {
         for el in elements[(currentIndex+1)...] where el.visible {
             if el.displayLabel == label {
                 return el

@@ -1,12 +1,12 @@
 import Cocoa
 import RFSupport
 
-protocol CounterElement where Self: Element {
+protocol CounterElement where Self: BaseElement {
     var count: Int { get set }
 }
 
 // Implements OCNT, ZCNT, BCNT, LCNT, LZCT
-class ElementOCNT<T: FixedWidthInteger>: Element, GroupElement, CounterElement {
+class ElementOCNT<T: FixedWidthInteger>: BaseElement, GroupElement, CounterElement {
     private var value: T = 0
     private weak var lstc: ElementLSTB!
     @objc var count: Int {

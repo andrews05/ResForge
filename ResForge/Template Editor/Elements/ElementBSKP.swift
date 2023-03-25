@@ -2,7 +2,7 @@ import Cocoa
 import RFSupport
 
 // Implements BSKP, SKIP, LSKP, BSIZ, WSIZ, LSIZ
-class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element, CollectionElement {
+class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: BaseElement, CollectionElement {
     let endType = "SKPE"
     private var subElements: ElementList!
     private var skipLengthBytes: Bool
@@ -86,7 +86,7 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: Element, CollectionEl
         subElements.count
     }
 
-    func subElement(at index: Int) -> Element {
+    func subElement(at index: Int) -> BaseElement {
         return subElements.element(at: index)
     }
 }

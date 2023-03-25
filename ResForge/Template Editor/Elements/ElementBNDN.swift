@@ -2,7 +2,7 @@ import Cocoa
 import RFSupport
 
 // Implements BNDN, LNDN, BIGE, LTLE
-class ElementBNDN: Element, GroupElement {
+class ElementBNDN: BaseElement, GroupElement {
     private let bigEndian: Bool
 
     required init(type: String, label: String) {

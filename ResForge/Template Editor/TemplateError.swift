@@ -5,9 +5,9 @@ enum TemplateError: LocalizedError, RecoverableError {
     case corrupt
     case unknownElement(String)
     case unclosedElement(CollectionElement)
-    case unboundedElement(Element)
-    case invalidStructure(Element, String)
-    case dataMismatch(Element)
+    case unboundedElement(BaseElement)
+    case invalidStructure(BaseElement, String)
+    case dataMismatch(BaseElement)
     case truncate
 
     var errorDescription: String? {

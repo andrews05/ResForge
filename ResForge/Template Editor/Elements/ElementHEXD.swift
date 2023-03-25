@@ -2,7 +2,7 @@ import Cocoa
 import RFSupport
 
 // Implements HEXD, HEXS, Hnnn
-class ElementHEXD: Element {
+class ElementHEXD: BaseElement {
     var data: Data?
     var length = 0
 
@@ -13,7 +13,7 @@ class ElementHEXD: Element {
             }
         } else {
             // Hnnn
-            length = Element.variableTypeValue(type)
+            length = BaseElement.variableTypeValue(type)
             data = Data(count: length)
             self.setRowHeight()
         }

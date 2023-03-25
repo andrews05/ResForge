@@ -121,7 +121,7 @@ class KeyElement: CasedElement, CollectionElement {
         currentSection?.subElementCount ?? 0
     }
 
-    func subElement(at index: Int) -> Element {
+    func subElement(at index: Int) -> BaseElement {
         return currentSection.subElement(at: index)
     }
 }

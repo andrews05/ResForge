@@ -2,15 +2,15 @@ import Cocoa
 import RFSupport
 
 // Implements LSTB, LSTZ, LSTC, LSTS
-class ElementLSTB: Element, CollectionElement {
+class ElementLSTB: BaseElement, CollectionElement {
     let endType = "LSTE"
     weak var counter: CounterElement?
     var fixedCount: Bool = false
     private let zeroTerminated: Bool
     private var subElements: ElementList!
-    private var entries: [Element]!
+    private var entries: [BaseElement]!
     private weak var tail: ElementLSTB!
-    private(set) var singleElement: Element?
+    private(set) var singleElement: BaseElement?
 
     override var displayLabel: String {
         get {
@@ -36,7 +36,7 @@ class ElementLSTB: Element, CollectionElement {
     }
 
     override func copy() -> Self {
-        let element = (super.copy() as Element) as! Self
+        let element = (super.copy() as BaseElement) as! Self
         element.subElements = try? subElements?.copy()
         element.checkSingleElement()
         element.fixedCount = fixedCount
@@ -121,7 +121,7 @@ class ElementLSTB: Element, CollectionElement {
         return tail == self ? 0 : subElements.count
     }
 
-    func subElement(at index: Int) -> Element {
+    func subElement(at index: Int) -> BaseElement {
         return (singleElement as? CollectionElement)?.subElement(at: index) ?? subElements.element(at: index)
     }
 

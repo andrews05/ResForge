@@ -4,7 +4,7 @@ class TemplateParser {
     private let template: Resource
     private let manager: RFEditorManager
     private let basic: Bool
-    private let registry: [String: Element.Type]
+    private let registry: [String: BaseElement.Type]
     private let reader: BinaryDataReader
 
     init(template: Resource, manager: RFEditorManager, basic: Bool = false) {
@@ -15,15 +15,15 @@ class TemplateParser {
         self.reader = BinaryDataReader(template.data)
     }
 
-    func parse() throws -> [Element] {
-        var elements: [Element] = []
+    func parse() throws -> [BaseElement] {
+        var elements: [BaseElement] = []
         while reader.position < reader.data.endIndex {
             elements += try self.process()
         }
         return elements
     }
 
-    private func process() throws -> [Element] {
+    private func process() throws -> [BaseElement] {
         let (element, type) = try self.readElement()
         switch type {
         case "TMPL":
@@ -40,11 +40,11 @@ class TemplateParser {
             return try TemplateParser(template: template, manager: manager, basic: basic).parse()
         case "R":
             // Rnnn psuedo-element repeats the following element n times
-            let count = Element.variableTypeValue(element.type)
+            let count = BaseElement.variableTypeValue(element.type)
             // The metaValue may be used as the starting index
             let offset = Int(element.metaValue ?? "") ?? 1
             let els = try self.process()
-            var elements: [Element] = []
+            var elements: [BaseElement] = []
             for i in 0..<count {
                 for el in els {
                     // Replace * symbol with index
@@ -61,7 +61,7 @@ class TemplateParser {
             }
             let fields = type == "RECT" ? ["T", "L", "B", "R"] : ["X", "Y"]
             let dwrd = registry["DWRD"]!
-            var elements: [Element] = []
+            var elements: [BaseElement] = []
             for f in fields {
                 let newEl = dwrd.init(type: "DWRD", label: "\(element.label) \(f)")!
                 elements.append(newEl)
@@ -72,7 +72,7 @@ class TemplateParser {
         }
     }
 
-    private func readElement() throws -> (Element, String) {
+    private func readElement() throws -> (BaseElement, String) {
         guard let label = try? reader.readPString(),
               let type = try? reader.readString(length: 4, encoding: .macOSRoman)
         else {
@@ -96,7 +96,7 @@ class TemplateParser {
     }
 
     // basic types that can be represented by (e.g.) csv
-    static let basicRegistry: [String: Element.Type] = [
+    static let basicRegistry: [String: BaseElement.Type] = [
         // integers
         "DBYT": ElementDBYT<Int8>.self,     // signed ints
         "DWRD": ElementDBYT<Int16>.self,
@@ -153,10 +153,10 @@ class TemplateParser {
         "LNDN": ElementBNDN.self,           // Little-endian (hidden)
 
         // psuedo-elements (handled by parser)
-        "R"   : Element.self,               // single-element repeat (ResForge)
+        "R"   : BaseElement.self,               // single-element repeat (ResForge)
     ]
 
-    static let fullRegistry: [String: Element.Type] = basicRegistry.merging([
+    static let fullRegistry: [String: BaseElement.Type] = basicRegistry.merging([
         // strings
         "TXTS": ElementTXTS.self,           // sized text dump
 
@@ -209,7 +209,7 @@ class TemplateParser {
         "LSTS": ElementLSTB.self,
         "LSTZ": ElementLSTB.self,
         "LSTC": ElementLSTB.self,
-        "LSTE": Element.self,
+        "LSTE": BaseElement.self,
 
         // option lists
         "CASE": ElementCASE.self,           // single option for preceding element
@@ -235,7 +235,7 @@ class TemplateParser {
         "KRID": ElementKRID.self,           // key on ID of the resource
         // keyed section begin/end
         "KEYB": ElementKEYB.self,
-        "KEYE": Element.self,
+        "KEYE": BaseElement.self,
 
         // dates
         "DATE": ElementDATE.self,           // 4-byte date (seconds since 1 Jan 1904)
@@ -253,7 +253,7 @@ class TemplateParser {
         "BSIZ": ElementBSKP<UInt8>.self,
         "WSIZ": ElementBSKP<UInt16>.self,
         "LSIZ": ElementBSKP<UInt32>.self,
-        "SKPE": Element.self,
+        "SKPE": BaseElement.self,
 
         // byte order
         "BIGE": ElementBNDN.self,           // Big-endian (visible)
@@ -266,7 +266,7 @@ class TemplateParser {
         "RNAM": ElementRNAM.self,           // the resource's name (ResForge)
 
         // psuedo-elements (handled by parser)
-        "TMPL": Element.self,               // include another template (ResForge)
+        "TMPL": BaseElement.self,               // include another template (ResForge)
 
         // and some faked ones just to increase compatibility
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)

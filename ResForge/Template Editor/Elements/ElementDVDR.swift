@@ -1,6 +1,6 @@
 import Cocoa
 
-class ElementDVDR: Element, GroupElement {
+class ElementDVDR: BaseElement, GroupElement {
     required init(type: String, label: String) {
         super.init(type: type, label: label)
         if label.isEmpty {

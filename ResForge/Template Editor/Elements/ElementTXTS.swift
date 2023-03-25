@@ -7,7 +7,7 @@ class ElementTXTS: ElementCSTR {
         case "TXTS":
             padding = .none
         default:
-            let nnn = Element.variableTypeValue(type)
+            let nnn = BaseElement.variableTypeValue(type)
             padding = .fixed(nnn)
             maxLength = nnn
         }

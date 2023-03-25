@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class Element: ValueTransformer, NSTextFieldDelegate {
+class BaseElement: ValueTransformer, NSTextFieldDelegate {
     static var sharedFormatters: [String: Formatter] = [:]
 
     /// Type code of this field.
@@ -79,7 +79,7 @@ class Element: ValueTransformer, NSTextFieldDelegate {
     /// Perform any configuration that may depend on other elements.
     func configure() throws {
         // Throw if not a subclass (typically ending elements such as LSTE).
-        if Self.self == Element.self {
+        if Self.self == BaseElement.self {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Not expected at this position.", comment: ""))
         }
     }
@@ -95,19 +95,19 @@ class Element: ValueTransformer, NSTextFieldDelegate {
 }
 
 /// An element that may contain child elements.
-protocol CollectionElement where Self: Element {
+protocol CollectionElement where Self: BaseElement {
     var endType: String { get }
     var subElementCount: Int { get }
-    func subElement(at index: Int) -> Element
+    func subElement(at index: Int) -> BaseElement
 }
 
 /// An element that is displayed as a group row in the outline view.
-protocol GroupElement where Self: Element {
+protocol GroupElement where Self: BaseElement {
     func configureGroup(view: NSTableCellView)
 }
 
 /// An element that can format a value.
-protocol FormattedElement where Self: Element {
+protocol FormattedElement where Self: BaseElement {
     var formatter: Formatter { get }
     func defaultValue() -> AnyHashable?
 }

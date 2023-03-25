@@ -1,7 +1,7 @@
 import Foundation
 import RFSupport
 
-class ElementKEYB: Element, CollectionElement {
+class ElementKEYB: BaseElement, CollectionElement {
     let endType = "KEYE"
     var subElements: ElementList!
 
@@ -11,7 +11,7 @@ class ElementKEYB: Element, CollectionElement {
     }
 
     override func copy() -> Self {
-        let element = (super.copy() as Element) as! Self
+        let element = (super.copy() as BaseElement) as! Self
         element.subElements = try? subElements?.copy()
         return element
     }
@@ -34,7 +34,7 @@ class ElementKEYB: Element, CollectionElement {
         subElements.count
     }
 
-    func subElement(at index: Int) -> Element {
+    func subElement(at index: Int) -> BaseElement {
         return subElements.element(at: index)
     }
 }

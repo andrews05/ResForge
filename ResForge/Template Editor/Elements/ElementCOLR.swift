@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class ElementCOLR: Element {
+class ElementCOLR: BaseElement {
     var r: UInt16 = 0
     var g: UInt16 = 0
     var b: UInt16 = 0

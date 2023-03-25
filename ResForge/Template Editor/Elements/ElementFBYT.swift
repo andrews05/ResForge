@@ -1,7 +1,7 @@
 import RFSupport
 
 // Implements FBYT, FWRD, FLNG, Fnnn
-class ElementFBYT: Element {
+class ElementFBYT: BaseElement {
     let length: Int
 
     required init(type: String, label: String) {
@@ -13,7 +13,7 @@ class ElementFBYT: Element {
         case "FLNG":
             length = 4
         default:
-            length = Element.variableTypeValue(type)
+            length = BaseElement.variableTypeValue(type)
         }
         super.init(type: type, label: label)
         visible = false

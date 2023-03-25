@@ -158,7 +158,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
 
 extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-        let item = item as! Element
+        let item = item as! BaseElement
         let view: NSView
         if let tableColumn {
             var identifier = tableColumn.identifier
@@ -231,7 +231,7 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
     }
 
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        return CGFloat((item as! Element).rowHeight) + 4
+        return CGFloat((item as! BaseElement).rowHeight) + 4
     }
 
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {

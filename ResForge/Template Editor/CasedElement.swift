@@ -2,7 +2,7 @@ import Cocoa
 import OrderedCollections
 
 // Abstract Element subclass for fields with associated CASE elements
-class CasedElement: Element, FormattedElement, NSComboBoxDelegate, NSComboBoxDataSource {
+class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBoxDataSource {
     var cases: OrderedDictionary<AnyHashable, ElementCASE> = [:]
 
     override func configure() throws {

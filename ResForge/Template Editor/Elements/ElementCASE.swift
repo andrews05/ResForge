@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class ElementCASE: Element {
+class ElementCASE: BaseElement {
     @objc var value: AnyHashable!
     var displayValue: String { metaValue ?? displayLabel }
 

@@ -72,7 +72,7 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         }
     }
 
-    static func createCheckbox(with frame: NSRect, for element: Element) -> NSButton {
+    static func createCheckbox(with frame: NSRect, for element: BaseElement) -> NSButton {
         let checkbox = NSButton(frame: frame)
         checkbox.setButtonType(.switch)
         checkbox.bezelStyle = .regularSquare

@@ -31,7 +31,7 @@ enum BulkError: LocalizedError {
 }
 
 class BulkController: OutlineController {
-    private var elements: [Element] = []
+    private var elements: [BaseElement] = []
     private var defaults: [Any?] = []
     private var rows: [Int: [Any?]] = [:]
     private let idCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("id"))

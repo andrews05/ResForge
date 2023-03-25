@@ -12,7 +12,7 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: ElementCSTR {
         case "ESTR":
             padding = .even
         default:
-            let nnn = Element.variableTypeValue(type)
+            let nnn = BaseElement.variableTypeValue(type)
             padding = .fixed(nnn)
             maxLength = min(nnn-1, maxLength)
         }

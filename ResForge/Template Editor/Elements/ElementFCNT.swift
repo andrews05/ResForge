@@ -1,6 +1,6 @@
 import Cocoa
 
-class ElementFCNT: Element, GroupElement, CounterElement {
+class ElementFCNT: BaseElement, GroupElement, CounterElement {
     var count: Int
     private let groupLabel: String
 

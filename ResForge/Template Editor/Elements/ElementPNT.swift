@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class ElementPNT: Element {
+class ElementPNT: BaseElement {
     @objc private var x: Int16 = 0
     @objc private var y: Int16 = 0
 

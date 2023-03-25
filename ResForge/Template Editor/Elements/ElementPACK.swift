@@ -6,8 +6,8 @@ import Cocoa
  * This can be helpful for grouping related elements, especially if they may otherwise not be consecutive
  * The PACK label format looks like "Display Label=element1Label,element2Label"
  */
-class ElementPACK: Element {
-    private var subElements: [Element] = []
+class ElementPACK: BaseElement {
+    private var subElements: [BaseElement] = []
 
     // The row height needs to be the maximum of all child elements - calculate this dynamically in case they change (e.g. PSTR)
     override var rowHeight: Double {

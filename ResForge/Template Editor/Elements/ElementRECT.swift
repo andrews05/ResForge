@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class ElementRECT: Element {
+class ElementRECT: BaseElement {
     static let formatter = IntFormatter<Int16>()
     @objc private var top: Int16 = 0
     @objc private var left: Int16 = 0
@@ -30,7 +30,7 @@ class ElementRECT: Element {
         writer.write(right)
     }
 
-    static func configure(fields: [String], in view: NSView, for element: Element) {
+    static func configure(fields: [String], in view: NSView, for element: BaseElement) {
         var frame = view.frame
         let width = element.width / CGFloat(fields.count)
         frame.size.width = width - 4
