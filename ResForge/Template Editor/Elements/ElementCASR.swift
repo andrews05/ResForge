@@ -4,7 +4,7 @@ import Cocoa
  * The CASR element is an experimental case range element
  * It allows an element's value to have different interpretations based on a range that the value falls into
  * An element with CASRs shows a popup button to select the case range, followed by a text field to enter a value within that range
- * The CASR label format looks like "Display Label=minValue,maxValue normal 'TNAM'"
+ * The CASR label format looks like "Display Label=minValue..maxValue ~normal 'TNAM'"
  * At least one of minValue and maxValue must be provided, the remainder is optional
  * The normal, if given, will normalise the value displayed in the text field - it represents what the minValue will display as
  * If minValue is greater than maxValue, the normalised values will be inverted
@@ -87,17 +87,22 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
                 throw TemplateError.invalidStructure(self, NSLocalizedString("Minimum value out of range for field type.", comment: ""))
             }
             scanner.charactersToBeSkipped = nil
-            if scanner.scanString(",", into: nil) {
+            if scanner.scanString("..", into: nil) {
                 hasMax = scanner.scanInt(&max)
                 guard !hasMax || range ~= max else {
                     throw TemplateError.invalidStructure(self, NSLocalizedString("Maximum value out of range for field type.", comment: ""))
                 }
                 scanner.charactersToBeSkipped = .whitespacesAndNewlines
-                var normal = 0
-                if scanner.scanInt(&normal) {
+                if scanner.scanString("~", into: nil) {
                     guard hasMin else {
                         throw TemplateError.invalidStructure(self, NSLocalizedString("Normal requires explicit minimum.", comment: ""))
                     }
+                    var normal = 0
+                    scanner.charactersToBeSkipped = nil
+                    guard scanner.scanInt(&normal) else {
+                        throw TemplateError.invalidStructure(self, NSLocalizedString("No value given for normal.", comment: ""))
+                    }
+                    scanner.charactersToBeSkipped = .whitespacesAndNewlines
                     // Invert if min greater than max, or if min is negative and no max was specified (i.e. from min down)
                     invert = min > max || (min < 0 && !hasMax)
                     offset = (invert ? -min : min) - normal
@@ -116,6 +121,10 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
             } else {
                 // Single value
                 max = min
+            }
+            // To help catch syntax errors, fail if we didn't consume the entire input
+            if !scanner.isAtEnd {
+                throw TemplateError.invalidStructure(self, String(format: NSLocalizedString("Unexpected character at position %d.", comment: ""), scanner.scanLocation))
             }
         }
         guard hasMin || hasMax else {
