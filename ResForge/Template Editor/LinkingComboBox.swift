@@ -39,7 +39,7 @@ class LinkingComboBox: NSComboBox {
             // If currently editing the field, the clip view frame will need updating
             if let clip = subviews.last as? NSClipView {
                 var frame = clip.frame
-                frame.size.width += linkButton.isHidden ? 15 : -15
+                frame.size.width += linkButton.isHidden ? 16 : -16
                 clip.frame = frame
             }
         }
@@ -56,7 +56,7 @@ class LinkingComboBoxCell: NSComboBoxCell {
         // Ensure the text does not overlap the link button
         var r = super.drawingRect(forBounds: rect)
         if let control = controlView as? LinkingComboBox, control.showsLink {
-            r.size.width -= 15
+            r.size.width -= 16
         }
         return r
     }
