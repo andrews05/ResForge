@@ -204,6 +204,11 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
         return view
     }
 
+    // This seemingly redundant function works around a bug in macOS 13 that causes problems with the key-view loop
+    func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
+        return NSTableRowView()
+    }
+
     func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
         // RNAM field should be visually distinct
         guard outlineView.item(atRow: row) is ElementRNAM else {
