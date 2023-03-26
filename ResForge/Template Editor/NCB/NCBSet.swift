@@ -84,7 +84,7 @@ struct NCBSetRandom: NCBSet {
             ")"
         }
     }
-    
+
     let ops: [NCBSetValue]
 
     func description(manager: RFEditorManager) -> String {
@@ -117,11 +117,11 @@ enum NCBSetOp: String, CaseIterable, CustomStringConvertible {
     case leave = "Q"
     case changeShipTitle = "T"
     case exploreSystem = "X"
-    
+
     var valueRequired: Bool {
         self != .leave
     }
-    
+
     var usage: String {
         var valueType = resourceType ?? "bit"
         // Indicate <required> or [optional]

@@ -58,10 +58,10 @@ struct NCBTestWrapped: NCBTest {
             NCBTestCombiner.OR.parser(2, terminator: ")")
         }
     }.map(Self.init).eraseToAnyParser()
-    
+
     let negate: Bool
     let expression: NCBTestExpression
-    
+
     func description(manager: RFSupport.RFEditorManager, indent: String) -> String {
         return expression.description(manager: manager, indent: indent, negate: negate)
     }
@@ -84,7 +84,7 @@ struct NCBTestValue: NCBTest {
             }
         }
     }
-    
+
     let negate: Bool
     let op: NCBTestOp
     let value: Int?
@@ -109,7 +109,7 @@ struct NCBTestValue: NCBTest {
 enum NCBTestCombiner: String, CaseIterable {
     case AND = "&"
     case OR = "|"
-    
+
     var usage: String {
         let text = "<op1> \(rawValue) <op2>: "
         switch self {
@@ -119,7 +119,7 @@ enum NCBTestCombiner: String, CaseIterable {
             return text + "Either operation"
         }
     }
-    
+
     func parser<Terminator: Parser>(_ length: CountingRange, terminator: Terminator) -> AnyParser<Substring, NCBTestExpression> where Terminator.Input == Substring {
         Many(length) {
             OneOf {
@@ -145,11 +145,11 @@ enum NCBTestOp: String, CaseIterable {
     case gender = "G"
     case hasOutfit = "O"
     case exploredSystem = "E"
-    
+
     var hasValue: Bool {
         self != .gender
     }
-    
+
     var usage: String {
         var text = rawValue
         if let valueType {
@@ -186,7 +186,7 @@ enum NCBTestOp: String, CaseIterable {
             return (negate ? "Unexplored" : "Explored") + " System #\(value)"
         }
     }
-    
+
     var valueType: String? {
         switch self {
         case .bitSet:

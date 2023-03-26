@@ -109,7 +109,7 @@
 		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49CC15922764218800E5605A /* LinkingComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CC15912764218800E5605A /* LinkingComboBox.swift */; };
 		49D6D349271BAA9F002DEA97 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 49D6D348271BAA9F002DEA97 /* OrderedCollections */; };
-		49D6D383271BAAB4002DEA97 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D34E271BAAAC002DEA97 /* LabelView.swift */; };
+		49D6D383271BAAB4002DEA97 /* TemplateLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D34E271BAAAC002DEA97 /* TemplateLabelView.swift */; };
 		49D6D384271BAAB4002DEA97 /* ElementPSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D35E271BAAAD002DEA97 /* ElementPSTR.swift */; };
 		49D6D385271BAAB4002DEA97 /* ElementUSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D382271BAAB3002DEA97 /* ElementUSTR.swift */; };
 		49D6D386271BAAB4002DEA97 /* ElementTNAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D362271BAAAD002DEA97 /* ElementTNAM.swift */; };
@@ -141,7 +141,7 @@
 		49D6D3A0271BAAB4002DEA97 /* ElementAWRD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D363271BAAAD002DEA97 /* ElementAWRD.swift */; };
 		49D6D3A1271BAAB4002DEA97 /* ElementCASR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D36B271BAAAE002DEA97 /* ElementCASR.swift */; };
 		49D6D3A2271BAAB4002DEA97 /* ElementKBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D376271BAAAF002DEA97 /* ElementKBYT.swift */; };
-		49D6D3A3271BAAB4002DEA97 /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D358271BAAAD002DEA97 /* DataView.swift */; };
+		49D6D3A3271BAAB4002DEA97 /* TemplateDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D358271BAAAD002DEA97 /* TemplateDataView.swift */; };
 		49D6D3A4271BAAB4002DEA97 /* ElementFCNT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D365271BAAAE002DEA97 /* ElementFCNT.swift */; };
 		49D6D3A5271BAAB4002DEA97 /* ElementDOUB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D372271BAAAF002DEA97 /* ElementDOUB.swift */; };
 		49D6D3A6271BAAB4002DEA97 /* TemplateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D354271BAAAC002DEA97 /* TemplateParser.swift */; };
@@ -444,7 +444,7 @@
 		49D6D34B271BAAAB002DEA97 /* TemplateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateError.swift; sourceTree = "<group>"; };
 		49D6D34C271BAAAB002DEA97 /* CasedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasedElement.swift; sourceTree = "<group>"; };
 		49D6D34D271BAAAB002DEA97 /* ElementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementList.swift; sourceTree = "<group>"; };
-		49D6D34E271BAAAC002DEA97 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
+		49D6D34E271BAAAC002DEA97 /* TemplateLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateLabelView.swift; sourceTree = "<group>"; };
 		49D6D34F271BAAAC002DEA97 /* BaseElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseElement.swift; sourceTree = "<group>"; };
 		49D6D350271BAAAC002DEA97 /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		49D6D351271BAAAC002DEA97 /* RangedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedElement.swift; sourceTree = "<group>"; };
@@ -453,7 +453,7 @@
 		49D6D354271BAAAC002DEA97 /* TemplateParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateParser.swift; sourceTree = "<group>"; };
 		49D6D355271BAAAC002DEA97 /* KeyElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyElement.swift; sourceTree = "<group>"; };
 		49D6D357271BAAAC002DEA97 /* TabbableOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbableOutlineView.swift; sourceTree = "<group>"; };
-		49D6D358271BAAAD002DEA97 /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
+		49D6D358271BAAAD002DEA97 /* TemplateDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateDataView.swift; sourceTree = "<group>"; };
 		49D6D35A271BAAAD002DEA97 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TemplateWindow.xib; sourceTree = "<group>"; };
 		49D6D35C271BAAAD002DEA97 /* ElementBHEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBHEX.swift; sourceTree = "<group>"; };
 		49D6D35D271BAAAD002DEA97 /* ElementHEXD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHEXD.swift; sourceTree = "<group>"; };
@@ -863,8 +863,8 @@
 				49D6D353271BAAAC002DEA97 /* TemplateEditor.swift */,
 				49D6D357271BAAAC002DEA97 /* TabbableOutlineView.swift */,
 				49CC15912764218800E5605A /* LinkingComboBox.swift */,
-				49D6D34E271BAAAC002DEA97 /* LabelView.swift */,
-				49D6D358271BAAAD002DEA97 /* DataView.swift */,
+				49D6D34E271BAAAC002DEA97 /* TemplateLabelView.swift */,
+				49D6D358271BAAAD002DEA97 /* TemplateDataView.swift */,
 				49D6D34B271BAAAB002DEA97 /* TemplateError.swift */,
 				49D6D354271BAAAC002DEA97 /* TemplateParser.swift */,
 				49D6D34D271BAAAB002DEA97 /* ElementList.swift */,
@@ -1462,10 +1462,10 @@
 				49D6D395271BAAB4002DEA97 /* RangedElement.swift in Sources */,
 				4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */,
 				49D6D38F271BAAB4002DEA97 /* ElementHEXD.swift in Sources */,
-				49D6D383271BAAB4002DEA97 /* LabelView.swift in Sources */,
+				49D6D383271BAAB4002DEA97 /* TemplateLabelView.swift in Sources */,
 				49D6D39B271BAAB4002DEA97 /* ElementBFLG.swift in Sources */,
 				49D6D3AC271BAAB4002DEA97 /* ElementCSTR.swift in Sources */,
-				49D6D3A3271BAAB4002DEA97 /* DataView.swift in Sources */,
+				49D6D3A3271BAAB4002DEA97 /* TemplateDataView.swift in Sources */,
 				49D6D387271BAAB4002DEA97 /* CasedElement.swift in Sources */,
 				49F2EAA526D50F4B0020D70E /* BulkController.swift in Sources */,
 				49D6D384271BAAB4002DEA97 /* ElementPSTR.swift in Sources */,

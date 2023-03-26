@@ -163,7 +163,7 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
         if let tableColumn {
             var identifier = tableColumn.identifier
             if identifier.rawValue == "data" {
-                view = DataView(frame: NSRect(x: 0, y: 2, width: tableColumn.width, height: CGFloat(item.rowHeight)))
+                view = TemplateDataView(frame: NSRect(x: 0, y: 2, width: tableColumn.width, height: CGFloat(item.rowHeight)))
                 item.configure(view: view)
                 if !item.subtext.isEmpty {
                     let subtext = NSTextField(labelWithString: item.subtext)

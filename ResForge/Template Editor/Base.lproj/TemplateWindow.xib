@@ -73,7 +73,7 @@
                                                         <outlet property="textField" destination="FUM-Fz-dnU" id="1TB-9j-8jy"/>
                                                     </connections>
                                                 </tableCellView>
-                                                <tableCellView identifier="listLabel" id="hgb-pb-eOm" customClass="LabelView" customModule="ResForge" customModuleProvider="target">
+                                                <tableCellView identifier="listLabel" id="hgb-pb-eOm" customClass="TemplateLabelView" customModule="ResForge" customModuleProvider="target">
                                                     <rect key="frame" x="3" y="22" width="150" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -95,7 +95,7 @@
                                                         <outlet property="textField" destination="3bN-4y-Fu0" id="War-Ee-myD"/>
                                                     </connections>
                                                 </tableCellView>
-                                                <tableCellView identifier="listEndLabel" id="hbr-Yq-Ifg" userLabel="Button View" customClass="LabelView" customModule="ResForge" customModuleProvider="target">
+                                                <tableCellView identifier="listEndLabel" id="hbr-Yq-Ifg" userLabel="Button View" customClass="TemplateLabelView" customModule="ResForge" customModuleProvider="target">
                                                     <rect key="frame" x="3" y="44" width="150" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>

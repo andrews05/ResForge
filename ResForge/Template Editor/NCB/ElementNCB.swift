@@ -72,7 +72,7 @@ class ElementNCB: ElementCSTR {
         // Make the popover the first responder so it will close and return to the control on any keypress
         control.window?.makeFirstResponder(popover)
     }
-    
+
     private func popoverTextField() -> NSTextField {
         let field = NSTextField(labelWithString: "")
         if value.isEmpty {
