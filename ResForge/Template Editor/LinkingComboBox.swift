@@ -47,7 +47,10 @@ class LinkingComboBox: NSComboBox {
     }
 
     @objc private func followLink(_ sender: Any) {
-        (delegate as? LinkingComboBoxDelegate)?.followLink(sender)
+        // Ensure value is committed before following link
+        if self.currentEditor() == nil || self.window?.makeFirstResponder(nil) != false {
+            (delegate as? LinkingComboBoxDelegate)?.followLink(sender)
+        }
     }
 }
 
