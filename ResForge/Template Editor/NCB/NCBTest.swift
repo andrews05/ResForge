@@ -4,8 +4,8 @@ import RFSupport
 /// Parses a full NCB test expression
 struct NCBTestExpression: NCBExpression {
     static let parser = OneOf {
-        NCBTestCombiner.AND.parser(terminator: End())
-        NCBTestCombiner.OR.parser(terminator: End())
+        NCBTestCombiner.AND.parser(1...2, terminator: End())
+        NCBTestCombiner.OR.parser(1...2, terminator: End())
     }
 
     static func parse(_ input: String) throws -> Self {
@@ -54,8 +54,8 @@ struct NCBTestWrapped: NCBTest {
         }.map { $0 != nil }
         "("
         OneOf {
-            NCBTestCombiner.AND.parser(terminator: ")")
-            NCBTestCombiner.OR.parser(terminator: ")")
+            NCBTestCombiner.AND.parser(2, terminator: ")")
+            NCBTestCombiner.OR.parser(2, terminator: ")")
         }
     }.map(Self.init).eraseToAnyParser()
     
@@ -120,8 +120,8 @@ enum NCBTestCombiner: String, CaseIterable {
         }
     }
     
-    func parser<Terminator: Parser>(terminator: Terminator) -> AnyParser<Substring, NCBTestExpression> where Terminator.Input == Substring {
-        Many(1...2) {
+    func parser<Terminator: Parser>(_ length: CountingRange, terminator: Terminator) -> AnyParser<Substring, NCBTestExpression> where Terminator.Input == Substring {
+        Many(length) {
             OneOf {
                 NCBTestValue.parser.map { $0 as NCBTest }
                 NCBTestWrapped.parser.map { $0 as NCBTest }
