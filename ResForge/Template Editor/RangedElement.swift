@@ -57,8 +57,12 @@ class RangedElement: CasedElement {
         if casrs.count > 1 {
             let orig = view.frame
             var frame = view.frame
-            frame.size.width = popupWidth-1
-            frame.size.height = 24
+            frame.origin.x -= 2
+            frame.size.width = popupWidth + 1
+            frame.size.height = 25
+            if #unavailable(macOS 11) {
+                frame.size.height -= 1
+            }
             let select = NSPopUpButton(frame: frame)
             select.target = self
             select.action = #selector(caseChanged(_:))

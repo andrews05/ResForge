@@ -58,8 +58,12 @@ class KeyElement: CasedElement, CollectionElement {
 
     override func configure(view: NSView) {
         var frame = view.frame
-        frame.size.width = width-1
-        frame.size.height = 24
+        frame.origin.x -= 2
+        frame.size.width = width + 1
+        frame.size.height = 25
+        if #unavailable(macOS 11) {
+            frame.size.height -= 1
+        }
         let keySelect = NSPopUpButton(frame: frame)
         keySelect.target = self
         keySelect.action = #selector(keyChanged(_:))
