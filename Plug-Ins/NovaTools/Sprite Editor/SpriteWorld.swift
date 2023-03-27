@@ -175,6 +175,7 @@ class SpriteWorld: WriteableSprite {
         var lineCount = 0
         var linePos = 0
         var pixels: [UInt16] = []
+        var run = 1
         for _ in 0..<frameHeight {
             lineCount += 1
             var transparent = 0
@@ -196,7 +197,7 @@ class SpriteWorld: WriteableSprite {
                         // Starting pixel data after transparency, write the skip
                         if !pixels.isEmpty {
                             // We have previous unwritten pixel data, write this first
-                            self.write(bigEndianPixels: &pixels)
+                            self.write(bigEndianPixels: &pixels, run: &run)
                         }
                         writer.write(RleOp.skip(transparent).rawValue)
                         transparent = 0
@@ -205,11 +206,20 @@ class SpriteWorld: WriteableSprite {
                               + UInt16(framePointer[1] & 0xF8) * 0x04
                               + UInt16(framePointer[2] & 0xF8) / 0x08
                     self.draw(pixel, to: &framePointer)
-                    pixels.append(pixel.bigEndian)
+                    let be = pixel.bigEndian
+                    if be == pixels.last {
+                        run += 1
+                    } else if run >= 7 || (run >= 4 && run == pixels.count) {
+                        // Need a run of at least 7 in the middle of a line, or 4 at the start, to save bytes with a colour run
+                        self.write(bigEndianPixels: &pixels, run: &run)
+                    } else {
+                        run = 1
+                    }
+                    pixels.append(be)
                 }
             }
             if !pixels.isEmpty {
-                self.write(bigEndianPixels: &pixels)
+                self.write(bigEndianPixels: &pixels, run: &run)
                 // Rewrite the line length
                 writer.write(RleOp.lineStart(writer.position-linePos).rawValue, at: linePos-4)
             }
@@ -260,6 +270,23 @@ class SpriteWorld: WriteableSprite {
         framePointer += 4
     }
 
+    private func write(bigEndianPixels pixels: inout [UInt16], run: inout Int) {
+        // Need a run of at least 5 at the end of a line to save bytes with a colour run
+        if run >= 5 || run == pixels.count {
+            let runValue = UInt16(bigEndian: pixels.last!)
+            pixels.removeLast(run)
+            if !pixels.isEmpty {
+                self.write(bigEndianPixels: &pixels)
+            }
+            writer.write(RleOp.colorRun(run).rawValue)
+            writer.write(runValue)
+            writer.write(runValue)
+        } else {
+            self.write(bigEndianPixels: &pixels)
+        }
+        run = 1
+    }
+
     private func write(bigEndianPixels pixels: inout [UInt16]) {
         writer.write(RleOp.pixels(pixels.count).rawValue)
         if pixels.count % 2 != 0 {
@@ -274,6 +301,10 @@ class SpriteWorld: WriteableSprite {
 }
 
 enum RleOp: RawRepresentable {
+    // A colour run takes 8 bytes, restarting pixels takes another 4
+    // We need a run of at least 6 to break even in most cases
+    static let minColorRun = 6
+
     case frameEnd
     case lineStart(Int)
     case pixels(Int)
