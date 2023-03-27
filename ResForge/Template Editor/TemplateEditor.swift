@@ -30,6 +30,11 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange(_:)), name: .ResourceDataDidChange, object: resource)
         NotificationCenter.default.addObserver(self, selector: #selector(self.templateDataDidChange(_:)), name: .ResourceDataDidChange, object: template)
+        UserDefaults.standard.addObserver(self, forKeyPath: RFDefaults.resourceNameInTemplate, context: nil)
+    }
+
+    deinit {
+        UserDefaults.standard.removeObserver(self, forKeyPath: RFDefaults.resourceNameInTemplate)
     }
 
     required init(resource: Resource, manager: RFEditorManager) {
@@ -49,7 +54,11 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     @objc func templateDataDidChange(_ notification: NSNotification) {
         // Reload the template while keeping the current data
         self.load(data: resourceStructure.getResourceData())
-        dataList.expandItem(nil, expandChildren: true)
+    }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        // UserDefaults for resourceNameInTemplate changed - reload the structure
+        self.load(data: resourceStructure.getResourceData())
     }
 
     override func windowDidLoad() {
