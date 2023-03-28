@@ -60,10 +60,6 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         }
         typeView.removeAllItems()
         typeView.addItems(withObjectValues: sorted)
-        if let formatter = idView.formatter as? NumberFormatter {
-            formatter.minimum = rDocument.format.minID as NSNumber
-            formatter.maximum = rDocument.format.maxID as NSNumber
-        }
         if rDocument.format == .extended {
             attributesHolder.isHidden = false
             attributesEditor.attributes = type?.attributes ?? [:]
@@ -93,35 +89,48 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
 
     @IBAction func hide(_ sender: AnyObject) {
         if sender === createButton {
-            // Safety check for invalid inputs (e.g. invalid MacRoman)
-            guard window?.makeFirstResponder(nil) != false else {
+            do {
+                try self.createResource()
+            } catch let error {
+                window?.presentError(error)
+                window?.makeFirstResponder(idView)
                 return
             }
-            // Check for conflict
-            let type = currentType
-            let id = idView.integerValue
-            if rDocument.directory.findResource(type: type, id: id) != nil {
-                window?.presentError(ResourceError.conflict(type, id))
-                return
-            }
-            // Create the resource
-            let resource = Resource(type: type, id: id, name: nameView.stringValue)
-            let actionName = NSLocalizedString("Create Resource", comment: "")
-            // If a callback is provided, don't automatically select and open the new resource
-            let selectAndOpen = callback == nil
-            rDocument.dataSource.reload(actionName: actionName) {
-                rDocument.directory.add(resource)
-                return selectAndOpen ? [resource] : rDocument.dataSource.selectedResources()
-            }
-            if selectAndOpen && !rDocument.dataSource.isBulkMode {
-                rDocument.editorManager.open(resource: resource)
-            }
-            self.callback?(resource)
         } else {
             self.callback?(nil)
         }
         self.callback = nil
         self.window?.sheetParent?.endSheet(self.window!)
+    }
+
+    private func createResource() throws {
+        // Safety check for invalid inputs (e.g. invalid MacRoman)
+        guard window?.makeFirstResponder(nil) != false else {
+            return
+        }
+        // Check for issues
+        let type = currentType
+        let id = idView.integerValue
+        if !rDocument.format.isValid(id: id) {
+            throw ResourceError.invalidID(id)
+        }
+        if rDocument.directory.findResource(type: type, id: id) != nil {
+            throw ResourceError.conflict(type, id)
+        }
+
+        // Create the resource
+        let resource = Resource(type: type, id: id, name: nameView.stringValue)
+        let actionName = NSLocalizedString("Create Resource", comment: "")
+        // If a callback is provided, don't automatically select and open the new resource
+        let selectAndOpen = callback == nil
+        rDocument.dataSource.reload(actionName: actionName) {
+            rDocument.directory.add(resource)
+            return selectAndOpen ? [resource] : rDocument.dataSource.selectedResources()
+        }
+        if selectAndOpen && !rDocument.dataSource.isBulkMode {
+            rDocument.editorManager.open(resource: resource)
+        }
+        self.callback?(resource)
     }
 
     // Prevent leaving a field in an invalid state. The resID being nil should indicate this.

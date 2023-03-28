@@ -2,14 +2,6 @@ import Cocoa
 import RFSupport
 
 extension Resource {
-    // Used for formatter binding
-    @objc var minID: Int {
-        (document as? ResourceDocument)?.format.minID ?? 0
-    }
-    @objc var maxID: Int {
-        (document as? ResourceDocument)?.format.maxID ?? 0
-    }
-
     // MARK: - Type/ID Validation
 
     @objc func validateTypeCode(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
@@ -21,7 +13,11 @@ extension Resource {
     }
 
     @objc func validateId(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
-        try self.checkConflict(id: ioValue.pointee as? Int)
+        let id = ioValue.pointee as? Int
+        if let id, (document as? ResourceDocument)?.format.isValid(id: id) != true {
+            throw ResourceError.invalidID(id)
+        }
+        try self.checkConflict(id: id)
     }
 
     func checkConflict(typeCode: String? = nil, typeAttributes: [String: String]? = nil, id: Int? = nil) throws {
@@ -93,16 +89,27 @@ extension Resource {
 
 enum ResourceError: LocalizedError {
     case conflict(ResourceType, Int)
+    case invalidID(Int)
+
     var errorDescription: String? {
         switch self {
         case let .conflict(type, id):
             return String(format: NSLocalizedString("A resource of type ‘%@’ with ID %ld already exists.", comment: ""), type.code, id)
+        case let .invalidID(id):
+            if id < 0 {
+                return String(format: NSLocalizedString("The ID %ld is below the minimum value.", comment: ""), id)
+            } else {
+                return String(format: NSLocalizedString("The ID %ld is above the maximum value.", comment: ""), id)
+            }
         }
     }
+
     var recoverySuggestion: String? {
         switch self {
         case .conflict:
-            return String(format: NSLocalizedString("Please enter a unique value.", comment: ""))
+            return NSLocalizedString("Please enter a unique value.", comment: "")
+        case .invalidID:
+            return NSLocalizedString("Please enter a valid value.", comment: "")
         }
     }
 }

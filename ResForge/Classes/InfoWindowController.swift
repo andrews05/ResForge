@@ -147,9 +147,9 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     }
 
     func control(_ control: NSControl, didFailToFormatString string: String, errorDescription error: String?) -> Bool {
-        // Suppress formatter errors
+        // Attempt to suppress formatter errors by reverting invalid values
         try? objectController.commitEditingWithoutPresentingError()
-        return true
+        return control.objectValue != nil
     }
 
     @IBAction func applyAttributes(_ sender: NSButton) {

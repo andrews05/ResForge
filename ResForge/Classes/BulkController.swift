@@ -144,12 +144,11 @@ class BulkController: OutlineController {
     }
 
     func importCSV(from url: URL) throws -> [Resource] {
-        let idRange = document.format.minID...document.format.maxID
         var resources: [Resource] = []
         let record = try CSVReader(stream: InputStream(url: url)!, hasHeaderRow: true)
         var i = 1
         while record.next() != nil {
-            guard let v = record["ID"], let id = Int(v), idRange ~= id  else {
+            guard let v = record["ID"], let id = Int(v), document.format.isValid(id: id)  else {
                 throw BulkError.invalidValue("ID", i)
             }
             guard let name = record["Name"] else {

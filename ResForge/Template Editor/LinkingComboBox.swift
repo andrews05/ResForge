@@ -50,8 +50,8 @@ class LinkingComboBox: NSComboBox {
     }
 
     @objc private func followLink(_ sender: Any) {
-        // Ensure value is committed before following link
-        if self.currentEditor() == nil || self.window?.makeFirstResponder(nil) != false {
+        // Ensure value is committed and link is still valid before following
+        if self.currentEditor() == nil || (self.window?.makeFirstResponder(nil) != false && linkIcon != nil) {
             (delegate as? LinkingComboBoxDelegate)?.followLink(sender)
         }
     }

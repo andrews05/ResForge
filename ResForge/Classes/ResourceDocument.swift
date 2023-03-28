@@ -81,6 +81,10 @@ extension ResourceFileFormat {
             self = .classic
         }
     }
+
+    func isValid(id: Int) -> Bool {
+        return minID...maxID ~= id
+    }
 }
 
 class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate {
