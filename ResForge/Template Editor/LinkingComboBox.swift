@@ -9,8 +9,8 @@ class LinkingComboBox: NSComboBox {
     }
 
     private let linkButton: NSButton
-    var showsLink: Bool {
-        (delegate as? LinkingComboBoxDelegate)?.showsLink == true
+    var linkIcon: NSImage.Name? {
+        (delegate as? LinkingComboBoxDelegate)?.linkIcon
     }
 
     override init(frame frameRect: NSRect) {
@@ -33,7 +33,10 @@ class LinkingComboBox: NSComboBox {
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        if linkButton.isHidden == showsLink {
+        if let linkIcon {
+            linkButton.image = NSImage(named: linkIcon)
+        }
+        if linkButton.isHidden != (linkIcon == nil) {
             // Toggle the button visibility
             linkButton.isHidden = !linkButton.isHidden
             // If currently editing the field, the clip view frame will need updating
@@ -57,15 +60,15 @@ class LinkingComboBox: NSComboBox {
 class LinkingComboBoxCell: NSComboBoxCell {
     open override func drawingRect(forBounds rect: NSRect) -> NSRect {
         // Ensure the text does not overlap the link button
-        var r = super.drawingRect(forBounds: rect)
-        if let control = controlView as? LinkingComboBox, control.showsLink {
-            r.size.width -= 16
+        var dRect = super.drawingRect(forBounds: rect)
+        if let control = controlView as? LinkingComboBox, control.linkIcon != nil {
+            dRect.size.width -= 16
         }
-        return r
+        return dRect
     }
 }
 
 @objc protocol LinkingComboBoxDelegate: NSComboBoxDelegate {
-    var showsLink: Bool { get }
+    var linkIcon: NSImage.Name? { get }
     func followLink(_ sender: Any)
 }

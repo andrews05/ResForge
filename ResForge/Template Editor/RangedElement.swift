@@ -103,7 +103,7 @@ class RangedElement: CasedElement {
         } else if displayValue > currentCase.max {
             displayValue = currentCase.max
         } else {
-            displayValue = +displayValue // Still need to trigger didSet
+            displayValue = displayValue as Int // Still need to trigger didSet
         }
         let outline = parentList.controller.dataList!
         // Item isn't necessarily self

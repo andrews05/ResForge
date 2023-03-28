@@ -137,8 +137,8 @@ class EditorManager: RFEditorManager {
             window?.makeKeyAndOrderFront(nil)
             if let resource {
                 self.open(resource: resource)
-                // Only callback if the type was not changed
-                if resource.type == type {
+                // Only callback if the type and id were not changed
+                if resource.type == type && resource.id == id {
                     callback?(resource)
                 }
             }

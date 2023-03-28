@@ -19,6 +19,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         }
         set {
             parentElement.displayValue = newValue
+            self.updateLinkIcon()
         }
     }
     private(set) var min = 0
@@ -27,7 +28,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
     private var invert = false
     private var resType: String?
     weak var parentElement: RangedElement!
-    let showsLink = true
+    private(set) var linkIcon: NSImage.Name?
 
     override var description: String {
         self.displayLabel
@@ -147,6 +148,24 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
                                      displayValue: "\(resource.name) = \(resource.id)")
             cases[resource.id] = caseEl
         }
+        value = value as Int // Trigger refresh
+    }
+
+    private func updateLinkIcon() {
+        guard let resType else {
+            return
+        }
+        let id = value
+        if cases[id] != nil {
+            // If resource exists in case list, show link icon
+            linkIcon = NSImage.followLinkFreestandingTemplateName
+        } else if parentList.controller.manager.findResource(type: .init(resType), id: id, currentDocumentOnly: false) != nil {
+            // If found in directory (as a last resort), show link icon
+            linkIcon = NSImage.followLinkFreestandingTemplateName
+        } else {
+            // Resource doesn't exist, show add icon
+            linkIcon = NSImage.touchBarAddDetailTemplateName
+        }
     }
 
     func followLink(_ sender: Any) {
@@ -154,15 +173,11 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
             return
         }
         let id = value
-        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [self] resource, isNew in
-            // If this is new resource with a valid id, reload the cases
-            if isNew && min...max ~= resource.id {
-                self.loadCases(resType, forceReload: true)
-                value = resource.id
-                // Check if the value actually changed
-                if resource.id != id {
-                    parentList.controller.itemValueUpdated(sender)
-                }
+        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
+            self?.linkIcon = NSImage.followLinkFreestandingTemplateName
+            // If this is a new resource with a name, reload the cases
+            if isNew && !resource.name.isEmpty {
+                self?.loadCases(resType, forceReload: true)
             }
         }
     }

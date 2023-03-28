@@ -15,7 +15,11 @@ import RFSupport
  * Implements RSID, LRID
  */
 class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingComboBoxDelegate {
-    var tValue: T = 0
+    var tValue: T = 0 {
+        didSet {
+            self.updateLinkIcon()
+        }
+    }
     @objc dynamic private var value: NSNumber {
         get { tValue as! NSNumber }
         set { tValue = newValue as! T }
@@ -28,9 +32,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
     private var offset: Int = 0
     private var range: ClosedRange<Int>?
     private var fixedMap: OrderedDictionary<AnyHashable, ElementCASE> = [:]
-    var showsLink: Bool {
-        return range?.contains(Int(tValue) + offset) != false
-    }
+    private(set) var linkIcon: NSImage.Name?
 
     deinit {
         self.unbind(NSBindingName("resType"))
@@ -90,6 +92,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
                                      displayValue: "\(resource.name) = \(idDisplay)")
             cases[resID] = caseEl
         }
+        value = value as NSNumber // Trigger refresh
     }
 
     private func resIDDisplay(_ resID: Int) -> String {
@@ -101,18 +104,33 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
         return String(resID)
     }
 
+    private func updateLinkIcon() {
+        guard !resType.isEmpty else {
+            return
+        }
+        let id = Int(tValue) + offset
+        if cases[tValue]?.label.isEmpty == true {
+            // If resource exists in case list (empty label implies a resource), show link icon
+            linkIcon = NSImage.followLinkFreestandingTemplateName
+        } else if tValue == -1 || range?.contains(id) == false {
+            // If invalid or out of range, show no icon (assume -1 is invalid)
+            linkIcon = nil
+        } else if parentList.controller.manager.findResource(type: .init(resType), id: id, currentDocumentOnly: false) != nil {
+            // If found in directory (as a last resort), show link icon
+            linkIcon = NSImage.followLinkFreestandingTemplateName
+        } else {
+            // Resource doesn't exist, show add icon
+            linkIcon = NSImage.touchBarAddDetailTemplateName
+        }
+    }
+
     func followLink(_ sender: Any) {
         let id = Int(tValue) + offset
-        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [self] resource, isNew in
-            let resID = resource.id - offset
-            // If this is new resource with a valid id, reload the cases
-            if isNew && range?.contains(resID) != false {
-                self.loadCases()
-                value = resID as NSNumber
-                // Check if the value actually changed
-                if resource.id != id {
-                    parentList.controller.itemValueUpdated(sender)
-                }
+        parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
+            self?.linkIcon = NSImage.followLinkFreestandingTemplateName
+            // If this is a new resource with a name, reload the cases
+            if isNew && !resource.name.isEmpty {
+                self?.loadCases()
             }
         }
     }

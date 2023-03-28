@@ -78,6 +78,9 @@ class SpriteLayer: NSObject {
     }
 
     @IBAction func openSprite(_ sender: Any) {
+        guard controller.window?.makeFirstResponder(nil) != false else {
+            return
+        }
         let type = ResourceType("rlëD", controller.resource.typeAttributes)
         if let resource = controller.manager.findResource(type: type, id: Int(spriteID), currentDocumentOnly: false) {
             // If we found a resource but don't currently have any frames, try loading it again
@@ -86,13 +89,8 @@ class SpriteLayer: NSObject {
             }
             controller.manager.open(resource: resource)
         } else {
-            controller.manager.createResource(type: type, id: Int(spriteID)) { resource in
-                // Update the field if the resource was created with a different id,
-                // but avoid marking the window as dirty if it is the same
-                let newID = Int16(resource.id)
-                if self.spriteID != newID {
-                    self.spriteID = newID
-                }
+            controller.manager.createResource(type: type, id: Int(spriteID)) { [weak self] resource in
+                guard let self else { return }
                 // The resource will be empty on initial creation - add an observer to load it when the data changes
                 NotificationCenter.default.addObserver(self, selector: #selector(self.rleCreated(_:)), name: .ResourceDataDidChange, object: resource)
             }
