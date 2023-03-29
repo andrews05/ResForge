@@ -109,12 +109,12 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
             return
         }
         let id = Int(tValue) + offset
-        if cases[tValue]?.label.isEmpty == true {
+        if range?.contains(id) == false {
+            // If out of range, show no icon
+            linkIcon = nil
+        } else if cases[tValue]?.label.isEmpty == true {
             // If resource exists in case list (empty label implies a resource), show link icon
             linkIcon = NSImage.followLinkFreestandingTemplateName
-        } else if tValue == -1 || range?.contains(id) == false {
-            // If invalid or out of range, show no icon (assume -1 is invalid)
-            linkIcon = nil
         } else if parentList.controller.manager.findResource(type: .init(resType), id: id, currentDocumentOnly: false) != nil {
             // If found in directory (as a last resort), show link icon
             linkIcon = NSImage.followLinkFreestandingTemplateName
@@ -127,10 +127,16 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
     func followLink(_ sender: Any) {
         let id = Int(tValue) + offset
         parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
-            self?.linkIcon = NSImage.followLinkFreestandingTemplateName
-            // If this is a new resource with a name, reload the cases
-            if isNew && !resource.name.isEmpty {
-                self?.loadCases()
+            guard let self else { return }
+            // If this is new resource with a valid id, reload the cases
+            let resID = resource.id - self.offset
+            if isNew && self.range?.contains(resID) != false {
+                self.loadCases()
+                // Check if the value changed
+                if resource.id != id {
+                    self.value = resID as NSNumber
+                    self.parentList.controller.itemValueUpdated(sender)
+                }
             }
         }
     }

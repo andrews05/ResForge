@@ -174,10 +174,15 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         }
         let id = value
         parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
-            self?.linkIcon = NSImage.followLinkFreestandingTemplateName
-            // If this is a new resource with a name, reload the cases
-            if isNew && !resource.name.isEmpty {
-                self?.loadCases(resType, forceReload: true)
+            guard let self else { return }
+            // If this is new resource with a valid id, reload the cases
+            if isNew && self.min...self.max ~= resource.id {
+                self.loadCases(resType, forceReload: true)
+                // Check if the value changed
+                if resource.id != id {
+                    self.value = resource.id
+                    self.parentList.controller.itemValueUpdated(sender)
+                }
             }
         }
     }

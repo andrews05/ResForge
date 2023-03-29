@@ -29,8 +29,10 @@ class SpriteLayer: NSObject {
                 let type = ResourceType("rlëD", controller.resource.typeAttributes)
                 guard spriteID > 0, let resource = controller.manager.findResource(type: type, id: Int(spriteID), currentDocumentOnly: false) else {
                     spriteLink.title = "not found"
+                    spriteLink.image = NSImage(named: NSImage.touchBarAddDetailTemplateName)
                     return
                 }
+                spriteLink.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
                 // Base sprite is loaded on the main thread, others are loaded in background
                 if Self.self == BaseLayer.self {
                     spriteLink.title = self.loadRle(resource.data)
@@ -91,6 +93,12 @@ class SpriteLayer: NSObject {
         } else {
             controller.manager.createResource(type: type, id: Int(spriteID)) { [weak self] resource in
                 guard let self else { return }
+                // Update the field if the resource was created with a different id,
+                // but avoid marking the window as dirty if it is the same
+                let newID = Int16(resource.id)
+                if self.spriteID != newID {
+                    self.spriteID = newID
+                }
                 // The resource will be empty on initial creation - add an observer to load it when the data changes
                 NotificationCenter.default.addObserver(self, selector: #selector(self.rleCreated(_:)), name: .ResourceDataDidChange, object: resource)
             }
