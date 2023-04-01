@@ -209,7 +209,7 @@ extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
         } else {
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: nil) as! NSTableCellView
         }
-        if #available(OSX 11.0, *) {
+        if #available(macOS 11.0, *) {
             // Remove leading/trailing spacing on macOS 11
             for constraint in view.constraints {
                 if constraint.firstAttribute == .leading || constraint.firstAttribute == .trailing {

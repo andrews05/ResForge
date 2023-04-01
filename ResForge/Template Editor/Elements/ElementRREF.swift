@@ -53,7 +53,7 @@ class ElementRREF: BaseElement {
         if resource == nil {
             // The add icon isn't strictly supposed to be used outside of the touch bar -
             // It works fine on macOS 11 but for appropriate sizing on 10.14 we need to set the size explicitly (default is 18x30)
-            button.image?.size = NSSize(width: 14, height: 23)
+            button.image?.size = NSSize(width: 14, height: 24)
         }
         button.imagePosition = .imageRight
         button.target = self

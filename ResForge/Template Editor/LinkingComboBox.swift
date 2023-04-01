@@ -14,7 +14,8 @@ class LinkingComboBox: NSComboBox {
     }
 
     override init(frame frameRect: NSRect) {
-        let buttonFrame = NSRect(x: frameRect.size.width - 36, y: 6, width: 12, height: 12)
+        // To accommodate the touch bar add icon on macOS 10.14, we need to allow a height of 22
+        let buttonFrame = NSRect(x: frameRect.size.width - 36, y: 1, width: 12, height: 22)
         linkButton = NSButton(frame: buttonFrame)
         super.init(frame: frameRect)
         linkButton.isBordered = false

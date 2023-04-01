@@ -348,7 +348,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             .flexibleSpace,
             .searchField
         ]
-        if #available(OSX 11.0, *) {
+        if #available(macOS 11.0, *) {
             defaults.removeFirst(.space)
         }
         return defaults
@@ -356,7 +356,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
 
     // Get a system symbol if on 11.0 or later, otherwise a standard image
     private func symbolImage(named name: String, fallback: String? = nil) -> NSImage? {
-        if #available(OSX 11.0, *) {
+        if #available(macOS 11.0, *) {
             return NSImage(systemSymbolName: name, accessibilityDescription: nil)
         }
         let image = NSImage(named: fallback ?? name)
@@ -368,7 +368,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         // Create the toolbar items. On macOS 11 we use the special search toolbar item as well as the system symbol images.
         let item: NSToolbarItem
         if itemIdentifier == .searchField {
-            if #available(OSX 11.0, *) {
+            if #available(macOS 11.0, *) {
                 let searchItem = NSSearchToolbarItem(itemIdentifier: itemIdentifier)
                 searchItem.preferredWidthForSearchField = 180
                 searchField = searchItem.searchField
@@ -461,7 +461,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         windowController.window?.registerForDraggedTypes([.RKResource])
         self.updateStatus()
         NotificationCenter.default.addObserver(self, selector: #selector(validateToolbarItems(_:)), name: .DocumentSelectionDidChange, object: self)
-        if #available(OSX 11.0, *) {
+        if #available(macOS 11.0, *) {
             (statusText.superview?.superview as? NSBox)?.fillColor = .windowBackgroundColor
         }
     }
