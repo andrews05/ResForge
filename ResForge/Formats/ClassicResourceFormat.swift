@@ -1,14 +1,10 @@
+import Foundation
 import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/MoreMacintoshToolbox.pdf#page=151
 
-
-enum ResourceFormatError: LocalizedError {
-    case invalidData(String)
-}
-
 struct ClassicResourceFormat {
-    public static func read(_ data: Data) throws -> [Resource] {
+    static func read(_ data: Data) throws -> [Resource] {
         var resources: [Resource] = []
         let reader = BinaryDataReader(data)
 

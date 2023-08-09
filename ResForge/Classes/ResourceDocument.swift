@@ -138,30 +138,23 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         if let fork {
             // If fork has been set, try this fork only
             if fork == .data && hasData {
-                resources = try ResourceFile.read(from: url, format: &format)
+                (format, resources) = try ResourceFileFormat.read(from: url)
             } else if fork == .rsrc && hasRsrc {
-                resources = try ResourceFile.read(from: rsrcURL, format: &format)
+                (format, resources) = try ResourceFileFormat.read(from: rsrcURL)
             } else {
                 // Fork is empty
                 resources = []
             }
         } else if hasRsrc {
-            // If resource fork exists, try it first with fallback to data fork
-            do {
-                resources = try ResourceFile.read(from: rsrcURL, format: &format)
-                fork = .rsrc
-            } catch {
-                resources = try ResourceFile.read(from: url, format: &format)
-                fork = .data
-            }
+            // Prefer resource fork if it exists
+            (format, resources) = try ResourceFileFormat.read(from: rsrcURL)
+            fork = .rsrc
+        } else if hasData {
+            (format, resources) = try ResourceFileFormat.read(from: url)
+            fork = .data
         } else {
-            // Use data fork, defaulting to empty only if both forks are empty
-            let t = Date.timeIntervalSinceReferenceDate
-//            resources = hasData ? try ResourceFile.read(from: url, format: &format) : []
-            let content = try Data(contentsOf: url)
-            resources = try ClassicResourceFormat.read(content)
-            Swift.print(Date.timeIntervalSinceReferenceDate - t)
-            format = .classic
+            // Both forks empty, stick with data fork
+            resources = []
             fork = .data
         }
 

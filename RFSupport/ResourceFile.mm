@@ -2,6 +2,8 @@
 #import <Cocoa/Cocoa.h> // Required for RFSupport-Swift
 #import "RFSupport/RFSupport-Swift.h"
 #include "libGraphite/rsrc/file.hpp"
+#include "libGraphite/rsrc/extended.hpp"
+#include "libGraphite/data/reader.hpp"
 
 @implementation ResourceFile
 
@@ -17,6 +19,38 @@
     if (format) *format = (ResourceFileFormat)gFile.current_format();
     NSMutableArray *resources = [NSMutableArray new];
     for (auto typeList : gFile.types()) {
+        NSString *type = [NSString stringWithUTF8String:typeList->code().c_str()];
+        NSMutableDictionary *typeAtts = [NSMutableDictionary new];
+        for (auto attribute : typeList->attributes()) {
+            NSString *key = [NSString stringWithUTF8String:attribute.first.c_str()];
+            NSString *val = [NSString stringWithUTF8String:attribute.second.c_str()];
+            typeAtts[key] = val;
+        }
+        for (auto resource : typeList->resources()) {
+            // create the resource & add it to the array
+            NSString    *name = [NSString stringWithUTF8String:resource->name().c_str()];
+            NSData      *data = [NSData dataWithBytes:resource->data()->get()->data()+resource->data()->start() length:resource->data()->size()];
+            Resource *r = [[Resource alloc] initWithTypeCode:type typeAttributes:typeAtts id:resource->id() name:name data:data];
+            [resources addObject:r];
+        }
+    }
+    return resources;
+}
+
++ (NSArray<Resource *> *)readExtended:(NSData *)data error:(NSError **)outError
+{
+    std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
+    graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
+    graphite::data::reader reader(std::make_shared<graphite::data::data>(gData));
+    std::vector<std::shared_ptr<graphite::rsrc::type>> types;
+    try {
+        types = graphite::rsrc::extended::parse(std::make_shared<graphite::data::reader>(reader));
+    } catch (const std::exception& e) {
+        *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:nil];
+        return nil;
+    }
+    NSMutableArray *resources = [NSMutableArray new];
+    for (auto typeList : types) {
         NSString *type = [NSString stringWithUTF8String:typeList->code().c_str()];
         NSMutableDictionary *typeAtts = [NSMutableDictionary new];
         for (auto attribute : typeList->attributes()) {

@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ResourceFile : NSObject
 
 + (NSArray<Resource *> * _Nullable)readFromURL:(NSURL *)url format:(ResourceFileFormat * _Nullable)format error:(NSError ** _Nullable)outError;
++ (NSArray<Resource *> * _Nullable)readExtended:(NSData *)data error:(NSError ** _Nullable)outError;
 + (BOOL)writeResources:(NSArray<Resource *> *)resources toURL:(NSURL *)url asFormat:(ResourceFileFormat)format error:(NSError ** _Nullable)outError;
 
 @end
