@@ -156,7 +156,12 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
         } else {
             // Use data fork, defaulting to empty only if both forks are empty
-            resources = hasData ? try ResourceFile.read(from: url, format: &format) : []
+            let t = Date.timeIntervalSinceReferenceDate
+//            resources = hasData ? try ResourceFile.read(from: url, format: &format) : []
+            let content = try Data(contentsOf: url)
+            resources = try ClassicResourceFormat.read(content)
+            Swift.print(Date.timeIntervalSinceReferenceDate - t)
+            format = .classic
             fork = .data
         }
 
