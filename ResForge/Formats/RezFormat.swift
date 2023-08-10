@@ -1,9 +1,11 @@
 import Foundation
 import RFSupport
 
+// https://github.com/Olde-Skuul/burgerlib/blob/master/source/file/brrezfile.cpp
+
 struct RezFormat {
     static let signature = "BRGR"
-    static let version = 1
+    static let type = 1
     static let mapName = "resource.map"
     static let resourceOffsetLength = 12
     static let mapHeaderLength = 8
@@ -19,15 +21,16 @@ struct RezFormat {
         guard signature == Self.signature else {
             throw ResourceFormatError.invalidData("Incorrect file signature")
         }
-        let version = try reader.read() as UInt32
+        let numGroups = try reader.read() as UInt32
         let headerLength = try reader.read() as UInt32
-        try reader.advance(4) // Unknown
-        let firstIndex = Int(try reader.read() as UInt32)
+        let groupType = try reader.read() as UInt32
+        let baseIndex = Int(try reader.read() as UInt32)
         let numEntries = Int(try reader.read() as UInt32)
         let expectedLength = 12 + (numEntries * Self.resourceOffsetLength) + Self.mapName.count + 1
-        guard version == Self.version,
-              numEntries >= 1,
-              headerLength == expectedLength
+        guard numGroups == 1,
+              headerLength == expectedLength,
+              groupType == Self.type,
+              numEntries >= 1
         else {
             throw ResourceFormatError.invalidData("Invalid header")
         }
@@ -38,16 +41,18 @@ struct RezFormat {
         for _ in 0..<numEntries {
             offsets.append(Int(try reader.read() as UInt32))
             sizes.append(Int(try reader.read() as UInt32))
-            try reader.advance(4)
+            try reader.advance(4) // Skip name offset
         }
 
         // Read map info
-        reader.bigEndian = true
         let mapOffset = offsets.last!
-        try reader.setPosition(mapOffset + 4) // Skip unknown value
+        try reader.setPosition(mapOffset)
+        reader.bigEndian = true
+        let typeListOffset = Int(try reader.read() as UInt32) + mapOffset
         let numTypes = try reader.read() as UInt32
 
         // Read types
+        try reader.setPosition(typeListOffset)
         for _ in 0..<numTypes {
             let type = (try reader.read() as UInt32).stringValue
             let resourceListOffset = Int(try reader.read() as UInt32) + mapOffset
@@ -57,7 +62,7 @@ struct RezFormat {
             // Read resources
             try reader.pushPosition(resourceListOffset)
             for _ in 0..<numResources {
-                let index = Int(try reader.read() as UInt32) - firstIndex
+                let index = Int(try reader.read() as UInt32) - baseIndex
                 guard 0..<numEntries ~= index else {
                     throw ResourceFormatError.invalidData("Invalid resource index")
                 }
