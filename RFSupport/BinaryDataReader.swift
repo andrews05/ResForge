@@ -50,9 +50,9 @@ public class BinaryDataReader {
         try self.setPosition(position)
     }
 
-    public func popPosition() throws {
+    public func popPosition() {
         assert(!posStack.isEmpty, "position stack is empty")
-        try self.setPosition(posStack.popLast()!)
+        self.position = posStack.popLast()!
     }
 
     public func read<T: FixedWidthInteger>(bigEndian: Bool? = nil) throws -> T {
@@ -75,6 +75,17 @@ public class BinaryDataReader {
         }
         let bytes = try self.readData(length: length)
         guard let string = String(data: bytes, encoding: encoding) else {
+            throw BinaryDataReaderError.stringDecodeFailure
+        }
+        return string
+    }
+
+    public func readCString(paddedLength: Int, encoding: String.Encoding = .utf8) throws -> String {
+        let data = try self.readData(length: paddedLength)
+        guard let endIndex = data.firstIndex(of: 0) else {
+            throw BinaryDataReaderError.stringDecodeFailure
+        }
+        guard let string = String(bytes: data[..<endIndex], encoding: encoding) else {
             throw BinaryDataReaderError.stringDecodeFailure
         }
         return string

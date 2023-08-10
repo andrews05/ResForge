@@ -17,7 +17,7 @@ extension ResourceFileFormat {
 
         // Rez starts with specific signature
         let first = try reader.read() as UInt32
-        if first.stringValue == "BRGR" {
+        if first.stringValue == RezFormat.signature {
             return .rez
         }
 
@@ -36,7 +36,7 @@ extension ResourceFileFormat {
         case .classic:
             return try ClassicResourceFormat.read(data)
         case .rez:
-            return []
+            return try RezFormat.read(data)
         case .extended:
             return try ResourceFile.readExtended(data)
         }

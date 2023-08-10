@@ -53,7 +53,7 @@ final class ShapeMachine: Sprite {
     private func readShape() throws -> Shape {
         try reader.pushPosition(Int(try reader.read() as UInt32))
         let shape = try Shape(reader: reader)
-        try reader.popPosition()
+        reader.popPosition()
         // Update our max size as necessary
         if shape.frameWidth > frameWidth {
             frameWidth = shape.frameWidth

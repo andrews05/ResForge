@@ -59,8 +59,7 @@ struct ClassicResourceFormat {
             let resourceType = ResourceType(type)
 
             // Read resources
-            let pos = reader.position
-            try reader.setPosition(resourceListOffset)
+            try reader.pushPosition(resourceListOffset)
             for _ in 0..<numResources {
                 let id = Int(try reader.read() as Int16)
                 let nameOffset = try reader.read() as UInt16
@@ -90,7 +89,7 @@ struct ClassicResourceFormat {
                 resource.attributes = attributes
                 resources.append(resource)
             }
-            try reader.setPosition(pos)
+            reader.popPosition()
         }
 
         return resources
