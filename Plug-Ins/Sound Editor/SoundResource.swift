@@ -209,7 +209,7 @@ class SoundResource {
 
         // Setup audio queue
         var byteSize = numPackets * streamDesc.mBytesPerPacket
-        let bytesRemaining = UInt32(data.count - reader.position)
+        let bytesRemaining = UInt32(reader.bytesRemaining)
         if byteSize > bytesRemaining {
             byteSize = bytesRemaining
         }

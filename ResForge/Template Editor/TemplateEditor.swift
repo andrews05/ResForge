@@ -77,7 +77,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
                 let data = try filter?.filter(data: resource.data, for: resource.typeCode) ?? resource.data
                 let reader = BinaryDataReader(data)
                 try resourceStructure.readData(from: reader)
-                if reader.remainingBytes > 0 {
+                if reader.bytesRemaining > 0 {
                     // Show warning
                     NSApp.presentError(TemplateError.truncate)
                 }

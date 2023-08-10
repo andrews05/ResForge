@@ -20,7 +20,7 @@ class ElementPSTR<T: FixedWidthInteger & UnsignedInteger>: ElementCSTR {
 
     override func readData(from reader: BinaryDataReader) throws {
         let length = min(Int(try reader.read() as T), maxLength)
-        guard length <= reader.remainingBytes else {
+        guard length <= reader.bytesRemaining else {
             throw TemplateError.dataMismatch(self)
         }
 

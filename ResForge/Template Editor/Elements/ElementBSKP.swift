@@ -51,7 +51,7 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: BaseElement, Collecti
         }
         // Create a new reader for the skipped section of data
         // This ensures the sub elements cannot read past the end of the section
-        let remainder = reader.remainingBytes
+        let remainder = reader.bytesRemaining
         let data: Data
         if length > remainder {
             // Pad to expected length
@@ -68,14 +68,14 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: BaseElement, Collecti
     }
 
     override func writeData(to writer: BinaryDataWriter) {
-        var position = writer.position
+        var position = writer.bytesWritten
         writer.advance(lengthBytes)
         if !skipLengthBytes {
-            position = writer.position
+            position = writer.bytesWritten
         }
         subElements.writeData(to: writer)
         // Note: data corruption may occur if the length of the section exceeds the maximum size of the field
-        let length = T(clamping: writer.position - position)
+        let length = T(clamping: writer.bytesWritten - position)
         writer.write(length, at: position)
         value = Int(length)
     }

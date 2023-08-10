@@ -17,7 +17,10 @@ public class BinaryDataReader {
     public var data: Data
     public var bigEndian: Bool
     private(set) public var position: Int
-    public var remainingBytes: Int {
+    public var bytesRead: Int {
+        position - data.startIndex
+    }
+    public var bytesRemaining: Int {
         data.endIndex - position
     }
 
@@ -31,7 +34,7 @@ public class BinaryDataReader {
 
     @inline(__always)
     public func advance(_ count: Int) throws {
-        guard count <= remainingBytes else {
+        guard count <= bytesRemaining else {
             throw BinaryDataReaderError.insufficientData
         }
         position += count

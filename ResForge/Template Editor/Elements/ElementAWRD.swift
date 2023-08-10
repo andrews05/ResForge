@@ -24,10 +24,10 @@ class ElementAWRD: BaseElement {
     }
 
     override func readData(from reader: BinaryDataReader) throws {
-        try reader.advance(self.align(reader.position))
+        try reader.advance(self.align(reader.bytesRead))
     }
 
     override func writeData(to writer: BinaryDataWriter) {
-        writer.advance(self.align(writer.data.count))
+        writer.advance(self.align(writer.bytesWritten))
     }
 }

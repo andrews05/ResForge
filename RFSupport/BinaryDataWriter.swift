@@ -9,7 +9,7 @@ public enum BinaryDataWriterError: Error {
 public class BinaryDataWriter {
     public var data: Data
     public var bigEndian: Bool
-    public var position: Int { data.count }
+    public var bytesWritten: Int { data.count }
 
     public init(capacity: Int = 0, bigEndian: Bool = true) {
         self.data = Data(capacity: capacity)

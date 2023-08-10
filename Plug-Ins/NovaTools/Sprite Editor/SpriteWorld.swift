@@ -189,7 +189,7 @@ class SpriteWorld: WriteableSprite {
                             writer.write(RleOp.lineStart(0).rawValue)
                         }
                         lineCount = 0
-                        linePos = writer.position
+                        linePos = writer.bytesWritten
                     }
                     if transparent != 0 {
                         // Starting pixel data after transparency, write the skip
@@ -210,7 +210,7 @@ class SpriteWorld: WriteableSprite {
             if !pixels.isEmpty {
                 self.write(bigEndianPixels: &pixels)
                 // Rewrite the line length
-                writer.write(RleOp.lineStart(writer.position-linePos).rawValue, at: linePos-4)
+                writer.write(RleOp.lineStart(writer.bytesWritten-linePos).rawValue, at: linePos-4)
             }
         }
         writer.write(RleOp.frameEnd.rawValue)

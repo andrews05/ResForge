@@ -47,7 +47,7 @@ class ElementHEXD: BaseElement {
     }
 
     override func readData(from reader: BinaryDataReader) throws {
-        let remainder = reader.remainingBytes
+        let remainder = reader.bytesRemaining
         if type == "HEXD" || type == "HEXS" || type == "CODE" {
             length = remainder
         }
