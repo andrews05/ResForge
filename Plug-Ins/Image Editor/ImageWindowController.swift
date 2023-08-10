@@ -290,7 +290,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             return Icons.rep(data, width: 8, height: 8, depth: 1)
         case "PAT#":
             // This just stacks all the patterns vertically
-            return Icons.rep(data[2...], width: 8, height: 8 * Int(data[1]), depth: 1)
+            let count = Int(data[data.startIndex + 1])
+            return Icons.rep(data.dropFirst(2), width: 8, height: 8 * count, depth: 1)
         default:
             return NSBitmapImageRep(data: data)
         }
@@ -305,7 +306,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             if let range = error.localizedDescription.range(of: "(?<=offset )[0-9]+", options: .regularExpression),
                let offset = Int(error.localizedDescription[range]),
                data.count > offset,
-               let rep = NSBitmapImageRep(data: data[offset...]) {
+               let rep = NSBitmapImageRep(data: data.dropFirst(offset)) {
                 // Older QuickTime versions (<6.5) stored png data as non-standard RGBX
                 // We need to disable the alpha, but first ensure the image has been decoded by accessing the bitmapData
                 _ = rep.bitmapData

@@ -22,10 +22,10 @@ class SpobFilter: TemplateFilter {
     static let name = "Defense Fleet Demangler"
 
     static func filter(data: Data, for resourceType: String) -> Data {
-        guard data.endIndex >= 32, (data[30] != 0 || data[31] != 0) else {
+        guard data.count >= 32, (data[at: 30] != 0 || data[at: 31] != 0) else {
             return data
         }
-        var defCount = Int16(bitPattern: UInt16(data[30]) << 8 | UInt16(data[31]))
+        var defCount = Int16(bitPattern: UInt16(data[at: 30]) << 8 | UInt16(data[at: 31]))
         var waveSize: Int16 = 0
         if defCount < 0 {
             defCount = 0
@@ -35,17 +35,17 @@ class SpobFilter: TemplateFilter {
             defCount /= 10
         }
         var data = data
-        data[30] = UInt8(defCount >> 4)
-        data[31] = UInt8((defCount & 0x0F) << 4 + waveSize)
+        data[at: 30] = UInt8(defCount >> 4)
+        data[at: 31] = UInt8((defCount & 0x0F) << 4 + waveSize)
         return data
     }
 
     static func unfilter(data: Data, for resourceType: String) -> Data {
-        guard data.endIndex >= 32, (data[30] != 0 || data[31] != 0) else {
+        guard data.count >= 32, (data[at: 30] != 0 || data[at: 31] != 0) else {
             return data
         }
-        var defCount = Int16(data[30]) << 4 | Int16(data[31]) >> 4
-        var waveSize = data[31] & 0x0F
+        var defCount = Int16(data[at: 30]) << 4 | Int16(data[at: 31]) >> 4
+        var waveSize = data[at: 31] & 0x0F
         if waveSize > 0 || defCount >= 1000 {
             // Int16.max = 32767, which equals a total of 2276 in waves of 7
             // For waves of size 8 or 9, the max total is 2275
@@ -55,8 +55,21 @@ class SpobFilter: TemplateFilter {
             defCount += 10000 + Int16(waveSize)
         }
         var data = data
-        data[30] = UInt8(defCount >> 8)
-        data[31] = UInt8(defCount & 0xFF)
+        data[at: 30] = UInt8(defCount >> 8)
+        data[at: 31] = UInt8(defCount & 0xFF)
         return data
+    }
+}
+
+fileprivate extension Data {
+    @inline(__always)
+    /// Access an element relative to the start index
+    subscript(at offset: Int) -> UInt8 {
+        get {
+            return self[startIndex + offset]
+        }
+        set {
+            self[startIndex + offset] = newValue
+        }
     }
 }

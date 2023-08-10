@@ -100,10 +100,9 @@ class SpriteWorld: WriteableSprite {
                 }
                 // Work directly with the bytes - this is much faster than reading the pixels one at a time
                 try reader.readData(length: count * 2).withUnsafeBytes { bytes in
-                    bytes.withMemoryRebound(to: UInt16.self) { pixels in
-                        for pixel in pixels {
-                            self.draw(UInt16(bigEndian: pixel), to: &framePointer)
-                        }
+                    // Note: we can't use `withMemoryRebound` as the data may not be aligned
+                    for pixel in bytes.bindMemory(to: UInt16.self) {
+                        self.draw(UInt16(bigEndian: pixel), to: &framePointer)
                     }
                 }
                 if count % 2 != 0 {

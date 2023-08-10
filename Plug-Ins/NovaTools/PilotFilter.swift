@@ -15,7 +15,7 @@ class PilotFilter: TemplateFilter {
             return j
         }).withUnsafeBufferPointer({ Data(buffer: $0) })
         // Work through remaining bytes
-        for i in data[newData.count...] {
+        for i in data.dropFirst(newData.count) {
             newData.append(i ^ UInt8(magic >> 24))
             magic <<= 8
         }
