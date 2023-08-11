@@ -63,7 +63,7 @@ class ElementHEXD: BaseElement {
 
     override func writeData(to writer: BinaryDataWriter) {
         if let data {
-            writer.data.append(data)
+            writer.writeData(data)
         } else {
             writer.advance(length)
         }

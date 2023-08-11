@@ -3,6 +3,7 @@ import RFSupport
 
 enum ResourceFormatError: LocalizedError {
     case invalidData(String)
+    case writeError(String)
 }
 
 extension ResourceFileFormat {
