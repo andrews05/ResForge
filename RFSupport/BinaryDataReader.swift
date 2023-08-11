@@ -55,7 +55,7 @@ public class BinaryDataReader {
 
     public func popPosition() {
         assert(!posStack.isEmpty, "position stack is empty")
-        self.position = posStack.popLast()!
+        self.position = posStack.removeLast()
     }
 
     public func read<T: FixedWidthInteger>(bigEndian: Bool? = nil) throws -> T {

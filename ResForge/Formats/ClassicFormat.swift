@@ -3,7 +3,7 @@ import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/MoreMacintoshToolbox.pdf#page=151
 
-struct ClassicResourceFormat {
+struct ClassicFormat {
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         var resources: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data)
@@ -154,6 +154,8 @@ struct ClassicResourceFormat {
 
         // Write resources
         let nameList = BinaryDataWriter()
+        // For improved performance, reverse the offsets so we can pop them quickly off the end in the loop
+        resourceOffsets.reverse()
         for resources in resourcesByType.values {
             for resource in resources {
                 writer.write(Int16(resource.id))
@@ -166,7 +168,7 @@ struct ClassicResourceFormat {
                     try nameList.writePString(resource.name)
                 }
 
-                let resourceDataOffset = resourceOffsets.removeFirst()
+                let resourceDataOffset = resourceOffsets.removeLast()
                 let attsAndOffset = UInt32(resource.attributes) << 24 | UInt32(resourceDataOffset)
                 writer.write(attsAndOffset)
                 writer.advance(4) // Skip handle to next resource

@@ -35,7 +35,7 @@ extension ResourceFileFormat {
     func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         switch self {
         case .classic:
-            return try ClassicResourceFormat.read(data)
+            return try ClassicFormat.read(data)
         case .rez:
             return try RezFormat.read(data)
         case .extended:
@@ -57,7 +57,7 @@ extension ResourceFileFormat {
     func write(_ resourcesByType: [ResourceType: [Resource]], to url: URL) throws {
         switch self {
         case .classic:
-            let data = try ClassicResourceFormat.write(resourcesByType)
+            let data = try ClassicFormat.write(resourcesByType)
             try data.write(to: url)
         default:
             let resources = Array(resourcesByType.values.joined())
