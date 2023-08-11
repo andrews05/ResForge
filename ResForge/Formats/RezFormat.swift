@@ -12,8 +12,8 @@ struct RezFormat {
     static let typeInfoLength = 12
     static let resourceInfoLength = 266
 
-    static func read(_ data: Data) throws -> [Resource] {
-        var resources: [Resource] = []
+    static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
+        var resources: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data, bigEndian: false)
 
         // Read and validate header
@@ -58,6 +58,7 @@ struct RezFormat {
             let resourceListOffset = Int(try reader.read() as UInt32) + mapOffset
             let numResources = try reader.read() as UInt32
             let resourceType = ResourceType(type)
+            resources[resourceType] = []
 
             // Read resources
             try reader.pushPosition(resourceListOffset)
@@ -77,7 +78,7 @@ struct RezFormat {
 
                 // Construct resource
                 let resource = Resource(type: resourceType, id: id, name: name, data: data)
-                resources.append(resource)
+                resources[resourceType]?.append(resource)
             }
             reader.popPosition()
         }

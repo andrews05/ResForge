@@ -134,7 +134,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         if fork == nil {
             fork = (NSDocumentController.shared as! OpenPanelDelegate).getSelectedFork()
         }
-        let resources: [Resource]
+        let resources: [ResourceType: [Resource]]
         if let fork {
             // If fork has been set, try this fork only
             if fork == .data && hasData {
@@ -143,7 +143,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                 (format, resources) = try ResourceFileFormat.read(from: rsrcURL)
             } else {
                 // Fork is empty
-                resources = []
+                resources = [:]
             }
         } else if hasRsrc {
             // Prefer resource fork if it exists
@@ -154,7 +154,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             fork = .data
         } else {
             // Both forks empty, stick with data fork
-            resources = []
+            resources = [:]
             fork = .data
         }
 
@@ -165,12 +165,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         fileType = format.typeName
         hfsType = attrs[.hfsTypeCode] as! OSType
         hfsCreator = attrs[.hfsCreatorCode] as! OSType
-        directory.reset()
-        directory.add(resources)
         revision = 0
-        for resource in resources {
-            resource.resetState()
-        }
+        directory.reset(resources)
         dataSource?.reload()
         self.undoManager?.enableUndoRegistration()
     }
@@ -190,7 +186,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         if saveOperation == .saveOperation && fork == .rsrc, let fileURL = self.fileURL {
             // In place save of resource fork. We want to preserve all other aspects of the file, such as the data fork and finder flags.
             // Relying on the default implementation can result in some oddities, so instead we'll just write out the resource fork directly.
-            // This isn't strictly "safe", although Graphite's writer will at least detect structural issues before writing any data.
+            // This isn't strictly "safe", although we will at least detect structural issues before writing any data.
             // First we need to check if the file is being renamed for some reason and copy the existing file to the new location.
             let moved = fileURL != url
             if moved {
@@ -198,7 +194,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             }
             do {
                 let writeUrl = url.appendingPathComponent("..namedfork/rsrc")
-                try ResourceFile.write(resources, to: writeUrl, as: format)
+                try format.write(directory.resourcesByType, to: writeUrl)
                 try FileManager.default.setAttributes([.hfsTypeCode: hfsType, .hfsCreatorCode: hfsCreator], ofItemAtPath: url.path)
             } catch let error {
                 if moved {
@@ -244,7 +240,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
 
         // Write resources to file
         let writeUrl = fork == .rsrc ? url.appendingPathComponent("..namedfork/rsrc") : url
-        try ResourceFile.write(directory.resources(), to: writeUrl, as: format)
+        try format.write(directory.resourcesByType, to: writeUrl)
 
         // Save any properties that may have changed (only do this after successful write)
         self.undoManager?.disableUndoRegistration()

@@ -25,6 +25,15 @@ class ResourceDirectory {
         }
     }
 
+    // The internal list remains consistently sorted
+    private static func typeSort(_ a: ResourceType, _ b: ResourceType) -> Bool {
+        let compare = a.code.localizedCompare(b.code)
+        return compare == .orderedSame ? a.attributes.count < b.attributes.count : compare == .orderedAscending
+    }
+    private static func idSort(_ a: Resource, _ b: Resource) -> Bool {
+        a.id < b.id
+    }
+
     init() {
         document = nil
     }
@@ -35,10 +44,18 @@ class ResourceDirectory {
         NotificationCenter.default.addObserver(self, selector: #selector(resourceDidChange(_:)), name: .ResourceDidChange, object: nil)
     }
 
-    /// Remove all resources.
-    func reset() {
-        resourcesByType.removeAll()
-        allTypes.removeAll()
+    /// Reset the directory, replacing all resources.
+    func reset(_ newResources: [ResourceType: [Resource]]) {
+        resourcesByType = newResources
+        for (type, resources) in resourcesByType {
+            for resource in resources {
+                resource.document = document
+                resource.resetState()
+            }
+            resourcesByType[type]?.sort(by: Self.idSort)
+        }
+        allTypes = Array(resourcesByType.keys).sorted(by: Self.typeSort)
+        filtered.removeAll()
     }
 
     /// Add an array of resources with no notification or undo registration.
@@ -107,12 +124,9 @@ class ResourceDirectory {
         resource.document = document
         if resourcesByType[resource.type] == nil {
             resourcesByType[resource.type] = [resource]
-            allTypes.insert(resource.type) {
-                let compare = $0.code.localizedCompare($1.code)
-                return compare == .orderedSame ? $0.attributes.count < $1.attributes.count : compare == .orderedAscending
-            }
+            allTypes.insert(resource.type, by: Self.typeSort)
         } else {
-            resourcesByType[resource.type]?.insert(resource) { $0.id < $1.id }
+            resourcesByType[resource.type]?.insert(resource, by: Self.idSort)
         }
     }
 
@@ -151,7 +165,7 @@ class ResourceDirectory {
             return
         }
         let idx = list.firstIndex(of: resource)
-        resourcesByType[resource.type]?.sort { $0.id < $1.id }
+        resourcesByType[resource.type]?.sort(by: Self.idSort)
         filtered.removeValue(forKey: resource.type)
         NotificationCenter.default.post(name: .DirectoryDidUpdateResource, object: self, userInfo: [
             "resource": resource,

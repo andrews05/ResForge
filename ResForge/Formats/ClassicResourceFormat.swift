@@ -4,8 +4,8 @@ import RFSupport
 // https://developer.apple.com/library/archive/documentation/mac/pdf/MoreMacintoshToolbox.pdf#page=151
 
 struct ClassicResourceFormat {
-    static func read(_ data: Data) throws -> [Resource] {
-        var resources: [Resource] = []
+    static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
+        var resources: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data)
 
         // Read and validate header
@@ -57,6 +57,7 @@ struct ClassicResourceFormat {
             let numResources = (try reader.read() as UInt16) &+ 1
             let resourceListOffset = Int(try reader.read() as UInt16) + typeListOffset
             let resourceType = ResourceType(type)
+            resources[resourceType] = []
 
             // Read resources
             try reader.pushPosition(resourceListOffset)
@@ -87,7 +88,7 @@ struct ClassicResourceFormat {
                 // Construct resource
                 let resource = Resource(type: resourceType, id: id, name: name, data: data)
                 resource.attributes = attributes
-                resources.append(resource)
+                resources[resourceType]?.append(resource)
             }
             reader.popPosition()
         }
