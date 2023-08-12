@@ -14,20 +14,18 @@ struct RezFormat {
 
         // Read and validate header
         let signature = (try reader.read(bigEndian: true) as UInt32).stringValue
-        guard signature == Self.signature else {
-            throw ResourceFormatError.invalidData("Incorrect file signature")
-        }
         let numGroups = try reader.read() as UInt32
         let headerLength = try reader.read() as UInt32
         let groupType = try reader.read() as UInt32
         let baseIndex = Int(try reader.read() as UInt32)
         let numEntries = Int(try reader.read() as UInt32)
-        guard numGroups == 1,
+        guard signature == Self.signature,
+              numGroups == 1,
               headerLength <= data.count,
               groupType == Self.type,
               numEntries >= 1
         else {
-            throw ResourceFormatError.invalidData("Invalid header")
+            throw CocoaError(.fileReadCorruptFile)
         }
 
         // Read resource offsets
@@ -61,7 +59,7 @@ struct RezFormat {
             for _ in 0..<numResources {
                 let index = Int(try reader.read() as UInt32) - baseIndex
                 guard 0..<numEntries ~= index else {
-                    throw ResourceFormatError.invalidData("Invalid resource index")
+                    throw CocoaError(.fileReadCorruptFile)
                 }
                 try reader.advance(4) // Skip type, which we already know
                 let id = Int(try reader.read() as Int16)
@@ -119,11 +117,11 @@ struct RezFormat {
         var resourceDataOffset = rootHeaderLength + headerLength
         for (type, resources) in resourcesByType {
             guard type.attributes.isEmpty else {
-                throw ResourceFormatError.writeError("Type attributes not supported")
+                throw ResourceFormatError.typeAttributesNotSupported
             }
             for resource in resources {
                 guard ResourceFileFormat.rez.isValid(id: resource.id) else {
-                    throw ResourceFormatError.writeError("Resource id outside of valid range")
+                    throw ResourceFormatError.invalidID(resource.id)
                 }
                 writer.write(UInt32(resourceDataOffset))
                 writer.write(UInt32(resource.data.count))

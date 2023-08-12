@@ -2,8 +2,23 @@ import Foundation
 import RFSupport
 
 enum ResourceFormatError: LocalizedError {
-    case invalidData(String)
-    case writeError(String)
+    case invalidID(Int)
+    case typeAttributesNotSupported
+    case fileTooBig
+    case valueOverflow
+
+    var failureReason: String? {
+        switch self {
+        case let .invalidID(id):
+            return String(format: NSLocalizedString("The ID %ld is out of range for this file format.", comment: ""), id)
+        case .typeAttributesNotSupported:
+            return NSLocalizedString("Type attributes are not compatible with this file format.", comment: "")
+        case .fileTooBig:
+            return NSLocalizedString("The maximum file size of this format was exceeded.", comment: "")
+        case .valueOverflow:
+            return NSLocalizedString("An internal limit of this file format was exceeded.", comment: "")
+        }
+    }
 }
 
 enum ResourceFileFormat {
@@ -73,8 +88,12 @@ extension ResourceFileFormat {
 extension ResourceFileFormat {
     static func read(from url: URL) throws -> (Self, [ResourceType: [Resource]]) {
         let content = try Data(contentsOf: url)
-        let format = try self.detectFormat(content)
-        return (format, try format.read(content))
+        do {
+            let format = try self.detectFormat(content)
+            return (format, try format.read(content))
+        } catch {
+            throw CocoaError(.fileReadCorruptFile)
+        }
     }
 
     static func detectFormat(_ data: Data) throws -> Self {

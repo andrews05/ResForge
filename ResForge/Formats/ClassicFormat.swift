@@ -16,12 +16,10 @@ struct ClassicFormat {
         guard dataOffset != 0,
               mapOffset != 0,
               mapLength != 0,
-              mapOffset == dataOffset + dataLength
+              mapOffset == dataOffset + dataLength,
+              mapOffset + mapLength <= data.count
         else {
-            throw ResourceFormatError.invalidData("Invalid header")
-        }
-        guard mapOffset + mapLength <= data.count else {
-            throw ResourceFormatError.invalidData("Invalid data length")
+            throw CocoaError(.fileReadCorruptFile)
         }
 
         // Go to map
@@ -39,7 +37,7 @@ struct ClassicFormat {
                   dataLength2 == dataLength,
                   mapLength2 == mapLength
             else {
-                throw ResourceFormatError.invalidData("Invalid second header")
+                throw CocoaError(.fileReadCorruptFile)
             }
         }
 
@@ -111,7 +109,7 @@ struct ClassicFormat {
         let nameListOffset = typeListOffset + 2 + (numTypes * typeInfoLength) + (numResources * resourceInfoLength)
         // Trivia: Total number of resources can never exceed 5458
         guard nameListOffset <= UInt16.max else {
-            throw ResourceFormatError.writeError("Name list offset would exceed maximum value")
+            throw ResourceFormatError.valueOverflow
         }
 
         let writer = BinaryDataWriter()
@@ -121,15 +119,15 @@ struct ClassicFormat {
         var resourceOffsets: [Int] = []
         for (type, resources) in resourcesByType {
             guard type.attributes.isEmpty else {
-                throw ResourceFormatError.writeError("Type attributes not supported")
+                throw ResourceFormatError.typeAttributesNotSupported
             }
             for resource in resources {
                 guard ResourceFileFormat.classic.isValid(id: resource.id) else {
-                    throw ResourceFormatError.writeError("Resource id outside of valid range")
+                    throw ResourceFormatError.invalidID(resource.id)
                 }
                 let offset = writer.bytesWritten - dataOffset
                 guard offset <= dataSizeMask else {
-                    throw ResourceFormatError.writeError("Resource data offset would exceed maximum value")
+                    throw ResourceFormatError.fileTooBig
                 }
                 resourceOffsets.append(offset)
                 writer.write(UInt32(resource.data.count))
@@ -162,7 +160,7 @@ struct ClassicFormat {
                 if resource.name.isEmpty {
                     writer.write(UInt16.max)
                 } else if nameList.bytesWritten >= UInt16.max {
-                    throw ResourceFormatError.writeError("Resource name offset would exceed maximum value")
+                    throw ResourceFormatError.valueOverflow
                 } else {
                     writer.write(UInt16(nameList.bytesWritten))
                     try nameList.writePString(resource.name)
@@ -181,7 +179,7 @@ struct ClassicFormat {
         // Even if the data is valid so far, the resource manager will still not read files larger than 16MB
         // (Specifically, the max seems to be (2 ^ 24) - 2)
         guard writer.bytesWritten < dataSizeMask else {
-            throw ResourceFormatError.writeError("File would exceed maximum size")
+            throw ResourceFormatError.fileTooBig
         }
 
         // Go back and write headers
