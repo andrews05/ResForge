@@ -48,6 +48,7 @@
 		496669662A836D80008DCC36 /* NCBExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2FC29CC4B290003702A /* NCBExpression.swift */; };
 		496669672A836D83008DCC36 /* NCBSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2DA29C420640003702A /* NCBSet.swift */; };
 		496669682A836D85008DCC36 /* NCBTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D5F1329CBC13A00A2668C /* NCBTest.swift */; };
+		496669732A8724C8008DCC36 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441D2472064F0035C0FA /* file.cpp */; };
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
@@ -79,13 +80,12 @@
 		49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970442A2472064F0035C0FA /* writer.cpp */; };
 		49964DF724D0EC0700BAB902 /* classic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441E2472064F0035C0FA /* classic.cpp */; };
 		49964DF824D0EC0F00BAB902 /* extended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044192472064F0035C0FA /* extended.cpp */; };
-		49964DF924D0EC1600BAB902 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441D2472064F0035C0FA /* file.cpp */; };
 		49964DFA24D0EC1A00BAB902 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441C2472064F0035C0FA /* manager.cpp */; };
 		49964DFB24D0EC1C00BAB902 /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044182472064F0035C0FA /* resource.cpp */; };
 		49964DFC24D0EC2000BAB902 /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
 		49964DFD24D0EC2300BAB902 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044212472064F0035C0FA /* type.cpp */; };
 		49964E1324D1034400BAB902 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
-		49964E1424D10A1000BAB902 /* ResourceFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 499216F024CCD2250054A390 /* ResourceFile.mm */; };
+		49964E1424D10A1000BAB902 /* ExtendedFormat.mm in Sources */ = {isa = PBXBuildFile; fileRef = 499216F024CCD2250054A390 /* ExtendedFormat.mm */; };
 		49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */; };
 		4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4996B90725DB6C2F0027FA39 /* Credits.rtf */; };
 		49A432D025437C64000B1109 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
@@ -421,8 +421,8 @@
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		498A02C225C3E4B500783776 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
-		499216EF24CCD2250054A390 /* ResourceFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceFile.h; sourceTree = "<group>"; };
-		499216F024CCD2250054A390 /* ResourceFile.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceFile.mm; sourceTree = "<group>"; };
+		499216EF24CCD2250054A390 /* ExtendedFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtendedFormat.h; sourceTree = "<group>"; };
+		499216F024CCD2250054A390 /* ExtendedFormat.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ExtendedFormat.mm; sourceTree = "<group>"; };
 		4992491926C3B527005F69A7 /* AttributesEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEditor.swift; sourceTree = "<group>"; };
 		49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDataSource.swift; sourceTree = "<group>"; };
 		4996B8F425DB6AC80027FA39 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -838,8 +838,8 @@
 				494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */,
 				496A52BD24F9B047006A12DF /* CustomImageView.swift */,
 				4970CCD326FA7DCC00B7C280 /* Extensions.swift */,
-				499216EF24CCD2250054A390 /* ResourceFile.h */,
-				499216F024CCD2250054A390 /* ResourceFile.mm */,
+				499216EF24CCD2250054A390 /* ExtendedFormat.h */,
+				499216F024CCD2250054A390 /* ExtendedFormat.mm */,
 				496674FF24BE5C8C00251406 /* QuickDraw.h */,
 				4966750024BE5C8D00251406 /* QuickDraw.mm */,
 			);
@@ -1399,7 +1399,7 @@
 				49964DE424D0EB4900BAB902 /* clut.cpp in Sources */,
 				49964DF724D0EC0700BAB902 /* classic.cpp in Sources */,
 				49964DF824D0EC0F00BAB902 /* extended.cpp in Sources */,
-				49964E1424D10A1000BAB902 /* ResourceFile.mm in Sources */,
+				49964E1424D10A1000BAB902 /* ExtendedFormat.mm in Sources */,
 				49AB3C2727D69388003B3536 /* planar.cpp in Sources */,
 				49964DED24D0EB8900BAB902 /* data.cpp in Sources */,
 				49964DFC24D0EC2000BAB902 /* rez.cpp in Sources */,
@@ -1407,7 +1407,6 @@
 				49964DEB24D0EB6300BAB902 /* surface.cpp in Sources */,
 				49964DEA24D0EB6000BAB902 /* packbits.cpp in Sources */,
 				49AB3C2A27D69388003B3536 /* raw.cpp in Sources */,
-				49964DF924D0EC1600BAB902 /* file.cpp in Sources */,
 				49AB3C2527D69388003B3536 /* imagedesc.cpp in Sources */,
 				49964DFA24D0EC1A00BAB902 /* manager.cpp in Sources */,
 				49964DE824D0EB5800BAB902 /* ppat.cpp in Sources */,
@@ -1425,6 +1424,7 @@
 				49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */,
 				49964DE924D0EB5D00BAB902 /* color.cpp in Sources */,
 				49964DFD24D0EC2300BAB902 /* type.cpp in Sources */,
+				496669732A8724C8008DCC36 /* file.cpp in Sources */,
 				49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */,
 				4970CCD426FA7DCC00B7C280 /* Extensions.swift in Sources */,
 				49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */,

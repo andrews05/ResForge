@@ -29,64 +29,6 @@ enum FileFork {
     }
 }
 
-extension ResourceFileFormat {
-    var name: String {
-        switch self {
-        case .classic:
-            return NSLocalizedString("Resource File", comment: "")
-        case .extended:
-            return NSLocalizedString("Extended Resource File", comment: "")
-        case .rez:
-            return NSLocalizedString("Rez File", comment: "")
-        }
-    }
-    var typeName: String {
-        // We want to make the format's filename extension simply a "suggestion" and not force it in any manner, but the
-        // standard behaviour makes this difficult to achieve nicely. NSSavePanel.allowsOtherFileTypes isn't sufficient as
-        // it still prompts the user to confirm and only works if the user has entered an extension known by the system.
-        // The current solution is to use the following system UTIs that have no extension.
-        switch self {
-        case .classic:
-            return "public.data"
-        case .extended:
-            return "public.item"
-        case .rez:
-            return "com.resforge.rez-file"
-        }
-    }
-    var filenameExtension: String {
-        switch self {
-        case .classic:
-            return "rsrc"
-        case .extended:
-            return "rsrx"
-        case .rez:
-            return "rez"
-        }
-    }
-    var minID: Int {
-        self == .extended ? Int(Int32.min) : Int(Int16.min)
-    }
-    var maxID: Int {
-        self == .extended ? Int(Int32.max) : Int(Int16.max)
-    }
-
-    init(typeName: String) {
-        switch typeName {
-        case Self.extended.typeName:
-            self = .extended
-        case Self.rez.typeName:
-            self = .rez
-        default:
-            self = .classic
-        }
-    }
-
-    func isValid(id: Int) -> Bool {
-        return minID...maxID ~= id
-    }
-}
-
 class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate {
     @IBOutlet var dataSource: ResourceDataSource!
     @IBOutlet var statusText: NSTextField!
