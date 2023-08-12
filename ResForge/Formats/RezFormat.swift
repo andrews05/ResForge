@@ -7,10 +7,6 @@ struct RezFormat {
     static let signature = "BRGR"
     static let type = 1
     static let mapName = "resource.map"
-    static let resourceOffsetLength = 12
-    static let mapHeaderLength = 8
-    static let typeInfoLength = 12
-    static let resourceInfoLength = 266
 
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         var resources: [ResourceType: [Resource]] = [:]
@@ -26,9 +22,8 @@ struct RezFormat {
         let groupType = try reader.read() as UInt32
         let baseIndex = Int(try reader.read() as UInt32)
         let numEntries = Int(try reader.read() as UInt32)
-        let expectedLength = 12 + (numEntries * Self.resourceOffsetLength) + Self.mapName.count + 1
         guard numGroups == 1,
-              headerLength == expectedLength,
+              headerLength <= data.count,
               groupType == Self.type,
               numEntries >= 1
         else {
@@ -41,7 +36,8 @@ struct RezFormat {
         for _ in 0..<numEntries {
             offsets.append(Int(try reader.read() as UInt32))
             sizes.append(Int(try reader.read() as UInt32))
-            try reader.advance(4) // Skip name offset
+            // Skip name offset - we'll just assume the resource map is the last entry
+            try reader.advance(4)
         }
 
         // Read map info
@@ -84,5 +80,106 @@ struct RezFormat {
         }
 
         return resources
+    }
+
+    static func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
+        // Known constants
+        let rootHeaderLength = 12
+        let groupHeaderLength = 12
+        let resourceOffsetLength = 12
+        let mapHeaderLength = 8
+        let typeInfoLength = 12
+        let resourceNameLength = 256
+        let resourceInfoLength = 10 + resourceNameLength
+
+        // Perform some initial calculations
+        let numTypes = resourcesByType.count
+        let numResources = resourcesByType.values.map(\.count).reduce(0, +)
+        let numEntries = numResources + 1 // Resource map is the last entry
+        let nameListOffset = groupHeaderLength + (numEntries * resourceOffsetLength)
+        let headerLength = nameListOffset + Self.mapName.count + 1
+        let numGroups = 1
+        var index = 1 // Base index
+
+        let writer = BinaryDataWriter(bigEndian: false)
+
+        // Write root header
+        writer.write(UInt32(Self.signature), bigEndian: true)
+        writer.write(UInt32(numGroups))
+        writer.write(UInt32(headerLength))
+        assert(writer.bytesWritten == rootHeaderLength)
+
+        // Write group header
+        writer.write(UInt32(Self.type))
+        writer.write(UInt32(index))
+        writer.write(UInt32(numEntries))
+        assert(writer.bytesWritten == rootHeaderLength + groupHeaderLength)
+
+        // Write offsets
+        var resourceDataOffset = rootHeaderLength + headerLength
+        for (type, resources) in resourcesByType {
+            guard type.attributes.isEmpty else {
+                throw ResourceFormatError.writeError("Type attributes not supported")
+            }
+            for resource in resources {
+                guard ResourceFileFormat.rez.isValid(id: resource.id) else {
+                    throw ResourceFormatError.writeError("Resource id outside of valid range")
+                }
+                writer.write(UInt32(resourceDataOffset))
+                writer.write(UInt32(resource.data.count))
+                writer.advance(4) // Skip name offset
+                resourceDataOffset += resource.data.count
+            }
+        }
+
+        // Write map offsets
+        var resourceListOffset = mapHeaderLength + (numTypes * typeInfoLength)
+        let mapLength = resourceListOffset + (numResources * resourceInfoLength)
+        writer.write(UInt32(resourceDataOffset))
+        writer.write(UInt32(mapLength))
+        writer.write(UInt32(nameListOffset))
+        assert(writer.bytesWritten == rootHeaderLength + nameListOffset)
+
+        // Write map name
+        try writer.writeString(Self.mapName)
+        writer.advance(1) // Null terminator
+        assert(writer.bytesWritten == rootHeaderLength + headerLength)
+
+        // Write resource data
+        for resources in resourcesByType.values {
+            for resource in resources {
+                writer.writeData(resource.data)
+            }
+        }
+        assert(writer.bytesWritten == resourceDataOffset)
+
+        // Write map header
+        writer.bigEndian = true
+        writer.write(UInt32(mapHeaderLength)) // Offset to type list
+        writer.write(UInt32(numTypes))
+        assert(writer.bytesWritten == resourceDataOffset + mapHeaderLength)
+
+        // Write types
+        for (type, resources) in resourcesByType {
+            writer.write(UInt32(type.code))
+            writer.write(UInt32(resourceListOffset))
+            writer.write(UInt32(resources.count))
+            resourceListOffset += resources.count * resourceInfoLength
+        }
+
+        // Write resources
+        for resources in resourcesByType.values {
+            for resource in resources {
+                writer.write(UInt32(index))
+                index += 1
+                writer.write(UInt32(resource.typeCode))
+                writer.write(Int16(resource.id))
+                try writer.writeString(resource.name, encoding: .macOSRoman)
+                writer.advance(resourceNameLength - resource.name.count)
+            }
+        }
+        assert(writer.bytesWritten == resourceDataOffset + mapLength)
+        
+        return writer.data
     }
 }

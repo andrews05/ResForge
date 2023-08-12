@@ -59,6 +59,9 @@ extension ResourceFileFormat {
         case .classic:
             let data = try ClassicFormat.write(resourcesByType)
             try data.write(to: url)
+        case .rez:
+            let data = try RezFormat.write(resourcesByType)
+            try data.write(to: url)
         default:
             let resources = Array(resourcesByType.values.joined())
             try ResourceFile.write(resources, to: url, as: self)

@@ -101,14 +101,14 @@ struct ClassicFormat {
         let dataOffset = 256
         let dataSizeMask = (1 << 24) - 1
         let mapHeaderLength = 24
-        let resourceTypeLength = 8
-        let resourceLength = 12
+        let typeInfoLength = 8
+        let resourceInfoLength = 12
 
         // Perform some initial calculations and validations
         let numTypes = resourcesByType.count
         let numResources = resourcesByType.values.map(\.count).reduce(0, +)
         let typeListOffset = mapHeaderLength + 4
-        let nameListOffset = typeListOffset + 2 + (numTypes * resourceTypeLength) + (numResources * resourceLength)
+        let nameListOffset = typeListOffset + 2 + (numTypes * typeInfoLength) + (numResources * resourceInfoLength)
         // Trivia: Total number of resources can never exceed 5458
         guard nameListOffset <= UInt16.max else {
             throw ResourceFormatError.writeError("Name list offset would exceed maximum value")
@@ -144,12 +144,12 @@ struct ClassicFormat {
 
         // Write types
         writer.write(UInt16(numTypes) &- 1)
-        var resourceListOffset = 2 + (numTypes * resourceTypeLength)
+        var resourceListOffset = 2 + (numTypes * typeInfoLength)
         for (type, resources) in resourcesByType {
             writer.write(UInt32(type.code))
             writer.write(UInt16(resources.count) &- 1)
             writer.write(UInt16(resourceListOffset))
-            resourceListOffset += resources.count * resourceLength
+            resourceListOffset += resources.count * resourceInfoLength
         }
 
         // Write resources
