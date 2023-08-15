@@ -83,14 +83,14 @@ public class BinaryDataReader {
         return string
     }
 
-    public func readCString(paddedLength: Int, encoding: String.Encoding = .utf8) throws -> String {
-        let data = try self.readData(length: paddedLength)
-        guard let endIndex = data.firstIndex(of: 0) else {
+    public func readCString(encoding: String.Encoding = .utf8) throws -> String {
+        guard let endIndex = data[position...].firstIndex(of: 0) else {
             throw BinaryDataReaderError.stringDecodeFailure
         }
-        guard let string = String(bytes: data[..<endIndex], encoding: encoding) else {
+        guard let string = String(bytes: data[position..<endIndex], encoding: encoding) else {
             throw BinaryDataReaderError.stringDecodeFailure
         }
+        position = endIndex + 1
         return string
     }
 

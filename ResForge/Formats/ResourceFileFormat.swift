@@ -99,20 +99,16 @@ extension ResourceFileFormat {
     static func detectFormat(_ data: Data) throws -> Self {
         let reader = BinaryDataReader(data)
 
-        // Rez starts with specific signature
-        let first = try reader.read() as UInt32
-        if first.stringValue == RezFormat.signature {
+        // Rez and Extended start with specific signature
+        let signature = (try reader.read() as UInt32).stringValue
+        if signature == RezFormat.signature {
             return .rez
-        }
-
-        // Extended starts with 8 byte version number, currently 1
-        let second = try reader.read() as UInt32
-        if first == 0 && second == 1 {
+        } else if signature == ExtendedFormat.signature {
             return .extended
+        } else {
+            // Fallback to classic
+            return .classic
         }
-
-        // Otherwise fallback to classic
-        return .classic
     }
 
     func read(_ data: Data) throws -> [ResourceType: [Resource]] {
@@ -122,26 +118,20 @@ extension ResourceFileFormat {
         case .rez:
             return try RezFormat.read(data)
         case .extended:
-            // The Objective-C bridge to Graphite can't work with `ResourceType`
-            // We need to construct the dictionary here instead
-            let resources = try ExtendedFormat.read(data)
-            return resources.reduce(into: [:]) { map, resource in
-                map[resource.type, default: []].append(resource)
-            }
+            return try ExtendedFormat.read(data)
         }
     }
 
     func write(_ resourcesByType: [ResourceType: [Resource]], to url: URL) throws {
+        let data: Data
         switch self {
         case .classic:
-            let data = try ClassicFormat.write(resourcesByType)
-            try data.write(to: url)
+            data = try ClassicFormat.write(resourcesByType)
         case .rez:
-            let data = try RezFormat.write(resourcesByType)
-            try data.write(to: url)
-        default:
-            let resources = Array(resourcesByType.values)
-            try ExtendedFormat.write(resources, to: url)
+            data = try RezFormat.write(resourcesByType)
+        case .extended:
+            data = try ExtendedFormat.write(resourcesByType)
         }
+        try data.write(to: url)
     }
 }

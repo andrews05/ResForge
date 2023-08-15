@@ -7,6 +7,7 @@ struct RezFormat {
     static let signature = "BRGR"
     static let type = 1
     static let mapName = "resource.map"
+    static let resourceNameLength = 256
 
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         var resources: [ResourceType: [Resource]] = [:]
@@ -63,12 +64,15 @@ struct RezFormat {
                 }
                 try reader.advance(4) // Skip type, which we already know
                 let id = Int(try reader.read() as Int16)
-                let name = try reader.readCString(paddedLength: 256, encoding: .macOSRoman)
+                let nextOffset = reader.bytesRead + Self.resourceNameLength
+
+                // Read resource name
+                let name = try reader.readCString(encoding: .macOSRoman)
 
                 // Read resource data
-                try reader.pushPosition(offsets[index])
+                try reader.setPosition(offsets[index])
                 let data = try reader.readData(length: sizes[index])
-                reader.popPosition()
+                try reader.setPosition(nextOffset)
 
                 // Construct resource
                 let resource = Resource(type: resourceType, id: id, name: name, data: data)
@@ -87,7 +91,6 @@ struct RezFormat {
         let resourceOffsetLength = 12
         let mapHeaderLength = 8
         let typeInfoLength = 12
-        let resourceNameLength = 256
         let resourceInfoLength = 10 + resourceNameLength
 
         // Perform some initial calculations
@@ -139,8 +142,7 @@ struct RezFormat {
         assert(writer.bytesWritten == rootHeaderLength + nameListOffset)
 
         // Write map name
-        try writer.writeString(Self.mapName)
-        writer.advance(1) // Null terminator
+        try writer.writeCString(Self.mapName)
         assert(writer.bytesWritten == rootHeaderLength + headerLength)
 
         // Write resource data

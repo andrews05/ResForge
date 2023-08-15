@@ -51,6 +51,14 @@ public class BinaryDataWriter {
         data.append(encoded)
     }
 
+    public func writeCString(_ value: String, encoding: String.Encoding = .utf8) throws {
+        guard let encoded = value.data(using: encoding) else {
+            throw BinaryDataWriterError.stringEncodeFailure
+        }
+        data.append(encoded)
+        data.append(0)
+    }
+
     public func writePString(_ value: String, encoding: String.Encoding = .macOSRoman) throws {
         guard let encoded = value.data(using: encoding), encoded.count <= UInt8.max else {
             throw BinaryDataWriterError.stringEncodeFailure

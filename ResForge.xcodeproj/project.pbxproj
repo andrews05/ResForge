@@ -48,7 +48,12 @@
 		496669662A836D80008DCC36 /* NCBExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2FC29CC4B290003702A /* NCBExpression.swift */; };
 		496669672A836D83008DCC36 /* NCBSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2DA29C420640003702A /* NCBSet.swift */; };
 		496669682A836D85008DCC36 /* NCBTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D5F1329CBC13A00A2668C /* NCBTest.swift */; };
-		496669732A8724C8008DCC36 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441D2472064F0035C0FA /* file.cpp */; };
+		496669C12A8B5D71008DCC36 /* ExtendedFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496669C02A8B5D71008DCC36 /* ExtendedFormat.swift */; };
+		496669C22A8B6FEC008DCC36 /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
+		496669C32A8B6FF1008DCC36 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441C2472064F0035C0FA /* manager.cpp */; };
+		496669C42A8B6FF3008DCC36 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441D2472064F0035C0FA /* file.cpp */; };
+		496669C52A8B6FF6008DCC36 /* extended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044192472064F0035C0FA /* extended.cpp */; };
+		496669C62A8B6FF8008DCC36 /* classic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441E2472064F0035C0FA /* classic.cpp */; };
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
@@ -78,14 +83,9 @@
 		49964DED24D0EB8900BAB902 /* data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044272472064F0035C0FA /* data.cpp */; };
 		49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044282472064F0035C0FA /* reader.cpp */; };
 		49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970442A2472064F0035C0FA /* writer.cpp */; };
-		49964DF724D0EC0700BAB902 /* classic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441E2472064F0035C0FA /* classic.cpp */; };
-		49964DF824D0EC0F00BAB902 /* extended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044192472064F0035C0FA /* extended.cpp */; };
-		49964DFA24D0EC1A00BAB902 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441C2472064F0035C0FA /* manager.cpp */; };
 		49964DFB24D0EC1C00BAB902 /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044182472064F0035C0FA /* resource.cpp */; };
-		49964DFC24D0EC2000BAB902 /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
 		49964DFD24D0EC2300BAB902 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044212472064F0035C0FA /* type.cpp */; };
 		49964E1324D1034400BAB902 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
-		49964E1424D10A1000BAB902 /* ExtendedFormat.mm in Sources */ = {isa = PBXBuildFile; fileRef = 499216F024CCD2250054A390 /* ExtendedFormat.mm */; };
 		49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */; };
 		4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4996B90725DB6C2F0027FA39 /* Credits.rtf */; };
 		49A432D025437C64000B1109 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
@@ -352,6 +352,7 @@
 		49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDocument.swift; sourceTree = "<group>"; };
 		49655DF924DE6DA200D6AFF6 /* ResourceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceExtension.swift; sourceTree = "<group>"; };
 		49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDirectory.swift; sourceTree = "<group>"; };
+		496669C02A8B5D71008DCC36 /* ExtendedFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedFormat.swift; sourceTree = "<group>"; };
 		496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Image Editor-Bridging-Header.h"; sourceTree = "<group>"; };
 		496674FD24BBC7CE00251406 /* ImageWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWindowController.swift; sourceTree = "<group>"; };
 		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
@@ -421,8 +422,6 @@
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		498A02C225C3E4B500783776 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
-		499216EF24CCD2250054A390 /* ExtendedFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtendedFormat.h; sourceTree = "<group>"; };
-		499216F024CCD2250054A390 /* ExtendedFormat.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ExtendedFormat.mm; sourceTree = "<group>"; };
 		4992491926C3B527005F69A7 /* AttributesEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEditor.swift; sourceTree = "<group>"; };
 		49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDataSource.swift; sourceTree = "<group>"; };
 		4996B8F425DB6AC80027FA39 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -517,7 +516,6 @@
 		49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataReader.swift; sourceTree = "<group>"; };
 		49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataWriter.swift; sourceTree = "<group>"; };
 		49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStatus.swift; sourceTree = "<group>"; };
-		49F6C75D24C577270078EB55 /* ResForge-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ResForge-Bridging-Header.h"; sourceTree = "<group>"; };
 		49F6C76024C577430078EB55 /* PrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsController.swift; sourceTree = "<group>"; };
 		49F6C76124C577440078EB55 /* ApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDelegate.swift; sourceTree = "<group>"; };
 		550B9046189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -815,7 +813,6 @@
 			children = (
 				E18BF9D706A01A2200F076B8 /* Info.plist */,
 				559DE9B3189D665000D55D3A /* Assets.xcassets */,
-				49F6C75D24C577270078EB55 /* ResForge-Bridging-Header.h */,
 				49F56FCC2A830C3600953A17 /* Formats */,
 				F5B5881C0156D40B01000001 /* Classes */,
 				F5B588350156D40B01000001 /* Resources */,
@@ -838,8 +835,6 @@
 				494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */,
 				496A52BD24F9B047006A12DF /* CustomImageView.swift */,
 				4970CCD326FA7DCC00B7C280 /* Extensions.swift */,
-				499216EF24CCD2250054A390 /* ExtendedFormat.h */,
-				499216F024CCD2250054A390 /* ExtendedFormat.mm */,
 				496674FF24BE5C8C00251406 /* QuickDraw.h */,
 				4966750024BE5C8D00251406 /* QuickDraw.mm */,
 			);
@@ -957,6 +952,7 @@
 				49F570022A844EFF00953A17 /* ResourceFileFormat.swift */,
 				49F56FCD2A830C4E00953A17 /* ClassicFormat.swift */,
 				49F570052A845D5E00953A17 /* RezFormat.swift */,
+				496669C02A8B5D71008DCC36 /* ExtendedFormat.swift */,
 			);
 			path = Formats;
 			sourceTree = "<group>";
@@ -1397,22 +1393,22 @@
 			files = (
 				49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */,
 				49964DE424D0EB4900BAB902 /* clut.cpp in Sources */,
-				49964DF724D0EC0700BAB902 /* classic.cpp in Sources */,
-				49964DF824D0EC0F00BAB902 /* extended.cpp in Sources */,
-				49964E1424D10A1000BAB902 /* ExtendedFormat.mm in Sources */,
 				49AB3C2727D69388003B3536 /* planar.cpp in Sources */,
 				49964DED24D0EB8900BAB902 /* data.cpp in Sources */,
-				49964DFC24D0EC2000BAB902 /* rez.cpp in Sources */,
 				49964DFB24D0EC1C00BAB902 /* resource.cpp in Sources */,
+				496669C62A8B6FF8008DCC36 /* classic.cpp in Sources */,
 				49964DEB24D0EB6300BAB902 /* surface.cpp in Sources */,
+				496669C32A8B6FF1008DCC36 /* manager.cpp in Sources */,
 				49964DEA24D0EB6000BAB902 /* packbits.cpp in Sources */,
 				49AB3C2A27D69388003B3536 /* raw.cpp in Sources */,
+				496669C22A8B6FEC008DCC36 /* rez.cpp in Sources */,
+				496669C42A8B6FF3008DCC36 /* file.cpp in Sources */,
 				49AB3C2527D69388003B3536 /* imagedesc.cpp in Sources */,
-				49964DFA24D0EC1A00BAB902 /* manager.cpp in Sources */,
 				49964DE824D0EB5800BAB902 /* ppat.cpp in Sources */,
 				49964DE524D0EB4E00BAB902 /* cicn.cpp in Sources */,
 				49964DE624D0EB5100BAB902 /* pict.cpp in Sources */,
 				49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */,
+				496669C52A8B6FF6008DCC36 /* extended.cpp in Sources */,
 				49AACD8824CE93520081DD4A /* ResForgePlugin.swift in Sources */,
 				49964E1324D1034400BAB902 /* Resource.swift in Sources */,
 				49640F5D25F36A77009FEC9B /* AbstractEditor.swift in Sources */,
@@ -1424,7 +1420,6 @@
 				49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */,
 				49964DE924D0EB5D00BAB902 /* color.cpp in Sources */,
 				49964DFD24D0EC2300BAB902 /* type.cpp in Sources */,
-				496669732A8724C8008DCC36 /* file.cpp in Sources */,
 				49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */,
 				4970CCD426FA7DCC00B7C280 /* Extensions.swift in Sources */,
 				49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */,
@@ -1512,6 +1507,7 @@
 				49D6D3BB271BAC2C002DEA97 /* ElementKCHR.swift in Sources */,
 				49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */,
 				49D6D3A9271BAAB4002DEA97 /* ElementCHAR.swift in Sources */,
+				496669C12A8B5D71008DCC36 /* ExtendedFormat.swift in Sources */,
 				49D6D390271BAAB4002DEA97 /* ElementCASE.swift in Sources */,
 				49D6D392271BAAB4002DEA97 /* ElementDATE.swift in Sources */,
 				49F56FCE2A830C4E00953A17 /* ClassicFormat.swift in Sources */,
@@ -1934,7 +1930,6 @@
 				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.ResForge;
 				PRODUCT_NAME = ResForge;
-				SWIFT_OBJC_BRIDGING_HEADER = "ResForge/ResForge-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1952,7 +1947,6 @@
 				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.ResForge;
 				PRODUCT_NAME = ResForge;
-				SWIFT_OBJC_BRIDGING_HEADER = "ResForge/ResForge-Bridging-Header.h";
 			};
 			name = Release;
 		};

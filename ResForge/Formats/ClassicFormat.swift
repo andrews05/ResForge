@@ -66,7 +66,7 @@ struct ClassicFormat {
                 let attsAndOffset = try reader.read() as UInt32
                 let attributes = Int(attsAndOffset >> 24)
                 let resourceDataOffset = Int(attsAndOffset & 0x00FFFFFF) + dataOffset
-                let pos = reader.position + 4 // Skip handle to resource
+                let nextOffset = reader.bytesRead + 4 // Skip handle to resource
 
                 // Read resource name
                 let name: String
@@ -81,7 +81,7 @@ struct ClassicFormat {
                 try reader.setPosition(resourceDataOffset)
                 let resourceLength = Int(try reader.read() as UInt32)
                 let data = try reader.readData(length: resourceLength)
-                try reader.setPosition(pos)
+                try reader.setPosition(nextOffset)
 
                 // Construct resource
                 let resource = Resource(type: resourceType, id: id, name: name, data: data)
