@@ -1238,7 +1238,6 @@
 				4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */,
 				493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */,
 				4907D2EE29C50AFE0003702A /* XCRemoteSwiftPackageReference "swift-parsing" */,
-				4907D2F129C512A00003702A /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 			);
 			productRefGroup = F5B588110156D30301000001 /* Products */;
 			projectDirPath = "";
@@ -1988,7 +1987,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
@@ -2031,7 +2030,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				SDKROOT = macosx;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -2112,16 +2111,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-parsing";
 			requirement = {
-				kind = exactVersion;
-				version = 0.9.2;
-			};
-		};
-		4907D2F129C512A00003702A /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-case-paths";
-			requirement = {
-				kind = exactVersion;
-				version = 0.9.2;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.13.0;
 			};
 		};
 		493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */ = {
