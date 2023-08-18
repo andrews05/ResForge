@@ -110,10 +110,11 @@ class SoundResource {
                     param2: try reader.read()
                 )
             )
-            if list.numModifiers != 1 ||
-                list.modifierPart.modNumber != sampledSynth ||
-                list.numCommands != 1 ||
-                list.commandPart.cmd != dataOffsetFlag+bufferCmd {
+            guard list.numModifiers == 1,
+                  list.modifierPart.modNumber == sampledSynth,
+                  list.numCommands == 1,
+                  (list.commandPart.cmd == dataOffsetFlag+bufferCmd || list.commandPart.cmd == dataOffsetFlag+soundCmd)
+            else {
                 return false
             }
         } else if soundFormat == secondSoundFormat {
@@ -127,8 +128,9 @@ class SoundResource {
                     param2: try reader.read()
                 )
             )
-            if list.numCommands != 1 ||
-                list.commandPart.cmd != dataOffsetFlag+bufferCmd {
+            guard list.numCommands == 1,
+                  (list.commandPart.cmd == dataOffsetFlag+bufferCmd || list.commandPart.cmd == dataOffsetFlag+soundCmd)
+            else {
                 return false
             }
         } else {
