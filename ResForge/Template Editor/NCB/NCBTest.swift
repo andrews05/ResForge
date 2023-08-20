@@ -72,9 +72,7 @@ struct NCBTestValue: NCBTest {
     static let parser = OneOf {
         for op in NCBTestOp.allCases {
             Parse(Self.init) {
-                Optionally {
-                    "!"
-                }.map { $0 != nil }
+                negateParser
                 op.rawValue.map { op }
                 if op.hasValue {
                     Digits().map { $0 as Int? }
@@ -84,6 +82,10 @@ struct NCBTestValue: NCBTest {
             }
         }
     }
+    // This part is separated out from the main parser to help the Swift type-checker
+    private static let negateParser = Optionally {
+        "!"
+    }.map { $0 != nil }
 
     let negate: Bool
     let op: NCBTestOp
