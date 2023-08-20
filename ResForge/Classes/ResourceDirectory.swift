@@ -203,7 +203,7 @@ class ResourceDirectory {
         }
         // Keep incrementing the id until we find an unused one
         var id = starting
-        let max = document.format.maxID
+        let max = Swift.type(of: document.format).IDType.max
         while i != used.endIndex && id == used[i] {
             if id == max {
                 // WARN: This wraps back to 128 - if there are no unused ids (unlikely) then it will loop infinitely

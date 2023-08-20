@@ -9,7 +9,7 @@ class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
     private let formatter = ByteCountFormatter()
     private static let forks = [nil, FileFork.data, FileFork.rsrc]
     override var defaultType: String? {
-        ResourceFileFormat.classic.typeName
+        ClassicFormat.typeName
     }
 
     func getSelectedFork() -> FileFork? {

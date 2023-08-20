@@ -38,7 +38,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     private(set) lazy var editorManager = EditorManager(self)
     private(set) lazy var createController = CreateResourceController(self)
     private var fork: FileFork!
-    private(set) var format: ResourceFileFormat = .classic
+    private(set) var format: any ResourceFileFormat = ClassicFormat()
     private(set) var revision = 0 // Used to track new resources
 
     @objc dynamic var hfsType: OSType = 0 {
@@ -65,40 +65,23 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     // MARK: - File Management
 
     override func read(from url: URL, ofType typeName: String) throws {
-        let rsrcURL = url.appendingPathComponent("..namedfork/rsrc")
-
-        // Find out which forks have data
-        let values = try url.resourceValues(forKeys: [.fileSizeKey, .totalFileSizeKey])
-        let hasData = values.fileSize! > 0
-        let hasRsrc = (values.totalFileSize! - values.fileSize!) > 0
-
-        // Work out which fork to parse. If we are opening the document for the first time, attempt to get fork from the open panel.
+        // Work out which fork to parse
         if fork == nil {
-            fork = (NSDocumentController.shared as! OpenPanelDelegate).getSelectedFork()
+            // If we are opening the document for the first time, attempt to get fork from the open panel,
+            // falling back to the resource fork if it exists, otherwise the data fork.
+            let values = try url.resourceValues(forKeys: [.fileSizeKey, .totalFileSizeKey])
+            let hasRsrc = (values.totalFileSize! - values.fileSize!) > 0
+            fork = (NSDocumentController.shared as! OpenPanelDelegate).getSelectedFork() ?? (hasRsrc ? .rsrc : .data)
         }
-        let resources: [ResourceType: [Resource]]
-        if let fork {
-            // If fork has been set, try this fork only
-            if fork == .data && hasData {
-                (format, resources) = try ResourceFileFormat.read(from: url)
-            } else if fork == .rsrc && hasRsrc {
-                (format, resources) = try ResourceFileFormat.read(from: rsrcURL)
-            } else {
-                // Fork is empty
-                resources = [:]
-            }
-        } else if hasRsrc {
-            // Prefer resource fork if it exists
-            (format, resources) = try ResourceFileFormat.read(from: rsrcURL)
-            fork = .rsrc
-        } else if hasData {
-            (format, resources) = try ResourceFileFormat.read(from: url)
-            fork = .data
+        let readUrl = fork == .rsrc ? url.appendingPathComponent("..namedfork/rsrc") : url
+        let data = try Data(contentsOf: readUrl)
+        if fork == .rsrc {
+            // Always use classic for resource fork
+            format = ClassicFormat()
         } else {
-            // Both forks empty, stick with data fork
-            resources = [:]
-            fork = .data
+            format = try ResourceFormat.from(data: data)
         }
+        let resources = try format.read(data)
 
         // Get type and creator - make sure undo registration is disabled while configuring
         let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
@@ -123,20 +106,19 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
 
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
-        let resources = directory.resources()
-
-        if saveOperation == .saveOperation && fork == .rsrc, let fileURL = self.fileURL {
+        if saveOperation == .saveOperation && fork == .rsrc, let fileURL {
             // In place save of resource fork. We want to preserve all other aspects of the file, such as the data fork and finder flags.
             // Relying on the default implementation can result in some oddities, so instead we'll just write out the resource fork directly.
             // This isn't strictly "safe", although we will at least detect structural issues before writing any data.
             // First we need to check if the file is being renamed for some reason and copy the existing file to the new location.
+            let data = try format.write(directory.resourcesByType)
             let moved = fileURL != url
             if moved {
                 try FileManager.default.copyItem(at: fileURL, to: url)
             }
             do {
                 let writeUrl = url.appendingPathComponent("..namedfork/rsrc")
-                try format.write(directory.resourcesByType, to: writeUrl)
+                try data.write(to: writeUrl)
                 try FileManager.default.setAttributes([.hfsTypeCode: hfsType, .hfsCreatorCode: hfsCreator], ofItemAtPath: url.path)
             } catch let error {
                 if moved {
@@ -149,7 +131,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
 
         revision += 1
-        for resource in resources {
+        for resource in directory.resources() {
             resource.resetState()
         }
         dataSource.reload(selecting: dataSource.selectedResources())
@@ -158,39 +140,41 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         self.updateStatus()
     }
 
-    override func write(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws {
-        var format = self.format
-        var fork = self.fork
-        var hfsType = self.hfsType
-        var hfsCreator = self.hfsCreator
-        if saveOperation == .saveAsOperation {
-            // Set format according to typeName
-            format = .init(typeName: typeName)
-            fork = .data
-            // Clear type/creator on save as
+    override func write(to url: URL, ofType typeName: String) throws {
+        // We're necessarily writing the data fork here
+        if typeName == format.typeName && fork == .data {
+            try super.write(to: url, ofType: typeName)
+        } else {
+            // Format or fork is changing - set format from typeName and clear type/creator,
+            // but make sure the original values are restored if an error occurs.
+            self.undoManager?.disableUndoRegistration()
+            defer {
+                self.undoManager?.enableUndoRegistration()
+            }
+            let origFormat = format
+            let origType = hfsType
+            let origCreator = hfsCreator
+            format = ResourceFormat.from(typeName: typeName)
             hfsType = 0
             hfsCreator = 0
+            do {
+                try super.write(to: url, ofType: typeName)
+            } catch let error {
+                format = origFormat
+                hfsType = origType
+                hfsCreator = origCreator
+                throw error
+            }
+            fork = .data
         }
+    }
 
-        // Create file (this is important to be done first if we're writing the resource fork)
-        // Type codes should only be set if not blank, to avoid unnecessarily creating the FinderInfo
-        var attrs: [FileAttributeKey: Any]?
-        if hfsType != 0 || hfsCreator != 0 {
-            attrs = [.hfsTypeCode: hfsType, .hfsCreatorCode: hfsCreator]
-        }
-        FileManager.default.createFile(atPath: url.path, contents: nil, attributes: attrs)
+    override func data(ofType typeName: String) throws -> Data {
+        return try format.write(directory.resourcesByType)
+    }
 
-        // Write resources to file
-        let writeUrl = fork == .rsrc ? url.appendingPathComponent("..namedfork/rsrc") : url
-        try format.write(directory.resourcesByType, to: writeUrl)
-
-        // Save any properties that may have changed (only do this after successful write)
-        self.undoManager?.disableUndoRegistration()
-        self.format = format
-        self.fork = fork
-        self.hfsType = hfsType
-        self.hfsCreator = hfsCreator
-        self.undoManager?.enableUndoRegistration()
+    override func fileAttributesToWrite(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws -> [String: Any] {
+        return [FileAttributeKey.hfsTypeCode.rawValue: hfsType, FileAttributeKey.hfsCreatorCode.rawValue: hfsCreator]
     }
 
     // MARK: - Export
@@ -658,8 +642,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             var added: [Resource] = []
             var resolver: ConflictResolver!
             for resource in resources {
-                // Clear type attributes if not extended format
-                if format != .extended {
+                // Clear type attributes if not supported
+                if !format.supportsTypeAttributes {
                     resource.typeAttributes = [:]
                     resource.id = Int(Int16(clamping: resource.id))
                 }

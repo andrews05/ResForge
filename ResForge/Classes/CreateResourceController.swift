@@ -60,7 +60,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         }
         typeView.removeAllItems()
         typeView.addItems(withObjectValues: sorted)
-        if rDocument.format == .extended {
+        if rDocument.format.supportsTypeAttributes {
             attributesHolder.isHidden = false
             attributesEditor.attributes = type?.attributes ?? [:]
         } else {

@@ -61,7 +61,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             window?.title = NSLocalizedString("Resource Info", comment: "")
 
             rSize.integerValue = resource.data.count
-            typeAttsHolder.isHidden = (resource.document as? ResourceDocument)?.format != .extended
+            typeAttsHolder.isHidden = (resource.document as? ResourceDocument)?.format.supportsTypeAttributes != true
             rTypeAtts.attributes = resource.typeAttributes
 
             window?.contentView = resourceView

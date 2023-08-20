@@ -3,7 +3,11 @@ import RFSupport
 
 // https://github.com/Olde-Skuul/burgerlib/blob/master/source/file/brrezfile.cpp
 
-struct RezFormat {
+struct RezFormat: ResourceFileFormat {
+    static let typeName = "com.resforge.rez-file"
+    let filenameExtension = "rez"
+    let name = NSLocalizedString("Rez File", comment: "")
+
     static let signature = "BRGR"
     static let type = 1
     static let mapName = "resource.map"
@@ -123,7 +127,7 @@ struct RezFormat {
                 throw ResourceFormatError.typeAttributesNotSupported
             }
             for resource in resources {
-                guard ResourceFileFormat.rez.isValid(id: resource.id) else {
+                guard Self.isValid(id: resource.id) else {
                     throw ResourceFormatError.invalidID(resource.id)
                 }
                 writer.write(UInt32(resourceDataOffset))

@@ -3,7 +3,13 @@ import RFSupport
 
 // https://github.com/TheDiamondProject/Graphite
 
-struct ExtendedFormat {
+struct ExtendedFormat: ResourceFileFormat {
+    typealias IDType = Int32 // Technically supports 64-bit but we limit to 32-bit
+    static let typeName = "public.item"
+    let filenameExtension = "rsrx"
+    let name = NSLocalizedString("Extended Resource File", comment: "")
+    let supportsTypeAttributes = true
+
     static let signature = "" // TODO: Change to "RSRX"
     static let version = 1
 

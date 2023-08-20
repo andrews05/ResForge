@@ -3,7 +3,15 @@ import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/MoreMacintoshToolbox.pdf#page=151
 
-struct ClassicFormat {
+struct ClassicFormat: ResourceFileFormat {
+    // We want to make the format's filename extension simply a "suggestion" and not force it in any manner, but the
+    // standard behaviour makes this difficult to achieve nicely. NSSavePanel.allowsOtherFileTypes isn't sufficient as
+    // it still prompts the user to confirm and only works if the user has entered an extension known by the system.
+    // The current solution is to use system UTIs that have no extension.
+    static let typeName = "public.data"
+    let filenameExtension = "rsrc"
+    let name = NSLocalizedString("Resource File", comment: "")
+
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         var resources: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data)
@@ -122,7 +130,7 @@ struct ClassicFormat {
                 throw ResourceFormatError.typeAttributesNotSupported
             }
             for resource in resources {
-                guard ResourceFileFormat.classic.isValid(id: resource.id) else {
+                guard Self.isValid(id: resource.id) else {
                     throw ResourceFormatError.invalidID(resource.id)
                 }
                 let offset = writer.bytesWritten - dataOffset
