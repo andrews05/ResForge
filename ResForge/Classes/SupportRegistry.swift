@@ -56,7 +56,7 @@ class SupportRegistry {
     private static func load(resourceFile: URL) {
         do {
             let data = try Data(contentsOf: resourceFile)
-            let format = try ResourceFormat.from(data: data)
+            var format = try ResourceFormat.from(data: data)
             let resourcesByType = try format.read(data)
             // Files loaded later should have precendence over files loaded earlier. This means their
             // resources should come first in the master list. To achieve this we sort the type lists

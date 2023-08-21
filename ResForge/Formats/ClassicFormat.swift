@@ -20,6 +20,14 @@ struct ClassicFormat: ResourceFileFormat {
         return Self.filenameExtension
     }
 
+    func read(_ data: Data) throws -> [ResourceType: [Resource]] {
+        return try Self.read(data)
+    }
+
+    func write(_ resources: [ResourceType: [Resource]]) throws -> Data {
+        return try Self.write(resources)
+    }
+
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         var resourcesByType: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data)

@@ -12,7 +12,7 @@ struct RezFormat: ResourceFileFormat {
     static let mapName = "resource.map"
     static let resourceNameLength = 256
 
-    static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
+    func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         var resourcesByType: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data, bigEndian: false)
 
@@ -88,14 +88,14 @@ struct RezFormat: ResourceFileFormat {
         return resourcesByType
     }
 
-    static func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
+    func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
         // Known constants
         let rootHeaderLength = 12
         let groupHeaderLength = 12
         let resourceOffsetLength = 12
         let mapHeaderLength = 8
         let typeInfoLength = 12
-        let resourceInfoLength = 10 + resourceNameLength
+        let resourceInfoLength = 10 + Self.resourceNameLength
 
         // Perform some initial calculations
         let numTypes = resourcesByType.count
@@ -179,7 +179,7 @@ struct RezFormat: ResourceFileFormat {
                 writer.write(UInt32(resource.typeCode))
                 writer.write(Int16(resource.id))
                 try writer.writeString(resource.name, encoding: .macOSRoman)
-                writer.advance(resourceNameLength - resource.name.count)
+                writer.advance(Self.resourceNameLength - resource.name.count)
             }
         }
         assert(writer.bytesWritten == resourceDataOffset + mapLength)

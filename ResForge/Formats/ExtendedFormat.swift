@@ -12,7 +12,7 @@ struct ExtendedFormat: ResourceFileFormat {
     static let signature = "RSRX"
     static let version = 1
 
-    static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
+    func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         var resourcesByType: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data)
 
@@ -120,7 +120,7 @@ struct ExtendedFormat: ResourceFileFormat {
         return resourcesByType
     }
 
-    static func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
+    func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
         // Known constants
         let dataOffset = 256
         let mapHeaderLength = 40

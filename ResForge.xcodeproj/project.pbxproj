@@ -68,6 +68,7 @@
 		4976D2992718CEA400322DDF /* GalaxyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4976D2772718CC4B00322DDF /* GalaxyView.swift */; };
 		497A93DE255F371100900C7B /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 497A93E0255F371100900C7B /* SelectTemplate.xib */; };
 		497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BB1DB24F741E400858EF1 /* Icons.swift */; };
+		498F2D712A9344AF001EC34E /* MacBinaryFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498F2D702A9344AF001EC34E /* MacBinaryFormat.swift */; };
 		499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499216ED24CB914F0054A390 /* CreateResourceController.swift */; };
 		4992491A26C3B527005F69A7 /* AttributesEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4992491926C3B527005F69A7 /* AttributesEditor.swift */; };
 		49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
@@ -421,6 +422,7 @@
 		497A93DF255F371100900C7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SelectTemplate.xib; sourceTree = "<group>"; };
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		498A02C225C3E4B500783776 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		498F2D702A9344AF001EC34E /* MacBinaryFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBinaryFormat.swift; sourceTree = "<group>"; };
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
 		4992491926C3B527005F69A7 /* AttributesEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEditor.swift; sourceTree = "<group>"; };
 		49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDataSource.swift; sourceTree = "<group>"; };
@@ -953,6 +955,7 @@
 				49F56FCD2A830C4E00953A17 /* ClassicFormat.swift */,
 				49F570052A845D5E00953A17 /* RezFormat.swift */,
 				496669C02A8B5D71008DCC36 /* ExtendedFormat.swift */,
+				498F2D702A9344AF001EC34E /* MacBinaryFormat.swift */,
 			);
 			path = Formats;
 			sourceTree = "<group>";
@@ -1493,6 +1496,7 @@
 				491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */,
 				49D6D3A8271BAAB4002DEA97 /* ElementDBYT.swift in Sources */,
 				49D6D386271BAAB4002DEA97 /* ElementTNAM.swift in Sources */,
+				498F2D712A9344AF001EC34E /* MacBinaryFormat.swift in Sources */,
 				49D6D3B2271BAAB4002DEA97 /* ElementKEYB.swift in Sources */,
 				49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */,
 				496669672A836D83008DCC36 /* NCBSet.swift in Sources */,

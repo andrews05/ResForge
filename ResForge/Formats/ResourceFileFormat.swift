@@ -7,11 +7,8 @@ protocol ResourceFileFormat {
     var name: String { get }
     var supportsTypeAttributes: Bool { get }
 
-    static func read(_ data: Data) throws -> [ResourceType: [Resource]]
-    static func write(_ resources: [ResourceType: [Resource]]) throws -> Data
-
     func filenameExtension(for url: URL?) -> String?
-    func read(_ data: Data) throws -> [ResourceType: [Resource]]
+    mutating func read(_ data: Data) throws -> [ResourceType: [Resource]]
     func write(_ resources: [ResourceType: [Resource]]) throws -> Data
 }
 
@@ -25,23 +22,15 @@ extension ResourceFileFormat {
         Self.typeName
     }
 
+    func filenameExtension(for url: URL?) -> String? {
+        return nil
+    }
+
     static func isValid(id: Int) -> Bool {
         return Int(IDType.min)...Int(IDType.max) ~= id
     }
     func isValid(id: Int) -> Bool {
         return Self.isValid(id: id)
-    }
-
-    func filenameExtension(for url: URL?) -> String? {
-        return nil
-    }
-
-    func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        return try Self.read(data)
-    }
-
-    func write(_ resources: [ResourceType: [Resource]]) throws -> Data {
-        return try Self.write(resources)
     }
 }
 
@@ -62,6 +51,8 @@ struct ResourceFormat {
             return RezFormat()
         } else if signature == ExtendedFormat.signature {
             return ExtendedFormat()
+        } else if MacBinaryFormat.matches(data: data) {
+            return MacBinaryFormat()
         } else {
             // Fallback to classic
             return ClassicFormat()
