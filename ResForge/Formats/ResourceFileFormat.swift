@@ -58,7 +58,7 @@ struct ResourceFormat {
 
         // Rez and Extended start with specific signature
         let reader = BinaryDataReader(data)
-        guard let signature = (try? reader.read() as UInt32)?.stringValue else {
+        guard let signature = try? reader.readString(length: 4) else {
             throw CocoaError(.fileReadCorruptFile)
         }
         if signature == RezFormat.signature {

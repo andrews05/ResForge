@@ -10,7 +10,7 @@ struct ExtendedFormat: ResourceFileFormat {
     let name = NSLocalizedString("Extended Resource File", comment: "")
     let supportsTypeAttributes = true
 
-    static let signature = "" // TODO: Change to "RSRX"
+    static let signature = "\0\0\0\0" // TODO: Change to "RSRX"
     static let version = 1
 
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
@@ -18,7 +18,7 @@ struct ExtendedFormat: ResourceFileFormat {
         let reader = BinaryDataReader(data)
 
         // Read and validate header
-        let signature = (try reader.read() as UInt32).stringValue
+        let signature = try reader.readString(length: 4)
         let version = try reader.read() as UInt32
         let dataOffset = try reader.readUInt64AsInt()
         let mapOffset = try reader.readUInt64AsInt()
@@ -132,13 +132,9 @@ struct ExtendedFormat: ResourceFileFormat {
         let numResources = resourcesByType.values.map(\.count).reduce(0, +)
         let typeListOffset = mapHeaderLength + 24
         let nameListOffset = typeListOffset + 8 + (numTypes * typeInfoLength) + (numResources * resourceInfoLength)
-        // Trivia: Total number of resources can never exceed 5458
-        guard nameListOffset <= UInt16.max else {
-            throw ResourceFormatError.valueOverflow
-        }
 
         let writer = BinaryDataWriter()
-        writer.write(UInt32(Self.signature))
+        try writer.writeString(Self.signature)
         writer.write(UInt32(Self.version))
         writer.advance(dataOffset - writer.bytesWritten) // Skip offsets for now
 
