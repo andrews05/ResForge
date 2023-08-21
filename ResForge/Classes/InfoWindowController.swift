@@ -174,7 +174,8 @@ class FourCharCodeTransformer: ValueTransformer {
 
     override func reverseTransformedValue(_ value: Any?) -> Any? {
         if let value = value as? String {
-            return FourCharCode(value)
+            // Workaround a bug in macOS 13? (crashes without the typecast)
+            return FourCharCode(value) as FourCharCode
         }
         return 0
     }
