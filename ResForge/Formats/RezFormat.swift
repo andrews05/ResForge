@@ -14,7 +14,7 @@ struct RezFormat: ResourceFileFormat {
     static let resourceNameLength = 256
 
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        var resources: [ResourceType: [Resource]] = [:]
+        var resourcesByType: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data, bigEndian: false)
 
         // Read and validate header
@@ -57,10 +57,10 @@ struct RezFormat: ResourceFileFormat {
             let resourceListOffset = Int(try reader.read() as UInt32) + mapOffset
             let numResources = try reader.read() as UInt32
             let resourceType = ResourceType(type)
-            resources[resourceType] = []
 
             // Read resources
             try reader.pushPosition(resourceListOffset)
+            var resources: [Resource] = []
             for _ in 0..<numResources {
                 let index = Int(try reader.read() as UInt32) - baseIndex
                 guard 0..<numEntries ~= index else {
@@ -80,12 +80,13 @@ struct RezFormat: ResourceFileFormat {
 
                 // Construct resource
                 let resource = Resource(type: resourceType, id: id, name: name, data: data)
-                resources[resourceType]?.append(resource)
+                resources.append(resource)
             }
+            resourcesByType[resourceType] = resources
             reader.popPosition()
         }
 
-        return resources
+        return resourcesByType
     }
 
     static func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {

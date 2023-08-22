@@ -14,7 +14,7 @@ struct ExtendedFormat: ResourceFileFormat {
     static let version = 1
 
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        var resources: [ResourceType: [Resource]] = [:]
+        var resourcesByType: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data)
 
         // Read and validate header
@@ -80,10 +80,10 @@ struct ExtendedFormat: ResourceFileFormat {
             }
 
             let resourceType = ResourceType(type, attributes)
-            resources[resourceType] = []
 
             // Read resources
             try reader.pushPosition(resourceListOffset)
+            var resources: [Resource] = []
             for _ in 0..<numResources {
                 let id = Int(try reader.read() as Int64)
                 let nameOffset = try reader.read() as UInt64
@@ -112,12 +112,13 @@ struct ExtendedFormat: ResourceFileFormat {
                 // Construct resource
                 let resource = Resource(type: resourceType, id: id, name: name, data: data)
                 resource.attributes = attributes
-                resources[resourceType]?.append(resource)
+                resources.append(resource)
             }
+            resourcesByType[resourceType] = resources
             reader.popPosition()
         }
 
-        return resources
+        return resourcesByType
     }
 
     static func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {

@@ -13,7 +13,7 @@ struct ClassicFormat: ResourceFileFormat {
     let name = NSLocalizedString("Resource File", comment: "")
 
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        var resources: [ResourceType: [Resource]] = [:]
+        var resourcesByType: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data)
 
         // Read and validate header
@@ -63,10 +63,10 @@ struct ClassicFormat: ResourceFileFormat {
             let numResources = (try reader.read() as UInt16) &+ 1
             let resourceListOffset = Int(try reader.read() as UInt16) + typeListOffset
             let resourceType = ResourceType(type)
-            resources[resourceType] = []
 
             // Read resources
             try reader.pushPosition(resourceListOffset)
+            var resources: [Resource] = []
             for _ in 0..<numResources {
                 let id = Int(try reader.read() as Int16)
                 let nameOffset = try reader.read() as UInt16
@@ -94,12 +94,13 @@ struct ClassicFormat: ResourceFileFormat {
                 // Construct resource
                 let resource = Resource(type: resourceType, id: id, name: name, data: data)
                 resource.attributes = attributes
-                resources[resourceType]?.append(resource)
+                resources.append(resource)
             }
+            resourcesByType[resourceType] = resources
             reader.popPosition()
         }
 
-        return resources
+        return resourcesByType
     }
 
     static func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
