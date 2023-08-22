@@ -13,6 +13,11 @@ struct MacBinaryFormat: ResourceFileFormat {
 
     private var headerAndData = Data()
 
+    func filenameExtension(for url: URL?) -> String? {
+        // We can't create MacBinary files, so Save As will default to classic format
+        return ClassicFormat.filenameExtension
+    }
+
     // MacBinary II and III are currently supported
     static func matches(data: Data) -> Bool {
         let versionOffset = 122

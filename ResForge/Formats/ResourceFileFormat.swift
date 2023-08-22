@@ -36,6 +36,13 @@ extension ResourceFileFormat {
 
 // Convenience functions for format detection
 struct ResourceFormat {
+    // We can only create new files of these types
+    static let creatableTypes = [
+        ClassicFormat.typeName,
+        RezFormat.typeName,
+        ExtendedFormat.typeName,
+    ]
+
     static func from(data: Data) throws -> any ResourceFileFormat {
         guard !data.isEmpty else {
             // Default to classic

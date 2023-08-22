@@ -111,6 +111,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         self.undoManager?.enableUndoRegistration()
     }
 
+    override class var writableTypes: [String] {
+        ResourceFormat.creatableTypes
+    }
+
     override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
         if let ext = format.filenameExtension(for: fileURL) {
             savePanel.nameFieldStringValue.append(".\(ext)")
