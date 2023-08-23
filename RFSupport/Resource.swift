@@ -140,13 +140,6 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         self.data = data
     }
 
-    @objc public init(typeCode: String, typeAttributes: [String: String], id: Int, name: String, data: Data) {
-        self.type = ResourceType(typeCode, typeAttributes)
-        self.id = id
-        self.name = name
-        self.data = data
-    }
-
     /// Asynchonously fetch the resource's preview image. The image will be initially loaded on a background thread and cached for future use.
     public func preview(_ callback: @escaping (NSImage?) -> Void) {
         if _preview == nil && !data.isEmpty {
