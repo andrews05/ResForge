@@ -6,6 +6,7 @@ import RFSupport
 struct MacBinaryFormat: ResourceFileFormat {
     static let typeName = "com.apple.macbinary-archive"
     let name = NSLocalizedString("MacBinary Archive", comment: "")
+    let supportsResAttributes = true
 
     static let headerLength = 128
     static let forkLengthOffset = 83

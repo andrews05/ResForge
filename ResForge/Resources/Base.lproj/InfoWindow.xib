@@ -20,6 +20,7 @@
                 <outlet property="rSize" destination="ACD-TC-daM" id="GFQ-V3-a6H"/>
                 <outlet property="rType" destination="kNq-HP-5AV" id="NKM-cT-UhZ"/>
                 <outlet property="rTypeAtts" destination="vJp-nb-fR2" id="7ar-on-md4"/>
+                <outlet property="resAttsHolder" destination="oW3-s3-lsG" id="kjG-5R-ffI"/>
                 <outlet property="resourceView" destination="nc0-Xf-rW3" id="shH-Iv-xua"/>
                 <outlet property="rsrcSize" destination="vMs-RW-hgX" id="lRb-Wm-h9P"/>
                 <outlet property="type" destination="pox-Qn-guL" id="THH-lM-hm4"/>
@@ -34,7 +35,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="572" y="561" width="252" height="170"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="252" height="170"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -59,6 +60,49 @@
             <point key="canvasLocation" x="97" y="312"/>
         </window>
         <byteCountFormatter id="t7T-4V-eof"/>
+        <matrix hidden="YES" verticalHuggingPriority="750" mode="track" id="qNW-wh-J43">
+            <rect key="frame" x="0.0" y="0.0" width="225" height="36"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+            <size key="cellSize" width="75" height="18"/>
+            <buttonCell key="prototype" type="check" title="Radio" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="HoY-ML-l6j">
+                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                <font key="font" metaFont="message" size="11"/>
+            </buttonCell>
+            <cells>
+                <column>
+                    <buttonCell type="check" title="Changed" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" enabled="NO" tag="2" inset="2" id="emN-zJ-1Z9">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                    </buttonCell>
+                    <buttonCell type="check" title="Locked" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="16" inset="2" id="Vcu-B6-QYp">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                    </buttonCell>
+                </column>
+                <column>
+                    <buttonCell type="check" title="Preload" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="4" inset="2" id="XYw-Wf-WLG">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                    </buttonCell>
+                    <buttonCell type="check" title="Purgeable" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="32" inset="2" id="CUS-45-DUO">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                    </buttonCell>
+                </column>
+                <column>
+                    <buttonCell type="check" title="Protected" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="8" inset="2" id="MsU-se-xQN">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                    </buttonCell>
+                    <buttonCell type="check" title="Sys Heap" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="64" inset="2" id="C4V-QX-MW8">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="message" size="11"/>
+                    </buttonCell>
+                </column>
+            </cells>
+            <point key="canvasLocation" x="-519" y="484"/>
+        </matrix>
         <customFormatter id="9Ky-lD-TeE" customClass="MacRomanFormatter" customModule="RFSupport">
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
@@ -420,7 +464,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BVG-Dy-HPp">
-                                        <rect key="frame" x="99" y="3" width="44" height="17"/>
+                                        <rect key="frame" x="99" y="3" width="43" height="17"/>
                                         <buttonCell key="cell" type="roundRect" title="apply" bezelStyle="roundedRect" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" inset="2" id="asp-C9-WZ0">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
@@ -465,14 +509,128 @@
                         <constraint firstItem="5GY-gi-Wgb" firstAttribute="top" secondItem="ByO-kB-Pq6" secondAttribute="top" id="rbW-Qx-9O0"/>
                     </constraints>
                 </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="oW3-s3-lsG">
+                    <rect key="frame" x="10" y="10" width="232" height="34"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4X8-Ge-iv5">
+                            <rect key="frame" x="-1" y="19" width="75" height="16"/>
+                            <buttonCell key="cell" type="check" title="Changed" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="qTO-E5-jsT">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.isChanged" id="xdP-dY-YtN">
+                                    <dictionary key="options">
+                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sgA-Ti-ZdE">
+                            <rect key="frame" x="78" y="19" width="75" height="16"/>
+                            <buttonCell key="cell" type="check" title="Preload" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="Jn8-zE-lVk">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.isPreload" id="p3z-VX-HCr">
+                                    <dictionary key="options">
+                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yfx-2q-Kze">
+                            <rect key="frame" x="157" y="19" width="75" height="16"/>
+                            <buttonCell key="cell" type="check" title="Protected" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="spM-Xz-tW9">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.isProtected" id="gda-XA-lsI">
+                                    <dictionary key="options">
+                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nq4-pa-jWP">
+                            <rect key="frame" x="-1" y="-1" width="75" height="16"/>
+                            <buttonCell key="cell" type="check" title="Locked" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="XZ3-Yf-6cm">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.isLocked" id="5ya-BP-Tso">
+                                    <dictionary key="options">
+                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xIf-r2-7wO">
+                            <rect key="frame" x="78" y="-1" width="75" height="16"/>
+                            <buttonCell key="cell" type="check" title="Purgeable" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="MFj-yA-1t9">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.isPurgeable" id="IyA-34-xV6">
+                                    <dictionary key="options">
+                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2zc-dP-fzf">
+                            <rect key="frame" x="157" y="-1" width="75" height="16"/>
+                            <buttonCell key="cell" type="check" title="Sys Heap" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="26k-Z7-mYK">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.isSysHeap" id="orj-5E-yzy">
+                                    <dictionary key="options">
+                                        <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="xIf-r2-7wO" firstAttribute="width" secondItem="4X8-Ge-iv5" secondAttribute="width" id="2Vt-Zt-fEP"/>
+                        <constraint firstItem="4X8-Ge-iv5" firstAttribute="width" secondItem="sgA-Ti-ZdE" secondAttribute="width" id="GTO-zj-B0m"/>
+                        <constraint firstItem="yfx-2q-Kze" firstAttribute="top" secondItem="oW3-s3-lsG" secondAttribute="top" id="Gco-h2-78G"/>
+                        <constraint firstAttribute="trailing" secondItem="2zc-dP-fzf" secondAttribute="trailing" id="HBP-wn-OqV"/>
+                        <constraint firstItem="xIf-r2-7wO" firstAttribute="leading" secondItem="Nq4-pa-jWP" secondAttribute="trailing" constant="5" id="Kft-DC-Kar"/>
+                        <constraint firstItem="2zc-dP-fzf" firstAttribute="width" secondItem="4X8-Ge-iv5" secondAttribute="width" id="POl-p7-i1U"/>
+                        <constraint firstItem="4X8-Ge-iv5" firstAttribute="top" secondItem="oW3-s3-lsG" secondAttribute="top" id="QLV-C6-c16"/>
+                        <constraint firstItem="Nq4-pa-jWP" firstAttribute="top" secondItem="4X8-Ge-iv5" secondAttribute="bottom" constant="6" symbolic="YES" id="Uxf-GY-3P0"/>
+                        <constraint firstItem="sgA-Ti-ZdE" firstAttribute="top" secondItem="oW3-s3-lsG" secondAttribute="top" id="VIC-ge-voY"/>
+                        <constraint firstItem="Nq4-pa-jWP" firstAttribute="width" secondItem="4X8-Ge-iv5" secondAttribute="width" id="WIT-O1-0Ju"/>
+                        <constraint firstItem="Nq4-pa-jWP" firstAttribute="leading" secondItem="oW3-s3-lsG" secondAttribute="leading" id="Wlq-Sp-6KU"/>
+                        <constraint firstAttribute="trailing" secondItem="yfx-2q-Kze" secondAttribute="trailing" id="dG7-2I-KCW"/>
+                        <constraint firstItem="4X8-Ge-iv5" firstAttribute="leading" secondItem="oW3-s3-lsG" secondAttribute="leading" id="jlT-E1-C4V"/>
+                        <constraint firstItem="sgA-Ti-ZdE" firstAttribute="leading" secondItem="4X8-Ge-iv5" secondAttribute="trailing" constant="5" id="lp9-O2-eJK"/>
+                        <constraint firstAttribute="bottom" secondItem="2zc-dP-fzf" secondAttribute="bottom" id="qn7-Pm-1V5"/>
+                        <constraint firstItem="yfx-2q-Kze" firstAttribute="leading" secondItem="sgA-Ti-ZdE" secondAttribute="trailing" constant="5" id="r13-bd-1KV"/>
+                        <constraint firstAttribute="bottom" secondItem="xIf-r2-7wO" secondAttribute="bottom" id="uDM-06-Qcq"/>
+                        <constraint firstItem="yfx-2q-Kze" firstAttribute="width" secondItem="4X8-Ge-iv5" secondAttribute="width" id="uSu-vj-tVH"/>
+                        <constraint firstAttribute="bottom" secondItem="Nq4-pa-jWP" secondAttribute="bottom" id="wKV-Hg-0LN"/>
+                        <constraint firstItem="2zc-dP-fzf" firstAttribute="leading" secondItem="xIf-r2-7wO" secondAttribute="trailing" constant="5" id="ybR-8G-sFX"/>
+                    </constraints>
+                </customView>
             </subviews>
             <constraints>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oW3-s3-lsG" secondAttribute="bottom" constant="10" id="1BM-Tn-9uJ"/>
                 <constraint firstItem="Zun-9i-AY0" firstAttribute="centerX" secondItem="nc0-Xf-rW3" secondAttribute="centerX" id="1Be-7T-R4g"/>
+                <constraint firstItem="oW3-s3-lsG" firstAttribute="leading" secondItem="nc0-Xf-rW3" secondAttribute="leading" constant="10" id="5NW-zZ-nXK"/>
+                <constraint firstAttribute="trailing" secondItem="oW3-s3-lsG" secondAttribute="trailing" constant="10" id="S8q-1c-vya"/>
                 <constraint firstAttribute="trailing" secondItem="ByO-kB-Pq6" secondAttribute="trailing" id="Ucm-sR-bNp"/>
-                <constraint firstItem="ByO-kB-Pq6" firstAttribute="centerX" secondItem="nc0-Xf-rW3" secondAttribute="centerX" id="VnZ-7s-ic8"/>
                 <constraint firstItem="8h2-zb-fz3" firstAttribute="leading" secondItem="nc0-Xf-rW3" secondAttribute="leading" constant="10" id="cZD-H6-ddg"/>
                 <constraint firstAttribute="trailing" secondItem="8h2-zb-fz3" secondAttribute="trailing" constant="10" id="dWY-dn-THd"/>
                 <constraint firstItem="ByO-kB-Pq6" firstAttribute="top" secondItem="Zun-9i-AY0" secondAttribute="bottom" constant="8" symbolic="YES" id="m9R-or-DrG"/>
+                <constraint firstItem="oW3-s3-lsG" firstAttribute="top" secondItem="Zun-9i-AY0" secondAttribute="bottom" constant="8" symbolic="YES" id="ro7-82-urH"/>
                 <constraint firstItem="ByO-kB-Pq6" firstAttribute="leading" secondItem="nc0-Xf-rW3" secondAttribute="leading" id="tNF-hA-G9y"/>
                 <constraint firstItem="Zun-9i-AY0" firstAttribute="top" secondItem="8h2-zb-fz3" secondAttribute="bottom" constant="16" id="th9-aR-k2z"/>
                 <constraint firstItem="8h2-zb-fz3" firstAttribute="top" secondItem="nc0-Xf-rW3" secondAttribute="top" constant="12" id="vQg-T9-YGv"/>
@@ -483,6 +641,6 @@
         <objectController id="Ivl-3s-tDS"/>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="18" height="17"/>
+        <image name="NSAddTemplate" width="14" height="13"/>
     </resources>
 </document>

@@ -1,11 +1,12 @@
 import Cocoa
 
 public extension Notification.Name {
-    static let ResourceDidChange        = Self("ResourceDidChange")
-    static let ResourceNameDidChange    = Self("ResourceNameDidChange")
-    static let ResourceTypeDidChange    = Self("ResourceTypeDidChange")
-    static let ResourceIDDidChange      = Self("ResourceIDDidChange")
-    static let ResourceDataDidChange    = Self("ResourceDataDidChange")
+    static let ResourceDidChange            = Self("ResourceDidChange")
+    static let ResourceNameDidChange        = Self("ResourceNameDidChange")
+    static let ResourceTypeDidChange        = Self("ResourceTypeDidChange")
+    static let ResourceIDDidChange          = Self("ResourceIDDidChange")
+    static let ResourceAttributesDidChange  = Self("ResourceAttributesDidChange")
+    static let ResourceDataDidChange        = Self("ResourceDataDidChange")
 }
 
 public extension NSPasteboard.PasteboardType {
@@ -31,6 +32,19 @@ public struct ResourceType: Hashable, CustomStringConvertible {
     }
 }
 
+public struct ResAttributes: OptionSet, Hashable {
+    public let rawValue: Int
+    public static let changed   = Self(rawValue: 2)
+    public static let preload   = Self(rawValue: 4)
+    public static let protected = Self(rawValue: 8)
+    public static let locked    = Self(rawValue: 16)
+    public static let purgeable = Self(rawValue: 32)
+    public static let sysHeap   = Self(rawValue: 64)
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+}
+
 public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboardReading {
     // The resource state tracks original values for the resource's properties.
     // It is used to determine whether the resource is new/modified/etc.
@@ -38,13 +52,13 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         public var type: ResourceType?
         public var id: Int?
         public var name: String?
+        public var attributes: ResAttributes?
         public var data: Data?
         public var revision: Int?
         public var disableTracking = false
     }
 
     public weak var document: NSDocument!
-    public var attributes = 0 // Not supported
     public private(set) var type: ResourceType
     private var _preview: NSImage?
     public var _state = State()
@@ -113,6 +127,25 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
     }
 
+    public var attributes: ResAttributes {
+        // ResAttributes is not compatible with objc so we need to manually trigger change events
+        willSet {
+            self.willChangeValue(forKey: "attributes")
+        }
+        didSet {
+            if attributes != oldValue {
+                if !_state.disableTracking && _state.revision != nil && _state.attributes == nil {
+                    _state.attributes = oldValue
+                }
+                NotificationCenter.default.post(name: .ResourceAttributesDidChange, object: self, userInfo: ["oldValue": oldValue])
+                NotificationCenter.default.post(name: .ResourceDidChange, object: self)
+                document?.undoManager?.setActionName(NSLocalizedString("Change Attributes", comment: ""))
+                document?.undoManager?.registerUndo(withTarget: self) { $0.attributes = oldValue }
+            }
+            self.didChangeValue(forKey: "attributes")
+        }
+    }
+
     @objc public var data: Data {
         didSet {
             _preview = nil
@@ -133,10 +166,11 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         return name
     }
 
-    public init(type: ResourceType, id: Int, name: String = "", data: Data = Data()) {
+    public init(type: ResourceType, id: Int, name: String = "", attributes: Int = 0, data: Data = Data()) {
         self.type = type
         self.id = id
         self.name = name
+        self.attributes = ResAttributes(rawValue: attributes)
         self.data = data
     }
 
@@ -180,7 +214,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         type = ResourceType(typeCode, typeAttributes)
         id = coder.decodeInteger(forKey: "id")
         self.name = name
-        attributes = coder.decodeInteger(forKey: "attributes")
+        attributes = ResAttributes(rawValue: coder.decodeInteger(forKey: "attributes"))
         self.data = data
     }
 
@@ -189,7 +223,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         coder.encode(typeAttributes, forKey: "typeAttributes")
         coder.encode(id, forKey: "id")
         coder.encode(name, forKey: "name")
-        coder.encode(attributes, forKey: "attributes")
+        coder.encode(attributes.rawValue, forKey: "attributes")
         coder.encode(data, forKey: "data")
     }
 

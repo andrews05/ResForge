@@ -86,7 +86,7 @@ struct ExtendedFormat: ResourceFileFormat {
             for _ in 0..<numResources {
                 let id = Int(try reader.read() as Int64)
                 let nameOffset = try reader.read() as UInt64
-                let attributes = Int(try reader.read() as UInt8)
+                try reader.advance(1) // Skip attributes as they don't apply here
                 let resourceDataOffset = try reader.readUInt64AsInt() + dataOffset
                 let pos = reader.position + 4 // Skip handle to resource
 
@@ -110,7 +110,6 @@ struct ExtendedFormat: ResourceFileFormat {
 
                 // Construct resource
                 let resource = Resource(type: resourceType, id: id, name: name, data: data)
-                resource.attributes = attributes
                 resources.append(resource)
             }
             resourcesByType[resourceType] = resources
@@ -187,7 +186,7 @@ struct ExtendedFormat: ResourceFileFormat {
                     try nameList.writePString(resource.name)
                 }
 
-                writer.write(UInt8(resource.attributes))
+                writer.advance(1) // Skip attributes
                 let resourceDataOffset = resourceOffsets.removeLast()
                 writer.write(UInt64(resourceDataOffset))
                 writer.advance(4) // Skip handle to next resource

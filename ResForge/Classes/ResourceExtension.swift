@@ -2,6 +2,47 @@ import Cocoa
 import RFSupport
 
 extension Resource {
+    // MARK: - Attribute bindings
+
+    @objc var isChanged: Bool {
+        get { attributes.contains(.changed) }
+        set { attributes.formSymmetricDifference(.changed) }
+    }
+
+    @objc var isPreload: Bool {
+        get { attributes.contains(.preload) }
+        set { attributes.formSymmetricDifference(.preload) }
+    }
+
+    @objc var isProtected: Bool {
+        get { attributes.contains(.protected) }
+        set { attributes.formSymmetricDifference(.protected) }
+    }
+
+    @objc var isLocked: Bool {
+        get { attributes.contains(.locked) }
+        set { attributes.formSymmetricDifference(.locked) }
+    }
+
+    @objc var isPurgeable: Bool {
+        get { attributes.contains(.purgeable) }
+        set { attributes.formSymmetricDifference(.purgeable) }
+    }
+
+    @objc var isSysHeap: Bool {
+        get { attributes.contains(.sysHeap) }
+        set { attributes.formSymmetricDifference(.sysHeap) }
+    }
+
+    public override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        switch key {
+        case "isChanged", "isPreload", "isProtected", "isLocked", "isPurgeable", "isSysHeap":
+            return ["attributes"]
+        default:
+            return []
+        }
+    }
+
     // MARK: - Type/ID Validation
 
     @objc func validateTypeCode(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
@@ -39,7 +80,8 @@ extension Resource {
     var isPropertiesModified: Bool {
         (_state.type != nil && _state.type != type) ||
         (_state.id != nil && _state.id != id) ||
-        (_state.name != nil && _state.name != name)
+        (_state.name != nil && _state.name != name) ||
+        (_state.attributes != nil && _state.attributes != attributes)
     }
 
     // For data, only check if the value was ever changed

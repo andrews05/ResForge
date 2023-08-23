@@ -5,6 +5,7 @@ protocol ResourceFileFormat {
     associatedtype IDType: FixedWidthInteger
     static var typeName: String { get }
     var name: String { get }
+    var supportsResAttributes: Bool { get }
     var supportsTypeAttributes: Bool { get }
 
     func filenameExtension(for url: URL?) -> String?
@@ -15,6 +16,9 @@ protocol ResourceFileFormat {
 // Implement some typical defaults and helpers for all formats
 extension ResourceFileFormat {
     typealias IDType = Int16
+    var supportsResAttributes: Bool {
+        false
+    }
     var supportsTypeAttributes: Bool {
         false
     }

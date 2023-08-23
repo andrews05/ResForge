@@ -17,6 +17,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     @IBOutlet var rType: NSTextField!
     @IBOutlet var rID: NSTextField!
     @IBOutlet var rSize: NSTextField!
+    @IBOutlet var resAttsHolder: NSView!
     @IBOutlet var typeAttsHolder: NSView!
     @IBOutlet var rTypeAtts: AttributesEditor!
 
@@ -61,7 +62,9 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             window?.title = NSLocalizedString("Resource Info", comment: "")
 
             rSize.integerValue = resource.data.count
-            typeAttsHolder.isHidden = (resource.document as? ResourceDocument)?.format.supportsTypeAttributes != true
+            let format = (resource.document as? ResourceDocument)?.format
+            resAttsHolder.isHidden = format?.supportsResAttributes != true
+            typeAttsHolder.isHidden = format?.supportsTypeAttributes != true
             rTypeAtts.attributes = resource.typeAttributes
 
             window?.contentView = resourceView

@@ -11,6 +11,7 @@ struct ClassicFormat: ResourceFileFormat {
     static let typeName = "public.data"
     static let filenameExtension = "rsrc"
     let name = NSLocalizedString("Resource File", comment: "")
+    let supportsResAttributes = true
 
     func filenameExtension(for url: URL?) -> String? {
         // Prefer to keep an existing extension
@@ -108,8 +109,7 @@ struct ClassicFormat: ResourceFileFormat {
                 try reader.setPosition(nextOffset)
 
                 // Construct resource
-                let resource = Resource(type: resourceType, id: id, name: name, data: data)
-                resource.attributes = attributes
+                let resource = Resource(type: resourceType, id: id, name: name, attributes: attributes, data: data)
                 resources.append(resource)
             }
             resourcesByType[resourceType] = resources
@@ -192,7 +192,7 @@ struct ClassicFormat: ResourceFileFormat {
                 }
 
                 let resourceDataOffset = resourceOffsets.removeLast()
-                let attsAndOffset = UInt32(resource.attributes) << 24 | UInt32(resourceDataOffset)
+                let attsAndOffset = UInt32(resource.attributes.rawValue) << 24 | UInt32(resourceDataOffset)
                 writer.write(attsAndOffset)
                 writer.advance(4) // Skip handle to next resource
             }
