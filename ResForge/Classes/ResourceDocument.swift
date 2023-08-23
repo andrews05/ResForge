@@ -112,9 +112,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
 
     override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
-        // Since the UTIs we use for saving have no extension we should manually append the default as a suggestion.
-        // Unfortunately we can't apply this when the user changes the selected format.
-        savePanel.nameFieldStringValue.append(".\(format.filenameExtension)")
+        if let ext = format.filenameExtension(for: fileURL) {
+            savePanel.nameFieldStringValue.append(".\(ext)")
+        }
         savePanel.isExtensionHidden = false
         savePanel.allowsOtherFileTypes = true
         return super.prepareSavePanel(savePanel)

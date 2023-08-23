@@ -4,13 +4,13 @@ import RFSupport
 protocol ResourceFileFormat {
     associatedtype IDType: FixedWidthInteger
     static var typeName: String { get }
-    var filenameExtension: String { get }
     var name: String { get }
     var supportsTypeAttributes: Bool { get }
 
     static func read(_ data: Data) throws -> [ResourceType: [Resource]]
     static func write(_ resources: [ResourceType: [Resource]]) throws -> Data
 
+    func filenameExtension(for url: URL?) -> String?
     func read(_ data: Data) throws -> [ResourceType: [Resource]]
     func write(_ resources: [ResourceType: [Resource]]) throws -> Data
 }
@@ -30,6 +30,10 @@ extension ResourceFileFormat {
     }
     func isValid(id: Int) -> Bool {
         return Self.isValid(id: id)
+    }
+
+    func filenameExtension(for url: URL?) -> String? {
+        return nil
     }
 
     func read(_ data: Data) throws -> [ResourceType: [Resource]] {

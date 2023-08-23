@@ -5,7 +5,6 @@ import RFSupport
 
 struct RezFormat: ResourceFileFormat {
     static let typeName = "com.resforge.rez-file"
-    let filenameExtension = "rez"
     let name = NSLocalizedString("Rez File", comment: "")
 
     static let signature = "BRGR"

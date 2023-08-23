@@ -5,12 +5,11 @@ import RFSupport
 
 struct ExtendedFormat: ResourceFileFormat {
     typealias IDType = Int32 // Technically supports 64-bit but we limit to 32-bit
-    static let typeName = "public.item"
-    let filenameExtension = "rsrx"
+    static let typeName = "com.resforge.extended-resource-file"
     let name = NSLocalizedString("Extended Resource File", comment: "")
     let supportsTypeAttributes = true
 
-    static let signature = "\0\0\0\0" // TODO: Change to "RSRX"
+    static let signature = "RSRX"
     static let version = 1
 
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {

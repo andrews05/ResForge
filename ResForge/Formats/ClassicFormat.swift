@@ -7,10 +7,18 @@ struct ClassicFormat: ResourceFileFormat {
     // We want to make the format's filename extension simply a "suggestion" and not force it in any manner, but the
     // standard behaviour makes this difficult to achieve nicely. NSSavePanel.allowsOtherFileTypes isn't sufficient as
     // it still prompts the user to confirm and only works if the user has entered an extension known by the system.
-    // The current solution is to use system UTIs that have no extension.
+    // The current solution is to use a system UTI that has no extension, then manually append one when the panel opens.
     static let typeName = "public.data"
-    let filenameExtension = "rsrc"
+    static let filenameExtension = "rsrc"
     let name = NSLocalizedString("Resource File", comment: "")
+
+    func filenameExtension(for url: URL?) -> String? {
+        // Prefer to keep an existing extension
+        if let url, !url.pathExtension.isEmpty {
+            return url.pathExtension
+        }
+        return Self.filenameExtension
+    }
 
     static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         var resourcesByType: [ResourceType: [Resource]] = [:]

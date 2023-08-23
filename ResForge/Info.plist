@@ -31,7 +31,6 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.resforge.extended-resource-file</string>
-				<string>public.item</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).ResourceDocument</string>
@@ -122,6 +121,7 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>rsrx</string>
+					<string>kdat</string>
 				</array>
 			</dict>
 		</dict>
