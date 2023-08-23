@@ -33,14 +33,7 @@ extension ResourceFileFormat {
     }
 
     func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        guard !data.isEmpty else {
-            return [:]
-        }
-        do {
-            return try Self.read(data)
-        } catch {
-            throw CocoaError(.fileReadCorruptFile)
-        }
+        return try Self.read(data)
     }
 
     func write(_ resources: [ResourceType: [Resource]]) throws -> Data {

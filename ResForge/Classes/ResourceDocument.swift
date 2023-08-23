@@ -73,15 +73,30 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             let hasRsrc = (values.totalFileSize! - values.fileSize!) > 0
             fork = (NSDocumentController.shared as! OpenPanelDelegate).getSelectedFork() ?? (hasRsrc ? .rsrc : .data)
         }
-        let readUrl = fork == .rsrc ? url.appendingPathComponent("..namedfork/rsrc") : url
-        let data = try Data(contentsOf: readUrl)
-        if fork == .rsrc {
+
+        // Read file and determine format
+        let data: Data
+        if fork == .data {
+            data = try Data(contentsOf: url)
+            format = try ResourceFormat.from(data: data)
+        } else {
             // Always use classic for resource fork
             format = ClassicFormat()
-        } else {
-            format = try ResourceFormat.from(data: data)
+            do {
+                data = try Data(contentsOf: url.appendingPathComponent("..namedfork/rsrc"))
+            } catch CocoaError.fileReadNoSuchFile {
+                // Resource fork does not exist but we can create it on save
+                data = Data()
+            }
         }
-        let resources = try format.read(data)
+
+        // Read resources
+        let resources: [ResourceType: [Resource]]
+        do {
+            resources = data.isEmpty ? [:] : try format.read(data)
+        } catch {
+            throw CocoaError(.fileReadCorruptFile)
+        }
 
         // Get type and creator - make sure undo registration is disabled while configuring
         let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
