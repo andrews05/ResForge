@@ -488,7 +488,7 @@
                             </view>
                             <color key="borderColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
                         </box>
-                        <ruleEditor verticalHuggingPriority="750" nestingMode="list" canRemoveAllRows="YES" rowHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vJp-nb-fR2" customClass="AttributesEditor" customModule="ResForge" customModuleProvider="target">
+                        <ruleEditor verticalHuggingPriority="750" nestingMode="list" canRemoveAllRows="YES" rowHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vJp-nb-fR2" customClass="TypeAttributesEditor" customModule="ResForge" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="-1" width="252" height="0.0"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="19" id="XKG-X6-9U4"/>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -89,14 +88,14 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="enabled" keyPath="rType" id="KcQ-wO-8Wj">
-                                                <dictionary key="options">
-                                                    <string key="NSValueTransformerName">NSIsNotNil</string>
-                                                </dictionary>
-                                            </binding>
                                             <binding destination="-2" name="value" keyPath="rID" id="Xpj-a4-sYH">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                                </dictionary>
+                                            </binding>
+                                            <binding destination="-2" name="enabled" keyPath="rType" id="KcQ-wO-8Wj">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">NSIsNotNil</string>
                                                 </dictionary>
                                             </binding>
                                             <outlet property="delegate" destination="-2" id="bZ7-66-MK9"/>
@@ -195,7 +194,7 @@
                                             </view>
                                             <color key="borderColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
                                         </box>
-                                        <ruleEditor verticalHuggingPriority="750" nestingMode="list" canRemoveAllRows="YES" rowHeight="32" translatesAutoresizingMaskIntoConstraints="NO" id="BQp-HD-IXn" customClass="AttributesEditor" customModule="ResForge" customModuleProvider="target">
+                                        <ruleEditor verticalHuggingPriority="750" nestingMode="list" canRemoveAllRows="YES" rowHeight="32" translatesAutoresizingMaskIntoConstraints="NO" id="BQp-HD-IXn" customClass="TypeAttributesEditor" customModule="ResForge" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="-1" width="258" height="0.0"/>
                                             <connections>
                                                 <outlet property="addButton" destination="i1z-B3-L37" id="cFa-JE-OQq"/>

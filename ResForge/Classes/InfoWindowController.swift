@@ -19,7 +19,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     @IBOutlet var rSize: NSTextField!
     @IBOutlet var resAttsHolder: NSView!
     @IBOutlet var typeAttsHolder: NSView!
-    @IBOutlet var rTypeAtts: AttributesEditor!
+    @IBOutlet var rTypeAtts: TypeAttributesEditor!
 
     @IBOutlet var objectController: NSObjectController!
 

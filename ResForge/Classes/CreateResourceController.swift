@@ -13,7 +13,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
     @IBOutlet var idView: NSTextField!
     @IBOutlet var typeView: NSComboBox!
     @IBOutlet var attributesHolder: NSView!
-    @IBOutlet var attributesEditor: AttributesEditor!
+    @IBOutlet var attributesEditor: TypeAttributesEditor!
     private unowned var rDocument: ResourceDocument
     private var callback: ((Resource?) -> Void)?
     private var currentType: ResourceType {

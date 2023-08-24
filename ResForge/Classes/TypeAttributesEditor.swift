@@ -3,9 +3,9 @@ import Cocoa
 /*
  * NSRuleEditor provides a great interface for type attributes but has proven difficult to work with.
  * In particular, providing the initial data is not easy, especially as the "rows" binding appears to be buggy (and crashy).
- * Here we store row values in property each time a row is added, which are subsequently accessed by the delegate function.
+ * Here we store row values in a property each time a row is added, which are subsequently accessed by the delegate function.
  */
-class AttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate {
+class TypeAttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDelegate {
     @IBOutlet var addButton: NSButton?
     @IBOutlet var applyButton: NSButton?
 
