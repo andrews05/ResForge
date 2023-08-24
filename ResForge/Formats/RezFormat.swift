@@ -7,7 +7,7 @@ struct RezFormat: ResourceFileFormat {
     static let typeName = "com.resforge.rez-file"
     let name = NSLocalizedString("Rez File", comment: "")
 
-    static let signature = "BRGR"
+    static let signature = UInt32("BRGR")
     static let type = 1
     static let mapName = "resource.map"
     static let resourceNameLength = 256
@@ -17,7 +17,7 @@ struct RezFormat: ResourceFileFormat {
         let reader = BinaryDataReader(data, bigEndian: false)
 
         // Read and validate header
-        let signature = try reader.readString(length: 4)
+        let signature = try reader.read(bigEndian: true) as UInt32
         let numGroups = try reader.read() as UInt32
         let headerLength = try reader.read() as UInt32
         let groupType = try reader.read() as UInt32
@@ -109,7 +109,7 @@ struct RezFormat: ResourceFileFormat {
         let writer = BinaryDataWriter(bigEndian: false)
 
         // Write root header
-        try writer.writeString(Self.signature)
+        writer.write(Self.signature, bigEndian: true)
         writer.write(UInt32(numGroups))
         writer.write(UInt32(headerLength))
         assert(writer.bytesWritten == rootHeaderLength)

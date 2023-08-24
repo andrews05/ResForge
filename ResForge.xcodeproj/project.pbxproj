@@ -68,6 +68,7 @@
 		4976D2992718CEA400322DDF /* GalaxyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4976D2772718CC4B00322DDF /* GalaxyView.swift */; };
 		497A93DE255F371100900C7B /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 497A93E0255F371100900C7B /* SelectTemplate.xib */; };
 		497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BB1DB24F741E400858EF1 /* Icons.swift */; };
+		4982C09E2A97F653006B7404 /* AppleSingleFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4982C09D2A97F653006B7404 /* AppleSingleFormat.swift */; };
 		498F2D712A9344AF001EC34E /* MacBinaryFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498F2D702A9344AF001EC34E /* MacBinaryFormat.swift */; };
 		499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499216ED24CB914F0054A390 /* CreateResourceController.swift */; };
 		4992491A26C3B527005F69A7 /* TypeAttributesEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4992491926C3B527005F69A7 /* TypeAttributesEditor.swift */; };
@@ -421,6 +422,7 @@
 		497A93BD255BB49600900C7B /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		497A93DF255F371100900C7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SelectTemplate.xib; sourceTree = "<group>"; };
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		4982C09D2A97F653006B7404 /* AppleSingleFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSingleFormat.swift; sourceTree = "<group>"; };
 		498A02C225C3E4B500783776 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		498F2D702A9344AF001EC34E /* MacBinaryFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBinaryFormat.swift; sourceTree = "<group>"; };
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
@@ -956,6 +958,7 @@
 				49F570052A845D5E00953A17 /* RezFormat.swift */,
 				496669C02A8B5D71008DCC36 /* ExtendedFormat.swift */,
 				498F2D702A9344AF001EC34E /* MacBinaryFormat.swift */,
+				4982C09D2A97F653006B7404 /* AppleSingleFormat.swift */,
 			);
 			path = Formats;
 			sourceTree = "<group>";
@@ -1531,6 +1534,7 @@
 				49D6D3B0271BAAB4002DEA97 /* ElementFBYT.swift in Sources */,
 				4968C03F24C78D7400716AB9 /* SupportRegistry.swift in Sources */,
 				49CC15922764218800E5605A /* LinkingComboBox.swift in Sources */,
+				4982C09E2A97F653006B7404 /* AppleSingleFormat.swift in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
 				49D6D388271BAAB4002DEA97 /* TemplateEditor.swift in Sources */,
 				49D6D3A0271BAAB4002DEA97 /* ElementAWRD.swift in Sources */,

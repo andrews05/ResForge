@@ -53,15 +53,17 @@ struct ResourceFormat {
             return ClassicFormat()
         }
 
-        // Rez and Extended start with specific signature
+        // Start by checking 4 byte signature
         let reader = BinaryDataReader(data)
-        guard let signature = try? reader.readString(length: 4) else {
+        guard let signature = try? reader.read() as UInt32 else {
             throw CocoaError(.fileReadCorruptFile)
         }
         if signature == RezFormat.signature {
             return RezFormat()
         } else if signature == ExtendedFormat.signature {
             return ExtendedFormat()
+        } else if signature == AppleSingleFormat.signature {
+            return AppleSingleFormat()
         } else if MacBinaryFormat.matches(data: data) {
             return MacBinaryFormat()
         } else {

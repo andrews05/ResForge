@@ -40,36 +40,32 @@ struct MacBinaryFormat: ResourceFileFormat {
     }
 
     mutating func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        do {
-            let reader = BinaryDataReader(data)
+        let reader = BinaryDataReader(data)
 
-            // Validate the CRC
-            try reader.setPosition(Self.crcOffset)
-            let crc = try reader.read() as UInt16
-            guard crc != 0, crc == self.crc16(data[0..<Self.crcOffset]) else {
-                throw CocoaError(.fileReadCorruptFile)
-            }
-
-            // Read fork lengths
-            try reader.setPosition(Self.forkLengthOffset)
-            let dataLength = Int(try reader.read() as UInt32)
-            let rsrcLength = Int(try reader.read() as UInt32)
-
-            // Calculate resource fork offset
-            let rsrcOffset = Self.headerLength + dataLength + self.forkPadding(dataLength)
-
-            // Read resource fork
-            try reader.setPosition(rsrcOffset)
-            let rsrcFork = try reader.readData(length: rsrcLength)
-            let resources = try ClassicFormat.read(rsrcFork)
-
-            // Retain the header and data fork
-            headerAndData = data[..<rsrcOffset]
-
-            return resources
-        } catch {
+        // Validate the CRC
+        try reader.setPosition(Self.crcOffset)
+        let crc = try reader.read() as UInt16
+        guard crc != 0, crc == self.crc16(data[0..<Self.crcOffset]) else {
             throw CocoaError(.fileReadCorruptFile)
         }
+
+        // Read fork lengths
+        try reader.setPosition(Self.forkLengthOffset)
+        let dataLength = Int(try reader.read() as UInt32)
+        let rsrcLength = Int(try reader.read() as UInt32)
+
+        // Calculate resource fork offset
+        let rsrcOffset = Self.headerLength + dataLength + self.forkPadding(dataLength)
+
+        // Read resource fork
+        try reader.setPosition(rsrcOffset)
+        let rsrcFork = try reader.readData(length: rsrcLength)
+        let resources = try ClassicFormat.read(rsrcFork)
+
+        // Retain the header and data fork
+        headerAndData = data[..<rsrcOffset]
+
+        return resources
     }
 
     func write(_ resources: [ResourceType: [Resource]]) throws -> Data {
