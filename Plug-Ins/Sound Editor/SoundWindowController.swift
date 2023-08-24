@@ -41,7 +41,6 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
     }
 
     override func windowDidLoad() {
-        self.window?.title = self.resource.defaultWindowTitle
         self.loadInfo()
         sound.play()
     }

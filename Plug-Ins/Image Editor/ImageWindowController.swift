@@ -50,7 +50,6 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     }
 
     override func windowDidLoad() {
-        self.window?.title = resource.defaultWindowTitle
         // Interface builder doesn't allow setting the document view so we have to do it here and configure the constraints
         scrollView.documentView = imageView
         let l = NSLayoutConstraint(item: imageView!, attribute: .leading, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .leading, multiplier: 1, constant: 0)
@@ -316,10 +315,6 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
                 }
                 return rep
             }
-        }
-        // On systems earlier than 10.15 we can fallback to the native handler
-        guard #available(macOS 10.15, *) else {
-            return NSPICTImageRep(data: data)
         }
         return nil
     }

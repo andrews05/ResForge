@@ -2,6 +2,17 @@ import Cocoa
 
 /// The abstract editor provides some default functionality for save handling. Do not extend this without also conforming to ResourceEditor.
 open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValidation {
+    open override func awakeFromNib() {
+        guard let window, let plug = window.windowController as? ResourceEditor else {
+            return
+        }
+        // Use a short title for the title bar but include the document name in the Window menu
+        window.title = plug.resource.defaultWindowTitle
+        if let docName = plug.resource.document?.displayName {
+            NSApp.changeWindowsItem(window, title: "\(docName): \(window.title)", filename: false)
+        }
+    }
+
     public func windowShouldClose(_ sender: NSWindow) -> Bool {
         // Ensure any controls have ended editing
         if !sender.makeFirstResponder(nil) {

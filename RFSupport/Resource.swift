@@ -159,11 +159,8 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     }
 
     public var defaultWindowTitle: String {
-        if let document {
-            let title = document.displayName.appending(": \(typeCode) \(id)")
-            return name.isEmpty ? title : title.appending(" '\(name)'")
-        }
-        return name
+        let title = "\(typeCode) \(id)"
+        return name.isEmpty ? title : title.appending(" - \(name)")
     }
 
     public init(type: ResourceType, id: Int, name: String = "", attributes: Int = 0, data: Data = Data()) {

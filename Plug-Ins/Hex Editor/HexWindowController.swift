@@ -37,7 +37,6 @@ class HexWindowController: AbstractEditor, ResourceEditor, NSTextFieldDelegate, 
     }
 
     override func windowDidLoad() {
-        self.window?.title = resource.defaultWindowTitle
         findView.isHidden = true
 
         let lineCountingRepresenter = HFLineCountingRepresenter()

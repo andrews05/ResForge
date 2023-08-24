@@ -49,7 +49,6 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     }
 
     override func windowDidLoad() {
-        self.window?.title = resource.defaultWindowTitle
         imageView.allowsCutCopyPaste = false
         importButton.isHidden = writeableType == nil
         importPanel.dither.isHidden = resource.typeCode != "rlëD"

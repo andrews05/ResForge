@@ -111,7 +111,6 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     }
 
     override func windowDidLoad() {
-        self.window?.title = resource.defaultWindowTitle
         layers = [
             baseLayer,
             altLayer,
