@@ -60,9 +60,8 @@ class HexFormatter<T: FixedWidthInteger & UnsignedInteger>: Formatter {
         if string.first == "$" {
             string = String(string.dropFirst())
         }
-        var value: UInt64 = 0
         let scanner = Scanner(string: string)
-        scanner.scanHexInt64(&value)
+        let value = scanner.scanInt64(representation: .hexadecimal) ?? 0
         if !scanner.isAtEnd {
             error?.pointee = NSLocalizedString("The value is not a valid hex string.", comment: "") as NSString
             return false

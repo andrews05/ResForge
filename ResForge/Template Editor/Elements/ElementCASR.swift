@@ -83,24 +83,29 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         var hasMax = false
         if let metaValue {
             let scanner = Scanner(string: metaValue)
-            hasMin = scanner.scanInt(&min)
-            guard !hasMin || range ~= min else {
-                throw TemplateError.invalidStructure(self, NSLocalizedString("Minimum value out of range for field type.", comment: ""))
+            if let min = scanner.scanInt() {
+                guard range ~= min else {
+                    throw TemplateError.invalidStructure(self, NSLocalizedString("Minimum value out of range for field type.", comment: ""))
+                }
+                self.min = min
+                hasMin = true
             }
             scanner.charactersToBeSkipped = nil
-            if scanner.scanString("..", into: nil) {
-                hasMax = scanner.scanInt(&max)
-                guard !hasMax || range ~= max else {
-                    throw TemplateError.invalidStructure(self, NSLocalizedString("Maximum value out of range for field type.", comment: ""))
+            if scanner.scanString("..") != nil {
+                if let max = scanner.scanInt() {
+                    guard range ~= max else {
+                        throw TemplateError.invalidStructure(self, NSLocalizedString("Maximum value out of range for field type.", comment: ""))
+                    }
+                    self.max = max
+                    hasMax = true
                 }
                 scanner.charactersToBeSkipped = .whitespacesAndNewlines
-                if scanner.scanString("~", into: nil) {
+                if scanner.scanString("~") != nil {
                     guard hasMin else {
                         throw TemplateError.invalidStructure(self, NSLocalizedString("Normal requires explicit minimum.", comment: ""))
                     }
-                    var normal = 0
                     scanner.charactersToBeSkipped = nil
-                    guard scanner.scanInt(&normal) else {
+                    guard let normal = scanner.scanInt() else {
                         throw TemplateError.invalidStructure(self, NSLocalizedString("No value given for normal.", comment: ""))
                     }
                     scanner.charactersToBeSkipped = .whitespacesAndNewlines
@@ -112,12 +117,11 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
                         max = (invert ? -max : max) - offset
                     }
                 }
-                if scanner.scanString("'", into: nil) {
-                    var resType: NSString?
-                    scanner.scanUpTo("'", into: &resType)
-                    if resType?.length == 4 && scanner.scanString("'", into: nil) {
-                        self.resType = resType as String?
-                    }
+                if scanner.scanString("'") != nil,
+                   let resType = scanner.scanUpToString("'"),
+                   resType.count == 4,
+                   scanner.scanString("'") != nil {
+                    self.resType = resType
                 }
             } else {
                 // Single value
@@ -125,7 +129,8 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
             }
             // To help catch syntax errors, fail if we didn't consume the entire input
             if !scanner.isAtEnd {
-                throw TemplateError.invalidStructure(self, String(format: NSLocalizedString("Unexpected character at position %d.", comment: ""), scanner.scanLocation))
+                let remainder = String(metaValue[scanner.currentIndex...])
+                throw TemplateError.invalidStructure(self, String(format: NSLocalizedString("Unexpected characters at end of label: %@", comment: ""), remainder))
             }
         }
         guard hasMin || hasMax else {

@@ -13,27 +13,25 @@ class ElementRREF: BaseElement {
     private var buttonLabel = ""
 
     override func configure() throws {
-        var typeCode: NSString?
         guard let metaValue,
               case let scanner = Scanner(string: metaValue),
-              scanner.scanString("'", into: nil),
-              scanner.scanUpTo("'", into: &typeCode),
-              scanner.scanString("'", into: nil),
-              typeCode?.length == 4
+              scanner.scanString("'") != nil,
+              let typeCode = scanner.scanUpToString("'"),
+              typeCode.count == 4,
+              scanner.scanString("'") != nil
         else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Could not determine resource type from label.", comment: ""))
         }
-        resType = typeCode! as String
-        if scanner.scanString("#", into: nil) {
-            scanner.scanInt(&id)
-        } else {
-            scanner.scanInt(&id)
+        resType = typeCode
+        let isRelative = scanner.scanString("#") == nil
+        id = scanner.scanInt() ?? 0
+        if isRelative {
             id += parentList.controller.resource.id
         }
         if scanner.isAtEnd {
             buttonLabel = "\(resType) #\(id)"
         } else {
-            buttonLabel = scanner.string.dropFirst(scanner.scanLocation).trimmingCharacters(in: .whitespaces)
+            buttonLabel = scanner.string[scanner.currentIndex...].trimmingCharacters(in: .whitespaces)
         }
         width = 120
     }

@@ -30,11 +30,10 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         _ = self.defaultValue()
         
         // Check for an id reference and try to load names from a STR#
-        var listID = 0
         if let metaValue,
            case let scanner = Scanner(string: metaValue),
-           scanner.scanString("#", into: nil),
-           scanner.scanInt(&listID),
+           scanner.scanString("#") != nil,
+           let listID = scanner.scanInt(),
            let list = parentList.controller.manager.findResource(type: ResourceType("STR#"), id: listID, currentDocumentOnly: false) {
             let reader = BinaryDataReader(list.data)
             do {
