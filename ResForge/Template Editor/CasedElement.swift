@@ -101,8 +101,17 @@ class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBo
     }
 
     override func reverseTransformedValue(_ value: Any?) -> Any? {
-        // Don't use the formatter here as we can't handle the error
-        return (value as? String)?.components(separatedBy: " = ").last ?? ""
+        guard let components = (value as? String)?.components(separatedBy: " = ") else {
+            return ""
+        }
+        // The value will be the last component if it was selected in the combo box
+        // However, if it was copy/pasted from another field it will be the first component
+        // To account for both, return the last component only if it passes the formatter
+        if components.count > 1,
+           self.formatter.getObjectValue(nil, for: components.last!, errorDescription: nil) {
+            return components.last
+        }
+        return components.first
     }
 
     // This is a key-value validation function for the specific key of "value"

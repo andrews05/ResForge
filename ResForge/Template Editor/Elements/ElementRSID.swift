@@ -146,10 +146,10 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
     }
 
     override func reverseTransformedValue(_ value: Any?) -> Any? {
-        var value = super.reverseTransformedValue(value) as? String
+        var value = value as? String
         if offset != 0 {
             value = value?.components(separatedBy: " (#").first
         }
-        return value ?? ""
+        return super.reverseTransformedValue(value) ?? ""
     }
 }
