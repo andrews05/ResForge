@@ -65,6 +65,8 @@ struct ResourceFormat {
             return ExtendedFormat()
         case AppleSingleFormat.signature:
             return AppleSingleFormat()
+        case AppleDoubleFormat.signature:
+            return AppleDoubleFormat()
         case _ where MacBinaryFormat.matches(data: data):
             return MacBinaryFormat()
         default:

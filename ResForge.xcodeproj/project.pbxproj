@@ -69,6 +69,7 @@
 		497A93DE255F371100900C7B /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 497A93E0255F371100900C7B /* SelectTemplate.xib */; };
 		497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BB1DB24F741E400858EF1 /* Icons.swift */; };
 		4982C09E2A97F653006B7404 /* AppleSingleFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4982C09D2A97F653006B7404 /* AppleSingleFormat.swift */; };
+		4982C0AA2A9844BB006B7404 /* AppleDoubleFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4982C0A92A9844BB006B7404 /* AppleDoubleFormat.swift */; };
 		498F2D712A9344AF001EC34E /* MacBinaryFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498F2D702A9344AF001EC34E /* MacBinaryFormat.swift */; };
 		499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499216ED24CB914F0054A390 /* CreateResourceController.swift */; };
 		4992491A26C3B527005F69A7 /* TypeAttributesEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4992491926C3B527005F69A7 /* TypeAttributesEditor.swift */; };
@@ -423,6 +424,7 @@
 		497A93DF255F371100900C7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SelectTemplate.xib; sourceTree = "<group>"; };
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		4982C09D2A97F653006B7404 /* AppleSingleFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSingleFormat.swift; sourceTree = "<group>"; };
+		4982C0A92A9844BB006B7404 /* AppleDoubleFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleDoubleFormat.swift; sourceTree = "<group>"; };
 		498A02C225C3E4B500783776 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		498F2D702A9344AF001EC34E /* MacBinaryFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBinaryFormat.swift; sourceTree = "<group>"; };
 		499216ED24CB914F0054A390 /* CreateResourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceController.swift; sourceTree = "<group>"; };
@@ -959,6 +961,7 @@
 				496669C02A8B5D71008DCC36 /* ExtendedFormat.swift */,
 				498F2D702A9344AF001EC34E /* MacBinaryFormat.swift */,
 				4982C09D2A97F653006B7404 /* AppleSingleFormat.swift */,
+				4982C0A92A9844BB006B7404 /* AppleDoubleFormat.swift */,
 			);
 			path = Formats;
 			sourceTree = "<group>";
@@ -1549,6 +1552,7 @@
 				49D6D39F271BAAB4002DEA97 /* ElementWCOL.swift in Sources */,
 				4907D2DD29C423660003702A /* ElementNCB.swift in Sources */,
 				49D6D3AE271BAAB4002DEA97 /* ElementPACK.swift in Sources */,
+				4982C0AA2A9844BB006B7404 /* AppleDoubleFormat.swift in Sources */,
 				49D6D3A5271BAAB4002DEA97 /* ElementDOUB.swift in Sources */,
 				49D6D3A7271BAAB4002DEA97 /* TemplateError.swift in Sources */,
 				492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */,
