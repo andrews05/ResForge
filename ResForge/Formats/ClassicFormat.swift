@@ -9,7 +9,7 @@ class ClassicFormat: ResourceFileFormat {
     // standard behaviour makes this difficult to achieve nicely. NSSavePanel.allowsOtherFileTypes isn't sufficient as
     // it still prompts the user to confirm and only works if the user has entered an extension known by the system.
     // The current solution is to use a system UTI that has no extension, then manually append one when the panel opens.
-    class var typeName: String { "public.data" }
+    static let typeName = "public.data"
     var name: String { NSLocalizedString("Resource File", comment: "") }
     let supportsResAttributes = true
 

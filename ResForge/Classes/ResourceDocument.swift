@@ -158,13 +158,13 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         self.updateStatus()
     }
 
-    override func write(to url: URL, ofType typeName: String) throws {
+    override func write(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws {
         // We're necessarily writing the data fork here
-        if typeName == fileType && fork == .data {
+        if saveOperation != .saveAsOperation {
             try super.write(to: url, ofType: typeName)
         } else {
-            // Format or fork is changing - set format from typeName and clear type/creator,
-            // but make sure the original values are restored if an error occurs.
+            // Set format from typeName and clear type/creator, but make
+            // sure the original values are restored if an error occurs.
             self.undoManager?.disableUndoRegistration()
             defer {
                 self.undoManager?.enableUndoRegistration()

@@ -4,7 +4,6 @@ import RFSupport
 // https://web.archive.org/web/20050305044255/http://www.lazerware.com/formats/macbinary/macbinary_iii.html
 
 class MacBinaryFormat: ClassicFormat {
-    override class var typeName: String { "com.apple.macbinary-archive" }
     override var name: String { NSLocalizedString("MacBinary Archive", comment: "") }
 
     static let headerLength = 128

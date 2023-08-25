@@ -4,7 +4,6 @@ import RFSupport
 // https://web.archive.org/web/20180311140826/http://kaiser-edv.de/documents/AppleSingle_AppleDouble.pdf
 
 class AppleSingleFormat: ClassicFormat {
-    override class var typeName: String { "com.apple.applesingle-archive" }
     override var name: String { NSLocalizedString("AppleSingle Archive", comment: "") }
 
     class var signature: UInt32 { 0x00051600 }
