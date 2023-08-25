@@ -43,10 +43,10 @@ class AppleSingleFormat: ClassicFormat {
             // Read the entry data
             try reader.pushPosition(offset)
             let entry = try reader.readData(length: length)
-            if entryID == Self.resourceForkID {
-                resourcesByType = try super.read(entry)
-            } else {
+            if entryID != Self.resourceForkID {
                 entries.append((entryID, entry))
+            } else if length > 0 {
+                resourcesByType = try super.read(entry)
             }
             reader.popPosition()
         }
