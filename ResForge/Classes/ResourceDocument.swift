@@ -102,7 +102,6 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
         self.undoManager?.disableUndoRegistration()
         _ = editorManager.closeAll(saving: false)
-        fileType = format.typeName
         hfsType = attrs[.hfsTypeCode] as! OSType
         hfsCreator = attrs[.hfsCreatorCode] as! OSType
         revision = 0
@@ -161,7 +160,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
 
     override func write(to url: URL, ofType typeName: String) throws {
         // We're necessarily writing the data fork here
-        if typeName == format.typeName && fork == .data {
+        if typeName == fileType && fork == .data {
             try super.write(to: url, ofType: typeName)
         } else {
             // Format or fork is changing - set format from typeName and clear type/creator,

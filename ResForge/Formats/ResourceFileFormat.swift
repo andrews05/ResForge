@@ -16,15 +16,8 @@ protocol ResourceFileFormat {
 // Implement some typical defaults and helpers for all formats
 extension ResourceFileFormat {
     typealias IDType = Int16
-    var typeName: String {
-        Self.typeName
-    }
-    var supportsResAttributes: Bool {
-        false
-    }
-    var supportsTypeAttributes: Bool {
-        false
-    }
+    var supportsResAttributes: Bool { false }
+    var supportsTypeAttributes: Bool { false }
 
     func filenameExtension(for url: URL?) -> String? {
         return nil
