@@ -3,10 +3,9 @@ import RFSupport
 
 // https://web.archive.org/web/20050305044255/http://www.lazerware.com/formats/macbinary/macbinary_iii.html
 
-struct MacBinaryFormat: ResourceFileFormat {
-    static let typeName = "com.apple.macbinary-archive"
-    let name = NSLocalizedString("MacBinary Archive", comment: "")
-    let supportsResAttributes = true
+class MacBinaryFormat: ClassicFormat {
+    override class var typeName: String { "com.apple.macbinary-archive" }
+    override var name: String { NSLocalizedString("MacBinary Archive", comment: "") }
 
     static let headerLength = 128
     static let forkLengthOffset = 83
@@ -14,9 +13,9 @@ struct MacBinaryFormat: ResourceFileFormat {
 
     private var headerAndData = Data()
 
-    func filenameExtension(for url: URL?) -> String? {
+    override func filenameExtension(for url: URL?) -> String? {
         // We can't create MacBinary files, so Save As will default to classic format
-        return ClassicFormat.filenameExtension
+        return ClassicFormat.defaultExtension
     }
 
     // MacBinary II and III are currently supported
@@ -39,7 +38,7 @@ struct MacBinaryFormat: ResourceFileFormat {
         return true
     }
 
-    mutating func read(_ data: Data) throws -> [ResourceType: [Resource]] {
+    override func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         let reader = BinaryDataReader(data)
 
         // Validate the CRC
@@ -60,7 +59,7 @@ struct MacBinaryFormat: ResourceFileFormat {
         // Read resource fork
         try reader.setPosition(rsrcOffset)
         let rsrcFork = try reader.readData(length: rsrcLength)
-        let resources = try ClassicFormat.read(rsrcFork)
+        let resources = try super.read(rsrcFork)
 
         // Retain the header and data fork
         headerAndData = data[..<rsrcOffset]
@@ -68,9 +67,9 @@ struct MacBinaryFormat: ResourceFileFormat {
         return resources
     }
 
-    func write(_ resources: [ResourceType: [Resource]]) throws -> Data {
+    override func write(_ resources: [ResourceType: [Resource]]) throws -> Data {
         // Construct the resource fork
-        let rsrcFork = try ClassicFormat.write(resources)
+        let rsrcFork = try super.write(resources)
 
         // Write header and data fork
         let writer = BinaryDataWriter()

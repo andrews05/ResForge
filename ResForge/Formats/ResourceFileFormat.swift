@@ -9,21 +9,21 @@ protocol ResourceFileFormat {
     var supportsTypeAttributes: Bool { get }
 
     func filenameExtension(for url: URL?) -> String?
-    mutating func read(_ data: Data) throws -> [ResourceType: [Resource]]
+    func read(_ data: Data) throws -> [ResourceType: [Resource]]
     func write(_ resources: [ResourceType: [Resource]]) throws -> Data
 }
 
 // Implement some typical defaults and helpers for all formats
 extension ResourceFileFormat {
     typealias IDType = Int16
+    var typeName: String {
+        Self.typeName
+    }
     var supportsResAttributes: Bool {
         false
     }
     var supportsTypeAttributes: Bool {
         false
-    }
-    var typeName: String {
-        Self.typeName
     }
 
     func filenameExtension(for url: URL?) -> String? {
@@ -58,15 +58,16 @@ struct ResourceFormat {
         guard let signature = try? reader.read() as UInt32 else {
             throw CocoaError(.fileReadCorruptFile)
         }
-        if signature == RezFormat.signature {
+        switch signature {
+        case RezFormat.signature:
             return RezFormat()
-        } else if signature == ExtendedFormat.signature {
+        case ExtendedFormat.signature:
             return ExtendedFormat()
-        } else if signature == AppleSingleFormat.signature {
+        case AppleSingleFormat.signature:
             return AppleSingleFormat()
-        } else if MacBinaryFormat.matches(data: data) {
+        case _ where MacBinaryFormat.matches(data: data):
             return MacBinaryFormat()
-        } else {
+        default:
             // Fallback to classic
             return ClassicFormat()
         }

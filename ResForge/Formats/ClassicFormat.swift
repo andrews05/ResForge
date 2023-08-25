@@ -3,14 +3,14 @@ import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/MoreMacintoshToolbox.pdf#page=151
 
-struct ClassicFormat: ResourceFileFormat {
+class ClassicFormat: ResourceFileFormat {
+    static let defaultExtension = "rsrc"
     // We want to make the format's filename extension simply a "suggestion" and not force it in any manner, but the
     // standard behaviour makes this difficult to achieve nicely. NSSavePanel.allowsOtherFileTypes isn't sufficient as
     // it still prompts the user to confirm and only works if the user has entered an extension known by the system.
     // The current solution is to use a system UTI that has no extension, then manually append one when the panel opens.
-    static let typeName = "public.data"
-    static let filenameExtension = "rsrc"
-    let name = NSLocalizedString("Resource File", comment: "")
+    class var typeName: String { "public.data" }
+    var name: String { NSLocalizedString("Resource File", comment: "") }
     let supportsResAttributes = true
 
     func filenameExtension(for url: URL?) -> String? {
@@ -18,18 +18,10 @@ struct ClassicFormat: ResourceFileFormat {
         if let url, !url.pathExtension.isEmpty {
             return url.pathExtension
         }
-        return Self.filenameExtension
+        return Self.defaultExtension
     }
 
     func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        return try Self.read(data)
-    }
-
-    func write(_ resources: [ResourceType: [Resource]]) throws -> Data {
-        return try Self.write(resources)
-    }
-
-    static func read(_ data: Data) throws -> [ResourceType: [Resource]] {
         var resourcesByType: [ResourceType: [Resource]] = [:]
         let reader = BinaryDataReader(data)
 
@@ -119,7 +111,7 @@ struct ClassicFormat: ResourceFileFormat {
         return resourcesByType
     }
 
-    static func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
+    func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
         // Known constants
         let dataOffset = 256
         let dataSizeMask = (1 << 24) - 1
