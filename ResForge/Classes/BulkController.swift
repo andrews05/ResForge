@@ -36,6 +36,7 @@ class BulkController: OutlineController {
     private var rows: [Int: [Any?]] = [:]
     private let idCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("id"))
     private let nameCol = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("name"))
+    private var inlineUpdate = false // Flag to distinguish inline edits from external updates
 
     init(document: ResourceDocument) {
         super.init()

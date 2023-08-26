@@ -5,7 +5,6 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet weak var document: ResourceDocument!
     var currentType: ResourceType?
-    var inlineUpdate = false // Flag to prevent reloading items when editing inline
 
     func prepareView(type: ResourceType?) throws -> NSView {
         currentType = type

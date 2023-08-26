@@ -1,7 +1,7 @@
 import Cocoa
 import RFSupport
 
-class StandardController: OutlineController, NSTextFieldDelegate {
+class StandardController: OutlineController {
     @IBAction func doubleClickItems(_ sender: Any) {
         // Ignore double-clicks in table header
         guard outlineView.clickedRow != -1 else {
@@ -32,19 +32,18 @@ class StandardController: OutlineController, NSTextFieldDelegate {
     }
 
     override func updated(resource: Resource, oldIndex: Int?) {
+        // Always return first responder to the outlineView, e.g. in case of inline editing
+        document.dataSource.ignoreChanges = true
+        outlineView.window?.makeFirstResponder(outlineView)
+        document.dataSource.ignoreChanges = false
+
         let parent = currentType == nil ? resource.type : nil
         let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
-        if inlineUpdate {
-            // The resource has been edited inline, perform the move async to ensure the first responder has been properly updated
-            DispatchQueue.main.async { [self] in
-                self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: parent)
-                outlineView.reloadItem(resource)
-                outlineView.scrollRowToVisible(outlineView.selectedRow)
-            }
-        } else {
-            self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: parent)
-            outlineView.reloadItem(resource)
+        self.updateRow(oldIndex: oldIndex, newIndex: newIndex, parent: parent)
+        if outlineView.selectedItem as? Resource == resource {
+            outlineView.scrollRowToVisible(outlineView.selectedRow)
         }
+        outlineView.reloadItem(resource)
     }
 
     // MARK: - Delegate functions
@@ -58,7 +57,7 @@ class StandardController: OutlineController, NSTextFieldDelegate {
                 view.textField?.integerValue = resource.id
                 view.imageView?.image = resource.statusIcon()
             case "name":
-                view.textField?.stringValue = resource.name
+                view.textField?.bind(.value, to: resource, withKeyPath: "name")
                 view.textField?.placeholderString = resource.placeholderName()
             case "size":
                 view.textField?.integerValue = resource.data.count
@@ -82,21 +81,5 @@ class StandardController: OutlineController, NSTextFieldDelegate {
             return view
         }
         return nil
-    }
-
-    func controlTextDidEndEditing(_ obj: Notification) {
-        let textField = obj.object as! NSTextField
-        guard let resource = outlineView.item(atRow: outlineView.row(for: textField)) as? Resource else {
-            // This can happen if the resource was updated by some other means while the field was in edit mode
-            return
-        }
-        inlineUpdate = true
-        switch textField.identifier?.rawValue {
-        case "name":
-            resource.name = textField.stringValue
-        default:
-            break
-        }
-        inlineUpdate = false
     }
 }

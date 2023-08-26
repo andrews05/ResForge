@@ -12,7 +12,7 @@ class ResourceDataSource: NSObject {
     @IBOutlet var attributesDisplay: NSTextField!
     @IBOutlet weak var document: ResourceDocument!
     private(set) var resourcesView: ResourcesView!
-    private var ignoreChanges = false
+    var ignoreChanges = false
 
     var isBulkMode: Bool {
         resourcesView is BulkController
