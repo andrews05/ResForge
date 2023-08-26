@@ -88,6 +88,8 @@ class ResourceDataSource: NSObject {
                 resourcesView = rView
                 scrollView.documentView = view
                 scrollView.window?.makeFirstResponder(view)
+                // Elasticity doesn't work well in 2 dimensions
+                scrollView.verticalScrollElasticity = isBulkMode ? .none : .automatic
             }
             // The outline header interferes with the scroll position, make sure we return to top
             (view as? NSOutlineView)?.scrollToBeginningOfDocument(self)
