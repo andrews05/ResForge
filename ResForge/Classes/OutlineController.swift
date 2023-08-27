@@ -16,10 +16,21 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
 
     func select(_ resources: [Resource]) {
-        let rows = resources.compactMap { resource -> Int? in
-            outlineView.expandItem(resource.type)
-            let i = outlineView.row(forItem: resource)
-            return i == -1 ? nil : i
+        let rows: [Int]
+        if resources.count > 1, let currentType {
+            // Fast path for bulk selection when showing a single type
+            let filtered = document.directory.filteredResources(type: currentType)
+            let indexMap = filtered.enumerated().reduce(into: [:]) {
+                $0[$1.element] = $1.offset
+            }
+            rows = resources.compactMap { indexMap[$0] }
+        } else {
+            // When showing all types we have to use outlineView.row(forItem:) which is relatively slow
+            rows = resources.compactMap {
+                outlineView.expandItem($0.type)
+                let i = outlineView.row(forItem: $0)
+                return i == -1 ? nil : i
+            }
         }
         let rowSet = IndexSet(rows)
         // Ensure notification gets posted even if selection doesn't actually change
