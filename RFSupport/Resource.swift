@@ -13,7 +13,7 @@ public extension NSPasteboard.PasteboardType {
     static let RKResource = Self("com.resforge.resource")
 }
 
-public struct ResourceType: Hashable, CustomStringConvertible {
+public struct ResourceType: Hashable, Comparable, CustomStringConvertible {
     public static let Template = Self("TMPL")
     public static let BasicTemplate = Self("TMPB")
 
@@ -29,6 +29,11 @@ public struct ResourceType: Hashable, CustomStringConvertible {
     public init(_ code: String, _ attributes: [String: String] = [:]) {
         self.code = code
         self.attributes = attributes
+    }
+
+    public static func < (lhs: ResourceType, rhs: ResourceType) -> Bool {
+        let compare = lhs.code.localizedCompare(rhs.code)
+        return compare == .orderedSame ? lhs.attributes.count < rhs.attributes.count : compare == .orderedAscending
     }
 }
 

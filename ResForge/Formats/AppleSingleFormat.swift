@@ -18,8 +18,8 @@ class AppleSingleFormat: ClassicFormat {
         return ClassicFormat.defaultExtension
     }
 
-    override func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        var resourcesByType: [ResourceType: [Resource]] = [:]
+    override func read(_ data: Data) throws -> ResourceMap {
+        var resourceMap: ResourceMap = [:]
         let reader = BinaryDataReader(data)
 
         // Read and validate header
@@ -45,19 +45,19 @@ class AppleSingleFormat: ClassicFormat {
             if entryID != Self.resourceForkID {
                 entries.append((entryID, entry))
             } else if length > 0 {
-                resourcesByType = try super.read(entry)
+                resourceMap = try super.read(entry)
             }
             reader.popPosition()
         }
 
-        return resourcesByType
+        return resourceMap
     }
 
-    override func write(_ resources: [ResourceType: [Resource]]) throws -> Data {
+    override func write(_ resourceMap: ResourceMap) throws -> Data {
         let entryDescriptorLength = 12
 
         // Construct the resource fork
-        let rsrcFork = try super.write(resources)
+        let rsrcFork = try super.write(resourceMap)
 
         // Write header
         let writer = BinaryDataWriter()

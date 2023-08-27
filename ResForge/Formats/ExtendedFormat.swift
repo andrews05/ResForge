@@ -12,8 +12,8 @@ struct ExtendedFormat: ResourceFileFormat {
     static let signature = UInt32("RSRX")
     static let version = 1
 
-    func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        var resourcesByType: [ResourceType: [Resource]] = [:]
+    func read(_ data: Data) throws -> ResourceMap {
+        var resourceMap: ResourceMap = [:]
         let reader = BinaryDataReader(data)
 
         // Read and validate header
@@ -112,14 +112,14 @@ struct ExtendedFormat: ResourceFileFormat {
                 let resource = Resource(type: resourceType, id: id, name: name, data: data)
                 resources.append(resource)
             }
-            resourcesByType[resourceType] = resources
+            resourceMap[resourceType] = resources
             reader.popPosition()
         }
 
-        return resourcesByType
+        return resourceMap
     }
 
-    func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
+    func write(_ resourceMap: ResourceMap) throws -> Data {
         // Known constants
         let dataOffset = 256
         let mapHeaderLength = 40
@@ -127,8 +127,8 @@ struct ExtendedFormat: ResourceFileFormat {
         let resourceInfoLength = 29
 
         // Perform some initial calculations and validations
-        let numTypes = resourcesByType.count
-        let numResources = resourcesByType.values.map(\.count).reduce(0, +)
+        let numTypes = resourceMap.count
+        let numResources = resourceMap.values.map(\.count).reduce(0, +)
         let typeListOffset = mapHeaderLength + 24
         let nameListOffset = typeListOffset + 8 + (numTypes * typeInfoLength) + (numResources * resourceInfoLength)
 
@@ -139,7 +139,7 @@ struct ExtendedFormat: ResourceFileFormat {
 
         // Write resource data
         var resourceOffsets: [Int] = []
-        for resources in resourcesByType.values {
+        for resources in resourceMap.values {
             for resource in resources {
                 let offset = writer.bytesWritten - dataOffset
                 resourceOffsets.append(offset)
@@ -159,7 +159,7 @@ struct ExtendedFormat: ResourceFileFormat {
         writer.write(UInt64(numTypes) &- 1)
         let attributeList = BinaryDataWriter()
         var resourceListOffset = 8 + (numTypes * typeInfoLength)
-        for (type, resources) in resourcesByType {
+        for (type, resources) in resourceMap {
             writer.write(UInt32(type.code))
             writer.write(UInt64(resources.count) &- 1)
             writer.write(UInt64(resourceListOffset))
@@ -176,7 +176,7 @@ struct ExtendedFormat: ResourceFileFormat {
         let nameList = BinaryDataWriter()
         // For improved performance, reverse the offsets so we can pop them quickly off the end in the loop
         resourceOffsets.reverse()
-        for resources in resourcesByType.values {
+        for resources in resourceMap.values {
             for resource in resources {
                 writer.write(Int64(resource.id))
                 if resource.name.isEmpty {

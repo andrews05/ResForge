@@ -1,4 +1,5 @@
 import Foundation
+import OrderedCollections
 import RFSupport
 
 extension Notification.Name {
@@ -9,9 +10,11 @@ extension Notification.Name {
 
 class ResourceDirectory {
     private(set) weak var document: ResourceDocument!
-    private(set) var resourcesByType: [ResourceType: [Resource]] = [:]
-    private(set) var allTypes: [ResourceType] = []
-    private var filtered: [ResourceType: [Resource]] = [:]
+    private(set) var resourceMap: ResourceMap = [:]
+    var allTypes: OrderedSet<ResourceType> {
+        resourceMap.keys
+    }
+    private var filtered: ResourceMap = [:]
     var filter = "" {
         didSet {
             filtered.removeAll()
@@ -25,15 +28,6 @@ class ResourceDirectory {
         }
     }
 
-    // The internal list remains consistently sorted
-    private static func typeSort(_ a: ResourceType, _ b: ResourceType) -> Bool {
-        let compare = a.code.localizedCompare(b.code)
-        return compare == .orderedSame ? a.attributes.count < b.attributes.count : compare == .orderedAscending
-    }
-    private static func idSort(_ a: Resource, _ b: Resource) -> Bool {
-        a.id < b.id
-    }
-
     init() {
         document = nil
     }
@@ -45,16 +39,16 @@ class ResourceDirectory {
     }
 
     /// Reset the directory, replacing all resources.
-    func reset(_ newResources: [ResourceType: [Resource]]) {
-        resourcesByType = newResources
-        for (type, resources) in resourcesByType {
+    func reset(_ newResources: ResourceMap) {
+        resourceMap = newResources
+        resourceMap.sort { $0.key < $1.key }
+        for (type, resources) in resourceMap {
             for resource in resources {
                 resource.document = document
                 resource.resetState()
             }
-            resourcesByType[type]?.sort(by: Self.idSort)
+            resourceMap[type]?.sort { $0.id < $1.id }
         }
-        allTypes = Array(resourcesByType.keys).sorted(by: Self.typeSort)
         filtered.removeAll()
     }
 
@@ -85,10 +79,10 @@ class ResourceDirectory {
     /// Get the resources for the given type that match the current filter.
     func filteredResources(type: ResourceType) -> [Resource] {
         if filter.isEmpty && sorter == nil {
-            return resourcesByType[type] ?? []
+            return resourceMap[type] ?? []
         }
         // Maintain a cache of the filtered resources
-        if filtered[type] == nil, var resouces = resourcesByType[type] {
+        if filtered[type] == nil, var resouces = resourceMap[type] {
             if !filter.isEmpty {
                 let id = Int(filter)
                 resouces = resouces.filter {
@@ -105,8 +99,8 @@ class ResourceDirectory {
 
     /// Get all types that contain resources matching the current filter.
     func filteredTypes() -> [ResourceType] {
-        return filter.isEmpty ? allTypes : allTypes.compactMap {
-            self.filteredResources(type: $0).isEmpty ? nil : $0
+        return filter.isEmpty ? Array(allTypes) : allTypes.filter {
+            !self.filteredResources(type: $0).isEmpty
         }
     }
 
@@ -115,27 +109,26 @@ class ResourceDirectory {
         if let type {
             return self.filteredResources(type: type).count
         } else {
-            let list = filter.isEmpty ? resourcesByType : filtered
+            let list = filter.isEmpty ? resourceMap : filtered
             return list.reduce(0) { $0 + $1.value.count }
         }
     }
 
     private func addToTypedList(_ resource: Resource) {
         resource.document = document
-        if resourcesByType[resource.type] == nil {
-            resourcesByType[resource.type] = [resource]
-            allTypes.insert(resource.type, by: Self.typeSort)
+        if resourceMap[resource.type] == nil {
+            resourceMap[resource.type] = [resource]
+            resourceMap.sort { $0.key < $1.key }
         } else {
-            resourcesByType[resource.type]?.insert(resource, by: Self.idSort)
+            resourceMap[resource.type]?.insert(resource) { $0.id < $1.id }
         }
     }
 
     private func removeFromTypedList(_ resource: Resource, type: ResourceType? = nil) {
         let type = type ?? resource.type
-        resourcesByType[type]?.removeFirst(resource)
-        if resourcesByType[type]?.isEmpty == true {
-            resourcesByType.removeValue(forKey: type)
-            allTypes.removeFirst(type)
+        resourceMap[type]?.removeFirst(resource)
+        if resourceMap[type]?.isEmpty == true {
+            resourceMap.removeValue(forKey: type)
         }
         resource.document = nil
     }
@@ -160,12 +153,12 @@ class ResourceDirectory {
             let document = document,
             let resource = notification.object as? Resource,
             resource.document === document,
-            let list = filtered[resource.type] ?? resourcesByType[resource.type]
+            let list = filtered[resource.type] ?? resourceMap[resource.type]
         else {
             return
         }
         let idx = list.firstIndex(of: resource)
-        resourcesByType[resource.type]?.sort(by: Self.idSort)
+        resourceMap[resource.type]?.sort { $0.id < $1.id }
         filtered.removeValue(forKey: resource.type)
         NotificationCenter.default.post(name: .DirectoryDidUpdateResource, object: self, userInfo: [
             "resource": resource,
@@ -174,23 +167,19 @@ class ResourceDirectory {
     }
 
     var count: Int {
-        resourcesByType.reduce(0) { $0 + $1.value.count }
-    }
-
-    func resources() -> [Resource] {
-        return Array(resourcesByType.values.joined())
+        resourceMap.reduce(0) { $0 + $1.value.count }
     }
 
     func resources(ofType type: ResourceType) -> [Resource] {
-        return resourcesByType[type] ?? []
+        return resourceMap[type] ?? []
     }
 
     func findResource(type: ResourceType, id: Int) -> Resource? {
-        return resourcesByType[type]?.first { $0.id == id }
+        return resourceMap[type]?.first { $0.id == id }
     }
 
     func findResource(type: ResourceType, name: String) -> Resource? {
-        return resourcesByType[type]?.first { $0.name == name }
+        return resourceMap[type]?.first { $0.name == name }
     }
 
     /// Return an unused resource ID for a new resource of specified type.

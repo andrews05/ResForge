@@ -21,8 +21,8 @@ class ClassicFormat: ResourceFileFormat {
         return Self.defaultExtension
     }
 
-    func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        var resourcesByType: [ResourceType: [Resource]] = [:]
+    func read(_ data: Data) throws -> ResourceMap {
+        var resourceMap: ResourceMap = [:]
         let reader = BinaryDataReader(data)
 
         // Read and validate header
@@ -104,14 +104,14 @@ class ClassicFormat: ResourceFileFormat {
                 let resource = Resource(type: resourceType, id: id, name: name, attributes: attributes, data: data)
                 resources.append(resource)
             }
-            resourcesByType[resourceType] = resources
+            resourceMap[resourceType] = resources
             reader.popPosition()
         }
 
-        return resourcesByType
+        return resourceMap
     }
 
-    func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
+    func write(_ resourceMap: ResourceMap) throws -> Data {
         // Known constants
         let dataOffset = 256
         let dataSizeMask = (1 << 24) - 1
@@ -120,8 +120,8 @@ class ClassicFormat: ResourceFileFormat {
         let resourceInfoLength = 12
 
         // Perform some initial calculations and validations
-        let numTypes = resourcesByType.count
-        let numResources = resourcesByType.values.map(\.count).reduce(0, +)
+        let numTypes = resourceMap.count
+        let numResources = resourceMap.values.map(\.count).reduce(0, +)
         let typeListOffset = mapHeaderLength + 4
         let nameListOffset = typeListOffset + 2 + (numTypes * typeInfoLength) + (numResources * resourceInfoLength)
         // Trivia: Total number of resources can never exceed 5458
@@ -134,7 +134,7 @@ class ClassicFormat: ResourceFileFormat {
 
         // Write resource data
         var resourceOffsets: [Int] = []
-        for (type, resources) in resourcesByType {
+        for (type, resources) in resourceMap {
             guard type.attributes.isEmpty else {
                 throw ResourceFormatError.typeAttributesNotSupported
             }
@@ -160,7 +160,7 @@ class ClassicFormat: ResourceFileFormat {
         // Write types
         writer.write(UInt16(numTypes) &- 1)
         var resourceListOffset = 2 + (numTypes * typeInfoLength)
-        for (type, resources) in resourcesByType {
+        for (type, resources) in resourceMap {
             writer.write(UInt32(type.code))
             writer.write(UInt16(resources.count) &- 1)
             writer.write(UInt16(resourceListOffset))
@@ -171,7 +171,7 @@ class ClassicFormat: ResourceFileFormat {
         let nameList = BinaryDataWriter()
         // For improved performance, reverse the offsets so we can pop them quickly off the end in the loop
         resourceOffsets.reverse()
-        for resources in resourcesByType.values {
+        for resources in resourceMap.values {
             for resource in resources {
                 writer.write(Int16(resource.id))
                 if resource.name.isEmpty {

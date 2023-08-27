@@ -1,5 +1,8 @@
 import Foundation
+import OrderedCollections
 import RFSupport
+
+typealias ResourceMap = OrderedDictionary<ResourceType, [Resource]>
 
 protocol ResourceFileFormat {
     associatedtype IDType: FixedWidthInteger
@@ -9,8 +12,8 @@ protocol ResourceFileFormat {
     var supportsTypeAttributes: Bool { get }
 
     func filenameExtension(for url: URL?) -> String?
-    func read(_ data: Data) throws -> [ResourceType: [Resource]]
-    func write(_ resources: [ResourceType: [Resource]]) throws -> Data
+    func read(_ data: Data) throws -> ResourceMap
+    func write(_ resourceMap: ResourceMap) throws -> Data
 }
 
 // Implement some typical defaults and helpers for all formats

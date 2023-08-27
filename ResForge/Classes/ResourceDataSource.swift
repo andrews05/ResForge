@@ -202,7 +202,7 @@ extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         let view: NSTableCellView
         if let type = item as? ResourceType {
-            let count = String(document.directory.resourcesByType[type]!.count)
+            let count = String(document.directory.resourceMap[type]!.count)
             view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: nil) as! NSTableCellView
             view.textField?.stringValue = type.code
             // Show a + indicator when the type has attributes

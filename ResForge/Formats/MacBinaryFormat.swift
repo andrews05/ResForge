@@ -37,7 +37,7 @@ class MacBinaryFormat: ClassicFormat {
         return true
     }
 
-    override func read(_ data: Data) throws -> [ResourceType: [Resource]] {
+    override func read(_ data: Data) throws -> ResourceMap {
         let reader = BinaryDataReader(data)
 
         // Validate the CRC
@@ -66,9 +66,9 @@ class MacBinaryFormat: ClassicFormat {
         return resources
     }
 
-    override func write(_ resources: [ResourceType: [Resource]]) throws -> Data {
+    override func write(_ resourceMap: ResourceMap) throws -> Data {
         // Construct the resource fork
-        let rsrcFork = try super.write(resources)
+        let rsrcFork = try super.write(resourceMap)
 
         // Write header and data fork
         let writer = BinaryDataWriter()

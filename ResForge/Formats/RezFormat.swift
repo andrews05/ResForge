@@ -12,8 +12,8 @@ struct RezFormat: ResourceFileFormat {
     static let mapName = "resource.map"
     static let resourceNameLength = 256
 
-    func read(_ data: Data) throws -> [ResourceType: [Resource]] {
-        var resourcesByType: [ResourceType: [Resource]] = [:]
+    func read(_ data: Data) throws -> ResourceMap {
+        var resourceMap: ResourceMap = [:]
         let reader = BinaryDataReader(data, bigEndian: false)
 
         // Read and validate header
@@ -81,14 +81,14 @@ struct RezFormat: ResourceFileFormat {
                 let resource = Resource(type: resourceType, id: id, name: name, data: data)
                 resources.append(resource)
             }
-            resourcesByType[resourceType] = resources
+            resourceMap[resourceType] = resources
             reader.popPosition()
         }
 
-        return resourcesByType
+        return resourceMap
     }
 
-    func write(_ resourcesByType: [ResourceType: [Resource]]) throws -> Data {
+    func write(_ resourceMap: ResourceMap) throws -> Data {
         // Known constants
         let rootHeaderLength = 12
         let groupHeaderLength = 12
@@ -98,8 +98,8 @@ struct RezFormat: ResourceFileFormat {
         let resourceInfoLength = 10 + Self.resourceNameLength
 
         // Perform some initial calculations
-        let numTypes = resourcesByType.count
-        let numResources = resourcesByType.values.map(\.count).reduce(0, +)
+        let numTypes = resourceMap.count
+        let numResources = resourceMap.values.map(\.count).reduce(0, +)
         let numEntries = numResources + 1 // Resource map is the last entry
         let nameListOffset = groupHeaderLength + (numEntries * resourceOffsetLength)
         let headerLength = nameListOffset + Self.mapName.count + 1
@@ -122,7 +122,7 @@ struct RezFormat: ResourceFileFormat {
 
         // Write offsets
         var resourceDataOffset = rootHeaderLength + headerLength
-        for (type, resources) in resourcesByType {
+        for (type, resources) in resourceMap {
             guard type.attributes.isEmpty else {
                 throw ResourceFormatError.typeAttributesNotSupported
             }
@@ -150,7 +150,7 @@ struct RezFormat: ResourceFileFormat {
         assert(writer.bytesWritten == rootHeaderLength + headerLength)
 
         // Write resource data
-        for resources in resourcesByType.values {
+        for resources in resourceMap.values {
             for resource in resources {
                 writer.writeData(resource.data)
             }
@@ -164,7 +164,7 @@ struct RezFormat: ResourceFileFormat {
         assert(writer.bytesWritten == resourceDataOffset + mapHeaderLength)
 
         // Write types
-        for (type, resources) in resourcesByType {
+        for (type, resources) in resourceMap {
             writer.write(UInt32(type.code))
             writer.write(UInt32(resourceListOffset))
             writer.write(UInt32(resources.count))
@@ -172,7 +172,7 @@ struct RezFormat: ResourceFileFormat {
         }
 
         // Write resources
-        for resources in resourcesByType.values {
+        for resources in resourceMap.values {
             for resource in resources {
                 writer.write(UInt32(index))
                 index += 1

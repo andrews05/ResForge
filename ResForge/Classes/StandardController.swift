@@ -74,7 +74,7 @@ class StandardController: OutlineController {
             case "nameGroup":
                 view.textField?.stringValue = type.attributesDisplay
             case "sizeGroup":
-                view.textField?.integerValue = document.directory.resourcesByType[type]!.count
+                view.textField?.integerValue = document.directory.resourceMap[type]!.count
             default:
                 return nil
             }

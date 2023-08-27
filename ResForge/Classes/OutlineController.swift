@@ -42,7 +42,7 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
             var resources: [Resource] = []
             for item in outlineView.selectedItems {
                 if let item = item as? ResourceType {
-                    resources += document.directory.resourcesByType[item]!
+                    resources += document.directory.resourceMap[item]!
                 } else if let item = item as? Resource, !resources.contains(item) {
                     resources.append(item)
                 }

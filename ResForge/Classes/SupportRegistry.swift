@@ -4,22 +4,22 @@ import RFSupport
 class SupportRegistry {
     static let directory = SupportRegistry()
 
-    private(set) var resourcesByType: [ResourceType: [Resource]] = [:]
+    private(set) var resourceMap: [ResourceType: [Resource]] = [:]
     // The support registry is where most templates are found and since the directory doesn't
     // change after app launch we can keep an index of resources by name for faster template lookups
     private var nameIndex: [ResourceType: [String: Resource]] = [:]
 
     func resources(ofType type: ResourceType) -> [Resource] {
-        return resourcesByType[type] ?? []
+        return resourceMap[type] ?? []
     }
 
     func findResource(type: ResourceType, id: Int) -> Resource? {
-        return resourcesByType[type]?.first { $0.id == id }
+        return resourceMap[type]?.first { $0.id == id }
     }
 
     func findResource(type: ResourceType, name: String) -> Resource? {
         if nameIndex[type] == nil {
-            guard let resources = resourcesByType[type] else {
+            guard let resources = resourceMap[type] else {
                 return nil
             }
             nameIndex[type] = resources.reduce(into: [String: Resource]()) { map, resource in
@@ -57,13 +57,13 @@ class SupportRegistry {
         do {
             let data = try Data(contentsOf: resourceFile)
             let format = try ResourceFormat.from(data: data)
-            let resourcesByType = try format.read(data)
+            let resourceMap = try format.read(data)
             // Files loaded later should have precendence over files loaded earlier. This means their
             // resources should come first in the master list. To achieve this we sort the type lists
             // by id, then prepend them to the master list.
-            for (rType, resources) in resourcesByType {
+            for (rType, resources) in resourceMap {
                 let resources = resources.sorted { $0.id < $1.id }
-                directory.resourcesByType[rType, default: []].insert(contentsOf: resources, at: 0)
+                directory.resourceMap[rType, default: []].insert(contentsOf: resources, at: 0)
             }
         } catch {}
     }

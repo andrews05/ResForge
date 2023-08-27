@@ -91,9 +91,9 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
 
         // Read resources
-        let resources: [ResourceType: [Resource]]
+        let resourceMap: ResourceMap
         do {
-            resources = data.isEmpty ? [:] : try format.read(data)
+            resourceMap = data.isEmpty ? [:] : try format.read(data)
         } catch {
             throw CocoaError(.fileReadCorruptFile)
         }
@@ -105,7 +105,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         hfsType = attrs[.hfsTypeCode] as! OSType
         hfsCreator = attrs[.hfsCreatorCode] as! OSType
         revision = 0
-        directory.reset(resources)
+        directory.reset(resourceMap)
         dataSource?.reload()
         self.undoManager?.enableUndoRegistration()
     }
@@ -129,7 +129,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             // Relying on the default implementation can result in some oddities, so instead we'll just write out the resource fork directly.
             // This isn't strictly "safe", although we will at least detect structural issues before writing any data.
             // First we need to check if the file is being renamed for some reason and copy the existing file to the new location.
-            let data = try format.write(directory.resourcesByType)
+            let data = try format.write(directory.resourceMap)
             let moved = fileURL != url
             if moved {
                 try FileManager.default.copyItem(at: fileURL, to: url)
@@ -149,7 +149,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
 
         revision += 1
-        for resource in directory.resources() {
+        for resource in directory.resourceMap.values.joined() {
             resource.resetState()
         }
         dataSource.reload(selecting: dataSource.selectedResources())
@@ -188,7 +188,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
 
     override func data(ofType typeName: String) throws -> Data {
-        return try format.write(directory.resourcesByType)
+        return try format.write(directory.resourceMap)
     }
 
     override func fileAttributesToWrite(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws -> [String: Any] {
