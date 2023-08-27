@@ -52,14 +52,6 @@ class ResourceDirectory {
         filtered.removeAll()
     }
 
-    /// Add an array of resources with no notification or undo registration.
-    func add(_ resources: [Resource]) {
-        for resource in resources {
-            self.addToTypedList(resource)
-        }
-        filtered.removeAll()
-    }
-
     /// Add a single resource.
     func add(_ resource: Resource) {
         self.addToTypedList(resource)
