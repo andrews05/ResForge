@@ -49,7 +49,7 @@ public class PluginRegistry {
 
     /// Return a placeholder name to show for a resource when it has no name.
     public static func placeholderName(for resource: Resource) -> String {
-        if let placeholder = placeholderProviders[resource.typeCode]?.placeholderName(for: resource) {
+        if let placeholder = placeholderProviders[resource.typeCode]?.placeholderName(for: resource), !placeholder.isEmpty {
             return placeholder
         }
 
