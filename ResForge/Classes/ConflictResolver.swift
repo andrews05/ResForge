@@ -1,4 +1,5 @@
 import Cocoa
+import OrderedCollections
 import RFSupport
 
 enum ConflictResolution {
@@ -8,23 +9,53 @@ enum ConflictResolution {
 }
 
 class ConflictResolver {
+    private(set) var toAdd: [Resource] = []
+    private(set) var toRemove: [Resource] = []
     private let document: ResourceDocument
+    private let multiple: Bool
     private var resolution: ConflictResolution?
-    private var alert = NSAlert()
-
-    init(document: ResourceDocument) {
-        self.document = document
+    private lazy var alert: NSAlert = {
+        let alert = NSAlert()
         alert.informativeText = NSLocalizedString("Do you wish to assign the new resource a unique ID, replace the existing resource, or skip this resource?", comment: "")
         alert.addButton(withTitle: NSLocalizedString("Unique ID", comment: ""))
         alert.addButton(withTitle: NSLocalizedString("Replace", comment: ""))
         alert.addButton(withTitle: NSLocalizedString("Skip", comment: ""))
         alert.suppressionButton?.title = NSLocalizedString("Apply to all", comment: "")
+        return alert
+    }()
+
+    init(document: ResourceDocument, multiple: Bool) {
+        self.document = document
+        self.multiple = multiple
     }
 
-    func resolve(_ resource: Resource, conflicted: Resource, multiple: Bool) -> Bool {
-        if let resolution {
-            return resolve(resource, conficted: conflicted, resolution: resolution)
+    func process(type: ResourceType, resources: [Resource]) {
+        guard let existing = document.directory.resourceMap[type] else {
+            toAdd.append(contentsOf: resources)
+            return
         }
+        // Keep an ordered mapping of ids to resources to allow us to quickly find both conflicts and unique ids
+        var idMap = existing.reduce(into: OrderedDictionary()) { $0[$1.id] = $1 }
+        for resource in resources {
+            if let conflicted = idMap[resource.id] {
+                switch resolution ?? self.getResolution(for: conflicted) {
+                case .unique:
+                    var index = idMap.index(forKey: conflicted.id)!
+                    resource.id = document.directory.nextAvailableID(in: idMap.keys, startingAt: &index)
+                    idMap.updateValue(resource, forKey: resource.id, insertingAt: index)
+                case .replace:
+                    toRemove.append(conflicted)
+                case .skip:
+                    continue
+                }
+            } else {
+                idMap.insert(key: resource.id, value: resource) { $0 < $1 }
+            }
+            toAdd.append(resource)
+        }
+    }
+
+    private func getResolution(for conflicted: Resource) -> ConflictResolution {
         alert.messageText = String(format: NSLocalizedString("A resource of type ‘%@’ with ID %ld already exists.", comment: ""), conflicted.typeCode, conflicted.id)
         alert.showsSuppressionButton = multiple
         // TODO: Do this in a non-blocking way?
@@ -39,21 +70,9 @@ class ConflictResolver {
         default:
             resolution = .skip
         }
-        if self.alert.suppressionButton?.state == .on {
+        if alert.suppressionButton?.state == .on {
             self.resolution = resolution
         }
-        return self.resolve(resource, conficted: conflicted, resolution: resolution)
-    }
-
-    private func resolve(_ resource: Resource, conficted: Resource, resolution: ConflictResolution) -> Bool {
-        switch resolution {
-        case .unique:
-            resource.id = document.directory.uniqueID(for: conficted.type, starting: conficted.id)
-        case .replace:
-            document.directory.remove(conficted)
-        case .skip:
-            return false
-        }
-        return true
+        return resolution
     }
 }

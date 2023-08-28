@@ -652,52 +652,47 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
 
     func add(resources: [Resource], actionName: String? = nil) {
-        guard !resources.isEmpty else {
+        // Clear type attributes if not supported
+        if !format.supportsTypeAttributes {
+            for resource in resources {
+                resource.typeAttributes = [:]
+                resource.id = Int(Int16(clamping: resource.id))
+            }
+        }
+        let resourceMap = ResourceMap(grouping: resources) { $0.type }
+        let resolver = ConflictResolver(document: self, multiple: resources.count > 1)
+        resourceMap.forEach(resolver.process)
+        guard !resolver.toAdd.isEmpty else {
             return
         }
         let actionName = actionName ?? NSLocalizedString(resources.count == 1 ? "Paste Resource" : "Paste Resources", comment: "")
         dataSource.reload(actionName: actionName) {
-            var added: [Resource] = []
-            var resolver: ConflictResolver!
-            for resource in resources {
-                // Clear type attributes if not supported
-                if !format.supportsTypeAttributes {
-                    resource.typeAttributes = [:]
-                    resource.id = Int(Int16(clamping: resource.id))
-                }
-                if let conflicted = directory.findResource(type: resource.type, id: resource.id) {
-                    resolver = resolver ?? ConflictResolver(document: self)
-                    if !resolver.resolve(resource, conflicted: conflicted, multiple: resources.count > 1) {
-                        continue
-                    }
-                }
-                directory.add(resource)
-                added.append(resource)
+            for resource in resolver.toRemove {
+                directory.remove(resource)
             }
-            return added
+            for resource in resolver.toAdd {
+                directory.add(resource)
+            }
+            return resolver.toAdd
         }
     }
 
     func changeTypes(resources: [Resource], type: ResourceType) {
-        guard !resources.isEmpty else {
+        let resolver = ConflictResolver(document: self, multiple: resources.count > 1)
+        resolver.process(type: type, resources: resources)
+        guard !resolver.toAdd.isEmpty else {
             return
         }
         let actionName = NSLocalizedString(resources.count == 1 ? "Change Type" : "Change Types", comment: "")
         dataSource.reload(actionName: actionName) {
-            var added: [Resource] = []
-            var resolver: ConflictResolver!
-            for resource in resources {
-                if let conflicted = directory.findResource(type: type, id: resource.id) {
-                    resolver = resolver ?? ConflictResolver(document: self)
-                    if !resolver.resolve(resource, conflicted: conflicted, multiple: resources.count > 1) {
-                        continue
-                    }
-                }
+            for resource in resolver.toRemove {
+                directory.remove(resource)
+            }
+            for resource in resolver.toAdd {
                 resource.typeCode = type.code
                 resource.typeAttributes = type.attributes
-                added.append(resource)
             }
-            return added
+            return resolver.toAdd
         }
     }
 

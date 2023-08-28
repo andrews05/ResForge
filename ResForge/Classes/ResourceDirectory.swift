@@ -54,7 +54,7 @@ class ResourceDirectory {
 
     /// Add a single resource.
     func add(_ resource: Resource) {
-        self.addToTypedList(resource)
+        self.addToMap(resource)
         filtered.removeValue(forKey: resource.type)
         document.undoManager?.registerUndo(withTarget: self) { $0.remove(resource) }
         NotificationCenter.default.post(name: .DirectoryDidAddResource, object: self, userInfo: ["resource": resource])
@@ -62,7 +62,7 @@ class ResourceDirectory {
 
     /// Remove a single resource.
     func remove(_ resource: Resource) {
-        self.removeFromTypedList(resource)
+        self.removeFromMap(resource)
         filtered.removeValue(forKey: resource.type)
         document.undoManager?.registerUndo(withTarget: self) { $0.add(resource) }
         NotificationCenter.default.post(name: .DirectoryDidRemoveResource, object: self, userInfo: ["resource": resource])
@@ -106,17 +106,16 @@ class ResourceDirectory {
         }
     }
 
-    private func addToTypedList(_ resource: Resource) {
+    private func addToMap(_ resource: Resource) {
         resource.document = document
         if resourceMap[resource.type] == nil {
-            resourceMap[resource.type] = [resource]
-            resourceMap.sort { $0.key < $1.key }
+            resourceMap.insert(key: resource.type, value: [resource]) { $0 < $1 }
         } else {
             resourceMap[resource.type]?.insert(resource) { $0.id < $1.id }
         }
     }
 
-    private func removeFromTypedList(_ resource: Resource, type: ResourceType? = nil) {
+    private func removeFromMap(_ resource: Resource, type: ResourceType? = nil) {
         let type = type ?? resource.type
         resourceMap[type]?.removeFirst(resource)
         if resourceMap[type]?.isEmpty == true {
@@ -134,8 +133,8 @@ class ResourceDirectory {
         else {
             return
         }
-        self.removeFromTypedList(resource, type: oldType)
-        self.addToTypedList(resource)
+        self.removeFromMap(resource, type: oldType)
+        self.addToMap(resource)
         filtered.removeValue(forKey: oldType)
         filtered.removeValue(forKey: resource.type)
     }
@@ -179,41 +178,62 @@ class ResourceDirectory {
         // Get a list of used ids (these will be in order)
         let used = self.resources(ofType: type).map(\.id)
         // Find the index of the starting id
-        guard var i = used.firstIndex(where: { $0 == starting }) else {
+        guard var index = used.firstIndex(of: starting) else {
             return starting
         }
-        // Keep incrementing the id until we find an unused one
-        var id = starting
-        let max = Swift.type(of: document.format).IDType.max
-        while i != used.endIndex && id == used[i] {
+        return self.nextAvailableID(in: OrderedSet(used), startingAt: &index)
+    }
+
+    /// Find the next available resource ID from a given starting point in a set of existing IDs.
+    func nextAvailableID(in existingIDs: OrderedSet<Int>, startingAt index: inout Int) -> Int {
+        var id = existingIDs[index]
+        let max = type(of: document.format).IDType.max
+        // Keep incrementing from the starting point until we find an unused id
+        repeat {
             if id == max {
-                // WARN: This wraps back to 128 - if there are no unused ids (unlikely) then it will loop infinitely
-                id = min(used[0], 128)
-                i = 0
+                // WARN: This wraps around - if there are no unused ids (unlikely) then it will loop infinitely
+                id = min(existingIDs[0], 128)
+                index = 0
             } else {
                 id += 1
-                i += 1
+                index += 1
             }
-        }
+        } while index != existingIDs.endIndex && id == existingIDs[index]
         return id
     }
 }
 
-// Sorted Array extension
-extension Array where Element: Equatable {
-    /// Insert an element into the sorted array at the position appropriate for the given comparator function.
-    mutating func insert(_ newElement: Element, by comparator: (_ a: Self.Element, _ b: Self.Element) -> Bool) {
+// Sorted collections extensions
+extension RandomAccessCollection {
+    /// Find the appropriate index to insert an element within a sorted collection according to the given comparator function.
+    func insertionIndex(for element: Element, using comparator: (_ a: Element, _ b: Element) -> Bool) -> Index {
         var slice: SubSequence = self[...]
         // Perform a binary search
         while !slice.isEmpty {
             let middle = slice.index(slice.startIndex, offsetBy: slice.count / 2)
-            if comparator(slice[middle], newElement) {
+            if comparator(slice[middle], element) {
                 slice = slice[index(after: middle)...]
             } else {
                 slice = slice[..<middle]
             }
         }
-        self.insert(newElement, at: slice.startIndex)
+        return slice.startIndex
+    }
+}
+
+extension OrderedDictionary {
+    /// Insert a key/value into the sorted dictionary at the position appropriate for the given key comparator function.
+    mutating func insert(key: Key, value: Value, by comparator: (_ a: Key, _ b: Key) -> Bool) {
+        let index = self.keys.insertionIndex(for: key, using: comparator)
+        self.updateValue(value, forKey: key, insertingAt: index)
+    }
+}
+
+extension Array where Element: Equatable {
+    /// Insert an element into the sorted array at the position appropriate for the given comparator function.
+    mutating func insert(_ newElement: Element, by comparator: (_ a: Element, _ b: Element) -> Bool) {
+        let index = self.insertionIndex(for: newElement, using: comparator)
+        self.insert(newElement, at: index)
     }
 
     /// Remove the first occurence of a given element.
