@@ -1,6 +1,7 @@
 import Cocoa
 
 public extension Notification.Name {
+    /// Resource id, name or data changed. This is not sent for type or attribute changes.
     static let ResourceDidChange            = Self("ResourceDidChange")
     static let ResourceNameDidChange        = Self("ResourceNameDidChange")
     static let ResourceTypeDidChange        = Self("ResourceTypeDidChange")
@@ -143,7 +144,6 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
                     _state.attributes = oldValue
                 }
                 NotificationCenter.default.post(name: .ResourceAttributesDidChange, object: self, userInfo: ["oldValue": oldValue])
-                NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 document?.undoManager?.setActionName(NSLocalizedString("Change Attributes", comment: ""))
                 document?.undoManager?.registerUndo(withTarget: self) { $0.attributes = oldValue }
             }
