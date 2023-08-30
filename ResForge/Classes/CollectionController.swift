@@ -66,7 +66,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
                     collectionView.animator().reloadItems(at: [new])
                 }
                 if selected {
-                    collectionView.selectItems(at: [new], scrollPosition: .nearestHorizontalEdge)
+                    collectionView.selectItems(at: [new], scrollPosition: old == new ? [] : .nearestHorizontalEdge)
                 }
             } else {
                 collectionView.animator().deleteItems(at: [old])
@@ -100,7 +100,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     }
 
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        let resource = document.directory.filteredResources(type: currentType)[indexPath.last!]
+        let resource = document.directory.filteredResources(type: currentType)[indexPath[1]]
         let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier("ResourceItem"), for: indexPath) as! ResourceItem
         view.configure(resource)
         return view
@@ -195,14 +195,6 @@ class ResourceCollection: NSCollectionView {
         }
     }
 
-    override func becomeFirstResponder() -> Bool {
-        // Stop editing the selected item as soon as first responder returns to us
-        if self.selectionIndexPaths.count == 1, let item = self.item(at: self.selectionIndexPaths.first!) as? ResourceItem {
-            item.endEditing()
-        }
-        return true
-    }
-
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
         return true
     }
@@ -253,9 +245,10 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
         self.resource = resource
         imageView?.image = nil
         textField?.stringValue = String(resource.id)
-        nameField.stringValue = resource.name
+        nameField.bind(.value, to: resource, withKeyPath: "name")
+        // Hide name when empty to prevent it from being a click target
+        nameField.isHidden = resource.name.isEmpty
         statusIcon.image = resource.statusIcon()
-        self.endEditing()
         resource.preview {
             // Check the resource is still the same, in case we got reconfigured with a different resource while waiting
             if self.resource == resource {
@@ -267,28 +260,26 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     func beginEditing() {
         nameField.isHidden = false
         nameField.isEditable = true
-        nameField.alignment = .center
         self.view.window?.makeFirstResponder(nameField)
     }
 
     func endEditing() {
         nameField.isHidden = resource.name.isEmpty
         nameField.isEditable = false
-        nameField.alignment = .natural
+        nameField.invalidateIntrinsicContentSize()
+        // Always return first responder to the collection view
+        self.view.window?.makeFirstResponder(self.collectionView)
     }
 
     func controlTextDidEndEditing(_ obj: Notification) {
-        resource.name = nameField.stringValue
+        self.endEditing()
     }
 
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         switch commandSelector {
         case #selector(cancelOperation(_:)):
-            nameField.abortEditing()
-            fallthrough
-        case #selector(insertNewline(_:)), #selector(insertTab(_:)), #selector(insertBacktab(_:)):
-            // Return first responder to the collection view when editing should end
-            self.view.window?.makeFirstResponder(self.collectionView)
+            control.abortEditing()
+            self.endEditing()
             return true
         default:
             return false

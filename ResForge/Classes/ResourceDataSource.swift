@@ -87,6 +87,7 @@ class ResourceDataSource: NSObject {
             if rView !== resourcesView {
                 resourcesView = rView
                 scrollView.documentView = view
+                scrollView.window?.initialFirstResponder = view
                 scrollView.window?.makeFirstResponder(view)
                 // Elasticity doesn't work well in 2 dimensions
                 scrollView.verticalScrollElasticity = isBulkMode ? .none : .automatic

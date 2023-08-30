@@ -22,6 +22,8 @@
                             <imageView translatesAutoresizingMaskIntoConstraints="NO" id="17" customClass="CustomImageView" customModule="RFSupport">
                                 <rect key="frame" x="4" y="2.5" width="100.5" height="104"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="100" placeholder="YES" id="KNP-gE-1FL"/>
+                                    <constraint firstAttribute="height" constant="100" placeholder="YES" id="T27-HU-vCy"/>
                                     <constraint firstAttribute="width" secondItem="17" secondAttribute="height" multiplier="1:1" id="dmr-w8-aG2"/>
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStopProgressTemplate" id="18"/>
@@ -65,8 +67,8 @@
                     </view>
                 </box>
                 <textField verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sdy-Z7-HX9">
-                    <rect key="frame" x="51" y="0.0" width="7" height="13"/>
-                    <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" placeholderString=" " id="E6P-MI-5Cq">
+                    <rect key="frame" x="49" y="0.0" width="11" height="13"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" alignment="center" placeholderString=" " id="E6P-MI-5Cq">
                         <customFormatter key="formatter" id="NlX-HS-SKt" customClass="MacRomanFormatter" customModule="RFSupport">
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
