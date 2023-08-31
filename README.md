@@ -6,7 +6,6 @@ ResForge is a resource editor for macOS, capable of editing classic resource for
 
 ### Features
 
-* Supports both resource and data forks in the original resource file format, as well as experimental support for the new extended format defined by [Graphite](https://github.com/TheDiamondProject/Graphite).
 * Hexadecimal editor, powered by [HexFiend](https://github.com/HexFiend/HexFiend).
 * Template editor, supporting a wide array of [field types](https://github.com/andrews05/ResForge/tree/master/ResForge/Template%20Editor#template-editor).
 * Template-driven bulk data view, with CSV import/export.
@@ -14,12 +13,20 @@ ResForge is a resource editor for macOS, capable of editing classic resource for
 * Sound editor, supporting sampled 'snd ' resources.
 * Tools for EV Nova, including a sprite (rlëD) editor, a ship animation (shän) editor and a galaxy viewer.
 
+### Supported File Formats
+
+* Macintosh resource format, in either resource fork or data fork.
+* Rez format, used by EV Nova.
+* Extended resource format, defined by [Graphite](https://github.com/TheDiamondProject/Graphite).
+* MacBinary encoded resource fork.
+* AppleSingle/AppleDouble encoded resource fork.
+
 
 ## Getting Started
 
 ### System Requirements
 
-ResForge is compatible with macOS 10.14 or later and runs natively on both 64-bit Intel and Apple Silicon.
+ResForge is compatible with macOS 10.15 or later and runs natively on both 64-bit Intel and Apple Silicon.
 
 ### Installation
 
@@ -38,7 +45,7 @@ ResForge includes a plug-in architecture, allowing custom editors to be created 
 
 ## Built With
 
-* [Graphite](https://github.com/TheDiamondProject/Graphite) - Provides reading/writing of resource files, as well 'PICT', 'cicn' and 'ppat' resources. 
+* [Graphite](https://github.com/TheDiamondProject/Graphite) - Provides reading/writing of 'PICT', 'cicn' and 'ppat' resources. 
 * [HexFiend](https://github.com/HexFiend/HexFiend) - Powers the hexadecimal editor.
 * [CSV.swift](https://github.com/yaslab/CSV.swift) - Provides reading/writing of CSV files.
 * [swift-parsing](https://github.com/pointfreeco/swift-parsing) - Provides parsing of custom DSLs.
