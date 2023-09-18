@@ -58,42 +58,49 @@ public class PluginRegistry {
             return NSLocalizedString("Custom Icon", comment: "")
         }
 
-        switch resource.typeCode {
-        case "carb":
-            if resource.id == 0 {
-                return NSLocalizedString("Carbon Identifier", comment: "")
+        var placeholder = ""
+        do {
+            switch resource.typeCode {
+            case "carb":
+                if resource.id == 0 {
+                    placeholder = NSLocalizedString("Carbon Identifier", comment: "")
+                }
+            case "CNTL":
+                // Read title at offset 22
+                placeholder = try BinaryDataReader(resource.data.dropFirst(22)).readPString()
+            case "DLOG":
+                // Read title at offset 20
+                placeholder = try BinaryDataReader(resource.data.dropFirst(20)).readPString()
+            case "MENU":
+                // Read title at offset 14
+                placeholder = try BinaryDataReader(resource.data.dropFirst(14)).readPString()
+                if placeholder == "\u{14}" {
+                    placeholder = ""
+                }
+            case "pnot":
+                if resource.id == 0 {
+                    placeholder = NSLocalizedString("File Preview", comment: "")
+                }
+            case "STR ":
+                placeholder = try BinaryDataReader(resource.data).readPString()
+            case "STR#":
+                // Read first string at offset 2
+                placeholder = try BinaryDataReader(resource.data.dropFirst(2)).readPString()
+            case "TEXT":
+                if let string = String(data: resource.data.prefix(100), encoding: .macOSRoman) {
+                    placeholder = string
+                }
+            case "vers":
+                // Read short version string at offset 6
+                placeholder = try BinaryDataReader(resource.data.dropFirst(6)).readPString()
+            case "WIND":
+                // Read title at offset 18
+                placeholder = try BinaryDataReader(resource.data.dropFirst(18)).readPString()
+            default:
+                break
             }
-        case "pnot":
-            if resource.id == 0 {
-                return NSLocalizedString("File Preview", comment: "")
-            }
-        case "STR ":
-            if resource.data.count > 1 {
-                do {
-                    return try BinaryDataReader(resource.data).readPString()
-                } catch {}
-            }
-        case "STR#":
-            if resource.data.count > 3 {
-                do {
-                    // Read first string at offset 2
-                    return try BinaryDataReader(resource.data.dropFirst(2)).readPString()
-                } catch {}
-            }
-        case "TEXT":
-            if !resource.data.isEmpty, let string = String(data: resource.data.prefix(100), encoding: .macOSRoman) {
-                return string
-            }
-        case "vers":
-            if resource.data.count > 7 {
-                do {
-                    // Read short version string at offset 6
-                    return try BinaryDataReader(resource.data.dropFirst(6)).readPString()
-                } catch {}
-            }
-        default:
-            break
-        }
-        return NSLocalizedString("Untitled Resource", comment: "")
+        } catch {}
+
+        return placeholder.isEmpty ? NSLocalizedString("Untitled Resource", comment: "") : placeholder
     }
 }
