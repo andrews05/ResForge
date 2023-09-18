@@ -108,6 +108,9 @@
 		49AB3C2B27D69388003B3536 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C2227D69388003B3536 /* animation.cpp */; };
 		49AB3C2C27D69388003B3536 /* imagedesc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 49AB3C2327D69388003B3536 /* imagedesc.hpp */; };
 		49AB8985288C9C2E0013B883 /* ShapeMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AB8984288C9C2E0013B883 /* ShapeMachine.swift */; };
+		49BC99A62AB7E8A600A2929B /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
+		49BC99AE2AB7E8E400A2929B /* DialogEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BC99A02AB7E88C00A2929B /* DialogEditor.swift */; };
+		49BC99B22AB7E95400A2929B /* Dialog Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 49BC99AC2AB7E8A600A2929B /* Dialog Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49CC15922764218800E5605A /* LinkingComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CC15912764218800E5605A /* LinkingComboBox.swift */; };
@@ -254,6 +257,13 @@
 			remoteGlobalIDString = 4953F594248874AA0002340F;
 			remoteInfo = "Sound Editor";
 		};
+		49BC99B02AB7E94700A2929B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 49BC99A12AB7E8A600A2929B;
+			remoteInfo = "Dialog Editor";
+		};
 		49DA3A552550BD7C00821A7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -306,6 +316,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				49BC99B22AB7E95400A2929B /* Dialog Editor.plugin in Copy Plugins */,
 				49DA3A572550BD9000821A7E /* NovaTools.plugin in Copy Plugins */,
 				4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */,
@@ -448,6 +459,9 @@
 		49AB3C2227D69388003B3536 /* animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation.cpp; sourceTree = "<group>"; };
 		49AB3C2327D69388003B3536 /* imagedesc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = imagedesc.hpp; sourceTree = "<group>"; };
 		49AB8984288C9C2E0013B883 /* ShapeMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeMachine.swift; sourceTree = "<group>"; };
+		49BC999F2AB7E84800A2929B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49BC99A02AB7E88C00A2929B /* DialogEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogEditor.swift; sourceTree = "<group>"; };
+		49BC99AC2AB7E8A600A2929B /* Dialog Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dialog Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49CC15912764218800E5605A /* LinkingComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingComboBox.swift; sourceTree = "<group>"; };
 		49D6D34B271BAAAB002DEA97 /* TemplateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateError.swift; sourceTree = "<group>"; };
 		49D6D34C271BAAAB002DEA97 /* CasedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasedElement.swift; sourceTree = "<group>"; };
@@ -554,6 +568,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49BC99A52AB7E8A600A2929B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49BC99A62AB7E8A600A2929B /* RFSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,6 +884,15 @@
 			path = quicktime;
 			sourceTree = "<group>";
 		};
+		49BC999E2AB7E83600A2929B /* Dialog Editor */ = {
+			isa = PBXGroup;
+			children = (
+				49BC999F2AB7E84800A2929B /* Info.plist */,
+				49BC99A02AB7E88C00A2929B /* DialogEditor.swift */,
+			);
+			path = "Dialog Editor";
+			sourceTree = "<group>";
+		};
 		49D6D34A271BAAAB002DEA97 /* Template Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -981,6 +1012,7 @@
 		F57CEE0B0189C95101A8010B /* Plug-Ins */ = {
 			isa = PBXGroup;
 			children = (
+				49BC999E2AB7E83600A2929B /* Dialog Editor */,
 				49EE72D92550B79600BEABDB /* NovaTools */,
 				F5EF839F020C08E601A80001 /* Hex Editor */,
 				B2FCA77C15A669C800696598 /* Image Editor */,
@@ -1013,6 +1045,7 @@
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
 				49AACD7B24CE931A0081DD4A /* RFSupport.framework */,
 				49EE72D82550B79600BEABDB /* NovaTools.plugin */,
+				49BC99AC2AB7E8A600A2929B /* Dialog Editor.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1124,6 +1157,23 @@
 			productReference = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		49BC99A12AB7E8A600A2929B /* Dialog Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 49BC99A92AB7E8A600A2929B /* Build configuration list for PBXNativeTarget "Dialog Editor" */;
+			buildPhases = (
+				49BC99A22AB7E8A600A2929B /* Sources */,
+				49BC99A52AB7E8A600A2929B /* Frameworks */,
+				49BC99A72AB7E8A600A2929B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Dialog Editor";
+			productName = "PICT Editor";
+			productReference = 49BC99AC2AB7E8A600A2929B /* Dialog Editor.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		49EE72D72550B79600BEABDB /* NovaTools */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49EE72DB2550B79600BEABDB /* Build configuration list for PBXNativeTarget "NovaTools" */;
@@ -1171,6 +1221,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				49BC99B12AB7E94700A2929B /* PBXTargetDependency */,
 				4953F5A52488759E0002340F /* PBXTargetDependency */,
 				B2FCA79B15A66B4A00696598 /* PBXTargetDependency */,
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
@@ -1264,6 +1315,7 @@
 				4953F594248874AA0002340F /* Sound Editor */,
 				49EE72D72550B79600BEABDB /* NovaTools */,
 				49AACD7A24CE931A0081DD4A /* RFSupport */,
+				49BC99A12AB7E8A600A2929B /* Dialog Editor */,
 			);
 		};
 /* End PBXProject section */
@@ -1330,6 +1382,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		49AACD7924CE931A0081DD4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49BC99A72AB7E8A600A2929B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1434,6 +1493,14 @@
 				49DA3A8B2550C65900821A7E /* rle.cpp in Sources */,
 				49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */,
 				49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49BC99A22AB7E8A600A2929B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49BC99AE2AB7E8E400A2929B /* DialogEditor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1582,6 +1649,11 @@
 			isa = PBXTargetDependency;
 			target = 4953F594248874AA0002340F /* Sound Editor */;
 			targetProxy = 4953F5A42488759E0002340F /* PBXContainerItemProxy */;
+		};
+		49BC99B12AB7E94700A2929B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 49BC99A12AB7E8A600A2929B /* Dialog Editor */;
+			targetProxy = 49BC99B02AB7E94700A2929B /* PBXContainerItemProxy */;
 		};
 		49DA3A562550BD7C00821A7E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1839,6 +1911,32 @@
 			};
 			name = Release;
 		};
+		49BC99AA2AB7E8A600A2929B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				INFOPLIST_FILE = "Plug-Ins/Dialog Editor/Info.plist";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Dialog-Editor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		49BC99AB2AB7E8A600A2929B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				INFOPLIST_FILE = "Plug-Ins/Dialog Editor/Info.plist";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Dialog-Editor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
 		49EE72DC2550B79600BEABDB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2067,6 +2165,15 @@
 			buildConfigurations = (
 				49AACD8524CE931A0081DD4A /* Debug */,
 				49AACD8624CE931A0081DD4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		49BC99A92AB7E8A600A2929B /* Build configuration list for PBXNativeTarget "Dialog Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49BC99AA2AB7E8A600A2929B /* Debug */,
+				49BC99AB2AB7E8A600A2929B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
