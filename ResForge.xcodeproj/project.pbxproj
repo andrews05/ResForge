@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -91,7 +91,6 @@
 		49964E1324D1034400BAB902 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
 		49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */; };
 		4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4996B90725DB6C2F0027FA39 /* Credits.rtf */; };
-		49A432D025437C64000B1109 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
 		49AACD8224CE931A0081DD4A /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49AACD8324CE931A0081DD4A /* RFSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49AACD8824CE93520081DD4A /* ResForgePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6924CE57EB0081DD4A /* ResForgePlugin.swift */; };
@@ -335,7 +334,6 @@
 		492E91C92553ADB100195174 /* SpriteImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteImporter.swift; sourceTree = "<group>"; };
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
-		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
 		493CC3DF271228FA00A9173E /* SpobFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpobFilter.swift; sourceTree = "<group>"; };
 		4943603F24C12DE100293E94 /* ppat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ppat.hpp; sourceTree = "<group>"; };
 		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
@@ -1065,7 +1063,6 @@
 				E18BF94B06A00F8E00F076B8 /* Info.plist */,
 				49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */,
 				49362D9D24A9317A0040B793 /* HexWindowController.swift */,
-				49362DA224A966960040B793 /* Hexadecimal.swift */,
 			);
 			path = "Hex Editor";
 			sourceTree = "<group>";
@@ -1571,7 +1568,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49362D9F24A941800040B793 /* HexWindowController.swift in Sources */,
-				49A432D025437C64000B1109 /* Hexadecimal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
