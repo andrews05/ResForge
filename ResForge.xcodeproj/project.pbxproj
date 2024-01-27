@@ -26,6 +26,7 @@
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CC3DF271228FA00A9173E /* SpobFilter.swift */; };
 		4945DC642531826400856385 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
+		4948E15C2B646D6700473FF3 /* QD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E15B2B646D6700473FF3 /* QD.swift */; };
 		494BE3D726CB19FD00A68264 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */; };
 		4952BD4C26DD9356005DB6EB /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 4952BD4B26DD9356005DB6EB /* CSV */; };
 		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
@@ -337,6 +338,7 @@
 		493CC3DF271228FA00A9173E /* SpobFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpobFilter.swift; sourceTree = "<group>"; };
 		4943603F24C12DE100293E94 /* ppat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ppat.hpp; sourceTree = "<group>"; };
 		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
+		4948E15B2B646D6700473FF3 /* QD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QD.swift; sourceTree = "<group>"; };
 		494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; };
 		4953F5922488740F0002340F /* SoundWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundWindow.xib; sourceTree = "<group>"; };
 		4953F593248874260002340F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -972,6 +974,7 @@
 				496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */,
 				496674FD24BBC7CE00251406 /* ImageWindowController.swift */,
 				497BB1DB24F741E400858EF1 /* Icons.swift */,
+				4948E15B2B646D6700473FF3 /* QD.swift */,
 			);
 			path = "Image Editor";
 			sourceTree = "<group>";
@@ -1466,6 +1469,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4948E15C2B646D6700473FF3 /* QD.swift in Sources */,
 				497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */,
 				496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */,
 			);
