@@ -132,9 +132,10 @@ extension QDPixMap {
 
     static func build(from rep: NSBitmapImageRep) -> (pixMap: Self, pixelData: Data, colorTable: OrderedSet<UInt32>) {
         let rep = Self.normalizeRep(rep)
+
+        // Iterate the pixels as UInt32 and construct the color table and pixel data
         let pixelCount = rep.pixelsWide * rep.pixelsHigh
         var pixelData = Data(capacity: pixelCount)
-        // Iterate the pixels as UInt32 and construct a color table
         var colorTable = OrderedSet<UInt32>()
         rep.bitmapData!.withMemoryRebound(to: UInt32.self, capacity: pixelCount) { pixels in
             for i in 0..<pixelCount {
@@ -142,12 +143,45 @@ extension QDPixMap {
                 pixelData.append(UInt8(index))
             }
         }
-        let pixMap = Self(rowBytes: UInt16(rep.pixelsWide) | Self.pixmap,
+
+        // Attempt to reduce depth
+        var pixelSize = 8
+        var rowBytes = rep.pixelsWide
+        if colorTable.count <= 16 {
+            switch colorTable.count {
+            case ...2: pixelSize = 1
+            case ...4: pixelSize = 2
+            default: pixelSize = 4
+            }
+
+            let mod = 8 / pixelSize
+            rowBytes = ((rowBytes - 1) / mod) + 1
+            let diff = 8 - pixelSize
+            var newData = Data(capacity: rowBytes * rep.pixelsHigh)
+
+            for y in 0..<rep.pixelsHigh {
+                var scratch: UInt8 = 0
+                for x in 0..<rep.pixelsWide {
+                    let pxNum = x % mod
+                    if pxNum == 0 && x != 0 {
+                        newData.append(scratch);
+                        scratch = 0
+                    }
+                    let value = pixelData[y * rep.pixelsWide + x]
+                    scratch |= value << (diff - (pxNum * pixelSize))
+                }
+                newData.append(scratch)
+            }
+            pixelData = newData
+        }
+
+        // Create the PixMap
+        let pixMap = Self(rowBytes: UInt16(rowBytes) | Self.pixmap,
                           bounds: QDRect(bottom: Int16(rep.pixelsHigh), right: Int16(rep.pixelsWide)),
                           pixelType: 0,
-                          pixelSize: 8,
+                          pixelSize: Int16(pixelSize),
                           cmpCount: 1,
-                          cmpSize: 8)
+                          cmpSize: Int16(pixelSize))
         return (pixMap, pixelData, colorTable)
     }
 
