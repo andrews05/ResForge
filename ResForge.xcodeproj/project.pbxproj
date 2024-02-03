@@ -27,6 +27,7 @@
 		493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CC3DF271228FA00A9173E /* SpobFilter.swift */; };
 		4945DC642531826400856385 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
 		4948E15C2B646D6700473FF3 /* QD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E15B2B646D6700473FF3 /* QD.swift */; };
+		4948E15E2B6DDE7800473FF3 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 4948E15D2B6DDE7800473FF3 /* OrderedCollections */; };
 		494BE3D726CB19FD00A68264 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */; };
 		4952BD4C26DD9356005DB6EB /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 4952BD4B26DD9356005DB6EB /* CSV */; };
 		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
@@ -569,6 +570,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4948E15E2B6DDE7800473FF3 /* OrderedCollections in Frameworks */,
 				49AACD8A24CE95FD0081DD4A /* RFSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1154,6 +1156,9 @@
 			dependencies = (
 			);
 			name = "Image Editor";
+			packageProductDependencies = (
+				4948E15D2B6DDE7800473FF3 /* OrderedCollections */,
+			);
 			productName = "PICT Editor";
 			productReference = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
@@ -2150,6 +2155,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4907D2EE29C50AFE0003702A /* XCRemoteSwiftPackageReference "swift-parsing" */;
 			productName = Parsing;
+		};
+		4948E15D2B6DDE7800473FF3 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
 		};
 		4952BD4B26DD9356005DB6EB /* CSV */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -179,7 +179,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         case "cicn":
             resource.data = QuickDraw.cicn(from: rep)
         case "ppat":
-            resource.data = QuickDraw.ppat(from: rep)
+            resource.data = PixelPattern.data(from: rep)
         default:
             resource.data = rep.representation(using: .png, properties: [.interlaced: false])!
         }

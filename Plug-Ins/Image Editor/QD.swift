@@ -1,4 +1,5 @@
 import RFSupport
+import OrderedCollections
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=322
 
@@ -8,8 +9,8 @@ enum QuickDrawError: Error {
 }
 
 struct QDRect {
-    var top: Int16
-    var left: Int16
+    var top: Int16 = 0
+    var left: Int16 = 0
     var bottom: Int16
     var right: Int16
 }
@@ -22,6 +23,13 @@ extension QDRect {
         right = try reader.read()
     }
 
+    func write(_ writer: BinaryDataWriter) {
+        writer.write(top)
+        writer.write(left)
+        writer.write(bottom)
+        writer.write(right)
+    }
+
     var width: Int {
         Int(right) - Int(left)
     }
@@ -30,10 +38,19 @@ extension QDRect {
     }
 }
 
-struct RGBColor {
+struct RGBColor: Hashable {
     var red: UInt8 = 0
     var green: UInt8 = 0
     var blue: UInt8 = 0
+}
+
+extension RGBColor {
+    init(from bitmap: inout UnsafeMutablePointer<UInt8>) {
+        red = bitmap[0]
+        green = bitmap[1]
+        blue = bitmap[2]
+        bitmap += 4
+    }
 
     func draw(to bitmap: inout UnsafeMutablePointer<UInt8>) {
         bitmap[0] = red
@@ -43,7 +60,7 @@ struct RGBColor {
     }
 }
 
-struct ColorLookupTable {
+struct ColorTable {
     static let device: UInt16 = 0x8000
     var colors: [RGBColor]
 
@@ -70,27 +87,39 @@ struct ColorLookupTable {
         }
     }
 
+    static func write(_ writer: BinaryDataWriter, colors: some Collection<RGBColor>) {
+        writer.advance(6) // skip seed and flags
+        writer.write(Int16(colors.count - 1))
+        for (i, color) in colors.enumerated() {
+            writer.write(Int16(i))
+            writer.write(UInt16(color.red) << 8 | UInt16(color.red))
+            writer.write(UInt16(color.green) << 8 | UInt16(color.green))
+            writer.write(UInt16(color.blue) << 8 | UInt16(color.blue))
+        }
+    }
+
     subscript(_ index: Int) -> RGBColor {
         colors[index]
     }
 }
 
 struct QDPixMap {
-    var baseAddr: UInt32
+    static let size: UInt32 = 50
+    var baseAddr: UInt32 = 0
     var rowBytes: UInt16
     var bounds: QDRect
-    var pmVersion: Int16
-    var packType: Int16
-    var packSize: Int32
-    var hRes: UInt32
-    var vRes: UInt32
+    var pmVersion: Int16 = 0
+    var packType: Int16 = 0
+    var packSize: Int32 = 0
+    var hRes: UInt32 = 0x00480000
+    var vRes: UInt32 = 0x00480000
     var pixelType: Int16
     var pixelSize: Int16
     var cmpCount: Int16
     var cmpSize: Int16
-    var planeBytes: Int32
-    var pmTable: UInt32
-    var pmReserved: UInt32
+    var planeBytes: Int32 = 0
+    var pmTable: UInt32 = 0
+    var pmReserved: UInt32 = 0
 }
 
 
@@ -124,6 +153,24 @@ extension QDPixMap {
         }
     }
 
+    func write(_ writer: BinaryDataWriter) {
+        writer.write(baseAddr)
+        writer.write(rowBytes)
+        bounds.write(writer)
+        writer.write(pmVersion)
+        writer.write(packType)
+        writer.write(packSize)
+        writer.write(hRes)
+        writer.write(vRes)
+        writer.write(pixelType)
+        writer.write(pixelSize)
+        writer.write(cmpCount)
+        writer.write(cmpSize)
+        writer.write(planeBytes)
+        writer.write(pmTable)
+        writer.write(pmReserved)
+    }
+
     var bytesPerRow: Int {
         Int(rowBytes & 0x3FFF)
     }
@@ -132,7 +179,7 @@ extension QDPixMap {
         bounds.height * bytesPerRow
     }
 
-    func imageRep(pixelData: Data, colorTable: ColorLookupTable) throws -> NSBitmapImageRep {
+    func imageRep(pixelData: Data, colorTable: ColorTable) throws -> NSBitmapImageRep {
         guard pixelData.count >= pixelDataSize else {
             throw QuickDrawError.insufficientData
         }
@@ -179,13 +226,14 @@ extension QDPixMap {
 }
 
 struct QDPixPat {
-    var patType: Int16
-    var patMap: UInt32
-    var patData: UInt32
-    var patXData: UInt32
-    var patXValid: Int16
-    var patXMap: UInt32
-    var pat1Data: UInt64
+    static let size: UInt32 = 28
+    var patType: Int16 = 1
+    var patMap: UInt32 = Self.size
+    var patData: UInt32 = Self.size + QDPixMap.size
+    var patXData: UInt32 = 0
+    var patXValid: Int16 = -1
+    var patXMap: UInt32 = 0
+    var pat1Data: UInt64 = 0
 }
 
 extension QDPixPat {
@@ -201,12 +249,23 @@ extension QDPixPat {
             throw QuickDrawError.invalidData
         }
     }
+
+    func write(_ writer: BinaryDataWriter) {
+        writer.write(patType)
+        writer.write(patMap)
+        writer.write(patData)
+        writer.write(patXData)
+        writer.write(patXValid)
+        writer.write(patXMap)
+        writer.write(pat1Data)
+    }
 }
 
 struct PixelPattern {
     var pixMap: QDPixMap
-    var colorTable: ColorLookupTable
     var pixelData: Data
+    var colors: any Collection<RGBColor>
+    var imageRep: NSBitmapImageRep
 
     var format: UInt32 {
         UInt32(pixMap.pixelSize)
@@ -218,13 +277,39 @@ struct PixelPattern {
         try reader.setPosition(Int(pixPat.patMap))
         pixMap = try QDPixMap(reader)
         try reader.setPosition(Int(pixMap.pmTable))
-        colorTable = try ColorLookupTable(reader)
+        let colorTable = try ColorTable(reader)
         try reader.setPosition(Int(pixPat.patData))
         pixelData = try reader.readData(length: pixMap.pixelDataSize)
+        imageRep = try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable)
+        colors = colorTable.colors
     }
 
-    func imageRep() throws -> NSBitmapImageRep {
-        return try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable)
+    init(from rep: NSBitmapImageRep) throws {
+        imageRep = rep
+        var colorSet = OrderedSet<RGBColor>()
+        var bitmap = rep.bitmapData!
+        pixelData = Data(capacity: rep.pixelsWide * rep.pixelsHigh)
+        for _ in 0..<(rep.pixelsWide * rep.pixelsHigh) {
+            let color = RGBColor(from: &bitmap)
+            let (_, index) = colorSet.append(color)
+            pixelData.append(UInt8(index))
+        }
+        pixMap = QDPixMap(rowBytes: UInt16(rep.pixelsWide) | 0x8000,
+                          bounds: QDRect(bottom: Int16(rep.pixelsHigh), right: Int16(rep.pixelsWide)),
+                          pixelType: 0,
+                          pixelSize: 8,
+                          cmpCount: 1,
+                          cmpSize: 8,
+                          pmTable: QDPixPat.size + QDPixMap.size + UInt32(pixelData.count))
+        colors = colorSet
+    }
+
+    func write(_ writer: BinaryDataWriter) {
+        let pixPat = QDPixPat()
+        pixPat.write(writer)
+        pixMap.write(writer)
+        writer.writeData(pixelData)
+        ColorTable.write(writer, colors: colors)
     }
 
     static func rep(_ data: Data, format: inout UInt32) -> NSBitmapImageRep? {
@@ -232,6 +317,15 @@ struct PixelPattern {
             return nil
         }
         format = ppat.format
-        return try? ppat.imageRep()
+        return ppat.imageRep
+    }
+
+    static func data(from rep: NSBitmapImageRep) -> Data {
+        guard let ppat = try? Self(from: rep) else {
+            return Data()
+        }
+        let writer = BinaryDataWriter()
+        ppat.write(writer)
+        return writer.data
     }
 }
