@@ -266,7 +266,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         case "ppat":
             return PixelPattern.rep(data, format: &format)
         case "crsr":
-            return QuickDraw.rep(fromCrsr: data)
+            return ColorCursor.rep(data, format: &format)
         case "ICN#", "ICON":
             return Icons.rep(data, width: 32, height: 32, depth: 1)
         case "ics#", "SICN", "CURS":

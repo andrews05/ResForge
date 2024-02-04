@@ -85,19 +85,21 @@ extension QDPixMap {
         writer.write(pmReserved)
     }
 
-    func imageRep(pixelData: Data, colorTable: [RGBColor]) throws -> NSBitmapImageRep {
+    func imageRep(pixelData: Data, colorTable: [RGBColor], mask: Data? = nil) throws -> NSBitmapImageRep {
         guard pixelData.count >= pixelDataSize else {
             throw QuickDrawError.insufficientData
         }
+        let hasAlpha = mask != nil
+        let channels = hasAlpha ? 4 : 3
         let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
                                    pixelsWide: bounds.width,
                                    pixelsHigh: bounds.height,
                                    bitsPerSample: 8,
-                                   samplesPerPixel: 3,
-                                   hasAlpha: false,
+                                   samplesPerPixel: channels,
+                                   hasAlpha: hasAlpha,
                                    isPlanar: false,
                                    colorSpaceName: .deviceRGB,
-                                   bytesPerRow: bounds.width * 3,
+                                   bytesPerRow: bounds.width * channels,
                                    bitsPerPixel: 0)!
         var bitmap = rep.bitmapData!
 
@@ -108,6 +110,7 @@ extension QDPixMap {
                 for x in 0..<rep.pixelsWide {
                     let value = Int(pixelData[offset + x])
                     colorTable[value].draw(to: &bitmap)
+                    bitmap += channels
                 }
             }
         } else {
@@ -123,11 +126,33 @@ extension QDPixMap {
                     let byteShift = diff - ((x % mod) * depth)
                     let value = (byte >> byteShift) & mask
                     colorTable[value].draw(to: &bitmap)
+                    bitmap += channels
                 }
             }
         }
 
+        if let mask {
+            Self.applyMask(mask, to: rep)
+        }
+
         return rep
+    }
+
+    static func applyMask(_ mask: Data, to rep: NSBitmapImageRep) {
+        let rowBytes = (rep.pixelsWide + 7) / 8
+        assert(mask.count == rowBytes * rep.pixelsHigh)
+        // Loop over the pixels and set the alpha component according to the mask
+        var bitmap = rep.bitmapData!
+        for y in 0..<rep.pixelsHigh {
+            let offset = mask.startIndex + y * rowBytes
+            for x in 0..<rep.pixelsWide {
+                let byte = Int(mask[offset + (x / 8)])
+                let byteShift = 7 - (x % 8)
+                let value = (byte >> byteShift) & 0x1
+                bitmap[3] = value == 0 ? 0 : 0xFF
+                bitmap += 4;
+            }
+        }
     }
 
     static func build(from rep: NSBitmapImageRep) -> (pixMap: Self, pixelData: Data, colorTable: OrderedSet<UInt32>) {
@@ -220,7 +245,6 @@ extension RGBColor {
         bitmap[0] = red
         bitmap[1] = green
         bitmap[2] = blue
-        bitmap += 3
     }
 }
 
@@ -293,5 +317,22 @@ extension QDRect {
     }
     var height: Int {
         Int(bottom) - Int(top)
+    }
+}
+
+struct QDPoint {
+    var x: Int16
+    var y: Int16
+}
+
+extension QDPoint {
+    init(_ reader: BinaryDataReader) throws {
+        x = try reader.read()
+        y = try reader.read()
+    }
+
+    func write(_ writer: BinaryDataWriter) {
+        writer.write(x)
+        writer.write(y)
     }
 }

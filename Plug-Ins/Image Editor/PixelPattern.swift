@@ -48,7 +48,10 @@ extension PixelPattern {
 
 struct QDPixPat {
     static let size: UInt32 = 28
-    var patType: Int16 = 1
+    static let typeMono: UInt16 = 0x0000
+    static let typeColor: UInt16 = 0x0001
+    static let typeRGB: UInt16 = 0x0002
+    var patType: UInt16 = Self.typeColor
     var patMap: UInt32 = Self.size
     var patData: UInt32 = Self.size + QDPixMap.size
     var patXData: UInt32 = 0
@@ -66,7 +69,7 @@ extension QDPixPat {
         patXValid = try reader.read()
         patXMap = try reader.read()
         pat1Data = try reader.read()
-        guard patType == 1, patMap != 0, patData != 0 else {
+        guard patType == Self.typeColor, patMap != 0, patData != 0 else {
             throw QuickDrawError.invalidData
         }
     }
