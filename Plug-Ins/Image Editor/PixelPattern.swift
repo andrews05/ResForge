@@ -38,10 +38,11 @@ extension PixelPattern {
         return ppat.imageRep
     }
 
-    static func data(from rep: NSBitmapImageRep) -> Data {
+    static func data(from rep: NSBitmapImageRep, format: inout UInt32) -> Data {
         var ppat = Self(imageRep: rep)
         let writer = BinaryDataWriter()
         try? ppat.write(writer)
+        format = ppat.format
         return writer.data
     }
 }

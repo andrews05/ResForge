@@ -155,7 +155,6 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         switch resource.typeCode {
         case "PICT":
             rep = self.bitmapRep(flatten: true)
-            format = 24
         case "cicn":
             rep = self.bitmapRep(palette: true)
         case "ppat":
@@ -164,6 +163,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             rep = self.bitmapRep()
         }
         _ = rep.bitmapData // Trigger redraw
+        format = 0
         self.updateView()
         self.setDocumentEdited(true)
     }
@@ -176,13 +176,15 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         switch resource.typeCode {
         case "PICT":
             resource.data = QuickDraw.pict(from: rep)
+            format = 24
         case "cicn":
             resource.data = QuickDraw.cicn(from: rep)
         case "ppat":
-            resource.data = PixelPattern.data(from: rep)
+            resource.data = PixelPattern.data(from: rep, format: &format)
         default:
             resource.data = rep.representation(using: .png, properties: [.interlaced: false])!
         }
+        self.updateView()
         self.setDocumentEdited(false)
     }
 
