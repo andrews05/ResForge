@@ -81,10 +81,8 @@
 		49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
 		49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043F92472064F0035C0FA /* geometry.cpp */; };
 		49964DE424D0EB4900BAB902 /* clut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FA2472064F0035C0FA /* clut.cpp */; };
-		49964DE524D0EB4E00BAB902 /* cicn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FC2472064F0035C0FA /* cicn.cpp */; };
 		49964DE624D0EB5100BAB902 /* pict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044042472064F0035C0FA /* pict.cpp */; };
 		49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044052472064F0035C0FA /* pixmap.cpp */; };
-		49964DE824D0EB5800BAB902 /* ppat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4943604024C12E0000293E94 /* ppat.cpp */; };
 		49964DE924D0EB5D00BAB902 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044002472064F0035C0FA /* color.cpp */; };
 		49964DEA24D0EB6000BAB902 /* packbits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044012472064F0035C0FA /* packbits.cpp */; };
 		49964DEB24D0EB6300BAB902 /* surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044032472064F0035C0FA /* surface.cpp */; };
@@ -173,7 +171,6 @@
 		49D6D3C1271BAC80002DEA97 /* ElementFIXD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D3C0271BAC80002DEA97 /* ElementFIXD.swift */; };
 		49DA3A4D2550BD2E00821A7E /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49DA3A572550BD9000821A7E /* NovaTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 49EE72D82550B79600BEABDB /* NovaTools.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		49DA3A8B2550C65900821A7E /* rle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044062472064F0035C0FA /* rle.cpp */; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
 		49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1D24F377A400BE0F0F /* CollectionController.swift */; };
 		49E56F7C26DA22FB005FA18B /* ConflictResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */; };
@@ -1426,8 +1423,6 @@
 				496669C22A8B6FEC008DCC36 /* rez.cpp in Sources */,
 				496669C42A8B6FF3008DCC36 /* file.cpp in Sources */,
 				49AB3C2527D69388003B3536 /* imagedesc.cpp in Sources */,
-				49964DE824D0EB5800BAB902 /* ppat.cpp in Sources */,
-				49964DE524D0EB4E00BAB902 /* cicn.cpp in Sources */,
 				49964DE624D0EB5100BAB902 /* pict.cpp in Sources */,
 				49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */,
 				496669C52A8B6FF6008DCC36 /* extended.cpp in Sources */,
@@ -1445,7 +1440,6 @@
 				49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */,
 				4970CCD426FA7DCC00B7C280 /* Extensions.swift in Sources */,
 				49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */,
-				49DA3A8B2550C65900821A7E /* rle.cpp in Sources */,
 				49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */,
 				49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */,
 			);
