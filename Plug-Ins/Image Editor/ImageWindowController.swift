@@ -178,7 +178,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             resource.data = QuickDraw.pict(from: rep)
             format = 24
         case "cicn":
-            resource.data = QuickDraw.cicn(from: rep)
+            resource.data = ColorIcon.data(from: rep, format: &format)
         case "ppat":
             resource.data = PixelPattern.data(from: rep, format: &format)
         default:
@@ -264,7 +264,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         case "PICT":
             return self.rep(fromPict: data, format: &format)
         case "cicn":
-            return QuickDraw.rep(fromCicn: data)
+            return ColorIcon.rep(data, format: &format)
         case "ppat":
             return PixelPattern.rep(data, format: &format)
         case "crsr":

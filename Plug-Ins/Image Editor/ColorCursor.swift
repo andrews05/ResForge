@@ -9,7 +9,7 @@ struct ColorCursor {
 
 extension ColorCursor {
     init(_ reader: BinaryDataReader) throws {
-        let crsr = try CCrsr(reader)
+        let crsr = try QDCCrsr(reader)
         try reader.setPosition(Int(crsr.crsrMap))
         let pixMap = try QDPixMap(reader)
         try reader.setPosition(Int(pixMap.pmTable))
@@ -30,7 +30,7 @@ extension ColorCursor {
     }
 }
 
-struct CCrsr {
+struct QDCCrsr {
     static let size: UInt32 = 96
     static let typeMono: UInt16 = 0x8000
     static let typeColor: UInt16 = 0x8001
@@ -47,7 +47,7 @@ struct CCrsr {
     var crsrID: UInt32 = 0
 }
 
-extension CCrsr {
+extension QDCCrsr {
     init(_ reader: BinaryDataReader) throws {
         crsrType = try reader.read()
         crsrMap = try reader.read()

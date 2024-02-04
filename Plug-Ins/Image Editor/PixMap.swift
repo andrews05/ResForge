@@ -19,10 +19,10 @@ struct QDPixMap {
     var packSize: Int32 = 0
     var hRes: UInt32 = 0x00480000
     var vRes: UInt32 = 0x00480000
-    var pixelType: Int16
-    var pixelSize: Int16
-    var cmpCount: Int16
-    var cmpSize: Int16
+    var pixelType: Int16 = 0
+    var pixelSize: Int16 = 0
+    var cmpCount: Int16 = 0
+    var cmpSize: Int16 = 0
     var planeBytes: Int32 = 0
     var pmTable: UInt32 = 0
     var pmReserved: UInt32 = 0
@@ -42,6 +42,12 @@ extension QDPixMap {
         baseAddr = try reader.read()
         rowBytes = try reader.read()
         bounds = try QDRect(reader)
+
+        // If this is bitmap rather than a pixmap then stop here
+        if rowBytes & Self.pixmap == 0 {
+            return
+        }
+
         pmVersion = try reader.read()
         packType = try reader.read()
         packSize = try reader.read()
@@ -60,7 +66,6 @@ extension QDPixMap {
               packSize == 0,
               pixelType == 0,
               pixelSize == 1 || pixelSize == 2 || pixelSize == 4 || pixelSize == 8,
-              pmTable != 0,
               bytesPerRow >= bounds.width / (8 / Int(pixelSize))
         else {
             throw QuickDrawError.invalidData
@@ -71,6 +76,12 @@ extension QDPixMap {
         writer.write(baseAddr)
         writer.write(rowBytes)
         bounds.write(writer)
+
+        // If this is bitmap rather than a pixmap then stop here
+        if rowBytes & Self.pixmap == 0 {
+            return
+        }
+
         writer.write(pmVersion)
         writer.write(packType)
         writer.write(packSize)
@@ -132,15 +143,17 @@ extension QDPixMap {
         }
 
         if let mask {
-            Self.applyMask(mask, to: rep)
+            try Self.applyMask(mask, to: rep)
         }
 
         return rep
     }
 
-    static func applyMask(_ mask: Data, to rep: NSBitmapImageRep) {
+    static func applyMask(_ mask: Data, to rep: NSBitmapImageRep) throws {
         let rowBytes = (rep.pixelsWide + 7) / 8
-        assert(mask.count == rowBytes * rep.pixelsHigh)
+        guard mask.count == rowBytes * rep.pixelsHigh else {
+            throw QuickDrawError.invalidData
+        }
         // Loop over the pixels and set the alpha component according to the mask
         var bitmap = rep.bitmapData!
         for y in 0..<rep.pixelsHigh {
@@ -210,6 +223,27 @@ extension QDPixMap {
         return (pixMap, pixelData, colorTable)
     }
 
+    static func buildMask(from rep: NSBitmapImageRep) -> Data {
+        let rowBytes = (rep.pixelsWide + 7) / 8
+        var mask = Data(capacity: rowBytes * rep.pixelsHigh)
+        var bitmap = rep.bitmapData!
+        for _ in 0..<rep.pixelsHigh {
+            var scratch: UInt8 = 0
+            for x in 0..<rep.pixelsWide {
+                let pxNum = x % 8
+                if pxNum == 0 && x != 0 {
+                    mask.append(scratch);
+                    scratch = 0
+                }
+                let value: UInt8 = bitmap[3] == 0xFF ? 1 : 0
+                scratch |= value << (7 - pxNum)
+                bitmap += 4
+            }
+            mask.append(scratch)
+        }
+        return mask
+    }
+
     static func normalizeRep(_ rep: NSBitmapImageRep) -> NSBitmapImageRep {
         // Ensure 32-bit RGBA
         if rep.bitsPerPixel == 32 && rep.colorSpace.colorSpaceModel == .rgb {
@@ -263,7 +297,7 @@ struct ColorTable {
         var colors = Array(repeating: RGBColor(), count: 256)
         for i in 0..<size {
             let value = Int(try reader.read() as Int16)
-            guard 0..<256 ~= value else {
+            guard device || 0..<256 ~= value else {
                 throw QuickDrawError.invalidData
             }
             // Take high bytes only
