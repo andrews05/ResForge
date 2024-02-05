@@ -187,7 +187,6 @@
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
 		55FB36042B71530C000F1528 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
-		55FB36112B7153FD000F1528 /* DialogEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FB360F2B7153FD000F1528 /* DialogEditorWindow.xib */; };
 		55FB36132B715407000F1528 /* Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36122B715406000F1528 /* Templates.rsrc */; };
 		55FB36152B715427000F1528 /* DialogEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB36142B715427000F1528 /* DialogEditorWindowController.swift */; };
 		55FB361F2B715A3F000F1528 /* Dialog Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 55FB360D2B71530C000F1528 /* Dialog Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1419,7 +1418,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55FB36202B715AE9000F1528 /* DialogEditorWindow.xib in Resources */,
-				55FB36112B7153FD000F1528 /* DialogEditorWindow.xib in Resources */,
 				55FB36132B715407000F1528 /* Templates.rsrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

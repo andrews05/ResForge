@@ -72,7 +72,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		var itemCount: Int = Int(itemCountMinusOne) + 1
 		
 		while itemCount > 0 {
-			let reserved: UInt32 = try! reader.read()
+			try! reader.advance(4)
 			let t: Int16 = try! reader.read()
 			let l: Int16 = try! reader.read()
 			let b: Int16 = try! reader.read()
@@ -80,12 +80,12 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 			let typeAndEnableFlag: UInt8 = try! reader.read()
 			let text = try! reader.readPString()
 			if (reader.bytesRead % 2) != 0 {
-				let filler: UInt8 = try! reader.read()
+				try! reader.advance(1)
 			}
 			let isEnabled = (typeAndEnableFlag & 0b10000000) == 0b10000000
 			let itemType = DITLItem.DITLItemType(rawValue: typeAndEnableFlag & 0b01111111 ) ?? .unknown
 			
-			items.append(DITLItem(itemView: DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r - l), height: Double(b - t))), title: text), enabled: isEnabled, itemType: itemType, resourceID: 0))
+			items.append(DITLItem(itemView: DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r - l), height: Double(b - t))), title: text, type: itemType), enabled: isEnabled, itemType: itemType, resourceID: 0))
 
 			itemCount -= 1
 		}
@@ -123,11 +123,16 @@ public class DITLDocumentView : NSView {
 	}
 }
 
-public class DITLItemView : NSView {
+/// View that shows a simple preview for a System 7 DITL item:
+class DITLItemView : NSView {
+	/// The text to display on the item (button title or text view text:
 	var title: String
+	/// Other info from the DITL resource about this item:
+	var type: DITLItem.DITLItemType
 	
-	public init(frame frameRect: NSRect, title: String) {
+	init(frame frameRect: NSRect, title: String, type: DITLItem.DITLItemType) {
 		self.title = title
+		self.type = type
 		super.init(frame: frameRect)
 	}
 	
@@ -135,19 +140,102 @@ public class DITLItemView : NSView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	public override func draw(_ dirtyRect: NSRect) {
-		let fillColor = NSColor.systemBlue.blended(withFraction: 0.4, of: NSColor.controlBackgroundColor) ?? NSColor.lightGray
-		let strokeColor = NSColor.systemBlue.blended(withFraction: 0.4, of: NSColor.controlTextColor) ?? NSColor.black
-		fillColor.setFill()
-		strokeColor.setStroke()
-		NSBezierPath.fill(self.bounds)
-		NSBezierPath.stroke(self.bounds)
-		
-		title.draw(at: NSZeroPoint, withAttributes: nil)
+	override func draw(_ dirtyRect: NSRect) {
+		switch type {
+		case .userItem:
+			let fillColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray
+			let strokeColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
+			fillColor.setFill()
+			strokeColor.setStroke()
+			NSBezierPath.fill(self.bounds)
+			NSBezierPath.stroke(self.bounds)
+			
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemGreen])
+//		case .helpItem:
+//
+		case .button:
+			let fillColor = NSColor.white
+			let strokeColor = NSColor.black
+			fillColor.setFill()
+			strokeColor.setStroke()
+			let lozenge = NSBezierPath(roundedRect: self.bounds, xRadius: 8.0, yRadius: 8.0)
+			lozenge.fill()
+			lozenge.stroke()
+			
+			let ps = NSMutableParagraphStyle()
+			ps.alignment = .center
+			title.draw(in: self.bounds, withAttributes: [.foregroundColor: strokeColor, .paragraphStyle: ps])
+		case .checkBox:
+			let fillColor = NSColor.white
+			let strokeColor = NSColor.black
+			fillColor.setFill()
+			strokeColor.setStroke()
+			var box = self.bounds
+			box.size.width = box.size.height
+			NSBezierPath.stroke(self.bounds)
+			NSBezierPath.fill(self.bounds)
+			
+			title.draw(at: NSPoint(x: box.maxX, y: 0), withAttributes: [.foregroundColor: strokeColor])
+		case .radioButton:
+			let fillColor = NSColor.white
+			let strokeColor = NSColor.black
+			fillColor.setFill()
+			strokeColor.setStroke()
+			var box = self.bounds
+			box.size.width = box.size.height
+			let lozenge = NSBezierPath(roundedRect: self.bounds, xRadius: 8.0, yRadius: 8.0)
+			lozenge.fill()
+			lozenge.stroke()
+			
+			title.draw(at: NSPoint(x: box.maxX, y: 0), withAttributes: [.foregroundColor: strokeColor])
+		case .control:
+			let fillColor = NSColor.white
+			let strokeColor = NSColor.black
+			fillColor.setFill()
+			strokeColor.setStroke()
+			NSBezierPath.fill(self.bounds)
+			NSBezierPath.stroke(self.bounds)
+		case .staticText:
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.black])
+		case .editText:
+			let fillColor = NSColor.white
+			let strokeColor = NSColor.black
+			fillColor.setFill()
+			strokeColor.setStroke()
+			NSBezierPath.fill(self.bounds)
+			NSBezierPath.stroke(self.bounds)
+			
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: strokeColor])
+		case .icon:
+			NSColor.darkGray.setFill()
+			NSBezierPath.fill(self.bounds)
+		case .picture:
+			NSColor.lightGray.setFill()
+			NSBezierPath.fill(self.bounds)
+		case .unknown:
+			let fillColor = NSColor.systemRed.blended(withFraction: 0.4, of: NSColor.controlBackgroundColor) ?? NSColor.lightGray
+			let strokeColor = NSColor.systemRed.blended(withFraction: 0.4, of: NSColor.controlTextColor) ?? NSColor.black
+			fillColor.setFill()
+			strokeColor.setStroke()
+			NSBezierPath.fill(self.bounds)
+			NSBezierPath.stroke(self.bounds)
+			
+			title.draw(at: NSZeroPoint, withAttributes: nil)
+		default:
+			let fillColor = NSColor.systemBlue.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray
+			let strokeColor = NSColor.systemBlue.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
+			fillColor.setFill()
+			strokeColor.setStroke()
+			NSBezierPath.fill(self.bounds)
+			NSBezierPath.stroke(self.bounds)
+			
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemBlue])
+		}
 	}
 }
 
-public class DITLFlippedClipView : NSClipView {
+/// View that makes our document view top-left aligned inside the scroll view:
+class DITLFlippedClipView : NSClipView {
 	public override var isFlipped: Bool {
 		get {
 			return true
