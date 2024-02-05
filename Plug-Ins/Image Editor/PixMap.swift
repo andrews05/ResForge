@@ -173,12 +173,15 @@ extension QDPixMap {
 
         // Iterate the pixels as UInt32 and construct the color table and pixel data
         let pixelCount = rep.pixelsWide * rep.pixelsHigh
-        var pixelData = Data(capacity: pixelCount)
+        var pixelData = Data(repeating: 0, count: pixelCount)
         var colorTable = OrderedSet<UInt32>()
         rep.bitmapData!.withMemoryRebound(to: UInt32.self, capacity: pixelCount) { pixels in
             for i in 0..<pixelCount {
-                let (_, index) = colorTable.append(pixels[i])
-                pixelData.append(UInt8(index))
+                // Skip transparent pixels - this can avoid storing unnecessary colors in the palette
+                if !rep.hasAlpha || UInt32(bigEndian: pixels[i]) & 0xFF != 0 {
+                    let (_, index) = colorTable.append(pixels[i])
+                    pixelData[i] = UInt8(index)
+                }
             }
         }
 
@@ -235,7 +238,7 @@ extension QDPixMap {
                     mask.append(scratch);
                     scratch = 0
                 }
-                let value: UInt8 = bitmap[3] == 0xFF ? 1 : 0
+                let value: UInt8 = bitmap[3] == 0 ? 0 : 1
                 scratch |= value << (7 - pxNum)
                 bitmap += 4
             }
