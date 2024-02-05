@@ -129,6 +129,8 @@ class DITLItemView : NSView {
 	var title: String
 	/// Other info from the DITL resource about this item:
 	var type: DITLItem.DITLItemType
+	/// Is this object selected for editing/moving/resizing?
+	var selected = false
 	
 	init(frame frameRect: NSRect, title: String, type: DITLItem.DITLItemType) {
 		self.title = title
@@ -138,6 +140,11 @@ class DITLItemView : NSView {
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func mouseDown(with event: NSEvent) {
+		selected = !selected
+		setNeedsDisplay(self.bounds)
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
@@ -236,6 +243,54 @@ class DITLItemView : NSView {
 			NSBezierPath.stroke(self.bounds)
 			
 			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemGreen])
+		}
+		
+		if selected {
+			var knobSize = 8.0
+			let box = self.bounds
+			var middleKnobs = true
+			var minimalKnobs = false
+			if ((knobSize * 2.0) + 1) >= box.size.height || ((knobSize * 2.0) + 1) >= box.size.width {
+				minimalKnobs = true
+			} else if ((knobSize * 3.0) + 2) >= box.size.height || ((knobSize * 3.0) + 2) > box.size.width {
+				middleKnobs = false
+			}
+			NSColor.controlAccentColor.set()
+			NSBezierPath.stroke(self.bounds)
+			var tlBox = self.bounds
+			tlBox.size.width = knobSize
+			tlBox.size.height = knobSize
+			if !minimalKnobs {
+				NSBezierPath.fill(tlBox)
+				if middleKnobs {
+					tlBox.origin.x = box.midX - (tlBox.size.width / 2)
+					NSBezierPath.fill(tlBox)
+				}
+				if middleKnobs {
+					tlBox.origin.x = 0
+					tlBox.origin.y = box.midY - (tlBox.size.height / 2)
+					NSBezierPath.fill(tlBox)
+				}
+				tlBox.origin.x = 0
+				tlBox.origin.y = box.maxY - tlBox.size.height
+				NSBezierPath.fill(tlBox)
+				if middleKnobs {
+					tlBox.origin.x = box.midX - (tlBox.size.width / 2)
+					tlBox.origin.y = box.maxY - tlBox.size.height
+				}
+				NSBezierPath.fill(tlBox)
+				tlBox.origin.x = box.maxX - tlBox.size.width
+				tlBox.origin.y = box.maxY - tlBox.size.height
+				NSBezierPath.fill(tlBox)
+				if middleKnobs {
+					tlBox.origin.x = box.maxX - tlBox.size.width
+					tlBox.origin.y = box.midY - (tlBox.size.height / 2)
+					NSBezierPath.fill(tlBox)
+				}
+			}
+			tlBox.origin.x = box.maxX - tlBox.size.width
+			tlBox.origin.y = 0
+			NSBezierPath.fill(tlBox)
 		}
 	}
 }
