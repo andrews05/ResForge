@@ -290,6 +290,8 @@ class DITLItemView : NSView {
 				minimalKnobs = true
 			} else if ((knobSize * 3.0) + 2) >= box.size.height || ((knobSize * 3.0) + 2) > box.size.width {
 				middleKnobs = false
+			} else if (knobSize + 1) > box.size.height || (knobSize + 1) > box.size.width {
+				knobSize = min(box.size.height - 1, box.size.width - 1)
 			}
 			NSColor.controlAccentColor.set()
 			NSBezierPath.stroke(self.bounds)
