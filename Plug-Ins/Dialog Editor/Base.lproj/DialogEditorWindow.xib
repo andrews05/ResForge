@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ImageWindowController" customModule="Dialog_Editor" customModuleProvider="target">
+            <connections>
+                <outlet property="scrollView" destination="PtH-kU-h2h" id="H0x-kR-Ai3"/>
+                <outlet property="window" destination="17" id="22"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Dialog Editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="17">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="0.0" y="556" width="320" height="240"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <value key="minSize" type="size" width="240" height="120"/>
+            <view key="contentView" id="18">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PtH-kU-h2h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                        <clipView key="contentView" id="Yh0-a6-CPU" customClass="DITLFlippedClipView" customModule="Dialog_Editor" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <view id="z3g-LT-GbE" userLabel="Document View" customClass="DITLDocumentView" customModule="Dialog_Editor" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="261" height="169"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="jgj-Kb-j7w">
+                            <rect key="frame" x="0.0" y="224" width="320" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2VW-jZ-w9D">
+                            <rect key="frame" x="304" y="0.0" width="16" height="160"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="PtH-kU-h2h" secondAttribute="trailing" id="EvW-dZ-3nV"/>
+                    <constraint firstItem="PtH-kU-h2h" firstAttribute="top" secondItem="18" secondAttribute="top" id="FJ2-HP-YCk"/>
+                    <constraint firstItem="PtH-kU-h2h" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="i7r-0i-0QW"/>
+                    <constraint firstAttribute="bottom" secondItem="PtH-kU-h2h" secondAttribute="bottom" id="uj4-vb-8rd"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="65" y="268"/>
+        </window>
+    </objects>
+</document>

@@ -186,6 +186,12 @@
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
+		55FB36042B71530C000F1528 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
+		55FB36112B7153FD000F1528 /* DialogEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FB360F2B7153FD000F1528 /* DialogEditorWindow.xib */; };
+		55FB36132B715407000F1528 /* Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36122B715406000F1528 /* Templates.rsrc */; };
+		55FB36152B715427000F1528 /* DialogEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB36142B715427000F1528 /* DialogEditorWindowController.swift */; };
+		55FB361F2B715A3F000F1528 /* Dialog Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 55FB360D2B71530C000F1528 /* Dialog Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55FB36202B715AE9000F1528 /* DialogEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36192B715497000F1528 /* DialogEditorWindow.xib */; };
 		B229EEF515A4FB6F0032C12C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEA15A4FB6F0032C12C /* MainMenu.xib */; };
 		B229EEF615A4FB6F0032C12C /* CreateResource.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEC15A4FB6F0032C12C /* CreateResource.xib */; };
 		B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */; };
@@ -261,6 +267,13 @@
 			remoteGlobalIDString = 49EE72D72550B79600BEABDB;
 			remoteInfo = KestrelTools;
 		};
+		55FB361D2B715A15000F1528 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55FB35EC2B71530C000F1528;
+			remoteInfo = "Dialog Editor";
+		};
 		B2FCA79A15A66B4A00696598 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -306,6 +319,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				55FB361F2B715A3F000F1528 /* Dialog Editor.plugin in Copy Plugins */,
 				49DA3A572550BD9000821A7E /* NovaTools.plugin in Copy Plugins */,
 				4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */,
@@ -533,6 +547,15 @@
 		550B904D189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HexWindow.xib; sourceTree = "<group>"; };
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImageWindow.xib; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		55FB360D2B71530C000F1528 /* Dialog Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dialog Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55FB36102B7153FD000F1528 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Plug-Ins/Dialog Editor/Base.lproj/DialogEditorWindow.xib"; sourceTree = "<group>"; };
+		55FB36122B715406000F1528 /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = Templates.rsrc; path = "Plug-Ins/Dialog Editor/Templates.rsrc"; sourceTree = "<group>"; };
+		55FB36142B715427000F1528 /* DialogEditorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DialogEditorWindowController.swift; path = "Plug-Ins/Dialog Editor/DialogEditorWindowController.swift"; sourceTree = "<group>"; };
+		55FB36172B715497000F1528 /* DialogEditorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogEditorWindowController.swift; sourceTree = "<group>"; };
+		55FB36182B715497000F1528 /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
+		55FB361A2B715497000F1528 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DialogEditorWindow.xib; sourceTree = "<group>"; };
+		55FB361B2B715497000F1528 /* Dialog Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dialog Editor-Bridging-Header.h"; sourceTree = "<group>"; };
+		55FB361C2B715497000F1528 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2FCA78A15A66ACE00696598 /* Image Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Image Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF58C069FEA1400F076B8 /* ResForge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResForge.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -562,6 +585,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				49DA3A4D2550BD2E00821A7E /* RFSupport.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55FB36032B71530C000F1528 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55FB36042B71530C000F1528 /* RFSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,6 +997,18 @@
 			path = Formats;
 			sourceTree = "<group>";
 		};
+		55FB36162B715497000F1528 /* Dialog Editor */ = {
+			isa = PBXGroup;
+			children = (
+				55FB36172B715497000F1528 /* DialogEditorWindowController.swift */,
+				55FB36182B715497000F1528 /* Templates.rsrc */,
+				55FB36192B715497000F1528 /* DialogEditorWindow.xib */,
+				55FB361B2B715497000F1528 /* Dialog Editor-Bridging-Header.h */,
+				55FB361C2B715497000F1528 /* Info.plist */,
+			);
+			path = "Dialog Editor";
+			sourceTree = "<group>";
+		};
 		B2FCA77C15A669C800696598 /* Image Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -985,6 +1028,7 @@
 				F5EF839F020C08E601A80001 /* Hex Editor */,
 				B2FCA77C15A669C800696598 /* Image Editor */,
 				4953F58F248873DD0002340F /* Sound Editor */,
+				55FB36162B715497000F1528 /* Dialog Editor */,
 			);
 			path = "Plug-Ins";
 			sourceTree = "<group>";
@@ -992,6 +1036,9 @@
 		F5B588100156D2A601000001 = {
 			isa = PBXGroup;
 			children = (
+				55FB36142B715427000F1528 /* DialogEditorWindowController.swift */,
+				55FB36122B715406000F1528 /* Templates.rsrc */,
+				55FB360F2B7153FD000F1528 /* DialogEditorWindow.xib */,
 				498A02C225C3E4B500783776 /* README.md */,
 				4996B8F425DB6AC80027FA39 /* LICENSE */,
 				4996B8E725DB6A3A0027FA39 /* ResForge */,
@@ -1013,6 +1060,7 @@
 				4953F5A0248874AA0002340F /* Sound Editor.plugin */,
 				49AACD7B24CE931A0081DD4A /* RFSupport.framework */,
 				49EE72D82550B79600BEABDB /* NovaTools.plugin */,
+				55FB360D2B71530C000F1528 /* Dialog Editor.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1141,6 +1189,23 @@
 			productReference = 49EE72D82550B79600BEABDB /* NovaTools.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		55FB35EC2B71530C000F1528 /* Dialog Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55FB360A2B71530C000F1528 /* Build configuration list for PBXNativeTarget "Dialog Editor" */;
+			buildPhases = (
+				55FB35ED2B71530C000F1528 /* Sources */,
+				55FB36032B71530C000F1528 /* Frameworks */,
+				55FB36052B71530C000F1528 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Dialog Editor";
+			productName = KestrelTools;
+			productReference = 55FB360D2B71530C000F1528 /* Dialog Editor.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		B2FCA78915A66ACE00696598 /* Image Editor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2FCA79315A66ACF00696598 /* Build configuration list for PBXNativeTarget "Image Editor" */;
@@ -1175,6 +1240,7 @@
 				B2FCA79B15A66B4A00696598 /* PBXTargetDependency */,
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
 				49DA3A562550BD7C00821A7E /* PBXTargetDependency */,
+				55FB361E2B715A15000F1528 /* PBXTargetDependency */,
 			);
 			name = ResForge;
 			packageProductDependencies = (
@@ -1263,6 +1329,7 @@
 				B2FCA78915A66ACE00696598 /* Image Editor */,
 				4953F594248874AA0002340F /* Sound Editor */,
 				49EE72D72550B79600BEABDB /* NovaTools */,
+				55FB35EC2B71530C000F1528 /* Dialog Editor */,
 				49AACD7A24CE931A0081DD4A /* RFSupport */,
 			);
 		};
@@ -1344,6 +1411,16 @@
 				49EE73012550B99200BEABDB /* SpriteWindow.xib in Resources */,
 				496E7E3C25E6EA17001C97CA /* ShanWindow.xib in Resources */,
 				4976D28E2718CEA100322DDF /* GalaxyWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55FB36052B71530C000F1528 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55FB36202B715AE9000F1528 /* DialogEditorWindow.xib in Resources */,
+				55FB36112B7153FD000F1528 /* DialogEditorWindow.xib in Resources */,
+				55FB36132B715407000F1528 /* Templates.rsrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1462,6 +1539,14 @@
 				49640F2B25F201B8009FEC9B /* LightLayer.swift in Sources */,
 				49640F3225F201BA009FEC9B /* WeaponLayer.swift in Sources */,
 				4976D2992718CEA400322DDF /* GalaxyView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55FB35ED2B71530C000F1528 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55FB36152B715427000F1528 /* DialogEditorWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1588,6 +1673,11 @@
 			target = 49EE72D72550B79600BEABDB /* NovaTools */;
 			targetProxy = 49DA3A552550BD7C00821A7E /* PBXContainerItemProxy */;
 		};
+		55FB361E2B715A15000F1528 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55FB35EC2B71530C000F1528 /* Dialog Editor */;
+			targetProxy = 55FB361D2B715A15000F1528 /* PBXContainerItemProxy */;
+		};
 		B2FCA79B15A66B4A00696598 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B2FCA78915A66ACE00696598 /* Image Editor */;
@@ -1639,6 +1729,22 @@
 				49EE72AD2550A7F300BEABDB /* Base */,
 			);
 			name = SpriteWindow.xib;
+			sourceTree = "<group>";
+		};
+		55FB360F2B7153FD000F1528 /* DialogEditorWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FB36102B7153FD000F1528 /* Base */,
+			);
+			name = DialogEditorWindow.xib;
+			sourceTree = "<group>";
+		};
+		55FB36192B715497000F1528 /* DialogEditorWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FB361A2B715497000F1528 /* Base */,
+			);
+			name = DialogEditorWindow.xib;
 			sourceTree = "<group>";
 		};
 		B229EEEA15A4FB6F0032C12C /* MainMenu.xib */ = {
@@ -1861,6 +1967,28 @@
 			};
 			name = Release;
 		};
+		55FB360B2B71530C000F1528 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				INFOPLIST_FILE = "Plug-Ins/Dialog Editor/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Dialog-Editor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		55FB360C2B71530C000F1528 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				INFOPLIST_FILE = "Plug-Ins/Dialog Editor/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Dialog-Editor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
 		B2FCA79415A66ACF00696598 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2076,6 +2204,15 @@
 			buildConfigurations = (
 				49EE72DC2550B79600BEABDB /* Debug */,
 				49EE72DD2550B79600BEABDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		55FB360A2B71530C000F1528 /* Build configuration list for PBXNativeTarget "Dialog Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55FB360B2B71530C000F1528 /* Debug */,
+				55FB360C2B71530C000F1528 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
