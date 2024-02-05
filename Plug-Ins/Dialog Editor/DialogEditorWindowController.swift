@@ -21,7 +21,7 @@ struct DITLItem {
 	var itemType: DITLItemType
 	var resourceID: Int // Only SInt16, but let's be consistent with ResForge's Resource type.
 	
-	static func read(_ reader: BinaryDataReader) -> DITLItem {
+	static func read(_ reader: BinaryDataReader, manager: RFEditorManager) -> DITLItem {
 		try! reader.advance(4)
 		var t: Int16 = try! reader.read()
 		var l: Int16 = try! reader.read()
@@ -66,7 +66,7 @@ struct DITLItem {
 			}
 		}
 
-		return DITLItem(itemView: DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r - l), height: Double(b - t))), title: text, type: itemType), enabled: isEnabled, itemType: itemType, resourceID: resourceID)
+		return DITLItem(itemView: DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r - l), height: Double(b - t))), title: text, type: itemType, resourceID: resourceID, manager: manager), enabled: isEnabled, itemType: itemType, resourceID: resourceID)
 	}
 }
 
@@ -120,7 +120,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		var itemCount: Int = Int(itemCountMinusOne) + 1
 		
 		while itemCount > 0 {
-			let item = DITLItem.read(reader)
+			let item = DITLItem.read(reader, manager: manager)
 			items.append(item)
 
 			itemCount -= 1
@@ -167,10 +167,15 @@ class DITLItemView : NSView {
 	var type: DITLItem.DITLItemType
 	/// Is this object selected for editing/moving/resizing?
 	var selected = false
-	
-	init(frame frameRect: NSRect, title: String, type: DITLItem.DITLItemType) {
+	var resourceID = 0
+	/// Object that lets us look up icons and images.
+	private let manager: RFEditorManager
+
+	init(frame frameRect: NSRect, title: String, type: DITLItem.DITLItemType, resourceID: Int, manager: RFEditorManager) {
 		self.title = title
 		self.type = type
+		self.resourceID = resourceID
+		self.manager = manager
 		super.init(frame: frameRect)
 	}
 	
@@ -194,8 +199,8 @@ class DITLItemView : NSView {
 			NSBezierPath.stroke(self.bounds)
 			
 			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemBlue, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
-//		case .helpItem:
-//
+			//		case .helpItem:
+			//
 		case .button:
 			let fillColor = NSColor.white
 			let strokeColor = NSColor.black
@@ -258,9 +263,24 @@ class DITLItemView : NSView {
 		case .icon:
 			NSColor.darkGray.setFill()
 			NSBezierPath.fill(self.bounds)
+			var resource: Resource?
+			resource = manager.findResource(type: ResourceType("cicn"), id: resourceID, currentDocumentOnly: true)
+			if resource == nil {
+				resource = manager.findResource(type: ResourceType("ICON"), id: resourceID, currentDocumentOnly: true)
+			}
+			if let resource = resource {
+				var format: UInt32 = 0
+				let imgRep = DITLItemView.imageRep(for: resource, format: &format)
+				imgRep?.draw(in: self.bounds)
+			}
 		case .picture:
 			NSColor.lightGray.setFill()
 			NSBezierPath.fill(self.bounds)
+			if let resource = manager.findResource(type: ResourceType("PICT"), id: resourceID, currentDocumentOnly: true) {
+				var format: UInt32 = 0
+				let imgRep = DITLItemView.imageRep(for: resource, format: &format)
+				imgRep?.draw(in: self.bounds)
+			}
 		case .unknown:
 			let fillColor = NSColor.systemRed.blended(withFraction: 0.4, of: NSColor.controlBackgroundColor) ?? NSColor.lightGray
 			let strokeColor = NSColor.systemRed.blended(withFraction: 0.4, of: NSColor.controlTextColor) ?? NSColor.black
@@ -330,6 +350,72 @@ class DITLItemView : NSView {
 			tlBox.origin.y = 0
 			NSBezierPath.fill(tlBox)
 		}
+	}
+	
+	private static func imageRep(for resource: Resource, format: inout UInt32) -> NSImageRep? {
+		let data = resource.data
+		guard !data.isEmpty else {
+			return nil
+		}
+		switch resource.typeCode {
+		case "PICT":
+			return self.rep(fromPict: data, format: &format)
+		case "cicn":
+			return QuickDraw.rep(fromCicn: data)
+		case "ppat":
+			return QuickDraw.rep(fromPpat: data)
+		case "crsr":
+			return QuickDraw.rep(fromCrsr: data)
+		case "ICN#", "ICON":
+			return Icons.rep(data, width: 32, height: 32, depth: 1)
+		case "ics#", "SICN", "CURS":
+			return Icons.rep(data, width: 16, height: 16, depth: 1)
+		case "icm#":
+			return Icons.rep(data, width: 16, height: 12, depth: 1)
+		case "icl4":
+			return Icons.rep(data, width: 32, height: 32, depth: 4)
+		case "ics4":
+			return Icons.rep(data, width: 16, height: 16, depth: 4)
+		case "icm4":
+			return Icons.rep(data, width: 16, height: 12, depth: 4)
+		case "icl8":
+			return Icons.rep(data, width: 32, height: 32, depth: 8)
+		case "ics8":
+			return Icons.rep(data, width: 16, height: 16, depth: 8)
+		case "icm8":
+			return Icons.rep(data, width: 16, height: 12, depth: 8)
+		case "PAT ":
+			return Icons.rep(data, width: 8, height: 8, depth: 1)
+		case "PAT#":
+			// This just stacks all the patterns vertically
+			let count = Int(data[data.startIndex + 1])
+			return Icons.rep(data.dropFirst(2), width: 8, height: 8 * count, depth: 1)
+		default:
+			return NSBitmapImageRep(data: data)
+		}
+	}
+	
+	private static func rep(fromPict data: Data, format: inout UInt32) -> NSImageRep? {
+		do {
+			return try QuickDraw.rep(fromPict: data, format: &format)
+		} catch let error {
+			// If the error is because of an unsupported QuickTime compressor, attempt to decode it
+			// natively from the offset indicated. This should work for e.g. PNG, JPEG, GIF, TIFF.
+			if let range = error.localizedDescription.range(of: "(?<=offset )[0-9]+", options: .regularExpression),
+			   let offset = Int(error.localizedDescription[range]),
+			   data.count > offset,
+			   let rep = NSBitmapImageRep(data: data.dropFirst(offset)) {
+				// Older QuickTime versions (<6.5) stored png data as non-standard RGBX
+				// We need to disable the alpha, but first ensure the image has been decoded by accessing the bitmapData
+				_ = rep.bitmapData
+				rep.hasAlpha = false
+				if let cRange = error.localizedDescription.range(of: "(?<=')....(?=')", options: .regularExpression) {
+					format = UInt32(String(error.localizedDescription[cRange]))
+				}
+				return rep
+			}
+		}
+		return nil
 	}
 }
 
