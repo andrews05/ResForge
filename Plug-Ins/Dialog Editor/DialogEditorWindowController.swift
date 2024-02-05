@@ -143,14 +143,14 @@ class DITLItemView : NSView {
 	override func draw(_ dirtyRect: NSRect) {
 		switch type {
 		case .userItem:
-			let fillColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray
-			let strokeColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
+			let fillColor = (NSColor.systemBlue.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray).withAlphaComponent(0.7)
+			let strokeColor = NSColor.systemBlue.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
 			fillColor.setFill()
 			strokeColor.setStroke()
 			NSBezierPath.fill(self.bounds)
 			NSBezierPath.stroke(self.bounds)
 			
-			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemGreen])
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemBlue])
 //		case .helpItem:
 //
 		case .button:
@@ -164,7 +164,11 @@ class DITLItemView : NSView {
 			
 			let ps = NSMutableParagraphStyle()
 			ps.alignment = .center
-			title.draw(in: self.bounds, withAttributes: [.foregroundColor: strokeColor, .paragraphStyle: ps])
+			let attrs: [NSAttributedString.Key:Any] = [.foregroundColor: strokeColor, .paragraphStyle: ps]
+			let measuredSize = title.size(withAttributes: attrs)
+			var textBox = self.bounds
+			textBox.origin.y -= (textBox.size.height - measuredSize.height) / 2
+			title.draw(in: textBox, withAttributes: attrs)
 		case .checkBox:
 			let fillColor = NSColor.white
 			let strokeColor = NSColor.black
@@ -172,10 +176,11 @@ class DITLItemView : NSView {
 			strokeColor.setStroke()
 			var box = self.bounds
 			box.size.width = box.size.height
-			NSBezierPath.stroke(self.bounds)
-			NSBezierPath.fill(self.bounds)
+			box = box.insetBy(dx: 2, dy: 2)
+			NSBezierPath.stroke(box)
+			NSBezierPath.fill(box)
 			
-			title.draw(at: NSPoint(x: box.maxX, y: 0), withAttributes: [.foregroundColor: strokeColor])
+			title.draw(at: NSPoint(x: box.maxX + 4, y: 0), withAttributes: [.foregroundColor: strokeColor])
 		case .radioButton:
 			let fillColor = NSColor.white
 			let strokeColor = NSColor.black
@@ -183,11 +188,12 @@ class DITLItemView : NSView {
 			strokeColor.setStroke()
 			var box = self.bounds
 			box.size.width = box.size.height
-			let lozenge = NSBezierPath(roundedRect: self.bounds, xRadius: 8.0, yRadius: 8.0)
+			box = box.insetBy(dx: 2, dy: 2)
+			let lozenge = NSBezierPath(ovalIn: box)
 			lozenge.fill()
 			lozenge.stroke()
 			
-			title.draw(at: NSPoint(x: box.maxX, y: 0), withAttributes: [.foregroundColor: strokeColor])
+			title.draw(at: NSPoint(x: box.maxX + 4, y: 0), withAttributes: [.foregroundColor: strokeColor])
 		case .control:
 			let fillColor = NSColor.white
 			let strokeColor = NSColor.black
@@ -222,14 +228,14 @@ class DITLItemView : NSView {
 			
 			title.draw(at: NSZeroPoint, withAttributes: nil)
 		default:
-			let fillColor = NSColor.systemBlue.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray
-			let strokeColor = NSColor.systemBlue.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
+			let fillColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray
+			let strokeColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
 			fillColor.setFill()
 			strokeColor.setStroke()
 			NSBezierPath.fill(self.bounds)
 			NSBezierPath.stroke(self.bounds)
 			
-			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemBlue])
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemGreen])
 		}
 	}
 }
