@@ -20,6 +20,54 @@ struct DITLItem {
 	var enabled: Bool
 	var itemType: DITLItemType
 	var resourceID: Int // Only SInt16, but let's be consistent with ResForge's Resource type.
+	
+	static func read(_ reader: BinaryDataReader) -> DITLItem {
+		try! reader.advance(4)
+		var t: Int16 = try! reader.read()
+		var l: Int16 = try! reader.read()
+		var b: Int16 = try! reader.read()
+		var r: Int16 = try! reader.read()
+		let typeAndEnableFlag: UInt8 = try! reader.read()
+		let isEnabled = (typeAndEnableFlag & 0b10000000) == 0b10000000
+		let itemType = DITLItem.DITLItemType(rawValue: typeAndEnableFlag & 0b01111111 ) ?? .unknown
+		
+		var text = ""
+		var resourceID: Int = 0
+		switch itemType {
+		case .checkBox, .radioButton, .button, .staticText:
+			text = try! reader.readPString()
+			if (reader.bytesRead % 2) != 0 {
+				try! reader.advance(1)
+			}
+		case .editText:
+			l -= 3;
+			t -= 3;
+			r += 3;
+			b += 3;
+			text = try! reader.readPString()
+			if (reader.bytesRead % 2) != 0 {
+				try! reader.advance(1)
+			}
+		case .control, .icon, .picture:
+			try! reader.advance(1)
+			let resID16: Int16 = try! reader.read()
+			resourceID = Int(resID16)
+		case .helpItem:
+			try! reader.advance(1)
+			try! reader.advance(2) // TODO: Handle helpItem type.
+			let resID16: Int16 = try! reader.read()
+			resourceID = Int(resID16)
+			try! reader.advance(2) // TODO: Handle item number.
+		default:
+			let reserved: UInt8 = try! reader.read()
+			try! reader.advance(Int(reserved))
+			if (reader.bytesRead % 2) != 0 {
+				try! reader.advance(1)
+			}
+		}
+
+		return DITLItem(itemView: DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r - l), height: Double(b - t))), title: text, type: itemType), enabled: isEnabled, itemType: itemType, resourceID: resourceID)
+	}
 }
 
 class DialogEditorWindowController: AbstractEditor, ResourceEditor {
@@ -72,20 +120,8 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		var itemCount: Int = Int(itemCountMinusOne) + 1
 		
 		while itemCount > 0 {
-			try! reader.advance(4)
-			let t: Int16 = try! reader.read()
-			let l: Int16 = try! reader.read()
-			let b: Int16 = try! reader.read()
-			let r: Int16 = try! reader.read()
-			let typeAndEnableFlag: UInt8 = try! reader.read()
-			let text = try! reader.readPString()
-			if (reader.bytesRead % 2) != 0 {
-				try! reader.advance(1)
-			}
-			let isEnabled = (typeAndEnableFlag & 0b10000000) == 0b10000000
-			let itemType = DITLItem.DITLItemType(rawValue: typeAndEnableFlag & 0b01111111 ) ?? .unknown
-			
-			items.append(DITLItem(itemView: DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r - l), height: Double(b - t))), title: text, type: itemType), enabled: isEnabled, itemType: itemType, resourceID: 0))
+			let item = DITLItem.read(reader)
+			items.append(item)
 
 			itemCount -= 1
 		}
@@ -157,7 +193,7 @@ class DITLItemView : NSView {
 			NSBezierPath.fill(self.bounds)
 			NSBezierPath.stroke(self.bounds)
 			
-			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemBlue])
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemBlue, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 //		case .helpItem:
 //
 		case .button:
@@ -171,7 +207,7 @@ class DITLItemView : NSView {
 			
 			let ps = NSMutableParagraphStyle()
 			ps.alignment = .center
-			let attrs: [NSAttributedString.Key:Any] = [.foregroundColor: strokeColor, .paragraphStyle: ps]
+			let attrs: [NSAttributedString.Key:Any] = [.foregroundColor: strokeColor, .paragraphStyle: ps, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!]
 			let measuredSize = title.size(withAttributes: attrs)
 			var textBox = self.bounds
 			textBox.origin.y -= (textBox.size.height - measuredSize.height) / 2
@@ -187,7 +223,7 @@ class DITLItemView : NSView {
 			NSBezierPath.stroke(box)
 			NSBezierPath.fill(box)
 			
-			title.draw(at: NSPoint(x: box.maxX + 4, y: 0), withAttributes: [.foregroundColor: strokeColor])
+			title.draw(at: NSPoint(x: box.maxX + 4, y: 0), withAttributes: [.foregroundColor: strokeColor, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		case .radioButton:
 			let fillColor = NSColor.white
 			let strokeColor = NSColor.black
@@ -200,7 +236,7 @@ class DITLItemView : NSView {
 			lozenge.fill()
 			lozenge.stroke()
 			
-			title.draw(at: NSPoint(x: box.maxX + 4, y: 0), withAttributes: [.foregroundColor: strokeColor])
+			title.draw(at: NSPoint(x: box.maxX + 4, y: 0), withAttributes: [.foregroundColor: strokeColor, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		case .control:
 			let fillColor = NSColor.white
 			let strokeColor = NSColor.black
@@ -209,7 +245,7 @@ class DITLItemView : NSView {
 			NSBezierPath.fill(self.bounds)
 			NSBezierPath.stroke(self.bounds)
 		case .staticText:
-			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.black])
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.black, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		case .editText:
 			let fillColor = NSColor.white
 			let strokeColor = NSColor.black
@@ -218,7 +254,7 @@ class DITLItemView : NSView {
 			NSBezierPath.fill(self.bounds)
 			NSBezierPath.stroke(self.bounds)
 			
-			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: strokeColor])
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: strokeColor, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		case .icon:
 			NSColor.darkGray.setFill()
 			NSBezierPath.fill(self.bounds)
@@ -242,7 +278,7 @@ class DITLItemView : NSView {
 			NSBezierPath.fill(self.bounds)
 			NSBezierPath.stroke(self.bounds)
 			
-			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemGreen])
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemGreen, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		}
 		
 		if selected {
