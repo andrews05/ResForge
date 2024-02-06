@@ -66,7 +66,8 @@ struct DITLItem {
 			}
 		}
 
-		return DITLItem(itemView: DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r - l), height: Double(b - t))), title: text, type: itemType, resourceID: resourceID, manager: manager), enabled: isEnabled, itemType: itemType, resourceID: resourceID)
+		let view = DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r - l), height: Double(b - t))), title: text, type: itemType, resourceID: resourceID, manager: manager)
+		return DITLItem(itemView: view, enabled: isEnabled, itemType: itemType, resourceID: resourceID)
 	}
 }
 
