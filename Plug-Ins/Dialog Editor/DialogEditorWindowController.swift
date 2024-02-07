@@ -29,44 +29,44 @@ struct DITLItem {
 		var r: Int16 = try! reader.read()
 		let typeAndEnableFlag: UInt8 = try! reader.read()
 		let isEnabled = (typeAndEnableFlag & 0b10000000) == 0b10000000
-		let itemType = DITLItem.DITLItemType(rawValue: typeAndEnableFlag & 0b01111111 ) ?? .unknown
+		let rawItemType: UInt8 = typeAndEnableFlag & 0b01111111
+		let itemType = DITLItem.DITLItemType(rawValue: rawItemType ) ?? .unknown
 		
 		var text = ""
 		var resourceID: Int = 0
 		switch itemType {
 		case .checkBox, .radioButton, .button, .staticText:
 			text = try! reader.readPString()
-			if (reader.bytesRead % 2) != 0 {
-				try! reader.advance(1)
-			}
 		case .editText:
 			l -= 3;
 			t -= 3;
 			r += 3;
 			b += 3;
 			text = try! reader.readPString()
-			if (reader.bytesRead % 2) != 0 {
-				try! reader.advance(1)
-			}
 		case .control, .icon, .picture:
 			try! reader.advance(1)
 			let resID16: Int16 = try! reader.read()
 			resourceID = Int(resID16)
 		case .helpItem:
 			try! reader.advance(1)
-			try! reader.advance(2) // TODO: Handle helpItem type.
+			let helpItemType: Int16 = try! reader.read() // TODO: Handle helpItem type.
 			let resID16: Int16 = try! reader.read()
 			resourceID = Int(resID16)
-			try! reader.advance(2) // TODO: Handle item number.
+			if helpItemType == 8 /* HMScanAppendhdlg */ {
+				try! reader.advance(2) // TODO: Handle item number.
+			} // else HMScanhdlg or HMScanhrct
+		case .userItem:
+			let reserved: UInt8 = try! reader.read()
+			try! reader.advance(Int(reserved))
 		default:
 			let reserved: UInt8 = try! reader.read()
 			try! reader.advance(Int(reserved))
-			if (reader.bytesRead % 2) != 0 {
-				try! reader.advance(1)
-			}
+		}
+		if (reader.bytesRead % 2) != 0 {
+			try! reader.advance(1)
 		}
 
-		let view = DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r - l), height: Double(b - t))), title: text, type: itemType, resourceID: resourceID, manager: manager)
+		let view = DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r &- l), height: Double(b &- t))), title: text, type: itemType, resourceID: resourceID, manager: manager)
 		return DITLItem(itemView: view, enabled: isEnabled, itemType: itemType, resourceID: resourceID)
 	}
 }
@@ -168,6 +168,7 @@ class DITLItemView : NSView {
 	var type: DITLItem.DITLItemType
 	/// Is this object selected for editing/moving/resizing?
 	var selected = false
+	/// Resource referenced by this item (e.g. ICON ID for an icon item PICT for picture, CNTL for control etc.)
 	var resourceID = 0
 	/// Object that lets us look up icons and images.
 	private let manager: RFEditorManager
@@ -282,74 +283,32 @@ class DITLItemView : NSView {
 				let imgRep = DITLItemView.imageRep(for: resource, format: &format)
 				imgRep?.draw(in: self.bounds)
 			}
-		case .unknown:
-			let fillColor = NSColor.systemRed.blended(withFraction: 0.4, of: NSColor.controlBackgroundColor) ?? NSColor.lightGray
-			let strokeColor = NSColor.systemRed.blended(withFraction: 0.4, of: NSColor.controlTextColor) ?? NSColor.black
-			fillColor.setFill()
-			strokeColor.setStroke()
-			NSBezierPath.fill(self.bounds)
-			NSBezierPath.stroke(self.bounds)
-			
-			title.draw(at: NSZeroPoint, withAttributes: nil)
-		default:
+		case .helpItem:
 			let fillColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray
 			let strokeColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
 			fillColor.setFill()
 			strokeColor.setStroke()
 			NSBezierPath.fill(self.bounds)
 			NSBezierPath.stroke(self.bounds)
+		default:
+			let fillColor = NSColor.systemRed.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray
+			let strokeColor = NSColor.systemRed.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
+			fillColor.setFill()
+			strokeColor.setStroke()
+			NSBezierPath.fill(self.bounds)
+			NSBezierPath.stroke(self.bounds)
 			
-			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemGreen, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
+			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemRed, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		}
 		
 		if selected {
-			var knobSize = 8.0
-			let box = self.bounds
-			var middleKnobs = true
-			var minimalKnobs = false
-			if ((knobSize * 2.0) + 1) >= box.size.height || ((knobSize * 2.0) + 1) >= box.size.width {
-				minimalKnobs = true
-			} else if ((knobSize * 3.0) + 2) >= box.size.height || ((knobSize * 3.0) + 2) > box.size.width {
-				middleKnobs = false
-			} else if (knobSize + 1) > box.size.height || (knobSize + 1) > box.size.width {
-				knobSize = min(box.size.height - 1, box.size.width - 1)
-			}
 			NSColor.controlAccentColor.set()
 			NSBezierPath.stroke(self.bounds)
-			var tlBox = self.bounds
-			tlBox.size.width = knobSize
-			tlBox.size.height = knobSize
-			if !minimalKnobs {
-				NSBezierPath.fill(tlBox)
-				if middleKnobs {
-					tlBox.origin.x = box.midX - (tlBox.size.width / 2)
-					NSBezierPath.fill(tlBox)
-				}
-				if middleKnobs {
-					tlBox.origin.x = 0
-					tlBox.origin.y = box.midY - (tlBox.size.height / 2)
-					NSBezierPath.fill(tlBox)
-				}
-				tlBox.origin.x = 0
-				tlBox.origin.y = box.maxY - tlBox.size.height
-				NSBezierPath.fill(tlBox)
-				if middleKnobs {
-					tlBox.origin.x = box.midX - (tlBox.size.width / 2)
-					tlBox.origin.y = box.maxY - tlBox.size.height
-				}
-				NSBezierPath.fill(tlBox)
-				tlBox.origin.x = box.maxX - tlBox.size.width
-				tlBox.origin.y = box.maxY - tlBox.size.height
-				NSBezierPath.fill(tlBox)
-				if middleKnobs {
-					tlBox.origin.x = box.maxX - tlBox.size.width
-					tlBox.origin.y = box.midY - (tlBox.size.height / 2)
-					NSBezierPath.fill(tlBox)
+			for knob in calculateKnobRects() {
+				if let knob = knob {
+					NSBezierPath.fill(knob)
 				}
 			}
-			tlBox.origin.x = box.maxX - tlBox.size.width
-			tlBox.origin.y = 0
-			NSBezierPath.fill(tlBox)
 		}
 	}
 	
@@ -417,6 +376,66 @@ class DITLItemView : NSView {
 			}
 		}
 		return nil
+	}
+	
+	func calculateKnobRects() -> [NSRect?] {
+		var result = [NSRect?]()
+		var knobSize = 8.0
+		let box = self.bounds
+		var middleKnobs = true
+		var minimalKnobs = false
+		if ((knobSize * 2.0) + 1) >= box.size.height || ((knobSize * 2.0) + 1) >= box.size.width {
+			minimalKnobs = true
+		} else if ((knobSize * 3.0) + 2) >= box.size.height || ((knobSize * 3.0) + 2) > box.size.width {
+			middleKnobs = false
+		} else if (knobSize + 1) > box.size.height || (knobSize + 1) > box.size.width {
+			knobSize = min(box.size.height - 1, box.size.width - 1)
+		}
+
+		var tlBox = self.bounds
+		tlBox.size.width = knobSize
+		tlBox.size.height = knobSize
+		if !minimalKnobs {
+			result.append(tlBox)
+			if middleKnobs {
+				tlBox.origin.x = box.midX - (tlBox.size.width / 2)
+				result.append(tlBox)
+			} else {
+				result.append(nil)
+			}
+			if middleKnobs {
+				tlBox.origin.x = 0
+				tlBox.origin.y = box.midY - (tlBox.size.height / 2)
+				result.append(tlBox)
+			} else {
+				result.append(nil)
+			}
+			tlBox.origin.x = 0
+			tlBox.origin.y = box.maxY - tlBox.size.height
+			result.append(tlBox)
+			if middleKnobs {
+				tlBox.origin.x = box.midX - (tlBox.size.width / 2)
+				tlBox.origin.y = box.maxY - tlBox.size.height
+				result.append(tlBox)
+			} else {
+				result.append(nil)
+			}
+			tlBox.origin.x = box.maxX - tlBox.size.width
+			tlBox.origin.y = box.maxY - tlBox.size.height
+			result.append(tlBox)
+			if middleKnobs {
+				tlBox.origin.x = box.maxX - tlBox.size.width
+				tlBox.origin.y = box.midY - (tlBox.size.height / 2)
+				result.append(tlBox)
+			} else {
+				result.append(nil)
+			}
+		}
+		tlBox.origin.x = box.maxX - tlBox.size.width
+		tlBox.origin.y = 0
+		result.append(tlBox)
+		
+		return result
 	}
 }
 
