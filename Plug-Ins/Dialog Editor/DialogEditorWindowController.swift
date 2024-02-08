@@ -245,10 +245,29 @@ class DITLItemView : NSView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	func trackKnob(_ index: Int) {
+		print("Clicked knob \(index)")
+	}
+	
+	func trackDrag() {
+		print("Start dragging item")
+	}
+	
 	override func mouseDown(with event: NSEvent) {
 		needsDisplay = true
 		if event.modifierFlags.contains(.shift) {
 			selected = !selected
+		} else if selected {
+			var knobIndex = 0
+			let pos = convert(event.locationInWindow, from: nil)
+			for knob in calculateKnobRects() {
+				if let knob = knob, knob.contains(pos) {
+					trackKnob(knobIndex)
+					return
+				}
+				knobIndex += 1
+			}
+			trackDrag()
 		} else {
 			selected = true
 			for itemView in superview?.subviews ?? [] {
