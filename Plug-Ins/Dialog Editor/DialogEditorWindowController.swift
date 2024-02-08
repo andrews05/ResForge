@@ -20,7 +20,9 @@ struct DITLItem {
 	var enabled: Bool
 	var itemType: DITLItemType
 	var resourceID: Int // Only SInt16, but let's be consistent with ResForge's Resource type.
-	
+	var helpItemType = Int16(0)
+	var itemNumber = Int16(0)
+
 	static func read(_ reader: BinaryDataReader, manager: RFEditorManager) -> DITLItem {
 		try! reader.advance(4)
 		var t: Int16 = try! reader.read()
@@ -31,6 +33,8 @@ struct DITLItem {
 		let isEnabled = (typeAndEnableFlag & 0b10000000) == 0b10000000
 		let rawItemType: UInt8 = typeAndEnableFlag & 0b01111111
 		let itemType = DITLItem.DITLItemType(rawValue: rawItemType ) ?? .unknown
+		var helpItemType = Int16(0)
+		var itemNumber = Int16(0)
 		
 		var text = ""
 		var resourceID: Int = 0
@@ -49,11 +53,11 @@ struct DITLItem {
 			resourceID = Int(resID16)
 		case .helpItem:
 			try! reader.advance(1)
-			let helpItemType: Int16 = try! reader.read() // TODO: Handle helpItem type.
+			helpItemType = try! reader.read()
 			let resID16: Int16 = try! reader.read()
 			resourceID = Int(resID16)
 			if helpItemType == 8 /* HMScanAppendhdlg */ {
-				try! reader.advance(2) // TODO: Handle item number.
+				itemNumber = try! reader.read()
 			} // else HMScanhdlg or HMScanhrct
 		case .userItem:
 			let reserved: UInt8 = try! reader.read()
@@ -66,8 +70,50 @@ struct DITLItem {
 			try! reader.advance(1)
 		}
 
-		let view = DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r &- l), height: Double(b &- t))), title: text, type: itemType, resourceID: resourceID, manager: manager)
-		return DITLItem(itemView: view, enabled: isEnabled, itemType: itemType, resourceID: resourceID)
+		let view = DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r &- l), height: Double(b &- t))), title: text, type: itemType, enabled: isEnabled, resourceID: resourceID, manager: manager)
+		return DITLItem(itemView: view, enabled: isEnabled, itemType: itemType, resourceID: resourceID, helpItemType: helpItemType, itemNumber: itemNumber)
+	}
+	
+	func write(to writer: BinaryDataWriter) {
+		writer.write(UInt32(0))
+		let box = itemView.frame
+		var t = Int16(box.minY)
+		var l = Int16(box.minX)
+		var b = Int16(box.maxY)
+		var r = Int16(box.maxX)
+		
+		if itemType == .editText {
+			l += 3;
+			t += 3;
+			r += 3;
+			b += 3;
+		}
+		
+		writer.write(t)
+		writer.write(l)
+		writer.write(b)
+		writer.write(r)
+		writer.write(UInt8(itemType.rawValue | (itemView.enabled ? 0b10000000 : 0)))
+		
+		switch itemType {
+		case .checkBox, .radioButton, .button, .staticText:
+			try! writer.writePString(itemView.title)
+		case .editText:
+			try! writer.writePString(itemView.title)
+		case .control, .icon, .picture:
+			writer.write(UInt8(2))
+			writer.write(Int16(resourceID))
+		case .helpItem:
+			writer.write(UInt8((helpItemType == 8) ? 6 : 4))
+			writer.write(Int16(resourceID))
+			if helpItemType == 8 /* HMScanAppendhdlg */ {
+				writer.write(Int16(itemNumber))
+			}
+		case .userItem:
+			writer.write(UInt8(0))
+		default:
+			writer.write(UInt8(0))
+		}
 	}
 }
 
@@ -170,12 +216,15 @@ class DITLItemView : NSView {
 	var selected = false
 	/// Resource referenced by this item (e.g. ICON ID for an icon item PICT for picture, CNTL for control etc.)
 	var resourceID = 0
+	/// Is this item clickable?
+	var enabled: Bool
 	/// Object that lets us look up icons and images.
 	private let manager: RFEditorManager
 
-	init(frame frameRect: NSRect, title: String, type: DITLItem.DITLItemType, resourceID: Int, manager: RFEditorManager) {
+	init(frame frameRect: NSRect, title: String, type: DITLItem.DITLItemType, enabled: Bool, resourceID: Int, manager: RFEditorManager) {
 		self.title = title
 		self.type = type
+		self.enabled = enabled
 		self.resourceID = resourceID
 		self.manager = manager
 		super.init(frame: frameRect)
