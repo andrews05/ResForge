@@ -207,17 +207,35 @@ public class DITLDocumentView : NSView {
 	}
 	
 	public override func mouseDown(with event: NSEvent) {
+		var didChange = false
 		for itemView in subviews {
 			if let itemView = itemView as? DITLItemView,
 			   itemView.selected {
 				itemView.selected = false
 				itemView.needsDisplay = true
+				didChange = true
 			}
+		}
+		if didChange {
+			NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: self)
 		}
 	}
 }
 
+extension DITLDocumentView {
+	
+	/// Notification sent whenever a ``DITLItemView`` inside this view is clicked and it causes a change in selected items.
+	/// Also sent when this view itself is clicked and all items are deselected.
+	static let selectionDidChangeNotification = Notification.Name("DITLItemViewSelectionDidChangeNotification")
+	
+	/// Notification sent whenever a ``DITLItemView`` inside this view is resized or moved.
+	static let itemFrameDidChangeNotification = Notification.Name("DITLItemViewFrameDidChangeNotification")
+
+}
+
+
 /// View that shows a simple preview for a System 7 DITL item:
+/// This view must be an immediate subview of a ``DITLDocumentView``.
 class DITLItemView : NSView {
 	/// The text to display on the item (button title or text view text:
 	var title: String
@@ -231,7 +249,7 @@ class DITLItemView : NSView {
 	var enabled: Bool
 	/// Object that lets us look up icons and images.
 	private let manager: RFEditorManager
-
+	
 	init(frame frameRect: NSRect, title: String, type: DITLItem.DITLItemType, enabled: Bool, resourceID: Int, manager: RFEditorManager) {
 		self.title = title
 		self.type = type
@@ -245,29 +263,59 @@ class DITLItemView : NSView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func trackKnob(_ index: Int) {
-		print("Clicked knob \(index)")
+	func trackKnob(_ index: Int, for event: NSEvent) {
+		NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
 	}
 	
-	func trackDrag() {
-		print("Start dragging item")
+	func trackDrag(for startEvent: NSEvent) {
+		var lastPos = superview!.convert(startEvent.locationInWindow, from: nil)
+		var keepTracking = true
+		var didChange = false
+		while keepTracking {
+			let currEvent = NSApplication.shared.nextEvent(matching: [.leftMouseDown, .leftMouseDragged, .leftMouseUp], until: Date.distantFuture, inMode: .eventTracking, dequeue: true)
+			if let currEvent = currEvent {
+				switch currEvent.type {
+				case .leftMouseDown, .leftMouseUp:
+					keepTracking = false
+				case .leftMouseDragged:
+					let currPos = superview!.convert(currEvent.locationInWindow, from: nil)
+					let distance = NSSize(width: currPos.x - lastPos.x, height: currPos.y - lastPos.y)
+					for itemView in superview?.subviews ?? [] {
+						if let itemView = itemView as? DITLItemView,
+						   itemView.selected {
+							let box = itemView.frame.offsetBy(dx: distance.width, dy: distance.height)
+							itemView.frame = box
+							didChange = true
+						}
+					}
+					lastPos = currPos
+				default:
+					keepTracking = false
+				}
+			}
+		}
+		if didChange {
+			print("moved.")
+			NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
+		}
 	}
 	
 	override func mouseDown(with event: NSEvent) {
 		needsDisplay = true
 		if event.modifierFlags.contains(.shift) {
 			selected = !selected
+			NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: superview)
 		} else if selected {
 			var knobIndex = 0
 			let pos = convert(event.locationInWindow, from: nil)
 			for knob in calculateKnobRects() {
 				if let knob = knob, knob.contains(pos) {
-					trackKnob(knobIndex)
+					trackKnob(knobIndex, for: event)
 					return
 				}
 				knobIndex += 1
 			}
-			trackDrag()
+			trackDrag(for: event)
 		} else {
 			selected = true
 			for itemView in superview?.subviews ?? [] {
@@ -277,6 +325,8 @@ class DITLItemView : NSView {
 					itemView.needsDisplay = true
 				}
 			}
+			NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: superview)
+			trackDrag(for: event)
 		}
 	}
 	
@@ -402,6 +452,88 @@ class DITLItemView : NSView {
 		}
 	}
 	
+	func calculateKnobRects() -> [NSRect?] {
+		var result = [NSRect?]()
+		var knobSize = 8.0
+		let box = self.bounds
+		var middleKnobs = true
+		var minimalKnobs = false
+		if ((knobSize * 2.0) + 1) >= box.size.height || ((knobSize * 2.0) + 1) >= box.size.width {
+			minimalKnobs = true
+		} else if ((knobSize * 3.0) + 2) >= box.size.height || ((knobSize * 3.0) + 2) > box.size.width {
+			middleKnobs = false
+		} else if (knobSize + 1) > box.size.height || (knobSize + 1) > box.size.width {
+			knobSize = min(box.size.height - 1, box.size.width - 1)
+		}
+		
+		var tlBox = self.bounds
+		tlBox.size.width = knobSize
+		tlBox.size.height = knobSize
+		tlBox.origin.x = box.maxX - tlBox.size.width
+		tlBox.origin.y = box.maxY - tlBox.size.height
+		result.append(tlBox)
+		if !minimalKnobs {
+			if middleKnobs {
+				tlBox.origin.x = box.maxX - tlBox.size.width
+				tlBox.origin.y = box.midY - (tlBox.size.height / 2)
+				result.append(tlBox)
+			} else {
+				result.append(nil)
+			}
+			tlBox.origin.x = box.maxX - tlBox.size.width
+			tlBox.origin.y = 0
+			result.append(tlBox)
+			if middleKnobs {
+				tlBox.origin.x = box.midX - (tlBox.size.width / 2)
+				tlBox.origin.y = 0
+				result.append(tlBox)
+			} else {
+				result.append(nil)
+			}
+			tlBox.origin.x = 0
+			tlBox.origin.y = 0
+			result.append(tlBox)
+			if middleKnobs {
+				tlBox.origin.x = 0
+				tlBox.origin.y = box.midY - (tlBox.size.height / 2)
+				result.append(tlBox)
+			} else {
+				result.append(nil)
+			}
+			tlBox.origin.x = 0
+			tlBox.origin.y = box.maxY - tlBox.size.height
+			result.append(tlBox)
+			if middleKnobs {
+				tlBox.origin.x = box.midX - (tlBox.size.width / 2)
+				tlBox.origin.y = box.maxY - tlBox.size.height
+				result.append(tlBox)
+			} else {
+				result.append(nil)
+			}
+		} else {
+			result.append(nil)
+			result.append(nil)
+			result.append(nil)
+			result.append(nil)
+			result.append(nil)
+			result.append(nil)
+			result.append(nil)
+		}
+		
+		return result
+	}
+	
+	public override var isFlipped: Bool {
+		get {
+			return type != .icon && type != .picture
+		}
+		set(newValue) {
+			
+		}
+	}
+}
+
+extension DITLItemView {
 	private static func imageRep(for resource: Resource, format: inout UInt32) -> NSImageRep? {
 		let data = resource.data
 		guard !data.isEmpty else {
@@ -468,73 +600,6 @@ class DITLItemView : NSView {
 		return nil
 	}
 	
-	func calculateKnobRects() -> [NSRect?] {
-		var result = [NSRect?]()
-		var knobSize = 8.0
-		let box = self.bounds
-		var middleKnobs = true
-		var minimalKnobs = false
-		if ((knobSize * 2.0) + 1) >= box.size.height || ((knobSize * 2.0) + 1) >= box.size.width {
-			minimalKnobs = true
-		} else if ((knobSize * 3.0) + 2) >= box.size.height || ((knobSize * 3.0) + 2) > box.size.width {
-			middleKnobs = false
-		} else if (knobSize + 1) > box.size.height || (knobSize + 1) > box.size.width {
-			knobSize = min(box.size.height - 1, box.size.width - 1)
-		}
-
-		var tlBox = self.bounds
-		tlBox.size.width = knobSize
-		tlBox.size.height = knobSize
-		if !minimalKnobs {
-			result.append(tlBox)
-			if middleKnobs {
-				tlBox.origin.x = box.midX - (tlBox.size.width / 2)
-				result.append(tlBox)
-			} else {
-				result.append(nil)
-			}
-			if middleKnobs {
-				tlBox.origin.x = 0
-				tlBox.origin.y = box.midY - (tlBox.size.height / 2)
-				result.append(tlBox)
-			} else {
-				result.append(nil)
-			}
-			tlBox.origin.x = 0
-			tlBox.origin.y = box.maxY - tlBox.size.height
-			result.append(tlBox)
-			if middleKnobs {
-				tlBox.origin.x = box.midX - (tlBox.size.width / 2)
-				tlBox.origin.y = box.maxY - tlBox.size.height
-				result.append(tlBox)
-			} else {
-				result.append(nil)
-			}
-			tlBox.origin.x = box.maxX - tlBox.size.width
-			tlBox.origin.y = box.maxY - tlBox.size.height
-			result.append(tlBox)
-			if middleKnobs {
-				tlBox.origin.x = box.maxX - tlBox.size.width
-				tlBox.origin.y = box.midY - (tlBox.size.height / 2)
-				result.append(tlBox)
-			} else {
-				result.append(nil)
-			}
-		} else {
-			result.append(nil)
-			result.append(nil)
-			result.append(nil)
-			result.append(nil)
-			result.append(nil)
-			result.append(nil)
-			result.append(nil)
-		}
-		tlBox.origin.x = box.maxX - tlBox.size.width
-		tlBox.origin.y = 0
-		result.append(tlBox)
-		
-		return result
-	}
 }
 
 /// View that makes our document view top-left aligned inside the scroll view:
