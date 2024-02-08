@@ -196,6 +196,7 @@ public class DITLDocumentView : NSView {
 			
 		}
 	}
+	
 	public override func draw(_ dirtyRect: NSRect) {
 		let fillColor = NSColor.white
 		let strokeColor = NSColor.systemGray
@@ -203,6 +204,16 @@ public class DITLDocumentView : NSView {
 		strokeColor.setStroke()
 		NSBezierPath.fill(self.bounds)
 		NSBezierPath.stroke(self.bounds)
+	}
+	
+	public override func mouseDown(with event: NSEvent) {
+		for itemView in subviews {
+			if let itemView = itemView as? DITLItemView,
+			   itemView.selected {
+				itemView.selected = false
+				itemView.needsDisplay = true
+			}
+		}
 	}
 }
 
@@ -235,8 +246,19 @@ class DITLItemView : NSView {
 	}
 	
 	override func mouseDown(with event: NSEvent) {
-		selected = !selected
-		setNeedsDisplay(self.bounds)
+		needsDisplay = true
+		if event.modifierFlags.contains(.shift) {
+			selected = !selected
+		} else {
+			selected = true
+			for itemView in superview?.subviews ?? [] {
+				if let itemView = itemView as? DITLItemView,
+				   itemView.selected, itemView != self {
+					itemView.selected = false
+					itemView.needsDisplay = true
+				}
+			}
+		}
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
