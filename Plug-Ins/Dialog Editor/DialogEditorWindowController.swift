@@ -520,6 +520,14 @@ class DITLItemView : NSView {
 			} else {
 				result.append(nil)
 			}
+		} else {
+			result.append(nil)
+			result.append(nil)
+			result.append(nil)
+			result.append(nil)
+			result.append(nil)
+			result.append(nil)
+			result.append(nil)
 		}
 		tlBox.origin.x = box.maxX - tlBox.size.width
 		tlBox.origin.y = 0
