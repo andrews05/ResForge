@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DialogEditorWindowController">
             <connections>
+                <outlet property="enabledCheckbox" destination="11T-1S-gY8" id="57M-3r-kJJ"/>
                 <outlet property="resourceIDFiekdChanged" destination="i1l-K3-SCv" id="WiT-3e-zoV"/>
                 <outlet property="resourceIDField" destination="i1l-K3-SCv" id="kEj-G1-Gxp"/>
                 <outlet property="scrollView" destination="PtH-kU-h2h" id="H0x-kR-Ai3"/>
@@ -86,17 +87,17 @@
                         </textFieldCell>
                     </textField>
                     <tabView fixedFrame="YES" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="ipL-Ip-iTR">
-                        <rect key="frame" x="404" y="0.0" width="191" height="303"/>
+                        <rect key="frame" x="396" y="0.0" width="199" height="280"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Text" identifier="" id="Yiz-OT-rFP">
                                 <view key="view" id="Ys6-V1-FwJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="191" height="303"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="199" height="280"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MqJ-am-yXp">
-                                            <rect key="frame" x="22" y="209" width="149" height="87"/>
+                                            <rect key="frame" x="30" y="186" width="149" height="87"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2t4-t7-BTv">
                                                 <font key="font" metaFont="system"/>
@@ -112,11 +113,11 @@
                             </tabViewItem>
                             <tabViewItem label="ID" identifier="" id="Dnz-q1-hRT">
                                 <view key="view" id="lfC-Az-1dk">
-                                    <rect key="frame" x="0.0" y="0.0" width="191" height="303"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="199" height="280"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i1l-K3-SCv">
-                                            <rect key="frame" x="62" y="277" width="109" height="21"/>
+                                            <rect key="frame" x="62" y="254" width="117" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="AR0-BI-X0u">
                                                 <font key="font" metaFont="system"/>
@@ -128,7 +129,7 @@
                                             </connections>
                                         </textField>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L3C-Xm-AFg">
-                                            <rect key="frame" x="35" y="280" width="21" height="16"/>
+                                            <rect key="frame" x="35" y="257" width="21" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="ID:" id="8Z9-ZU-7bX">
                                                 <font key="font" metaFont="system"/>
@@ -141,11 +142,23 @@
                             </tabViewItem>
                             <tabViewItem label="Item 2" identifier="" id="0Il-jQ-iOE">
                                 <view key="view" id="dzH-VD-D8K">
+                                    <rect key="frame" x="0.0" y="0.0" width="199" height="280"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </view>
                             </tabViewItem>
                         </tabViewItems>
                     </tabView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="11T-1S-gY8">
+                        <rect key="frame" x="466" y="285" width="75" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Chy-3x-QLx">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="enabledCheckBoxChanged:" target="-2" id="Hs6-yc-zUU"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="PtH-kU-h2h" secondAttribute="trailing" constant="200" id="EvW-dZ-3nV"/>

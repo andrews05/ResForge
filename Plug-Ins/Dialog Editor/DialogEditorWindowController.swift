@@ -129,6 +129,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	@IBOutlet var resourceIDField: NSTextField!
 	@IBOutlet var titleContentsField: NSTextField!
 	@IBOutlet var tabView: NSTabView!
+	@IBOutlet weak var enabledCheckbox: NSButton!
 	private var items = [DITLItem]()
 	
 	override var windowNibName: String {
@@ -168,6 +169,9 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 			if item.itemView.selected {
 				typePopup.selectItem(withTag: Int(item.itemType.rawValue))
 				typePopup.isEnabled = true
+				enabledCheckbox.state = item.enabled ? .on : .off
+				enabledCheckbox.isEnabled = true
+
 				switch item.itemType {
 				case .userItem, .unknown, .helpItem:
 					tabView.selectTabViewItem(at: 2)
@@ -181,6 +185,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 				return
 			}
 		}
+		enabledCheckbox.isEnabled = false
 		typePopup.isEnabled = false
 	}
 	
@@ -352,6 +357,26 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 			if itemView.selected {
 				items[itemIndex].resourceID = newID
 				itemView.resourceID = newID
+				itemView.needsDisplay = true
+				didChange = true
+			}
+			itemIndex += 1
+		}
+		reflectSelectedItem()
+		if didChange {
+			self.setDocumentEdited(true)
+		}
+	}
+	
+	@IBAction func enabledCheckBoxChanged(_ sender: Any) {
+		var didChange = false
+		var itemIndex = 0
+		let newState = enabledCheckbox.state == .on
+		for item in items {
+			let itemView = item.itemView
+			if itemView.selected {
+				items[itemIndex].enabled = newState
+				itemView.enabled = newState
 				itemView.needsDisplay = true
 				didChange = true
 			}
