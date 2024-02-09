@@ -162,7 +162,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		self.setDocumentEdited(true)
 	}
 	
-	@objc func selectedItemDidChange(_ notification: Notification) {
+	func reflectSelectedItem() {
 		for item in items {
 			if item.itemView.selected {
 				typePopup.selectItem(withTag: Int(item.itemType.rawValue))
@@ -181,6 +181,10 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 			}
 		}
 		typePopup.isEnabled = false
+	}
+	
+	@objc func selectedItemDidChange(_ notification: Notification) {
+		reflectSelectedItem()
 	}
 	
 	/// Reload the views representing our ``items`` list.
@@ -291,16 +295,33 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		let newItem = DITLItem(itemView: view, enabled: true, itemType: .button, resourceID: 0, helpItemType: 0, itemNumber: 0)
 		items.append(newItem)
 		self.scrollView.documentView?.addSubview(view)
+		NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
 		self.setDocumentEdited(true)
+	}
+	
+	@IBAction func delete(_ sender: Any?) {
+		var didChange = false
+		for itemIndex in (0 ..< items.count).reversed() {
+			let itemView = items[itemIndex].itemView
+			if itemView.selected {
+				itemView.removeFromSuperview()
+				items.remove(at: itemIndex)
+				didChange = true
+			}
+		}
+		reflectSelectedItem()
+		if didChange {
+			self.setDocumentEdited(true)
+		}
 	}
 	
 	@IBAction func typePopupSelectionDidChange(_ sender: NSPopUpButton) {
 		var didChange = false
 		var itemIndex = 0
+		let newType = DITLItem.DITLItemType(rawValue: UInt8(sender.selectedTag())) ?? .unknown
 		for item in items {
 			let itemView = item.itemView
 			if itemView.selected {
-				let newType = DITLItem.DITLItemType(rawValue: UInt8(sender.selectedTag())) ?? .unknown
 				items[itemIndex].itemType = newType
 				itemView.type = newType
 				itemView.needsDisplay = true
@@ -308,6 +329,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 			}
 			itemIndex += 1
 		}
+		reflectSelectedItem()
 		if didChange {
 			self.setDocumentEdited(true)
 		}
@@ -336,6 +358,7 @@ public class DITLDocumentView : NSView {
 	}
 	
 	public override func mouseDown(with event: NSEvent) {
+		window?.makeFirstResponder(self)
 		var didChange = false
 		for itemView in subviews {
 			if let itemView = itemView as? DITLItemView,
@@ -348,6 +371,18 @@ public class DITLDocumentView : NSView {
 		if didChange {
 			NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: self)
 		}
+	}
+	
+	public override var canBecomeKeyView: Bool {
+		return true
+	}
+	
+	public override var acceptsFirstResponder: Bool {
+		return true
+	}
+	
+	public override func resignFirstResponder() -> Bool {
+		return true
 	}
 }
 
