@@ -3,11 +3,6 @@ import OrderedCollections
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=322
 
-enum QuickDrawError: Error {
-    case invalidData
-    case insufficientData
-}
-
 struct QDPixMap {
     static let size: UInt32 = 50
     static let pixmap: UInt16 = 0x8000
@@ -68,7 +63,7 @@ extension QDPixMap {
               pixelSize == 1 || pixelSize == 2 || pixelSize == 4 || pixelSize == 8,
               bytesPerRow >= bounds.width / (8 / Int(pixelSize))
         else {
-            throw QuickDrawError.invalidData
+            throw ImageReaderError.invalidData
         }
     }
 
@@ -98,7 +93,7 @@ extension QDPixMap {
 
     func imageRep(pixelData: Data, colorTable: [RGBColor], mask: Data? = nil) throws -> NSBitmapImageRep {
         guard pixelData.count >= pixelDataSize else {
-            throw QuickDrawError.insufficientData
+            throw ImageReaderError.insufficientData
         }
         let hasAlpha = mask != nil
         let channels = hasAlpha ? 4 : 3
@@ -152,7 +147,7 @@ extension QDPixMap {
     static func applyMask(_ mask: Data, to rep: NSBitmapImageRep) throws {
         let rowBytes = (rep.pixelsWide + 7) / 8
         guard mask.count == rowBytes * rep.pixelsHigh else {
-            throw QuickDrawError.invalidData
+            throw ImageReaderError.invalidData
         }
         // Loop over the pixels and set the alpha component according to the mask
         var bitmap = rep.bitmapData!
@@ -294,14 +289,14 @@ struct ColorTable {
         let device = flags == Self.device
         let size = Int(try reader.read() as Int16) + 1
         guard 0...256 ~= size else {
-            throw QuickDrawError.invalidData
+            throw ImageReaderError.invalidData
         }
 
         var colors = Array(repeating: RGBColor(), count: 256)
         for i in 0..<size {
             let value = Int(try reader.read() as Int16)
             guard device || 0..<256 ~= value else {
-                throw QuickDrawError.invalidData
+                throw ImageReaderError.invalidData
             }
             // Take high bytes only
             let red = UInt8(try reader.read() as UInt16 >> 8)

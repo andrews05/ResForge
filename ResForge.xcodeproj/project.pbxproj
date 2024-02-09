@@ -169,6 +169,7 @@
 		49D6D3B7271BAB15002DEA97 /* Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 497A93BD255BB49600900C7B /* Templates.rsrc */; };
 		49D6D3BB271BAC2C002DEA97 /* ElementKCHR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D3BA271BAC2B002DEA97 /* ElementKCHR.swift */; };
 		49D6D3C1271BAC80002DEA97 /* ElementFIXD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D3C0271BAC80002DEA97 /* ElementFIXD.swift */; };
+		49D6EA0E2B7603F400D358F6 /* Pxm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6EA0D2B7603F400D358F6 /* Pxm.swift */; };
 		49DA3A4D2550BD2E00821A7E /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49DA3A572550BD9000821A7E /* NovaTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 49EE72D82550B79600BEABDB /* NovaTools.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
@@ -508,6 +509,7 @@
 		49D6D382271BAAB3002DEA97 /* ElementUSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUSTR.swift; sourceTree = "<group>"; };
 		49D6D3BA271BAC2B002DEA97 /* ElementKCHR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKCHR.swift; sourceTree = "<group>"; };
 		49D6D3C0271BAC80002DEA97 /* ElementFIXD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementFIXD.swift; sourceTree = "<group>"; };
+		49D6EA0D2B7603F400D358F6 /* Pxm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pxm.swift; sourceTree = "<group>"; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
 		49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConflictResolver.swift; sourceTree = "<group>"; };
@@ -980,6 +982,7 @@
 				496674FD24BBC7CE00251406 /* ImageWindowController.swift */,
 				497BB1DB24F741E400858EF1 /* Icons.swift */,
 				4948E15B2B646D6700473FF3 /* PixMap.swift */,
+				49D6EA0D2B7603F400D358F6 /* Pxm.swift */,
 				4903B8412B6F04BA00805094 /* ColorCursor.swift */,
 				4903B8432B6F4F0700805094 /* ColorIcon.swift */,
 				4903B83F2B6EEFC700805094 /* PixelPattern.swift */,
@@ -1481,6 +1484,7 @@
 				4948E15C2B646D6700473FF3 /* PixMap.swift in Sources */,
 				4903B8402B6EEFC700805094 /* PixelPattern.swift in Sources */,
 				497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */,
+				49D6EA0E2B7603F400D358F6 /* Pxm.swift in Sources */,
 				4903B8442B6F4F0700805094 /* ColorIcon.swift in Sources */,
 				496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */,
 			);

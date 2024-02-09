@@ -61,7 +61,7 @@ extension QDCCrsr {
         crsrXTable = try reader.read()
         crsrID = try reader.read()
         guard crsrType == Self.typeColor, crsrMap != 0, crsrData != 0 else {
-            throw QuickDrawError.invalidData
+            throw ImageReaderError.invalidData
         }
     }
 

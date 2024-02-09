@@ -71,7 +71,7 @@ extension QDPixPat {
         patXMap = try reader.read()
         pat1Data = try reader.read()
         guard patType == Self.typeColor, patMap != 0, patData != 0 else {
-            throw QuickDrawError.invalidData
+            throw ImageReaderError.invalidData
         }
     }
 

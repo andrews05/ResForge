@@ -1,6 +1,11 @@
 import Cocoa
 import RFSupport
 
+enum ImageReaderError: Error {
+    case invalidData
+    case insufficientData
+}
+
 class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
     static let supportedTypes = [
         "PICT",
@@ -22,7 +27,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         "icm8",
         "CURS",
         "PAT ",
-        "PAT#"
+        "PAT#",
+        "pxm#"
     ]
 
     let resource: Resource
@@ -248,7 +254,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
 
     static func maxThumbnailSize(for resourceType: String) -> Int? {
         switch resourceType {
-        case "PICT", "PNG ":
+        case "PICT", "PNG ", "pxm#":
             return nil
         default:
             return 64
@@ -293,6 +299,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             // This just stacks all the patterns vertically
             let count = Int(data[data.startIndex + 1])
             return Icons.rep(data.dropFirst(2), width: 8, height: 8 * count, depth: 1)
+        case "pxm#":
+            return Pxm.rep(data, format: &format)
         default:
             return NSBitmapImageRep(data: data)
         }
