@@ -142,10 +142,25 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	}
 	
 	override func windowDidLoad() {
+		NotificationCenter.default.addObserver(self, selector: #selector(itemDoubleClicked(_:)), name: DITLDocumentView.itemDoubleClickedNotification, object: self.scrollView.documentView)
+		NotificationCenter.default.addObserver(self, selector: #selector(itemFrameDidChange(_:)), name: DITLDocumentView.itemFrameDidChangeNotification, object: self.scrollView.documentView)
+		NotificationCenter.default.addObserver(self, selector: #selector(selectedItemDidChange(_:)), name: DITLDocumentView.selectionDidChangeNotification, object: self.scrollView.documentView)
 		self.loadItems()
 		self.updateView()
 	}
 		
+	@objc func itemDoubleClicked(_ notification: Notification) {
+		print("double clicked.")
+	}
+	
+	@objc func itemFrameDidChange(_ notification: Notification) {
+		print("resized/moved.")
+	}
+	
+	@objc func selectedItemDidChange(_ notification: Notification) {
+		print("selection changed.")
+	}
+	
 	private func updateView() {
 		var maxSize = NSSize(width: 128, height: 64)
 		for item in items {
@@ -230,7 +245,13 @@ extension DITLDocumentView {
 	
 	/// Notification sent whenever a ``DITLItemView`` inside this view is resized or moved.
 	static let itemFrameDidChangeNotification = Notification.Name("DITLItemViewFrameDidChangeNotification")
+	
+	/// Notification sent whenever a ``DITLItemView`` inside this view is double clicked.
+	static let itemDoubleClickedNotification = Notification.Name("DITLItemDoubleClickedNotification")
 
+	/// Notification userInfo key under which the clicked view for
+	/// ``itemDoubleClickedNotification`` is stored.
+	static let doubleClickedItemView = "DITLItemDoubleClickedItem"
 }
 
 
@@ -354,7 +375,11 @@ class DITLItemView : NSView {
 				}
 				knobIndex += 1
 			}
-			trackDrag(for: event)
+			if (event.clickCount % 2) == 0 {
+				NotificationCenter.default.post(name: DITLDocumentView.itemDoubleClickedNotification, object: superview, userInfo: [DITLDocumentView.doubleClickedItemView: self])
+			} else {
+				trackDrag(for: event)
+			}
 		} else {
 			selected = true
 			for itemView in superview?.subviews ?? [] {
@@ -365,7 +390,11 @@ class DITLItemView : NSView {
 				}
 			}
 			NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: superview)
-			trackDrag(for: event)
+			if (event.clickCount % 2) == 0 {
+				NotificationCenter.default.post(name: DITLDocumentView.itemDoubleClickedNotification, object: superview, userInfo: [DITLDocumentView.doubleClickedItemView: self])
+			} else {
+				trackDrag(for: event)
+			}
 		}
 	}
 	
