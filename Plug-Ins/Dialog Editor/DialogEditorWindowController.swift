@@ -155,6 +155,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	
 	@objc func itemFrameDidChange(_ notification: Notification) {
 		print("resized/moved.")
+		self.setDocumentEdited(true)
 	}
 	
 	@objc func selectedItemDidChange(_ notification: Notification) {
@@ -177,6 +178,10 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	}
 	
 	private func loadItems() {
+		if resource.data.isEmpty {
+			items = []
+			return
+		}
 		let reader = BinaryDataReader(resource.data)
 		let itemCountMinusOne: UInt16 = try! reader.read()
 		var itemCount: Int = Int(itemCountMinusOne) + 1
@@ -190,6 +195,15 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	}
 			
 	@IBAction func saveResource(_ sender: Any) {
+		let writer = BinaryDataWriter()
+
+		let numItems: Int16 = Int16(items.count) - 1
+		writer.write(numItems)
+		for item in items {
+			item.write(to: writer)
+		}
+		resource.data = writer.data
+		
 		self.setDocumentEdited(false)
 	}
 	
