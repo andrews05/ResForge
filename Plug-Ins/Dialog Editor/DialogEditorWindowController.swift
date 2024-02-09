@@ -250,6 +250,11 @@ class DITLItemView : NSView {
 	/// Object that lets us look up icons and images.
 	private let manager: RFEditorManager
 	
+	static let rightEdgeIndices = [0, 1, 2]
+	static let leftEdgeIndices = [4, 5, 6]
+	static let bottomEdgeIndices = [0, 6, 7]
+	static let topEdgeIndices = [2, 3, 4]
+	
 	init(frame frameRect: NSRect, title: String, type: DITLItem.DITLItemType, enabled: Bool, resourceID: Int, manager: RFEditorManager) {
 		self.title = title
 		self.type = type
@@ -263,8 +268,43 @@ class DITLItemView : NSView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func trackKnob(_ index: Int, for event: NSEvent) {
-		NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
+	func trackKnob(_ index: Int, for startEvent: NSEvent) {
+		var lastPos = superview!.convert(startEvent.locationInWindow, from: nil)
+		var keepTracking = true
+		var didChange = false
+		while keepTracking {
+			let currEvent = NSApplication.shared.nextEvent(matching: [.leftMouseDown, .leftMouseDragged, .leftMouseUp], until: Date.distantFuture, inMode: .eventTracking, dequeue: true)
+			if let currEvent = currEvent {
+				switch currEvent.type {
+				case .leftMouseDown, .leftMouseUp:
+					keepTracking = false
+				case .leftMouseDragged:
+					let currPos = superview!.convert(currEvent.locationInWindow, from: nil)
+					let distance = NSSize(width: currPos.x - lastPos.x, height: currPos.y - lastPos.y)
+					var box = frame
+					if DITLItemView.rightEdgeIndices.contains(index) {
+						box.size.width += distance.width
+					} else if DITLItemView.leftEdgeIndices.contains(index) {
+						box.size.width -= distance.width
+						box.origin.x += distance.width
+					}
+					if DITLItemView.bottomEdgeIndices.contains(index) {
+						box.size.height += distance.height
+					} else if DITLItemView.topEdgeIndices.contains(index) {
+						box.size.height -= distance.height
+						box.origin.y += distance.height
+					}
+					frame = box
+					didChange = true
+					lastPos = currPos
+				default:
+					keepTracking = false
+				}
+			}
+		}
+		if didChange {
+			NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
+		}
 	}
 	
 	func trackDrag(for startEvent: NSEvent) {
@@ -295,7 +335,6 @@ class DITLItemView : NSView {
 			}
 		}
 		if didChange {
-			print("moved.")
 			NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
 		}
 	}
