@@ -17,21 +17,21 @@
         <window title="Dialog Editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="17">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="0.0" y="556" width="320" height="240"/>
+            <rect key="contentRect" x="0.0" y="556" width="595" height="352"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <value key="minSize" type="size" width="240" height="120"/>
             <view key="contentView" id="18">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                <rect key="frame" x="0.0" y="0.0" width="595" height="352"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PtH-kU-h2h">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                    <scrollView misplaced="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PtH-kU-h2h">
+                        <rect key="frame" x="0.0" y="0.0" width="396" height="352"/>
                         <clipView key="contentView" id="Yh0-a6-CPU" customClass="DITLFlippedClipView" customModule="Dialog_Editor" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                            <rect key="frame" x="0.0" y="0.0" width="396" height="352"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view id="z3g-LT-GbE" userLabel="Document View" customClass="DITLDocumentView" customModule="Dialog_Editor" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="261" height="169"/>
+                                    <rect key="frame" x="0.0" y="112" width="261" height="169"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 </view>
                             </subviews>
@@ -46,15 +46,96 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e8F-r2-iZE">
+                        <rect key="frame" x="465" y="307" width="114" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="User Item" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="an1-Sn-UAD" id="3Cq-Sb-SFq">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="e76-Wt-JYt">
+                                <items>
+                                    <menuItem title="User Item" state="on" id="an1-Sn-UAD"/>
+                                    <menuItem title="Help Item" tag="1" id="ufY-lm-iqi"/>
+                                    <menuItem title="Button" tag="4" id="u09-mb-nCu"/>
+                                    <menuItem title="Check Box" tag="5" id="GXX-ni-dZ0"/>
+                                    <menuItem title="Radio Button" tag="6" id="AQ9-tp-rg4"/>
+                                    <menuItem title="Control" tag="7" id="qmg-f1-Hu7"/>
+                                    <menuItem title="Static Text" tag="8" id="kYE-vb-oiJ"/>
+                                    <menuItem title="Edit Text" tag="16" id="lRw-Ux-jn2"/>
+                                    <menuItem title="Icon" tag="32" id="dzZ-O9-9f1"/>
+                                    <menuItem title="Picture" tag="64" id="OBu-lx-ubf"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VXU-1J-Duj">
+                        <rect key="frame" x="424" y="314" width="38" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Type:" id="DVe-TA-Lst">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <tabView fixedFrame="YES" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="ipL-Ip-iTR">
+                        <rect key="frame" x="404" y="0.0" width="191" height="303"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <tabViewItems>
+                            <tabViewItem label="Text" identifier="" id="Yiz-OT-rFP">
+                                <view key="view" id="Ys6-V1-FwJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="191" height="303"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MqJ-am-yXp">
+                                            <rect key="frame" x="22" y="275" width="149" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2t4-t7-BTv">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="ID" identifier="" id="Dnz-q1-hRT">
+                                <view key="view" id="lfC-Az-1dk">
+                                    <rect key="frame" x="0.0" y="0.0" width="191" height="303"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i1l-K3-SCv">
+                                            <rect key="frame" x="62" y="277" width="109" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="AR0-BI-X0u">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L3C-Xm-AFg">
+                                            <rect key="frame" x="35" y="280" width="21" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="ID:" id="8Z9-ZU-7bX">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                        </tabViewItems>
+                    </tabView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="PtH-kU-h2h" secondAttribute="trailing" id="EvW-dZ-3nV"/>
+                    <constraint firstAttribute="trailing" secondItem="PtH-kU-h2h" secondAttribute="trailing" constant="200" id="EvW-dZ-3nV"/>
                     <constraint firstItem="PtH-kU-h2h" firstAttribute="top" secondItem="18" secondAttribute="top" id="FJ2-HP-YCk"/>
                     <constraint firstItem="PtH-kU-h2h" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="i7r-0i-0QW"/>
                     <constraint firstAttribute="bottom" secondItem="PtH-kU-h2h" secondAttribute="bottom" id="uj4-vb-8rd"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="65" y="268"/>
+            <point key="canvasLocation" x="202.5" y="324"/>
         </window>
     </objects>
 </document>
