@@ -163,7 +163,15 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	}
 	
 	@objc func selectedItemDidChange(_ notification: Notification) {
-		print("selection changed.")
+		for item in items {
+			if item.itemView.selected {
+				typePopup.selectItem(withTag: Int(item.itemType.rawValue))
+				titleContentsField.stringValue = item.itemView.title
+				typePopup.isEnabled = true
+				return
+			}
+		}
+		typePopup.isEnabled = false
 	}
 	
 	/// Reload the views representing our ``items`` list.
@@ -279,13 +287,17 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	
 	@IBAction func typePopupSelectionDidChange(_ sender: NSPopUpButton) {
 		var didChange = false
-		for itemView in scrollView.documentView?.subviews ?? [] {
-			if let itemView = itemView as? DITLItemView,
-			   itemView.selected {
-				itemView.type = DITLItem.DITLItemType(rawValue: UInt8(sender.selectedTag())) ?? .unknown
+		var itemIndex = 0
+		for item in items {
+			let itemView = item.itemView
+			if itemView.selected {
+				let newType = DITLItem.DITLItemType(rawValue: UInt8(sender.selectedTag())) ?? .unknown
+				items[itemIndex].itemType = newType
+				itemView.type = newType
 				itemView.needsDisplay = true
 				didChange = true
 			}
+			itemIndex += 1
 		}
 		if didChange {
 			self.setDocumentEdited(true)
