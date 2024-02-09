@@ -125,6 +125,10 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	let resource: Resource
 	private let manager: RFEditorManager
 	@IBOutlet var scrollView: NSScrollView!
+	@IBOutlet var typePopup: NSPopUpButton!
+	@IBOutlet var resourceIDField: NSTextField!
+	@IBOutlet var titleContentsField: NSTextField!
+	@IBOutlet var tabView: NSTabView!
 	private var items = [DITLItem]()
 	
 	override var windowNibName: String {
@@ -272,6 +276,22 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		self.scrollView.documentView?.addSubview(view)
 		self.setDocumentEdited(true)
 	}
+	
+	@IBAction func typePopupSelectionDidChange(_ sender: NSPopUpButton) {
+		var didChange = false
+		for itemView in scrollView.documentView?.subviews ?? [] {
+			if let itemView = itemView as? DITLItemView,
+			   itemView.selected {
+				itemView.type = DITLItem.DITLItemType(rawValue: UInt8(sender.selectedTag())) ?? .unknown
+				itemView.needsDisplay = true
+				didChange = true
+			}
+		}
+		if didChange {
+			self.setDocumentEdited(true)
+		}
+	}
+	
 }
 
 /// The "document area" of our scroll view, in which we show the DITL items.
