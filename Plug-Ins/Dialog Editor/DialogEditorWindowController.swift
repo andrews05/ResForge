@@ -230,8 +230,43 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		self.setDocumentEdited(false)
 	}
 	
-	@IBAction func createNewItem(_ sender: Any) {
+
+	func windowDidBecomeKey(_ notification: Notification) {
+		let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
+		createItem?.title = NSLocalizedString("Create New Item", comment: "")
+	}
+	
+	func windowDidResignKey(_ notification: Notification) {
+		let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
+		createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
+	}
+	
+	@IBAction func deselectAll(_ sender: Any?) {
+		for itemView in scrollView.documentView?.subviews ?? [] {
+			if let itemView = itemView as? DITLItemView,
+			   itemView.selected {
+				itemView.selected = false
+				itemView.needsDisplay = true
+			}
+		}
+		NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
+	}
+	
+	override func selectAll(_ sender: Any?) {
+		for itemView in scrollView.documentView?.subviews ?? [] {
+			if let itemView = itemView as? DITLItemView,
+			   !itemView.selected {
+				itemView.selected = true
+				itemView.needsDisplay = true
+			}
+		}
+		NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
+	}
+	
+	@IBAction func createNewItem(_ sender: Any?) {
+		deselectAll(nil)
 		let view = DITLItemView(frame: NSRect(origin: NSPoint(x: 10, y: 10), size: NSSize(width: 80, height: 20)), title: "Button", type: .button, enabled: true, resourceID: 0, manager: manager)
+		view.selected = true
 		let newItem = DITLItem(itemView: view, enabled: true, itemType: .button, resourceID: 0, helpItemType: 0, itemNumber: 0)
 		items.append(newItem)
 		self.scrollView.documentView?.addSubview(view)
