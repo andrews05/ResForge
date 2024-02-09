@@ -132,6 +132,11 @@
                                     </subviews>
                                 </view>
                             </tabViewItem>
+                            <tabViewItem label="Item 2" identifier="" id="0Il-jQ-iOE">
+                                <view key="view" id="dzH-VD-D8K">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </view>
+                            </tabViewItem>
                         </tabViewItems>
                     </tabView>
                 </subviews>

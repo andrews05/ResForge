@@ -166,8 +166,17 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		for item in items {
 			if item.itemView.selected {
 				typePopup.selectItem(withTag: Int(item.itemType.rawValue))
-				titleContentsField.stringValue = item.itemView.title
 				typePopup.isEnabled = true
+				switch item.itemType {
+				case .userItem, .unknown, .helpItem:
+					tabView.selectTabViewItem(at: 2)
+				case .button, .checkBox, .radioButton, .staticText, .editText:
+					tabView.selectTabViewItem(at: 0)
+					titleContentsField.stringValue = item.itemView.title
+				case .control, .icon, .picture:
+					tabView.selectTabViewItem(at: 1)
+					resourceIDField.integerValue = item.resourceID
+				}
 				return
 			}
 		}
