@@ -255,7 +255,7 @@ extension QDPixMap {
         let newRep = NSBitmapImageRep(bitmapDataPlanes: nil,
                                       pixelsWide: rep.pixelsWide,
                                       pixelsHigh: rep.pixelsHigh,
-                                      bitsPerSample: 32,
+                                      bitsPerSample: 8,
                                       samplesPerPixel: 4,
                                       hasAlpha: true,
                                       isPlanar: false,
