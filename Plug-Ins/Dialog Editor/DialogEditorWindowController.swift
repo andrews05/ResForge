@@ -187,7 +187,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 			createEmptyResource()
 		}
 		let reader = BinaryDataReader(resource.data)
-		let itemCountMinusOne: UInt16 = try! reader.read()
+		let itemCountMinusOne: Int16 = try! reader.read()
 		var itemCount: Int = Int(itemCountMinusOne) + 1
 		
 		while itemCount > 0 {
@@ -229,7 +229,14 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		
 		self.setDocumentEdited(false)
 	}
-				
+	
+	@IBAction func createNewItem(_ sender: Any) {
+		let view = DITLItemView(frame: NSRect(origin: NSPoint(x: 10, y: 10), size: NSSize(width: 80, height: 20)), title: "Button", type: .button, enabled: true, resourceID: 0, manager: manager)
+		let newItem = DITLItem(itemView: view, enabled: true, itemType: .button, resourceID: 0, helpItemType: 0, itemNumber: 0)
+		items.append(newItem)
+		self.scrollView.documentView?.addSubview(view)
+		self.setDocumentEdited(true)
+	}
 }
 
 /// The "document area" of our scroll view, in which we show the DITL items.
