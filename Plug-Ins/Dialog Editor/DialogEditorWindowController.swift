@@ -148,7 +148,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		self.loadItems()
 		self.updateView()
 	}
-		
+	
 	@objc func itemDoubleClicked(_ notification: Notification) {
 		print("double clicked.")
 	}
@@ -162,7 +162,11 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		print("selection changed.")
 	}
 	
+	/// Reload the views representing our ``items`` list.
 	private func updateView() {
+		for view in self.scrollView.documentView?.subviews ?? [] {
+			view.removeFromSuperview()
+		}
 		var maxSize = NSSize(width: 128, height: 64)
 		for item in items {
 			self.scrollView.documentView?.addSubview(item.itemView)
@@ -177,10 +181,10 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		self.scrollView.documentView?.clipsToBounds = true
 	}
 	
+	/// Parse the resource into our ``items`` list.
 	private func loadItems() {
 		if resource.data.isEmpty {
-			items = []
-			return
+			createEmptyResource()
 		}
 		let reader = BinaryDataReader(resource.data)
 		let itemCountMinusOne: UInt16 = try! reader.read()
@@ -193,7 +197,18 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 			itemCount -= 1
 		}
 	}
-			
+	
+	/// Create a valid but empty DITL resource. Used when we are opened for an empty resource.
+	private func createEmptyResource() {
+		let writer = BinaryDataWriter()
+		let numItems = Int16(-1)
+		writer.write(numItems)
+		resource.data = writer.data
+		
+		self.setDocumentEdited(true)
+	}
+	
+	/// Write the current state of the ``items`` list back to the resource.
 	@IBAction func saveResource(_ sender: Any) {
 		let writer = BinaryDataWriter()
 
@@ -207,6 +222,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		self.setDocumentEdited(false)
 	}
 	
+	/// Revert the resource to its on-disk state.
 	@IBAction func revertResource(_ sender: Any) {
 		self.loadItems()
 		self.updateView()
@@ -216,6 +232,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 				
 }
 
+/// The "document area" of our scroll view, in which we show the DITL items.
 public class DITLDocumentView : NSView {
 	public override var isFlipped: Bool {
 		get {
@@ -303,7 +320,8 @@ class DITLItemView : NSView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func trackKnob(_ index: Int, for startEvent: NSEvent) {
+	/// Resize the view in response to a click on one of the 8 "handles":
+	private func trackKnob(_ index: Int, for startEvent: NSEvent) {
 		var lastPos = superview!.convert(startEvent.locationInWindow, from: nil)
 		var keepTracking = true
 		var didChange = false
@@ -342,7 +360,8 @@ class DITLItemView : NSView {
 		}
 	}
 	
-	func trackDrag(for startEvent: NSEvent) {
+	/// Move the view around in response to the user dragging it.
+	private func trackDrag(for startEvent: NSEvent) {
 		var lastPos = superview!.convert(startEvent.locationInWindow, from: nil)
 		var keepTracking = true
 		var didChange = false
@@ -376,10 +395,10 @@ class DITLItemView : NSView {
 	
 	override func mouseDown(with event: NSEvent) {
 		needsDisplay = true
-		if event.modifierFlags.contains(.shift) {
+		if event.modifierFlags.contains(.shift) { // Multi-selection.
 			selected = !selected
 			NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: superview)
-		} else if selected {
+		} else if selected { // Drag/resize of selected items.
 			var knobIndex = 0
 			let pos = convert(event.locationInWindow, from: nil)
 			for knob in calculateKnobRects() {
@@ -394,7 +413,7 @@ class DITLItemView : NSView {
 			} else {
 				trackDrag(for: event)
 			}
-		} else {
+		} else { // Select and possibly drag around an unselected item:
 			selected = true
 			for itemView in superview?.subviews ?? [] {
 				if let itemView = itemView as? DITLItemView,
@@ -423,8 +442,6 @@ class DITLItemView : NSView {
 			NSBezierPath.stroke(self.bounds)
 			
 			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemBlue, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
-			//		case .helpItem:
-			//
 		case .button:
 			let fillColor = NSColor.white
 			let strokeColor = NSColor.black
@@ -523,6 +540,7 @@ class DITLItemView : NSView {
 			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemRed, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		}
 		
+		// Draw selection outline and resize handles, if this view is selected.
 		if selected {
 			NSColor.controlAccentColor.set()
 			NSBezierPath.stroke(self.bounds)
@@ -534,6 +552,10 @@ class DITLItemView : NSView {
 		}
 	}
 	
+	/// Calculate the rects of all 8 resize knobs.
+	/// - Returns: An array with an entry for each knob, starting at the lower right,
+	/// 		  then continuing counter-clockwise. If this view's rectangle is too
+	/// 		  small, some knobs are set to `nil`, to make as many fit as possible.
 	func calculateKnobRects() -> [NSRect?] {
 		var result = [NSRect?]()
 		var knobSize = 8.0
@@ -605,8 +627,13 @@ class DITLItemView : NSView {
 		return result
 	}
 	
+	/// It's usually more convenient when dealing with Quickdraw
+	/// coordinates to make this view display flipped.
 	public override var isFlipped: Bool {
 		get {
+			/// NSImageRep is kinda hard to get to draw flipped these
+			/// days, so for those we just draw un-flipped, so our images
+			/// aren't upside-down.
 			return type != .icon && type != .picture
 		}
 		set(newValue) {
@@ -615,6 +642,7 @@ class DITLItemView : NSView {
 	}
 }
 
+/// These are the same methods as in the other editors.
 extension DITLItemView {
 	private static func imageRep(for resource: Resource, format: inout UInt32) -> NSImageRep? {
 		let data = resource.data
