@@ -149,6 +149,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		NotificationCenter.default.addObserver(self, selector: #selector(itemDoubleClicked(_:)), name: DITLDocumentView.itemDoubleClickedNotification, object: self.scrollView.documentView)
 		NotificationCenter.default.addObserver(self, selector: #selector(itemFrameDidChange(_:)), name: DITLDocumentView.itemFrameDidChangeNotification, object: self.scrollView.documentView)
 		NotificationCenter.default.addObserver(self, selector: #selector(selectedItemDidChange(_:)), name: DITLDocumentView.selectionDidChangeNotification, object: self.scrollView.documentView)
+		NotificationCenter.default.addObserver(self, selector: #selector(selectedItemWillChange(_:)), name: DITLDocumentView.selectionWillChangeNotification, object: self.scrollView.documentView)
 		self.loadItems()
 		self.updateView()
 	}
@@ -181,6 +182,10 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 			}
 		}
 		typePopup.isEnabled = false
+	}
+	
+	@objc func selectedItemWillChange(_ notification: Notification) {
+		window?.makeFirstResponder(scrollView.documentView)
 	}
 	
 	@objc func selectedItemDidChange(_ notification: Notification) {
@@ -267,6 +272,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	}
 	
 	@IBAction func deselectAll(_ sender: Any?) {
+		NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: scrollView.documentView)
 		for itemView in scrollView.documentView?.subviews ?? [] {
 			if let itemView = itemView as? DITLItemView,
 			   itemView.selected {
@@ -278,6 +284,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	}
 	
 	override func selectAll(_ sender: Any?) {
+		NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: scrollView.documentView)
 		for itemView in scrollView.documentView?.subviews ?? [] {
 			if let itemView = itemView as? DITLItemView,
 			   !itemView.selected {
@@ -291,6 +298,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	@IBAction func createNewItem(_ sender: Any?) {
 		deselectAll(nil)
 		let view = DITLItemView(frame: NSRect(origin: NSPoint(x: 10, y: 10), size: NSSize(width: 80, height: 20)), title: "Button", type: .button, enabled: true, resourceID: 0, manager: manager)
+		NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: scrollView.documentView)
 		view.selected = true
 		let newItem = DITLItem(itemView: view, enabled: true, itemType: .button, resourceID: 0, helpItemType: 0, itemNumber: 0)
 		items.append(newItem)
@@ -335,6 +343,45 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		}
 	}
 	
+	@IBAction func resourceIDFieldChanged(_ sender: Any) {
+		var didChange = false
+		var itemIndex = 0
+		let newID = resourceIDField.integerValue
+		for item in items {
+			let itemView = item.itemView
+			if itemView.selected {
+				items[itemIndex].resourceID = newID
+				itemView.resourceID = newID
+				itemView.needsDisplay = true
+				didChange = true
+			}
+			itemIndex += 1
+		}
+		reflectSelectedItem()
+		if didChange {
+			self.setDocumentEdited(true)
+		}
+	}
+	
+	@IBAction func titleContentsFieldChanged(_ sender: Any) {
+		var didChange = false
+		var itemIndex = 0
+		let newTitle = titleContentsField.stringValue
+		for item in items {
+			let itemView = item.itemView
+			if itemView.selected {
+				itemView.title = newTitle
+				itemView.needsDisplay = true
+				didChange = true
+			}
+			itemIndex += 1
+		}
+		reflectSelectedItem()
+		if didChange {
+			self.setDocumentEdited(true)
+		}
+	}
+	
 }
 
 /// The "document area" of our scroll view, in which we show the DITL items.
@@ -359,10 +406,15 @@ public class DITLDocumentView : NSView {
 	
 	public override func mouseDown(with event: NSEvent) {
 		window?.makeFirstResponder(self)
+		var willChange = false
 		var didChange = false
 		for itemView in subviews {
 			if let itemView = itemView as? DITLItemView,
 			   itemView.selected {
+				if willChange {
+					NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: self)
+					willChange = false
+				}
 				itemView.selected = false
 				itemView.needsDisplay = true
 				didChange = true
@@ -387,6 +439,10 @@ public class DITLDocumentView : NSView {
 }
 
 extension DITLDocumentView {
+	
+	/// Notification sent whenever a ``DITLItemView`` inside this view is clicked and it is about to cause a change in selected items.
+	/// Also sent when this view itself is clicked and all items are about to be deselected.
+	static let selectionWillChangeNotification = Notification.Name("DITLItemViewSelectionWillChangeNotification")
 	
 	/// Notification sent whenever a ``DITLItemView`` inside this view is clicked and it causes a change in selected items.
 	/// Also sent when this view itself is clicked and all items are deselected.
@@ -514,6 +570,7 @@ class DITLItemView : NSView {
 	override func mouseDown(with event: NSEvent) {
 		needsDisplay = true
 		if event.modifierFlags.contains(.shift) { // Multi-selection.
+			NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: superview)
 			selected = !selected
 			NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: superview)
 		} else if selected { // Drag/resize of selected items.
@@ -532,6 +589,7 @@ class DITLItemView : NSView {
 				trackDrag(for: event)
 			}
 		} else { // Select and possibly drag around an unselected item:
+			NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: superview)
 			selected = true
 			for itemView in superview?.subviews ?? [] {
 				if let itemView = itemView as? DITLItemView,
