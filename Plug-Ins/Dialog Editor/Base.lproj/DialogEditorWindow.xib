@@ -9,7 +9,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="DialogEditorWindowController">
             <connections>
                 <outlet property="enabledCheckbox" destination="11T-1S-gY8" id="57M-3r-kJJ"/>
-                <outlet property="resourceIDFiekdChanged" destination="i1l-K3-SCv" id="WiT-3e-zoV"/>
                 <outlet property="resourceIDField" destination="i1l-K3-SCv" id="kEj-G1-Gxp"/>
                 <outlet property="scrollView" destination="PtH-kU-h2h" id="H0x-kR-Ai3"/>
                 <outlet property="tabView" destination="ipL-Ip-iTR" id="1ZG-Pt-HiM"/>
