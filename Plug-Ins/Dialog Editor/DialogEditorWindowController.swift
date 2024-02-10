@@ -173,7 +173,9 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 				enabledCheckbox.isEnabled = true
 
 				switch item.itemType {
-				case .userItem, .unknown, .helpItem:
+				case .userItem, .unknown:
+					tabView.selectTabViewItem(at: 3)
+				case .helpItem:
 					tabView.selectTabViewItem(at: 2)
 				case .button, .checkBox, .radioButton, .staticText, .editText:
 					tabView.selectTabViewItem(at: 0)
@@ -185,7 +187,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 				return
 			}
 		}
-		tabView.selectTabViewItem(at: 2)
+		tabView.selectTabViewItem(at: 3)
 		enabledCheckbox.isEnabled = false
 		typePopup.isEnabled = false
 	}
