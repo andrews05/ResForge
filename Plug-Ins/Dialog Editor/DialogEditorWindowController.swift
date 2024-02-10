@@ -258,7 +258,12 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		if resource.data.isEmpty {
 			createEmptyResource()
 		}
-		items = try! itemsFromData(resource.data)
+		do {
+			items = try itemsFromData(resource.data)
+		} catch {
+			items = []
+			self.window?.presentError(error)
+		}
 	}
 	
 	/// Create a valid but empty DITL resource. Used when we are opened for an empty resource.
@@ -271,20 +276,24 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		self.setDocumentEdited(true)
 	}
 	
-	private func currentResourceStateAsData() -> Data {
+	private func currentResourceStateAsData() throws -> Data {
 		let writer = BinaryDataWriter()
 
 		let numItems: Int16 = Int16(items.count) - 1
 		writer.write(numItems)
 		for item in items {
-			try! item.write(to: writer)
+			try item.write(to: writer)
 		}
 		return writer.data
 	}
 	
 	/// Write the current state of the ``items`` list back to the resource.
 	@IBAction func saveResource(_ sender: Any) {
-		resource.data = currentResourceStateAsData()
+		do {
+			resource.data = try currentResourceStateAsData()
+		} catch {
+			self.window?.presentError(error)
+		}
 		
 		self.setDocumentEdited(false)
 	}
@@ -345,224 +354,264 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	}
 	
 	@IBAction func delete(_ sender: Any?) {
-		let oldData = currentResourceStateAsData()
+		do {
+			let oldData = try currentResourceStateAsData()
 		
-		var didChange = false
-		for itemIndex in (0 ..< items.count).reversed() {
-			let itemView = items[itemIndex].itemView
-			if itemView.selected {
-				itemView.removeFromSuperview()
-				items.remove(at: itemIndex)
-				didChange = true
+			var didChange = false
+			for itemIndex in (0 ..< items.count).reversed() {
+				let itemView = items[itemIndex].itemView
+				if itemView.selected {
+					itemView.removeFromSuperview()
+					items.remove(at: itemIndex)
+					didChange = true
+				}
 			}
-		}
-		reflectSelectedItem()
-		if didChange {
-			self.window?.contentView?.undoManager?.beginUndoGrouping()
-			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Delete Item", comment: ""))
-			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-			self.window?.contentView?.undoManager?.endUndoGrouping()
-
-			self.setDocumentEdited(true)
+			reflectSelectedItem()
+			if didChange {
+				self.window?.contentView?.undoManager?.beginUndoGrouping()
+				self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Delete Item", comment: ""))
+				self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+				self.window?.contentView?.undoManager?.endUndoGrouping()
+				
+				self.setDocumentEdited(true)
+			}
+		} catch {
+			self.window?.presentError(error)
 		}
 	}
 	
 	private func undoRedoResourceData(_ data: Data) {
-		let oldData = currentResourceStateAsData()
-		self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-		
-		for item in items {
-			item.itemView.removeFromSuperview()
+		do {
+			let oldData = try currentResourceStateAsData()
+			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+			
+			for item in items {
+				item.itemView.removeFromSuperview()
+			}
+			
+			do {
+				items = try self.itemsFromData(data)
+				self.updateView()
+				self.reflectSelectedItem()
+				
+				self.setDocumentEdited(true)
+			} catch {
+				self.window?.presentError(error)
+			}
+		} catch {
+			self.window?.presentError(error)
 		}
-		
-		items = try! self.itemsFromData(data)
-		self.updateView()
-		self.reflectSelectedItem()
-		
-		self.setDocumentEdited(true)
 	}
 	
 	@IBAction func typePopupSelectionDidChange(_ sender: NSPopUpButton) {
-		let oldData = currentResourceStateAsData()
-
-		var didChange = false
-		var itemIndex = 0
-		let newType = DITLItem.DITLItemType(rawValue: UInt8(sender.selectedTag())) ?? .unknown
-		for item in items {
-			let itemView = item.itemView
-			if itemView.selected {
-				items[itemIndex].itemType = newType
-				itemView.type = newType
-				itemView.needsDisplay = true
-				didChange = true
+		do {
+			let oldData = try currentResourceStateAsData()
+			
+			var didChange = false
+			var itemIndex = 0
+			let newType = DITLItem.DITLItemType(rawValue: UInt8(sender.selectedTag())) ?? .unknown
+			for item in items {
+				let itemView = item.itemView
+				if itemView.selected {
+					items[itemIndex].itemType = newType
+					itemView.type = newType
+					itemView.needsDisplay = true
+					didChange = true
+				}
+				itemIndex += 1
 			}
-			itemIndex += 1
-		}
-		reflectSelectedItem()
-		if didChange {
-			self.window?.contentView?.undoManager?.beginUndoGrouping()
-			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Type", comment: ""))
-			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-			self.window?.contentView?.undoManager?.endUndoGrouping()
-
-			self.setDocumentEdited(true)
+			reflectSelectedItem()
+			if didChange {
+				self.window?.contentView?.undoManager?.beginUndoGrouping()
+				self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Type", comment: ""))
+				self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+				self.window?.contentView?.undoManager?.endUndoGrouping()
+				
+				self.setDocumentEdited(true)
+			}
+		} catch {
+			self.window?.presentError(error)
 		}
 	}
 	
 	@IBAction func resourceIDFieldChanged(_ sender: Any) {
-		let oldData = currentResourceStateAsData()
-
-		var didChange = false
-		var itemIndex = 0
-		let newID = resourceIDField.integerValue
-		for item in items {
-			let itemView = item.itemView
-			if itemView.selected {
-				items[itemIndex].resourceID = newID
-				itemView.resourceID = newID
-				itemView.needsDisplay = true
-				didChange = true
+		do {
+			let oldData = try currentResourceStateAsData()
+			
+			var didChange = false
+			var itemIndex = 0
+			let newID = resourceIDField.integerValue
+			for item in items {
+				let itemView = item.itemView
+				if itemView.selected {
+					items[itemIndex].resourceID = newID
+					itemView.resourceID = newID
+					itemView.needsDisplay = true
+					didChange = true
+				}
+				itemIndex += 1
 			}
-			itemIndex += 1
-		}
-		reflectSelectedItem()
-		if didChange {
-			self.window?.contentView?.undoManager?.beginUndoGrouping()
-			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Resource ID", comment: ""))
-			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-			self.window?.contentView?.undoManager?.endUndoGrouping()
-
-			self.setDocumentEdited(true)
+			reflectSelectedItem()
+			if didChange {
+				self.window?.contentView?.undoManager?.beginUndoGrouping()
+				self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Resource ID", comment: ""))
+				self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+				self.window?.contentView?.undoManager?.endUndoGrouping()
+				
+				self.setDocumentEdited(true)
+			}
+		} catch {
+			self.window?.presentError(error)
 		}
 	}
 	
 	@IBAction func helpResourceIDFieldChanged(_ sender: Any) {
-		let oldData = currentResourceStateAsData()
-
-		var didChange = false
-		var itemIndex = 0
-		let newID = helpResourceIDField.integerValue
-		for item in items {
-			let itemView = item.itemView
-			if itemView.selected {
-				items[itemIndex].resourceID = newID
-				itemView.resourceID = newID
-				itemView.needsDisplay = true
-				didChange = true
+		do {
+			let oldData = try currentResourceStateAsData()
+			
+			var didChange = false
+			var itemIndex = 0
+			let newID = helpResourceIDField.integerValue
+			for item in items {
+				let itemView = item.itemView
+				if itemView.selected {
+					items[itemIndex].resourceID = newID
+					itemView.resourceID = newID
+					itemView.needsDisplay = true
+					didChange = true
+				}
+				itemIndex += 1
 			}
-			itemIndex += 1
-		}
-		reflectSelectedItem()
-		if didChange {
-			self.window?.contentView?.undoManager?.beginUndoGrouping()
-			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Resource ID", comment: ""))
-			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-			self.window?.contentView?.undoManager?.endUndoGrouping()
-
-			self.setDocumentEdited(true)
+			reflectSelectedItem()
+			if didChange {
+				self.window?.contentView?.undoManager?.beginUndoGrouping()
+				self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Resource ID", comment: ""))
+				self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+				self.window?.contentView?.undoManager?.endUndoGrouping()
+				
+				self.setDocumentEdited(true)
+			}
+		} catch {
+			self.window?.presentError(error)
 		}
 	}
 	
 	@IBAction func helpTypePopupSelectionDidChange(_ sender: NSPopUpButton) {
-		let oldData = currentResourceStateAsData()
-
-		var didChange = false
-		var itemIndex = 0
-		let newType = DITLItem.DITLHelpItemType(rawValue: UInt16(sender.selectedTag())) ?? .unknown
-		for item in items {
-			let itemView = item.itemView
-			if itemView.selected {
-				items[itemIndex].helpItemType = newType
-				didChange = true
+		do {
+			let oldData = try currentResourceStateAsData()
+			
+			var didChange = false
+			var itemIndex = 0
+			let newType = DITLItem.DITLHelpItemType(rawValue: UInt16(sender.selectedTag())) ?? .unknown
+			for item in items {
+				let itemView = item.itemView
+				if itemView.selected {
+					items[itemIndex].helpItemType = newType
+					didChange = true
+				}
+				itemIndex += 1
 			}
-			itemIndex += 1
-		}
-		reflectSelectedItem()
-		if didChange {
-			self.window?.contentView?.undoManager?.beginUndoGrouping()
-			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Help Type", comment: ""))
-			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-			self.window?.contentView?.undoManager?.endUndoGrouping()
-
-			self.setDocumentEdited(true)
+			reflectSelectedItem()
+			if didChange {
+				self.window?.contentView?.undoManager?.beginUndoGrouping()
+				self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Help Type", comment: ""))
+				self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+				self.window?.contentView?.undoManager?.endUndoGrouping()
+				
+				self.setDocumentEdited(true)
+			}
+		} catch {
+			self.window?.presentError(error)
 		}
 	}
 	
 	@IBAction func helpItemFieldChanged(_ sender: Any) {
-		let oldData = currentResourceStateAsData()
-
-		var didChange = false
-		var itemIndex = 0
-		let newID = Int16(helpItemField.integerValue)
-		for item in items {
-			let itemView = item.itemView
-			if itemView.selected {
-				items[itemIndex].itemNumber = newID
-				didChange = true
+		do {
+			let oldData = try currentResourceStateAsData()
+			
+			var didChange = false
+			var itemIndex = 0
+			let newID = Int16(helpItemField.integerValue)
+			for item in items {
+				let itemView = item.itemView
+				if itemView.selected {
+					items[itemIndex].itemNumber = newID
+					didChange = true
+				}
+				itemIndex += 1
 			}
-			itemIndex += 1
-		}
-		reflectSelectedItem()
-		if didChange {
-			self.window?.contentView?.undoManager?.beginUndoGrouping()
-			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Help Item Index", comment: ""))
-			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-			self.window?.contentView?.undoManager?.endUndoGrouping()
-
-			self.setDocumentEdited(true)
+			reflectSelectedItem()
+			if didChange {
+				self.window?.contentView?.undoManager?.beginUndoGrouping()
+				self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Help Item Index", comment: ""))
+				self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+				self.window?.contentView?.undoManager?.endUndoGrouping()
+				
+				self.setDocumentEdited(true)
+			}
+		} catch {
+			self.window?.presentError(error)
 		}
 	}
 
 	@IBAction func enabledCheckBoxChanged(_ sender: Any) {
-		let oldData = currentResourceStateAsData()
-
-		var didChange = false
-		var itemIndex = 0
-		let newState = enabledCheckbox.state == .on
-		for item in items {
-			let itemView = item.itemView
-			if itemView.selected {
-				items[itemIndex].enabled = newState
-				itemView.enabled = newState
-				itemView.needsDisplay = true
-				didChange = true
+		do {
+			let oldData = try currentResourceStateAsData()
+			
+			var didChange = false
+			var itemIndex = 0
+			let newState = enabledCheckbox.state == .on
+			for item in items {
+				let itemView = item.itemView
+				if itemView.selected {
+					items[itemIndex].enabled = newState
+					itemView.enabled = newState
+					itemView.needsDisplay = true
+					didChange = true
+				}
+				itemIndex += 1
 			}
-			itemIndex += 1
-		}
-		reflectSelectedItem()
-		if didChange {
-			self.window?.contentView?.undoManager?.beginUndoGrouping()
-			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Enable State", comment: ""))
-			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-			self.window?.contentView?.undoManager?.endUndoGrouping()
-
-			self.setDocumentEdited(true)
+			reflectSelectedItem()
+			if didChange {
+				self.window?.contentView?.undoManager?.beginUndoGrouping()
+				self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Enable State", comment: ""))
+				self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+				self.window?.contentView?.undoManager?.endUndoGrouping()
+				
+				self.setDocumentEdited(true)
+			}
+		} catch {
+			self.window?.presentError(error)
 		}
 	}
 	
 	@IBAction func titleContentsFieldChanged(_ sender: Any) {
-		let oldData = currentResourceStateAsData()
-
-		var didChange = false
-		var itemIndex = 0
-		let newTitle = titleContentsField.stringValue
-		for item in items {
-			let itemView = item.itemView
-			if itemView.selected {
-				itemView.title = newTitle
-				itemView.needsDisplay = true
-				didChange = true
+		do {
+			let oldData = try currentResourceStateAsData()
+			
+			var didChange = false
+			var itemIndex = 0
+			let newTitle = titleContentsField.stringValue
+			for item in items {
+				let itemView = item.itemView
+				if itemView.selected {
+					itemView.title = newTitle
+					itemView.needsDisplay = true
+					didChange = true
+				}
+				itemIndex += 1
 			}
-			itemIndex += 1
-		}
-		reflectSelectedItem()
-		if didChange {
-			self.window?.contentView?.undoManager?.beginUndoGrouping()
-			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Text", comment: ""))
-			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-			self.window?.contentView?.undoManager?.endUndoGrouping()
-
-			self.setDocumentEdited(true)
+			reflectSelectedItem()
+			if didChange {
+				self.window?.contentView?.undoManager?.beginUndoGrouping()
+				self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Text", comment: ""))
+				self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+				self.window?.contentView?.undoManager?.endUndoGrouping()
+				
+				self.setDocumentEdited(true)
+			}
+		} catch {
+			self.window?.presentError(error)
 		}
 	}
 	
