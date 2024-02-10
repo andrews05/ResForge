@@ -185,6 +185,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 				return
 			}
 		}
+		tabView.selectTabViewItem(at: 2)
 		enabledCheckbox.isEnabled = false
 		typePopup.isEnabled = false
 	}
