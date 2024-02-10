@@ -48,13 +48,47 @@ class EditorManager: RFEditorManager {
         return self.findResource(type: basic ? ResourceType.BasicTemplate : ResourceType.Template, name: type.code)
     }
 
+	private func mappedType(for resource: Resource, forEditor: Bool) -> ResourceType? {
+		do {
+			guard let rmapResource = findResource(type: ResourceType("RMAP"), name: resource.type.code) else { return nil }
+			let reader = BinaryDataReader(rmapResource.data)
+			let destinationType = try reader.readString(length: 4, encoding: .macOSRoman)
+			let editorOnly: UInt16 = try reader.read()
+			var exceptionCount: UInt16 = try reader.read()
+			while exceptionCount > 0 {
+				let exceptionResID: Int16 = try reader.read()
+				let exceptionDestinationType = try reader.readString(length: 4, encoding: .macOSRoman)
+				let exceptionEditorOnly: UInt16 = try reader.read()
+				
+				if resource.id == exceptionResID,
+				   forEditor || exceptionEditorOnly == 0 {
+					return ResourceType(exceptionDestinationType)
+				}
+
+				exceptionCount -= 1
+			}
+			if forEditor || editorOnly == 0 {
+				return ResourceType(destinationType)
+			}
+		} catch {
+		}
+		return nil
+	}
+	
     // MARK: - Protocol functions
 
-    func open(resource: Resource) {
-        if let editor = PluginRegistry.editors[resource.typeCode] {
+	func open(resource: Resource) {
+		open(resource: resource, asType: nil)
+	}
+	
+	private func open(resource: Resource, asType: ResourceType?) {
+		if let editor = PluginRegistry.editors[(asType ?? resource.type).code] {
             self.open(resource: resource, using: editor, template: nil)
-        } else if let template = self.template(for: resource.type) {
-            self.open(resource: resource, using: TemplateEditor.self, template: template)
+		} else if let template = self.template(for: asType ?? resource.type) {
+			self.open(resource: resource, using: TemplateEditor.self, template: template)
+		} else if asType == nil,
+				  let mappedType = mappedType(for: resource, forEditor: true) {
+			open(resource: resource, asType: mappedType)
         } else {
             self.open(resource: resource, using: PluginRegistry.hexEditor, template: nil)
         }
