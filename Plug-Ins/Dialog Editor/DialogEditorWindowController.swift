@@ -30,13 +30,13 @@ struct DITLItem {
 	var helpItemType = DITLHelpItemType.unknown
 	var itemNumber = Int16(0)
 
-	static func read(_ reader: BinaryDataReader, manager: RFEditorManager) -> DITLItem {
-		try! reader.advance(4)
-		var t: Int16 = try! reader.read()
-		var l: Int16 = try! reader.read()
-		var b: Int16 = try! reader.read()
-		var r: Int16 = try! reader.read()
-		let typeAndEnableFlag: UInt8 = try! reader.read()
+	static func read(_ reader: BinaryDataReader, manager: RFEditorManager) throws -> DITLItem {
+		try reader.advance(4)
+		var t: Int16 = try reader.read()
+		var l: Int16 = try reader.read()
+		var b: Int16 = try reader.read()
+		var r: Int16 = try reader.read()
+		let typeAndEnableFlag: UInt8 = try reader.read()
 		let isEnabled = (typeAndEnableFlag & 0b10000000) == 0b10000000
 		let rawItemType: UInt8 = typeAndEnableFlag & 0b01111111
 		let itemType = DITLItem.DITLItemType(rawValue: rawItemType ) ?? .unknown
@@ -47,41 +47,41 @@ struct DITLItem {
 		var resourceID: Int = 0
 		switch itemType {
 		case .checkBox, .radioButton, .button, .staticText:
-			text = try! reader.readPString()
+			text = try reader.readPString()
 		case .editText:
 			l -= 3;
 			t -= 3;
 			r += 3;
 			b += 3;
-			text = try! reader.readPString()
+			text = try reader.readPString()
 		case .control, .icon, .picture:
-			try! reader.advance(1)
-			let resID16: Int16 = try! reader.read()
+			try reader.advance(1)
+			let resID16: Int16 = try reader.read()
 			resourceID = Int(resID16)
 		case .helpItem:
-			try! reader.advance(1)
-			helpItemType = DITLHelpItemType(rawValue: try! reader.read()) ?? .unknown
-			let resID16: Int16 = try! reader.read()
+			try reader.advance(1)
+			helpItemType = DITLHelpItemType(rawValue: try reader.read()) ?? .unknown
+			let resID16: Int16 = try reader.read()
 			resourceID = Int(resID16)
 			if helpItemType == .HMScanAppendhdlg {
-				itemNumber = try! reader.read()
+				itemNumber = try reader.read()
 			}
 		case .userItem:
-			let reserved: UInt8 = try! reader.read()
-			try! reader.advance(Int(reserved))
+			let reserved: UInt8 = try reader.read()
+			try reader.advance(Int(reserved))
 		default:
-			let reserved: UInt8 = try! reader.read()
-			try! reader.advance(Int(reserved))
+			let reserved: UInt8 = try reader.read()
+			try reader.advance(Int(reserved))
 		}
 		if (reader.bytesRead % 2) != 0 {
-			try! reader.advance(1)
+			try reader.advance(1)
 		}
 
 		let view = DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r &- l), height: Double(b &- t))), title: text, type: itemType, enabled: isEnabled, resourceID: resourceID, manager: manager)
 		return DITLItem(itemView: view, enabled: isEnabled, itemType: itemType, resourceID: resourceID, helpItemType: helpItemType, itemNumber: itemNumber)
 	}
 	
-	func write(to writer: BinaryDataWriter) {
+	func write(to writer: BinaryDataWriter) throws {
 		writer.write(UInt32(0))
 		let box = itemView.frame
 		var t = Int16(box.minY)
@@ -104,9 +104,9 @@ struct DITLItem {
 		
 		switch itemType {
 		case .checkBox, .radioButton, .button, .staticText:
-			try! writer.writePString(itemView.title)
+			try writer.writePString(itemView.title)
 		case .editText:
-			try! writer.writePString(itemView.title)
+			try writer.writePString(itemView.title)
 		case .control, .icon, .picture:
 			writer.write(UInt8(2))
 			writer.write(Int16(resourceID))
@@ -238,21 +238,27 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		self.scrollView.documentView?.clipsToBounds = true
 	}
 	
+	private func itemsFromData(_ data: Data) throws -> [DITLItem] {
+		let reader = BinaryDataReader(data)
+		let itemCountMinusOne: Int16 = try reader.read()
+		var itemCount: Int = Int(itemCountMinusOne) + 1
+		var newItems = [DITLItem]()
+		
+		while itemCount > 0 {
+			let item = try DITLItem.read(reader, manager: manager)
+			newItems.append(item)
+
+			itemCount -= 1
+		}
+		return newItems
+	}
+	
 	/// Parse the resource into our ``items`` list.
 	private func loadItems() {
 		if resource.data.isEmpty {
 			createEmptyResource()
 		}
-		let reader = BinaryDataReader(resource.data)
-		let itemCountMinusOne: Int16 = try! reader.read()
-		var itemCount: Int = Int(itemCountMinusOne) + 1
-		
-		while itemCount > 0 {
-			let item = DITLItem.read(reader, manager: manager)
-			items.append(item)
-
-			itemCount -= 1
-		}
+		items = try! itemsFromData(resource.data)
 	}
 	
 	/// Create a valid but empty DITL resource. Used when we are opened for an empty resource.
@@ -265,16 +271,20 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		self.setDocumentEdited(true)
 	}
 	
-	/// Write the current state of the ``items`` list back to the resource.
-	@IBAction func saveResource(_ sender: Any) {
+	private func currentResourceStateAsData() -> Data {
 		let writer = BinaryDataWriter()
 
 		let numItems: Int16 = Int16(items.count) - 1
 		writer.write(numItems)
 		for item in items {
-			item.write(to: writer)
+			try! item.write(to: writer)
 		}
-		resource.data = writer.data
+		return writer.data
+	}
+	
+	/// Write the current state of the ``items`` list back to the resource.
+	@IBAction func saveResource(_ sender: Any) {
+		resource.data = currentResourceStateAsData()
 		
 		self.setDocumentEdited(false)
 	}
@@ -335,6 +345,8 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	}
 	
 	@IBAction func delete(_ sender: Any?) {
+		let oldData = currentResourceStateAsData()
+		
 		var didChange = false
 		for itemIndex in (0 ..< items.count).reversed() {
 			let itemView = items[itemIndex].itemView
@@ -346,11 +358,33 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		}
 		reflectSelectedItem()
 		if didChange {
+			self.window?.contentView?.undoManager?.beginUndoGrouping()
+			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Delete Item", comment: ""))
+			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+			self.window?.contentView?.undoManager?.endUndoGrouping()
+
 			self.setDocumentEdited(true)
 		}
 	}
 	
+	private func undoRedoResourceData(_ data: Data) {
+		let oldData = currentResourceStateAsData()
+		self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+		
+		for item in items {
+			item.itemView.removeFromSuperview()
+		}
+		
+		items = try! self.itemsFromData(data)
+		self.updateView()
+		self.reflectSelectedItem()
+		
+		self.setDocumentEdited(true)
+	}
+	
 	@IBAction func typePopupSelectionDidChange(_ sender: NSPopUpButton) {
+		let oldData = currentResourceStateAsData()
+
 		var didChange = false
 		var itemIndex = 0
 		let newType = DITLItem.DITLItemType(rawValue: UInt8(sender.selectedTag())) ?? .unknown
@@ -366,11 +400,18 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		}
 		reflectSelectedItem()
 		if didChange {
+			self.window?.contentView?.undoManager?.beginUndoGrouping()
+			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Type", comment: ""))
+			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+			self.window?.contentView?.undoManager?.endUndoGrouping()
+
 			self.setDocumentEdited(true)
 		}
 	}
 	
 	@IBAction func resourceIDFieldChanged(_ sender: Any) {
+		let oldData = currentResourceStateAsData()
+
 		var didChange = false
 		var itemIndex = 0
 		let newID = resourceIDField.integerValue
@@ -386,11 +427,18 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		}
 		reflectSelectedItem()
 		if didChange {
+			self.window?.contentView?.undoManager?.beginUndoGrouping()
+			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Resource ID", comment: ""))
+			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+			self.window?.contentView?.undoManager?.endUndoGrouping()
+
 			self.setDocumentEdited(true)
 		}
 	}
 	
 	@IBAction func helpResourceIDFieldChanged(_ sender: Any) {
+		let oldData = currentResourceStateAsData()
+
 		var didChange = false
 		var itemIndex = 0
 		let newID = helpResourceIDField.integerValue
@@ -406,11 +454,18 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		}
 		reflectSelectedItem()
 		if didChange {
+			self.window?.contentView?.undoManager?.beginUndoGrouping()
+			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Resource ID", comment: ""))
+			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+			self.window?.contentView?.undoManager?.endUndoGrouping()
+
 			self.setDocumentEdited(true)
 		}
 	}
 	
 	@IBAction func helpTypePopupSelectionDidChange(_ sender: NSPopUpButton) {
+		let oldData = currentResourceStateAsData()
+
 		var didChange = false
 		var itemIndex = 0
 		let newType = DITLItem.DITLHelpItemType(rawValue: UInt16(sender.selectedTag())) ?? .unknown
@@ -424,11 +479,18 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		}
 		reflectSelectedItem()
 		if didChange {
+			self.window?.contentView?.undoManager?.beginUndoGrouping()
+			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Help Type", comment: ""))
+			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+			self.window?.contentView?.undoManager?.endUndoGrouping()
+
 			self.setDocumentEdited(true)
 		}
 	}
 	
 	@IBAction func helpItemFieldChanged(_ sender: Any) {
+		let oldData = currentResourceStateAsData()
+
 		var didChange = false
 		var itemIndex = 0
 		let newID = Int16(helpItemField.integerValue)
@@ -442,11 +504,18 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		}
 		reflectSelectedItem()
 		if didChange {
+			self.window?.contentView?.undoManager?.beginUndoGrouping()
+			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Help Item Index", comment: ""))
+			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+			self.window?.contentView?.undoManager?.endUndoGrouping()
+
 			self.setDocumentEdited(true)
 		}
 	}
 
 	@IBAction func enabledCheckBoxChanged(_ sender: Any) {
+		let oldData = currentResourceStateAsData()
+
 		var didChange = false
 		var itemIndex = 0
 		let newState = enabledCheckbox.state == .on
@@ -462,11 +531,18 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		}
 		reflectSelectedItem()
 		if didChange {
+			self.window?.contentView?.undoManager?.beginUndoGrouping()
+			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Enable State", comment: ""))
+			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+			self.window?.contentView?.undoManager?.endUndoGrouping()
+
 			self.setDocumentEdited(true)
 		}
 	}
 	
 	@IBAction func titleContentsFieldChanged(_ sender: Any) {
+		let oldData = currentResourceStateAsData()
+
 		var didChange = false
 		var itemIndex = 0
 		let newTitle = titleContentsField.stringValue
@@ -481,6 +557,11 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		}
 		reflectSelectedItem()
 		if didChange {
+			self.window?.contentView?.undoManager?.beginUndoGrouping()
+			self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Text", comment: ""))
+			self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+			self.window?.contentView?.undoManager?.endUndoGrouping()
+
 			self.setDocumentEdited(true)
 		}
 	}
