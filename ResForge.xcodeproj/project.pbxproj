@@ -187,11 +187,11 @@
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
 		55FB36042B71530C000F1528 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
-		55FB36132B715407000F1528 /* Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36122B715406000F1528 /* Templates.rsrc */; };
-		55FB36152B715427000F1528 /* DialogEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB36142B715427000F1528 /* DialogEditorWindowController.swift */; };
 		55FB361F2B715A3F000F1528 /* Dialog Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 55FB360D2B71530C000F1528 /* Dialog Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55FB36202B715AE9000F1528 /* DialogEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36192B715497000F1528 /* DialogEditorWindow.xib */; };
 		55FB36222B719951000F1528 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB36212B719910000F1528 /* Icons.swift */; };
+		55FB36232B778E9A000F1528 /* DialogEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB36172B715497000F1528 /* DialogEditorWindowController.swift */; };
+		55FB36242B778E9E000F1528 /* Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36182B715497000F1528 /* Templates.rsrc */; };
 		B229EEF515A4FB6F0032C12C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEA15A4FB6F0032C12C /* MainMenu.xib */; };
 		B229EEF615A4FB6F0032C12C /* CreateResource.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEC15A4FB6F0032C12C /* CreateResource.xib */; };
 		B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEE15A4FB6F0032C12C /* InfoWindow.xib */; };
@@ -548,9 +548,6 @@
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImageWindow.xib; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55FB360D2B71530C000F1528 /* Dialog Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dialog Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		55FB36102B7153FD000F1528 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Plug-Ins/Dialog Editor/Base.lproj/DialogEditorWindow.xib"; sourceTree = "<group>"; };
-		55FB36122B715406000F1528 /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = Templates.rsrc; path = "Plug-Ins/Dialog Editor/Templates.rsrc"; sourceTree = "<group>"; };
-		55FB36142B715427000F1528 /* DialogEditorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DialogEditorWindowController.swift; path = "Plug-Ins/Dialog Editor/DialogEditorWindowController.swift"; sourceTree = "<group>"; };
 		55FB36172B715497000F1528 /* DialogEditorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogEditorWindowController.swift; sourceTree = "<group>"; };
 		55FB36182B715497000F1528 /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		55FB361A2B715497000F1528 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DialogEditorWindow.xib; sourceTree = "<group>"; };
@@ -1038,9 +1035,6 @@
 		F5B588100156D2A601000001 = {
 			isa = PBXGroup;
 			children = (
-				55FB36142B715427000F1528 /* DialogEditorWindowController.swift */,
-				55FB36122B715406000F1528 /* Templates.rsrc */,
-				55FB360F2B7153FD000F1528 /* DialogEditorWindow.xib */,
 				498A02C225C3E4B500783776 /* README.md */,
 				4996B8F425DB6AC80027FA39 /* LICENSE */,
 				4996B8E725DB6A3A0027FA39 /* ResForge */,
@@ -1421,7 +1415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55FB36202B715AE9000F1528 /* DialogEditorWindow.xib in Resources */,
-				55FB36132B715407000F1528 /* Templates.rsrc in Resources */,
+				55FB36242B778E9E000F1528 /* Templates.rsrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1547,8 +1541,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55FB36232B778E9A000F1528 /* DialogEditorWindowController.swift in Sources */,
 				55FB36222B719951000F1528 /* Icons.swift in Sources */,
-				55FB36152B715427000F1528 /* DialogEditorWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1731,14 +1725,6 @@
 				49EE72AD2550A7F300BEABDB /* Base */,
 			);
 			name = SpriteWindow.xib;
-			sourceTree = "<group>";
-		};
-		55FB360F2B7153FD000F1528 /* DialogEditorWindow.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55FB36102B7153FD000F1528 /* Base */,
-			);
-			name = DialogEditorWindow.xib;
 			sourceTree = "<group>";
 		};
 		55FB36192B715497000F1528 /* DialogEditorWindow.xib */ = {

@@ -9,6 +9,9 @@
         <customObject id="-2" userLabel="File's Owner" customClass="DialogEditorWindowController">
             <connections>
                 <outlet property="enabledCheckbox" destination="11T-1S-gY8" id="57M-3r-kJJ"/>
+                <outlet property="helpItemField" destination="i3d-Tg-ebf" id="pLG-2W-Ggt"/>
+                <outlet property="helpResourceIDField" destination="ckN-Hj-xkn" id="k6m-yo-klU"/>
+                <outlet property="helpTypePopup" destination="Dnp-nr-2V3" id="hve-ym-wcY"/>
                 <outlet property="resourceIDField" destination="i1l-K3-SCv" id="kEj-G1-Gxp"/>
                 <outlet property="scrollView" destination="PtH-kU-h2h" id="H0x-kR-Ai3"/>
                 <outlet property="tabView" destination="ipL-Ip-iTR" id="1ZG-Pt-HiM"/>
@@ -153,7 +156,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <action selector="resourceIDFieldChanged:" target="-2" id="N0G-Pk-oyR"/>
+                                                <action selector="helpResourceIDFieldChanged:" target="-2" id="mCh-ao-06L"/>
                                             </connections>
                                         </textField>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AIg-6B-Qqn">
@@ -174,25 +177,25 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <action selector="resourceIDFieldChanged:" target="-2" id="7VM-3U-blK"/>
+                                                <action selector="helpItemFieldChanged:" target="-2" id="Zu8-Ck-mwX"/>
                                             </connections>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dnp-nr-2V3">
                                             <rect key="frame" x="59" y="222" width="124" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="HMScanhdlg" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="Zny-sb-XuD" id="wwC-QX-du2">
+                                            <popUpButtonCell key="cell" type="push" title="HMScanhdlg" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="Zny-sb-XuD" id="wwC-QX-du2">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="bNH-Ny-JEn">
                                                     <items>
                                                         <menuItem title="HMScanhdlg" state="on" tag="1" id="Zny-sb-XuD"/>
-                                                        <menuItem title="HMScanhrct" tag="4" id="46V-RR-XjD"/>
+                                                        <menuItem title="HMScanhrct" tag="2" id="46V-RR-XjD"/>
                                                         <menuItem title="HMScanAppendhdlg" tag="8" id="XUh-UC-JSW"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="typePopupSelectionDidChange:" target="-1" id="6kC-xv-ZbS"/>
+                                                <action selector="helpTypePopupSelectionDidChange:" target="-2" id="XyU-bt-Xqb"/>
                                             </connections>
                                         </popUpButton>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vka-9f-zNG">

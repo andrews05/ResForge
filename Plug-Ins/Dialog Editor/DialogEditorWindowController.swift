@@ -16,11 +16,18 @@ struct DITLItem {
 		case unknown = 255
 	}
 	
+	enum DITLHelpItemType : UInt16 {
+		case unknown = 0
+		case HMScanhdlg = 1
+		case HMScanhrct = 2
+		case HMScanAppendhdlg = 8
+	}
+	
 	var itemView: DITLItemView
 	var enabled: Bool
 	var itemType: DITLItemType
 	var resourceID: Int // Only SInt16, but let's be consistent with ResForge's Resource type.
-	var helpItemType = Int16(0)
+	var helpItemType = DITLHelpItemType.unknown
 	var itemNumber = Int16(0)
 
 	static func read(_ reader: BinaryDataReader, manager: RFEditorManager) -> DITLItem {
@@ -33,7 +40,7 @@ struct DITLItem {
 		let isEnabled = (typeAndEnableFlag & 0b10000000) == 0b10000000
 		let rawItemType: UInt8 = typeAndEnableFlag & 0b01111111
 		let itemType = DITLItem.DITLItemType(rawValue: rawItemType ) ?? .unknown
-		var helpItemType = Int16(0)
+		var helpItemType = DITLHelpItemType.unknown
 		var itemNumber = Int16(0)
 		
 		var text = ""
@@ -53,12 +60,12 @@ struct DITLItem {
 			resourceID = Int(resID16)
 		case .helpItem:
 			try! reader.advance(1)
-			helpItemType = try! reader.read()
+			helpItemType = DITLHelpItemType(rawValue: try! reader.read()) ?? .unknown
 			let resID16: Int16 = try! reader.read()
 			resourceID = Int(resID16)
-			if helpItemType == 8 /* HMScanAppendhdlg */ {
+			if helpItemType == .HMScanAppendhdlg {
 				itemNumber = try! reader.read()
-			} // else HMScanhdlg or HMScanhrct
+			}
 		case .userItem:
 			let reserved: UInt8 = try! reader.read()
 			try! reader.advance(Int(reserved))
@@ -104,9 +111,10 @@ struct DITLItem {
 			writer.write(UInt8(2))
 			writer.write(Int16(resourceID))
 		case .helpItem:
-			writer.write(UInt8((helpItemType == 8) ? 6 : 4))
+			writer.write(UInt8((helpItemType == .HMScanAppendhdlg) ? 6 : 4))
+			writer.write(helpItemType.rawValue)
 			writer.write(Int16(resourceID))
-			if helpItemType == 8 /* HMScanAppendhdlg */ {
+			if helpItemType == .HMScanAppendhdlg {
 				writer.write(Int16(itemNumber))
 			}
 		case .userItem:
@@ -130,6 +138,9 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	@IBOutlet var titleContentsField: NSTextField!
 	@IBOutlet var tabView: NSTabView!
 	@IBOutlet weak var enabledCheckbox: NSButton!
+	@IBOutlet var helpResourceIDField: NSTextField!
+	@IBOutlet var helpTypePopup: NSPopUpButton!
+	@IBOutlet var helpItemField: NSTextField!
 	private var items = [DITLItem]()
 	
 	override var windowNibName: String {
@@ -177,6 +188,14 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 					tabView.selectTabViewItem(at: 3)
 				case .helpItem:
 					tabView.selectTabViewItem(at: 2)
+					helpResourceIDField.integerValue = item.resourceID
+					helpTypePopup.selectItem(withTag: Int(item.helpItemType.rawValue))
+					if item.helpItemType == .HMScanAppendhdlg {
+						helpItemField.integerValue = Int(item.itemNumber)
+						helpItemField.isEnabled = true
+					} else {
+						helpItemField.isEnabled = false
+					}
 				case .button, .checkBox, .radioButton, .staticText, .editText:
 					tabView.selectTabViewItem(at: 0)
 					titleContentsField.stringValue = item.itemView.title
@@ -308,7 +327,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		let view = DITLItemView(frame: NSRect(origin: NSPoint(x: 10, y: 10), size: NSSize(width: 80, height: 20)), title: "Button", type: .button, enabled: true, resourceID: 0, manager: manager)
 		NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: scrollView.documentView)
 		view.selected = true
-		let newItem = DITLItem(itemView: view, enabled: true, itemType: .button, resourceID: 0, helpItemType: 0, itemNumber: 0)
+		let newItem = DITLItem(itemView: view, enabled: true, itemType: .button, resourceID: 0, helpItemType: .unknown, itemNumber: 0)
 		items.append(newItem)
 		self.scrollView.documentView?.addSubview(view)
 		NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
@@ -371,6 +390,62 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		}
 	}
 	
+	@IBAction func helpResourceIDFieldChanged(_ sender: Any) {
+		var didChange = false
+		var itemIndex = 0
+		let newID = helpResourceIDField.integerValue
+		for item in items {
+			let itemView = item.itemView
+			if itemView.selected {
+				items[itemIndex].resourceID = newID
+				itemView.resourceID = newID
+				itemView.needsDisplay = true
+				didChange = true
+			}
+			itemIndex += 1
+		}
+		reflectSelectedItem()
+		if didChange {
+			self.setDocumentEdited(true)
+		}
+	}
+	
+	@IBAction func helpTypePopupSelectionDidChange(_ sender: NSPopUpButton) {
+		var didChange = false
+		var itemIndex = 0
+		let newType = DITLItem.DITLHelpItemType(rawValue: UInt16(sender.selectedTag())) ?? .unknown
+		for item in items {
+			let itemView = item.itemView
+			if itemView.selected {
+				items[itemIndex].helpItemType = newType
+				didChange = true
+			}
+			itemIndex += 1
+		}
+		reflectSelectedItem()
+		if didChange {
+			self.setDocumentEdited(true)
+		}
+	}
+	
+	@IBAction func helpItemFieldChanged(_ sender: Any) {
+		var didChange = false
+		var itemIndex = 0
+		let newID = Int16(helpItemField.integerValue)
+		for item in items {
+			let itemView = item.itemView
+			if itemView.selected {
+				items[itemIndex].itemNumber = newID
+				didChange = true
+			}
+			itemIndex += 1
+		}
+		reflectSelectedItem()
+		if didChange {
+			self.setDocumentEdited(true)
+		}
+	}
+
 	@IBAction func enabledCheckBoxChanged(_ sender: Any) {
 		var didChange = false
 		var itemIndex = 0
@@ -706,8 +781,6 @@ class DITLItemView : NSView {
 			
 			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: strokeColor, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		case .icon:
-			NSColor.darkGray.setFill()
-			NSBezierPath.fill(self.bounds)
 			var resource: Resource?
 			resource = manager.findResource(type: ResourceType("cicn"), id: resourceID, currentDocumentOnly: true)
 			if resource == nil {
@@ -717,14 +790,18 @@ class DITLItemView : NSView {
 				var format: UInt32 = 0
 				let imgRep = DITLItemView.imageRep(for: resource, format: &format)
 				imgRep?.draw(in: self.bounds)
+			} else {
+				NSColor.darkGray.setFill()
+				NSBezierPath.fill(self.bounds)
 			}
 		case .picture:
-			NSColor.lightGray.setFill()
-			NSBezierPath.fill(self.bounds)
 			if let resource = manager.findResource(type: ResourceType("PICT"), id: resourceID, currentDocumentOnly: true) {
 				var format: UInt32 = 0
 				let imgRep = DITLItemView.imageRep(for: resource, format: &format)
 				imgRep?.draw(in: self.bounds)
+			} else {
+				NSColor.darkGray.setFill()
+				NSBezierPath.fill(self.bounds)
 			}
 		case .helpItem:
 			let fillColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray
