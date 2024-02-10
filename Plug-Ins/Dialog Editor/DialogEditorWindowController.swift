@@ -624,8 +624,14 @@ class DITLItemView : NSView {
 						box.size.height -= distance.height
 						box.origin.y += distance.height
 					}
+					if !didChange {
+						self.undoManager?.beginUndoGrouping()
+						self.undoManager?.setActionName(NSLocalizedString("Resize Item", comment: ""))
+						didChange = true
+					}
+					let oldFrame = frame
+					self.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoMove(oldFrame: oldFrame) })
 					frame = box
-					didChange = true
 					lastPos = currPos
 				default:
 					keepTracking = false
@@ -633,11 +639,18 @@ class DITLItemView : NSView {
 			}
 		}
 		if didChange {
+			self.undoManager?.endUndoGrouping()
 			NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
 		}
 	}
 	
-	/// Move the view around in response to the user dragging it.
+	private func undoRedoMove(oldFrame: NSRect) {
+		let newFrame = frame
+		frame = oldFrame
+		self.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoMove(oldFrame: newFrame) })
+	}
+	
+	/// Move the view and any other selected views around in response to the user dragging it.
 	private func trackDrag(for startEvent: NSEvent) {
 		var lastPos = superview!.convert(startEvent.locationInWindow, from: nil)
 		var keepTracking = true
@@ -654,9 +667,15 @@ class DITLItemView : NSView {
 					for itemView in superview?.subviews ?? [] {
 						if let itemView = itemView as? DITLItemView,
 						   itemView.selected {
+							if !didChange {
+								self.undoManager?.beginUndoGrouping()
+								self.undoManager?.setActionName(NSLocalizedString("Move Item", comment: ""))
+								didChange = true
+							}
+							let oldFrame = frame
+							self.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoMove(oldFrame: oldFrame) })
 							let box = itemView.frame.offsetBy(dx: distance.width, dy: distance.height)
 							itemView.frame = box
-							didChange = true
 						}
 					}
 					lastPos = currPos
@@ -666,6 +685,7 @@ class DITLItemView : NSView {
 			}
 		}
 		if didChange {
+			self.undoManager?.endUndoGrouping()
 			NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
 		}
 	}
