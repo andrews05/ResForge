@@ -1,6 +1,11 @@
 import Cocoa
 import RFSupport
 
+enum ImageReaderError: Error {
+    case invalidData
+    case insufficientData
+}
+
 class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
     static let supportedTypes = [
         "PICT",
@@ -22,7 +27,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         "icm8",
         "CURS",
         "PAT ",
-        "PAT#"
+        "PAT#",
+        "pxm#"
     ]
 
     let resource: Resource
@@ -155,7 +161,6 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         switch resource.typeCode {
         case "PICT":
             rep = self.bitmapRep(flatten: true)
-            format = 24
         case "cicn":
             rep = self.bitmapRep(palette: true)
         case "ppat":
@@ -164,6 +169,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             rep = self.bitmapRep()
         }
         _ = rep.bitmapData // Trigger redraw
+        format = 0
         self.updateView()
         self.setDocumentEdited(true)
     }
@@ -176,13 +182,15 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         switch resource.typeCode {
         case "PICT":
             resource.data = QuickDraw.pict(from: rep)
+            format = 24
         case "cicn":
-            resource.data = QuickDraw.cicn(from: rep)
+            resource.data = ColorIcon.data(from: rep, format: &format)
         case "ppat":
-            resource.data = QuickDraw.ppat(from: rep)
+            resource.data = PixelPattern.data(from: rep, format: &format)
         default:
             resource.data = rep.representation(using: .png, properties: [.interlaced: false])!
         }
+        self.updateView()
         self.setDocumentEdited(false)
     }
 
@@ -246,7 +254,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
 
     static func maxThumbnailSize(for resourceType: String) -> Int? {
         switch resourceType {
-        case "PICT", "PNG ":
+        case "PICT", "PNG ", "pxm#":
             return nil
         default:
             return 64
@@ -262,11 +270,11 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         case "PICT":
             return self.rep(fromPict: data, format: &format)
         case "cicn":
-            return QuickDraw.rep(fromCicn: data)
+            return ColorIcon.rep(data, format: &format)
         case "ppat":
-            return QuickDraw.rep(fromPpat: data)
+            return PixelPattern.rep(data, format: &format)
         case "crsr":
-            return QuickDraw.rep(fromCrsr: data)
+            return ColorCursor.rep(data, format: &format)
         case "ICN#", "ICON":
             return Icons.rep(data, width: 32, height: 32, depth: 1)
         case "ics#", "SICN", "CURS":
@@ -291,6 +299,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             // This just stacks all the patterns vertically
             let count = Int(data[data.startIndex + 1])
             return Icons.rep(data.dropFirst(2), width: 8, height: 8 * count, depth: 1)
+        case "pxm#":
+            return Pxm.rep(data, format: &format)
         default:
             return NSBitmapImageRep(data: data)
         }

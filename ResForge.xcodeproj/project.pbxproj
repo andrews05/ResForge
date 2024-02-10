@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4903B8402B6EEFC700805094 /* PixelPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4903B83F2B6EEFC700805094 /* PixelPattern.swift */; };
+		4903B8422B6F04BA00805094 /* ColorCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4903B8412B6F04BA00805094 /* ColorCursor.swift */; };
+		4903B8442B6F4F0700805094 /* ColorIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4903B8432B6F4F0700805094 /* ColorIcon.swift */; };
 		4907D2DD29C423660003702A /* ElementNCB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2DC29C423660003702A /* ElementNCB.swift */; };
 		4907D2F029C50AFE0003702A /* Parsing in Frameworks */ = {isa = PBXBuildFile; productRef = 4907D2EF29C50AFE0003702A /* Parsing */; };
 		490C682429A9571400FF3EAF /* ElementRNAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490C682329A9571400FF3EAF /* ElementRNAM.swift */; };
@@ -26,6 +29,8 @@
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CC3DF271228FA00A9173E /* SpobFilter.swift */; };
 		4945DC642531826400856385 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
+		4948E15C2B646D6700473FF3 /* PixMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E15B2B646D6700473FF3 /* PixMap.swift */; };
+		4948E15E2B6DDE7800473FF3 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 4948E15D2B6DDE7800473FF3 /* OrderedCollections */; };
 		494BE3D726CB19FD00A68264 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */; };
 		4952BD4C26DD9356005DB6EB /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 4952BD4B26DD9356005DB6EB /* CSV */; };
 		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
@@ -76,10 +81,8 @@
 		49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
 		49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043F92472064F0035C0FA /* geometry.cpp */; };
 		49964DE424D0EB4900BAB902 /* clut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FA2472064F0035C0FA /* clut.cpp */; };
-		49964DE524D0EB4E00BAB902 /* cicn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FC2472064F0035C0FA /* cicn.cpp */; };
 		49964DE624D0EB5100BAB902 /* pict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044042472064F0035C0FA /* pict.cpp */; };
 		49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044052472064F0035C0FA /* pixmap.cpp */; };
-		49964DE824D0EB5800BAB902 /* ppat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4943604024C12E0000293E94 /* ppat.cpp */; };
 		49964DE924D0EB5D00BAB902 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044002472064F0035C0FA /* color.cpp */; };
 		49964DEA24D0EB6000BAB902 /* packbits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044012472064F0035C0FA /* packbits.cpp */; };
 		49964DEB24D0EB6300BAB902 /* surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044032472064F0035C0FA /* surface.cpp */; };
@@ -91,7 +94,6 @@
 		49964E1324D1034400BAB902 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
 		49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */; };
 		4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4996B90725DB6C2F0027FA39 /* Credits.rtf */; };
-		49A432D025437C64000B1109 /* Hexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362DA224A966960040B793 /* Hexadecimal.swift */; };
 		49AACD8224CE931A0081DD4A /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49AACD8324CE931A0081DD4A /* RFSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49AACD8824CE93520081DD4A /* ResForgePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6924CE57EB0081DD4A /* ResForgePlugin.swift */; };
@@ -167,9 +169,9 @@
 		49D6D3B7271BAB15002DEA97 /* Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 497A93BD255BB49600900C7B /* Templates.rsrc */; };
 		49D6D3BB271BAC2C002DEA97 /* ElementKCHR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D3BA271BAC2B002DEA97 /* ElementKCHR.swift */; };
 		49D6D3C1271BAC80002DEA97 /* ElementFIXD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D3C0271BAC80002DEA97 /* ElementFIXD.swift */; };
+		49D6EA0E2B7603F400D358F6 /* Pxm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6EA0D2B7603F400D358F6 /* Pxm.swift */; };
 		49DA3A4D2550BD2E00821A7E /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49DA3A572550BD9000821A7E /* NovaTools.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 49EE72D82550B79600BEABDB /* NovaTools.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		49DA3A8B2550C65900821A7E /* rle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044062472064F0035C0FA /* rle.cpp */; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
 		49DB6A1E24F377A400BE0F0F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1D24F377A400BE0F0F /* CollectionController.swift */; };
 		49E56F7C26DA22FB005FA18B /* ConflictResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */; };
@@ -331,6 +333,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4903B83F2B6EEFC700805094 /* PixelPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPattern.swift; sourceTree = "<group>"; };
+		4903B8412B6F04BA00805094 /* ColorCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCursor.swift; sourceTree = "<group>"; };
+		4903B8432B6F4F0700805094 /* ColorIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorIcon.swift; sourceTree = "<group>"; };
 		4907D2DA29C420640003702A /* NCBSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCBSet.swift; sourceTree = "<group>"; };
 		4907D2DC29C423660003702A /* ElementNCB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementNCB.swift; sourceTree = "<group>"; };
 		4907D2FC29CC4B290003702A /* NCBExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCBExpression.swift; sourceTree = "<group>"; };
@@ -349,10 +354,10 @@
 		492E91C92553ADB100195174 /* SpriteImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteImporter.swift; sourceTree = "<group>"; };
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; };
-		49362DA224A966960040B793 /* Hexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexadecimal.swift; sourceTree = "<group>"; };
 		493CC3DF271228FA00A9173E /* SpobFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpobFilter.swift; sourceTree = "<group>"; };
 		4943603F24C12DE100293E94 /* ppat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ppat.hpp; sourceTree = "<group>"; };
 		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
+		4948E15B2B646D6700473FF3 /* PixMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixMap.swift; sourceTree = "<group>"; };
 		494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; };
 		4953F5922488740F0002340F /* SoundWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundWindow.xib; sourceTree = "<group>"; };
 		4953F593248874260002340F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -518,6 +523,7 @@
 		49D6D382271BAAB3002DEA97 /* ElementUSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUSTR.swift; sourceTree = "<group>"; };
 		49D6D3BA271BAC2B002DEA97 /* ElementKCHR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementKCHR.swift; sourceTree = "<group>"; };
 		49D6D3C0271BAC80002DEA97 /* ElementFIXD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementFIXD.swift; sourceTree = "<group>"; };
+		49D6EA0D2B7603F400D358F6 /* Pxm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pxm.swift; sourceTree = "<group>"; };
 		49DB6A1B24F375A100BE0F0F /* OutlineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineController.swift; sourceTree = "<group>"; };
 		49DB6A1D24F377A400BE0F0F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
 		49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConflictResolver.swift; sourceTree = "<group>"; };
@@ -598,6 +604,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4948E15E2B6DDE7800473FF3 /* OrderedCollections in Frameworks */,
 				49AACD8A24CE95FD0081DD4A /* RFSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1016,6 +1023,11 @@
 				496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */,
 				496674FD24BBC7CE00251406 /* ImageWindowController.swift */,
 				497BB1DB24F741E400858EF1 /* Icons.swift */,
+				4948E15B2B646D6700473FF3 /* PixMap.swift */,
+				49D6EA0D2B7603F400D358F6 /* Pxm.swift */,
+				4903B8412B6F04BA00805094 /* ColorCursor.swift */,
+				4903B8432B6F4F0700805094 /* ColorIcon.swift */,
+				4903B83F2B6EEFC700805094 /* PixelPattern.swift */,
 			);
 			path = "Image Editor";
 			sourceTree = "<group>";
@@ -1109,7 +1121,6 @@
 				E18BF94B06A00F8E00F076B8 /* Info.plist */,
 				49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */,
 				49362D9D24A9317A0040B793 /* HexWindowController.swift */,
-				49362DA224A966960040B793 /* Hexadecimal.swift */,
 			);
 			path = "Hex Editor";
 			sourceTree = "<group>";
@@ -1215,6 +1226,9 @@
 			dependencies = (
 			);
 			name = "Image Editor";
+			packageProductDependencies = (
+				4948E15D2B6DDE7800473FF3 /* OrderedCollections */,
+			);
 			productName = "PICT Editor";
 			productReference = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
@@ -1484,8 +1498,6 @@
 				496669C22A8B6FEC008DCC36 /* rez.cpp in Sources */,
 				496669C42A8B6FF3008DCC36 /* file.cpp in Sources */,
 				49AB3C2527D69388003B3536 /* imagedesc.cpp in Sources */,
-				49964DE824D0EB5800BAB902 /* ppat.cpp in Sources */,
-				49964DE524D0EB4E00BAB902 /* cicn.cpp in Sources */,
 				49964DE624D0EB5100BAB902 /* pict.cpp in Sources */,
 				49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */,
 				496669C52A8B6FF6008DCC36 /* extended.cpp in Sources */,
@@ -1503,7 +1515,6 @@
 				49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */,
 				4970CCD426FA7DCC00B7C280 /* Extensions.swift in Sources */,
 				49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */,
-				49DA3A8B2550C65900821A7E /* rle.cpp in Sources */,
 				49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */,
 				49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */,
 			);
@@ -1550,7 +1561,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4903B8422B6F04BA00805094 /* ColorCursor.swift in Sources */,
+				4948E15C2B646D6700473FF3 /* PixMap.swift in Sources */,
+				4903B8402B6EEFC700805094 /* PixelPattern.swift in Sources */,
 				497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */,
+				49D6EA0E2B7603F400D358F6 /* Pxm.swift in Sources */,
+				4903B8442B6F4F0700805094 /* ColorIcon.swift in Sources */,
 				496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1652,7 +1668,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49362D9F24A941800040B793 /* HexWindowController.swift in Sources */,
-				49A432D025437C64000B1109 /* Hexadecimal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2277,6 +2292,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4907D2EE29C50AFE0003702A /* XCRemoteSwiftPackageReference "swift-parsing" */;
 			productName = Parsing;
+		};
+		4948E15D2B6DDE7800473FF3 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
 		};
 		4952BD4B26DD9356005DB6EB /* CSV */ = {
 			isa = XCSwiftPackageProductDependency;

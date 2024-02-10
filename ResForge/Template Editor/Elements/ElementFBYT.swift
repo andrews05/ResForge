@@ -3,7 +3,7 @@ import RFSupport
 // Implements FBYT, FWRD, FLNG, Fnnn
 class ElementFBYT: BaseElement {
     let length: Int
-    var intValue: (any FixedWidthInteger)?
+    var bytes: Data?
 
     required init(type: String, label: String) {
         switch type {
@@ -21,38 +21,11 @@ class ElementFBYT: BaseElement {
     }
 
     override func configure() {
-        guard let metaValue else {
+        // If the metaValue contains hex bytes we will use this for the filler
+        guard let metaValue, metaValue.starts(with: "0x") else {
             return
         }
-
-        if metaValue.starts(with: "0x") {
-            let value = metaValue.dropFirst(2)
-            switch length {
-            case 1:
-                intValue = UInt8(value, radix: 16)
-            case 2:
-                intValue = UInt16(value, radix: 16)
-            case 4:
-                intValue = UInt32(value, radix: 16)
-            case 8:
-                intValue = UInt64(value, radix: 16)
-            default:
-                break
-            }
-        } else {
-            switch length {
-            case 1:
-                intValue = Int8(metaValue)
-            case 2:
-                intValue = Int16(metaValue)
-            case 4:
-                intValue = Int32(metaValue)
-            case 8:
-                intValue = Int64(metaValue)
-            default:
-                break
-            }
-        }
+        bytes = metaValue.dropFirst(2).data(using: .hexadecimal)?.prefix(length)
     }
 
     override func readData(from reader: BinaryDataReader) throws {
@@ -60,9 +33,9 @@ class ElementFBYT: BaseElement {
     }
 
     override func writeData(to writer: BinaryDataWriter) {
-        if let intValue {
-            assert(intValue.bitWidth / 8 == length)
-            writer.write(intValue)
+        if let bytes {
+            writer.writeData(bytes)
+            writer.advance(length - bytes.count)
         } else {
             writer.advance(length)
         }

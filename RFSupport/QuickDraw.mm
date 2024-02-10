@@ -1,8 +1,5 @@
 #import "QuickDraw.h"
 #include "libGraphite/quickdraw/pict.hpp"
-#include "libGraphite/quickdraw/cicn.hpp"
-#include "libGraphite/quickdraw/ppat.hpp"
-#include "libGraphite/quickdraw/rle.hpp"
 
 @implementation QuickDraw
 
@@ -25,65 +22,6 @@
     graphite::qd::pict pict([QuickDraw surfaceFromRep:rep]);
     auto data = pict.data();
     return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
-}
-
-+ (NSBitmapImageRep *)repFromCicn:(NSData *)data {
-    std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
-    graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
-    try {
-        auto surface = graphite::qd::cicn(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
-        return [QuickDraw repFromRaw:surface->raw() size:surface->size()];
-    } catch (const std::exception& e) {
-        return nil;
-    }
-}
-
-+ (NSData *)cicnFromRep:(NSBitmapImageRep *)rep {
-    graphite::qd::cicn cicn([QuickDraw surfaceFromRep:rep]);
-    auto data = cicn.data();
-    return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
-}
-
-+ (NSBitmapImageRep *)repFromPpat:(NSData *)data {
-    std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
-    graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
-    try {
-        auto surface = graphite::qd::ppat(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
-        return [QuickDraw repFromRaw:surface->raw() size:surface->size()];
-    } catch (const std::exception& e) {
-        return nil;
-    }
-}
-
-+ (NSData *)ppatFromRep:(NSBitmapImageRep *)rep {
-    graphite::qd::ppat ppat([QuickDraw surfaceFromRep:rep]);
-    auto data = ppat.data();
-    return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
-}
-
-+ (NSBitmapImageRep *)repFromCrsr:(NSData *)data {
-    // Quick hack for parsing crsr resources - data is like a ppat but with a mask
-    std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
-    // Clear the first byte to make graphite think it's a normal ppat
-    buffer[0] = 0;
-    graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
-    try {
-        auto surface = graphite::qd::ppat(std::make_shared<graphite::data::data>(gData), 0, "").surface().lock();
-        auto raw = surface->raw();
-        // 16x16 1-bit mask is stored at offset 52
-        // Loop over the bytes and bits and clear the alpha component as necessary
-        for (int i = 0; i < 32; i++) {
-            char byte = buffer[i+52];
-            for (int j = 0; j < 8; j++) {
-                if (!((byte >> (7-j)) & 0x1)) {
-                    raw[i*8+j] = 0;
-                }
-            }
-        }
-        return [QuickDraw repFromRaw:raw size:surface->size()];
-    } catch (const std::exception& e) {
-        return nil;
-    }
 }
 
 
