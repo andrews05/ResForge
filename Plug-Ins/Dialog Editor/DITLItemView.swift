@@ -7,13 +7,23 @@ class DITLItemView : NSView {
 	/// The text to display on the item (button title or text view text:
 	var title: String
 	/// Other info from the DITL resource about this item:
-	var type: DITLItem.DITLItemType
+	var type: DITLItem.DITLItemType {
+		didSet {
+			reloadImage()
+		}
+	}
 	/// Is this object selected for editing/moving/resizing?
 	var selected = false
 	/// Resource referenced by this item (e.g. ICON ID for an icon item PICT for picture, CNTL for control etc.)
-	var resourceID = 0
+	var resourceID = 0 {
+		didSet {
+			reloadImage()
+		}
+	}
+		
 	/// Is this item clickable?
 	var enabled: Bool
+	private var image: NSImage?
 	/// Object that lets us look up icons and images.
 	private let manager: RFEditorManager
 	
@@ -29,12 +39,39 @@ class DITLItemView : NSView {
 		self.resourceID = resourceID
 		self.manager = manager
 		super.init(frame: frameRect)
+		
+		reloadImage()
 	}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	/// Load the picture or icon associated with this dialog:
+	private func reloadImage() {
+		var resource: Resource?
+		switch type {
+		case .picture:
+			resource = manager.findResource(type: ResourceType("PICT"), id: resourceID, currentDocumentOnly: true)
+		case .icon:
+			resource = manager.findResource(type: ResourceType("cicn"), id: resourceID, currentDocumentOnly: true)
+			if resource == nil {
+				resource = manager.findResource(type: ResourceType("ICON"), id: resourceID, currentDocumentOnly: true)
+			}
+		default:
+			resource = nil
+		}
+		if let resource = resource {
+			resource.preview { img in
+				self.image = img
+				self.needsDisplay = true
+			}
+		} else {
+			self.image = nil
+			self.needsDisplay = true
+		}
+	}
+
 	/// Resize the view in response to a click on one of the 8 "handles":
 	private func trackKnob(_ index: Int, for startEvent: NSEvent) {
 		var lastPos = superview!.convert(startEvent.locationInWindow, from: nil)
@@ -239,24 +276,15 @@ class DITLItemView : NSView {
 			
 			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: strokeColor, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		case .icon:
-			var resource: Resource?
-			resource = manager.findResource(type: ResourceType("cicn"), id: resourceID, currentDocumentOnly: true)
-			if resource == nil {
-				resource = manager.findResource(type: ResourceType("ICON"), id: resourceID, currentDocumentOnly: true)
-			}
-			if let resource = resource {
-				var format: UInt32 = 0
-				let imgRep = DITLItemView.imageRep(for: resource, format: &format)
-				imgRep?.draw(in: self.bounds)
+			if let image = image {
+				image.draw(in: self.bounds)
 			} else {
 				NSColor.darkGray.setFill()
 				NSBezierPath.fill(self.bounds)
 			}
 		case .picture:
-			if let resource = manager.findResource(type: ResourceType("PICT"), id: resourceID, currentDocumentOnly: true) {
-				var format: UInt32 = 0
-				let imgRep = DITLItemView.imageRep(for: resource, format: &format)
-				imgRep?.draw(in: self.bounds)
+			if let image = image {
+				image.draw(in: self.bounds)
 			} else {
 				NSColor.darkGray.setFill()
 				NSBezierPath.fill(self.bounds)
@@ -379,74 +407,4 @@ class DITLItemView : NSView {
 			
 		}
 	}
-}
-
-/// These are the same methods as in the other editors.
-extension DITLItemView {
-	private static func imageRep(for resource: Resource, format: inout UInt32) -> NSImageRep? {
-		let data = resource.data
-		guard !data.isEmpty else {
-			return nil
-		}
-		switch resource.typeCode {
-		case "PICT":
-			return self.rep(fromPict: data, format: &format)
-		case "cicn":
-			return QuickDraw.rep(fromCicn: data)
-		case "ppat":
-			return QuickDraw.rep(fromPpat: data)
-		case "crsr":
-			return QuickDraw.rep(fromCrsr: data)
-		case "ICN#", "ICON":
-			return Icons.rep(data, width: 32, height: 32, depth: 1)
-		case "ics#", "SICN", "CURS":
-			return Icons.rep(data, width: 16, height: 16, depth: 1)
-		case "icm#":
-			return Icons.rep(data, width: 16, height: 12, depth: 1)
-		case "icl4":
-			return Icons.rep(data, width: 32, height: 32, depth: 4)
-		case "ics4":
-			return Icons.rep(data, width: 16, height: 16, depth: 4)
-		case "icm4":
-			return Icons.rep(data, width: 16, height: 12, depth: 4)
-		case "icl8":
-			return Icons.rep(data, width: 32, height: 32, depth: 8)
-		case "ics8":
-			return Icons.rep(data, width: 16, height: 16, depth: 8)
-		case "icm8":
-			return Icons.rep(data, width: 16, height: 12, depth: 8)
-		case "PAT ":
-			return Icons.rep(data, width: 8, height: 8, depth: 1)
-		case "PAT#":
-			// This just stacks all the patterns vertically
-			let count = Int(data[data.startIndex + 1])
-			return Icons.rep(data.dropFirst(2), width: 8, height: 8 * count, depth: 1)
-		default:
-			return NSBitmapImageRep(data: data)
-		}
-	}
-	
-	private static func rep(fromPict data: Data, format: inout UInt32) -> NSImageRep? {
-		do {
-			return try QuickDraw.rep(fromPict: data, format: &format)
-		} catch let error {
-			// If the error is because of an unsupported QuickTime compressor, attempt to decode it
-			// natively from the offset indicated. This should work for e.g. PNG, JPEG, GIF, TIFF.
-			if let range = error.localizedDescription.range(of: "(?<=offset )[0-9]+", options: .regularExpression),
-			   let offset = Int(error.localizedDescription[range]),
-			   data.count > offset,
-			   let rep = NSBitmapImageRep(data: data.dropFirst(offset)) {
-				// Older QuickTime versions (<6.5) stored png data as non-standard RGBX
-				// We need to disable the alpha, but first ensure the image has been decoded by accessing the bitmapData
-				_ = rep.bitmapData
-				rep.hasAlpha = false
-				if let cRange = error.localizedDescription.range(of: "(?<=')....(?=')", options: .regularExpression) {
-					format = UInt32(String(error.localizedDescription[cRange]))
-				}
-				return rep
-			}
-		}
-		return nil
-	}
-	
 }
