@@ -29,6 +29,8 @@ class ElementNCB: ElementCSTR {
         }
         infoButton.target = self
         infoButton.action = #selector(showInfo(_:))
+        self.updateButtonState(infoButton)
+        textField.nextKeyView = infoButton
         view.addSubview(infoButton)
     }
 
@@ -44,6 +46,23 @@ class ElementNCB: ElementCSTR {
             return true
         }
         return super.control(control, textView: textView, doCommandBy: commandSelector)
+    }
+
+    func controlTextDidEndEditing(_ obj: Notification) {
+        if let infoButton = (obj.object as? NSControl)?.nextKeyView as? NSButton {
+            self.updateButtonState(infoButton)
+        }
+    }
+
+    private func updateButtonState(_ infoButton: NSButton) {
+        // Change icon color according to validity of expression
+        if value.isEmpty {
+            infoButton.contentTintColor = nil
+        } else if (try? expressionType.parse(value.uppercased())) != nil {
+            infoButton.contentTintColor = .systemGreen
+        } else {
+            infoButton.contentTintColor = .systemRed
+        }
     }
 
     private func showPopover(_ control: NSControl) {
