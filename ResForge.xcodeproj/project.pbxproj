@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -191,7 +191,6 @@
 		55FB36042B71530C000F1528 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		55FB361F2B715A3F000F1528 /* Dialog Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 55FB360D2B71530C000F1528 /* Dialog Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55FB36202B715AE9000F1528 /* DialogEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36192B715497000F1528 /* DialogEditorWindow.xib */; };
-		55FB36222B719951000F1528 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB36212B719910000F1528 /* Icons.swift */; };
 		55FB36232B778E9A000F1528 /* DialogEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB36172B715497000F1528 /* DialogEditorWindowController.swift */; };
 		55FB36242B778E9E000F1528 /* Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36182B715497000F1528 /* Templates.rsrc */; };
 		B229EEF515A4FB6F0032C12C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEA15A4FB6F0032C12C /* MainMenu.xib */; };
@@ -557,9 +556,7 @@
 		55FB36172B715497000F1528 /* DialogEditorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogEditorWindowController.swift; sourceTree = "<group>"; };
 		55FB36182B715497000F1528 /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		55FB361A2B715497000F1528 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DialogEditorWindow.xib; sourceTree = "<group>"; };
-		55FB361B2B715497000F1528 /* Dialog Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dialog Editor-Bridging-Header.h"; sourceTree = "<group>"; };
 		55FB361C2B715497000F1528 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		55FB36212B719910000F1528 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		B2FCA78A15A66ACE00696598 /* Image Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Image Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF58C069FEA1400F076B8 /* ResForge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResForge.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1005,11 +1002,9 @@
 		55FB36162B715497000F1528 /* Dialog Editor */ = {
 			isa = PBXGroup;
 			children = (
-				55FB36212B719910000F1528 /* Icons.swift */,
 				55FB36172B715497000F1528 /* DialogEditorWindowController.swift */,
 				55FB36182B715497000F1528 /* Templates.rsrc */,
 				55FB36192B715497000F1528 /* DialogEditorWindow.xib */,
-				55FB361B2B715497000F1528 /* Dialog Editor-Bridging-Header.h */,
 				55FB361C2B715497000F1528 /* Info.plist */,
 			);
 			path = "Dialog Editor";
@@ -1553,7 +1548,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55FB36232B778E9A000F1528 /* DialogEditorWindowController.swift in Sources */,
-				55FB36222B719951000F1528 /* Icons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1977,7 +1971,6 @@
 				INFOPLIST_FILE = "Plug-Ins/Dialog Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Dialog-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Dialog Editor/Dialog Editor-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1989,7 +1982,6 @@
 				INFOPLIST_FILE = "Plug-Ins/Dialog Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Dialog-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Dialog Editor/Dialog Editor-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
