@@ -235,7 +235,9 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 		documentBox.size.width = max(documentBox.size.width, maxSize.width + 16)
 		documentBox.size.height = max(documentBox.size.height, maxSize.height + 16)
 		self.scrollView.documentView?.frame = documentBox
-		self.scrollView.documentView?.clipsToBounds = true
+		if #available(macOS 14, *) { // If built w. macOS 14+ SDK, this defaults to false.
+			self.scrollView.documentView?.clipsToBounds = true
+		}
 	}
 	
 	private func itemsFromData(_ data: Data) throws -> [DITLItem] {
