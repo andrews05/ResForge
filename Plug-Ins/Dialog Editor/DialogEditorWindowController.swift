@@ -44,11 +44,10 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	}
 	
 	@objc func itemDoubleClicked(_ notification: Notification) {
-		print("double clicked.")
+		// If we had a hideable inspector, this is where we'd show it.
 	}
 	
 	@objc func itemFrameDidChange(_ notification: Notification) {
-		print("resized/moved.")
 		self.setDocumentEdited(true)
 	}
 	
