@@ -40,6 +40,9 @@ class DITLItemView : NSView {
 		self.manager = manager
 		super.init(frame: frameRect)
 		
+		if #available(macOS 14, *) { // If built w. macOS 14+ SDK, this defaults to false.
+			clipsToBounds = true
+		}
 		reloadImage()
 	}
 	
@@ -265,7 +268,7 @@ class DITLItemView : NSView {
 			NSBezierPath.fill(self.bounds)
 			NSBezierPath.stroke(self.bounds)
 		case .staticText:
-			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.black, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
+			title.draw(in: self.bounds, withAttributes: [.foregroundColor: NSColor.black, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		case .editText:
 			let fillColor = NSColor.white
 			let strokeColor = NSColor.black
@@ -274,7 +277,7 @@ class DITLItemView : NSView {
 			NSBezierPath.fill(self.bounds)
 			NSBezierPath.stroke(self.bounds)
 			
-			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: strokeColor, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
+			title.draw(in: self.bounds, withAttributes: [.foregroundColor: strokeColor, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		case .icon:
 			if let image = image {
 				image.draw(in: self.bounds, from: .zero, operation: .sourceAtop, fraction: 1.0, respectFlipped: true, hints: nil)
