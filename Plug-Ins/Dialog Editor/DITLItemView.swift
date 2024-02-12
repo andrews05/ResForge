@@ -277,14 +277,14 @@ class DITLItemView : NSView {
 			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: strokeColor, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		case .icon:
 			if let image = image {
-				image.draw(in: self.bounds)
+				image.draw(in: self.bounds, from: .zero, operation: .sourceAtop, fraction: 1.0, respectFlipped: true, hints: nil)
 			} else {
 				NSColor.darkGray.setFill()
 				NSBezierPath.fill(self.bounds)
 			}
 		case .picture:
 			if let image = image {
-				image.draw(in: self.bounds)
+				image.draw(in: self.bounds, from: .zero, operation: .sourceAtop, fraction: 1.0, respectFlipped: true, hints: nil)
 			} else {
 				NSColor.darkGray.setFill()
 				NSBezierPath.fill(self.bounds)
@@ -398,10 +398,7 @@ class DITLItemView : NSView {
 	/// coordinates to make this view display flipped.
 	public override var isFlipped: Bool {
 		get {
-			/// NSImageRep is kinda hard to get to draw flipped these
-			/// days, so for those we just draw un-flipped, so our images
-			/// aren't upside-down.
-			return type != .icon && type != .picture
+			return true
 		}
 		set(newValue) {
 			
