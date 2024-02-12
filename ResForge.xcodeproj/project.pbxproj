@@ -187,6 +187,10 @@
 		49F570062A845D5E00953A17 /* RezFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F570052A845D5E00953A17 /* RezFormat.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
+		5504F7462B7A7E4E0096F16A /* DITLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7452B7A7E4E0096F16A /* DITLItem.swift */; };
+		5504F7482B7A7EB20096F16A /* DITLItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7472B7A7EB20096F16A /* DITLItemView.swift */; };
+		5504F74A2B7A7EEC0096F16A /* DITLDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */; };
+		5504F74C2B7A7F2E0096F16A /* DITLFlippedClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
 		55FB36042B71530C000F1528 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		55FB361F2B715A3F000F1528 /* Dialog Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 55FB360D2B71530C000F1528 /* Dialog Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -543,6 +547,10 @@
 		49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStatus.swift; sourceTree = "<group>"; };
 		49F6C76024C577430078EB55 /* PrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsController.swift; sourceTree = "<group>"; };
 		49F6C76124C577440078EB55 /* ApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDelegate.swift; sourceTree = "<group>"; };
+		5504F7452B7A7E4E0096F16A /* DITLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITLItem.swift; sourceTree = "<group>"; };
+		5504F7472B7A7EB20096F16A /* DITLItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITLItemView.swift; sourceTree = "<group>"; };
+		5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITLDocumentView.swift; sourceTree = "<group>"; };
+		5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITLFlippedClipView.swift; sourceTree = "<group>"; };
 		550B9046189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		550B9047189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CreateResource.xib; sourceTree = "<group>"; };
 		550B9048189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfoWindow.xib; sourceTree = "<group>"; };
@@ -1003,6 +1011,10 @@
 			isa = PBXGroup;
 			children = (
 				55FB36172B715497000F1528 /* DialogEditorWindowController.swift */,
+				5504F7452B7A7E4E0096F16A /* DITLItem.swift */,
+				5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */,
+				5504F7472B7A7EB20096F16A /* DITLItemView.swift */,
+				5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */,
 				55FB36182B715497000F1528 /* Templates.rsrc */,
 				55FB36192B715497000F1528 /* DialogEditorWindow.xib */,
 				55FB361C2B715497000F1528 /* Info.plist */,
@@ -1547,7 +1559,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5504F74A2B7A7EEC0096F16A /* DITLDocumentView.swift in Sources */,
+				5504F74C2B7A7F2E0096F16A /* DITLFlippedClipView.swift in Sources */,
 				55FB36232B778E9A000F1528 /* DialogEditorWindowController.swift in Sources */,
+				5504F7482B7A7EB20096F16A /* DITLItemView.swift in Sources */,
+				5504F7462B7A7E4E0096F16A /* DITLItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
