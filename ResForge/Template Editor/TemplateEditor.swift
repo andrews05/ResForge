@@ -24,13 +24,15 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
         self.filter = filter
         super.init(window: nil)
 
+        // Add observer before possible failure as deinit will still run regardless
+        UserDefaults.standard.addObserver(self, forKeyPath: RFDefaults.resourceNameInTemplate, context: nil)
+
         if !self.load(data: resource.data) {
             return nil
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange(_:)), name: .ResourceDataDidChange, object: resource)
         NotificationCenter.default.addObserver(self, selector: #selector(self.templateDataDidChange(_:)), name: .ResourceDataDidChange, object: template)
-        UserDefaults.standard.addObserver(self, forKeyPath: RFDefaults.resourceNameInTemplate, context: nil)
     }
 
     deinit {
