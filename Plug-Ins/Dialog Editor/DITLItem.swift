@@ -92,8 +92,8 @@ struct DITLItem {
 		if itemType == .editText {
 			l += 3;
 			t += 3;
-			r += 3;
-			b += 3;
+			r -= 3;
+			b -= 3;
 		}
 		
 		writer.write(t)
