@@ -230,10 +230,15 @@ class DITLItemView : NSView {
 			
 			let ps = NSMutableParagraphStyle()
 			ps.alignment = .center
-			let attrs: [NSAttributedString.Key:Any] = [.foregroundColor: strokeColor, .paragraphStyle: ps, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!]
+			ps.lineBreakMode = .byTruncatingTail
+			let attrs: [NSAttributedString.Key:Any] = [
+				.foregroundColor: strokeColor, .paragraphStyle: ps,
+				.font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0) ?? .systemFont(ofSize: 12)
+			]
 			let measuredSize = title.size(withAttributes: attrs)
 			var textBox = self.bounds
-			textBox.origin.y -= (textBox.size.height - measuredSize.height) / 2
+			textBox.origin.y += (textBox.size.height - measuredSize.height) / 2.0
+			textBox.size.height = measuredSize.height
 			title.draw(in: textBox, withAttributes: attrs)
 		case .checkBox:
 			let fillColor = NSColor.white
