@@ -122,5 +122,8 @@ struct DITLItem {
 		default:
 			writer.write(UInt8(0))
 		}
+		if (writer.bytesWritten % 2) != 0 {
+			writer.write(UInt8(0))
+		}
 	}
 }
