@@ -23,14 +23,12 @@ public class DITLDocumentView : NSView {
 	
 	public override func mouseDown(with event: NSEvent) {
 		window?.makeFirstResponder(self)
-		var willChange = false
 		var didChange = false
 		for itemView in subviews {
 			if let itemView = itemView as? DITLItemView,
 			   itemView.selected {
-				if willChange {
+				if !didChange {
 					NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: self)
-					willChange = false
 				}
 				itemView.selected = false
 				itemView.needsDisplay = true
