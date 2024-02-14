@@ -217,8 +217,6 @@ class DITLItemView : NSView {
 			strokeColor.setStroke()
 			NSBezierPath.fill(self.bounds)
 			NSBezierPath.stroke(self.bounds)
-			
-			title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemBlue, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
 		case .button:
 			let fillColor = NSColor.white
 			let strokeColor = NSColor.black
