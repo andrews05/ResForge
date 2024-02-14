@@ -178,6 +178,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 	
 	/// Revert the resource to its on-disk state.
 	@IBAction func revertResource(_ sender: Any) {
+		self.window?.contentView?.undoManager?.removeAllActions()
 		self.loadItems()
 		self.updateView()
 		
