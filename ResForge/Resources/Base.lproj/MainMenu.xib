@@ -110,6 +110,12 @@
                                     <action selector="saveDocument:" target="-1" id="462"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Save All" alternate="YES" keyEquivalent="s" identifier="save" id="PdD-rN-cA6">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="saveAllDocuments:" target="-1" id="BYR-IF-LJr"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Save As…" keyEquivalent="S" id="372">
                                 <connections>
                                     <action selector="saveDocumentAs:" target="-1" id="465"/>
@@ -370,13 +376,13 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Save Resource" tag="7" keyEquivalent="s" identifier="saveResource" id="429">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>
                                     <action selector="saveResource:" target="-1" id="507"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Revert Resource" tag="8" keyEquivalent="r" identifier="revertResource" id="426">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>
                                     <action selector="revertResource:" target="-1" id="494"/>
                                 </connections>
