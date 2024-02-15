@@ -39,10 +39,11 @@ class DITLItemView : NSView {
         self.resourceID = resourceID
         self.manager = manager
         super.init(frame: frameRect)
-        
-        if #available(macOS 14, *) { // If built w. macOS 14+ SDK, this defaults to false.
-            clipsToBounds = true
-        }
+
+#if compiler(>=5.9)
+        // On macOS 14+ this defaults to false.
+        clipsToBounds = true
+#endif
         reloadImage()
     }
     
