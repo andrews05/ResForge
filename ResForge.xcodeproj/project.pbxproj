@@ -187,6 +187,7 @@
 		49F570062A845D5E00953A17 /* RezFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F570052A845D5E00953A17 /* RezFormat.swift */; };
 		49F6A2EE24A03C5E0086C0F4 /* OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2ED24A03C5E0086C0F4 /* OSStatus.swift */; };
 		49F6C76324C579820078EB55 /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76024C577430078EB55 /* PrefsController.swift */; };
+		554125602B7E8A47008B6832 /* ResourceMappings.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 5541255F2B7E8A47008B6832 /* ResourceMappings.rsrc */; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
 		B229EEF515A4FB6F0032C12C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEA15A4FB6F0032C12C /* MainMenu.xib */; };
 		B229EEF615A4FB6F0032C12C /* CreateResource.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEEC15A4FB6F0032C12C /* CreateResource.xib */; };
@@ -538,6 +539,7 @@
 		550B904B189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ResourceItem.xib; sourceTree = "<group>"; };
 		550B904D189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HexWindow.xib; sourceTree = "<group>"; };
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImageWindow.xib; sourceTree = "<group>"; };
+		5541255F2B7E8A47008B6832 /* ResourceMappings.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = ResourceMappings.rsrc; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2FCA78A15A66ACE00696598 /* Image Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Image Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FCA78E15A66ACF00696598 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -874,6 +876,7 @@
 			children = (
 				49D6D352271BAAAC002DEA97 /* README.md */,
 				49D6D359271BAAAD002DEA97 /* TemplateWindow.xib */,
+				5541255F2B7E8A47008B6832 /* ResourceMappings.rsrc */,
 				49D6D350271BAAAC002DEA97 /* Templates.rsrc */,
 				49D6D353271BAAAC002DEA97 /* TemplateEditor.swift */,
 				49D6D357271BAAAC002DEA97 /* TabbableOutlineView.swift */,
@@ -1377,6 +1380,7 @@
 				4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */,
 				B229EEF515A4FB6F0032C12C /* MainMenu.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResource.xib in Resources */,
+				554125602B7E8A47008B6832 /* ResourceMappings.rsrc in Resources */,
 				559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */,
 				4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */,
 				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,
