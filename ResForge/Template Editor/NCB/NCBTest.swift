@@ -49,7 +49,7 @@ protocol NCBTest {
 
 /// A parenthetically enclosed NCB test expression
 struct NCBTestWrapped: NCBTest {
-    static let parser: AnyParser<Substring, Self> = Lazy {
+    static let parser = Parse<Substring, _>(Self.init) {
         Optionally {
             "!"
         }.map { $0 != nil }
@@ -58,7 +58,7 @@ struct NCBTestWrapped: NCBTest {
             NCBTestCombiner.AND.parser(2, terminator: ")")
             NCBTestCombiner.OR.parser(2, terminator: ")")
         }
-    }.map(Self.init).eraseToAnyParser()
+    }
 
     let negate: Bool
     let expression: NCBTestExpression
@@ -217,7 +217,7 @@ enum NCBTestOp: String, CaseIterable {
 }
 
 struct NCBTestCounted: NCBTest {
-    static let parser: AnyParser<Substring, Self> = Parse(Self.init) {
+    static let parser = Parse<Substring, _>(Self.init) {
         "("
         Whitespace(1...)
         listParser
@@ -227,7 +227,7 @@ struct NCBTestCounted: NCBTest {
         }
         Whitespace(0...)
         ")"
-    }.eraseToAnyParser()
+    }
 
     private static let listParser = Parse {
         "["
