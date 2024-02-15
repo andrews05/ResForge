@@ -284,7 +284,7 @@ enum NCBTestComparisonOp: String, CaseIterable {
 }
 
 struct NCBTestComparison {
-    static let parser = Parse(Self.init) {
+    static let parser = Parse<Substring, _>(Self.init) {
         NCBTestComparisonOp.parser()
         Whitespace(1...)
         Digits()
