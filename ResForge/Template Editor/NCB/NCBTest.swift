@@ -15,7 +15,8 @@ struct NCBTestExpression: NCBExpression {
     static let usage = {
         let ops = NCBTestOp.allCases.map(\.usage).joined(separator: "\n")
         let combiners = NCBTestCombiner.allCases.map(\.usage).joined(separator: "\n")
-        return "\(ops)\n\(combiners)\n!<op>: Negate operation"
+        let negate = "!<op>: Negate operation"
+        return "\(ops)\n\(combiners)\n\(negate)\n\(NCBTestCounted.usage)"
     }()
 
     let ops: [NCBTest]
@@ -48,7 +49,7 @@ protocol NCBTest {
 
 /// A parenthetically enclosed NCB test expression
 struct NCBTestWrapped: NCBTest {
-    static let parser: AnyParser<Substring, Self> = Lazy {
+    static let parser = Parse<Substring, _>(Self.init) {
         Optionally {
             "!"
         }.map { $0 != nil }
@@ -57,7 +58,7 @@ struct NCBTestWrapped: NCBTest {
             NCBTestCombiner.AND.parser(2, terminator: ")")
             NCBTestCombiner.OR.parser(2, terminator: ")")
         }
-    }.map(Self.init).eraseToAnyParser()
+    }
 
     let negate: Bool
     let expression: NCBTestExpression
@@ -127,6 +128,7 @@ enum NCBTestCombiner: String, CaseIterable {
             OneOf {
                 NCBTestValue.parser.map { $0 as NCBTest }
                 NCBTestWrapped.parser.map { $0 as NCBTest }
+                NCBTestCounted.parser.map { $0 as NCBTest }
             }
         } separator: {
             Whitespace(1...)
@@ -211,5 +213,87 @@ enum NCBTestOp: String, CaseIterable {
         default:
             return nil
         }
+    }
+}
+
+struct NCBTestCounted: NCBTest {
+    static let parser = Parse<Substring, _>(Self.init) {
+        "("
+        Whitespace(1...)
+        listParser
+        Optionally {
+            Whitespace(1...)
+            NCBTestComparison.parser
+        }
+        Whitespace(0...)
+        ")"
+    }
+
+    private static let listParser = Parse {
+        "["
+        Many(2...) {
+            OneOf {
+                NCBTestValue.parser.map { $0 as NCBTest }
+                NCBTestWrapped.parser.map { $0 as NCBTest }
+            }
+        } separator: {
+            Whitespace(1...)
+        } terminator: {
+            "]"
+        }
+    }
+
+    static var usage: String {
+        NCBTestComparisonOp.allCases.map {
+            "( [<op> <op> ...] \($0.rawValue) <n> ): \($0.description) <n> operations"
+        }.joined(separator: "\n")
+    }
+
+    let ops: [NCBTest]
+    let comparison: NCBTestComparison?
+
+    func description(manager: RFEditorManager, indent: String) -> String {
+        let prefix: String
+        if let comparison {
+            prefix = comparison.description
+        } else {
+            prefix = "Any"
+        }
+        let text = ops.map {
+            $0.description(manager: manager, indent: "\(indent)    ")
+        }.joined(separator: "\n")
+        return "\(indent)\(prefix) (\n\(text)\n\(indent))"
+    }
+}
+
+enum NCBTestComparisonOp: String, CaseIterable {
+    case lessThan = "<"
+    case equal = "="
+    case greaterThan = ">"
+
+    var description: String {
+        switch self {
+        case .lessThan:
+            return "Less than"
+        case .equal:
+            return "Exactly"
+        case .greaterThan:
+            return "More than"
+        }
+    }
+}
+
+struct NCBTestComparison {
+    static let parser = Parse<Substring, _>(Self.init) {
+        NCBTestComparisonOp.parser()
+        Whitespace(1...)
+        Digits()
+    }
+
+    let op: NCBTestComparisonOp
+    let value: Int
+
+    var description: String {
+        "\(op.description) \(value)"
     }
 }

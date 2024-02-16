@@ -68,16 +68,16 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: BaseElement, Collecti
     }
 
     override func writeData(to writer: BinaryDataWriter) {
-        var position = writer.bytesWritten
+        let position = writer.bytesWritten
         writer.advance(lengthBytes)
-        if !skipLengthBytes {
-            position = writer.bytesWritten
-        }
         subElements.writeData(to: writer)
+        var length = writer.bytesWritten - position
+        if !skipLengthBytes {
+            length -= lengthBytes
+        }
         // Note: data corruption may occur if the length of the section exceeds the maximum size of the field
-        let length = T(clamping: writer.bytesWritten - position)
-        writer.write(length, at: position)
-        value = Int(length)
+        writer.write(T(clamping: length), at: position)
+        value = length
     }
 
     // MARK: -

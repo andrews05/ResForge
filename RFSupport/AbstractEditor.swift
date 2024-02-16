@@ -82,7 +82,7 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
             fallthrough
         case "saveResource", "save":
             return self.window?.isDocumentEdited == true
-        case "exportResources":
+        case "exportResource":
             return self is ExportProvider
         default:
             return true

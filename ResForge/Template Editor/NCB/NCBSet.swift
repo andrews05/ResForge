@@ -79,7 +79,7 @@ struct NCBSetRandom: NCBSet {
         Many(1...2) {
             NCBSetValue.parser
         } separator: {
-            Whitespace(1...)
+            Whitespace(1)
         } terminator: {
             ")"
         }
