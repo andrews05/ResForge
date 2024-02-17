@@ -62,7 +62,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="RGo-ON-Gf1" name="value" keyPath="objectValue" id="gBK-7w-Wih"/>
+                                                                <binding destination="RGo-ON-Gf1" name="value" keyPath="objectValue.markCharacter" id="DgR-ar-J7x"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -103,7 +103,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="XDg-6m-dtd" name="value" keyPath="objectValue" id="39s-wf-0Ba"/>
+                                                                <binding destination="XDg-6m-dtd" name="value" keyPath="objectValue.name" id="I9V-Rv-JnK"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -136,24 +136,43 @@
                                                     <rect key="frame" x="381" y="0.0" width="27" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FRb-sP-p63">
-                                                            <rect key="frame" x="-2" y="-1" width="31" height="19"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="right" title="⌘ M" usesSingleLineMode="YES" id="j7q-fI-CHe">
+                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FRb-sP-p63">
+                                                            <rect key="frame" x="13" y="0.0" width="16" height="19"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="right" title="M" usesSingleLineMode="YES" id="j7q-fI-CHe">
                                                                 <font key="font" size="12" name="Silom"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="akf-VV-HfX" name="value" keyPath="objectValue" id="5Kr-3Y-neb"/>
+                                                                <binding destination="akf-VV-HfX" name="value" keyPath="objectValue.keyEquivalent" id="RkL-cr-asY"/>
+                                                            </connections>
+                                                        </textField>
+                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jcB-rh-gom">
+                                                            <rect key="frame" x="-2" y="0.0" width="19" height="19"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" title="⌘ " usesSingleLineMode="YES" id="hWv-1I-zHY">
+                                                                <font key="font" size="12" name="Silom"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="akf-VV-HfX" name="hidden" keyPath="objectValue.hasKeyEquivalent" id="79F-Ni-bIA">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                    </dictionary>
+                                                                </binding>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstItem="FRb-sP-p63" firstAttribute="leading" secondItem="jcB-rh-gom" secondAttribute="trailing" id="4cG-9H-WQo"/>
+                                                        <constraint firstItem="jcB-rh-gom" firstAttribute="top" relation="greaterThanOrEqual" secondItem="akf-VV-HfX" secondAttribute="top" id="Bqr-Cu-dY8"/>
                                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="FRb-sP-p63" secondAttribute="bottom" id="GGw-80-yhu"/>
+                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jcB-rh-gom" secondAttribute="bottom" id="Kee-sj-KVs"/>
+                                                        <constraint firstItem="jcB-rh-gom" firstAttribute="leading" secondItem="akf-VV-HfX" secondAttribute="leading" id="LUb-8E-x9I"/>
                                                         <constraint firstAttribute="trailing" secondItem="FRb-sP-p63" secondAttribute="trailing" id="aGx-Hd-ywB"/>
                                                         <constraint firstItem="FRb-sP-p63" firstAttribute="centerY" secondItem="akf-VV-HfX" secondAttribute="centerY" id="oQy-Tg-irg"/>
                                                         <constraint firstItem="FRb-sP-p63" firstAttribute="top" relation="greaterThanOrEqual" secondItem="akf-VV-HfX" secondAttribute="top" id="rKz-cw-BJn"/>
-                                                        <constraint firstItem="FRb-sP-p63" firstAttribute="leading" secondItem="akf-VV-HfX" secondAttribute="leading" id="y2v-97-Px4"/>
+                                                        <constraint firstItem="jcB-rh-gom" firstAttribute="centerY" secondItem="akf-VV-HfX" secondAttribute="centerY" id="zzx-zS-pbb"/>
                                                     </constraints>
                                                     <connections>
                                                         <outlet property="textField" destination="FRb-sP-p63" id="QyD-nX-ra9"/>

@@ -12,7 +12,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     @IBOutlet weak var menuTable: NSTableView!
     let resource: Resource
     private let manager: RFEditorManager
-
+    
     private var menuInfo = Menu()
     
     override var windowNibName: String {
@@ -32,12 +32,27 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     override func windowDidLoad() {
         self.loadItems()
         self.updateView()
-    }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: Menu.nameDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.nameDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.keyEquivalentDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.markCharacterDidChangeNotification, object: nil)
+    }
+    
     func reflectSelectedItem() {
-
-    }
         
+    }
+    
+    @objc func itemChangeNotification(_ notification: Notification) {
+        if notification.object as? Menu == menuInfo {
+            self.setDocumentEdited(true)
+        } else if let item = notification.object as? MenuItem,
+                  menuInfo.items.contains(item) {
+            self.setDocumentEdited(true)
+        }
+        print("menuInfo.items = \(menuInfo)")
+    }
+    
     /// Reload the views representing our ``items`` list.
     private func updateView() {
         menuTable.reloadData()
@@ -52,8 +67,8 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         } else {
             commandsSize = .none
         }
-
-        var newMenu = Menu()
+        
+        let newMenu = Menu()
         let reader = BinaryDataReader(data)
         newMenu.menuID = try reader.read()
         try reader.advance(2)   // menu width
@@ -61,11 +76,11 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         newMenu.mdefID = try reader.read()
         try reader.advance(2)   // filler
         newMenu.enableFlags = try reader.read()
-        newMenu.menuName = try reader.readPString()
-
+        newMenu.name = try reader.readPString()
+        
         while reader.bytesRemaining > 5 {
-            var newItem = MenuItem()
-            newItem.itemName = try reader.readPString()
+            let newItem = MenuItem()
+            newItem.name = try reader.readPString()
             let iconID: Int8 = try reader.read()
             newItem.iconID = (iconID == 0) ? 0 : Int(iconID) + 256
             let keyEquivalent: UInt8 = try reader.read()
@@ -88,11 +103,11 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
             case .none:
                 break // only breaks out of switch
             }
-
+            
             newMenu.items.append(newItem)
         }
         try reader.advance(1)
-
+        
         return newMenu
     }
     
@@ -118,7 +133,8 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         writer.write(Int16(0)) // mdef ID
         writer.write(Int16(0)) // filler
         writer.write(UInt32.max) // enableFlags
-        try! writer.writePString("New Menu") // menu title
+        let newName = (resource.name.isEmpty ? NSLocalizedString("New Menu", comment: "") : resource.name)
+        try! writer.writePString(newName) // menu title
         writer.write(UInt8(0)) // zero terminator
         resource.data = writer.data
         
@@ -149,8 +165,9 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         writer.write(menuInfo.mdefID) // mdef ID
         writer.write(Int16(0)) // filler
         writer.write(menuInfo.enableFlags) // enableFlags
+        try writer.writePString(menuInfo.name)
         for item in menuInfo.items {
-            try writer.writePString(item.itemName)
+            try writer.writePString(item.name)
             writer.write((item.iconID == 0) ? Int8(0) : Int8(item.iconID - 256))
             let keyEquivalentBytes = [UInt8](item.keyEquivalent.data(using: .macOSRoman) ?? Data())
             writer.write(keyEquivalentBytes.first ?? UInt8(0))
@@ -201,13 +218,13 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
         createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
     }
-        
+    
     @IBAction func createNewItem(_ sender: Any?) {
         var selRow = menuTable.selectedRow
         if selRow == -1 {
             selRow = menuInfo.items.count // No need to subtract 1, because title already offset the index by 1 compared to items.
         }
-        menuInfo.items.insert(MenuItem(itemName: NSLocalizedString("New Item", comment: "name for new menu items")), at: selRow)
+        menuInfo.items.insert(MenuItem(name: NSLocalizedString("New Item", comment: "name for new menu items")), at: selRow)
         
         updateView()
         menuTable.selectRowIndexes([selRow + 1], byExtendingSelection: false) // +1 to account for title row
@@ -226,7 +243,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
                     deletedCount += 1
                 }
             }
-
+            
             reflectSelectedItem()
             if deletedCount > 0 {
                 self.window?.contentView?.undoManager?.beginUndoGrouping()
@@ -259,7 +276,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
             self.window?.presentError(error)
         }
     }
-        
+    
 }
 
 extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegate {
@@ -267,38 +284,19 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
     static let titleColumn = NSUserInterfaceItemIdentifier("Name")
     static let shortcutColumn = NSUserInterfaceItemIdentifier("Shortcut")
     static let markColumn = NSUserInterfaceItemIdentifier("Mark")
-
+    
     @MainActor func numberOfRows(in tableView: NSTableView) -> Int {
         return menuInfo.items.count + 1
     }
-
+    
     @MainActor func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        if row != 0 && menuInfo.items[row - 1].itemName.hasPrefix("-") {
-            return ""
+        if row != 0 {
+            return menuInfo.items[row - 1]
+        } else {
+            return menuInfo
         }
-        if tableColumn?.identifier == MenuEditorWindowController.titleColumn {
-            if row != 0 {
-                return menuInfo.items[row - 1].itemName
-            } else {
-                return menuInfo.menuName
-            }
-        } else if tableColumn?.identifier == MenuEditorWindowController.shortcutColumn {
-            if row != 0 {
-                return menuInfo.items[row - 1].keyEquivalent.isEmpty ? "" : "⌘ \(menuInfo.items[row - 1].keyEquivalent)"
-            } else {
-                return "" // Menu title has no shortcut.
-            }
-        } else if tableColumn?.identifier == MenuEditorWindowController.markColumn {
-            if row != 0 {
-                return menuInfo.items[row - 1].markCharacter
-            } else {
-                return "" // Menu title has no mark.
-            }
-        }
-        
-        return "?"
     }
-
+    
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
         let rowView = MenuItemTableRowView()
         if row == 0 {
@@ -310,7 +308,7 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
         } else if menuInfo.items.count == row {
             rowView.rowStyle = .lastItemCell
         }
-        if row > 0 && menuInfo.items[row - 1].itemName.hasPrefix("-") {
+        if row > 0 && menuInfo.items[row - 1].name.hasPrefix("-") {
             rowView.contentStyle = .separator
         } else {
             rowView.contentStyle = .normal
@@ -322,31 +320,4 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
         return tableColumn?.identifier == MenuEditorWindowController.titleColumn || row != 0
     }
     
-    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
-        let newValue = object as? String ?? ""
-        if tableColumn?.identifier == MenuEditorWindowController.titleColumn {
-            if row != 0 {
-                menuInfo.items[row - 1].itemName = newValue
-            } else {
-                menuInfo.menuName = newValue
-            }
-        } else if tableColumn?.identifier == MenuEditorWindowController.shortcutColumn {
-            if row != 0 {
-                let prefixes = ["⌘ ", "⌘"]
-                var newValueNoCommandKey = newValue
-                for prefix in prefixes {
-                    if newValueNoCommandKey.hasPrefix(prefix) {
-                        newValueNoCommandKey = String(newValueNoCommandKey.dropFirst(prefix.count))
-                    }
-                }
-                menuInfo.items[row - 1].keyEquivalent = newValueNoCommandKey
-            }
-        } else if tableColumn?.identifier == MenuEditorWindowController.markColumn {
-            if row != 0 {
-                menuInfo.items[row - 1].markCharacter = newValue
-            }
-        }
-        
-        self.setDocumentEdited(true)
-    }
 }
