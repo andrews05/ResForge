@@ -31,22 +31,14 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         self.loadItems()
         self.updateView()
     }
-    
-    @objc func itemDoubleClicked(_ notification: Notification) {
-        // If we had a hideable inspector, this is where we'd show it.
-    }
-    
-    @objc func itemFrameDidChange(_ notification: Notification) {
-        self.setDocumentEdited(true)
-    }
-    
+        
     func reflectSelectedItem() {
 
     }
         
     /// Reload the views representing our ``items`` list.
     private func updateView() {
-        print("menu = \(menuInfo)")
+        menuTable.reloadData()
     }
     
     private func itemsFromData(_ data: Data) throws -> Menu {
@@ -214,12 +206,16 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
     
     static let titleColumn = NSUserInterfaceItemIdentifier("Name")
     static let shortcutColumn = NSUserInterfaceItemIdentifier("Shortcut")
+    static let markColumn = NSUserInterfaceItemIdentifier("Mark")
 
     @MainActor func numberOfRows(in tableView: NSTableView) -> Int {
         return menuInfo.items.count + 1
     }
 
     @MainActor func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+        if row != 0 && menuInfo.items[row - 1].itemName.hasPrefix("-") {
+            return ""
+        }
         if tableColumn?.identifier == MenuEditorWindowController.titleColumn {
             if row != 0 {
                 return menuInfo.items[row - 1].itemName
@@ -231,6 +227,12 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
                 return menuInfo.items[row - 1].keyEquivalent.isEmpty ? "" : "⌘ \(menuInfo.items[row - 1].keyEquivalent)"
             } else {
                 return "" // Menu title has no shortcut.
+            }
+        } else if tableColumn?.identifier == MenuEditorWindowController.markColumn {
+            if row != 0 {
+                return menuInfo.items[row - 1].markCharacter
+            } else {
+                return "" // Menu title has no mark.
             }
         }
         
@@ -247,6 +249,11 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
             rowView.rowStyle = .firstItemCell
         } else if menuInfo.items.count == row {
             rowView.rowStyle = .lastItemCell
+        }
+        if row > 0 && menuInfo.items[row - 1].itemName.hasPrefix("-") {
+            rowView.contentStyle = .separator
+        } else {
+            rowView.contentStyle = .normal
         }
         return rowView
     }
