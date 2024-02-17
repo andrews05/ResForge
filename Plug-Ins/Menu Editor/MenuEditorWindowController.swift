@@ -209,3 +209,45 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     }
         
 }
+
+extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegate {
+    
+    static let titleColumn = NSUserInterfaceItemIdentifier("Name")
+    static let shortcutColumn = NSUserInterfaceItemIdentifier("Shortcut")
+
+    @MainActor func numberOfRows(in tableView: NSTableView) -> Int {
+        return menuInfo.items.count + 1
+    }
+
+    @MainActor func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+        if tableColumn?.identifier == MenuEditorWindowController.titleColumn {
+            if row != 0 {
+                return menuInfo.items[row - 1].itemName
+            } else {
+                return menuInfo.menuName
+            }
+        } else if tableColumn?.identifier == MenuEditorWindowController.shortcutColumn {
+            if row != 0 {
+                return menuInfo.items[row - 1].keyEquivalent.isEmpty ? "" : "⌘ \(menuInfo.items[row - 1].keyEquivalent)"
+            } else {
+                return "" // Menu title has no shortcut.
+            }
+        }
+        
+        return "?"
+    }
+
+    func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+        let rowView = MenuItemTableRowView()
+        if row == 0 {
+            rowView.rowStyle = .titleCell
+        } else if row == 1 && menuInfo.items.count == 1 {
+            rowView.rowStyle = .onlyCell
+        } else if row == 1 {
+            rowView.rowStyle = .firstItemCell
+        } else if menuInfo.items.count == row {
+            rowView.rowStyle = .lastItemCell
+        }
+        return rowView
+    }
+}

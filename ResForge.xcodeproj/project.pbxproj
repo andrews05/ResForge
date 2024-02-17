@@ -205,6 +205,7 @@
 		554125CA2B803911008B6832 /* MenuEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125C22B803911008B6832 /* MenuEditorWindowController.swift */; };
 		554125CC2B811213008B6832 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125CB2B811213008B6832 /* Menu.swift */; };
 		554125CD2B811C24008B6832 /* Menu Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 554125B72B8037E4008B6832 /* Menu Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		554125D12B8122F3008B6832 /* MenuItemTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125D02B8122F3008B6832 /* MenuItemTableRowView.swift */; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
 		55FB36042B71530C000F1528 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		55FB361F2B715A3F000F1528 /* Dialog Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 55FB360D2B71530C000F1528 /* Dialog Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -587,6 +588,7 @@
 		554125C12B803911008B6832 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		554125C22B803911008B6832 /* MenuEditorWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuEditorWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		554125CB2B811213008B6832 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		554125D02B8122F3008B6832 /* MenuItemTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemTableRowView.swift; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55FB360D2B71530C000F1528 /* Dialog Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dialog Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FB36172B715497000F1528 /* DialogEditorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogEditorWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -1047,6 +1049,7 @@
 			isa = PBXGroup;
 			children = (
 				554125BD2B803911008B6832 /* MenuEditorWindow.xib */,
+				554125D02B8122F3008B6832 /* MenuItemTableRowView.swift */,
 				554125C02B803911008B6832 /* MenuItem.swift */,
 				554125CB2B811213008B6832 /* Menu.swift */,
 				554125C12B803911008B6832 /* Info.plist */,
@@ -1646,6 +1649,7 @@
 				554125AD2B8037E4008B6832 /* DITLItemView.swift in Sources */,
 				554125C82B803911008B6832 /* MenuItem.swift in Sources */,
 				554125CA2B803911008B6832 /* MenuEditorWindowController.swift in Sources */,
+				554125D12B8122F3008B6832 /* MenuItemTableRowView.swift in Sources */,
 				554125AE2B8037E4008B6832 /* DITLItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
