@@ -95,9 +95,15 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
             
             switch commandsSize {
             case .int16:
+                if (reader.bytesRead % 2) != 0 {
+                    try reader.advance(1)
+                }
                 let shortCommand: UInt16 = try reader.read()
                 newItem.menuCommand = UInt32(shortCommand)
             case .int32:
+                if (reader.bytesRead % 2) != 0 {
+                    try reader.advance(1)
+                }
                 let longCommand: UInt32 = try reader.read()
                 newItem.menuCommand = longCommand
             case .none:
@@ -177,8 +183,14 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
             
             switch commandsSize {
             case .int16:
+                if (writer.bytesWritten % 2) != 0 {
+                    writer.write(UInt8(0))
+                }
                 writer.write(UInt16(item.menuCommand))
             case .int32:
+                if (writer.bytesWritten % 2) != 0 {
+                    writer.write(UInt8(0))
+                }
                 writer.write(item.menuCommand)
             case .none:
                 break // only breaks out of switch
