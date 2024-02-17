@@ -5,6 +5,8 @@ import RFSupport
 class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     static let supportedTypes = [
         "MENU",
+        "cmnu",
+        "CMNU"
     ]
     
     @IBOutlet weak var menuTable: NSTableView!
@@ -42,6 +44,15 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     }
     
     private func itemsFromData(_ data: Data) throws -> Menu {
+        let commandsSize: CommandsSize
+        if resource.typeCode == "cmnu" {
+            commandsSize = .int16
+        } else if resource.typeCode == "CMNU" {
+            commandsSize = .int32
+        } else {
+            commandsSize = .none
+        }
+
         var newMenu = Menu()
         let reader = BinaryDataReader(data)
         newMenu.menuID = try reader.read()
@@ -66,6 +77,18 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
                 newItem.markCharacter = String(data: Data([markCharacter]), encoding: .macOSRoman) ?? ""
             }
             newItem.styleByte = try reader.read()
+            
+            switch commandsSize {
+            case .int16:
+                let shortCommand: UInt16 = try reader.read()
+                newItem.menuCommand = UInt32(shortCommand)
+            case .int32:
+                let longCommand: UInt32 = try reader.read()
+                newItem.menuCommand = longCommand
+            case .none:
+                break // only breaks out of switch
+            }
+
             newMenu.items.append(newItem)
         }
         try reader.advance(1)
@@ -102,8 +125,23 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         self.setDocumentEdited(true)
     }
     
+    private enum CommandsSize {
+        case none
+        case int16
+        case int32
+    }
+    
     private func currentResourceStateAsData() throws -> Data {
         let writer = BinaryDataWriter()
+        
+        let commandsSize: CommandsSize
+        if resource.typeCode == "cmnu" {
+            commandsSize = .int16
+        } else if resource.typeCode == "CMNU" {
+            commandsSize = .int32
+        } else {
+            commandsSize = .none
+        }
         
         writer.write(menuInfo.menuID)
         writer.write(Int16(0)) // width
@@ -119,6 +157,15 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
             let markCharacterBytes = [UInt8](item.markCharacter.data(using: .macOSRoman) ?? Data())
             writer.write(markCharacterBytes.first ?? UInt8(0))
             writer.write(item.styleByte)
+            
+            switch commandsSize {
+            case .int16:
+                writer.write(UInt16(item.menuCommand))
+            case .int32:
+                writer.write(item.menuCommand)
+            case .none:
+                break // only breaks out of switch
+            }
         }
         writer.write(UInt8(0)) // zero terminator
         return writer.data
@@ -147,7 +194,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     
     func windowDidBecomeKey(_ notification: Notification) {
         let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
-        createItem?.title = NSLocalizedString("Create New Item", comment: "")
+        createItem?.title = NSLocalizedString("Create New Item", comment: "menu command for adding menu items to MENUs")
     }
     
     func windowDidResignKey(_ notification: Notification) {
@@ -156,6 +203,14 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     }
         
     @IBAction func createNewItem(_ sender: Any?) {
+        var selRow = menuTable.selectedRow
+        if selRow == -1 {
+            selRow = menuInfo.items.count // No need to subtract 1, because title already offset the index by 1 compared to items.
+        }
+        menuInfo.items.insert(MenuItem(itemName: NSLocalizedString("New Item", comment: "name for new menu items")), at: selRow)
+        
+        updateView()
+        menuTable.selectRowIndexes([selRow + 1], byExtendingSelection: false) // +1 to account for title row
         
         self.setDocumentEdited(true)
     }
@@ -163,13 +218,19 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     @IBAction func delete(_ sender: Any?) {
         do {
             let oldData = try currentResourceStateAsData()
+            var deletedCount = 0
             
-            var didChange = false
+            for row in menuTable.selectedRowIndexes.reversed() {
+                if row > 0 { // Don't allow deleting title.
+                    menuInfo.items.remove(at: row - 1)
+                    deletedCount += 1
+                }
+            }
 
             reflectSelectedItem()
-            if didChange {
+            if deletedCount > 0 {
                 self.window?.contentView?.undoManager?.beginUndoGrouping()
-                self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Delete Item", comment: ""))
+                self.window?.contentView?.undoManager?.setActionName((deletedCount > 0) ? NSLocalizedString("Delete Items", comment: "") : NSLocalizedString("Delete Item", comment: ""))
                 self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
                 self.window?.contentView?.undoManager?.endUndoGrouping()
                 
@@ -184,7 +245,6 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         do {
             let oldData = try currentResourceStateAsData()
             self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-            
             
             do {
                 menuInfo = try self.itemsFromData(data)
@@ -256,5 +316,37 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
             rowView.contentStyle = .normal
         }
         return rowView
+    }
+    
+    func tableView(_ tableView: NSTableView, shouldEdit tableColumn: NSTableColumn?, row: Int) -> Bool {
+        return tableColumn?.identifier == MenuEditorWindowController.titleColumn || row != 0
+    }
+    
+    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
+        let newValue = object as? String ?? ""
+        if tableColumn?.identifier == MenuEditorWindowController.titleColumn {
+            if row != 0 {
+                menuInfo.items[row - 1].itemName = newValue
+            } else {
+                menuInfo.menuName = newValue
+            }
+        } else if tableColumn?.identifier == MenuEditorWindowController.shortcutColumn {
+            if row != 0 {
+                let prefixes = ["⌘ ", "⌘"]
+                var newValueNoCommandKey = newValue
+                for prefix in prefixes {
+                    if newValueNoCommandKey.hasPrefix(prefix) {
+                        newValueNoCommandKey = String(newValueNoCommandKey.dropFirst(prefix.count))
+                    }
+                }
+                menuInfo.items[row - 1].keyEquivalent = newValueNoCommandKey
+            }
+        } else if tableColumn?.identifier == MenuEditorWindowController.markColumn {
+            if row != 0 {
+                menuInfo.items[row - 1].markCharacter = newValue
+            }
+        }
+        
+        self.setDocumentEdited(true)
     }
 }

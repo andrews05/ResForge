@@ -1,6 +1,6 @@
 import Foundation
 
-struct Menu {
+class Menu {
 	
 	var menuID: Int16 = 128
 	var mdefID: Int16 = 0
