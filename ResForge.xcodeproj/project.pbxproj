@@ -199,13 +199,12 @@
 		554125B02B8037E4008B6832 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		554125B22B8037E4008B6832 /* DialogEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36192B715497000F1528 /* DialogEditorWindow.xib */; };
 		554125B32B8037E4008B6832 /* StdSystemIcons.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36182B715497000F1528 /* StdSystemIcons.rsrc */; };
-		554125C32B803911008B6832 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125BA2B803911008B6832 /* MenuItemView.swift */; };
-		554125C42B803911008B6832 /* MenuDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125BB2B803911008B6832 /* MenuDocumentView.swift */; };
-		554125C52B803911008B6832 /* MenuFlippedClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125BC2B803911008B6832 /* MenuFlippedClipView.swift */; };
 		554125C62B803911008B6832 /* MenuEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554125BD2B803911008B6832 /* MenuEditorWindow.xib */; };
 		554125C82B803911008B6832 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125C02B803911008B6832 /* MenuItem.swift */; };
 		554125C92B803911008B6832 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 554125C12B803911008B6832 /* Info.plist */; };
 		554125CA2B803911008B6832 /* MenuEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125C22B803911008B6832 /* MenuEditorWindowController.swift */; };
+		554125CC2B811213008B6832 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125CB2B811213008B6832 /* Menu.swift */; };
+		554125CD2B811C24008B6832 /* Menu Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 554125B72B8037E4008B6832 /* Menu Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
 		55FB36042B71530C000F1528 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		55FB361F2B715A3F000F1528 /* Dialog Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 55FB360D2B71530C000F1528 /* Dialog Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -287,6 +286,13 @@
 			remoteGlobalIDString = 49EE72D72550B79600BEABDB;
 			remoteInfo = KestrelTools;
 		};
+		554125CE2B811C24008B6832 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 554125A82B8037E4008B6832;
+			remoteInfo = "Menu Editor";
+		};
 		55FB361D2B715A15000F1528 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -344,6 +350,7 @@
 				4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */,
 				B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */,
 				E1EAB19A06A20F1A0041EE35 /* Hex Editor.plugin in Copy Plugins */,
+				554125CD2B811C24008B6832 /* Menu Editor.plugin in Copy Plugins */,
 			);
 			name = "Copy Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -575,14 +582,11 @@
 		550B904D189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HexWindow.xib; sourceTree = "<group>"; };
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImageWindow.xib; sourceTree = "<group>"; };
 		554125B72B8037E4008B6832 /* Menu Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Menu Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		554125B82B8037E4008B6832 /* Dialog Editor copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Dialog Editor copy-Info.plist"; path = "/Users/uli/Programming/ResForge/Dialog Editor copy-Info.plist"; sourceTree = "<absolute>"; };
-		554125BA2B803911008B6832 /* MenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; usesTabs = 0; };
-		554125BB2B803911008B6832 /* MenuDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDocumentView.swift; sourceTree = "<group>"; usesTabs = 0; };
-		554125BC2B803911008B6832 /* MenuFlippedClipView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuFlippedClipView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		554125BE2B803911008B6832 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuEditorWindow.xib; sourceTree = "<group>"; };
 		554125C02B803911008B6832 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; usesTabs = 0; };
 		554125C12B803911008B6832 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		554125C22B803911008B6832 /* MenuEditorWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuEditorWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
+		554125CB2B811213008B6832 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55FB360D2B71530C000F1528 /* Dialog Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dialog Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FB36172B715497000F1528 /* DialogEditorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogEditorWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -1042,11 +1046,9 @@
 		554125B92B803911008B6832 /* Menu Editor */ = {
 			isa = PBXGroup;
 			children = (
-				554125BA2B803911008B6832 /* MenuItemView.swift */,
-				554125BB2B803911008B6832 /* MenuDocumentView.swift */,
-				554125BC2B803911008B6832 /* MenuFlippedClipView.swift */,
 				554125BD2B803911008B6832 /* MenuEditorWindow.xib */,
 				554125C02B803911008B6832 /* MenuItem.swift */,
+				554125CB2B811213008B6832 /* Menu.swift */,
 				554125C12B803911008B6832 /* Info.plist */,
 				554125C22B803911008B6832 /* MenuEditorWindowController.swift */,
 			);
@@ -1110,7 +1112,6 @@
 				497043F32472064F0035C0FA /* Graphite */,
 				490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */,
 				493CC3B4270AE9FA00A9173E /* Frameworks */,
-				554125B82B8037E4008B6832 /* Dialog Editor copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1324,6 +1325,7 @@
 				E18BF6CA069FEA1900F076B8 /* PBXTargetDependency */,
 				49DA3A562550BD7C00821A7E /* PBXTargetDependency */,
 				55FB361E2B715A15000F1528 /* PBXTargetDependency */,
+				554125CF2B811C24008B6832 /* PBXTargetDependency */,
 			);
 			name = ResForge;
 			packageProductDependencies = (
@@ -1637,14 +1639,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554125C52B803911008B6832 /* MenuFlippedClipView.swift in Sources */,
 				554125AA2B8037E4008B6832 /* DITLDocumentView.swift in Sources */,
-				554125C42B803911008B6832 /* MenuDocumentView.swift in Sources */,
 				554125AB2B8037E4008B6832 /* DITLFlippedClipView.swift in Sources */,
 				554125AC2B8037E4008B6832 /* DialogEditorWindowController.swift in Sources */,
+				554125CC2B811213008B6832 /* Menu.swift in Sources */,
 				554125AD2B8037E4008B6832 /* DITLItemView.swift in Sources */,
 				554125C82B803911008B6832 /* MenuItem.swift in Sources */,
-				554125C32B803911008B6832 /* MenuItemView.swift in Sources */,
 				554125CA2B803911008B6832 /* MenuEditorWindowController.swift in Sources */,
 				554125AE2B8037E4008B6832 /* DITLItem.swift in Sources */,
 			);
@@ -1788,6 +1788,11 @@
 			isa = PBXTargetDependency;
 			target = 49EE72D72550B79600BEABDB /* NovaTools */;
 			targetProxy = 49DA3A552550BD7C00821A7E /* PBXContainerItemProxy */;
+		};
+		554125CF2B811C24008B6832 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 554125A82B8037E4008B6832 /* Menu Editor */;
+			targetProxy = 554125CE2B811C24008B6832 /* PBXContainerItemProxy */;
 		};
 		55FB361E2B715A15000F1528 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

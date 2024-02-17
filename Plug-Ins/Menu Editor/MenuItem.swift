@@ -2,12 +2,10 @@ import Foundation
 
 struct MenuItem {
     
-    var itemView: MenuItemView
-    var enabled: Bool
-    var title: String
-    var iconID: Int
-    var keyEquivalent: String
-    var markCharacter: String
-    var style: UInt8
+    var itemName = ""
+    var iconID = Int(0)
+    var keyEquivalent = ""
+    var markCharacter = ""
+    var styleByte = UInt8(0)
 
 }
