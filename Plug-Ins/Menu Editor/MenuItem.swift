@@ -106,13 +106,20 @@ extension MenuItem {
         } else if key == "mdefID" {
             return mdefID
         } else if key == "menuCommand" {
-            return menuCommand
+            if commandsSize == .int32 {
+                return String(data: Data([UInt8((menuCommand & 0xff000000) >> 24),
+                                          UInt8((menuCommand & 0x00ff0000) >> 16),
+                                          UInt8((menuCommand & 0x0000ff00) >> 8),
+                                          UInt8((menuCommand & 0x000000ff))]), encoding: .macOSRoman)
+            } else {
+                return "\(menuCommand)"
+            }
         } else if key == "styleByte" {
             return styleByte
         } else if key == "isEnabled" {
             return isEnabled
         } else if key == "iconID" {
-            return iconID
+            return "\(iconID)"
         } else if key == "iconImage" {
             return iconImage
         } else if key == "isItem" {
@@ -140,7 +147,11 @@ extension MenuItem {
         } else if key == "iconID" {
             iconID = Int(value as? String ?? "0") ?? 0
         } else if key == "menuCommand" {
-            menuCommand = UInt32(Int(value as? String ?? "0") ?? 0)
+            if commandsSize == .int32 {
+                menuCommand = UInt32(value as? String ?? "\0\0\0\0")
+            } else {
+                menuCommand = UInt32(Int(value as? String ?? "0") ?? 0)
+            }
         } else if key == "styleByte" {
             styleByte = value as? UInt8 ?? 0
         } else {
