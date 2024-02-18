@@ -35,6 +35,8 @@ class MenuItem: NSObject {
         return !keyEquivalent.isEmpty
     }
     
+    var isItem: Bool { return true }
+    
     internal init(name: String = "", iconID: Int = Int(0), keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true) {
         self.name = name
         self.iconID = iconID

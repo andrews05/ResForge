@@ -72,6 +72,8 @@ extension Menu {
     var hasKeyEquivalent: Bool {
         return false
     }
+    
+    var isItem: Bool { return false }
 
     override func value(forKey key: String) -> Any? {
         if key == "markCharacter" {
@@ -84,6 +86,8 @@ extension Menu {
             return hasKeyEquivalent
         } else if key == "isEnabled" {
             return isEnabled
+        } else if key == "isItem" {
+            return isItem
         } else if key == "textColor" {
             return isEnabled ? NSColor.white : NSColor.lightGray
         } else {

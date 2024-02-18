@@ -21,17 +21,17 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <value key="minSize" type="size" width="240" height="120"/>
             <view key="contentView" misplaced="YES" id="18">
-                <rect key="frame" x="0.0" y="0.0" width="595" height="352"/>
+                <rect key="frame" x="0.0" y="0.0" width="595" height="358"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
-                        <rect key="frame" x="-1" y="-1" width="385" height="353"/>
+                    <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
+                        <rect key="frame" x="-1" y="-1" width="385" height="359"/>
                         <clipView key="contentView" id="Q0k-GS-R3n">
-                            <rect key="frame" x="1" y="1" width="383" height="351"/>
+                            <rect key="frame" x="1" y="1" width="383" height="357"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="oOj-xi-kqb">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="351"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="oOj-xi-kqb">
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="357"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -200,15 +200,40 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
+                    <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" misplaced="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="64d-80-xuj">
+                        <rect key="frame" x="392" y="-4" width="203" height="360"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8jz-NL-5Wd">
+                                <rect key="frame" x="-2" y="343" width="205" height="18"/>
+                                <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Ccb-Cl-FAc">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="-2" name="value" keyPath="selectedItem.isEnabled" id="5ea-27-62N"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <visibilityPriorities>
+                            <integer value="1000"/>
+                        </visibilityPriorities>
+                        <customSpacing>
+                            <real value="3.4028234663852886e+38"/>
+                        </customSpacing>
+                    </stackView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="H9d-D8-19n" firstAttribute="leading" secondItem="18" secondAttribute="leading" constant="-1" id="GSr-Dc-0K8"/>
+                    <constraint firstAttribute="trailing" secondItem="64d-80-xuj" secondAttribute="trailing" id="Od1-r5-DgE"/>
                     <constraint firstAttribute="bottom" secondItem="H9d-D8-19n" secondAttribute="bottom" constant="-1" id="UsI-0x-UNi"/>
                     <constraint firstAttribute="trailing" secondItem="H9d-D8-19n" secondAttribute="trailing" constant="211" id="X0c-OX-PiL"/>
-                    <constraint firstItem="H9d-D8-19n" firstAttribute="top" secondItem="18" secondAttribute="top" id="wdp-8S-x6Y"/>
+                    <constraint firstItem="64d-80-xuj" firstAttribute="top" secondItem="H9d-D8-19n" secondAttribute="top" id="Z8y-PV-yVh"/>
+                    <constraint firstAttribute="bottom" secondItem="64d-80-xuj" secondAttribute="bottom" id="vwZ-Da-ODY"/>
+                    <constraint firstItem="H9d-D8-19n" firstAttribute="top" secondItem="18" secondAttribute="top" constant="2" id="wdp-8S-x6Y"/>
+                    <constraint firstItem="64d-80-xuj" firstAttribute="leading" secondItem="H9d-D8-19n" secondAttribute="trailing" constant="8" symbolic="YES" id="zUi-qr-oOy"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="202.5" y="323.5"/>
+            <point key="canvasLocation" x="194" y="333"/>
         </window>
     </objects>
 </document>

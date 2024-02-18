@@ -31,8 +31,8 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     
     override func windowDidLoad() {
         self.loadItems()
-        self.updateView()
-        
+        menuTable.reloadData()
+
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: Menu.nameDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: Menu.enabledDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.nameDidChangeNotification, object: nil)
@@ -41,9 +41,8 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: MenuItem.enabledDidChangeNotification, object: nil)
     }
     
-    func reflectSelectedItem() {
-        
-    }
+    /// For inspector UI to bind to.
+    var selectedItem: Any? = nil
     
     @objc func itemChangeNotification(_ notification: Notification) {
         if notification.object as? Menu == menuInfo {
@@ -60,14 +59,9 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         } else if let item = notification.object as? MenuItem,
                   let itemIndex = menuInfo.items.firstIndex(of: item) {
             menuInfo.setEnabled(item.isEnabled, at: itemIndex)
-            self.updateView()
+            menuTable.reloadData()
             self.setDocumentEdited(true)
         }
-    }
-    
-    /// Reload the views representing our ``items`` list.
-    private func updateView() {
-        menuTable.reloadData()
     }
     
     private func itemsFromData(_ data: Data) throws -> Menu {
@@ -232,8 +226,8 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     @IBAction func revertResource(_ sender: Any) {
         self.window?.contentView?.undoManager?.removeAllActions()
         self.loadItems()
-        self.updateView()
-        
+        menuTable.reloadData()
+
         self.setDocumentEdited(false)
     }
     
@@ -255,9 +249,9 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         }
         menuInfo.items.insert(MenuItem(name: NSLocalizedString("New Menu Item", comment: "name for new menu items")), at: selRow)
         
-        updateView()
+        menuTable.reloadData()
         menuTable.selectRowIndexes([selRow + 1], byExtendingSelection: false) // +1 to account for title row
-        
+
         self.setDocumentEdited(true)
     }
     
@@ -273,9 +267,8 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
                 }
             }
             
-            reflectSelectedItem()
             if deletedCount > 0 {
-                self.updateView()
+                menuTable.reloadData()
                 self.window?.contentView?.undoManager?.beginUndoGrouping()
                 self.window?.contentView?.undoManager?.setActionName((deletedCount > 0) ? NSLocalizedString("Delete Items", comment: "") : NSLocalizedString("Delete Item", comment: ""))
                 self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
@@ -295,9 +288,8 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
             
             do {
                 menuInfo = try self.itemsFromData(data)
-                self.updateView()
-                self.reflectSelectedItem()
-                
+                menuTable.reloadData()
+
                 self.setDocumentEdited(true)
             } catch {
                 self.window?.presentError(error)
@@ -348,6 +340,31 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
     
     func tableView(_ tableView: NSTableView, shouldEdit tableColumn: NSTableColumn?, row: Int) -> Bool {
         return tableColumn?.identifier == MenuEditorWindowController.titleColumn || row != 0
+    }
+    
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        self.willChangeValue(forKey: "selectedItem")
+        let selRow = menuTable.selectedRow
+        if selRow == -1 {
+            selectedItem = nil
+        } else if selRow == 0 {
+            selectedItem = menuInfo
+        } else {
+            selectedItem = menuInfo.items[selRow - 1]
+        }
+        self.didChangeValue(forKey: "selectedItem")
+    }
+
+}
+
+extension MenuEditorWindowController {
+    
+    override func value(forKey key: String) -> Any? {
+        if key == "selectedItem" {
+            return selectedItem
+        } else {
+            return super.value(forKey: key)
+        }
     }
     
 }
