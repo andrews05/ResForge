@@ -58,8 +58,16 @@ extension MenuItem {
             return keyEquivalent
         } else if key == "name" {
             return name
+        } else if key == "menuID" {
+            return menuID
+        } else if key == "mdefID" {
+            return mdefID
+        } else if key == "menuCommand" {
+            return menuCommand
         } else if key == "isEnabled" {
             return isEnabled
+        } else if key == "isItem" {
+            return isItem
         } else if key == "textColor" {
             return isEnabled ? NSColor.black : NSColor.lightGray
         } else if key == "hasKeyEquivalent" {
@@ -78,11 +86,19 @@ extension MenuItem {
             name = value as? String ?? ""
         } else if key == "isEnabled" {
             isEnabled = value as? Bool ?? true
+        } else if key == "menuCommand" {
+            menuCommand = value as? UInt32 ?? 0
         } else {
             super.setValue(value, forKey: key)
         }
     }
     
+}
+
+// So menu and menu item can be treated identically by UI.
+extension MenuItem {
+    var menuID: Int16 { return 0 }
+    var mdefID: Int16 { return 0 }
 }
 
 extension MenuItem {

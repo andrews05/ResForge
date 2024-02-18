@@ -72,7 +72,8 @@ extension Menu {
     var hasKeyEquivalent: Bool {
         return false
     }
-    
+    var menuCommand: UInt32 { return 0 }
+
     var isItem: Bool { return false }
 
     override func value(forKey key: String) -> Any? {
@@ -86,6 +87,12 @@ extension Menu {
             return hasKeyEquivalent
         } else if key == "isEnabled" {
             return isEnabled
+        } else if key == "menuID" {
+            return menuID
+        } else if key == "mdefID" {
+            return mdefID
+        } else if key == "menuCommand" {
+            return menuCommand
         } else if key == "isItem" {
             return isItem
         } else if key == "textColor" {
