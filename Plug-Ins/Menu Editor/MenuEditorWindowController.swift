@@ -34,9 +34,11 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         self.updateView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: Menu.nameDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: Menu.enabledDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.nameDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.keyEquivalentDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.markCharacterDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: MenuItem.enabledDidChangeNotification, object: nil)
     }
     
     func reflectSelectedItem() {
@@ -50,7 +52,17 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
                   menuInfo.items.contains(item) {
             self.setDocumentEdited(true)
         }
-        print("menuInfo.items = \(menuInfo)")
+    }
+    
+    @objc func enabledChangeNotification(_ notification: Notification) {
+        if notification.object as? Menu == menuInfo {
+            self.setDocumentEdited(true)
+        } else if let item = notification.object as? MenuItem,
+                  let itemIndex = menuInfo.items.firstIndex(of: item) {
+            menuInfo.setEnabled(item.isEnabled, at: itemIndex)
+            self.updateView()
+            self.setDocumentEdited(true)
+        }
     }
     
     /// Reload the views representing our ``items`` list.
@@ -78,6 +90,8 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         newMenu.enableFlags = try reader.read()
         newMenu.name = try reader.readPString()
         
+        var itemEnableBitIndex = 1
+        
         while reader.bytesRemaining > 5 {
             let newItem = MenuItem()
             newItem.name = try reader.readPString()
@@ -92,6 +106,9 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
                 newItem.markCharacter = String(data: Data([markCharacter]), encoding: .macOSRoman) ?? ""
             }
             newItem.styleByte = try reader.read()
+            newItem.isEnabled = (newMenu.enableFlags & (1 << itemEnableBitIndex)) != 0
+            
+            itemEnableBitIndex += 1
             
             switch commandsSize {
             case .int16:
@@ -236,7 +253,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         if selRow == -1 {
             selRow = menuInfo.items.count // No need to subtract 1, because title already offset the index by 1 compared to items.
         }
-        menuInfo.items.insert(MenuItem(name: NSLocalizedString("New Item", comment: "name for new menu items")), at: selRow)
+        menuInfo.items.insert(MenuItem(name: NSLocalizedString("New Menu Item", comment: "name for new menu items")), at: selRow)
         
         updateView()
         menuTable.selectRowIndexes([selRow + 1], byExtendingSelection: false) // +1 to account for title row
@@ -258,6 +275,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
             
             reflectSelectedItem()
             if deletedCount > 0 {
+                self.updateView()
                 self.window?.contentView?.undoManager?.beginUndoGrouping()
                 self.window?.contentView?.undoManager?.setActionName((deletedCount > 0) ? NSLocalizedString("Delete Items", comment: "") : NSLocalizedString("Delete Item", comment: ""))
                 self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })

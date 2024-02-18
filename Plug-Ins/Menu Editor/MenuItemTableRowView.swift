@@ -29,7 +29,7 @@ class MenuItemTableRowView : NSTableRowView {
             box.origin.x += 16 // keep these two lines in sync with XIB "Mark" and "Shortcut" column widths.
             box.size.width -= 16 + 25;
             if !isSelected {
-                NSColor.darkGray.setFill()
+                NSColor.black.setFill()
             } else {
                 NSColor.selectedMenuItemColor.setFill()
             }

@@ -21,18 +21,17 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <value key="minSize" type="size" width="240" height="120"/>
             <view key="contentView" misplaced="YES" id="18">
-                <rect key="frame" x="0.0" y="0.0" width="595" height="347"/>
+                <rect key="frame" x="0.0" y="0.0" width="595" height="352"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
-                        <rect key="frame" x="-1" y="-1" width="438" height="348"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
+                        <rect key="frame" x="-1" y="-1" width="385" height="353"/>
                         <clipView key="contentView" id="Q0k-GS-R3n">
-                            <rect key="frame" x="1" y="1" width="436" height="346"/>
+                            <rect key="frame" x="1" y="1" width="383" height="351"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="oOj-xi-kqb">
-                                    <rect key="frame" x="0.0" y="0.0" width="436" height="346"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="351"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -62,6 +61,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="RGo-ON-Gf1" name="textColor" keyPath="objectValue.textColor" id="oJ1-6S-eU3"/>
                                                                 <binding destination="RGo-ON-Gf1" name="value" keyPath="objectValue.markCharacter" id="DgR-ar-J7x"/>
                                                             </connections>
                                                         </textField>
@@ -79,7 +79,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="Name" width="325" minWidth="40" maxWidth="1000" id="sR9-n1-K32">
+                                        <tableColumn identifier="Name" width="291" minWidth="40" maxWidth="1000" id="sR9-n1-K32">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -92,17 +92,18 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="XDg-6m-dtd">
-                                                    <rect key="frame" x="39" y="0.0" width="325" height="24"/>
+                                                    <rect key="frame" x="39" y="0.0" width="291" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="91H-at-hQY">
-                                                            <rect key="frame" x="-2" y="3" width="329" height="19"/>
+                                                            <rect key="frame" x="-2" y="3" width="295" height="19"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Item Text" usesSingleLineMode="YES" id="g0d-pv-Og9">
                                                                 <font key="font" size="12" name="Silom"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="XDg-6m-dtd" name="textColor" keyPath="objectValue.textColor" id="Uj9-G3-cAA"/>
                                                                 <binding destination="XDg-6m-dtd" name="value" keyPath="objectValue.name" id="I9V-Rv-JnK"/>
                                                             </connections>
                                                         </textField>
@@ -133,7 +134,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView misplaced="YES" id="akf-VV-HfX">
-                                                    <rect key="frame" x="381" y="0.0" width="27" height="17"/>
+                                                    <rect key="frame" x="347" y="0.0" width="27" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FRb-sP-p63">
@@ -144,6 +145,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="akf-VV-HfX" name="textColor" keyPath="objectValue.textColor" id="qCV-26-Kzv"/>
                                                                 <binding destination="akf-VV-HfX" name="value" keyPath="objectValue.keyEquivalent" id="RkL-cr-asY"/>
                                                             </connections>
                                                         </textField>
@@ -160,6 +162,7 @@
                                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                     </dictionary>
                                                                 </binding>
+                                                                <binding destination="akf-VV-HfX" name="textColor" keyPath="objectValue.textColor" id="G9a-dT-rij"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -189,7 +192,7 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mWa-Fc-iYa">
-                            <rect key="frame" x="1" y="331" width="436" height="16"/>
+                            <rect key="frame" x="1" y="331" width="220" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="mUu-Gd-CMj">
@@ -198,6 +201,12 @@
                         </scroller>
                     </scrollView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="H9d-D8-19n" firstAttribute="leading" secondItem="18" secondAttribute="leading" constant="-1" id="GSr-Dc-0K8"/>
+                    <constraint firstAttribute="bottom" secondItem="H9d-D8-19n" secondAttribute="bottom" constant="-1" id="UsI-0x-UNi"/>
+                    <constraint firstAttribute="trailing" secondItem="H9d-D8-19n" secondAttribute="trailing" constant="211" id="X0c-OX-PiL"/>
+                    <constraint firstItem="H9d-D8-19n" firstAttribute="top" secondItem="18" secondAttribute="top" id="wdp-8S-x6Y"/>
+                </constraints>
             </view>
             <point key="canvasLocation" x="202.5" y="323.5"/>
         </window>
