@@ -27,11 +27,15 @@ class MenuItem: NSObject {
             if iconID != 0,
                let res = manager.findResource(type: ResourceType("ICON"), id: iconID, currentDocumentOnly: false) {
                 res.preview({ img in
+                    self.willChangeValue(forKey: "iconImage")
                     self.iconImage = img
-                    NotificationCenter.default.post(name: MenuItem.iconDidChangeNotification, object: self)
+                    self.didChangeValue(forKey: "iconImage")
                 })
+                NotificationCenter.default.post(name: MenuItem.iconDidChangeNotification, object: self) // This is *only* the change of the icon ID. Image loading isn't a change (otherwise every resource would open and immediately be edited)
             } else {
-                iconImage = nil
+                self.willChangeValue(forKey: "iconImage")
+                self.iconImage = nil
+                self.didChangeValue(forKey: "iconImage")
                 NotificationCenter.default.post(name: MenuItem.iconDidChangeNotification, object: self)
             }
         }
@@ -94,6 +98,18 @@ class MenuItem: NSObject {
         self.submenuID = submenuID
         self.commandsSize = commandsSize
         self.manager = manager
+        
+        super.init()
+        
+        if iconID != 0,
+           let res = manager.findResource(type: ResourceType("ICON"), id: iconID, currentDocumentOnly: false) {
+            res.preview({ img in
+                self.willChangeValue(forKey: "iconImage")
+                self.iconImage = img
+                self.didChangeValue(forKey: "iconImage")
+            })
+        }
+
     }
     
 }
