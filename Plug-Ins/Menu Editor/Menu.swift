@@ -74,8 +74,10 @@ extension Menu {
     }
     var menuCommand: UInt32 { return 0 }
     var styleByte: UInt8 { return 0 }
+    var iconID: Int { return 0 }
 
     var isItem: Bool { return false }
+    var hasCommand: Bool { return false }
 
     override func value(forKey key: String) -> Any? {
         if key == "markCharacter" {
@@ -96,6 +98,10 @@ extension Menu {
             return menuCommand
         } else if key == "styleByte" {
             return styleByte
+        } else if key == "iconID" {
+            return iconID
+        } else if key == "hasCommand" {
+            return hasCommand
         } else if key == "isItem" {
             return isItem
         } else if key == "textColor" {

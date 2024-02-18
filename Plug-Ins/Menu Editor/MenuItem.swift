@@ -2,19 +2,30 @@ import Cocoa
 
 class MenuItem: NSObject {
     
+    enum CommandsSize {
+        case none
+        case int16
+        case int32
+    }
+    
     static let nameDidChangeNotification = Notification.Name("MENUItemNameDidChangeNotification")
     static let keyEquivalentDidChangeNotification = Notification.Name("MENUItemKeyEquivalentDidChangeNotification")
     static let markCharacterDidChangeNotification = Notification.Name("MENUItemMarkCharacterDidChangeNotification")
     static let styleByteDidChangeNotification = Notification.Name("MENUItemStyleByteDidChangeNotification")
     static let menuCommandDidChangeNotification = Notification.Name("MENUItemCommandByteDidChangeNotification")
     static let enabledDidChangeNotification = Notification.Name("MENUItemEnabledDidChangeNotification")
+    static let iconDidChangeNotification = Notification.Name("MENUItemIconDidChangeNotification")
 
     var name = "" {
         didSet {
             NotificationCenter.default.post(name: MenuItem.nameDidChangeNotification, object: self)
         }
     }
-    var iconID = Int(0)
+    var iconID = Int(0) {
+        didSet {
+            NotificationCenter.default.post(name: MenuItem.iconDidChangeNotification, object: self)
+        }
+    }
     var keyEquivalent = "" {
         didSet {
             NotificationCenter.default.post(name: MenuItem.keyEquivalentDidChangeNotification, object: self)
@@ -35,6 +46,7 @@ class MenuItem: NSObject {
             NotificationCenter.default.post(name: MenuItem.menuCommandDidChangeNotification, object: self)
         }
     }
+    let commandsSize: CommandsSize
     
     var isEnabled: Bool = true {
         didSet {
@@ -45,9 +57,13 @@ class MenuItem: NSObject {
         return !keyEquivalent.isEmpty
     }
     
+    var hasCommand: Bool {
+        return commandsSize != .none
+    }
+    
     var isItem: Bool { return true }
     
-    internal init(name: String = "", iconID: Int = Int(0), keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true) {
+    internal init(name: String = "", iconID: Int = Int(0), keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true, commandsSize: CommandsSize = .none) {
         self.name = name
         self.iconID = iconID
         self.keyEquivalent = keyEquivalent
@@ -55,6 +71,7 @@ class MenuItem: NSObject {
         self.styleByte = styleByte
         self.menuCommand = menuCommand
         self.isEnabled = isEnabled
+        self.commandsSize = commandsSize
     }
     
 }
@@ -78,8 +95,12 @@ extension MenuItem {
             return styleByte
         } else if key == "isEnabled" {
             return isEnabled
+        } else if key == "iconID" {
+            return iconID
         } else if key == "isItem" {
             return isItem
+        } else if key == "hasCommand" {
+            return hasCommand
         } else if key == "textColor" {
             return isEnabled ? NSColor.black : NSColor.lightGray
         } else if key == "hasKeyEquivalent" {
@@ -98,6 +119,8 @@ extension MenuItem {
             name = value as? String ?? ""
         } else if key == "isEnabled" {
             isEnabled = value as? Bool ?? true
+        } else if key == "iconID" {
+            iconID = Int(value as? String ?? "0") ?? 0
         } else if key == "menuCommand" {
             menuCommand = UInt32(Int(value as? String ?? "0") ?? 0)
         } else if key == "styleByte" {

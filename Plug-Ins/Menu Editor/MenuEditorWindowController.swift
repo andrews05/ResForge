@@ -40,6 +40,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.markCharacterDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.styleByteDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.menuCommandDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.iconDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: MenuItem.enabledDidChangeNotification, object: nil)
     }
     
@@ -67,7 +68,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     }
     
     private func itemsFromData(_ data: Data) throws -> Menu {
-        let commandsSize: CommandsSize
+        let commandsSize: MenuItem.CommandsSize
         if resource.typeCode == "cmnu" {
             commandsSize = .int16
         } else if resource.typeCode == "CMNU" {
@@ -89,7 +90,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         var itemEnableBitIndex = 1
         
         while reader.bytesRemaining > 5 {
-            let newItem = MenuItem()
+            let newItem = MenuItem(commandsSize: commandsSize)
             newItem.name = try reader.readPString()
             let iconID: Int8 = try reader.read()
             newItem.iconID = (iconID == 0) ? 0 : Int(iconID) + 256
@@ -160,16 +161,10 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         self.setDocumentEdited(true)
     }
     
-    private enum CommandsSize {
-        case none
-        case int16
-        case int32
-    }
-    
     private func currentResourceStateAsData() throws -> Data {
         let writer = BinaryDataWriter()
         
-        let commandsSize: CommandsSize
+        let commandsSize: MenuItem.CommandsSize
         if resource.typeCode == "cmnu" {
             commandsSize = .int16
         } else if resource.typeCode == "CMNU" {
