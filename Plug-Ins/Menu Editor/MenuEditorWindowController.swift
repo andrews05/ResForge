@@ -90,7 +90,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         var itemEnableBitIndex = 1
         
         while reader.bytesRemaining > 5 {
-            let newItem = MenuItem(commandsSize: commandsSize)
+            let newItem = MenuItem(commandsSize: commandsSize, manager: manager)
             newItem.name = try reader.readPString()
             let iconID: Int8 = try reader.read()
             newItem.iconID = (iconID == 0) ? 0 : Int(iconID) + 256
@@ -244,7 +244,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         if selRow == -1 {
             selRow = menuInfo.items.count // No need to subtract 1, because title already offset the index by 1 compared to items.
         }
-        menuInfo.items.insert(MenuItem(name: NSLocalizedString("New Menu Item", comment: "name for new menu items")), at: selRow)
+        menuInfo.items.insert(MenuItem(name: NSLocalizedString("New Menu Item", comment: "name for new menu items"), manager: manager), at: selRow)
         
         menuTable.reloadData()
         menuTable.selectRowIndexes([selRow + 1], byExtendingSelection: false) // +1 to account for title row

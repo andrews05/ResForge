@@ -21,17 +21,17 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <value key="minSize" type="size" width="240" height="120"/>
             <view key="contentView" misplaced="YES" id="18">
-                <rect key="frame" x="0.0" y="0.0" width="595" height="358"/>
+                <rect key="frame" x="0.0" y="0.0" width="585" height="364"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
-                        <rect key="frame" x="-1" y="-1" width="375" height="359"/>
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="18" horizontalPageScroll="10" verticalLineScroll="18" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
+                        <rect key="frame" x="-1" y="-1" width="375" height="373"/>
                         <clipView key="contentView" id="Q0k-GS-R3n">
-                            <rect key="frame" x="1" y="1" width="373" height="357"/>
+                            <rect key="frame" x="1" y="1" width="373" height="371"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="20" viewBased="YES" floatsGroupRows="NO" id="oOj-xi-kqb">
-                                    <rect key="frame" x="0.0" y="0.0" width="373" height="357"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" floatsGroupRows="NO" id="oOj-xi-kqb">
+                                    <rect key="frame" x="0.0" y="0.0" width="373" height="371"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -52,8 +52,8 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="22" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rau-w8-qyY">
-                                                            <rect key="frame" x="-2" y="-1" width="26" height="19"/>
+                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="rau-w8-qyY">
+                                                            <rect key="frame" x="-2" y="0.0" width="26" height="19"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="center" title="✔︎" usesSingleLineMode="YES" id="Wfa-no-JcT">
                                                                 <font key="font" size="12" name="Silom"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -94,8 +94,18 @@
                                                     <rect key="frame" x="22" y="0.0" width="315" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
+                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zDX-EO-Cr9">
+                                                            <rect key="frame" x="0.0" y="4" width="0.0" height="16"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="16" id="eUF-58-lex"/>
+                                                            </constraints>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="LVn-02-IjU"/>
+                                                            <connections>
+                                                                <binding destination="XDg-6m-dtd" name="value" keyPath="objectValue.iconImage" id="uoN-rk-SdT"/>
+                                                            </connections>
+                                                        </imageView>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="91H-at-hQY">
-                                                            <rect key="frame" x="-2" y="3" width="319" height="19"/>
+                                                            <rect key="frame" x="2" y="3" width="315" height="19"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Item Text" usesSingleLineMode="YES" id="g0d-pv-Og9">
                                                                 <font key="font" size="12" name="Silom"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -109,9 +119,11 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="91H-at-hQY" secondAttribute="bottom" id="2Qy-WG-Lje"/>
-                                                        <constraint firstItem="91H-at-hQY" firstAttribute="leading" secondItem="XDg-6m-dtd" secondAttribute="leading" id="8VM-7E-abh"/>
+                                                        <constraint firstItem="zDX-EO-Cr9" firstAttribute="leading" secondItem="XDg-6m-dtd" secondAttribute="leading" id="8Dg-s8-gb2"/>
                                                         <constraint firstAttribute="trailing" secondItem="91H-at-hQY" secondAttribute="trailing" id="9x6-fa-guO"/>
                                                         <constraint firstItem="91H-at-hQY" firstAttribute="centerY" secondItem="XDg-6m-dtd" secondAttribute="centerY" id="V1a-MT-o4S"/>
+                                                        <constraint firstItem="91H-at-hQY" firstAttribute="leading" secondItem="zDX-EO-Cr9" secondAttribute="trailing" constant="4" id="aXp-Bn-Kdn"/>
+                                                        <constraint firstItem="zDX-EO-Cr9" firstAttribute="centerY" secondItem="XDg-6m-dtd" secondAttribute="centerY" id="hgw-QF-bE3"/>
                                                         <constraint firstItem="91H-at-hQY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="XDg-6m-dtd" secondAttribute="top" id="oDb-lw-fs9"/>
                                                     </constraints>
                                                     <connections>
@@ -136,8 +148,8 @@
                                                     <rect key="frame" x="337" y="0.0" width="36" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FRb-sP-p63">
-                                                            <rect key="frame" x="10" y="-1" width="28" height="19"/>
+                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="800" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FRb-sP-p63">
+                                                            <rect key="frame" x="13" y="0.0" width="25" height="15"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="left" title="M" usesSingleLineMode="YES" id="j7q-fI-CHe">
                                                                 <font key="font" size="12" name="Silom"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -148,9 +160,9 @@
                                                                 <binding destination="akf-VV-HfX" name="value" keyPath="objectValue.keyEquivalent" id="RkL-cr-asY"/>
                                                             </connections>
                                                         </textField>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="100" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jcB-rh-gom">
-                                                            <rect key="frame" x="-2" y="2" width="16" height="15"/>
-                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" title="⌘" usesSingleLineMode="YES" id="hWv-1I-zHY">
+                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="jcB-rh-gom">
+                                                            <rect key="frame" x="-2" y="0.0" width="19" height="15"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" title="⌘ " usesSingleLineMode="YES" id="hWv-1I-zHY">
                                                                 <font key="font" size="12" name="LucidaGrande-Bold"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -166,15 +178,14 @@
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="FRb-sP-p63" secondAttribute="bottom" id="313-UM-JPM"/>
                                                         <constraint firstItem="FRb-sP-p63" firstAttribute="leading" secondItem="jcB-rh-gom" secondAttribute="trailing" id="4cG-9H-WQo"/>
-                                                        <constraint firstItem="jcB-rh-gom" firstAttribute="top" relation="greaterThanOrEqual" secondItem="akf-VV-HfX" secondAttribute="top" id="Bqr-Cu-dY8"/>
-                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="FRb-sP-p63" secondAttribute="bottom" id="GGw-80-yhu"/>
-                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jcB-rh-gom" secondAttribute="bottom" id="Kee-sj-KVs"/>
+                                                        <constraint firstItem="FRb-sP-p63" firstAttribute="top" secondItem="akf-VV-HfX" secondAttribute="top" id="EPC-Xe-2qA"/>
+                                                        <constraint firstItem="jcB-rh-gom" firstAttribute="top" secondItem="akf-VV-HfX" secondAttribute="top" id="IAE-fo-khH"/>
                                                         <constraint firstItem="jcB-rh-gom" firstAttribute="leading" secondItem="akf-VV-HfX" secondAttribute="leading" id="LUb-8E-x9I"/>
                                                         <constraint firstAttribute="trailing" secondItem="FRb-sP-p63" secondAttribute="trailing" id="aGx-Hd-ywB"/>
-                                                        <constraint firstItem="FRb-sP-p63" firstAttribute="centerY" secondItem="akf-VV-HfX" secondAttribute="centerY" id="oQy-Tg-irg"/>
-                                                        <constraint firstItem="FRb-sP-p63" firstAttribute="top" relation="greaterThanOrEqual" secondItem="akf-VV-HfX" secondAttribute="top" id="rKz-cw-BJn"/>
-                                                        <constraint firstItem="jcB-rh-gom" firstAttribute="centerY" secondItem="akf-VV-HfX" secondAttribute="centerY" id="zzx-zS-pbb"/>
+                                                        <constraint firstItem="FRb-sP-p63" firstAttribute="centerY" secondItem="akf-VV-HfX" secondAttribute="centerY" id="cRB-Yd-wBE"/>
+                                                        <constraint firstAttribute="bottom" secondItem="jcB-rh-gom" secondAttribute="bottom" id="pTi-9O-VZH"/>
                                                     </constraints>
                                                     <connections>
                                                         <outlet property="textField" destination="FRb-sP-p63" id="QyD-nX-ra9"/>
@@ -191,7 +202,7 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mWa-Fc-iYa">
-                            <rect key="frame" x="1" y="342" width="123" height="16"/>
+                            <rect key="frame" x="1" y="350" width="363" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="mUu-Gd-CMj">
@@ -200,10 +211,10 @@
                         </scroller>
                     </scrollView>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="64d-80-xuj" userLabel="Inspector Stack View">
-                        <rect key="frame" x="382" y="0.0" width="191" height="348"/>
+                        <rect key="frame" x="382" y="0.0" width="191" height="360"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mkd-DJ-7f3" userLabel="Enabled Stack View">
-                                <rect key="frame" x="40" y="332" width="151" height="16"/>
+                                <rect key="frame" x="40" y="344" width="151" height="16"/>
                                 <subviews>
                                     <customView verticalHuggingPriority="100" id="Xpt-F5-fga">
                                         <rect key="frame" x="3" y="2" width="67" height="13"/>
@@ -230,7 +241,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AbZ-go-Ck0" userLabel="ID Stack View">
-                                <rect key="frame" x="0.0" y="303" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="315" width="191" height="21"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="1dy-JZ-eeI">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -268,7 +279,7 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DKS-Xg-pXR" userLabel="MDEF Stack View">
-                                <rect key="frame" x="0.0" y="274" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="286" width="191" height="21"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="53h-zB-gK1">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -303,7 +314,7 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q2b-Qp-1JV" userLabel="Style Stack View">
-                                <rect key="frame" x="0.0" y="246" width="191" height="20"/>
+                                <rect key="frame" x="0.0" y="258" width="191" height="20"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="Ty4-0S-dYi">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -353,7 +364,7 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fce-T5-IgR" userLabel="Icon Stack View">
-                                <rect key="frame" x="0.0" y="217" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="229" width="191" height="21"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="4o3-HS-pkX" userLabel="Icon:">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -392,7 +403,7 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXn-jk-okw" userLabel="Command Stack View">
-                                <rect key="frame" x="0.0" y="188" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="200" width="191" height="21"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="76Y-nP-lpq">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -431,7 +442,7 @@
                                 </connections>
                             </stackView>
                             <customView verticalHuggingPriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="bik-hd-VQL">
-                                <rect key="frame" x="0.0" y="0.0" width="191" height="180"/>
+                                <rect key="frame" x="0.0" y="0.0" width="191" height="192"/>
                             </customView>
                         </subviews>
                         <constraints>

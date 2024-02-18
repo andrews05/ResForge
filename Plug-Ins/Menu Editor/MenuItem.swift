@@ -1,4 +1,5 @@
 import Cocoa
+import RFSupport
 
 class MenuItem: NSObject {
     
@@ -23,7 +24,16 @@ class MenuItem: NSObject {
     }
     var iconID = Int(0) {
         didSet {
-            NotificationCenter.default.post(name: MenuItem.iconDidChangeNotification, object: self)
+            if iconID != 0,
+               let res = manager.findResource(type: ResourceType("ICON"), id: iconID, currentDocumentOnly: false) {
+                res.preview({ img in
+                    self.iconImage = img
+                    NotificationCenter.default.post(name: MenuItem.iconDidChangeNotification, object: self)
+                })
+            } else {
+                iconImage = nil
+                NotificationCenter.default.post(name: MenuItem.iconDidChangeNotification, object: self)
+            }
         }
     }
     var keyEquivalent = "" {
@@ -53,6 +63,9 @@ class MenuItem: NSObject {
             NotificationCenter.default.post(name: MenuItem.enabledDidChangeNotification, object: self)
         }
     }
+    
+    var iconImage: NSImage?
+    
     var hasKeyEquivalent: Bool {
         return !keyEquivalent.isEmpty
     }
@@ -63,7 +76,9 @@ class MenuItem: NSObject {
     
     var isItem: Bool { return true }
     
-    internal init(name: String = "", iconID: Int = Int(0), keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true, commandsSize: CommandsSize = .none) {
+    let manager: RFEditorManager
+    
+    internal init(name: String = "", iconID: Int = Int(0), keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true, commandsSize: CommandsSize = .none, manager: RFEditorManager) {
         self.name = name
         self.iconID = iconID
         self.keyEquivalent = keyEquivalent
@@ -72,6 +87,7 @@ class MenuItem: NSObject {
         self.menuCommand = menuCommand
         self.isEnabled = isEnabled
         self.commandsSize = commandsSize
+        self.manager = manager
     }
     
 }
@@ -97,6 +113,8 @@ extension MenuItem {
             return isEnabled
         } else if key == "iconID" {
             return iconID
+        } else if key == "iconImage" {
+            return iconImage
         } else if key == "isItem" {
             return isItem
         } else if key == "hasCommand" {
