@@ -1,11 +1,16 @@
 import Cocoa
 import RFSupport
 
-// Implements USTR, Unnn
+// Implements USTR, UTXT, Unnn
 class ElementUSTR: ElementCSTR {
-    override func configurePadding() {
+    override func configurePadding() throws {
         switch type {
         case "USTR":
+            padding = .c
+        case "UTXT":
+            guard self.isAtEnd() else {
+                throw TemplateError.unboundedElement(self)
+            }
             padding = .none
         default:
             let nnn = BaseElement.variableTypeValue(type)
@@ -16,7 +21,7 @@ class ElementUSTR: ElementCSTR {
 
     override func configure(view: NSView) {
         super.configure(view: view)
-        if type != "USTR" {
+        if maxLength < UInt32.max {
             let textField = view.subviews.last as! NSTextField
             textField.placeholderString = "\(type) (\(maxLength) bytes)"
         }
@@ -31,7 +36,7 @@ class ElementUSTR: ElementCSTR {
         } catch BinaryDataReaderError.stringDecodeFailure {
             throw TemplateError.dataMismatch(self)
         }
-        try reader.advance(1 + padding.length(length + 1))
+        try reader.advance(padding.length(length))
     }
 
     override func writeData(to writer: BinaryDataWriter) {
@@ -41,7 +46,7 @@ class ElementUSTR: ElementCSTR {
         }
 
         try? writer.writeString(value, encoding: .utf8)
-        writer.advance(1 + padding.length(value.utf8.count + 1))
+        writer.advance(padding.length(value.utf8.count))
     }
 
     override var formatter: Formatter {
