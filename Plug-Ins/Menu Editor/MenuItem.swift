@@ -5,8 +5,10 @@ class MenuItem: NSObject {
     static let nameDidChangeNotification = Notification.Name("MENUItemNameDidChangeNotification")
     static let keyEquivalentDidChangeNotification = Notification.Name("MENUItemKeyEquivalentDidChangeNotification")
     static let markCharacterDidChangeNotification = Notification.Name("MENUItemMarkCharacterDidChangeNotification")
+    static let styleByteDidChangeNotification = Notification.Name("MENUItemStyleByteDidChangeNotification")
+    static let menuCommandDidChangeNotification = Notification.Name("MENUItemCommandByteDidChangeNotification")
     static let enabledDidChangeNotification = Notification.Name("MENUItemEnabledDidChangeNotification")
-    
+
     var name = "" {
         didSet {
             NotificationCenter.default.post(name: MenuItem.nameDidChangeNotification, object: self)
@@ -23,8 +25,16 @@ class MenuItem: NSObject {
             NotificationCenter.default.post(name: MenuItem.markCharacterDidChangeNotification, object: self)
         }
     }
-    var styleByte = UInt8(0)
-    var menuCommand = UInt32(0)
+    var styleByte = UInt8(0) {
+        didSet {
+            NotificationCenter.default.post(name: MenuItem.styleByteDidChangeNotification, object: self)
+        }
+    }
+    var menuCommand = UInt32(0) {
+        didSet {
+            NotificationCenter.default.post(name: MenuItem.menuCommandDidChangeNotification, object: self)
+        }
+    }
     
     var isEnabled: Bool = true {
         didSet {
@@ -64,6 +74,8 @@ extension MenuItem {
             return mdefID
         } else if key == "menuCommand" {
             return menuCommand
+        } else if key == "styleByte" {
+            return styleByte
         } else if key == "isEnabled" {
             return isEnabled
         } else if key == "isItem" {
@@ -87,7 +99,9 @@ extension MenuItem {
         } else if key == "isEnabled" {
             isEnabled = value as? Bool ?? true
         } else if key == "menuCommand" {
-            menuCommand = value as? UInt32 ?? 0
+            menuCommand = UInt32(Int(value as? String ?? "0") ?? 0)
+        } else if key == "styleByte" {
+            styleByte = value as? UInt8 ?? 0
         } else {
             super.setValue(value, forKey: key)
         }

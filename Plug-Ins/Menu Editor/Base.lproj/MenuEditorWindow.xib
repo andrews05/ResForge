@@ -283,8 +283,58 @@
                                     <binding destination="-2" name="hidden" keyPath="selectedItem.isItem" id="cSZ-SN-Bsw"/>
                                 </connections>
                             </stackView>
+                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q2b-Qp-1JV" userLabel="Style Stack View">
+                                <rect key="frame" x="0.0" y="282" width="191" height="20"/>
+                                <subviews>
+                                    <textField focusRingType="none" horizontalHuggingPriority="800" verticalHuggingPriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="Ty4-0S-dYi">
+                                        <rect key="frame" x="-2" y="3" width="39" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Style:" id="3z6-Jw-79B">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dlj-3c-orU">
+                                        <rect key="frame" x="40" y="-4" width="155" height="25"/>
+                                        <popUpButtonCell key="cell" type="push" title="Plain" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="g2r-Yj-HhQ" id="esU-2I-aSe">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="0ss-UM-UQ6">
+                                                <items>
+                                                    <menuItem title="Plain" state="on" id="g2r-Yj-HhQ"/>
+                                                    <menuItem title="Bold" tag="1" id="u5L-Jt-xIB"/>
+                                                    <menuItem title="Italic" tag="2" id="2Io-Zi-rrc"/>
+                                                    <menuItem title="Underline" tag="4" id="nKs-TF-XC9"/>
+                                                    <menuItem title="Outline" tag="8" id="Jnt-NP-Ss6"/>
+                                                    <menuItem title="Shadow" tag="16" id="6dB-Jz-djv"/>
+                                                    <menuItem title="Condense" tag="32" id="07y-Ee-QT9"/>
+                                                    <menuItem title="Extend" tag="64" id="mUR-wU-0c7"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <binding destination="-2" name="selectedTag" keyPath="selectedItem.styleByte" id="hE4-3t-uua"/>
+                                        </connections>
+                                    </popUpButton>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                                <connections>
+                                    <binding destination="-2" name="hidden" keyPath="selectedItem.isItem" id="lQg-cP-4yH">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXn-jk-okw" userLabel="Command Stack View">
-                                <rect key="frame" x="0.0" y="281" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="261" width="191" height="21"/>
                                 <subviews>
                                     <textField focusRingType="none" horizontalHuggingPriority="800" verticalHuggingPriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="76Y-nP-lpq">
                                         <rect key="frame" x="-2" y="3" width="70" height="16"/>
@@ -323,7 +373,7 @@
                                 </connections>
                             </stackView>
                             <customView verticalHuggingPriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="Xpt-F5-fga">
-                                <rect key="frame" x="0.0" y="0.0" width="203" height="281"/>
+                                <rect key="frame" x="0.0" y="0.0" width="203" height="261"/>
                             </customView>
                         </subviews>
                         <constraints>
@@ -331,7 +381,9 @@
                             <constraint firstAttribute="trailing" secondItem="DKS-Xg-pXR" secondAttribute="trailing" constant="12" id="B6T-aU-p4V"/>
                             <constraint firstItem="DKS-Xg-pXR" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="E4k-0q-XGf"/>
                             <constraint firstItem="eXn-jk-okw" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="K0C-Sa-xiV"/>
+                            <constraint firstAttribute="trailing" secondItem="Q2b-Qp-1JV" secondAttribute="trailing" constant="12" id="PSb-fH-sSG"/>
                             <constraint firstAttribute="trailing" secondItem="AbZ-go-Ck0" secondAttribute="trailing" constant="12" id="Pok-5l-Rir"/>
+                            <constraint firstItem="Q2b-Qp-1JV" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="Tqy-KT-eQ0"/>
                             <constraint firstItem="8jz-NL-5Wd" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="Z8S-QU-v2g"/>
                             <constraint firstAttribute="trailing" secondItem="eXn-jk-okw" secondAttribute="trailing" constant="12" id="gcS-Bf-hmH"/>
                             <constraint firstItem="AbZ-go-Ck0" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="pQl-ut-tA2"/>
@@ -342,8 +394,10 @@
                             <integer value="1000"/>
                             <integer value="1000"/>
                             <integer value="1000"/>
+                            <integer value="1000"/>
                         </visibilityPriorities>
                         <customSpacing>
+                            <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>

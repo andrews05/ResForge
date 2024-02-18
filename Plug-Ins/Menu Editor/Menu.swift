@@ -73,6 +73,7 @@ extension Menu {
         return false
     }
     var menuCommand: UInt32 { return 0 }
+    var styleByte: UInt8 { return 0 }
 
     var isItem: Bool { return false }
 
@@ -93,6 +94,8 @@ extension Menu {
             return mdefID
         } else if key == "menuCommand" {
             return menuCommand
+        } else if key == "styleByte" {
+            return styleByte
         } else if key == "isItem" {
             return isItem
         } else if key == "textColor" {

@@ -38,6 +38,8 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.nameDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.keyEquivalentDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.markCharacterDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.styleByteDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.menuCommandDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: MenuItem.enabledDidChangeNotification, object: nil)
     }
     
