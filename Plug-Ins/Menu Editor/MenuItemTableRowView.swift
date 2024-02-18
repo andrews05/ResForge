@@ -13,6 +13,7 @@ class MenuItemTableRowView : NSTableRowView {
     enum ContentStyle {
         case normal
         case separator
+        case submenu // Like normal, but with an arrow on the right.
     }
     
     var rowStyle = RowStyle.middleCell
@@ -90,6 +91,17 @@ class MenuItemTableRowView : NSTableRowView {
             let contentBox = bounds.insetBy(dx: 2, dy: 0)
             NSColor.lightGray.setStroke()
             NSBezierPath.strokeLine(from: NSPoint(x: contentBox.minX + 1, y: trunc(contentBox.midY) + 0.5), to: NSPoint(x: contentBox.maxX - 1, y: trunc(contentBox.midY) + 0.5))
+        } else if contentStyle == .submenu {
+            var contentBox = bounds.insetBy(dx: 3, dy: 3)
+            contentBox.size.width = contentBox.size.height / 2.0
+            contentBox.origin.x = bounds.maxX - 6 - contentBox.size.width
+            let triangle = NSBezierPath()
+            triangle.move(to: contentBox.origin)
+            triangle.line(to: NSPoint(x: contentBox.origin.x, y: contentBox.maxY))
+            triangle.line(to: NSPoint(x: contentBox.maxX, y: contentBox.midY))
+            triangle.line(to: contentBox.origin)
+            NSColor.black.setFill()
+            triangle.fill()
         }
     }
     

@@ -76,6 +76,7 @@ extension Menu {
     var styleByte: UInt8 { return 0 }
     var iconID: Int { return 0 }
     var iconImage: NSImage? { return nil }
+    var submenuID: Int { return 0 }
 
     var isItem: Bool { return false }
     var hasCommand: Bool { return false }
@@ -103,6 +104,8 @@ extension Menu {
             return iconID
         } else if key == "iconImage" {
             return iconImage
+        } else if key == "submenuID" {
+            return submenuID
         } else if key == "hasCommand" {
             return hasCommand
         } else if key == "isItem" {

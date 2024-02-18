@@ -36,6 +36,11 @@ class MenuItem: NSObject {
             }
         }
     }
+    var submenuID = Int(0) {
+        didSet {
+            NotificationCenter.default.post(name: MenuItem.iconDidChangeNotification, object: self)
+        }
+    }
     var keyEquivalent = "" {
         didSet {
             NotificationCenter.default.post(name: MenuItem.keyEquivalentDidChangeNotification, object: self)
@@ -73,12 +78,10 @@ class MenuItem: NSObject {
     var hasCommand: Bool {
         return commandsSize != .none
     }
-    
-    var isItem: Bool { return true }
-    
+
     let manager: RFEditorManager
     
-    internal init(name: String = "", iconID: Int = Int(0), keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true, commandsSize: CommandsSize = .none, manager: RFEditorManager) {
+    internal init(name: String = "", iconID: Int = Int(0), keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true, submenuID: Int = 0, commandsSize: CommandsSize = .none, manager: RFEditorManager) {
         self.name = name
         self.iconID = iconID
         self.keyEquivalent = keyEquivalent
@@ -86,6 +89,7 @@ class MenuItem: NSObject {
         self.styleByte = styleByte
         self.menuCommand = menuCommand
         self.isEnabled = isEnabled
+        self.submenuID = submenuID
         self.commandsSize = commandsSize
         self.manager = manager
     }
@@ -120,6 +124,8 @@ extension MenuItem {
             return isEnabled
         } else if key == "iconID" {
             return "\(iconID)"
+        } else if key == "submenuID" {
+            return "\(submenuID)"
         } else if key == "iconImage" {
             return iconImage
         } else if key == "isItem" {
@@ -146,6 +152,8 @@ extension MenuItem {
             isEnabled = value as? Bool ?? true
         } else if key == "iconID" {
             iconID = Int(value as? String ?? "0") ?? 0
+        } else if key == "submenuID" {
+            submenuID = Int(value as? String ?? "0") ?? 0
         } else if key == "menuCommand" {
             if commandsSize == .int32 {
                 menuCommand = UInt32(value as? String ?? "\0\0\0\0")
@@ -165,6 +173,8 @@ extension MenuItem {
 extension MenuItem {
     var menuID: Int16 { return 0 }
     var mdefID: Int16 { return 0 }
+    
+    var isItem: Bool { return true }
 }
 
 extension MenuItem {

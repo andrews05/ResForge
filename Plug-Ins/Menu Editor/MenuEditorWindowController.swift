@@ -93,18 +93,21 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
             let newItem = MenuItem(commandsSize: commandsSize, manager: manager)
             newItem.name = try reader.readPString()
             let iconID: Int8 = try reader.read()
-            newItem.iconID = (iconID == 0) ? 0 : Int(iconID) + 256
             let keyEquivalent: UInt8 = try reader.read()
-            if keyEquivalent != 0 {
+            var markCharacter: UInt8 = try reader.read()
+            newItem.styleByte = try reader.read()
+            newItem.isEnabled = (newMenu.enableFlags & (1 << itemEnableBitIndex)) != 0
+            newItem.iconID = (iconID == 0) ? 0 : Int(iconID) + 256
+            if keyEquivalent == 0x1b {
+                newItem.submenuID = Int(markCharacter) + 256
+                markCharacter = 0
+            } else if keyEquivalent != 0 {
                 newItem.keyEquivalent = String(data: Data([keyEquivalent]), encoding: .macOSRoman) ?? ""
             }
-            let markCharacter: UInt8 = try reader.read()
             if markCharacter != 0 {
                 newItem.markCharacter = String(data: Data([markCharacter]), encoding: .macOSRoman) ?? ""
             }
-            newItem.styleByte = try reader.read()
-            newItem.isEnabled = (newMenu.enableFlags & (1 << itemEnableBitIndex)) != 0
-            
+
             itemEnableBitIndex += 1
             
             switch commandsSize {
@@ -183,10 +186,15 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         for item in menuInfo.items {
             try writer.writePString(item.name)
             writer.write((item.iconID == 0) ? Int8(0) : Int8(item.iconID - 256))
-            let keyEquivalentBytes = [UInt8](item.keyEquivalent.data(using: .macOSRoman) ?? Data())
-            writer.write(keyEquivalentBytes.first ?? UInt8(0))
-            let markCharacterBytes = [UInt8](item.markCharacter.data(using: .macOSRoman) ?? Data())
-            writer.write(markCharacterBytes.first ?? UInt8(0))
+            if item.submenuID == 0 {
+                let keyEquivalentBytes = [UInt8](item.keyEquivalent.data(using: .macOSRoman) ?? Data())
+                writer.write(keyEquivalentBytes.first ?? UInt8(0))
+                let markCharacterBytes = [UInt8](item.markCharacter.data(using: .macOSRoman) ?? Data())
+                writer.write(markCharacterBytes.first ?? UInt8(0))
+            } else {
+                writer.write(UInt8(0x1b))
+                writer.write(UInt8(item.submenuID))
+            }
             writer.write(item.styleByte)
             
             switch commandsSize {
@@ -329,6 +337,8 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
         }
         if row > 0 && menuInfo.items[row - 1].name.hasPrefix("-") {
             rowView.contentStyle = .separator
+        } else if row > 0 && menuInfo.items[row - 1].submenuID != 0 {
+            rowView.contentStyle = .submenu
         } else {
             rowView.contentStyle = .normal
         }
