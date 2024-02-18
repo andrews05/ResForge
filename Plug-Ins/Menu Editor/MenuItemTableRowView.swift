@@ -75,7 +75,12 @@ class MenuItemTableRowView : NSTableRowView {
             NSBezierPath.fill(box)
             NSBezierPath.stroke(box.insetBy(dx: 0.5, dy: 0.5))
         case .onlyCell:
-            let shadowBox = box.offsetBy(dx: 1, dy: 1)
+            box.size.height -= 1
+            var shadowBox = box.offsetBy(dx: 1, dy: 1)
+            shadowBox.origin.x += 1
+            shadowBox.size.width -= 1
+            shadowBox.origin.y += 1
+            shadowBox.size.height -= 1
             NSColor.black.setFill()
             NSBezierPath.fill(shadowBox)
             if !isSelected {

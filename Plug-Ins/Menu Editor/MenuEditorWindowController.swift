@@ -99,7 +99,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
             newItem.isEnabled = (newMenu.enableFlags & (1 << itemEnableBitIndex)) != 0
             newItem.iconID = (iconID == 0) ? 0 : Int(iconID) + 256
             if keyEquivalent == 0x1b {
-                newItem.submenuID = Int(markCharacter) + 256
+                newItem.submenuID = Int(markCharacter)
                 markCharacter = 0
             } else if keyEquivalent != 0 {
                 newItem.keyEquivalent = String(data: Data([keyEquivalent]), encoding: .macOSRoman) ?? ""
