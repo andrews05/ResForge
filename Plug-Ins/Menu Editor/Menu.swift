@@ -80,6 +80,7 @@ extension Menu {
 
     var isItem: Bool { return false }
     var hasCommand: Bool { return false }
+    var iconType: UInt8 { return 0 }
 
     override func value(forKey key: String) -> Any? {
         if key == "markCharacter" {
@@ -104,6 +105,8 @@ extension Menu {
             return iconID
         } else if key == "iconImage" {
             return iconImage
+        } else if key == "iconType" {
+            return iconType
         } else if key == "submenuID" {
             return submenuID
         } else if key == "hasCommand" {

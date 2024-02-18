@@ -101,6 +101,8 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
             if keyEquivalent == 0x1b {
                 newItem.submenuID = Int(markCharacter)
                 markCharacter = 0
+            } else if keyEquivalent >= 0x1B && keyEquivalent <= 0x1F {
+                newItem.iconType = keyEquivalent
             } else if keyEquivalent != 0 {
                 newItem.keyEquivalent = String(data: Data([keyEquivalent]), encoding: .macOSRoman) ?? ""
             }

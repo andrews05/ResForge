@@ -70,7 +70,8 @@ class MenuItem: NSObject {
     }
     
     var iconImage: NSImage?
-    
+    var iconType: UInt8
+
     var hasKeyEquivalent: Bool {
         return !keyEquivalent.isEmpty
     }
@@ -81,9 +82,10 @@ class MenuItem: NSObject {
 
     let manager: RFEditorManager
     
-    internal init(name: String = "", iconID: Int = Int(0), keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true, submenuID: Int = 0, commandsSize: CommandsSize = .none, manager: RFEditorManager) {
+    internal init(name: String = "", iconID: Int = Int(0), iconType: UInt8 = 0, keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true, submenuID: Int = 0, commandsSize: CommandsSize = .none, manager: RFEditorManager) {
         self.name = name
         self.iconID = iconID
+        self.iconType = iconType
         self.keyEquivalent = keyEquivalent
         self.markCharacter = markCharacter
         self.styleByte = styleByte
@@ -120,6 +122,8 @@ extension MenuItem {
             }
         } else if key == "styleByte" {
             return styleByte
+        } else if key == "iconType" {
+            return iconType
         } else if key == "isEnabled" {
             return isEnabled
         } else if key == "iconID" {
@@ -162,6 +166,8 @@ extension MenuItem {
             }
         } else if key == "styleByte" {
             styleByte = value as? UInt8 ?? 0
+        } else if key == "iconType" {
+            iconType = value as? UInt8 ?? 0
         } else {
             super.setValue(value, forKey: key)
         }
