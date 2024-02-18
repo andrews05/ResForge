@@ -25,6 +25,9 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         "icl8",
         "ics8",
         "icm8",
+        "kcs#",
+        "kcs4",
+        "kcs8",
         "CURS",
         "PAT ",
         "PAT#",
@@ -277,19 +280,19 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             return ColorCursor.rep(data, format: &format)
         case "ICN#", "ICON":
             return Icons.rep(data, width: 32, height: 32, depth: 1)
-        case "ics#", "SICN", "CURS":
+        case "ics#", "SICN", "CURS", "kcs#":
             return Icons.rep(data, width: 16, height: 16, depth: 1)
         case "icm#":
             return Icons.rep(data, width: 16, height: 12, depth: 1)
         case "icl4":
             return Icons.rep(data, width: 32, height: 32, depth: 4)
-        case "ics4":
+        case "ics4", "kcs4":
             return Icons.rep(data, width: 16, height: 16, depth: 4)
         case "icm4":
             return Icons.rep(data, width: 16, height: 12, depth: 4)
         case "icl8":
             return Icons.rep(data, width: 32, height: 32, depth: 8)
-        case "ics8":
+        case "ics8", "kcs8":
             return Icons.rep(data, width: 16, height: 16, depth: 8)
         case "icm8":
             return Icons.rep(data, width: 16, height: 12, depth: 8)
