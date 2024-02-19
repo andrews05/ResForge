@@ -16,8 +16,16 @@ class MenuItemTableRowView : NSTableRowView {
         case submenu // Like normal, but with an arrow on the right.
     }
     
-    var rowStyle = RowStyle.middleCell
-    var contentStyle = ContentStyle.normal
+    var rowStyle = RowStyle.middleCell {
+        didSet {
+            self.needsDisplay = true
+        }
+    }
+    var contentStyle = ContentStyle.normal {
+        didSet {
+            self.needsDisplay = true
+        }
+    }
     
     override func draw(_ dirtyRect: NSRect) {
         var box = bounds.insetBy(dx: 2, dy: 0)

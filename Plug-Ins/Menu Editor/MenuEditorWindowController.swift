@@ -33,7 +33,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         self.loadItems()
         menuTable.reloadData()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: Menu.nameDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(rowContentStyleAffectingThingDidChangeNotification(_:)), name: Menu.nameDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: Menu.enabledDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.nameDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.keyEquivalentDidChangeNotification, object: nil)
@@ -41,11 +41,27 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.styleByteDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.menuCommandDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.iconDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(rowContentStyleAffectingThingDidChangeNotification(_:)), name: MenuItem.submenuIDDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: MenuItem.enabledDidChangeNotification, object: nil)
     }
     
     /// For inspector UI to bind to.
     var selectedItem: Any? = nil
+    
+    @objc func rowContentStyleAffectingThingDidChangeNotification(_ notification: Notification) {
+        if let item = notification.object as? MenuItem,
+           let itemIndex = menuInfo.items.firstIndex(of: item),
+           let itemRowView = menuTable.rowView(atRow: itemIndex + 1, makeIfNecessary: false) as? MenuItemTableRowView {
+            if item.name.hasPrefix("-") {
+                itemRowView.contentStyle = .separator
+            } else if item.submenuID != 0 {
+                itemRowView.contentStyle = .submenu
+            } else {
+                itemRowView.contentStyle = .normal
+            }
+            self.setDocumentEdited(true)
+        }
+    }
     
     @objc func itemChangeNotification(_ notification: Notification) {
         if notification.object as? Menu == menuInfo {

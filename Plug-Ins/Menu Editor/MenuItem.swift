@@ -16,6 +16,7 @@ class MenuItem: NSObject {
     static let menuCommandDidChangeNotification = Notification.Name("MENUItemCommandByteDidChangeNotification")
     static let enabledDidChangeNotification = Notification.Name("MENUItemEnabledDidChangeNotification")
     static let iconDidChangeNotification = Notification.Name("MENUItemIconDidChangeNotification")
+    static let submenuIDDidChangeNotification = Notification.Name("MENUItemSubmenuIDDidChangeNotification")
 
     var name = "" {
         didSet {
@@ -42,7 +43,7 @@ class MenuItem: NSObject {
     }
     var submenuID = Int(0) {
         didSet {
-            NotificationCenter.default.post(name: MenuItem.iconDidChangeNotification, object: self)
+            NotificationCenter.default.post(name: MenuItem.submenuIDDidChangeNotification, object: self)
         }
     }
     var keyEquivalent = "" {
