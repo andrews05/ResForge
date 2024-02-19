@@ -33,9 +33,9 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         self.loadItems()
         menuTable.reloadData()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(rowContentStyleAffectingThingDidChangeNotification(_:)), name: Menu.nameDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: Menu.nameDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: Menu.enabledDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.nameDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(rowContentStyleAffectingThingDidChangeNotification(_:)), name: MenuItem.nameDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.keyEquivalentDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.markCharacterDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.styleByteDidChangeNotification, object: nil)
