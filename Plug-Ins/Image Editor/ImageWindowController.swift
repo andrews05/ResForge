@@ -299,6 +299,9 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         case "PAT ":
             return Icons.rep(data, width: 8, height: 8, depth: 1)
         case "PAT#":
+            guard data.count > 1 else {
+                return nil
+            }
             // This just stacks all the patterns vertically
             let count = Int(data[data.startIndex + 1])
             return Icons.rep(data.dropFirst(2), width: 8, height: 8 * count, depth: 1)
