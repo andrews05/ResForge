@@ -129,6 +129,8 @@ extension Menu {
             name = value as? String ?? ""
         } else if key == "isEnabled" {
             isEnabled = value as? Bool ?? true
+        } else if key == "mdefID" {
+            mdefID = Int16(value as? String ?? "0") ?? Int16(0)
         } else {
             super.setValue(value, forKey: key)
         }
