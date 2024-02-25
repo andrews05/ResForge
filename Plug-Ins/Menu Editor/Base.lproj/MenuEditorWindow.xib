@@ -24,7 +24,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="502" height="334"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="18" horizontalPageScroll="10" verticalLineScroll="18" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
+                    <scrollView appearanceType="aqua" misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="18" horizontalPageScroll="10" verticalLineScroll="18" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
                         <rect key="frame" x="-1" y="-1" width="292" height="336"/>
                         <clipView key="contentView" id="Q0k-GS-R3n">
                             <rect key="frame" x="1" y="1" width="290" height="334"/>
@@ -547,9 +547,13 @@
                             </stackView>
                             <customView verticalHuggingPriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="bik-hd-VQL">
                                 <rect key="frame" x="0.0" y="0.0" width="191" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="171" id="Q3C-Zj-W84"/>
+                                </constraints>
                             </customView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="bik-hd-VQL" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="5Of-bp-2d5"/>
                             <constraint firstItem="76Y-nP-lpq" firstAttribute="trailing" secondItem="1dy-JZ-eeI" secondAttribute="trailing" id="9Sz-Ww-oMF"/>
                             <constraint firstAttribute="trailing" secondItem="DKS-Xg-pXR" secondAttribute="trailing" id="B6T-aU-p4V"/>
                             <constraint firstItem="DKS-Xg-pXR" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="E4k-0q-XGf"/>
@@ -563,6 +567,7 @@
                             <constraint firstItem="Q2b-Qp-1JV" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="Tqy-KT-eQ0"/>
                             <constraint firstAttribute="trailing" secondItem="mkd-DJ-7f3" secondAttribute="trailing" id="fHg-VP-J3o"/>
                             <constraint firstAttribute="trailing" secondItem="eXn-jk-okw" secondAttribute="trailing" id="gcS-Bf-hmH"/>
+                            <constraint firstAttribute="trailing" secondItem="bik-hd-VQL" secondAttribute="trailing" id="hNu-D1-lne"/>
                             <constraint firstItem="tTR-Ac-PZk" firstAttribute="trailing" secondItem="Ycr-zv-CON" secondAttribute="trailing" id="pFY-V5-WOg"/>
                             <constraint firstItem="AbZ-go-Ck0" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="pQl-ut-tA2"/>
                             <constraint firstItem="4o3-HS-pkX" firstAttribute="trailing" secondItem="Ycr-zv-CON" secondAttribute="trailing" id="xuR-7h-aST"/>

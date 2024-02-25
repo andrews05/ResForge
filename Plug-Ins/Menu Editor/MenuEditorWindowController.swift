@@ -12,6 +12,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     @IBOutlet weak var menuTable: NSTableView!
     let resource: Resource
     private let manager: RFEditorManager
+    private var fieldEditorForMenuPreview: NSTextView!
     
     private var menuInfo = Menu()
     
@@ -395,6 +396,24 @@ extension MenuEditorWindowController {
         } else {
             return super.value(forKey: key)
         }
+    }
+    
+}
+
+extension MenuEditorWindowController {
+    
+    func windowWillReturnFieldEditor(_ sender: NSWindow, to client: Any?) -> Any? {
+        // Ensure that the edit fields in the menu editor are all black on white,
+        // no matter whether menu item is disabled or if it's the white-on-black menu title.
+        guard let client = client as? NSTextField,
+              let clientParent = client.superview as? NSTableCellView,
+              let menu = clientParent.objectValue else { return nil }
+        if fieldEditorForMenuPreview == nil {
+            fieldEditorForMenuPreview = NSTextView.fieldEditor()
+        }
+        fieldEditorForMenuPreview.backgroundColor = NSColor.white
+        fieldEditorForMenuPreview.textColor = NSColor.black
+        return fieldEditorForMenuPreview
     }
     
 }
