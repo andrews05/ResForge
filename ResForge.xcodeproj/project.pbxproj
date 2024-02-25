@@ -191,14 +191,7 @@
 		5504F7482B7A7EB20096F16A /* DITLItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7472B7A7EB20096F16A /* DITLItemView.swift */; };
 		5504F74A2B7A7EEC0096F16A /* DITLDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */; };
 		5504F74C2B7A7F2E0096F16A /* DITLFlippedClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */; };
-		554125AA2B8037E4008B6832 /* DITLDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */; };
-		554125AB2B8037E4008B6832 /* DITLFlippedClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */; };
-		554125AC2B8037E4008B6832 /* DialogEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FB36172B715497000F1528 /* DialogEditorWindowController.swift */; };
-		554125AD2B8037E4008B6832 /* DITLItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7472B7A7EB20096F16A /* DITLItemView.swift */; };
-		554125AE2B8037E4008B6832 /* DITLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7452B7A7E4E0096F16A /* DITLItem.swift */; };
 		554125B02B8037E4008B6832 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
-		554125B22B8037E4008B6832 /* DialogEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36192B715497000F1528 /* DialogEditorWindow.xib */; };
-		554125B32B8037E4008B6832 /* StdSystemIcons.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 55FB36182B715497000F1528 /* StdSystemIcons.rsrc */; };
 		554125C62B803911008B6832 /* MenuEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554125BD2B803911008B6832 /* MenuEditorWindow.xib */; };
 		554125C82B803911008B6832 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125C02B803911008B6832 /* MenuItem.swift */; };
 		554125C92B803911008B6832 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 554125C12B803911008B6832 /* Info.plist */; };
@@ -1508,9 +1501,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554125B22B8037E4008B6832 /* DialogEditorWindow.xib in Resources */,
 				554125C62B803911008B6832 /* MenuEditorWindow.xib in Resources */,
-				554125B32B8037E4008B6832 /* StdSystemIcons.rsrc in Resources */,
 				554125C92B803911008B6832 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1643,15 +1634,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554125AA2B8037E4008B6832 /* DITLDocumentView.swift in Sources */,
-				554125AB2B8037E4008B6832 /* DITLFlippedClipView.swift in Sources */,
-				554125AC2B8037E4008B6832 /* DialogEditorWindowController.swift in Sources */,
 				554125CC2B811213008B6832 /* Menu.swift in Sources */,
-				554125AD2B8037E4008B6832 /* DITLItemView.swift in Sources */,
 				554125C82B803911008B6832 /* MenuItem.swift in Sources */,
 				554125CA2B803911008B6832 /* MenuEditorWindowController.swift in Sources */,
 				554125D12B8122F3008B6832 /* MenuItemTableRowView.swift in Sources */,
-				554125AE2B8037E4008B6832 /* DITLItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
