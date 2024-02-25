@@ -84,7 +84,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         }
     }
     
-    private func itemsFromData(_ data: Data) throws -> Menu {
+    var commandsSize: MenuItem.CommandsSize {
         let commandsSize: MenuItem.CommandsSize
         if resource.typeCode == "cmnu" {
             commandsSize = .int16
@@ -93,7 +93,10 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         } else {
             commandsSize = .none
         }
-        
+        return commandsSize
+    }
+    
+    private func itemsFromData(_ data: Data) throws -> Menu {
         let newMenu = Menu()
         let reader = BinaryDataReader(data)
         newMenu.menuID = try reader.read()
@@ -186,15 +189,6 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     private func currentResourceStateAsData() throws -> Data {
         let writer = BinaryDataWriter()
         
-        let commandsSize: MenuItem.CommandsSize
-        if resource.typeCode == "cmnu" {
-            commandsSize = .int16
-        } else if resource.typeCode == "CMNU" {
-            commandsSize = .int32
-        } else {
-            commandsSize = .none
-        }
-        
         writer.write(menuInfo.menuID)
         writer.write(Int16(0)) // width
         writer.write(Int16(0)) // height
@@ -271,7 +265,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         if selRow == -1 {
             selRow = menuInfo.items.count // No need to subtract 1, because title already offset the index by 1 compared to items.
         }
-        menuInfo.items.insert(MenuItem(name: NSLocalizedString("New Menu Item", comment: "name for new menu items"), manager: manager), at: selRow)
+        menuInfo.items.insert(MenuItem(name: NSLocalizedString("New Menu Item", comment: "name for new menu items"), commandsSize: commandsSize, manager: manager), at: selRow)
         
         menuTable.reloadData()
         menuTable.selectRowIndexes([selRow + 1], byExtendingSelection: false) // +1 to account for title row

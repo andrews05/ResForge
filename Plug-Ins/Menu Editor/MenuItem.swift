@@ -87,7 +87,7 @@ class MenuItem: NSObject {
 
     let manager: RFEditorManager
     
-    internal init(name: String = "", iconID: Int = Int(0), iconType: UInt8 = 0, keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true, submenuID: Int = 0, commandsSize: CommandsSize = .none, manager: RFEditorManager) {
+    internal init(name: String = "", iconID: Int = Int(0), iconType: UInt8 = 0, keyEquivalent: String = "", markCharacter: String = "", styleByte: UInt8 = UInt8(0), menuCommand: UInt32 = UInt32(0), isEnabled: Bool = true, submenuID: Int = 0, commandsSize: CommandsSize, manager: RFEditorManager) {
         self.name = name
         self.iconID = iconID
         self.iconType = iconType
