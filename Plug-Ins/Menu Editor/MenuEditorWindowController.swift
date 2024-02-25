@@ -342,6 +342,15 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
         }
     }
     
+    @MainActor func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let tableColumn = tableColumn else { return nil }
+        if row == 0 && tableColumn.identifier != MenuEditorWindowController.titleColumn {
+            return NSTableCellView()
+        }
+        let view = menuTable.makeView(withIdentifier: tableColumn.identifier, owner: self) as? NSTableCellView ?? NSTableCellView()
+        return view
+    }
+    
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
         let rowView = MenuItemTableRowView()
         if row == 0 {
@@ -361,10 +370,6 @@ extension MenuEditorWindowController : NSTableViewDataSource, NSTableViewDelegat
             rowView.contentStyle = .normal
         }
         return rowView
-    }
-    
-    func tableView(_ tableView: NSTableView, shouldEdit tableColumn: NSTableColumn?, row: Int) -> Bool {
-        return tableColumn?.identifier == MenuEditorWindowController.titleColumn || row != 0
     }
     
     func tableViewSelectionDidChange(_ notification: Notification) {
