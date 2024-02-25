@@ -130,10 +130,7 @@ extension MenuItem {
             return mdefID
         } else if key == "menuCommand" {
             if commandsSize == .int32 {
-                return String(data: Data([UInt8((menuCommand & 0xff000000) >> 24),
-                                          UInt8((menuCommand & 0x00ff0000) >> 16),
-                                          UInt8((menuCommand & 0x0000ff00) >> 8),
-                                          UInt8((menuCommand & 0x000000ff))]), encoding: .macOSRoman)
+                return menuCommand.stringValue
             } else {
                 return "\(menuCommand)"
             }
