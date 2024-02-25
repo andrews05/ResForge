@@ -1263,7 +1263,7 @@
 			dependencies = (
 			);
 			name = "Menu Editor";
-			productName = KestrelTools;
+			productName = MenuEditor;
 			productReference = 554125B72B8037E4008B6832 /* Menu Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1280,7 +1280,7 @@
 			dependencies = (
 			);
 			name = "Dialog Editor";
-			productName = KestrelTools;
+			productName = DialogEditor;
 			productReference = 55FB360D2B71530C000F1528 /* Dialog Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
