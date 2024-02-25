@@ -169,12 +169,12 @@ extension MenuItem {
         } else if key == "isEnabled" {
             isEnabled = value as? Bool ?? true
         } else if key == "iconID" {
-            iconID = Int(value as? String ?? "0") ?? 0
+            iconID = value as? Int ?? 0
         } else if key == "submenuID" {
-            submenuID = Int(value as? String ?? "0") ?? 0
+            submenuID = value as? Int ?? 0
         } else if key == "menuCommand" {
             if commandsSize == .int32 {
-                menuCommand = UInt32(value as? String ?? "\0\0\0\0")
+                menuCommand = UInt32(value as? String ?? "")
             } else {
                 menuCommand = UInt32(Int(value as? String ?? "0") ?? 0)
             }
