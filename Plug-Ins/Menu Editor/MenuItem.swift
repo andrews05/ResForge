@@ -151,7 +151,7 @@ extension MenuItem {
         } else if key == "hasCommand" {
             return hasCommand
         } else if key == "textColor" {
-            return isEnabled ? NSColor.black : NSColor.lightGray
+            return isEnabled ? NSColor.textColor : NSColor.disabledControlTextColor
         } else if key == "hasKeyEquivalent" {
             return hasKeyEquivalent
         } else {

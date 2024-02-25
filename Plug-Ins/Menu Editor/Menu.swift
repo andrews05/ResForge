@@ -114,7 +114,7 @@ extension Menu {
         } else if key == "isItem" {
             return isItem
         } else if key == "textColor" {
-            return isEnabled ? NSColor.white : NSColor.lightGray
+            return isEnabled ? NSColor.textBackgroundColor : NSColor.systemGray
         } else {
             return super.value(forKey: key)
         }

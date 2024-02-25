@@ -407,12 +407,12 @@ extension MenuEditorWindowController {
         // no matter whether menu item is disabled or if it's the white-on-black menu title.
         guard let client = client as? NSTextField,
               let clientParent = client.superview as? NSTableCellView,
-              let menu = clientParent.objectValue else { return nil }
+              let _ = clientParent.objectValue else { return nil }
         if fieldEditorForMenuPreview == nil {
             fieldEditorForMenuPreview = NSTextView.fieldEditor()
         }
-        fieldEditorForMenuPreview.backgroundColor = NSColor.white
-        fieldEditorForMenuPreview.textColor = NSColor.black
+        fieldEditorForMenuPreview.backgroundColor = NSColor.textBackgroundColor
+        fieldEditorForMenuPreview.textColor = NSColor.textColor
         return fieldEditorForMenuPreview
     }
     

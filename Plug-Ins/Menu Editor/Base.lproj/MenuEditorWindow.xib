@@ -24,7 +24,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="502" height="334"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <scrollView appearanceType="aqua" misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="18" horizontalPageScroll="10" verticalLineScroll="18" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
+                    <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="18" horizontalPageScroll="10" verticalLineScroll="18" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
                         <rect key="frame" x="-1" y="-1" width="292" height="336"/>
                         <clipView key="contentView" id="Q0k-GS-R3n">
                             <rect key="frame" x="1" y="1" width="290" height="334"/>
