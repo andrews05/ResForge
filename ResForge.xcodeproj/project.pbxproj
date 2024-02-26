@@ -190,6 +190,7 @@
 		5504F7482B7A7EB20096F16A /* DITLItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7472B7A7EB20096F16A /* DITLItemView.swift */; };
 		5504F74A2B7A7EEC0096F16A /* DITLDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */; };
 		5504F74C2B7A7F2E0096F16A /* DITLFlippedClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */; };
+		554125602B7E8A47008B6832 /* ResourceMappings.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 5541255F2B7E8A47008B6832 /* ResourceMappings.rsrc */; };
 		559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559DE9B3189D665000D55D3A /* Assets.xcassets */; };
 		55FB36042B71530C000F1528 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		55FB361F2B715A3F000F1528 /* Dialog Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 55FB360D2B71530C000F1528 /* Dialog Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -557,6 +558,7 @@
 		550B904B189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ResourceItem.xib; sourceTree = "<group>"; };
 		550B904D189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HexWindow.xib; sourceTree = "<group>"; };
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImageWindow.xib; sourceTree = "<group>"; };
+		5541255F2B7E8A47008B6832 /* ResourceMappings.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = ResourceMappings.rsrc; sourceTree = "<group>"; };
 		559DE9B3189D665000D55D3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55FB360D2B71530C000F1528 /* Dialog Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dialog Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FB36172B715497000F1528 /* DialogEditorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogEditorWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -906,6 +908,7 @@
 			children = (
 				49D6D352271BAAAC002DEA97 /* README.md */,
 				49D6D359271BAAAD002DEA97 /* TemplateWindow.xib */,
+				5541255F2B7E8A47008B6832 /* ResourceMappings.rsrc */,
 				49D6D350271BAAAC002DEA97 /* Templates.rsrc */,
 				49D6D353271BAAAC002DEA97 /* TemplateEditor.swift */,
 				49D6D357271BAAAC002DEA97 /* TabbableOutlineView.swift */,
@@ -1453,6 +1456,7 @@
 				4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */,
 				B229EEF515A4FB6F0032C12C /* MainMenu.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResource.xib in Resources */,
+				554125602B7E8A47008B6832 /* ResourceMappings.rsrc in Resources */,
 				559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */,
 				4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */,
 				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,
