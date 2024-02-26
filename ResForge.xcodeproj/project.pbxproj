@@ -270,7 +270,7 @@
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 49EE72D72550B79600BEABDB;
-			remoteInfo = KestrelTools;
+			remoteInfo = NovaTools;
 		};
 		55FB361D2B715A15000F1528 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -284,14 +284,14 @@
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B2FCA78915A66ACE00696598;
-			remoteInfo = "PICT Editor";
+			remoteInfo = "Image Editor";
 		};
 		E18BF6C9069FEA1900F076B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = E18BF58E069FEA1400F076B8;
-			remoteInfo = "Hex Editor Cocoa (Upgraded)";
+			remoteInfo = "Hex Editor";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1164,7 +1164,7 @@
 			dependencies = (
 			);
 			name = "Sound Editor";
-			productName = "PICT Editor";
+			productName = "Sound Editor";
 			productReference = 4953F5A0248874AA0002340F /* Sound Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1182,7 +1182,7 @@
 			dependencies = (
 			);
 			name = RFSupport;
-			productName = ResKnifePlugins;
+			productName = RFSupport;
 			productReference = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -1199,7 +1199,7 @@
 			dependencies = (
 			);
 			name = NovaTools;
-			productName = KestrelTools;
+			productName = NovaTools;
 			productReference = 49EE72D82550B79600BEABDB /* NovaTools.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1236,7 +1236,7 @@
 			packageProductDependencies = (
 				4948E15D2B6DDE7800473FF3 /* OrderedCollections */,
 			);
-			productName = "PICT Editor";
+			productName = "Image Editor";
 			productReference = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1266,7 +1266,7 @@
 				4907D2EF29C50AFE0003702A /* Parsing */,
 			);
 			productInstallPath = "$(USER_APPS_DIR)";
-			productName = "ResKnife Cocoa";
+			productName = ResForge;
 			productReference = E18BF58C069FEA1400F076B8 /* ResForge.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -1284,7 +1284,7 @@
 			dependencies = (
 			);
 			name = "Hex Editor";
-			productName = "Hex Editor Cocoa";
+			productName = "Hex Editor";
 			productReference = E18BF5A6069FEA1400F076B8 /* Hex Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
