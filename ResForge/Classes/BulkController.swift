@@ -200,9 +200,7 @@ class BulkController: OutlineController {
         if tableColumn == idCol {
             cell.alignment = .right
         } else if tableColumn == nameCol {
-            let formatter = MacRomanFormatter()
-            formatter.stringLength = 255
-            cell.formatter = formatter
+            cell.formatter = MacRomanFormatter()
             cell.placeholderString = NSLocalizedString("Untitled Resource", comment: "")
         } else if let tableColumn {
             let element = elements[Int(tableColumn.identifier.rawValue)!]
