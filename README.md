@@ -9,7 +9,7 @@ ResForge is a resource editor for macOS, capable of editing classic resource for
 * Hexadecimal editor, powered by [HexFiend](https://github.com/HexFiend/HexFiend).
 * Template editor, supporting a wide array of [field types](https://github.com/andrews05/ResForge/tree/master/ResForge/Template%20Editor#template-editor).
 * Template-driven bulk data view, with CSV import/export.
-* Image editor, supporting 'PICT', 'PNG ', 'cicn' & 'ppat' resources, plus view-only support for a variety of icons and other bitmaps.
+* Image editor, supporting 'PICT', 'PNG ', 'PNGf', 'cicn' & 'ppat' resources, plus view-only support for a variety of icons and other bitmaps.
 * Sound editor, supporting sampled 'snd ' resources.
 * Dialog editor, supporting 'DITL' resources (by Uli Kusterer) 
 * Menu editor, supporting 'MENU', 'CMNU' & 'cmnu' resources (by Uli Kusterer)

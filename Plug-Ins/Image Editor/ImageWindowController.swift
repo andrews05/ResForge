@@ -10,6 +10,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     static let supportedTypes = [
         "PICT",
         "PNG ",
+        "PNGf",
         "cicn",
         "ppat",
         "crsr",
@@ -69,7 +70,12 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         heightConstraint = NSLayoutConstraint(item: imageView!, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         scrollView.addConstraints([widthConstraint, heightConstraint, l, r, t, b])
         imageView.allowsCutCopyPaste = false // Ideally want copy/paste but not cut/delete
-        imageView.isEditable = ["PICT", "cicn", "ppat", "PNG "].contains(resource.typeCode)
+        switch resource.typeCode {
+        case "PICT", "cicn", "ppat", "PNG ", "PNGf":
+            imageView.isEditable = true
+        default:
+            imageView.isEditable = false
+        }
 
         self.loadImage()
     }
@@ -223,7 +229,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
 
     static func filenameExtension(for resourceType: String) -> String {
         switch resourceType {
-        case "PNG ":
+        case "PNG ", "PNGf":
             return "png"
         case "icns":
             return "icns"
@@ -235,7 +241,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     static func export(_ resource: Resource, to url: URL) throws {
         let data: Data
         switch resource.typeCode {
-        case "PNG ", "icns":
+        case "PNG ", "PNGf", "icns":
             data = resource.data
         default:
             data = self.image(for: resource)?.tiffRepresentation ?? Data()
@@ -257,7 +263,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
 
     static func maxThumbnailSize(for resourceType: String) -> Int? {
         switch resourceType {
-        case "PICT", "PNG ", "pxm#":
+        case "PICT", "PNG ", "PNGf", "pxm#":
             return nil
         default:
             return 64
