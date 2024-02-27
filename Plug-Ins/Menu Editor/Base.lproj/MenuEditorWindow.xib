@@ -55,7 +55,15 @@
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="rau-w8-qyY">
                                                             <rect key="frame" x="-2" y="0.0" width="26" height="19"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="center" usesSingleLineMode="YES" id="Wfa-no-JcT">
-                                                                <customFormatter key="formatter" id="SLU-jK-q3p" customClass="MacRomanFormatter" customModule="RFSupport"/>
+                                                                <customFormatter key="formatter" id="SLU-jK-q3p" customClass="MacRomanFormatter" customModule="RFSupport">
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
+                                                                            <integer key="value" value="1"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="valueRequired" value="NO"/>
+                                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="exactLengthRequired" value="YES"/>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </customFormatter>
                                                                 <font key="font" size="12" name="Silom"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -108,7 +116,15 @@
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="91H-at-hQY">
                                                             <rect key="frame" x="2" y="3" width="200" height="19"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" usesSingleLineMode="YES" id="g0d-pv-Og9">
-                                                                <customFormatter key="formatter" id="GXa-GX-Cpe" customClass="MacRomanFormatter" customModule="RFSupport"/>
+                                                                <customFormatter key="formatter" id="GXa-GX-Cpe" customClass="MacRomanFormatter" customModule="RFSupport">
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="valueRequired" value="NO"/>
+                                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="exactLengthRequired" value="NO"/>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
+                                                                            <integer key="value" value="255"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </customFormatter>
                                                                 <font key="font" size="12" name="Silom"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -153,7 +169,15 @@
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="800" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FRb-sP-p63">
                                                             <rect key="frame" x="13" y="0.0" width="25" height="15"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="j7q-fI-CHe">
-                                                                <customFormatter key="formatter" id="v1s-oH-1T0" customClass="MacRomanFormatter" customModule="RFSupport"/>
+                                                                <customFormatter key="formatter" id="v1s-oH-1T0" customClass="MacRomanFormatter" customModule="RFSupport">
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
+                                                                            <integer key="value" value="1"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="valueRequired" value="NO"/>
+                                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="exactLengthRequired" value="YES"/>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </customFormatter>
                                                                 <font key="font" size="12" name="Silom"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -214,10 +238,10 @@
                         </scroller>
                     </scrollView>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="64d-80-xuj" userLabel="Inspector Stack View">
-                        <rect key="frame" x="299" y="0.0" width="191" height="325"/>
+                        <rect key="frame" x="299" y="0.0" width="191" height="354"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mkd-DJ-7f3" userLabel="Enabled Stack View">
-                                <rect key="frame" x="40" y="309" width="151" height="16"/>
+                                <rect key="frame" x="40" y="338" width="151" height="16"/>
                                 <subviews>
                                     <customView verticalHuggingPriority="100" id="Xpt-F5-fga">
                                         <rect key="frame" x="3" y="2" width="67" height="13"/>
@@ -244,7 +268,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AbZ-go-Ck0" userLabel="ID Stack View">
-                                <rect key="frame" x="0.0" y="280" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="309" width="191" height="21"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="1dy-JZ-eeI">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -256,7 +280,7 @@
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="nVB-8y-NcJ">
                                         <rect key="frame" x="118" y="0.0" width="73" height="21"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="fCf-AG-Cmh">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="fCf-AG-Cmh">
                                             <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="cg5-1I-bUF">
                                                 <real key="minimum" value="-32767"/>
                                                 <real key="maximum" value="32768"/>
@@ -286,7 +310,7 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DKS-Xg-pXR" userLabel="MDEF Stack View">
-                                <rect key="frame" x="0.0" y="251" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="280" width="191" height="21"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="53h-zB-gK1">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -298,7 +322,7 @@
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="SJa-TN-hnR">
                                         <rect key="frame" x="118" y="0.0" width="73" height="21"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="htV-bP-WkK">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="htV-bP-WkK">
                                             <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="RJb-bX-vXS">
                                                 <real key="minimum" value="-32767"/>
                                                 <real key="maximum" value="32768"/>
@@ -325,7 +349,7 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q2b-Qp-1JV" userLabel="Style Stack View">
-                                <rect key="frame" x="0.0" y="223" width="191" height="20"/>
+                                <rect key="frame" x="0.0" y="252" width="191" height="20"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="Ty4-0S-dYi">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -375,7 +399,7 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xuD-Ae-TIh" userLabel="Icon Stack View">
-                                <rect key="frame" x="0.0" y="194" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="223" width="191" height="21"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="Ycr-zv-CON" userLabel="Icon:">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -387,7 +411,7 @@
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="g6k-VQ-8Jy">
                                         <rect key="frame" x="118" y="0.0" width="73" height="21"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="f7R-2n-Raw">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="f7R-2n-Raw">
                                             <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="cAS-0l-NtB">
                                                 <real key="minimum" value="257"/>
                                                 <real key="maximum" value="511"/>
@@ -418,7 +442,7 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IeJ-56-fjv" userLabel="Icon Type Stack View">
-                                <rect key="frame" x="0.0" y="166" width="191" height="20"/>
+                                <rect key="frame" x="0.0" y="195" width="191" height="20"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="tTR-Ac-PZk">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -463,7 +487,7 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fce-T5-IgR" userLabel="Submenu Stack View">
-                                <rect key="frame" x="0.0" y="137" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="166" width="191" height="21"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="4o3-HS-pkX" userLabel="Submenu:">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -475,7 +499,7 @@
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="GRI-vK-VBD">
                                         <rect key="frame" x="118" y="0.0" width="73" height="21"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Mie-nz-lCj">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="Mie-nz-lCj">
                                             <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="jvd-Rg-lzC">
                                                 <real key="minimum" value="1"/>
                                                 <real key="maximum" value="255"/>
@@ -505,8 +529,8 @@
                                     </binding>
                                 </connections>
                             </stackView>
-                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXn-jk-okw" userLabel="Command Stack View">
-                                <rect key="frame" x="0.0" y="108" width="191" height="21"/>
+                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXn-jk-okw" userLabel="CMNU Command Stack View">
+                                <rect key="frame" x="0.0" y="137" width="191" height="21"/>
                                 <subviews>
                                     <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="76Y-nP-lpq">
                                         <rect key="frame" x="-2" y="3" width="114" height="16"/>
@@ -518,8 +542,15 @@
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="DQg-LP-QQW">
                                         <rect key="frame" x="118" y="0.0" width="73" height="21"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="vhL-5F-lGP">
-                                            <customFormatter key="formatter" id="Hon-AV-u3W" customClass="MacRomanFormatter" customModule="RFSupport"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="TYPE" drawsBackground="YES" usesSingleLineMode="YES" id="vhL-5F-lGP">
+                                            <customFormatter key="formatter" id="Hon-AV-u3W" customClass="MacRomanFormatter" customModule="RFSupport">
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="stringLength">
+                                                        <integer key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="valueRequired" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </customFormatter>
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -538,7 +569,50 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="selectedItem.hasCommand" id="F4l-ir-biN">
+                                    <binding destination="-2" name="hidden" keyPath="selectedItem.has4CCCommand" id="nbQ-W9-qPP">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </stackView>
+                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u4U-Je-HW0" userLabel="cmnu Command Stack View">
+                                <rect key="frame" x="0.0" y="108" width="191" height="21"/>
+                                <subviews>
+                                    <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="4My-Se-Meq">
+                                        <rect key="frame" x="-2" y="3" width="114" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Command:" id="xoI-l0-czX">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="xlN-Rz-lcT">
+                                        <rect key="frame" x="118" y="0.0" width="73" height="21"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="0" drawsBackground="YES" usesSingleLineMode="YES" id="3M2-WQ-1Ps">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="9KI-9b-8U8">
+                                                <real key="minimum" value="0.0"/>
+                                                <real key="maximum" value="65535"/>
+                                            </numberFormatter>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="selectedItem.menuCommand" id="WYa-KH-JRe"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                                <connections>
+                                    <binding destination="-2" name="hidden" keyPath="selectedItem.hasInt16Command" id="u11-pU-zrt">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -556,6 +630,7 @@
                             <constraint firstItem="bik-hd-VQL" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="5Of-bp-2d5"/>
                             <constraint firstItem="76Y-nP-lpq" firstAttribute="trailing" secondItem="1dy-JZ-eeI" secondAttribute="trailing" id="9Sz-Ww-oMF"/>
                             <constraint firstAttribute="trailing" secondItem="DKS-Xg-pXR" secondAttribute="trailing" id="B6T-aU-p4V"/>
+                            <constraint firstItem="u4U-Je-HW0" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="E3A-aS-OL4"/>
                             <constraint firstItem="DKS-Xg-pXR" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="E4k-0q-XGf"/>
                             <constraint firstItem="53h-zB-gK1" firstAttribute="trailing" secondItem="1dy-JZ-eeI" secondAttribute="trailing" id="FZY-KE-qUC"/>
                             <constraint firstItem="4o3-HS-pkX" firstAttribute="trailing" secondItem="Ty4-0S-dYi" secondAttribute="trailing" id="GzU-of-eFf"/>
@@ -565,8 +640,10 @@
                             <constraint firstItem="1dy-JZ-eeI" firstAttribute="trailing" secondItem="Xpt-F5-fga" secondAttribute="trailing" id="Psi-Ww-qwj"/>
                             <constraint firstItem="Ty4-0S-dYi" firstAttribute="trailing" secondItem="1dy-JZ-eeI" secondAttribute="trailing" id="SrR-A2-iyD"/>
                             <constraint firstItem="Q2b-Qp-1JV" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="Tqy-KT-eQ0"/>
+                            <constraint firstItem="xlN-Rz-lcT" firstAttribute="leading" secondItem="GRI-vK-VBD" secondAttribute="leading" id="WOG-ql-sfO"/>
                             <constraint firstAttribute="trailing" secondItem="mkd-DJ-7f3" secondAttribute="trailing" id="fHg-VP-J3o"/>
                             <constraint firstAttribute="trailing" secondItem="eXn-jk-okw" secondAttribute="trailing" id="gcS-Bf-hmH"/>
+                            <constraint firstAttribute="trailing" secondItem="u4U-Je-HW0" secondAttribute="trailing" id="hC8-GB-Zna"/>
                             <constraint firstAttribute="trailing" secondItem="bik-hd-VQL" secondAttribute="trailing" id="hNu-D1-lne"/>
                             <constraint firstItem="tTR-Ac-PZk" firstAttribute="trailing" secondItem="Ycr-zv-CON" secondAttribute="trailing" id="pFY-V5-WOg"/>
                             <constraint firstItem="AbZ-go-Ck0" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="pQl-ut-tA2"/>
@@ -582,8 +659,10 @@
                             <integer value="1000"/>
                             <integer value="1000"/>
                             <integer value="1000"/>
+                            <integer value="1000"/>
                         </visibilityPriorities>
                         <customSpacing>
+                            <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>

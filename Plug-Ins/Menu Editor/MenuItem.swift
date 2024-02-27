@@ -81,8 +81,12 @@ class MenuItem: NSObject {
         return !keyEquivalent.isEmpty
     }
     
-    var hasCommand: Bool {
-        return commandsSize != .none
+    var has4CCCommand: Bool {
+        return commandsSize == .int32
+    }
+
+    var hasInt16Command: Bool {
+        return commandsSize == .int16
     }
 
     let manager: RFEditorManager
@@ -148,8 +152,10 @@ extension MenuItem {
             return iconImage
         } else if key == "isItem" {
             return isItem
-        } else if key == "hasCommand" {
-            return hasCommand
+        } else if key == "has4CCCommand" {
+            return has4CCCommand
+        } else if key == "hasInt16Command" {
+            return hasInt16Command
         } else if key == "textColor" {
             return isEnabled ? NSColor.textColor : NSColor.disabledControlTextColor
         } else if key == "hasKeyEquivalent" {
@@ -176,7 +182,7 @@ extension MenuItem {
             if commandsSize == .int32 {
                 menuCommand = UInt32(value as? String ?? "")
             } else {
-                menuCommand = UInt32(Int(value as? String ?? "0") ?? 0)
+                menuCommand = value as? UInt32 ?? 0
             }
         } else if key == "styleByte" {
             styleByte = value as? UInt8 ?? 0

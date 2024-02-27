@@ -79,7 +79,8 @@ extension Menu {
     var submenuID: Int { return 0 }
 
     var isItem: Bool { return false }
-    var hasCommand: Bool { return false }
+    var has4CCCommand: Bool { return false }
+    var hasInt16Command: Bool { return false }
     var iconType: UInt8 { return 0 }
 
     override func value(forKey key: String) -> Any? {
@@ -109,8 +110,10 @@ extension Menu {
             return iconType
         } else if key == "submenuID" {
             return submenuID
-        } else if key == "hasCommand" {
-            return hasCommand
+        } else if key == "has4CCCommand" {
+            return has4CCCommand
+        } else if key == "hasInt16Command" {
+            return hasInt16Command
         } else if key == "isItem" {
             return isItem
         } else if key == "textColor" {
@@ -130,14 +133,16 @@ extension Menu {
         } else if key == "isEnabled" {
             isEnabled = value as? Bool ?? true
         } else if key == "mdefID" {
-            mdefID = Int16(value as? String ?? "0") ?? Int16(0)
+            mdefID = Int16(value as? Int ?? 0)
+        } else if key == "menuID" {
+            menuID = Int16(value as? Int ?? 0)
         } else {
             super.setValue(value, forKey: key)
         }
     }
     
     override var description: String {
-        return "\(self.className)(name = \"\(name)\"){" + items.map({ $0.description }).joined(separator: ", ") + "}"
+        return "\(self.className)(name = \"\(name)\", id = \(menuID)){" + items.map({ $0.description }).joined(separator: ", ") + "}"
     }
     
 }
