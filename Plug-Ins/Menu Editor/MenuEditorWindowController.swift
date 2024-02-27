@@ -112,7 +112,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         while reader.bytesRemaining > 5 {
             let newItem = MenuItem(commandsSize: commandsSize, manager: manager)
             newItem.name = try reader.readPString()
-            let iconID: Int8 = try reader.read()
+            let iconID: UInt8 = try reader.read()
             let keyEquivalent: UInt8 = try reader.read()
             var markCharacter: UInt8 = try reader.read()
             newItem.styleByte = try reader.read()
@@ -198,7 +198,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         try writer.writePString(menuInfo.name)
         for item in menuInfo.items {
             try writer.writePString(item.name)
-            writer.write((item.iconID == 0) ? Int8(0) : Int8(item.iconID - 256))
+            writer.write((item.iconID == 0) ? UInt8(0) : UInt8(item.iconID - 256))
             if item.submenuID == 0 {
                 let keyEquivalentBytes = [UInt8](item.keyEquivalent.data(using: .macOSRoman) ?? Data())
                 writer.write(keyEquivalentBytes.first ?? UInt8(0))
