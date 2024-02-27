@@ -1,61 +1,69 @@
 import Cocoa
 import RFSupport
 
-enum StringPadding {
+enum StringPadding: Equatable {
     case none
+    case c
     case odd
+    case oddC
     case even
+    case evenC
     case fixed(_ count: Int)
 
     func length(_ currentLength: Int) -> Int {
         switch self {
         case .none:
             return 0
+        case .c:
+            return 1
         case .odd:
             return (currentLength+1) % 2
+        case .oddC:
+            return currentLength % 2 + 1
         case .even:
             return currentLength % 2
+        case .evenC:
+            return (currentLength+1) % 2 + 1
         case let .fixed(count):
             return count - currentLength
         }
     }
 }
 
-// Implements CSTR, OCST, ECST, Cnnn
+// Implements CSTR, OCST, ECST, Cnnn, TXTS, Tnnn
 class ElementCSTR: CasedElement {
     @objc var value = ""
     var maxLength = Int(UInt32.max)
     var padding = StringPadding.none
     var insertLineBreaks = false
 
-    required init(type: String, label: String) {
-        super.init(type: type, label: label)
-        self.configurePadding()
-        width = 240
+    override func configure() throws {
+        try self.configurePadding()
+        try super.configure()
+        // Use a width of zero to allow flexible sizing when appropriate
+        width = cases.isEmpty && maxLength > 32 ? 0 : 240
         insertLineBreaks = maxLength > 256
     }
 
-    override func configure() throws {
-        try super.configure()
-        if cases.isEmpty && maxLength > 32 {
-            width = 0
-        }
-    }
-
-    func configurePadding() {
+    func configurePadding() throws {
         switch type {
         case "CSTR":
-            padding = .none
+            padding = .c
         case "OCST":
-            padding = .odd
+            padding = .oddC
         case "ECST":
-            padding = .even
+            padding = .evenC
+        case "TXTS":
+            guard self.isAtEnd() else {
+                throw TemplateError.unboundedElement(self)
+            }
+            padding = .none
         default:
             // Assume Xnnn for anything else
             let nnn = BaseElement.variableTypeValue(type)
             // Use resorcerer's more consistent n = datalength rather than resedit's n = stringlength
             padding = .fixed(nnn)
-            maxLength = nnn-1
+            maxLength = type.first == "T" ? nnn : nnn-1
         }
     }
 
@@ -116,8 +124,7 @@ class ElementCSTR: CasedElement {
         let length = min(end - reader.position, maxLength)
 
         value = try reader.readString(length: length, encoding: .macOSRoman)
-        // Advance over null-terminator and any additional padding
-        try reader.advance(1 + padding.length(length + 1))
+        try reader.advance(padding.length(length))
     }
 
     override func writeData(to writer: BinaryDataWriter) {
@@ -127,7 +134,7 @@ class ElementCSTR: CasedElement {
 
         // Error shouldn't happen because the formatter won't allow non-MacRoman characters
         try? writer.writeString(value, encoding: .macOSRoman)
-        writer.advance(1 + padding.length(value.count + 1))
+        writer.advance(padding.length(value.count))
     }
 
     override var formatter: Formatter {

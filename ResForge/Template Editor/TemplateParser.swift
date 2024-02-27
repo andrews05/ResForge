@@ -132,9 +132,9 @@ class TemplateParser {
         "ECST": ElementCSTR.self,
         "OCST": ElementCSTR.self,
         "C"   : ElementCSTR.self,           // Cnnn
-        "USTR": ElementUSTR.self,           // UTF-8 string (ResForge)
+        "USTR": ElementUSTR.self,           // UTF-8 C string (ResForge)
         "U"   : ElementUSTR.self,           // Unnn (ResForge)
-        "T"   : ElementTXTS.self,           // Tnnn
+        "T"   : ElementCSTR.self,           // Tnnn
         "CHAR": ElementCHAR.self,
         "TNAM": ElementTNAM.self,
 
@@ -158,7 +158,8 @@ class TemplateParser {
 
     static let fullRegistry: [String: BaseElement.Type] = basicRegistry.merging([
         // strings
-        "TXTS": ElementTXTS.self,           // sized text dump
+        "TXTS": ElementCSTR.self,           // sized text dump
+        "UTXT": ElementUSTR.self,           // UTF-8 text dump (ResForge)
 
         // bits
         "BOOL": ElementBOOL.self,           // true = 256; false = 0

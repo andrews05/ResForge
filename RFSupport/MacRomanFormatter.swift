@@ -1,12 +1,12 @@
 import AppKit
 
 public class MacRomanFormatter: Formatter {
-    @IBInspectable public var stringLength: Int = 0
+    @IBInspectable public var stringLength: Int = 255
     @IBInspectable public var valueRequired: Bool = false
     @IBInspectable public var exactLengthRequired: Bool = false
     @IBInspectable public var convertLineEndings: Bool = false
 
-    public convenience init(stringLength: Int = 0, valueRequired: Bool = false, exactLengthRequired: Bool = false, convertLineEndings: Bool = false) {
+    public convenience init(stringLength: Int = 255, valueRequired: Bool = false, exactLengthRequired: Bool = false, convertLineEndings: Bool = false) {
         self.init()
         self.stringLength = stringLength
         self.valueRequired = valueRequired

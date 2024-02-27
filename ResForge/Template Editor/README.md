@@ -95,9 +95,10 @@ WSTR|Word Length String|2 to 64KB|✓|✓|✓|🟢 🅱️
 LSTR|Long Length String|4 to 4MB|✓|✓|✓|🟢 🅱️
 USTR|Null-Terminated UTF-8 String|1 or more||||🟢 🅱️
 TXTS|Sized Text Dump|any||✓||🟢
+UTXT|UTF-8 Text Dump|any||||🟢
 Pnmm|Pascal String with Fixed Padding|$_nmm_ bytes|✓|✓|✓|🟢 🅱️
 Cnmm|C String with Fixed Padding|$_nmm_ bytes|✓|✓|✓|🟢 🅱️
-Unmm|UTF-8 String with Fixed Padding|$_nmm_ bytes||||🟢 🅱️
+Unmm|UTF-8 C String with Fixed Padding|$_nmm_ bytes||||🟢 🅱️
 Tnmm|Text with Fixed Padding|$_nmm_ bytes||✓|✓|🟢 🅱️
 
 ### Hexadecimal Dump Field Types

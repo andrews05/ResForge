@@ -160,7 +160,6 @@
 		49D6D3AE271BAAB4002DEA97 /* ElementPACK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D37A271BAAAF002DEA97 /* ElementPACK.swift */; };
 		49D6D3AF271BAAB4002DEA97 /* ElementREAL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D36F271BAAAE002DEA97 /* ElementREAL.swift */; };
 		49D6D3B0271BAAB4002DEA97 /* ElementFBYT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D371271BAAAF002DEA97 /* ElementFBYT.swift */; };
-		49D6D3B1271BAAB4002DEA97 /* ElementTXTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D361271BAAAD002DEA97 /* ElementTXTS.swift */; };
 		49D6D3B2271BAAB4002DEA97 /* ElementKEYB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D378271BAAAF002DEA97 /* ElementKEYB.swift */; };
 		49D6D3B3271BAAB4002DEA97 /* ElementLSTB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D36D271BAAAE002DEA97 /* ElementLSTB.swift */; };
 		49D6D3B4271BAAB4002DEA97 /* ElementRECT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D368271BAAAE002DEA97 /* ElementRECT.swift */; };
@@ -191,6 +190,7 @@
 		5504F7482B7A7EB20096F16A /* DITLItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7472B7A7EB20096F16A /* DITLItemView.swift */; };
 		5504F74A2B7A7EEC0096F16A /* DITLDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */; };
 		5504F74C2B7A7F2E0096F16A /* DITLFlippedClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */; };
+		554125602B7E8A47008B6832 /* ResourceMappings.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 5541255F2B7E8A47008B6832 /* ResourceMappings.rsrc */; };
 		554125B02B8037E4008B6832 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		554125C62B803911008B6832 /* MenuEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554125BD2B803911008B6832 /* MenuEditorWindow.xib */; };
 		554125C82B803911008B6832 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125C02B803911008B6832 /* MenuItem.swift */; };
@@ -277,7 +277,7 @@
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 49EE72D72550B79600BEABDB;
-			remoteInfo = KestrelTools;
+			remoteInfo = NovaTools;
 		};
 		554125CE2B811C24008B6832 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -298,14 +298,14 @@
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B2FCA78915A66ACE00696598;
-			remoteInfo = "PICT Editor";
+			remoteInfo = "Image Editor";
 		};
 		E18BF6C9069FEA1900F076B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = E18BF58E069FEA1400F076B8;
-			remoteInfo = "Hex Editor Cocoa (Upgraded)";
+			remoteInfo = "Hex Editor";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -505,7 +505,6 @@
 		49D6D35E271BAAAD002DEA97 /* ElementPSTR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementPSTR.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49D6D35F271BAAAD002DEA97 /* ElementDVDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDVDR.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49D6D360271BAAAD002DEA97 /* ElementBOOL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementBOOL.swift; sourceTree = "<group>"; usesTabs = 0; };
-		49D6D361271BAAAD002DEA97 /* ElementTXTS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTXTS.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49D6D362271BAAAD002DEA97 /* ElementTNAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTNAM.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49D6D363271BAAAD002DEA97 /* ElementAWRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementAWRD.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49D6D364271BAAAE002DEA97 /* ElementCASE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCASE.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -574,6 +573,7 @@
 		550B904B189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ResourceItem.xib; sourceTree = "<group>"; };
 		550B904D189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HexWindow.xib; sourceTree = "<group>"; };
 		550B9051189A0361005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImageWindow.xib; sourceTree = "<group>"; };
+		5541255F2B7E8A47008B6832 /* ResourceMappings.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = ResourceMappings.rsrc; sourceTree = "<group>"; };
 		554125B72B8037E4008B6832 /* Menu Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Menu Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		554125BE2B803911008B6832 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuEditorWindow.xib; sourceTree = "<group>"; };
 		554125C02B803911008B6832 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -938,6 +938,7 @@
 			children = (
 				49D6D352271BAAAC002DEA97 /* README.md */,
 				49D6D359271BAAAD002DEA97 /* TemplateWindow.xib */,
+				5541255F2B7E8A47008B6832 /* ResourceMappings.rsrc */,
 				49D6D350271BAAAC002DEA97 /* Templates.rsrc */,
 				49D6D353271BAAAC002DEA97 /* TemplateEditor.swift */,
 				49D6D357271BAAAC002DEA97 /* TabbableOutlineView.swift */,
@@ -978,7 +979,6 @@
 				49D6D363271BAAAD002DEA97 /* ElementAWRD.swift */,
 				49D6D373271BAAAF002DEA97 /* ElementCSTR.swift */,
 				49D6D35E271BAAAD002DEA97 /* ElementPSTR.swift */,
-				49D6D361271BAAAD002DEA97 /* ElementTXTS.swift */,
 				49D6D382271BAAB3002DEA97 /* ElementUSTR.swift */,
 				49D6D360271BAAAD002DEA97 /* ElementBOOL.swift */,
 				49D6D37E271BAAB0002DEA97 /* ElementBFLG.swift */,
@@ -1210,7 +1210,7 @@
 			dependencies = (
 			);
 			name = "Sound Editor";
-			productName = "PICT Editor";
+			productName = "Sound Editor";
 			productReference = 4953F5A0248874AA0002340F /* Sound Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1228,7 +1228,7 @@
 			dependencies = (
 			);
 			name = RFSupport;
-			productName = ResKnifePlugins;
+			productName = RFSupport;
 			productReference = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -1245,7 +1245,7 @@
 			dependencies = (
 			);
 			name = NovaTools;
-			productName = KestrelTools;
+			productName = NovaTools;
 			productReference = 49EE72D82550B79600BEABDB /* NovaTools.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1299,7 +1299,7 @@
 			packageProductDependencies = (
 				4948E15D2B6DDE7800473FF3 /* OrderedCollections */,
 			);
-			productName = "PICT Editor";
+			productName = "Image Editor";
 			productReference = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1330,7 +1330,7 @@
 				4907D2EF29C50AFE0003702A /* Parsing */,
 			);
 			productInstallPath = "$(USER_APPS_DIR)";
-			productName = "ResKnife Cocoa";
+			productName = ResForge;
 			productReference = E18BF58C069FEA1400F076B8 /* ResForge.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -1348,7 +1348,7 @@
 			dependencies = (
 			);
 			name = "Hex Editor";
-			productName = "Hex Editor Cocoa";
+			productName = "Hex Editor";
 			productReference = E18BF5A6069FEA1400F076B8 /* Hex Editor.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1529,6 +1529,7 @@
 				4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */,
 				B229EEF515A4FB6F0032C12C /* MainMenu.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResource.xib in Resources */,
+				554125602B7E8A47008B6832 /* ResourceMappings.rsrc in Resources */,
 				559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */,
 				4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */,
 				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,
@@ -1711,7 +1712,6 @@
 				49D6D390271BAAB4002DEA97 /* ElementCASE.swift in Sources */,
 				49D6D392271BAAB4002DEA97 /* ElementDATE.swift in Sources */,
 				49F56FCE2A830C4E00953A17 /* ClassicFormat.swift in Sources */,
-				49D6D3B1271BAAB4002DEA97 /* ElementTXTS.swift in Sources */,
 				4968C03B24C6808200716AB9 /* EditorManager.swift in Sources */,
 				49D6D398271BAAB4002DEA97 /* ElementBORV.swift in Sources */,
 				49D6D3A4271BAAB4002DEA97 /* ElementFCNT.swift in Sources */,
