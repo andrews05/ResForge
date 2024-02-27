@@ -9,7 +9,7 @@ struct ExtendedFormat: ResourceFileFormat {
     let name = NSLocalizedString("Extended Resource File", comment: "")
     let supportsTypeAttributes = true
 
-    static let signature = UInt32("RSRX")
+    static let signature = UInt32(fourCharString: "RSRX")
     static let version = 1
 
     func read(_ data: Data) throws -> ResourceMap {
@@ -61,7 +61,7 @@ struct ExtendedFormat: ResourceFileFormat {
         // Use overflow addition to get counts
         let numTypes = (try reader.read() as UInt64) &+ 1
         for _ in 0..<numTypes {
-            let type = (try reader.read() as UInt32).stringValue
+            let type = (try reader.read() as UInt32).fourCharString
             let numResources = (try reader.read() as UInt64) &+ 1
             let resourceListOffset = try reader.readUInt64AsInt() + typeListOffset
             let numAttributes = try reader.readUInt64AsInt()
@@ -160,7 +160,7 @@ struct ExtendedFormat: ResourceFileFormat {
         let attributeList = BinaryDataWriter()
         var resourceListOffset = 8 + (numTypes * typeInfoLength)
         for (type, resources) in resourceMap {
-            writer.write(UInt32(type.code))
+            writer.write(UInt32(fourCharString: type.code))
             writer.write(UInt64(resources.count) &- 1)
             writer.write(UInt64(resourceListOffset))
             writer.write(UInt64(type.attributes.count))

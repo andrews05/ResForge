@@ -68,7 +68,7 @@ class ClassicFormat: ResourceFileFormat {
         // Use overflow addition to get counts
         let numTypes = (try reader.read() as UInt16) &+ 1
         for _ in 0..<numTypes {
-            let type = (try reader.read() as UInt32).stringValue
+            let type = (try reader.read() as UInt32).fourCharString
             let numResources = (try reader.read() as UInt16) &+ 1
             let resourceListOffset = Int(try reader.read() as UInt16) + typeListOffset
             let resourceType = ResourceType(type)
@@ -161,7 +161,7 @@ class ClassicFormat: ResourceFileFormat {
         writer.write(UInt16(numTypes) &- 1)
         var resourceListOffset = 2 + (numTypes * typeInfoLength)
         for (type, resources) in resourceMap {
-            writer.write(UInt32(type.code))
+            writer.write(UInt32(fourCharString: type.code))
             writer.write(UInt16(resources.count) &- 1)
             writer.write(UInt16(resourceListOffset))
             resourceListOffset += resources.count * resourceInfoLength

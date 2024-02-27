@@ -173,13 +173,13 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
 
 class FourCharCodeTransformer: ValueTransformer {
     override func transformedValue(_ value: Any?) -> Any? {
-        return (value as! FourCharCode).stringValue
+        return (value as! FourCharCode).fourCharString
     }
 
     override func reverseTransformedValue(_ value: Any?) -> Any? {
         if let value = value as? String {
             // Workaround a bug in macOS 13? (crashes without the typecast)
-            return FourCharCode(value) as FourCharCode
+            return FourCharCode(fourCharString: value) as FourCharCode
         }
         return 0
     }

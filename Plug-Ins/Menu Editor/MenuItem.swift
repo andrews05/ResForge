@@ -134,7 +134,7 @@ extension MenuItem {
             return mdefID
         } else if key == "menuCommand" {
             if commandsSize == .int32 {
-                return menuCommand.stringValue
+                return menuCommand.fourCharString
             } else {
                 return "\(menuCommand)"
             }
@@ -180,7 +180,7 @@ extension MenuItem {
             submenuID = value as? Int ?? 0
         } else if key == "menuCommand" {
             if commandsSize == .int32 {
-                menuCommand = UInt32(value as? String ?? "")
+                menuCommand = UInt32(fourCharString: value as? String ?? "")
             } else {
                 menuCommand = value as? UInt32 ?? 0
             }

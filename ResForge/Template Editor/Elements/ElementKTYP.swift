@@ -4,8 +4,8 @@ import RFSupport
 class ElementKTYP: KeyElement {
     private var tValue: UInt32 = 0
     @objc private var value: String {
-        get { tValue.stringValue }
-        set { tValue = FourCharCode(newValue) }
+        get { tValue.fourCharString }
+        set { tValue = FourCharCode(fourCharString: newValue) }
     }
 
     override func readData(from reader: BinaryDataReader) throws {

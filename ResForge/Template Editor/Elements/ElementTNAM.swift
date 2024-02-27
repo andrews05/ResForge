@@ -5,8 +5,8 @@ class ElementTNAM: CasedElement {
     private var tValue: FourCharCode = 0
     // This is marked as dynamic so that RSID can bind to it and receive changes
     @objc dynamic private var value: String {
-        get { tValue.stringValue }
-        set { tValue = FourCharCode(newValue) }
+        get { tValue.fourCharString }
+        set { tValue = FourCharCode(fourCharString: newValue) }
     }
 
     override func readData(from reader: BinaryDataReader) throws {

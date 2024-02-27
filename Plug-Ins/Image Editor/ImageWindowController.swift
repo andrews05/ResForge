@@ -126,7 +126,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             case 16, 24, 32:
                 imageFormat.stringValue = "\(format)-bit RGB"
             default:
-                imageFormat.stringValue = format.stringValue.trimmingCharacters(in: .whitespaces).uppercased()
+                imageFormat.stringValue = format.fourCharString.trimmingCharacters(in: .whitespaces).uppercased()
             }
         } else if !resource.data.isEmpty {
             imageSize.stringValue = "Invalid or unsupported image format"
@@ -327,7 +327,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
                 _ = rep.bitmapData
                 rep.hasAlpha = false
                 if let cRange = error.localizedDescription.range(of: "(?<=')....(?=')", options: .regularExpression) {
-                    format = UInt32(String(error.localizedDescription[cRange]))
+                    format = UInt32(fourCharString: String(error.localizedDescription[cRange]))
                 }
                 return rep
             }

@@ -1,9 +1,9 @@
 import Foundation
 
-// Allow easy translation between String and FourCharCode, in the same manner as classic OSTypes
-public extension FourCharCode {
+// Allow easy translation between String and UInt32/FourCharCode, in the same manner as classic OSTypes
+public extension UInt32 {
     /// Returns a four character String representation of this integer, using macOSRoman encoding.
-    var stringValue: String {
+    var fourCharString: String {
         guard self != 0 else {
             return ""
         }
@@ -17,16 +17,16 @@ public extension FourCharCode {
     }
 
     /// Creates a new instance from four characters of a String, using macOSRoman encoding.
-    init(_ string: String) {
+    init(fourCharString: String) {
         self = 0
-        guard string != "" else {
+        guard fourCharString != "" else {
             return
         }
         var bytes: [UInt8] = [0, 0, 0, 0]
-        let max = Swift.min(string.count, 4)
+        let max = Swift.min(fourCharString.count, 4)
         var used = 0
-        var range = string.startIndex..<string.endIndex
-        _ = string.getBytes(&bytes, maxLength: max, usedLength: &used, encoding: .macOSRoman, range: range, remaining: &range)
+        var range = fourCharString.startIndex..<fourCharString.endIndex
+        _ = fourCharString.getBytes(&bytes, maxLength: max, usedLength: &used, encoding: .macOSRoman, range: range, remaining: &range)
         if used == max {
             self = bytes.reduce(0) { $0 << 8 | Self($1) }
         }

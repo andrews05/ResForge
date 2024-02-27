@@ -7,7 +7,7 @@ struct RezFormat: ResourceFileFormat {
     static let typeName = "com.resforge.rez-file"
     let name = NSLocalizedString("Rez File", comment: "")
 
-    static let signature = UInt32("BRGR")
+    static let signature = UInt32(fourCharString: "BRGR")
     static let type = 1
     static let mapName = "resource.map"
     static let resourceNameLength = 256
@@ -52,7 +52,7 @@ struct RezFormat: ResourceFileFormat {
         // Read types
         try reader.setPosition(typeListOffset)
         for _ in 0..<numTypes {
-            let type = (try reader.read() as UInt32).stringValue
+            let type = (try reader.read() as UInt32).fourCharString
             let resourceListOffset = Int(try reader.read() as UInt32) + mapOffset
             let numResources = try reader.read() as UInt32
             let resourceType = ResourceType(type)
@@ -165,7 +165,7 @@ struct RezFormat: ResourceFileFormat {
 
         // Write types
         for (type, resources) in resourceMap {
-            writer.write(UInt32(type.code))
+            writer.write(UInt32(fourCharString: type.code))
             writer.write(UInt32(resourceListOffset))
             writer.write(UInt32(resources.count))
             resourceListOffset += resources.count * resourceInfoLength
@@ -176,7 +176,7 @@ struct RezFormat: ResourceFileFormat {
             for resource in resources {
                 writer.write(UInt32(index))
                 index += 1
-                writer.write(UInt32(resource.typeCode))
+                writer.write(UInt32(fourCharString: resource.typeCode))
                 writer.write(Int16(resource.id))
                 try writer.writeString(resource.name, encoding: .macOSRoman)
                 writer.advance(Self.resourceNameLength - resource.name.count)
