@@ -11,6 +11,8 @@ ResForge is a resource editor for macOS, capable of editing classic resource for
 * Template-driven bulk data view, with CSV import/export.
 * Image editor, supporting 'PICT', 'PNG ', 'cicn' & 'ppat' resources, plus view-only support for a variety of icons and other bitmaps.
 * Sound editor, supporting sampled 'snd ' resources.
+* Dialog editor, supporting 'DITL' resources (by Uli Kusterer) 
+* Menu editor, supporting 'MENU', 'CMNU' & 'cmnu' resources (by Uli Kusterer)
 * Tools for EV Nova, including a sprite (rlëD) editor, a ship animation (shän) editor and a galaxy viewer.
 
 ### Supported File Formats
