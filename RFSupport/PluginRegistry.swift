@@ -71,7 +71,7 @@ public class PluginRegistry {
             case "DLOG":
                 // Read title at offset 20
                 placeholder = try BinaryDataReader(resource.data.dropFirst(20)).readPString()
-            case "MENU":
+            case "MENU", "CMNU", "cmnu":
                 // Read title at offset 14
                 placeholder = try BinaryDataReader(resource.data.dropFirst(14)).readPString()
                 if placeholder == "\u{14}" {
