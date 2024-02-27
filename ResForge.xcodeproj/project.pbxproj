@@ -194,7 +194,6 @@
 		554125B02B8037E4008B6832 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		554125C62B803911008B6832 /* MenuEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554125BD2B803911008B6832 /* MenuEditorWindow.xib */; };
 		554125C82B803911008B6832 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125C02B803911008B6832 /* MenuItem.swift */; };
-		554125C92B803911008B6832 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 554125C12B803911008B6832 /* Info.plist */; };
 		554125CA2B803911008B6832 /* MenuEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125C22B803911008B6832 /* MenuEditorWindowController.swift */; };
 		554125CC2B811213008B6832 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125CB2B811213008B6832 /* Menu.swift */; };
 		554125CD2B811C24008B6832 /* Menu Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 554125B72B8037E4008B6832 /* Menu Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1502,7 +1501,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				554125C62B803911008B6832 /* MenuEditorWindow.xib in Resources */,
-				554125C92B803911008B6832 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
