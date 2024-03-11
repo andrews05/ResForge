@@ -52,22 +52,28 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
     }
 
     @IBAction func exportResource(_ sender: Any) {
-        guard let plug = self as? ResourceEditor,
-              let exporter = type(of: self) as? ExportProvider.Type else {
+        self.exportResource(using: type(of: self) as? ExportProvider.Type)
+    }
+
+    @IBAction func exportRawResource(_ sender: Any) {
+        self.exportResource(using: nil)
+    }
+
+    private func exportResource(using exporter: ExportProvider.Type?) {
+        guard let resource = (self as? ResourceEditor)?.resource else {
             return
         }
-        let resource = plug.resource
         let panel = NSSavePanel()
-        if resource.name.isEmpty {
-            panel.nameFieldStringValue = "\(resource.typeCode) \(resource.id)"
-        } else {
-            panel.nameFieldStringValue = resource.name
-        }
-        panel.allowedFileTypes = [exporter.filenameExtension(for: resource.typeCode)]
+        let filename = resource.filenameForExport(using: exporter)
+        panel.nameFieldStringValue = "\(filename.name).\(filename.ext)"
         panel.beginSheetModal(for: self.window!) { returnCode in
-            if returnCode == .OK {
+            if returnCode == .OK, let url = panel.url {
                 do {
-                    try exporter.export(plug.resource, to: panel.url!)
+                    if !resource.data.isEmpty, let exporter {
+                        try exporter.export(resource, to: url)
+                    } else {
+                        try resource.data.write(to: url)
+                    }
                 } catch {
                     self.presentError(error)
                 }

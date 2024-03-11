@@ -200,6 +200,16 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         return PluginRegistry.placeholderName(for: self)
     }
 
+    /// Return a filename and extension to use when exporting the resource with the given ExportProvider.
+    public func filenameForExport(using exporter: ExportProvider.Type?) -> (name: String, ext: String) {
+        var filename = name.replacingOccurrences(of: "/", with: ":")
+        if filename == "" {
+            filename = "\(typeCode) \(id)"
+        }
+        let ext = exporter?.filenameExtension(for: typeCode) ?? typeCode.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        return (filename, ext)
+    }
+
     // MARK: - Pasteboard functions
 
     public static var supportsSecureCoding = true

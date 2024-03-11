@@ -198,6 +198,14 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     // MARK: - Export
 
     @IBAction func exportResource(_ sender: Any) {
+        self.exportResources(raw: false)
+    }
+
+    @IBAction func exportRawResource(_ sender: Any) {
+        self.exportResources(raw: true)
+    }
+
+    private func exportResources(raw: Bool) {
         let resources = dataSource.selectedResources(deep: true)
         if resources.count > 1 {
             // Multiple resources, choose a directory to export to
@@ -210,7 +218,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
                 if modalResponse == .OK, let saveDir = panel.url {
                     for resource in resources {
-                        let filename = self.filenameForExport(resource: resource)
+                        let exporter = raw ? nil : PluginRegistry.exportProviders[resource.typeCode]
+                        let filename = resource.filenameForExport(using: exporter)
                         var url = saveDir.appendingPathComponent(filename.name).appendingPathExtension(filename.ext)
                         // Ensure unique name
                         var i = 2
@@ -218,37 +227,28 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
                             url = saveDir.appendingPathComponent("\(filename.name) \(i)").appendingPathExtension(filename.ext)
                             i += 1
                         }
-                        self.export(resource: resource, to: url)
+                        self.export(resource: resource, to: url, using: exporter)
                     }
                 }
             }
         } else if resources.count == 1 {
             // Single resource, show save panel
             let resource = resources.first!
+            let exporter = raw ? nil : PluginRegistry.exportProviders[resource.typeCode]
             let panel = NSSavePanel()
-            let filename = self.filenameForExport(resource: resource)
+            let filename = resource.filenameForExport(using: exporter)
             panel.nameFieldStringValue = "\(filename.name).\(filename.ext)"
             panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
                 if modalResponse == .OK, let url = panel.url {
-                    self.export(resource: resource, to: url)
+                    self.export(resource: resource, to: url, using: exporter)
                 }
             }
         }
     }
 
-    private func filenameForExport(resource: Resource) -> (name: String, ext: String) {
-        var filename = resource.name.replacingOccurrences(of: "/", with: ":")
-        if filename == "" {
-            filename = "\(resource.typeCode) \(resource.id)"
-        }
-        let editor = PluginRegistry.exportProviders[resource.typeCode]
-        let ext = editor?.filenameExtension(for: resource.typeCode) ?? resource.typeCode.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        return (filename, ext)
-    }
-
-    private func export(resource: Resource, to url: URL) {
+    private func export(resource: Resource, to url: URL, using exporter: ExportProvider.Type?) {
         do {
-            if !resource.data.isEmpty, let exporter = PluginRegistry.exportProviders[resource.typeCode] {
+            if !resource.data.isEmpty, let exporter {
                 try exporter.export(resource, to: url)
             } else {
                 try resource.data.write(to: url)

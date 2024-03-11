@@ -372,6 +372,12 @@ CA
                                     <action selector="exportResource:" target="-1" id="K26-n0-cc3"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Export raw…" tag="6" alternate="YES" identifier="exportRawResource" id="u1n-vr-dUI">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="exportRawResource:" target="-1" id="pk1-QP-gWr"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" tag="6" id="425">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
