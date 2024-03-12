@@ -238,6 +238,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             let panel = NSSavePanel()
             let filename = resource.filenameForExport(using: exporter)
             panel.nameFieldStringValue = "\(filename.name).\(filename.ext)"
+            panel.isExtensionHidden = false
+            if exporter != nil {
+                panel.allowedFileTypes = [filename.ext]
+            }
             panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
                 if modalResponse == .OK, let url = panel.url {
                     self.export(resource: resource, to: url, using: exporter)

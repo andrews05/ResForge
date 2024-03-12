@@ -66,6 +66,10 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
         let panel = NSSavePanel()
         let filename = resource.filenameForExport(using: exporter)
         panel.nameFieldStringValue = "\(filename.name).\(filename.ext)"
+        panel.isExtensionHidden = false
+        if exporter != nil {
+            panel.allowedFileTypes = [filename.ext]
+        }
         panel.beginSheetModal(for: self.window!) { returnCode in
             if returnCode == .OK, let url = panel.url {
                 do {
