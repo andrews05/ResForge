@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -29,12 +29,12 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="556" width="1024" height="643"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="944"/>
             <view key="contentView" id="18" customClass="ShanWindowView" customModule="NovaTools" customModuleProvider="target">
                 <rect key="frame" x="0.0" y="0.0" width="1023" height="643"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="ldy-h7-87K" customClass="ShanView" customModule="NovaTools" customModuleProvider="target">
+                    <customView clipsToBounds="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ldy-h7-87K" customClass="ShanView" customModule="NovaTools" customModuleProvider="target">
                         <rect key="frame" x="410" y="186" width="402" height="402"/>
                         <subviews>
                             <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gx5-MO-Xlp">
@@ -91,13 +91,13 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lAH-QM-9x0">
                                     <rect key="frame" x="180" y="145" width="112" height="18"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="SyD-FO-am7"/>
-                                    </constraints>
                                     <buttonCell key="cell" type="inline" title="not found" bezelStyle="inline" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" borderStyle="border" inset="2" id="lMh-yH-hCy">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystemBold"/>
                                     </buttonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="SyD-FO-am7"/>
+                                    </constraints>
                                     <connections>
                                         <action selector="openSprite:" target="3hB-Gf-oKq" id="3QD-rQ-yzX"/>
                                     </connections>
@@ -356,13 +356,13 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XFC-oE-ayl">
                                     <rect key="frame" x="180" y="52" width="112" height="18"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="DPI-Ei-13c"/>
-                                    </constraints>
                                     <buttonCell key="cell" type="inline" title="not found" bezelStyle="inline" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" borderStyle="border" inset="2" id="fOu-iL-9y7">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystemBold"/>
                                     </buttonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="DPI-Ei-13c"/>
+                                    </constraints>
                                     <connections>
                                         <action selector="openSprite:" target="voQ-sS-cgL" id="iG8-wr-XzJ"/>
                                     </connections>
@@ -469,13 +469,13 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CBi-O6-Uyr">
                                     <rect key="frame" x="180" y="21" width="112" height="18"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="G3C-M2-ZUp"/>
-                                    </constraints>
                                     <buttonCell key="cell" type="inline" title="not found" bezelStyle="inline" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" borderStyle="border" inset="2" id="FAg-S8-040">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystemBold"/>
                                     </buttonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="G3C-M2-ZUp"/>
+                                    </constraints>
                                     <connections>
                                         <action selector="openSprite:" target="YPf-Cu-YD2" id="nrn-6I-XQX"/>
                                     </connections>
@@ -539,13 +539,13 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7BM-PX-15g">
                                     <rect key="frame" x="180" y="114" width="112" height="18"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="G8U-kk-fyL"/>
-                                    </constraints>
                                     <buttonCell key="cell" type="inline" title="not found" bezelStyle="inline" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" borderStyle="border" inset="2" id="VrI-2q-E2A">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystemBold"/>
                                     </buttonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="G8U-kk-fyL"/>
+                                    </constraints>
                                     <connections>
                                         <action selector="openSprite:" target="aL1-qs-j3R" id="G5l-Vj-Orw"/>
                                     </connections>
@@ -780,13 +780,13 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V4P-s8-oLs">
                                     <rect key="frame" x="180" y="52" width="112" height="18"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="PG1-g7-ZOL"/>
-                                    </constraints>
                                     <buttonCell key="cell" type="inline" title="not found" bezelStyle="inline" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" borderStyle="border" inset="2" id="jj5-Tc-WCg">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystemBold"/>
                                     </buttonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="PG1-g7-ZOL"/>
+                                    </constraints>
                                     <connections>
                                         <action selector="openSprite:" target="i3w-Wq-7dL" id="6ry-Rn-aSD"/>
                                     </connections>
@@ -880,13 +880,13 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="udx-k7-EJr">
                                     <rect key="frame" x="180" y="21" width="112" height="18"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="tK4-bn-o62"/>
-                                    </constraints>
                                     <buttonCell key="cell" type="inline" title="not found" bezelStyle="inline" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" borderStyle="border" inset="2" id="HM1-81-0ib">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystemBold"/>
                                     </buttonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="tK4-bn-o62"/>
+                                    </constraints>
                                     <connections>
                                         <action selector="openSprite:" target="5Sz-mw-zeq" id="Hkn-v7-OZf"/>
                                     </connections>
@@ -918,13 +918,13 @@
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e3j-NW-hCp">
                         <rect key="frame" x="570" y="596" width="82" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="TNA-1z-mzE"/>
-                        </constraints>
                         <buttonCell key="cell" type="push" title="Stop  ▶︎" bezelStyle="rounded" imagePosition="right" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DQ7-97-wNv">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="TNA-1z-mzE"/>
+                        </constraints>
                         <connections>
                             <action selector="forward:" target="-2" id="VDM-oY-hhy"/>
                         </connections>
@@ -1977,13 +1977,13 @@
                     </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dRj-wC-ewS">
                         <rect key="frame" x="530" y="596" width="42" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="28" id="VmT-Zo-Xdw"/>
-                        </constraints>
                         <buttonCell key="cell" type="push" title="◀︎" bezelStyle="rounded" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aNL-5X-kH4">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="28" id="VmT-Zo-Xdw"/>
+                        </constraints>
                         <connections>
                             <action selector="reverse:" target="-2" id="zQR-nO-vO0"/>
                         </connections>
