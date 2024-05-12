@@ -64,7 +64,6 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     }
 
     override func windowDidLoad() {
-        self.window?.title = resource.defaultWindowTitle
         dataList.expandItem(nil, expandChildren: true)
         if validStructure && resource.data.isEmpty {
             self.setDocumentEdited(true)

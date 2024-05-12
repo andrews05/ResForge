@@ -2,8 +2,8 @@ import Cocoa
 import RFSupport
 
 /*
- * The galaxy editor is a bit hacky. It relies on a set of 2048 dummy 'glxÿ' resources within the
- * support file (one for each possible sÿst) which are opened using RREF links in the sÿst template.
+ * The galaxy editor is a bit hacky. It relies on a dummy 'glxÿ' resource within the support file
+ * which is opened using RREF links in the sÿst template.
  * The GalaxyStub is the registered editor for this type but all it does is hand over to the shared
  * GalaxyWindowController, passing the id of the glxÿ resource as the id of the system to highlight.
  */
@@ -24,7 +24,7 @@ class GalaxyStub: AbstractEditor, ResourceEditor {
     func revertResource(_ sender: Any) {}
 }
 
-class GalaxyWindowController: NSWindowController, NSWindowDelegate {
+class GalaxyWindowController: NSWindowController {
     static var shared = GalaxyWindowController()
 
     @IBOutlet var clipView: NSClipView!
@@ -38,7 +38,7 @@ class GalaxyWindowController: NSWindowController, NSWindowDelegate {
         return "GalaxyWindow"
     }
 
-    override func awakeFromNib() {
+    override func windowDidLoad() {
         NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .ResourceDidChange, object: nil)
     }
 
