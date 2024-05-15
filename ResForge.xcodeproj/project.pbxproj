@@ -26,6 +26,7 @@
 		492D1E232606F53F0053DD27 /* PilotFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D1E222606F53F0053DD27 /* PilotFilter.swift */; };
 		492E912E2551373100195174 /* SpriteWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E912D2551373100195174 /* SpriteWorld.swift */; };
 		492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E91C92553ADB100195174 /* SpriteImporter.swift */; };
+		493074172BF09624001FFB76 /* TemplateDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493074162BF09624001FFB76 /* TemplateDocument.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CC3DF271228FA00A9173E /* SpobFilter.swift */; };
 		4945DC642531826400856385 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
@@ -370,6 +371,7 @@
 		492D5F1329CBC13A00A2668C /* NCBTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCBTest.swift; sourceTree = "<group>"; usesTabs = 0; };
 		492E912D2551373100195174 /* SpriteWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteWorld.swift; sourceTree = "<group>"; usesTabs = 0; };
 		492E91C92553ADB100195174 /* SpriteImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteImporter.swift; sourceTree = "<group>"; usesTabs = 0; };
+		493074162BF09624001FFB76 /* TemplateDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateDocument.swift; sourceTree = "<group>"; };
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		493CC3DF271228FA00A9173E /* SpobFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpobFilter.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -1130,24 +1132,25 @@
 			isa = PBXGroup;
 			children = (
 				49F6C76124C577440078EB55 /* ApplicationDelegate.swift */,
-				4992491926C3B527005F69A7 /* TypeAttributesEditor.swift */,
-				4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */,
-				49F6C76024C577430078EB55 /* PrefsController.swift */,
-				4968C03424C66D8B00716AB9 /* EditorManager.swift */,
-				4968C03E24C78D7400716AB9 /* SupportRegistry.swift */,
-				49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */,
-				49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */,
-				49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */,
-				49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */,
-				49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */,
-				49DB6A1B24F375A100BE0F0F /* OutlineController.swift */,
-				49F2EAAA26D5AB5E0020D70E /* StandardController.swift */,
 				49E7A3B926D0E59100EF885F /* BulkController.swift */,
 				49DB6A1D24F377A400BE0F0F /* CollectionController.swift */,
+				49E56F7B26DA22FB005FA18B /* ConflictResolver.swift */,
 				499216ED24CB914F0054A390 /* CreateResourceController.swift */,
-				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
+				4968C03424C66D8B00716AB9 /* EditorManager.swift */,
 				49F416E22879330400404BA1 /* ImportPanel.swift */,
+				49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */,
+				4962BCD224C6D19A00990DA0 /* OpenPanelDelegate.swift */,
+				49DB6A1B24F375A100BE0F0F /* OutlineController.swift */,
+				49F6C76024C577430078EB55 /* PrefsController.swift */,
+				49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */,
+				49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */,
+				49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */,
 				49655DF924DE6DA200D6AFF6 /* ResourceExtension.swift */,
+				491EDA5224E37E34008E58CB /* SelectTemplateController.swift */,
+				49F2EAAA26D5AB5E0020D70E /* StandardController.swift */,
+				4968C03E24C78D7400716AB9 /* SupportRegistry.swift */,
+				493074162BF09624001FFB76 /* TemplateDocument.swift */,
+				4992491926C3B527005F69A7 /* TypeAttributesEditor.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1732,6 +1735,7 @@
 				4982C09E2A97F653006B7404 /* AppleSingleFormat.swift in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
 				49D6D388271BAAB4002DEA97 /* TemplateEditor.swift in Sources */,
+				493074172BF09624001FFB76 /* TemplateDocument.swift in Sources */,
 				49D6D3A0271BAAB4002DEA97 /* ElementAWRD.swift in Sources */,
 				49D6D3A1271BAAB4002DEA97 /* ElementCASR.swift in Sources */,
 				49D6D393271BAAB4002DEA97 /* ElementRSID.swift in Sources */,

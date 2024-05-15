@@ -14,7 +14,7 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
         }
     }
 
-    public func windowShouldClose(_ sender: NSWindow) -> Bool {
+    open func windowShouldClose(_ sender: NSWindow) -> Bool {
         // Ensure any controls have ended editing
         if !sender.makeFirstResponder(nil) {
             return false
@@ -44,7 +44,7 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
         return true
     }
 
-    @IBAction func saveDocument(_ sender: Any) {
+    @IBAction open func saveDocument(_ sender: Any) {
         // Ensure any controls have ended editing, then save both the resource and the document
         if let editor = self as? ResourceEditor, editor.window?.makeFirstResponder(nil) != false {
             editor.saveResource(sender)
@@ -86,7 +86,7 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
         }
     }
 
-    public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    open func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.identifier?.rawValue {
         case "revertResource":
             menuItem.title = NSLocalizedString("Revert Resource", comment: "")

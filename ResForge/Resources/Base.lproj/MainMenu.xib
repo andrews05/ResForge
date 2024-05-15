@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -79,6 +79,11 @@
                                     <action selector="openDocument:" target="-1" id="460"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Open with Template…" keyEquivalent="O" id="qjg-Ln-BaG">
+                                <connections>
+                                    <action selector="begin:" target="Rro-SD-N8d" id="mdM-hi-dqb"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Open Recent" id="375">
                                 <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="376">
                                     <items>
@@ -97,12 +102,6 @@
                             <menuItem title="Close" keyEquivalent="w" id="366">
                                 <connections>
                                     <action selector="performClose:" target="-1" id="461"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Close All" alternate="YES" keyEquivalent="w" id="380">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="performClose:" target="-1" id="506"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Save" keyEquivalent="s" identifier="save" id="368">
@@ -439,7 +438,7 @@ CA
             <point key="canvasLocation" x="140" y="154"/>
         </menu>
         <customObject id="431" customClass="ApplicationDelegate" customModule="ResForge" customModuleProvider="target"/>
-        <customView id="432">
+        <customView id="432" userLabel="Select Fork">
             <rect key="frame" x="0.0" y="0.0" width="431" height="38"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
@@ -453,9 +452,6 @@ CA
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW9-Ng-yIh">
                     <rect key="frame" x="106" y="5" width="187" height="25"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="xWq-2O-h1B"/>
-                    </constraints>
                     <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="kwd-tA-MiD" id="k6W-79-SSl">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -473,6 +469,9 @@ CA
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="xWq-2O-h1B"/>
+                    </constraints>
                     <connections>
                         <binding destination="448" name="selectedIndex" keyPath="forkIndex" id="PVy-Iy-ukN"/>
                     </connections>
@@ -494,6 +493,46 @@ CA
                 <outlet property="forkSelect" destination="NW9-Ng-yIh" id="FkP-Ya-ttz"/>
             </connections>
         </customObject>
+        <customObject id="Rro-SD-N8d" customClass="OpenTemplateDelegate" customModule="ResForge" customModuleProvider="target">
+            <connections>
+                <outlet property="accessoryView" destination="6Df-Xi-GWZ" id="wx9-8w-hAn"/>
+                <outlet property="templateSelect" destination="bua-jX-8TE" id="K5x-v5-Roi"/>
+            </connections>
+        </customObject>
         <userDefaultsController representsSharedInstance="YES" id="e7o-Nx-2Jo"/>
+        <customView id="6Df-Xi-GWZ" userLabel="Select Template">
+            <rect key="frame" x="0.0" y="0.0" width="431" height="38"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6mN-Bs-34d">
+                    <rect key="frame" x="18" y="11" width="64" height="16"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Template:" id="zQa-6R-ybO">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bua-jX-8TE">
+                    <rect key="frame" x="87" y="7" width="154" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="krG-ur-Iuw"/>
+                    </constraints>
+                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" numberOfVisibleItems="5" id="Yed-wq-aUd">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </comboBoxCell>
+                </comboBox>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bua-jX-8TE" secondAttribute="trailing" constant="20" symbolic="YES" id="5Om-bm-CN5"/>
+                <constraint firstItem="6mN-Bs-34d" firstAttribute="top" secondItem="6Df-Xi-GWZ" secondAttribute="top" constant="11" id="CLI-zD-SK0"/>
+                <constraint firstItem="bua-jX-8TE" firstAttribute="leading" secondItem="6mN-Bs-34d" secondAttribute="trailing" constant="8" symbolic="YES" id="FlI-2n-87V"/>
+                <constraint firstItem="6mN-Bs-34d" firstAttribute="leading" secondItem="6Df-Xi-GWZ" secondAttribute="leading" constant="20" symbolic="YES" id="Pkf-Ft-gJq"/>
+                <constraint firstAttribute="bottom" secondItem="6mN-Bs-34d" secondAttribute="bottom" constant="11" id="gDB-7X-gUW"/>
+                <constraint firstItem="6mN-Bs-34d" firstAttribute="firstBaseline" secondItem="bua-jX-8TE" secondAttribute="firstBaseline" id="gzR-cb-2Pd"/>
+            </constraints>
+            <point key="canvasLocation" x="140" y="409"/>
+        </customView>
     </objects>
 </document>
