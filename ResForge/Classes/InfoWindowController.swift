@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import AppKit // Redundant, but shuts up warning about our NSOutlineView and NSImageView extensions.
 import RFSupport
 

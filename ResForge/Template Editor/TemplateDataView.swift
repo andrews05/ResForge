@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class TemplateDataView: NSView {
     // Data cells use flipped coordinates, drawing from top to bottom

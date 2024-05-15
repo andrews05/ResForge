@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 /// The abstract editor provides some default functionality for save handling. Do not extend this without also conforming to ResourceEditor.
 open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValidation {

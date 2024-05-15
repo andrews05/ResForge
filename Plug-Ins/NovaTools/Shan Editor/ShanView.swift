@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class ShanView: NSView {
     @IBOutlet weak var controller: ShanWindowController!

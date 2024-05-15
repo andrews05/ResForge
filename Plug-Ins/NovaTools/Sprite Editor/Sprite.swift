@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 enum SpriteError: Error {
     case invalid

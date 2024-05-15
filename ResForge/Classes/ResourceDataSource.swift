@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 class ResourceDataSource: NSObject {
@@ -35,7 +35,7 @@ class ResourceDataSource: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(resourceTypeDidChange(_:)), name: .ResourceTypeDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resourceDidUpdate(_:)), name: .DirectoryDidUpdateResource, object: document.directory)
         useTypeList = UserDefaults.standard.bool(forKey: RFDefaults.showSidebar)
-        typeList.registerForDraggedTypes([.RKResource])
+        typeList.registerForDraggedTypes([.RFResource])
     }
 
     @objc func resourceTypeDidChange(_ notification: Notification) {

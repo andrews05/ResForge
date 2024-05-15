@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class SteppingFieldDelegate: NSObject, NSTextFieldDelegate {
     // Increment/decrement the value with up/down keypress

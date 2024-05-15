@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 // Implements BSKP, SKIP, LSKP, BSIZ, WSIZ, LSIZ

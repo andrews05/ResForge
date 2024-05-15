@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 enum OpenTemplateError: LocalizedError {

@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class ShieldLayer: SpriteLayer {
     override var enabled: Bool {

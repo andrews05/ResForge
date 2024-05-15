@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class LightLayer: SpriteLayer {
     // These labels are also bound to the hide vars so 'weak' is needed to prevent ref cycles

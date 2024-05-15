@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class ElementFCNT: BaseElement, GroupElement, CounterElement {
     var count: Int

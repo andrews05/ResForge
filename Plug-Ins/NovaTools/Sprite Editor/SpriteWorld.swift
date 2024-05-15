@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 // SpriteWorld RLE sprite, as seen in EV Nova

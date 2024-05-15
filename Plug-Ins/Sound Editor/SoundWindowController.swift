@@ -1,5 +1,5 @@
 import AVKit
-import Cocoa
+import AppKit
 import RFSupport
 
 class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {

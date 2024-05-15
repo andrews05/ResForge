@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 // Implements BFLG, WFLG, LFLG

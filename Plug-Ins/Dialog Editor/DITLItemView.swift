@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 /// View that shows a simple preview for a System 7 DITL item:

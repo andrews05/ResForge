@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class ElementKRID: KeyElement, GroupElement {
     override func configure() throws {

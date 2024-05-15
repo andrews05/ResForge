@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class PrefsController: NSWindowController, NSWindowDelegate, NSTableViewDataSource {
     @IBOutlet var launchActions: NSView!

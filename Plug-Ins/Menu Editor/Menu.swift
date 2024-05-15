@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class Menu: NSObject {
     static let nameDidChangeNotification = Notification.Name("MENUNameDidChangeNotification")

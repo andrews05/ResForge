@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 // Abstract Element subclass that handles CASR elements
 class RangedElement: CasedElement {

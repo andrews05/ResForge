@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 extension Notification.Name {
@@ -404,7 +404,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     // MARK: - Window Management
 
     override func windowControllerDidLoadNib(_ windowController: NSWindowController) {
-        windowController.window?.registerForDraggedTypes([.RKResource])
+        windowController.window?.registerForDraggedTypes([.RFResource])
         self.updateStatus()
         NotificationCenter.default.addObserver(self, selector: #selector(validateToolbarItems(_:)), name: .DocumentSelectionDidChange, object: self)
         if #available(macOS 11.0, *) {
@@ -620,7 +620,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     @IBAction func cut(_ sender: Any) {
         let resources = dataSource.selectedResources(deep: true)
         let pb = NSPasteboard.init(name: .general)
-        pb.declareTypes([.RKResource], owner: self)
+        pb.declareTypes([.RFResource], owner: self)
         pb.writeObjects(resources)
         self.remove(resources: resources)
         self.undoManager?.setActionName(NSLocalizedString(resources.count == 1 ? "Cut Resource" : "Cut Resources", comment: ""))
@@ -628,7 +628,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
 
     @IBAction func copy(_ sender: Any) {
         let pb = NSPasteboard(name: .general)
-        pb.declareTypes([.RKResource], owner: self)
+        pb.declareTypes([.RFResource], owner: self)
         pb.writeObjects(dataSource.selectedResources(deep: true))
     }
 

@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 public class PluginRegistry {
     public private(set) static var editors: [String: ResourceEditor.Type] = [:]

@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 // Implements KHBT, KHWD, KHLG, KHQD
 class ElementKHBT<T: FixedWidthInteger & UnsignedInteger>: ElementKBYT<T> {

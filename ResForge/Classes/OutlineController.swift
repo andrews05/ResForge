@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, ResourcesView {

@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 /// Focusable label view for list headers, allows creating and deleting entries.
 class TemplateLabelView: NSTableCellView {

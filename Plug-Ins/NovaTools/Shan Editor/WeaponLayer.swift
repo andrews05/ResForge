@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class WeaponLayer: ShieldLayer {
     @objc dynamic var decay: Int16 = 0

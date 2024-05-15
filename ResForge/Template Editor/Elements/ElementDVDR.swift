@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class ElementDVDR: BaseElement, GroupElement {
     required init(type: String, label: String) {

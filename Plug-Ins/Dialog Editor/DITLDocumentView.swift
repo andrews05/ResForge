@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 
 /// The "document area" of our scroll view, in which we show the DITL items.

@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 /*
  * NSRuleEditor provides a great interface for type attributes but has proven difficult to work with.

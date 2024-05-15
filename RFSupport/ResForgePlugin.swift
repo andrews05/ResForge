@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 /// An editor provides a window for editing or viewing resources of the supported types.
 public protocol ResourceEditor: AbstractEditor {

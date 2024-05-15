@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 public extension Notification.Name {
     /// Resource id, name or data changed. This is not sent for type or attribute changes.
@@ -11,7 +11,7 @@ public extension Notification.Name {
 }
 
 public extension NSPasteboard.PasteboardType {
-    static let RKResource = Self("com.resforge.resource")
+    static let RFResource = Self("com.resforge.resource")
 }
 
 public struct ResourceType: Hashable, Comparable, CustomStringConvertible {
@@ -240,7 +240,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     }
 
     public func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
-        return [.RKResource]
+        return [.RFResource]
     }
 
     public func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
@@ -248,7 +248,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     }
 
     public static func readableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
-        return [.RKResource]
+        return [.RFResource]
     }
 
     public static func readingOptions(forType type: NSPasteboard.PasteboardType, pasteboard: NSPasteboard) -> NSPasteboard.ReadingOptions {

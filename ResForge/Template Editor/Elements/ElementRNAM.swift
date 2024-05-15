@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 // Allows editing the resource name within the template

@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 // An extension of NSComboBox that allows displaying a link button inside the cell
 // This is used by RSID and CASR to open referenced resources

@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 // The create resource implementation is designed around the following desired behaviours:

@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class Icons {
     static func rep(_ data: Data, width: Int, height: Int, depth: Int) -> NSBitmapImageRep? {

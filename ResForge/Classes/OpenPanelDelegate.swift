@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
     @IBOutlet var accessoryView: NSView!

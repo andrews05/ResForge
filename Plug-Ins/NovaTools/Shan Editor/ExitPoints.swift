@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class ExitPoints: NSObject {
     @objc var enabled = false

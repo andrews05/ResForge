@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 
 /// View that makes our document view top-left aligned inside the scroll view:

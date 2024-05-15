@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 // Implements BBIT/BBnn/BFnn, WBIT/WBnn/WFnn, LBIT/LBnn/LFnn, QBIT/QBnn/QFnn

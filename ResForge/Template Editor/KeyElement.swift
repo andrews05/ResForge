@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 // Abstract Element subclass that handles key elements

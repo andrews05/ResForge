@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import OrderedCollections
 
 // Abstract Element subclass for fields with associated CASE elements

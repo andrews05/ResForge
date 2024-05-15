@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 class AltLayer: BaseLayer {
     override var currentFrame: NSBitmapImageRep? {

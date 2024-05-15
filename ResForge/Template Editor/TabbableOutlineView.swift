@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 // Table views don't support tabbing between rows so we need to handle the key view loop manually
 class TabbableOutlineView: NSOutlineView {

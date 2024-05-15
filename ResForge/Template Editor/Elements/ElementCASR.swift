@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 /*
  * The CASR element is an experimental case range element

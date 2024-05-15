@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 class ImportPanel: NSObject, NSOpenSavePanelDelegate {

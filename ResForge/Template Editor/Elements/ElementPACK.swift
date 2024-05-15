@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 /*
  * The PACK element is an experimental layout control element

@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 public class CustomImageView: NSImageView {
     // This override ensures crisp rendering of 72-dpi images on retina displays.

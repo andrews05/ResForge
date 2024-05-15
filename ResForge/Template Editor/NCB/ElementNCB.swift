@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 
 // The NCB element performs parsing of a Nova Control Bit string and displays the result in a popover
 class ElementNCB: ElementCSTR {

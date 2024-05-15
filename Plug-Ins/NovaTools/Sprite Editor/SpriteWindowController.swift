@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {

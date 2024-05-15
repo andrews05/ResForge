@@ -1,4 +1,4 @@
-import Cocoa
+import AppKit
 import RFSupport
 
 // ShapeMachine IV sprite, as seen in Ares
