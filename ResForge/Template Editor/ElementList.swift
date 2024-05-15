@@ -44,7 +44,7 @@ class ElementList {
         do {
             elements = try TemplateParser(template: template, manager: controller.manager).parse()
             // Check if we need to prepend an RNAM element.
-            let includeName = UserDefaults.standard.bool(forKey: RFDefaults.resourceNameInTemplate)
+            let includeName = controller.resource.document != nil && UserDefaults.standard.bool(forKey: RFDefaults.resourceNameInTemplate)
             if includeName && !(elements.first is ElementRNAM) {
                 elements.insert(ElementRNAM(type: "RNAM", label: "Resource Name"), at: 0)
             }
