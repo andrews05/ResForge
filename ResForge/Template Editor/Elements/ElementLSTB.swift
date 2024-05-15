@@ -139,11 +139,13 @@ class ElementLSTB: BaseElement, CollectionElement {
         let index = entries?.endIndex ?? tail.entries.firstIndex(of: self)!
         tail.entries.insert(list, at: index)
         tail.counter?.count += 1
+        parentList.controller.itemValueUpdated(self)
     }
 
     func removeListEntry() {
         parentList.remove(self)
         tail.entries.removeAll(where: { $0 == self })
         tail.counter?.count -= 1
+        parentList.controller.itemValueUpdated(self)
     }
 }
