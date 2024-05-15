@@ -58,7 +58,7 @@ public protocol TemplateFilter {
     static func filter(data: Data, for resourceType: String) throws -> Data
 
     /// Reverse the filter for writing data back to the resource.
-    static func unfilter(data: Data, for resourceType: String) throws -> Data
+    static func unfilter(data: Data, for resourceType: String) -> Data
 }
 
 /// The editor manager provides utility functions and is provided to editors on init. It should not be implemented by plugins.

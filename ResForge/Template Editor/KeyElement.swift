@@ -80,8 +80,8 @@ class KeyElement: CasedElement, CollectionElement {
         if oldSection != currentSection {
             if let oldSection {
                 // Check if the section sizes match and attempt to copy the data
-                let oldData = oldSection.subElements.getResourceData()
-                let newData = currentSection.subElements.getResourceData()
+                let oldData = oldSection.subElements.getData()
+                let newData = currentSection.subElements.getData()
                 if oldData.count == newData.count {
                     try? currentSection.readData(from: BinaryDataReader(oldData))
                 }

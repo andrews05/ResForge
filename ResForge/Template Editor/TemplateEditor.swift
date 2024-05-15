@@ -8,7 +8,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     let manager: RFEditorManager
     let template: Resource
     private let filter: TemplateFilter.Type?
-    private var resourceStructure: ElementList!
+    private var elementList: ElementList!
     private var validStructure = false
     @IBOutlet var dataList: TabbableOutlineView!
     var resourceCache: [String: [Resource]] = [:] // Shared cache for RSID/CASR
@@ -55,12 +55,12 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
 
     @objc func templateDataDidChange(_ notification: NSNotification) {
         // Reload the template while keeping the current data
-        self.load(data: resourceStructure.getResourceData())
+        self.load(data: self.getData())
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         // UserDefaults for resourceNameInTemplate changed - reload the structure
-        self.load(data: resourceStructure.getResourceData())
+        self.load(data: self.getData())
     }
 
     override func windowDidLoad() {
@@ -71,13 +71,13 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     }
 
     @discardableResult func load(data: Data) -> Bool {
-        resourceStructure = ElementList(controller: self)
-        validStructure = resourceStructure.readTemplate(template, filterName: filter?.name)
-        if validStructure && !resource.data.isEmpty {
+        elementList = ElementList(controller: self)
+        validStructure = elementList.readTemplate(template, filterName: filter?.name)
+        if validStructure && !data.isEmpty {
             do {
-                let data = try filter?.filter(data: resource.data, for: resource.typeCode) ?? resource.data
+                let data = try filter?.filter(data: data, for: resource.typeCode) ?? data
                 let reader = BinaryDataReader(data)
-                try resourceStructure.readData(from: reader)
+                try elementList.readData(from: reader)
                 if reader.bytesRemaining > 0 {
                     // Show warning
                     NSApp.presentError(TemplateError.truncate)
@@ -93,6 +93,11 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
         dataList?.reloadData()
         dataList?.expandItem(nil, expandChildren: true)
         return true
+    }
+
+    func getData() -> Data {
+        let data = elementList.getData()
+        return filter?.unfilter(data: data, for: resource.typeCode) ?? data
     }
 
     // MARK: - Helper functions
@@ -136,13 +141,8 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
 
     @IBAction func saveResource(_ sender: Any) {
         if self.window?.makeFirstResponder(dataList) != false {
-            do {
-                let data = resourceStructure.getResourceData()
-                resource.data = try filter?.unfilter(data: data, for: resource.typeCode) ?? data
-                self.setDocumentEdited(false)
-            } catch let error {
-                NSApp.presentError(error)
-            }
+            resource.data = self.getData()
+            self.setDocumentEdited(false)
         }
     }
 
@@ -231,14 +231,14 @@ extension TemplateEditor: NSOutlineViewDelegate, NSOutlineViewDataSource {
         if let item = item as? CollectionElement {
             return item.subElementCount
         }
-        return Int(resourceStructure.count)
+        return Int(elementList.count)
     }
 
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         if let item = item as? CollectionElement {
             return item.subElement(at: index)
         }
-        return resourceStructure.element(at: index)
+        return elementList.element(at: index)
     }
 
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {

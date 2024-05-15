@@ -71,7 +71,7 @@ class ElementList {
         }
     }
 
-    func getResourceData() -> Data {
+    func getData() -> Data {
         let writer = BinaryDataWriter()
         self.writeData(to: writer)
         return writer.data
