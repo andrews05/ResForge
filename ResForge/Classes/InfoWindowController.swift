@@ -6,6 +6,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     @IBOutlet var placeholderView: NSView!
     @IBOutlet var resourceView: NSView!
     @IBOutlet var documentView: NSView!
+    @IBOutlet var typesView: NSView!
 
     @IBOutlet var iconView: NSImageView!
     @IBOutlet var nameView: NSTextField!
@@ -70,7 +71,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
 
             window?.contentView = resourceView
             window?.initialFirstResponder = rName
-        } else if let document = objectController.content as? ResourceDocument {
+        } else if let document = objectController.content as? NSDocument {
             window?.title = NSLocalizedString("Document Info", comment: "")
 
             dataSize.integerValue = 0
@@ -90,6 +91,8 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
                 nameView.stringValue = document.displayName
             }
 
+            typesView.isHidden = !(document is ResourceDocument)
+
             window?.contentView = documentView
             window?.initialFirstResponder = type
         } else {
@@ -99,8 +102,12 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     }
 
     private func setMainWindow(_ mainWindow: NSWindow?) {
-        if let document = mainWindow?.windowController?.document as? ResourceDocument {
-            objectController.content = self.object(for: document)
+        if let document = mainWindow?.windowController?.document {
+            if let document = document as? ResourceDocument {
+                objectController.content = self.object(for: document)
+            } else {
+                objectController.content = document
+            }
         } else {
             objectController.content = (mainWindow?.windowController as? ResourceEditor)?.resource
         }

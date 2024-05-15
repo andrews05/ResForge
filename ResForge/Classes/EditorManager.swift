@@ -3,7 +3,10 @@ import RFSupport
 
 class EditorManager: RFEditorManager {
     private var editorWindows: [String: ResourceEditor] = [:]
-    private unowned var document: ResourceDocument
+    private unowned var document: ResourceDocument?
+    static var shared = EditorManager()
+
+    init() {}
     
     init(_ document: ResourceDocument) {
         self.document = document
@@ -122,10 +125,9 @@ class EditorManager: RFEditorManager {
     }
     
     func allResources(ofType type: ResourceType, currentDocumentOnly: Bool = false) -> [Resource] {
-        var resources = document.directory.resources(ofType: type)
+        var resources = document?.directory.resources(ofType: type) ?? []
         if !currentDocumentOnly {
-            let docs = NSDocumentController.shared.documents as! [ResourceDocument]
-            for doc in docs where doc !== document {
+            for doc in ResourceDocument.all() where doc !== document {
                 resources += doc.directory.resources(ofType: type)
             }
             resources += SupportRegistry.directory.resources(ofType: type)
@@ -134,12 +136,11 @@ class EditorManager: RFEditorManager {
     }
     
     func findResource(type: ResourceType, id: Int, currentDocumentOnly: Bool = false) -> Resource? {
-        if let resource = document.directory.findResource(type: type, id: id) {
+        if let resource = document?.directory.findResource(type: type, id: id) {
             return resource
         }
         if !currentDocumentOnly {
-            let docs = NSDocumentController.shared.documents as! [ResourceDocument]
-            for doc in docs where doc !== document {
+            for doc in ResourceDocument.all() where doc !== document {
                 if let resource = doc.directory.findResource(type: type, id: id) {
                     return resource
                 }
@@ -149,12 +150,11 @@ class EditorManager: RFEditorManager {
     }
     
     func findResource(type: ResourceType, name: String, currentDocumentOnly: Bool = false) -> Resource? {
-        if let resource = document.directory.findResource(type: type, name: name) {
+        if let resource = document?.directory.findResource(type: type, name: name) {
             return resource
         }
         if !currentDocumentOnly {
-            let docs = NSDocumentController.shared.documents as! [ResourceDocument]
-            for doc in docs where doc !== document {
+            for doc in ResourceDocument.all() where doc !== document {
                 if let resource = doc.directory.findResource(type: type, name: name) {
                     return resource
                 }
@@ -167,7 +167,7 @@ class EditorManager: RFEditorManager {
         // The create modal will bring the document window to the front
         // Remember the current main window so we can restore it afterward
         let window = NSApp.mainWindow
-        document.createController.show(type: type, id: id, name: name) { resource in
+        document?.createController.show(type: type, id: id, name: name) { resource in
             window?.makeKeyAndOrderFront(nil)
             if let resource {
                 self.open(resource: resource)

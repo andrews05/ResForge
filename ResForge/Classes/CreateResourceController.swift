@@ -46,7 +46,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
     func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil, callback: ((Resource?) -> Void)? = nil) {
         _ = self.window
         // Add all types currently open
-        let docs = NSDocumentController.shared.documents as! [ResourceDocument]
+        let docs = ResourceDocument.all()
         var suggestions = Set(docs.flatMap { $0.directory.allTypes.map(\.code) })
         if let favorites = UserDefaults.standard.array(forKey: RFDefaults.favoriteTypes) as? [String] {
             suggestions.formUnion(favorites)

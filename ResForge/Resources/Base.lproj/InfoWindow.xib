@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,6 +25,7 @@
                 <outlet property="rsrcSize" destination="vMs-RW-hgX" id="lRb-Wm-h9P"/>
                 <outlet property="type" destination="pox-Qn-guL" id="THH-lM-hm4"/>
                 <outlet property="typeAttsHolder" destination="ByO-kB-Pq6" id="p3a-wa-HRU"/>
+                <outlet property="typesView" destination="mn5-kI-edH" id="JQQ-7C-8mW"/>
                 <outlet property="window" destination="5" id="31"/>
             </connections>
         </customObject>
@@ -35,7 +36,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="572" y="561" width="252" height="170"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="252" height="170"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -452,13 +453,13 @@
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0HU-cV-gYA">
                                         <rect key="frame" x="224" y="3" width="18" height="17"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="18" id="No5-md-gP8"/>
-                                        </constraints>
                                         <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSAddTemplate" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" inset="2" id="Bl6-sx-W8Y">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="18" id="No5-md-gP8"/>
+                                        </constraints>
                                         <connections>
                                             <action selector="addOrClear:" target="vJp-nb-fR2" id="hne-ve-hIR"/>
                                         </connections>
@@ -641,6 +642,6 @@
         <objectController id="Ivl-3s-tDS"/>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
+        <image name="NSAddTemplate" width="18" height="17"/>
     </resources>
 </document>

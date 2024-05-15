@@ -62,6 +62,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         return "ResourceDocument"
     }
 
+    static func all() -> [ResourceDocument] {
+        return NSDocumentController.shared.documents.compactMap { $0 as? ResourceDocument }
+    }
+
     // MARK: - File Management
 
     override func read(from url: URL, ofType typeName: String) throws {
