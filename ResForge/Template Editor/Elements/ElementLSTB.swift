@@ -133,19 +133,33 @@ class ElementLSTB: BaseElement, CollectionElement {
         return !fixedCount && tail != self
     }
 
-    func createListEntry() {
+    func createListEntry(_ data: Data? = nil) -> Bool {
+        guard self.allowsCreateListEntry() else {
+            return false
+        }
         let list = tail.copy() as ElementLSTB
+        if let data {
+            let reader = BinaryDataReader(data)
+            guard (try? list.readData(from: reader)) != nil, reader.bytesRemaining == 0 else {
+                return false
+            }
+        }
         parentList.insert(list, before: self)
         let index = entries?.endIndex ?? tail.entries.firstIndex(of: self)!
         tail.entries.insert(list, at: index)
         tail.counter?.count += 1
         parentList.controller.itemValueUpdated(self)
+        return true
     }
 
-    func removeListEntry() {
+    func removeListEntry() -> Bool {
+        guard self.allowsRemoveListEntry() else {
+            return false
+        }
         parentList.remove(self)
         tail.entries.removeAll(where: { $0 == self })
         tail.counter?.count -= 1
         parentList.controller.itemValueUpdated(self)
+        return true
     }
 }

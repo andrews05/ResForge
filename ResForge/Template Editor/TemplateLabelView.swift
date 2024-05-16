@@ -1,9 +1,18 @@
 import AppKit
+import RFSupport
+
+public extension NSPasteboard.PasteboardType {
+    static let RFTemplateListItem = Self("com.resforge.template-list-item")
+}
 
 /// Focusable label view for list headers, allows creating and deleting entries.
 class TemplateLabelView: NSTableCellView {
     override var acceptsFirstResponder: Bool {
         return true
+    }
+
+    private var dataList: NSOutlineView? {
+        superview?.superview as? NSOutlineView
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -18,16 +27,40 @@ class TemplateLabelView: NSTableCellView {
         self.focusRingMaskBounds.fill()
     }
 
-    @IBAction func createNewItem(_ sender: Any) {
-        guard let dataList = self.superview?.superview as? NSOutlineView, let window = self.window else {
-            return
-        }
+    @IBAction func cut(_ sender: Any) {
+        self.copy(sender)
+        self.delete(sender)
+    }
+
+    @IBAction func copy(_ sender: Any) {
+        guard let dataList else { return }
         let row = dataList.row(for: self)
-        if let element = dataList.item(atRow: row) as? ElementLSTB, element.allowsCreateListEntry() {
-            element.createListEntry()
+        if let element = dataList.item(atRow: row) as? ElementLSTB {
+            let writer = BinaryDataWriter()
+            element.writeData(to: writer)
+            let pb = NSPasteboard(name: .general)
+            pb.declareTypes([.RFTemplateListItem], owner: nil)
+            pb.setData(writer.data, forType: .RFTemplateListItem)
+        }
+    }
+
+    @IBAction func paste(_ sender: Any) {
+        if let data = NSPasteboard(name: .general).data(forType: .RFTemplateListItem) {
+            self.createListItem(data)
+        }
+    }
+
+    @IBAction func createNewItem(_ sender: Any) {
+        self.createListItem()
+    }
+
+    private func createListItem(_ data: Data? = nil) {
+        guard let dataList else { return }
+        let row = dataList.row(for: self)
+        if let element = dataList.item(atRow: row) as? ElementLSTB, element.createListEntry(data) {
             dataList.reloadData()
             let newHeader = dataList.view(atColumn: 0, row: row, makeIfNecessary: true)
-            window.makeFirstResponder(newHeader)
+            window?.makeFirstResponder(newHeader)
             // Expand the item and scroll the new content into view
             dataList.expandItem(dataList.item(atRow: row), expandChildren: true)
             let lastChild = dataList.rowView(atRow: dataList.row(forItem: element), makeIfNecessary: true)
@@ -37,15 +70,12 @@ class TemplateLabelView: NSTableCellView {
     }
 
     @IBAction func delete(_ sender: Any) {
-        guard let dataList = self.superview?.superview as? NSOutlineView, let window = self.window else {
-            return
-        }
+        guard let dataList else { return }
         let row = dataList.row(for: self)
-        if let element = dataList.item(atRow: row) as? ElementLSTB, element.allowsRemoveListEntry() {
-            element.removeListEntry()
+        if let element = dataList.item(atRow: row) as? ElementLSTB, element.removeListEntry() {
             dataList.reloadData()
             let newHeader = dataList.view(atColumn: 0, row: row, makeIfNecessary: true)
-            window.makeFirstResponder(newHeader)
+            window?.makeFirstResponder(newHeader)
         }
     }
 }
