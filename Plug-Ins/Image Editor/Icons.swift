@@ -32,7 +32,7 @@ class Icons {
                                    colorSpaceName: .deviceWhite,
                                    bytesPerRow: bytesPerRow,
                                    bitsPerPixel: 1)!
-        rep.bitmapData!.assign(from: &plane, count: rep.bytesPerPlane * rep.numberOfPlanes)
+        rep.bitmapData!.update(from: &plane, count: rep.bytesPerPlane * rep.numberOfPlanes)
         return rep
     }
 
@@ -65,7 +65,7 @@ class Icons {
                                    colorSpaceName: .deviceRGB,
                                    bytesPerRow: width * 3,
                                    bitsPerPixel: 0)!
-        rep.bitmapData!.assign(from: plane, count: rep.bytesPerPlane)
+        rep.bitmapData!.update(from: plane, count: rep.bytesPerPlane)
         return rep
     }
 

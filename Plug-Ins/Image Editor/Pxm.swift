@@ -42,7 +42,7 @@ struct Pxm {
                                     bytesPerRow: width * 4,
                                     bitsPerPixel: 32)!
         rgbaData.withUnsafeBufferPointer {
-            imageRep.bitmapData!.assign(from: $0.baseAddress!, count: bitmapSize)
+            imageRep.bitmapData!.update(from: $0.baseAddress!, count: bitmapSize)
         }
     }
 
