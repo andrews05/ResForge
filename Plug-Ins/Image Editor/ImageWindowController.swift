@@ -190,7 +190,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         let rep = self.bitmapRep()
         switch resource.typeCode {
         case "PICT":
-            resource.data = QuickDraw.pict(from: rep)
+            resource.data = QDPict.data(from: rep)
             format = 24
         case "cicn":
             resource.data = ColorIcon.data(from: rep, format: &format)
@@ -320,7 +320,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
 
     private static func rep(fromPict data: Data, format: inout UInt32) -> NSImageRep? {
         do {
-            return try QuickDraw.rep(fromPict: data, format: &format)
+            return try QDPict.rep(from: data, format: &format)
         } catch let error {
             // If the error is because of an unsupported QuickTime compressor, attempt to decode it
             // natively from the offset indicated. This should work for e.g. PNG, JPEG, GIF, TIFF.

@@ -1,3 +1,4 @@
+import AppKit
 import RFSupport
 
 struct PixelPattern {

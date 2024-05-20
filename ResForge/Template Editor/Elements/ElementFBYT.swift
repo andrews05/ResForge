@@ -1,3 +1,4 @@
+import Foundation
 import RFSupport
 
 // Implements FBYT, FWRD, FLNG, Fnnn

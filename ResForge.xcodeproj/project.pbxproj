@@ -15,11 +15,33 @@
 		490C682429A9571400FF3EAF /* ElementRNAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490C682329A9571400FF3EAF /* ElementRNAM.swift */; };
 		490D94AF25624FCF00F73544 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; };
+		491AE74F2BFB22D0002E4CBE /* QDPict.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QDPict.mm */; };
+		491AE7522BFB3124002E4CBE /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044182472064F0035C0FA /* resource.cpp */; };
+		491AE7532BFB312A002E4CBE /* clut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FA2472064F0035C0FA /* clut.cpp */; };
+		491AE7542BFB312E002E4CBE /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043F92472064F0035C0FA /* geometry.cpp */; };
+		491AE7552BFB3133002E4CBE /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044002472064F0035C0FA /* color.cpp */; };
+		491AE7562BFB3136002E4CBE /* packbits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044012472064F0035C0FA /* packbits.cpp */; };
+		491AE7572BFB3139002E4CBE /* surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044032472064F0035C0FA /* surface.cpp */; };
+		491AE7582BFB313E002E4CBE /* pixmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044052472064F0035C0FA /* pixmap.cpp */; };
+		491AE7592BFB3145002E4CBE /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C2227D69388003B3536 /* animation.cpp */; };
+		491AE75A2BFB3149002E4CBE /* imagedesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C1C27D69388003B3536 /* imagedesc.cpp */; };
+		491AE75B2BFB314D002E4CBE /* planar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C1E27D69388003B3536 /* planar.cpp */; };
+		491AE75C2BFB3150002E4CBE /* raw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C2127D69388003B3536 /* raw.cpp */; };
+		491AE75D2BFB315B002E4CBE /* data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044272472064F0035C0FA /* data.cpp */; };
+		491AE75E2BFB315E002E4CBE /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044282472064F0035C0FA /* reader.cpp */; };
+		491AE75F2BFB3162002E4CBE /* writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970442A2472064F0035C0FA /* writer.cpp */; };
+		491AE7602BFB3166002E4CBE /* classic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441E2472064F0035C0FA /* classic.cpp */; };
+		491AE7612BFB316A002E4CBE /* extended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044192472064F0035C0FA /* extended.cpp */; };
+		491AE7622BFB316D002E4CBE /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441D2472064F0035C0FA /* file.cpp */; };
+		491AE7632BFB3170002E4CBE /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441C2472064F0035C0FA /* manager.cpp */; };
+		491AE7642BFB3176002E4CBE /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
+		491AE7652BFB3179002E4CBE /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044212472064F0035C0FA /* type.cpp */; };
+		491AE7662BFB3186002E4CBE /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
+		491AE7672BFB322C002E4CBE /* pict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044042472064F0035C0FA /* pict.cpp */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */; };
 		4925B579288D2B1300F21D15 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4925B578288D2B1300F21D15 /* Sprite.swift */; };
 		492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */; };
-		492722AF24CFADD600819E32 /* RFSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 49AACD7D24CE931A0081DD4A /* RFSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
 		4927A48C248E162F00CD3E5A /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A489248C9DBD00CD3E5A /* Sound.swift */; };
@@ -29,7 +51,6 @@
 		493074172BF09624001FFB76 /* TemplateDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493074162BF09624001FFB76 /* TemplateDocument.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CC3DF271228FA00A9173E /* SpobFilter.swift */; };
-		4945DC642531826400856385 /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
 		4948E15C2B646D6700473FF3 /* PixMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E15B2B646D6700473FF3 /* PixMap.swift */; };
 		4948E15E2B6DDE7800473FF3 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 4948E15D2B6DDE7800473FF3 /* OrderedCollections */; };
 		494BE3D726CB19FD00A68264 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */; };
@@ -55,11 +76,6 @@
 		496669672A836D83008DCC36 /* NCBSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4907D2DA29C420640003702A /* NCBSet.swift */; };
 		496669682A836D85008DCC36 /* NCBTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D5F1329CBC13A00A2668C /* NCBTest.swift */; };
 		496669C12A8B5D71008DCC36 /* ExtendedFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496669C02A8B5D71008DCC36 /* ExtendedFormat.swift */; };
-		496669C22A8B6FEC008DCC36 /* rez.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044202472064F0035C0FA /* rez.cpp */; };
-		496669C32A8B6FF1008DCC36 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441C2472064F0035C0FA /* manager.cpp */; };
-		496669C42A8B6FF3008DCC36 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441D2472064F0035C0FA /* file.cpp */; };
-		496669C52A8B6FF6008DCC36 /* extended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044192472064F0035C0FA /* extended.cpp */; };
-		496669C62A8B6FF8008DCC36 /* classic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970441E2472064F0035C0FA /* classic.cpp */; };
 		496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496674FD24BBC7CE00251406 /* ImageWindowController.swift */; };
 		4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B3CEA816B9DCE90027F33F /* ResourceItem.xib */; };
 		4968C03724C67B6E00716AB9 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6C76124C577440078EB55 /* ApplicationDelegate.swift */; };
@@ -79,19 +95,6 @@
 		498F2D712A9344AF001EC34E /* MacBinaryFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498F2D702A9344AF001EC34E /* MacBinaryFormat.swift */; };
 		499216EE24CB914F0054A390 /* CreateResourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499216ED24CB914F0054A390 /* CreateResourceController.swift */; };
 		4992491A26C3B527005F69A7 /* TypeAttributesEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4992491926C3B527005F69A7 /* TypeAttributesEditor.swift */; };
-		49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4966750024BE5C8D00251406 /* QuickDraw.mm */; };
-		49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043F92472064F0035C0FA /* geometry.cpp */; };
-		49964DE424D0EB4900BAB902 /* clut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497043FA2472064F0035C0FA /* clut.cpp */; };
-		49964DE624D0EB5100BAB902 /* pict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044042472064F0035C0FA /* pict.cpp */; };
-		49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044052472064F0035C0FA /* pixmap.cpp */; };
-		49964DE924D0EB5D00BAB902 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044002472064F0035C0FA /* color.cpp */; };
-		49964DEA24D0EB6000BAB902 /* packbits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044012472064F0035C0FA /* packbits.cpp */; };
-		49964DEB24D0EB6300BAB902 /* surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044032472064F0035C0FA /* surface.cpp */; };
-		49964DED24D0EB8900BAB902 /* data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044272472064F0035C0FA /* data.cpp */; };
-		49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044282472064F0035C0FA /* reader.cpp */; };
-		49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4970442A2472064F0035C0FA /* writer.cpp */; };
-		49964DFB24D0EC1C00BAB902 /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044182472064F0035C0FA /* resource.cpp */; };
-		49964DFD24D0EC2300BAB902 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044212472064F0035C0FA /* type.cpp */; };
 		49964E1324D1034400BAB902 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
 		49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */; };
 		4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4996B90725DB6C2F0027FA39 /* Credits.rtf */; };
@@ -102,13 +105,9 @@
 		49AACD8B24CE97CB0081DD4A /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49AACD8D24CE97CD0081DD4A /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49AB3C2427D69388003B3536 /* hints.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 49AB3C1227D69388003B3536 /* hints.hpp */; };
-		49AB3C2527D69388003B3536 /* imagedesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C1C27D69388003B3536 /* imagedesc.cpp */; };
 		49AB3C2627D69388003B3536 /* raw.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 49AB3C1D27D69388003B3536 /* raw.hpp */; };
-		49AB3C2727D69388003B3536 /* planar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C1E27D69388003B3536 /* planar.cpp */; };
 		49AB3C2827D69388003B3536 /* animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 49AB3C1F27D69388003B3536 /* animation.hpp */; };
 		49AB3C2927D69388003B3536 /* planar.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 49AB3C2027D69388003B3536 /* planar.hpp */; };
-		49AB3C2A27D69388003B3536 /* raw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C2127D69388003B3536 /* raw.cpp */; };
-		49AB3C2B27D69388003B3536 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49AB3C2227D69388003B3536 /* animation.cpp */; };
 		49AB3C2C27D69388003B3536 /* imagedesc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 49AB3C2327D69388003B3536 /* imagedesc.hpp */; };
 		49AB8985288C9C2E0013B883 /* ShapeMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AB8984288C9C2E0013B883 /* ShapeMachine.swift */; };
 		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
@@ -397,8 +396,8 @@
 		496669C02A8B5D71008DCC36 /* ExtendedFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedFormat.swift; sourceTree = "<group>"; usesTabs = 0; };
 		496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Image Editor-Bridging-Header.h"; sourceTree = "<group>"; };
 		496674FD24BBC7CE00251406 /* ImageWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
-		496674FF24BE5C8C00251406 /* QuickDraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickDraw.h; sourceTree = "<group>"; };
-		4966750024BE5C8D00251406 /* QuickDraw.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QuickDraw.mm; sourceTree = "<group>"; };
+		496674FF24BE5C8C00251406 /* QDPict.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPict.h; sourceTree = "<group>"; };
+		4966750024BE5C8D00251406 /* QDPict.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = QDPict.mm; sourceTree = "<group>"; };
 		4968C03424C66D8B00716AB9 /* EditorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorManager.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4968C03E24C78D7400716AB9 /* SupportRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportRegistry.swift; sourceTree = "<group>"; usesTabs = 0; };
 		496A52BD24F9B047006A12DF /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -475,7 +474,6 @@
 		49AACD6324CE41A60081DD4A /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49AACD6924CE57EB0081DD4A /* ResForgePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResForgePlugin.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49AACD7B24CE931A0081DD4A /* RFSupport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RFSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		49AACD7D24CE931A0081DD4A /* RFSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RFSupport.h; sourceTree = "<group>"; };
 		49AACD7E24CE931A0081DD4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49AB3C1227D69388003B3536 /* hints.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = hints.hpp; sourceTree = "<group>"; };
 		49AB3C1C27D69388003B3536 /* imagedesc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imagedesc.cpp; sourceTree = "<group>"; };
@@ -904,7 +902,6 @@
 			isa = PBXGroup;
 			children = (
 				49AACD7E24CE931A0081DD4A /* Info.plist */,
-				49AACD7D24CE931A0081DD4A /* RFSupport.h */,
 				491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */,
 				49AACD6324CE41A60081DD4A /* Resource.swift */,
 				49AACD6924CE57EB0081DD4A /* ResForgePlugin.swift */,
@@ -914,8 +911,6 @@
 				494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */,
 				496A52BD24F9B047006A12DF /* CustomImageView.swift */,
 				4970CCD326FA7DCC00B7C280 /* Extensions.swift */,
-				496674FF24BE5C8C00251406 /* QuickDraw.h */,
-				4966750024BE5C8D00251406 /* QuickDraw.mm */,
 			);
 			path = RFSupport;
 			sourceTree = "<group>";
@@ -1080,6 +1075,8 @@
 				4903B8412B6F04BA00805094 /* ColorCursor.swift */,
 				4903B8432B6F4F0700805094 /* ColorIcon.swift */,
 				4903B83F2B6EEFC700805094 /* PixelPattern.swift */,
+				496674FF24BE5C8C00251406 /* QDPict.h */,
+				4966750024BE5C8D00251406 /* QDPict.mm */,
 			);
 			path = "Image Editor";
 			sourceTree = "<group>";
@@ -1190,7 +1187,6 @@
 			files = (
 				49AB3C2627D69388003B3536 /* raw.hpp in Headers */,
 				49AB3C2927D69388003B3536 /* planar.hpp in Headers */,
-				492722AF24CFADD600819E32 /* RFSupport.h in Headers */,
 				49AB3C2427D69388003B3536 /* hints.hpp in Headers */,
 				49AB3C2827D69388003B3536 /* animation.hpp in Headers */,
 				49AB3C2C27D69388003B3536 /* imagedesc.hpp in Headers */,
@@ -1571,37 +1567,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */,
-				49964DE424D0EB4900BAB902 /* clut.cpp in Sources */,
-				49AB3C2727D69388003B3536 /* planar.cpp in Sources */,
-				49964DED24D0EB8900BAB902 /* data.cpp in Sources */,
-				49964DFB24D0EC1C00BAB902 /* resource.cpp in Sources */,
-				496669C62A8B6FF8008DCC36 /* classic.cpp in Sources */,
-				49964DEB24D0EB6300BAB902 /* surface.cpp in Sources */,
-				496669C32A8B6FF1008DCC36 /* manager.cpp in Sources */,
-				49964DEA24D0EB6000BAB902 /* packbits.cpp in Sources */,
-				49AB3C2A27D69388003B3536 /* raw.cpp in Sources */,
-				496669C22A8B6FEC008DCC36 /* rez.cpp in Sources */,
-				496669C42A8B6FF3008DCC36 /* file.cpp in Sources */,
-				49AB3C2527D69388003B3536 /* imagedesc.cpp in Sources */,
-				49964DE624D0EB5100BAB902 /* pict.cpp in Sources */,
 				49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */,
-				496669C52A8B6FF6008DCC36 /* extended.cpp in Sources */,
 				49AACD8824CE93520081DD4A /* ResForgePlugin.swift in Sources */,
 				49964E1324D1034400BAB902 /* Resource.swift in Sources */,
 				49640F5D25F36A77009FEC9B /* AbstractEditor.swift in Sources */,
-				49AB3C2B27D69388003B3536 /* animation.cpp in Sources */,
 				494BE3D726CB19FD00A68264 /* MacRomanFormatter.swift in Sources */,
 				491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */,
-				4945DC642531826400856385 /* macroman.cpp in Sources */,
 				496A52BE24F9B047006A12DF /* CustomImageView.swift in Sources */,
-				49964DE324D0EB4600BAB902 /* geometry.cpp in Sources */,
-				49964DE924D0EB5D00BAB902 /* color.cpp in Sources */,
-				49964DFD24D0EC2300BAB902 /* type.cpp in Sources */,
-				49964DE724D0EB5400BAB902 /* pixmap.cpp in Sources */,
 				4970CCD426FA7DCC00B7C280 /* Extensions.swift in Sources */,
-				49964DEE24D0EB8D00BAB902 /* reader.cpp in Sources */,
-				49964DE224D0EB2500BAB902 /* QuickDraw.mm in Sources */,
-				49964DEF24D0EB9000BAB902 /* writer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1661,12 +1634,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				4903B8422B6F04BA00805094 /* ColorCursor.swift in Sources */,
+				491AE75B2BFB314D002E4CBE /* planar.cpp in Sources */,
+				491AE75A2BFB3149002E4CBE /* imagedesc.cpp in Sources */,
+				491AE75D2BFB315B002E4CBE /* data.cpp in Sources */,
+				491AE7562BFB3136002E4CBE /* packbits.cpp in Sources */,
 				4948E15C2B646D6700473FF3 /* PixMap.swift in Sources */,
+				491AE7642BFB3176002E4CBE /* rez.cpp in Sources */,
+				491AE7612BFB316A002E4CBE /* extended.cpp in Sources */,
 				4903B8402B6EEFC700805094 /* PixelPattern.swift in Sources */,
+				491AE7532BFB312A002E4CBE /* clut.cpp in Sources */,
+				491AE7542BFB312E002E4CBE /* geometry.cpp in Sources */,
 				497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */,
+				491AE75E2BFB315E002E4CBE /* reader.cpp in Sources */,
 				49D6EA0E2B7603F400D358F6 /* Pxm.swift in Sources */,
+				491AE7602BFB3166002E4CBE /* classic.cpp in Sources */,
+				491AE7582BFB313E002E4CBE /* pixmap.cpp in Sources */,
 				4903B8442B6F4F0700805094 /* ColorIcon.swift in Sources */,
+				491AE75C2BFB3150002E4CBE /* raw.cpp in Sources */,
 				496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */,
+				491AE7552BFB3133002E4CBE /* color.cpp in Sources */,
+				491AE7662BFB3186002E4CBE /* macroman.cpp in Sources */,
+				491AE7572BFB3139002E4CBE /* surface.cpp in Sources */,
+				491AE74F2BFB22D0002E4CBE /* QDPict.mm in Sources */,
+				491AE7672BFB322C002E4CBE /* pict.cpp in Sources */,
+				491AE7592BFB3145002E4CBE /* animation.cpp in Sources */,
+				491AE7652BFB3179002E4CBE /* type.cpp in Sources */,
+				491AE75F2BFB3162002E4CBE /* writer.cpp in Sources */,
+				491AE7632BFB3170002E4CBE /* manager.cpp in Sources */,
+				491AE7622BFB316D002E4CBE /* file.cpp in Sources */,
+				491AE7522BFB3124002E4CBE /* resource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1961,7 +1957,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1987,7 +1982,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = RFSupport/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1995,8 +1989,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.RFSupport;
@@ -2016,7 +2008,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -2044,7 +2035,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = RFSupport/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2052,8 +2042,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.RFSupport;
@@ -2135,13 +2123,16 @@
 		B2FCA79415A66ACF00696598 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_ENABLE_MODULES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Plug-Ins/Image Editor/Info.plist";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Image-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Image Editor/Image Editor-Bridging-Header.h";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -2149,13 +2140,16 @@
 		B2FCA79515A66ACF00696598 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_ENABLE_MODULES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = "Plug-Ins/Image Editor/Info.plist";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Image-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Image Editor/Image Editor-Bridging-Header.h";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -2206,7 +2200,6 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = ResForge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MARKETING_VERSION = 1.4.1;
@@ -2223,7 +2216,6 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				HEADER_SEARCH_PATHS = Graphite;
 				INFOPLIST_FILE = ResForge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MARKETING_VERSION = 1.4.1;

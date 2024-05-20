@@ -1,16 +1,16 @@
-#import "QuickDraw.h"
+#import "QDPict.h"
 #include "libGraphite/quickdraw/pict.hpp"
 
-@implementation QuickDraw
+@implementation QDPict
 
-+ (NSBitmapImageRep *)repFromPict:(NSData *)data format:(uint32_t *)format error:(NSError **)outError {
++ (NSBitmapImageRep *)repFromData:(NSData *)data format:(uint32_t *)format error:(NSError **)outError {
     std::vector<char> buffer((char *)data.bytes, (char *)data.bytes+data.length);
     graphite::data::data gData(std::make_shared<std::vector<char>>(buffer), data.length);
     try {
         auto pict = graphite::qd::pict(std::make_shared<graphite::data::data>(gData), 0, "");
         *format = pict.format();
         auto surface = pict.image_surface().lock();
-        return [QuickDraw repFromRaw:surface->raw() size:surface->size()];
+        return [self repFromRaw:surface->raw() size:surface->size()];
     } catch (const std::exception& e) {
         NSString *message = [NSString stringWithUTF8String:e.what()];
         *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError userInfo:@{NSLocalizedDescriptionKey:message}];
@@ -18,8 +18,8 @@
     }
 }
 
-+ (NSData *)pictFromRep:(NSBitmapImageRep *)rep {
-    graphite::qd::pict pict([QuickDraw surfaceFromRep:rep]);
++ (NSData *)dataFromRep:(NSBitmapImageRep *)rep {
+    graphite::qd::pict pict([self surfaceFromRep:rep]);
     auto data = pict.data();
     return [NSData dataWithBytes:data->get()->data()+data->start() length:data->size()];
 }

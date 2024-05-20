@@ -1,3 +1,4 @@
+import AppKit
 import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/More_Mac_Toolbox/Icon_Utilities.pdf#page=15

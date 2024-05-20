@@ -1,3 +1,4 @@
+import AppKit
 import RFSupport
 
 // `pxm#` resource used in old Mac OS X theme files

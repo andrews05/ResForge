@@ -1,3 +1,4 @@
+import AppKit
 import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=590
