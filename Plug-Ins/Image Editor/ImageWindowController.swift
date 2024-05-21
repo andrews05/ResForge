@@ -4,6 +4,7 @@ import RFSupport
 enum ImageReaderError: Error {
     case invalidData
     case insufficientData
+    case unsupported
 }
 
 class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
@@ -278,7 +279,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
         switch resource.typeCode {
         case "PICT":
-            return self.rep(fromPict: data, format: &format)
+            return Picture.rep(data, format: &format)
         case "cicn":
             return ColorIcon.rep(data, format: &format)
         case "ppat":

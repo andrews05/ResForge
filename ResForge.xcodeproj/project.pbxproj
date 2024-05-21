@@ -38,6 +38,7 @@
 		491AE7652BFB3179002E4CBE /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044212472064F0035C0FA /* type.cpp */; };
 		491AE7662BFB3186002E4CBE /* macroman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044142472064F0035C0FA /* macroman.cpp */; };
 		491AE7672BFB322C002E4CBE /* pict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497044042472064F0035C0FA /* pict.cpp */; };
+		491AE7692BFB34B1002E4CBE /* Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AE7682BFB34B1002E4CBE /* Picture.swift */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */; };
 		4925B579288D2B1300F21D15 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4925B578288D2B1300F21D15 /* Sprite.swift */; };
@@ -54,6 +55,7 @@
 		4948E15C2B646D6700473FF3 /* PixMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E15B2B646D6700473FF3 /* PixMap.swift */; };
 		4948E15E2B6DDE7800473FF3 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 4948E15D2B6DDE7800473FF3 /* OrderedCollections */; };
 		494BE3D726CB19FD00A68264 /* MacRomanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */; };
+		494D820B2BFC80C200B99790 /* PackBits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D820A2BFC80C200B99790 /* PackBits.swift */; };
 		4952BD4C26DD9356005DB6EB /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 4952BD4B26DD9356005DB6EB /* CSV */; };
 		4953F5A2248875610002340F /* SoundWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4953F5922488740F0002340F /* SoundWindow.xib */; };
 		4953F5A6248875D10002340F /* Sound Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 4953F5A0248874AA0002340F /* Sound Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -110,6 +112,8 @@
 		49AB3C2927D69388003B3536 /* planar.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 49AB3C2027D69388003B3536 /* planar.hpp */; };
 		49AB3C2C27D69388003B3536 /* imagedesc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 49AB3C2327D69388003B3536 /* imagedesc.hpp */; };
 		49AB8985288C9C2E0013B883 /* ShapeMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AB8984288C9C2E0013B883 /* ShapeMachine.swift */; };
+		49AFF36C2C09AF4200A4F5D0 /* ColorTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AFF36B2C09AF4200A4F5D0 /* ColorTable.swift */; };
+		49AFF36E2C0A9BB700A4F5D0 /* QDRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AFF36D2C0A9BB700A4F5D0 /* QDRect.swift */; };
 		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49CC15922764218800E5605A /* LinkingComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CC15912764218800E5605A /* LinkingComboBox.swift */; };
@@ -360,6 +364,7 @@
 		490C682329A9571400FF3EAF /* ElementRNAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRNAM.swift; sourceTree = "<group>"; usesTabs = 0; };
 		490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
 		4919415425E98E7000FFC3F8 /* SpriteLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteLayer.swift; sourceTree = "<group>"; usesTabs = 0; };
+		491AE7682BFB34B1002E4CBE /* Picture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4925B578288D2B1300F21D15 /* Sprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -378,6 +383,7 @@
 		4943604024C12E0000293E94 /* ppat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppat.cpp; sourceTree = "<group>"; };
 		4948E15B2B646D6700473FF3 /* PixMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixMap.swift; sourceTree = "<group>"; usesTabs = 0; };
 		494BE3D626CB19FD00A68264 /* MacRomanFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacRomanFormatter.swift; sourceTree = "<group>"; usesTabs = 0; };
+		494D820A2BFC80C200B99790 /* PackBits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackBits.swift; sourceTree = "<group>"; };
 		4953F5922488740F0002340F /* SoundWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundWindow.xib; sourceTree = "<group>"; };
 		4953F593248874260002340F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4953F5A0248874AA0002340F /* Sound Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sound Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -485,6 +491,8 @@
 		49AB3C2227D69388003B3536 /* animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation.cpp; sourceTree = "<group>"; };
 		49AB3C2327D69388003B3536 /* imagedesc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = imagedesc.hpp; sourceTree = "<group>"; };
 		49AB8984288C9C2E0013B883 /* ShapeMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeMachine.swift; sourceTree = "<group>"; usesTabs = 0; };
+		49AFF36B2C09AF4200A4F5D0 /* ColorTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTable.swift; sourceTree = "<group>"; };
+		49AFF36D2C0A9BB700A4F5D0 /* QDRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QDRect.swift; sourceTree = "<group>"; };
 		49CC15912764218800E5605A /* LinkingComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingComboBox.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49D6D34B271BAAAB002DEA97 /* TemplateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateError.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49D6D34C271BAAAB002DEA97 /* CasedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasedElement.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -1068,13 +1076,17 @@
 				B24925E015A6776600C22060 /* ImageWindow.xib */,
 				B2FCA78E15A66ACF00696598 /* Info.plist */,
 				496674FC24BBC7CD00251406 /* Image Editor-Bridging-Header.h */,
-				496674FD24BBC7CE00251406 /* ImageWindowController.swift */,
-				497BB1DB24F741E400858EF1 /* Icons.swift */,
-				4948E15B2B646D6700473FF3 /* PixMap.swift */,
-				49D6EA0D2B7603F400D358F6 /* Pxm.swift */,
 				4903B8412B6F04BA00805094 /* ColorCursor.swift */,
 				4903B8432B6F4F0700805094 /* ColorIcon.swift */,
+				49AFF36B2C09AF4200A4F5D0 /* ColorTable.swift */,
+				496674FD24BBC7CE00251406 /* ImageWindowController.swift */,
+				497BB1DB24F741E400858EF1 /* Icons.swift */,
+				494D820A2BFC80C200B99790 /* PackBits.swift */,
+				491AE7682BFB34B1002E4CBE /* Picture.swift */,
 				4903B83F2B6EEFC700805094 /* PixelPattern.swift */,
+				4948E15B2B646D6700473FF3 /* PixMap.swift */,
+				49D6EA0D2B7603F400D358F6 /* Pxm.swift */,
+				49AFF36D2C0A9BB700A4F5D0 /* QDRect.swift */,
 				496674FF24BE5C8C00251406 /* QDPict.h */,
 				4966750024BE5C8D00251406 /* QDPict.mm */,
 			);
@@ -1639,12 +1651,15 @@
 				491AE75D2BFB315B002E4CBE /* data.cpp in Sources */,
 				491AE7562BFB3136002E4CBE /* packbits.cpp in Sources */,
 				4948E15C2B646D6700473FF3 /* PixMap.swift in Sources */,
+				49AFF36E2C0A9BB700A4F5D0 /* QDRect.swift in Sources */,
 				491AE7642BFB3176002E4CBE /* rez.cpp in Sources */,
+				49AFF36C2C09AF4200A4F5D0 /* ColorTable.swift in Sources */,
 				491AE7612BFB316A002E4CBE /* extended.cpp in Sources */,
 				4903B8402B6EEFC700805094 /* PixelPattern.swift in Sources */,
 				491AE7532BFB312A002E4CBE /* clut.cpp in Sources */,
 				491AE7542BFB312E002E4CBE /* geometry.cpp in Sources */,
 				497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */,
+				491AE7692BFB34B1002E4CBE /* Picture.swift in Sources */,
 				491AE75E2BFB315E002E4CBE /* reader.cpp in Sources */,
 				49D6EA0E2B7603F400D358F6 /* Pxm.swift in Sources */,
 				491AE7602BFB3166002E4CBE /* classic.cpp in Sources */,
@@ -1658,6 +1673,7 @@
 				491AE74F2BFB22D0002E4CBE /* QDPict.mm in Sources */,
 				491AE7672BFB322C002E4CBE /* pict.cpp in Sources */,
 				491AE7592BFB3145002E4CBE /* animation.cpp in Sources */,
+				494D820B2BFC80C200B99790 /* PackBits.swift in Sources */,
 				491AE7652BFB3179002E4CBE /* type.cpp in Sources */,
 				491AE75F2BFB3162002E4CBE /* writer.cpp in Sources */,
 				491AE7632BFB3170002E4CBE /* manager.cpp in Sources */,

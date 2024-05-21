@@ -1,6 +1,8 @@
 import AppKit
 import RFSupport
 
+// https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=334
+
 struct PixelPattern {
     var imageRep: NSBitmapImageRep
     var format: UInt32 = 0

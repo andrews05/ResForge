@@ -1,6 +1,7 @@
 import AppKit
 import RFSupport
 
+// https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=378
 // https://developer.apple.com/library/archive/documentation/mac/pdf/More_Mac_Toolbox/Icon_Utilities.pdf#page=15
 
 struct ColorIcon {
@@ -14,10 +15,8 @@ extension ColorIcon {
         let maskMap = try QDPixMap(reader)
         let bitMap = try QDPixMap(reader)
         try reader.advance(4) // Skip data handle
-        let maskSize = maskMap.bytesPerRow * maskMap.bounds.height
-        let mask = try reader.readData(length: maskSize)
-        let bitmapSize = bitMap.bytesPerRow * bitMap.bounds.height
-        try reader.advance(bitmapSize) // Skip bitmap data
+        let mask = try reader.readData(length: maskMap.pixelDataSize)
+        try reader.advance(bitMap.pixelDataSize) // Skip bitmap data
         let colorTable = try ColorTable.read(reader)
         let pixelData = try reader.readData(length: pixMap.pixelDataSize)
 
@@ -29,7 +28,7 @@ extension ColorIcon {
         imageRep = QDPixMap.normalizeRep(imageRep)
         let (pixMap, pixelData, palette) = QDPixMap.build(from: imageRep)
         let maskRowBytes = (imageRep.pixelsWide + 7) / 8
-        let maskMap = QDPixMap(rowBytes: UInt16(maskRowBytes), bounds: pixMap.bounds)
+        let maskMap = QDPixMap(rowBytesAndFlags: UInt16(maskRowBytes), bounds: pixMap.bounds)
         let mask = QDPixMap.buildMask(from: imageRep)
         pixMap.write(writer)
         maskMap.write(writer)
