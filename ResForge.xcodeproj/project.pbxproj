@@ -117,6 +117,7 @@
 		49C5622824D0D8A90072D659 /* BinaryDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2E9249C96D00086C0F4 /* BinaryDataReader.swift */; };
 		49C5622924D0D8A90072D659 /* BinaryDataWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6A2EA249C96D00086C0F4 /* BinaryDataWriter.swift */; };
 		49CC15922764218800E5605A /* LinkingComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CC15912764218800E5605A /* LinkingComboBox.swift */; };
+		49D38ACC2C0D6D9200F3592B /* QTImageDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D38ACB2C0D6D9200F3592B /* QTImageDesc.swift */; };
 		49D6D349271BAA9F002DEA97 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 49D6D348271BAA9F002DEA97 /* OrderedCollections */; };
 		49D6D383271BAAB4002DEA97 /* TemplateLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D34E271BAAAC002DEA97 /* TemplateLabelView.swift */; };
 		49D6D384271BAAB4002DEA97 /* ElementPSTR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6D35E271BAAAD002DEA97 /* ElementPSTR.swift */; };
@@ -494,6 +495,7 @@
 		49AFF36B2C09AF4200A4F5D0 /* ColorTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTable.swift; sourceTree = "<group>"; };
 		49AFF36D2C0A9BB700A4F5D0 /* QDRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QDRect.swift; sourceTree = "<group>"; };
 		49CC15912764218800E5605A /* LinkingComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingComboBox.swift; sourceTree = "<group>"; usesTabs = 0; };
+		49D38ACB2C0D6D9200F3592B /* QTImageDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QTImageDesc.swift; sourceTree = "<group>"; };
 		49D6D34B271BAAAB002DEA97 /* TemplateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateError.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49D6D34C271BAAAB002DEA97 /* CasedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasedElement.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49D6D34D271BAAAB002DEA97 /* ElementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementList.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -1087,6 +1089,7 @@
 				4948E15B2B646D6700473FF3 /* PixMap.swift */,
 				49D6EA0D2B7603F400D358F6 /* Pxm.swift */,
 				49AFF36D2C0A9BB700A4F5D0 /* QDRect.swift */,
+				49D38ACB2C0D6D9200F3592B /* QTImageDesc.swift */,
 				496674FF24BE5C8C00251406 /* QDPict.h */,
 				4966750024BE5C8D00251406 /* QDPict.mm */,
 			);
@@ -1654,6 +1657,7 @@
 				49AFF36E2C0A9BB700A4F5D0 /* QDRect.swift in Sources */,
 				491AE7642BFB3176002E4CBE /* rez.cpp in Sources */,
 				49AFF36C2C09AF4200A4F5D0 /* ColorTable.swift in Sources */,
+				49D38ACC2C0D6D9200F3592B /* QTImageDesc.swift in Sources */,
 				491AE7612BFB316A002E4CBE /* extended.cpp in Sources */,
 				4903B8402B6EEFC700805094 /* PixelPattern.swift in Sources */,
 				491AE7532BFB312A002E4CBE /* clut.cpp in Sources */,

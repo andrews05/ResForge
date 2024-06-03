@@ -41,6 +41,29 @@ struct ColorTable {
             }
         }
     }
+
+    /// Get a system color table by clut id.
+    static func get(id: Int16) throws -> [RGBColor] {
+        switch id {
+        case 1, 33:
+            return Self.system1
+        case 2:
+            return Self.system2
+        case 4:
+            return Self.system4
+        case 8:
+            return Self.system8
+        case 34, 36, 40:
+            // Synthesize a grayscale palette scaling from white to black
+            let count = 1 << (id - 32)
+            let step = 255 / (count - 1)
+            return stride(from: 255, through: 0, by: -step).map { [$0, $0, $0] }
+        default:
+            // We don't have access to the EditorManager here so we can't lookup currently loaded clut resources
+            // (In practice this is unlikely to be needed)
+            throw ImageReaderError.unsupported
+        }
+    }
 }
 
 

@@ -137,7 +137,7 @@ extension QDPixMap {
         writer.write(pmReserved)
     }
 
-    func imageRep(pixelData: Data, colorTable: [RGBColor], mask: Data? = nil) throws -> NSBitmapImageRep {
+    func imageRep(pixelData: Data, colorTable: [RGBColor]? = nil, mask: Data? = nil) throws -> NSBitmapImageRep {
         let rep = Self.rgbaRep(width: bounds.width, height: bounds.height)
         let destRect = QDRect(bottom: Int16(bounds.height), right: Int16(bounds.width))
         try self.draw(pixelData, colorTable: colorTable, to: rep, in: destRect, from: bounds)
@@ -149,7 +149,7 @@ extension QDPixMap {
         return rep
     }
 
-    func draw(_ pixelData: Data, colorTable: [RGBColor] = [], to rep: NSBitmapImageRep, in destRect: QDRect, from srcRect: QDRect) throws {
+    func draw(_ pixelData: Data, colorTable: [RGBColor]? = nil, to rep: NSBitmapImageRep, in destRect: QDRect, from srcRect: QDRect) throws {
         guard pixelData.count >= pixelDataSize else {
             throw ImageReaderError.insufficientData
         }
@@ -177,6 +177,9 @@ extension QDPixMap {
         try pixelData.withUnsafeBytes { (pixelData: UnsafeRawBufferPointer) in
             switch pixelSize {
             case 1, 2, 4:
+                guard let colorTable, colorTable.count >= 1 << pixelSize else {
+                    throw ImageReaderError.invalidData
+                }
                 let depth = Int(pixelSize)
                 let mod = 8 / depth
                 let mask = (1 << depth) - 1
@@ -194,6 +197,9 @@ extension QDPixMap {
                 }
             case 8:
                 // Fast path for 8-bit
+                guard let colorTable, colorTable.count >= 256 else {
+                    throw ImageReaderError.invalidData
+                }
                 for y in yRange {
                     let offset = y * rowBytes
                     for x in xRange {
@@ -223,9 +229,9 @@ extension QDPixMap {
                     }
                     bitmap += rep.bytesPerRow - (xRange.count * 4)
                 }
-            case 32:
+            case 24, 32:
                 // Don't rely on the given component count here - determine it from the pack type
-                let cmpCount = resolvedPackType == .dropPadByte ? 3 : 4
+                let cmpCount = pixelSize == 24 || resolvedPackType == .dropPadByte ? 3 : 4
                 for y in yRange {
                     let offset = y * rowBytes + cmpCount - 3
                     for x in xRange {

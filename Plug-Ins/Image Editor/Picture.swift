@@ -85,6 +85,10 @@ extension Picture {
                 try self.skipRegion(reader)
             case .longComment:
                 try self.skipLongComment(reader)
+            case .compressedQuickTime:
+                try self.readQuickTime(reader)
+                // A successful QuickTime decode will replace the imageRep and we should stop processing.
+                return
             case .uncompressedQuickTime:
                 // Uncompressed QuickTime contains a matte which we can skip over. Actual image data should follow.
                 let length = Int(try reader.read() as UInt32)
@@ -204,6 +208,31 @@ extension Picture {
         try reader.advance(2) // kind
         let length = Int(try reader.read() as UInt16)
         try reader.advance(length)
+    }
+
+    private mutating func readQuickTime(_ reader: BinaryDataReader) throws {
+        // https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#509
+        let size = Int(try reader.read() as Int32)
+        guard size > 0 else {
+            throw ImageReaderError.invalidData
+        }
+
+        // Construct a new reader constrained to the specified size
+        let reader = BinaryDataReader(try reader.readData(length: size))
+        try reader.advance(2 + 36) // version, matrix
+        let matteSize = Int(try reader.read() as Int32)
+        try reader.advance(8 + 2 + 8 + 4) // matteRect, transferMode, srcRect, accuracy
+        let maskSize = Int(try reader.read() as Int32)
+        if matteSize > 0 {
+            try reader.advance(matteSize)
+        }
+        if maskSize > 0 {
+            try reader.advance(maskSize)
+        }
+
+        let imageDesc = try QTImageDesc(reader)
+        format = imageDesc.compressor
+        imageRep = try imageDesc.readImage(reader)
     }
 }
 
