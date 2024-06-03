@@ -152,13 +152,16 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             rep = NSBitmapImageRep(data: data)!
         }
         if flatten {
-            // Hide alpha (might be nice to flatten to white background but not really worth the trouble)
+            // Hide alpha - access the bitmap data first to make sure it updates correctly
+            _ = rep.bitmapData
             rep.hasAlpha = false
-            // Ensure display size matches pixel dimensions
-            rep.size = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
         }
+        // Ensure display size matches pixel dimensions
+        rep.size = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
         // Update the image
-        image.removeRepresentation(image.representations[0])
+        for r in image.representations {
+            image.removeRepresentation(r)
+        }
         image.addRepresentation(rep)
         return rep
     }
@@ -166,18 +169,16 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     // MARK: -
 
     @IBAction func changedImage(_ sender: Any) {
-        let rep: NSBitmapImageRep
         switch resource.typeCode {
         case "PICT":
-            rep = self.bitmapRep(flatten: true)
+            _ = self.bitmapRep(flatten: true)
         case "cicn":
-            rep = self.bitmapRep(palette: true)
+            _ = self.bitmapRep(palette: true)
         case "ppat":
-            rep = self.bitmapRep(flatten: true, palette: true)
+            _ = self.bitmapRep(flatten: true, palette: true)
         default:
-            rep = self.bitmapRep()
+            _ = self.bitmapRep()
         }
-        _ = rep.bitmapData // Trigger redraw
         format = 0
         self.updateView()
         self.setDocumentEdited(true)
