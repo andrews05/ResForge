@@ -143,7 +143,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
     }
 
-    private func bitmapRep(flatten: Bool=false, palette: Bool=false) -> NSBitmapImageRep {
+    private func ensureBitmap(flatten: Bool=false, palette: Bool=false) {
         let image = imageView.image!
         var rep = image.representations[0] as? NSBitmapImageRep ?? NSBitmapImageRep(data: image.tiffRepresentation!)!
         if palette {
@@ -151,7 +151,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             let data = rep.representation(using: .gif, properties: [.ditherTransparency: false])!
             rep = NSBitmapImageRep(data: data)!
         }
-        if flatten {
+        if flatten && rep.hasAlpha {
             // Hide alpha - access the bitmap data first to make sure it updates correctly
             _ = rep.bitmapData
             rep.hasAlpha = false
@@ -163,7 +163,6 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             image.removeRepresentation(r)
         }
         image.addRepresentation(rep)
-        return rep
     }
 
     // MARK: -
@@ -171,13 +170,13 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     @IBAction func changedImage(_ sender: Any) {
         switch resource.typeCode {
         case "PICT":
-            _ = self.bitmapRep(flatten: true)
+            self.ensureBitmap(flatten: true)
         case "cicn":
-            _ = self.bitmapRep(palette: true)
+            self.ensureBitmap(palette: true)
         case "ppat":
-            _ = self.bitmapRep(flatten: true, palette: true)
+            self.ensureBitmap(flatten: true, palette: true)
         default:
-            _ = self.bitmapRep()
+            self.ensureBitmap()
         }
         format = 0
         self.updateView()
@@ -185,10 +184,9 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     }
 
     @IBAction func saveResource(_ sender: Any) {
-        guard imageView.image != nil else {
+        guard let rep = imageView.image?.representations[0] as? NSBitmapImageRep else {
             return
         }
-        let rep = self.bitmapRep()
         switch resource.typeCode {
         case "PICT":
             resource.data = QDPict.data(from: rep)
