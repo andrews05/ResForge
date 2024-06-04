@@ -138,16 +138,7 @@ extension QDPixMap {
     }
 
     func imageRep(pixelData: Data, colorTable: [RGBColor], mask: Data? = nil) throws -> NSBitmapImageRep {
-        let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                   pixelsWide: bounds.width,
-                                   pixelsHigh: bounds.height,
-                                   bitsPerSample: 8,
-                                   samplesPerPixel: 4,
-                                   hasAlpha: true,
-                                   isPlanar: false,
-                                   colorSpaceName: .deviceRGB,
-                                   bytesPerRow: bounds.width * 4,
-                                   bitsPerPixel: 0)!
+        let rep = Self.rgbaRep(width: bounds.width, height: bounds.height)
         let destRect = QDRect(bottom: Int16(bounds.height), right: Int16(bounds.width))
         try self.draw(pixelData, colorTable: colorTable, to: rep, in: destRect, from: bounds)
 
@@ -198,7 +189,6 @@ extension QDPixMap {
                         let byteShift = diff - ((x % mod) * depth)
                         let value = (byte >> byteShift) & mask
                         colorTable[value].draw(to: &bitmap)
-                        bitmap += 4
                     }
                     bitmap += rep.bytesPerRow - (xRange.count * 4)
                 }
@@ -209,7 +199,6 @@ extension QDPixMap {
                     for x in xRange {
                         let value = Int(pixelData[offset + x])
                         colorTable[value].draw(to: &bitmap)
-                        bitmap += 4
                     }
                     bitmap += rep.bytesPerRow - (xRange.count * 4)
                 }
@@ -218,7 +207,6 @@ extension QDPixMap {
                     let offset = y * rowBytes
                     for x in xRange {
                         RGBColor(pixelData[offset + x * 2], pixelData[offset + x * 2 + 1]).draw(to: &bitmap)
-                        bitmap += 4
                     }
                     bitmap += rep.bytesPerRow - (xRange.count * 4)
                 }
@@ -358,21 +346,25 @@ extension QDPixMap {
         if rep.bitsPerPixel == 32 && rep.colorSpace.colorSpaceModel == .rgb {
             return rep
         }
-        let newRep = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                      pixelsWide: rep.pixelsWide,
-                                      pixelsHigh: rep.pixelsHigh,
-                                      bitsPerSample: 8,
-                                      samplesPerPixel: 4,
-                                      hasAlpha: true,
-                                      isPlanar: false,
-                                      colorSpaceName: .deviceRGB,
-                                      bytesPerRow: rep.pixelsWide * 4,
-                                      bitsPerPixel: 32)!
+        let newRep = self.rgbaRep(width: rep.pixelsWide, height: rep.pixelsHigh)
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: newRep)
         rep.draw()
         NSGraphicsContext.restoreGraphicsState()
         return newRep
+    }
+
+    static func rgbaRep(width: Int, height: Int) -> NSBitmapImageRep {
+        return NSBitmapImageRep(bitmapDataPlanes: nil,
+                                pixelsWide: width,
+                                pixelsHigh: height,
+                                bitsPerSample: 8,
+                                samplesPerPixel: 4,
+                                hasAlpha: true,
+                                isPlanar: false,
+                                colorSpaceName: .deviceRGB,
+                                bytesPerRow: width * 4,
+                                bitsPerPixel: 0)!
     }
 }
 

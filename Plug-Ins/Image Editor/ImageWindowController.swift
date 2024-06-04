@@ -107,11 +107,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             if let maskType,
                let bw = manager.findResource(type: ResourceType(maskType, resource.typeAttributes), id: resource.id, currentDocumentOnly: true),
                let bwRep = Self.imageRep(for: bw, format: &format) {
-                image.lockFocus()
-                NSGraphicsContext.current?.imageInterpolation = .none
-                image.representations[0].draw()
+                NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
                 bwRep.draw(in: image.alignmentRect, from: .zero, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
-                image.unlockFocus()
             }
         }
         self.updateView()
@@ -272,7 +269,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
     }
 
-    private static func imageRep(for resource: Resource, format: inout UInt32) -> NSImageRep? {
+    private static func imageRep(for resource: Resource, format: inout UInt32) -> NSBitmapImageRep? {
         let data = resource.data
         guard !data.isEmpty else {
             return nil
@@ -320,7 +317,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
     }
 
-    private static func rep(fromPict data: Data, format: inout UInt32) -> NSImageRep? {
+    private static func rep(fromPict data: Data, format: inout UInt32) -> NSBitmapImageRep? {
         do {
             return try QDPict.rep(from: data, format: &format)
         } catch let error {

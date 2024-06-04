@@ -46,16 +46,7 @@ extension Picture {
 
         origin = frame.origin
         clipRect = frame
-        imageRep = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                    pixelsWide: frame.width,
-                                    pixelsHigh: frame.height,
-                                    bitsPerSample: 8,
-                                    samplesPerPixel: 4,
-                                    hasAlpha: true,
-                                    isPlanar: false,
-                                    colorSpaceName: .deviceRGB,
-                                    bytesPerRow: frame.width * 4,
-                                    bitsPerPixel: 0)!
+        imageRep = QDPixMap.rgbaRep(width: frame.width, height: frame.height)
 
         let readOp = v1 ? PictOpcode.read1 : PictOpcode.read2
     ops:while true {
@@ -124,7 +115,7 @@ extension Picture {
         let colorTable = if pixMap.isPixmap {
             try ColorTable.read(reader)
         } else {
-            ColorTable.monochrome
+            ColorTable.system1
         }
 
         let (srcRect, destRect) = try self.readSrcAndDestRects(reader)
