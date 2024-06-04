@@ -98,6 +98,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
                 maskType = "icm#"
             case "ics4", "ics8":
                 maskType = "ics#"
+            case "kcs4", "kcs8":
+                maskType = "kcs#"
             default:
                 maskType = nil
             }
