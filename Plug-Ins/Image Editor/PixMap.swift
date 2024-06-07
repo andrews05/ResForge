@@ -10,7 +10,7 @@ struct QDPixMap {
     static let rgbDirect: Int16 = 16
 
     var baseAddr: UInt32 = 0
-    var rowBytesAndFlags: UInt16
+    var rowBytesAndFlags: UInt16 = 0
     var bounds: QDRect
     var pmVersion: Int16 = 0
     var packType: PackType = .default
@@ -24,16 +24,14 @@ struct QDPixMap {
     var planeBytes: Int32 = 0
     var pmTable: UInt32 = 0
     var pmReserved: UInt32 = 0
+
+    /// The underlying number of row bytes, excluding flag bits.
+    var rowBytes = 0
 }
 
 extension QDPixMap {
     var isPixmap: Bool {
         rowBytesAndFlags & Self.pixmap == Self.pixmap
-    }
-    /// The underlying number of row bytes, excluding flag bits.
-    var rowBytes: Int {
-        // 2 high bits are flags
-        Int(rowBytesAndFlags & 0x3FFF)
     }
     /// For direct pixels, the actual packing type used.
     var resolvedPackType: PackType {
@@ -79,10 +77,11 @@ extension QDPixMap {
             pmTable = try reader.read()
             pmReserved = try reader.read()
         }
+        // 2 high bits are flags
+        rowBytes = Int(rowBytesAndFlags & 0x3FFF)
 
         guard pmVersion == 0 || pmVersion == 4,
-              packSize == 0,
-              rowBytes >= (bounds.width * Int(pixelSize) + 7) / 8
+              packSize == 0
         else {
             throw ImageReaderError.invalidData
         }
@@ -150,10 +149,9 @@ extension QDPixMap {
     }
 
     func draw(_ pixelData: Data, colorTable: [RGBColor]? = nil, to rep: NSBitmapImageRep, in destRect: QDRect, from srcRect: QDRect) throws {
-        guard pixelData.count >= pixelDataSize else {
-            throw ImageReaderError.insufficientData
-        }
-        guard destRect.top >= 0,
+        guard rowBytes >= (bounds.width * Int(pixelSize) + 7) / 8,
+              pixelData.count >= pixelDataSize,
+              destRect.top >= 0,
               destRect.left >= 0,
               destRect.bottom <= rep.pixelsHigh,
               destRect.right <= rep.pixelsWide,

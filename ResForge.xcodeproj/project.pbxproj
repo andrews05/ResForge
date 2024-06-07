@@ -50,6 +50,7 @@
 		492E912E2551373100195174 /* SpriteWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E912D2551373100195174 /* SpriteWorld.swift */; };
 		492E91CA2553ADB100195174 /* SpriteImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492E91C92553ADB100195174 /* SpriteImporter.swift */; };
 		493074172BF09624001FFB76 /* TemplateDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493074162BF09624001FFB76 /* TemplateDocument.swift */; };
+		49332F182C11A74000C61F6B /* QTNone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49332F172C11A74000C61F6B /* QTNone.swift */; };
 		49362D9F24A941800040B793 /* HexWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49362D9D24A9317A0040B793 /* HexWindowController.swift */; };
 		493CC3E0271228FA00A9173E /* SpobFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493CC3DF271228FA00A9173E /* SpobFilter.swift */; };
 		4948E15C2B646D6700473FF3 /* PixMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E15B2B646D6700473FF3 /* PixMap.swift */; };
@@ -377,6 +378,7 @@
 		492E912D2551373100195174 /* SpriteWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteWorld.swift; sourceTree = "<group>"; usesTabs = 0; };
 		492E91C92553ADB100195174 /* SpriteImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteImporter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		493074162BF09624001FFB76 /* TemplateDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateDocument.swift; sourceTree = "<group>"; };
+		49332F172C11A74000C61F6B /* QTNone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QTNone.swift; sourceTree = "<group>"; };
 		49362D9C24A9317A0040B793 /* Hex Editor Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hex Editor Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		49362D9D24A9317A0040B793 /* HexWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		493CC3DF271228FA00A9173E /* SpobFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpobFilter.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -1090,6 +1092,7 @@
 				49D6EA0D2B7603F400D358F6 /* Pxm.swift */,
 				49AFF36D2C0A9BB700A4F5D0 /* QDRect.swift */,
 				49D38ACB2C0D6D9200F3592B /* QTImageDesc.swift */,
+				49332F172C11A74000C61F6B /* QTNone.swift */,
 				496674FF24BE5C8C00251406 /* QDPict.h */,
 				4966750024BE5C8D00251406 /* QDPict.mm */,
 			);
@@ -1657,6 +1660,7 @@
 				49AFF36E2C0A9BB700A4F5D0 /* QDRect.swift in Sources */,
 				491AE7642BFB3176002E4CBE /* rez.cpp in Sources */,
 				49AFF36C2C09AF4200A4F5D0 /* ColorTable.swift in Sources */,
+				49332F182C11A74000C61F6B /* QTNone.swift in Sources */,
 				49D38ACC2C0D6D9200F3592B /* QTImageDesc.swift in Sources */,
 				491AE7612BFB316A002E4CBE /* extended.cpp in Sources */,
 				4903B8402B6EEFC700805094 /* PixelPattern.swift in Sources */,

@@ -63,6 +63,8 @@ extension QTImageDesc {
             // QuickDraw Picture
             try reader.advance(bytesUntilData)
             return try Picture(reader).imageRep
+        case "raw ":
+            return try QTNone.rep(for: self, reader: reader)
         default:
             // Attempt to let the system decode it. This should work for e.g. PNG, JPEG, GIF, TIFF.
             try reader.advance(bytesUntilData)
@@ -78,5 +80,12 @@ extension QTImageDesc {
             }
             return rep
         }
+    }
+
+    /// Construct a PixMap than can be used to blit pixel data.
+    func blitter(rowBytes: Int) -> QDPixMap {
+        return QDPixMap(bounds: QDRect(bottom: height, right: width),
+                        pixelSize: Int16(resolvedDepth),
+                        rowBytes: rowBytes)
     }
 }
