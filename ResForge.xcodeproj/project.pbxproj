@@ -91,6 +91,7 @@
 		4976D2832718CE9C00322DDF /* GalaxyWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4976D2702718CAFF00322DDF /* GalaxyWindowController.swift */; };
 		4976D28E2718CEA100322DDF /* GalaxyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4976D2642718CAD500322DDF /* GalaxyWindow.xib */; };
 		4976D2992718CEA400322DDF /* GalaxyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4976D2772718CC4B00322DDF /* GalaxyView.swift */; };
+		4977542C2C12F22000652639 /* QTPlanar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977542B2C12F22000652639 /* QTPlanar.swift */; };
 		497A93DE255F371100900C7B /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 497A93E0255F371100900C7B /* SelectTemplate.xib */; };
 		497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BB1DB24F741E400858EF1 /* Icons.swift */; };
 		4982C09E2A97F653006B7404 /* AppleSingleFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4982C09D2A97F653006B7404 /* AppleSingleFormat.swift */; };
@@ -467,6 +468,7 @@
 		4976D2642718CAD500322DDF /* GalaxyWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalaxyWindow.xib; sourceTree = "<group>"; };
 		4976D2702718CAFF00322DDF /* GalaxyWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4976D2772718CC4B00322DDF /* GalaxyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyView.swift; sourceTree = "<group>"; usesTabs = 0; };
+		4977542B2C12F22000652639 /* QTPlanar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QTPlanar.swift; sourceTree = "<group>"; };
 		497A93BD255BB49600900C7B /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		497A93DF255F371100900C7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SelectTemplate.xib; sourceTree = "<group>"; };
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -1093,6 +1095,7 @@
 				49AFF36D2C0A9BB700A4F5D0 /* QDRect.swift */,
 				49D38ACB2C0D6D9200F3592B /* QTImageDesc.swift */,
 				49332F172C11A74000C61F6B /* QTNone.swift */,
+				4977542B2C12F22000652639 /* QTPlanar.swift */,
 				496674FF24BE5C8C00251406 /* QDPict.h */,
 				4966750024BE5C8D00251406 /* QDPict.mm */,
 			);
@@ -1670,6 +1673,7 @@
 				491AE7692BFB34B1002E4CBE /* Picture.swift in Sources */,
 				491AE75E2BFB315E002E4CBE /* reader.cpp in Sources */,
 				49D6EA0E2B7603F400D358F6 /* Pxm.swift in Sources */,
+				4977542C2C12F22000652639 /* QTPlanar.swift in Sources */,
 				491AE7602BFB3166002E4CBE /* classic.cpp in Sources */,
 				491AE7582BFB313E002E4CBE /* pixmap.cpp in Sources */,
 				4903B8442B6F4F0700805094 /* ColorIcon.swift in Sources */,

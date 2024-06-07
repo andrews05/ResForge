@@ -65,6 +65,8 @@ extension QTImageDesc {
             return try Picture(reader).imageRep
         case "raw ":
             return try QTNone.rep(for: self, reader: reader)
+        case "8BPS":
+            return try QTPlanar.rep(for: self, reader: reader)
         default:
             // Attempt to let the system decode it. This should work for e.g. PNG, JPEG, GIF, TIFF.
             try reader.advance(bytesUntilData)
