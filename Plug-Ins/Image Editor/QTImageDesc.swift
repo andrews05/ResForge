@@ -63,6 +63,8 @@ extension QTImageDesc {
             // QuickDraw Picture
             try reader.advance(bytesUntilData)
             return try Picture(reader).imageRep
+        case "rle ":
+            return try QTAnimation.rep(for: self, reader: reader)
         case "raw ":
             return try QTNone.rep(for: self, reader: reader)
         case "8BPS":
