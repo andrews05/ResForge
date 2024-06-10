@@ -58,7 +58,7 @@ struct QTPlanar {
             // Construct a 3-channel planar image rep, ignoring any additional channels in the data
             let size = width * height * 3
             guard data.count >= size else {
-                throw ImageReaderError.invalidData
+                throw ImageReaderError.invalid
             }
             let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
                                        pixelsWide: width,
@@ -74,7 +74,7 @@ struct QTPlanar {
             return rep
         default:
             // Depths 2, 4 and 16 are not known to be valid
-            throw ImageReaderError.unsupported
+            throw ImageReaderError.invalid
         }
     }
 }

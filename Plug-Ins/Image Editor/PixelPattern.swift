@@ -5,7 +5,7 @@ import RFSupport
 
 struct PixelPattern {
     var imageRep: NSBitmapImageRep
-    var format: UInt32 = 0
+    var format: ImageFormat = .unknown
 }
 
 extension PixelPattern {
@@ -18,7 +18,7 @@ extension PixelPattern {
         try reader.setPosition(Int(pixPat.patData))
         let pixelData = try reader.readData(length: pixMap.pixelDataSize)
         imageRep = try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable)
-        format = UInt32(pixMap.pixelSize)
+        format = pixMap.format
     }
 
     mutating func write(_ writer: BinaryDataWriter) throws {
@@ -29,10 +29,10 @@ extension PixelPattern {
         pixMap.write(writer)
         writer.writeData(pixelData)
         ColorTable.write(writer, colors: palette)
-        format = UInt32(pixMap.pixelSize)
+        format = pixMap.format
     }
 
-    static func rep(_ data: Data, format: inout UInt32) -> NSBitmapImageRep? {
+    static func rep(_ data: Data, format: inout ImageFormat) -> NSBitmapImageRep? {
         let reader = BinaryDataReader(data)
         guard let ppat = try? Self(reader) else {
             return nil
@@ -41,7 +41,7 @@ extension PixelPattern {
         return ppat.imageRep
     }
 
-    static func data(from rep: NSBitmapImageRep, format: inout UInt32) -> Data {
+    static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) -> Data {
         var ppat = Self(imageRep: rep)
         let writer = BinaryDataWriter()
         try? ppat.write(writer)
@@ -74,7 +74,7 @@ extension QDPixPat {
         patXMap = try reader.read()
         pat1Data = try reader.read()
         guard patType == Self.typeColor, patMap != 0, patData != 0 else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
     }
 

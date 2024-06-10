@@ -10,7 +10,7 @@ struct ColorTable {
         let device = flags == Self.device
         let size = Int(try reader.read() as Int16) + 1
         guard 0...256 ~= size else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
 
         let data = try reader.readData(length: size * 8)
@@ -19,7 +19,7 @@ struct ColorTable {
         for i in 0..<size {
             // Take low byte for the value, ensuring high byte is 0
             guard device || data[offset] == 0 else {
-                throw ImageReaderError.invalidData
+                throw ImageReaderError.invalid
             }
             let value = device ? i : Int(data[offset + 1])
             // Take high bytes for the rgb

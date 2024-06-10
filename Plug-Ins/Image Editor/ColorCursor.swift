@@ -5,7 +5,7 @@ import RFSupport
 
 struct ColorCursor {
     var imageRep: NSBitmapImageRep
-    var format: UInt32 = 0
+    var format: ImageFormat
 }
 
 extension ColorCursor {
@@ -18,16 +18,16 @@ extension ColorCursor {
         try reader.setPosition(Int(crsr.crsrData))
         let pixelData = try reader.readData(length: pixMap.pixelDataSize)
         imageRep = try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable, mask: crsr.crsrMask)
-        format = UInt32(pixMap.pixelSize)
+        format = pixMap.format
     }
 
-    static func rep(_ data: Data, format: inout UInt32) -> NSBitmapImageRep? {
+    static func rep(_ data: Data, format: inout ImageFormat) -> NSBitmapImageRep? {
         let reader = BinaryDataReader(data)
-        guard let pcrsr = try? Self(reader) else {
+        guard let crsr = try? Self(reader) else {
             return nil
         }
-        format = pcrsr.format
-        return pcrsr.imageRep
+        format = crsr.format
+        return crsr.imageRep
     }
 }
 
@@ -62,7 +62,7 @@ extension QDCCrsr {
         crsrXTable = try reader.read()
         crsrID = try reader.read()
         guard crsrType == Self.typeColor, crsrMap != 0, crsrData != 0 else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
     }
 

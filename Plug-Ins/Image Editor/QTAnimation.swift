@@ -19,7 +19,7 @@ struct QTAnimation {
         case 24: 3
         case 2, 4, 8, 32: 4
         default:
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
 
         // Read header and determine lines to skip
@@ -29,7 +29,7 @@ struct QTAnimation {
         if header & 0x0008 != 0 {
             skipLines = Int(try reader.read() as UInt16)
             guard skipLines < height else {
-                throw ImageReaderError.invalidData
+                throw ImageReaderError.invalid
             }
             try reader.advance(6)
         }
@@ -92,7 +92,7 @@ struct QTAnimation {
                     // Literal - copy bytes
                     let run = Int(code) * valSize
                     guard inPos+run <= inputEnd, outPos+run <= outputEnd else {
-                        throw ImageReaderError.invalidData
+                        throw ImageReaderError.invalid
                     }
                     outPos.copyMemory(from: inPos, byteCount: run)
                     inPos += run
@@ -102,7 +102,7 @@ struct QTAnimation {
                     let run = -Int(code)
                     let runEnd = outPos + run * valSize
                     guard inPos+valSize <= inputEnd, runEnd <= outputEnd else {
-                        throw ImageReaderError.invalidData
+                        throw ImageReaderError.invalid
                     }
                     for _ in 0..<run {
                         outPos.copyMemory(from: inPos, byteCount: valSize)

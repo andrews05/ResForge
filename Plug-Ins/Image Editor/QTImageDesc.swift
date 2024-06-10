@@ -45,7 +45,7 @@ extension QTImageDesc {
               dataSize > 0,
               depth > 0
         else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
 
         if clutID == 0 {

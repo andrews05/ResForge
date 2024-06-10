@@ -6,7 +6,7 @@ import RFSupport
 
 struct ColorIcon {
     var imageRep: NSBitmapImageRep
-    var format: UInt32 = 0
+    var format: ImageFormat = .unknown
 }
 
 extension ColorIcon {
@@ -21,7 +21,7 @@ extension ColorIcon {
         let pixelData = try reader.readData(length: pixMap.pixelDataSize)
 
         imageRep = try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable, mask: mask)
-        format = UInt32(pixMap.pixelSize)
+        format = pixMap.format
     }
 
     mutating func write(_ writer: BinaryDataWriter) throws {
@@ -38,10 +38,10 @@ extension ColorIcon {
         writer.advance(maskRowBytes * imageRep.pixelsHigh) // Skip bitmap data
         ColorTable.write(writer, colors: palette)
         writer.writeData(pixelData)
-        format = UInt32(pixMap.pixelSize)
+        format = pixMap.format
     }
 
-    static func rep(_ data: Data, format: inout UInt32) -> NSBitmapImageRep? {
+    static func rep(_ data: Data, format: inout ImageFormat) -> NSBitmapImageRep? {
         let reader = BinaryDataReader(data)
         guard let cicn = try? Self(reader) else {
             return nil
@@ -50,7 +50,7 @@ extension ColorIcon {
         return cicn.imageRep
     }
 
-    static func data(from rep: NSBitmapImageRep, format: inout UInt32) -> Data {
+    static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) -> Data {
         var cicn = Self(imageRep: rep)
         let writer = BinaryDataWriter()
         try? cicn.write(writer)

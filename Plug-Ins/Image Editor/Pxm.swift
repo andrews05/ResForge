@@ -19,7 +19,7 @@ struct Pxm {
         guard version == 3,
               width > 0, height > 0, count > 0
         else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
         
         // 1-bit click mask, round row bytes up to multiple of 2
@@ -45,11 +45,8 @@ struct Pxm {
         rgbaData.copyBytes(to: imageRep.bitmapData!, count: bitmapSize)
     }
 
-    static func rep(_ data: Data, format: inout UInt32) -> NSBitmapImageRep? {
+    static func rep(_ data: Data) -> NSBitmapImageRep? {
         let reader = BinaryDataReader(data, bigEndian: false)
-        guard let pxm = try? Self(reader) else {
-            return nil
-        }
-        return pxm.imageRep
+        return try? Self(reader).imageRep
     }
 }

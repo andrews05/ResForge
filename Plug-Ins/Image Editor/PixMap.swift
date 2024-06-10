@@ -54,6 +54,16 @@ extension QDPixMap {
     var pixelDataSize: Int {
         bounds.height * resolvedRowBytes
     }
+    var format: ImageFormat {
+        if !isPixmap {
+            .monochrome
+        } else if pixelSize == 32 {
+            // Show 24 if only 3 components are stored
+            .color(Int(cmpCount * cmpSize))
+        } else {
+            .color(Int(pixelSize))
+        }
+    }
 
     init(_ reader: BinaryDataReader, skipBaseAddr: Bool = false) throws {
         if !skipBaseAddr {
@@ -83,19 +93,19 @@ extension QDPixMap {
         guard pmVersion == 0 || pmVersion == 4,
               packSize == 0
         else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
 
         switch pixelSize {
         case 1, 2, 4, 8:
             guard pixelType == 0 else {
-                throw ImageReaderError.invalidData
+                throw ImageReaderError.invalid
             }
         case 16:
             guard packType == .none || packType == .rlePixel,
                   pixelType == Self.rgbDirect
             else {
-                throw ImageReaderError.invalidData
+                throw ImageReaderError.invalid
             }
         case 32:
             guard packType == .none || packType == .dropPadByte || packType == .rleComponent,
@@ -103,10 +113,10 @@ extension QDPixMap {
                   cmpCount == 3 || cmpCount == 4,
                   cmpSize == 8
             else {
-                throw ImageReaderError.invalidData
+                throw ImageReaderError.invalid
             }
         default:
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
     }
 
@@ -159,7 +169,7 @@ extension QDPixMap {
               srcRect.width == destRect.width,
               srcRect.height == destRect.height
         else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
 
         // Align source rect to bounds
@@ -176,7 +186,7 @@ extension QDPixMap {
             switch pixelSize {
             case 1, 2, 4:
                 guard let colorTable, colorTable.count >= 1 << pixelSize else {
-                    throw ImageReaderError.invalidData
+                    throw ImageReaderError.invalid
                 }
                 let depth = Int(pixelSize)
                 let mod = 8 / depth
@@ -196,7 +206,7 @@ extension QDPixMap {
             case 8:
                 // Fast path for 8-bit
                 guard let colorTable, colorTable.count >= 256 else {
-                    throw ImageReaderError.invalidData
+                    throw ImageReaderError.invalid
                 }
                 for y in yRange {
                     let offset = y * rowBytes
@@ -242,7 +252,7 @@ extension QDPixMap {
                     bitmap += rep.bytesPerRow - (xRange.count * 4)
                 }
             default:
-                throw ImageReaderError.unsupported
+                throw ImageReaderError.invalid
             }
         }
     }
@@ -250,7 +260,7 @@ extension QDPixMap {
     static func applyMask(_ mask: Data, to rep: NSBitmapImageRep) throws {
         let rowBytes = (rep.pixelsWide + 7) / 8
         guard mask.count == rowBytes * rep.pixelsHigh else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
         // Loop over the pixels and set the alpha component according to the mask
         var bitmap = rep.bitmapData!
@@ -386,7 +396,7 @@ enum PackType: Int16 {
 
     static func read(_ reader: BinaryDataReader) throws -> Self {
         guard let packType = Self.init(rawValue: try reader.read()) else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
         return packType
     }

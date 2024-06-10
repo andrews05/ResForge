@@ -1,12 +1,6 @@
 import AppKit
 import RFSupport
 
-enum ImageReaderError: Error {
-    case invalidData
-    case insufficientData
-    case unsupported
-}
-
 class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
     static let supportedTypes = [
         "PICT",
@@ -42,7 +36,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var imageSize: NSTextField!
     @IBOutlet var imageFormat: NSTextField!
-    private var format: UInt32 = 0
+    private var format: ImageFormat = .unknown
     private var widthConstraint: NSLayoutConstraint!
     private var heightConstraint: NSLayoutConstraint!
 
@@ -115,25 +109,13 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     }
 
     private func updateView() {
-        imageFormat.isHidden = true
+        imageFormat.stringValue = format.description
+        imageFormat.isHidden = imageFormat.stringValue.isEmpty
         if let image = imageView.image {
             widthConstraint.constant = max(image.size.width, window!.contentMinSize.width)
             heightConstraint.constant = max(image.size.height, window!.contentMinSize.height)
             self.window?.setContentSize(NSSize(width: widthConstraint.constant, height: heightConstraint.constant))
             imageSize.stringValue = String(format: "%.0fx%.0f", image.size.width, image.size.height)
-            imageFormat.isHidden = format == 0
-            switch format {
-            case 0:
-                break
-            case 1:
-                imageFormat.stringValue = "Monochrome"
-            case 2, 4, 8:
-                imageFormat.stringValue = "\(format)-bit Indexed"
-            case 16, 24, 32:
-                imageFormat.stringValue = "\(format)-bit RGB"
-            default:
-                imageFormat.stringValue = format.fourCharString.trimmingCharacters(in: .whitespaces).uppercased()
-            }
         } else if !resource.data.isEmpty {
             imageSize.stringValue = "Invalid or unsupported image format"
         } else if imageView.isEditable {
@@ -178,7 +160,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         default:
             self.ensureBitmap()
         }
-        format = 0
+        format = .unknown
         self.updateView()
         self.setDocumentEdited(true)
     }
@@ -190,7 +172,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         switch resource.typeCode {
         case "PICT":
             resource.data = QDPict.data(from: rep)
-            format = 24
+            format = .color(24)
         case "cicn":
             resource.data = ColorIcon.data(from: rep, format: &format)
         case "ppat":
@@ -251,7 +233,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     // MARK: - Preview Provider
 
     static func image(for resource: Resource) -> NSImage? {
-        var format: UInt32 = 0
+        var format: ImageFormat = .unknown
         guard let rep = self.imageRep(for: resource, format: &format) else {
             return nil
         }
@@ -269,7 +251,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
     }
 
-    private static func imageRep(for resource: Resource, format: inout UInt32) -> NSBitmapImageRep? {
+    private static func imageRep(for resource: Resource, format: inout ImageFormat) -> NSBitmapImageRep? {
         let data = resource.data
         guard !data.isEmpty else {
             return nil
@@ -311,7 +293,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             let count = Int(data[data.startIndex + 1])
             return Icons.rep(data.dropFirst(2), width: 8, height: 8 * count, depth: 1)
         case "pxm#":
-            return Pxm.rep(data, format: &format)
+            return Pxm.rep(data)
         default:
             return NSBitmapImageRep(data: data)
         }

@@ -7,27 +7,28 @@ struct Picture {
     static let version1: UInt16 = 0x1101 // 1-byte versionOp + version number
     static let version2: Int16 = -1
     static let extendedVersion2: Int16 = -2
+    private var v1: Bool
     private var frame: QDRect
     private var clipRect: QDRect
     private var origin: QDPoint
 
     var imageRep: NSBitmapImageRep
-    var format: UInt32 = 0
+    var format: ImageFormat = .unknown
 }
 
 extension Picture {
-    init(_ reader: BinaryDataReader) throws {
+    init(_ reader: BinaryDataReader, _ readOps: Bool = true) throws {
         try reader.advance(2) // v1 size
         frame = try QDRect(reader)
 
         let versionOp = try reader.read() as UInt16
-        let v1 = versionOp == Self.version1
+        v1 = versionOp == Self.version1
         if !v1 {
             guard versionOp == PictOpcode.versionOp.rawValue,
                   try PictOpcode.read2(reader) == .version,
                   try PictOpcode.read2(reader) == .headerOp
             else {
-                throw ImageReaderError.invalidData
+                throw ImageReaderError.invalid
             }
             let headerVersion = try reader.read() as Int16
             if headerVersion == Self.version2 {
@@ -40,14 +41,35 @@ extension Picture {
                 frame = try QDRect(reader)
                 try reader.advance(4) // reserved
             } else {
-                throw ImageReaderError.invalidData
+                throw ImageReaderError.invalid
             }
         }
 
         origin = frame.origin
         clipRect = frame
         imageRep = QDPixMap.rgbaRep(width: frame.width, height: frame.height)
+        if readOps {
+            try self.readOps(reader)
+        }
+    }
 
+    static func rep(_ data: Data, format: inout ImageFormat) -> NSBitmapImageRep? {
+        let reader = BinaryDataReader(data)
+        guard var pict = try? Self(reader, false) else {
+            return nil
+        }
+        do {
+            try pict.readOps(reader)
+            format = pict.format
+            return pict.imageRep
+        } catch {
+            // We may still be able to show the format even if decoding failed
+            format = pict.format
+            return nil
+        }
+    }
+
+    private mutating func readOps(_ reader: BinaryDataReader) throws {
         let readOp = v1 ? PictOpcode.read1 : PictOpcode.read2
     ops:while true {
             switch try readOp(reader) {
@@ -99,23 +121,14 @@ extension Picture {
         }
 
         // If we reached the end and have nothing to show for it then we should fail
-        guard format != 0 else {
+        if case .unknown = format {
             throw ImageReaderError.unsupported
         }
     }
 
-    static func rep(_ data: Data, format: inout UInt32) -> NSBitmapImageRep? {
-        let reader = BinaryDataReader(data)
-        guard let pict = try? Self(reader) else {
-            return nil
-        }
-        format = pict.format
-        return pict.imageRep
-    }
-
     private mutating func readIndirectBitsRect(_ reader: BinaryDataReader, packed: Bool, withMaskRegion: Bool) throws {
         let pixMap = try QDPixMap(reader, skipBaseAddr: true)
-        format = UInt32(pixMap.pixelSize)
+        format = pixMap.format
         let colorTable = if pixMap.isPixmap {
             try ColorTable.read(reader)
         } else {
@@ -141,8 +154,7 @@ extension Picture {
 
     private mutating func readDirectBits(_ reader: BinaryDataReader, withMaskRegion: Bool) throws {
         let pixMap = try QDPixMap(reader)
-        // Pixel size is always either 16 or 32 but we want to show 24 if only 3 components are stored
-        format = pixMap.pixelSize == 16 ? 16 : UInt32(pixMap.cmpCount * pixMap.cmpSize)
+        format = pixMap.format
 
         let (srcRect, destRect) = try self.readSrcAndDestRects(reader)
 
@@ -214,7 +226,7 @@ extension Picture {
         // https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#509
         let size = Int(try reader.read() as Int32)
         guard size > 0 else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
 
         // Construct a new reader constrained to the specified size
@@ -231,7 +243,7 @@ extension Picture {
         }
 
         let imageDesc = try QTImageDesc(reader)
-        format = imageDesc.compressor
+        format = .quickTime(imageDesc.compressor, imageDesc.resolvedDepth)
         imageRep = try imageDesc.readImage(reader)
     }
 }

@@ -38,7 +38,7 @@ struct PackBits<T: FixedWidthInteger> {
                 run = 0x100 - run + 1
                 let runEnd = outPos + run * valSize
                 guard inPos+valSize <= inputEnd && runEnd <= outputEnd else {
-                    throw ImageReaderError.invalidData
+                    throw ImageReaderError.invalid
                 }
                 let value = inPos.loadUnaligned(as: T.self)
                 inPos += valSize
@@ -52,7 +52,7 @@ struct PackBits<T: FixedWidthInteger> {
                 run = (run + 1) * valSize
                 let runEnd = outPos + run
                 guard inPos+run <= inputEnd && runEnd <= outputEnd else {
-                    throw ImageReaderError.invalidData
+                    throw ImageReaderError.invalid
                 }
                 outPos.copyMemory(from: inPos, byteCount: run)
                 outPos = runEnd

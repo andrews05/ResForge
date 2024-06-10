@@ -93,6 +93,7 @@
 		4976D2992718CEA400322DDF /* GalaxyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4976D2772718CC4B00322DDF /* GalaxyView.swift */; };
 		4977542C2C12F22000652639 /* QTPlanar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977542B2C12F22000652639 /* QTPlanar.swift */; };
 		497754642C14E74B00652639 /* QTAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497754632C14E74B00652639 /* QTAnimation.swift */; };
+		4977549C2C16DAC700652639 /* ImageFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977549B2C16DAC700652639 /* ImageFormat.swift */; };
 		497A93DE255F371100900C7B /* SelectTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 497A93E0255F371100900C7B /* SelectTemplate.xib */; };
 		497BB1DD24F76EFC00858EF1 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497BB1DB24F741E400858EF1 /* Icons.swift */; };
 		4982C09E2A97F653006B7404 /* AppleSingleFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4982C09D2A97F653006B7404 /* AppleSingleFormat.swift */; };
@@ -471,6 +472,7 @@
 		4976D2772718CC4B00322DDF /* GalaxyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4977542B2C12F22000652639 /* QTPlanar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QTPlanar.swift; sourceTree = "<group>"; };
 		497754632C14E74B00652639 /* QTAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QTAnimation.swift; sourceTree = "<group>"; };
+		4977549B2C16DAC700652639 /* ImageFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFormat.swift; sourceTree = "<group>"; };
 		497A93BD255BB49600900C7B /* Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Templates.rsrc; sourceTree = "<group>"; };
 		497A93DF255F371100900C7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SelectTemplate.xib; sourceTree = "<group>"; };
 		497BB1DB24F741E400858EF1 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -1087,6 +1089,7 @@
 				4903B8412B6F04BA00805094 /* ColorCursor.swift */,
 				4903B8432B6F4F0700805094 /* ColorIcon.swift */,
 				49AFF36B2C09AF4200A4F5D0 /* ColorTable.swift */,
+				4977549B2C16DAC700652639 /* ImageFormat.swift */,
 				496674FD24BBC7CE00251406 /* ImageWindowController.swift */,
 				497BB1DB24F741E400858EF1 /* Icons.swift */,
 				494D820A2BFC80C200B99790 /* PackBits.swift */,
@@ -1678,6 +1681,7 @@
 				49D6EA0E2B7603F400D358F6 /* Pxm.swift in Sources */,
 				497754642C14E74B00652639 /* QTAnimation.swift in Sources */,
 				4977542C2C12F22000652639 /* QTPlanar.swift in Sources */,
+				4977549C2C16DAC700652639 /* ImageFormat.swift in Sources */,
 				491AE7602BFB3166002E4CBE /* classic.cpp in Sources */,
 				491AE7582BFB313E002E4CBE /* pixmap.cpp in Sources */,
 				4903B8442B6F4F0700805094 /* ColorIcon.swift in Sources */,

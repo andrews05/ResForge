@@ -14,7 +14,7 @@ extension QDRect {
         bottom = try reader.read()
         right = try reader.read()
         guard isValid else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
     }
 
@@ -31,7 +31,7 @@ extension QDRect {
         bottom &-= point.y
         right &-= point.x
         guard isValid else {
-            throw ImageReaderError.invalidData
+            throw ImageReaderError.invalid
         }
     }
 
