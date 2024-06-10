@@ -30,7 +30,7 @@ struct Pxm {
         }
         try reader.advance(maskSize)
         let bitmapSize = width * height * count * 4
-        let rgbaData = [UInt8](try reader.readData(length: bitmapSize))
+        let rgbaData = try reader.readData(length: bitmapSize)
 
         imageRep = NSBitmapImageRep(bitmapDataPlanes: nil,
                                     pixelsWide: width,
@@ -42,9 +42,7 @@ struct Pxm {
                                     colorSpaceName: .deviceRGB,
                                     bytesPerRow: width * 4,
                                     bitsPerPixel: 32)!
-        rgbaData.withUnsafeBufferPointer {
-            imageRep.bitmapData!.update(from: $0.baseAddress!, count: bitmapSize)
-        }
+        rgbaData.copyBytes(to: imageRep.bitmapData!, count: bitmapSize)
     }
 
     static func rep(_ data: Data, format: inout UInt32) -> NSBitmapImageRep? {
