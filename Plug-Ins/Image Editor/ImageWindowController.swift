@@ -297,27 +297,4 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             return NSBitmapImageRep(data: data)
         }
     }
-
-    private static func rep(fromPict data: Data, format: inout UInt32) -> NSBitmapImageRep? {
-        do {
-            return try QDPict.rep(from: data, format: &format)
-        } catch let error {
-            // If the error is because of an unsupported QuickTime compressor, attempt to decode it
-            // natively from the offset indicated. This should work for e.g. PNG, JPEG, GIF, TIFF.
-            if let range = error.localizedDescription.range(of: "(?<=offset )[0-9]+", options: .regularExpression),
-               let offset = Int(error.localizedDescription[range]),
-               data.count > offset,
-               let rep = NSBitmapImageRep(data: data.dropFirst(offset)) {
-                // Older QuickTime versions (<6.5) stored png data as non-standard RGBX
-                // We need to disable the alpha, but first ensure the image has been decoded by accessing the bitmapData
-                _ = rep.bitmapData
-                rep.hasAlpha = false
-                if let cRange = error.localizedDescription.range(of: "(?<=')....(?=')", options: .regularExpression) {
-                    format = UInt32(fourCharString: String(error.localizedDescription[cRange]))
-                }
-                return rep
-            }
-        }
-        return nil
-    }
 }
