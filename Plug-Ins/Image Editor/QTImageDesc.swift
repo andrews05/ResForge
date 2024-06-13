@@ -1,3 +1,4 @@
+import AppKit
 import RFSupport
 
 // https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#509

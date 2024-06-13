@@ -47,7 +47,7 @@ extension Picture {
 
         origin = frame.origin
         clipRect = frame
-        imageRep = QDPixMap.rgbaRep(width: frame.width, height: frame.height)
+        imageRep = ImageFormat.rgbaRep(width: frame.width, height: frame.height)
         if readOps {
             try self.readOps(reader)
         }
@@ -247,6 +247,139 @@ extension Picture {
         imageRep = try imageDesc.readImage(reader)
     }
 }
+
+// MARK: Writer
+
+extension Picture {
+    init(imageRep: NSBitmapImageRep) throws {
+        self.imageRep = ImageFormat.normalize(imageRep)
+        v1 = false
+        frame = try QDRect(for: imageRep)
+        clipRect = frame
+        origin = frame.origin
+    }
+
+    mutating func write(_ writer: BinaryDataWriter, format: ImageFormat) throws {
+        // Header
+        writer.advance(2) // v1 size
+        frame.write(writer)
+        writer.write(PictOpcode.versionOp.rawValue)
+        writer.write(PictOpcode.version.rawValue)
+        writer.write(PictOpcode.headerOp.rawValue)
+        writer.write(Self.version2)
+        writer.advance(2) // reserved
+        writer.write(0x00480000 as UInt32) // hRes
+        writer.write(0x00480000 as UInt32) // vRes
+        frame.write(writer) // source rect
+        writer.advance(4) // reserved
+
+        // Clip region (required)
+        writer.write(PictOpcode.clipRegion.rawValue)
+        writer.write(10 as UInt16) // size
+        clipRect.write(writer)
+
+        // Image data
+        switch format {
+        case .color(8):
+            try self.writeIndirectBits(writer)
+        case .color(16):
+            try self.writeDirectBits(writer, rgb555: true)
+        default:
+            try self.writeDirectBits(writer)
+        }
+
+        // Align and end
+        writer.advance(writer.bytesWritten % 2)
+        writer.write(PictOpcode.opEndPicture.rawValue)
+    }
+
+    private mutating func writeIndirectBits(_ writer: BinaryDataWriter) throws {
+        ImageFormat.reduceTo256Colors(&imageRep)
+        var (pixMap, pixelData, colorTable) = try QDPixMap.build(from: imageRep)
+        writer.write(PictOpcode.packBitsRect.rawValue)
+        pixMap.write(writer, skipBaseAddr: true)
+        ColorTable.write(writer, colors: colorTable)
+        pixMap.bounds.write(writer) // source rect
+        frame.write(writer) // dest rect
+        writer.advance(2) // transfer mode (0 = Source Copy)
+
+        let rowBytes = pixMap.rowBytes
+        if rowBytes >= 8 {
+            pixelData.withUnsafeMutableBytes { inBuffer in
+                var input = inBuffer.assumingMemoryBound(to: UInt8.self).baseAddress!
+                for _ in 0..<imageRep.pixelsHigh {
+                    let inputRow = UnsafeMutableBufferPointer(start: input, count: rowBytes)
+                    PackBits<UInt8>.writeRow(inputRow, writer: writer, pixMap: pixMap)
+                    input += rowBytes
+                }
+            }
+        } else {
+            writer.writeData(pixelData)
+        }
+
+        // Update format
+        format = pixMap.format
+    }
+
+    private mutating func writeDirectBits(_ writer: BinaryDataWriter, rgb555: Bool = false) throws {
+        let pixMap = try QDPixMap(for: imageRep, rgb555: rgb555)
+        writer.write(PictOpcode.directBitsRect.rawValue)
+        pixMap.write(writer)
+        pixMap.bounds.write(writer) // source rect
+        frame.write(writer) // dest rect
+        writer.advance(2) // transfer mode (0 = Source Copy)
+
+        var bitmap = imageRep.bitmapData!
+        switch pixMap.resolvedPackType {
+        case .rleComponent:
+            withUnsafeTemporaryAllocation(of: UInt8.self, capacity: imageRep.pixelsWide * 3) { inBuffer in
+                for _ in 0..<imageRep.pixelsHigh {
+                    // Convert RGBA to channels
+                    for x in 0..<imageRep.pixelsWide {
+                        inBuffer[x] = bitmap[0]
+                        inBuffer[x + imageRep.pixelsWide] = bitmap[1]
+                        inBuffer[x + imageRep.pixelsWide * 2] = bitmap[2]
+                        bitmap += 4
+                    }
+                    PackBits<UInt8>.writeRow(inBuffer, writer: writer, pixMap: pixMap)
+                }
+            }
+        case .rlePixel:
+            withUnsafeTemporaryAllocation(of: UInt16.self, capacity: imageRep.pixelsWide) { inBuffer in
+                for _ in 0..<imageRep.pixelsHigh {
+                    // Convert RGBA to RGB555
+                    for x in 0..<imageRep.pixelsWide {
+                        inBuffer[x] = RGBColor(red: bitmap[0], green: bitmap[1], blue: bitmap[2]).rgb555().bigEndian
+                        bitmap += 4
+                    }
+                    PackBits<UInt16>.writeRow(inBuffer, writer: writer, pixMap: pixMap)
+                }
+            }
+        case .none where pixMap.pixelSize == 16:
+            // Convert RGBA to RGB555
+            for _ in 0..<(imageRep.pixelsHigh * imageRep.pixelsWide) {
+                writer.write(RGBColor(red: bitmap[0], green: bitmap[1], blue: bitmap[2]).rgb555())
+                bitmap += 4
+            }
+        default:
+            // Convert RGBA to XRGB by shifting the data 1 byte
+            writer.advance(1)
+            writer.data.append(bitmap, count: imageRep.bytesPerPlane-1)
+        }
+
+        // Update format
+        format = pixMap.format
+    }
+
+    static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) throws -> Data {
+        var pict = try Self(imageRep: rep)
+        let writer = BinaryDataWriter()
+        try pict.write(writer, format: format)
+        format = pict.format
+        return writer.data
+    }
+}
+
 
 enum PictOpcode: UInt16 {
     case nop = 0x0000

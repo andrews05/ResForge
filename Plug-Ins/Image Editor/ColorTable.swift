@@ -1,3 +1,4 @@
+import Foundation
 import RFSupport
 import OrderedCollections
 
@@ -100,6 +101,12 @@ extension RGBColor {
         bitmap[2] = blue
         bitmap[3] = 0xFF
         bitmap += 4
+    }
+
+    func rgb555() -> UInt16 {
+        UInt16(red & 0xF8) << 7 |
+        UInt16(green & 0xF8) << 2 |
+        UInt16(blue & 0xF8) >> 3
     }
 }
 

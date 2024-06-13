@@ -23,7 +23,7 @@ extension PixelPattern {
 
     mutating func write(_ writer: BinaryDataWriter) throws {
         let pixPat = QDPixPat()
-        var (pixMap, pixelData, palette) = QDPixMap.build(from: imageRep)
+        var (pixMap, pixelData, palette) = try QDPixMap.build(from: imageRep)
         pixMap.pmTable = QDPixPat.size + QDPixMap.size + UInt32(pixelData.count)
         pixPat.write(writer)
         pixMap.write(writer)
@@ -41,10 +41,10 @@ extension PixelPattern {
         return ppat.imageRep
     }
 
-    static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) -> Data {
+    static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) throws -> Data {
         var ppat = Self(imageRep: rep)
         let writer = BinaryDataWriter()
-        try? ppat.write(writer)
+        try ppat.write(writer)
         format = ppat.format
         return writer.data
     }

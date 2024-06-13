@@ -1,3 +1,4 @@
+import AppKit
 import RFSupport
 
 struct QDRect {
@@ -16,6 +17,14 @@ extension QDRect {
         guard isValid else {
             throw ImageReaderError.invalid
         }
+    }
+
+    init(for rep: NSBitmapImageRep) throws {
+        guard rep.pixelsWide <= Int16.max, rep.pixelsHigh <= Int16.max else {
+            throw ImageWriterError.tooBig
+        }
+        bottom = Int16(rep.pixelsHigh)
+        right = Int16(rep.pixelsWide)
     }
 
     func write(_ writer: BinaryDataWriter) {

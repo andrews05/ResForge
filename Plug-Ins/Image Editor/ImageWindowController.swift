@@ -128,15 +128,11 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     private func ensureBitmap(flatten: Bool=false, palette: Bool=false) {
         let image = imageView.image!
         var rep = image.representations[0] as? NSBitmapImageRep ?? NSBitmapImageRep(data: image.tiffRepresentation!)!
-        if palette {
-            // Reduce to 8-bit colour by converting to gif
-            let data = rep.representation(using: .gif, properties: [.ditherTransparency: false])!
-            rep = NSBitmapImageRep(data: data)!
+        if flatten {
+            ImageFormat.removeTransparency(&rep)
         }
-        if flatten && rep.hasAlpha {
-            // Hide alpha - access the bitmap data first to make sure it updates correctly
-            _ = rep.bitmapData
-            rep.hasAlpha = false
+        if palette {
+            ImageFormat.reduceTo256Colors(&rep)
         }
         // Ensure display size matches pixel dimensions
         rep.size = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
@@ -169,19 +165,22 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         guard let rep = imageView.image?.representations[0] as? NSBitmapImageRep else {
             return
         }
-        switch resource.typeCode {
-        case "PICT":
-            resource.data = QDPict.data(from: rep)
-            format = .color(24)
-        case "cicn":
-            resource.data = ColorIcon.data(from: rep, format: &format)
-        case "ppat":
-            resource.data = PixelPattern.data(from: rep, format: &format)
-        default:
-            resource.data = rep.representation(using: .png, properties: [.interlaced: false])!
+        do {
+            switch resource.typeCode {
+            case "PICT":
+                resource.data = try Picture.data(from: rep, format: &format)
+            case "cicn":
+                resource.data = try ColorIcon.data(from: rep, format: &format)
+            case "ppat":
+                resource.data = try PixelPattern.data(from: rep, format: &format)
+            default:
+                resource.data = rep.representation(using: .png, properties: [.interlaced: false])!
+            }
+            self.updateView()
+            self.setDocumentEdited(false)
+        } catch let error {
+            self.presentError(error)
         }
-        self.updateView()
-        self.setDocumentEdited(false)
     }
 
     @IBAction func revertResource(_ sender: Any) {

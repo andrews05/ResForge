@@ -25,8 +25,8 @@ extension ColorIcon {
     }
 
     mutating func write(_ writer: BinaryDataWriter) throws {
-        imageRep = QDPixMap.normalizeRep(imageRep)
-        let (pixMap, pixelData, palette) = QDPixMap.build(from: imageRep)
+        imageRep = ImageFormat.normalize(imageRep)
+        let (pixMap, pixelData, palette) = try QDPixMap.build(from: imageRep)
         let maskRowBytes = (imageRep.pixelsWide + 7) / 8
         let maskMap = QDPixMap(rowBytesAndFlags: UInt16(maskRowBytes), bounds: pixMap.bounds)
         let mask = QDPixMap.buildMask(from: imageRep)
@@ -50,10 +50,10 @@ extension ColorIcon {
         return cicn.imageRep
     }
 
-    static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) -> Data {
+    static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) throws -> Data {
         var cicn = Self(imageRep: rep)
         let writer = BinaryDataWriter()
-        try? cicn.write(writer)
+        try cicn.write(writer)
         format = cicn.format
         return writer.data
     }

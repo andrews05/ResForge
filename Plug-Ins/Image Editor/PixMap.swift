@@ -120,34 +120,8 @@ extension QDPixMap {
         }
     }
 
-    func write(_ writer: BinaryDataWriter, skipBaseAddr: Bool = false) {
-        if !skipBaseAddr {
-            writer.write(baseAddr)
-        }
-        writer.write(rowBytesAndFlags)
-        bounds.write(writer)
-
-        // If this is bitmap rather than a pixmap then stop here
-        if rowBytesAndFlags & Self.pixmap == 0 {
-            return
-        }
-
-        writer.write(pmVersion)
-        writer.write(packType.rawValue)
-        writer.write(packSize)
-        writer.write(hRes)
-        writer.write(vRes)
-        writer.write(pixelType)
-        writer.write(pixelSize)
-        writer.write(cmpCount)
-        writer.write(cmpSize)
-        writer.write(planeBytes)
-        writer.write(pmTable)
-        writer.write(pmReserved)
-    }
-
     func imageRep(pixelData: Data, colorTable: [RGBColor]? = nil, mask: Data? = nil) throws -> NSBitmapImageRep {
-        let rep = Self.rgbaRep(width: bounds.width, height: bounds.height)
+        let rep = ImageFormat.rgbaRep(width: bounds.width, height: bounds.height)
         let destRect = QDRect(bottom: Int16(bounds.height), right: Int16(bounds.width))
         try self.draw(pixelData, colorTable: colorTable, to: rep, in: destRect, from: bounds)
 
@@ -271,13 +245,59 @@ extension QDPixMap {
                 let byteShift = 7 - (x % 8)
                 let value = (byte >> byteShift) & 0x1
                 bitmap[3] = value == 0 ? 0 : 0xFF
-                bitmap += 4;
+                bitmap += 4
             }
         }
     }
+}
 
-    static func build(from rep: NSBitmapImageRep) -> (pixMap: Self, pixelData: Data, colorTable: OrderedSet<UInt32>) {
-        let rep = Self.normalizeRep(rep)
+// MARK: Writer
+
+extension QDPixMap {
+    init(for rep: NSBitmapImageRep, rgb555: Bool = false) throws {
+        bounds = try QDRect(for: rep)
+        rowBytes = rep.pixelsWide * (rgb555 ? 2 : 4)
+        guard rowBytes < 0x4000 else {
+            throw ImageWriterError.tooBig
+        }
+
+        rowBytesAndFlags = UInt16(rowBytes) | Self.pixmap
+        packType = rgb555 ? .rlePixel : .rleComponent
+        pixelType = Self.rgbDirect
+        pixelSize = rgb555 ? 16 : 32
+        cmpCount = 3
+        cmpSize = rgb555 ? 5 : 8
+    }
+
+    func write(_ writer: BinaryDataWriter, skipBaseAddr: Bool = false) {
+        if !skipBaseAddr {
+            writer.write(baseAddr)
+        }
+        writer.write(rowBytesAndFlags)
+        bounds.write(writer)
+
+        // If this is bitmap rather than a pixmap then stop here
+        if rowBytesAndFlags & Self.pixmap == 0 {
+            return
+        }
+
+        writer.write(pmVersion)
+        writer.write(packType.rawValue)
+        writer.write(packSize)
+        writer.write(hRes)
+        writer.write(vRes)
+        writer.write(pixelType)
+        writer.write(pixelSize)
+        writer.write(cmpCount)
+        writer.write(cmpSize)
+        writer.write(planeBytes)
+        writer.write(pmTable)
+        writer.write(pmReserved)
+    }
+
+    static func build(from rep: NSBitmapImageRep) throws -> (pixMap: Self, pixelData: Data, colorTable: OrderedSet<UInt32>) {
+        let rep = ImageFormat.normalize(rep)
+        let bounds = try QDRect(for: rep)
 
         // Iterate the pixels as UInt32 and construct the color table and pixel data
         let pixelCount = rep.pixelsWide * rep.pixelsHigh
@@ -293,18 +313,23 @@ extension QDPixMap {
             }
         }
 
-        // Attempt to reduce depth
-        var pixelSize = 8
-        var rowBytes = rep.pixelsWide
-        if colorTable.count <= 16 {
-            switch colorTable.count {
-            case ...2: pixelSize = 1
-            case ...4: pixelSize = 2
-            default: pixelSize = 4
-            }
+        // Determine minimum depth and row bytes
+        let pixelSize = switch colorTable.count {
+        case ...2: 1
+        case ...4: 2
+        case ...16: 4
+        case ...256: 8
+        default:
+            throw ImageWriterError.tooManyColors
+        }
+        let rowBytes = (rep.pixelsWide * pixelSize + 7) / 8
+        guard rowBytes < 0x4000 else {
+            throw ImageWriterError.tooBig
+        }
 
+        // Rewrite data if below 8-bit
+        if pixelSize < 8 {
             let mod = 8 / pixelSize
-            rowBytes = ((rowBytes - 1) / mod) + 1
             let diff = 8 - pixelSize
             var newData = Data(capacity: rowBytes * rep.pixelsHigh)
 
@@ -313,7 +338,7 @@ extension QDPixMap {
                 for x in 0..<rep.pixelsWide {
                     let pxNum = x % mod
                     if pxNum == 0 && x != 0 {
-                        newData.append(scratch);
+                        newData.append(scratch)
                         scratch = 0
                     }
                     let value = pixelData[y * rep.pixelsWide + x]
@@ -326,11 +351,12 @@ extension QDPixMap {
 
         // Create the PixMap
         let pixMap = Self(rowBytesAndFlags: UInt16(rowBytes) | Self.pixmap,
-                          bounds: QDRect(bottom: Int16(rep.pixelsHigh), right: Int16(rep.pixelsWide)),
+                          bounds: bounds,
                           pixelType: 0,
                           pixelSize: Int16(pixelSize),
                           cmpCount: 1,
-                          cmpSize: Int16(pixelSize))
+                          cmpSize: Int16(pixelSize),
+                          rowBytes: rowBytes)
         return (pixMap, pixelData, colorTable)
     }
 
@@ -343,7 +369,7 @@ extension QDPixMap {
             for x in 0..<rep.pixelsWide {
                 let pxNum = x % 8
                 if pxNum == 0 && x != 0 {
-                    mask.append(scratch);
+                    mask.append(scratch)
                     scratch = 0
                 }
                 let value: UInt8 = bitmap[3] == 0 ? 0 : 1
@@ -353,32 +379,6 @@ extension QDPixMap {
             mask.append(scratch)
         }
         return mask
-    }
-
-    static func normalizeRep(_ rep: NSBitmapImageRep) -> NSBitmapImageRep {
-        // Ensure 32-bit RGBA
-        if rep.bitsPerPixel == 32 && rep.colorSpace.colorSpaceModel == .rgb {
-            return rep
-        }
-        let newRep = self.rgbaRep(width: rep.pixelsWide, height: rep.pixelsHigh)
-        NSGraphicsContext.saveGraphicsState()
-        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: newRep)
-        rep.draw()
-        NSGraphicsContext.restoreGraphicsState()
-        return newRep
-    }
-
-    static func rgbaRep(width: Int, height: Int) -> NSBitmapImageRep {
-        return NSBitmapImageRep(bitmapDataPlanes: nil,
-                                pixelsWide: width,
-                                pixelsHigh: height,
-                                bitsPerSample: 8,
-                                samplesPerPixel: 4,
-                                hasAlpha: true,
-                                isPlanar: false,
-                                colorSpaceName: .deviceRGB,
-                                bytesPerRow: width * 4,
-                                bitsPerPixel: 0)!
     }
 }
 

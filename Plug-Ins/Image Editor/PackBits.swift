@@ -34,7 +34,7 @@ struct PackBits<T: FixedWidthInteger> {
             var run = Int(inPos.load(as: UInt8.self))
             inPos += 1
             if run > 0x80 {
-                // Repeat single byte
+                // Repeat single value
                 run = 0x100 - run + 1
                 let runEnd = outPos + run * valSize
                 guard inPos+valSize <= inputEnd && runEnd <= outputEnd else {
@@ -59,5 +59,66 @@ struct PackBits<T: FixedWidthInteger> {
                 inPos += run
             }
         }
+    }
+
+    static func writeRow(_ row: UnsafeMutableBufferPointer<T>, writer: BinaryDataWriter, pixMap: QDPixMap) {
+        // For best performance we'll use a fixed size output buffer, rather than e.g. incrementally appending to Data
+        // In case of incompressible data we need to allocate the whole row size plus a little extra
+        let rowBytes = pixMap.rowBytes
+        withUnsafeTemporaryAllocation(of: UInt8.self, capacity: rowBytes + rowBytes/128 + 1) { outBuffer in
+            let output = outBuffer.baseAddress!
+            let packLength = Self.encode(row, to: output)
+            if rowBytes > 250 {
+                writer.write(UInt16(packLength))
+            } else {
+                writer.write(UInt8(packLength))
+            }
+            writer.data.append(output, count: packLength)
+        }
+    }
+
+    static func encode(_ input: UnsafeMutableBufferPointer<T>, to output: UnsafeMutableRawPointer) -> Int {
+        var inPos = input.baseAddress!
+        var outPos = output
+        let valSize = T.bitWidth / 8
+        let inputEnd = inPos + input.count - 1
+        // For 8-bit we want to avoid breaking a literal to make a run of 2, as it would generally be less efficient
+        // For 16-bit we should always use runs where possible
+        let inputEnd2 = valSize == 1 ? inputEnd - 1 : inPos
+        while inPos <= inputEnd {
+            var run = 1
+            let runStart = inPos
+            let val = inPos[0]
+            inPos += 1
+            // Repeated run, up to 128
+            while run < 0x80 && inPos <= inputEnd && inPos[0] == val {
+                run += 1
+                inPos += 1
+            }
+
+            if run > 1 {
+                outPos.storeBytes(of: Int8(-run + 1), as: Int8.self)
+                outPos += 1
+                outPos.copyMemory(from: runStart, byteCount: valSize)
+                outPos += valSize
+                continue
+            }
+
+            // Literal run, up to 128
+            while run < 0x80 && (inPos == inputEnd ||
+                                (inPos < inputEnd && inPos[0] != inPos[1]) ||
+                                (inPos < inputEnd2 && inPos[0] != inPos[2])) {
+                run += 1
+                inPos += 1
+            }
+
+            outPos.storeBytes(of: Int8(run - 1), as: Int8.self)
+            outPos += 1
+            outPos.copyMemory(from: runStart, byteCount: run * valSize)
+            outPos += run * valSize
+        }
+
+        // Return the number of bytes written
+        return outPos - output
     }
 }

@@ -43,7 +43,7 @@ class Icons {
             return nil
         }
 
-        let rep = QDPixMap.rgbaRep(width: width, height: height)
+        let rep = ImageFormat.rgbaRep(width: width, height: height)
         var bitmap = rep.bitmapData!
         if depth == 4 {
             let palette = ColorTable.system4
