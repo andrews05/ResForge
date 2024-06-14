@@ -51,7 +51,7 @@ extension ImageFormat {
         return newRep
     }
 
-    static func removeTransparency(_ rep: inout NSBitmapImageRep) {
+    static func removeTransparency(_ rep: NSBitmapImageRep) {
         if rep.hasAlpha {
             rep.hasAlpha = false
             // Access the bitmap data to make sure it updates correctly
@@ -63,6 +63,34 @@ extension ImageFormat {
         // Reduce to 8-bit colour by converting to gif
         let data = rep.representation(using: .gif, properties: [.ditherTransparency: false])!
         rep = NSBitmapImageRep(data: data)!
+    }
+
+    static func rgb555Dither(_ rep: NSBitmapImageRep) {
+        // QuickDraw dithering algorithm.
+        // Half the error is diffused right on even rows, left on odd rows. The remainder is diffused down.
+        let rowBytes = rep.bytesPerRow // This is a computed property, only access it once.
+        var bitmap = rep.bitmapData!
+        for y in 0..<rep.pixelsHigh {
+            let even = y % 2 == 0
+            let row = even ? stride(from: 0, through: rowBytes-1, by: 1) : stride(from: rowBytes-1, through: 0, by: -1)
+            for x in row where x % 4 != 3 {
+                // To perfectly replicate QuickDraw we would simply take the error as the lower 3 bits of the value.
+                // This is not entirely accurate though and has the side-effect that repeat dithers will degrade the image.
+                // To fix this we subtract from that the upper 3 bits (which would be copied to the lower bits on restoration).
+                let error = Int(bitmap[x] & 0x7) - Int(bitmap[x] / 0x20)
+                if error != 0 {
+                    if even && x+4 < rowBytes {
+                        bitmap[x+4] = UInt8(clamping: Int(bitmap[x+4]) + error / 2)
+                    } else if !even && x > 0 {
+                        bitmap[x-4] = UInt8(clamping: Int(bitmap[x-4]) + error / 2)
+                    }
+                    if y+1 < rep.pixelsHigh {
+                        bitmap[x+rowBytes] = UInt8(clamping: Int(bitmap[x+rowBytes]) + (error+1) / 2)
+                    }
+                }
+            }
+            bitmap += rowBytes
+        }
     }
 }
 

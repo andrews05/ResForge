@@ -130,7 +130,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         let image = imageView.image!
         var rep = image.representations[0] as? NSBitmapImageRep ?? NSBitmapImageRep(data: image.tiffRepresentation!)!
         if flatten {
-            ImageFormat.removeTransparency(&rep)
+            ImageFormat.removeTransparency(rep)
         }
         if palette {
             ImageFormat.reduceTo256Colors(&rep)

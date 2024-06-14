@@ -61,14 +61,15 @@ struct PackBits<T: FixedWidthInteger> {
         }
     }
 
-    static func writeRow(_ row: UnsafeMutableBufferPointer<T>, writer: BinaryDataWriter, pixMap: PixelMap) {
+    static func writeRow(_ row: UnsafePointer<T>, writer: BinaryDataWriter, pixMap: PixelMap) {
         // For best performance we'll use a fixed size output buffer, rather than e.g. incrementally appending to Data
         // In case of incompressible data we need to allocate the whole row size plus a little extra
-        let rowBytes = pixMap.rowBytes
+        let rowBytes = pixMap.resolvedRowBytes
+        let inputSize = rowBytes * 8 / T.bitWidth
         withUnsafeTemporaryAllocation(of: UInt8.self, capacity: rowBytes + rowBytes/128 + 1) { outBuffer in
             let output = outBuffer.baseAddress!
-            let packLength = Self.encode(row, to: output)
-            if rowBytes > 250 {
+            let packLength = Self.encode(row, inputSize: inputSize, to: output)
+            if pixMap.rowBytes > 250 {
                 writer.write(UInt16(packLength))
             } else {
                 writer.write(UInt8(packLength))
@@ -77,11 +78,11 @@ struct PackBits<T: FixedWidthInteger> {
         }
     }
 
-    static func encode(_ input: UnsafeMutableBufferPointer<T>, to output: UnsafeMutableRawPointer) -> Int {
-        var inPos = input.baseAddress!
+    static func encode(_ input: UnsafePointer<T>, inputSize: Int, to output: UnsafeMutableRawPointer) -> Int {
+        var inPos = input
         var outPos = output
         let valSize = T.bitWidth / 8
-        let inputEnd = inPos + input.count - 1
+        let inputEnd = inPos + inputSize - 1
         // For 8-bit we want to avoid breaking a literal to make a run of 2, as it would generally be less efficient
         // For 16-bit we should always use runs where possible
         let inputEnd2 = valSize == 1 ? inputEnd - 1 : inPos

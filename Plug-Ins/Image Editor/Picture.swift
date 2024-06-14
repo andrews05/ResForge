@@ -299,7 +299,7 @@ extension Picture {
 
     private mutating func writeIndirectBits(_ writer: BinaryDataWriter) throws {
         ImageFormat.reduceTo256Colors(&imageRep)
-        var (pixMap, pixelData, colorTable) = try PixelMap.build(from: imageRep)
+        let (pixMap, pixelData, colorTable) = try PixelMap.build(from: imageRep)
         writer.write(PictOpcode.packBitsRect.rawValue)
         pixMap.write(writer, skipBaseAddr: true)
         ColorTable.write(writer, colors: colorTable)
@@ -309,11 +309,10 @@ extension Picture {
 
         let rowBytes = pixMap.rowBytes
         if rowBytes >= 8 {
-            pixelData.withUnsafeMutableBytes { inBuffer in
+            pixelData.withUnsafeBytes { inBuffer in
                 var input = inBuffer.assumingMemoryBound(to: UInt8.self).baseAddress!
                 for _ in 0..<imageRep.pixelsHigh {
-                    let inputRow = UnsafeMutableBufferPointer(start: input, count: rowBytes)
-                    PackBits<UInt8>.writeRow(inputRow, writer: writer, pixMap: pixMap)
+                    PackBits<UInt8>.writeRow(input, writer: writer, pixMap: pixMap)
                     input += rowBytes
                 }
             }
@@ -326,6 +325,9 @@ extension Picture {
     }
 
     private mutating func writeDirectBits(_ writer: BinaryDataWriter, rgb555: Bool = false) throws {
+        if rgb555 {
+            ImageFormat.rgb555Dither(imageRep)
+        }
         let pixMap = try PixelMap(for: imageRep, rgb555: rgb555)
         writer.write(PictOpcode.directBitsRect.rawValue)
         pixMap.write(writer)
@@ -345,7 +347,7 @@ extension Picture {
                         inBuffer[x + imageRep.pixelsWide * 2] = bitmap[2]
                         bitmap += 4
                     }
-                    PackBits<UInt8>.writeRow(inBuffer, writer: writer, pixMap: pixMap)
+                    PackBits<UInt8>.writeRow(inBuffer.baseAddress!, writer: writer, pixMap: pixMap)
                 }
             }
         case .rlePixel:
@@ -356,7 +358,7 @@ extension Picture {
                         inBuffer[x] = RGBColor(red: bitmap[0], green: bitmap[1], blue: bitmap[2]).rgb555().bigEndian
                         bitmap += 4
                     }
-                    PackBits<UInt16>.writeRow(inBuffer, writer: writer, pixMap: pixMap)
+                    PackBits<UInt16>.writeRow(inBuffer.baseAddress!, writer: writer, pixMap: pixMap)
                 }
             }
         case .none where pixMap.pixelSize == 16:
