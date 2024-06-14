@@ -1,15 +1,13 @@
 import AppKit
 import RFSupport
-import OrderedCollections
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=334
 
 struct PixelPattern {
     let format: ImageFormat
-    private let pixMap: QDPixMap
+    private let pixMap: PixelMap
     private let colorTable: [RGBColor]
     private let pixelData: Data
-    private let palette: OrderedSet<UInt32>?
 }
 
 extension PixelPattern {
@@ -17,22 +15,20 @@ extension PixelPattern {
         let pos = reader.bytesRead
         let pixPat = try QDPixPat(reader)
         try reader.setPosition(pos + Int(pixPat.patMap))
-        pixMap = try QDPixMap(reader)
+        pixMap = try PixelMap(reader)
         try reader.setPosition(pos + Int(pixMap.pmTable))
         colorTable = try ColorTable.read(reader)
         try reader.setPosition(pos + Int(pixPat.patData))
         pixelData = try reader.readData(length: pixMap.pixelDataSize)
-        palette = nil
         format = pixMap.format
     }
 
     init(imageRep: NSBitmapImageRep) throws {
-        var (pixMap, pixelData, palette) = try QDPixMap.build(from: imageRep)
-        pixMap.pmTable = QDPixPat.size + QDPixMap.size + UInt32(pixelData.count)
+        var (pixMap, pixelData, colorTable) = try PixelMap.build(from: imageRep)
+        pixMap.pmTable = QDPixPat.size + PixelMap.size + UInt32(pixelData.count)
         self.pixMap = pixMap
         self.pixelData = pixelData
-        self.palette = palette
-        colorTable = []
+        self.colorTable = colorTable
         format = pixMap.format
     }
 
@@ -41,7 +37,7 @@ extension PixelPattern {
         pixPat.write(writer)
         pixMap.write(writer)
         writer.writeData(pixelData)
-        ColorTable.write(writer, colors: palette!)
+        ColorTable.write(writer, colors: colorTable)
     }
 
     static func rep(_ data: Data, format: inout ImageFormat) -> NSBitmapImageRep? {
@@ -69,18 +65,18 @@ extension PixelPattern {
             try reader.setPosition(offsets[0])
             let ppat = try Self(reader)
             format = ppat.format
-            var bounds = ppat.pixMap.bounds
+            var destRect = QDRect(bottom: ppat.pixMap.bounds.height, right: ppat.pixMap.bounds.width)
             // Construct a rep that lines all the ppats up horizontally
-            let rep = ImageFormat.rgbaRep(width: bounds.width * count, height: bounds.height)
-            try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, in: bounds, from: ppat.pixMap.bounds)
+            let rep = ImageFormat.rgbaRep(width: destRect.width * count, height: destRect.height)
+            try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, in: destRect, from: ppat.pixMap.bounds)
 
             // Read and draw remaining ppats - assume they're all the same size as the first
             for offset in offsets[1...] {
                 try reader.setPosition(offset)
                 let ppat = try Self(reader)
-                bounds.left = bounds.right
-                bounds.right += ppat.pixMap.bounds.right
-                try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, in: bounds, from: ppat.pixMap.bounds)
+                destRect.left = destRect.right
+                destRect.right += ppat.pixMap.bounds.width
+                try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, in: destRect, from: ppat.pixMap.bounds)
             }
             return rep
         } catch {
@@ -104,7 +100,7 @@ struct QDPixPat {
     static let typeRGB: UInt16 = 0x0002
     var patType: UInt16 = Self.typeColor
     var patMap: UInt32 = Self.size
-    var patData: UInt32 = Self.size + QDPixMap.size
+    var patData: UInt32 = Self.size + PixelMap.size
     var patXData: UInt32 = 0
     var patXValid: Int16 = -1
     var patXMap: UInt32 = 0

@@ -2,18 +2,18 @@ import AppKit
 import RFSupport
 
 struct QDRect {
-    var top: Int16 = 0
-    var left: Int16 = 0
-    var bottom: Int16
-    var right: Int16
+    var top: Int = 0
+    var left: Int = 0
+    var bottom: Int
+    var right: Int
 }
 
 extension QDRect {
     init(_ reader: BinaryDataReader) throws {
-        top = try reader.read()
-        left = try reader.read()
-        bottom = try reader.read()
-        right = try reader.read()
+        top = Int(try reader.read() as Int16)
+        left = Int(try reader.read() as Int16)
+        bottom = Int(try reader.read() as Int16)
+        right = Int(try reader.read() as Int16)
         guard isValid else {
             throw ImageReaderError.invalid
         }
@@ -23,25 +23,22 @@ extension QDRect {
         guard rep.pixelsWide <= Int16.max, rep.pixelsHigh <= Int16.max else {
             throw ImageWriterError.tooBig
         }
-        bottom = Int16(rep.pixelsHigh)
-        right = Int16(rep.pixelsWide)
+        bottom = rep.pixelsHigh
+        right = rep.pixelsWide
     }
 
     func write(_ writer: BinaryDataWriter) {
-        writer.write(top)
-        writer.write(left)
-        writer.write(bottom)
-        writer.write(right)
+        writer.write(Int16(top))
+        writer.write(Int16(left))
+        writer.write(Int16(bottom))
+        writer.write(Int16(right))
     }
 
-    mutating func alignTo(_ point: QDPoint) throws {
-        top &-= point.y
-        left &-= point.x
-        bottom &-= point.y
-        right &-= point.x
-        guard isValid else {
-            throw ImageReaderError.invalid
-        }
+    mutating func alignTo(_ point: QDPoint) {
+        top -= point.y
+        left -= point.x
+        bottom -= point.y
+        right -= point.x
     }
 
     func contains(_ other: QDRect) -> Bool {
@@ -60,10 +57,10 @@ extension QDRect {
         QDPoint(x: left, y: top)
     }
     var width: Int {
-        Int(right) - Int(left)
+        right - left
     }
     var height: Int {
-        Int(bottom) - Int(top)
+        bottom - top
     }
     var isValid: Bool {
         bottom > top && right > left
@@ -71,18 +68,18 @@ extension QDRect {
 }
 
 struct QDPoint {
-    var x: Int16
-    var y: Int16
+    var x: Int
+    var y: Int
 }
 
 extension QDPoint {
     init(_ reader: BinaryDataReader) throws {
-        x = try reader.read()
-        y = try reader.read()
+        x = Int(try reader.read() as Int16)
+        y = Int(try reader.read() as Int16)
     }
 
     func write(_ writer: BinaryDataWriter) {
-        writer.write(x)
-        writer.write(y)
+        writer.write(Int16(x))
+        writer.write(Int16(y))
     }
 }

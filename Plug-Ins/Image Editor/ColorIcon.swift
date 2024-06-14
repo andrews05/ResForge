@@ -11,9 +11,9 @@ struct ColorIcon {
 
 extension ColorIcon {
     init(_ reader: BinaryDataReader) throws {
-        let pixMap = try QDPixMap(reader)
-        let maskMap = try QDPixMap(reader)
-        let bitMap = try QDPixMap(reader)
+        let pixMap = try PixelMap(reader)
+        let maskMap = try PixelMap(reader)
+        let bitMap = try PixelMap(reader)
         try reader.advance(4) // Skip data handle
         let mask = try reader.readData(length: maskMap.pixelDataSize)
         try reader.advance(bitMap.pixelDataSize) // Skip bitmap data
@@ -26,10 +26,10 @@ extension ColorIcon {
 
     mutating func write(_ writer: BinaryDataWriter) throws {
         imageRep = ImageFormat.normalize(imageRep)
-        let (pixMap, pixelData, palette) = try QDPixMap.build(from: imageRep)
+        let (pixMap, pixelData, palette) = try PixelMap.build(from: imageRep)
         let maskRowBytes = (imageRep.pixelsWide + 7) / 8
-        let maskMap = QDPixMap(rowBytesAndFlags: UInt16(maskRowBytes), bounds: pixMap.bounds)
-        let mask = QDPixMap.buildMask(from: imageRep)
+        let maskMap = PixelMap(rowBytes: maskRowBytes, bounds: pixMap.bounds)
+        let mask = PixelMap.buildMask(from: imageRep)
         pixMap.write(writer)
         maskMap.write(writer)
         maskMap.write(writer) // Repeat maskMap for bitMap

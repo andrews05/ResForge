@@ -88,9 +88,9 @@ extension QTImageDesc {
     }
 
     /// Construct a PixMap than can be used to blit pixel data.
-    func blitter(rowBytes: Int) -> QDPixMap {
-        return QDPixMap(bounds: QDRect(bottom: height, right: width),
-                        pixelSize: Int16(resolvedDepth),
-                        rowBytes: rowBytes)
+    func blitter(rowBytes: Int) -> PixelMap {
+        return PixelMap(rowBytes: rowBytes,
+                        bounds: QDRect(bottom: Int(height), right: Int(width)),
+                        pixelSize: Int16(resolvedDepth))
     }
 }

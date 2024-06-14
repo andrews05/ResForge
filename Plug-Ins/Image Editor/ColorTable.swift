@@ -1,6 +1,5 @@
 import Foundation
 import RFSupport
-import OrderedCollections
 
 struct ColorTable {
     static let device: UInt16 = 0x8000
@@ -31,15 +30,12 @@ struct ColorTable {
         return colors
     }
 
-    static func write(_ writer: BinaryDataWriter, colors: OrderedSet<UInt32>) {
+    static func write(_ writer: BinaryDataWriter, colors: [RGBColor]) {
         writer.advance(6) // skip seed and flags
         writer.write(Int16(colors.count - 1))
         for (i, color) in colors.enumerated() {
-            // Use the raw bytes of the UInt32
-            withUnsafeBytes(of: color) {
-                writer.write(Int16(i))
-                writer.writeData(Data([$0[0], $0[0], $0[1], $0[1], $0[2], $0[2]]))
-            }
+            writer.write(Int16(i))
+            writer.writeData(Data([color.red, color.red, color.green, color.green, color.blue, color.blue]))
         }
     }
 
@@ -73,6 +69,7 @@ struct RGBColor: Hashable, ExpressibleByArrayLiteral {
     var red: UInt8 = 0
     var green: UInt8 = 0
     var blue: UInt8 = 0
+    var alpha: UInt8 = 0xFF
 }
 
 extension RGBColor {

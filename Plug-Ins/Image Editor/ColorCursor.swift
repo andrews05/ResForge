@@ -12,7 +12,7 @@ extension ColorCursor {
     init(_ reader: BinaryDataReader) throws {
         let crsr = try QDCCrsr(reader)
         try reader.setPosition(Int(crsr.crsrMap))
-        let pixMap = try QDPixMap(reader)
+        let pixMap = try PixelMap(reader)
         try reader.setPosition(Int(pixMap.pmTable))
         let colorTable = try ColorTable.read(reader)
         try reader.setPosition(Int(crsr.crsrData))
@@ -37,7 +37,7 @@ struct QDCCrsr {
     static let typeColor: UInt16 = 0x8001
     var crsrType: UInt16 = Self.typeColor
     var crsrMap: UInt32 = Self.size
-    var crsrData: UInt32 = Self.size + QDPixMap.size
+    var crsrData: UInt32 = Self.size + PixelMap.size
     var crsrXData: UInt32 = 0
     var crsrXValid: Int16 = 0
     var crsrXHandle: UInt32 = 0

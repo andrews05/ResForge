@@ -2,7 +2,7 @@ import Foundation
 import RFSupport
 
 struct PackBits<T: FixedWidthInteger> {
-    static func readRows(reader: BinaryDataReader, pixMap: QDPixMap) throws -> Data {
+    static func readRows(reader: BinaryDataReader, pixMap: PixelMap) throws -> Data {
         var pixelData = Data(repeating: 0, count: pixMap.pixelDataSize)
         let rowBytes = pixMap.resolvedRowBytes
         try pixelData.withUnsafeMutableBytes { output in
@@ -61,7 +61,7 @@ struct PackBits<T: FixedWidthInteger> {
         }
     }
 
-    static func writeRow(_ row: UnsafeMutableBufferPointer<T>, writer: BinaryDataWriter, pixMap: QDPixMap) {
+    static func writeRow(_ row: UnsafeMutableBufferPointer<T>, writer: BinaryDataWriter, pixMap: PixelMap) {
         // For best performance we'll use a fixed size output buffer, rather than e.g. incrementally appending to Data
         // In case of incompressible data we need to allocate the whole row size plus a little extra
         let rowBytes = pixMap.rowBytes

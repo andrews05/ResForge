@@ -127,7 +127,7 @@ extension Picture {
     }
 
     private mutating func readIndirectBitsRect(_ reader: BinaryDataReader, packed: Bool, withMaskRegion: Bool) throws {
-        let pixMap = try QDPixMap(reader, skipBaseAddr: true)
+        let pixMap = try PixelMap(reader, skipBaseAddr: true)
         format = pixMap.format
         let colorTable = if pixMap.isPixmap {
             try ColorTable.read(reader)
@@ -153,7 +153,7 @@ extension Picture {
     }
 
     private mutating func readDirectBits(_ reader: BinaryDataReader, withMaskRegion: Bool) throws {
-        let pixMap = try QDPixMap(reader)
+        let pixMap = try PixelMap(reader)
         format = pixMap.format
 
         let (srcRect, destRect) = try self.readSrcAndDestRects(reader)
@@ -195,8 +195,11 @@ extension Picture {
             srcRect.right -= destRect.right - clipRect.right
             destRect.right = clipRect.right
         }
+        guard destRect.isValid else {
+            throw ImageReaderError.invalid
+        }
         // Align dest rect to the origin
-        try destRect.alignTo(origin)
+        destRect.alignTo(origin)
         return (srcRect, destRect)
     }
 
@@ -207,8 +210,9 @@ extension Picture {
     }
 
     private mutating func readOrigin(_ reader: BinaryDataReader) throws {
-        origin.x &+= try reader.read()
-        origin.y &+= try reader.read()
+        let delta = try QDPoint(reader)
+        origin.x += delta.x
+        origin.y += delta.y
     }
 
     private func skipRegion(_ reader: BinaryDataReader) throws {
@@ -266,7 +270,7 @@ extension Picture {
         writer.write(PictOpcode.versionOp.rawValue)
         writer.write(PictOpcode.version.rawValue)
         writer.write(PictOpcode.headerOp.rawValue)
-        writer.write(Self.version2)
+        writer.write(Self.extendedVersion2)
         writer.advance(2) // reserved
         writer.write(0x00480000 as UInt32) // hRes
         writer.write(0x00480000 as UInt32) // vRes
@@ -295,7 +299,7 @@ extension Picture {
 
     private mutating func writeIndirectBits(_ writer: BinaryDataWriter) throws {
         ImageFormat.reduceTo256Colors(&imageRep)
-        var (pixMap, pixelData, colorTable) = try QDPixMap.build(from: imageRep)
+        var (pixMap, pixelData, colorTable) = try PixelMap.build(from: imageRep)
         writer.write(PictOpcode.packBitsRect.rawValue)
         pixMap.write(writer, skipBaseAddr: true)
         ColorTable.write(writer, colors: colorTable)
@@ -322,7 +326,7 @@ extension Picture {
     }
 
     private mutating func writeDirectBits(_ writer: BinaryDataWriter, rgb555: Bool = false) throws {
-        let pixMap = try QDPixMap(for: imageRep, rgb555: rgb555)
+        let pixMap = try PixelMap(for: imageRep, rgb555: rgb555)
         writer.write(PictOpcode.directBitsRect.rawValue)
         pixMap.write(writer)
         pixMap.bounds.write(writer) // source rect

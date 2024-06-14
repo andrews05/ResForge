@@ -4,13 +4,14 @@ import OrderedCollections
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=322
 
-struct QDPixMap {
+struct PixelMap {
     static let size: UInt32 = 50
     static let pixmap: UInt16 = 0x8000
     static let rgbDirect: Int16 = 16
 
     var baseAddr: UInt32 = 0
-    var rowBytesAndFlags: UInt16 = 0
+    var rowBytes = 0
+    var isPixmap = false
     var bounds: QDRect
     var pmVersion: Int16 = 0
     var packType: PackType = .default
@@ -24,15 +25,9 @@ struct QDPixMap {
     var planeBytes: Int32 = 0
     var pmTable: UInt32 = 0
     var pmReserved: UInt32 = 0
-
-    /// The underlying number of row bytes, excluding flag bits.
-    var rowBytes = 0
 }
 
-extension QDPixMap {
-    var isPixmap: Bool {
-        rowBytesAndFlags & Self.pixmap == Self.pixmap
-    }
+extension PixelMap {
     /// For direct pixels, the actual packing type used.
     var resolvedPackType: PackType {
         // Row bytes less than 8 is never packed
@@ -69,7 +64,9 @@ extension QDPixMap {
         if !skipBaseAddr {
             baseAddr = try reader.read()
         }
-        rowBytesAndFlags = try reader.read()
+        let rowBytesAndFlags = try reader.read() as UInt16
+        rowBytes = Int(rowBytesAndFlags & 0x3FFF)
+        isPixmap = rowBytesAndFlags & Self.pixmap == Self.pixmap
         bounds = try QDRect(reader)
 
         // If the PixMap is actually a BitMap, don't read any further
@@ -87,8 +84,6 @@ extension QDPixMap {
             pmTable = try reader.read()
             pmReserved = try reader.read()
         }
-        // 2 high bits are flags
-        rowBytes = Int(rowBytesAndFlags & 0x3FFF)
 
         guard pmVersion == 0 || pmVersion == 4,
               packSize == 0
@@ -122,7 +117,7 @@ extension QDPixMap {
 
     func imageRep(pixelData: Data, colorTable: [RGBColor]? = nil, mask: Data? = nil) throws -> NSBitmapImageRep {
         let rep = ImageFormat.rgbaRep(width: bounds.width, height: bounds.height)
-        let destRect = QDRect(bottom: Int16(bounds.height), right: Int16(bounds.width))
+        let destRect = QDRect(bottom: bounds.height, right: bounds.width)
         try self.draw(pixelData, colorTable: colorTable, to: rep, in: destRect, from: bounds)
 
         if let mask {
@@ -148,11 +143,11 @@ extension QDPixMap {
 
         // Align source rect to bounds
         var srcRect = srcRect
-        try srcRect.alignTo(bounds.origin)
+        srcRect.alignTo(bounds.origin)
 
-        let yRange = Int(srcRect.top)..<Int(srcRect.bottom)
-        let xRange = Int(srcRect.left)..<Int(srcRect.right)
-        var bitmap = rep.bitmapData! + Int(destRect.top) * rep.bytesPerRow + Int(destRect.left) * 4
+        let yRange = srcRect.top..<srcRect.bottom
+        let xRange = srcRect.left..<srcRect.right
+        var bitmap = rep.bitmapData! + destRect.top * rep.bytesPerRow + destRect.left * 4
         let rowBytes = resolvedRowBytes
 
         // Access the raw pixel buffer for best performance
@@ -253,7 +248,7 @@ extension QDPixMap {
 
 // MARK: Writer
 
-extension QDPixMap {
+extension PixelMap {
     init(for rep: NSBitmapImageRep, rgb555: Bool = false) throws {
         bounds = try QDRect(for: rep)
         rowBytes = rep.pixelsWide * (rgb555 ? 2 : 4)
@@ -261,7 +256,8 @@ extension QDPixMap {
             throw ImageWriterError.tooBig
         }
 
-        rowBytesAndFlags = UInt16(rowBytes) | Self.pixmap
+        baseAddr = 0x000000FF // Not required but standard practice
+        isPixmap = true
         packType = rgb555 ? .rlePixel : .rleComponent
         pixelType = Self.rgbDirect
         pixelSize = rgb555 ? 16 : 32
@@ -273,40 +269,42 @@ extension QDPixMap {
         if !skipBaseAddr {
             writer.write(baseAddr)
         }
+        var rowBytesAndFlags = UInt16(rowBytes)
+        if isPixmap {
+            rowBytesAndFlags |= Self.pixmap
+        }
         writer.write(rowBytesAndFlags)
         bounds.write(writer)
 
-        // If this is bitmap rather than a pixmap then stop here
-        if rowBytesAndFlags & Self.pixmap == 0 {
-            return
+        // If the PixMap is actually a BitMap, don't write any more
+        if isPixmap {
+            writer.write(pmVersion)
+            writer.write(packType.rawValue)
+            writer.write(packSize)
+            writer.write(hRes)
+            writer.write(vRes)
+            writer.write(pixelType)
+            writer.write(pixelSize)
+            writer.write(cmpCount)
+            writer.write(cmpSize)
+            writer.write(planeBytes)
+            writer.write(pmTable)
+            writer.write(pmReserved)
         }
-
-        writer.write(pmVersion)
-        writer.write(packType.rawValue)
-        writer.write(packSize)
-        writer.write(hRes)
-        writer.write(vRes)
-        writer.write(pixelType)
-        writer.write(pixelSize)
-        writer.write(cmpCount)
-        writer.write(cmpSize)
-        writer.write(planeBytes)
-        writer.write(pmTable)
-        writer.write(pmReserved)
     }
 
-    static func build(from rep: NSBitmapImageRep) throws -> (pixMap: Self, pixelData: Data, colorTable: OrderedSet<UInt32>) {
+    static func build(from rep: NSBitmapImageRep) throws -> (pixMap: Self, pixelData: Data, colorTable: [RGBColor]) {
         let rep = ImageFormat.normalize(rep)
         let bounds = try QDRect(for: rep)
 
         // Iterate the pixels as UInt32 and construct the color table and pixel data
         let pixelCount = rep.pixelsWide * rep.pixelsHigh
         var pixelData = Data(repeating: 0, count: pixelCount)
-        var colorTable = OrderedSet<UInt32>()
-        rep.bitmapData!.withMemoryRebound(to: UInt32.self, capacity: pixelCount) { pixels in
+        var colorTable = OrderedSet<RGBColor>()
+        rep.bitmapData!.withMemoryRebound(to: RGBColor.self, capacity: pixelCount) { pixels in
             for i in 0..<pixelCount {
                 // Skip transparent pixels - this can avoid storing unnecessary colors in the palette
-                if !rep.hasAlpha || UInt32(bigEndian: pixels[i]) & 0xFF != 0 {
+                if !rep.hasAlpha || pixels[i].alpha != 0 {
                     let (_, index) = colorTable.append(pixels[i])
                     pixelData[i] = UInt8(index)
                 }
@@ -350,14 +348,14 @@ extension QDPixMap {
         }
 
         // Create the PixMap
-        let pixMap = Self(rowBytesAndFlags: UInt16(rowBytes) | Self.pixmap,
+        let pixMap = Self(rowBytes: rowBytes,
+                          isPixmap: true,
                           bounds: bounds,
                           pixelType: 0,
                           pixelSize: Int16(pixelSize),
                           cmpCount: 1,
-                          cmpSize: Int16(pixelSize),
-                          rowBytes: rowBytes)
-        return (pixMap, pixelData, colorTable)
+                          cmpSize: Int16(pixelSize))
+        return (pixMap, pixelData, Array(colorTable))
     }
 
     static func buildMask(from rep: NSBitmapImageRep) -> Data {
