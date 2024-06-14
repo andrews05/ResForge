@@ -66,7 +66,7 @@ extension QDRect {
         Int(bottom) - Int(top)
     }
     var isValid: Bool {
-        bottom >= top && right >= left
+        bottom > top && right > left
     }
 }
 

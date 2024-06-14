@@ -8,6 +8,15 @@ class Icons {
         return self.colorRep(data, width: width, height: height, depth: depth)
     }
 
+    static func multiRep(_ data: Data, width: Int, height: Int, depth: Int) -> NSBitmapImageRep? {
+        guard data.count > 1 else {
+            return nil
+        }
+        // This just stacks all the patterns vertically
+        let count = Int(data[data.startIndex + 1])
+        return Self.rep(data.dropFirst(2), width: width, height: height * count, depth: depth)
+    }
+
     private static func bwRep(_ data: Data, width: Int, height: Int) -> NSBitmapImageRep? {
         let bytesPerRow = width / 8
         let planeLength = bytesPerRow * height

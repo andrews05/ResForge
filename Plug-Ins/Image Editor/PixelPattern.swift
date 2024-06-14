@@ -1,35 +1,47 @@
 import AppKit
 import RFSupport
+import OrderedCollections
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=334
 
 struct PixelPattern {
-    var imageRep: NSBitmapImageRep
-    var format: ImageFormat = .unknown
+    let format: ImageFormat
+    private let pixMap: QDPixMap
+    private let colorTable: [RGBColor]
+    private let pixelData: Data
+    private let palette: OrderedSet<UInt32>?
 }
 
 extension PixelPattern {
     init(_ reader: BinaryDataReader) throws {
+        let pos = reader.bytesRead
         let pixPat = try QDPixPat(reader)
-        try reader.setPosition(Int(pixPat.patMap))
-        let pixMap = try QDPixMap(reader)
-        try reader.setPosition(Int(pixMap.pmTable))
-        let colorTable = try ColorTable.read(reader)
-        try reader.setPosition(Int(pixPat.patData))
-        let pixelData = try reader.readData(length: pixMap.pixelDataSize)
-        imageRep = try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable)
+        try reader.setPosition(pos + Int(pixPat.patMap))
+        pixMap = try QDPixMap(reader)
+        try reader.setPosition(pos + Int(pixMap.pmTable))
+        colorTable = try ColorTable.read(reader)
+        try reader.setPosition(pos + Int(pixPat.patData))
+        pixelData = try reader.readData(length: pixMap.pixelDataSize)
+        palette = nil
+        format = pixMap.format
+    }
+
+    init(imageRep: NSBitmapImageRep) throws {
+        var (pixMap, pixelData, palette) = try QDPixMap.build(from: imageRep)
+        pixMap.pmTable = QDPixPat.size + QDPixMap.size + UInt32(pixelData.count)
+        self.pixMap = pixMap
+        self.pixelData = pixelData
+        self.palette = palette
+        colorTable = []
         format = pixMap.format
     }
 
     mutating func write(_ writer: BinaryDataWriter) throws {
         let pixPat = QDPixPat()
-        var (pixMap, pixelData, palette) = try QDPixMap.build(from: imageRep)
-        pixMap.pmTable = QDPixPat.size + QDPixMap.size + UInt32(pixelData.count)
         pixPat.write(writer)
         pixMap.write(writer)
         writer.writeData(pixelData)
-        ColorTable.write(writer, colors: palette)
-        format = pixMap.format
+        ColorTable.write(writer, colors: palette!)
     }
 
     static func rep(_ data: Data, format: inout ImageFormat) -> NSBitmapImageRep? {
@@ -38,11 +50,46 @@ extension PixelPattern {
             return nil
         }
         format = ppat.format
-        return ppat.imageRep
+        return try? ppat.pixMap.imageRep(pixelData: ppat.pixelData, colorTable: ppat.colorTable)
+    }
+
+    static func multiRep(_ data: Data, format: inout ImageFormat) -> NSBitmapImageRep? {
+        do {
+            let reader = BinaryDataReader(data)
+            let count = Int(try reader.read() as Int16)
+            guard count > 0 else {
+                return nil
+            }
+            var offsets: [Int] = []
+            for _ in 0..<count {
+                offsets.append(Int(try reader.read() as UInt32))
+            }
+
+            // Read first ppat
+            try reader.setPosition(offsets[0])
+            let ppat = try Self(reader)
+            format = ppat.format
+            var bounds = ppat.pixMap.bounds
+            // Construct a rep that lines all the ppats up horizontally
+            let rep = ImageFormat.rgbaRep(width: bounds.width * count, height: bounds.height)
+            try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, in: bounds, from: ppat.pixMap.bounds)
+
+            // Read and draw remaining ppats - assume they're all the same size as the first
+            for offset in offsets[1...] {
+                try reader.setPosition(offset)
+                let ppat = try Self(reader)
+                bounds.left = bounds.right
+                bounds.right += ppat.pixMap.bounds.right
+                try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, in: bounds, from: ppat.pixMap.bounds)
+            }
+            return rep
+        } catch {
+            return nil
+        }
     }
 
     static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) throws -> Data {
-        var ppat = Self(imageRep: rep)
+        var ppat = try Self(imageRep: rep)
         let writer = BinaryDataWriter()
         try ppat.write(writer)
         format = ppat.format
