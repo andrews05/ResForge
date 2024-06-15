@@ -40,8 +40,9 @@ class BulkController: OutlineController {
 
     init(document: ResourceDocument) {
         super.init()
-        self.outlineView = NSOutlineView(frame: NSRect(x: 0, y: 0, width: 500, height: 500))
         self.document = document
+        scrollView = NSScrollView()
+        outlineView = NSOutlineView()
 
         idCol.headerCell.title = "ID"
         idCol.width = 64
@@ -62,6 +63,8 @@ class BulkController: OutlineController {
         outlineView.dataSource = self
         outlineView.target = self
         outlineView.doubleAction = #selector(doubleClickItems(_:))
+        scrollView.documentView = outlineView
+        scrollView.usesPredominantAxisScrolling = false
     }
 
     @IBAction func doubleClickItems(_ sender: Any) {
@@ -93,7 +96,8 @@ class BulkController: OutlineController {
         }
         outlineView.sortDescriptors = [idCol.sortDescriptorPrototype!]
         document.directory.sorter = nil
-        return outlineView
+        outlineView.scrollToBeginningOfDocument(self)
+        return scrollView
     }
 
     override func reload() {

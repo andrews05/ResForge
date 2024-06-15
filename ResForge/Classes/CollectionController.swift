@@ -2,6 +2,7 @@ import AppKit
 import RFSupport
 
 class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionViewDataSource, ResourcesView {
+    @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var collectionView: ResourceCollection!
     @IBOutlet weak var document: ResourceDocument!
     private var currentType: ResourceType!
@@ -12,7 +13,8 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
             collectionView.maxSize = PluginRegistry.previewProviders[type.code]!.maxThumbnailSize(for: type.code)
             document.directory.sorter = nil
         }
-        return collectionView
+        collectionView.scroll(.zero)
+        return scrollView
     }
 
     func reload() {
@@ -70,10 +72,12 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
                 }
             } else {
                 collectionView.animator().deleteItems(at: [old])
+                NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
             }
         } else if let newIndex {
             let new: IndexPath = [0, newIndex]
             collectionView.animator().insertItems(at: [new])
+            NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
         }
     }
 
@@ -87,6 +91,14 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
         for i in indexes {
             collectionView.item(at: i)?.view.isHidden = false
         }
+    }
+
+    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+        NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
+    }
+
+    func collectionView(_ collectionView: NSCollectionView, didDeselectItemsAt indexPaths: Set<IndexPath>) {
+        NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
     }
 
     // MARK: - DataSource functions
@@ -165,19 +177,10 @@ class ResourceCollection: NSCollectionView {
         }
     }
 
-    // The delegate selection change callbacks are insufficient - best to trigger notification ourselves.
-    override func didChangeValue(forKey key: String) {
-        super.didChangeValue(forKey: key)
-        if key == "selectionIndexPaths", let document = (self.delegate as? CollectionController)?.document {
-            NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
-        }
-    }
-
-    // Programmatic selection for some reason isn't KVO compliant - override to fix this.
+    // Programmatic selection for some reason doesn't notify the delegate - override to fix this.
     override func selectItems(at indexPaths: Set<IndexPath>, scrollPosition: NSCollectionView.ScrollPosition) {
-        self.willChangeValue(for: \.selectionIndexPaths)
         super.selectItems(at: indexPaths, scrollPosition: scrollPosition)
-        self.didChangeValue(for: \.selectionIndexPaths)
+        delegate?.collectionView?(self, didSelectItemsAt: indexPaths)
     }
 
     // Detect clicks only the image or text

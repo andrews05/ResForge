@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,7 +22,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="600" y="600" width="480" height="400"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
             <value key="minSize" type="size" width="350" height="200"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
@@ -190,7 +190,7 @@
                                             <constraint firstItem="Q4E-xX-ZRY" firstAttribute="leading" secondItem="Gn3-yc-Oy0" secondAttribute="leading" constant="-1" id="ler-nK-wgK"/>
                                         </constraints>
                                     </customView>
-                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" findBarPosition="aboveHorizontalRuler" id="146">
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" findBarPosition="aboveHorizontalRuler" id="146">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="353"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <clipView key="contentView" id="wBO-8u-DWd">
@@ -469,8 +469,8 @@
                 <outlet property="collectionController" destination="bpN-Hx-BgR" id="Szf-ze-LIG"/>
                 <outlet property="document" destination="-2" id="121"/>
                 <outlet property="outlineController" destination="KZo-Ug-Xhc" id="Aov-yV-BjU"/>
-                <outlet property="scrollView" destination="146" id="QYq-XB-rik"/>
                 <outlet property="splitView" destination="P36-7u-Lzi" id="BCv-y2-KAq"/>
+                <outlet property="stackView" destination="Hdo-SJ-bNv" id="D7l-zc-sSQ"/>
                 <outlet property="typeList" destination="u10-wc-uhV" id="23Z-LS-Zzh"/>
             </connections>
         </customObject>
@@ -478,28 +478,16 @@
             <connections>
                 <outlet property="document" destination="-2" id="v0M-hs-4Ud"/>
                 <outlet property="outlineView" destination="145" id="xnq-a5-pCf"/>
+                <outlet property="scrollView" destination="146" id="0th-TB-w5K"/>
             </connections>
         </customObject>
         <customObject id="bpN-Hx-BgR" customClass="CollectionController" customModule="ResForge" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="XSg-qL-KmL" id="tda-kJ-ynm"/>
+                <outlet property="collectionView" destination="DiS-hq-bvl" id="pUm-Cs-857"/>
                 <outlet property="document" destination="-2" id="oZ5-YA-qgn"/>
+                <outlet property="scrollView" destination="f4D-Zh-16w" id="5YX-bV-CvX"/>
             </connections>
         </customObject>
-        <collectionView selectable="YES" allowsMultipleSelection="YES" id="XSg-qL-KmL" customClass="ResourceCollection" customModule="ResForge" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="250" height="158"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="Pxt-Mn-njY">
-                <size key="itemSize" width="72" height="90"/>
-                <edgeInsets key="sectionInset" left="10" right="10" top="5" bottom="10"/>
-            </collectionViewFlowLayout>
-            <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-            <connections>
-                <outlet property="dataSource" destination="bpN-Hx-BgR" id="Ed4-38-yxI"/>
-                <outlet property="delegate" destination="bpN-Hx-BgR" id="sYY-eI-Fvh"/>
-            </connections>
-            <point key="canvasLocation" x="142" y="548"/>
-        </collectionView>
         <customView id="NJ7-dE-jnk">
             <rect key="frame" x="0.0" y="0.0" width="431" height="54"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
@@ -514,9 +502,6 @@
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jdg-6c-adz">
                     <rect key="frame" x="59" y="21" width="87" height="25"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="1lc-0J-hmx"/>
-                    </constraints>
                     <popUpButtonCell key="cell" type="push" title="TMPB" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="iyv-47-u8x" id="auW-VP-huj">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -528,6 +513,9 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="1lc-0J-hmx"/>
+                    </constraints>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="BwV-QO-fCM">
                     <rect key="frame" x="148" y="12" width="265" height="32"/>
@@ -557,6 +545,38 @@
                 <outlet property="typeSelect" destination="jdg-6c-adz" id="Ru5-xd-o51"/>
             </connections>
         </customObject>
+        <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="f4D-Zh-16w">
+            <rect key="frame" x="0.0" y="0.0" width="250" height="160"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <clipView key="contentView" id="14E-2K-osY">
+                <rect key="frame" x="0.0" y="0.0" width="250" height="160"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <collectionView selectable="YES" allowsMultipleSelection="YES" id="DiS-hq-bvl" customClass="ResourceCollection" customModule="ResForge" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="158"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="rhL-gT-yuu">
+                            <size key="itemSize" width="72" height="90"/>
+                            <edgeInsets key="sectionInset" left="10" right="10" top="5" bottom="10"/>
+                        </collectionViewFlowLayout>
+                        <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <connections>
+                            <outlet property="dataSource" destination="bpN-Hx-BgR" id="1kd-ts-bEA"/>
+                            <outlet property="delegate" destination="bpN-Hx-BgR" id="Ul5-VT-8lh"/>
+                        </connections>
+                    </collectionView>
+                </subviews>
+            </clipView>
+            <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="xnv-VZ-eQf">
+                <rect key="frame" x="1" y="144" width="233" height="15"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </scroller>
+            <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="3IQ-wT-EOB">
+                <rect key="frame" x="234" y="1" width="15" height="143"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </scroller>
+            <point key="canvasLocation" x="145" y="520"/>
+        </scrollView>
     </objects>
     <resources>
         <image name="NSStatusAvailable" width="16" height="16"/>

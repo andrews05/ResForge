@@ -4,7 +4,7 @@ import RFSupport
 class ResourceDataSource: NSObject {
     @IBOutlet var splitView: NSSplitView!
     @IBOutlet var typeList: NSOutlineView!
-    @IBOutlet var scrollView: NSScrollView!
+    @IBOutlet var stackView: NSStackView!
     @IBOutlet var outlineController: StandardController!
     @IBOutlet var collectionController: CollectionController!
     lazy var bulkController = BulkController(document: document)
@@ -86,14 +86,11 @@ class ResourceDataSource: NSObject {
             rView.reload()
             if rView !== resourcesView {
                 resourcesView = rView
-                scrollView.documentView = view
-                scrollView.window?.initialFirstResponder = view
-                scrollView.window?.makeFirstResponder(view)
-                // Elasticity doesn't work well in 2 dimensions
-                scrollView.verticalScrollElasticity = isBulkMode ? .none : .automatic
+                stackView.removeView(stackView.views.last!)
+                stackView.addView(view, in: .bottom)
+                view.window?.initialFirstResponder = view
+                view.window?.makeFirstResponder(view)
             }
-            // The outline header interferes with the scroll position, make sure we return to top
-            (view as? NSOutlineView)?.scrollToBeginningOfDocument(self)
             if retainSelection {
                 resourcesView.select(selected)
             }
@@ -251,7 +248,7 @@ extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
     // Allow changing type by drag and drop onto a different type
     func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
         if let type = item as? ResourceType, type != currentType
-            && (info.draggingSource as? NSView)?.enclosingScrollView === scrollView {
+            && (info.draggingSource as? NSView)?.window === outlineView.window {
             return .move
         }
         return []

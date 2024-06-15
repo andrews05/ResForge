@@ -2,13 +2,14 @@ import AppKit
 import RFSupport
 
 class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource, ResourcesView {
+    @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var outlineView: NSOutlineView!
     @IBOutlet weak var document: ResourceDocument!
     var currentType: ResourceType?
 
     func prepareView(type: ResourceType?) throws -> NSView {
         currentType = type
-        return outlineView
+        return scrollView
     }
 
     func reload() {
