@@ -90,6 +90,10 @@ public class PluginRegistry {
                 if let string = String(data: resource.data.prefix(100), encoding: .macOSRoman) {
                     placeholder = string
                 }
+            case "utxt":
+                if let string = String(data: resource.data.prefix(100), encoding: .utf8) {
+                    placeholder = string
+                }
             case "vers":
                 // Read short version string at offset 6
                 placeholder = try BinaryDataReader(resource.data.dropFirst(6)).readPString()
