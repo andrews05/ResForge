@@ -19,7 +19,7 @@ class ResourceDataSource: NSObject {
     }
     private(set) var useTypeList = false {
         didSet {
-            splitView.setPosition(useTypeList ? 110 : 0, ofDividerAt: 0)
+            splitView.setPosition(useTypeList ? 116 : 0, ofDividerAt: 0)
             self.reload(selecting: self.selectedResources())
         }
     }
