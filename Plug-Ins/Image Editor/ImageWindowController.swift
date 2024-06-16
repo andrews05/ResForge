@@ -78,14 +78,20 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
 
         if resource.typeCode == "PICT" {
             // Set up the format selection menu
-            let item24 = NSMenuItem(title: "24-bit RGB", action: #selector(self.setFormat(_:)), keyEquivalent: "")
-            item24.tag = 24
-            let item16 = NSMenuItem(title: "16-bit RGB", action: #selector(self.setFormat(_:)), keyEquivalent: "")
-            item16.tag = 16
-            let item8 = NSMenuItem(title: "Indexed (best depth)", action: #selector(self.setFormat(_:)), keyEquivalent: "")
-            item8.tag = 8
+            let rgb24 = NSMenuItem(title: "24-bit RGB", action: #selector(self.setFormat(_:)), keyEquivalent: "")
+            rgb24.tag = 24
+            let rgb16 = NSMenuItem(title: "16-bit RGB", action: #selector(self.setFormat(_:)), keyEquivalent: "")
+            rgb16.tag = 16
+            let indexed = NSMenuItem(title: "Indexed (best depth)", action: #selector(self.setFormat(_:)), keyEquivalent: "")
+            indexed.tag = 8
+            let mono = NSMenuItem(title: "Monochrome", action: #selector(self.setFormat(_:)), keyEquivalent: "")
+            mono.tag = 1
+            let png = NSMenuItem(title: "24-bit PNG", action: #selector(self.setFormat(_:)), keyEquivalent: "")
+            png.tag = Int(QTImageDesc.png)
+            let jpeg = NSMenuItem(title: "24-bit JPEG", action: #selector(self.setFormat(_:)), keyEquivalent: "")
+            jpeg.tag = Int(QTImageDesc.jpeg)
             formatsMenu = NSMenu()
-            formatsMenu?.items = [item24, item16, item8]
+            formatsMenu?.items = [rgb24, rgb16, indexed, mono, png, jpeg]
         }
 
         self.loadImage()
@@ -229,12 +235,16 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     @IBAction func setFormat(_ sender: NSMenuItem) {
         modifyBitmap { rep in
             switch sender.tag {
+            case 1:
+                format = ImageFormat.reduceToMono(&rep)
             case 8:
                 format = ImageFormat.reduceTo256Colors(&rep)
             case 16:
                 format = ImageFormat.rgb555Dither(rep)
+            case 24:
+                format = .color(24)
             default:
-                format = .color(sender.tag)
+                format = .quickTime(UInt32(sender.tag), 24)
             }
         }
     }

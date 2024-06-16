@@ -67,6 +67,15 @@ public class BinaryDataWriter {
         data.append(encoded)
     }
 
+    public func writePString(_ value: String, encoding: String.Encoding = .macOSRoman, fixedSize: Int) throws {
+        guard let encoded = value.data(using: encoding), encoded.count <= UInt8.max, encoded.count < fixedSize else {
+            throw BinaryDataWriterError.stringEncodeFailure
+        }
+        data.append(UInt8(encoded.count))
+        data.append(encoded)
+        self.advance(fixedSize - encoded.count - 1)
+    }
+
     public func writeStruct(_ value: Any, bigEndian: Bool? = nil) throws {
         let mirror = Mirror(reflecting: value)
         if mirror.displayStyle != .struct {

@@ -227,18 +227,15 @@ extension Picture {
     }
 
     private mutating func readQuickTime(_ reader: BinaryDataReader) throws {
-        // https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#509
-        let size = Int(try reader.read() as Int32)
-        guard size > 0 else {
-            throw ImageReaderError.invalid
-        }
+        // https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#484
+        let size = Int(try reader.read() as UInt32)
 
         // Construct a new reader constrained to the specified size
         let reader = BinaryDataReader(try reader.readData(length: size))
         try reader.advance(2 + 36) // version, matrix
-        let matteSize = Int(try reader.read() as Int32)
+        let matteSize = Int(try reader.read() as UInt32)
         try reader.advance(8 + 2 + 8 + 4) // matteRect, transferMode, srcRect, accuracy
-        let maskSize = Int(try reader.read() as Int32)
+        let maskSize = Int(try reader.read() as UInt32)
         if matteSize > 0 {
             try reader.advance(matteSize)
         }
@@ -263,6 +260,14 @@ extension Picture {
         origin = frame.origin
     }
 
+    static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) throws -> Data {
+        var pict = try Self(imageRep: rep)
+        let writer = BinaryDataWriter()
+        try pict.write(writer, format: format)
+        format = pict.format
+        return writer.data
+    }
+
     mutating func write(_ writer: BinaryDataWriter, format: ImageFormat) throws {
         // Header
         writer.advance(2) // v1 size
@@ -283,13 +288,20 @@ extension Picture {
         clipRect.write(writer)
 
         // Image data
+        self.format = format
         switch format {
+        case .monochrome:
+            try self.writeIndirectBits(writer, mono: true)
         case let .color(depth) where depth <= 8:
             try self.writeIndirectBits(writer)
         case .color(16):
             try self.writeDirectBits(writer, rgb555: true)
-        default:
+        case .color(24):
             try self.writeDirectBits(writer)
+        case let .quickTime(compressor, _):
+            try self.writeQuickTime(writer, compressor: compressor)
+        default:
+            throw ImageWriterError.unsupported
         }
 
         // Align and end
@@ -297,11 +309,19 @@ extension Picture {
         writer.write(PictOpcode.opEndPicture.rawValue)
     }
 
-    private mutating func writeIndirectBits(_ writer: BinaryDataWriter) throws {
-        let (pixMap, pixelData, colorTable) = try PixelMap.build(from: imageRep)
+    private mutating func writeIndirectBits(_ writer: BinaryDataWriter, mono: Bool = false) throws {
         writer.write(PictOpcode.packBitsRect.rawValue)
-        pixMap.write(writer, skipBaseAddr: true)
-        ColorTable.write(writer, colors: colorTable)
+        var (pixMap, pixelData, colorTable) = try PixelMap.build(from: imageRep, startingColors: mono ? ColorTable.system1 : nil)
+        if mono {
+            guard colorTable.count == 2 else {
+                throw ImageWriterError.tooManyColors
+            }
+            pixMap.isPixmap = false
+            pixMap.write(writer, skipBaseAddr: true)
+        } else {
+            pixMap.write(writer, skipBaseAddr: true)
+            ColorTable.write(writer, colors: colorTable)
+        }
         pixMap.bounds.write(writer) // source rect
         frame.write(writer) // dest rect
         writer.advance(2) // transfer mode (0 = Source Copy)
@@ -319,11 +339,11 @@ extension Picture {
             writer.writeData(pixelData)
         }
 
-        // Update format
+        // Update format (may be different than what was specified)
         format = pixMap.format
     }
 
-    private mutating func writeDirectBits(_ writer: BinaryDataWriter, rgb555: Bool = false) throws {
+    private func writeDirectBits(_ writer: BinaryDataWriter, rgb555: Bool = false) throws {
         let pixMap = try PixelMap(for: imageRep, rgb555: rgb555)
         writer.write(PictOpcode.directBitsRect.rawValue)
         pixMap.write(writer)
@@ -368,17 +388,20 @@ extension Picture {
             writer.advance(1)
             writer.data.append(bitmap, count: imageRep.bytesPerPlane-1)
         }
-
-        // Update format
-        format = pixMap.format
     }
 
-    static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) throws -> Data {
-        var pict = try Self(imageRep: rep)
-        let writer = BinaryDataWriter()
-        try pict.write(writer, format: format)
-        format = pict.format
-        return writer.data
+    private func writeQuickTime(_ writer: BinaryDataWriter, compressor: UInt32) throws {
+        writer.write(PictOpcode.compressedQuickTime.rawValue)
+        writer.advance(4) // Size will be written later
+        let start = writer.bytesWritten
+        writer.advance(2 + 36) // version, matrix
+        writer.advance(4) // matteSize
+        writer.advance(8 + 2 + 8 + 4) // matteRect, transferMode, srcRect, accuracy
+        writer.advance(4) // maskSize
+
+        try QTImageDesc.write(rep: imageRep, to: writer, using: compressor)
+        let size = UInt32(writer.bytesWritten - start)
+        writer.write(size, at: start-4)
     }
 }
 

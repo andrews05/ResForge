@@ -60,6 +60,14 @@ extension ImageFormat {
         return .color(24)
     }
 
+    @discardableResult static func reduceToMono(_ rep: inout NSBitmapImageRep) -> ImageFormat {
+        // Reduce to monochrome by converting to gif with a black and white color table
+        let monoTable = Data([0, 0, 0, 0xFF, 0xFF, 0xFF])
+        let data = rep.representation(using: .gif, properties: [.ditherTransparency: false, .rgbColorTable: monoTable])!
+        rep = NSBitmapImageRep(data: data)!
+        return .monochrome
+    }
+
     @discardableResult static func reduceTo256Colors(_ rep: inout NSBitmapImageRep) -> ImageFormat {
         // Reduce to 8-bit colour by converting to gif
         let data = rep.representation(using: .gif, properties: [.ditherTransparency: false])!
@@ -122,10 +130,13 @@ enum ImageReaderError: Error {
 }
 
 enum ImageWriterError: LocalizedError {
+    case unsupported
     case tooBig
     case tooManyColors
     var errorDescription: String? {
         switch self {
+        case .unsupported:
+            NSLocalizedString("The image cannot be encoded in this format.", comment: "")
         case .tooBig:
             NSLocalizedString("The image is too big to be encoded in this format.", comment: "")
         case .tooManyColors:

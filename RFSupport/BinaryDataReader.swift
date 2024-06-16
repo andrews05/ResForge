@@ -99,4 +99,14 @@ public class BinaryDataReader {
         let length = Int(try self.read() as UInt8)
         return try self.readString(length: length, encoding: encoding)
     }
+
+    public func readPString(encoding: String.Encoding = .macOSRoman, fixedSize: Int) throws -> String {
+        let length = Int(try self.read() as UInt8)
+        guard length < fixedSize else {
+            throw BinaryDataReaderError.stringDecodeFailure
+        }
+        let string = try self.readString(length: length, encoding: encoding)
+        try self.advance(fixedSize - length - 1)
+        return string
+    }
 }

@@ -293,14 +293,14 @@ extension PixelMap {
         }
     }
 
-    static func build(from rep: NSBitmapImageRep) throws -> (pixMap: Self, pixelData: Data, colorTable: [RGBColor]) {
+    static func build(from rep: NSBitmapImageRep, startingColors: [RGBColor]? = nil) throws -> (pixMap: Self, pixelData: Data, colorTable: [RGBColor]) {
         let rep = ImageFormat.normalize(rep)
         let bounds = try QDRect(for: rep)
 
         // Iterate the pixels as UInt32 and construct the color table and pixel data
         let pixelCount = rep.pixelsWide * rep.pixelsHigh
         var pixelData = Data(repeating: 0, count: pixelCount)
-        var colorTable = OrderedSet<RGBColor>()
+        var colorTable = OrderedSet<RGBColor>(startingColors ?? [])
         rep.bitmapData!.withMemoryRebound(to: RGBColor.self, capacity: pixelCount) { pixels in
             for i in 0..<pixelCount {
                 // Skip transparent pixels - this can avoid storing unnecessary colors in the palette
