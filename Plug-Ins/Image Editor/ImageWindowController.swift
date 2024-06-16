@@ -40,6 +40,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     private var format: ImageFormat = .unknown
     private var widthConstraint: NSLayoutConstraint!
     private var heightConstraint: NSLayoutConstraint!
+    private var formatsMenu: NSMenu?
 
     override var windowNibName: String {
         return "ImageWindow"
@@ -71,6 +72,18 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             imageView.isEditable = true
         default:
             imageView.isEditable = false
+        }
+
+        if resource.typeCode == "PICT" {
+            // Set up the format selection menu
+            let item24 = NSMenuItem(title: "24-bit RGB", action: #selector(self.setFormat(_:)), keyEquivalent: "")
+            item24.tag = 24
+            let item16 = NSMenuItem(title: "16-bit RGB", action: #selector(self.setFormat(_:)), keyEquivalent: "")
+            item16.tag = 16
+            let item8 = NSMenuItem(title: "Indexed (best depth)", action: #selector(self.setFormat(_:)), keyEquivalent: "")
+            item8.tag = 8
+            formatsMenu = NSMenu()
+            formatsMenu?.items = [item24, item16, item8]
         }
 
         self.loadImage()
@@ -112,11 +125,19 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     private func updateView() {
         imageFormat.stringValue = format.description
         imageFormat.isHidden = imageFormat.stringValue.isEmpty
+        imageFormat.menu = nil
         if let image = imageView.image {
             widthConstraint.constant = max(image.size.width, window!.contentMinSize.width)
             heightConstraint.constant = max(image.size.height, window!.contentMinSize.height)
             self.window?.setContentSize(NSSize(width: widthConstraint.constant, height: heightConstraint.constant))
             imageSize.stringValue = String(format: "%.0fx%.0f", image.size.width, image.size.height)
+            if formatsMenu != nil {
+                // Add a caret to indicate the menu is available
+                let string = NSMutableAttributedString(string: "▼", attributes: [.font: NSFont.systemFont(ofSize: 9)])
+                string.append(NSAttributedString(string: " \(imageFormat.stringValue)"))
+                imageFormat.attributedStringValue = string
+                imageFormat.menu = formatsMenu
+            }
         } else if !resource.data.isEmpty {
             imageSize.stringValue = "Invalid or unsupported image format"
         } else if imageView.isEditable {
@@ -126,40 +147,37 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
     }
 
-    private func ensureBitmap(flatten: Bool=false, palette: Bool=false) {
-        let image = imageView.image!
+    private func modifyBitmap(_ modify: (inout NSBitmapImageRep) -> ()) {
+        guard let image = imageView.image else {
+            return
+        }
         var rep = image.representations[0] as? NSBitmapImageRep ?? NSBitmapImageRep(data: image.tiffRepresentation!)!
-        if flatten {
-            ImageFormat.removeTransparency(rep)
-        }
-        if palette {
-            ImageFormat.reduceTo256Colors(&rep)
-        }
         // Ensure display size matches pixel dimensions
         rep.size = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
-        // Update the image
-        for r in image.representations {
-            image.removeRepresentation(r)
-        }
-        image.addRepresentation(rep)
+        modify(&rep)
+        // Update the image and view
+        imageView.image = NSImage()
+        imageView.image?.addRepresentation(rep)
+        self.updateView()
+        self.setDocumentEdited(true)
     }
 
     // MARK: -
 
     @IBAction func changedImage(_ sender: Any) {
-        switch resource.typeCode {
-        case "PICT":
-            self.ensureBitmap(flatten: true)
-        case "cicn":
-            self.ensureBitmap(palette: true)
-        case "ppat":
-            self.ensureBitmap(flatten: true, palette: true)
-        default:
-            self.ensureBitmap()
+        self.modifyBitmap { rep in
+            switch resource.typeCode {
+            case "PICT":
+                format = ImageFormat.removeTransparency(rep)
+            case "cicn":
+                format = ImageFormat.reduceTo256Colors(&rep)
+            case "ppat":
+                ImageFormat.removeTransparency(rep)
+                format = ImageFormat.reduceTo256Colors(&rep)
+            default:
+                break
+            }
         }
-        format = .unknown
-        self.updateView()
-        self.setDocumentEdited(true)
     }
 
     @IBAction func saveResource(_ sender: Any) {
@@ -204,6 +222,19 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         }
         imageView.image = image
         self.changedImage(sender)
+    }
+
+    @IBAction func setFormat(_ sender: NSMenuItem) {
+        modifyBitmap { rep in
+            switch sender.tag {
+            case 8:
+                format = ImageFormat.reduceTo256Colors(&rep)
+            case 16:
+                format = ImageFormat.rgb555Dither(rep)
+            default:
+                format = .color(sender.tag)
+            }
+        }
     }
 
     // MARK: - Export Provider
@@ -294,5 +325,13 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         default:
             return NSBitmapImageRep(data: data)
         }
+    }
+}
+
+class ImageFormatTextField: NSTextField {
+    // Show the menu on click
+    override func mouseDown(with event: NSEvent) {
+        let location = NSPoint(x: frame.minX, y: frame.minY - 6)
+        menu?.popUp(positioning: nil, at: location, in: superview)
     }
 }

@@ -284,7 +284,7 @@ extension Picture {
 
         // Image data
         switch format {
-        case .color(8):
+        case let .color(depth) where depth <= 8:
             try self.writeIndirectBits(writer)
         case .color(16):
             try self.writeDirectBits(writer, rgb555: true)
@@ -298,7 +298,6 @@ extension Picture {
     }
 
     private mutating func writeIndirectBits(_ writer: BinaryDataWriter) throws {
-        ImageFormat.reduceTo256Colors(&imageRep)
         let (pixMap, pixelData, colorTable) = try PixelMap.build(from: imageRep)
         writer.write(PictOpcode.packBitsRect.rawValue)
         pixMap.write(writer, skipBaseAddr: true)
@@ -325,9 +324,6 @@ extension Picture {
     }
 
     private mutating func writeDirectBits(_ writer: BinaryDataWriter, rgb555: Bool = false) throws {
-        if rgb555 {
-            ImageFormat.rgb555Dither(imageRep)
-        }
         let pixMap = try PixelMap(for: imageRep, rgb555: rgb555)
         writer.write(PictOpcode.directBitsRect.rawValue)
         pixMap.write(writer)
