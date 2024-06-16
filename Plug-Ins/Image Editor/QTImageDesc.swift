@@ -4,10 +4,16 @@ import RFSupport
 // https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#509
 
 struct QTImageDesc {
-    static let minSize: UInt32 = 86
     static let png = UInt32(fourCharString: "png ")
     static let jpeg = UInt32(fourCharString: "jpeg")
-    var size: UInt32 = Self.minSize
+    static let gif = UInt32(fourCharString: "gif ")
+    static let tiff = UInt32(fourCharString: "tiff")
+    static let animation = UInt32(fourCharString: "rle ")
+    static let none = UInt32(fourCharString: "raw ")
+    static let planar = UInt32(fourCharString: "8BPS")
+    static let quickDraw = UInt32(fourCharString: "qdrw")
+
+    var size: UInt32 = 86
     var compressor: UInt32
     var version: UInt16 = 1
     var revisionLevel: UInt16 = 1
@@ -52,15 +58,6 @@ extension QTImageDesc {
         depth = try reader.read()
         clutID = try reader.read()
 
-        guard size >= Self.minSize,
-              width > 0,
-              height > 0,
-              dataSize > 0,
-              depth > 0
-        else {
-            throw ImageReaderError.invalid
-        }
-
         if clutID == 0 {
             colorTable = try ColorTable.read(reader)
         } else if clutID > 0 {
@@ -68,19 +65,27 @@ extension QTImageDesc {
         }
 
         bytesUntilData = start + Int(size) - reader.position
+
+        guard bytesUntilData >= 0,
+              width > 0,
+              height > 0,
+              dataSize > 0,
+              depth > 0
+        else {
+            throw ImageReaderError.invalid
+        }
     }
 
     func readImage(_ reader: BinaryDataReader) throws -> NSBitmapImageRep {
-        switch compressor.fourCharString {
-        case "qdrw":
-            // QuickDraw Picture
+        switch compressor {
+        case Self.quickDraw:
             try reader.advance(bytesUntilData)
             return try Picture(reader).imageRep
-        case "rle ":
+        case Self.animation:
             return try QTAnimation.rep(for: self, reader: reader)
-        case "raw ":
+        case Self.none:
             return try QTNone.rep(for: self, reader: reader)
-        case "8BPS":
+        case Self.planar:
             return try QTPlanar.rep(for: self, reader: reader)
         default:
             // Attempt to let the system decode it. This should work for e.g. PNG, JPEG, GIF, TIFF.

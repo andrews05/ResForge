@@ -3,7 +3,7 @@ import RFSupport
 
 // https://wiki.multimedia.cx/index.php/8BPS
 
-/// Decoder for the QuickTime "8BPS" compressor.
+/// Decoder for the QuickTime "8BPS" (Adobe Photoshop) compressor.
 struct QTPlanar {
     static func rep(for imageDesc: QTImageDesc, reader: BinaryDataReader) throws -> NSBitmapImageRep {
         let width = Int(imageDesc.width)
