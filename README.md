@@ -8,7 +8,9 @@ ResForge is a resource editor for macOS, capable of editing classic resource for
 
 * Hexadecimal editor, powered by [HexFiend](https://github.com/HexFiend/HexFiend).
 * Template editor, supporting a wide array of [field types](https://github.com/andrews05/ResForge/tree/master/ResForge/Template%20Editor#template-editor).
-* Template-driven bulk data view, with CSV import/export.
+  * User-defined templates, loaded automatically from resource files in `~/Library/Application Support/ResForge/`.
+  * Template-driven bulk data view, with CSV import/export.
+  * Generic binary file editor, via the `Open with Template…` menu item.
 * Image editor, supporting 'PICT', 'PNG ', 'PNGf', 'cicn' & 'ppat' resources, plus view-only support for a variety of icons and other bitmaps.
 * Sound editor, supporting sampled 'snd ' resources.
 * Dialog editor, supporting 'DITL' resources (by Uli Kusterer) 
@@ -36,13 +38,9 @@ Download the latest version of ResForge from the [Releases](https://github.com/a
 
 ### Building
 
-To build ResForge yourself you will need to have Xcode 14.1 or later installed.
+To build ResForge yourself you will need to have Xcode 15 or later installed.
 
 Make sure to use the `--recurse-submodules` option when cloning the repository, or use `git submodule update --init` to initialise an existing copy.
-
-### Plug-ins
-
-ResForge includes a plug-in architecture, allowing custom editors to be created and distributed independently of the application itself. The specification is not currently documented but feel free to duplicate an existing plug-in, such as the hex editor, and work from there to create your own.
 
 
 ## Built With
@@ -50,6 +48,11 @@ ResForge includes a plug-in architecture, allowing custom editors to be created 
 * [HexFiend](https://github.com/HexFiend/HexFiend) - Powers the hexadecimal editor.
 * [CSV.swift](https://github.com/yaslab/CSV.swift) - Provides reading/writing of CSV files.
 * [swift-parsing](https://github.com/pointfreeco/swift-parsing) - Provides parsing of custom DSLs.
+
+
+## Similar Projects
+
+* [resource_dasm](https://github.com/fuzziqersoftware/resource_dasm) - CLI tools for disassembling resource files.
 
 
 ## Contributing
