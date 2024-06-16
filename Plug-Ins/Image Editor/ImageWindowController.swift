@@ -6,6 +6,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         "PICT",
         "PNG ",
         "PNGf",
+        "GIFf",
+        "jpeg",
         "cicn",
         "ppat",
         "ppt#",
@@ -243,6 +245,10 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         switch resourceType {
         case "PNG ", "PNGf":
             return "png"
+        case "GIFf":
+            return "gif"
+        case "jpeg":
+            return "jpg"
         case "icns":
             return "icns"
         default:
@@ -253,7 +259,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
     static func export(_ resource: Resource, to url: URL) throws {
         let data: Data
         switch resource.typeCode {
-        case "PNG ", "PNGf", "icns":
+        case "PNG ", "PNGf", "GIFf", "jpeg", "icns":
             data = resource.data
         default:
             data = self.image(for: resource)?.tiffRepresentation ?? Data()
