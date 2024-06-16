@@ -21,7 +21,7 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         }
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .allDomainsMask)
         for url in appSupport {
-            SupportRegistry.scanForResources(in: url.appendingPathComponent("ResForge/Support Resources"))
+            SupportRegistry.scanForResources(in: url.appendingPathComponent("ResForge"))
         }
     }
 
