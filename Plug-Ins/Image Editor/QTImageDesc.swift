@@ -133,21 +133,24 @@ extension QTImageDesc {
     }
 
     static func write(rep: NSBitmapImageRep, to writer: BinaryDataWriter, using compressor: UInt32) throws {
+        guard rep.pixelsWide <= Int16.max, rep.pixelsHigh <= Int16.max else {
+            throw ImageWriterError.tooBig
+        }
+
         let name: String
-        let compressed: Data
+        var compressed: Data
         switch compressor {
         case Self.png:
             name = "PNG"
             compressed = rep.representation(using: .png, properties: [:])!
+            try? self.stripPng(&compressed)
         case Self.jpeg:
             name = "Photo - JPEG"
             compressed = rep.representation(using: .jpeg, properties: [:])!
         default:
             throw ImageWriterError.unsupported
         }
-        guard rep.pixelsWide <= Int16.max, rep.pixelsHigh <= Int16.max else {
-            throw ImageWriterError.tooBig
-        }
+
         let imageDesc = QTImageDesc(compressor: compressor,
                                     width: Int16(rep.pixelsWide),
                                     height: Int16(rep.pixelsHigh),
@@ -156,5 +159,22 @@ extension QTImageDesc {
                                     depth: 24)
         try imageDesc.write(writer)
         writer.writeData(compressed)
+    }
+
+    // Strip png chunks we don't need, like gAMA which can cause problems
+    private static func stripPng(_ png: inout Data) throws {
+        let reader = BinaryDataReader(png)
+        let header = png.startIndex + 8 + 25  // Signature + IHDR
+        try reader.advance(header)
+        while true {
+            let chunkSize = Int(try reader.read() as UInt32)
+            let chunkType = try reader.read() as UInt32
+            if chunkType.fourCharString == "IDAT" {
+                // Remove all chunks between IHDR and IDAT
+                png.removeSubrange(header..<(reader.position-8))
+                break
+            }
+            try reader.advance(chunkSize + 4) // checksum
+        }
     }
 }
