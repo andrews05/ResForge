@@ -7,6 +7,7 @@ public class PluginRegistry {
     public private(set) static var exportProviders: [String: ExportProvider.Type] = [:]
     public private(set) static var placeholderProviders: [String: PlaceholderProvider.Type] = [:]
     public private(set) static var templateFilters: [String: TemplateFilter.Type] = [:]
+    public private(set) static var typeIcons: [String: String] = [:]
 
     @objc public static func bundleLoaded(_ notification: Notification) {
         // Iterate over the bundle's loaded classes and register them according to their implemented protocols
@@ -24,19 +25,24 @@ public class PluginRegistry {
                     }
                 }
             }
-            if let previewer = pluginClass as? PreviewProvider.Type {
-                for type in previewer.supportedTypes {
-                    previewProviders[type] = previewer
+            if let provider = pluginClass as? PreviewProvider.Type {
+                for type in provider.supportedTypes {
+                    previewProviders[type] = provider
                 }
             }
-            if let exporter = pluginClass as? ExportProvider.Type {
-                for type in exporter.supportedTypes {
-                    exportProviders[type] = exporter
+            if let provider = pluginClass as? ExportProvider.Type {
+                for type in provider.supportedTypes {
+                    exportProviders[type] = provider
                 }
             }
-            if let placeholderer = pluginClass as? PlaceholderProvider.Type {
-                for type in placeholderer.supportedTypes {
-                    placeholderProviders[type] = placeholderer
+            if let provider = pluginClass as? PlaceholderProvider.Type {
+                for type in provider.supportedTypes {
+                    placeholderProviders[type] = provider
+                }
+            }
+            if let provider = pluginClass as? TypeIconProvider.Type {
+                for (type, icon) in provider.typeIcons {
+                    typeIcons[type] = icon
                 }
             }
             if let filter = pluginClass as? TemplateFilter.Type {
@@ -106,5 +112,63 @@ public class PluginRegistry {
         } catch {}
 
         return placeholder.isEmpty ? NSLocalizedString("Untitled Resource", comment: "") : placeholder
+    }
+
+    public static func icon(for type: ResourceType) -> NSImage? {
+        guard #available(macOS 11, *) else {
+            return nil
+        }
+
+        let icon = if let icon = typeIcons[type.code] {
+            icon
+        } else {
+            switch type.code {
+            case "ALRT":
+                "exclamationmark.bubble"
+            case "cicn", "ICON", "SICN":
+                "exclamationmark.triangle"
+            case "clut", "pltt":
+                "paintpalette"
+            case "crsr", "CURS":
+                "hand.point.up"
+            case "DLOG":
+                "note.text"
+            case "DITL":
+                "square.fill.text.grid.1x2"
+            case "GIFf", "jpeg", "PICT", "PNG ", "PNGf":
+                "photo"
+            case "ICN#", "icl4", "icl8", "icm#", "icm4", "icm8", "ics#", "ics4", "ics8", "kcs#", "kcs4", "kcs8":
+                "doc.circle"
+            case "MENU":
+                "filemenu.and.selection"
+            case "PAT ", "ppat":
+                "squareshape.dashed.squareshape"
+            case "PAT#", "ppt#":
+                "square.3.stack.3d"
+            case "snd ":
+                "speaker.wave.2"
+            case "STR ":
+                "textformat.abc"
+            case "STR#":
+                "list.number"
+            case "TMPB", "TMPL":
+                "list.bullet.rectangle"
+            case "WIND":
+                "macwindow"
+            default:
+                "doc"
+            }
+        }
+
+        if icon.count == 1 {
+            // Render a single character as an image
+            return NSImage(size: NSSize(width: 16, height: 16), flipped: false) { rect in
+                (icon as NSString).draw(in: rect, withAttributes: [.font: NSFont.systemFont(ofSize: 12)])
+                return true
+            }
+        }
+        // Create system symbol image, falling back to doc if given symbol is not available
+        return NSImage(systemSymbolName: icon, accessibilityDescription: nil) ??
+            NSImage(systemSymbolName: "doc", accessibilityDescription: nil)
     }
 }

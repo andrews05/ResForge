@@ -48,6 +48,12 @@ public protocol PlaceholderProvider {
     static func placeholderName(for resource: Resource) -> String?
 }
 
+/// A type icon provider allows specific icons to be shown in the type list.
+public protocol TypeIconProvider {
+    /// Mapping of type codes to icon characters or symbol names.
+    static var typeIcons: [String: String] { get }
+}
+
 /// A template filter can modify data to allow it to be interpreted by a template.
 public protocol TemplateFilter {
     static var supportedTypes: [String] { get }

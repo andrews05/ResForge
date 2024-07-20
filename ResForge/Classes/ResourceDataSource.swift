@@ -19,7 +19,15 @@ class ResourceDataSource: NSObject {
     }
     private(set) var useTypeList = false {
         didSet {
-            splitView.setPosition(useTypeList ? 116 : 0, ofDividerAt: 0)
+            let width: CGFloat = if !useTypeList {
+                0
+            } else if #available(macOS 11, *) {
+                // The type list has additional padding on macOS 11 and shows type icons
+                140
+            } else {
+                100
+            }
+            splitView.setPosition(width, ofDividerAt: 0)
             self.reload(selecting: self.selectedResources())
         }
     }
@@ -202,18 +210,22 @@ extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
         if let type = item as? ResourceType {
             let count = String(document.directory.resourceMap[type]!.count)
             view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: nil) as! NSTableCellView
+            view.imageView?.image = PluginRegistry.icon(for: type)
             view.textField?.stringValue = type.code
             // Show a + indicator when the type has attributes
-            (view.subviews[1] as? NSTextField)?.stringValue = type.attributes.isEmpty ? "" : "+"
+            (view.subviews[2] as? NSTextField)?.stringValue = type.attributes.isEmpty ? "" : "+"
             (view.subviews.last as? NSButton)?.title = count
         } else {
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: nil) as! NSTableCellView
         }
-        if #available(macOS 11.0, *) {
-            // Remove leading/trailing spacing on macOS 11
+        if #unavailable(macOS 11) {
+            // Remove image view and adjust padding on older macOS
+            view.imageView?.removeFromSuperview()
             for constraint in view.constraints {
-                if constraint.firstAttribute == .leading || constraint.firstAttribute == .trailing {
-                    constraint.constant = 0
+                if constraint.identifier == "left-padding" {
+                    constraint.constant = 8
+                } else if constraint.identifier == "right-padding" {
+                    constraint.constant = 4
                 }
             }
         }
