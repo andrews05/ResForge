@@ -123,36 +123,76 @@ public class PluginRegistry {
             icon
         } else {
             switch type.code {
+            case "actb", "cctb", "clut", "dctb", "fctb", "mctb", "pltt", "wctb":
+                "paintpalette"
+            case "acur":
+                "cursorarrow.rays"
+            case "aete":
+                "applescript"
             case "ALRT":
                 "exclamationmark.bubble"
+            case "BNDL", "FREF":
+                "app.connected.to.app.below.fill" // macOS 12
             case "cicn", "ICON", "SICN":
                 "exclamationmark.triangle"
-            case "clut", "pltt":
-                "paintpalette"
+            case "CMNU", "cmnu", "MENU":
+                "filemenu.and.selection"
+            case "CNTL":
+                "switch.2"
             case "crsr", "CURS":
                 "hand.point.up"
             case "DLOG":
                 "note.text"
             case "DITL":
                 "square.fill.text.grid.1x2"
-            case "GIFf", "jpeg", "PICT", "PNG ", "PNGf":
+            case "errs":
+                "exclamationmark.circle"
+            case "finf":
+                "f.cursive.circle"
+            case "FOND", "FONT":
+                "f.cursive"
+            case "GIFf", "jpeg", "PICT", "PNG ", "PNGf", "pxm#":
                 "photo"
-            case "ICN#", "icl4", "icl8", "icm#", "icm4", "icm8", "ics#", "ics4", "ics8", "kcs#", "kcs4", "kcs8":
+            case "hdlg", "hfdr", "hmnu", "hrct", "hwin":
+                "questionmark.bubble" // macOS 13
+            case "ICN#", "icns", "icl4", "icl8", "icm#", "icm4", "icm8", "ics#", "ics4", "ics8":
                 "doc.circle"
-            case "MENU":
-                "filemenu.and.selection"
+            case "KCAP":
+                "a.square"
+            case "KCHR", "KMAP":
+                "keyboard"
+            case "kcs#", "kcs4", "kcs8":
+                "flag.circle"
+            case "mem!":
+                "memorychip"
+            case "MBAR":
+                "menubar.rectangle"
+            case "nrct":
+                "rectangle.on.rectangle"
             case "PAT ", "ppat":
                 "squareshape.dashed.squareshape"
             case "PAT#", "ppt#":
                 "square.3.stack.3d"
+            case "RECT":
+                "rectangle"
+            case "RMAP":
+                "point.topleft.down.curvedto.point.bottomright.up"
+            case "SIZE":
+                "arrow.left.and.right.square"
             case "snd ":
                 "speaker.wave.2"
             case "STR ":
                 "textformat.abc"
             case "STR#":
                 "list.number"
+            case "styl", "TxSt":
+                "bold.italic.underline"
+            case "TEXT":
+                "text.word.spacing" // macOS 13
             case "TMPB", "TMPL":
                 "list.bullet.rectangle"
+            case "vers":
+                "1.circle"
             case "WIND":
                 "macwindow"
             default:
