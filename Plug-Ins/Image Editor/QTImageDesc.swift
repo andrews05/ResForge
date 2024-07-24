@@ -94,8 +94,8 @@ extension QTImageDesc {
             guard let rep = NSBitmapImageRep(data: data) else {
                 throw ImageReaderError.unsupported
             }
-            if compressor == Self.png {
-                // Older QuickTime versions (<6.5) stored png data as non-standard RGBX
+            if depth == 32 {
+                // Older QuickTime versions (<6.5) stored data as non-standard RGBX
                 // We need to disable the alpha, but first ensure the image has been decoded by accessing the bitmapData
                 _ = rep.bitmapData
                 rep.hasAlpha = false
