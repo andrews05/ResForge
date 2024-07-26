@@ -173,6 +173,10 @@ public class PluginRegistry {
                 "squareshape.dashed.squareshape"
             case "PAT#", "ppt#":
                 "square.3.stack.3d"
+            case "pnot":
+                "magnifyingglass"
+            case "PREC":
+                "printer"
             case "RECT":
                 "rectangle"
             case "RMAP":
@@ -187,7 +191,7 @@ public class PluginRegistry {
                 "list.number"
             case "styl", "TxSt":
                 "bold.italic.underline"
-            case "TEXT":
+            case "TEXT", "utxt":
                 "text.word.spacing" // macOS 13
             case "TMPB", "TMPL":
                 "list.bullet.rectangle"
