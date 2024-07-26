@@ -8,13 +8,35 @@ class Icons {
         return self.colorRep(data, width: width, height: height, depth: depth)
     }
 
-    static func multiRep(_ data: Data, width: Int, height: Int, depth: Int) -> NSBitmapImageRep? {
+    static func multiRep(_ data: Data, width: Int, height: Int, depth: Int, count: Int? = nil) -> NSBitmapImageRep? {
         guard data.count > 1 else {
             return nil
         }
         // This just stacks all the patterns vertically
-        let count = Int(data[data.startIndex + 1])
-        return Self.rep(data.dropFirst(2), width: width, height: height * count, depth: depth)
+        let actualCount = count ?? Int(data[data.startIndex + 1])
+        let longRep = Self.rep((count == nil) ? data.dropFirst(2) : data, width: width, height: height * actualCount, depth: depth)
+        
+        // Now split it up in vertical columns in a more efficient layout.
+        let patternsPerColumn = Int(floor(sqrt(Double(actualCount))))
+        let numColumns = Int(ceil(Double(actualCount) / Double(patternsPerColumn)))
+        
+        let srcSize = NSSize(width: width, height: height * actualCount)
+        let dstSize = NSSize(width: width * numColumns, height: height * patternsPerColumn)
+        let img = NSImage(size: dstSize,
+                          flipped: false) { box in
+            for colIndex in 0..<numColumns {
+                let srcY = srcSize.height - Double((colIndex + 1) * (height * patternsPerColumn))
+                let srcBox = NSRect(origin: NSPoint(x: 0, y: srcY), size: NSSize(width: width, height: height * patternsPerColumn))
+                let dstBox = NSRect(origin: NSPoint(x: colIndex * width, y: 0), size: NSSize(width: width, height: height * patternsPerColumn))
+                longRep?.draw(in: dstBox, from: srcBox, operation: .copy, fraction: 1.0, respectFlipped: false, hints: nil)
+            }
+            return true
+        }
+        
+        if let tiffData = img.tiffRepresentation {
+            return NSBitmapImageRep(data: tiffData)
+        }
+        return nil
     }
 
     private static func bwRep(_ data: Data, width: Int, height: Int) -> NSBitmapImageRep? {
