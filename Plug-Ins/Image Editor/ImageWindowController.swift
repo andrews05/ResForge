@@ -316,7 +316,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             return ColorCursor.rep(data, format: &format)
         case "ICN#", "ICON":
             return Icons.rep(data, width: 32, height: 32, depth: 1)
-        case "ics#", "SICN", "CURS", "kcs#":
+        case "ics#", "CURS", "kcs#":
             return Icons.rep(data, width: 16, height: 16, depth: 1)
         case "icm#":
             return Icons.rep(data, width: 16, height: 12, depth: 1)
@@ -336,6 +336,8 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             return Icons.rep(data, width: 8, height: 8, depth: 1)
         case "PAT#":
             return Icons.multiRep(data, width: 8, height: 8, depth: 1)
+        case "SICN":
+            return Icons.multiRep(data, width: 16, height: 16, depth: 1, count: data.count / 32)
         case "pxm#":
             return Pxm.rep(data)
         default:
