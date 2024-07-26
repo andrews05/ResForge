@@ -13,7 +13,7 @@ class Icons {
             return nil
         }
         // This just stacks all the patterns vertically
-        let actualCount = count ?? Int(data[data.startIndex + 1])
+        let actualCount = count ?? Int(data[data.startIndex + 1] | (data[data.startIndex] << 8))
         let longRep = Self.rep((count == nil) ? data.dropFirst(2) : data, width: width, height: height * actualCount, depth: depth)
         
         // Now split it up in vertical columns in a more efficient layout.
