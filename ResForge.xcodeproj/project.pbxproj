@@ -171,7 +171,6 @@
 		5504F7482B7A7EB20096F16A /* DITLItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7472B7A7EB20096F16A /* DITLItemView.swift */; };
 		5504F74A2B7A7EEC0096F16A /* DITLDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */; };
 		5504F74C2B7A7F2E0096F16A /* DITLFlippedClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */; };
-		554125602B7E8A47008B6832 /* ResourceMappings.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 5541255F2B7E8A47008B6832 /* ResourceMappings.rsrc */; };
 		554125B02B8037E4008B6832 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		554125C62B803911008B6832 /* MenuEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554125BD2B803911008B6832 /* MenuEditorWindow.xib */; };
 		554125C82B803911008B6832 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125C02B803911008B6832 /* MenuItem.swift */; };
@@ -1309,7 +1308,6 @@
 				4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */,
 				B229EEF515A4FB6F0032C12C /* MainMenu.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResource.xib in Resources */,
-				554125602B7E8A47008B6832 /* ResourceMappings.rsrc in Resources */,
 				559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */,
 				4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */,
 				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,

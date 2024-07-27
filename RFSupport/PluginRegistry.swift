@@ -59,18 +59,13 @@ public class PluginRegistry {
             return placeholder
         }
 
-        if resource.id == -16455 {
-            // don't bother checking type since there are too many icon types
-            return NSLocalizedString("Custom Icon", comment: "")
-        }
-
         var placeholder = ""
         do {
             switch resource.typeCode {
-            case "carb":
-                if resource.id == 0 {
-                    placeholder = NSLocalizedString("Carbon Identifier", comment: "")
-                }
+            case _ where resource.id == -16455:
+                placeholder = NSLocalizedString("Custom Icon", comment: "")
+            case "carb" where resource.id == 0:
+                placeholder = NSLocalizedString("Carbon Identifier", comment: "")
             case "CNTL":
                 // Read title at offset 22
                 placeholder = try BinaryDataReader(resource.data.dropFirst(22)).readPString()
@@ -83,10 +78,8 @@ public class PluginRegistry {
                 if placeholder == "\u{14}" {
                     placeholder = ""
                 }
-            case "pnot":
-                if resource.id == 0 {
-                    placeholder = NSLocalizedString("File Preview", comment: "")
-                }
+            case "pnot" where resource.id == 0:
+                placeholder = NSLocalizedString("File Preview", comment: "")
             case "STR ":
                 placeholder = try BinaryDataReader(resource.data).readPString()
             case "STR#":
@@ -114,105 +107,92 @@ public class PluginRegistry {
         return placeholder.isEmpty ? NSLocalizedString("Untitled Resource", comment: "") : placeholder
     }
 
-    public static func icon(for type: ResourceType) -> NSImage? {
-        guard #available(macOS 11, *) else {
-            return nil
+    /// Return an icon string for the given resource type. This may either be a single character or the name of a system symbol.
+    @available(macOS 11, *)
+    public static func icon(for type: ResourceType) -> String? {
+        if let icon = typeIcons[type.code] {
+            return icon
         }
-
-        let icon = if let icon = typeIcons[type.code] {
-            icon
-        } else {
-            switch type.code {
-            case "actb", "cctb", "clut", "dctb", "fctb", "mctb", "pltt", "wctb":
-                "paintpalette"
-            case "acur":
-                "cursorarrow.rays"
-            case "aete":
-                "applescript"
-            case "ALRT":
-                "exclamationmark.bubble"
-            case "BNDL", "FREF":
-                "app.connected.to.app.below.fill" // macOS 12
-            case "cicn", "ICON", "SICN":
-                "exclamationmark.triangle"
-            case "CMNU", "cmnu", "MENU":
-                "filemenu.and.selection"
-            case "CNTL":
-                "switch.2"
-            case "crsr", "CURS":
-                "hand.point.up"
-            case "DLOG":
-                "note.text"
-            case "DITL":
-                "square.fill.text.grid.1x2"
-            case "errs":
-                "exclamationmark.circle"
-            case "finf":
-                "f.cursive.circle"
-            case "FOND", "FONT":
-                "f.cursive"
-            case "GIFf", "jpeg", "PICT", "PNG ", "PNGf", "pxm#":
-                "photo"
-            case "hdlg", "hfdr", "hmnu", "hrct", "hwin":
-                "questionmark.bubble" // macOS 13
-            case "ICN#", "icns", "icl4", "icl8", "icm#", "icm4", "icm8", "ics#", "ics4", "ics8":
-                "doc.circle"
-            case "KCAP":
-                "a.square"
-            case "KCHR", "KMAP":
-                "keyboard"
-            case "kcs#", "kcs4", "kcs8":
-                "flag.circle"
-            case "mem!":
-                "memorychip"
-            case "MBAR":
-                "menubar.rectangle"
-            case "nrct":
-                "rectangle.on.rectangle"
-            case "PAT ", "ppat":
-                "squareshape.dashed.squareshape"
-            case "PAT#", "ppt#":
-                "square.3.stack.3d"
-            case "pnot":
-                "magnifyingglass"
-            case "PREC":
-                "printer"
-            case "RECT":
-                "rectangle"
-            case "RMAP":
-                "point.topleft.down.curvedto.point.bottomright.up"
-            case "SIZE":
-                "arrow.left.and.right.square"
-            case "snd ":
-                "speaker.wave.2"
-            case "STR ":
-                "textformat.abc"
-            case "STR#":
-                "list.number"
-            case "styl", "TxSt":
-                "bold.italic.underline"
-            case "TEXT", "utxt":
-                "text.word.spacing" // macOS 13
-            case "TMPB", "TMPL":
-                "list.bullet.rectangle"
-            case "vers":
-                "1.circle"
-            case "WIND":
-                "macwindow"
-            default:
-                "doc"
-            }
+        
+        return switch type.code {
+        case "actb", "cctb", "clut", "dctb", "fctb", "mctb", "pltt", "wctb":
+            "paintpalette"
+        case "acur":
+            "cursorarrow.rays"
+        case "aete":
+            "applescript"
+        case "ALRT":
+            "exclamationmark.bubble"
+        case "BNDL", "FREF":
+            "app.connected.to.app.below.fill" // macOS 12
+        case "cicn", "ICON", "SICN":
+            "exclamationmark.triangle"
+        case "CMNU", "cmnu", "MENU":
+            "filemenu.and.selection"
+        case "CNTL":
+            "switch.2"
+        case "crsr", "CURS":
+            "hand.point.up"
+        case "DLOG":
+            "note.text"
+        case "DITL":
+            "square.fill.text.grid.1x2"
+        case "errs":
+            "exclamationmark.circle"
+        case "finf":
+            "f.cursive.circle"
+        case "FOND", "FONT":
+            "f.cursive"
+        case "GIFf", "jpeg", "PICT", "PNG ", "PNGf", "pxm#":
+            "photo"
+        case "hdlg", "hfdr", "hmnu", "hrct", "hwin":
+            "questionmark.bubble" // macOS 13
+        case "ICN#", "icns", "icl4", "icl8", "icm#", "icm4", "icm8", "ics#", "ics4", "ics8":
+            "doc.circle"
+        case "KCAP":
+            "a.square"
+        case "KCHR", "KMAP":
+            "keyboard"
+        case "kcs#", "kcs4", "kcs8":
+            "flag.circle"
+        case "mem!":
+            "memorychip"
+        case "MBAR":
+            "menubar.rectangle"
+        case "nrct":
+            "rectangle.on.rectangle"
+        case "PAT ", "ppat":
+            "squareshape.dashed.squareshape"
+        case "PAT#", "ppt#":
+            "square.3.stack.3d"
+        case "pnot":
+            "magnifyingglass"
+        case "PREC":
+            "printer"
+        case "RECT":
+            "rectangle"
+        case "RMAP":
+            "point.topleft.down.curvedto.point.bottomright.up"
+        case "SIZE":
+            "arrow.left.and.right.square"
+        case "snd ":
+            "speaker.wave.2"
+        case "STR ":
+            "textformat.abc"
+        case "STR#":
+            "list.number"
+        case "styl", "TxSt":
+            "bold.italic.underline"
+        case "TEXT", "utxt":
+            "text.word.spacing" // macOS 13
+        case "TMPB", "TMPL":
+            "list.bullet.rectangle"
+        case "vers":
+            "1.circle"
+        case "WIND":
+            "macwindow"
+        default:
+            nil
         }
-
-        if icon.count == 1 {
-            // Render a single character as an image
-            return NSImage(size: NSSize(width: 16, height: 16), flipped: false) { rect in
-                (icon as NSString).draw(in: rect, withAttributes: [.font: NSFont.systemFont(ofSize: 12)])
-                return true
-            }
-        }
-        // Create system symbol image, falling back to doc if given symbol is not available
-        return NSImage(systemSymbolName: icon, accessibilityDescription: nil) ??
-            NSImage(systemSymbolName: "doc", accessibilityDescription: nil)
     }
 }

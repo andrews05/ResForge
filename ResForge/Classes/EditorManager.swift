@@ -43,12 +43,12 @@ class EditorManager: RFEditorManager {
         }
         return true
     }
-    
+
     func template(for type: ResourceType?, basic: Bool = false) -> Resource? {
         guard let type else {
             return nil
         }
-        return self.findResource(type: basic ? ResourceType.BasicTemplate : ResourceType.Template, name: type.code)
+        return self.findResource(type: basic ? .BasicTemplate : .Template, name: type.code)
     }
     
     private func mappedType(for resource: Resource, forEditor: Bool) -> ResourceType? {
@@ -77,7 +77,29 @@ class EditorManager: RFEditorManager {
         }
         return nil
     }
-    
+
+    func image(for type: ResourceType) -> NSImage? {
+        guard #available(macOS 11, *) else {
+            return nil
+        }
+
+        if let icon = PluginRegistry.icon(for: type) {
+            if icon.count == 1 {
+                // Render a single character as an image
+                return NSImage(size: NSSize(width: 16, height: 16), flipped: false) { rect in
+                    (icon as NSString).draw(in: rect, withAttributes: [.font: NSFont.systemFont(ofSize: 12)])
+                    return true
+                }
+            } else if let image = NSImage(systemSymbolName: icon, accessibilityDescription: nil) {
+                return image
+            }
+        }
+
+        // Use a default icon according to whether we have a template or not
+        let hasTemplate = self.template(for: type) != nil
+        return NSImage(systemSymbolName: hasTemplate ? "doc.plaintext" : "01.square", accessibilityDescription: nil)
+    }
+
     // MARK: - Protocol functions
     
     func open(resource: Resource) {

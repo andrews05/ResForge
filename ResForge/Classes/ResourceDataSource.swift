@@ -210,7 +210,7 @@ extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
         if let type = item as? ResourceType {
             let count = String(document.directory.resourceMap[type]!.count)
             view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: nil) as! NSTableCellView
-            view.imageView?.image = PluginRegistry.icon(for: type)
+            view.imageView?.image = document.editorManager.image(for: type)
             view.textField?.stringValue = type.code
             // Show a + indicator when the type has attributes
             (view.subviews[2] as? NSTextField)?.stringValue = type.attributes.isEmpty ? "" : "+"
