@@ -4,12 +4,14 @@ import RFSupport
 class Icons {
     static func rep(_ data: Data, for type: ResourceType) -> NSBitmapImageRep? {
         switch type.code {
-        case "ICN#", "ICON":
+        case "ICON":
             return monoRep(data, width: 32, height: 32)
+        case "ICN#":
+            return monoRep(data, width: 32, height: 32, hasMask: true)
         case "ics#", "kcs#", "CURS":
-            return monoRep(data, width: 16, height: 16)
+            return monoRep(data, width: 16, height: 16, hasMask: true)
         case "icm#":
-            return monoRep(data, width: 16, height: 12)
+            return monoRep(data, width: 16, height: 12, hasMask: true)
         case "icl4":
             return colorRep(data, width: 32, height: 32, depth: 4)
         case "ics4", "kcs4":
@@ -25,13 +27,11 @@ class Icons {
         case "PAT ":
             return monoRep(data, width: 8, height: 8)
         case "PAT#":
-            guard data.count > 2,
-                  case let count = Int(data[data.startIndex]) << 8 | Int(data[data.startIndex + 1]),
-                  count > 0
-            else {
+            guard data.count > 2 else {
                 return nil
             }
-            return monoRep(data, width: 8, height: 8 * count)
+            let count = Int(data[data.startIndex]) << 8 | Int(data[data.startIndex + 1])
+            return monoRep(data.dropFirst(2), width: 8, height: 8 * count)
         case "SICN":
             let count = data.count / 32
             return monoRep(data, width: 16, height: 16 * count)
@@ -62,27 +62,28 @@ class Icons {
         }
     }
 
-    private static func monoRep(_ data: Data, width: Int, height: Int) -> NSBitmapImageRep? {
+    private static func monoRep(_ data: Data, width: Int, height: Int, hasMask: Bool = false) -> NSBitmapImageRep? {
         let bytesPerRow = width / 8
         let planeLength = bytesPerRow * height
-        guard data.count >= planeLength else {
+        let planeCount = hasMask ? 2 : 1
+        guard planeLength > 0,
+              data.count >= planeLength * planeCount
+        else {
             return nil
         }
 
-        // Assume mask if sufficient data
-        let hasMask = data.count >= planeLength * 2
         let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
                                    pixelsWide: width,
                                    pixelsHigh: height,
                                    bitsPerSample: 1,
-                                   samplesPerPixel: hasMask ? 2 : 1,
+                                   samplesPerPixel: planeCount,
                                    hasAlpha: hasMask,
                                    isPlanar: true,
                                    colorSpaceName: .deviceWhite,
                                    bytesPerRow: bytesPerRow,
                                    bitsPerPixel: 1)!
         let bitmap = rep.bitmapData!
-        data.copyBytes(to: bitmap, count: rep.numberOfPlanes * planeLength)
+        data.copyBytes(to: bitmap, count: planeLength * planeCount)
         // Invert bitmap plane
         for i in 0..<planeLength {
             bitmap[i] ^= 0xFF
