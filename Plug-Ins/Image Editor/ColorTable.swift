@@ -16,6 +16,8 @@ struct ColorTable {
         let data = try reader.readData(length: size * 8)
         var offset = data.startIndex
         var colors = Array(repeating: RGBColor(), count: 256)
+        // Set first color to white, in case size is 0
+        colors[0] = [255, 255, 255]
         for i in 0..<size {
             // Take low byte for the value, ensuring high byte is 0
             guard device || data[offset] == 0 else {
