@@ -14,7 +14,6 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         "crsr",
         "icns",
         "ICON",
-        "SICN",
         "ICN#",
         "ics#",
         "icm#",
@@ -30,6 +29,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
         "CURS",
         "PAT ",
         "PAT#",
+        "SICN",
         "pxm#"
     ]
 
@@ -105,27 +105,9 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             let image = NSImage()
             image.addRepresentation(rep)
             imageView.image = image
-            // Colour icons use the mask from the black & white version of the same icon - see if we can load it.
+            // Colour icons use the mask from the black & white version of the same icon - see if we can apply it.
             // Note this is only done within the viewer - preview and export should not access other resources.
-            let maskType: String?
-            switch resource.typeCode {
-            case "icl4", "icl8":
-                maskType = "ICN#"
-            case "icm4", "icm8":
-                maskType = "icm#"
-            case "ics4", "ics8":
-                maskType = "ics#"
-            case "kcs4", "kcs8":
-                maskType = "kcs#"
-            default:
-                maskType = nil
-            }
-            if let maskType,
-               let bw = manager.findResource(type: ResourceType(maskType, resource.typeAttributes), id: resource.id, currentDocumentOnly: true),
-               let bwRep = Self.imageRep(for: bw, format: &format) {
-                NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
-                bwRep.draw(in: image.alignmentRect, from: .zero, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
-            }
+            Icons.applyMask(for: resource, to: rep, manager: manager)
         }
         self.updateView()
     }
@@ -314,28 +296,9 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
             return PixelPattern.multiRep(data, format: &format)
         case "crsr":
             return ColorCursor.rep(data, format: &format)
-        case "ICN#", "ICON":
-            return Icons.rep(data, width: 32, height: 32, depth: 1)
-        case "ics#", "SICN", "CURS", "kcs#":
-            return Icons.rep(data, width: 16, height: 16, depth: 1)
-        case "icm#":
-            return Icons.rep(data, width: 16, height: 12, depth: 1)
-        case "icl4":
-            return Icons.rep(data, width: 32, height: 32, depth: 4)
-        case "ics4", "kcs4":
-            return Icons.rep(data, width: 16, height: 16, depth: 4)
-        case "icm4":
-            return Icons.rep(data, width: 16, height: 12, depth: 4)
-        case "icl8":
-            return Icons.rep(data, width: 32, height: 32, depth: 8)
-        case "ics8", "kcs8":
-            return Icons.rep(data, width: 16, height: 16, depth: 8)
-        case "icm8":
-            return Icons.rep(data, width: 16, height: 12, depth: 8)
-        case "PAT ":
-            return Icons.rep(data, width: 8, height: 8, depth: 1)
-        case "PAT#":
-            return Icons.multiRep(data, width: 8, height: 8, depth: 1)
+        case "ICN#", "icl4", "icl8", "ics#", "ics4", "ics8", "icm#", "icm4", "icm8",
+            "ICON", "SICN", "CURS", "PAT ", "PAT#", "kcs#", "kcs4", "kcs8":
+            return Icons.rep(data, for: resource.type)
         case "pxm#":
             return Pxm.rep(data)
         default:
