@@ -31,10 +31,10 @@ class Icons {
                 return nil
             }
             let count = Int(data[data.startIndex]) << 8 | Int(data[data.startIndex + 1])
-            return monoRep(data.dropFirst(2), width: 8, height: 8 * count)
+            return multiRep(data.dropFirst(2), width: 8, height: 8, count: count)
         case "SICN":
             let count = data.count / 32
-            return monoRep(data, width: 16, height: 16 * count)
+            return multiRep(data, width: 16, height: 16, count: count)
         default:
             return nil
         }
@@ -60,6 +60,35 @@ class Icons {
             let rect = NSRect(x: 0, y: 0, width: rep.pixelsWide, height: rep.pixelsHigh)
             monoRep.draw(in: rect, from: .zero, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
         }
+    }
+
+    private static func multiRep(_ data: Data, width: Int, height: Int, count: Int) -> NSBitmapImageRep? {
+        // Construct the base rep with all the icons stacked vertically
+        guard let baseRep = monoRep(data, width: width, height: height * count) else {
+            return nil
+        }
+
+        // Determine grid size and create output rep
+        let maxColumns = max(64 / width, 4)
+        let gridX = min(count, maxColumns)
+        let gridY = (count + maxColumns - 1) / maxColumns
+        let rep = ImageFormat.rgbaRep(width: width * gridX, height: height * gridY)
+
+        // Redraw each icon to the output rep
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
+        var srcRect = NSRect(x: 0, y: baseRep.pixelsHigh - height, width: width, height: height)
+        var destRect = NSRect(x: 0, y: rep.pixelsHigh - height, width: width, height: height)
+        for _ in 0..<count {
+            baseRep.draw(in: destRect, from: srcRect, operation: .copy, fraction: 1, respectFlipped: true, hints: nil)
+            srcRect.origin.y -= srcRect.height
+            if Int(destRect.maxX) == rep.pixelsWide {
+                destRect.origin.x = 0
+                destRect.origin.y -= destRect.height
+            } else {
+                destRect.origin.x += destRect.width
+            }
+        }
+        return rep
     }
 
     private static func monoRep(_ data: Data, width: Int, height: Int, hasMask: Bool = false) -> NSBitmapImageRep? {

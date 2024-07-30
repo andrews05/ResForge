@@ -65,17 +65,32 @@ extension PixelPattern {
             try reader.setPosition(offsets[0])
             let ppat = try Self(reader)
             format = ppat.format
-            var destRect = QDRect(bottom: ppat.pixMap.bounds.height, right: ppat.pixMap.bounds.width)
-            // Construct a rep that lines all the ppats up horizontally
-            let rep = ImageFormat.rgbaRep(width: destRect.width * count, height: destRect.height)
+
+            // Determine grid size
+            let width = ppat.pixMap.bounds.width
+            let height = ppat.pixMap.bounds.height
+            let maxColumns = max(64 / width, 4)
+            let gridX = min(count, maxColumns)
+            let gridY = (count + maxColumns - 1) / maxColumns
+
+            // Construct a rep and draw the first ppat
+            let rep = ImageFormat.rgbaRep(width: width * gridX, height: height * gridY)
+            var destRect = QDRect(bottom: height, right: width)
             try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, in: destRect, from: ppat.pixMap.bounds)
 
             // Read and draw remaining ppats - assume they're all the same size as the first
             for offset in offsets[1...] {
                 try reader.setPosition(offset)
+                if destRect.right == rep.pixelsWide {
+                    destRect.top = destRect.bottom
+                    destRect.bottom += height
+                    destRect.left = 0
+                    destRect.right = width
+                } else {
+                    destRect.left = destRect.right
+                    destRect.right += width
+                }
                 let ppat = try Self(reader)
-                destRect.left = destRect.right
-                destRect.right += ppat.pixMap.bounds.width
                 try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, in: destRect, from: ppat.pixMap.bounds)
             }
             return rep
