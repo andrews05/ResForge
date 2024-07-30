@@ -1,6 +1,8 @@
 import Foundation
 import RFSupport
 
+// https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=331
+
 struct ColorTable {
     static let device: UInt16 = 0x8000
 
@@ -9,6 +11,10 @@ struct ColorTable {
         let flags = try reader.read() as UInt16
         let device = flags == Self.device
         let size = Int(try reader.read() as Int16) + 1
+        // If size is zero, default to the system1 (monochrome) table
+        if size == 0 {
+            return Self.system1
+        }
         guard 0...256 ~= size else {
             throw ImageReaderError.invalid
         }
@@ -16,8 +22,6 @@ struct ColorTable {
         let data = try reader.readData(length: size * 8)
         var offset = data.startIndex
         var colors = Array(repeating: RGBColor(), count: 256)
-        // Set first color to white, in case size is 0
-        colors[0] = [255, 255, 255]
         for i in 0..<size {
             // Take low byte for the value, ensuring high byte is 0
             guard device || data[offset] == 0 else {
