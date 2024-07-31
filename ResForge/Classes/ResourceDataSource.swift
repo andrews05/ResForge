@@ -314,8 +314,8 @@ class SourceList: NSOutlineView {
 
 // Pass badge click through to parent
 class SourceCount: NSButton {
-    override func mouseDown(with event: NSEvent) {
-        self.superview?.mouseDown(with: event)
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        nil
     }
 }
 
