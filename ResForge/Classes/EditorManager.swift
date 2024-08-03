@@ -103,17 +103,23 @@ class EditorManager: RFEditorManager {
     // MARK: - Protocol functions
     
     func open(resource: Resource) {
-        open(resource: resource, asType: nil)
+        // If the resource belongs to a different document, make sure we use that document's editor
+        // manager to open it. If the resource has no document (e.g. it's from the support registry)
+        // then it's okay to track it with the current manager, closing it when our document closes.
+        if let rDoc = resource.document as? ResourceDocument, rDoc != document {
+            rDoc.editorManager.open(resource: resource, as: nil)
+            return
+        }
+        open(resource: resource, as: nil)
     }
     
-    private func open(resource: Resource, asType: ResourceType?) {
-        if let editor = PluginRegistry.editors[(asType ?? resource.type).code] {
+    private func open(resource: Resource, as type: ResourceType?) {
+        if let editor = PluginRegistry.editors[(type ?? resource.type).code] {
             self.open(resource: resource, using: editor, template: nil)
-        } else if let template = self.template(for: asType ?? resource.type) {
+        } else if let template = self.template(for: type ?? resource.type) {
             self.open(resource: resource, using: TemplateEditor.self, template: template)
-        } else if asType == nil,
-                  let mappedType = mappedType(for: resource, forEditor: true) {
-            open(resource: resource, asType: mappedType)
+        } else if type == nil, let mappedType = mappedType(for: resource, forEditor: true) {
+            open(resource: resource, as: mappedType)
         } else {
             self.open(resource: resource, using: PluginRegistry.hexEditor, template: nil)
         }
