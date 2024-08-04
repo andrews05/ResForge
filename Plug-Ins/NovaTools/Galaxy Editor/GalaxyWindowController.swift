@@ -1,19 +1,23 @@
 import AppKit
 import RFSupport
 
-/*
- * The galaxy editor is a bit hacky. It relies on a dummy 'glxÿ' resource within the support file
- * which is opened using RREF links in the sÿst template.
- * The GalaxyStub is the registered editor for this type but all it does is hand over to the shared
- * GalaxyWindowController, passing the id of the glxÿ resource as the id of the system to highlight.
- */
-class GalaxyStub: AbstractEditor, ResourceEditor {
+class GalaxyWindowController: AbstractEditor, ResourceEditor {
     static let supportedTypes = ["glxÿ"]
     let resource: Resource
+    private let manager: RFEditorManager
 
-    required init?(resource: Resource, manager: RFEditorManager) {
-        GalaxyWindowController.shared.show(targetID: resource.id, manager: manager)
-        return nil
+    @IBOutlet var systemsList: NSOutlineView!
+    @IBOutlet var clipView: NSClipView!
+    @IBOutlet var galaxyView: GalaxyView!
+    private(set) var systems: [Int: (resource: Resource, pos: NSPoint, links: [Int])] = [:]
+    private(set) var nebulae: [Int: (name: String, area: NSRect)] = [:]
+    private(set) var nebImages: [Int: NSImage] = [:]
+    private var systemListItems: [Any] = []
+
+    required init(resource: Resource, manager: RFEditorManager) {
+        self.resource = resource
+        self.manager = manager
+        super.init(window: nil)
     }
 
     required init?(coder: NSCoder) {
@@ -24,86 +28,48 @@ class GalaxyStub: AbstractEditor, ResourceEditor {
     func revertResource(_ sender: Any) {}
 }
 
-class GalaxyWindowController: NSWindowController {
-    static var shared = GalaxyWindowController()
-
-    @IBOutlet var clipView: NSClipView!
-    @IBOutlet var galaxyView: GalaxyView!
-    var targetID = 0
-    var systems: [Int: (name: String, pos: NSPoint, links: [Int])] = [:]
-    var nebulae: [Int: (name: String, area: NSRect)] = [:]
-    var nebImages: [Int: NSImage] = [:]
-
+extension GalaxyWindowController {
     override var windowNibName: String {
-        return "GalaxyWindow"
+        "GalaxyWindow"
+    }
+    var windowTitle: String {
+        "Galaxy Map"
     }
 
     override func windowDidLoad() {
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .ResourceDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .DocumentDidAddResource, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .DocumentDidRemoveResource, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .ResourceIDDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceNameChanged(_:)), name: .ResourceNameDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceDataChanged(_:)), name: .ResourceDataDidChange, object: nil)
+
+        // Workaround a bug in interface builder that prevents setting the column width correctly
+        systemsList.tableColumns[1].width = systemsList.frame.width - 2 - systemsList.tableColumns[0].width - systemsList.intercellSpacing.width
+
+        let point = NSPoint(x: galaxyView.frame.midX - clipView.frame.midX, y: galaxyView.frame.midY - clipView.frame.midY)
+        galaxyView.scroll(point)
+        self.reload()
     }
 
-    @IBAction func zoomIn(_ sender: Any) {
-        galaxyView.zoomIn(sender)
-    }
-
-    @IBAction func zoomOut(_ sender: Any) {
-        galaxyView.zoomOut(sender)
-    }
-
-    @objc func resourceChanged(_ notification: Notification) {
-        guard let resource = notification.object as? Resource else {
-            return
-        }
-        if resource.typeCode == "sÿst" {
-            self.read(system: resource)
-            galaxyView.needsDisplay = true
-        } else if resource.typeCode == "nebü" {
-            self.read(nebula: resource)
-            galaxyView.needsDisplay = true
-        }
-    }
-
-    private func read(system: Resource) {
-        let reader = BinaryDataReader(system.data)
-        do {
-            let point = NSPoint(
-                x: CGFloat(try reader.read() as Int16),
-                y: CGFloat(try reader.read() as Int16)
-            )
-            systems[system.id] = (system.name, point, [])
-            for _ in 0..<16 {
-                let id = Int(try reader.read() as Int16)
-                systems[system.id]?.links.append(id)
-            }
-        } catch {}
-    }
-
-    private func read(nebula: Resource) {
-        let reader = BinaryDataReader(nebula.data)
-        do {
-            let rect = NSRect(
-                x: CGFloat(try reader.read() as Int16),
-                y: CGFloat(try reader.read() as Int16),
-                width: CGFloat(try reader.read() as Int16),
-                height: CGFloat(try reader.read() as Int16)
-            )
-            nebulae[nebula.id] = (nebula.name, rect)
-        } catch {}
-    }
-
-    func show(targetID: Int, manager: RFEditorManager) {
-        window?.makeKeyAndOrderFront(self)
-        self.targetID = targetID
+    private func reload() {
         systems = [:]
         nebulae = [:]
         nebImages = [:]
+        systemListItems = []
 
         let systs = manager.allResources(ofType: ResourceType("sÿst"), currentDocumentOnly: false)
+        var currentDocument: NSDocument?
         for system in systs {
             guard systems[system.id] == nil else {
                 continue
             }
             self.read(system: system)
+            // Include a "group" row for each document
+            if system.document != currentDocument {
+                systemListItems.append(system.document?.displayName ?? "Other")
+                currentDocument = system.document
+            }
+            systemListItems.append(system)
         }
 
         let nebus = manager.allResources(ofType: ResourceType("nëbu"), currentDocumentOnly: false)
@@ -124,10 +90,114 @@ class GalaxyWindowController: NSWindowController {
             }
         }
 
-        var point = galaxyView.transform.transform(systems[targetID]?.pos ?? .zero)
-        point.x -= clipView.frame.midX
-        point.y = galaxyView.frame.height - point.y - clipView.frame.midY
-        galaxyView.scroll(point)
         galaxyView.needsDisplay = true
+        systemsList.reloadData()
+    }
+
+    @IBAction func zoomIn(_ sender: Any) {
+        galaxyView.zoomIn(sender)
+    }
+
+    @IBAction func zoomOut(_ sender: Any) {
+        galaxyView.zoomOut(sender)
+    }
+
+    @objc func resourceChanged(_ notification: Notification) {
+        guard let resource = notification.object as? Resource ?? notification.userInfo?["resource"] as? Resource else {
+            return
+        }
+        if resource.typeCode == "sÿst" || resource.typeCode == "nebü" {
+            self.reload()
+        }
+    }
+
+    @objc func resourceNameChanged(_ notification: Notification) {
+        guard let resource = notification.object as? Resource else {
+            return
+        }
+        if resource.typeCode == "sÿst" {
+            galaxyView.needsDisplay = true
+            systemsList.reloadData()
+        } else if resource.typeCode == "nebü" {
+            galaxyView.needsDisplay = true
+        }
+    }
+
+    @objc func resourceDataChanged(_ notification: Notification) {
+        guard let resource = notification.object as? Resource else {
+            return
+        }
+        if resource.typeCode == "sÿst" {
+            self.read(system: resource)
+            galaxyView.needsDisplay = true
+        } else if resource.typeCode == "nebü" {
+            self.read(nebula: resource)
+            galaxyView.needsDisplay = true
+        }
+    }
+
+    private func read(system: Resource) {
+        let reader = BinaryDataReader(system.data)
+        do {
+            let point = NSPoint(
+                x: CGFloat(try reader.read() as Int16),
+                y: CGFloat(try reader.read() as Int16)
+            )
+            let links = try (0..<16).map { _ in
+                Int(try reader.read() as Int16)
+            }
+            systems[system.id] = (system, point, links)
+        } catch {}
+    }
+
+    private func read(nebula: Resource) {
+        let reader = BinaryDataReader(nebula.data)
+        do {
+            let rect = NSRect(
+                x: CGFloat(try reader.read() as Int16),
+                y: CGFloat(try reader.read() as Int16),
+                width: CGFloat(try reader.read() as Int16),
+                height: CGFloat(try reader.read() as Int16)
+            )
+            nebulae[nebula.id] = (nebula.name, rect)
+        } catch {}
+    }
+}
+
+extension GalaxyWindowController: NSOutlineViewDataSource, NSOutlineViewDelegate {
+    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+        systemListItems.count
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        systemListItems[index]
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
+        item is String
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+        guard let system = item as? Resource else {
+            let view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: self) as! NSTableCellView
+            view.textField?.stringValue = item as! String
+            return view
+        }
+        let view = outlineView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
+        switch tableColumn?.identifier.rawValue {
+        case "id":
+            view.textField?.stringValue = "\(system.id)"
+        case "name":
+            view.textField?.stringValue = system.name
+        default:
+            return nil
+        }
+        return view
+    }
+
+    @IBAction func doubleClickSystem(_ sender: Any) {
+        if let system = systemListItems[systemsList.selectedRow] as? Resource {
+            manager.open(resource: system)
+        }
     }
 }

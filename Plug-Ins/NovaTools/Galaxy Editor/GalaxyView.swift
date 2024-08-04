@@ -31,7 +31,7 @@ class GalaxyView: NSView {
         var pointNames: [NSPoint: [String]] = [:]
         for (id, point) in points {
             if let system = controller.systems[id] {
-                pointNames[point, default: []].append(system.name)
+                pointNames[point, default: []].append(system.resource.name)
             }
         }
 
@@ -86,13 +86,6 @@ class GalaxyView: NSView {
             path.fill()
             (names.count == 1 ? NSColor.blue : NSColor.purple).setStroke()
             path.stroke()
-        }
-
-        // Highlight the target system
-        if let point = points[controller.targetID] {
-            NSColor.cyan.setFill()
-            let rect = NSRect(x: point.x-2, y: point.y-2, width: 4, height: 4)
-            NSBezierPath(ovalIn: rect).fill()
         }
 
         // System names - show first name only
