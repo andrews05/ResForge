@@ -3,9 +3,7 @@ import OrderedCollections
 import RFSupport
 
 extension Notification.Name {
-    static let DirectoryDidAddResource      = Self("DirectoryDidAddResource")
-    static let DirectoryDidRemoveResource   = Self("DirectoryDidRemoveResource")
-    static let DirectoryDidUpdateResource   = Self("DirectoryDidUpdateResource")
+    static let DirectoryDidUpdateResource = Self("DirectoryDidUpdateResource")
 }
 
 class ResourceDirectory {
@@ -57,7 +55,7 @@ class ResourceDirectory {
         self.addToMap(resource)
         filtered.removeValue(forKey: resource.type)
         document.undoManager?.registerUndo(withTarget: self) { $0.remove(resource) }
-        NotificationCenter.default.post(name: .DirectoryDidAddResource, object: self, userInfo: ["resource": resource])
+        NotificationCenter.default.post(name: .DocumentDidAddResource, object: document, userInfo: ["resource": resource])
     }
 
     /// Remove a single resource.
@@ -65,7 +63,7 @@ class ResourceDirectory {
         self.removeFromMap(resource)
         filtered.removeValue(forKey: resource.type)
         document.undoManager?.registerUndo(withTarget: self) { $0.add(resource) }
-        NotificationCenter.default.post(name: .DirectoryDidRemoveResource, object: self, userInfo: ["resource": resource])
+        NotificationCenter.default.post(name: .DocumentDidAddResource, object: document, userInfo: ["resource": resource])
     }
 
     /// Get the resources for the given type that match the current filter.

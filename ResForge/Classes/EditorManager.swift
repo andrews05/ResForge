@@ -10,7 +10,7 @@ class EditorManager: RFEditorManager {
     
     init(_ document: ResourceDocument) {
         self.document = document
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .DirectoryDidRemoveResource, object: document.directory)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .DocumentDidRemoveResource, object: document)
         NotificationCenter.default.addObserver(self, selector: #selector(windowWillClose(_:)), name: NSWindow.willCloseNotification, object: nil)
     }
     
