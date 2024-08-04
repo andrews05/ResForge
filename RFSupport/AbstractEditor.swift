@@ -8,7 +8,7 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
             return
         }
         // Use a short title for the title bar but include the document name in the Window menu
-        window.title = plug.resource.defaultWindowTitle
+        window.title = plug.windowTitle
         if let docName = plug.resource.document?.displayName {
             NSApp.changeWindowsItem(window, title: "\(docName): \(window.title)", filename: false)
         }

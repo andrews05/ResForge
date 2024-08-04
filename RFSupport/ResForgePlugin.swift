@@ -5,12 +5,18 @@ public protocol ResourceEditor: AbstractEditor {
     /// The list of resource types that this plugin supports.
     static var supportedTypes: [String] { get }
 
+    var windowTitle: String { get }
     var resource: Resource { get }
     init?(resource: Resource, manager: RFEditorManager)
 
     // Implementers should declare these @IBAction
     func saveResource(_ sender: Any)
     func revertResource(_ sender: Any)
+}
+public extension ResourceEditor  {
+    var windowTitle: String {
+        resource.defaultWindowTitle
+    }
 }
 
 /// A preview provider allows the document to display a grid view for a supported resource type.
