@@ -61,49 +61,6 @@
             <point key="canvasLocation" x="97" y="312"/>
         </window>
         <byteCountFormatter id="t7T-4V-eof"/>
-        <matrix hidden="YES" verticalHuggingPriority="750" mode="track" id="qNW-wh-J43">
-            <rect key="frame" x="0.0" y="0.0" width="225" height="36"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-            <size key="cellSize" width="75" height="18"/>
-            <buttonCell key="prototype" type="check" title="Radio" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="HoY-ML-l6j">
-                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                <font key="font" metaFont="message" size="11"/>
-            </buttonCell>
-            <cells>
-                <column>
-                    <buttonCell type="check" title="Changed" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" enabled="NO" tag="2" inset="2" id="emN-zJ-1Z9">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                    <buttonCell type="check" title="Locked" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="16" inset="2" id="Vcu-B6-QYp">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                </column>
-                <column>
-                    <buttonCell type="check" title="Preload" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="4" inset="2" id="XYw-Wf-WLG">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                    <buttonCell type="check" title="Purgeable" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="32" inset="2" id="CUS-45-DUO">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                </column>
-                <column>
-                    <buttonCell type="check" title="Protected" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="8" inset="2" id="MsU-se-xQN">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                    <buttonCell type="check" title="Sys Heap" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" tag="64" inset="2" id="C4V-QX-MW8">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="message" size="11"/>
-                    </buttonCell>
-                </column>
-            </cells>
-            <point key="canvasLocation" x="-519" y="484"/>
-        </matrix>
         <customFormatter id="9Ky-lD-TeE" customClass="MacRomanFormatter" customModule="RFSupport">
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="number" keyPath="stringLength">

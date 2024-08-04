@@ -60,13 +60,13 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
         guard self.window?.isVisible == true else {
             return
         }
-        if let resource = objectController.content as? Resource {
+        // Show resource info for resources in a ResourceDocument (exclude those in the support directory)
+        if let resource = objectController.content as? Resource, let document = resource.document as? ResourceDocument {
             window?.title = NSLocalizedString("Resource Info", comment: "")
 
             rSize.integerValue = resource.data.count
-            let format = (resource.document as? ResourceDocument)?.format
-            resAttsHolder.isHidden = format?.supportsResAttributes != true
-            typeAttsHolder.isHidden = format?.supportsTypeAttributes != true
+            resAttsHolder.isHidden = document.format.supportsResAttributes != true
+            typeAttsHolder.isHidden = document.format.supportsTypeAttributes != true
             rTypeAtts.attributes = resource.typeAttributes
 
             window?.contentView = resourceView
@@ -91,6 +91,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
                 nameView.stringValue = document.displayName
             }
 
+            // Don't show type/creator for files that were opened using a template
             typesView.isHidden = !(document is ResourceDocument)
 
             window?.contentView = documentView
