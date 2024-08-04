@@ -1,19 +1,24 @@
 import AppKit
 import RFSupport
+import OrderedCollections
 
-/*
- * The galaxy editor is a bit hacky. It relies on a dummy 'glxÿ' resource within the support file
- * which is opened using RREF links in the sÿst template.
- * The GalaxyStub is the registered editor for this type but all it does is hand over to the shared
- * GalaxyWindowController, passing the id of the glxÿ resource as the id of the system to highlight.
- */
-class GalaxyStub: AbstractEditor, ResourceEditor {
+class GalaxyWindowController: AbstractEditor, ResourceEditor {
     static let supportedTypes = ["glxÿ"]
     let resource: Resource
+    let manager: RFEditorManager
 
-    required init?(resource: Resource, manager: RFEditorManager) {
-        GalaxyWindowController.shared.show(targetID: resource.id, manager: manager)
-        return nil
+    @IBOutlet var systemTable: NSTableView!
+    @IBOutlet var galaxyView: GalaxyView!
+    private(set) var systemViews: OrderedDictionary<Int, SystemView> = [:]
+    private(set) var nebulae: [Int: (name: String, area: NSRect)] = [:]
+    private(set) var nebImages: [Int: NSImage] = [:]
+    private var systemList: [Resource] = []
+    private var isSelectingSystems = false
+
+    required init(resource: Resource, manager: RFEditorManager) {
+        self.resource = resource
+        self.manager = manager
+        super.init(window: nil)
     }
 
     required init?(coder: NSCoder) {
@@ -24,22 +29,95 @@ class GalaxyStub: AbstractEditor, ResourceEditor {
     func revertResource(_ sender: Any) {}
 }
 
-class GalaxyWindowController: NSWindowController {
-    static var shared = GalaxyWindowController()
-
-    @IBOutlet var clipView: NSClipView!
-    @IBOutlet var galaxyView: GalaxyView!
-    var targetID = 0
-    var systems: [Int: (name: String, pos: NSPoint, links: [Int])] = [:]
-    var nebulae: [Int: (name: String, area: NSRect)] = [:]
-    var nebImages: [Int: NSImage] = [:]
-
+extension GalaxyWindowController {
     override var windowNibName: String {
-        return "GalaxyWindow"
+        "GalaxyWindow"
+    }
+    var windowTitle: String {
+        "Galaxy Map"
     }
 
     override func windowDidLoad() {
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .ResourceDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceListChanged(_:)), name: .DocumentDidAddResources, object: manager.document)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceListChanged(_:)), name: .DocumentDidRemoveResources, object: manager.document)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceIDChanged(_:)), name: .ResourceIDDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceNameChanged(_:)), name: .ResourceNameDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceDataChanged(_:)), name: .ResourceDataDidChange, object: nil)
+
+        // Workaround a bug in interface builder that prevents setting the column width correctly
+        systemTable.tableColumns[1].width = systemTable.frame.width - 2 - systemTable.tableColumns[0].width - systemTable.intercellSpacing.width
+
+        // Scroll to galaxy center
+        if var documentRect = galaxyView.enclosingScrollView?.documentVisibleRect {
+            documentRect.origin.y *= -1 // Workaround an issue where the clip view is initially misplaced
+            galaxyView.scroll(NSPoint(x: galaxyView.frame.midX - documentRect.midX, y: galaxyView.frame.midY - documentRect.midY))
+        }
+
+        self.reload()
+    }
+
+    private func reload() {
+        systemViews = [:]
+        nebulae = [:]
+        nebImages = [:]
+
+        let systs = manager.allResources(ofType: ResourceType("sÿst"), currentDocumentOnly: false)
+        for system in systs {
+            if systemViews[system.id] == nil {
+                self.read(system: system)
+            }
+        }
+
+        let nebus = manager.allResources(ofType: ResourceType("nëbu"), currentDocumentOnly: false)
+        for nebula in nebus {
+            if nebulae[nebula.id] == nil {
+                self.read(nebula: nebula)
+            }
+        }
+
+        self.updateSystemList()
+    }
+
+    private func updateSystemList() {
+        // Reverse list so first draws on top
+        galaxyView.subviews = Array(systemViews.values).reversed()
+        systemList = manager.allResources(ofType: ResourceType("sÿst"), currentDocumentOnly: true)
+        systemTable.reloadData()
+    }
+
+    private func read(system: Resource) {
+        if let view = systemViews[system.id] {
+            try? view.read()
+        } else if let view = SystemView(system, isEnabled: system.document == manager.document) {
+            systemViews[system.id] = view
+        }
+    }
+
+    private func read(nebula: Resource) {
+        let reader = BinaryDataReader(nebula.data)
+        do {
+            let rect = NSRect(
+                x: Double(try reader.read() as Int16),
+                y: Double(try reader.read() as Int16),
+                width: Double(try reader.read() as Int16),
+                height: Double(try reader.read() as Int16)
+            )
+            nebulae[nebula.id] = (nebula.name, rect)
+        } catch {}
+
+        if nebImages[nebula.id] == nil {
+            // Find the largest available image
+            let first = (nebula.id - 128) * 7 + 9500
+            for id in (first..<first+7).reversed() {
+                if let pict = manager.findResource(type: ResourceType("PICT"), id: id, currentDocumentOnly: false) {
+                    pict.preview {
+                        self.nebImages[nebula.id] = $0
+                        self.galaxyView.needsDisplay = true
+                    }
+                    break
+                }
+            }
+        }
     }
 
     @IBAction func zoomIn(_ sender: Any) {
@@ -50,84 +128,137 @@ class GalaxyWindowController: NSWindowController {
         galaxyView.zoomOut(sender)
     }
 
-    @objc func resourceChanged(_ notification: Notification) {
+    // MARK: - Notifications
+
+    @objc func resourceListChanged(_ notification: Notification) {
+        guard let resources = notification.userInfo?["resources"] as? [Resource] else {
+            return
+        }
+        let shouldReload = resources.contains {
+            !$0.data.isEmpty && ($0.typeCode == "sÿst" || $0.typeCode == "nëbu")
+        }
+        if shouldReload {
+            self.reload()
+        }
+    }
+
+    @objc func resourceIDChanged(_ notification: Notification) {
+        guard let resource = notification.object as? Resource else {
+            return
+        }
+        if resource.typeCode == "sÿst" || resource.typeCode == "nëbu" {
+            self.reload()
+        }
+    }
+
+    @objc func resourceNameChanged(_ notification: Notification) {
+        guard let resource = notification.object as? Resource else {
+            return
+        }
+        if resource.typeCode == "sÿst" {
+            systemViews[resource.id]?.updateFrame()
+            if let idx = systemList.firstIndex(of: resource) {
+                systemTable.reloadData(forRowIndexes: [idx + 1], columnIndexes: [1])
+            }
+        } else if resource.typeCode == "nëbu" {
+            galaxyView.needsDisplay = true
+        }
+    }
+
+    @objc func resourceDataChanged(_ notification: Notification) {
         guard let resource = notification.object as? Resource else {
             return
         }
         if resource.typeCode == "sÿst" {
             self.read(system: resource)
-            galaxyView.needsDisplay = true
-        } else if resource.typeCode == "nebü" {
+            self.updateSystemList()
+            self.syncSelectionFromView()
+        } else if resource.typeCode == "nëbu" {
             self.read(nebula: resource)
             galaxyView.needsDisplay = true
         }
     }
+}
 
-    private func read(system: Resource) {
-        let reader = BinaryDataReader(system.data)
-        do {
-            let point = NSPoint(
-                x: CGFloat(try reader.read() as Int16),
-                y: CGFloat(try reader.read() as Int16)
-            )
-            systems[system.id] = (system.name, point, [])
-            for _ in 0..<16 {
-                let id = Int(try reader.read() as Int16)
-                systems[system.id]?.links.append(id)
-            }
-        } catch {}
+extension GalaxyWindowController: NSTableViewDataSource, NSTableViewDelegate {
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        systemList.count + 1
     }
 
-    private func read(nebula: Resource) {
-        let reader = BinaryDataReader(nebula.data)
-        do {
-            let rect = NSRect(
-                x: CGFloat(try reader.read() as Int16),
-                y: CGFloat(try reader.read() as Int16),
-                width: CGFloat(try reader.read() as Int16),
-                height: CGFloat(try reader.read() as Int16)
-            )
-            nebulae[nebula.id] = (nebula.name, rect)
-        } catch {}
+    func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
+        row == 0
     }
 
-    func show(targetID: Int, manager: RFEditorManager) {
-        window?.makeKeyAndOrderFront(self)
-        self.targetID = targetID
-        systems = [:]
-        nebulae = [:]
-        nebImages = [:]
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        row != 0
+    }
 
-        let systs = manager.allResources(ofType: ResourceType("sÿst"), currentDocumentOnly: false)
-        for system in systs {
-            guard systems[system.id] == nil else {
-                continue
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        let identifier = tableColumn?.identifier ?? NSUserInterfaceItemIdentifier("HeaderCell")
+        let view = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
+        if let tableColumn {
+            let system = systemList[row - 1]
+            switch tableColumn.identifier.rawValue {
+            case "id":
+                view.textField?.stringValue = "\(system.id)"
+            case "name":
+                view.textField?.stringValue = system.name
+            default:
+                break
             }
-            self.read(system: system)
+        } else {
+            view.textField?.stringValue = manager.document?.displayName ?? ""
         }
+        return view
+    }
 
-        let nebus = manager.allResources(ofType: ResourceType("nëbu"), currentDocumentOnly: false)
-        for nebula in nebus {
-            guard nebulae[nebula.id] == nil else {
-                continue
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        guard !isSelectingSystems else {
+            return
+        }
+        self.syncSelectionToView()
+        galaxyView.restackSystems()
+
+        // Scroll to last selected system, unless selected all
+        if systemTable.selectedRow > 0 && systemTable.selectedRowIndexes.count < systemList.count {
+            let system = systemList[systemTable.selectedRow - 1]
+            if let view = systemViews[system.id] {
+                view.scrollToVisible(view.bounds.insetBy(dx: -4, dy: -4))
             }
-            self.read(nebula: nebula)
-            // Find the largest available image
-            let first = (nebula.id - 128) * 7 + 9500
-            for id in (first..<first+7).reversed() {
-                if let pict = manager.findResource(type: ResourceType("PICT"), id: id, currentDocumentOnly: false) {
-                    pict.preview {
-                        self.nebImages[nebula.id] = $0
-                        self.galaxyView.needsDisplay = true
-                    }
+        }
+    }
+
+    func syncSelectionToView() {
+        for (i, system) in systemList.enumerated() {
+            systemViews[system.id]?.isHighlighted = systemTable.isRowSelected(i + 1)
+        }
+    }
+
+    func syncSelectionFromView(clicked: SystemView? = nil) {
+        var scrollRow: Int?
+        var indexes = IndexSet()
+        for (i, system) in systemList.enumerated() {
+            if let view = systemViews[system.id], view.isHighlighted {
+                indexes.insert(i + 1)
+                if view == clicked {
+                    scrollRow = i + 1
                 }
             }
         }
+        isSelectingSystems = true
+        systemTable.selectRowIndexes(indexes, byExtendingSelection: false)
+        isSelectingSystems = false
+        if let scrollRow {
+            systemTable.scrollRowToVisible(scrollRow)
+        }
+    }
 
-        var point = galaxyView.transform.transform(systems[targetID]?.pos ?? .zero)
-        point.x -= clipView.frame.midX
-        point.y = galaxyView.frame.height - point.y - clipView.frame.midY
-        galaxyView.scroll(point)
-        galaxyView.needsDisplay = true
+    @IBAction func doubleClickSystem(_ sender: Any) {
+        guard systemTable.clickedRow != 0 else {
+            return
+        }
+        for i in systemTable.selectedRowIndexes {
+            manager.open(resource: systemList[i - 1])
+        }
     }
 }

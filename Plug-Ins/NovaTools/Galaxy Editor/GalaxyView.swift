@@ -1,46 +1,91 @@
 import AppKit
 import RFSupport
 
-class GalaxyView: NSView {
+class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     @IBOutlet weak var controller: GalaxyWindowController!
-    let zoomLevels: [CGFloat] = [8/19, 9/16, 3/4, 1, 4/3, 16/9, 19/8]
-    var transform = AffineTransform()
-    var zoomLevel = 4 {
+    private let zoomLevels: [Double] = [8/19, 9/16, 3/4, 1, 4/3, 16/9, 19/8]
+    private var transform = AffineTransform()
+    private var zoomLevel = 4 {
         didSet {
             if zoomLevel != oldValue {
                 transform = AffineTransform(translationByX: frame.midX, byY: frame.midY)
                 transform.scale(zoomLevels[zoomLevel])
-                needsDisplay = true
+                self.transformSubviews()
             }
         }
     }
 
-    override var wantsUpdateLayer: Bool {
-        true
+    override var acceptsFirstResponder: Bool { true }
+    override var isFlipped: Bool { true }
+    override var subviews: [NSView] {
+        didSet {
+            self.transformSubviews()
+            self.restackSystems()
+        }
     }
 
     override func awakeFromNib() {
+        wantsLayer = true
         transform.translate(x: frame.midX, y: frame.midY)
         transform.scale(zoomLevels[zoomLevel])
     }
 
-    override func updateLayer() {
-        let points = controller.systems.mapValues {
-            transform.transform($0.pos)
+    private func transformSubviews() {
+        for view in controller.systemViews.values {
+            view.showName = zoomLevel >= 3
+            view.point = transform.transform(view.position)
         }
-        var pointNames: [NSPoint: [String]] = [:]
-        for (id, point) in points {
-            if let system = controller.systems[id] {
-                pointNames[point, default: []].append(system.name)
+        needsDisplay = true
+    }
+
+    func restackSystems() {
+        // Keep track of occupied locations - only the first system at a given point will be displayed
+        var topViews: [NSPoint: SystemView] = [:]
+        for view in controller.systemViews.values {
+            view.highlightCount = 1
+            if let topView = topViews[view.point] {
+                if !view.isHighlighted {
+                    view.isHidden = true
+                } else if !topView.isHighlighted {
+                    // The current top view is not part of the selection, swap it with this one
+                    topView.isHidden = true
+                    topViews[view.point] = view
+                    view.isHidden = false
+                } else if topView != view {
+                    topView.highlightCount += 1
+                    view.isHidden = true
+                }
+            } else {
+                // No current top view, set it to this one
+                topViews[view.point] = view
+                view.isHidden = false
             }
         }
+    }
 
-        let image = NSImage(size: frame.size)
-        image.lockFocusFlipped(true)
+    // MARK: - Drawing
+
+    override var needsDisplay: Bool {
+        get { layer?.needsDisplay() ?? false }
+        set { layer?.setNeedsDisplay() }
+    }
+
+    override func makeBackingLayer() -> CALayer {
+        let layer = CALayer()
+        layer.contentsScale = window?.backingScaleFactor ?? 1
+        layer.backgroundColor = .black
+        layer.delegate = self
+        return layer
+    }
+
+    nonisolated func layer(_ layer: CALayer, shouldInheritContentsScale newScale: CGFloat, from window: NSWindow) -> Bool {
+        return true
+    }
+
+    func draw(_ layer: CALayer, in ctx: CGContext) {
+        NSGraphicsContext.current = NSGraphicsContext(cgContext: ctx, flipped: true)
 
         // Center lines
-        NSColor.black.setFill()
-        frame.fill()
         NSColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1).setFill()
         NSRect(x: frame.midX, y: 0, width: 1, height: frame.height).frame()
         NSRect(x: 0, y: frame.midY, width: frame.height, height: 1).frame()
@@ -48,22 +93,22 @@ class GalaxyView: NSView {
         // Nebulae
         let font = NSFont.systemFont(ofSize: 11)
         for (id, nebu) in controller.nebulae {
-            var rect = transform.transform(nebu.area)
+            let rect = transform.transform(nebu.area)
             if let image = controller.nebImages[id] {
                 image.draw(in: rect)
             } else {
                 NSColor(red: 0.1, green: 0.3, blue: 0.1, alpha: 1).setFill()
                 rect.fill()
-                rect.origin.x += 4
-                rect.origin.y += 12
-                nebu.name.draw(with: rect, attributes: [.foregroundColor: NSColor.lightGray, .font: font])
+                let textRect = NSRect(x: rect.origin.x + 4, y: rect.origin.y + 12, width: 0, height: 0)
+                nebu.name.draw(with: textRect, attributes: [.foregroundColor: NSColor.lightGray, .font: font])
             }
         }
 
         // Hyperlinks
+        let points = controller.systemViews.mapValues(\.point)
         NSColor.darkGray.setStroke()
         let path = NSBezierPath()
-        for (fromID, system) in controller.systems {
+        for (fromID, system) in controller.systemViews {
             guard let from = points[fromID] else {
                 continue
             }
@@ -77,45 +122,9 @@ class GalaxyView: NSView {
         }
         path.lineWidth = 1.2
         path.stroke()
-
-        // Systems - show in purple if multiple systems at one point
-        NSColor.black.setFill()
-        for (point, names) in pointNames {
-            let rect = NSRect(x: point.x-4, y: point.y-4, width: 8, height: 8)
-            let path = NSBezierPath(ovalIn: rect)
-            path.fill()
-            (names.count == 1 ? NSColor.blue : NSColor.purple).setStroke()
-            path.stroke()
-        }
-
-        // Highlight the target system
-        if let point = points[controller.targetID] {
-            NSColor.cyan.setFill()
-            let rect = NSRect(x: point.x-2, y: point.y-2, width: 4, height: 4)
-            NSBezierPath(ovalIn: rect).fill()
-        }
-
-        // System names - show first name only
-        if zoomLevel >= 3 {
-            for (point, names) in pointNames {
-                let rect = NSRect(x: point.x.rounded()+8, y: point.y.rounded()+4, width: 0, height: 0)
-                names[0].draw(with: rect, attributes: [.foregroundColor: NSColor.white, .font: font])
-            }
-        }
-
-        image.unlockFocus()
-        layer?.contents = image
     }
 
-    // Drag to scroll
-    override func mouseDragged(with event: NSEvent) {
-        if let clipView = superview as? NSClipView {
-            var origin = clipView.bounds.origin
-            origin.x -= event.deltaX
-            origin.y += event.deltaY
-            self.scroll(origin)
-        }
-    }
+    // MARK: - Event handling
 
     @IBAction func zoomIn(_ sender: Any) {
         zoomLevel = min(zoomLevel+1, 6)
@@ -123,6 +132,52 @@ class GalaxyView: NSView {
 
     @IBAction func zoomOut(_ sender: Any) {
         zoomLevel = max(zoomLevel-1, 0)
+    }
+
+    // Drag to scroll
+    override func mouseDragged(with event: NSEvent) {
+        if let clipView = superview as? NSClipView {
+            var origin = clipView.bounds.origin
+            origin.x -= event.deltaX
+            origin.y -= event.deltaY
+            self.scroll(origin)
+        }
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        // Deselect all if not holding shift or command and not dragging
+        let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
+        if !toggle,
+           let e = window?.nextEvent(matching: [.leftMouseUp, .leftMouseDragged]),
+           e.type == .leftMouseUp {
+            controller.systemTable.deselectAll(self)
+        }
+    }
+
+    func mouseDown(system: SystemView, with event: NSEvent) {
+        let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
+        guard toggle || !system.isHighlighted else {
+            return
+        }
+        let state = toggle ? !system.isHighlighted : true
+        for view in controller.systemViews.values {
+            // Select/deselect all enabled systems at the same point
+            if view.isEnabled && view.point == system.point {
+                view.isHighlighted = state
+            } else if !toggle {
+                view.isHighlighted = false
+            }
+        }
+        self.restackSystems()
+        controller.syncSelectionFromView(clicked: system)
+    }
+
+    override func keyDown(with event: NSEvent) {
+        controller.systemTable.keyDown(with: event)
+    }
+
+    override func selectAll(_ sender: Any?) {
+        controller.systemTable.selectAll(self)
     }
 }
 

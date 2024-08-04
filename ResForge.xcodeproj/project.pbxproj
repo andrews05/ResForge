@@ -16,6 +16,7 @@
 		490D94AF25624FCF00F73544 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		490D94D2256251E400F73544 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490D949C25624F5D00F73544 /* HexFiend.framework */; };
 		491AE7692BFB34B1002E4CBE /* Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AE7682BFB34B1002E4CBE /* Picture.swift */; };
+		491B44DB2C60A9CC00D0DBB1 /* SystemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491B44DA2C60A9CC00D0DBB1 /* SystemView.swift */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */; };
 		4925B579288D2B1300F21D15 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4925B578288D2B1300F21D15 /* Sprite.swift */; };
@@ -49,6 +50,7 @@
 		49640F4725F201C9009FEC9B /* ShanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E7E4B25E6EE28001C97CA /* ShanView.swift */; };
 		49640F4F25F24049009FEC9B /* SteppingFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */; };
 		49640F5D25F36A77009FEC9B /* AbstractEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49640F5C25F36A77009FEC9B /* AbstractEditor.swift */; };
+		496438932C6894240081D910 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 496438922C6894240081D910 /* OrderedCollections */; };
 		49655DF824DE6D5600D6AFF6 /* ResourceDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF724DE6D5600D6AFF6 /* ResourceDocument.swift */; };
 		49655DFA24DE6DA200D6AFF6 /* ResourceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DF924DE6DA200D6AFF6 /* ResourceExtension.swift */; };
 		49655DFC24DF94B500D6AFF6 /* ResourceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49655DFB24DF94B500D6AFF6 /* ResourceDirectory.swift */; };
@@ -341,6 +343,7 @@
 		490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
 		4919415425E98E7000FFC3F8 /* SpriteLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteLayer.swift; sourceTree = "<group>"; usesTabs = 0; };
 		491AE7682BFB34B1002E4CBE /* Picture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
+		491B44DA2C60A9CC00D0DBB1 /* SystemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemView.swift; sourceTree = "<group>"; };
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4925B578288D2B1300F21D15 /* Sprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -541,6 +544,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				496438932C6894240081D910 /* OrderedCollections in Frameworks */,
 				49DA3A4D2550BD2E00821A7E /* RFSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,6 +679,7 @@
 				4976D2642718CAD500322DDF /* GalaxyWindow.xib */,
 				4976D2702718CAFF00322DDF /* GalaxyWindowController.swift */,
 				4976D2772718CC4B00322DDF /* GalaxyView.swift */,
+				491B44DA2C60A9CC00D0DBB1 /* SystemView.swift */,
 			);
 			path = "Galaxy Editor";
 			sourceTree = "<group>";
@@ -1023,6 +1028,9 @@
 			dependencies = (
 			);
 			name = NovaTools;
+			packageProductDependencies = (
+				496438922C6894240081D910 /* OrderedCollections */,
+			);
 			productName = NovaTools;
 			productReference = 49EE72D82550B79600BEABDB /* NovaTools.plugin */;
 			productType = "com.apple.product-type.bundle";
@@ -1377,6 +1385,7 @@
 				49EE73092550B9B400BEABDB /* SpriteWindowController.swift in Sources */,
 				496E7E3525E6EA15001C97CA /* ShanWindowController.swift in Sources */,
 				49640F4025F201C0009FEC9B /* ExitPoints.swift in Sources */,
+				491B44DB2C60A9CC00D0DBB1 /* SystemView.swift in Sources */,
 				49640F3925F201BD009FEC9B /* ShieldLayer.swift in Sources */,
 				49640F2B25F201B8009FEC9B /* LightLayer.swift in Sources */,
 				49640F3225F201BA009FEC9B /* WeaponLayer.swift in Sources */,
@@ -2190,6 +2199,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */;
 			productName = CSV;
+		};
+		496438922C6894240081D910 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
 		};
 		49D6D348271BAA9F002DEA97 /* OrderedCollections */ = {
 			isa = XCSwiftPackageProductDependency;
