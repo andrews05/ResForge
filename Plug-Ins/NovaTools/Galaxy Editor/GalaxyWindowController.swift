@@ -4,12 +4,12 @@ import RFSupport
 class GalaxyWindowController: AbstractEditor, ResourceEditor {
     static let supportedTypes = ["glxÿ"]
     let resource: Resource
-    private let manager: RFEditorManager
+    let manager: RFEditorManager
 
     @IBOutlet var systemsList: NSOutlineView!
     @IBOutlet var clipView: NSClipView!
     @IBOutlet var galaxyView: GalaxyView!
-    private(set) var systems: [Int: (resource: Resource, pos: NSPoint, links: [Int])] = [:]
+    private(set) var systems: [Int: SystemView] = [:]
     private(set) var nebulae: [Int: (name: String, area: NSRect)] = [:]
     private(set) var nebImages: [Int: NSImage] = [:]
     private var systemListItems: [Any] = []
@@ -37,9 +37,9 @@ extension GalaxyWindowController {
     }
 
     override func windowDidLoad() {
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .DocumentDidAddResource, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .DocumentDidRemoveResource, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceChanged(_:)), name: .ResourceIDDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceAdded(_:)), name: .DocumentDidAddResource, object: manager.document)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .DocumentDidRemoveResource, object: manager.document)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .ResourceIDDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resourceNameChanged(_:)), name: .ResourceNameDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resourceDataChanged(_:)), name: .ResourceDataDidChange, object: nil)
 
@@ -55,99 +55,35 @@ extension GalaxyWindowController {
         systems = [:]
         nebulae = [:]
         nebImages = [:]
-        systemListItems = []
 
         let systs = manager.allResources(ofType: ResourceType("sÿst"), currentDocumentOnly: false)
-        var currentDocument: NSDocument?
         for system in systs {
-            guard systems[system.id] == nil else {
-                continue
+            if systems[system.id] == nil {
+                self.read(system: system)
             }
-            self.read(system: system)
-            // Include a "group" row for each document
-            if system.document != currentDocument {
-                systemListItems.append(system.document?.displayName ?? "Other")
-                currentDocument = system.document
-            }
-            systemListItems.append(system)
         }
 
         let nebus = manager.allResources(ofType: ResourceType("nëbu"), currentDocumentOnly: false)
         for nebula in nebus {
-            guard nebulae[nebula.id] == nil else {
-                continue
-            }
-            self.read(nebula: nebula)
-            // Find the largest available image
-            let first = (nebula.id - 128) * 7 + 9500
-            for id in (first..<first+7).reversed() {
-                if let pict = manager.findResource(type: ResourceType("PICT"), id: id, currentDocumentOnly: false) {
-                    pict.preview {
-                        self.nebImages[nebula.id] = $0
-                        self.galaxyView.needsDisplay = true
-                    }
-                }
+            if nebulae[nebula.id] == nil {
+                self.read(nebula: nebula)
             }
         }
 
-        galaxyView.needsDisplay = true
+        self.updateSystemList()
+    }
+
+    private func updateSystemList() {
+        galaxyView.subviews = Array(systems.values)
+        systemListItems = manager.allResources(ofType: ResourceType("sÿst"), currentDocumentOnly: true)
+        systemListItems.insert(manager.document?.displayName ?? "", at: 0)
         systemsList.reloadData()
     }
 
-    @IBAction func zoomIn(_ sender: Any) {
-        galaxyView.zoomIn(sender)
-    }
-
-    @IBAction func zoomOut(_ sender: Any) {
-        galaxyView.zoomOut(sender)
-    }
-
-    @objc func resourceChanged(_ notification: Notification) {
-        guard let resource = notification.object as? Resource ?? notification.userInfo?["resource"] as? Resource else {
-            return
-        }
-        if resource.typeCode == "sÿst" || resource.typeCode == "nebü" {
-            self.reload()
-        }
-    }
-
-    @objc func resourceNameChanged(_ notification: Notification) {
-        guard let resource = notification.object as? Resource else {
-            return
-        }
-        if resource.typeCode == "sÿst" {
-            galaxyView.needsDisplay = true
-            systemsList.reloadData()
-        } else if resource.typeCode == "nebü" {
-            galaxyView.needsDisplay = true
-        }
-    }
-
-    @objc func resourceDataChanged(_ notification: Notification) {
-        guard let resource = notification.object as? Resource else {
-            return
-        }
-        if resource.typeCode == "sÿst" {
-            self.read(system: resource)
-            galaxyView.needsDisplay = true
-        } else if resource.typeCode == "nebü" {
-            self.read(nebula: resource)
-            galaxyView.needsDisplay = true
-        }
-    }
-
     private func read(system: Resource) {
-        let reader = BinaryDataReader(system.data)
-        do {
-            let point = NSPoint(
-                x: CGFloat(try reader.read() as Int16),
-                y: CGFloat(try reader.read() as Int16)
-            )
-            let links = try (0..<16).map { _ in
-                Int(try reader.read() as Int16)
-            }
-            systems[system.id] = (system, point, links)
-        } catch {}
+        if let view = SystemView(system, isEnabled: system.document == manager.document) {
+            systems[system.id] = view
+        }
     }
 
     private func read(nebula: Resource) {
@@ -161,6 +97,77 @@ extension GalaxyWindowController {
             )
             nebulae[nebula.id] = (nebula.name, rect)
         } catch {}
+
+        if nebImages[nebula.id] == nil {
+            // Find the largest available image
+            let first = (nebula.id - 128) * 7 + 9500
+            for id in (first..<first+7).reversed() {
+                if let pict = manager.findResource(type: ResourceType("PICT"), id: id, currentDocumentOnly: false) {
+                    pict.preview {
+                        self.nebImages[nebula.id] = $0
+                        self.galaxyView.needsDisplay = true
+                    }
+                    break
+                }
+            }
+        }
+    }
+
+    @IBAction func zoomIn(_ sender: Any) {
+        galaxyView.zoomIn(sender)
+    }
+
+    @IBAction func zoomOut(_ sender: Any) {
+        galaxyView.zoomOut(sender)
+    }
+
+    // MARK: Notifications
+
+    @objc func resourceAdded(_ notification: Notification) {
+        guard let resource = notification.userInfo?["resource"] as? Resource else {
+            return
+        }
+        if resource.typeCode == "sÿst" {
+            self.read(system: resource)
+            self.updateSystemList()
+        } else if resource.typeCode == "nëbu" {
+            self.read(nebula: resource)
+            galaxyView.needsDisplay = true
+        }
+    }
+
+    @objc func resourceRemoved(_ notification: Notification) {
+        guard let resource = notification.object as? Resource ?? notification.userInfo?["resource"] as? Resource else {
+            return
+        }
+        if resource.typeCode == "sÿst" || resource.typeCode == "nëbu" {
+            self.reload()
+        }
+    }
+
+    @objc func resourceNameChanged(_ notification: Notification) {
+        guard let resource = notification.object as? Resource else {
+            return
+        }
+        if resource.typeCode == "sÿst" {
+            systems[resource.id]?.needsDisplay = true
+            systemsList.reloadData()
+        } else if resource.typeCode == "nëbu" {
+            galaxyView.needsDisplay = true
+        }
+    }
+
+    @objc func resourceDataChanged(_ notification: Notification) {
+        guard let resource = notification.object as? Resource else {
+            return
+        }
+        if resource.typeCode == "sÿst" {
+            self.read(system: resource)
+            galaxyView.subviews = Array(systems.values)
+        } else if resource.typeCode == "nëbu" {
+            self.read(nebula: resource)
+            galaxyView.needsDisplay = true
+        }
     }
 }
 

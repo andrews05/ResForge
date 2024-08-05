@@ -3,20 +3,28 @@ import RFSupport
 
 class GalaxyView: NSView {
     @IBOutlet weak var controller: GalaxyWindowController!
-    let zoomLevels: [CGFloat] = [8/19, 9/16, 3/4, 1, 4/3, 16/9, 19/8]
-    var transform = AffineTransform()
-    var zoomLevel = 4 {
+    private let zoomLevels: [CGFloat] = [8/19, 9/16, 3/4, 1, 4/3, 16/9, 19/8]
+    private var transform = AffineTransform()
+    private var zoomLevel = 4 {
         didSet {
             if zoomLevel != oldValue {
                 transform = AffineTransform(translationByX: frame.midX, byY: frame.midY)
                 transform.scale(zoomLevels[zoomLevel])
-                needsDisplay = true
+                self.updateSubviews()
             }
         }
     }
 
+    override var isFlipped: Bool {
+        true
+    }
     override var wantsUpdateLayer: Bool {
         true
+    }
+    override var subviews: [NSView] {
+        didSet {
+            self.updateSubviews()
+        }
     }
 
     override func awakeFromNib() {
@@ -24,17 +32,24 @@ class GalaxyView: NSView {
         transform.scale(zoomLevels[zoomLevel])
     }
 
-    override func updateLayer() {
-        let points = controller.systems.mapValues {
-            transform.transform($0.pos)
-        }
-        var pointNames: [NSPoint: [String]] = [:]
-        for (id, point) in points {
-            if let system = controller.systems[id] {
-                pointNames[point, default: []].append(system.resource.name)
+    private func updateSubviews() {
+        var points: [NSPoint: SystemView] = [:]
+        for system in subviews as! [SystemView] {
+            system.overlaps = false
+            system.update(transform, showName: zoomLevel >= 3)
+            if let existing = points[system.point] {
+                existing.overlaps = true
+                // Don't draw this system but still allow it to respond to clicks
+                system.alphaValue = 0
+            } else {
+                points[system.point] = system
+                system.alphaValue = 1
             }
         }
+        needsDisplay = true
+    }
 
+    override func updateLayer() {
         let image = NSImage(size: frame.size)
         image.lockFocusFlipped(true)
 
@@ -61,6 +76,7 @@ class GalaxyView: NSView {
         }
 
         // Hyperlinks
+        let points = controller.systems.mapValues(\.point)
         NSColor.darkGray.setStroke()
         let path = NSBezierPath()
         for (fromID, system) in controller.systems {
@@ -78,24 +94,6 @@ class GalaxyView: NSView {
         path.lineWidth = 1.2
         path.stroke()
 
-        // Systems - show in purple if multiple systems at one point
-        NSColor.black.setFill()
-        for (point, names) in pointNames {
-            let rect = NSRect(x: point.x-4, y: point.y-4, width: 8, height: 8)
-            let path = NSBezierPath(ovalIn: rect)
-            path.fill()
-            (names.count == 1 ? NSColor.blue : NSColor.purple).setStroke()
-            path.stroke()
-        }
-
-        // System names - show first name only
-        if zoomLevel >= 3 {
-            for (point, names) in pointNames {
-                let rect = NSRect(x: point.x.rounded()+8, y: point.y.rounded()+4, width: 0, height: 0)
-                names[0].draw(with: rect, attributes: [.foregroundColor: NSColor.white, .font: font])
-            }
-        }
-
         image.unlockFocus()
         layer?.contents = image
     }
@@ -105,7 +103,7 @@ class GalaxyView: NSView {
         if let clipView = superview as? NSClipView {
             var origin = clipView.bounds.origin
             origin.x -= event.deltaX
-            origin.y += event.deltaY
+            origin.y -= event.deltaY
             self.scroll(origin)
         }
     }
