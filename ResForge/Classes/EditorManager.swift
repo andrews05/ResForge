@@ -3,13 +3,14 @@ import RFSupport
 
 class EditorManager: RFEditorManager {
     private var editorWindows: [String: ResourceEditor] = [:]
-    private unowned var document: ResourceDocument?
+    private unowned var _document: ResourceDocument?
+    var document: NSDocument? { _document }
     static var shared = EditorManager()
 
     init() {}
     
     init(_ document: ResourceDocument) {
-        self.document = document
+        self._document = document
         NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .DocumentDidRemoveResource, object: document)
         NotificationCenter.default.addObserver(self, selector: #selector(windowWillClose(_:)), name: NSWindow.willCloseNotification, object: nil)
     }
@@ -106,7 +107,7 @@ class EditorManager: RFEditorManager {
         // If the resource belongs to a different document, make sure we use that document's editor
         // manager to open it. If the resource has no document (e.g. it's from the support registry)
         // then it's okay to track it with the current manager, closing it when our document closes.
-        if let rDoc = resource.document as? ResourceDocument, rDoc != document {
+        if let rDoc = resource.document as? ResourceDocument, rDoc != _document {
             rDoc.editorManager.open(resource: resource, as: nil)
             return
         }
@@ -153,9 +154,9 @@ class EditorManager: RFEditorManager {
     }
     
     func allResources(ofType type: ResourceType, currentDocumentOnly: Bool = false) -> [Resource] {
-        var resources = document?.directory.resources(ofType: type) ?? []
+        var resources = _document?.directory.resources(ofType: type) ?? []
         if !currentDocumentOnly {
-            for doc in ResourceDocument.all() where doc !== document {
+            for doc in ResourceDocument.all() where doc !== _document {
                 resources += doc.directory.resources(ofType: type)
             }
             resources += SupportRegistry.directory.resources(ofType: type)
@@ -164,11 +165,11 @@ class EditorManager: RFEditorManager {
     }
     
     func findResource(type: ResourceType, id: Int, currentDocumentOnly: Bool = false) -> Resource? {
-        if let resource = document?.directory.findResource(type: type, id: id) {
+        if let resource = _document?.directory.findResource(type: type, id: id) {
             return resource
         }
         if !currentDocumentOnly {
-            for doc in ResourceDocument.all() where doc !== document {
+            for doc in ResourceDocument.all() where doc !== _document {
                 if let resource = doc.directory.findResource(type: type, id: id) {
                     return resource
                 }
@@ -178,11 +179,11 @@ class EditorManager: RFEditorManager {
     }
     
     func findResource(type: ResourceType, name: String, currentDocumentOnly: Bool = false) -> Resource? {
-        if let resource = document?.directory.findResource(type: type, name: name) {
+        if let resource = _document?.directory.findResource(type: type, name: name) {
             return resource
         }
         if !currentDocumentOnly {
-            for doc in ResourceDocument.all() where doc !== document {
+            for doc in ResourceDocument.all() where doc !== _document {
                 if let resource = doc.directory.findResource(type: type, name: name) {
                     return resource
                 }
@@ -195,7 +196,7 @@ class EditorManager: RFEditorManager {
         // The create modal will bring the document window to the front
         // Remember the current main window so we can restore it afterward
         let window = NSApp.mainWindow
-        document?.createController.show(type: type, id: id, name: name) { resource in
+        _document?.createController.show(type: type, id: id, name: name) { resource in
             window?.makeKeyAndOrderFront(nil)
             if let resource {
                 self.open(resource: resource)

@@ -75,6 +75,7 @@ public protocol TemplateFilter {
 
 /// The editor manager provides utility functions and is provided to editors on init. It should not be implemented by plugins.
 public protocol RFEditorManager: AnyObject {
+    var document: NSDocument? { get }
     func open(resource: Resource)
     func open(resource: Resource, using editor: ResourceEditor.Type)
     func allResources(ofType: ResourceType, currentDocumentOnly: Bool) -> [Resource]
