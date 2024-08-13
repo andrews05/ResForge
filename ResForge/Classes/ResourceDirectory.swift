@@ -63,7 +63,7 @@ class ResourceDirectory {
         self.removeFromMap(resource)
         filtered.removeValue(forKey: resource.type)
         document.undoManager?.registerUndo(withTarget: self) { $0.add(resource) }
-        NotificationCenter.default.post(name: .DocumentDidAddResource, object: document, userInfo: ["resource": resource])
+        NotificationCenter.default.post(name: .DocumentDidRemoveResource, object: document, userInfo: ["resource": resource])
     }
 
     /// Get the resources for the given type that match the current filter.
