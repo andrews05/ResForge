@@ -27,11 +27,12 @@ public class BinaryDataWriter {
         }
     }
 
-    public func write<T: FixedWidthInteger>(_ value: T, at position: Int, bigEndian: Bool? = nil) {
-        let end = position + T.bitWidth/8
+    public func write<T: FixedWidthInteger>(_ value: T, at offset: Int, bigEndian: Bool? = nil) {
+        let start = data.startIndex + offset
+        let end = start + T.bitWidth/8
         let val = bigEndian ?? self.bigEndian ? value.bigEndian : value.littleEndian
         withUnsafeBytes(of: val) {
-            data.replaceSubrange(position..<end, with: $0)
+            data.replaceSubrange(start..<end, with: $0)
         }
     }
 
@@ -39,9 +40,10 @@ public class BinaryDataWriter {
         data.append(newData)
     }
 
-    public func writeData(_ newData: Data, at position: Int) {
-        let end = position + newData.count
-        data.replaceSubrange(position..<end, with: newData)
+    public func writeData(_ newData: Data, at offset: Int) {
+        let start = data.startIndex + offset
+        let end = start + newData.count
+        data.replaceSubrange(start..<end, with: newData)
     }
 
     public func writeString(_ value: String, encoding: String.Encoding = .utf8) throws {

@@ -166,7 +166,7 @@ extension GalaxyWindowController {
     }
 
     @objc func resourceDataChanged(_ notification: Notification) {
-        guard let resource = notification.object as? Resource else {
+        guard !galaxyView.isSavingSystem, let resource = notification.object as? Resource else {
             return
         }
         if resource.typeCode == "sÿst" {

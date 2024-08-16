@@ -3,17 +3,8 @@ import RFSupport
 
 class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     @IBOutlet weak var controller: GalaxyWindowController!
-    private let zoomLevels: [Double] = [8/19, 9/16, 3/4, 1, 4/3, 16/9, 19/8]
-    private var transform = AffineTransform()
-    private var zoomLevel = 4 {
-        didSet {
-            if zoomLevel != oldValue {
-                transform = AffineTransform(translationByX: frame.midX, byY: frame.midY)
-                transform.scale(zoomLevels[zoomLevel])
-                self.transformSubviews()
-            }
-        }
-    }
+    private(set) var transform = AffineTransform()
+    var isSavingSystem = false
 
     override var acceptsFirstResponder: Bool { true }
     override var isFlipped: Bool { true }
@@ -21,11 +12,11 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         didSet {
             self.transformSubviews()
             self.restackSystems()
+            undoManager?.removeAllActions()
         }
     }
 
     override func awakeFromNib() {
-        wantsLayer = true
         transform.translate(x: frame.midX, y: frame.midY)
         transform.scale(zoomLevels[zoomLevel])
     }
@@ -33,7 +24,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     private func transformSubviews() {
         for view in controller.systemViews.values {
             view.showName = zoomLevel >= 3
-            view.point = transform.transform(view.position)
+            view.updateFrame()
         }
         needsDisplay = true
     }
@@ -41,6 +32,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     func restackSystems() {
         // Keep track of occupied locations - only the first system at a given point will be displayed
         var topViews: [NSPoint: SystemView] = [:]
+        selectedSystems = []
         for view in controller.systemViews.values {
             view.highlightCount = 1
             if let topView = topViews[view.point] {
@@ -59,6 +51,9 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
                 // No current top view, set it to this one
                 topViews[view.point] = view
                 view.isHidden = false
+            }
+            if view.isHighlighted {
+                selectedSystems.append(view)
             }
         }
     }
@@ -124,7 +119,18 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         path.stroke()
     }
 
-    // MARK: - Event handling
+    // MARK: - Pan and zoom
+
+    private let zoomLevels: [Double] = [8/19, 9/16, 3/4, 1, 4/3, 16/9, 19/8]
+    private var zoomLevel = 4 {
+        didSet {
+            if zoomLevel != oldValue {
+                transform = AffineTransform(translationByX: frame.midX, byY: frame.midY)
+                transform.scale(zoomLevels[zoomLevel])
+                self.transformSubviews()
+            }
+        }
+    }
 
     @IBAction func zoomIn(_ sender: Any) {
         zoomLevel = min(zoomLevel+1, 6)
@@ -134,7 +140,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         zoomLevel = max(zoomLevel-1, 0)
     }
 
-    // Drag to scroll
+    // Drag background to pan
     override func mouseDragged(with event: NSEvent) {
         if let clipView = superview as? NSClipView {
             var origin = clipView.bounds.origin
@@ -144,6 +150,15 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
     }
 
+    // MARK: - Selection
+
+    private var selectedSystems: [SystemView] = []
+
+    override func selectAll(_ sender: Any?) {
+        controller.systemTable.selectAll(self)
+    }
+
+    // Click background to deselect (if not holding shift or command and not dragging)
     override func mouseDown(with event: NSEvent) {
         // Deselect all if not holding shift or command and not dragging
         let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
@@ -154,7 +169,10 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
     }
 
+    // Click system to select
     func mouseDown(system: SystemView, with event: NSEvent) {
+        dragOrigin = self.convert(event.locationInWindow, from: nil)
+        window?.makeFirstResponder(self)
         let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
         guard toggle || !system.isHighlighted else {
             return
@@ -172,12 +190,102 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         controller.syncSelectionFromView(clicked: system)
     }
 
+    // MARK: - Move systems
+
+    private var isMovingSystems = false
+    private var dragOrigin: NSPoint?
+
+    // Arrow keys to move systems
     override func keyDown(with event: NSEvent) {
-        controller.systemTable.keyDown(with: event)
+        let delta = event.modifierFlags.contains(.shift) ? 10.0 : 1.0
+        switch event.specialKey {
+        case .leftArrow:
+            self.moveSystems(x: 0 - delta, y: 0)
+        case .rightArrow:
+            self.moveSystems(x: delta, y: 0)
+        case .upArrow:
+            self.moveSystems(x: 0, y: 0 - delta)
+        case .downArrow:
+            self.moveSystems(x: 0, y: delta)
+        default:
+            // Pass other key events to the table view for type-to-select
+            controller.systemTable.keyDown(with: event)
+            return
+        }
+        // Debounce saving
+        if window?.nextEvent(matching: .keyDown, until: Date(timeIntervalSinceNow: 0.2), inMode: .eventTracking, dequeue: false) == nil {
+            self.applyMove()
+        }
     }
 
-    override func selectAll(_ sender: Any?) {
-        controller.systemTable.selectAll(self)
+    // Drag system to move
+    func mouseDragged(system: SystemView, with event: NSEvent) {
+        guard let dragOrigin, event.deltaX != 0 || event.deltaY != 0 else {
+            return
+        }
+        let origin = self.convert(event.locationInWindow, from: nil).constrained(within: bounds)
+        self.moveSystems(x: origin.x - dragOrigin.x, y: origin.y - dragOrigin.y)
+        self.dragOrigin = origin
+        self.autoscroll(with: event)
+    }
+
+    // Release to apply move
+    func mouseUp(system: SystemView, with event: NSEvent) {
+        dragOrigin = nil
+        guard isMovingSystems else {
+            return
+        }
+        self.applyMove()
+        isMovingSystems = false
+    }
+
+    private func moveSystems(x: Double, y: Double) {
+        for view in selectedSystems {
+            view.point.x += x
+            view.point.y += y
+        }
+        if !isMovingSystems {
+            // Restack after initial move in case any obscured systems need to be revealed
+            self.restackSystems()
+            isMovingSystems = true
+        }
+        needsDisplay = true
+    }
+
+    private func applyMove() {
+        guard let invert = transform.inverted() else {
+            return
+        }
+        let term = selectedSystems.count == 1 ? "System" : "Systems"
+        undoManager?.setActionName("Move \(term)")
+        self.beginApplyMove()
+        for view in selectedSystems {
+            view.move(to: invert.transform(view.point))
+        }
+        self.endApplyMove()
+    }
+
+    private func beginApplyMove() {
+        undoManager?.registerUndo(withTarget: self) { $0.endApplyMove() }
+    }
+
+    private func endApplyMove() {
+        undoManager?.registerUndo(withTarget: self) { $0.beginApplyMove() }
+        self.restackSystems()
+    }
+
+    // Escape to cancel move
+    override func cancelOperation(_ sender: Any?) {
+        dragOrigin = nil
+        guard isMovingSystems else {
+            return
+        }
+        for view in selectedSystems {
+            view.updateFrame()
+        }
+        self.restackSystems()
+        isMovingSystems = false
+        needsDisplay = true
     }
 }
 
@@ -191,5 +299,10 @@ extension NSPoint: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(x)
         hasher.combine(y)
+    }
+
+    /// Returns the nearest point to this one that lies within the given rectangle.
+    public func constrained(within rect: NSRect) -> Self {
+        Self(x: min(max(x, rect.minX), rect.maxX), y: min(max(y, rect.minY), rect.maxY))
     }
 }

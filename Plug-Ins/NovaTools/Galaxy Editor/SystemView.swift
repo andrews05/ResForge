@@ -9,10 +9,14 @@ class SystemView: NSView {
     private var attributes: [NSAttributedString.Key: Any] {
         [.foregroundColor: NSColor.white, .font: NSFont.systemFont(ofSize: 11)]
     }
+    private var galaxyView: GalaxyView? {
+        superview as? GalaxyView
+    }
     var showName = true
     var point = NSPoint.zero {
         didSet {
-            self.updateFrame()
+            frame.origin.x = point.x - 6
+            frame.origin.y = point.y - 6
         }
     }
     var isHighlighted = false {
@@ -55,14 +59,42 @@ class SystemView: NSView {
     }
 
     func updateFrame() {
-        frame.origin.x = point.x - 6
-        frame.origin.y = point.y - 6
+        if let point = (superview as? GalaxyView)?.transform.transform(position) {
+            self.point = point
+        }
         frame.size.height = 12
         frame.size.width = 12
         if showName {
             let nameBounds = resource.name.boundingRect(with: .zero, attributes: attributes)
             frame.size.width += 2 + nameBounds.width + 2
         }
+    }
+
+    func move(to newPos: NSPoint) {
+        let curPos = position
+        position = NSPoint(x: newPos.x.rounded(), y: newPos.y.rounded())
+        self.updateFrame()
+        self.save()
+        undoManager?.registerUndo(withTarget: self) { $0.move(to: curPos) }
+    }
+
+    func save() {
+        guard resource.data.count >= 4 else {
+            return
+        }
+        let writer = BinaryDataWriter()
+        writer.data = resource.data
+        writer.write(Int16(position.x), at: 0)
+        writer.write(Int16(position.y), at: 2)
+        var pos = 4
+        for link in links {
+            writer.write(Int16(link), at: pos)
+            pos += 2
+        }
+        galaxyView?.isSavingSystem = true
+        resource.data = writer.data
+        galaxyView?.isSavingSystem = false
+        galaxyView?.needsDisplay = true
     }
 
     override func draw(_ dirtyRect: NSRect) {
@@ -108,7 +140,19 @@ class SystemView: NSView {
 
     override func mouseDown(with event: NSEvent) {
         if isEnabled {
-            (superview as! GalaxyView).mouseDown(system: self, with: event)
+            galaxyView?.mouseDown(system: self, with: event)
+        }
+    }
+
+    override func mouseDragged(with event: NSEvent) {
+        if isEnabled {
+            galaxyView?.mouseDragged(system: self, with: event)
+        }
+    }
+
+    override func mouseUp(with event: NSEvent) {
+        if isEnabled {
+            galaxyView?.mouseUp(system: self, with: event)
         }
     }
 }
