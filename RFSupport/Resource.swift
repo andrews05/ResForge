@@ -64,7 +64,6 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         public var attributes: ResAttributes?
         public var data: Data?
         public var revision: Int?
-        public var disableTracking = false
     }
 
     public weak var document: NSDocument!
@@ -78,10 +77,11 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
         set {
             let oldValue = type
+            type.code = newValue
             if let document, oldValue.code != newValue {
-                type.code = newValue
-                if !_state.disableTracking && _state.revision != nil && _state.type == nil {
-                    _state.type = oldValue
+                if _state.revision != nil {
+                    let origValue = _state.type ?? oldValue
+                    _state.type = type == origValue ? nil : origValue
                 }
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue": oldValue])
                 document.undoManager?.setActionName(NSLocalizedString("Change Type", comment: ""))
@@ -96,10 +96,11 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
         set {
             let oldValue = type
+            type.attributes = newValue
             if let document, oldValue.attributes != newValue {
-                type.attributes = newValue
-                if !_state.disableTracking && _state.revision != nil && _state.type == nil {
-                    _state.type = oldValue
+                if _state.revision != nil {
+                    let origValue = _state.type ?? oldValue
+                    _state.type = type == origValue ? nil : origValue
                 }
                 NotificationCenter.default.post(name: .ResourceTypeDidChange, object: self, userInfo: ["oldValue": oldValue])
                 document.undoManager?.setActionName(NSLocalizedString("Change Type Attributes", comment: ""))
@@ -111,8 +112,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     @objc dynamic public var id: Int {
         didSet {
             if let document, id != oldValue {
-                if !_state.disableTracking && _state.revision != nil && _state.id == nil {
-                    _state.id = oldValue
+                if _state.revision != nil {
+                    let origValue = _state.id ?? oldValue
+                    _state.id = id == origValue ? nil : origValue
                 }
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 NotificationCenter.default.post(name: .ResourceIDDidChange, object: self, userInfo: ["oldValue": oldValue])
@@ -125,8 +127,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     @objc dynamic public var name: String {
         didSet {
             if let document, name != oldValue {
-                if !_state.disableTracking && _state.revision != nil && _state.name == nil {
-                    _state.name = oldValue
+                if _state.revision != nil {
+                    let origValue = _state.name ?? oldValue
+                    _state.name = name == origValue ? nil : origValue
                 }
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 NotificationCenter.default.post(name: .ResourceNameDidChange, object: self, userInfo: ["oldValue": oldValue])
@@ -143,8 +146,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         }
         didSet {
             if let document, attributes != oldValue {
-                if !_state.disableTracking && _state.revision != nil && _state.attributes == nil {
-                    _state.attributes = oldValue
+                if _state.revision != nil {
+                    let origValue = _state.attributes ?? oldValue
+                    _state.attributes = attributes == origValue ? nil : origValue
                 }
                 NotificationCenter.default.post(name: .ResourceAttributesDidChange, object: self, userInfo: ["oldValue": oldValue])
                 document.undoManager?.setActionName(NSLocalizedString("Change Attributes", comment: ""))
@@ -158,8 +162,9 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
         didSet {
             _preview = nil
             if let document {
-                if !_state.disableTracking && _state.revision != nil && _state.data == nil {
-                    _state.data = oldValue
+                if _state.revision != nil {
+                    let origValue = _state.data ?? oldValue
+                    _state.data = data == origValue ? nil : origValue
                 }
                 NotificationCenter.default.post(name: .ResourceDidChange, object: self)
                 NotificationCenter.default.post(name: .ResourceDataDidChange, object: self)

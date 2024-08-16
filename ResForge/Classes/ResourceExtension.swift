@@ -76,15 +76,13 @@ extension Resource {
         _state.revision != (document as? ResourceDocument)?.revision
     }
 
-    // For basic properties, check if the value is actually different from the original
     var isPropertiesModified: Bool {
-        (_state.type != nil && _state.type != type) ||
-        (_state.id != nil && _state.id != id) ||
-        (_state.name != nil && _state.name != name) ||
-        (_state.attributes != nil && _state.attributes != attributes)
+        _state.type != nil ||
+        _state.id != nil ||
+        _state.name != nil ||
+        _state.attributes != nil
     }
 
-    // For data, only check if the value was ever changed
     var isDataModified: Bool {
         _state.data != nil
     }
@@ -101,10 +99,7 @@ extension Resource {
     /// Revert data to last saved state.
     func revertData() {
         if let data = _state.data {
-            _state.disableTracking = true
-            _state.data = nil
             self.data = data
-            _state.disableTracking = false
         }
     }
 
