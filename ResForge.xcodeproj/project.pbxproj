@@ -83,6 +83,7 @@
 		49964E1324D1034400BAB902 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6324CE41A60081DD4A /* Resource.swift */; };
 		49964E1924D12FFC00BAB902 /* ResourceDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */; };
 		4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4996B90725DB6C2F0027FA39 /* Credits.rtf */; };
+		49A2E6BE2C75731100BBFE38 /* LinkingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2E6BD2C75731100BBFE38 /* LinkingLayer.swift */; };
 		49AACD8224CE931A0081DD4A /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		49AACD8324CE931A0081DD4A /* RFSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49AACD8824CE93520081DD4A /* ResForgePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD6924CE57EB0081DD4A /* ResForgePlugin.swift */; };
@@ -405,6 +406,7 @@
 		49964E1824D12FFC00BAB902 /* ResourceDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDataSource.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4996B8F425DB6AC80027FA39 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4996B91125DB6C870027FA39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		49A2E6BD2C75731100BBFE38 /* LinkingLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingLayer.swift; sourceTree = "<group>"; };
 		49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49AACD6324CE41A60081DD4A /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49AACD6924CE57EB0081DD4A /* ResForgePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResForgePlugin.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -679,6 +681,7 @@
 				4976D2642718CAD500322DDF /* GalaxyWindow.xib */,
 				4976D2702718CAFF00322DDF /* GalaxyWindowController.swift */,
 				4976D2772718CC4B00322DDF /* GalaxyView.swift */,
+				49A2E6BD2C75731100BBFE38 /* LinkingLayer.swift */,
 				491B44DA2C60A9CC00D0DBB1 /* SystemView.swift */,
 			);
 			path = "Galaxy Editor";
@@ -1386,6 +1389,7 @@
 				496E7E3525E6EA15001C97CA /* ShanWindowController.swift in Sources */,
 				49640F4025F201C0009FEC9B /* ExitPoints.swift in Sources */,
 				491B44DB2C60A9CC00D0DBB1 /* SystemView.swift in Sources */,
+				49A2E6BE2C75731100BBFE38 /* LinkingLayer.swift in Sources */,
 				49640F3925F201BD009FEC9B /* ShieldLayer.swift in Sources */,
 				49640F2B25F201B8009FEC9B /* LightLayer.swift in Sources */,
 				49640F3225F201BA009FEC9B /* WeaponLayer.swift in Sources */,

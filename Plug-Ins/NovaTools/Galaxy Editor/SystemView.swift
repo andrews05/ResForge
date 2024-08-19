@@ -53,7 +53,15 @@ class SystemView: NSView {
             Int(try reader.read() as Int16)
         }
     }
-    
+
+    override func updateTrackingAreas() {
+        for trackingArea in self.trackingAreas {
+            self.removeTrackingArea(trackingArea)
+        }
+        let tracking = NSTrackingArea(rect: bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow, .enabledDuringMouseDrag], owner: self, userInfo: nil)
+        self.addTrackingArea(tracking)
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -78,8 +86,39 @@ class SystemView: NSView {
         undoManager?.registerUndo(withTarget: self) { $0.move(to: curPos) }
     }
 
-    func save() {
-        guard resource.data.count >= 4 else {
+    func addLink(_ id: Int) {
+        guard isEnabled, !links.contains(id), let i = links.firstIndex(of: -1) else {
+            return
+        }
+        var links = links
+        links[i] = id
+        self.setLinks(links)
+        undoManager?.setActionName("Add Link")
+    }
+
+    func removeLink(_ id: Int) {
+        guard isEnabled, links.contains(id) else {
+            return
+        }
+        var links = links
+        links.removeAll { $0 == id }
+        while links.count < 16 {
+            links.append(-1)
+        }
+        self.setLinks(links)
+        undoManager?.setActionName("Remove Link")
+    }
+
+    private func setLinks(_ newLinks: [Int]) {
+        assert(newLinks.count == 16)
+        let curLinks = links
+        links = newLinks
+        self.save()
+        undoManager?.registerUndo(withTarget: self) { $0.setLinks(curLinks) }
+    }
+
+    private func save() {
+        guard resource.data.count >= 18 * 2 else {
             return
         }
         let writer = BinaryDataWriter()
@@ -138,21 +177,64 @@ class SystemView: NSView {
         }
     }
 
+    // MARK: - Mouse events
+
+    private var useRightMouse = false
+
     override func mouseDown(with event: NSEvent) {
         if isEnabled {
-            galaxyView?.mouseDown(system: self, with: event)
+            useRightMouse = event.modifierFlags.contains(.control) || event.modifierFlags.contains(.option)
+            if useRightMouse {
+                galaxyView?.rightMouseDown(system: self, with: event)
+            } else {
+                galaxyView?.mouseDown(system: self, with: event)
+            }
         }
     }
 
     override func mouseDragged(with event: NSEvent) {
         if isEnabled {
-            galaxyView?.mouseDragged(system: self, with: event)
+            if useRightMouse {
+                galaxyView?.rightMouseDragged(system: self, with: event)
+            } else {
+                galaxyView?.mouseDragged(system: self, with: event)
+            }
         }
     }
 
     override func mouseUp(with event: NSEvent) {
         if isEnabled {
-            galaxyView?.mouseUp(system: self, with: event)
+            if useRightMouse {
+                galaxyView?.rightMouseUp(system: self, with: event)
+            } else {
+                galaxyView?.mouseUp(system: self, with: event)
+            }
         }
+    }
+
+    override func rightMouseDown(with event: NSEvent) {
+        if isEnabled {
+            galaxyView?.rightMouseDown(system: self, with: event)
+        }
+    }
+
+    override func rightMouseDragged(with event: NSEvent) {
+        if isEnabled {
+            galaxyView?.rightMouseDragged(system: self, with: event)
+        }
+    }
+
+    override func rightMouseUp(with event: NSEvent) {
+        if isEnabled {
+            galaxyView?.rightMouseUp(system: self, with: event)
+        }
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        galaxyView?.mouseEntered(system: self, with: event)
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        galaxyView?.mouseExited(system: self, with: event)
     }
 }

@@ -287,6 +287,66 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         isMovingSystems = false
         needsDisplay = true
     }
+
+    // MARK: - Link systems
+
+    private var linkingLayer = LinkingLayer()
+
+    func layoutSublayers(of layer: CALayer) {
+        // The linking layer should always be topmost
+        linkingLayer.frame = layer.frame
+        layer.addSublayer(linkingLayer)
+    }
+
+    // Right mouse down to begin link
+    func rightMouseDown(system: SystemView, with event: NSEvent) {
+        linkingLayer.source = system
+        linkingLayer.targets = []
+        linkingLayer.setNeedsDisplay()
+    }
+
+    // Drag to draw link
+    func rightMouseDragged(system: SystemView, with event: NSEvent) {
+        if linkingLayer.source != nil {
+            system.updateTrackingAreas() // mouseEntered doesn't work without this??
+            linkingLayer.setNeedsDisplay()
+        }
+    }
+
+    // Mouse entered to select target
+    func mouseEntered(system: SystemView, with event: NSEvent) {
+        if linkingLayer.source != nil && linkingLayer.source != system {
+            linkingLayer.targets.append(system)
+        }
+    }
+
+    func mouseExited(system: SystemView, with event: NSEvent) {
+        if linkingLayer.source != nil {
+            linkingLayer.targets.removeAll { $0 == system }
+        }
+    }
+
+    // Mouse up to add/remove link
+    func rightMouseUp(system: SystemView, with event: NSEvent) {
+        if let linkSource = linkingLayer.source, let linkTarget = linkingLayer.target {
+            let remove = event.modifierFlags.contains(.option)
+            let sources = controller.systemViews.values.filter { $0.point == linkSource.point }
+            let targets = controller.systemViews.values.filter { $0.point == linkTarget.point }
+            for source in sources {
+                for target in targets {
+                    if remove {
+                        source.removeLink(target.resource.id)
+                        target.removeLink(source.resource.id)
+                    } else {
+                        source.addLink(target.resource.id)
+                        target.addLink(source.resource.id)
+                    }
+                }
+            }
+        }
+        linkingLayer.source = nil
+        linkingLayer.setNeedsDisplay()
+    }
 }
 
 extension AffineTransform {

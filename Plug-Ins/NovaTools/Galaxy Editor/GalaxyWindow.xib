@@ -143,7 +143,7 @@
                         <rect key="frame" x="180" y="-1" width="801" height="802"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="wQz-E8-mMB">
-                            <rect key="frame" x="1" y="1" width="784" height="785"/>
+                            <rect key="frame" x="1" y="1" width="799" height="800"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view wantsLayer="YES" id="219-vE-A9L" customClass="GalaxyView" customModule="NovaTools" customModuleProvider="target">
@@ -157,11 +157,11 @@
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </clipView>
                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Tkg-u1-5dv">
-                            <rect key="frame" x="1" y="786" width="784" height="15"/>
+                            <rect key="frame" x="1" y="785" width="799" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="TPw-5A-b4x">
-                            <rect key="frame" x="785" y="1" width="15" height="785"/>
+                            <rect key="frame" x="784" y="1" width="16" height="800"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
