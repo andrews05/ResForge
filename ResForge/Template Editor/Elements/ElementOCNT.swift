@@ -37,6 +37,7 @@ class ElementOCNT<T: FixedWidthInteger>: BaseElement, GroupElement, CounterEleme
     }
 
     override func readData(from reader: BinaryDataReader) throws {
+        lstc.reset()
         if T.isSigned {
             value = try reader.read() + 1
             guard value >= 0 else {

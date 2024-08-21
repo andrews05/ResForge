@@ -88,6 +88,11 @@ class ElementLSTB: BaseElement, CollectionElement {
         return list
     }
 
+    func reset() {
+        entries.forEach(parentList.remove)
+        entries = []
+    }
+
     override func readData(from reader: BinaryDataReader) throws {
         if tail != self {
             try subElements.readData(from: reader)
