@@ -128,6 +128,26 @@ extension GalaxyWindowController {
         galaxyView.zoomOut(sender)
     }
 
+    func createSystem(position: NSPoint) {
+        manager.createResource(type: ResourceType("sÿst"), id: systemList.last?.id) { [weak self] system in
+            guard let self else { return }
+
+            // Construct the minimum data required
+            let writer = BinaryDataWriter()
+            writer.write(Int16(position.x.rounded()))
+            writer.write(Int16(position.y.rounded()))
+            for _ in 0..<16 {
+                writer.write(Int16(-1))
+            }
+            // Allow the DataChanged notification to create the view
+            system.data = writer.data
+            if let view = systemViews[system.id] {
+                view.isHighlighted = true
+                self.syncSelectionFromView(clicked: view)
+            }
+        }
+    }
+
     // MARK: - Notifications
 
     @objc func resourceListChanged(_ notification: Notification) {

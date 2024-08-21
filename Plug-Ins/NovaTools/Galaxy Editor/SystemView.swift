@@ -214,6 +214,7 @@ class SystemView: NSView {
 
     override func rightMouseDown(with event: NSEvent) {
         if isEnabled {
+            window?.makeKeyAndOrderFront(self)
             galaxyView?.rightMouseDown(system: self, with: event)
         }
     }

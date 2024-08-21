@@ -159,35 +159,47 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     }
 
     // Click background to deselect (if not holding shift or command and not dragging)
+    // Double click to create system
     override func mouseDown(with event: NSEvent) {
-        // Deselect all if not holding shift or command and not dragging
-        let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
-        if !toggle,
-           let e = window?.nextEvent(matching: [.leftMouseUp, .leftMouseDragged]),
-           e.type == .leftMouseUp {
-            controller.systemTable.deselectAll(self)
+        if event.clickCount == 1 {
+            let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
+            if !toggle,
+               let e = window?.nextEvent(matching: [.leftMouseUp, .leftMouseDragged]),
+               e.type == .leftMouseUp {
+                controller.systemTable.deselectAll(self)
+            }
+        } else if let invert = transform.inverted() {
+            let point = self.convert(event.locationInWindow, from: nil)
+            controller.createSystem(position: invert.transform(point))
         }
     }
 
     // Click system to select
+    // Double click to open selected systems
     func mouseDown(system: SystemView, with event: NSEvent) {
-        dragOrigin = self.convert(event.locationInWindow, from: nil)
-        window?.makeFirstResponder(self)
         let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
-        guard toggle || !system.isHighlighted else {
-            return
-        }
-        let state = toggle ? !system.isHighlighted : true
-        for view in controller.systemViews.values {
-            // Select/deselect all enabled systems at the same point
-            if view.isEnabled && view.point == system.point {
-                view.isHighlighted = state
-            } else if !toggle {
-                view.isHighlighted = false
+        if event.clickCount == 1 || toggle {
+            dragOrigin = self.convert(event.locationInWindow, from: nil)
+            window?.makeFirstResponder(self)
+            guard toggle || !system.isHighlighted else {
+                return
+            }
+            let state = toggle ? !system.isHighlighted : true
+            for view in controller.systemViews.values {
+                // Select/deselect all enabled systems at the same point
+                if view.isEnabled && view.point == system.point {
+                    view.isHighlighted = state
+                } else if !toggle {
+                    view.isHighlighted = false
+                }
+            }
+            self.restackSystems()
+            controller.syncSelectionFromView(clicked: system)
+        } else {
+            for view in selectedSystems {
+                controller.manager.open(resource: view.resource)
             }
         }
-        self.restackSystems()
-        controller.syncSelectionFromView(clicked: system)
     }
 
     // MARK: - Move systems
