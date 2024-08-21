@@ -190,7 +190,7 @@ class ElementList {
         let bigEndian = reader.bigEndian
         currentIndex = 0
         // Don't use for loop here as the list may be modified while reading
-        while currentIndex < elements.count && reader.position < reader.data.endIndex {
+        while currentIndex < elements.count {
             try elements[currentIndex].readData(from: reader)
             currentIndex += 1
         }

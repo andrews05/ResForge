@@ -1,6 +1,12 @@
 import AppKit
 import RFSupport
 
+enum TemplateEdited {
+    case none
+    case user
+    case forced
+}
+
 class TemplateEditor: AbstractEditor, ResourceEditor {
     static let supportedTypes: [String] = []
 
@@ -12,6 +18,11 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     private var validStructure = false
     @IBOutlet var dataList: TabbableOutlineView!
     var resourceCache: [String: [Resource]] = [:] // Shared cache for RSID/CASR
+    private var edited = TemplateEdited.none {
+        didSet {
+            self.setDocumentEdited(edited != .none)
+        }
+    }
 
     override var windowNibName: String {
         return "TemplateWindow"
@@ -48,8 +59,8 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     }
 
     @objc func resourceDataDidChange(_ notification: NSNotification) {
-        if self.window?.isDocumentEdited != true {
-            self.load(data: resource.data)
+        if edited != .user {
+            self.load(data: resource.data, reloadTemplate: false)
         }
     }
 
@@ -65,15 +76,16 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
 
     override func windowDidLoad() {
         dataList.expandItem(nil, expandChildren: true)
-        if validStructure && resource.data.isEmpty {
-            self.setDocumentEdited(true)
-        }
+        self.setDocumentEdited(edited != .none)
     }
 
-    @discardableResult func load(data: Data) -> Bool {
-        elementList = ElementList(controller: self)
-        validStructure = elementList.readTemplate(template, filterName: filter?.name)
-        if validStructure && !data.isEmpty {
+    @discardableResult func load(data: Data, reloadTemplate: Bool = true) -> Bool {
+        edited = .none
+        if reloadTemplate || elementList == nil {
+            elementList = ElementList(controller: self)
+            validStructure = elementList.readTemplate(template, filterName: filter?.name)
+        }
+        if validStructure {
             do {
                 let data = try filter?.filter(data: data, for: resource.typeCode) ?? data
                 let reader = BinaryDataReader(data)
@@ -84,12 +96,13 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
                 }
             } catch BinaryDataReaderError.insufficientData {
                 // Ignore error, data will be padded on save
+                edited = .forced
             } catch let error {
                 NSApp.presentError(error)
                 return false
             }
         }
-        // expand all
+        // Expand all
         dataList?.reloadData()
         dataList?.expandItem(nil, expandChildren: true)
         return true
@@ -142,17 +155,17 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     @IBAction func saveResource(_ sender: Any) {
         if self.window?.makeFirstResponder(dataList) != false {
             resource.data = self.getData()
-            self.setDocumentEdited(false)
+            edited = .none
         }
     }
 
     @IBAction func revertResource(_ sender: Any) {
         self.load(data: resource.data)
-        self.setDocumentEdited(false)
+        edited = .none
     }
 
     @IBAction func itemValueUpdated(_ sender: Any) {
-        self.setDocumentEdited(true)
+        edited = .user
     }
 
     func windowDidBecomeKey(_ notification: Notification) {
