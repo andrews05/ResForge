@@ -194,10 +194,12 @@ class EditorManager: RFEditorManager {
         return SupportRegistry.directory.findResource(type: type, name: name)
     }
     
-    func createResource(type: ResourceType, id: Int, name: String, callback: ((Resource) -> Void)? = nil) {
+    func createResource(type: ResourceType, id: Int?, name: String, callback: ((Resource) -> Void)? = nil) {
         // The create modal will bring the document window to the front
         // Remember the current main window so we can restore it afterward
-        let window = NSApp.mainWindow
+        weak var window = NSApp.mainWindow
+        // Ignore id if -1 or 0
+        let id = id == -1 || id == 0 ? nil : id
         _document?.createController.show(type: type, id: id, name: name) { resource in
             window?.makeKeyAndOrderFront(nil)
             if let resource {

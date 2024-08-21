@@ -35,7 +35,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
     }
 
     init(_ document: ResourceDocument) {
-        self.rDocument = document
+        rDocument = document
         super.init(window: nil)
     }
 
@@ -44,7 +44,9 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
     }
 
     func show(type: ResourceType? = nil, id: Int? = nil, name: String? = nil, callback: ((Resource?) -> Void)? = nil) {
-        _ = self.window
+        guard let window else {
+            return
+        }
         // Add all types currently open
         let docs = ResourceDocument.all()
         var suggestions = Set(docs.flatMap { $0.directory.allTypes.map(\.code) })
@@ -70,17 +72,21 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         }
         rName = name
         if name == nil {
-            // Focus no name provided, focus the type field
-            self.window?.makeFirstResponder(typeView)
-        } else if id == 0 || id == -1 {
-            // Else if provided id is 0 or -1, focus the id field
-            self.window?.makeFirstResponder(idView)
+            // No name provided, focus the type field
+            window.makeFirstResponder(typeView)
+        } else if id == nil {
+            // No id provided, focus the id field
+            window.makeFirstResponder(idView)
         } else {
             // Else focus name the field
-            self.window?.makeFirstResponder(nameView)
+            window.makeFirstResponder(nameView)
         }
         self.callback = callback
-        rDocument.windowForSheet?.beginSheet(self.window!)
+        if window.isVisible {
+            window.makeKeyAndOrderFront(self)
+        } else {
+            rDocument.windowForSheet?.beginSheet(window)
+        }
     }
 
     @IBAction func hide(_ sender: AnyObject) {
@@ -93,10 +99,10 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
                 return
             }
         } else {
-            self.callback?(nil)
+            callback?(nil)
         }
-        self.callback = nil
-        self.window?.sheetParent?.endSheet(self.window!)
+        callback = nil
+        window?.sheetParent?.endSheet(window!)
     }
 
     private func createResource() throws {

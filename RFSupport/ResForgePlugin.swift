@@ -82,11 +82,11 @@ public protocol RFEditorManager: AnyObject {
     func findResource(type: ResourceType, id: Int, currentDocumentOnly: Bool) -> Resource?
     func findResource(type: ResourceType, name: String, currentDocumentOnly: Bool) -> Resource?
     /// Open the resource creation modal with the given properties. Callback will be called if a resource was created with the same type that was requested.
-    func createResource(type: ResourceType, id: Int, name: String, callback: ((Resource) -> Void)?)
+    func createResource(type: ResourceType, id: Int?, name: String, callback: ((Resource) -> Void)?)
 }
 // Extension facilitates optional arguments for protocol functions.
 public extension RFEditorManager {
-    func createResource(type: ResourceType, id: Int, name: String = "", callback: ((Resource) -> Void)? = nil) {
+    func createResource(type: ResourceType, id: Int? = nil, name: String = "", callback: ((Resource) -> Void)? = nil) {
         createResource(type: type, id: id, name: name, callback: callback)
     }
 }
