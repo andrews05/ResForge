@@ -11,14 +11,16 @@ class EditorManager: RFEditorManager {
     
     init(_ document: ResourceDocument) {
         self._document = document
-        NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .DocumentDidRemoveResource, object: document)
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceRemoved(_:)), name: .DocumentDidRemoveResources, object: document)
         NotificationCenter.default.addObserver(self, selector: #selector(windowWillClose(_:)), name: NSWindow.willCloseNotification, object: nil)
     }
     
     @objc func resourceRemoved(_ notification: Notification) {
         // Close any open editors without saving
-        let resource = notification.userInfo!["resource"] as! Resource
-        for (_, plug) in editorWindows where plug.resource === resource {
+        guard let resources = notification.userInfo?["resources"] as? [Resource] else {
+            return
+        }
+        for (_, plug) in editorWindows where resources.contains(plug.resource) {
             plug.close()
         }
     }

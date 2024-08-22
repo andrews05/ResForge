@@ -675,12 +675,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         let actionName = actionName ?? NSLocalizedString(resources.count == 1 ? "Paste Resource" : "Paste Resources", comment: "")
         dataSource.reload(actionName: actionName) {
-            for resource in resolver.toRemove {
-                directory.remove(resource)
-            }
-            for resource in resolver.toAdd {
-                directory.add(resource)
-            }
+            directory.remove(resolver.toRemove)
+            directory.add(resolver.toAdd)
             return resolver.toAdd
         }
     }
@@ -693,9 +689,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         let actionName = NSLocalizedString(resources.count == 1 ? "Change Type" : "Change Types", comment: "")
         dataSource.reload(actionName: actionName) {
-            for resource in resolver.toRemove {
-                directory.remove(resource)
-            }
+            directory.remove(resolver.toRemove)
             for resource in resolver.toAdd {
                 resource.typeCode = type.code
                 resource.typeAttributes = type.attributes
@@ -710,9 +704,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
         let actionName = NSLocalizedString(resources.count == 1 ? "Delete Resource" : "Delete Resources", comment: "")
         dataSource.reload(actionName: actionName) {
-            for resource in resources {
-                directory.remove(resource)
-            }
+            directory.remove(resources)
             return []
         }
     }

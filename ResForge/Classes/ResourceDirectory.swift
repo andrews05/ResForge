@@ -50,20 +50,30 @@ class ResourceDirectory {
         filtered.removeAll()
     }
 
-    /// Add a single resource.
-    func add(_ resource: Resource) {
-        self.addToMap(resource)
-        filtered.removeValue(forKey: resource.type)
-        document.undoManager?.registerUndo(withTarget: self) { $0.remove(resource) }
-        NotificationCenter.default.post(name: .DocumentDidAddResource, object: document, userInfo: ["resource": resource])
+    /// Add resources.
+    func add(_ resources: [Resource]) {
+        guard !resources.isEmpty else {
+            return
+        }
+        for resource in resources {
+            self.addToMap(resource)
+            filtered.removeValue(forKey: resource.type)
+        }
+        document.undoManager?.registerUndo(withTarget: self) { $0.remove(resources) }
+        NotificationCenter.default.post(name: .DocumentDidAddResources, object: document, userInfo: ["resources": resources])
     }
 
-    /// Remove a single resource.
-    func remove(_ resource: Resource) {
-        self.removeFromMap(resource)
-        filtered.removeValue(forKey: resource.type)
-        document.undoManager?.registerUndo(withTarget: self) { $0.add(resource) }
-        NotificationCenter.default.post(name: .DocumentDidRemoveResource, object: document, userInfo: ["resource": resource])
+    /// Remove resources.
+    func remove(_ resources: [Resource]) {
+        guard !resources.isEmpty else {
+            return
+        }
+        for resource in resources {
+            self.removeFromMap(resource)
+            filtered.removeValue(forKey: resource.type)
+        }
+        document.undoManager?.registerUndo(withTarget: self) { $0.add(resources) }
+        NotificationCenter.default.post(name: .DocumentDidRemoveResources, object: document, userInfo: ["resources": resources])
     }
 
     /// Get the resources for the given type that match the current filter.

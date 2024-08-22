@@ -120,7 +120,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
         // If a callback is provided, don't automatically select and open the new resource
         let selectAndOpen = callback == nil
         rDocument.dataSource.reload(actionName: actionName) {
-            rDocument.directory.add(resource)
+            rDocument.directory.add([resource])
             return selectAndOpen ? [resource] : rDocument.dataSource.selectedResources()
         }
         if selectAndOpen && !rDocument.dataSource.isBulkMode {

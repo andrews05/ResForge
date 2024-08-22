@@ -9,8 +9,8 @@ public extension Notification.Name {
     static let ResourceAttributesDidChange  = Self("ResourceAttributesDidChange")
     static let ResourceDataDidChange        = Self("ResourceDataDidChange")
 
-    static let DocumentDidAddResource       = Self("DocumentDidAddResource")
-    static let DocumentDidRemoveResource    = Self("DocumentDidRemoveResource")
+    static let DocumentDidAddResources      = Self("DocumentDidAddResources")
+    static let DocumentDidRemoveResources   = Self("DocumentDidRemoveResources")
 }
 
 public extension NSPasteboard.PasteboardType {
