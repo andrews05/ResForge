@@ -12,7 +12,7 @@ import RFSupport
 class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
     override func configure() throws {
         width = 120
-        _ = self.defaultValue()
+        self.defaultValue()
         try self.readCases()
         if cases.isEmpty {
             throw TemplateError.invalidStructure(self, NSLocalizedString("No ‘CASE’ elements found.", comment: ""))

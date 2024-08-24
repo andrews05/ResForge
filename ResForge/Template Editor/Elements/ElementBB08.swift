@@ -27,7 +27,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
 
     override func configure() throws {
         // Cases not actually supported but we still want to allow default values
-        _ = self.defaultValue()
+        self.defaultValue()
         
         // Check for an id reference and try to load names from a STR#
         if let metaValue,

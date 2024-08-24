@@ -128,7 +128,7 @@ class BulkController: OutlineController {
         }
         currentType = type
         defaults = elements.map {
-            ($0 as? FormattedElement)?.defaultValue()
+            ($0 as? FormattedElement)?.defaultValue(orCurrent: true)
         }
     }
 

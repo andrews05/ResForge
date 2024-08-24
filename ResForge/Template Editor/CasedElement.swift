@@ -7,7 +7,7 @@ class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBo
 
     override func configure() throws {
         try self.readCases()
-        _ = self.defaultValue()
+        self.defaultValue()
         if !cases.isEmpty {
             width = 240
         }
@@ -34,13 +34,18 @@ class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBo
         fatalError("Formatter not implemented.")
     }
 
-    func defaultValue() -> AnyHashable? {
-        // Attempt to get a default value from the first case or the meta value
-        if let value = cases.keys.first ?? self.parseMetaValue() {
+    @discardableResult func defaultValue(orCurrent: Bool = false) -> AnyHashable? {
+        // Attempt to get a default value from the first case (if not dynamic) or the meta value
+        let value = if let firstCase = cases.values.first, !firstCase.label.isEmpty {
+            firstCase.value
+        } else {
+            self.parseMetaValue()
+        }
+        if let value {
             self.setValue(value, forKey: "value")
             return value
         }
-        return self.value(forKey: "value") as? AnyHashable
+        return orCurrent ? self.value(forKey: "value") as? AnyHashable : nil
     }
 
     private func parseMetaValue() -> AnyHashable? {
@@ -117,7 +122,17 @@ class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBo
     // This is a key-value validation function for the specific key of "value"
     @objc func validateValue(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
         // Here we validate the value with the formatter and can raise an error
-        ioValue.pointee = try formatter.getObjectValue(for: ioValue.pointee as! String)
+        let string = ioValue.pointee as! String
+        do {
+            ioValue.pointee = try formatter.getObjectValue(for: string)
+        } catch let error {
+            // If the string is empty, try falling back to the default value
+            if string.isEmpty, let value = self.defaultValue() {
+                ioValue.pointee = value as AnyObject
+            } else {
+                throw error
+            }
+        }
     }
 
     // MARK: - Combo box functions

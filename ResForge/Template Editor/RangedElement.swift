@@ -38,7 +38,7 @@ class RangedElement: CasedElement {
         }
         if casrs == nil {
             try super.configure()
-        } else if let value = self.defaultValue() as? Int, self.casr(for: value) == nil {
+        } else if let value = self.defaultValue(orCurrent: true) as? Int, self.casr(for: value) == nil {
             // If the default value didn't match a case, set value to min of first case
             self.setValue(casrs[0].deNormalise(casrs[0].min), forKey: "value")
         }

@@ -109,7 +109,7 @@ protocol GroupElement where Self: BaseElement {
 /// An element that can format a value.
 protocol FormattedElement where Self: BaseElement {
     var formatter: Formatter { get }
-    func defaultValue() -> AnyHashable?
+    func defaultValue(orCurrent: Bool) -> AnyHashable?
 }
 extension FormattedElement {
     /// Get the shared formatter for the given key, providing the implementation if it doesn't already exist.
