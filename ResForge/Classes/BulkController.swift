@@ -63,7 +63,11 @@ class BulkController: OutlineController {
         outlineView.dataSource = self
         outlineView.target = self
         outlineView.doubleAction = #selector(doubleClickItems(_:))
+        outlineView.columnAutoresizingStyle = .noColumnAutoresizing
         scrollView.documentView = outlineView
+        scrollView.hasVerticalScroller = true
+        scrollView.hasHorizontalScroller = true
+        scrollView.autohidesScrollers = true
         scrollView.usesPredominantAxisScrolling = false
     }
 
@@ -90,7 +94,8 @@ class BulkController: OutlineController {
             let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(String(i)))
             column.headerCell.title = element.displayLabel
             column.sizeToFit()
-            column.width = max(min(element.width, 150), column.width)
+            // Size to fit seems to come up short sometimes - add 1 to correct
+            column.width = max(min(element.width, 150), column.width+1)
             column.sortDescriptorPrototype = NSSortDescriptor(key: String(i), ascending: true)
             outlineView.addTableColumn(column)
         }
