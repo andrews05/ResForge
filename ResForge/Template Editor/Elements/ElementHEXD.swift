@@ -43,7 +43,8 @@ class ElementHEXD: BaseElement {
 
     private func setRowHeight() {
         // 24 bytes per line, 13pt line height (minimum height 22)
-        rowHeight = (ceil(Double(length) / 24) * 13) + 9
+        let lines = max(ceil(Double(length) / 24), 1)
+        rowHeight = (lines * 13) + 9
     }
 
     override func readData(from reader: BinaryDataReader) throws {
