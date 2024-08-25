@@ -2,8 +2,11 @@ import AppKit
 import RFSupport
 
 // Implements BBIT/BBnn/BFnn, WBIT/WBnn/WFnn, LBIT/LBnn/LFnn, QBIT/QBnn/QFnn
-class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
-    @objc private var value: UInt = 0
+class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement<T> {
+    @objc private var value: UInt {
+        get { UInt(tValue) }
+        set { tValue = T(newValue) }
+    }
     private var bits = 1
     private var position = 0
     private var bitList: [ElementBBIT] = []
@@ -69,9 +72,9 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
 
     override func readData(from reader: BinaryDataReader) throws {
         if first {
-            let completeValue = UInt(try reader.read() as T)
+            let completeValue = try reader.read() as T
             for bbit in bitList {
-                bbit.value = (completeValue >> bbit.position) & ((1 << bbit.bits) - 1)
+                bbit.tValue = (completeValue >> bbit.position) & ((1 << bbit.bits) - 1)
             }
         }
     }
@@ -80,7 +83,7 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement {
         if first {
             var completeValue: T = 0
             for bbit in bitList {
-                completeValue |= T(bbit.value << bbit.position)
+                completeValue |= T(bbit.tValue << bbit.position)
             }
             writer.write(completeValue)
         }

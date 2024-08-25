@@ -27,7 +27,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
     private var offset = 0
     private var invert = false
     private var resType: String?
-    weak var parentElement: RangedElement!
+    weak var parentElement: RangedController!
     private(set) var linkIcon: NSImage.Name?
 
     override var description: String {
@@ -70,7 +70,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
 
     // MARK: -
 
-    func configure(for element: RangedElement) throws {
+    func configure(for element: RangedController) throws {
         parentElement = element
         parentList = element.parentList // Required to trigger itemValueUpdated
         width = element.width
@@ -145,7 +145,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         guard forceReload || cases.isEmpty else {
             return
         }
-        width = parentElement.casrs.count > 1 ? 180 : 240
+        width = parentElement.hasPopup ? 180 : 240
         let resources = parentList.controller.resources(ofType: resType)
         for resource in resources where min...max ~= resource.id {
             let caseEl = ElementCASE(value: resource.id,

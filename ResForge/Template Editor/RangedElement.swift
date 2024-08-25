@@ -1,7 +1,15 @@
 import AppKit
 
+protocol RangedController: CasedElement {
+    var displayValue: Int { get set }
+    var hasPopup: Bool { get }
+    var popupWidth: Double { get set }
+}
+
 // Abstract Element subclass that handles CASR elements
-class RangedElement: CasedElement {
+class RangedElement<T: FixedWidthInteger>: CasedElement, RangedController {
+    var tValue: T = 0
+
     override var subtext: String {
         get {
             if let currentCase, !currentCase.subtext.isEmpty {
@@ -16,13 +24,14 @@ class RangedElement: CasedElement {
     var displayValue = 0 {
         didSet {
             if let currentCase {
-                self.setValue(currentCase.deNormalise(displayValue), forKey: "value")
+                tValue = T(currentCase.deNormalise(displayValue))
             }
         }
     }
     @objc private(set) var casrs: [ElementCASR]!
     @objc private var currentCase: ElementCASR!
-    var popupWidth: CGFloat = 240
+    var hasPopup: Bool { casrs.count > 1 }
+    var popupWidth: Double = 240
 
     override func configure() throws {
         // Read CASR elements
@@ -36,11 +45,19 @@ class RangedElement: CasedElement {
                 popupWidth = 180 // Shrink pop-up menu if any CASR needs a field
             }
         }
-        if casrs == nil {
+        if let casrs {
+            // Configure default value
+            if let defaultValue = self.parseMetaValue() as? T {
+                tValue = defaultValue
+                if self.matchingCase() == nil {
+                    throw TemplateError.invalidStructure(self, NSLocalizedString("Default value doesn't match any CASR.", comment: ""))
+                }
+            } else if self.matchingCase() == nil {
+                // If the current value doesn't match a case, set value to min of first case
+                tValue = T(casrs[0].deNormalise(casrs[0].min))
+            }
+        } else {
             try super.configure()
-        } else if let value = self.defaultValue(orCurrent: true) as? Int, self.casr(for: value) == nil {
-            // If the default value didn't match a case, set value to min of first case
-            self.setValue(casrs[0].deNormalise(casrs[0].min), forKey: "value")
         }
     }
 
@@ -54,7 +71,7 @@ class RangedElement: CasedElement {
             self.loadValue()
         }
         // Only show the select menu if there are multiple options
-        if casrs.count > 1 {
+        if hasPopup {
             let orig = view.frame
             var frame = view.frame
             frame.origin.x -= 2
@@ -83,17 +100,16 @@ class RangedElement: CasedElement {
     }
 
     private func loadValue() {
-        let value = self.value(forKey: "value") as? Int ?? 0
         // If the data does not match a case we still want to preserve the value:
         // When multiple cases exist, create a dummy case for the menu, else force the value into the singular case.
-        let casr = self.casr(for: value) ?? (casrs.count > 1 ? ElementCASR(value: value) : casrs[0])
+        let casr = self.matchingCase() ?? (hasPopup ? ElementCASR(value: Int(tValue)) : casrs[0])
         // Set displayValue before currentCase to avoid re-setting the base value
-        displayValue = casr.normalise(value)
+        displayValue = casr.normalise(Int(tValue))
         currentCase = casr
     }
 
-    private func casr(for value: Int) -> ElementCASR? {
-        return casrs.first { $0.matches(value: value) }
+    private func matchingCase() -> ElementCASR? {
+        return casrs.first { $0.matches(value: Int(tValue)) }
     }
 
     @IBAction func caseChanged(_ sender: NSPopUpButton) {

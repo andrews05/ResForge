@@ -48,7 +48,7 @@ class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBo
         return orCurrent ? self.value(forKey: "value") as? AnyHashable : nil
     }
 
-    private func parseMetaValue() -> AnyHashable? {
+    func parseMetaValue() -> AnyHashable? {
         if let metaValue {
             return try? formatter.getObjectValue(for: metaValue) as? AnyHashable
         }

@@ -2,8 +2,7 @@ import Foundation
 import RFSupport
 
 // Implements DBYT, DWRD, DLNG, DQWD, UBYT, UWRD, ULNG, UQWD
-class ElementDBYT<T: FixedWidthInteger>: RangedElement {
-    var tValue: T = 0
+class ElementDBYT<T: FixedWidthInteger>: RangedElement<T> {
     @objc private var value: NSNumber {
         get { tValue as! NSNumber }
         set { tValue = newValue as! T }
