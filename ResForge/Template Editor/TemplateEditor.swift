@@ -60,6 +60,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
 
     @objc func resourceDataDidChange(_ notification: NSNotification) {
         if edited != .user {
+            edited = .none
             self.load(data: resource.data, reloadTemplate: false)
         }
     }
@@ -80,7 +81,6 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     }
 
     @discardableResult func load(data: Data, reloadTemplate: Bool = true) -> Bool {
-        edited = .none
         if reloadTemplate || elementList == nil {
             elementList = ElementList(controller: self)
             validStructure = elementList.readTemplate(template, filterName: filter?.name)
