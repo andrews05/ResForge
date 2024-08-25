@@ -132,8 +132,12 @@ class BulkController: OutlineController {
             throw BulkError.templateError(error)
         }
         currentType = type
-        defaults = elements.map {
-            ($0 as? FormattedElement)?.defaultValue(orCurrent: true)
+        defaults = elements.map { el in
+            if let el = el as? FormattedElement {
+                el.defaultValue() ?? el.value(forKey: "value")
+            } else {
+                nil
+            }
         }
     }
 

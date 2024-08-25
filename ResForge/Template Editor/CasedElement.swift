@@ -34,18 +34,17 @@ class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBo
         fatalError("Formatter not implemented.")
     }
 
-    @discardableResult func defaultValue(orCurrent: Bool = false) -> AnyHashable? {
-        // Attempt to get a default value from the first case (if not dynamic) or the meta value
-        let value = if let firstCase = cases.values.first, !firstCase.label.isEmpty {
-            firstCase.value
-        } else {
-            self.parseMetaValue()
-        }
-        if let value {
+    @discardableResult func defaultValue() -> AnyHashable? {
+        // Attempt to get a default value from the meta value, or the first case (if not dynamic)
+       if let value = self.parseMetaValue() {
             self.setValue(value, forKey: "value")
             return value
+        } else if let firstCase = cases.values.first, !firstCase.label.isEmpty {
+            self.setValue(firstCase.value, forKey: "value")
+            return firstCase.value
+        } else {
+            return nil
         }
-        return orCurrent ? self.value(forKey: "value") as? AnyHashable : nil
     }
 
     func parseMetaValue() -> AnyHashable? {

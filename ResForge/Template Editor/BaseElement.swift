@@ -18,7 +18,7 @@ class BaseElement: ValueTransformer, NSTextFieldDelegate {
     weak var parentList: ElementList!
     var rowHeight: Double = 22
     var visible: Bool = true
-    var width: CGFloat = 60 // Default for many types
+    var width: Double = 60 // Default for many types
 
     required init!(type: String, label: String) {
         self.type = type
@@ -109,7 +109,7 @@ protocol GroupElement where Self: BaseElement {
 /// An element that can format a value.
 protocol FormattedElement where Self: BaseElement {
     var formatter: Formatter { get }
-    func defaultValue(orCurrent: Bool) -> AnyHashable?
+    func defaultValue() -> AnyHashable?
 }
 extension FormattedElement {
     /// Get the shared formatter for the given key, providing the implementation if it doesn't already exist.

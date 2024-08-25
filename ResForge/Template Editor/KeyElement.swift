@@ -19,6 +19,8 @@ class KeyElement: CasedElement, CollectionElement {
         if let value = self.defaultValue(), let section = keyedSections[value] {
             currentSection = section
             parentList.insert(currentSection, after: self)
+        } else {
+            throw TemplateError.invalidStructure(self, NSLocalizedString("Default value doesn't match any CASE.", comment: ""))
         }
     }
 
