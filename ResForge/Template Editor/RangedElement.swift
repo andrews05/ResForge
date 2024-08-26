@@ -8,8 +8,6 @@ protocol RangedController: CasedElement {
 
 // Abstract Element subclass that handles CASR elements
 class RangedElement<T: FixedWidthInteger>: CasedElement, RangedController {
-    var tValue: T = 0
-
     override var subtext: String {
         get {
             if let currentCase, !currentCase.subtext.isEmpty {
@@ -21,15 +19,26 @@ class RangedElement<T: FixedWidthInteger>: CasedElement, RangedController {
             super.subtext = newValue
         }
     }
-    var displayValue = 0 {
+    var tValue: T = 0 {
         didSet {
-            if let currentCase {
-                tValue = T(currentCase.deNormalise(displayValue))
+            if !suppressDidSet, currentCase != nil {
+                self.loadValue()
             }
         }
     }
+    var displayValue = 0 {
+        didSet {
+            if !suppressDidSet, let currentCase {
+                suppressDidSet = true
+                tValue = T(currentCase.deNormalise(displayValue))
+                suppressDidSet = false
+            }
+        }
+    }
+
     @objc private(set) var casrs: [ElementCASR]!
-    @objc private var currentCase: ElementCASR!
+    @objc private var currentCase: ElementCASR?
+    private var suppressDidSet = false
     var hasPopup: Bool { casrs.count > 1 }
     var popupWidth: Double = 240
 
@@ -56,20 +65,18 @@ class RangedElement<T: FixedWidthInteger>: CasedElement, RangedController {
                 // If the current value doesn't match a case, set value to min of first case
                 tValue = T(casrs[0].deNormalise(casrs[0].min))
             }
+            self.loadValue()
         } else {
             try super.configure()
         }
     }
 
     override func configure(view: NSView) {
-        if casrs == nil {
+        guard let currentCase else {
             super.configure(view: view)
             return
         }
 
-        if currentCase == nil {
-            self.loadValue()
-        }
         // Only show the select menu if there are multiple options
         if hasPopup {
             let orig = view.frame
@@ -102,10 +109,10 @@ class RangedElement<T: FixedWidthInteger>: CasedElement, RangedController {
     private func loadValue() {
         // If the data does not match a case we still want to preserve the value:
         // When multiple cases exist, create a dummy case for the menu, else force the value into the singular case.
-        let casr = self.matchingCase() ?? (hasPopup ? ElementCASR(value: Int(tValue)) : casrs[0])
-        // Set displayValue before currentCase to avoid re-setting the base value
-        displayValue = casr.normalise(Int(tValue))
-        currentCase = casr
+        currentCase = self.matchingCase() ?? (hasPopup ? ElementCASR(value: Int(tValue)) : casrs[0])
+        suppressDidSet = true
+        displayValue = currentCase!.normalise(Int(tValue))
+        suppressDidSet = false
     }
 
     private func matchingCase() -> ElementCASR? {
@@ -113,6 +120,9 @@ class RangedElement<T: FixedWidthInteger>: CasedElement, RangedController {
     }
 
     @IBAction func caseChanged(_ sender: NSPopUpButton) {
+        guard let currentCase else {
+            return
+        }
         // Adjust the current display value to fit the new range
         if displayValue < currentCase.min {
             displayValue = currentCase.min

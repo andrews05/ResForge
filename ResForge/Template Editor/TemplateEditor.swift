@@ -155,6 +155,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
 
     @IBAction func saveResource(_ sender: Any) {
         if self.window?.makeFirstResponder(dataList) != false {
+            edited = .user // Ensure reload is not triggered
             resource.data = self.getData()
             edited = .none
         }

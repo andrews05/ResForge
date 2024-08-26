@@ -51,6 +51,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         } else if let resType {
             // If a resType has been given this will become a combo box for resource selection
             self.loadCases(resType)
+            self.updateLinkIcon()
             self.configureComboBox(view: view)
         } else {
             self.configureTextField(view: view)
@@ -153,7 +154,6 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
                                      displayValue: "\(resource.name) = \(resource.id)")
             cases[resource.id] = caseEl
         }
-        value = value as Int // Trigger refresh
     }
 
     private func updateLinkIcon() {
@@ -181,12 +181,14 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
             guard let self else { return }
             // If this is new resource with a valid id, reload the cases
-            if isNew && self.min...self.max ~= resource.id {
+            if isNew && min...max ~= resource.id {
                 self.loadCases(resType, forceReload: true)
                 // Check if the value changed
                 if resource.id != id {
-                    self.value = resource.id
-                    self.parentList.controller.itemValueUpdated(sender)
+                    value = resource.id
+                    parentList.controller.itemValueUpdated(sender)
+                } else {
+                    value = value as Int // Still need to refresh displayed value
                 }
             }
         }
