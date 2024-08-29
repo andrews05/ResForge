@@ -74,7 +74,7 @@ class SystemView: NSView {
         frame.size.width = 12
         if showName {
             let nameBounds = resource.name.boundingRect(with: .zero, attributes: attributes)
-            frame.size.width += 2 + nameBounds.width + 2
+            frame.size.width += 2 + nameBounds.width + 4
         }
     }
 
@@ -144,11 +144,7 @@ class SystemView: NSView {
         if isHighlighted {
             // Highlight background
             NSColor.selectedContentBackgroundColor.setFill()
-            var bgRect = bounds
-            if showName {
-                bgRect.size.width += 2
-            }
-            NSBezierPath(roundedRect: bgRect, xRadius: 6, yRadius: 6).fill()
+            NSBezierPath(roundedRect: bounds, xRadius: 6, yRadius: 6).fill()
 
             // Black circle
             NSColor.black.setFill()

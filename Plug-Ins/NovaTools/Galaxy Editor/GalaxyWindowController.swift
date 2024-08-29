@@ -86,7 +86,7 @@ extension GalaxyWindowController {
     }
 
     private func read(system: Resource) {
-        if let view = systemViews[system.id] {
+        if let view = systemViews[system.id], view.resource == system {
             try? view.read()
         } else if let view = SystemView(system, isEnabled: system.document == manager.document) {
             systemViews[system.id] = view
