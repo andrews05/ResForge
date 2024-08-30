@@ -44,9 +44,6 @@ extension GalaxyWindowController {
         NotificationCenter.default.addObserver(self, selector: #selector(resourceNameChanged(_:)), name: .ResourceNameDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resourceDataChanged(_:)), name: .ResourceDataDidChange, object: nil)
 
-        // Workaround a bug in interface builder that prevents setting the column width correctly
-        systemTable.tableColumns[1].width = systemTable.frame.width - 2 - systemTable.tableColumns[0].width - systemTable.intercellSpacing.width
-
         // Scroll to galaxy center
         if var documentRect = galaxyView.enclosingScrollView?.documentVisibleRect {
             documentRect.origin.y *= -1 // Workaround an issue where the clip view is initially misplaced
