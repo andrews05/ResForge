@@ -24,6 +24,7 @@ class ElementBSKP<T: FixedWidthInteger & UnsignedInteger>: BaseElement, Collecti
         var frame = view.frame
         frame.origin.y += 3
         let textField = NSTextField(frame: frame)
+        textField.drawsBackground = false
         textField.isBezeled = false
         textField.isEditable = false
         textField.isSelectable = true
