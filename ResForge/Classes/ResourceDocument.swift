@@ -620,7 +620,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     @IBAction func cut(_ sender: Any) {
         let resources = dataSource.selectedResources(deep: true)
         let pb = NSPasteboard.init(name: .general)
-        pb.declareTypes([.RFResource], owner: self)
+        pb.declareTypes([.RFResource], owner: nil)
         pb.writeObjects(resources)
         self.remove(resources: resources)
         self.undoManager?.setActionName(NSLocalizedString(resources.count == 1 ? "Cut Resource" : "Cut Resources", comment: ""))
@@ -628,7 +628,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
 
     @IBAction func copy(_ sender: Any) {
         let pb = NSPasteboard(name: .general)
-        pb.declareTypes([.RFResource], owner: self)
+        pb.declareTypes([.RFResource], owner: nil)
         pb.writeObjects(dataSource.selectedResources(deep: true))
     }
 

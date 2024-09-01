@@ -125,6 +125,17 @@ extension GalaxyWindowController {
         galaxyView.zoomOut(sender)
     }
 
+    @IBAction func copy(_ sender: Any) {
+        let pb = NSPasteboard(name: .general)
+        pb.declareTypes([.RFResource], owner: nil)
+        pb.writeObjects(selectedSystems)
+    }
+
+    @IBAction func paste(_ sender: Any) {
+        // Forward to the document
+        manager.document?.perform(#selector(paste(_:)), with: sender)
+    }
+
     func createSystem(position: NSPoint) {
         manager.createResource(type: ResourceType("sÿst"), id: systemList.last?.id) { [weak self] system in
             guard let self else { return }
@@ -156,6 +167,13 @@ extension GalaxyWindowController {
         }
         if shouldReload {
             self.reload()
+            if notification.name == .DocumentDidAddResources {
+                // Select added systems
+                selectedSystems = resources.filter { $0.typeCode == "sÿst" }
+                if systemTable.selectedRow > 0 {
+                    systemTable.scrollRowToVisible(systemTable.selectedRow)
+                }
+            }
         }
     }
 
@@ -174,8 +192,8 @@ extension GalaxyWindowController {
         }
         if resource.typeCode == "sÿst" {
             systemViews[resource.id]?.updateFrame()
-            if let idx = systemList.firstIndex(of: resource) {
-                systemTable.reloadData(forRowIndexes: [idx + 1], columnIndexes: [1])
+            if let i = self.row(for: resource) {
+                systemTable.reloadData(forRowIndexes: [i], columnIndexes: [1])
             }
         } else if resource.typeCode == "nëbu" {
             galaxyView.needsDisplay = true
@@ -252,21 +270,11 @@ extension GalaxyWindowController: NSTableViewDataSource, NSTableViewDelegate {
     }
 
     func syncSelectionFromView(clicked: SystemView? = nil) {
-        var scrollRow: Int?
-        var indexes = IndexSet()
-        for (i, system) in systemList.enumerated() {
-            if let view = systemViews[system.id], view.isHighlighted {
-                indexes.insert(i + 1)
-                if view == clicked {
-                    scrollRow = i + 1
-                }
-            }
-        }
         isSelectingSystems = true
-        systemTable.selectRowIndexes(indexes, byExtendingSelection: false)
+        selectedSystems = galaxyView.selectedSystems.map(\.resource)
         isSelectingSystems = false
-        if let scrollRow {
-            systemTable.scrollRowToVisible(scrollRow)
+        if let clicked, let i = self.row(for: clicked.resource) {
+            systemTable.scrollRowToVisible(i)
         }
     }
 
@@ -274,8 +282,25 @@ extension GalaxyWindowController: NSTableViewDataSource, NSTableViewDelegate {
         guard systemTable.clickedRow != 0 else {
             return
         }
-        for i in systemTable.selectedRowIndexes {
-            manager.open(resource: systemList[i - 1])
+        for system in selectedSystems {
+            manager.open(resource: system)
+        }
+    }
+
+    func row(for resource: Resource) -> Int? {
+        if let i = systemList.firstIndex(of: resource) {
+            return i + 1
+        }
+        return nil
+    }
+
+    var selectedSystems: [Resource] {
+        get {
+            systemTable.selectedRowIndexes.map { systemList[$0 - 1] }
+        }
+        set {
+            let indexes = IndexSet(newValue.compactMap(self.row(for:)))
+            systemTable.selectRowIndexes(indexes, byExtendingSelection: false)
         }
     }
 }

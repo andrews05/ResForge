@@ -152,7 +152,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     // MARK: - Selection
 
-    private var selectedSystems: [SystemView] = []
+    private(set) var selectedSystems: [SystemView] = []
 
     override func selectAll(_ sender: Any?) {
         controller.systemTable.selectAll(self)
