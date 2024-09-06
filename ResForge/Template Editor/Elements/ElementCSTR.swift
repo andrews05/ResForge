@@ -36,16 +36,24 @@ class ElementCSTR: CasedElement {
     var maxLength = Int(UInt32.max)
     var padding = StringPadding.none
     var insertLineBreaks = false
+    var unbounded = false
 
-    override func configure() throws {
-        try self.configurePadding()
-        try super.configure()
-        // Use a width of zero to allow flexible sizing when appropriate
-        width = cases.isEmpty && maxLength > 32 ? 0 : 240
+    required init(type: String, label: String) {
+        super.init(type: type, label: label)
+        self.configurePadding()
         insertLineBreaks = maxLength > 256
     }
 
-    func configurePadding() throws {
+    override func configure() throws {
+        guard !unbounded || self.isAtEnd() else {
+            throw TemplateError.unboundedElement(self)
+        }
+        try super.configure()
+        // Use a width of zero to allow flexible sizing when appropriate
+        width = cases.isEmpty && maxLength > 32 ? 0 : 240
+    }
+
+    func configurePadding() {
         switch type {
         case "CSTR":
             padding = .c
@@ -54,10 +62,8 @@ class ElementCSTR: CasedElement {
         case "ECST":
             padding = .evenC
         case "TXTS":
-            guard self.isAtEnd() else {
-                throw TemplateError.unboundedElement(self)
-            }
             padding = .none
+            unbounded = true
         default:
             // Assume Xnnn for anything else
             let nnn = BaseElement.variableTypeValue(type)

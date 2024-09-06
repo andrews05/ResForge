@@ -3,15 +3,13 @@ import RFSupport
 
 // Implements USTR, UTXT, Unnn
 class ElementUSTR: ElementCSTR {
-    override func configurePadding() throws {
+    override func configurePadding() {
         switch type {
         case "USTR":
             padding = .c
         case "UTXT":
-            guard self.isAtEnd() else {
-                throw TemplateError.unboundedElement(self)
-            }
             padding = .none
+            unbounded = true
         default:
             let nnn = BaseElement.variableTypeValue(type)
             padding = .fixed(nnn)
