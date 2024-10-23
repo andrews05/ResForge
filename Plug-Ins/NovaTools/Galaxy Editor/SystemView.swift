@@ -57,7 +57,7 @@ class SystemView: NSView {
         navDefaults = try (0..<16).map { _ in
             Int(try reader.read() as Int16)
         }
-        hasStellars = navDefaults.contains(where: { $0 > -1 })
+        hasStellars = navDefaults.contains(where: { 128...2175 ~= $0 })
     }
 
     override func updateTrackingAreas() {
