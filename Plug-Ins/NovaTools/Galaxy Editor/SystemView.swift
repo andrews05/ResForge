@@ -6,6 +6,8 @@ class SystemView: NSView {
     let isEnabled: Bool
     private(set) var position = NSPoint.zero
     private(set) var links: [Int] = []
+    private(set) var navDefaults: [Int] = []
+    private(set) var hasStellars = false
     private var attributes: [NSAttributedString.Key: Any] {
         [.foregroundColor: NSColor.white, .font: NSFont.systemFont(ofSize: 11)]
     }
@@ -52,6 +54,10 @@ class SystemView: NSView {
         links = try (0..<16).map { _ in
             Int(try reader.read() as Int16)
         }
+        navDefaults = try (0..<16).map { _ in
+            Int(try reader.read() as Int16)
+        }
+        hasStellars = navDefaults.contains(where: { 128...2175 ~= $0 })
     }
 
     override func updateTrackingAreas() {
@@ -157,7 +163,14 @@ class SystemView: NSView {
         } else {
             NSColor.black.setFill()
             if isEnabled {
-                NSColor.blue.setStroke()
+                // Systems without stellars show as white; otherwise they show as blue.
+                // This is not the same as EV logic, where only systems with inhabited, landable stellars owned
+                // by a govt with which the player is friendly show as blue.
+                if hasStellars {
+                    NSColor.blue.setStroke()
+                } else {
+                    NSColor.white.setStroke()
+                }
             } else {
                 NSColor.gray.setStroke()
             }
