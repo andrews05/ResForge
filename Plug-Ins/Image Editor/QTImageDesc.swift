@@ -12,6 +12,7 @@ struct QTImageDesc {
     static let none = UInt32(fourCharString: "raw ")
     static let planar = UInt32(fourCharString: "8BPS")
     static let quickDraw = UInt32(fourCharString: "qdrw")
+    static let video = UInt32(fourCharString: "rpza")
 
     var size: UInt32 = 86
     var compressor: UInt32
@@ -87,6 +88,8 @@ extension QTImageDesc {
             return try QTNone.rep(for: self, reader: reader)
         case Self.planar:
             return try QTPlanar.rep(for: self, reader: reader)
+        case Self.video:
+            return try QTVideo.rep(for: self, reader: reader)
         default:
             // Attempt to let the system decode it. This should work for e.g. PNG, JPEG, GIF, TIFF.
             try reader.advance(bytesUntilData)

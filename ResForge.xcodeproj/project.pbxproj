@@ -20,6 +20,7 @@
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		491FFD6924F5D6C00034CCA6 /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */; };
 		4925B579288D2B1300F21D15 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4925B578288D2B1300F21D15 /* Sprite.swift */; };
+		492612DC2CCD76AA0096DC6A /* QTVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492612DB2CCD76AA0096DC6A /* QTVideo.swift */; };
 		492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */; };
 		4927A486248C7A9200CD3E5A /* SoundWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A485248C7A9100CD3E5A /* SoundWindowController.swift */; };
 		4927A488248C8C0500CD3E5A /* SoundResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4927A487248C8C0500CD3E5A /* SoundResource.swift */; };
@@ -348,6 +349,7 @@
 		491EDA5224E37E34008E58CB /* SelectTemplateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		491FFD6824F5D6C00034CCA6 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4925B578288D2B1300F21D15 /* Sprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; usesTabs = 0; };
+		492612DB2CCD76AA0096DC6A /* QTVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QTVideo.swift; sourceTree = "<group>"; };
 		4927A485248C7A9100CD3E5A /* SoundWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundWindowController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4927A487248C8C0500CD3E5A /* SoundResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResource.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4927A489248C9DBD00CD3E5A /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -870,6 +872,7 @@
 				49D38ACB2C0D6D9200F3592B /* QTImageDesc.swift */,
 				49332F172C11A74000C61F6B /* QTNone.swift */,
 				4977542B2C12F22000652639 /* QTPlanar.swift */,
+				492612DB2CCD76AA0096DC6A /* QTVideo.swift */,
 			);
 			path = "Image Editor";
 			sourceTree = "<group>";
@@ -1437,6 +1440,7 @@
 				497754642C14E74B00652639 /* QTAnimation.swift in Sources */,
 				4977542C2C12F22000652639 /* QTPlanar.swift in Sources */,
 				4977549C2C16DAC700652639 /* ImageFormat.swift in Sources */,
+				492612DC2CCD76AA0096DC6A /* QTVideo.swift in Sources */,
 				4903B8442B6F4F0700805094 /* ColorIcon.swift in Sources */,
 				496674FE24BBC7CE00251406 /* ImageWindowController.swift in Sources */,
 				494D820B2BFC80C200B99790 /* PackBits.swift in Sources */,
