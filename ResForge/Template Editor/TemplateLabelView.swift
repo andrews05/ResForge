@@ -38,14 +38,13 @@ class TemplateLabelView: NSTableCellView {
         if let element = dataList.item(atRow: row) as? ElementLSTB {
             let writer = BinaryDataWriter()
             element.writeData(to: writer)
-            let pb = NSPasteboard(name: .general)
-            pb.declareTypes([.RFTemplateListItem], owner: nil)
-            pb.setData(writer.data, forType: .RFTemplateListItem)
+            NSPasteboard.general.declareTypes([.RFTemplateListItem], owner: nil)
+            NSPasteboard.general.setData(writer.data, forType: .RFTemplateListItem)
         }
     }
 
     @IBAction func paste(_ sender: Any) {
-        if let data = NSPasteboard(name: .general).data(forType: .RFTemplateListItem) {
+        if let data = NSPasteboard.general.data(forType: .RFTemplateListItem) {
             self.createListItem(data)
         }
     }

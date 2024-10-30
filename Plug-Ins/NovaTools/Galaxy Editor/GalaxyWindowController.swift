@@ -126,9 +126,8 @@ extension GalaxyWindowController {
     }
 
     @IBAction func copy(_ sender: Any) {
-        let pb = NSPasteboard(name: .general)
-        pb.declareTypes([.RFResource], owner: nil)
-        pb.writeObjects(selectedSystems)
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.writeObjects(selectedSystems)
     }
 
     @IBAction func paste(_ sender: Any) {
