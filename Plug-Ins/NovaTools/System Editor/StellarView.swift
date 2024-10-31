@@ -51,7 +51,7 @@ class StellarView: NSView {
         position.x = Double(try reader.read() as Int16)
         position.y = Double(try reader.read() as Int16)
 
-        let spinId = (Int)(try reader.read() as Int16) + 1000;
+        let spinId = Int(try reader.read() as Int16) + 1000
         if let spinResource = manager.findResource(type: ResourceType("spïn"), id: spinId, currentDocumentOnly: false) {
             let spinReader = BinaryDataReader(spinResource.data)
             let spriteId = (Int)(try spinReader.read() as Int16);
@@ -80,7 +80,7 @@ class StellarView: NSView {
     }
 
     func updateFrame() {
-        if image != nil, let imageSize = systemView?.transform.transform(image!.size) {
+        if let image, let imageSize = systemView?.transform.transform(image.size) {
             frame.size.width = imageSize.width
             frame.size.height = imageSize.height
         } else {
@@ -120,7 +120,7 @@ class StellarView: NSView {
             return
         }
 
-        if image != nil {
+        if let image {
             let imageSize = systemView?.transform.transform(image!.size) ?? image!.size
             let imageOrigin = NSPoint(x: frame.size.width / 2 - imageSize.width / 2, y: frame.size.height / 2 - imageSize.height / 2)
             image!.draw(in: NSRect(origin: imageOrigin, size: imageSize))

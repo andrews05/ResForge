@@ -56,8 +56,8 @@ extension SystemWindowController {
 
         stellarViews = [:]
         for stellar in stellarList {
-            if stellar != nil && stellarViews[stellar!.id] == nil {
-                self.read(stellar: stellar!)
+            if let stellar && stellarViews[stellar.id] == nil {
+                self.read(stellar: stellar)
             }
         }
 
@@ -73,9 +73,7 @@ extension SystemWindowController {
     
     private func read() throws {
         let reader = BinaryDataReader(resource.data)
-        for _ in 0..<18 {
-            _ = try reader.read() as Int16
-        }
+        try reader.advance(18 * 2)
         stellarList = try (0..<16).map { _ in
             Int(try reader.read() as Int16)
         }.map { stellarId in

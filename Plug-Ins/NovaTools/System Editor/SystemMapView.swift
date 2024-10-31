@@ -148,7 +148,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     }
 
     // Click background to deselect (if not holding shift or command and not dragging)
-    // Double click to create system
+    // Double click to create stellar
     override func mouseDown(with event: NSEvent) {
         if event.clickCount == 1 {
             let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
