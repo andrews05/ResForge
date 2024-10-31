@@ -92,10 +92,9 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     // MARK: - Pan and zoom
 
-    // Rescale all zoom levels so the 5k x 5k view can show the whole system (30k x 30k) even on max zoom
-    private let zoomLevels: [Double] = [8/19, 9/16, 3/4, 1, 4/3, 16/10]
+    private let zoomLevels: [Double] = [1/16, 1/8, 1/4, 8/19, 9/16, 3/4, 1];
     func scaleFactor(forLevel level: Int) -> CGFloat {
-        return zoomLevels[level] * (5 / 30); // Scale the view to no more than 5k pixels across to avoid issues
+        return zoomLevels[level];
     }
     private var zoomLevel = 0 {
         didSet {
@@ -163,8 +162,8 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
     }
 
-    // Click system to select
-    // Double click to open selected systems
+    // Click stellar to select
+    // Double click to open selected stellars
     func mouseDown(stellar: StellarView, with event: NSEvent) {
         let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
         if event.clickCount == 1 || toggle {
@@ -191,12 +190,12 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
     }
 
-    // MARK: - Move systems
+    // MARK: - Move stellars
 
     private var isMovingStellars = false
     private var dragOrigin: NSPoint?
 
-    // Arrow keys to move systems
+    // Arrow keys to move stellars
     override func keyDown(with event: NSEvent) {
         let delta = event.modifierFlags.contains(.shift) ? 10.0 : 1.0
         switch event.specialKey {
@@ -219,7 +218,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
     }
 
-    // Drag system to move
+    // Drag stellar to move
     func mouseDragged(stellar: StellarView, with event: NSEvent) {
         guard let dragOrigin, event.deltaX != 0 || event.deltaY != 0 else {
             return
@@ -246,7 +245,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
             view.point.y += y
         }
         if !isMovingStellars {
-            // Restack after initial move in case any obscured systems need to be revealed
+            // Restack after initial move in case any obscured stellars need to be revealed
             self.restackStellars()
             isMovingStellars = true
         }

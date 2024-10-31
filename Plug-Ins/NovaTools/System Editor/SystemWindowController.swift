@@ -32,7 +32,7 @@ extension SystemWindowController {
         "SystemWindow"
     }
     var windowTitle: String {
-        "System Map"
+        "System Map: \(resource.name) (ID \(resource.id))"
     }
 
     override func windowDidLoad() {
@@ -56,7 +56,7 @@ extension SystemWindowController {
 
         stellarViews = [:]
         for stellar in stellarList {
-            if let stellar && stellarViews[stellar.id] == nil {
+            if let stellar, stellarViews[stellar.id] == nil {
                 self.read(stellar: stellar)
             }
         }
@@ -75,12 +75,11 @@ extension SystemWindowController {
         let reader = BinaryDataReader(resource.data)
         try reader.advance(18 * 2)
         stellarList = try (0..<16).map { _ in
-            Int(try reader.read() as Int16)
-        }.map { stellarId in
+            let stellarId = Int(try reader.read() as Int16)
             if 128...2175 ~= stellarId {
-                manager.findResource(type: ResourceType("spöb"), id: stellarId, currentDocumentOnly: false)
+                return manager.findResource(type: ResourceType("spöb"), id: stellarId, currentDocumentOnly: false)
             } else {
-                nil
+                return nil
             }
         }
      }
@@ -125,9 +124,7 @@ extension SystemWindowController {
             let writer = BinaryDataWriter()
             writer.write(Int16(position.x.rounded()))
             writer.write(Int16(position.y.rounded()))
-            for _ in 0..<16 {
-                writer.write(Int16(-1))
-            }
+            writer.write(Int16(0)) // graphic
             // Allow the DataChanged notification to create the view
             stellar.data = writer.data
             // Add the stellar to our navdefaults
@@ -136,11 +133,14 @@ extension SystemWindowController {
             // Save the nav defaults
             let systWriter = BinaryDataWriter()
             // Make sure there's enough data in the resource to save nav defaults; otherwise initialize default data up to the end of the NavDefaults list
-            if resource.data.count < 2 * 2 {
-                systWriter.write(Int16(0)) // xPos/yPos = 0
-                systWriter.write(Int16(0))
-            }
             if resource.data.count < (2 + 16 + 16) * 2 {
+                if resource.data.count < 2 * 2 {
+                    // Completely empty resource; write default x/yPos here
+                    systWriter.write(Int16(0))
+                    systWriter.write(Int16(0))
+                }
+
+                // Resource now has some data but not the full amount, intitalize the minimum we need to write nav defaults
                 for _ in resource.data.count..<32 {
                     systWriter.write(Int16(-1)) // no hyperlinks or navdefaults
                 }
@@ -195,11 +195,9 @@ extension SystemWindowController {
             return
         }
         if resource.typeCode == "sÿst" || resource.typeCode == "spöb" {
-            stellarViews[resource.id]?.updateFrame()
             if let i = self.row(for: resource) {
                 stellarTable.reloadData(forRowIndexes: [i], columnIndexes: [1])
             }
-            systemView.needsDisplay = true
         }
     }
 
@@ -264,7 +262,7 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
                 }
             }
         } else {
-            view.textField?.stringValue = resource.name
+            view.textField?.stringValue = "Nav Defaults"
         }
         return view
     }

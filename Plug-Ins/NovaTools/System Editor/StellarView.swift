@@ -56,14 +56,15 @@ class StellarView: NSView {
             let spinReader = BinaryDataReader(spinResource.data)
             let spriteId = (Int)(try spinReader.read() as Int16);
 
-            // Use the preview provider to obtain an NSImage from the resources the spïn might point to -- try PICT then fall back to rlëD
-            if let spriteResource = manager.findResource(type: ResourceType("PICT"), id: spriteId, currentDocumentOnly: false) ?? manager.findResource(type: ResourceType("rlëD"), id: spriteId, currentDocumentOnly: false) {
-                spriteResource.preview({ img in
+            // Use the preview provider to obtain an NSImage from the resources the spïn might point to -- try rlëD then fall back to PICT
+            if let spriteResource = manager.findResource(type: ResourceType("rlëD"), id: spriteId, currentDocumentOnly: false) ?? manager.findResource(type: ResourceType("PICT"), id: spriteId, currentDocumentOnly: false) {
+                spriteResource.preview { img in
                     self.image = img
-                    self.updateFrame()
-                    self.needsDisplay = true
-                })
+                }
             }
+
+            self.updateFrame()
+            self.needsDisplay = true
         }
     }
 
@@ -84,8 +85,9 @@ class StellarView: NSView {
             frame.size.width = imageSize.width
             frame.size.height = imageSize.height
         } else {
-            frame.size.width = 12
-            frame.size.height = 12
+            let size = systemView?.transform.transform(NSSize(width: 90, height: 90))
+            frame.size.width = size?.width ?? 90
+            frame.size.height = size?.height ?? 90
         }
 
         if let point = systemView?.transform.transform(position) {
@@ -121,9 +123,7 @@ class StellarView: NSView {
         }
 
         if let image {
-            let imageSize = systemView?.transform.transform(image!.size) ?? image!.size
-            let imageOrigin = NSPoint(x: frame.size.width / 2 - imageSize.width / 2, y: frame.size.height / 2 - imageSize.height / 2)
-            image!.draw(in: NSRect(origin: imageOrigin, size: imageSize))
+            image.draw(in: NSRect(origin: .zero, size: frame.size))
         } else {
             NSColor.black.setFill()
             if isEnabled {
@@ -131,14 +131,15 @@ class StellarView: NSView {
             } else {
                 NSColor.gray.setStroke()
             }
-            let circle = NSRect(x: 2, y: 2, width: 8, height: 8)
+            let circleSize = NSSize(width: frame.size.width * 0.9, height: frame.size.height * 0.9)
+            let circle = NSRect(origin: NSPoint(x: frame.size.width * 0.05, y: frame.size.height * 0.05), size: circleSize)
             let path = NSBezierPath(ovalIn: circle)
             path.fill()
             path.stroke()
         }
 
         if isHighlighted {
-            // Highlight background
+            // Draw a highlighted outline around the stellar
             NSColor.selectedContentBackgroundColor.setStroke()
             let outline = NSBezierPath(roundedRect: bounds, xRadius: 6, yRadius: 6)
             outline.lineWidth = 3
