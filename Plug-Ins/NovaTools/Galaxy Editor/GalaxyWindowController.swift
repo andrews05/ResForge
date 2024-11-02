@@ -144,7 +144,7 @@ extension GalaxyWindowController {
             let writer = BinaryDataWriter()
             writer.write(Int16(position.x.rounded()))
             writer.write(Int16(position.y.rounded()))
-            for _ in 0..<16 {
+            for _ in 0..<32 {
                 writer.write(Int16(-1))
             }
             // Allow the DataChanged notification to create the view
