@@ -101,6 +101,8 @@ class ResourceDataSource: NSObject {
             }
             if retainSelection {
                 resourcesView.select(selected)
+            } else {
+                (view as? NSScrollView)?.documentView?.scrollToVisible(.zero)
             }
         } catch let error {
             document.presentError(error)
@@ -144,7 +146,7 @@ class ResourceDataSource: NSObject {
             typeList.selectRowIndexes([i], byExtendingSelection: false)
         } else {
             currentType = nil
-            setView()
+            self.setView()
         }
         resourcesView.select(resources)
         if let actionName {

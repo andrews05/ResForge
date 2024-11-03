@@ -101,7 +101,6 @@ class BulkController: OutlineController {
         }
         outlineView.sortDescriptors = [idCol.sortDescriptorPrototype!]
         document.directory.sorter = nil
-        outlineView.scrollToBeginningOfDocument(self)
         return scrollView
     }
 

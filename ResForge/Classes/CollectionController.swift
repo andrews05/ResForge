@@ -13,7 +13,6 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
             collectionView.maxSize = PluginRegistry.previewProviders[type.code]!.maxThumbnailSize(for: type.code)
             document.directory.sorter = nil
         }
-        collectionView.scroll(.zero)
         return scrollView
     }
 

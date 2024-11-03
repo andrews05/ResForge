@@ -28,7 +28,6 @@ class StandardController: OutlineController {
         outlineView.indentationPerLevel = type == nil ? 1 : 0
         outlineView.tableColumns[0].width = type == nil ? 76 : 66
         self.setSorter()
-        outlineView.scrollToBeginningOfDocument(self)
         return scrollView
     }
 
