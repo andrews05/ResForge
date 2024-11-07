@@ -17,14 +17,13 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     }
 
     override func awakeFromNib() {
-        zoomLevel = 3
+        self.updateScale()
     }
 
     private func transformSubviews() {
         for view in controller.stellarViews.values {
             view.updateFrame()
         }
-        needsDisplay = true
     }
 
     func restackStellars() {
@@ -60,64 +59,45 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     // MARK: - Drawing
 
-    override var needsDisplay: Bool {
-        get { layer?.needsDisplay() ?? false }
-        set { layer?.setNeedsDisplay() }
-    }
-
-    override func makeBackingLayer() -> CALayer {
-        let layer = CALayer()
-        layer.contentsScale = window?.backingScaleFactor ?? 1
-        layer.backgroundColor = .black
-        layer.delegate = self
-        return layer
-    }
-
-    nonisolated func layer(_ layer: CALayer, shouldInheritContentsScale newScale: CGFloat, from window: NSWindow) -> Bool {
-        return true
-    }
-
-    func draw(_ layer: CALayer, in ctx: CGContext) {
-        NSGraphicsContext.current = NSGraphicsContext(cgContext: ctx, flipped: true)
-
+    override func draw(_ dirtyRect: NSRect) {
         // Centre line
         let path = NSBezierPath()
         NSColor(deviceRed: 0.5, green: 0.5, blue: 0.5, alpha: 0.4).setStroke()
-        path.move(to: NSPoint(x: 0, y: frame.size.height / 2 - 0.5))
-        path.line(to: NSPoint(x: frame.size.width, y: frame.size.height / 2 - 0.5))
-        path.move(to: NSPoint(x: frame.size.width / 2 - 0.5, y: 0))
-        path.line(to: NSPoint(x: frame.size.width / 2 - 0.5, y: frame.size.height))
+        path.move(to: NSPoint(x: frame.minX, y: frame.midY - 0.5))
+        path.line(to: NSPoint(x: frame.maxX, y: frame.midY - 0.5))
+        path.move(to: NSPoint(x: frame.midX - 0.5, y: frame.minY))
+        path.line(to: NSPoint(x: frame.midX - 0.5, y: frame.maxY))
         path.stroke()
     }
 
     // MARK: - Pan and zoom
 
-    private let zoomLevels: [Double] = [1/16, 1/8, 1/4, 8/19, 9/16, 3/4, 1];
-    func scaleFactor(forLevel level: Int) -> CGFloat {
-        return zoomLevels[level];
-    }
-    private var zoomLevel = 0 {
+    private let zoomLevels: [Double] = [1/16, 1/8, 1/4, 8/19, 9/16, 3/4, 1]
+    private var zoomLevel = 3 {
         didSet {
-            if zoomLevel != oldValue {
-                let oldPos = NSPoint(x: (enclosingScrollView?.documentVisibleRect.midX ?? 0) / frame.size.width, y: (enclosingScrollView?.documentVisibleRect.midY ?? 0) / frame.size.height)
-                let scaleFactor = scaleFactor(forLevel: zoomLevel)
-                // EVN wraps the player around at ±15000 from the origin, so a stellar could conceivably be placed anywhere within
-                // that range
-                let calculatedSize = NSSize(width: Int(30000 * scaleFactor), height: Int(30000 * scaleFactor))
-                frame.size = calculatedSize
+            if zoomLevel != oldValue, let enclosingScrollView {
+                let documentRect = enclosingScrollView.documentVisibleRect
+                let oldPos = NSPoint(x: documentRect.midX / frame.size.width, y: documentRect.midY / frame.size.height)
 
-                transform = AffineTransform(translationByX: frame.midX, byY: frame.midY)
-                transform.scale(scaleFactor)
-
+                self.updateScale()
                 self.transformSubviews()
 
-                if let newVisibleRect = enclosingScrollView?.documentVisibleRect {
-                    let scrollOrigin = NSPoint(x: oldPos.x * frame.size.width - newVisibleRect.width / 2, y: oldPos.y * frame.size.height - newVisibleRect.height / 2)
-                    self.scroll(scrollOrigin)
-                }
-                enclosingScrollView?.flashScrollers()
+                let scrollOrigin = NSPoint(x: oldPos.x * frame.size.width - documentRect.width / 2, y: oldPos.y * frame.size.height - documentRect.height / 2)
+                self.scroll(scrollOrigin)
+                enclosingScrollView.flashScrollers()
             }
         }
+    }
+
+    private func updateScale() {
+        let scaleFactor = zoomLevels[zoomLevel]
+        // EVN wraps the player around at ±15000 from the origin, so a stellar could conceivably be placed anywhere within
+        // that range
+        frame.size = NSSize(width: Int(30000 * scaleFactor), height: Int(30000 * scaleFactor))
+        needsDisplay = true
+
+        transform = AffineTransform(translationByX: frame.midX, byY: frame.midY)
+        transform.scale(scaleFactor)
     }
 
     @IBAction func zoomIn(_ sender: Any) {
@@ -249,7 +229,6 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
             self.restackStellars()
             isMovingStellars = true
         }
-        needsDisplay = true
     }
 
     private func applyMove() {
@@ -285,7 +264,6 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
         self.restackStellars()
         isMovingStellars = false
-        needsDisplay = true
     }
     
     // Handlers from galaxy view preserved in case we need them
