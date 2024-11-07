@@ -67,6 +67,9 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         path.line(to: NSPoint(x: frame.maxX, y: frame.midY - 0.5))
         path.move(to: NSPoint(x: frame.midX - 0.5, y: frame.minY))
         path.line(to: NSPoint(x: frame.midX - 0.5, y: frame.maxY))
+        // Default safe jump distance
+        let jumpZone = transform.transform(NSRect(x: -1000, y: -1000, width: 2000, height: 2000))
+        path.appendOval(in: jumpZone)
         path.stroke()
     }
 
