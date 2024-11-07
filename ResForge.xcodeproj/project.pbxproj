@@ -197,6 +197,10 @@
 		B27A65D715A678260029141B /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B27A65D415A678260029141B /* HexWindow.xib */; };
 		B2FCA79C15A66B5500696598 /* Image Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = B2FCA78A15A66ACE00696598 /* Image Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E1EAB19A06A20F1A0041EE35 /* Hex Editor.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = E18BF5A6069FEA1400F076B8 /* Hex Editor.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F93386EF2CC8A5EA0043D755 /* SystemWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F93386EB2CC88E540043D755 /* SystemWindow.xib */; };
+		F93386F02CC8A5FF0043D755 /* SystemWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93386EC2CC88E710043D755 /* SystemWindowController.swift */; };
+		F93386F12CC8A6060043D755 /* SystemMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93386ED2CC88E760043D755 /* SystemMapView.swift */; };
+		F93386F22CC8A6090043D755 /* StellarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93386EE2CC895C90043D755 /* StellarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -526,6 +530,10 @@
 		E18BF5A6069FEA1400F076B8 /* Hex Editor.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hex Editor.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E18BF94B06A00F8E00F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18BF9D706A01A2200F076B8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F93386EB2CC88E540043D755 /* SystemWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemWindow.xib; sourceTree = "<group>"; };
+		F93386EC2CC88E710043D755 /* SystemWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemWindowController.swift; sourceTree = "<group>"; };
+		F93386ED2CC88E760043D755 /* SystemMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMapView.swift; sourceTree = "<group>"; };
+		F93386EE2CC895C90043D755 /* StellarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -802,6 +810,7 @@
 				49640F4E25F24049009FEC9B /* SteppingFieldDelegate.swift */,
 				496E7DE225E59344001C97CA /* Sprite Editor */,
 				496E7E3125E6E936001C97CA /* Shan Editor */,
+				F93386EA2CC88E3B0043D755 /* System Editor */,
 				4976D25B2718CAB800322DDF /* Galaxy Editor */,
 				492D1E222606F53F0053DD27 /* PilotFilter.swift */,
 				493CC3DF271228FA00A9173E /* SpobFilter.swift */,
@@ -971,6 +980,17 @@
 				49362D9D24A9317A0040B793 /* HexWindowController.swift */,
 			);
 			path = "Hex Editor";
+			sourceTree = "<group>";
+		};
+		F93386EA2CC88E3B0043D755 /* System Editor */ = {
+			isa = PBXGroup;
+			children = (
+				F93386EB2CC88E540043D755 /* SystemWindow.xib */,
+				F93386EC2CC88E710043D755 /* SystemWindowController.swift */,
+				F93386ED2CC88E760043D755 /* SystemMapView.swift */,
+				F93386EE2CC895C90043D755 /* StellarView.swift */,
+			);
+			path = "System Editor";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1284,6 +1304,7 @@
 			files = (
 				49D6D3B7271BAB15002DEA97 /* Templates.rsrc in Resources */,
 				49EE73012550B99200BEABDB /* SpriteWindow.xib in Resources */,
+				F93386EF2CC8A5EA0043D755 /* SystemWindow.xib in Resources */,
 				496E7E3C25E6EA17001C97CA /* ShanWindow.xib in Resources */,
 				4976D28E2718CEA100322DDF /* GalaxyWindow.xib in Resources */,
 			);
@@ -1397,6 +1418,9 @@
 				49640F2B25F201B8009FEC9B /* LightLayer.swift in Sources */,
 				49640F3225F201BA009FEC9B /* WeaponLayer.swift in Sources */,
 				4976D2992718CEA400322DDF /* GalaxyView.swift in Sources */,
+				F93386F02CC8A5FF0043D755 /* SystemWindowController.swift in Sources */,
+				F93386F12CC8A6060043D755 /* SystemMapView.swift in Sources */,
+				F93386F22CC8A6090043D755 /* StellarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
