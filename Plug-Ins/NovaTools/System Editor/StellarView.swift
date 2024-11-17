@@ -26,13 +26,6 @@ class StellarView: NSView {
             }
         }
     }
-    var highlightCount = 1 {
-        didSet {
-            if oldValue != highlightCount {
-                needsDisplay = true
-            }
-        }
-    }
 
     init?(_ stellar: Resource, manager: RFEditorManager, isEnabled: Bool) {
         self.resource = stellar

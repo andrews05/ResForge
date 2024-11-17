@@ -65,9 +65,7 @@ extension SystemWindowController {
     }
 
     private func updateStellarList() {
-        // Reverse list so first draws on top
-        systemView.subviews = Array(stellarViews.values).reversed()
-
+        systemView.syncViews()
         stellarTable.reloadData()
     }
     

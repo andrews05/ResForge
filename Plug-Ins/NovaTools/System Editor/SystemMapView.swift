@@ -8,16 +8,15 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     override var acceptsFirstResponder: Bool { true }
     override var isFlipped: Bool { true }
-    override var subviews: [NSView] {
-        didSet {
-            self.transformSubviews()
-            self.restackStellars()
-            undoManager?.removeAllActions()
-        }
-    }
 
     override func awakeFromNib() {
         self.updateScale()
+    }
+
+    func syncViews() {
+        self.restackStellars()
+        self.transformSubviews()
+        undoManager?.removeAllActions()
     }
 
     private func transformSubviews() {
@@ -27,33 +26,11 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     }
 
     func restackStellars() {
-        // Keep track of occupied locations - only the first stellar at a given point will be displayed
-        // This logic is inherited from GalaxyView where it's required for replacing systems based on visibilty;
-        // it's used here for consistency and just in case there's a reason to do the same with stellars.
-        var topViews: [NSPoint: StellarView] = [:]
-        selectedStellars = []
-        for view in controller.stellarViews.values {
-            view.highlightCount = 1
-            if let topView = topViews[view.point] {
-                if !view.isHighlighted {
-                    view.isHidden = true
-                } else if !topView.isHighlighted {
-                    // The current top view is not part of the selection, swap it with this one
-                    topView.isHidden = true
-                    topViews[view.point] = view
-                    view.isHidden = false
-                } else if topView != view {
-                    topView.highlightCount += 1
-                    view.isHidden = true
-                }
-            } else {
-                // No current top view, set it to this one
-                topViews[view.point] = view
-                view.isHidden = false
-            }
-            if view.isHighlighted {
-                selectedStellars.append(view)
-            }
+        subviews = Array(controller.stellarViews.values)
+        selectedStellars = controller.stellarViews.values.filter(\.isHighlighted)
+        // Keep selected stellars on top
+        for view in selectedStellars {
+            self.addSubview(view)
         }
     }
 
@@ -155,15 +132,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
             guard toggle || !stellar.isHighlighted else {
                 return
             }
-            let state = toggle ? !stellar.isHighlighted : true
-            for view in controller.stellarViews.values {
-                // Select/deselect all enabled stellars at the same point
-                if view.isEnabled && view.point == stellar.point {
-                    view.isHighlighted = state
-                } else if !toggle {
-                    view.isHighlighted = false
-                }
-            }
+            stellar.isHighlighted = toggle ? !stellar.isHighlighted : true
             self.restackStellars()
             controller.syncSelectionFromView(clicked: stellar)
         } else {
@@ -227,11 +196,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
             view.point.x += x
             view.point.y += y
         }
-        if !isMovingStellars {
-            // Restack after initial move in case any obscured stellars need to be revealed
-            self.restackStellars()
-            isMovingStellars = true
-        }
+        isMovingStellars = true
     }
 
     private func applyMove() {
@@ -240,20 +205,9 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
         let term = selectedStellars.count == 1 ? "Stellar Object" : "Stellar Objects"
         undoManager?.setActionName("Move \(term)")
-        self.beginApplyMove()
         for view in selectedStellars {
             view.move(to: invert.transform(view.point))
         }
-        self.endApplyMove()
-    }
-
-    private func beginApplyMove() {
-        undoManager?.registerUndo(withTarget: self) { $0.endApplyMove() }
-    }
-
-    private func endApplyMove() {
-        undoManager?.registerUndo(withTarget: self) { $0.beginApplyMove() }
-        self.restackStellars()
     }
 
     // Escape to cancel move
@@ -265,7 +219,6 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         for view in selectedStellars {
             view.updateFrame()
         }
-        self.restackStellars()
         isMovingStellars = false
     }
     
