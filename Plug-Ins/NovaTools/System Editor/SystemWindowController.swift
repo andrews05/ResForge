@@ -192,10 +192,8 @@ extension SystemWindowController {
         guard let resource = notification.object as? Resource else {
             return
         }
-        if resource.typeCode == "sÿst" || resource.typeCode == "spöb" {
-            if let i = self.row(for: resource) {
-                stellarTable.reloadData(forRowIndexes: [i], columnIndexes: [1])
-            }
+        if resource.typeCode == "spöb", let i = self.row(for: resource) {
+            stellarTable.reloadData(forRowIndexes: [i], columnIndexes: [2])
         }
     }
 
@@ -229,7 +227,11 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
     }
 
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        row != 0
+        if row > 0, let stellar = stellarList[row - 1] {
+            // Prevent selection of foreign stellars
+            return stellar.document == resource.document
+        }
+        return row != 0
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
@@ -237,24 +239,29 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
         let view = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
         if let tableColumn {
             if let stellar = stellarList[row - 1] {
+                // Dim id and name of foreign stellars
+                let color: NSColor = stellar.document == resource.document ? .labelColor : .secondaryLabelColor
                 switch tableColumn.identifier.rawValue {
                 case "index":
-                    view.textField?.stringValue = "#\(row)"
+                    view.textField?.stringValue = "\(row))"
                 case "id":
                     view.textField?.stringValue = "\(stellar.id)"
+                    view.textField?.textColor = color
                 case "name":
                     view.textField?.stringValue = stellar.name
+                    view.textField?.textColor = color
                 default:
                     break
                 }
             } else {
                 switch tableColumn.identifier.rawValue {
                 case "index":
-                    view.textField?.stringValue = "#\(row)"
+                    view.textField?.stringValue = "\(row))"
                 case "id":
                     view.textField?.stringValue = "-1"
                 case "name":
-                    view.textField?.stringValue = "(unused)"
+                    view.textField?.stringValue = ""
+                    view.textField?.placeholderString = "unused"
                 default:
                     break
                 }
