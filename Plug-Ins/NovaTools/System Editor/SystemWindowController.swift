@@ -10,7 +10,7 @@ class SystemWindowController: AbstractEditor, ResourceEditor {
     @IBOutlet var stellarTable: NSTableView!
     @IBOutlet var systemView: SystemMapView!
     private(set) var stellarViews: OrderedDictionary<Int, StellarView> = [:]
-    private var stellarList: [Resource?] = Array(repeating: nil, count: 16)
+    private var navDefaults: [(id: Int, stellar: Resource?)] = Array(repeating: (-1, nil), count: 16)
     private var isSelectingStellars = false
 
     required init(resource: Resource, manager: RFEditorManager) {
@@ -55,8 +55,8 @@ extension SystemWindowController {
         try? read()
 
         stellarViews = [:]
-        for stellar in stellarList {
-            if let stellar, stellarViews[stellar.id] == nil {
+        for (id, stellar) in navDefaults {
+            if let stellar, stellarViews[id] == nil {
                 self.read(stellar: stellar)
             }
         }
@@ -72,13 +72,14 @@ extension SystemWindowController {
     private func read() throws {
         let reader = BinaryDataReader(resource.data)
         try reader.advance(18 * 2)
-        stellarList = try (0..<16).map { _ in
-            let stellarId = Int(try reader.read() as Int16)
-            if 128...2175 ~= stellarId {
-                return manager.findResource(type: ResourceType("spöb"), id: stellarId, currentDocumentOnly: false)
-            } else {
-                return nil
+        navDefaults = try (0..<16).map { _ in
+            let id = Int(try reader.read() as Int16)
+            if 128...2175 ~= id {
+                let stellar = manager.findResource(type: ResourceType("spöb"), id: id, currentDocumentOnly: false)
+                // If the stellar wasn't found we still need to retain the id
+                return (id, stellar)
             }
+            return (-1, nil)
         }
      }
 
@@ -110,9 +111,7 @@ extension SystemWindowController {
     }
 
     func createStellar(position: NSPoint = .zero, navDefault: Int? = nil) {
-        let destinationNavDefault = navDefault ?? stellarList.firstIndex(of: nil) ?? -1
-        // Make sure there's room for another stellar in the system, and don't allow overwriting an existing navDefault
-        if !(0...15 ~= destinationNavDefault) || stellarList[destinationNavDefault] != nil {
+        guard let navDefault = navDefault ?? navDefaults.firstIndex(where: { $0.id == -1 }) else {
             return
         }
         manager.createResource(type: ResourceType("spöb"), id: nil) { [weak self] stellar in
@@ -126,7 +125,7 @@ extension SystemWindowController {
             // Allow the DataChanged notification to create the view
             stellar.data = writer.data
             // Add the stellar to our navdefaults
-            stellarList[destinationNavDefault] = stellar
+            navDefaults[navDefault] = (stellar.id, stellar)
 
             // Save the nav defaults
             let systWriter = BinaryDataWriter()
@@ -145,8 +144,8 @@ extension SystemWindowController {
             } else {
                 systWriter.data = resource.data
             }
-            for (i, navDefault) in stellarList.enumerated() {
-                systWriter.write(Int16(navDefault?.id ?? -1), at: (2 + 16 + i) * 2)
+            for (i, navDefault) in navDefaults.enumerated() {
+                systWriter.write(Int16(navDefault.id), at: (2 + 16 + i) * 2)
             }
             resource.data = systWriter.data
 
@@ -219,7 +218,7 @@ extension SystemWindowController {
 
 extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        stellarList.count + 1
+        navDefaults.count + 1
     }
 
     func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
@@ -227,7 +226,7 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
     }
 
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        if row > 0, let stellar = stellarList[row - 1] {
+        if row > 0, let stellar = navDefaults[row - 1].stellar {
             // Prevent selection of foreign stellars
             return stellar.document == resource.document
         }
@@ -238,14 +237,15 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
         let identifier = tableColumn?.identifier ?? NSUserInterfaceItemIdentifier("HeaderCell")
         let view = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
         if let tableColumn {
-            if let stellar = stellarList[row - 1] {
+            let (id, stellar) = navDefaults[row - 1]
+            if let stellar {
                 // Dim id and name of foreign stellars
                 let color: NSColor = stellar.document == resource.document ? .labelColor : .secondaryLabelColor
                 switch tableColumn.identifier.rawValue {
                 case "index":
                     view.textField?.stringValue = "\(row))"
                 case "id":
-                    view.textField?.stringValue = "\(stellar.id)"
+                    view.textField?.stringValue = "\(id)"
                     view.textField?.textColor = color
                 case "name":
                     view.textField?.stringValue = stellar.name
@@ -258,10 +258,10 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
                 case "index":
                     view.textField?.stringValue = "\(row))"
                 case "id":
-                    view.textField?.stringValue = "-1"
+                    view.textField?.stringValue = "\(id)"
                 case "name":
                     view.textField?.stringValue = ""
-                    view.textField?.placeholderString = "unused"
+                    view.textField?.placeholderString = id == -1 ? "unused" : "not found"
                 default:
                     break
                 }
@@ -280,18 +280,17 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
         systemView.restackStellars()
 
         // Scroll to last selected stellar, unless selected all
-        if stellarTable.selectedRow > 0 && stellarTable.selectedRowIndexes.count < stellarList.count {
-            if let stellar = stellarList[stellarTable.selectedRow - 1], let view = stellarViews[stellar.id] {
+        if stellarTable.selectedRow > 0 && stellarTable.selectedRowIndexes.count < navDefaults.count {
+            let navDefault = navDefaults[stellarTable.selectedRow - 1]
+            if let view = stellarViews[navDefault.id] {
                 view.scrollToVisible(view.bounds.insetBy(dx: -4, dy: -4))
             }
         }
     }
 
     func syncSelectionToView() {
-        for (i, stellar) in stellarList.enumerated() {
-            if stellar != nil {
-                stellarViews[stellar!.id]?.isHighlighted = stellarTable.isRowSelected(i + 1)
-            }
+        for (i, navDefault) in navDefaults.enumerated() {
+            stellarViews[navDefault.id]?.isHighlighted = stellarTable.isRowSelected(i + 1)
         }
     }
 
@@ -308,17 +307,20 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
         guard stellarTable.clickedRow != 0 else {
             return
         }
-        for navDefault in stellarTable.selectedRowIndexes {
-            if let stellar = stellarList[navDefault - 1] {
-                manager.open(resource: stellar) // Open the window to edit an existing selection
-            } else {
-                createStellar(navDefault: navDefault - 1) // Create a new stellar at the origin in the selected navDefault slot
+        let i = stellarTable.clickedRow - 1
+        if stellarTable.selectedRowIndexes.count == 1 && navDefaults[i].id == -1 {
+            // Create a new stellar at the origin in the selected navDefault slot
+            self.createStellar(navDefault: i)
+        } else {
+            // Open the selected stellars
+            for stellar in selectedStellars {
+                manager.open(resource: stellar)
             }
         }
     }
 
     func row(for resource: Resource) -> Int? {
-        if let i = stellarList.firstIndex(of: resource) {
+        if let i = navDefaults.firstIndex(where: { $0.stellar == resource }) {
             return i + 1
         }
         return nil
@@ -326,7 +328,7 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
 
     var selectedStellars: [Resource] {
         get {
-            stellarTable.selectedRowIndexes.compactMap { stellarList[$0 - 1] }
+            stellarTable.selectedRowIndexes.compactMap { navDefaults[$0 - 1].stellar }
         }
         set {
             let indexes = IndexSet(newValue.compactMap(self.row(for:)))
