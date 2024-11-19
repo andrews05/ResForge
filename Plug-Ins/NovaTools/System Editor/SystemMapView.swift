@@ -16,18 +16,18 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     func syncViews() {
         self.restackStellars()
         self.transformSubviews()
-        undoManager?.removeAllActions()
     }
 
     private func transformSubviews() {
-        for view in controller.stellarViews.values {
-            view.updateFrame()
+        for view in subviews {
+            (view as? StellarView)?.updateFrame()
         }
     }
 
     func restackStellars() {
-        subviews = Array(controller.stellarViews.values)
-        selectedStellars = controller.stellarViews.values.filter(\.isHighlighted)
+        let views = controller.navDefaults.compactMap(\.view)
+        subviews = views
+        selectedStellars = views.filter(\.isHighlighted)
         // Keep selected stellars on top
         for view in selectedStellars {
             self.addSubview(view)
