@@ -132,6 +132,11 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
             guard toggle || !stellar.isHighlighted else {
                 return
             }
+            if !toggle {
+                for view in selectedStellars {
+                    view.isHighlighted = false
+                }
+            }
             stellar.isHighlighted = toggle ? !stellar.isHighlighted : true
             self.restackStellars()
             controller.syncSelectionFromView(clicked: stellar)
