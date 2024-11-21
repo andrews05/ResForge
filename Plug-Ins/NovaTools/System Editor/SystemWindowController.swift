@@ -145,15 +145,17 @@ extension SystemWindowController {
         systemView.zoomOut(sender)
     }
 
-    @IBAction func copy(_ sender: Any) {
-        let pb = NSPasteboard(name: .general)
-        pb.declareTypes([.RFResource], owner: nil)
-        pb.writeObjects(selectedStellars)
-    }
-
-    @IBAction func paste(_ sender: Any) {
-        // Forward to the document
-        manager.document?.perform(#selector(paste(_:)), with: sender)
+    @IBAction func delete(_ sender: Any) {
+        var navDefaults = navDefaults
+        let removed = stellarTable.selectedRowIndexes.count {
+            let nav = navDefaults[$0 - 1]
+            navDefaults[$0 - 1] = NavDefault()
+            return nav.id != -1
+        }
+        if removed > 0 {
+            let term = removed == 1 ? "Nav Default" : "Nav Defaults"
+            self.setNavDefaults(navDefaults, actionName: "Remove \(term)")
+        }
     }
 
     func createStellar(position: NSPoint = .zero, navIndex: Int? = nil) {
@@ -375,7 +377,7 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
         // Swap the two nav defaults
         var navDefaults = navDefaults
         navDefaults.swapAt(oldRow - 1, row - 1)
-        self.setNavDefaults(navDefaults, actionName: "Change Nav Defaults")
+        self.setNavDefaults(navDefaults, actionName: "Move Nav Default")
         stellarTable.selectRowIndexes([row], byExtendingSelection: false)
 
         return true
