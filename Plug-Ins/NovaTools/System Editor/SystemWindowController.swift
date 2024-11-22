@@ -55,7 +55,7 @@ extension SystemWindowController {
         "SystemWindow"
     }
     var windowTitle: String {
-        "System Map: \(resource.name) (ID \(resource.id))"
+        "System Map \(resource.id) - \(resource.name)"
     }
 
     override func windowDidLoad() {

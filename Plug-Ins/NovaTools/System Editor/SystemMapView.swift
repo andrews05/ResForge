@@ -52,7 +52,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     // MARK: - Pan and zoom
 
-    private let zoomLevels: [Double] = [1/16, 1/8, 1/4, 8/19, 9/16, 3/4, 1]
+    private let zoomLevels: [Double] = [1/16, 1/8, 1/4, 1/2, 1]
     private var zoomLevel = 3 {
         didSet {
             if zoomLevel != oldValue, let enclosingScrollView {

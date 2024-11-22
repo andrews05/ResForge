@@ -76,15 +76,10 @@ class StellarView: NSView {
     }
 
     func updateFrame() {
-        if let image, let imageSize = systemView?.transform.transform(image.size) {
-            frame.size.width = imageSize.width
-            frame.size.height = imageSize.height
-        } else {
-            let size = systemView?.transform.transform(NSSize(width: 90, height: 90))
-            frame.size.width = size?.width ?? 90
-            frame.size.height = size?.height ?? 90
+        let baseSize = image?.size ?? NSSize(width: 80, height: 80)
+        if let size = systemView?.transform.transform(baseSize) {
+            frame.size = size
         }
-
         if let point = systemView?.transform.transform(position) {
             self.point = point
         }
@@ -126,9 +121,7 @@ class StellarView: NSView {
             } else {
                 NSColor.gray.setStroke()
             }
-            let circleSize = NSSize(width: frame.size.width * 0.9, height: frame.size.height * 0.9)
-            let circle = NSRect(origin: NSPoint(x: frame.size.width * 0.05, y: frame.size.height * 0.05), size: circleSize)
-            let path = NSBezierPath(ovalIn: circle)
+            let path = NSBezierPath(ovalIn: bounds.insetBy(dx: 1, dy: 1))
             path.fill()
             path.stroke()
         }
@@ -137,7 +130,7 @@ class StellarView: NSView {
             // Draw a highlighted outline around the stellar
             NSColor.selectedContentBackgroundColor.setStroke()
             let outline = NSBezierPath(roundedRect: bounds, xRadius: 6, yRadius: 6)
-            outline.lineWidth = 3
+            outline.lineWidth = 2
             outline.stroke()
         }
     }
