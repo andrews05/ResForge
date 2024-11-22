@@ -148,9 +148,9 @@ extension GalaxyWindowController {
             }
             // Allow the DataChanged notification to create the view
             system.data = writer.data
-            if let view = systemViews[system.id] {
-                view.isHighlighted = true
-                self.syncSelectionFromView(clicked: view)
+            if let i = self.row(for: system) {
+                systemTable.selectRowIndexes([i], byExtendingSelection: false)
+                systemTable.scrollRowToVisible(i)
             }
         }
     }
