@@ -12,6 +12,10 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         RFDefaults.register()
     }
 
+    func applicationSupportsSecureRestorableState(_ application: NSApplication) -> Bool {
+        true
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Load support resources and plugins
         NotificationCenter.default.addObserver(PluginRegistry.self, selector: #selector(PluginRegistry.bundleLoaded(_:)), name: Bundle.didLoadNotification, object: nil)

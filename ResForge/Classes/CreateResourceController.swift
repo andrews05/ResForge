@@ -165,7 +165,7 @@ class CreateResourceController: NSWindowController, NSComboBoxDelegate {
 }
 
 /// A number formatter that always returns nil for invalid values rather than reporting errors.
-class SilentNumberFormatter: NumberFormatter {
+class SilentNumberFormatter: NumberFormatter, @unchecked Sendable {
     override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?,
                                  for string: String,
                                  errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {

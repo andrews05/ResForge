@@ -31,17 +31,19 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     func restackSystems() {
         // Keep track of occupied locations - only the first system at a given point will be displayed
-        var topViews: [NSPoint: SystemView] = [:]
+        // Note NSPoint only conforms to Hashable since macOS 15
+        var topViews: [Int: SystemView] = [:]
         selectedSystems = []
         for view in controller.systemViews.values {
             view.highlightCount = 1
-            if let topView = topViews[view.point] {
+            let key = view.point.hashValue
+            if let topView = topViews[key] {
                 if !view.isHighlighted {
                     view.isHidden = true
                 } else if !topView.isHighlighted {
                     // The current top view is not part of the selection, swap it with this one
                     topView.isHidden = true
-                    topViews[view.point] = view
+                    topViews[key] = view
                     view.isHidden = false
                 } else if topView != view {
                     topView.highlightCount += 1
@@ -49,7 +51,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
                 }
             } else {
                 // No current top view, set it to this one
-                topViews[view.point] = view
+                topViews[key] = view
                 view.isHidden = false
             }
             if view.isHighlighted {
@@ -374,14 +376,9 @@ extension AffineTransform {
     }
 }
 
-extension NSPoint: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(x)
-        hasher.combine(y)
-    }
-
+extension NSPoint {
     /// Returns the nearest point to this one that lies within the given rectangle.
-    public func constrained(within rect: NSRect) -> Self {
+    func constrained(within rect: NSRect) -> Self {
         Self(x: min(max(x, rect.minX), rect.maxX), y: min(max(y, rect.minY), rect.maxY))
     }
 }

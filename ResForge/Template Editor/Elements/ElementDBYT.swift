@@ -34,7 +34,7 @@ class ElementDBYT<T: FixedWidthInteger>: RangedElement<T> {
     }
 }
 
-class IntFormatter<T: FixedWidthInteger>: NumberFormatter {
+class IntFormatter<T: FixedWidthInteger>: NumberFormatter, @unchecked Sendable {
     override init() {
         super.init()
         minimum = T.min as? NSNumber

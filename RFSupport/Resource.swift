@@ -222,7 +222,7 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
 
     // MARK: - Pasteboard functions
 
-    public static var supportsSecureCoding = true
+    public static let supportsSecureCoding = true
 
     public required init?(coder: NSCoder) {
         guard
