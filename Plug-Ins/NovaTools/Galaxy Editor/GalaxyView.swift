@@ -32,11 +32,11 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     func restackSystems() {
         // Keep track of occupied locations - only the first system at a given point will be displayed
         // Note NSPoint only conforms to Hashable since macOS 15
-        var topViews: [Int: SystemView] = [:]
+        var topViews: [NSPoint.Hash: SystemView] = [:]
         selectedSystems = []
         for view in controller.systemViews.values {
             view.highlightCount = 1
-            let key = view.point.hashValue
+            let key = view.point.hashable
             if let topView = topViews[key] {
                 if !view.isHighlighted {
                     view.isHidden = true
@@ -377,6 +377,12 @@ extension AffineTransform {
 }
 
 extension NSPoint {
+    struct Hash: Hashable {
+        let x: Double
+        let y: Double
+    }
+    var hashable: Hash { .init(x: x, y: y) }
+
     /// Returns the nearest point to this one that lies within the given rectangle.
     func constrained(within rect: NSRect) -> Self {
         Self(x: min(max(x, rect.minX), rect.maxX), y: min(max(y, rect.minY), rect.maxY))
