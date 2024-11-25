@@ -380,9 +380,11 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
 
     func toolbarWillAddItem(_ notification: Notification) {
-        // Set the correct action
-        if let addedItem = notification.userInfo?["item"] as? NSToolbarItem, addedItem.itemIdentifier == .toggleSidebar {
-            addedItem.action = #selector(toggleTypes(_:))
+        // Set the correct action for the sidebar toggle
+        // This can't be done in itemForItemIdentifier as it will be overridden afterward
+        if let item = notification.userInfo?["item"] as? NSToolbarItem, item.itemIdentifier == .toggleSidebar {
+            item.action = #selector(toggleTypes(_:))
+            (item.view as? NSControl)?.action = #selector(toggleTypes(_:))
         }
     }
 
