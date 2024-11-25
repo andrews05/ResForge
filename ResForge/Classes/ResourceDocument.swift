@@ -114,8 +114,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         self.undoManager?.enableUndoRegistration()
     }
 
-    override class var writableTypes: [String] {
-        ResourceFormat.creatableTypes
+    override class var writableTypes: [String] { ResourceFormat.creatableTypes }
+
+    override func canAsynchronouslyWrite(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) -> Bool {
+        true
     }
 
     override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
@@ -156,10 +158,12 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         for resource in directory.resourceMap.values.joined() {
             resource.resetState()
         }
-        dataSource.reload(selecting: dataSource.selectedResources())
-        // Update info window
-        NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
-        self.updateStatus()
+        DispatchQueue.main.async { [self] in
+            dataSource.reload(selecting: dataSource.selectedResources())
+            // Update info window
+            NotificationCenter.default.post(name: .DocumentInfoDidChange, object: self)
+            self.updateStatus()
+        }
     }
 
     override func write(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, originalContentsURL absoluteOriginalContentsURL: URL?) throws {
