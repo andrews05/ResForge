@@ -183,6 +183,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <connections>
                                         <outlet property="controller" destination="-2" id="x0i-8r-X1y"/>
+                                        <outlet property="scaleText" destination="KFz-Xf-wO8" id="tQC-Cs-CWX"/>
                                     </connections>
                                 </view>
                             </subviews>
@@ -197,7 +198,20 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
+                    <textField wantsLayer="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="KFz-Xf-wO8">
+                        <rect key="frame" x="967" y="786" width="33" height="14"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Scale" drawsBackground="YES" id="fF6-r7-KLD">
+                            <font key="font" metaFont="system" size="11"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="KFz-Xf-wO8" secondAttribute="trailing" id="aZG-Qt-xE8"/>
+                    <constraint firstItem="KFz-Xf-wO8" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="f1V-Ni-KXB"/>
+                    <constraint firstItem="KFz-Xf-wO8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="w0n-Cf-47R"/>
+                </constraints>
             </view>
             <connections>
                 <outlet property="initialFirstResponder" destination="219-vE-A9L" id="th6-wF-fbs"/>

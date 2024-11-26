@@ -3,6 +3,7 @@ import RFSupport
 
 class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     @IBOutlet weak var controller: GalaxyWindowController!
+    @IBOutlet var scaleText: NSTextField!
     private(set) var transform = AffineTransform()
     var isSavingSystem = false
 
@@ -17,8 +18,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     }
 
     override func awakeFromNib() {
-        transform.translate(x: frame.midX, y: frame.midY)
-        transform.scale(zoomLevels[zoomLevel])
+        self.updateScale()
     }
 
     private func transformSubviews() {
@@ -130,8 +130,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
                 let documentRect = enclosingScrollView.documentVisibleRect
                 let oldPos = inverse.transform(NSPoint(x: documentRect.midX, y: documentRect.midY))
 
-                transform = AffineTransform(translationByX: frame.midX, byY: frame.midY)
-                transform.scale(zoomLevels[zoomLevel])
+                self.updateScale()
                 self.transformSubviews()
 
                 let newPos = transform.transform(oldPos)
@@ -139,6 +138,13 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
                 enclosingScrollView.flashScrollers()
             }
         }
+    }
+
+    private func updateScale() {
+        let scaleFactor = zoomLevels[zoomLevel]
+        transform = AffineTransform(translationByX: frame.midX, byY: frame.midY)
+        transform.scale(scaleFactor)
+        scaleText.stringValue = String(format: "%.3g%%", scaleFactor * 100)
     }
 
     @IBAction func zoomIn(_ sender: Any) {

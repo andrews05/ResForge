@@ -3,6 +3,7 @@ import RFSupport
 
 class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     @IBOutlet weak var controller: SystemWindowController!
+    @IBOutlet var scaleText: NSTextField!
     private(set) var transform = AffineTransform()
     var isSavingStellar = false
 
@@ -78,6 +79,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
         transform = AffineTransform(translationByX: frame.midX, byY: frame.midY)
         transform.scale(scaleFactor)
+        scaleText.stringValue = String(format: "%.3g%%", scaleFactor * 100)
     }
 
     @IBAction func zoomIn(_ sender: Any) {
