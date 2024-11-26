@@ -123,7 +123,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     // MARK: - Pan and zoom
 
-    private let zoomLevels: [Double] = [8/19, 9/16, 3/4, 1, 4/3, 16/9, 19/8]
+    private let zoomLevels: [Double] = [27/64, 9/16, 3/4, 1, 4/3, 16/9, 64/27]
     private var zoomLevel = 4 {
         didSet {
             if zoomLevel != oldValue, let enclosingScrollView, let inverse = transform.inverted() {

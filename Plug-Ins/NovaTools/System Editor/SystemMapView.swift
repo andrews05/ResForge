@@ -56,15 +56,15 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     private let zoomLevels: [Double] = [1/16, 1/8, 1/4, 1/2, 1]
     private var zoomLevel = 3 {
         didSet {
-            if zoomLevel != oldValue, let enclosingScrollView {
+            if zoomLevel != oldValue, let enclosingScrollView, let inverse = transform.inverted() {
                 let documentRect = enclosingScrollView.documentVisibleRect
-                let oldPos = NSPoint(x: documentRect.midX / frame.size.width, y: documentRect.midY / frame.size.height)
+                let oldPos = inverse.transform(NSPoint(x: documentRect.midX, y: documentRect.midY))
 
                 self.updateScale()
                 self.transformSubviews()
 
-                let scrollOrigin = NSPoint(x: oldPos.x * frame.size.width - documentRect.width / 2, y: oldPos.y * frame.size.height - documentRect.height / 2)
-                self.scroll(scrollOrigin)
+                let newPos = transform.transform(oldPos)
+                self.scroll(NSPoint(x: newPos.x - documentRect.width / 2, y: newPos.y - documentRect.height / 2))
                 enclosingScrollView.flashScrollers()
             }
         }
