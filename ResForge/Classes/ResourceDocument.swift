@@ -114,6 +114,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         self.undoManager?.enableUndoRegistration()
     }
 
+    override class var autosavesInPlace: Bool { false }
+
     override class var writableTypes: [String] { ResourceFormat.creatableTypes }
 
     override func canAsynchronouslyWrite(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) -> Bool {
@@ -133,9 +135,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         if saveOperation == .saveOperation && fork == .rsrc, let fileURL {
             // In place save of resource fork. We want to preserve all other aspects of the file, such as the data fork and finder flags.
             // Relying on the default implementation can result in some oddities, so instead we'll just write out the resource fork directly.
-            // This isn't strictly "safe", although we will at least detect structural issues before writing any data.
-            // First we need to check if the file is being renamed for some reason and copy the existing file to the new location.
+            // Note this isn't strictly "safe". We also don't call `unblockUserInteraction()` here - it may be better to remain synchronous.
+
             let data = try format.write(directory.resourceMap)
+            // Check if the file is being renamed for some reason and copy the existing file to the new location.
             let moved = fileURL != url
             if moved {
                 try FileManager.default.copyItem(at: fileURL, to: url)
