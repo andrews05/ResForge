@@ -25,9 +25,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="1000" height="800"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUV-rg-XZP">
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUV-rg-XZP">
                         <rect key="frame" x="-1" y="-1" width="202" height="802"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="TwP-hy-wLn">
                             <rect key="frame" x="1" y="1" width="200" height="800"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -162,6 +161,9 @@
                                 </tableView>
                             </subviews>
                         </clipView>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="202" id="jRi-Xe-Ccm"/>
+                        </constraints>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Ff5-fX-lbV">
                             <rect key="frame" x="1" y="785" width="180" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
@@ -171,9 +173,8 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0JA-rt-h1p">
+                    <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0JA-rt-h1p">
                         <rect key="frame" x="200" y="-1" width="801" height="802"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="wQz-E8-mMB">
                             <rect key="frame" x="1" y="1" width="799" height="800"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -199,7 +200,7 @@
                         </scroller>
                     </scrollView>
                     <textField wantsLayer="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="KFz-Xf-wO8">
-                        <rect key="frame" x="967" y="786" width="33" height="14"/>
+                        <rect key="frame" x="201" y="786" width="33" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Scale" drawsBackground="YES" id="fF6-r7-KLD">
                             <font key="font" metaFont="system" size="11"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -208,9 +209,16 @@
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="KFz-Xf-wO8" secondAttribute="trailing" id="aZG-Qt-xE8"/>
+                    <constraint firstItem="lUV-rg-XZP" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="-1" id="2s1-2u-gEz"/>
+                    <constraint firstItem="0JA-rt-h1p" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="-1" id="I5A-Dj-LZn"/>
+                    <constraint firstAttribute="bottom" secondItem="0JA-rt-h1p" secondAttribute="bottom" constant="-1" id="M3Q-hV-TqU"/>
+                    <constraint firstAttribute="trailing" secondItem="0JA-rt-h1p" secondAttribute="trailing" constant="-1" id="MNc-Ox-eqN"/>
+                    <constraint firstItem="lUV-rg-XZP" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="-1" id="NkU-eN-V7e"/>
+                    <constraint firstItem="KFz-Xf-wO8" firstAttribute="leading" secondItem="0JA-rt-h1p" secondAttribute="leading" constant="1" id="YUO-Ci-cnC"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KFz-Xf-wO8" secondAttribute="trailing" id="aZG-Qt-xE8"/>
+                    <constraint firstItem="0JA-rt-h1p" firstAttribute="leading" secondItem="lUV-rg-XZP" secondAttribute="trailing" constant="-1" id="cQn-El-2yA"/>
                     <constraint firstItem="KFz-Xf-wO8" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="f1V-Ni-KXB"/>
-                    <constraint firstItem="KFz-Xf-wO8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="w0n-Cf-47R"/>
+                    <constraint firstAttribute="bottom" secondItem="lUV-rg-XZP" secondAttribute="bottom" constant="-1" id="h5n-Vo-nC9"/>
                 </constraints>
             </view>
             <connections>
