@@ -84,8 +84,8 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
         // Center lines
         NSColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1).setFill()
-        NSRect(x: frame.midX, y: 0, width: 1, height: frame.height).frame()
-        NSRect(x: 0, y: frame.midY, width: frame.height, height: 1).frame()
+        NSRect(x: bounds.midX, y: 0, width: 1, height: bounds.height).frame()
+        NSRect(x: 0, y: bounds.midY, width: bounds.width, height: 1).frame()
 
         // Nebulae
         let font = NSFont.systemFont(ofSize: 11)

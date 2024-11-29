@@ -43,21 +43,23 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         let grid = NSBezierPath()
         NSColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1).setStroke()
         let gridSpacing = 200 * zoomLevels[zoomLevel]
-        for i in stride(from: gridSpacing + 0.5, to: frame.width, by: gridSpacing) {
-            grid.move(to: NSPoint(x: frame.minX, y: i))
-            grid.line(to: NSPoint(x: frame.maxX, y: i))
-            grid.move(to: NSPoint(x: i, y: frame.minY))
-            grid.line(to: NSPoint(x: i, y: frame.maxY))
+        for i in stride(from: gridSpacing + 0.5, to: bounds.width, by: gridSpacing) {
+            grid.move(to: NSPoint(x: bounds.minX, y: i))
+            grid.line(to: NSPoint(x: bounds.maxX, y: i))
+            grid.move(to: NSPoint(x: i, y: bounds.minY))
+            grid.line(to: NSPoint(x: i, y: bounds.maxY))
         }
         grid.stroke()
 
         // Centre lines
         let path = NSBezierPath()
         NSColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1).setStroke()
-        path.move(to: NSPoint(x: frame.minX, y: frame.midY + 0.5))
-        path.line(to: NSPoint(x: frame.maxX, y: frame.midY + 0.5))
-        path.move(to: NSPoint(x: frame.midX + 0.5, y: frame.minY))
-        path.line(to: NSPoint(x: frame.midX + 0.5, y: frame.maxY))
+        path.move(to: NSPoint(x: bounds.minX, y: bounds.midY + 0.5))
+        path.line(to: NSPoint(x: bounds.maxX, y: bounds.midY + 0.5))
+        path.move(to: NSPoint(x: bounds.midX + 0.5, y: bounds.minY))
+        path.line(to: NSPoint(x: bounds.midX + 0.5, y: bounds.maxY))
+        // Boundary (visible only when document is smaller than clip view)
+        path.appendRect(bounds.insetBy(dx: -0.5, dy: -0.5))
         // Default safe jump distance
         let jumpZone = transform.transform(NSRect(x: -1000, y: -1000, width: 2000, height: 2000))
         path.appendOval(in: jumpZone)
