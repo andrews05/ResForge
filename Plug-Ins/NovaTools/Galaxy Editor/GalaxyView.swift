@@ -394,3 +394,14 @@ extension NSPoint {
         Self(x: min(max(x, rect.minX), rect.maxX), y: min(max(y, rect.minY), rect.maxY))
     }
 }
+
+extension NSRect {
+    /// The center point of the specified rectangle.
+    var center: NSPoint {
+        get { .init(x: midX, y: midY) }
+        set {
+            origin.x = newValue.x - width / 2
+            origin.y = newValue.y - height / 2
+        }
+    }
+}

@@ -15,8 +15,7 @@ class StellarView: NSView {
     }
     var point = NSPoint.zero {
         didSet {
-            frame.origin.x = point.x - frame.size.width / 2
-            frame.origin.y = point.y - frame.size.height / 2
+            frame.center = point
         }
     }
     var isHighlighted = false {
@@ -78,7 +77,8 @@ class StellarView: NSView {
     func updateFrame() {
         let baseSize = image?.size ?? NSSize(width: 80, height: 80)
         if let size = systemView?.transform.transform(baseSize) {
-            frame.size = size
+            frame.size.width = max(size.width, 8)
+            frame.size.height = max(size.height, 8)
         }
         if let point = systemView?.transform.transform(position) {
             self.point = point
@@ -141,7 +141,7 @@ class StellarView: NSView {
 
     override func mouseDown(with event: NSEvent) {
         if isEnabled {
-            useRightMouse = event.modifierFlags.contains(.control) || event.modifierFlags.contains(.option)
+            useRightMouse = event.modifierFlags.contains(.control)
             if useRightMouse {
                 systemView?.rightMouseDown(stellar: self, with: event)
             } else {

@@ -38,13 +38,25 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     // MARK: - Drawing
 
     override func draw(_ dirtyRect: NSRect) {
-        // Centre line
+        // Grid lines
+        let grid = NSBezierPath()
+        NSColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1).setStroke()
+        let gridSpacing = 200 * zoomLevels[zoomLevel]
+        for i in stride(from: gridSpacing + 0.5, to: frame.width, by: gridSpacing) {
+            grid.move(to: NSPoint(x: frame.minX, y: i))
+            grid.line(to: NSPoint(x: frame.maxX, y: i))
+            grid.move(to: NSPoint(x: i, y: frame.minY))
+            grid.line(to: NSPoint(x: i, y: frame.maxY))
+        }
+        grid.stroke()
+
+        // Centre lines
         let path = NSBezierPath()
-        NSColor(deviceRed: 0.5, green: 0.5, blue: 0.5, alpha: 0.4).setStroke()
-        path.move(to: NSPoint(x: frame.minX, y: frame.midY - 0.5))
-        path.line(to: NSPoint(x: frame.maxX, y: frame.midY - 0.5))
-        path.move(to: NSPoint(x: frame.midX - 0.5, y: frame.minY))
-        path.line(to: NSPoint(x: frame.midX - 0.5, y: frame.maxY))
+        NSColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1).setStroke()
+        path.move(to: NSPoint(x: frame.minX, y: frame.midY + 0.5))
+        path.line(to: NSPoint(x: frame.maxX, y: frame.midY + 0.5))
+        path.move(to: NSPoint(x: frame.midX + 0.5, y: frame.minY))
+        path.line(to: NSPoint(x: frame.midX + 0.5, y: frame.maxY))
         // Default safe jump distance
         let jumpZone = transform.transform(NSRect(x: -1000, y: -1000, width: 2000, height: 2000))
         path.appendOval(in: jumpZone)
@@ -53,8 +65,8 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     // MARK: - Pan and zoom
 
-    private let zoomLevels: [Double] = [1/16, 1/8, 1/4, 1/2, 1]
-    private var zoomLevel = 3 {
+    private let zoomLevels: [Double] = [1/40, 1/20, 1/10, 1/5, 1/2, 1]
+    private var zoomLevel = 4 {
         didSet {
             if zoomLevel != oldValue, let enclosingScrollView, let inverse = transform.inverted() {
                 let documentRect = enclosingScrollView.documentVisibleRect
@@ -183,7 +195,8 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
             return
         }
         let origin = self.convert(event.locationInWindow, from: nil).constrained(within: bounds)
-        self.moveStellars(x: origin.x - dragOrigin.x, y: origin.y - dragOrigin.y)
+        let snap = event.modifierFlags.contains(.option)
+        self.moveStellars(x: origin.x - dragOrigin.x, y: origin.y - dragOrigin.y, snap: snap)
         self.dragOrigin = origin
         self.autoscroll(with: event)
     }
@@ -198,10 +211,15 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         isMovingStellars = false
     }
 
-    private func moveStellars(x: Double, y: Double) {
+    private func moveStellars(x: Double, y: Double, snap: Bool = false) {
         for view in selectedStellars {
             view.point.x += x
             view.point.y += y
+            if snap {
+                // Snap the frame center to a multiple of 10 (don't change view.point)
+                view.frame.center.x = (view.frame.midX / 10).rounded() * 10
+                view.frame.center.y = (view.frame.midY / 10).rounded() * 10
+            }
         }
         isMovingStellars = true
     }
@@ -213,7 +231,8 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         let term = selectedStellars.count == 1 ? "Stellar Object" : "Stellar Objects"
         undoManager?.setActionName("Move \(term)")
         for view in selectedStellars {
-            view.move(to: invert.transform(view.point))
+            // Use the frame center rather than view.point in case of snapping
+            view.move(to: invert.transform(view.frame.center))
         }
     }
 
