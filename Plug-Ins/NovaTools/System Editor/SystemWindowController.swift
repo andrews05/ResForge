@@ -68,12 +68,6 @@ extension SystemWindowController {
         // Allow re-arranging the stellars
         stellarTable.registerForDraggedTypes([.RFNavDefault])
 
-        // Scroll to system center
-        if var documentRect = systemView.enclosingScrollView?.documentVisibleRect {
-            documentRect.origin.y *= -1 // Workaround an issue where the clip view is initially misplaced
-            systemView.scroll(NSPoint(x: systemView.frame.midX - documentRect.midX, y: systemView.frame.midY - documentRect.midY))
-        }
-
         self.reload()
     }
 

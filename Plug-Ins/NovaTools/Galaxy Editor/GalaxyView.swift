@@ -19,6 +19,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     override func awakeFromNib() {
         self.updateScale()
+        self.centerScroll(frame.center)
     }
 
     private func transformSubviews() {
@@ -31,7 +32,6 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     func restackSystems() {
         // Keep track of occupied locations - only the first system at a given point will be displayed
-        // Note NSPoint only conforms to Hashable since macOS 15
         var topViews: [NSPoint.Hash: SystemView] = [:]
         selectedSystems = []
         for view in controller.systemViews.values {
@@ -133,8 +133,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
                 self.updateScale()
                 self.transformSubviews()
 
-                let newPos = transform.transform(oldPos)
-                self.scroll(NSPoint(x: newPos.x - documentRect.width / 2, y: newPos.y - documentRect.height / 2))
+                self.centerScroll(transform.transform(oldPos))
                 enclosingScrollView.flashScrollers()
             }
         }
@@ -222,7 +221,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     private var isMovingSystems = false
     private var dragOrigin: NSPoint?
 
-    // Arrow keys to move systems
+    // Arrow keys to move systems, space to scroll to center
     override func keyDown(with event: NSEvent) {
         let delta = event.modifierFlags.contains(.shift) ? 10.0 : 1.0
         switch event.specialKey {
@@ -234,6 +233,9 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
             self.moveSystems(x: 0, y: 0 - delta)
         case .downArrow:
             self.moveSystems(x: 0, y: delta)
+        case _ where event.characters == " ":
+            self.centerScroll(frame.center)
+            return
         default:
             // Pass other key events to the table view for type-to-select
             controller.systemTable.keyDown(with: event)
@@ -373,35 +375,5 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
         linkingLayer.source = nil
         linkingLayer.setNeedsDisplay()
-    }
-}
-
-extension AffineTransform {
-    func transform(_ rect: NSRect) -> NSRect {
-        NSRect(origin: transform(rect.origin), size: transform(rect.size))
-    }
-}
-
-extension NSPoint {
-    struct Hash: Hashable {
-        let x: Double
-        let y: Double
-    }
-    var hashable: Hash { .init(x: x, y: y) }
-
-    /// Returns the nearest point to this one that lies within the given rectangle.
-    func constrained(within rect: NSRect) -> Self {
-        Self(x: min(max(x, rect.minX), rect.maxX), y: min(max(y, rect.minY), rect.maxY))
-    }
-}
-
-extension NSRect {
-    /// The center point of the specified rectangle.
-    var center: NSPoint {
-        get { .init(x: midX, y: midY) }
-        set {
-            origin.x = newValue.x - width / 2
-            origin.y = newValue.y - height / 2
-        }
     }
 }

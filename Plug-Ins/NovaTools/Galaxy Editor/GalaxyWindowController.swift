@@ -44,12 +44,6 @@ extension GalaxyWindowController {
         NotificationCenter.default.addObserver(self, selector: #selector(resourceNameChanged(_:)), name: .ResourceNameDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resourceDataChanged(_:)), name: .ResourceDataDidChange, object: nil)
 
-        // Scroll to galaxy center
-        if var documentRect = galaxyView.enclosingScrollView?.documentVisibleRect {
-            documentRect.origin.y *= -1 // Workaround an issue where the clip view is initially misplaced
-            galaxyView.scroll(NSPoint(x: galaxyView.frame.midX - documentRect.midX, y: galaxyView.frame.midY - documentRect.midY))
-        }
-
         self.reload()
     }
 

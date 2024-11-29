@@ -12,6 +12,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     override func awakeFromNib() {
         self.updateScale()
+        self.centerScroll(frame.center)
     }
 
     func syncViews() {
@@ -75,8 +76,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
                 self.updateScale()
                 self.transformSubviews()
 
-                let newPos = transform.transform(oldPos)
-                self.scroll(NSPoint(x: newPos.x - documentRect.width / 2, y: newPos.y - documentRect.height / 2))
+                self.centerScroll(transform.transform(oldPos))
                 enclosingScrollView.flashScrollers()
             }
         }
@@ -166,18 +166,21 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     private var isMovingStellars = false
     private var dragOrigin: NSPoint?
 
-    // Arrow keys to move stellars
+    // Arrow keys to move stellars, space to scroll to center
     override func keyDown(with event: NSEvent) {
         let delta = event.modifierFlags.contains(.shift) ? 10.0 : 1.0
         switch event.specialKey {
-        case NSEvent.SpecialKey.leftArrow:
+        case .leftArrow:
             self.moveStellars(x: 0 - delta, y: 0)
-        case NSEvent.SpecialKey.rightArrow:
+        case .rightArrow:
             self.moveStellars(x: delta, y: 0)
-        case NSEvent.SpecialKey.upArrow:
+        case .upArrow:
             self.moveStellars(x: 0, y: 0 - delta)
-        case NSEvent.SpecialKey.downArrow:
+        case .downArrow:
             self.moveStellars(x: 0, y: delta)
+        case _ where event.characters == " ":
+            self.centerScroll(frame.center)
+            return
         default:
             // Pass other key events to the table view for type-to-select
             controller.stellarTable.keyDown(with: event)
