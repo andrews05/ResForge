@@ -194,6 +194,14 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
     }
 
+    // Hold option while moving to snap
+    override func flagsChanged(with event: NSEvent) {
+        if isMovingStellars {
+            let snap = event.modifierFlags.contains(.option)
+            self.moveStellars(x: 0, y: 0, snap: snap)
+        }
+    }
+
     // Drag stellar to move
     func mouseDragged(stellar: StellarView, with event: NSEvent) {
         guard let dragOrigin, event.deltaX != 0 || event.deltaY != 0 else {
