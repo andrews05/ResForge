@@ -13,9 +13,17 @@ class StellarView: NSView {
     private var systemView: SystemMapView? {
         superview as? SystemMapView
     }
+    private var showName = false {
+        didSet {
+            if oldValue != showName {
+                needsDisplay = true
+            }
+        }
+    }
     var point = NSPoint.zero {
         didSet {
             frame.center = point
+            needsDisplay = showName
         }
     }
     var isHighlighted = false {
@@ -104,7 +112,6 @@ class StellarView: NSView {
         systemView?.isSavingStellar = true
         resource.data = writer.data
         systemView?.isSavingStellar = false
-        systemView?.needsDisplay = true
     }
 
     override func draw(_ dirtyRect: NSRect) {
@@ -133,67 +140,47 @@ class StellarView: NSView {
             outline.lineWidth = 2
             outline.stroke()
         }
+
+        // Show name and position - get this from frame center in case of dragging
+        if showName, let position = systemView?.transform.inverted()?.transform(frame.center) {
+            let x = Int(position.x.rounded())
+            let y = Int(position.y.rounded())
+            let label = "\(resource.name): \(x),\(y)"
+            var rect = label.boundingRect(with: .zero, attributes: attributes)
+            rect.origin.x = bounds.maxX + 4
+            rect.origin.y = bounds.midY - 4
+            rect.size.height = 8
+            NSColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.7).setFill()
+            NSBezierPath(roundedRect: rect.insetBy(dx: -2, dy: -3), xRadius: 2, yRadius: 2).fill()
+            label.draw(with: rect, attributes: attributes)
+        }
     }
 
     // MARK: - Mouse events
 
-    private var useRightMouse = false
-
     override func mouseDown(with event: NSEvent) {
         if isEnabled {
-            useRightMouse = event.modifierFlags.contains(.control)
-            if useRightMouse {
-                systemView?.rightMouseDown(stellar: self, with: event)
-            } else {
-                systemView?.mouseDown(stellar: self, with: event)
-            }
+            systemView?.mouseDown(stellar: self, with: event)
         }
     }
 
     override func mouseDragged(with event: NSEvent) {
         if isEnabled {
-            if useRightMouse {
-                systemView?.rightMouseDragged(stellar: self, with: event)
-            } else {
-                systemView?.mouseDragged(stellar: self, with: event)
-            }
+            systemView?.mouseDragged(stellar: self, with: event)
         }
     }
 
     override func mouseUp(with event: NSEvent) {
         if isEnabled {
-            if useRightMouse {
-                systemView?.rightMouseUp(stellar: self, with: event)
-            } else {
-                systemView?.mouseUp(stellar: self, with: event)
-            }
+            systemView?.mouseUp(stellar: self, with: event)
         }
     }
 
-    override func rightMouseDown(with event: NSEvent) {
-        if isEnabled {
-            window?.makeKeyAndOrderFront(self)
-            systemView?.rightMouseDown(stellar: self, with: event)
-        }
-    }
-
-    override func rightMouseDragged(with event: NSEvent) {
-        if isEnabled {
-            systemView?.rightMouseDragged(stellar: self, with: event)
-        }
-    }
-
-    override func rightMouseUp(with event: NSEvent) {
-        if isEnabled {
-            systemView?.rightMouseUp(stellar: self, with: event)
-        }
-    }
-
+    // Show name and position on hover
     override func mouseEntered(with event: NSEvent) {
-        systemView?.mouseEntered(stellar: self, with: event)
+        showName = true
     }
-
     override func mouseExited(with event: NSEvent) {
-        systemView?.mouseExited(stellar: self, with: event)
+        showName = false
     }
 }

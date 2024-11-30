@@ -252,20 +252,4 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
         isMovingStellars = false
     }
-    
-    // Handlers from galaxy view preserved in case we need them
-    func rightMouseDown(stellar: StellarView, with event: NSEvent) {
-    }
-
-    func rightMouseDragged(stellar: StellarView, with event: NSEvent) {
-    }
-
-    func mouseEntered(stellar: StellarView, with event: NSEvent) {
-    }
-
-    func mouseExited(stellar: StellarView, with event: NSEvent) {
-    }
-
-    func rightMouseUp(stellar: StellarView, with event: NSEvent) {
-    }
 }
