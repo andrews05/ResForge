@@ -72,8 +72,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     private var zoomLevel = 4 {
         didSet {
             if zoomLevel != oldValue, let enclosingScrollView, let inverse = transform.inverted() {
-                let documentRect = enclosingScrollView.documentVisibleRect
-                let oldPos = inverse.transform(NSPoint(x: documentRect.midX, y: documentRect.midY))
+                let oldPos = inverse.transform(enclosingScrollView.documentVisibleRect.center)
 
                 self.updateScale()
                 self.transformSubviews()
@@ -226,13 +225,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     private func moveStellars(x: Double, y: Double, snap: Bool = false) {
         for view in selectedStellars {
-            view.point.x += x
-            view.point.y += y
-            if snap {
-                // Snap the frame center to a multiple of 10 (don't change view.point)
-                view.frame.center.x = (view.frame.midX / 10).rounded() * 10
-                view.frame.center.y = (view.frame.midY / 10).rounded() * 10
-            }
+            view.setPoint(NSPoint(x: view.point.x + x, y: view.point.y + y), snapSize: snap ? 10 : nil)
         }
         isMovingStellars = true
     }

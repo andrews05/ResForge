@@ -7,23 +7,13 @@ class StellarView: NSView {
     let isEnabled: Bool
     private(set) var position = NSPoint.zero
     private(set) var image: NSImage? = nil
-    private var attributes: [NSAttributedString.Key: Any] {
-        [.foregroundColor: NSColor.white, .font: NSFont.systemFont(ofSize: 11)]
-    }
+    private let nameView = NSTextField(labelWithString: "")
     private var systemView: SystemMapView? {
         superview as? SystemMapView
-    }
-    private var showName = false {
-        didSet {
-            if oldValue != showName {
-                needsDisplay = true
-            }
-        }
     }
     var point = NSPoint.zero {
         didSet {
             frame.center = point
-            needsDisplay = showName
         }
     }
     var isHighlighted = false {
@@ -44,6 +34,17 @@ class StellarView: NSView {
         } catch {
             return nil
         }
+
+        // To display content outside the frame on macOS < 14, we must use a subview and explicitly set clipsToBounds to false
+        // The stellar view itself will always be clipped on macOS < 14
+        clipsToBounds = false
+        nameView.isHidden = true
+        nameView.textColor = .white
+        nameView.font = .systemFont(ofSize: 11)
+        nameView.wantsLayer = true
+        nameView.layer?.cornerRadius = 2
+        nameView.layer?.backgroundColor = CGColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.7)
+        self.addSubview(nameView)
     }
 
     func read() throws {
@@ -85,12 +86,26 @@ class StellarView: NSView {
     func updateFrame() {
         let baseSize = image?.size ?? NSSize(width: 80, height: 80)
         if let size = systemView?.transform.transform(baseSize) {
-            frame.size.width = max(size.width, 8)
-            frame.size.height = max(size.height, 8)
+            // Allow 1px padding for the selection highlight
+            frame.size.width = max(size.width, 8) + 2
+            frame.size.height = max(size.height, 8) + 2
         }
         if let point = systemView?.transform.transform(position) {
             self.point = point
         }
+        self.updateNameView()
+        nameView.frame.origin.x = bounds.maxX + 1
+        nameView.frame.origin.y = bounds.midY - nameView.frame.height / 2
+    }
+
+    func setPoint(_ point: NSPoint, snapSize: Double? = nil) {
+        self.point = point
+        if let snapSize {
+            // Snap the frame center to a multiple of the value
+            frame.center.x = (frame.midX / snapSize).rounded() * snapSize
+            frame.center.y = (frame.midY / snapSize).rounded() * snapSize
+        }
+        self.updateNameView()
     }
 
     func move(to newPos: NSPoint) {
@@ -120,7 +135,7 @@ class StellarView: NSView {
         }
 
         if let image {
-            image.draw(in: NSRect(origin: .zero, size: frame.size))
+            image.draw(in: bounds.insetBy(dx: 1, dy: 1))
         } else {
             NSColor.black.setFill()
             if isEnabled {
@@ -128,7 +143,7 @@ class StellarView: NSView {
             } else {
                 NSColor.gray.setStroke()
             }
-            let path = NSBezierPath(ovalIn: bounds.insetBy(dx: 1, dy: 1))
+            let path = NSBezierPath(ovalIn: bounds.insetBy(dx: 2, dy: 2))
             path.fill()
             path.stroke()
         }
@@ -136,23 +151,19 @@ class StellarView: NSView {
         if isHighlighted {
             // Draw a highlighted outline around the stellar
             NSColor.selectedContentBackgroundColor.setStroke()
-            let outline = NSBezierPath(roundedRect: bounds, xRadius: 6, yRadius: 6)
+            let outline = NSBezierPath(roundedRect: bounds.insetBy(dx: 1, dy: 1), xRadius: 6, yRadius: 6)
             outline.lineWidth = 2
             outline.stroke()
         }
+    }
 
-        // Show name and position - get this from frame center in case of dragging
-        if showName, let position = systemView?.transform.inverted()?.transform(frame.center) {
+    private func updateNameView() {
+        // Get position from frame center in case the stellar is being moved
+        if let position = systemView?.transform.inverted()?.transform(frame.center) {
             let x = Int(position.x.rounded())
             let y = Int(position.y.rounded())
-            let label = "\(resource.name): \(x),\(y)"
-            var rect = label.boundingRect(with: .zero, attributes: attributes)
-            rect.origin.x = bounds.maxX + 4
-            rect.origin.y = bounds.midY - 4
-            rect.size.height = 8
-            NSColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.7).setFill()
-            NSBezierPath(roundedRect: rect.insetBy(dx: -2, dy: -3), xRadius: 2, yRadius: 2).fill()
-            label.draw(with: rect, attributes: attributes)
+            nameView.stringValue = "\(resource.name): \(x),\(y)"
+            nameView.sizeToFit()
         }
     }
 
@@ -176,11 +187,11 @@ class StellarView: NSView {
         }
     }
 
-    // Show name and position on hover
+    // Show name on hover
     override func mouseEntered(with event: NSEvent) {
-        showName = true
+        nameView.isHidden = false
     }
     override func mouseExited(with event: NSEvent) {
-        showName = false
+        nameView.isHidden = true
     }
 }

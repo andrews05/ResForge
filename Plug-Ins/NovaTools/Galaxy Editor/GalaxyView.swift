@@ -127,8 +127,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     private var zoomLevel = 4 {
         didSet {
             if zoomLevel != oldValue, let enclosingScrollView, let inverse = transform.inverted() {
-                let documentRect = enclosingScrollView.documentVisibleRect
-                let oldPos = inverse.transform(NSPoint(x: documentRect.midX, y: documentRect.midY))
+                let oldPos = inverse.transform(enclosingScrollView.documentVisibleRect.center)
 
                 self.updateScale()
                 self.transformSubviews()
