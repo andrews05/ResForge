@@ -1737,14 +1737,10 @@
 		4953F59E248874AA0002340F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = "Plug-Ins/Sound Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1752,14 +1748,10 @@
 		4953F59F248874AA0002340F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = "Plug-Ins/Sound Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Sound-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -1782,13 +1774,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1836,14 +1825,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1876,14 +1862,10 @@
 		49EE72DC2550B79600BEABDB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.NovaTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1891,14 +1873,10 @@
 		49EE72DD2550B79600BEABDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = "Plug-Ins/NovaTools/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.NovaTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -1906,14 +1884,10 @@
 		554125B52B8037E4008B6832 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = "Plug-Ins/Menu Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Menu-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1921,14 +1895,10 @@
 		554125B62B8037E4008B6832 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = "Plug-Ins/Menu Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Menu-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -1936,14 +1906,10 @@
 		55FB360B2B71530C000F1528 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = "Plug-Ins/Dialog Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Dialog-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1951,14 +1917,10 @@
 		55FB360C2B71530C000F1528 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = "Plug-Ins/Dialog Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Dialog-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -1966,14 +1928,10 @@
 		B2FCA79415A66ACF00696598 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = "Plug-Ins/Image Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Image-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1981,14 +1939,10 @@
 		B2FCA79515A66ACF00696598 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = "Plug-Ins/Image Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Image-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -1997,10 +1951,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2009,7 +1960,6 @@
 				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Hex-Editor";
 				PRODUCT_NAME = "Hex Editor";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -2019,10 +1969,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2031,7 +1978,6 @@
 				INFOPLIST_FILE = "Plug-Ins/Hex Editor/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.resforge.Hex-Editor";
 				PRODUCT_NAME = "Hex Editor";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Ins/Hex Editor/Hex Editor Cocoa-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -2041,11 +1987,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ResForge;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = ResForge/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
@@ -2059,11 +2001,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ResForge;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 78M756C92G;
 				INFOPLIST_FILE = ResForge/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
@@ -2093,6 +2031,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -2143,10 +2082,13 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 78M756C92G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
