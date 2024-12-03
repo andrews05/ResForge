@@ -261,6 +261,13 @@
 			remoteGlobalIDString = 4953F594248874AA0002340F;
 			remoteInfo = "Sound Editor";
 		};
+		497031552CFEB3DD002D87AA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 490D948D25624F5D00F73544 /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A50859A72B204C8100325B36;
+			remoteInfo = "Hex Fiend Tests";
+		};
 		49DA3A552550BD7C00821A7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5B5880F0156D2A601000001 /* Project object */;
@@ -632,6 +639,7 @@
 				490D94A225624F5D00F73544 /* HexFiendling.app */,
 				490D94A425624F5D00F73544 /* HexFiend_Framework Tests.xctest */,
 				490D94A625624F5D00F73544 /* hexf */,
+				497031562CFEB3DD002D87AA /* Hex Fiend Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1281,6 +1289,13 @@
 			fileType = "compiled.mach-o.executable";
 			path = hexf;
 			remoteRef = 490D94A525624F5D00F73544 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		497031562CFEB3DD002D87AA /* Hex Fiend Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Hex Fiend Tests.xctest";
+			remoteRef = 497031552CFEB3DD002D87AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
