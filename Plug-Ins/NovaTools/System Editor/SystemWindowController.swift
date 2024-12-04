@@ -36,9 +36,12 @@ class SystemWindowController: AbstractEditor, ResourceEditor {
     private var isSaving = false
     private var isSelectingStellars = false
 
-    required init(resource: Resource, manager: RFEditorManager) {
+    required init?(resource: Resource, manager: RFEditorManager) {
+        guard let system = manager.findResource(type: .system, id: resource.id, currentDocumentOnly: true) else {
+            return nil
+        }
         self.manager = manager
-        self.resource = manager.findResource(type: .system, id: resource.id, currentDocumentOnly: true)!
+        self.resource = system
         super.init(window: nil)
     }
 
