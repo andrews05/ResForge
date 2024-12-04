@@ -52,14 +52,14 @@ extension GalaxyWindowController {
         nebulae = [:]
         nebImages = [:]
 
-        let systs = manager.allResources(ofType: ResourceType("sÿst"), currentDocumentOnly: false)
+        let systs = manager.allResources(ofType: .system, currentDocumentOnly: false)
         for system in systs {
             if systemViews[system.id] == nil {
                 self.read(system: system)
             }
         }
 
-        let nebus = manager.allResources(ofType: ResourceType("nëbu"), currentDocumentOnly: false)
+        let nebus = manager.allResources(ofType: .nebula, currentDocumentOnly: false)
         for nebula in nebus {
             if nebulae[nebula.id] == nil {
                 self.read(nebula: nebula)
@@ -72,7 +72,8 @@ extension GalaxyWindowController {
     private func updateSystemList() {
         // Reverse list so first draws on top
         galaxyView.subviews = Array(systemViews.values).reversed()
-        systemList = manager.allResources(ofType: ResourceType("sÿst"), currentDocumentOnly: true)
+        // Don't include foreign systs in the list
+        systemList = manager.allResources(ofType: .system, currentDocumentOnly: true)
         systemTable.reloadData()
     }
 
@@ -100,7 +101,7 @@ extension GalaxyWindowController {
             // Find the largest available image
             let first = (nebula.id - 128) * 7 + 9500
             for id in (first..<first+7).reversed() {
-                if let pict = manager.findResource(type: ResourceType("PICT"), id: id, currentDocumentOnly: false) {
+                if let pict = manager.findResource(type: .picture, id: id) {
                     pict.preview {
                         self.nebImages[nebula.id] = $0
                         self.galaxyView.needsDisplay = true
@@ -130,7 +131,7 @@ extension GalaxyWindowController {
     }
 
     func createSystem(position: NSPoint) {
-        manager.createResource(type: ResourceType("sÿst"), id: systemList.last?.id) { [weak self] system in
+        manager.createResource(type: .system, id: systemList.last?.id) { [weak self] system in
             guard let self else { return }
 
             // Construct the minimum data required
@@ -156,13 +157,13 @@ extension GalaxyWindowController {
             return
         }
         let shouldReload = resources.contains {
-            !$0.data.isEmpty && ($0.typeCode == "sÿst" || $0.typeCode == "nëbu")
+            !$0.data.isEmpty && ($0.type == .system || $0.type == .nebula)
         }
         if shouldReload {
             self.reload()
             if notification.name == .DocumentDidAddResources {
                 // Select added systems
-                selectedSystems = resources.filter { $0.typeCode == "sÿst" }
+                selectedSystems = resources.filter { $0.type == .system }
                 if systemTable.selectedRow > 0 {
                     systemTable.scrollRowToVisible(systemTable.selectedRow)
                 }
@@ -174,7 +175,7 @@ extension GalaxyWindowController {
         guard let resource = notification.object as? Resource else {
             return
         }
-        if resource.typeCode == "sÿst" || resource.typeCode == "nëbu" {
+        if resource.type == .system || resource.type == .nebula {
             self.reload()
         }
     }
@@ -183,12 +184,12 @@ extension GalaxyWindowController {
         guard let resource = notification.object as? Resource else {
             return
         }
-        if resource.typeCode == "sÿst" {
+        if resource.type == .system {
             systemViews[resource.id]?.updateFrame()
             if let i = self.row(for: resource) {
                 systemTable.reloadData(forRowIndexes: [i], columnIndexes: [1])
             }
-        } else if resource.typeCode == "nëbu" {
+        } else if resource.type == .nebula {
             galaxyView.needsDisplay = true
         }
     }
@@ -197,11 +198,11 @@ extension GalaxyWindowController {
         guard !galaxyView.isSavingSystem, let resource = notification.object as? Resource else {
             return
         }
-        if resource.typeCode == "sÿst" {
+        if resource.type == .system {
             self.read(system: resource)
             self.updateSystemList()
             self.syncSelectionFromView()
-        } else if resource.typeCode == "nëbu" {
+        } else if resource.type == .nebula {
             self.read(nebula: resource)
             galaxyView.needsDisplay = true
         }

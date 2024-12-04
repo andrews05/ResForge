@@ -18,8 +18,13 @@ public extension NSPasteboard.PasteboardType {
 }
 
 public struct ResourceType: Hashable, Comparable, CustomStringConvertible {
-    public static let Template = Self("TMPL")
-    public static let BasicTemplate = Self("TMPB")
+    public static let colorIcon = Self("cicn")
+    public static let icon = Self("ICON")
+    public static let picture = Self("PICT")
+    public static let string = Self("STR ")
+    public static let stringList = Self("STR#")
+    public static let template = Self("TMPL")
+    public static let basicTemplate = Self("TMPB")
 
     public var code: String
     public var attributes: [String: String]

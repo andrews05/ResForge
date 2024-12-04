@@ -96,7 +96,7 @@ struct NCBTestValue: NCBTest {
         guard let value, let type = op.resourceType else {
             return nil
         }
-        return manager.findResource(type: .init(type), id: value, currentDocumentOnly: false)
+        return manager.findResource(type: .init(type), id: value)
     }
 
     func description(manager: RFEditorManager, indent: String) -> String {

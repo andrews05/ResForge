@@ -38,7 +38,7 @@ class SystemWindowController: AbstractEditor, ResourceEditor {
 
     required init(resource: Resource, manager: RFEditorManager) {
         self.manager = manager
-        self.resource = manager.findResource(type: ResourceType("sÿst"), id: resource.id, currentDocumentOnly: true)!
+        self.resource = manager.findResource(type: .system, id: resource.id, currentDocumentOnly: true)!
         super.init(window: nil)
     }
 
@@ -89,7 +89,7 @@ extension SystemWindowController {
         for i in navDefaults.indices {
             let id = Int(try reader.read() as Int16)
             if 128...2175 ~= id {
-                let stellar = manager.findResource(type: ResourceType("spöb"), id: id, currentDocumentOnly: false)
+                let stellar = manager.findResource(type: .spaceObject, id: id)
                 navDefaults[i] = NavDefault(id: id, stellar: stellar)
                 navDefaults[i].read(manager: manager)
             }
@@ -156,7 +156,7 @@ extension SystemWindowController {
         guard let navIndex = navIndex ?? navDefaults.firstIndex(where: { $0.id == -1 }) else {
             return
         }
-        manager.createResource(type: ResourceType("spöb"), id: nil) { [weak self] stellar in
+        manager.createResource(type: .spaceObject, id: nil) { [weak self] stellar in
             guard let self else { return }
 
             // Construct the minimum data required
@@ -181,7 +181,7 @@ extension SystemWindowController {
         guard let resources = notification.userInfo?["resources"] as? [Resource] else {
             return
         }
-        for resource in resources where resource.typeCode == "spöb" {
+        for resource in resources where resource.type == .spaceObject {
             if navDefaults.contains(where: { $0.id == resource.id }) {
                 self.reload()
                 break
@@ -193,7 +193,7 @@ extension SystemWindowController {
         guard let resource = notification.object as? Resource else {
             return
         }
-        if resource.typeCode == "spöb", navDefaults.contains(where: { $0.id == resource.id || $0.stellar == resource}) {
+        if resource.type == .spaceObject, navDefaults.contains(where: { $0.id == resource.id || $0.stellar == resource}) {
             self.reload()
         }
     }
@@ -202,7 +202,7 @@ extension SystemWindowController {
         guard let resource = notification.object as? Resource else {
             return
         }
-        if resource.typeCode == "spöb", let i = self.row(for: resource) {
+        if resource.type == .spaceObject, let i = self.row(for: resource) {
             stellarTable.reloadData(forRowIndexes: [i], columnIndexes: [2])
         }
     }
@@ -213,7 +213,7 @@ extension SystemWindowController {
         }
         if resource == self.resource {
             self.reload()
-        } else if resource.typeCode == "spöb", let i = navDefaults.firstIndex(where: { $0.stellar == resource }) {
+        } else if resource.type == .spaceObject, let i = navDefaults.firstIndex(where: { $0.stellar == resource }) {
             navDefaults[i].read(manager: manager)
         }
     }

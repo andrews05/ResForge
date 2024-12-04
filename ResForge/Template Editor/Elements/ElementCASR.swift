@@ -164,7 +164,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         if cases[id] != nil {
             // If resource exists in case list, show link icon
             linkIcon = NSImage.followLinkFreestandingTemplateName
-        } else if parentList.controller.manager.findResource(type: .init(resType), id: id, currentDocumentOnly: false) != nil {
+        } else if parentList.controller.manager.findResource(type: .init(resType), id: id) != nil {
             // If found in directory (as a last resort), show link icon
             linkIcon = NSImage.followLinkFreestandingTemplateName
         } else {

@@ -26,8 +26,7 @@ class SpriteLayer: NSObject {
         didSet {
             if spriteID != oldValue {
                 frames.removeAll()
-                let type = ResourceType("rlëD", controller.resource.typeAttributes)
-                guard spriteID > 0, let resource = controller.manager.findResource(type: type, id: Int(spriteID), currentDocumentOnly: false) else {
+                guard spriteID > 0, let resource = controller.manager.findResource(type: .rle16, id: Int(spriteID)) else {
                     spriteLink.title = "not found"
                     spriteLink.image = NSImage(named: NSImage.touchBarAddDetailTemplateName)
                     return
@@ -83,15 +82,14 @@ class SpriteLayer: NSObject {
         guard controller.window?.makeFirstResponder(nil) != false else {
             return
         }
-        let type = ResourceType("rlëD", controller.resource.typeAttributes)
-        if let resource = controller.manager.findResource(type: type, id: Int(spriteID), currentDocumentOnly: false) {
+        if let resource = controller.manager.findResource(type: .rle16, id: Int(spriteID)) {
             // If we found a resource but don't currently have any frames, try loading it again
             if frames.isEmpty && !resource.data.isEmpty {
                 self.loadRleAsync(resource.data)
             }
             controller.manager.open(resource: resource)
         } else {
-            controller.manager.createResource(type: type, id: Int(spriteID)) { [weak self] resource in
+            controller.manager.createResource(type: .rle16, id: Int(spriteID)) { [weak self] resource in
                 guard let self else { return }
                 // Update the field if the resource was created with a different id,
                 // but avoid marking the window as dirty if it is the same

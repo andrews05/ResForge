@@ -34,7 +34,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
            case let scanner = Scanner(string: metaValue),
            scanner.scanString("#") != nil,
            let listID = scanner.scanInt(),
-           let list = parentList.controller.manager.findResource(type: ResourceType("STR#"), id: listID, currentDocumentOnly: false) {
+           let list = parentList.controller.manager.findResource(type: .stringList, id: listID) {
             let reader = BinaryDataReader(list.data)
             do {
                 try reader.advance(2)

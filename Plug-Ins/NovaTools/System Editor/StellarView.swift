@@ -56,12 +56,12 @@ class StellarView: NSView {
     }
 
     private func loadGraphic(_ spinId: Int) throws {
-        if let spinResource = manager.findResource(type: ResourceType("spïn"), id: spinId, currentDocumentOnly: false) {
+        if let spinResource = manager.findResource(type: .spin, id: spinId) {
             let spinReader = BinaryDataReader(spinResource.data)
             let spriteId = Int(try spinReader.read() as Int16)
 
             // Use the preview provider to obtain an NSImage from the resources the spïn might point to -- try rlëD then fall back to PICT
-            if let spriteResource = manager.findResource(type: ResourceType("rlëD"), id: spriteId, currentDocumentOnly: false) ?? manager.findResource(type: ResourceType("PICT"), id: spriteId, currentDocumentOnly: false) {
+            if let spriteResource = manager.findResource(type: .rle16, id: spriteId) ?? manager.findResource(type: .picture, id: spriteId) {
                 spriteResource.preview { img in
                     self.image = img
                     self.updateFrame()

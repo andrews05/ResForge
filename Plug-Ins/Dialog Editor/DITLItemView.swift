@@ -53,11 +53,11 @@ class DITLItemView : NSView {
         var resource: Resource?
         switch type {
         case .picture:
-            resource = manager.findResource(type: ResourceType("PICT"), id: resourceID, currentDocumentOnly: true)
+            resource = manager.findResource(type: .picture, id: resourceID, currentDocumentOnly: true)
         case .icon:
-            resource = manager.findResource(type: ResourceType("cicn"), id: resourceID, currentDocumentOnly: true)
+            resource = manager.findResource(type: .colorIcon, id: resourceID, currentDocumentOnly: true)
             if resource == nil {
-                resource = manager.findResource(type: ResourceType("ICON"), id: resourceID, currentDocumentOnly: true)
+                resource = manager.findResource(type: .icon, id: resourceID, currentDocumentOnly: true)
             }
         default:
             resource = nil

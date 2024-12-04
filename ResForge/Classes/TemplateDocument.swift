@@ -113,7 +113,7 @@ class OpenTemplateDelegate: NSObject, NSOpenSavePanelDelegate {
 
     @IBAction func begin(_ sender: Any?) {
         // Populate the template list
-        let allTemplates = EditorManager.shared.allResources(ofType: ResourceType.Template)
+        let allTemplates = EditorManager.shared.allResources(ofType: .template)
         for template in allTemplates {
             if templates[template.name] == nil {
                 templates[template.name] = template

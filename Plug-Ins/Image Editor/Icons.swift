@@ -54,7 +54,7 @@ class Icons {
             nil
         }
         if let maskType,
-           let mono = manager.findResource(type: ResourceType(maskType), id: resource.id, currentDocumentOnly: true),
+           let mono = manager.findResource(type: .init(maskType), id: resource.id, currentDocumentOnly: true),
            let monoRep = Self.rep(mono.data, for: mono.type) {
             NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
             let rect = NSRect(x: 0, y: 0, width: rep.pixelsWide, height: rep.pixelsHigh)

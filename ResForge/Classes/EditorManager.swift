@@ -51,7 +51,7 @@ class EditorManager: RFEditorManager {
         guard let type else {
             return nil
         }
-        return self.findResource(type: basic ? .BasicTemplate : .Template, name: type.code)
+        return self.findResource(type: basic ? .basicTemplate : .template, name: type.code)
     }
     
     private func mappedType(for resource: Resource, forEditor: Bool) -> ResourceType? {

@@ -46,3 +46,11 @@ extension NovaTools: TypeIconProvider {
         "l33t": "🤡",
     ]
 }
+
+extension ResourceType {
+    static let nebula = Self("nëbu")
+    static let rle16 = Self("rlëD")
+    static let spin = Self("spïn")
+    static let spaceObject = Self("spöb")
+    static let system = Self("sÿst")
+}

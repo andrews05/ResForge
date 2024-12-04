@@ -8,7 +8,7 @@ class ImportPanel: NSObject, NSOpenSavePanelDelegate {
 
     func show(callback: @escaping(URL, ResourceType) -> Void) {
         let type = document.dataSource.selectedType()
-        let types = document.editorManager.allResources(ofType: .BasicTemplate)
+        let types = document.editorManager.allResources(ofType: .basicTemplate)
             .map(\.name).sorted(by: { $0.localizedStandardCompare($1) == .orderedAscending })
         typeSelect.removeAllItems()
         typeSelect.addItems(withTitles: types)

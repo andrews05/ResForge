@@ -12,7 +12,7 @@ enum BulkError: LocalizedError {
         case .templateError:
             return NSLocalizedString("Invalid basic template.", comment: "")
         case let .templateNotFound(type):
-            return String(format: NSLocalizedString("Could not find ‘%@’ resource for type ‘%@’.", comment: ""), ResourceType.BasicTemplate.code, type.code)
+            return String(format: NSLocalizedString("Could not find ‘%@’ resource for type ‘%@’.", comment: ""), ResourceType.basicTemplate.code, type.code)
         case let .invalidValue(column, row, _):
             return String(format: NSLocalizedString("Invalid value for “%@” on row %d.", comment: ""), column, row)
         }

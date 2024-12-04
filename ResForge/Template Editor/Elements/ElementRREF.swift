@@ -46,7 +46,7 @@ class ElementRREF: BaseElement {
         button.title = buttonLabel
         button.font = .boldSystemFont(ofSize: 11)
         // Show add icon if resource does not exist, otherwise follow link icon
-        let resource = parentList.controller.manager.findResource(type: ResourceType(resType), id: id, currentDocumentOnly: false)
+        let resource = parentList.controller.manager.findResource(type: .init(resType), id: id)
         button.image = NSImage(named: resource == nil ? NSImage.touchBarAddDetailTemplateName : NSImage.followLinkFreestandingTemplateName)
         if resource == nil {
             // The add icon isn't strictly supposed to be used outside of the touch bar -

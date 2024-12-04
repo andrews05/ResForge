@@ -26,7 +26,7 @@ class MenuItem: NSObject {
     var iconID = Int(0) {
         didSet {
             if iconID != 0,
-               let res = manager.findResource(type: ResourceType("ICON"), id: iconID, currentDocumentOnly: false) {
+               let res = manager.findResource(type: .icon, id: iconID) {
                 res.preview({ img in
                     self.willChangeValue(forKey: "iconImage")
                     self.iconImage = img
@@ -107,7 +107,7 @@ class MenuItem: NSObject {
         super.init()
         
         if iconID != 0,
-           let res = manager.findResource(type: ResourceType("ICON"), id: iconID, currentDocumentOnly: false) {
+           let res = manager.findResource(type: .icon, id: iconID) {
             res.preview({ img in
                 self.willChangeValue(forKey: "iconImage")
                 self.iconImage = img

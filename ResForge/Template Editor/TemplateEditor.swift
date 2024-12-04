@@ -120,7 +120,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     func resources(ofType type: String) -> [Resource] {
         if resourceCache[type] == nil {
             // Find resources in all documents, deduplicate and sort by name
-            let allResources = manager.allResources(ofType: ResourceType(type, resource.typeAttributes), currentDocumentOnly: false)
+            let allResources = manager.allResources(ofType: .init(type, resource.typeAttributes), currentDocumentOnly: false)
             let resources: [Int: Resource] = allResources.reduce(into: [:]) { (result, resource) in
                 if result[resource.id] == nil && !resource.name.isEmpty {
                     result[resource.id] = resource
@@ -136,7 +136,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
 
     func openOrCreateResource(typeCode: String, id: Int, callback: ((Resource, Bool) -> Void)? = nil) {
         let type = ResourceType(typeCode, resource.typeAttributes)
-        if let resource = manager.findResource(type: type, id: id, currentDocumentOnly: false) {
+        if let resource = manager.findResource(type: type, id: id) {
             manager.open(resource: resource)
             callback?(resource, false)
         } else {

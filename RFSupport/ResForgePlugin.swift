@@ -86,6 +86,9 @@ public protocol RFEditorManager: AnyObject {
 }
 // Extension facilitates optional arguments for protocol functions.
 public extension RFEditorManager {
+    func findResource(type: ResourceType, id: Int, currentDocumentOnly: Bool = false) -> Resource? {
+        findResource(type: type, id: id, currentDocumentOnly: currentDocumentOnly)
+    }
     func createResource(type: ResourceType, id: Int? = nil, name: String = "", callback: ((Resource) -> Void)? = nil) {
         createResource(type: type, id: id, name: name, callback: callback)
     }
