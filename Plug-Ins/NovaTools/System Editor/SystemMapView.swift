@@ -156,7 +156,7 @@ class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
             self.restackStellars()
             controller.syncSelectionFromView(clicked: stellar)
         } else {
-            for view in selectedStellars {
+            for view in selectedStellars where view.isEnabled {
                 controller.manager.open(resource: view.resource)
             }
         }

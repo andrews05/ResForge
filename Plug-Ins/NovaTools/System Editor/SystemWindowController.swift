@@ -232,11 +232,7 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
     }
 
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        if row > 0, let stellar = navDefaults[row - 1].stellar {
-            // Prevent selection of foreign stellars
-            return stellar.document == resource.document
-        }
-        return row != 0
+        row != 0
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
@@ -319,7 +315,7 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
             self.createStellar(navIndex: i)
         } else {
             // Open the selected stellars
-            for stellar in selectedStellars {
+            for stellar in selectedStellars where stellar.document == manager.document {
                 manager.open(resource: stellar)
             }
         }

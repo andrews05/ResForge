@@ -99,6 +99,7 @@ class StellarView: NSView {
     }
 
     func setPoint(_ point: NSPoint, snapSize: Double? = nil) {
+        guard isEnabled else { return }
         self.point = point
         if let snapSize {
             // Snap the frame center to a multiple of the value
@@ -109,6 +110,7 @@ class StellarView: NSView {
     }
 
     func move(to newPos: NSPoint) {
+        guard isEnabled else { return }
         let curPos = position
         position = NSPoint(x: newPos.x.rounded(), y: newPos.y.rounded())
         self.updateFrame()
@@ -150,7 +152,11 @@ class StellarView: NSView {
 
         if isHighlighted {
             // Draw a highlighted outline around the stellar
-            NSColor.selectedContentBackgroundColor.setStroke()
+            if isEnabled {
+                NSColor.selectedContentBackgroundColor.setStroke()
+            } else {
+                NSColor.darkGray.setStroke()
+            }
             let outline = NSBezierPath(roundedRect: bounds.insetBy(dx: 1, dy: 1), xRadius: 6, yRadius: 6)
             outline.lineWidth = 2
             outline.stroke()
@@ -170,9 +176,7 @@ class StellarView: NSView {
     // MARK: - Mouse events
 
     override func mouseDown(with event: NSEvent) {
-        if isEnabled {
-            systemView?.mouseDown(stellar: self, with: event)
-        }
+        systemView?.mouseDown(stellar: self, with: event)
     }
 
     override func mouseDragged(with event: NSEvent) {
