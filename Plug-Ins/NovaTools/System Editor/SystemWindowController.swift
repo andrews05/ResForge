@@ -232,7 +232,8 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
     }
 
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        row != 0
+        // Prevent selecting the header row, as well as unused rows unless directly clicked
+        row != 0 && (navDefaults[row - 1].id != -1 || tableView.clickedRow == row)
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
@@ -281,8 +282,8 @@ extension SystemWindowController: NSTableViewDataSource, NSTableViewDelegate {
         self.syncSelectionToView()
         systemView.restackStellars()
 
-        // Scroll to last selected stellar, unless selected all
-        if stellarTable.selectedRow > 0 && stellarTable.selectedRowIndexes.count < navDefaults.count {
+        // If single stellar selected, scroll to it
+        if stellarTable.selectedRowIndexes.count == 1 {
             let nav = navDefaults[stellarTable.selectedRow - 1]
             if let view = nav.view {
                 view.scrollToVisible(view.bounds.insetBy(dx: -4, dy: -4))
