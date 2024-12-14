@@ -23,7 +23,7 @@ ResForge is compatible with macOS 10.15 or later and runs natively on both 64-bi
 * Sound editor, supporting sampled 'snd ' resources.
 * Dialog editor, supporting 'DITL' resources (by Uli Kusterer) 
 * Menu editor, supporting 'MENU', 'CMNU' & 'cmnu' resources (by Uli Kusterer)
-* Tools for EV Nova, including a sprite (rlëD) editor, a ship animation (shän) editor and a galaxy editor.
+* Tools for EV Nova, including powerful templates for all types and a number of graphical editors.
 
 ### Supported File Formats
 
