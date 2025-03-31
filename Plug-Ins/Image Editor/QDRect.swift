@@ -14,9 +14,6 @@ extension QDRect {
         left = Int(try reader.read() as Int16)
         bottom = Int(try reader.read() as Int16)
         right = Int(try reader.read() as Int16)
-        guard isValid else {
-            throw ImageReaderError.invalid
-        }
     }
 
     init(for rep: NSBitmapImageRep) throws {

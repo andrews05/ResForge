@@ -45,6 +45,10 @@ extension Picture {
             }
         }
 
+        guard frame.isValid else {
+            throw ImageReaderError.invalid
+        }
+
         origin = frame.origin
         clipRect = frame
         imageRep = ImageFormat.rgbaRep(width: frame.width, height: frame.height)
@@ -178,6 +182,13 @@ extension Picture {
     private func readSrcAndDestRects(_ reader: BinaryDataReader) throws -> (srcRect: QDRect, destRect: QDRect) {
         var srcRect = try QDRect(reader)
         var destRect = try QDRect(reader)
+        // Source rect may be bigger than dest - clip if necessary (smaller would be invalid)
+        if srcRect.width > destRect.width {
+            srcRect.right = srcRect.left + destRect.width
+        }
+        if srcRect.height > destRect.height {
+            srcRect.bottom = srcRect.top + destRect.height
+        }
         // Apply clip rect to dest rect, adjusting source rect by matching amount
         if clipRect.top > destRect.top {
             srcRect.top += clipRect.top - destRect.top
@@ -195,7 +206,7 @@ extension Picture {
             srcRect.right -= destRect.right - clipRect.right
             destRect.right = clipRect.right
         }
-        guard destRect.isValid else {
+        guard srcRect.isValid, destRect.isValid else {
             throw ImageReaderError.invalid
         }
         // Align dest rect to the origin
@@ -206,6 +217,9 @@ extension Picture {
     private mutating func readClipRegion(_ reader: BinaryDataReader) throws {
         let length = Int(try reader.read() as UInt16)
         clipRect = try QDRect(reader)
+        guard clipRect.isValid else {
+            throw ImageReaderError.invalid
+        }
         try reader.advance(length - 10)
     }
 

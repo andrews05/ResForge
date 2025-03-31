@@ -85,7 +85,8 @@ extension PixelMap {
             pmReserved = try reader.read()
         }
 
-        guard pmVersion == 0 || pmVersion == 4,
+        guard bounds.isValid,
+              pmVersion == 0 || pmVersion == 4,
               packSize == 0
         else {
             throw ImageReaderError.invalid
@@ -118,7 +119,7 @@ extension PixelMap {
     func imageRep(pixelData: Data, colorTable: [RGBColor]? = nil, mask: Data? = nil) throws -> NSBitmapImageRep {
         let rep = ImageFormat.rgbaRep(width: bounds.width, height: bounds.height)
         let destRect = QDRect(bottom: bounds.height, right: bounds.width)
-        try self.draw(pixelData, colorTable: colorTable, to: rep, in: destRect, from: bounds)
+        try self.draw(pixelData, colorTable: colorTable, to: rep, in: destRect)
 
         if let mask {
             try Self.applyMask(mask, to: rep)
@@ -127,7 +128,8 @@ extension PixelMap {
         return rep
     }
 
-    func draw(_ pixelData: Data, colorTable: [RGBColor]? = nil, to rep: NSBitmapImageRep, in destRect: QDRect, from srcRect: QDRect) throws {
+    func draw(_ pixelData: Data, colorTable: [RGBColor]? = nil, to rep: NSBitmapImageRep, in destRect: QDRect, from srcRect: QDRect? = nil) throws {
+        var srcRect = srcRect ?? bounds
         guard rowBytes >= (bounds.width * Int(pixelSize) + 7) / 8,
               pixelData.count >= pixelDataSize,
               destRect.top >= 0,
@@ -142,7 +144,6 @@ extension PixelMap {
         }
 
         // Align source rect to bounds
-        var srcRect = srcRect
         srcRect.alignTo(bounds.origin)
 
         let yRange = srcRect.top..<srcRect.bottom
