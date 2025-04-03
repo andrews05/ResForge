@@ -182,13 +182,6 @@ extension Picture {
     private func readSrcAndDestRects(_ reader: BinaryDataReader) throws -> (srcRect: QDRect, destRect: QDRect) {
         var srcRect = try QDRect(reader)
         var destRect = try QDRect(reader)
-        // Source rect may be bigger than dest - clip if necessary (smaller would be invalid)
-        if srcRect.width > destRect.width {
-            srcRect.right = srcRect.left + destRect.width
-        }
-        if srcRect.height > destRect.height {
-            srcRect.bottom = srcRect.top + destRect.height
-        }
         // Apply clip rect to dest rect, adjusting source rect by matching amount
         if clipRect.top > destRect.top {
             srcRect.top += clipRect.top - destRect.top

@@ -118,8 +118,7 @@ extension PixelMap {
 
     func imageRep(pixelData: Data, colorTable: [RGBColor]? = nil, mask: Data? = nil) throws -> NSBitmapImageRep {
         let rep = ImageFormat.rgbaRep(width: bounds.width, height: bounds.height)
-        let destRect = QDRect(bottom: bounds.height, right: bounds.width)
-        try self.draw(pixelData, colorTable: colorTable, to: rep, in: destRect)
+        try self._draw(pixelData, colorTable: colorTable, to: rep)
 
         if let mask {
             try Self.applyMask(mask, to: rep)
@@ -130,15 +129,11 @@ extension PixelMap {
 
     func draw(_ pixelData: Data, colorTable: [RGBColor]? = nil, to rep: NSBitmapImageRep, in destRect: QDRect, from srcRect: QDRect? = nil) throws {
         var srcRect = srcRect ?? bounds
-        guard rowBytes >= (bounds.width * Int(pixelSize) + 7) / 8,
-              pixelData.count >= pixelDataSize,
-              destRect.top >= 0,
+        guard destRect.top >= 0,
               destRect.left >= 0,
               destRect.bottom <= rep.pixelsHigh,
               destRect.right <= rep.pixelsWide,
-              bounds.contains(srcRect),
-              srcRect.width == destRect.width,
-              srcRect.height == destRect.height
+              bounds.contains(srcRect)
         else {
             throw ImageReaderError.invalid
         }
@@ -146,9 +141,33 @@ extension PixelMap {
         // Align source rect to bounds
         srcRect.alignTo(bounds.origin)
 
+        if srcRect.width == destRect.width && srcRect.height == destRect.height {
+            try self._draw(pixelData, colorTable: colorTable, to: rep, in: destRect, from: srcRect)
+        } else {
+            // Scaling required - first draw to a temp rep then redraw to the target
+            let tmpRep = ImageFormat.rgbaRep(width: srcRect.width, height: srcRect.height)
+            try self._draw(pixelData, colorTable: colorTable, to: tmpRep, from: srcRect)
+            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
+            NSGraphicsContext.current?.imageInterpolation = .none
+            tmpRep.draw(in: NSRect(x: destRect.left, y: rep.pixelsHigh - destRect.bottom, width: destRect.width, height: destRect.height))
+        }
+    }
+
+    // Direct draw - rects are not validated
+    private func _draw(_ pixelData: Data, colorTable: [RGBColor]? = nil, to rep: NSBitmapImageRep, in destRect: QDRect? = nil, from srcRect: QDRect? = nil) throws {
+        guard rowBytes >= (bounds.width * Int(pixelSize) + 7) / 8,
+              pixelData.count >= pixelDataSize
+        else {
+            throw ImageReaderError.invalid
+        }
+
+        let srcRect = srcRect ?? QDRect(bottom: bounds.height, right: bounds.width)
         let yRange = srcRect.top..<srcRect.bottom
         let xRange = srcRect.left..<srcRect.right
-        var bitmap = rep.bitmapData! + destRect.top * rep.bytesPerRow + destRect.left * 4
+        var bitmap = rep.bitmapData!
+        if let destRect {
+            bitmap += destRect.top * rep.bytesPerRow + destRect.left * 4
+        }
         let rowBytes = resolvedRowBytes
 
         // Access the raw pixel buffer for best performance
