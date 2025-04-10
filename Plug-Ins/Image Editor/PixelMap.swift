@@ -149,7 +149,7 @@ extension PixelMap {
             try self._draw(pixelData, colorTable: colorTable, to: tmpRep, from: srcRect)
             NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
             NSGraphicsContext.current?.imageInterpolation = .none
-            tmpRep.draw(in: NSRect(x: destRect.left, y: rep.pixelsHigh - destRect.bottom, width: destRect.width, height: destRect.height))
+            tmpRep.draw(in: destRect.nsRect(in: rep))
         }
     }
 

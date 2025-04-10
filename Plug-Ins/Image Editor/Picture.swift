@@ -1,4 +1,5 @@
 import AppKit
+import CoreImage.CIFilterBuiltins
 import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=727
@@ -11,6 +12,8 @@ struct Picture {
     private var frame: QDRect
     private var clipRect: QDRect
     private var origin: QDPoint
+    private var matteRep: NSBitmapImageRep?
+    private var matteRect: QDRect?
 
     var imageRep: NSBitmapImageRep
     var format: ImageFormat = .unknown
@@ -114,11 +117,9 @@ extension Picture {
             case .compressedQuickTime:
                 try self.readQuickTime(reader)
                 // A successful QuickTime decode will replace the imageRep and we should stop processing.
-                return
+                break ops
             case .uncompressedQuickTime:
-                // Uncompressed QuickTime contains a matte which we can skip over. Actual image data should follow.
-                let length = Int(try reader.read() as UInt32)
-                try reader.advance(length)
+                try self.readUncompressedQuickTime(reader)
             default:
                 throw ImageReaderError.unsupported
             }
@@ -154,6 +155,7 @@ extension Picture {
         }
 
         try pixMap.draw(pixelData, colorTable: colorTable, to: imageRep, in: destRect, from: srcRect)
+        self.applyMatte(in: destRect)
     }
 
     private mutating func readDirectBits(_ reader: BinaryDataReader, withMaskRegion: Bool) throws {
@@ -177,6 +179,7 @@ extension Picture {
         }
 
         try pixMap.draw(pixelData, to: imageRep, in: destRect, from: srcRect)
+        self.applyMatte(in: destRect)
     }
 
     private func readSrcAndDestRects(_ reader: BinaryDataReader) throws -> (srcRect: QDRect, destRect: QDRect) {
@@ -241,10 +244,12 @@ extension Picture {
         let reader = BinaryDataReader(try reader.readData(length: size))
         try reader.advance(2 + 36) // version, matrix
         let matteSize = Int(try reader.read() as UInt32)
-        try reader.advance(8 + 2 + 8 + 4) // matteRect, transferMode, srcRect, accuracy
+        matteRect = try QDRect(reader)
+        try reader.advance(2 + 8 + 4) // transferMode, srcRect, accuracy
         let maskSize = Int(try reader.read() as UInt32)
         if matteSize > 0 {
-            try reader.advance(matteSize)
+            let matteReader = BinaryDataReader(try reader.readData(length: matteSize))
+            matteRep = try QTImageDesc(matteReader).readImage(matteReader)
         }
         if maskSize > 0 {
             try reader.advance(maskSize)
@@ -253,6 +258,43 @@ extension Picture {
         let imageDesc = try QTImageDesc(reader)
         format = .quickTime(imageDesc.compressor, imageDesc.resolvedDepth)
         imageRep = try imageDesc.readImage(reader)
+        self.applyMatte()
+    }
+
+    private mutating func readUncompressedQuickTime(_ reader: BinaryDataReader) throws {
+        let size = Int(try reader.read() as UInt32)
+
+        // Construct a new reader constrained to the specified size
+        let reader = BinaryDataReader(try reader.readData(length: size))
+        try reader.advance(2 + 36) // version, matrix
+        let matteSize = Int(try reader.read() as UInt32)
+        matteRect = try QDRect(reader)
+        if matteSize > 0 {
+            matteRep = try QTImageDesc(reader).readImage(reader)
+        }
+    }
+
+    // Apply a QuickTime matte as an alpha mask for the image
+    private mutating func applyMatte(in rect: QDRect? = nil) {
+        guard let matteRep else {
+            return
+        }
+        // First invert the matte
+        let invert = CIFilter.colorInvert()
+        invert.inputImage = CIImage(bitmapImageRep: matteRep)
+        // Then convert it to alpha
+        let blend = CIFilter.blendWithMask()
+        blend.inputImage = invert.outputImage
+        blend.maskImage = invert.outputImage
+        // Finally draw it into the image using destinationIn
+        if let mask = blend.outputImage.map(NSBitmapImageRep.init) {
+            let destRect = rect?.nsRect(in: imageRep) ?? NSRect(x: 0, y: 0, width: imageRep.pixelsWide, height: imageRep.pixelsHigh)
+            let srcRect = matteRect?.nsRect(in: matteRep) ?? .zero
+            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
+            mask.draw(in: destRect, from: srcRect, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
+        }
+        // Clear the matte so it doesn't get used again
+        self.matteRep = nil
     }
 }
 

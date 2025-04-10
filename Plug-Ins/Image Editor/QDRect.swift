@@ -62,6 +62,10 @@ extension QDRect {
     var isValid: Bool {
         bottom > top && right > left
     }
+
+    func nsRect(in rep: NSBitmapImageRep) -> NSRect {
+        return NSRect(x: left, y: rep.pixelsHigh - bottom, width: width, height: height)
+    }
 }
 
 struct QDPoint {
