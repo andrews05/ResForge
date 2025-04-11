@@ -5,6 +5,7 @@ enum ImageFormat: CustomStringConvertible {
     case monochrome
     case color(Int)
     case quickTime(UInt32, Int)
+    case custom(String)
 
     var description: String {
         switch self {
@@ -20,6 +21,8 @@ enum ImageFormat: CustomStringConvertible {
         case let .quickTime(compressor, depth):
             let fourCC = compressor.fourCharString.trimmingCharacters(in: .whitespaces).uppercased()
             return "\(depth)-bit \(fourCC)"
+        case let .custom(description):
+            return description
         }
     }
 }

@@ -216,6 +216,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
 
     @IBAction func setFormat(_ sender: NSMenuItem) {
         modifyBitmap { rep in
+            ImageFormat.removeTransparency(rep)
             switch sender.tag {
             case 1:
                 format = ImageFormat.reduceToMono(&rep)

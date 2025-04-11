@@ -292,6 +292,7 @@ extension Picture {
             let srcRect = matteRect?.nsRect(in: matteRep) ?? .zero
             NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
             mask.draw(in: destRect, from: srcRect, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
+            format = .custom("\(format.description) + Matte")
         }
         // Clear the matte so it doesn't get used again
         self.matteRep = nil
