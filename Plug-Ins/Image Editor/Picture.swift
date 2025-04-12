@@ -34,9 +34,7 @@ extension Picture {
                 throw ImageReaderError.invalid
             }
             let headerVersion = try reader.read() as Int16
-            if headerVersion == Self.version2 {
-                try reader.advance(2 + 16 + 4) // ??, fixed-point bounding box, reserved
-            } else if headerVersion == Self.extendedVersion2 {
+            if headerVersion == Self.extendedVersion2 {
                 try reader.advance(2 + 4 + 4) // reserved, hRes, vRes
                 // Set the frame to the source rect. This isn't strictly correct but it allows us
                 // to decode some images which would otherwise fail due to mismatched frame sizes
@@ -44,7 +42,8 @@ extension Picture {
                 frame = try QDRect(reader)
                 try reader.advance(4) // reserved
             } else {
-                throw ImageReaderError.invalid
+                // headerVersion should be version2 at this point, but sometimes it isn't
+                try reader.advance(2 + 16 + 4) // ??, fixed-point bounding box, reserved
             }
         }
 
