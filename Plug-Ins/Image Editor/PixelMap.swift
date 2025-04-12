@@ -116,14 +116,9 @@ extension PixelMap {
         }
     }
 
-    func imageRep(pixelData: Data, colorTable: [RGBColor]? = nil, mask: Data? = nil) throws -> NSBitmapImageRep {
+    func imageRep(pixelData: Data, colorTable: [RGBColor]? = nil) throws -> NSBitmapImageRep {
         let rep = ImageFormat.rgbaRep(width: bounds.width, height: bounds.height)
         try self._draw(pixelData, colorTable: colorTable, to: rep)
-
-        if let mask {
-            try Self.applyMask(mask, to: rep)
-        }
-
         return rep
     }
 
@@ -246,9 +241,14 @@ extension PixelMap {
         }
     }
 
-    static func applyMask(_ mask: Data, to rep: NSBitmapImageRep) throws {
-        let rowBytes = (rep.pixelsWide + 7) / 8
-        guard mask.count == rowBytes * rep.pixelsHigh else {
+    func applyMask(_ mask: Data, to rep: NSBitmapImageRep) throws {
+        try Self.applyMask(mask, to: rep, rowBytes: rowBytes)
+    }
+
+    static func applyMask(_ mask: Data, to rep: NSBitmapImageRep, rowBytes: Int) throws {
+        guard rowBytes >= (rep.pixelsWide + 7) / 8,
+              mask.count == rowBytes * rep.pixelsHigh
+        else {
             throw ImageReaderError.invalid
         }
         // Loop over the pixels and set the alpha component according to the mask

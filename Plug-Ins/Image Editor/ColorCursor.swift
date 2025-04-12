@@ -17,7 +17,8 @@ extension ColorCursor {
         let colorTable = try ColorTable.read(reader)
         try reader.setPosition(Int(crsr.crsrData))
         let pixelData = try reader.readData(length: pixMap.pixelDataSize)
-        imageRep = try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable, mask: crsr.crsrMask)
+        imageRep = try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable)
+        try PixelMap.applyMask(crsr.crsrMask, to: imageRep, rowBytes: 2)
         format = pixMap.format
     }
 

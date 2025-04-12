@@ -20,7 +20,8 @@ extension ColorIcon {
         let colorTable = try ColorTable.read(reader)
         let pixelData = try reader.readData(length: pixMap.pixelDataSize)
 
-        imageRep = try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable, mask: mask)
+        imageRep = try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable)
+        try maskMap.applyMask(mask, to: imageRep)
         format = pixMap.format
     }
 
