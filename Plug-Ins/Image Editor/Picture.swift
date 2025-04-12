@@ -101,7 +101,9 @@ extension Picture {
             case .nop, .hiliteMode, .defHilite,
                     .frameSameRect, .paintSameRect, .eraseSameRect, .invertSameRect, .fillSameRect:
                 continue
-            case .penMode, .shortLineFrom, .shortComment:
+            case .textFace:
+                try reader.advance(1)
+            case .textFont, .textMode, .penMode, .textSize, .shortLineFrom, .shortComment:
                 try reader.advance(2)
             case .penSize, .lineFrom:
                 try reader.advance(4)
@@ -110,10 +112,18 @@ extension Picture {
             case .penPattern, .fillPattern, .line,
                     .frameRect, .paintRect, .eraseRect, .invertRect, .fillRect:
                 try reader.advance(8)
+            case .longText:
+                try self.sizedSkip(reader, pre: 4, byte: true)
+            case .dhText, .dvText:
+                try self.sizedSkip(reader, pre: 1, byte: true)
+            case .dhdvText:
+                try self.sizedSkip(reader, pre: 2, byte: true)
+            case .fontName, .lineJustify, .glyphState:
+                try self.sizedSkip(reader)
             case .frameRegion, .paintRegion, .eraseRegion, .invertRegion, .fillRegion:
                 try self.skipRegion(reader)
             case .longComment:
-                try self.skipLongComment(reader)
+                try self.sizedSkip(reader, pre: 2)
             case .compressedQuickTime:
                 try self.readQuickTime(reader)
                 // A successful QuickTime decode will replace the imageRep and we should stop processing.
@@ -230,9 +240,13 @@ extension Picture {
         try reader.advance(length - 2)
     }
 
-    private func skipLongComment(_ reader: BinaryDataReader) throws {
-        try reader.advance(2) // kind
-        let length = Int(try reader.read() as UInt16)
+    private func sizedSkip(_ reader: BinaryDataReader, pre: Int = 0, byte: Bool = false) throws {
+        try reader.advance(pre)
+        let length = if byte {
+            Int(try reader.read() as UInt8)
+        } else {
+            Int(try reader.read() as UInt16)
+        }
         try reader.advance(length)
     }
 
@@ -459,11 +473,15 @@ extension Picture {
 enum PictOpcode: UInt16 {
     case nop = 0x0000
     case clipRegion = 0x0001
+    case textFont = 0x0003
+    case textFace = 0x0004
+    case textMode = 0x0005
     case penSize = 0x0007
     case penMode = 0x0008
     case penPattern = 0x0009
     case fillPattern = 0x000A
     case origin = 0x000C
+    case textSize = 0x000D
     case versionOp = 0x0011
     case rgbFgColor = 0x001A
     case rgbBkCcolor = 0x001B
@@ -475,6 +493,13 @@ enum PictOpcode: UInt16 {
     case lineFrom = 0x0021
     case shortLine = 0x0022
     case shortLineFrom = 0x0023
+    case longText = 0x0028
+    case dhText = 0x0029
+    case dvText = 0x002A
+    case dhdvText = 0x002B
+    case fontName = 0x002C
+    case lineJustify = 0x002D
+    case glyphState = 0x002E
     case frameRect = 0x0030
     case paintRect = 0x0031
     case eraseRect = 0x0032
