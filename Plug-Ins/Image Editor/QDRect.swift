@@ -63,14 +63,14 @@ extension QDRect {
         bottom > top && right > left
     }
 
-    func nsRect(in rep: NSBitmapImageRep) -> NSRect {
-        return NSRect(x: left, y: rep.pixelsHigh - bottom, width: width, height: height)
+    var nsRect: NSRect {
+        NSRect(x: left, y: top, width: width, height: height)
     }
 }
 
 struct QDPoint {
-    var v: Int
-    var h: Int
+    var v: Int = 0
+    var h: Int = 0
 }
 
 extension QDPoint {
@@ -91,5 +91,9 @@ extension QDPoint {
     var y: Int {
         get { v }
         set { v = newValue }
+    }
+
+    var nsPoint: NSPoint {
+        NSPoint(x: x, y: y)
     }
 }

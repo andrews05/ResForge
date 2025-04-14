@@ -3,7 +3,7 @@ import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=727
 
-struct Picture {
+class Picture {
     static let version1: UInt16 = 0x1101 // 1-byte versionOp + version number
     static let version2: Int16 = -1
     static let extendedVersion2: Int16 = -2
@@ -16,10 +16,8 @@ struct Picture {
 
     var imageRep: NSBitmapImageRep
     var format: ImageFormat = .unknown
-}
 
-extension Picture {
-    init(_ reader: BinaryDataReader, _ readOps: Bool = true) throws {
+    required init(_ reader: BinaryDataReader, decode: Bool = true) throws {
         try reader.advance(2) // v1 size
         frame = try QDRect(reader)
 
@@ -53,18 +51,28 @@ extension Picture {
         origin = frame.origin
         clipRect = frame
         imageRep = ImageFormat.rgbaRep(width: frame.width, height: frame.height)
-        if readOps {
-            try self.readOps(reader)
+        if decode {
+            try self.decode(reader)
         }
     }
 
+    required init(imageRep: NSBitmapImageRep) throws {
+        self.imageRep = ImageFormat.normalize(imageRep)
+        v1 = false
+        frame = try QDRect(for: imageRep)
+        clipRect = frame
+        origin = frame.origin
+    }
+}
+
+extension Picture {
     static func rep(_ data: Data, format: inout ImageFormat) -> NSBitmapImageRep? {
         let reader = BinaryDataReader(data)
-        guard var pict = try? Self(reader, false) else {
+        guard let pict = try? Self(reader, decode: false) else {
             return nil
         }
         do {
-            try pict.readOps(reader)
+            try pict.decode(reader)
             format = pict.format
             return pict.imageRep
         } catch {
@@ -74,7 +82,32 @@ extension Picture {
         }
     }
 
-    private mutating func readOps(_ reader: BinaryDataReader) throws {
+    private func decode(_ reader: BinaryDataReader) throws {
+        var error: Error? = nil
+        // Create an NSImage with flipped custom draw handler
+        let size = NSSize(width: frame.width, height: frame.height)
+        let img = NSImage(size: size, flipped: true) { _ in
+            do {
+                NSGraphicsContext.current?.imageInterpolation = .none
+                NSGraphicsContext.current?.shouldAntialias = false
+                try self.readOps(reader)
+                return true
+            } catch let err {
+                error = err
+                return false
+            }
+        }
+        // Draw the image into the rep
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
+        img.draw(in: NSRect(origin: .zero, size: size))
+        NSGraphicsContext.restoreGraphicsState()
+        if let error {
+            throw error
+        }
+    }
+
+    private func readOps(_ reader: BinaryDataReader) throws {
         let readOp = v1 ? PictOpcode.read1 : PictOpcode.read2
     ops:while true {
             switch try readOp(reader) {
@@ -96,19 +129,44 @@ extension Picture {
                 try self.readDirectBits(reader, withMaskRegion: false)
             case .directBitsRegion:
                 try self.readDirectBits(reader, withMaskRegion: true)
+            case .rgbFgColor:
+                try self.readColor(reader).set()
+            case .line:
+                let from = try QDPoint(reader)
+                let to = try QDPoint(reader)
+                NSBezierPath.strokeLine(from: self.convert(from), to: self.convert(to))
+            case .lineFrom:
+                let to = try QDPoint(reader)
+                NSBezierPath.strokeLine(from: self.convert(origin), to: self.convert(to))
+            case .shortLine:
+                let from = try QDPoint(reader)
+                var to = from
+                to.x += Int(try reader.read() as Int8)
+                to.y += Int(try reader.read() as Int8)
+                NSBezierPath.strokeLine(from: self.convert(from), to: self.convert(to))
+            case .shortLineFrom:
+                var to = origin
+                to.x += Int(try reader.read() as Int8)
+                to.y += Int(try reader.read() as Int8)
+                NSBezierPath.strokeLine(from: self.convert(origin), to: self.convert(to))
+            case .frameRect:
+                var rect = try QDRect(reader)
+                rect.alignTo(origin)
+                // Inset by half the stroke width
+                NSBezierPath.stroke(rect.nsRect.insetBy(dx: 0.5, dy: 0.5))
             case .nop, .hiliteMode, .defHilite,
                     .frameSameRect, .paintSameRect, .eraseSameRect, .invertSameRect, .fillSameRect:
                 continue
             case .textFace:
                 try reader.advance(1)
-            case .textFont, .textMode, .penMode, .textSize, .shortLineFrom, .shortComment:
+            case .textFont, .textMode, .penMode, .textSize, .shortComment:
                 try reader.advance(2)
-            case .penSize, .lineFrom:
+            case .penSize:
                 try reader.advance(4)
-            case .shortLine, .rgbFgColor, .rgbBkCcolor, .hiliteColor, .opColor:
+            case .rgbBkCcolor, .hiliteColor, .opColor:
                 try reader.advance(6)
-            case .penPattern, .fillPattern, .line,
-                    .frameRect, .paintRect, .eraseRect, .invertRect, .fillRect:
+            case .penPattern, .fillPattern,
+                    .paintRect, .eraseRect, .invertRect, .fillRect:
                 try reader.advance(8)
             case .longText:
                 try self.sizedSkip(reader, pre: 4, byte: true)
@@ -134,12 +192,12 @@ extension Picture {
         }
 
         // If we reached the end and have nothing to show for it then we should fail
-        if case .unknown = format {
-            throw ImageReaderError.unsupported
-        }
+//        if case .unknown = format {
+//            throw ImageReaderError.unsupported
+//        }
     }
 
-    private mutating func readIndirectBitsRect(_ reader: BinaryDataReader, packed: Bool, withMaskRegion: Bool) throws {
+    private func readIndirectBitsRect(_ reader: BinaryDataReader, packed: Bool, withMaskRegion: Bool) throws {
         let pixMap = try PixelMap(reader, skipBaseAddr: true)
         format = pixMap.format
         let colorTable = if pixMap.isPixmap {
@@ -148,7 +206,8 @@ extension Picture {
             ColorTable.system1
         }
 
-        let (srcRect, destRect) = try self.readSrcAndDestRects(reader)
+        var (srcRect, destRect) = try self.readSrcAndDestRects(reader)
+        srcRect.alignTo(pixMap.bounds.origin)
 
         try reader.advance(2) // transfer mode
         if withMaskRegion {
@@ -162,15 +221,17 @@ extension Picture {
             try reader.readData(length: pixMap.pixelDataSize)
         }
 
-        try pixMap.draw(pixelData, colorTable: colorTable, to: imageRep, in: destRect, from: srcRect)
-        self.applyMatte(in: destRect)
+        let rep = try pixMap.imageRep(pixelData: pixelData, colorTable: colorTable)
+        self.applyMatte(to: rep, in: srcRect)
+        rep.draw(in: destRect.nsRect, from: srcRect.nsRect, operation: .copy, fraction: 1, respectFlipped: true, hints: nil)
     }
 
-    private mutating func readDirectBits(_ reader: BinaryDataReader, withMaskRegion: Bool) throws {
+    private func readDirectBits(_ reader: BinaryDataReader, withMaskRegion: Bool) throws {
         let pixMap = try PixelMap(reader)
         format = pixMap.format
 
-        let (srcRect, destRect) = try self.readSrcAndDestRects(reader)
+        var (srcRect, destRect) = try self.readSrcAndDestRects(reader)
+        srcRect.alignTo(pixMap.bounds.origin)
 
         try reader.advance(2) // transfer mode
         if withMaskRegion {
@@ -186,8 +247,9 @@ extension Picture {
             try reader.readData(length: pixMap.pixelDataSize)
         }
 
-        try pixMap.draw(pixelData, to: imageRep, in: destRect, from: srcRect)
-        self.applyMatte(in: destRect)
+        let rep = try pixMap.imageRep(pixelData: pixelData)
+        self.applyMatte(to: rep, in: srcRect)
+        rep.draw(in: destRect.nsRect, from: .zero, operation: .copy, fraction: 1, respectFlipped: true, hints: nil)
     }
 
     private func readSrcAndDestRects(_ reader: BinaryDataReader) throws -> (srcRect: QDRect, destRect: QDRect) {
@@ -218,7 +280,7 @@ extension Picture {
         return (srcRect, destRect)
     }
 
-    private mutating func readClipRegion(_ reader: BinaryDataReader) throws {
+    private func readClipRegion(_ reader: BinaryDataReader) throws {
         let length = Int(try reader.read() as UInt16)
         clipRect = try QDRect(reader)
         guard clipRect.isValid else {
@@ -227,9 +289,25 @@ extension Picture {
         try reader.advance(length - 10)
     }
 
-    private mutating func readOrigin(_ reader: BinaryDataReader) throws {
+    private func readOrigin(_ reader: BinaryDataReader) throws {
         origin.x += Int(try reader.read() as Int16)
         origin.y += Int(try reader.read() as Int16)
+    }
+
+    private func readColor(_ reader: BinaryDataReader) throws -> NSColor {
+        let data = try reader.readData(length: 6)
+        return NSColor(deviceRed: Double(data[data.startIndex + 0]) / 255,
+                       green: Double(data[data.startIndex + 2]) / 255,
+                       blue: Double(data[data.startIndex + 4]) / 255,
+                       alpha: 1)
+    }
+
+    private func convert(_ point: QDPoint) -> NSPoint {
+        var p = point.nsPoint
+        // Align to origin and offset by half the stroke width
+        p.x += Double(origin.x) + 0.5
+        p.y += Double(origin.y) + 0.5
+        return p
     }
 
     private func skipRegion(_ reader: BinaryDataReader) throws {
@@ -247,7 +325,7 @@ extension Picture {
         try reader.advance(length)
     }
 
-    private mutating func readQuickTime(_ reader: BinaryDataReader) throws {
+    private func readQuickTime(_ reader: BinaryDataReader) throws {
         // https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#484
         let size = Int(try reader.read() as UInt32)
 
@@ -256,7 +334,9 @@ extension Picture {
         try reader.advance(2 + 36) // version, matrix
         let matteSize = Int(try reader.read() as UInt32)
         matteRect = try QDRect(reader)
-        try reader.advance(2 + 8 + 4) // transferMode, srcRect, accuracy
+        try reader.advance(2) // transferMode
+        let srcRect = try QDRect(reader)
+        try reader.advance(4) // accuracy
         let maskSize = Int(try reader.read() as UInt32)
         if matteSize > 0 {
             let matteReader = BinaryDataReader(try reader.readData(length: matteSize))
@@ -268,11 +348,13 @@ extension Picture {
 
         let imageDesc = try QTImageDesc(reader)
         format = .quickTime(imageDesc.compressor, imageDesc.resolvedDepth)
-        imageRep = try imageDesc.readImage(reader)
-        self.applyMatte()
+        let rep = try imageDesc.readImage(reader)
+        self.applyMatte(to: rep, in: srcRect)
+        let destRect = NSRect(x: 0, y: 0, width: rep.pixelsWide, height: rep.pixelsHigh)
+        rep.draw(in: destRect, from: srcRect.nsRect, operation: .copy, fraction: 1, respectFlipped: true, hints: nil)
     }
 
-    private mutating func readUncompressedQuickTime(_ reader: BinaryDataReader) throws {
+    private func readUncompressedQuickTime(_ reader: BinaryDataReader) throws {
         let size = Int(try reader.read() as UInt32)
 
         // Construct a new reader constrained to the specified size
@@ -285,9 +367,9 @@ extension Picture {
         }
     }
 
-    // Apply a QuickTime matte as an alpha mask for the image
-    private mutating func applyMatte(in rect: QDRect? = nil) {
-        guard let matteRep else {
+    // Apply a QuickTime matte as an alpha mask for the rep
+    private func applyMatte(to rep: NSBitmapImageRep, in rect: QDRect) {
+        guard let matteRep, let matteRect else {
             return
         }
         // First convert the matte into an alpha channel
@@ -295,11 +377,11 @@ extension Picture {
         for i in 0..<(matteRep.pixelsWide * matteRep.pixelsHigh) {
             bitmap[i * 4 + 3] = 255 - bitmap[i * 4]
         }
-        // Then draw it into the image using destinationIn
-        let destRect = rect?.nsRect(in: imageRep) ?? NSRect(x: 0, y: 0, width: imageRep.pixelsWide, height: imageRep.pixelsHigh)
-        let srcRect = matteRect?.nsRect(in: matteRep) ?? .zero
-        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
-        matteRep.draw(in: destRect, from: srcRect, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
+        // Then draw it into the rep using destinationIn
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
+        matteRep.draw(in: rect.nsRect, from: matteRect.nsRect, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
+        NSGraphicsContext.restoreGraphicsState()
         format = .custom("\(format.description) + Matte")
         // Clear the matte so it doesn't get used again
         self.matteRep = nil
@@ -309,23 +391,15 @@ extension Picture {
 // MARK: Writer
 
 extension Picture {
-    init(imageRep: NSBitmapImageRep) throws {
-        self.imageRep = ImageFormat.normalize(imageRep)
-        v1 = false
-        frame = try QDRect(for: imageRep)
-        clipRect = frame
-        origin = frame.origin
-    }
-
     static func data(from rep: NSBitmapImageRep, format: inout ImageFormat) throws -> Data {
-        var pict = try Self(imageRep: rep)
+        let pict = try Self(imageRep: rep)
         let writer = BinaryDataWriter()
         try pict.write(writer, format: format)
         format = pict.format
         return writer.data
     }
 
-    mutating func write(_ writer: BinaryDataWriter, format: ImageFormat) throws {
+    func write(_ writer: BinaryDataWriter, format: ImageFormat) throws {
         // Header
         writer.advance(2) // v1 size
         frame.write(writer)
@@ -366,7 +440,7 @@ extension Picture {
         writer.write(PictOpcode.opEndPicture.rawValue)
     }
 
-    private mutating func writeIndirectBits(_ writer: BinaryDataWriter, mono: Bool = false) throws {
+    private func writeIndirectBits(_ writer: BinaryDataWriter, mono: Bool = false) throws {
         writer.write(PictOpcode.packBitsRect.rawValue)
         var (pixMap, pixelData, colorTable) = try PixelMap.build(from: imageRep, startingColors: mono ? ColorTable.system1 : nil)
         if mono {

@@ -75,23 +75,19 @@ extension PixelPattern {
 
             // Construct a rep and draw the first ppat
             let rep = ImageFormat.rgbaRep(width: width * gridX, height: height * gridY)
-            var destRect = QDRect(bottom: height, right: width)
-            try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, in: destRect)
+            try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep)
 
             // Read and draw remaining ppats - assume they're all the same size as the first
+            var point = QDPoint()
             for offset in offsets[1...] {
                 try reader.setPosition(offset)
-                if destRect.right == rep.pixelsWide {
-                    destRect.top = destRect.bottom
-                    destRect.bottom += height
-                    destRect.left = 0
-                    destRect.right = width
-                } else {
-                    destRect.left = destRect.right
-                    destRect.right += width
+                point.x += width
+                if point.x == rep.pixelsWide {
+                    point.x = 0
+                    point.y += height
                 }
                 let ppat = try Self(reader)
-                try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, in: destRect)
+                try ppat.pixMap.draw(ppat.pixelData, colorTable: ppat.colorTable, to: rep, at: point)
             }
             return rep
         } catch {

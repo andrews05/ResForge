@@ -118,51 +118,26 @@ extension PixelMap {
 
     func imageRep(pixelData: Data, colorTable: [RGBColor]? = nil) throws -> NSBitmapImageRep {
         let rep = ImageFormat.rgbaRep(width: bounds.width, height: bounds.height)
-        try self._draw(pixelData, colorTable: colorTable, to: rep)
+        try self.draw(pixelData, colorTable: colorTable, to: rep)
         return rep
     }
 
-    func draw(_ pixelData: Data, colorTable: [RGBColor]? = nil, to rep: NSBitmapImageRep, in destRect: QDRect, from srcRect: QDRect? = nil) throws {
-        var srcRect = srcRect ?? bounds
-        guard destRect.top >= 0,
-              destRect.left >= 0,
-              destRect.bottom <= rep.pixelsHigh,
-              destRect.right <= rep.pixelsWide,
-              bounds.contains(srcRect)
-        else {
-            throw ImageReaderError.invalid
-        }
-
-        // Align source rect to bounds
-        srcRect.alignTo(bounds.origin)
-
-        if srcRect.width == destRect.width && srcRect.height == destRect.height {
-            try self._draw(pixelData, colorTable: colorTable, to: rep, in: destRect, from: srcRect)
-        } else {
-            // Scaling required - first draw to a temp rep then redraw to the target
-            let tmpRep = ImageFormat.rgbaRep(width: srcRect.width, height: srcRect.height)
-            try self._draw(pixelData, colorTable: colorTable, to: tmpRep, from: srcRect)
-            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
-            NSGraphicsContext.current?.imageInterpolation = .none
-            tmpRep.draw(in: destRect.nsRect(in: rep))
-        }
-    }
-
-    // Direct draw - rects are not validated
-    private func _draw(_ pixelData: Data, colorTable: [RGBColor]? = nil, to rep: NSBitmapImageRep, in destRect: QDRect? = nil, from srcRect: QDRect? = nil) throws {
+    func draw(_ pixelData: Data, colorTable: [RGBColor]? = nil, to rep: NSBitmapImageRep, at point: QDPoint = QDPoint()) throws {
         guard rowBytes >= (bounds.width * Int(pixelSize) + 7) / 8,
-              pixelData.count >= pixelDataSize
+              pixelData.count >= pixelDataSize,
+              point.x >= 0,
+              point.y >= 0,
+              (point.x + bounds.width) <= rep.pixelsWide,
+              (point.y + bounds.height) <= rep.pixelsHigh
         else {
             throw ImageReaderError.invalid
         }
 
-        let srcRect = srcRect ?? QDRect(bottom: bounds.height, right: bounds.width)
-        let yRange = srcRect.top..<srcRect.bottom
-        let xRange = srcRect.left..<srcRect.right
         var bitmap = rep.bitmapData!
-        if let destRect {
-            bitmap += destRect.top * rep.bytesPerRow + destRect.left * 4
-        }
+        bitmap += point.y * rep.bytesPerRow + point.x * 4
+
+        let yRange = 0..<bounds.height
+        let xRange = 0..<bounds.width
         let rowBytes = resolvedRowBytes
 
         // Access the raw pixel buffer for best performance
