@@ -229,9 +229,8 @@ extension Picture {
     }
 
     private mutating func readOrigin(_ reader: BinaryDataReader) throws {
-        let delta = try QDPoint(reader)
-        origin.x += delta.x
-        origin.y += delta.y
+        origin.x += Int(try reader.read() as Int16)
+        origin.y += Int(try reader.read() as Int16)
     }
 
     private func skipRegion(_ reader: BinaryDataReader) throws {

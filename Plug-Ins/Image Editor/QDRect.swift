@@ -51,7 +51,7 @@ extension QDRect {
     }
 
     var origin: QDPoint {
-        QDPoint(x: left, y: top)
+        QDPoint(v: top, h: left)
     }
     var width: Int {
         right - left
@@ -69,18 +69,27 @@ extension QDRect {
 }
 
 struct QDPoint {
-    var x: Int
-    var y: Int
+    var v: Int
+    var h: Int
 }
 
 extension QDPoint {
     init(_ reader: BinaryDataReader) throws {
-        x = Int(try reader.read() as Int16)
-        y = Int(try reader.read() as Int16)
+        v = Int(try reader.read() as Int16)
+        h = Int(try reader.read() as Int16)
     }
 
     func write(_ writer: BinaryDataWriter) {
-        writer.write(Int16(x))
-        writer.write(Int16(y))
+        writer.write(Int16(v))
+        writer.write(Int16(h))
+    }
+
+    var x: Int {
+        get { h }
+        set { h = newValue }
+    }
+    var y: Int {
+        get { v }
+        set { v = newValue }
     }
 }
