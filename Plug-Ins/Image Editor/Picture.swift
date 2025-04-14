@@ -1,5 +1,4 @@
 import AppKit
-import CoreImage.CIFilterBuiltins
 import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=727
@@ -291,21 +290,17 @@ extension Picture {
         guard let matteRep else {
             return
         }
-        // First invert the matte
-        let invert = CIFilter.colorInvert()
-        invert.inputImage = CIImage(bitmapImageRep: matteRep)
-        // Then convert it to alpha
-        let blend = CIFilter.blendWithMask()
-        blend.inputImage = invert.outputImage
-        blend.maskImage = invert.outputImage
-        // Finally draw it into the image using destinationIn
-        if let mask = blend.outputImage.map(NSBitmapImageRep.init) {
-            let destRect = rect?.nsRect(in: imageRep) ?? NSRect(x: 0, y: 0, width: imageRep.pixelsWide, height: imageRep.pixelsHigh)
-            let srcRect = matteRect?.nsRect(in: matteRep) ?? .zero
-            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
-            mask.draw(in: destRect, from: srcRect, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
-            format = .custom("\(format.description) + Matte")
+        // First convert the matte into an alpha channel
+        let bitmap = matteRep.bitmapData!
+        for i in 0..<(matteRep.pixelsWide * matteRep.pixelsHigh) {
+            bitmap[i * 4 + 3] = 255 - bitmap[i * 4]
         }
+        // Then draw it into the image using destinationIn
+        let destRect = rect?.nsRect(in: imageRep) ?? NSRect(x: 0, y: 0, width: imageRep.pixelsWide, height: imageRep.pixelsHigh)
+        let srcRect = matteRect?.nsRect(in: matteRep) ?? .zero
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
+        matteRep.draw(in: destRect, from: srcRect, operation: .destinationIn, fraction: 1, respectFlipped: true, hints: nil)
+        format = .custom("\(format.description) + Matte")
         // Clear the matte so it doesn't get used again
         self.matteRep = nil
     }
