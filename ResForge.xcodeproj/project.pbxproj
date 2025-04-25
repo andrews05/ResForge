@@ -175,7 +175,6 @@
 		5504F7462B7A7E4E0096F16A /* DITLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7452B7A7E4E0096F16A /* DITLItem.swift */; };
 		5504F7482B7A7EB20096F16A /* DITLItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7472B7A7EB20096F16A /* DITLItemView.swift */; };
 		5504F74A2B7A7EEC0096F16A /* DITLDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */; };
-		5504F74C2B7A7F2E0096F16A /* DITLFlippedClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */; };
 		554125B02B8037E4008B6832 /* RFSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AACD7B24CE931A0081DD4A /* RFSupport.framework */; };
 		554125C62B803911008B6832 /* MenuEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554125BD2B803911008B6832 /* MenuEditorWindow.xib */; };
 		554125C82B803911008B6832 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554125C02B803911008B6832 /* MenuItem.swift */; };
@@ -510,7 +509,6 @@
 		5504F7452B7A7E4E0096F16A /* DITLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITLItem.swift; sourceTree = "<group>"; usesTabs = 0; };
 		5504F7472B7A7EB20096F16A /* DITLItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITLItemView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITLDocumentView.swift; sourceTree = "<group>"; usesTabs = 0; };
-		5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITLFlippedClipView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		550B9046189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		550B9047189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CreateResource.xib; sourceTree = "<group>"; };
 		550B9048189A0360005AC38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfoWindow.xib; sourceTree = "<group>"; };
@@ -863,7 +861,6 @@
 				5504F7492B7A7EEC0096F16A /* DITLDocumentView.swift */,
 				5504F7452B7A7E4E0096F16A /* DITLItem.swift */,
 				5504F7472B7A7EB20096F16A /* DITLItemView.swift */,
-				5504F74B2B7A7F2E0096F16A /* DITLFlippedClipView.swift */,
 				55FB36182B715497000F1528 /* StdSystemIcons.rsrc */,
 				55FB36192B715497000F1528 /* DialogEditorWindow.xib */,
 				55FB361C2B715497000F1528 /* Info.plist */,
@@ -1459,7 +1456,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5504F74A2B7A7EEC0096F16A /* DITLDocumentView.swift in Sources */,
-				5504F74C2B7A7F2E0096F16A /* DITLFlippedClipView.swift in Sources */,
 				55FB36232B778E9A000F1528 /* DialogEditorWindowController.swift in Sources */,
 				5504F7482B7A7EB20096F16A /* DITLItemView.swift in Sources */,
 				5504F7462B7A7E4E0096F16A /* DITLItem.swift in Sources */,

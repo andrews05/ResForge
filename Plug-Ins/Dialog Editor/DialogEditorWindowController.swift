@@ -9,7 +9,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     
     let resource: Resource
     private let manager: RFEditorManager
-    @IBOutlet var scrollView: NSScrollView!
+    @IBOutlet var documentView: DITLDocumentView!
     @IBOutlet var typePopup: NSPopUpButton!
     @IBOutlet var resourceIDField: NSTextField!
     @IBOutlet var titleContentsField: NSTextField!
@@ -22,6 +22,8 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     @objc dynamic var selectedItemView: DITLItemView?
     private var items = [DITLItem]()
     private var isSelectingItems = false
+    private var widthConstraint: NSLayoutConstraint!
+    private var heightConstraint: NSLayoutConstraint!
 
     override var windowNibName: String {
         return "DialogEditorWindow"
@@ -38,11 +40,21 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     }
     
     override func windowDidLoad() {
-        NotificationCenter.default.addObserver(self, selector: #selector(itemDoubleClicked(_:)), name: DITLDocumentView.itemDoubleClickedNotification, object: self.scrollView.documentView)
-        NotificationCenter.default.addObserver(self, selector: #selector(itemFrameDidChange(_:)), name: DITLDocumentView.itemFrameDidChangeNotification, object: self.scrollView.documentView)
-        NotificationCenter.default.addObserver(self, selector: #selector(selectedItemDidChange(_:)), name: DITLDocumentView.selectionDidChangeNotification, object: self.scrollView.documentView)
-        NotificationCenter.default.addObserver(self, selector: #selector(selectedItemWillChange(_:)), name: DITLDocumentView.selectionWillChangeNotification, object: self.scrollView.documentView)
+        // Configure constraints to allow maintaining a minimum size of the document view
+        let clipView = documentView.superview
+        let l = NSLayoutConstraint(item: documentView!, attribute: .leading, relatedBy: .equal, toItem: clipView, attribute: .leading, multiplier: 1, constant: 0)
+        let r = NSLayoutConstraint(item: documentView!, attribute: .trailing, relatedBy: .greaterThanOrEqual, toItem: clipView, attribute: .trailing, multiplier: 1, constant: 0)
+        let t = NSLayoutConstraint(item: documentView!, attribute: .top, relatedBy: .equal, toItem: clipView, attribute: .top, multiplier: 1, constant: 0)
+        let b = NSLayoutConstraint(item: documentView!, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: clipView, attribute: .bottom, multiplier: 1, constant: 0)
+        widthConstraint = NSLayoutConstraint(item: documentView!, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
+        heightConstraint = NSLayoutConstraint(item: documentView!, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
+        clipView?.addConstraints([widthConstraint, heightConstraint, l, r, t, b])
+        NotificationCenter.default.addObserver(self, selector: #selector(itemDoubleClicked(_:)), name: DITLDocumentView.itemDoubleClickedNotification, object: documentView)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemFrameDidChange(_:)), name: DITLDocumentView.itemFrameDidChangeNotification, object: documentView)
+        NotificationCenter.default.addObserver(self, selector: #selector(selectedItemDidChange(_:)), name: DITLDocumentView.selectionDidChangeNotification, object: documentView)
+        NotificationCenter.default.addObserver(self, selector: #selector(selectedItemWillChange(_:)), name: DITLDocumentView.selectionWillChangeNotification, object: documentView)
         self.loadItems()
+        self.loadDLOG()
         self.updateView()
     }
     
@@ -52,6 +64,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     
     @objc func itemFrameDidChange(_ notification: Notification) {
         self.setDocumentEdited(true)
+        self.updateMinSize()
     }
     
     func reflectSelectedItem() {
@@ -93,7 +106,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     }
     
     @objc func selectedItemWillChange(_ notification: Notification) {
-        window?.makeFirstResponder(scrollView.documentView)
+        window?.makeFirstResponder(documentView)
     }
     
     @objc func selectedItemDidChange(_ notification: Notification) {
@@ -108,26 +121,22 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     
     /// Reload the views representing our ``items`` list.
     private func updateView() {
-        for view in self.scrollView.documentView?.subviews ?? [] {
-            view.removeFromSuperview()
-        }
-        var maxSize = NSSize(width: 128, height: 64)
-        for item in items {
-            self.scrollView.documentView?.addSubview(item.itemView)
-            let itemBox = item.itemView.frame
-            maxSize.width = max(itemBox.maxX, maxSize.width)
-            maxSize.height = max(itemBox.maxY, maxSize.height)
-        }
-        var documentBox = self.scrollView.documentView?.frame ?? NSZeroRect
-        documentBox.size.width = max(documentBox.size.width, maxSize.width + 16)
-        documentBox.size.height = max(documentBox.size.height, maxSize.height + 16)
-        self.scrollView.documentView?.frame = documentBox
-        // When building on macOS 14+ this defaults to false.
-        self.scrollView.documentView?.clipsToBounds = true
-
+        documentView.subviews = items.map(\.itemView)
+        self.updateMinSize()
         itemList.reloadData()
     }
-    
+
+    private func updateMinSize() {
+        var minSize = documentView.dialogBounds?.size ?? NSSize()
+        for item in items {
+            let itemBox = item.itemView.frame
+            minSize.width = max(itemBox.maxX, minSize.width)
+            minSize.height = max(itemBox.maxY, minSize.height)
+        }
+        widthConstraint.constant = minSize.width + 16
+        heightConstraint.constant = minSize.height + 16
+    }
+
     private func itemsFromData(_ data: Data) throws -> [DITLItem] {
         let reader = BinaryDataReader(data)
         let itemCountMinusOne: Int16 = try reader.read()
@@ -152,10 +161,33 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
             items = try itemsFromData(resource.data)
         } catch {
             items = []
-            self.window?.presentError(error)
+            window?.presentError(error)
         }
     }
-    
+
+    private func loadDLOG() {
+        guard let dlog = manager.findResource(type: ResourceType("DLOG"), id: resource.id)
+                ?? manager.findResource(type: ResourceType("ALRT"), id: resource.id)
+        else {
+            return
+        }
+        do {
+            // Note we don't check here whether the DLOG actually references this DITL
+            let reader = BinaryDataReader(dlog.data)
+            let top = Int(try reader.read() as Int16)
+            let left = Int(try reader.read() as Int16)
+            let bottom = Int(try reader.read() as Int16)
+            let right = Int(try reader.read() as Int16)
+            var size = NSSize(width: right - left, height: bottom - top)
+            documentView.dialogBounds = NSRect(origin: .zero, size: size)
+            size.width += (window?.contentView?.frame.width ?? 0) - (documentView.enclosingScrollView?.documentVisibleRect.width ?? 0) + 16
+            size.height += 16
+            window?.setContentSize(size)
+        } catch {
+            // Ignore
+        }
+    }
+
     /// Create a valid but empty DITL resource. Used when we are opened for an empty resource.
     private func createEmptyResource() {
         let writer = BinaryDataWriter()
@@ -182,7 +214,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
         do {
             resource.data = try currentResourceStateAsData()
         } catch {
-            self.window?.presentError(error)
+            self.presentError(error)
         }
         
         self.setDocumentEdited(false)
@@ -190,7 +222,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     
     /// Revert the resource to its on-disk state.
     @IBAction func revertResource(_ sender: Any) {
-        self.window?.contentView?.undoManager?.removeAllActions()
+        window?.undoManager?.removeAllActions()
         self.loadItems()
         self.updateView()
         
@@ -209,39 +241,37 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     }
     
     @IBAction func deselectAll(_ sender: Any?) {
-        NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: scrollView.documentView)
-        for itemView in scrollView.documentView?.subviews ?? [] {
-            if let itemView = itemView as? DITLItemView,
-               itemView.selected {
+        NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: documentView)
+        for itemView in documentView.subviews {
+            if let itemView = itemView as? DITLItemView, itemView.selected {
                 itemView.selected = false
                 itemView.needsDisplay = true
             }
         }
-        NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
+        NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: documentView)
     }
     
     override func selectAll(_ sender: Any?) {
-        NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: scrollView.documentView)
-        for itemView in scrollView.documentView?.subviews ?? [] {
-            if let itemView = itemView as? DITLItemView,
-               !itemView.selected {
+        NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: documentView)
+        for itemView in documentView.subviews {
+            if let itemView = itemView as? DITLItemView, !itemView.selected {
                 itemView.selected = true
                 itemView.needsDisplay = true
             }
         }
-        NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
+        NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: documentView)
     }
     
     @IBAction func createNewItem(_ sender: Any?) {
         deselectAll(nil)
         let view = DITLItemView(frame: NSRect(origin: NSPoint(x: 10, y: 10), size: NSSize(width: 80, height: 20)), title: "Button", type: .button, enabled: true, resourceID: 0, manager: manager)
-        NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: scrollView.documentView)
+        NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: documentView)
         view.selected = true
         let newItem = DITLItem(itemView: view, enabled: true, itemType: .button, resourceID: 0, helpItemType: .unknown, itemNumber: 0)
         items.append(newItem)
-        self.scrollView.documentView?.addSubview(view)
+        documentView.addSubview(view)
         itemList.reloadData()
-        NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
+        NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: documentView)
         self.setDocumentEdited(true)
     }
     
@@ -259,24 +289,22 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
                 }
             }
             if didChange {
-                self.window?.contentView?.undoManager?.beginUndoGrouping()
-                self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Delete Item", comment: ""))
-                self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-                self.window?.contentView?.undoManager?.endUndoGrouping()
+                window?.undoManager?.setActionName(NSLocalizedString("Delete Item", comment: ""))
+                window?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
 
                 itemList.reloadData()
-                NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
+                NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: documentView)
                 self.setDocumentEdited(true)
             }
         } catch {
-            self.window?.presentError(error)
+            window?.presentError(error)
         }
     }
     
     private func undoRedoResourceData(_ data: Data) {
         do {
             let oldData = try currentResourceStateAsData()
-            self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+            window?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
             
             for item in items {
                 item.itemView.removeFromSuperview()
@@ -286,13 +314,13 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
                 items = try self.itemsFromData(data)
                 self.updateView()
 
-                NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
+                NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: documentView)
                 self.setDocumentEdited(true)
             } catch {
-                self.window?.presentError(error)
+                window?.presentError(error)
             }
         } catch {
-            self.window?.presentError(error)
+            window?.presentError(error)
         }
     }
     
@@ -315,15 +343,13 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
             }
             reflectSelectedItem()
             if didChange {
-                self.window?.contentView?.undoManager?.beginUndoGrouping()
-                self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Type", comment: ""))
-                self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-                self.window?.contentView?.undoManager?.endUndoGrouping()
-                
+                window?.undoManager?.setActionName(NSLocalizedString("Change Item Type", comment: ""))
+                window?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+
                 self.setDocumentEdited(true)
             }
         } catch {
-            self.window?.presentError(error)
+            window?.presentError(error)
         }
     }
     
@@ -346,15 +372,13 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
             }
             reflectSelectedItem()
             if didChange {
-                self.window?.contentView?.undoManager?.beginUndoGrouping()
-                self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Resource ID", comment: ""))
-                self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-                self.window?.contentView?.undoManager?.endUndoGrouping()
-                
+                window?.undoManager?.setActionName(NSLocalizedString("Change Item Resource ID", comment: ""))
+                window?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+
                 self.setDocumentEdited(true)
             }
         } catch {
-            self.window?.presentError(error)
+            window?.presentError(error)
         }
     }
     
@@ -377,15 +401,13 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
             }
             reflectSelectedItem()
             if didChange {
-                self.window?.contentView?.undoManager?.beginUndoGrouping()
-                self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Resource ID", comment: ""))
-                self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-                self.window?.contentView?.undoManager?.endUndoGrouping()
-                
+                window?.undoManager?.setActionName(NSLocalizedString("Change Item Resource ID", comment: ""))
+                window?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+
                 self.setDocumentEdited(true)
             }
         } catch {
-            self.window?.presentError(error)
+            window?.presentError(error)
         }
     }
     
@@ -406,15 +428,13 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
             }
             reflectSelectedItem()
             if didChange {
-                self.window?.contentView?.undoManager?.beginUndoGrouping()
-                self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Help Type", comment: ""))
-                self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-                self.window?.contentView?.undoManager?.endUndoGrouping()
-                
+                window?.undoManager?.setActionName(NSLocalizedString("Change Item Help Type", comment: ""))
+                window?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+
                 self.setDocumentEdited(true)
             }
         } catch {
-            self.window?.presentError(error)
+            window?.presentError(error)
         }
     }
     
@@ -435,15 +455,13 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
             }
             reflectSelectedItem()
             if didChange {
-                self.window?.contentView?.undoManager?.beginUndoGrouping()
-                self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Help Item Index", comment: ""))
-                self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-                self.window?.contentView?.undoManager?.endUndoGrouping()
-                
+                window?.undoManager?.setActionName(NSLocalizedString("Change Item Help Item Index", comment: ""))
+                window?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+
                 self.setDocumentEdited(true)
             }
         } catch {
-            self.window?.presentError(error)
+            window?.presentError(error)
         }
     }
     
@@ -466,15 +484,13 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
             }
             reflectSelectedItem()
             if didChange {
-                self.window?.contentView?.undoManager?.beginUndoGrouping()
-                self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Enable State", comment: ""))
-                self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-                self.window?.contentView?.undoManager?.endUndoGrouping()
-                
+                window?.undoManager?.setActionName(NSLocalizedString("Change Item Enable State", comment: ""))
+                window?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+
                 self.setDocumentEdited(true)
             }
         } catch {
-            self.window?.presentError(error)
+            window?.presentError(error)
         }
     }
     
@@ -496,15 +512,13 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
             }
             reflectSelectedItem()
             if didChange {
-                self.window?.contentView?.undoManager?.beginUndoGrouping()
-                self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Change Item Text", comment: ""))
-                self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-                self.window?.contentView?.undoManager?.endUndoGrouping()
-                
+                window?.undoManager?.setActionName(NSLocalizedString("Change Item Text", comment: ""))
+                window?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+
                 self.setDocumentEdited(true)
             }
         } catch {
-            self.window?.presentError(error)
+            window?.presentError(error)
         }
     }
 }

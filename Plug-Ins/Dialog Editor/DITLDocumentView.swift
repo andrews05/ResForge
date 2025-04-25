@@ -2,31 +2,27 @@ import AppKit
 
 
 /// The "document area" of our scroll view, in which we show the DITL items.
-public class DITLDocumentView : NSView {
-    public override var isFlipped: Bool {
-        get {
-            return true
-        }
-        set(newValue) {
-            
+class DITLDocumentView: NSView {
+    var dialogBounds: NSRect?
+
+    override var isFlipped: Bool { true }
+    override var canBecomeKeyView: Bool { true }
+    override var acceptsFirstResponder: Bool { true }
+
+    override func draw(_ dirtyRect: NSRect) {
+        if let dialogBounds {
+            NSColor.white.setFill()
+            NSColor.systemGray.setStroke()
+            NSBezierPath.fill(dialogBounds)
+            NSBezierPath.stroke(dialogBounds)
         }
     }
     
-    public override func draw(_ dirtyRect: NSRect) {
-        let fillColor = NSColor.white
-        let strokeColor = NSColor.systemGray
-        fillColor.setFill()
-        strokeColor.setStroke()
-        NSBezierPath.fill(self.bounds)
-        NSBezierPath.stroke(self.bounds)
-    }
-    
-    public override func mouseDown(with event: NSEvent) {
+    override func mouseDown(with event: NSEvent) {
         window?.makeFirstResponder(self)
         var didChange = false
         for itemView in subviews {
-            if let itemView = itemView as? DITLItemView,
-               itemView.selected {
+            if let itemView = itemView as? DITLItemView, itemView.selected {
                 if !didChange {
                     NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: self)
                 }
@@ -38,18 +34,6 @@ public class DITLDocumentView : NSView {
         if didChange {
             NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: self)
         }
-    }
-    
-    public override var canBecomeKeyView: Bool {
-        return true
-    }
-    
-    public override var acceptsFirstResponder: Bool {
-        return true
-    }
-    
-    public override func resignFirstResponder() -> Bool {
-        return true
     }
 }
 

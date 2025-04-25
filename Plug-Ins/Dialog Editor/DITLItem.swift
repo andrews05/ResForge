@@ -100,11 +100,11 @@ struct DITLItem {
     func write(to writer: BinaryDataWriter) throws {
         writer.write(UInt32(0))
         let box = itemView.frame
-        var t = Int16(box.minY)
-        var l = Int16(box.minX)
-        var b = Int16(box.maxY)
-        var r = Int16(box.maxX)
-        
+        var t = Int16(clamping: Int(box.minY))
+        var l = Int16(clamping: Int(box.minX))
+        var b = Int16(clamping: Int(box.maxY))
+        var r = Int16(clamping: Int(box.maxX))
+
         if itemType == .editText {
             l += 3;
             t += 3;
