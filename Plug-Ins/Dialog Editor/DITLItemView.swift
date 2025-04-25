@@ -20,7 +20,47 @@ class DITLItemView : NSView {
             reloadImage()
         }
     }
-    
+
+    @objc var x: CGFloat {
+        get { frame.origin.x }
+        set {
+            var frame = frame
+            frame.origin.x = newValue
+            self.updateFrame(frame, actionName: "Move Item")
+        }
+    }
+    @objc var y: CGFloat {
+        get { frame.origin.y }
+        set {
+            var frame = frame
+            frame.origin.y = newValue
+            self.updateFrame(frame, actionName: "Move Item")
+        }
+    }
+    @objc var width: CGFloat {
+        get { frame.size.width }
+        set {
+            var frame = frame
+            frame.size.width = newValue
+            self.updateFrame(frame, actionName: "Resize Item")
+        }
+    }
+    @objc var height: CGFloat {
+        get { frame.size.height }
+        set {
+            var frame = frame
+            frame.size.height = newValue
+            self.updateFrame(frame, actionName: "Resize Item")
+        }
+    }
+
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        switch key {
+        case "x", "y", "width", "height": ["frame"]
+        default: []
+        }
+    }
+
     /// Is this item clickable?
     var enabled: Bool
     private var image: NSImage?
@@ -125,7 +165,13 @@ class DITLItemView : NSView {
         frame = oldFrame
         self.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoMove(oldFrame: newFrame) })
     }
-    
+
+    private func updateFrame(_ newFrame: NSRect, actionName: String) {
+        self.undoManager?.setActionName(NSLocalizedString(actionName, comment: ""))
+        self.undoRedoMove(oldFrame: newFrame)
+        NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
+    }
+
     /// Move the view and any other selected views around in response to the user dragging it.
     private func trackDrag(for startEvent: NSEvent) {
         var lastPos = superview!.convert(startEvent.locationInWindow, from: nil)

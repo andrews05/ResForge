@@ -19,6 +19,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     @IBOutlet var helpTypePopup: NSPopUpButton!
     @IBOutlet var helpItemField: NSTextField!
     @IBOutlet var itemList: NSTableView!
+    @objc dynamic var selectedItemView: DITLItemView?
     private var items = [DITLItem]()
     private var isSelectingItems = false
 
@@ -56,11 +57,12 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     func reflectSelectedItem() {
         for item in items {
             if item.itemView.selected {
+                selectedItemView = item.itemView
                 typePopup.selectItem(withTag: Int(item.itemType.rawValue))
                 typePopup.isEnabled = true
                 enabledCheckbox.state = item.enabled ? .on : .off
                 enabledCheckbox.isEnabled = true
-                
+
                 switch item.itemType {
                 case .userItem, .unknown:
                     tabView.selectTabViewItem(at: 3)
@@ -84,6 +86,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
                 return
             }
         }
+        selectedItemView = nil
         tabView.selectTabViewItem(at: 3)
         enabledCheckbox.isEnabled = false
         typePopup.isEnabled = false
