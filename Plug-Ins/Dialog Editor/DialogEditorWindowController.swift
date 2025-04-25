@@ -18,8 +18,10 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     @IBOutlet var helpResourceIDField: NSTextField!
     @IBOutlet var helpTypePopup: NSPopUpButton!
     @IBOutlet var helpItemField: NSTextField!
+    @IBOutlet var itemList: NSTableView!
     private var items = [DITLItem]()
-    
+    private var isSelectingItems = false
+
     override var windowNibName: String {
         return "DialogEditorWindow"
     }
@@ -92,7 +94,13 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     }
     
     @objc func selectedItemDidChange(_ notification: Notification) {
+        isSelectingItems = true
+        let indices = items.enumerated()
+            .filter { $0.1.itemView.selected }
+            .map { $0.0 }
+        itemList.selectRowIndexes(IndexSet(indices), byExtendingSelection: false)
         reflectSelectedItem()
+        isSelectingItems = false
     }
     
     /// Reload the views representing our ``items`` list.
@@ -113,6 +121,8 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
         self.scrollView.documentView?.frame = documentBox
         // When building on macOS 14+ this defaults to false.
         self.scrollView.documentView?.clipsToBounds = true
+
+        itemList.reloadData()
     }
     
     private func itemsFromData(_ data: Data) throws -> [DITLItem] {
@@ -227,6 +237,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
         let newItem = DITLItem(itemView: view, enabled: true, itemType: .button, resourceID: 0, helpItemType: .unknown, itemNumber: 0)
         items.append(newItem)
         self.scrollView.documentView?.addSubview(view)
+        itemList.reloadData()
         NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
         self.setDocumentEdited(true)
     }
@@ -244,13 +255,14 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
                     didChange = true
                 }
             }
-            reflectSelectedItem()
             if didChange {
                 self.window?.contentView?.undoManager?.beginUndoGrouping()
                 self.window?.contentView?.undoManager?.setActionName(NSLocalizedString("Delete Item", comment: ""))
                 self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
                 self.window?.contentView?.undoManager?.endUndoGrouping()
-                
+
+                itemList.reloadData()
+                NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
                 self.setDocumentEdited(true)
             }
         } catch {
@@ -270,8 +282,8 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
             do {
                 items = try self.itemsFromData(data)
                 self.updateView()
-                self.reflectSelectedItem()
-                
+
+                NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: scrollView.documentView)
                 self.setDocumentEdited(true)
             } catch {
                 self.window?.presentError(error)
@@ -492,5 +504,37 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
             self.window?.presentError(error)
         }
     }
-    
+}
+
+extension DialogEditorWindowController: NSTableViewDelegate, NSTableViewDataSource {
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        items.count
+    }
+
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let tableColumn = tableColumn else { return nil }
+        let view = tableView.makeView(withIdentifier: tableColumn.identifier, owner: self) as! NSTableCellView
+        if tableColumn.identifier.rawValue == "num" {
+            view.textField?.stringValue = "\(row + 1)"
+        } else if tableColumn.identifier.rawValue == "name" {
+            let item = items[row]
+            view.textField?.placeholderString = item.itemType.title
+            view.textField?.stringValue = item.itemView.title
+        }
+        return view
+    }
+
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        guard !isSelectingItems else {
+            return
+        }
+        for (i, item) in items.enumerated() {
+            let isSelected = itemList.selectedRowIndexes.contains(i)
+            if isSelected != item.itemView.selected {
+                item.itemView.selected = isSelected
+                item.itemView.needsDisplay = true
+            }
+        }
+        self.reflectSelectedItem()
+    }
 }

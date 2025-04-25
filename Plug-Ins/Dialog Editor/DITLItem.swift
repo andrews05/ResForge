@@ -14,6 +14,22 @@ struct DITLItem {
         case icon = 32
         case picture = 64
         case unknown = 255
+
+        var title: String {
+            switch self {
+            case .userItem: "User Item"
+            case .helpItem: "Help Item"
+            case .button: "Button"
+            case .checkBox: "Check Box"
+            case .radioButton: "Radio Button"
+            case .control: "Control"
+            case .staticText: "Static Text"
+            case .editText: "Edit Text"
+            case .icon: "Icon"
+            case .picture: "Picture"
+            case .unknown: "Unknown"
+            }
+        }
     }
     
     enum DITLHelpItemType : UInt16 {
@@ -29,7 +45,7 @@ struct DITLItem {
     var resourceID: Int // Only SInt16, but let's be consistent with ResForge's Resource type.
     var helpItemType = DITLHelpItemType.unknown
     var itemNumber = Int16(0)
-    
+
     static func read(_ reader: BinaryDataReader, manager: RFEditorManager) throws -> DITLItem {
         try reader.advance(4)
         var t: Int16 = try reader.read()
