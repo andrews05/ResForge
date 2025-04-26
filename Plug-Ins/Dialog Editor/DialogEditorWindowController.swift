@@ -264,7 +264,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     
     @IBAction func createNewItem(_ sender: Any?) {
         deselectAll(nil)
-        let view = DITLItemView(frame: NSRect(origin: NSPoint(x: 10, y: 10), size: NSSize(width: 80, height: 20)), title: "Button", type: .button, enabled: true, resourceID: 0, manager: manager)
+        let view = DITLItemView(rawFrame: NSRect(origin: NSPoint(x: 10, y: 10), size: NSSize(width: 80, height: 20)), title: "Button", type: .button, enabled: true, resourceID: 0, manager: manager)
         NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: documentView)
         view.selected = true
         let newItem = DITLItem(itemView: view, enabled: true, itemType: .button, resourceID: 0, helpItemType: .unknown, itemNumber: 0)

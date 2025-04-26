@@ -3,13 +3,13 @@ import RFSupport
 
 /// View that shows a simple preview for a System 7 DITL item:
 /// This view must be an immediate subview of a ``DITLDocumentView``.
-class DITLItemView : NSView {
+class DITLItemView: NSView {
     /// The text to display on the item (button title or text view text:
     var title: String
     /// Other info from the DITL resource about this item:
     var type: DITLItem.DITLItemType {
         didSet {
-            reloadImage()
+            self.reloadImage()
         }
     }
     /// Is this object selected for editing/moving/resizing?
@@ -17,40 +17,61 @@ class DITLItemView : NSView {
     /// Resource referenced by this item (e.g. ICON ID for an icon item PICT for picture, CNTL for control etc.)
     var resourceID = 0 {
         didSet {
-            reloadImage()
+            self.reloadImage()
         }
     }
 
+    /// It's usually more convenient when dealing with Quickdraw
+    /// coordinates to make this view display flipped.
+    override var isFlipped: Bool { true }
+
     @objc var x: CGFloat {
-        get { frame.origin.x }
+        get { rawFrame.origin.x }
         set {
-            var frame = frame
-            frame.origin.x = newValue
-            self.updateFrame(frame, actionName: "Move Item")
+            undoManager?.setActionName(NSLocalizedString("Move Item", comment: ""))
+            rawFrame.origin.x = newValue
         }
     }
     @objc var y: CGFloat {
-        get { frame.origin.y }
+        get { rawFrame.origin.y }
         set {
-            var frame = frame
-            frame.origin.y = newValue
-            self.updateFrame(frame, actionName: "Move Item")
+            undoManager?.setActionName(NSLocalizedString("Move Item", comment: ""))
+            rawFrame.origin.y = newValue
         }
     }
     @objc var width: CGFloat {
-        get { frame.size.width }
+        get { rawFrame.size.width }
         set {
-            var frame = frame
-            frame.size.width = newValue
-            self.updateFrame(frame, actionName: "Resize Item")
+            undoManager?.setActionName(NSLocalizedString("Resize Item", comment: ""))
+            rawFrame.size.width = newValue
         }
     }
     @objc var height: CGFloat {
-        get { frame.size.height }
+        get { rawFrame.size.height }
         set {
-            var frame = frame
-            frame.size.height = newValue
-            self.updateFrame(frame, actionName: "Resize Item")
+            undoManager?.setActionName(NSLocalizedString("Resize Item", comment: ""))
+            rawFrame.size.height = newValue
+        }
+    }
+
+    /// The underlying frame, accounting for insets for Edit Text
+    var rawFrame: NSRect {
+        get {
+            if type == .editText {
+                frame.insetBy(dx: 3, dy: 3)
+            } else {
+                frame
+            }
+        }
+        set {
+            let oldFrame = rawFrame
+            if type == .editText {
+                frame = newValue.insetBy(dx: -3, dy: -3)
+            } else {
+                frame = newValue
+            }
+            undoManager?.registerUndo(withTarget: self, handler: { $0.rawFrame = oldFrame })
+            NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
         }
     }
 
@@ -72,16 +93,17 @@ class DITLItemView : NSView {
     static let bottomEdgeIndices = [0, 6, 7]
     static let topEdgeIndices = [2, 3, 4]
     
-    init(frame frameRect: NSRect, title: String, type: DITLItem.DITLItemType, enabled: Bool, resourceID: Int, manager: RFEditorManager) {
+    init(rawFrame: NSRect, title: String, type: DITLItem.DITLItemType, enabled: Bool, resourceID: Int, manager: RFEditorManager) {
         self.title = title
         self.type = type
         self.enabled = enabled
         self.resourceID = resourceID
         self.manager = manager
-        super.init(frame: frameRect)
+        super.init(frame: .zero)
+        self.rawFrame = rawFrame
         // When building on macOS 14+ this defaults to false.
         clipsToBounds = true
-        reloadImage()
+        self.reloadImage()
     }
     
     required init?(coder: NSCoder) {
@@ -90,19 +112,15 @@ class DITLItemView : NSView {
     
     /// Load the picture or icon associated with this dialog:
     private func reloadImage() {
-        var resource: Resource?
-        switch type {
+        let resource: Resource? = switch type {
         case .picture:
-            resource = manager.findResource(type: .picture, id: resourceID, currentDocumentOnly: true)
+            manager.findResource(type: .picture, id: resourceID)
         case .icon:
-            resource = manager.findResource(type: .colorIcon, id: resourceID, currentDocumentOnly: true)
-            if resource == nil {
-                resource = manager.findResource(type: .icon, id: resourceID, currentDocumentOnly: true)
-            }
+            manager.findResource(type: .colorIcon, id: resourceID) ?? manager.findResource(type: .icon, id: resourceID)
         default:
-            resource = nil
+            nil
         }
-        if let resource = resource {
+        if let resource {
             resource.preview { img in
                 self.image = img
                 self.needsDisplay = true
@@ -120,34 +138,32 @@ class DITLItemView : NSView {
         var didChange = false
         while keepTracking {
             let currEvent = NSApplication.shared.nextEvent(matching: [.leftMouseDown, .leftMouseDragged, .leftMouseUp], until: Date.distantFuture, inMode: .eventTracking, dequeue: true)
-            if let currEvent = currEvent {
+            if let currEvent {
                 switch currEvent.type {
                 case .leftMouseDown, .leftMouseUp:
                     keepTracking = false
                 case .leftMouseDragged:
                     let currPos = superview!.convert(currEvent.locationInWindow, from: nil)
                     let distance = NSSize(width: currPos.x - lastPos.x, height: currPos.y - lastPos.y)
-                    var box = frame
-                    if DITLItemView.rightEdgeIndices.contains(index) {
-                        box.size.width += distance.width
-                    } else if DITLItemView.leftEdgeIndices.contains(index) {
-                        box.size.width -= distance.width
+                    var box = rawFrame
+                    if Self.rightEdgeIndices.contains(index) {
+                        box.size.width = max(0, box.width + distance.width)
+                    } else if Self.leftEdgeIndices.contains(index) {
+                        box.size.width = max(0, box.width - distance.width)
                         box.origin.x += distance.width
                     }
-                    if DITLItemView.bottomEdgeIndices.contains(index) {
-                        box.size.height += distance.height
-                    } else if DITLItemView.topEdgeIndices.contains(index) {
-                        box.size.height -= distance.height
+                    if Self.bottomEdgeIndices.contains(index) {
+                        box.size.height = max(0, box.height + distance.height)
+                    } else if Self.topEdgeIndices.contains(index) {
+                        box.size.height = max(0, box.height - distance.height)
                         box.origin.y += distance.height
                     }
                     if !didChange {
-                        self.undoManager?.beginUndoGrouping()
-                        self.undoManager?.setActionName(NSLocalizedString("Resize Item", comment: ""))
+                        undoManager?.beginUndoGrouping()
+                        undoManager?.setActionName(NSLocalizedString("Resize Item", comment: ""))
                         didChange = true
                     }
-                    let oldFrame = frame
-                    self.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoMove(oldFrame: oldFrame) })
-                    frame = box
+                    rawFrame = box
                     lastPos = currPos
                 default:
                     keepTracking = false
@@ -155,21 +171,9 @@ class DITLItemView : NSView {
             }
         }
         if didChange {
-            self.undoManager?.endUndoGrouping()
-            NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
+            rawFrame = rawFrame.rounded
+            undoManager?.endUndoGrouping()
         }
-    }
-    
-    private func undoRedoMove(oldFrame: NSRect) {
-        let newFrame = frame
-        frame = oldFrame
-        self.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoMove(oldFrame: newFrame) })
-    }
-
-    private func updateFrame(_ newFrame: NSRect, actionName: String) {
-        self.undoManager?.setActionName(NSLocalizedString(actionName, comment: ""))
-        self.undoRedoMove(oldFrame: newFrame)
-        NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
     }
 
     /// Move the view and any other selected views around in response to the user dragging it.
@@ -177,28 +181,23 @@ class DITLItemView : NSView {
         var lastPos = superview!.convert(startEvent.locationInWindow, from: nil)
         var keepTracking = true
         var didChange = false
+        let selection = (superview?.subviews as? [DITLItemView] ?? []).filter(\.selected)
         while keepTracking {
             let currEvent = NSApplication.shared.nextEvent(matching: [.leftMouseDown, .leftMouseDragged, .leftMouseUp], until: Date.distantFuture, inMode: .eventTracking, dequeue: true)
-            if let currEvent = currEvent {
+            if let currEvent {
                 switch currEvent.type {
                 case .leftMouseDown, .leftMouseUp:
                     keepTracking = false
                 case .leftMouseDragged:
                     let currPos = superview!.convert(currEvent.locationInWindow, from: nil)
                     let distance = NSSize(width: currPos.x - lastPos.x, height: currPos.y - lastPos.y)
-                    for itemView in superview?.subviews ?? [] {
-                        if let itemView = itemView as? DITLItemView,
-                           itemView.selected {
-                            if !didChange {
-                                self.undoManager?.beginUndoGrouping()
-                                self.undoManager?.setActionName(NSLocalizedString("Move Item", comment: ""))
-                                didChange = true
-                            }
-                            let oldFrame = frame
-                            self.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoMove(oldFrame: oldFrame) })
-                            let box = itemView.frame.offsetBy(dx: distance.width, dy: distance.height)
-                            itemView.frame = box
-                        }
+                    if !didChange {
+                        undoManager?.beginUndoGrouping()
+                        undoManager?.setActionName(NSLocalizedString("Move Item", comment: ""))
+                        didChange = true
+                    }
+                    for itemView in selection {
+                        itemView.rawFrame = itemView.rawFrame.offsetBy(dx: distance.width, dy: distance.height)
                     }
                     lastPos = currPos
                 default:
@@ -207,23 +206,25 @@ class DITLItemView : NSView {
             }
         }
         if didChange {
-            self.undoManager?.endUndoGrouping()
-            NotificationCenter.default.post(name: DITLDocumentView.itemFrameDidChangeNotification, object: superview)
+            for itemView in selection {
+                itemView.rawFrame = itemView.rawFrame.rounded
+            }
+            undoManager?.endUndoGrouping()
         }
     }
     
     override func mouseDown(with event: NSEvent) {
         needsDisplay = true
-        if event.modifierFlags.contains(.shift) { // Multi-selection.
+        if event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command) { // Multi-selection.
             NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: superview)
             selected = !selected
             NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: superview)
         } else if selected { // Drag/resize of selected items.
             var knobIndex = 0
             let pos = convert(event.locationInWindow, from: nil)
-            for knob in calculateKnobRects() {
-                if let knob = knob, knob.contains(pos) {
-                    trackKnob(knobIndex, for: event)
+            for knob in self.calculateKnobRects() {
+                if let knob, knob.contains(pos) {
+                    self.trackKnob(knobIndex, for: event)
                     return
                 }
                 knobIndex += 1
@@ -231,23 +232,21 @@ class DITLItemView : NSView {
             if (event.clickCount % 2) == 0 {
                 NotificationCenter.default.post(name: DITLDocumentView.itemDoubleClickedNotification, object: superview, userInfo: [DITLDocumentView.doubleClickedItemView: self])
             } else {
-                trackDrag(for: event)
+                self.trackDrag(for: event)
             }
         } else { // Select and possibly drag around an unselected item:
             NotificationCenter.default.post(name: DITLDocumentView.selectionWillChangeNotification, object: superview)
-            selected = true
-            for itemView in superview?.subviews ?? [] {
-                if let itemView = itemView as? DITLItemView,
-                   itemView.selected, itemView != self {
-                    itemView.selected = false
-                    itemView.needsDisplay = true
-                }
+            let selection = (superview?.subviews as? [DITLItemView] ?? []).filter(\.selected)
+            for itemView in selection {
+                itemView.selected = false
+                itemView.needsDisplay = true
             }
+            selected = true
             NotificationCenter.default.post(name: DITLDocumentView.selectionDidChangeNotification, object: superview)
             if (event.clickCount % 2) == 0 {
                 NotificationCenter.default.post(name: DITLDocumentView.itemDoubleClickedNotification, object: superview, userInfo: [DITLDocumentView.doubleClickedItemView: self])
             } else {
-                trackDrag(for: event)
+                self.trackDrag(for: event)
             }
         }
     }
@@ -259,26 +258,26 @@ class DITLItemView : NSView {
             let strokeColor = NSColor.systemBlue.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
             fillColor.setFill()
             strokeColor.setStroke()
-            NSBezierPath.fill(self.bounds)
-            NSBezierPath.stroke(self.bounds)
+            NSBezierPath.fill(bounds)
+            NSBezierPath.stroke(bounds.insetBy(dx: 0.5, dy: 0.5))
         case .button:
             let fillColor = NSColor.white
             let strokeColor = NSColor.black
             fillColor.setFill()
             strokeColor.setStroke()
-            let lozenge = NSBezierPath(roundedRect: self.bounds, xRadius: 8.0, yRadius: 8.0)
+            let lozenge = NSBezierPath(roundedRect: bounds.insetBy(dx: 0.5, dy: 0.5), xRadius: 8.0, yRadius: 8.0)
             lozenge.fill()
             lozenge.stroke()
             
             let ps = NSMutableParagraphStyle()
             ps.alignment = .center
             ps.lineBreakMode = .byTruncatingTail
-            let attrs: [NSAttributedString.Key:Any] = [
+            let attrs: [NSAttributedString.Key: Any] = [
                 .foregroundColor: strokeColor, .paragraphStyle: ps,
                 .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0) ?? .systemFont(ofSize: 12)
             ]
             let measuredSize = title.size(withAttributes: attrs)
-            var textBox = self.bounds
+            var textBox = bounds
             textBox.origin.y += (textBox.size.height - measuredSize.height) / 2.0
             textBox.size.height = measuredSize.height
             title.draw(in: textBox, withAttributes: attrs)
@@ -287,7 +286,7 @@ class DITLItemView : NSView {
             let strokeColor = NSColor.black
             fillColor.setFill()
             strokeColor.setStroke()
-            var box = self.bounds
+            var box = bounds
             box.size.width = box.size.height
             box = box.insetBy(dx: 2, dy: 2)
             NSBezierPath.stroke(box)
@@ -299,7 +298,7 @@ class DITLItemView : NSView {
             let strokeColor = NSColor.black
             fillColor.setFill()
             strokeColor.setStroke()
-            var box = self.bounds
+            var box = bounds
             box.size.width = box.size.height
             box = box.insetBy(dx: 2, dy: 2)
             let lozenge = NSBezierPath(ovalIn: box)
@@ -312,57 +311,57 @@ class DITLItemView : NSView {
             let strokeColor = NSColor.black
             fillColor.setFill()
             strokeColor.setStroke()
-            NSBezierPath.fill(self.bounds)
-            NSBezierPath.stroke(self.bounds)
+            NSBezierPath.fill(bounds)
+            NSBezierPath.stroke(bounds.insetBy(dx: 0.5, dy: 0.5))
         case .staticText:
-            title.draw(in: self.bounds, withAttributes: [.foregroundColor: NSColor.black, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
+            title.draw(in: bounds, withAttributes: [.foregroundColor: NSColor.black, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
         case .editText:
             let fillColor = NSColor.white
             let strokeColor = NSColor.black
             fillColor.setFill()
             strokeColor.setStroke()
-            NSBezierPath.fill(self.bounds)
-            NSBezierPath.stroke(self.bounds)
-            
-            title.draw(in: self.bounds, withAttributes: [.foregroundColor: strokeColor, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
+            NSBezierPath.fill(bounds)
+            NSBezierPath.stroke(bounds.insetBy(dx: 0.5, dy: 0.5))
+
+            title.draw(in: bounds.insetBy(dx: 3, dy: 0), withAttributes: [.foregroundColor: strokeColor, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
         case .icon:
-            if let image = image {
-                image.draw(in: self.bounds, from: .zero, operation: .sourceAtop, fraction: 1.0, respectFlipped: true, hints: nil)
+            if let image {
+                image.draw(in: bounds, from: .zero, operation: .sourceAtop, fraction: 1.0, respectFlipped: true, hints: nil)
             } else {
                 NSColor.darkGray.setFill()
-                NSBezierPath.fill(self.bounds)
+                NSBezierPath.fill(bounds)
             }
         case .picture:
-            if let image = image {
-                image.draw(in: self.bounds, from: .zero, operation: .sourceAtop, fraction: 1.0, respectFlipped: true, hints: nil)
+            if let image {
+                image.draw(in: bounds, from: .zero, operation: .sourceAtop, fraction: 1.0, respectFlipped: true, hints: nil)
             } else {
                 NSColor.darkGray.setFill()
-                NSBezierPath.fill(self.bounds)
+                NSBezierPath.fill(bounds)
             }
         case .helpItem:
             let fillColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray
             let strokeColor = NSColor.systemGreen.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
             fillColor.setFill()
             strokeColor.setStroke()
-            NSBezierPath.fill(self.bounds)
-            NSBezierPath.stroke(self.bounds)
+            NSBezierPath.fill(bounds)
+            NSBezierPath.stroke(bounds.insetBy(dx: 0.5, dy: 0.5))
         default:
             let fillColor = NSColor.systemRed.blended(withFraction: 0.4, of: NSColor.white) ?? NSColor.lightGray
             let strokeColor = NSColor.systemRed.blended(withFraction: 0.4, of: NSColor.black) ?? NSColor.black
             fillColor.setFill()
             strokeColor.setStroke()
-            NSBezierPath.fill(self.bounds)
-            NSBezierPath.stroke(self.bounds)
-            
+            NSBezierPath.fill(bounds)
+            NSBezierPath.stroke(bounds.insetBy(dx: 0.5, dy: 0.5))
+
             title.draw(at: NSZeroPoint, withAttributes: [.foregroundColor: NSColor.systemRed, .font: NSFontManager.shared.font(withFamily: "Silom", traits: [], weight: 0, size: 12.0)!])
         }
         
         // Draw selection outline and resize handles, if this view is selected.
         if selected {
             NSColor.controlAccentColor.set()
-            NSBezierPath.stroke(self.bounds)
-            for knob in calculateKnobRects() {
-                if let knob = knob {
+            NSBezierPath.stroke(bounds.insetBy(dx: 0.5, dy: 0.5))
+            for knob in self.calculateKnobRects() {
+                if let knob {
                     NSBezierPath.fill(knob)
                 }
             }
@@ -376,7 +375,7 @@ class DITLItemView : NSView {
     func calculateKnobRects() -> [NSRect?] {
         var result = [NSRect?]()
         var knobSize = 8.0
-        let box = self.bounds
+        let box = bounds
         var middleKnobs = true
         var minimalKnobs = false
         if ((knobSize * 2.0) + 1) >= box.size.height || ((knobSize * 2.0) + 1) >= box.size.width {
@@ -387,7 +386,7 @@ class DITLItemView : NSView {
             knobSize = min(box.size.height - 1, box.size.width - 1)
         }
         
-        var tlBox = self.bounds
+        var tlBox = bounds
         tlBox.size.width = knobSize
         tlBox.size.height = knobSize
         tlBox.origin.x = box.maxX - tlBox.size.width
@@ -443,15 +442,10 @@ class DITLItemView : NSView {
         
         return result
     }
-    
-    /// It's usually more convenient when dealing with Quickdraw
-    /// coordinates to make this view display flipped.
-    public override var isFlipped: Bool {
-        get {
-            return true
-        }
-        set(newValue) {
-            
-        }
+}
+
+extension NSRect {
+    var rounded: NSRect {
+        NSRect(x: minX.rounded(), y: minY.rounded(), width: width.rounded(), height: height.rounded())
     }
 }

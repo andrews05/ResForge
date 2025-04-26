@@ -48,10 +48,10 @@ struct DITLItem {
 
     static func read(_ reader: BinaryDataReader, manager: RFEditorManager) throws -> DITLItem {
         try reader.advance(4)
-        var t: Int16 = try reader.read()
-        var l: Int16 = try reader.read()
-        var b: Int16 = try reader.read()
-        var r: Int16 = try reader.read()
+        let t: Int16 = try reader.read()
+        let l: Int16 = try reader.read()
+        let b: Int16 = try reader.read()
+        let r: Int16 = try reader.read()
         let typeAndEnableFlag: UInt8 = try reader.read()
         let isEnabled = (typeAndEnableFlag & 0b10000000) == 0b10000000
         let rawItemType: UInt8 = typeAndEnableFlag & 0b01111111
@@ -65,10 +65,6 @@ struct DITLItem {
         case .checkBox, .radioButton, .button, .staticText:
             text = try reader.readPString()
         case .editText:
-            l -= 3;
-            t -= 3;
-            r += 3;
-            b += 3;
             text = try reader.readPString()
         case .control, .icon, .picture:
             try reader.advance(1)
@@ -93,29 +89,18 @@ struct DITLItem {
             try reader.advance(1)
         }
         
-        let view = DITLItemView(frame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r &- l), height: Double(b &- t))), title: text, type: itemType, enabled: isEnabled, resourceID: resourceID, manager: manager)
+        let view = DITLItemView(rawFrame: NSRect(origin: NSPoint(x: Double(l), y: Double(t)), size: NSSize(width: Double(r &- l), height: Double(b &- t))), title: text, type: itemType, enabled: isEnabled, resourceID: resourceID, manager: manager)
         return DITLItem(itemView: view, enabled: isEnabled, itemType: itemType, resourceID: resourceID, helpItemType: helpItemType, itemNumber: itemNumber)
     }
     
     func write(to writer: BinaryDataWriter) throws {
         writer.write(UInt32(0))
-        let box = itemView.frame
-        var t = Int16(clamping: Int(box.minY))
-        var l = Int16(clamping: Int(box.minX))
-        var b = Int16(clamping: Int(box.maxY))
-        var r = Int16(clamping: Int(box.maxX))
-
-        if itemType == .editText {
-            l += 3;
-            t += 3;
-            r -= 3;
-            b -= 3;
-        }
+        let box = itemView.rawFrame
         
-        writer.write(t)
-        writer.write(l)
-        writer.write(b)
-        writer.write(r)
+        writer.write(Int16(clamping: Int(box.minY)))
+        writer.write(Int16(clamping: Int(box.minX)))
+        writer.write(Int16(clamping: Int(box.maxY)))
+        writer.write(Int16(clamping: Int(box.maxX)))
         writer.write(UInt8(itemType.rawValue | (itemView.enabled ? 0b10000000 : 0)))
         
         switch itemType {
