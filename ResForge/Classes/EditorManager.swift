@@ -1,5 +1,6 @@
 import AppKit
 import RFSupport
+import TemplateEditor
 
 class EditorManager: RFEditorManager {
     private var editorWindows: [String: ResourceEditor] = [:]
@@ -113,7 +114,7 @@ class EditorManager: RFEditorManager {
             rDoc.editorManager.open(resource: resource, as: nil)
             return
         }
-        open(resource: resource, as: nil)
+        self.open(resource: resource, as: nil)
     }
     
     private func open(resource: Resource, as type: ResourceType?) {
@@ -122,7 +123,7 @@ class EditorManager: RFEditorManager {
         } else if let template = self.template(for: type ?? resource.type) {
             self.open(resource: resource, using: TemplateEditor.self, template: template)
         } else if type == nil, let mappedType = mappedType(for: resource, forEditor: true) {
-            open(resource: resource, as: mappedType)
+            self.open(resource: resource, as: mappedType)
         } else {
             self.open(resource: resource, using: PluginRegistry.hexEditor, template: nil)
         }

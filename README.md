@@ -15,14 +15,14 @@ ResForge is compatible with macOS 10.15 or later and runs natively on both 64-bi
 ## Features
 
 * Hexadecimal editor, powered by [HexFiend](https://github.com/HexFiend/HexFiend).
-* Template editor, supporting a wide array of [field types](https://github.com/andrews05/ResForge/tree/master/ResForge/Template%20Editor#template-editor).
+* Template editor, supporting a wide array of [field types](https://github.com/andrews05/ResForge/tree/master/Plugins/Sources/TemplateEditor#template-editor).
   * User-defined templates, loaded automatically from resource files in `~/Library/Application Support/ResForge/`.
   * Template-driven bulk data view, with CSV import/export.
   * Generic binary file editor, via the `Open with Template…` menu item.
 * Image editor, supporting 'PICT', 'PNG ', 'PNGf', 'cicn' & 'ppat' resources, plus view-only support for a variety of icons and other bitmaps.
 * Sound editor, supporting sampled 'snd ' resources.
-* Dialog editor, supporting 'DITL' resources (by Uli Kusterer) 
-* Menu editor, supporting 'MENU', 'CMNU' & 'cmnu' resources (by Uli Kusterer)
+* Dialog editor, supporting 'DITL' resources.
+* Menu editor, supporting 'MENU', 'CMNU' & 'cmnu' resources.
 * Tools for EV Nova, including powerful templates for all types and a number of graphical editors.
 
 ### Supported File Formats
@@ -32,13 +32,6 @@ ResForge is compatible with macOS 10.15 or later and runs natively on both 64-bi
 * Extended resource format, defined by [Graphite](https://github.com/TheDiamondProject/Graphite).
 * MacBinary encoded resource fork.
 * AppleSingle/AppleDouble encoded resource fork.
-
-
-## Building
-
-To build ResForge yourself you will need to have Xcode 15 or later installed.
-
-Make sure to use the `--recurse-submodules` option when cloning the repository, or use `git submodule update --init` to initialise an existing copy.
 
 
 ## Built With

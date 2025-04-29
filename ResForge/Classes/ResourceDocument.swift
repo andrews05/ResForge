@@ -1,5 +1,6 @@
 import AppKit
 import RFSupport
+import TemplateEditor
 
 extension Notification.Name {
     static let DocumentInfoDidChange        = Self("DocumentInfoDidChange")
@@ -58,8 +59,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         }
     }
 
-    override var windowNibName: String {
-        return "ResourceDocument"
+    override var windowNibName: NSNib.Name {
+        "ResourceDocument"
     }
 
     static func all() -> [ResourceDocument] {

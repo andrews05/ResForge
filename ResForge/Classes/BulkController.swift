@@ -1,6 +1,7 @@
 import AppKit
 import CSV
 import RFSupport
+import TemplateEditor
 
 enum BulkError: LocalizedError {
     case templateError(Error)
