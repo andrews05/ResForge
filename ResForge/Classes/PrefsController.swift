@@ -1,4 +1,5 @@
 import AppKit
+import TemplateEditor
 
 class PrefsController: NSWindowController, NSWindowDelegate, NSTableViewDataSource {
     @IBOutlet var launchActions: NSView!
@@ -64,7 +65,7 @@ struct RFDefaults {
     static let showSidebar = "ShowSidebar"
     static let thumbnailSize = "ThumbnailSize"
     static let favoriteTypes = "FavoriteTypes"
-    static let resourceNameInTemplate = "ResourceNameInTemplate"
+    static let resourceNameInTemplate = TemplateEditor.resourceNameInTemplate
 
     enum LaunchAction: String, CaseIterable {
         case None
