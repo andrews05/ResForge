@@ -1,6 +1,24 @@
 import AppKit
 import RFSupport
 
+import HexEditor
+import TemplateEditor
+import DialogEditor
+import ImageEditor
+import MenuEditor
+import NovaTools
+import SoundEditor
+
+let plugins: [RFPlugin.Type] = [
+    HexEditor.self,
+    TemplateEditor.self,
+    DialogEditor.self,
+    ImageEditor.self,
+    MenuEditor.self,
+    NovaTools.self,
+    SoundEditor.self,
+]
+
 @main
 class ApplicationDelegate: NSObject, NSApplicationDelegate {
     static let githubURL = "https://github.com/andrews05/ResForge"
@@ -17,11 +35,10 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Load support resources and plugins
-        NotificationCenter.default.addObserver(PluginRegistry.self, selector: #selector(PluginRegistry.bundleLoaded(_:)), name: Bundle.didLoadNotification, object: nil)
-        SupportRegistry.scanForResources(in: Bundle.main)
-        if let plugins = Bundle.main.builtInPlugInsURL {
-            self.scanForPlugins(in: plugins)
+        // Load plugins and support resources
+        for plugin in plugins {
+            plugin.register()
+            SupportRegistry.scanForResources(in: plugin.bundle)
         }
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .allDomainsMask)
         for url in appSupport {
@@ -66,22 +83,6 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     @IBAction func viewWebsite(_ sender: Any) {
         if let url = URL(string: Self.githubURL) {
             NSWorkspace.shared.open(url)
-        }
-    }
-
-    private func scanForPlugins(in folder: URL) {
-        let items: [URL]
-        do {
-            items = try FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-        } catch {
-            return
-        }
-        for item in items where item.pathExtension == "plugin" {
-            guard let plugin = Bundle(url: item) else {
-                continue
-            }
-            SupportRegistry.scanForResources(in: plugin)
-            plugin.load()
         }
     }
 }

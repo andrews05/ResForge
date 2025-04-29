@@ -1,5 +1,6 @@
 import AppKit
 import RFSupport
+import TemplateEditor
 
 enum OpenTemplateError: LocalizedError {
     case noTemplate
