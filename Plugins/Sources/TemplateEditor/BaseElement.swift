@@ -1,7 +1,7 @@
 import AppKit
 import RFSupport
 
-public class BaseElement: ValueTransformer, NSTextFieldDelegate {
+open class BaseElement: ValueTransformer, NSTextFieldDelegate {
     static var sharedFormatters: [String: Formatter] = [:]
 
     /// Type code of this field.
@@ -19,8 +19,9 @@ public class BaseElement: ValueTransformer, NSTextFieldDelegate {
     var rowHeight: Double = 22
     var visible: Bool = true
     public internal(set) var width: Double = 60 // Default for many types
+    public var manager: RFEditorManager { parentList.controller.manager }
 
-    required init!(type: String, label: String) {
+    required public init!(type: String, label: String) {
         self.type = type
         self.label = label
         let lines = label.split(separator: "\n", maxSplits: 1, omittingEmptySubsequences: false)

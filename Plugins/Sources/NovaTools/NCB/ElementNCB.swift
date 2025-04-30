@@ -1,4 +1,5 @@
 import AppKit
+import TemplateEditor
 
 // The NCB element performs parsing of a Nova Control Bit string and displays the result in a popover
 class ElementNCB: ElementCSTR {
@@ -101,7 +102,7 @@ class ElementNCB: ElementCSTR {
             // Parse the value
             do {
                 let parsed = try expressionType.parse(value.uppercased())
-                field.stringValue = parsed.description(manager: parentList.controller.manager)
+                field.stringValue = parsed.description(manager: manager)
             } catch let err {
                 // If multiple failures occur, only show the first one (index 1 after splitting)
                 let errors = "\(err)".components(separatedBy: "\n\n")

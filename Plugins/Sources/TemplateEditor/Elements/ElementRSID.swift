@@ -115,7 +115,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
         } else if cases[tValue]?.label.isEmpty == true {
             // If resource exists in case list (empty label implies a resource), show link icon
             linkIcon = NSImage.followLinkFreestandingTemplateName
-        } else if parentList.controller.manager.findResource(type: .init(resType), id: id) != nil {
+        } else if manager.findResource(type: .init(resType), id: id) != nil {
             // If found in directory (as a last resort), show link icon
             linkIcon = NSImage.followLinkFreestandingTemplateName
         } else {
