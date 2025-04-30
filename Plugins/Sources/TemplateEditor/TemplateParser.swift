@@ -156,7 +156,7 @@ public class TemplateParser {
         "R"   : BaseElement.self,               // single-element repeat (ResForge)
     ]
 
-    static let fullRegistry: [String: BaseElement.Type] = basicRegistry.merging([
+    static var fullRegistry: [String: BaseElement.Type] = basicRegistry.merging([
         // strings
         "TXTS": ElementCSTR.self,           // sized text dump
         "UTXT": ElementUSTR.self,           // UTF-8 text dump (ResForge)
@@ -273,9 +273,10 @@ public class TemplateParser {
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
         "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)
-
-        // custom elements that should be in plugins, but we don't support that yet
-        // these are considered non-standard and contain at least one character that is not uppercase ascii
-        "n"   : ElementNCB.self,            // Nova Control Bit string
     ]) { $1 }
+
+    /// Register a custom element. These are considered non-standard and contain at least one character that is not uppercase ascii.
+    public static func register(_ element: String, _ type: BaseElement.Type) {
+        fullRegistry[element] = type
+    }
 }

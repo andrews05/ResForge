@@ -9,7 +9,7 @@ public class PluginRegistry {
     public private(set) static var templateFilters: [String: TemplateFilter.Type] = [:]
     public private(set) static var typeIcons: [String: String] = [:]
 
-    public static func registerClass(_ pluginClass: AnyClass?) {
+    public static func register(_ pluginClass: AnyClass?) {
         if let editor = pluginClass as? ResourceEditor.Type {
             for type in editor.supportedTypes {
                 editors[type] = editor

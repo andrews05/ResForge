@@ -31,14 +31,14 @@ enum StringPadding: Equatable {
 }
 
 // Implements CSTR, OCST, ECST, Cnnn, TXTS, Tnnn
-class ElementCSTR: CasedElement {
-    @objc var value = ""
-    var maxLength = Int(UInt32.max)
+open class ElementCSTR: CasedElement {
+    @objc public internal(set) var value = ""
+    public internal(set) var maxLength = Int(UInt32.max)
     var padding = StringPadding.none
     var insertLineBreaks = false
     var unbounded = false
 
-    required init(type: String, label: String) {
+    required public init(type: String, label: String) {
         super.init(type: type, label: label)
         self.configurePadding()
         insertLineBreaks = maxLength > 256
@@ -73,7 +73,7 @@ class ElementCSTR: CasedElement {
         }
     }
 
-    override func configure(view: NSView) {
+    open override func configure(view: NSView) {
         super.configure(view: view)
         let textField = view.subviews.last as! NSTextField
         if maxLength < UInt32.max {
@@ -95,7 +95,7 @@ class ElementCSTR: CasedElement {
     }
 
     // Insert new line with return key instead of ending editing (this would otherwise require opt+return)
-    override func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+    open override func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         if insertLineBreaks && commandSelector == #selector(NSTextView.insertNewline(_:)) {
             textView.insertNewlineIgnoringFieldEditor(nil)
             return true
@@ -124,7 +124,7 @@ class ElementCSTR: CasedElement {
         }
     }
 
-    override func readData(from reader: BinaryDataReader) throws {
+    public override func readData(from reader: BinaryDataReader) throws {
         // Get offset to null
         let end = reader.data[reader.position...].firstIndex(of: 0) ?? reader.data.endIndex
         let length = min(end - reader.position, maxLength)
@@ -133,7 +133,7 @@ class ElementCSTR: CasedElement {
         try reader.advance(padding.length(length))
     }
 
-    override func writeData(to writer: BinaryDataWriter) {
+    public override func writeData(to writer: BinaryDataWriter) {
         if value.count > maxLength {
             value = String(value.prefix(maxLength))
         }
@@ -143,7 +143,7 @@ class ElementCSTR: CasedElement {
         writer.advance(padding.length(value.count))
     }
 
-    override var formatter: Formatter {
+    public override var formatter: Formatter {
         self.sharedFormatter {
             MacRomanFormatter(stringLength: maxLength, convertLineEndings: insertLineBreaks)
         }

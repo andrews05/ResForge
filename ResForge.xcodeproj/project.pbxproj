@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4907D2F029C50AFE0003702A /* Parsing in Frameworks */ = {isa = PBXBuildFile; productRef = 4907D2EF29C50AFE0003702A /* Parsing */; };
 		491EDA5324E37E34008E58CB /* SelectTemplateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EDA5224E37E34008E58CB /* SelectTemplateController.swift */; };
 		492722AC24CF89C200819E32 /* InfoWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AACD5F24CE303E0081DD4A /* InfoWindowController.swift */; };
 		493074172BF09624001FFB76 /* TemplateDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493074162BF09624001FFB76 /* TemplateDocument.swift */; };
@@ -129,7 +128,6 @@
 				49AA91E02DC08054007944F6 /* NovaTools in Frameworks */,
 				49AA91E42DC08DE1007944F6 /* MenuEditor in Frameworks */,
 				49AA91E62DC08EC2007944F6 /* SoundEditor in Frameworks */,
-				4907D2F029C50AFE0003702A /* Parsing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,7 +251,6 @@
 			packageProductDependencies = (
 				4952BD4B26DD9356005DB6EB /* CSV */,
 				49D6D348271BAA9F002DEA97 /* OrderedCollections */,
-				4907D2EF29C50AFE0003702A /* Parsing */,
 				498001B02DC05A6F006C39BE /* DialogEditor */,
 				49AA91DF2DC08054007944F6 /* NovaTools */,
 				49AA91E12DC08B89007944F6 /* ImageEditor */,
@@ -294,7 +291,6 @@
 			packageReferences = (
 				4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */,
 				493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */,
-				4907D2EE29C50AFE0003702A /* XCRemoteSwiftPackageReference "swift-parsing" */,
 			);
 			productRefGroup = F5B588110156D30301000001 /* Products */;
 			projectDirPath = "";
@@ -579,14 +575,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4907D2EE29C50AFE0003702A /* XCRemoteSwiftPackageReference "swift-parsing" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-parsing";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.13.0;
-			};
-		};
 		493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
@@ -606,11 +594,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4907D2EF29C50AFE0003702A /* Parsing */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4907D2EE29C50AFE0003702A /* XCRemoteSwiftPackageReference "swift-parsing" */;
-			productName = Parsing;
-		};
 		4952BD4B26DD9356005DB6EB /* CSV */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */;

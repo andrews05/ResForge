@@ -22,7 +22,7 @@ public protocol ResourceEditor: AbstractEditor, RFPlugin {
 }
 public extension ResourceEditor  {
     static func register() {
-        PluginRegistry.registerClass(self)
+        PluginRegistry.register(self)
     }
     var windowTitle: String {
         resource.defaultWindowTitle

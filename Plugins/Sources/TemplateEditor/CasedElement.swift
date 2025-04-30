@@ -2,7 +2,7 @@ import AppKit
 import OrderedCollections
 
 // Abstract Element subclass for fields with associated CASE elements
-class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBoxDataSource {
+open class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBoxDataSource {
     var cases: OrderedDictionary<AnyHashable, ElementCASE> = [:]
 
     override func configure() throws {
@@ -30,11 +30,12 @@ class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBo
 
     // All subclasses must provide a formatter to format case values.
     // We can't enforce this easily so we just have a default implementation which triggers a fatal error.
-    var formatter: Formatter {
+    public var formatter: Formatter {
         fatalError("Formatter not implemented.")
     }
 
-    @discardableResult func defaultValue() -> AnyHashable? {
+    @discardableResult
+    public func defaultValue() -> AnyHashable? {
         // Attempt to get a default value from the meta value, or the first case (if not dynamic)
        if let value = self.parseMetaValue() {
             self.setValue(value, forKey: "value")
@@ -100,11 +101,11 @@ class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBo
         view.addSubview(combo)
     }
 
-    override func transformedValue(_ value: Any?) -> Any? {
+    open override func transformedValue(_ value: Any?) -> Any? {
         return cases[value as! AnyHashable]?.displayLabel ?? self.formatter.string(for: value) ?? value
     }
 
-    override func reverseTransformedValue(_ value: Any?) -> Any? {
+    open override func reverseTransformedValue(_ value: Any?) -> Any? {
         guard let components = (value as? String)?.components(separatedBy: " = ") else {
             return ""
         }
@@ -136,13 +137,13 @@ class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBo
 
     // MARK: - Combo box functions
 
-    func comboBoxSelectionDidChange(_ notification: Notification) {
+    public func comboBoxSelectionDidChange(_ notification: Notification) {
         // Notify the controller that the value changed
         // (The selection change notification doesn't strictly mean that the value changed but it will suffice)
         parentList.controller.itemValueUpdated(notification.object!)
     }
 
-    func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
+    public func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
         // Use insensitive completion, except for TNAM
         let options: NSString.CompareOptions = type == "TNAM" ? [] : .caseInsensitive
         return cases.values.first {
@@ -150,11 +151,11 @@ class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSComboBo
         }?.displayValue
     }
 
-    func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
+    public func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
         return index < cases.values.endIndex ? cases.values[index].displayValue : nil
     }
 
-    func numberOfItems(in comboBox: NSComboBox) -> Int {
+    public func numberOfItems(in comboBox: NSComboBox) -> Int {
         return cases.count
     }
 }
