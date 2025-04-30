@@ -1,16 +1,18 @@
 import Foundation
 import RFSupport
+import TemplateEditor
 
 public class NovaTools: RFPlugin {
     public static var bundle: Bundle { .module }
     public static func register() {
-        PluginRegistry.registerClass(self)
-        PluginRegistry.registerClass(GalaxyWindowController.self)
-        PluginRegistry.registerClass(ShanWindowController.self)
-        PluginRegistry.registerClass(SpriteWindowController.self)
-        PluginRegistry.registerClass(SystemWindowController.self)
-        PluginRegistry.registerClass(PilotFilter.self)
-        PluginRegistry.registerClass(SpobFilter.self)
+        PluginRegistry.register(self)
+        PluginRegistry.register(GalaxyWindowController.self)
+        PluginRegistry.register(ShanWindowController.self)
+        PluginRegistry.register(SpriteWindowController.self)
+        PluginRegistry.register(SystemWindowController.self)
+        PluginRegistry.register(PilotFilter.self)
+        PluginRegistry.register(SpobFilter.self)
+        TemplateParser.register("n", ElementNCB.self)
     }
 }
 

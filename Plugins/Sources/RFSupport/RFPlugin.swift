@@ -34,7 +34,7 @@ public extension ResourceEditor  {
     var createMenuTitle: String? { nil }
 
     static func register() {
-        PluginRegistry.registerClass(self)
+        PluginRegistry.register(self)
     }
 }
 

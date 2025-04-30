@@ -36,7 +36,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-collections.git", "1.0.0"..<"2.0.0"),
-        .package(url: "https://github.com/HexFiend/HexFiend.git", branch: "package")
+        .package(url: "https://github.com/HexFiend/HexFiend.git", branch: "package"),
+        .package(url: "https://github.com/pointfreeco/swift-parsing.git", "0.14.0"..<"0.15.0")
     ],
     targets: [
         .target(
@@ -64,7 +65,9 @@ let package = Package(
         .target(
             name: "NovaTools",
             dependencies: [.target(name: "RFSupport"),
-                           .product(name: "OrderedCollections", package: "swift-collections")],
+                           .target(name: "TemplateEditor"),
+                           .product(name: "OrderedCollections", package: "swift-collections"),
+                           .product(name: "Parsing", package: "swift-parsing")],
             resources: [.process("Templates.rsrc")]),
         .target(
             name: "SoundEditor",
