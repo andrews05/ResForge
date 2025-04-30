@@ -49,6 +49,7 @@ let package = Package(
         .target(
             name: "TemplateEditor",
             dependencies: [.target(name: "RFSupport"),
+                           .product(name: "HexFiend", package: "HexFiend"),
                            .product(name: "OrderedCollections", package: "swift-collections")],
             resources: [.process("Templates.rsrc")]),
         .target(
