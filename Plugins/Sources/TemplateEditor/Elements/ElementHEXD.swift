@@ -3,9 +3,10 @@ import RFSupport
 
 // Implements HEXD, HEXS, Hnnn
 class ElementHEXD: BaseElement, HFTextViewDelegate {
-    private var data = Data()
+    var data = Data()
+    var showScroller = true
     private var fixedLength: Int?
-    private var hexView: HFTextView?
+    private(set) var hexView: HFTextView?
 
     override func configure() throws {
         if type == "HEXD" || type == "HEXS" {
@@ -16,6 +17,7 @@ class ElementHEXD: BaseElement, HFTextViewDelegate {
             // Hnnn
             let length = BaseElement.variableTypeValue(type)
             fixedLength = length
+            showScroller = false
             data = Data(count: length)
             self.setRowHeight(length)
         }
@@ -46,13 +48,14 @@ class ElementHEXD: BaseElement, HFTextViewDelegate {
             hexView.layoutRepresenter.removeRepresenter(stringRep)
             hexView.controller.removeRepresenter(stringRep)
         }
-        if fixedLength != nil {
-            hexView.controller.editMode = .overwriteMode
-            // Remove the vertical scroller as the view is sized to fit
+        if !showScroller {
             for case let scroller as HFVerticalScrollerRepresenter in hexView.layoutRepresenter.representers {
                 hexView.layoutRepresenter.removeRepresenter(scroller)
                 hexView.controller.removeRepresenter(scroller)
             }
+        }
+        if fixedLength != nil {
+            hexView.controller.editMode = .overwriteMode
         }
         hexView.layoutRepresenter.performLayout()
         hexView.delegate = self
@@ -73,10 +76,10 @@ class ElementHEXD: BaseElement, HFTextViewDelegate {
         }
     }
 
-    private func setRowHeight(_ length: Int, lineHeight: Double = 15) {
+    func setRowHeight(_ length: Int, lineHeight: Double = 15) {
         // 24 bytes per line, 15pt line height (minimum height 22)
         // Add 1 as the view creates a new line as soon as one is complete
-        let rowBytes = fixedLength == nil ? 20.0 : 24.0
+        let rowBytes = showScroller ? 20.0 : 24.0
         var lines = ceil(Double(length + 1) / rowBytes)
         if fixedLength == nil {
             lines = min(lines, 30)
