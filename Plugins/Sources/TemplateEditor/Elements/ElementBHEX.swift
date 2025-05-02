@@ -1,53 +1,42 @@
 import AppKit
 import RFSupport
+import HexFiend
 
 // Implements BHEX, WHEX, LHEX, BSHX, WSHX, LSHX
-class ElementBHEX<T: FixedWidthInteger & UnsignedInteger>: BaseElement {
-    private var data = Data()
-    private var length = 0
+class ElementBHEX<T: FixedWidthInteger & UnsignedInteger>: ElementHEXD {
+    private let lengthBytes = T.bitWidth / 8
+    private var maxLength = UInt64(T.max)
     private var skipLengthBytes = false
-    private var lengthBytes = 0
 
     override func configure() throws {
+        showScroller = T.max > 0xFF
         skipLengthBytes = type.hasSuffix("SHX")
-        lengthBytes = T.bitWidth / 8
+        if skipLengthBytes {
+            maxLength -= UInt64(lengthBytes)
+        }
         width = 360
     }
 
-    override func configure(view: NSView) {
-        var frame = view.frame
-        frame.origin.y += 5
-        frame.size.width = width - 4
-        frame.size.height = CGFloat(rowHeight) - 9
-        let textField = NSTextField(frame: frame)
-        textField.isBezeled = false
-        textField.isEditable = false
-        textField.isSelectable = true
-        textField.drawsBackground = false
-        textField.font = NSFont.userFixedPitchFont(ofSize: 11)
-        var count = 0
-        textField.stringValue = data.map {
-            count += 1
-            return String(format: count.isMultiple(of: 4) ? "%02X " : "%02X", $0)
-        } .joined()
-        view.addSubview(textField)
-    }
-
-    private func setRowHeight() {
-        // 24 bytes per line, 13pt line height (minimum height 22)
-        let lines = max(ceil(Double(length) / 24), 1)
-        rowHeight = (lines * 13) + 9
+    override func hexTextView(_ view: HFTextView, didChangeProperties properties: HFControllerPropertyBits) {
+        if properties.contains(.contentLength) && view.byteArray.length() > maxLength {
+            // Remove the excess
+            // Until we work out how to disable debug in HexFiend, this has to be done async to avoid an assertion failure
+            DispatchQueue.main.async { [self] in
+                view.controller.insert(Data(), replacingPreviousBytes: view.byteArray.length() - maxLength, allowUndoCoalescing: true)
+                NSSound.beep()
+            }
+        }
+        super.hexTextView(view, didChangeProperties: properties)
     }
 
     override func readData(from reader: BinaryDataReader) throws {
-        length = Int(try reader.read() as T)
+        var length = Int(try reader.read() as T)
         if skipLengthBytes {
             guard length >= lengthBytes else {
                 throw TemplateError.dataMismatch(self)
             }
             length -= lengthBytes
         }
-        self.setRowHeight()
         let remainder = reader.bytesRemaining
         if length > remainder {
             // Pad to expected length and throw error
@@ -56,10 +45,12 @@ class ElementBHEX<T: FixedWidthInteger & UnsignedInteger>: BaseElement {
         } else {
             data = try reader.readData(length: length)
         }
+        self.setRowHeight(length)
     }
 
     override func writeData(to writer: BinaryDataWriter) {
-        var writeLength = length
+        let data = hexView?.data ?? data
+        var writeLength = data.count
         if skipLengthBytes {
             writeLength += lengthBytes
         }
