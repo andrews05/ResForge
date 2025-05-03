@@ -69,6 +69,14 @@ class BulkController: OutlineController {
         scrollView.hasHorizontalScroller = true
         scrollView.autohidesScrollers = true
         scrollView.usesPredominantAxisScrolling = false
+
+        NotificationCenter.default.addObserver(self, selector: #selector(resourceDataDidChange), name: .ResourceDataDidChange, object: nil)
+    }
+
+    @objc private func resourceDataDidChange(_ notification: Notification) {
+        if !inlineUpdate {
+            outlineView.reloadItem(notification.object)
+        }
     }
 
     @IBAction func doubleClickItems(_ sender: Any) {
