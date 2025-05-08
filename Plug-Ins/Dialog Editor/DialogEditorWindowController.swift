@@ -13,6 +13,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     @IBOutlet var tabView: NSTabView!
     @IBOutlet var itemList: NSTableView!
     @objc dynamic var selectedItem: DITLItemView?
+    @objc dynamic var hasSelection = false
     private var items = [DITLItemView]()
     private var isSelectingItems = false
 
@@ -39,6 +40,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     func reflectSelectedItem() {
         let selection = items.filter(\.selected)
         selectedItem = selection.count == 1 ? selection[0] : nil
+        hasSelection = !selection.isEmpty
         switch selectedItem?.type {
         case .button, .checkBox, .radioButton, .staticText, .editText:
             tabView.selectTabViewItem(at: 0)
@@ -55,7 +57,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
         isSelectingItems = true
         let indices = items.enumerated()
             .filter { $0.1.selected }
-            .map { $0.0 }
+            .map { $0.0 + 1 }
         itemList.selectRowIndexes(IndexSet(indices), byExtendingSelection: false)
         self.reflectSelectedItem()
         isSelectingItems = false
@@ -168,11 +170,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     
     @IBAction func createNewItem(_ sender: Any?) {
         var newItems = items
-        for item in items where item.selected {
-            item.selected = false
-        }
         let newItem = DITLItemView(frame: NSRect(x: 10, y: 10, width: 80, height: 20), text: "Button", type: .button, manager: manager)
-        newItem.selected = true
         newItems.append(newItem)
         window?.undoManager?.setActionName(NSLocalizedString("Create Item", comment: ""))
         self.undoRedoItems(newItems)
@@ -187,6 +185,9 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     }
     
     private func undoRedoItems(_ newItems: [DITLItemView]) {
+        for item in newItems {
+            item.selected = !items.contains(item)
+        }
         let oldItems = items
         items = newItems
         window?.undoManager?.registerUndo(withTarget: self) { $0.undoRedoItems(oldItems) }
@@ -198,18 +199,24 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 
 extension DialogEditorWindowController: NSTableViewDelegate, NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        items.count
+        items.count + 1
+    }
+
+    func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
+        row == 0
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let tableColumn = tableColumn else { return nil }
-        let view = tableView.makeView(withIdentifier: tableColumn.identifier, owner: self) as! NSTableCellView
-        if tableColumn.identifier.rawValue == "num" {
-            view.textField?.stringValue = "\(row + 1)"
-        } else if tableColumn.identifier.rawValue == "name" {
-            let item = items[row]
+        let identifier = tableColumn?.identifier ?? NSUserInterfaceItemIdentifier("name")
+        let view = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
+        if tableColumn?.identifier.rawValue == "num" {
+            view.textField?.integerValue = row
+        } else if tableColumn?.identifier.rawValue == "name" {
+            let item = items[row - 1]
             view.textField?.placeholderString = item.type.name
             view.textField?.stringValue = item.text
+        } else {
+            view.textField?.stringValue = "Items"
         }
         return view
     }
@@ -219,7 +226,7 @@ extension DialogEditorWindowController: NSTableViewDelegate, NSTableViewDataSour
             return
         }
         for (i, item) in items.enumerated() {
-            item.selected = itemList.isRowSelected(i)
+            item.selected = itemList.isRowSelected(i + 1)
         }
         self.reflectSelectedItem()
     }
