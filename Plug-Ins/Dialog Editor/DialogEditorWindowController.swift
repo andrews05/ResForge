@@ -206,6 +206,10 @@ extension DialogEditorWindowController: NSTableViewDelegate, NSTableViewDataSour
         row == 0
     }
 
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        row != 0
+    }
+
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let identifier = tableColumn?.identifier ?? NSUserInterfaceItemIdentifier("name")
         let view = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
@@ -229,5 +233,11 @@ extension DialogEditorWindowController: NSTableViewDelegate, NSTableViewDataSour
             item.selected = itemList.isRowSelected(i + 1)
         }
         self.reflectSelectedItem()
+
+        // If single item selected, scroll to it
+        if itemList.selectedRowIndexes.count == 1 {
+            let item = items[itemList.selectedRow - 1]
+            item.scrollToVisible(item.bounds.insetBy(dx: -4, dy: -4))
+        }
     }
 }

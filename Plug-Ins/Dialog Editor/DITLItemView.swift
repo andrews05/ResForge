@@ -294,16 +294,11 @@ class DITLItemView: NSView {
         let bounds = self.convert(bounds)
         switch type {
         case .userItem:
-            let fillColor = (NSColor.systemBlue.blended(withFraction: 0.4, of: .white) ?? NSColor.lightGray).withAlphaComponent(0.7)
-            let strokeColor = NSColor.systemBlue.blended(withFraction: 0.4, of: .black) ?? NSColor.black
-            fillColor.setFill()
-            bounds.fill()
-            strokeColor.setFill()
-            bounds.frame()
+            self.colorBox(.systemBlue.withAlphaComponent(0.7), in: bounds)
         case .button:
             NSColor.white.setFill()
             NSColor.black.setStroke()
-            let lozenge = NSBezierPath(roundedRect: bounds.insetBy(dx: 0.5, dy: 0.5), xRadius: 4, yRadius: 4)
+            let lozenge = NSBezierPath(roundedRect: bounds.insetBy(dx: 0.5, dy: 0.5), xRadius: 3, yRadius: 3)
             lozenge.fill()
             lozenge.stroke()
 
@@ -313,31 +308,28 @@ class DITLItemView: NSView {
             let attrs: [NSAttributedString.Key: Any] = [.paragraphStyle: ps, .font: font]
             let measuredSize = text.size(withAttributes: attrs)
             var textBox = bounds
-            textBox.origin.y += (textBox.size.height - measuredSize.height) / 2.0
+            textBox.origin.y += floor((textBox.size.height - measuredSize.height) / 2.0)
             textBox.size.height = measuredSize.height
             text.draw(in: textBox, withAttributes: attrs)
         case .checkBox:
-            let box = NSRect(x: bounds.minX + 2, y: bounds.midY - 6, width: 12, height: 12)
+            let box = NSRect(x: bounds.minX + 2, y: round(bounds.midY - 6), width: 12, height: 12)
             NSColor.white.setFill()
             box.fill()
             NSColor.black.setFill()
             box.frame()
 
-            text.draw(at: NSPoint(x: box.maxX + 5, y: 0), withAttributes: [.font: font])
+            text.draw(at: NSPoint(x: box.maxX + 5, y: box.minY - 2), withAttributes: [.font: font])
         case .radioButton:
             NSColor.white.setFill()
             NSColor.black.setStroke()
-            let box = NSRect(x: bounds.minX + 2, y: bounds.midY - 6, width: 12, height: 12)
+            let box = NSRect(x: bounds.minX + 2, y: round(bounds.midY - 6), width: 12, height: 12)
             let lozenge = NSBezierPath(ovalIn: box.insetBy(dx: 0.5, dy: 0.5))
             lozenge.fill()
             lozenge.stroke()
 
-            text.draw(at: NSPoint(x: box.maxX + 5, y: 0), withAttributes: [.font: font])
+            text.draw(at: NSPoint(x: box.maxX + 5, y: box.minY - 2), withAttributes: [.font: font])
         case .control:
-            NSColor.white.setFill()
-            bounds.fill()
-            NSColor.black.setFill()
-            bounds.frame()
+            self.colorBox(.systemGray, in: bounds)
         case .staticText:
             text.draw(in: bounds, withAttributes: [.font: font])
         case .editText:
@@ -351,24 +343,12 @@ class DITLItemView: NSView {
             if let image {
                 image.draw(in: bounds)
             } else {
-                NSColor.darkGray.setFill()
-                bounds.fill()
+                self.colorBox(.systemYellow, in: bounds)
             }
         case .helpItem:
-            let fillColor = NSColor.systemGreen.blended(withFraction: 0.4, of: .white) ?? NSColor.lightGray
-            let strokeColor = NSColor.systemGreen.blended(withFraction: 0.4, of: .black) ?? NSColor.black
-            fillColor.setFill()
-            bounds.fill()
-            strokeColor.setFill()
-            bounds.frame()
+            self.colorBox(.systemGreen, in: bounds)
         default:
-            let fillColor = NSColor.systemRed.blended(withFraction: 0.4, of: .white) ?? NSColor.lightGray
-            let strokeColor = NSColor.systemRed.blended(withFraction: 0.4, of: .black) ?? NSColor.black
-            fillColor.setFill()
-            bounds.fill()
-            strokeColor.setFill()
-            bounds.frame()
-
+            self.colorBox(.systemRed, in: bounds)
             text.draw(at: .zero, withAttributes: [.foregroundColor: NSColor.systemRed, .font: font])
         }
 
@@ -380,6 +360,13 @@ class DITLItemView: NSView {
                 knob?.fill()
             }
         }
+    }
+
+    private func colorBox(_ color: NSColor, in rect: NSRect) {
+        color.highlight(withLevel: 0.4)?.setFill()
+        rect.fill()
+        color.shadow(withLevel: 0.4)?.setFill()
+        rect.frame()
     }
 
     // MARK: - Moving/resizing
