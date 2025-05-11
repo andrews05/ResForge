@@ -1,6 +1,10 @@
 import AppKit
+import SwiftUI
 import RFSupport
 
+extension NSPasteboard.PasteboardType {
+    static let RFDialogItem = Self("com.resforge.dialog-item")
+}
 
 class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     static let supportedTypes = [
@@ -35,6 +39,9 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
         self.loadItems()
         self.loadDLOG()
         self.updateView()
+
+        // Allow re-arranging the items
+        itemList.registerForDraggedTypes([.RFDialogItem])
     }
     
     func reflectSelectedItem() {
@@ -184,13 +191,15 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
         }
     }
     
-    private func undoRedoItems(_ newItems: [DITLItemView]) {
-        for item in newItems {
-            item.selected = !items.contains(item)
+    private func undoRedoItems(_ newItems: [DITLItemView], selectDiff: Bool = true) {
+        if selectDiff {
+            for item in newItems {
+                item.selected = !items.contains(item)
+            }
         }
         let oldItems = items
         items = newItems
-        window?.undoManager?.registerUndo(withTarget: self) { $0.undoRedoItems(oldItems) }
+        window?.undoManager?.registerUndo(withTarget: self) { $0.undoRedoItems(oldItems, selectDiff: selectDiff) }
         self.setDocumentEdited(true)
         self.updateView()
         self.selectionDidChange()
@@ -239,5 +248,36 @@ extension DialogEditorWindowController: NSTableViewDelegate, NSTableViewDataSour
             let item = items[itemList.selectedRow - 1]
             item.scrollToVisible(item.bounds.insetBy(dx: -4, dy: -4))
         }
+    }
+
+    // MARK: - Drag and drop
+
+    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> (any NSPasteboardWriting)? {
+        guard row != 0 else {
+            return nil
+        }
+        let item = NSPasteboardItem()
+        item.setString("\(row - 1)", forType: .RFDialogItem)
+        return item
+    }
+
+    func tableView(_ tableView: NSTableView, validateDrop info: any NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+        if dropOperation == .above && (info.draggingSource as? NSView) == tableView {
+            return .move
+        }
+        return []
+    }
+
+    func tableView(_ tableView: NSTableView, acceptDrop info: any NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        guard let pbItems = (info.draggingPasteboard.readObjects(forClasses: [NSPasteboardItem.self]) as? [NSPasteboardItem]) else {
+            return false
+        }
+        let indexes = pbItems.compactMap({ $0.string(forType: .RFDialogItem) }).compactMap(Int.init)
+
+        var newItems = items
+        newItems.move(fromOffsets: IndexSet(indexes), toOffset: row - 1)
+        self.undoRedoItems(newItems, selectDiff: false)
+
+        return true
     }
 }
