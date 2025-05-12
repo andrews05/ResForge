@@ -31,13 +31,7 @@ class DITLDocumentView: NSView {
     }
     
     override func mouseDown(with event: NSEvent) {
-        let selection = items.filter(\.selected)
-        for item in selection {
-            item.selected = false
-        }
-        if !selection.isEmpty {
-            controller?.selectionDidChange()
-        }
+        controller?.deselectAll(self)
     }
 
     func updateMinSize() {

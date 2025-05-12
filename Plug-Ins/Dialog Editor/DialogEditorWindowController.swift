@@ -64,7 +64,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
         isSelectingItems = true
         let indices = items.enumerated()
             .filter { $0.1.selected }
-            .map { $0.0 + 1 }
+            .map { $0.0 }
         itemList.selectRowIndexes(IndexSet(indices), byExtendingSelection: false)
         self.reflectSelectedItem()
         isSelectingItems = false
@@ -161,20 +161,14 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
         createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
     }
     
-    @IBAction func deselectAll(_ sender: Any?) {
-        for item in items where item.selected {
-            item.selected = false
-        }
-        self.selectionDidChange()
-    }
-    
     override func selectAll(_ sender: Any?) {
-        for item in items where !item.selected {
-            item.selected = true
-        }
-        self.selectionDidChange()
+        itemList.selectAll(sender)
     }
-    
+
+    func deselectAll(_ sender: Any?) {
+        itemList.deselectAll(sender)
+    }
+
     @IBAction func createNewItem(_ sender: Any?) {
         var newItems = items
         let newItem = DITLItemView(frame: NSRect(x: 10, y: 10, width: 80, height: 20), text: "Button", type: .button, manager: manager)
@@ -208,28 +202,18 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
 
 extension DialogEditorWindowController: NSTableViewDelegate, NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        items.count + 1
-    }
-
-    func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
-        row == 0
-    }
-
-    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        row != 0
+        items.count
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let identifier = tableColumn?.identifier ?? NSUserInterfaceItemIdentifier("name")
-        let view = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
-        if tableColumn?.identifier.rawValue == "num" {
+        guard let tableColumn else { return nil }
+        let view = tableView.makeView(withIdentifier: tableColumn.identifier, owner: self) as! NSTableCellView
+        if tableColumn.identifier.rawValue == "num" {
             view.textField?.integerValue = row
-        } else if tableColumn?.identifier.rawValue == "name" {
-            let item = items[row - 1]
+        } else if tableColumn.identifier.rawValue == "name" {
+            let item = items[row]
             view.textField?.placeholderString = item.type.name
             view.textField?.stringValue = item.text
-        } else {
-            view.textField?.stringValue = "Items"
         }
         return view
     }
@@ -239,13 +223,13 @@ extension DialogEditorWindowController: NSTableViewDelegate, NSTableViewDataSour
             return
         }
         for (i, item) in items.enumerated() {
-            item.selected = itemList.isRowSelected(i + 1)
+            item.selected = itemList.isRowSelected(i)
         }
         self.reflectSelectedItem()
 
         // If single item selected, scroll to it
         if itemList.selectedRowIndexes.count == 1 {
-            let item = items[itemList.selectedRow - 1]
+            let item = items[itemList.selectedRow]
             item.scrollToVisible(item.bounds.insetBy(dx: -4, dy: -4))
         }
     }
@@ -253,11 +237,8 @@ extension DialogEditorWindowController: NSTableViewDelegate, NSTableViewDataSour
     // MARK: - Drag and drop
 
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> (any NSPasteboardWriting)? {
-        guard row != 0 else {
-            return nil
-        }
         let item = NSPasteboardItem()
-        item.setString("\(row - 1)", forType: .RFDialogItem)
+        item.setString("\(row)", forType: .RFDialogItem)
         return item
     }
 
@@ -275,7 +256,7 @@ extension DialogEditorWindowController: NSTableViewDelegate, NSTableViewDataSour
         let indexes = pbItems.compactMap({ $0.string(forType: .RFDialogItem) }).compactMap(Int.init)
 
         var newItems = items
-        newItems.move(fromOffsets: IndexSet(indexes), toOffset: row - 1)
+        newItems.move(fromOffsets: IndexSet(indexes), toOffset: row)
         self.undoRedoItems(newItems, selectDiff: false)
 
         return true
