@@ -11,6 +11,7 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
     
     @IBOutlet weak var menuTable: NSTableView!
     let resource: Resource
+    let createMenuTitle: String? = "Add Menu Item"
     private let manager: RFEditorManager
     private var fieldEditorForMenuPreview: NSTextView!
     
@@ -247,17 +248,6 @@ class MenuEditorWindowController: AbstractEditor, ResourceEditor {
         menuTable.reloadData()
 
         self.setDocumentEdited(false)
-    }
-    
-    
-    func windowDidBecomeKey(_ notification: Notification) {
-        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
-        createItem?.title = NSLocalizedString("Create New Item", comment: "menu command for adding menu items to MENUs")
-    }
-    
-    func windowDidResignKey(_ notification: Notification) {
-        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
-        createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
     }
     
     @IBAction func createNewItem(_ sender: Any?) {

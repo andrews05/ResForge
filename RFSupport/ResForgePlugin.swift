@@ -2,21 +2,29 @@ import AppKit
 
 /// An editor provides a window for editing or viewing resources of the supported types.
 public protocol ResourceEditor: AbstractEditor {
-    /// The list of resource types that this plugin supports.
+    /// The list of resource types that this editor supports.
     static var supportedTypes: [String] { get }
 
-    var windowTitle: String { get }
+    /// The resource that the editor is editing.
     var resource: Resource { get }
+
+    /// The title of the editor's window. Default implementation provided.
+    var windowTitle: String { get }
+
+    /// The title of the "Create" menu item, if the editor implements the `createNewItem()` function.
+    var createMenuTitle: String? { get }
+
+    /// Initialise the editor with the resource to be edited and the editor manager.
+    /// May return nil if the editor is unable to edit the resource.
     init?(resource: Resource, manager: RFEditorManager)
 
-    // Implementers should declare these @IBAction
+    // Implementers should declare these @IBAction (or @obj)
     func saveResource(_ sender: Any)
     func revertResource(_ sender: Any)
 }
 public extension ResourceEditor  {
-    var windowTitle: String {
-        resource.defaultWindowTitle
-    }
+    var windowTitle: String { resource.defaultWindowTitle }
+    var createMenuTitle: String? { nil }
 }
 
 /// A preview provider allows the document to display a grid view for a supported resource type.

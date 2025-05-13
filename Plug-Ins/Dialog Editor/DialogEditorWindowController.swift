@@ -12,6 +12,7 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
     ]
     
     let resource: Resource
+    let createMenuTitle: String? = "Add Dialog Item"
     private let manager: RFEditorManager
     @IBOutlet var documentView: DITLDocumentView!
     @IBOutlet var tabView: NSTabView!
@@ -148,17 +149,6 @@ class DialogEditorWindowController: AbstractEditor, ResourceEditor {
         self.loadItems()
         self.updateView()
         self.setDocumentEdited(false)
-    }
-    
-    
-    func windowDidBecomeKey(_ notification: Notification) {
-        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
-        createItem?.title = NSLocalizedString("Create New Item", comment: "")
-    }
-    
-    func windowDidResignKey(_ notification: Notification) {
-        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
-        createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
     }
     
     override func selectAll(_ sender: Any?) {

@@ -11,6 +11,7 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
     static let supportedTypes: [String] = []
 
     let resource: Resource
+    let createMenuTitle: String? = "Insert List Entry"
     let manager: RFEditorManager
     let template: Resource
     private let filter: TemplateFilter.Type?
@@ -168,16 +169,6 @@ class TemplateEditor: AbstractEditor, ResourceEditor {
 
     @IBAction func itemValueUpdated(_ sender: Any) {
         edited = .user
-    }
-
-    func windowDidBecomeKey(_ notification: Notification) {
-        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
-        createItem?.title = NSLocalizedString("Create List Entry", comment: "")
-    }
-
-    func windowDidResignKey(_ notification: Notification) {
-        let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
-        createItem?.title = NSLocalizedString("Create New Resource…", comment: "")
     }
 }
 

@@ -99,4 +99,18 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
             return true
         }
     }
+
+    open func windowDidBecomeKey(_ notification: Notification) {
+        if let createMenuTitle = (self as? ResourceEditor)?.createMenuTitle {
+            let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
+            createItem?.title = NSLocalizedString(createMenuTitle, comment: "")
+        }
+    }
+
+    open func windowDidResignKey(_ notification: Notification) {
+        if (self as? ResourceEditor)?.createMenuTitle != nil {
+            let createItem = NSApp.mainMenu?.item(withTag: 3)?.submenu?.item(withTag: 0)
+            createItem?.title = NSLocalizedString("New Resource…", comment: "")
+        }
+    }
 }
