@@ -23,9 +23,9 @@ protocol WriteableSprite: Sprite {
     // Init for writing
     init(width: Int, height: Int, count: Int)
 
-    func writeSheet(_ image: NSImage, dither: Bool) -> [NSBitmapImageRep]
+    func writeSheet(_ rep: NSImageRep, dither: Bool) -> [NSBitmapImageRep]
 
-    func writeFrames(_ images: [NSImage], dither: Bool) -> [NSBitmapImageRep]
+    func writeFrames(_ reps: [NSImageRep], dither: Bool) -> [NSBitmapImageRep]
 }
 
 // Utility functions helpful for implementers

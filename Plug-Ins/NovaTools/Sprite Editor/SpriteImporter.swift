@@ -41,8 +41,8 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         }
     }
     @objc dynamic private var directory = true
-    private var image: NSImage?
-    private var images: [NSImage]?
+    private var image: NSImageRep?
+    private var images: [NSImageRep]?
 
     override init() {
         gridX = Self.GRID_X
@@ -51,8 +51,8 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     }
 
     func beginSheetModal(for window: NSWindow,
-                         sheetCallback: @escaping(NSImage, Int, Int, Bool) -> Void,
-                         framesCallback: @escaping([NSImage], Bool) -> Void) {
+                         sheetCallback: @escaping(NSImageRep, Int, Int, Bool) -> Void,
+                         framesCallback: @escaping([NSImageRep], Bool) -> Void) {
         self.reset()
         let panel = NSOpenPanel()
         panel.allowedFileTypes = ["public.image"]
@@ -74,8 +74,8 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     }
 
     func beginSheetModal(for window: NSWindow,
-                         with image: NSImage,
-                         sheetCallback: @escaping(NSImage, Int, Int, Bool) -> Void) {
+                         with image: NSImageRep,
+                         sheetCallback: @escaping(NSImageRep, Int, Int, Bool) -> Void) {
         self.setImage(image)
         self.updateGrid()
         // The width of the options view will change when used in the open panel - reset it to an appropriate value
@@ -85,7 +85,9 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         alert.accessoryView = optionsView
         if #available(macOS 11, *) {
             // We don't really want an icon but the alert necessarily has one - on macOS 11 we can use the given image
-            alert.icon = image
+            let icon = NSImage(size: image.size)
+            icon.addRepresentation(image)
+            alert.icon = icon
             alert.messageText = ""
         } else {
             // On older systems the default app icon works better but we do need a title
@@ -107,13 +109,8 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     func panel(_ sender: Any, validate url: URL) throws {
         if directory {
             var items = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-            items.sort(by: { $0.path.localizedStandardCompare($1.path) == .orderedAscending })
-            var images: [NSImage] = []
-            for item in items {
-                if let image = NSImage(contentsOf: item), image.isValid {
-                    images.append(image)
-                }
-            }
+            items.sort { $0.path.localizedStandardCompare($1.path) == .orderedAscending }
+            let images = items.compactMap(NSImageRep.init)
             guard !images.isEmpty else {
                 throw SpriteImporterError.noImages
             }
@@ -122,10 +119,10 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             guard let image else {
                 throw SpriteImporterError.unsupportedFile
             }
-            guard gridX > 0, image.representations[0].pixelsWide % gridX == 0 else {
+            guard image.pixelsWide.isMultiple(of: gridX) else {
                 throw SpriteImporterError.invalidX(gridX)
             }
-            guard gridY > 0, image.representations[0].pixelsHigh % gridY == 0 else {
+            guard image.pixelsHigh.isMultiple(of: gridY) else {
                 throw SpriteImporterError.invalidY(gridY)
             }
         }
@@ -138,7 +135,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             if (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true {
                 panel.prompt = NSLocalizedString("Import Folder", comment: "")
             } else {
-                self.setImage(NSImage(contentsOf: url))
+                self.setImage(NSImageRep(contentsOf: url))
                 panel.prompt = NSLocalizedString("Import Image", comment: "")
             }
         }
@@ -151,19 +148,19 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             preview.image = nil
             return
         }
-        let width = image.representations[0].pixelsWide
-        let height = image.representations[0].pixelsHigh
-        guard gridX > 0, width % gridX == 0, gridY > 0, height % gridY == 0 else {
+        let width = image.pixelsWide
+        let height = image.pixelsHigh
+        guard width.isMultiple(of: gridX), height.isMultiple(of: gridY) else {
             frameSize.stringValue = "grid mismatch"
             preview.image = nil
             return
         }
         frameSize.stringValue = "\(width/gridX) x \(height/gridY)"
-        let size = NSSize(width: image.size.width/CGFloat(gridX), height: image.size.height/CGFloat(gridY))
-        preview.image = NSImage(size: size)
-        preview.image?.lockFocus()
-        image.draw(at: .zero, from: NSRect(x: 0, y: image.size.height-size.height, width: size.width, height: size.height), operation: .copy, fraction: 1)
-        preview.image?.unlockFocus()
+        let size = NSSize(width: width/gridX, height: height/gridY)
+        preview.image = NSImage(size: size, flipped: false) { rect in
+            let srcRect = NSRect(x: 0, y: image.size.height-size.height, width: size.width, height: size.height)
+            return image.draw(in: rect, from: srcRect, operation: .copy, fraction: 1, respectFlipped: true, hints: nil)
+        }
     }
 
     private func reset() {
@@ -175,16 +172,16 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         preview.image = nil
     }
 
-    private func setImage(_ image: NSImage?) {
+    private func setImage(_ image: NSImageRep?) {
         directory = false
         guard let image,
-              let rep = image.representations.first,
-              rep.pixelsWide > 0 && rep.pixelsHigh > 0
+              image.pixelsWide > 0 && image.pixelsHigh > 0
         else {
             imageSize.stringValue = "unsupported"
             return
         }
+        image.size = NSSize(width: image.pixelsWide, height: image.pixelsHigh)
         self.image = image
-        imageSize.stringValue = "\(rep.pixelsWide) x \(rep.pixelsHigh)"
+        imageSize.stringValue = "\(image.pixelsWide) x \(image.pixelsHigh)"
     }
 }

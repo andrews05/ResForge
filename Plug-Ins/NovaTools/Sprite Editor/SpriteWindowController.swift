@@ -9,7 +9,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     ]
 
     let resource: Resource
-    private var sprite: Sprite!
+    private var sprite: Sprite?
     private var frames: [NSBitmapImageRep] = []
     private var currentFrame = 0
     private var timer: Timer?
@@ -86,7 +86,8 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
         }
         if !resource.data.isEmpty {
             do {
-                sprite = try spriteType.init(resource.data)
+                let sprite = try spriteType.init(resource.data)
+                self.sprite = sprite
                 for _ in 0..<sprite.frameCount {
                     frames.append(try sprite.readFrame())
                 }
@@ -100,8 +101,8 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
             return
         }
         currentFrame = (currentFrame + 1) % frames.count
-        if !image.representations.isEmpty {
-            image.removeRepresentation(image.representations[0])
+        if let rep = image.representations.first {
+            image.removeRepresentation(rep)
         }
         image.addRepresentation(frames[currentFrame])
         image.size = frames[currentFrame].size
@@ -111,7 +112,7 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
 
     private func updateView() {
         playing = false
-        if !frames.isEmpty {
+        if let sprite, !frames.isEmpty {
             // Shrink the window
             window?.setContentSize(window!.contentMinSize)
             // Expand to fit
@@ -163,33 +164,31 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
 
     @IBAction func paste(_ sender: Any) {
         guard writeableType != nil,
-              let image = NSPasteboard.general.readObjects(forClasses: [NSImage.self])?.first as? NSImage
+              let rep = NSImageRep(pasteboard: .general)
         else {
             return
         }
-        importPanel.beginSheetModal(for: window!, with: image, sheetCallback: self.importSheet)
+        importPanel.beginSheetModal(for: window!, with: rep, sheetCallback: self.importSheet)
     }
 
-    private func importSheet(image: NSImage, gridX: Int, gridY: Int, dither: Bool) {
+    private func importSheet(rep: NSImageRep, gridX: Int, gridY: Int, dither: Bool) {
         guard let writeableType else {
             return
         }
-        let rep = image.representations[0]
         let newSprite = writeableType.init(width: rep.pixelsWide / gridX, height: rep.pixelsHigh / gridY, count: gridX * gridY)
         sprite = newSprite
-        frames = newSprite.writeSheet(image, dither: dither)
+        frames = newSprite.writeSheet(rep, dither: dither)
         self.updateView()
         self.setDocumentEdited(true)
     }
 
-    private func importFrames(images: [NSImage], dither: Bool) {
-        guard let writeableType else {
+    private func importFrames(reps: [NSImageRep], dither: Bool) {
+        guard let writeableType, let rep = reps.first else {
             return
         }
-        let rep = images[0].representations[0]
-        let newSprite = writeableType.init(width: rep.pixelsWide, height: rep.pixelsHigh, count: images.count)
+        let newSprite = writeableType.init(width: rep.pixelsWide, height: rep.pixelsHigh, count: reps.count)
         sprite = newSprite
-        frames = newSprite.writeFrames(images, dither: dither)
+        frames = newSprite.writeFrames(reps, dither: dither)
         self.updateView()
         self.setDocumentEdited(true)
     }

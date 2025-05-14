@@ -127,8 +127,7 @@ class SpriteWorld: WriteableSprite {
         }
     }
 
-    func writeSheet(_ image: NSImage, dither: Bool = false) -> [NSBitmapImageRep] {
-        let rep = image.representations[0]
+    func writeSheet(_ rep: NSImageRep, dither: Bool = false) -> [NSBitmapImageRep] {
         // Reset the resolution
         rep.size = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
         let gridX = rep.pixelsWide / frameWidth
@@ -150,10 +149,9 @@ class SpriteWorld: WriteableSprite {
         return frames
     }
 
-    func writeFrames(_ images: [NSImage], dither: Bool = false) -> [NSBitmapImageRep] {
+    func writeFrames(_ reps: [NSImageRep], dither: Bool = false) -> [NSBitmapImageRep] {
         var frames: [NSBitmapImageRep] = []
-        for image in images {
-            let rep = image.representations[0]
+        for rep in reps {
             // Reset the resolution
             rep.size = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
             let frame = self.newFrame()

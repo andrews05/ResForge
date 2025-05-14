@@ -206,7 +206,7 @@ class ImageWindowController: AbstractEditor, ResourceEditor, PreviewProvider, Ex
 
     @IBAction func paste(_ sender: Any) {
         guard imageView.isEditable,
-              let image = NSPasteboard.general.readObjects(forClasses: [NSImage.self])?.first as? NSImage
+              let image = NSImage(pasteboard: .general)
         else {
             return
         }
