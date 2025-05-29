@@ -92,51 +92,51 @@ class SoundResource {
     }
 
     private func parse(_ data: Data) throws -> Bool {
-        // Read sound headers
+        // Read sound list
         let reader = BinaryDataReader(data, bigEndian: true)
         let soundFormat: Int16 = try reader.read()
         if soundFormat == firstSoundFormat {
             let list = SndListResource(
-                format: soundFormat,
                 numModifiers: try reader.read(),
                 modifierPart: ModRef(
                     modNumber: try reader.read(),
                     modInit: try reader.read()
                 ),
-                numCommands: try reader.read(),
-                commandPart: SndCommand(
-                    cmd: try reader.read(),
-                    param1: try reader.read(),
-                    param2: try reader.read()
-                )
             )
             guard list.numModifiers == 1,
-                  list.modifierPart.modNumber == sampledSynth,
-                  list.numCommands == 1,
-                  (list.commandPart.cmd == dataOffsetFlag+bufferCmd || list.commandPart.cmd == dataOffsetFlag+soundCmd)
+                  list.modifierPart.modNumber == sampledSynth
             else {
                 return false
             }
         } else if soundFormat == secondSoundFormat {
-            let list = Snd2ListResource(
-                format: soundFormat,
+            _ = Snd2ListResource(
                 refCount: try reader.read(),
-                numCommands: try reader.read(),
-                commandPart: SndCommand(
-                    cmd: try reader.read(),
-                    param1: try reader.read(),
-                    param2: try reader.read()
-                )
             )
-            guard list.numCommands == 1,
-                  (list.commandPart.cmd == dataOffsetFlag+bufferCmd || list.commandPart.cmd == dataOffsetFlag+soundCmd)
-            else {
-                return false
-            }
         } else {
             return false
         }
 
+        // Read sound commands
+        let numCommands: Int16 = try reader.read()
+        guard numCommands > 0 else {
+            return false
+        }
+        var command: SndCommand!
+        for _ in 0..<numCommands {
+            command = SndCommand(
+                cmd: try reader.read(),
+                param1: try reader.read(),
+                param2: try reader.read()
+            )
+        }
+        // The last command must be sampled sound with the sound header immediately following
+        guard command.cmd == dataOffsetFlag+bufferCmd || command.cmd == dataOffsetFlag+soundCmd,
+              command.param2 == reader.bytesRead
+        else {
+            return false
+        }
+
+        // Read sound headers
         let header = SoundHeader(
             samplePtr: try reader.read(),
             length: try reader.read(),
@@ -314,11 +314,11 @@ class SoundResource {
                 modInit: initStereo // unused
             ),
             numCommands: 1,
-            commandPart: SndCommand(
+            commandPart: [SndCommand(
                 cmd: dataOffsetFlag+bufferCmd,
                 param1: 0, // ignored
                 param2: 20 // offset to sound header
-            )
+            )]
         )
         try writer.writeStruct(list)
 

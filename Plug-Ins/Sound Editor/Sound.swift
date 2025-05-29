@@ -38,6 +38,7 @@ let extSH: UInt8                        = 0xFF  /*Extended sound header encode v
 let cmpSH: UInt8                        = 0xFE  /*Compressed sound header encode value*/
 
 /*command numbers for SndDoCommand and SndDoImmediate*/
+//https://preterhuman.net/macstuff/techpubs/mac/Sound/Sound-66.html
 let nullCmd: UInt16                     = 0
 let quietCmd: UInt16                    = 3
 let flushCmd: UInt16                    = 4
@@ -106,18 +107,18 @@ struct ModRef {
     var modInit: Int32
 }
 struct SndListResource {
-    var format: Int16
+    var format: Int16 = firstSoundFormat
     var numModifiers: Int16
     var modifierPart: ModRef
-    var numCommands: Int16
-    var commandPart: SndCommand
+    var numCommands: Int16 = 1
+    var commandPart: [SndCommand] = []
 }
 /*HyperCard sound resource format*/
 struct Snd2ListResource {
-    var format: Int16
+    var format: Int16 = secondSoundFormat
     var refCount: Int16
-    var numCommands: Int16
-    var commandPart: SndCommand
+    var numCommands: Int16 = 1
+    var commandPart: [SndCommand] = []
 }
 struct SoundHeader {
     var samplePtr: UInt32              /*if NIL then samples are in sampleArea*/
