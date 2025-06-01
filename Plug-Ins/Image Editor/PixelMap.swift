@@ -72,7 +72,7 @@ extension PixelMap {
         // If the PixMap is actually a BitMap, don't read any further
         if isPixmap {
             pmVersion = try reader.read()
-            packType = try PackType.read(reader)
+            packType = try reader.read()
             packSize = try reader.read()
             hRes = try reader.read()
             vRes = try reader.read()
@@ -299,7 +299,7 @@ extension PixelMap {
         // If the PixMap is actually a BitMap, don't write any more
         if isPixmap {
             writer.write(pmVersion)
-            writer.write(packType.rawValue)
+            writer.write(packType)
             writer.write(packSize)
             writer.write(hRes)
             writer.write(vRes)
@@ -411,11 +411,4 @@ enum PackType: Int16 {
     case rlePixel = 3
     /// Run length encoding one component at a time, one scan line at a time, red component first—supported only for 32-bit pixels (24-bit data)
     case rleComponent = 4
-
-    static func read(_ reader: BinaryDataReader) throws -> Self {
-        guard let packType = Self.init(rawValue: try reader.read()) else {
-            throw ImageReaderError.invalid
-        }
-        return packType
-    }
 }

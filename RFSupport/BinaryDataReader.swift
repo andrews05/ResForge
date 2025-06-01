@@ -2,11 +2,14 @@ import Foundation
 
 public enum BinaryDataReaderError: LocalizedError {
     case insufficientData
+    case unknownValue
     case stringDecodeFailure
     public var errorDescription: String? {
         switch self {
         case .insufficientData:
             return NSLocalizedString("Insufficient data available.", comment: "")
+        case .unknownValue:
+            return NSLocalizedString("Data does not match any of the expected values for the type requested.", comment: "")
         case .stringDecodeFailure:
             return NSLocalizedString("Unable to decode string in the requested encoding.", comment: "")
         }
@@ -65,6 +68,13 @@ public class BinaryDataReader {
             $0.loadUnaligned(fromByteOffset: position-length-data.startIndex, as: T.self)
         }
         return bigEndian ?? self.bigEndian ? T(bigEndian: val) : T(littleEndian: val)
+    }
+
+    public func read<T: RawRepresentable>(bigEndian: Bool? = nil) throws -> T where T.RawValue: FixedWidthInteger {
+        guard let value = T(rawValue: try self.read(bigEndian: bigEndian)) else {
+            throw BinaryDataReaderError.unknownValue
+        }
+        return value
     }
 
     public func readData(length: Int) throws -> Data {

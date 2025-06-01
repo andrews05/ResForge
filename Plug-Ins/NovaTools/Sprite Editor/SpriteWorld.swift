@@ -74,9 +74,7 @@ class SpriteWorld: WriteableSprite {
         var x = 0
         var framePointer = framePointer
         while true {
-            guard let op = RleOp(rawValue: try reader.read()) else {
-                throw SpriteError.invalid
-            }
+            let op = try reader.read() as RleOp
             switch op {
             case .lineStart:
                 guard y < frameHeight else {
@@ -184,7 +182,7 @@ class SpriteWorld: WriteableSprite {
                         // First pixel data for this line, write the line start
                         // Doing this only on demand allows us to omit trailing blank lines in the frame
                         for _ in 0..<lineCount {
-                            writer.write(RleOp.lineStart(0).rawValue)
+                            writer.write(RleOp.lineStart(0))
                         }
                         lineCount = 0
                         linePos = writer.bytesWritten
@@ -195,7 +193,7 @@ class SpriteWorld: WriteableSprite {
                             // We have previous unwritten pixel data, write this first
                             self.write(bigEndianPixels: &pixels)
                         }
-                        writer.write(RleOp.skip(transparent).rawValue)
+                        writer.write(RleOp.skip(transparent))
                         transparent = 0
                     }
                     let pixel = UInt16(framePointer[0] & 0xF8) * 0x80
@@ -211,7 +209,7 @@ class SpriteWorld: WriteableSprite {
                 writer.write(RleOp.lineStart(writer.bytesWritten-linePos).rawValue, at: linePos-4)
             }
         }
-        writer.write(RleOp.frameEnd.rawValue)
+        writer.write(RleOp.frameEnd)
     }
 
     private func dither(_ frame: NSBitmapImageRep) {
@@ -258,7 +256,7 @@ class SpriteWorld: WriteableSprite {
     }
 
     private func write(bigEndianPixels pixels: inout [UInt16]) {
-        writer.write(RleOp.pixels(pixels.count).rawValue)
+        writer.write(RleOp.pixels(pixels.count))
         if pixels.count % 2 != 0 {
             pixels.append(0)
         }

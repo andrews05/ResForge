@@ -27,6 +27,10 @@ public class BinaryDataWriter {
         }
     }
 
+    public func write<T: RawRepresentable>(_ value: T, bigEndian: Bool? = nil) where T.RawValue: FixedWidthInteger {
+        self.write(value.rawValue)
+    }
+
     public func write<T: FixedWidthInteger>(_ value: T, at offset: Int, bigEndian: Bool? = nil) {
         let start = data.startIndex + offset
         let end = start + T.bitWidth/8
