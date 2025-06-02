@@ -94,8 +94,9 @@ class SoundResource {
     private func parse(_ data: Data) throws -> Bool {
         // Read sound list
         let reader = BinaryDataReader(data, bigEndian: true)
-        let soundFormat: Int16 = try reader.read()
-        if soundFormat == firstSoundFormat {
+        let soundFormat = try reader.read() as SoundFormat
+        switch soundFormat {
+        case .first:
             let list = SndListResource(
                 numModifiers: try reader.read(),
                 modifierPart: ModRef(
@@ -104,16 +105,14 @@ class SoundResource {
                 ),
             )
             guard list.numModifiers == 1,
-                  list.modifierPart.modNumber == sampledSynth
+                  list.modifierPart.modNumber == ModRef.sampledSynth
             else {
                 return false
             }
-        } else if soundFormat == secondSoundFormat {
+        case .second:
             _ = Snd2ListResource(
                 refCount: try reader.read(),
             )
-        } else {
-            return false
         }
 
         // Read sound commands
@@ -130,7 +129,7 @@ class SoundResource {
             )
         }
         // The last command must be sampled sound with the sound header immediately following
-        guard command.cmd == dataOffsetFlag+bufferCmd || command.cmd == dataOffsetFlag+soundCmd,
+        guard command.cmd == .offsetBuffer || command.cmd == .offsetSound,
               command.param2 == reader.bytesRead
         else {
             return false
@@ -149,14 +148,15 @@ class SoundResource {
 
         let format: UInt32
         let numChannels: UInt32
-        if header.encode == stdSH {
+        switch header.encode {
+        case .standard:
             format = k8BitOffsetBinaryFormat
             numChannels = 1
             numPackets = header.length
-        } else if header.encode == extSH {
+        case .extended:
             let extHeader = ExtSoundHeader(
                 numFrames: try reader.read(),
-                AIFFSampleRate: extended80(
+                AIFFSampleRate: Extended80(
                     exp: try reader.read(),
                     man: try reader.read()
                 ),
@@ -172,10 +172,10 @@ class SoundResource {
             format = extHeader.sampleSize == 8 ? k8BitOffsetBinaryFormat : k16BitBigEndianFormat
             numChannels = header.length
             numPackets = extHeader.numFrames
-        } else if header.encode == cmpSH {
+        case .compressed:
             let cmpHeader = CmpSoundHeader(
                 numFrames: try reader.read(),
-                AIFFSampleRate: extended80(
+                AIFFSampleRate: Extended80(
                     exp: try reader.read(),
                     man: try reader.read()
                 ),
@@ -190,17 +190,15 @@ class SoundResource {
                 sampleSize: try reader.read()
             )
             // MACE is not supported but this at least allows to see the format id in the info
-            if cmpHeader.compressionID == threeToOne {
+            if cmpHeader.compressionID == .threeToOne {
                 format = kAudioFormatMACE3
-            } else if cmpHeader.compressionID == sixToOne {
+            } else if cmpHeader.compressionID == .sixToOne {
                 format = kAudioFormatMACE6
             } else {
                 format = cmpHeader.format
             }
             numChannels = header.length
             numPackets = cmpHeader.numFrames
-        } else {
-            return false
         }
 
         // Construct stream description
@@ -307,15 +305,15 @@ class SoundResource {
         let writer = BinaryDataWriter(capacity: capacity)
 
         let list = SndListResource(
-            format: firstSoundFormat,
+            format: .first,
             numModifiers: 1,
             modifierPart: ModRef(
-                modNumber: sampledSynth,
-                modInit: initStereo // unused
+                modNumber: ModRef.sampledSynth,
+                modInit: .stereo // unused
             ),
             numCommands: 1,
             commandPart: [SndCommand(
-                cmd: dataOffsetFlag+bufferCmd,
+                cmd: .offsetBuffer,
                 param1: 0, // ignored
                 param2: 20 // offset to sound header
             )]
@@ -328,18 +326,18 @@ class SoundResource {
             sampleRate: DoubleToFixed(streamDesc.mSampleRate),
             loopStart: 0,
             loopEnd: 0,
-            encode: stdSH,
-            baseFrequency: kMiddleC
+            encode: .standard,
+            baseFrequency: SoundHeader.middleC
         )
         if streamDesc.mFormatID == kAudioFormatLinearPCM && streamDesc.mBitsPerChannel == 8 && streamDesc.mChannelsPerFrame == 1 {
             try writer.writeStruct(header)
         } else if streamDesc.mFormatID == kAudioFormatLinearPCM {
-            header.encode = extSH
+            header.encode = .extended
             header.length = streamDesc.mChannelsPerFrame
             try writer.writeStruct(header)
             let extHeader = ExtSoundHeader(
                 numFrames: numPackets,
-                AIFFSampleRate: extended80(exp: 0, man: 0), // unused
+                AIFFSampleRate: Extended80(exp: 0, man: 0), // unused
                 markerChunk: 0,
                 instrumentChunks: 0,
                 AESRecording: 0,
@@ -351,18 +349,18 @@ class SoundResource {
             )
             try writer.writeStruct(extHeader)
         } else {
-            header.encode = cmpSH
+            header.encode = .compressed
             header.length = streamDesc.mChannelsPerFrame
             try writer.writeStruct(header)
             let cmpHeader = CmpSoundHeader(
                 numFrames: numPackets,
-                AIFFSampleRate: extended80(exp: 0, man: 0), // unused
+                AIFFSampleRate: Extended80(exp: 0, man: 0), // unused
                 markerChunk: 0,
                 format: streamDesc.mFormatID,
                 futureUse2: 0,
                 stateVars: 0,
                 leftOverSamples: 0,
-                compressionID: fixedCompression,
+                compressionID: .fixedCompression,
                 packetSize: 0, // 0 = auto
                 snthID: 0,
                 sampleSize: UInt16(streamDesc.mBitsPerChannel)

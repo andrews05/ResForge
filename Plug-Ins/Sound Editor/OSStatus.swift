@@ -1,15 +1,6 @@
 import AudioToolbox
 
 extension OSStatus {
-    func asString() -> String? {
-        let n = UInt32(bitPattern: self.littleEndian)
-        guard let n1 = UnicodeScalar((n >> 24) & 255), n1.isASCII else { return nil }
-        guard let n2 = UnicodeScalar((n >> 16) & 255), n2.isASCII else { return nil }
-        guard let n3 = UnicodeScalar((n >>  8) & 255), n3.isASCII else { return nil }
-        guard let n4 = UnicodeScalar( n        & 255), n4.isASCII else { return nil }
-        return String(n1) + String(n2) + String(n3) + String(n4)
-    }
-
     func detailedErrorMessage() -> String? {
         switch self {
         // Audio errors
@@ -121,8 +112,7 @@ extension OSStatus {
 
     func throwError() throws {
         if self != noErr {
-            let message = self.detailedErrorMessage()
-            let info = message == nil ? nil : [NSLocalizedDescriptionKey: message!]
+            let info = self.detailedErrorMessage().map { [NSLocalizedDescriptionKey: $0] }
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(self), userInfo: info)
         }
     }
