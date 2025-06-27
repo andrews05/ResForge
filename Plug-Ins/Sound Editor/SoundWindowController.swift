@@ -47,18 +47,18 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
 
     private func loadInfo() {
         if sound.format != 0 {
-            self.format.stringValue = SoundResource.formatNames[sound.format] ?? NSFileTypeForHFSTypeCode(OSType(sound.format))
+            format.stringValue = SoundResource.formatNames[sound.format] ?? NSFileTypeForHFSTypeCode(OSType(sound.format))
             if sound.valid {
-                self.duration.stringValue = stringFromSeconds(sound.duration)
+                duration.stringValue = stringFromSeconds(sound.duration)
             } else {
-                self.format.stringValue += " (unsupported)"
+                format.stringValue += " (unsupported)"
             }
-            self.channels.stringValue = sound.channels == 2 ? "Stereo" : "Mono"
-            self.sampleRate.stringValue = String(format: "%.0f Hz", sound.sampleRate)
+            channels.stringValue = sound.channels == 2 ? "Stereo" : "Mono"
+            sampleRate.stringValue = String(format: "%.0f Hz", sound.sampleRate)
         } else if resource.data.isEmpty {
-            self.format.stringValue = "(empty)"
+            format.stringValue = "(empty)"
         } else {
-            self.format.stringValue = "(unknown)"
+            format.stringValue = "(unknown)"
         }
         playButton.isEnabled = sound.valid
         exportButton.isEnabled = sound.valid
@@ -88,16 +88,16 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
     @IBAction func importSound(_ sender: Any) {
         let panel = NSOpenPanel()
         panel.allowedFileTypes = ["public.audio"]
-        panel.accessoryView = self.accessoryView
+        panel.accessoryView = accessoryView
         panel.isAccessoryViewDisclosed = true
         panel.prompt = "Import"
-        panel.beginSheetModal(for: self.window!, completionHandler: { returnCode in
+        panel.beginSheetModal(for: window!, completionHandler: { [self] returnCode in
             if returnCode == .OK, let url = panel.url {
-                let format = self.selectFormat.selectedTag()
-                let channels = self.selectChannels.selectedTag()
-                let sampleRate = self.selectSampleRate.selectedTag()
+                let format = selectFormat.selectedTag()
+                let channels = selectChannels.selectedTag()
+                let sampleRate = selectSampleRate.selectedTag()
                 do {
-                    try self.sound.load(url: url, format: UInt32(format), channels: UInt32(channels), sampleRate: Double(sampleRate))
+                    try sound.load(url: url, format: UInt32(format), channels: UInt32(channels), sampleRate: Double(sampleRate))
                     self.setDocumentEdited(true)
                 } catch let error {
                     self.presentError(error)
@@ -108,15 +108,11 @@ class SoundWindowController: AbstractEditor, ResourceEditor, ExportProvider {
     }
 
     @IBAction func saveResource(_ sender: Any) {
-        guard self.sound.valid else {
+        guard sound.valid else {
             return
         }
-        do {
-            self.resource.data = try self.sound.data()
-            self.setDocumentEdited(false)
-        } catch let error {
-            self.presentError(error)
-        }
+        resource.data = sound.data()
+        self.setDocumentEdited(false)
     }
 
     @IBAction func revertResource(_ sender: Any) {

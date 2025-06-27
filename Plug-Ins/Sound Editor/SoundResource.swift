@@ -93,58 +93,25 @@ class SoundResource {
 
     private func parse(_ data: Data) throws -> Bool {
         // Read sound list
-        let reader = BinaryDataReader(data, bigEndian: true)
+        let reader = BinaryDataReader(data)
         let soundFormat = try reader.read() as SoundFormat
-        switch soundFormat {
+        let command = switch soundFormat {
         case .first:
-            let list = SndListResource(
-                numModifiers: try reader.read(),
-                modifierPart: ModRef(
-                    modNumber: try reader.read(),
-                    modInit: try reader.read()
-                ),
-            )
-            guard list.numModifiers == 1,
-                  list.modifierPart.modNumber == ModRef.sampledSynth
-            else {
-                return false
-            }
+            try SndListResource(reader).commandPart.last
         case .second:
-            _ = Snd2ListResource(
-                refCount: try reader.read(),
-            )
+            try Snd2ListResource(reader).commandPart.last
         }
 
-        // Read sound commands
-        let numCommands: Int16 = try reader.read()
-        guard numCommands > 0 else {
-            return false
-        }
-        var command: SndCommand!
-        for _ in 0..<numCommands {
-            command = SndCommand(
-                cmd: try reader.read(),
-                param1: try reader.read(),
-                param2: try reader.read()
-            )
-        }
         // The last command must be sampled sound with the sound header immediately following
-        guard command.cmd == .offsetBuffer || command.cmd == .offsetSound,
+        guard let command,
+              command.cmd == .offsetBuffer || command.cmd == .offsetSound,
               command.param2 == reader.bytesRead
         else {
             return false
         }
 
         // Read sound headers
-        let header = SoundHeader(
-            samplePtr: try reader.read(),
-            length: try reader.read(),
-            sampleRate: try reader.read(),
-            loopStart: try reader.read(),
-            loopEnd: try reader.read(),
-            encode: try reader.read(),
-            baseFrequency: try reader.read()
-        )
+        let header = try SoundHeader(reader)
 
         let format: UInt32
         let numChannels: UInt32
@@ -154,41 +121,12 @@ class SoundResource {
             numChannels = 1
             numPackets = header.length
         case .extended:
-            let extHeader = ExtSoundHeader(
-                numFrames: try reader.read(),
-                AIFFSampleRate: Extended80(
-                    exp: try reader.read(),
-                    man: try reader.read()
-                ),
-                markerChunk: try reader.read(),
-                instrumentChunks: try reader.read(),
-                AESRecording: try reader.read(),
-                sampleSize: try reader.read(),
-                futureUse1: try reader.read(),
-                futureUse2: try reader.read(),
-                futureUse3: try reader.read(),
-                futureUse4: try reader.read()
-            )
+            let extHeader = try ExtSoundHeader(reader)
             format = extHeader.sampleSize == 8 ? k8BitOffsetBinaryFormat : k16BitBigEndianFormat
             numChannels = header.length
             numPackets = extHeader.numFrames
         case .compressed:
-            let cmpHeader = CmpSoundHeader(
-                numFrames: try reader.read(),
-                AIFFSampleRate: Extended80(
-                    exp: try reader.read(),
-                    man: try reader.read()
-                ),
-                markerChunk: try reader.read(),
-                format: try reader.read(),
-                futureUse2: try reader.read(),
-                stateVars: try reader.read(),
-                leftOverSamples: try reader.read(),
-                compressionID: try reader.read(),
-                packetSize: try reader.read(),
-                snthID: try reader.read(),
-                sampleSize: try reader.read()
-            )
+            let cmpHeader = try CmpSoundHeader(reader)
             // MACE is not supported but this at least allows to see the format id in the info
             if cmpHeader.compressionID == .threeToOne {
                 format = kAudioFormatMACE3
@@ -296,7 +234,7 @@ class SoundResource {
         self.valid = true
     }
 
-    func data() throws -> Data {
+    func data() -> Data {
         let byteSize = Int(bufferRef!.pointee.mAudioDataByteSize)
         let capacity = MemoryLayout<SndListResource>.stride +
             MemoryLayout<SoundHeader>.stride +
@@ -307,10 +245,10 @@ class SoundResource {
         let list = SndListResource(
             format: .first,
             numModifiers: 1,
-            modifierPart: ModRef(
+            modifierPart: [ModRef(
                 modNumber: ModRef.sampledSynth,
                 modInit: .stereo // unused
-            ),
+            )],
             numCommands: 1,
             commandPart: [SndCommand(
                 cmd: .offsetBuffer,
@@ -318,7 +256,7 @@ class SoundResource {
                 param2: 20 // offset to sound header
             )]
         )
-        try writer.writeStruct(list)
+        list.write(writer)
 
         var header = SoundHeader(
             samplePtr: 0, // 0 = after header
@@ -330,11 +268,11 @@ class SoundResource {
             baseFrequency: SoundHeader.middleC
         )
         if streamDesc.mFormatID == kAudioFormatLinearPCM && streamDesc.mBitsPerChannel == 8 && streamDesc.mChannelsPerFrame == 1 {
-            try writer.writeStruct(header)
+            header.write(writer)
         } else if streamDesc.mFormatID == kAudioFormatLinearPCM {
             header.encode = .extended
             header.length = streamDesc.mChannelsPerFrame
-            try writer.writeStruct(header)
+            header.write(writer)
             let extHeader = ExtSoundHeader(
                 numFrames: numPackets,
                 AIFFSampleRate: Extended80(exp: 0, man: 0), // unused
@@ -347,11 +285,11 @@ class SoundResource {
                 futureUse3: 0,
                 futureUse4: 0
             )
-            try writer.writeStruct(extHeader)
+            extHeader.write(writer)
         } else {
             header.encode = .compressed
             header.length = streamDesc.mChannelsPerFrame
-            try writer.writeStruct(header)
+            header.write(writer)
             let cmpHeader = CmpSoundHeader(
                 numFrames: numPackets,
                 AIFFSampleRate: Extended80(exp: 0, man: 0), // unused
@@ -365,7 +303,7 @@ class SoundResource {
                 snthID: 0,
                 sampleSize: UInt16(streamDesc.mBitsPerChannel)
             )
-            try writer.writeStruct(cmpHeader)
+            cmpHeader.write(writer)
         }
 
         let buff = bufferRef!.pointee.mAudioData.assumingMemoryBound(to: UInt8.self)

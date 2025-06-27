@@ -1,7 +1,6 @@
 import Foundation
 
 public enum BinaryDataWriterError: Error {
-    case notAStruct
     case stringEncodeFailure
     case outOfBounds
 }
@@ -80,19 +79,5 @@ public class BinaryDataWriter {
         data.append(UInt8(encoded.count))
         data.append(encoded)
         self.advance(fixedSize - encoded.count - 1)
-    }
-
-    public func writeStruct(_ value: Any, bigEndian: Bool? = nil) throws {
-        let mirror = Mirror(reflecting: value)
-        if mirror.displayStyle != .struct {
-            throw BinaryDataWriterError.notAStruct
-        }
-        for (_, value) in mirror.children {
-            if let value = value as? (any FixedWidthInteger) {
-                self.write(value, bigEndian: bigEndian)
-            } else {
-                try self.writeStruct(value)
-            }
-        }
     }
 }

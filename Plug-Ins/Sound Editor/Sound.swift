@@ -1,3 +1,4 @@
+import RFSupport
 /*
 Sound Manager Interfaces
 Converted from CarbonSound/Sound.h
@@ -107,32 +108,91 @@ struct SndCommand {
     var param2: Int32
 }
 
+extension SndCommand {
+    init(_ reader: BinaryDataReader) throws {
+        cmd = try reader.read()
+        param1 = try reader.read()
+        param2 = try reader.read()
+    }
+
+    func write(_ writer: BinaryDataWriter) {
+        writer.write(cmd)
+        writer.write(param1)
+        writer.write(param2)
+    }
+}
+
 struct ModRef {
+    static let sampledSynth: UInt16 = 5 // sampled sound synthesizer
+
     var modNumber: UInt16
     var modInit: InitOptions
-
-    static let sampledSynth: UInt16 = 5 // sampled sound synthesizer
 }
+
 struct SndListResource {
     var format: SoundFormat = .first
     var numModifiers: Int16
-    var modifierPart: ModRef
-    var numCommands: Int16 = 1
-    var commandPart: [SndCommand] = []
+    var modifierPart: [ModRef]
+    var numCommands: Int16
+    var commandPart: [SndCommand]
 }
+
+extension SndListResource {
+    init(_ reader: BinaryDataReader) throws {
+//        format = try reader.read()
+        numModifiers = try reader.read()
+        modifierPart = try (0..<max(numModifiers, 0)).map { _ in
+            ModRef(
+                modNumber: try reader.read(),
+                modInit: try reader.read()
+            )
+        }
+        numCommands = try reader.read()
+        commandPart = try (0..<max(numCommands, 0)).map { _ in
+            try SndCommand(reader)
+        }
+    }
+
+    func write(_ writer: BinaryDataWriter) {
+        writer.write(format)
+        writer.write(numModifiers)
+        for modifier in modifierPart {
+            writer.write(modifier.modNumber)
+            writer.write(modifier.modInit)
+        }
+        writer.write(numCommands)
+        for command in commandPart {
+            command.write(writer)
+        }
+    }
+}
+
 // HyperCard sound resource format
 struct Snd2ListResource {
     var format: SoundFormat = .second
     var refCount: Int16
-    var numCommands: Int16 = 1
-    var commandPart: [SndCommand] = []
+    var numCommands: Int16
+    var commandPart: [SndCommand]
 }
+
+extension Snd2ListResource {
+    init(_ reader: BinaryDataReader) throws {
+//        format = try reader.read()
+        refCount = try reader.read()
+        numCommands = try reader.read()
+        commandPart = try (0..<max(numCommands, 0)).map { _ in
+            try SndCommand(reader)
+        }
+    }
+}
+
 struct SoundHeader {
     enum Encode: UInt8 {
         case standard   = 0x00      // Standard sound header encode value
         case extended   = 0xFF      // Extended sound header encode value
         case compressed = 0xFE      // Compressed sound header encode value
     }
+    static let middleC: UInt8 = 60  // MIDI note value for middle C
 
     var samplePtr: UInt32           // if NIL then samples are in sampleArea
     var length: UInt32              // length of sound in bytes
@@ -141,9 +201,30 @@ struct SoundHeader {
     var loopEnd: UInt32             // end of looping portion
     var encode: Encode              // header encoding
     var baseFrequency: UInt8        // baseFrequency value
-
-    static let middleC: UInt8 = 60  // MIDI note value for middle C
 }
+
+extension SoundHeader {
+    init(_ reader: BinaryDataReader) throws {
+        samplePtr = try reader.read()
+        length = try reader.read()
+        sampleRate = try reader.read()
+        loopStart = try reader.read()
+        loopEnd = try reader.read()
+        encode = try reader.read()
+        baseFrequency = try reader.read()
+    }
+
+    func write(_ writer: BinaryDataWriter) {
+        writer.write(samplePtr)
+        writer.write(length)
+        writer.write(sampleRate)
+        writer.write(loopStart)
+        writer.write(loopEnd)
+        writer.write(encode)
+        writer.write(baseFrequency)
+    }
+}
+
 struct CmpSoundHeader {
 //    var samplePtr: UInt32              // if nil then samples are in sample area
 //    var numChannels: UInt32            // number of channels i.e. mono = 1
@@ -164,6 +245,41 @@ struct CmpSoundHeader {
     var snthID: UInt16                 // resource ID of Sound Manager snth that contains NRT C/E
     var sampleSize: UInt16             // number of bits in non-compressed sample
 }
+
+extension CmpSoundHeader {
+    init(_ reader: BinaryDataReader) throws {
+        numFrames = try reader.read()
+        AIFFSampleRate = Extended80(
+            exp: try reader.read(),
+            man: try reader.read()
+        )
+        markerChunk = try reader.read()
+        format = try reader.read()
+        futureUse2 = try reader.read()
+        stateVars = try reader.read()
+        leftOverSamples = try reader.read()
+        compressionID = try reader.read()
+        packetSize = try reader.read()
+        snthID = try reader.read()
+        sampleSize = try reader.read()
+    }
+
+    func write(_ writer: BinaryDataWriter) {
+        writer.write(numFrames)
+        writer.write(AIFFSampleRate.exp)
+        writer.write(AIFFSampleRate.man)
+        writer.write(markerChunk)
+        writer.write(format)
+        writer.write(futureUse2)
+        writer.write(stateVars)
+        writer.write(leftOverSamples)
+        writer.write(compressionID)
+        writer.write(packetSize)
+        writer.write(snthID)
+        writer.write(sampleSize)
+    }
+}
+
 struct ExtSoundHeader {
 //    var samplePtr: UInt32              // if nil then samples are in sample area
 //    var numChannels: UInt32            // number of channels i.e. mono = 1
@@ -182,4 +298,36 @@ struct ExtSoundHeader {
     var futureUse2: UInt32             // reserved by Apple
     var futureUse3: UInt32             // reserved by Apple
     var futureUse4: UInt32             // reserved by Apple
+}
+
+extension ExtSoundHeader {
+    init(_ reader: BinaryDataReader) throws {
+        numFrames = try reader.read()
+        AIFFSampleRate = Extended80(
+            exp: try reader.read(),
+            man: try reader.read()
+        )
+        markerChunk = try reader.read()
+        instrumentChunks = try reader.read()
+        AESRecording = try reader.read()
+        sampleSize = try reader.read()
+        futureUse1 = try reader.read()
+        futureUse2 = try reader.read()
+        futureUse3 = try reader.read()
+        futureUse4 = try reader.read()
+    }
+
+    func write(_ writer: BinaryDataWriter) {
+        writer.write(numFrames)
+        writer.write(AIFFSampleRate.exp)
+        writer.write(AIFFSampleRate.man)
+        writer.write(markerChunk)
+        writer.write(instrumentChunks)
+        writer.write(AESRecording)
+        writer.write(sampleSize)
+        writer.write(futureUse1)
+        writer.write(futureUse2)
+        writer.write(futureUse3)
+        writer.write(futureUse4)
+    }
 }
