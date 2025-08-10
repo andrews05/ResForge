@@ -6,11 +6,21 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     @IBOutlet var collectionView: ResourceCollection!
     @IBOutlet weak var document: ResourceDocument!
     private var currentType: ResourceType!
+    var isActive = false {
+        didSet {
+            if !isActive {
+                zoomEnabled = false
+            }
+        }
+    }
+    @objc dynamic var zoomEnabled = false
 
     func prepareView(type: ResourceType?) -> NSView {
         if let type {
             currentType = type
             collectionView.maxSize = PluginRegistry.previewProviders[type.code]!.maxThumbnailSize(for: type.code)
+                ?? ResourceCollection.zoomLevels.last!
+            zoomEnabled = collectionView.maxSize > ResourceCollection.zoomLevels[0]
             document.directory.sorter = nil
         }
         return scrollView
@@ -119,41 +129,42 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
 }
 
 class ResourceCollection: NSCollectionView {
-    private static let zoomLevels = [64, 100, 160, 256]
+    static let zoomLevels = [64, 100, 160, 256]
     private static var preferredSize = UserDefaults.standard.integer(forKey: RFDefaults.thumbnailSize) {
         didSet {
             UserDefaults.standard.set(preferredSize, forKey: RFDefaults.thumbnailSize)
         }
     }
     // Some resource types, like small icons, may prefer to limit their max size
-    var maxSize: Int! {
+    @objc dynamic var maxSize = 0 {
         didSet {
-            if maxSize == nil {
-                maxSize = Self.zoomLevels.last
-            }
-            self.updateSize()
+            currentSize = 0
         }
     }
-    private var currentSize = 0
-
-    private func updateSize() {
-        currentSize = max(0, min(maxSize, Self.preferredSize))
-        let layout = collectionViewLayout as! NSCollectionViewFlowLayout
-        layout.itemSize = NSSize(width: currentSize+8, height: currentSize+40)
+    @objc dynamic private var currentSize = 0 {
+        didSet {
+            if currentSize == 0 {
+                // Reset to the preferred size without changing the preferred size
+                currentSize = min(maxSize, Self.preferredSize)
+            } else {
+                currentSize = min(maxSize, currentSize)
+                Self.preferredSize = currentSize
+            }
+            let layout = collectionViewLayout as! NSCollectionViewFlowLayout
+            layout.itemSize = NSSize(width: currentSize+8, height: currentSize+40)
+        }
     }
 
-    @IBAction func zoomIn(_ sender: Any) {
+    @IBAction private func zoomIn(_ sender: Any) {
         if currentSize < maxSize,
            let newSize = Self.zoomLevels.first(where: { $0 > currentSize }) {
-            Self.preferredSize = newSize
-            self.updateSize()
+            currentSize = newSize
         }
     }
 
-    @IBAction func zoomOut(_ sender: Any) {
+    @IBAction private func zoomOut(_ sender: Any) {
         if let newSize = Self.zoomLevels.last(where: { $0 < currentSize }) {
-            Self.preferredSize = newSize
-            self.updateSize()
+            currentSize = newSize
         }
     }
 

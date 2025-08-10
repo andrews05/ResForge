@@ -93,11 +93,13 @@ class ResourceDataSource: NSObject {
             let view = try rView.prepareView(type: currentType)
             rView.reload()
             if rView !== resourcesView {
+                resourcesView?.isActive = false
                 resourcesView = rView
                 stackView.removeView(stackView.views.last!)
                 stackView.addView(view, in: .bottom)
                 view.window?.initialFirstResponder = view
                 view.window?.makeFirstResponder(view)
+                resourcesView.isActive = true
             }
             if retainSelection {
                 resourcesView.select(selected)
@@ -323,6 +325,9 @@ class SourceCount: NSButton {
 
 // Common interface for the OutlineController and CollectionController
 protocol ResourcesView: AnyObject {
+    /// Whether this is the currently active view.
+    var isActive: Bool { get set }
+
     /// Prepare the view to be displayed within the scroll view.
     func prepareView(type: ResourceType?) throws -> NSView
 
