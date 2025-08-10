@@ -8,7 +8,7 @@ struct HFDefaults {
 }
 
 public class HexEditor: AbstractEditor, ResourceEditor, NSTextFieldDelegate, HFTextViewDelegate {
-    public static var bundle: Bundle { .module }
+    public static var bundle: Bundle { .main }
     public static let supportedTypes: [String] = []
     public static func register() {
         PluginRegistry.hexEditor = self

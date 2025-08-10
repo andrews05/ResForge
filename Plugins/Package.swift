@@ -12,9 +12,9 @@ let package = Package(
         .library(
             name: "RFSupport",
             targets: ["RFSupport"]),
-        .library(
-            name: "HexEditor",
-            targets: ["HexEditor"]),
+//        .library(
+//            name: "HexEditor",
+//            targets: ["HexEditor"]),
         .library(
             name: "TemplateEditor",
             targets: ["TemplateEditor"]),
@@ -36,16 +36,16 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-collections.git", "1.0.0"..<"2.0.0"),
-        .package(url: "https://github.com/HexFiend/HexFiend.git", branch: "package"),
+//        .package(url: "https://github.com/HexFiend/HexFiend.git", branch: "package"),
         .package(url: "https://github.com/pointfreeco/swift-parsing.git", "0.14.0"..<"0.15.0")
     ],
     targets: [
         .target(
             name: "RFSupport"),
-        .target(
-            name: "HexEditor",
-            dependencies: [.target(name: "RFSupport"),
-                           .product(name: "HexFiend", package: "HexFiend")]),
+//        .target(
+//            name: "HexEditor",
+//            dependencies: [.target(name: "RFSupport"),
+//                           .product(name: "HexFiend", package: "HexFiend")]),
         .target(
             name: "TemplateEditor",
             dependencies: [.target(name: "RFSupport"),

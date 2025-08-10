@@ -34,7 +34,6 @@
 		49AA91E22DC08B89007944F6 /* ImageEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 49AA91E12DC08B89007944F6 /* ImageEditor */; };
 		49AA91E42DC08DE1007944F6 /* MenuEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 49AA91E32DC08DE1007944F6 /* MenuEditor */; };
 		49AA91E62DC08EC2007944F6 /* SoundEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 49AA91E52DC08EC2007944F6 /* SoundEditor */; };
-		49AA91FC2DC0A78E007944F6 /* HexEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 49AA91FB2DC0A78E007944F6 /* HexEditor */; };
 		49AA91FE2DC0A902007944F6 /* RFSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 49AA91FD2DC0A902007944F6 /* RFSupport */; };
 		49D6D349271BAA9F002DEA97 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 49D6D348271BAA9F002DEA97 /* OrderedCollections */; };
 		49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB6A1B24F375A100BE0F0F /* OutlineController.swift */; };
@@ -43,6 +42,10 @@
 		49F2EAA526D50F4B0020D70E /* BulkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7A3B926D0E59100EF885F /* BulkController.swift */; };
 		49F2EAAB26D5AB5E0020D70E /* StandardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F2EAAA26D5AB5E0020D70E /* StandardController.swift */; };
 		49F416EB2879330400404BA1 /* ImportPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F416E22879330400404BA1 /* ImportPanel.swift */; };
+		49F4648D2E487A15003C732F /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F464802E4879EC003C732F /* HexFiend.framework */; };
+		49F4648E2E487A15003C732F /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49F464802E4879EC003C732F /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		49F464952E487B72003C732F /* HexEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F464922E487B72003C732F /* HexEditor.swift */; };
+		49F464962E487B72003C732F /* HexWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49F464932E487B72003C732F /* HexWindow.xib */; };
 		49F56FCE2A830C4E00953A17 /* ClassicFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F56FCD2A830C4E00953A17 /* ClassicFormat.swift */; };
 		49F570032A844EFF00953A17 /* ResourceFileFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F570022A844EFF00953A17 /* ResourceFileFormat.swift */; };
 		49F570062A845D5E00953A17 /* RezFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F570052A845D5E00953A17 /* RezFormat.swift */; };
@@ -55,7 +58,77 @@
 		B229EEF915A4FB6F0032C12C /* ResourceDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = B229EEF215A4FB6F0032C12C /* ResourceDocument.xib */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		49F4647D2E4879EC003C732F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = HexFiend_2;
+		};
+		49F4647F2E4879EC003C732F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D01E7BB80CDC530C00943F9E;
+			remoteInfo = HexFiend_Framework;
+		};
+		49F464812E4879EC003C732F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A5EF294A20F187B700CA7B39;
+			remoteInfo = HexFiend_Framework_iOS;
+		};
+		49F464832E4879EC003C732F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D047E3151022CEFE00EF307B;
+			remoteInfo = "FortunateSon (PrivilegedHelper)";
+		};
+		49F464852E4879EC003C732F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D00C15E50FF091FF006D021F;
+			remoteInfo = HexFiendling;
+		};
+		49F464872E4879EC003C732F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9408FBFA19DD72DE004F800E;
+			remoteInfo = "HexFiend_Framework Tests";
+		};
+		49F464892E4879EC003C732F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A550A7161F7877F8001C79C7;
+			remoteInfo = hexf;
+		};
+		49F4648B2E4879EC003C732F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A50859A72B204C8100325B36;
+			remoteInfo = "Hex Fiend Tests";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		49F4648F2E487A15003C732F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				49F4648E2E487A15003C732F /* HexFiend.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E1EAB18D06A20EEB0041EE35 /* Copy Plugins */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -97,6 +170,9 @@
 		49E7A3B926D0E59100EF885F /* BulkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49F2EAAA26D5AB5E0020D70E /* StandardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49F416E22879330400404BA1 /* ImportPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPanel.swift; sourceTree = "<group>"; usesTabs = 0; };
+		49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
+		49F464922E487B72003C732F /* HexEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexEditor.swift; sourceTree = "<group>"; };
+		49F464932E487B72003C732F /* HexWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HexWindow.xib; sourceTree = "<group>"; };
 		49F56FCD2A830C4E00953A17 /* ClassicFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicFormat.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49F570022A844EFF00953A17 /* ResourceFileFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceFileFormat.swift; sourceTree = "<group>"; usesTabs = 0; };
 		49F570052A845D5E00953A17 /* RezFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RezFormat.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -120,11 +196,11 @@
 			files = (
 				49AA91E22DC08B89007944F6 /* ImageEditor in Frameworks */,
 				4952BD4C26DD9356005DB6EB /* CSV in Frameworks */,
+				49F4648D2E487A15003C732F /* HexFiend.framework in Frameworks */,
 				49AA91FE2DC0A902007944F6 /* RFSupport in Frameworks */,
 				498001B12DC05A6F006C39BE /* DialogEditor in Frameworks */,
 				49D6D349271BAA9F002DEA97 /* OrderedCollections in Frameworks */,
 				496107642DC0E71000D73B44 /* TemplateEditor in Frameworks */,
-				49AA91FC2DC0A78E007944F6 /* HexEditor in Frameworks */,
 				49AA91E02DC08054007944F6 /* NovaTools in Frameworks */,
 				49AA91E42DC08DE1007944F6 /* MenuEditor in Frameworks */,
 				49AA91E62DC08EC2007944F6 /* SoundEditor in Frameworks */,
@@ -149,8 +225,33 @@
 				49F56FCC2A830C3600953A17 /* Formats */,
 				F5B5881C0156D40B01000001 /* Classes */,
 				F5B588350156D40B01000001 /* Resources */,
+				49F464942E487B72003C732F /* HexEditor */,
 			);
 			path = ResForge;
+			sourceTree = "<group>";
+		};
+		49F464722E4879EC003C732F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				49F4647E2E4879EC003C732F /* Hex Fiend.app */,
+				49F464802E4879EC003C732F /* HexFiend.framework */,
+				49F464822E4879EC003C732F /* HexFiend_Framework_iOS.framework */,
+				49F464842E4879EC003C732F /* com.ridiculousfish.HexFiend.PrivilegedHelper */,
+				49F464862E4879EC003C732F /* HexFiendling.app */,
+				49F464882E4879EC003C732F /* HexFiend_Framework Tests.xctest */,
+				49F4648A2E4879EC003C732F /* hexf */,
+				49F4648C2E4879EC003C732F /* Hex Fiend Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		49F464942E487B72003C732F /* HexEditor */ = {
+			isa = PBXGroup;
+			children = (
+				49F464922E487B72003C732F /* HexEditor.swift */,
+				49F464932E487B72003C732F /* HexWindow.xib */,
+			);
+			path = HexEditor;
 			sourceTree = "<group>";
 		};
 		49F56FCC2A830C3600953A17 /* Formats */ = {
@@ -175,6 +276,7 @@
 				498A02C225C3E4B500783776 /* README.md */,
 				4996B8F425DB6AC80027FA39 /* LICENSE */,
 				4996B8E725DB6A3A0027FA39 /* ResForge */,
+				49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */,
 				F5B588110156D30301000001 /* Products */,
 				493CC3B4270AE9FA00A9173E /* Frameworks */,
 			);
@@ -242,6 +344,7 @@
 				E1EAB18D06A20EEB0041EE35 /* Copy Plugins */,
 				E18BF56F069FEA1300F076B8 /* Sources */,
 				E18BF586069FEA1300F076B8 /* Frameworks */,
+				49F4648F2E487A15003C732F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -256,7 +359,6 @@
 				49AA91E12DC08B89007944F6 /* ImageEditor */,
 				49AA91E32DC08DE1007944F6 /* MenuEditor */,
 				49AA91E52DC08EC2007944F6 /* SoundEditor */,
-				49AA91FB2DC0A78E007944F6 /* HexEditor */,
 				49AA91FD2DC0A902007944F6 /* RFSupport */,
 				496107632DC0E71000D73B44 /* TemplateEditor */,
 			);
@@ -294,12 +396,77 @@
 			);
 			productRefGroup = F5B588110156D30301000001 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 49F464722E4879EC003C732F /* Products */;
+					ProjectRef = 49F464712E4879EC003C732F /* HexFiend_2.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				E18BF537069FEA1300F076B8 /* ResForge */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		49F4647E2E4879EC003C732F /* Hex Fiend.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Hex Fiend.app";
+			remoteRef = 49F4647D2E4879EC003C732F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49F464802E4879EC003C732F /* HexFiend.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HexFiend.framework;
+			remoteRef = 49F4647F2E4879EC003C732F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49F464822E4879EC003C732F /* HexFiend_Framework_iOS.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HexFiend_Framework_iOS.framework;
+			remoteRef = 49F464812E4879EC003C732F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49F464842E4879EC003C732F /* com.ridiculousfish.HexFiend.PrivilegedHelper */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = com.ridiculousfish.HexFiend.PrivilegedHelper;
+			remoteRef = 49F464832E4879EC003C732F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49F464862E4879EC003C732F /* HexFiendling.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HexFiendling.app;
+			remoteRef = 49F464852E4879EC003C732F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49F464882E4879EC003C732F /* HexFiend_Framework Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "HexFiend_Framework Tests.xctest";
+			remoteRef = 49F464872E4879EC003C732F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49F4648A2E4879EC003C732F /* hexf */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = hexf;
+			remoteRef = 49F464892E4879EC003C732F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49F4648C2E4879EC003C732F /* Hex Fiend Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Hex Fiend Tests.xctest";
+			remoteRef = 49F4648B2E4879EC003C732F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E18BF553069FEA1300F076B8 /* Resources */ = {
@@ -309,6 +476,7 @@
 				4968368924F224FB009BDBBE /* ResourceItem.xib in Resources */,
 				B229EEF515A4FB6F0032C12C /* MainMenu.xib in Resources */,
 				B229EEF615A4FB6F0032C12C /* CreateResource.xib in Resources */,
+				49F464962E487B72003C732F /* HexWindow.xib in Resources */,
 				559DE9B4189D665000D55D3A /* Assets.xcassets in Resources */,
 				4996B90925DB6C2F0027FA39 /* Credits.rtf in Resources */,
 				B229EEF715A4FB6F0032C12C /* InfoWindow.xib in Resources */,
@@ -339,6 +507,7 @@
 				49F56FCE2A830C4E00953A17 /* ClassicFormat.swift in Sources */,
 				4968C03B24C6808200716AB9 /* EditorManager.swift in Sources */,
 				49F416EB2879330400404BA1 /* ImportPanel.swift in Sources */,
+				49F464952E487B72003C732F /* HexEditor.swift in Sources */,
 				49DB6A1C24F375A100BE0F0F /* OutlineController.swift in Sources */,
 				4982C09E2A97F653006B7404 /* AppleSingleFormat.swift in Sources */,
 				4962BCD324C6D19A00990DA0 /* OpenPanelDelegate.swift in Sources */,
@@ -622,10 +791,6 @@
 		49AA91E52DC08EC2007944F6 /* SoundEditor */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SoundEditor;
-		};
-		49AA91FB2DC0A78E007944F6 /* HexEditor */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = HexEditor;
 		};
 		49AA91FD2DC0A902007944F6 /* RFSupport */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,7 +1,7 @@
 import AppKit
 import RFSupport
 
-import HexEditor
+//import HexEditor
 import TemplateEditor
 import DialogEditor
 import ImageEditor
