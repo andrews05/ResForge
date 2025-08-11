@@ -129,7 +129,7 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
 }
 
 class ResourceCollection: NSCollectionView {
-    static let zoomLevels = [64, 100, 160, 256]
+    static let zoomLevels = [64, 100, 140, 192, 256]
     private static var preferredSize = UserDefaults.standard.integer(forKey: RFDefaults.thumbnailSize) {
         didSet {
             UserDefaults.standard.set(preferredSize, forKey: RFDefaults.thumbnailSize)
