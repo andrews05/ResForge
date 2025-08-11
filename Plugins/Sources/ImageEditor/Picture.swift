@@ -103,12 +103,13 @@ extension Picture {
                 try reader.advance(1)
             case .textFont, .textMode, .penMode, .textSize, .shortLineFrom, .shortComment:
                 try reader.advance(2)
-            case .penSize, .lineFrom:
+            case .ovSize, .penSize, .lineFrom:
                 try reader.advance(4)
             case .shortLine, .rgbFgColor, .rgbBkCcolor, .hiliteColor, .opColor:
                 try reader.advance(6)
             case .penPattern, .fillPattern, .line,
-                    .frameRect, .paintRect, .eraseRect, .invertRect, .fillRect:
+                    .frameRect, .paintRect, .eraseRect, .invertRect, .fillRect,
+                    .frameRRect, .paintRRect, .eraseRRect, .invertRRect, .fillRRect:
                 try reader.advance(8)
             case .longText:
                 try self.sizedSkip(reader, pre: 4, byte: true)
@@ -473,6 +474,7 @@ enum PictOpcode: UInt16 {
     case penMode = 0x0008
     case penPattern = 0x0009
     case fillPattern = 0x000A
+    case ovSize = 0x000B
     case origin = 0x000C
     case textSize = 0x000D
     case versionOp = 0x0011
@@ -503,6 +505,11 @@ enum PictOpcode: UInt16 {
     case eraseSameRect = 0x003A
     case invertSameRect = 0x003B
     case fillSameRect = 0x003C
+    case frameRRect = 0x0040
+    case paintRRect = 0x0041
+    case eraseRRect = 0x0042
+    case invertRRect = 0x0043
+    case fillRRect = 0x0044
     case bitsRect = 0x0090
     case bitsRegion = 0x0091
     case packBitsRect = 0x0098
