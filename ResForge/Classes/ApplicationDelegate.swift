@@ -24,6 +24,8 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     static let githubURL = "https://github.com/andrews05/ResForge"
 
     private lazy var prefsController = PrefsController()
+    /// The standard menu to show when right-clicking a resource.
+    @IBOutlet private(set) var resourceMenu: NSMenu!
 
     override init() {
         NSApp.registerServicesMenuSendTypes([.string], returnTypes: [.string])

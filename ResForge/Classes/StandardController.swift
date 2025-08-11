@@ -83,3 +83,18 @@ class StandardController: OutlineController {
         return nil
     }
 }
+
+class StandardView: NSOutlineView {
+    // Show the resource menu when right-clicking an item, selecting it if necessary
+    override func menu(for event: NSEvent) -> NSMenu? {
+        let point = self.convert(event.locationInWindow, from: nil)
+        let row = self.row(at: point)
+        if row != -1 {
+            if !selectedRowIndexes.contains(row) {
+                self.selectRowIndexes([row], byExtendingSelection: false)
+            }
+            return (NSApp.delegate as? ApplicationDelegate)?.resourceMenu
+        }
+        return nil
+    }
+}

@@ -209,7 +209,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="369" height="353"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" autosaveName="" rowSizeStyle="automatic" headerView="164" viewBased="YES" indentationPerLevel="1" outlineTableColumn="149" id="145">
+                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" autosaveName="" rowSizeStyle="automatic" headerView="164" viewBased="YES" indentationPerLevel="1" outlineTableColumn="149" id="145" customClass="StandardView" customModule="ResForge" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="369" height="330"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -462,13 +462,13 @@
                                     </constraints>
                                     <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" minValue="64" maxValue="256" doubleValue="100" tickMarkPosition="above" sliderType="linear" id="HEf-WO-JwA"/>
                                     <connections>
+                                        <binding destination="bpN-Hx-BgR" name="value" keyPath="collectionView.currentSize" previousBinding="qi4-GG-ZH8" id="Mv8-TX-ubJ"/>
+                                        <binding destination="bpN-Hx-BgR" name="maxValue" keyPath="collectionView.maxSize" id="qi4-GG-ZH8"/>
                                         <binding destination="bpN-Hx-BgR" name="hidden" keyPath="zoomEnabled" id="8i8-xN-eqI">
                                             <dictionary key="options">
                                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                                             </dictionary>
                                         </binding>
-                                        <binding destination="bpN-Hx-BgR" name="maxValue" keyPath="collectionView.maxSize" id="qi4-GG-ZH8"/>
-                                        <binding destination="bpN-Hx-BgR" name="value" keyPath="collectionView.currentSize" previousBinding="qi4-GG-ZH8" id="Mv8-TX-ubJ"/>
                                     </connections>
                                 </slider>
                             </subviews>

@@ -175,10 +175,10 @@ class ResourceCollection: NSCollectionView {
         if event.specialKey == .home {
             self.scroll(.zero)
         } else if event.specialKey == .end {
-            self.scroll(NSPoint(x: self.frame.width, y: self.frame.height))
-        } else if (event.specialKey == .downArrow || event.specialKey == .rightArrow) && self.selectionIndexPaths.isEmpty {
+            self.scroll(NSPoint(x: frame.width, y: frame.height))
+        } else if (event.specialKey == .downArrow || event.specialKey == .rightArrow) && selectionIndexPaths.isEmpty {
             self.selectItems(at: [[0, 0]], scrollPosition: [.top, .left])
-        } else if (event.specialKey == .upArrow || event.specialKey == .leftArrow) && self.selectionIndexPaths.isEmpty {
+        } else if (event.specialKey == .upArrow || event.specialKey == .leftArrow) && selectionIndexPaths.isEmpty {
             self.selectItems(at: [[0, self.numberOfItems(inSection: 0)-1]], scrollPosition: [.bottom, .right])
         } else if event.specialKey == .delete || event.specialKey == .pageUp || event.specialKey == .pageDown {
             self.nextResponder?.keyDown(with: event)
@@ -201,15 +201,28 @@ class ResourceCollection: NSCollectionView {
 
     override func insertNewline(_ sender: Any?) {
         // Begin editing the selected item when enter is pressed
-        if self.selectionIndexPaths.count == 1 {
-            self.scrollToItems(at: self.selectionIndexPaths, scrollPosition: .nearestHorizontalEdge)
-            let item = self.item(at: self.selectionIndexPaths.first!) as! ResourceItem
+        if selectionIndexPaths.count == 1 {
+            self.scrollToItems(at: selectionIndexPaths, scrollPosition: .nearestHorizontalEdge)
+            let item = self.item(at: selectionIndexPaths.first!) as! ResourceItem
             item.beginEditing()
         }
     }
 
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
         return true
+    }
+
+    // Show the resource menu when right-clicking an item, selecting it if necessary
+    override func menu(for event: NSEvent) -> NSMenu? {
+        let point = self.convert(event.locationInWindow, from: nil)
+        if let indexPath = self.indexPathForItem(at: point) {
+            if !selectionIndexPaths.contains(indexPath) {
+                self.deselectAll(self)
+                self.selectItems(at: [indexPath], scrollPosition: [])
+            }
+            return (NSApp.delegate as? ApplicationDelegate)?.resourceMenu
+        }
+        return nil
     }
 }
 
@@ -239,7 +252,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
         let clicker = NSClickGestureRecognizer(target: self, action: #selector(doubleClick))
         clicker.numberOfClicksRequired = 2
         clicker.delaysPrimaryMouseButtonEvents = false
-        self.view.addGestureRecognizer(clicker)
+        view.addGestureRecognizer(clicker)
     }
 
     private func highlight(_ on: Bool) {
@@ -249,7 +262,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     }
 
     @objc private func doubleClick() {
-        if let document = self.view.window?.delegate as? ResourceDocument {
+        if let document = view.window?.delegate as? ResourceDocument {
             document.openResources(self)
         }
     }
@@ -273,7 +286,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     func beginEditing() {
         nameField.isHidden = false
         nameField.isEditable = true
-        self.view.window?.makeFirstResponder(nameField)
+        nameField.window?.makeFirstResponder(nameField)
     }
 
     func endEditing() {
@@ -281,7 +294,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
         nameField.isEditable = false
         nameField.invalidateIntrinsicContentSize()
         // Always return first responder to the collection view
-        self.view.window?.makeFirstResponder(self.collectionView)
+        collectionView?.window?.makeFirstResponder(collectionView)
     }
 
     func controlTextDidEndEditing(_ obj: Notification) {

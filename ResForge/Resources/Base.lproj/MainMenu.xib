@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -437,12 +437,16 @@ CA
             </items>
             <point key="canvasLocation" x="140" y="154"/>
         </menu>
-        <customObject id="431" customClass="ApplicationDelegate" customModule="ResForge" customModuleProvider="target"/>
+        <customObject id="431" customClass="ApplicationDelegate" customModule="ResForge" customModuleProvider="target">
+            <connections>
+                <outlet property="resourceMenu" destination="FZW-lO-D0R" id="Rig-UN-2HB"/>
+            </connections>
+        </customObject>
         <customView id="432" userLabel="Select Fork">
             <rect key="frame" x="0.0" y="0.0" width="431" height="38"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZz-d2-V4c">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZz-d2-V4c">
                     <rect key="frame" x="18" y="12" width="85" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fork to open:" id="q6V-9a-MRp">
                         <font key="font" metaFont="system"/>
@@ -454,7 +458,7 @@ CA
                     <rect key="frame" x="106" y="5" width="187" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="kwd-tA-MiD" id="k6W-79-SSl">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
+                        <font key="font" metaFont="message"/>
                         <menu key="menu" autoenablesItems="NO" id="e1x-em-dsm">
                             <items>
                                 <menuItem title="Automatic" state="on" id="kwd-tA-MiD">
@@ -504,7 +508,7 @@ CA
             <rect key="frame" x="0.0" y="0.0" width="431" height="38"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6mN-Bs-34d">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6mN-Bs-34d">
                     <rect key="frame" x="18" y="11" width="64" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Template:" id="zQa-6R-ybO">
                         <font key="font" metaFont="system"/>
@@ -512,7 +516,7 @@ CA
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bua-jX-8TE">
+                <comboBox focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bua-jX-8TE">
                     <rect key="frame" x="87" y="7" width="154" height="23"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="150" id="krG-ur-Iuw"/>
@@ -534,5 +538,46 @@ CA
             </constraints>
             <point key="canvasLocation" x="140" y="409"/>
         </customView>
+        <menu title="Resource" id="FZW-lO-D0R">
+            <items>
+                <menuItem title="Edit with Default Editor" tag="2" id="Vbi-O9-ZOP">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openResources:" target="-1" id="HmL-kd-4Y1"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Edit with Template…" tag="3" id="p0A-t2-xB6">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openResourcesInTemplate:" target="-1" id="EZd-3z-MXn"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Edit with Hex Editor" tag="5" id="WUq-sq-DND">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openResourcesAsHex:" target="-1" id="JyH-rT-zLf"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Export…" tag="6" identifier="exportResource" id="wMp-Gg-aQ2">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="exportResource:" target="-1" id="HCK-8J-nuH"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Export raw…" tag="6" alternate="YES" identifier="exportRawResource" id="BVq-d2-QDu">
+                    <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                    <connections>
+                        <action selector="exportRawResource:" target="-1" id="DOH-yD-14c"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Revert Resource Content" tag="8" identifier="revertResource" id="ysi-aA-xJa">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="revertResource:" target="-1" id="3yy-aw-af7"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="68" y="541"/>
+        </menu>
     </objects>
 </document>
