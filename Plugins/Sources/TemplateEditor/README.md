@@ -3,7 +3,7 @@
 This document outlines all template field types that have been defined by various editors. ResForge currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
 * Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (64 of 95)
-* All of [Rezilla's additions](https://bdesgraupes.pagesperso-orange.fr/DocHTML/EN/RezillaHelp/47.html) (5)
+* All of [Rezilla's additions](https://html-preview.github.io/?url=https://github.com/chrisballinger/rezilla/blob/master/RezillaHelp/English.lproj/RezillaHelp/47.html) (5)
 * ResForge's own additions (21)
 
 In addition to standard TMPL resources, ResForge also supports "basic" templates in the form of TMPB resources. These templates operate on a reduced set of field types and enable the bulk data view and CSV import/export for the associated resource type.
@@ -92,7 +92,7 @@ ECST|Even-Padded C String|2 or more|✓|✓|✓|🟢 🅱️
 OCST|Odd-Padded C String|1 or more|✓|✓|✓|🟢 🅱️
 BSTR|Byte Length String (same as PSTR)|1 to 256||✓|✓|🟢 🅱️
 WSTR|Word Length String|2 to 64KB|✓|✓|✓|🟢 🅱️
-LSTR|Long Length String|4 to 4MB|✓|✓|✓|🟢 🅱️
+LSTR|Long Length String|4 to 4GB|✓|✓|✓|🟢 🅱️
 USTR|Null-Terminated UTF-8 String|1 or more||||🟢 🅱️
 TXTS|Sized Text Dump|any||✓||🟢
 UTXT|UTF-8 Text Dump|any||||🟢
@@ -107,10 +107,10 @@ Type|Description|Size|ResEdit|Resorcerer|Rezilla|ResForge
 ----|-----------|----|-------|----------|-------|--------
 BHEX|Byte Length Hex Dump|1 to 256||✓|✓|🔵
 WHEX|Word Length Hex Dump|2 to 64KB||✓|✓|🔵
-LHEX|Long Length Hex Dump|4 to 4MB||✓|✓|🔵
+LHEX|Long Length Hex Dump|4 to 4GB||✓|✓|🔵
 BSHX|Byte Length - 1 Hex Dump|1 to 255||✓|✓|🔵
 WSHX|Word Length - 2 Hex Dump|2 to 64KB-2||✓|✓|🔵
-LHEX|Long Length - 4 Hex Dump|4 to 4MB-4||✓|✓|🔵
+LHEX|Long Length - 4 Hex Dump|4 to 4GB-4||✓|✓|🔵
 Hnmm|Fixed-Length Hex Dump|$_nmm_ bytes|✓|✓|✓|🔵
 HEXS|Sized Hex Dump|any||✓||🔵
 HEXD|Hex Dump|any|✓|✓|✓|🔵
