@@ -558,19 +558,19 @@ CA
                         <action selector="openResourcesAsHex:" target="-1" id="JyH-rT-zLf"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Export…" tag="6" identifier="exportResource" id="wMp-Gg-aQ2">
+                <menuItem title="Export…" tag="6" id="wMp-Gg-aQ2">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="exportResource:" target="-1" id="HCK-8J-nuH"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Export raw…" tag="6" alternate="YES" identifier="exportRawResource" id="BVq-d2-QDu">
+                <menuItem title="Export raw…" tag="6" alternate="YES" id="BVq-d2-QDu">
                     <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                     <connections>
                         <action selector="exportRawResource:" target="-1" id="DOH-yD-14c"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Revert Resource Content" tag="8" identifier="revertResource" id="ysi-aA-xJa">
+                <menuItem title="Revert Resource Content" tag="8" id="ysi-aA-xJa">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="revertResource:" target="-1" id="3yy-aw-af7"/>
