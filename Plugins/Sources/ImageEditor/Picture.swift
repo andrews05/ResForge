@@ -386,8 +386,8 @@ extension Picture {
 
         let rowBytes = pixMap.rowBytes
         if rowBytes >= 8 {
-            pixelData.withUnsafeBytes { inBuffer in
-                var input = inBuffer.assumingMemoryBound(to: UInt8.self).baseAddress!
+            pixelData.withContiguousStorageIfAvailable { inBuffer in
+                var input = inBuffer.baseAddress!
                 for _ in 0..<imageRep.pixelsHigh {
                     PackBits<UInt8>.writeRow(input, writer: writer, pixMap: pixMap)
                     input += rowBytes

@@ -152,8 +152,8 @@ class SoundResource {
             byteSize = bytesRemaining
         }
         try initAudioQueue(byteSize)
-        let buff = bufferRef!.pointee.mAudioData.assumingMemoryBound(to: UInt8.self)
-        data.copyBytes(to: buff, from: reader.position..<(reader.position+Int(byteSize)))
+        let buff = UnsafeMutableRawBufferPointer(start: bufferRef!.pointee.mAudioData, count: Int(byteSize))
+        data.copyBytes(to: buff, from: reader.position...)
         bufferRef!.pointee.mAudioDataByteSize = byteSize
         return true
     }
@@ -306,8 +306,8 @@ class SoundResource {
             cmpHeader.write(writer)
         }
 
-        let buff = bufferRef!.pointee.mAudioData.assumingMemoryBound(to: UInt8.self)
-        writer.data.append(UnsafeBufferPointer(start: buff, count: byteSize))
+        let buff = UnsafeRawBufferPointer(start: bufferRef!.pointee.mAudioData, count: byteSize)
+        writer.data.append(contentsOf: buff)
         return writer.data
     }
 
