@@ -40,55 +40,34 @@ struct QTGraphics {
         let roundedWidth = (width + 3) & ~3
         let roundedHeight = (height + 3) & ~3
 
+        // Initialise the rep
+        let rep = ImageFormat.rgbaRep(width: width, height: height)
+
         // First byte is ignored, chunk size is next 3 bytes
         let chunkSize = Int(try reader.read() as UInt32) & 0xFFFFFF
         guard chunkSize >= 4, let palette = imageDesc.colorTable else {
             throw ImageReaderError.invalid
         }
         let data = try reader.readData(length: chunkSize - 4)
-        var pixelData = Data(repeating: 0, count: roundedWidth * roundedHeight)
-        try pixelData.withUnsafeMutableBytes { outData in
-            try outData.withMemoryRebound(to: UInt8.self) { output in
-                try data.withUnsafeBytes { inData in
-                    try inData.withMemoryRebound(to: UInt8.self) { input in
-                        var graphics = Self(input: input, output: output)
-                        try graphics.decode()
-                    }
-                }
+        try withUnsafeTemporaryAllocation(of: UInt8.self, capacity: roundedWidth * roundedHeight) { output in
+            try data.withContiguousStorageIfAvailable { input in
+                var graphics = Self(input: input, output: output)
+                try graphics.decode()
             }
-        }
 
-        // Initialise the rep
-        let rowBytes = roundedWidth * 3
-        let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                   pixelsWide: width,
-                                   pixelsHigh: height,
-                                   bitsPerSample: 8,
-                                   samplesPerPixel: 3,
-                                   hasAlpha: false,
-                                   isPlanar: false,
-                                   colorSpaceName: .deviceRGB,
-                                   bytesPerRow: rowBytes,
-                                   bitsPerPixel: 0)!
-        let bitmap = rep.bitmapData!
-
-        // Use the palette to draw the 4x4 blocks to the rep
-        for y in stride(from: 0, to: roundedHeight, by: 4) {
-            let y2 = min(y + 4, height)
-            for x in stride(from: 0, to: rowBytes, by: 12) {
-                var offset = y * roundedWidth + x / 12 * 16
-                for by in y..<y2 {
-                    for bx in stride(from: x, to: x + 12, by: 3) {
-                        let index = Int(pixelData[offset])
-                        guard index < palette.endIndex else {
-                            throw ImageReaderError.invalid
-                        }
-                        offset += 1
-                        let color = palette[index]
-                        bitmap[by * rowBytes + bx] = color.red
-                        bitmap[by * rowBytes + bx + 1] = color.green
-                        bitmap[by * rowBytes + bx + 2] = color.blue
+            // Use the palette to draw the 4x4 blocks to the rep
+            var bitmap = rep.bitmapData!
+            for y in 0..<height {
+                let (yq, yr) = y.quotientAndRemainder(dividingBy: 4)
+                let yOffset = (yq * roundedWidth + yr) * 4
+                for x in 0..<width {
+                    let (xq, xr) = x.quotientAndRemainder(dividingBy: 4)
+                    let offset = yOffset + xq * 16 + xr
+                    let index = Int(output[offset])
+                    guard index < palette.endIndex else {
+                        throw ImageReaderError.invalid
                     }
+                    palette[index].draw(to: &bitmap)
                 }
             }
         }
@@ -148,9 +127,7 @@ struct QTGraphics {
                 }
                 let val = inPos.pointee
                 inPos += 1
-                if val != 0 {
-                    outPos.update(repeating: val, count: blockCount * 16)
-                }
+                outPos.update(repeating: val, count: blockCount * 16)
                 outPos += blockCount * 16
             case 0x80:
                 // 2 colours
