@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -382,7 +382,6 @@
 				};
 			};
 			buildConfigurationList = E13F7F0508F0411100E2A5CB /* Build configuration list for PBXProject "ResForge" */;
-			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -394,6 +393,7 @@
 				4952BD4A26DD9356005DB6EB /* XCRemoteSwiftPackageReference "CSV.swift" */,
 				493CC3A9270AE8CA00A9173E /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = F5B588110156D30301000001 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -602,7 +602,7 @@
 				INFOPLIST_FILE = ResForge/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1.4.6;
+				MARKETING_VERSION = 1.4.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.ResForge;
 				PRODUCT_NAME = ResForge;
 			};
@@ -616,7 +616,7 @@
 				INFOPLIST_FILE = ResForge/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1.4.6;
+				MARKETING_VERSION = 1.4.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resforge.ResForge;
 				PRODUCT_NAME = ResForge;
 			};
