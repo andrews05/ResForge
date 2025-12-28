@@ -36,7 +36,7 @@ class ElementNCB: ElementCSTR {
     }
 
     @objc private func showInfo(_ sender: NSButton) {
-        if let control = sender.previousKeyView as? NSControl {
+        if let control = sender.previousValidKeyView as? NSControl {
             self.showPopover(control)
         }
     }
