@@ -14,15 +14,6 @@ class StandardController: OutlineController {
         document.openResources(sender)
     }
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Default sort resources by id
-        // Note: awakeFromNib is re-triggered each time a cell is created - be careful not to re-sort each time
-        if outlineView.sortDescriptors.isEmpty, let descriptor = outlineView.outlineTableColumn?.sortDescriptorPrototype {
-            outlineView.sortDescriptors = [descriptor]
-        }
-    }
-
     override func prepareView(type: ResourceType?) -> NSView {
         currentType = type
         outlineView.indentationPerLevel = type == nil ? 1 : 0
@@ -96,5 +87,13 @@ class StandardView: NSOutlineView {
             return (NSApp.delegate as? ApplicationDelegate)?.resourceMenu
         }
         return nil
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Default sort resources by id
+        if let descriptor = outlineTableColumn?.sortDescriptorPrototype {
+            sortDescriptors = [descriptor]
+        }
     }
 }
