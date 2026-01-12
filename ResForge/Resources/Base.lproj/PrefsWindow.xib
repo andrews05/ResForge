@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,18 +21,18 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="277" y="484" width="440" height="224"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1800" height="1130"/>
             <view key="contentView" autoresizesSubviews="NO" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="434" height="288"/>
+                <rect key="frame" x="0.0" y="0.0" width="432" height="282"/>
                 <subviews>
                     <box title="Data Protection" translatesAutoresizingMaskIntoConstraints="NO" id="10">
-                        <rect key="frame" x="17" y="182" width="280" height="86"/>
+                        <rect key="frame" x="20" y="182" width="272" height="80"/>
                         <view key="contentView" id="KKp-nW-NBY">
-                            <rect key="frame" x="3" y="3" width="274" height="66"/>
+                            <rect key="frame" x="0.0" y="0.0" width="272" height="66"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MeL-b0-sie">
-                                    <rect key="frame" x="10" y="37" width="252" height="18"/>
+                                    <rect key="frame" x="12" y="38" width="248" height="16"/>
                                     <buttonCell key="cell" type="check" title="Confirm changes when closing editor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Gwn-Hw-R8r">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -42,7 +42,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q0u-Gl-gdY">
-                                    <rect key="frame" x="10" y="11" width="227" height="18"/>
+                                    <rect key="frame" x="12" y="12" width="223" height="16"/>
                                     <buttonCell key="cell" type="check" title="Confirm when deleting resources" bezelStyle="regularSquare" imagePosition="left" inset="2" id="cYT-7e-OLo">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -65,13 +65,13 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box title="Launch Action" translatesAutoresizingMaskIntoConstraints="NO" id="31">
-                        <rect key="frame" x="17" y="80" width="280" height="98"/>
+                        <rect key="frame" x="20" y="82" width="272" height="92"/>
                         <view key="contentView" id="vK3-Br-fhK">
-                            <rect key="frame" x="3" y="3" width="274" height="78"/>
+                            <rect key="frame" x="0.0" y="0.0" width="272" height="78"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kn1-lZ-eXz">
-                                    <rect key="frame" x="10" y="51" width="95" height="18"/>
+                                    <rect key="frame" x="12" y="52" width="91" height="16"/>
                                     <buttonCell key="cell" type="radio" title="Do Nothing" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="i72-t1-gCD">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -80,8 +80,8 @@
                                         <action selector="setLaunchAction:" target="-2" id="xoB-zV-aIZ"/>
                                     </connections>
                                 </button>
-                                <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="sKi-sr-R0b">
-                                    <rect key="frame" x="10" y="30" width="163" height="18"/>
+                                <button tag="1" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sKi-sr-R0b">
+                                    <rect key="frame" x="12" y="31" width="159" height="16"/>
                                     <buttonCell key="cell" type="radio" title="Create New Document" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0Y5-SZ-cZ9">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -90,8 +90,8 @@
                                         <action selector="setLaunchAction:" target="-2" id="qer-hK-Gg9"/>
                                     </connections>
                                 </button>
-                                <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="NX4-OD-hyo">
-                                    <rect key="frame" x="10" y="9" width="149" height="18"/>
+                                <button tag="2" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NX4-OD-hyo">
+                                    <rect key="frame" x="12" y="10" width="145" height="16"/>
                                     <buttonCell key="cell" type="radio" title="Display Open Dialog" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Nrt-RH-rVq">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -116,8 +116,8 @@
                         </view>
                         <font key="titleFont" metaFont="system"/>
                     </box>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kBp-Of-rHm">
-                        <rect key="frame" x="312" y="252" width="92" height="16"/>
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kBp-Of-rHm">
+                        <rect key="frame" x="310" y="246" width="92" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Favorite Types" id="2af-7Q-1gP">
                             <font key="font" usesAppearanceFont="YES"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -125,13 +125,13 @@
                         </textFieldCell>
                     </textField>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIS-iN-Vam">
-                        <rect key="frame" x="314" y="40" width="100" height="207"/>
+                        <rect key="frame" x="312" y="40" width="100" height="201"/>
                         <clipView key="contentView" id="MpM-Cc-P5k">
-                            <rect key="frame" x="1" y="1" width="98" height="205"/>
+                            <rect key="frame" x="1" y="1" width="98" height="199"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" id="Rsk-Zj-biq">
-                                    <rect key="frame" x="0.0" y="0.0" width="98" height="205"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="98" height="199"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -180,21 +180,21 @@
                         </scroller>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eYO-eF-IJK">
-                        <rect key="frame" x="314" y="19" width="26" height="23"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="DXp-P1-gMx"/>
-                            <constraint firstAttribute="width" constant="26" id="u9E-5S-WTW"/>
-                        </constraints>
+                        <rect key="frame" x="312" y="19" width="26" height="23"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mcK-lF-aBf">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="DXp-P1-gMx"/>
+                            <constraint firstAttribute="width" constant="26" id="u9E-5S-WTW"/>
+                        </constraints>
                         <connections>
                             <action selector="add:" target="-2" id="Fac-8C-mIS"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1AT-1O-9kd">
-                        <rect key="frame" x="339" y="19" width="26" height="23"/>
+                        <rect key="frame" x="337" y="19" width="26" height="23"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3tT-Xn-COZ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -208,20 +208,20 @@ CA
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cOB-EU-zgN">
-                        <rect key="frame" x="364" y="19" width="50" height="23"/>
+                        <rect key="frame" x="362" y="19" width="50" height="23"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" enabled="NO" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VEz-6T-EGE">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
                     <box title="Template Editor" translatesAutoresizingMaskIntoConstraints="NO" id="2PP-mE-dOn">
-                        <rect key="frame" x="17" y="16" width="280" height="60"/>
+                        <rect key="frame" x="20" y="20" width="272" height="54"/>
                         <view key="contentView" id="EFQ-X0-91a">
-                            <rect key="frame" x="3" y="3" width="274" height="40"/>
+                            <rect key="frame" x="0.0" y="0.0" width="272" height="40"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p9m-q6-RUq">
-                                    <rect key="frame" x="10" y="11" width="214" height="18"/>
+                                    <rect key="frame" x="12" y="12" width="210" height="16"/>
                                     <buttonCell key="cell" type="check" title="Include field for resource name" bezelStyle="regularSquare" imagePosition="left" inset="2" id="9jd-6o-GAI">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -283,7 +283,7 @@ CA
         </arrayController>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSAddTemplate" width="18" height="17"/>
+        <image name="NSRemoveTemplate" width="18" height="5"/>
     </resources>
 </document>

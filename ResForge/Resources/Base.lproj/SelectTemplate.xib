@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="SelectTemplateController" customModule="ResKnife" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="SelectTemplateController" customModule="ResForge" customModuleProvider="target">
             <connections>
                 <outlet property="openButton" destination="nFU-NU-Joq" id="SdC-YV-OR2"/>
                 <outlet property="typeList" destination="icg-n4-8Pu" id="SJu-QE-Tkd"/>
@@ -19,13 +19,13 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="220" height="100"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1800" height="1130"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="220" height="100"/>
+                <rect key="frame" x="0.0" y="0.0" width="220" height="108"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nFU-NU-Joq">
-                        <rect key="frame" x="133" y="13" width="73" height="32"/>
+                        <rect key="frame" x="143" y="20" width="57" height="24"/>
                         <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bj1-1r-38e">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -38,7 +38,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g1U-Go-JiD">
-                        <rect key="frame" x="51" y="13" width="82" height="32"/>
+                        <rect key="frame" x="65" y="20" width="66" height="24"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4h9-gF-HIA">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -50,8 +50,8 @@ Gw
                             <action selector="hide:" target="-2" id="NR1-V2-Jm1"/>
                         </connections>
                     </button>
-                    <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="icg-n4-8Pu">
-                        <rect key="frame" x="88" y="57" width="115" height="25"/>
+                    <comboBox focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="icg-n4-8Pu">
+                        <rect key="frame" x="88" y="64" width="112" height="24"/>
                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" numberOfVisibleItems="5" id="BoN-We-2Ir">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -66,8 +66,8 @@ Gw
                             <outlet property="delegate" destination="-2" id="xcc-3p-QTG"/>
                         </connections>
                     </comboBox>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tn3-5A-fXy">
-                        <rect key="frame" x="18" y="63" width="64" height="16"/>
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tn3-5A-fXy">
+                        <rect key="frame" x="18" y="68" width="64" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Template:" id="dpq-Lq-bsA">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -83,7 +83,7 @@ Gw
                     <constraint firstItem="nFU-NU-Joq" firstAttribute="leading" secondItem="g1U-Go-JiD" secondAttribute="trailing" constant="12" symbolic="YES" id="Ewg-bm-yFJ"/>
                     <constraint firstAttribute="trailing" secondItem="nFU-NU-Joq" secondAttribute="trailing" constant="20" symbolic="YES" id="L05-n4-0pc"/>
                     <constraint firstItem="nFU-NU-Joq" firstAttribute="top" secondItem="icg-n4-8Pu" secondAttribute="bottom" constant="20" symbolic="YES" id="Ld2-R8-LJ0"/>
-                    <constraint firstItem="tn3-5A-fXy" firstAttribute="firstBaseline" secondItem="icg-n4-8Pu" secondAttribute="firstBaseline" id="Sea-Xj-f5a"/>
+                    <constraint firstItem="icg-n4-8Pu" firstAttribute="baseline" secondItem="tn3-5A-fXy" secondAttribute="baseline" id="ZuM-qZ-0l4"/>
                     <constraint firstItem="g1U-Go-JiD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="e4q-qi-a1u"/>
                     <constraint firstItem="tn3-5A-fXy" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="hgn-8B-Og7"/>
                     <constraint firstAttribute="bottom" secondItem="nFU-NU-Joq" secondAttribute="bottom" constant="20" symbolic="YES" id="ut4-Ic-GD3"/>

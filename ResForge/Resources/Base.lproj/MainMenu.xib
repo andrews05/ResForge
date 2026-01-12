@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -455,7 +455,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW9-Ng-yIh">
-                    <rect key="frame" x="106" y="5" width="187" height="25"/>
+                    <rect key="frame" x="109" y="8" width="180" height="24"/>
                     <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="kwd-tA-MiD" id="k6W-79-SSl">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="message"/>
@@ -517,7 +517,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <comboBox focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bua-jX-8TE">
-                    <rect key="frame" x="87" y="7" width="154" height="23"/>
+                    <rect key="frame" x="88" y="7" width="150" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="150" id="krG-ur-Iuw"/>
                     </constraints>
@@ -533,8 +533,8 @@ CA
                 <constraint firstItem="6mN-Bs-34d" firstAttribute="top" secondItem="6Df-Xi-GWZ" secondAttribute="top" constant="11" id="CLI-zD-SK0"/>
                 <constraint firstItem="bua-jX-8TE" firstAttribute="leading" secondItem="6mN-Bs-34d" secondAttribute="trailing" constant="8" symbolic="YES" id="FlI-2n-87V"/>
                 <constraint firstItem="6mN-Bs-34d" firstAttribute="leading" secondItem="6Df-Xi-GWZ" secondAttribute="leading" constant="20" symbolic="YES" id="Pkf-Ft-gJq"/>
+                <constraint firstItem="bua-jX-8TE" firstAttribute="baseline" secondItem="6mN-Bs-34d" secondAttribute="baseline" id="Y8w-LC-b4W"/>
                 <constraint firstAttribute="bottom" secondItem="6mN-Bs-34d" secondAttribute="bottom" constant="11" id="gDB-7X-gUW"/>
-                <constraint firstItem="6mN-Bs-34d" firstAttribute="firstBaseline" secondItem="bua-jX-8TE" secondAttribute="firstBaseline" id="gzR-cb-2Pd"/>
             </constraints>
             <point key="canvasLocation" x="140" y="409"/>
         </customView>

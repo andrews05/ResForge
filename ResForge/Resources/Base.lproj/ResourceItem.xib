@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView translatesAutoresizingMaskIntoConstraints="NO" id="17" customClass="CustomImageView" customModule="RFSupport">
-                                <rect key="frame" x="4" y="2.5" width="100.5" height="104"/>
+                                <rect key="frame" x="4" y="0.5" width="100" height="107"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" placeholder="YES" id="KNP-gE-1FL"/>
                                     <constraint firstAttribute="height" constant="100" placeholder="YES" id="T27-HU-vCy"/>
@@ -43,7 +43,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="18" height="17"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KKS-Bl-Sd6">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KKS-Bl-Sd6">
                                 <rect key="frame" x="1" y="1" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="DtA-kI-qcO"/>
@@ -66,7 +66,7 @@
                         </constraints>
                     </view>
                 </box>
-                <textField verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sdy-Z7-HX9">
+                <textField focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sdy-Z7-HX9">
                     <rect key="frame" x="49" y="0.0" width="11" height="13"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" alignment="center" placeholderString=" " id="E6P-MI-5Cq">
                         <customFormatter key="formatter" id="NlX-HS-SKt" customClass="MacRomanFormatter" customModule="RFSupport">
@@ -121,6 +121,6 @@
     </objects>
     <resources>
         <image name="NSStatusAvailable" width="16" height="16"/>
-        <image name="NSStopProgressTemplate" width="14" height="13"/>
+        <image name="NSStopProgressTemplate" width="17" height="16"/>
     </resources>
 </document>
