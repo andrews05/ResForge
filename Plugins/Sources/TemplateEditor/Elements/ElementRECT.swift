@@ -34,6 +34,12 @@ class ElementRECT: BaseElement {
         var frame = view.frame
         let width = element.width / CGFloat(fields.count)
         frame.size.width = width - 4
+        if #available(macOS 26, *) {
+            frame.origin.x += 1
+            frame.origin.y += 1
+            frame.size.width -= 2
+            frame.size.height -= 2
+        }
         for key in fields {
             let field = NSTextField(frame: frame)
             field.placeholderString = key

@@ -32,7 +32,7 @@ class ElementLSTB: BaseElement, CollectionElement {
     required init(type: String, label: String) {
         zeroTerminated = type == "LSTZ"
         super.init(type: type, label: label)
-        rowHeight = 18
+        rowHeight = 20
     }
 
     override func copy() -> Self {

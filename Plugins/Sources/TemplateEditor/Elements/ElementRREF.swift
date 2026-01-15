@@ -42,9 +42,15 @@ class ElementRREF: BaseElement {
         frame.size.width = width - 4
         frame.size.height = 19
         let button = NSButton(frame: frame)
-        button.bezelStyle = .inline
+        if #available(macOS 26, *) {
+            button.bezelStyle = .roundRect
+            button.controlSize = .small
+            button.font = .systemFont(ofSize: 11)
+        } else {
+            button.bezelStyle = .inline
+            button.font = .boldSystemFont(ofSize: 11)
+        }
         button.title = buttonLabel
-        button.font = .boldSystemFont(ofSize: 11)
         // Show add icon if resource does not exist, otherwise follow link icon
         let resource = manager.findResource(type: .init(resType), id: id)
         button.image = NSImage(named: resource == nil ? NSImage.touchBarAddDetailTemplateName : NSImage.followLinkFreestandingTemplateName)

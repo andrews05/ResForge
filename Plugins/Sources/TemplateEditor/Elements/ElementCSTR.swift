@@ -109,8 +109,16 @@ open class ElementCSTR: CasedElement {
         }
         let index = outline.row(for: field)
         if index != -1 {
-            let frame = field.cell!.expansionFrame(withFrame: NSRect(x: 0, y: 0, width: field.frame.size.width-4, height: 0), in: field)
-            let height = Double(frame.height) + 7
+            var baseFrame = NSRect(x: 0, y: 0, width: field.frame.size.width, height: 0)
+            if #unavailable(macOS 26) {
+                baseFrame.size.width -= 4
+            }
+            let frame = field.cell!.expansionFrame(withFrame: baseFrame, in: field)
+            let height = if #available(macOS 26, *) {
+                Double(frame.height) + 2
+            } else {
+                Double(frame.height) + 7
+            }
             if height != rowHeight {
                 rowHeight = height
                 // In case we're not our own row...

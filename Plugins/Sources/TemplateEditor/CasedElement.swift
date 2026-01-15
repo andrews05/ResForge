@@ -71,6 +71,12 @@ open class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSCo
         if width != 0 {
             frame.size.width = width - 4
         }
+        if #available(macOS 26, *) {
+            frame.origin.x += 1
+            frame.origin.y += 1
+            frame.size.width -= 2
+            frame.size.height -= 2
+        }
         let textField = NSTextField(frame: frame)
         textField.formatter = formatter
         textField.delegate = self
@@ -84,7 +90,11 @@ open class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSCo
     func configureComboBox(view: NSView) {
         var frame = view.frame
         if width != 0 {
-            frame.size.width = width - 1
+            frame.size.width = width - 2
+        }
+        if #available(macOS 26, *) {
+            frame.origin.x += 1
+            frame.size.width -= 4
         }
         frame.size.height = 24
         frame.origin.y -= 1
@@ -95,6 +105,9 @@ open class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSCo
         combo.placeholderString = type
         combo.usesDataSource = true
         combo.dataSource = self
+        if #available(macOS 26, *) {
+            combo.controlSize = .small
+        }
         // The formatter isn't directly compatible with the values displayed by the combo box
         // Use a combination of value transformation with immediate validation to run the formatter manually
         combo.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self, .validatesImmediately: true])
