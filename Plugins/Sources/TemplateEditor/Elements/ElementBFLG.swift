@@ -48,7 +48,7 @@ class ElementBFLG<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         if !valid || (!element.cases.isEmpty && element.cases.count != 2) {
             throw TemplateError.invalidStructure(element, NSLocalizedString("CASE list must contain exactly two values: 1/On and 0/Off.", comment: ""))
         }
-        element.width = element.cases.isEmpty ? 120 : 240
+        element.blockWidth = element.cases.isEmpty ? 4 : 8
     }
 
     static func configure(view: NSView, for element: CasedElement) {

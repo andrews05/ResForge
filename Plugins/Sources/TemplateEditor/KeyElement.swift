@@ -13,7 +13,7 @@ class KeyElement: CasedElement, CollectionElement {
 
     override func configure() throws {
         try self.readSections()
-        width = 240
+        blockWidth = 8
 
         // Set initial state
         if let value = self.defaultValue(), let section = keyedSections[value] {

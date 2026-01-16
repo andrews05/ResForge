@@ -17,7 +17,7 @@ class ElementHEXD: BaseElement {
             data = Data(count: length)
             self.setRowHeight()
         }
-        width = 360
+        blockWidth = 12
     }
 
     override func configure(view: NSView) {

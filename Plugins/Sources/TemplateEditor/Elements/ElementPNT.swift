@@ -6,7 +6,7 @@ class ElementPNT: BaseElement {
     @objc private var y: Int16 = 0
 
     override func configure() throws {
-        self.width = 120
+        blockWidth = 4
     }
 
     override func configure(view: NSView) {

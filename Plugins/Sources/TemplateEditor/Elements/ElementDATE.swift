@@ -10,7 +10,7 @@ class ElementDATE: BaseElement {
     }
 
     override func configure() throws {
-        width = 240
+        blockWidth = 8
         value = Date()
         tValue += UInt32(TimeZone.current.secondsFromGMT())
     }

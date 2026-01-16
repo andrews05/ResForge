@@ -9,7 +9,7 @@ open class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSCo
         try self.readCases()
         self.defaultValue()
         if !cases.isEmpty {
-            width = 240
+            blockWidth = 8
         }
         for caseEl in cases.values where caseEl.displayLabel != caseEl.displayValue {
             // Cases will show as "title = value" in the options list to allow searching by title

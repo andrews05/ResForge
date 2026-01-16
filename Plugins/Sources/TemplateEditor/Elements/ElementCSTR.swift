@@ -50,7 +50,7 @@ open class ElementCSTR: CasedElement {
         }
         try super.configure()
         // Use a width of zero to allow flexible sizing when appropriate
-        width = cases.isEmpty && maxLength > 32 ? 0 : 240
+        blockWidth = cases.isEmpty && maxLength > 32 ? 0 : 8
     }
 
     func configurePadding() {

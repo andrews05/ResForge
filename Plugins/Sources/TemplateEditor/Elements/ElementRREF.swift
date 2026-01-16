@@ -33,7 +33,7 @@ class ElementRREF: BaseElement {
         } else {
             buttonLabel = scanner.string[scanner.currentIndex...].trimmingCharacters(in: .whitespaces)
         }
-        width = 120
+        blockWidth = 4
     }
 
     override func configure(view: NSView) {

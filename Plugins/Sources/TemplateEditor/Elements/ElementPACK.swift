@@ -42,11 +42,12 @@ class ElementPACK: BaseElement {
         for element in subElements {
             // When packing multiple elements, attempt to reduce the width
             if subElements.count > 1 {
-                if element.width > 180 {
-                    element.width = 180
+                let maxWidth = Self.blockSize * 6
+                if element.width > maxWidth {
+                    element.width = maxWidth
                 }
                 if let element = element as? RangedController {
-                    element.popupWidth = element.popupWidth > 180 ? 180 : 120
+                    element.popupWidth = element.popupWidth > maxWidth ? maxWidth : Self.blockSize * 4
                 }
             }
             let prev = view.subviews.last

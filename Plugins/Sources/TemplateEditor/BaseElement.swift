@@ -3,6 +3,7 @@ import RFSupport
 
 open class BaseElement: ValueTransformer, NSTextFieldDelegate {
     static var sharedFormatters: [String: Formatter] = [:]
+    static let blockSize: Double = 33 // Best fit for hex fields on macOS 26
 
     /// Type code of this field.
     let type: String
@@ -18,7 +19,12 @@ open class BaseElement: ValueTransformer, NSTextFieldDelegate {
     weak var parentList: ElementList!
     var rowHeight: Double = 22
     var visible: Bool = true
-    public internal(set) var width: Double = 60 // Default for many types
+    public internal(set) var width: Double
+    /// The width of the element as number of blocks.
+    var blockWidth: Double {
+        get { width / Self.blockSize }
+        set { width = Self.blockSize * newValue }
+    }
     public var manager: RFEditorManager { parentList.controller.manager }
 
     required public init!(type: String, label: String) {
@@ -31,6 +37,7 @@ open class BaseElement: ValueTransformer, NSTextFieldDelegate {
         if parts.count == 2 {
             metaValue = String(parts[1])
         }
+        width = Self.blockSize * 2 // Default for many types
     }
 
     func copy() -> Self {

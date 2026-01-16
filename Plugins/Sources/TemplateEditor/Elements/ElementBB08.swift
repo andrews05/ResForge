@@ -21,7 +21,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
 
     required init(type: String, label: String) {
         super.init(type: type, label: label)
-        width = 180
+        blockWidth = 6
         rowHeight = Double(T.bitWidth/8 * 20) + 21
     }
 

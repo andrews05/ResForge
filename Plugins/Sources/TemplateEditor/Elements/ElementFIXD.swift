@@ -12,7 +12,7 @@ class ElementFIXD: CasedElement {
 
     required init(type: String, label: String) {
         super.init(type: type, label: label)
-        width = 90
+        blockWidth = 3
     }
 
     override func readData(from reader: BinaryDataReader) throws {

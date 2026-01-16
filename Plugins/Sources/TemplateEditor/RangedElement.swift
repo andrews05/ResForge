@@ -40,9 +40,10 @@ class RangedElement<T: FixedWidthInteger>: CasedElement, RangedController {
     @objc private var currentCase: ElementCASR?
     private var suppressDidSet = false
     var hasPopup: Bool { casrs.count > 1 }
-    var popupWidth: Double = 240
+    var popupWidth: Double = 0
 
     override func configure() throws {
+        popupWidth = Self.blockSize * 8
         // Read CASR elements
         while let casr = parentList.pop("CASR") as? ElementCASR {
             if casrs == nil {
@@ -51,7 +52,7 @@ class RangedElement<T: FixedWidthInteger>: CasedElement, RangedController {
             try casr.configure(for: self)
             casrs.append(casr)
             if casr.min != casr.max {
-                popupWidth = 180 // Shrink pop-up menu if any CASR needs a field
+                popupWidth = Self.blockSize * 6 // Shrink pop-up menu if any CASR needs a field
             }
         }
         if let casrs {

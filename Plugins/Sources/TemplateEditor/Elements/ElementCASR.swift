@@ -146,7 +146,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         guard forceReload || cases.isEmpty else {
             return
         }
-        width = parentElement.hasPopup ? 180 : 240
+        blockWidth = parentElement.hasPopup ? 6 : 8
         let resources = parentList.controller.resources(ofType: resType)
         for resource in resources where min...max ~= resource.id {
             let caseEl = ElementCASE(value: resource.id,

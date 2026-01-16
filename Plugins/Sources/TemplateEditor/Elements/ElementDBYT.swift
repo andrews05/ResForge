@@ -12,9 +12,9 @@ class ElementDBYT<T: FixedWidthInteger>: RangedElement<T> {
         super.init(type: type, label: label)
         switch T.bitWidth/8 {
         case 4:
-            width = 90
+            blockWidth = 3
         case 8:
-            width = 150
+            blockWidth = 5
         default:
             break
         }

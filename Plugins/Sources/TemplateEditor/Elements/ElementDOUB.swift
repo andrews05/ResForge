@@ -6,7 +6,7 @@ class ElementDOUB: CasedElement {
 
     required init(type: String, label: String) {
         super.init(type: type, label: label)
-        self.width = 180
+        blockWidth = 6
     }
 
     override func readData(from reader: BinaryDataReader) throws {

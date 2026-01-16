@@ -50,7 +50,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
         }
 
         try super.configure()
-        width = 240
+        blockWidth = 8
         fixedMap = cases
 
         // Setting the resType will load the cases so we need to do this last

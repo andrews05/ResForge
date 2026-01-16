@@ -6,7 +6,7 @@ class ElementREAL: CasedElement {
 
     required init(type: String, label: String) {
         super.init(type: type, label: label)
-        self.width = 90
+        blockWidth = 3
     }
 
     override func readData(from reader: BinaryDataReader) throws {

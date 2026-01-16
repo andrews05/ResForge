@@ -9,7 +9,7 @@ class ElementRECT: BaseElement {
     @objc private var right: Int16 = 0
 
     override func configure() throws {
-        width = 240
+        blockWidth = 8
     }
 
     override func configure(view: NSView) {

@@ -10,7 +10,7 @@ class ElementRNAM: CasedElement {
         guard parentList.parentElement == nil && parentList.element(at: 0) == self else {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Must be first element in template.", comment: ""))
         }
-        width = 240
+        blockWidth = 8
         try super.configure()
         // In case data isn't read (resource is empty) we still need to ensure the value is populated
         value = parentList.controller.resource.name
