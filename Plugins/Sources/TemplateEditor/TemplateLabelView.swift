@@ -59,7 +59,7 @@ class TemplateLabelView: NSTableCellView {
         if let element = dataList.item(atRow: row) as? ElementLSTB, element.createListEntry(data) {
             dataList.reloadData()
             let newHeader = dataList.view(atColumn: 0, row: row, makeIfNecessary: true)
-            window?.makeFirstResponder(newHeader)
+            newHeader?.window?.makeFirstResponder(newHeader)
             // Expand the item and scroll the new content into view
             dataList.expandItem(dataList.item(atRow: row), expandChildren: true)
             let lastChild = dataList.rowView(atRow: dataList.row(forItem: element), makeIfNecessary: true)
@@ -74,7 +74,7 @@ class TemplateLabelView: NSTableCellView {
         if let element = dataList.item(atRow: row) as? ElementLSTB, element.removeListEntry() {
             dataList.reloadData()
             let newHeader = dataList.view(atColumn: 0, row: row, makeIfNecessary: true)
-            window?.makeFirstResponder(newHeader)
+            newHeader?.window?.makeFirstResponder(newHeader)
         }
     }
 }
