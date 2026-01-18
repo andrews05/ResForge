@@ -256,8 +256,8 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     }
 
     private func highlight(_ on: Bool) {
-        imageBox.fillColor = on ? .secondarySelectedControlColor : .clear
-        textBox.fillColor = on ? .alternateSelectedControlColor : .clear
+        imageBox.fillColor = on ? .unemphasizedSelectedContentBackgroundColor : .clear
+        textBox.fillColor = on ? .selectedContentBackgroundColor : .clear
         textField?.textColor = on ? .alternateSelectedControlTextColor : .controlTextColor
     }
 

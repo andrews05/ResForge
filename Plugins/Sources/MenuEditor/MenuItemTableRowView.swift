@@ -40,7 +40,7 @@ class MenuItemTableRowView : NSTableRowView {
             if !isSelected {
                 NSColor.textColor.setFill()
             } else {
-                NSColor.selectedMenuItemColor.setFill()
+                NSColor.controlAccentColor.setFill()
             }
             NSBezierPath.fill(box)
         case .lastItemCell:
@@ -53,7 +53,7 @@ class MenuItemTableRowView : NSTableRowView {
             if !isSelected {
                 NSColor.textBackgroundColor.setFill()
             } else {
-                NSColor.selectedMenuItemColor.setFill()
+                NSColor.controlAccentColor.setFill()
             }
             NSBezierPath.fill(box)
             NSBezierPath.stroke(box.insetBy(dx: 0.5, dy: 0.5))
@@ -65,7 +65,7 @@ class MenuItemTableRowView : NSTableRowView {
             if !isSelected {
                 NSColor.textBackgroundColor.setFill()
             } else {
-                NSColor.selectedMenuItemColor.setFill()
+                NSColor.controlAccentColor.setFill()
             }
             NSBezierPath.fill(box)
             NSBezierPath.stroke(box.insetBy(dx: 0.5, dy: 0.5))
@@ -78,7 +78,7 @@ class MenuItemTableRowView : NSTableRowView {
             if !isSelected {
                 NSColor.textBackgroundColor.setFill()
             } else {
-                NSColor.selectedMenuItemColor.setFill()
+                NSColor.controlAccentColor.setFill()
             }
             NSBezierPath.fill(box)
             NSBezierPath.stroke(box.insetBy(dx: 0.5, dy: 0.5))
@@ -94,7 +94,7 @@ class MenuItemTableRowView : NSTableRowView {
             if !isSelected {
                 NSColor.textBackgroundColor.setFill()
             } else {
-                NSColor.selectedMenuItemColor.setFill()
+                NSColor.controlAccentColor.setFill()
             }
             NSBezierPath.fill(box)
             NSBezierPath.stroke(box.insetBy(dx: 0.5, dy: 0.5))

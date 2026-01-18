@@ -83,10 +83,6 @@ class EditorManager: RFEditorManager {
     }
 
     func image(for type: ResourceType) -> NSImage? {
-        guard #available(macOS 11, *) else {
-            return nil
-        }
-
         if let icon = PluginRegistry.icon(for: type) {
             if icon.count == 1 {
                 // Render a single character as an image
@@ -198,7 +194,7 @@ class EditorManager: RFEditorManager {
     func createResource(type: ResourceType, id: Int?, name: String, callback: ((Resource) -> Void)? = nil) {
         // The create modal will bring the document window to the front
         // Remember the current main window so we can restore it afterward
-        weak var window = NSApp.mainWindow
+        weak let window = NSApp.mainWindow
         // Ignore id if -1 or 0
         let id = id == -1 || id == 0 ? nil : id
         _document?.createController.show(type: type, id: id, name: name) { resource in

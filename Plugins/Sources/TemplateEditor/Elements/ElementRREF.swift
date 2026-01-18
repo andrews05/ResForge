@@ -53,12 +53,7 @@ class ElementRREF: BaseElement {
         button.title = buttonLabel
         // Show add icon if resource does not exist, otherwise follow link icon
         let resource = manager.findResource(type: .init(resType), id: id)
-        button.image = NSImage(named: resource == nil ? NSImage.touchBarAddDetailTemplateName : NSImage.followLinkFreestandingTemplateName)
-        if resource == nil {
-            // The add icon isn't strictly supposed to be used outside of the touch bar -
-            // It works fine on macOS 11 but for appropriate sizing on 10.14 we need to set the size explicitly (default is 18x30)
-            button.image?.size = NSSize(width: 14, height: 24)
-        }
+        button.image = NSImage(systemSymbolName: resource == nil ? "plus.circle" : "arrow.right.circle", accessibilityDescription: nil)
         button.imagePosition = .imageRight
         button.target = self
         button.action = #selector(openResource(_:))
@@ -69,7 +64,7 @@ class ElementRREF: BaseElement {
         parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, _ in
             // Update button image
             if let button = sender as? NSButton, resource.id == self?.id {
-                button.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
+                button.image = NSImage(systemSymbolName: "arrow.right.circle", accessibilityDescription: nil)
             }
         }
     }

@@ -28,7 +28,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
     private var invert = false
     private var resType: String?
     weak var parentElement: RangedController!
-    private(set) var linkIcon: NSImage.Name?
+    private(set) var linkIcon: String?
 
     override var description: String {
         self.displayLabel
@@ -163,13 +163,13 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         let id = value
         if cases[id] != nil {
             // If resource exists in case list, show link icon
-            linkIcon = NSImage.followLinkFreestandingTemplateName
+            linkIcon = "arrow.right.circle"
         } else if manager.findResource(type: .init(resType), id: id) != nil {
             // If found in directory (as a last resort), show link icon
-            linkIcon = NSImage.followLinkFreestandingTemplateName
+            linkIcon = "arrow.right.circle"
         } else {
             // Resource doesn't exist, show add icon
-            linkIcon = NSImage.touchBarAddDetailTemplateName
+            linkIcon = "plus.circle"
         }
     }
 

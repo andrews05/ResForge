@@ -292,9 +292,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
     }
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        var defaults: [NSToolbarItem.Identifier] = [
+        return [
             .toggleSidebar,
-            .space,
             .addResource,
             .editResource,
             .exportResources,
@@ -302,46 +301,20 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             .flexibleSpace,
             .searchField
         ]
-        if #available(macOS 11.0, *) {
-            defaults.removeFirst(.space)
-        }
-        return defaults
-    }
-
-    // Get a system symbol if on 11.0 or later, otherwise a standard image
-    private func symbolImage(named name: String, fallback: String? = nil) -> NSImage? {
-        if #available(macOS 11.0, *) {
-            return NSImage(systemSymbolName: name, accessibilityDescription: nil)
-        }
-        let image = NSImage(named: fallback ?? name)
-        image?.isTemplate = true
-        return image
     }
 
     func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
-        // Create the toolbar items. On macOS 11 we use the special search toolbar item as well as the system symbol images.
-        let item: NSToolbarItem
+        // Create the toolbar items
         if itemIdentifier == .searchField {
-            if #available(macOS 11.0, *) {
-                let searchItem = NSSearchToolbarItem(itemIdentifier: itemIdentifier)
-                searchItem.preferredWidthForSearchField = 180
-                searchField = searchItem.searchField
-                item = searchItem
-            } else {
-                item = NSToolbarItem(itemIdentifier: itemIdentifier)
-                searchField = NSSearchField()
-                item.view = searchField
-                item.label = NSLocalizedString("Search", comment: "")
-                item.paletteLabel = item.label
-                item.minSize = NSSize(width: 120, height: 0)
-                item.maxSize = NSSize(width: 180, height: 0)
-            }
-            item.action = #selector(ResourceDataSource.filter(_:))
-            item.target = dataSource
-            return item
+            let searchItem = NSSearchToolbarItem(itemIdentifier: itemIdentifier)
+            searchItem.preferredWidthForSearchField = 180
+            searchField = searchItem.searchField
+            searchItem.action = #selector(ResourceDataSource.filter(_:))
+            searchItem.target = dataSource
+            return searchItem
         }
 
-        item = NSToolbarItem(itemIdentifier: itemIdentifier)
+        let item = NSToolbarItem(itemIdentifier: itemIdentifier)
         let button = NSButton(frame: NSRect(x: 0, y: 0, width: 36, height: 0))
         button.bezelStyle = .texturedRounded
         item.view = button
@@ -349,31 +322,31 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         switch itemIdentifier {
         case .addResource:
             item.label = NSLocalizedString("Add", comment: "")
-            item.image = NSImage(named: NSImage.addTemplateName)
+            item.image = NSImage(systemSymbolName: "plus", accessibilityDescription: nil)
             item.action = #selector(createNewItem(_:))
         case .deleteResource:
             item.label = NSLocalizedString("Delete", comment: "")
-            item.image = self.symbolImage(named: "trash", fallback: "NSToolbarDelete")
+            item.image = NSImage(systemSymbolName: "trash", accessibilityDescription: nil)
             item.action = #selector(delete(_:))
             item.isEnabled = false
         case .editResource:
             item.label = NSLocalizedString("Edit", comment: "")
-            item.image = self.symbolImage(named: "square.and.pencil")
+            item.image = NSImage(systemSymbolName: "square.and.pencil", accessibilityDescription: nil)
             item.action = #selector(openResources(_:))
             item.isEnabled = false
         case .editHex:
             item.label = NSLocalizedString("Edit Hex", comment: "")
-            item.image = self.symbolImage(named: "rectangle.and.pencil.and.ellipsis")
+            item.image = NSImage(systemSymbolName: "rectangle.and.pencil.and.ellipsis", accessibilityDescription: nil)
             item.action = #selector(openResourcesAsHex(_:))
             item.isEnabled = false
         case .exportResources:
             item.label = NSLocalizedString("Export", comment: "")
-            item.image = NSImage(named: NSImage.shareTemplateName)
+            item.image = NSImage(systemSymbolName: "square.and.arrow.up", accessibilityDescription: nil)
             item.action = #selector(exportResource(_:))
             item.isEnabled = false
         case .showInfo:
             item.label = NSLocalizedString("Show Info", comment: "")
-            item.image = self.symbolImage(named: "info.circle", fallback: "NSToolbarGetInfo")
+            item.image = NSImage(systemSymbolName: "info.circle", accessibilityDescription: nil)
             item.target = NSApp.delegate
             item.action = #selector(ApplicationDelegate.showInfo(_:))
         default:
@@ -417,9 +390,6 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         windowController.window?.registerForDraggedTypes([.RFResource])
         self.updateStatus()
         NotificationCenter.default.addObserver(self, selector: #selector(validateToolbarItems(_:)), name: .DocumentSelectionDidChange, object: self)
-        if #available(macOS 11.0, *) {
-            (statusText.superview?.superview as? NSBox)?.fillColor = .windowBackgroundColor
-        }
     }
 
     func updateStatus() {

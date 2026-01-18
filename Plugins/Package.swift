@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Plugins",
     platforms: [
-        .macOS(.v10_15)
+        .macOS(.v11)
     ],
     products: [
         .library(

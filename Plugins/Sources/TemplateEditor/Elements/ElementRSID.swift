@@ -32,7 +32,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
     private var offset: Int = 0
     private var range: ClosedRange<Int>?
     private var fixedMap: OrderedDictionary<AnyHashable, ElementCASE> = [:]
-    private(set) var linkIcon: NSImage.Name?
+    private(set) var linkIcon: String?
 
     deinit {
         self.unbind(NSBindingName("resType"))
@@ -114,13 +114,13 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
             linkIcon = nil
         } else if cases[tValue]?.label.isEmpty == true {
             // If resource exists in case list (empty label implies a resource), show link icon
-            linkIcon = NSImage.followLinkFreestandingTemplateName
+            linkIcon = "arrow.right.circle"
         } else if manager.findResource(type: .init(resType), id: id) != nil {
             // If found in directory (as a last resort), show link icon
-            linkIcon = NSImage.followLinkFreestandingTemplateName
+            linkIcon = "arrow.right.circle"
         } else {
             // Resource doesn't exist, show add icon
-            linkIcon = NSImage.touchBarAddDetailTemplateName
+            linkIcon = "plus.circle"
         }
     }
 

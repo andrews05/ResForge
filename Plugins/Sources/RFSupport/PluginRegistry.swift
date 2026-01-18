@@ -97,7 +97,6 @@ public class PluginRegistry {
     }
 
     /// Return an icon string for the given resource type. This may either be a single character or the name of a system symbol.
-    @available(macOS 11, *)
     public static func icon(for type: ResourceType) -> String? {
         if let icon = typeIcons[type.code] {
             return icon

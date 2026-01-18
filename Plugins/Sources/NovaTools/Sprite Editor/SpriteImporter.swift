@@ -83,16 +83,11 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         optionsView.isHidden = false
         let alert = NSAlert()
         alert.accessoryView = optionsView
-        if #available(macOS 11, *) {
-            // We don't really want an icon but the alert necessarily has one - on macOS 11 we can use the given image
-            let icon = NSImage(size: image.size)
-            icon.addRepresentation(image)
-            alert.icon = icon
-            alert.messageText = ""
-        } else {
-            // On older systems the default app icon works better but we do need a title
-            alert.messageText = NSLocalizedString("Import sprite sheet", comment: "")
-        }
+        // We don't really want an icon but the alert necessarily has one - use the given image
+        let icon = NSImage(size: image.size)
+        icon.addRepresentation(image)
+        alert.icon = icon
+        alert.messageText = ""
         let importButton = alert.addButton(withTitle: NSLocalizedString("Import", comment: ""))
         // The preview image will be nil when the grid is invalid - use this to control the enabled state of the import button
         importButton.bind(.enabled, to: preview!, withKeyPath: "image", options: [.valueTransformerName: NSValueTransformerName.isNotNilTransformerName])

@@ -9,7 +9,7 @@ ResForge is a resource editor for macOS, capable of editing classic resource for
 
 Download the latest version of ResForge from the [Releases](https://github.com/andrews05/ResForge/releases) page.
 
-ResForge is compatible with macOS 10.15 or later and runs natively on both 64-bit Intel and Apple Silicon.
+ResForge is compatible with macOS 11 or later and runs natively on both 64-bit Intel and Apple Silicon.
 
 
 ## Features

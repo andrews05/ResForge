@@ -197,14 +197,14 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
             if let loader = PluginRegistry.previewProviders[typeCode]?.image {
                 DispatchQueue.global().async {
                     // If we fail to load a preview, show an x image instead - this prevents repeatedly trying to parse bad data
-                    self._preview = loader(self) ?? NSImage(named: NSImage.stopProgressTemplateName)
+                    self._preview = loader(self) ?? NSImage(systemSymbolName: "xmark", accessibilityDescription: nil)
                     DispatchQueue.main.async {
                         callback(self._preview)
                     }
                 }
                 return
             } else {
-                _preview = NSImage(named: NSImage.stopProgressTemplateName)
+                _preview = NSImage(systemSymbolName: "xmark", accessibilityDescription: nil)
             }
         }
         callback(self._preview)

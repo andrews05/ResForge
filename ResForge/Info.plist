@@ -109,8 +109,6 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Resource File</string>
-			<key>UTTypeIconFile</key>
-			<string>Resource Document</string>
 			<key>UTTypeIcons</key>
 			<dict>
 				<key>UTTypeIconBadgeName</key>

@@ -75,7 +75,7 @@ class ShanWindowController: AbstractEditor, ResourceEditor {
     private var timer: Timer?
     private var playing = false {
         didSet {
-            forwardButton.title = playing && forward ? "Stop  ▶︎" : "Spin  ▶︎"
+            forwardButton.title = playing && forward ? "Stop  " : "Spin  "
             (forward ? forwardButton : reverseButton)?.state = playing ? .on : .off
         }
     }
