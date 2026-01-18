@@ -22,12 +22,7 @@ class ElementNCB: ElementCSTR {
         let infoButton = NSButton(frame: NSRect(x: textField.frame.maxX - 16, y: 7, width: 12, height: 12))
         infoButton.isBordered = false
         infoButton.bezelStyle = .inline
-        if #available(macOS 11, *) {
-            infoButton.image = NSImage(systemSymbolName: "info.circle", accessibilityDescription: nil)
-        } else {
-            infoButton.image = NSImage(named: "NSToolbarGetInfo")
-            infoButton.imageScaling = .scaleProportionallyDown
-        }
+        infoButton.image = NSImage(systemSymbolName: "info.circle", accessibilityDescription: nil)
         infoButton.target = self
         infoButton.action = #selector(showInfo(_:))
         self.updateButtonState(infoButton)

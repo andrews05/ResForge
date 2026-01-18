@@ -83,10 +83,6 @@ class EditorManager: RFEditorManager {
     }
 
     func image(for type: ResourceType) -> NSImage? {
-        guard #available(macOS 11, *) else {
-            return nil
-        }
-
         if let icon = PluginRegistry.icon(for: type) {
             if icon.count == 1 {
                 // Render a single character as an image

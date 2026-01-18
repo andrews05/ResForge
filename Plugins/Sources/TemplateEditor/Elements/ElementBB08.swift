@@ -148,7 +148,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         let actionButton = NSButton(frame: frame)
         actionButton.isBordered = false
         actionButton.bezelStyle = .inline
-        actionButton.image = NSImage(named: NSImage.actionTemplateName)
+        actionButton.image = NSImage(systemSymbolName: "ellipsis.circle", accessibilityDescription: nil)
         actionButton.menu = actions
         actionButton.target = self
         actionButton.action = #selector(self.actionMenu(_:))

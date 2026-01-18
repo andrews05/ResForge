@@ -19,14 +19,7 @@ class ResourceDataSource: NSObject {
     }
     private(set) var useTypeList = false {
         didSet {
-            let width: CGFloat = if !useTypeList {
-                0
-            } else if #available(macOS 11, *) {
-                // The type list has additional padding on macOS 11 and shows type icons
-                140
-            } else {
-                100
-            }
+            let width: CGFloat = useTypeList ? 140 : 0
             splitView.setPosition(width, ofDividerAt: 0)
             self.reload(selecting: self.selectedResources())
         }
@@ -221,17 +214,6 @@ extension ResourceDataSource: NSOutlineViewDelegate, NSOutlineViewDataSource {
             (view.subviews.last as? NSButton)?.title = count
         } else {
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("HeaderCell"), owner: nil) as! NSTableCellView
-        }
-        if #unavailable(macOS 11) {
-            // Remove image view and adjust padding on older macOS
-            view.imageView?.removeFromSuperview()
-            for constraint in view.constraints {
-                if constraint.identifier == "left-padding" {
-                    constraint.constant = 8
-                } else if constraint.identifier == "right-padding" {
-                    constraint.constant = 4
-                }
-            }
         }
         return view
     }

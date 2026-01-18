@@ -91,7 +91,7 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lAH-QM-9x0">
                                     <rect key="frame" x="180" y="149" width="112" height="20"/>
-                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="lMh-yH-hCy">
+                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="plus.circle" catalog="system" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="lMh-yH-hCy">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
@@ -353,7 +353,7 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XFC-oE-ayl">
                                     <rect key="frame" x="180" y="53" width="112" height="20"/>
-                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="fOu-iL-9y7">
+                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="plus.circle" catalog="system" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="fOu-iL-9y7">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
@@ -463,7 +463,7 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CBi-O6-Uyr">
                                     <rect key="frame" x="180" y="21" width="112" height="20"/>
-                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="FAg-S8-040">
+                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="plus.circle" catalog="system" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="FAg-S8-040">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
@@ -533,7 +533,7 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7BM-PX-15g">
                                     <rect key="frame" x="180" y="117" width="112" height="20"/>
-                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="VrI-2q-E2A">
+                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="plus.circle" catalog="system" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="VrI-2q-E2A">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
@@ -771,7 +771,7 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V4P-s8-oLs">
                                     <rect key="frame" x="180" y="53" width="112" height="20"/>
-                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="jj5-Tc-WCg">
+                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="plus.circle" catalog="system" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="jj5-Tc-WCg">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
@@ -868,7 +868,7 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="udx-k7-EJr">
                                     <rect key="frame" x="180" y="21" width="112" height="20"/>
-                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="NSTouchBarAddDetailTemplate" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="HM1-81-0ib">
+                                    <buttonCell key="cell" type="roundRect" title="not found" bezelStyle="roundedRect" image="plus.circle" catalog="system" imagePosition="right" alignment="center" controlSize="small" borderStyle="border" inset="2" id="HM1-81-0ib">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
@@ -905,13 +905,13 @@
                         </view>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e3j-NW-hCp">
-                        <rect key="frame" x="589" y="604" width="70" height="24"/>
-                        <buttonCell key="cell" type="push" title="Stop  ▶︎" bezelStyle="rounded" imagePosition="right" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DQ7-97-wNv">
+                        <rect key="frame" x="592" y="604" width="65" height="24"/>
+                        <buttonCell key="cell" type="push" title="Stop  " bezelStyle="rounded" image="arrowtriangle.right.fill" catalog="system" imagePosition="right" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DQ7-97-wNv">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="TNA-1z-mzE"/>
+                            <constraint firstAttribute="width" constant="65" id="TNA-1z-mzE"/>
                         </constraints>
                         <connections>
                             <action selector="forward:" target="-2" id="VDM-oY-hhy"/>
@@ -1964,8 +1964,8 @@
                         </constraints>
                     </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dRj-wC-ewS">
-                        <rect key="frame" x="549" y="604" width="28" height="24"/>
-                        <buttonCell key="cell" type="push" title="◀︎" bezelStyle="rounded" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aNL-5X-kH4">
+                        <rect key="frame" x="552" y="604" width="28" height="24"/>
+                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="arrowtriangle.left.fill" catalog="system" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aNL-5X-kH4">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -2067,6 +2067,8 @@
         </customObject>
     </objects>
     <resources>
-        <image name="NSTouchBarAddDetailTemplate" width="20" height="20"/>
+        <image name="arrowtriangle.left.fill" catalog="system" width="14" height="13"/>
+        <image name="arrowtriangle.right.fill" catalog="system" width="14" height="13"/>
+        <image name="plus.circle" catalog="system" width="15" height="15"/>
     </resources>
 </document>

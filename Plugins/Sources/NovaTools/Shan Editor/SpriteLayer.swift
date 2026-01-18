@@ -28,10 +28,10 @@ class SpriteLayer: NSObject {
                 frames.removeAll()
                 guard spriteID > 0, let resource = controller.manager.findResource(type: .rle16, id: Int(spriteID)) else {
                     spriteLink.title = "not found"
-                    spriteLink.image = NSImage(named: NSImage.touchBarAddDetailTemplateName)
+                    spriteLink.image = NSImage(systemSymbolName: "plus.circle", accessibilityDescription: nil)
                     return
                 }
-                spriteLink.image = NSImage(named: NSImage.followLinkFreestandingTemplateName)
+                spriteLink.image = NSImage(systemSymbolName: "arrow.right.circle", accessibilityDescription: nil)
                 // Base sprite is loaded on the main thread, others are loaded in background
                 if Self.self == BaseLayer.self {
                     spriteLink.title = self.loadRle(resource.data)
