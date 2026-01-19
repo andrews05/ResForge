@@ -129,13 +129,12 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
         parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, isNew in
             guard let self else { return }
             // If this is new resource with a valid id, reload the cases
-            let resID = resource.id - self.offset
-            if isNew && self.range?.contains(resID) != false {
+            if isNew && range?.contains(resource.id) != false {
                 self.loadCases()
                 // Check if the value changed
                 if resource.id != id {
-                    self.value = resID as NSNumber
-                    self.parentList.controller.itemValueUpdated(sender)
+                    value = (resource.id - offset) as NSNumber
+                    parentList.controller.itemValueUpdated(sender)
                 }
             }
         }
