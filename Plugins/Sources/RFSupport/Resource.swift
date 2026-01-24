@@ -273,4 +273,10 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     public required init?(pasteboardPropertyList propertyList: Any, ofType type: NSPasteboard.PasteboardType) {
         return nil
     }
+	
+	@objc public override func value(forUndefinedKey key: String) -> Any? {
+		let keys = ["hfsCreator", "hfsType"]
+		if keys.contains(key) { return nil }
+		return super.value(forUndefinedKey: key)
+	}
 }

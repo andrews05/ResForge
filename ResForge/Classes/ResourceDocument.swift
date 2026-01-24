@@ -688,4 +688,11 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             return []
         }
     }
+
+    @objc override func value(forUndefinedKey key: String) -> Any? {
+        let keys = ["isChanged", "isPreload", "isProtected", "isLocked", "isPurgeable", "isSysHeap",
+                    "typeCode", "id", "name"]
+        if keys.contains(key) { return nil }
+        return super.value(forUndefinedKey: key)
+    }
 }

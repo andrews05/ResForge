@@ -181,7 +181,8 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
 
 class FourCharCodeTransformer: ValueTransformer {
     override func transformedValue(_ value: Any?) -> Any? {
-        return (value as! FourCharCode).fourCharString
+        guard let fourCC = value as? FourCharCode else { return nil }
+        return fourCC.fourCharString
     }
 
     override func reverseTransformedValue(_ value: Any?) -> Any? {
