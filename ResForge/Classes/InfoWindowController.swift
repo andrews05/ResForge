@@ -1,5 +1,4 @@
 import AppKit
-import AppKit // Redundant, but shuts up warning about our NSOutlineView and NSImageView extensions.
 import RFSupport
 
 class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
@@ -23,7 +22,8 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     @IBOutlet var typeAttsHolder: NSView!
     @IBOutlet var rTypeAtts: TypeAttributesEditor!
 
-    @IBOutlet var objectController: NSObjectController!
+    @IBOutlet var resourceController: NSObjectController!
+    @IBOutlet var documentController: NSObjectController!
 
     static var shared = InfoWindowController(windowNibName: "InfoWindow")
 
@@ -47,7 +47,8 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
 
     func windowWillClose(_ notification: Notification) {
         // Suppress all errors when closing
-        try? objectController.commitEditingWithoutPresentingError()
+        try? resourceController.commitEditingWithoutPresentingError()
+        try? documentController.commitEditingWithoutPresentingError()
     }
 
     override func showWindow(_ sender: Any?) {
@@ -61,7 +62,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             return
         }
         // Show resource info for resources in a ResourceDocument (exclude those in the support directory)
-        if let resource = objectController.content as? Resource, let document = resource.document as? ResourceDocument {
+        if let resource = resourceController.content as? Resource, let document = resource.document as? ResourceDocument {
             window?.title = NSLocalizedString("Resource Info", comment: "")
 
             rSize.integerValue = resource.data.count
@@ -71,7 +72,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
 
             window?.contentView = resourceView
             window?.initialFirstResponder = rName
-        } else if let document = objectController.content as? NSDocument {
+        } else if let document = documentController.content as? NSDocument ?? NSApp.mainWindow?.windowController?.document as? NSDocument {
             window?.title = NSLocalizedString("Document Info", comment: "")
 
             dataSize.integerValue = 0
@@ -91,8 +92,8 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
                 nameView.stringValue = document.displayName
             }
 
-            // Don't show type/creator for files that were opened using a template
-            typesView.isHidden = !(document is ResourceDocument)
+            // Type/creator is bound to the document controller, don't show if no content (e.g. TemplateDocument)
+            typesView.isHidden = documentController.content == nil
 
             window?.contentView = documentView
             window?.initialFirstResponder = type
@@ -103,23 +104,25 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     }
 
     private func setMainWindow(_ mainWindow: NSWindow?) {
-        if let document = mainWindow?.windowController?.document {
-            if let document = document as? ResourceDocument {
-                objectController.content = self.object(for: document)
-            } else {
-                objectController.content = document
-            }
+        if let editor = mainWindow?.windowController as? ResourceEditor {
+            resourceController.content = editor.resource
+            documentController.content = editor.resource.document
+        } else if let document = mainWindow?.windowController?.document as? ResourceDocument {
+            resourceController.content = self.resource(for: document)
+            documentController.content = document
         } else {
-            objectController.content = (mainWindow?.windowController as? ResourceEditor)?.resource
+            // No document or TemplateDocument
+            resourceController.content = nil
+            documentController.content = nil
         }
         self.refresh()
     }
 
-    private func object(for document: ResourceDocument) -> AnyObject {
+    private func resource(for document: ResourceDocument) -> Resource? {
         if document.dataSource.selectionCount() == 1 {
-            return document.dataSource.selectedResources().first ?? document
+            return document.dataSource.selectedResources().first
         }
-        return document
+        return nil
     }
 
     @objc func mainWindowChanged(_ notification: Notification) {
@@ -127,17 +130,17 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     }
 
     @objc func mainWindowResigned(_ notification: Notification) {
+        // Avoid double refresh if we still have a main window
         if NSApp.mainWindow == nil {
-            objectController.content = nil
-            self.refresh()
+            self.setMainWindow(nil)
         }
     }
 
-    @objc func selectedResourceChanged(_ notification: Notification) {
+    @objc private func selectedResourceChanged(_ notification: Notification) {
         if let document = notification.object as? ResourceDocument, document === NSApp.mainWindow?.windowController?.document {
-            let object = self.object(for: document)
-            if object !== objectController.content as AnyObject {
-                objectController.content = object
+            let resource = self.resource(for: document)
+            if resource !== resourceController.content as AnyObject {
+                resourceController.content = resource
                 self.refresh()
             }
         }
@@ -151,7 +154,8 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
         // Discard editing on escape - this would otherwise close the window immediately
         switch commandSelector {
         case #selector(cancelOperation(_:)):
-            objectController.discardEditing()
+            resourceController.discardEditing()
+            documentController.discardEditing()
             return true
         default:
             return false
@@ -160,13 +164,14 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
 
     func control(_ control: NSControl, didFailToFormatString string: String, errorDescription error: String?) -> Bool {
         // Attempt to suppress formatter errors by reverting invalid values
-        try? objectController.commitEditingWithoutPresentingError()
+        try? resourceController.commitEditingWithoutPresentingError()
+        try? documentController.commitEditingWithoutPresentingError()
         return control.objectValue != nil
     }
 
     @IBAction func applyAttributes(_ sender: NSButton) {
         // Make sure the type/id fields are committed before saving attributes
-        if window?.makeFirstResponder(nil) != false, let resource = objectController.content as? Resource {
+        if window?.makeFirstResponder(nil) != false, let resource = resourceController.content as? Resource {
             do {
                 let attributes = rTypeAtts.attributes
                 try resource.checkConflict(typeAttributes: attributes)
@@ -186,8 +191,7 @@ class FourCharCodeTransformer: ValueTransformer {
 
     override func reverseTransformedValue(_ value: Any?) -> Any? {
         if let value = value as? String {
-            // Workaround a bug in macOS 13? (crashes without the typecast)
-            return FourCharCode(fourCharString: value) as FourCharCode
+            return FourCharCode(fourCharString: value)
         }
         return 0
     }

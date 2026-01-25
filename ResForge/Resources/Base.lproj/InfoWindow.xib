@@ -10,10 +10,10 @@
             <connections>
                 <outlet property="creator" destination="vcX-K0-60n" id="OWz-5P-dgO"/>
                 <outlet property="dataSize" destination="bPl-P3-Z8S" id="rlG-sc-YOh"/>
+                <outlet property="documentController" destination="ktG-Wh-efq" id="SIF-8V-4C9"/>
                 <outlet property="documentView" destination="PG4-xU-c3S" id="BtM-Xs-QtG"/>
                 <outlet property="iconView" destination="EH9-LM-o2p" id="Ged-Dd-exT"/>
                 <outlet property="nameView" destination="c6h-l1-Ad7" id="YG8-Io-mEg"/>
-                <outlet property="objectController" destination="Ivl-3s-tDS" id="RgC-oK-4rm"/>
                 <outlet property="placeholderView" destination="6" id="pX9-Ef-Dwp"/>
                 <outlet property="rID" destination="Wc5-m9-c69" id="A4I-fA-Wf7"/>
                 <outlet property="rName" destination="8h2-zb-fz3" id="Cnf-Vs-B85"/>
@@ -21,6 +21,7 @@
                 <outlet property="rType" destination="kNq-HP-5AV" id="NKM-cT-UhZ"/>
                 <outlet property="rTypeAtts" destination="vJp-nb-fR2" id="7ar-on-md4"/>
                 <outlet property="resAttsHolder" destination="oW3-s3-lsG" id="kjG-5R-ffI"/>
+                <outlet property="resourceController" destination="Ivl-3s-tDS" id="ZmH-yZ-U97"/>
                 <outlet property="resourceView" destination="nc0-Xf-rW3" id="shH-Iv-xua"/>
                 <outlet property="rsrcSize" destination="vMs-RW-hgX" id="lRb-Wm-h9P"/>
                 <outlet property="type" destination="pox-Qn-guL" id="THH-lM-hm4"/>
@@ -119,7 +120,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.hfsType" id="1RW-Go-bUb">
+                                <binding destination="ktG-Wh-efq" name="value" keyPath="selection.hfsType" id="CYD-qV-DVn">
                                     <dictionary key="options">
                                         <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
                                         <string key="NSValueTransformerName">FourCharCodeTransformer</string>
@@ -137,7 +138,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="Ivl-3s-tDS" name="value" keyPath="selection.hfsCreator" id="hpY-NT-JCv">
+                                <binding destination="ktG-Wh-efq" name="value" keyPath="selection.hfsCreator" id="CfX-wn-69g">
                                     <dictionary key="options">
                                         <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
                                         <string key="NSValueTransformerName">FourCharCodeTransformer</string>
@@ -250,8 +251,9 @@
             </constraints>
             <point key="canvasLocation" x="-213" y="312"/>
         </view>
-        <view translatesAutoresizingMaskIntoConstraints="NO" id="nc0-Xf-rW3">
+        <view id="nc0-Xf-rW3">
             <rect key="frame" x="0.0" y="0.0" width="252" height="175"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="8h2-zb-fz3">
                     <rect key="frame" x="10" y="140" width="232" height="23"/>
@@ -596,7 +598,8 @@
             </constraints>
             <point key="canvasLocation" x="-213" y="590"/>
         </view>
-        <objectController id="Ivl-3s-tDS"/>
+        <objectController id="Ivl-3s-tDS" userLabel="Resource Controller"/>
+        <objectController id="ktG-Wh-efq" userLabel="Document Controller"/>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="18" height="17"/>
