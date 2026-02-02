@@ -255,11 +255,19 @@ public class Resource: NSObject, NSSecureCoding, NSPasteboardWriting, NSPasteboa
     }
 
     public func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
-        return [.RFResource]
+        var types = [NSPasteboard.PasteboardType.RFResource]
+        // Also include the preview when available
+        if let _preview {
+            types.append(contentsOf: _preview.writableTypes(for: pasteboard))
+        }
+        return types
     }
 
     public func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
-        return try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: true)
+        if type == .RFResource {
+            return try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: true)
+        }
+        return _preview?.pasteboardPropertyList(forType: type)
     }
 
     public static func readableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
