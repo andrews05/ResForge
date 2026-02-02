@@ -131,7 +131,13 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
             imageView.image = nil
             playButton.isEnabled = false
             exportButton.isEnabled = false
-            imageSize.stringValue = resource.data.isEmpty ? "No data" : "Invalid data"
+            if !resource.data.isEmpty {
+                imageSize.stringValue = "Invalid data"
+            } else if writeableType != nil {
+                imageSize.stringValue = "Import or paste an image to create a sprite"
+            } else {
+                imageSize.stringValue = "Can't edit resources of this type"
+            }
             frameCounter.stringValue = "-/-"
         }
     }

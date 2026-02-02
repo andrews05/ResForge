@@ -1,4 +1,5 @@
 import AppKit
+import CoreImage.CIFilterBuiltins
 
 enum SpriteImporterError: LocalizedError {
     case unsupportedFile
@@ -43,6 +44,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     @objc dynamic private var directory = true
     private var image: NSImageRep?
     private var images: [NSImageRep]?
+    private var alert: NSAlert?
 
     override init() {
         gridX = Self.GRID_X
@@ -53,7 +55,6 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
     func beginSheetModal(for window: NSWindow,
                          sheetCallback: @escaping(NSImageRep, Int, Int, Bool) -> Void,
                          framesCallback: @escaping([NSImageRep], Bool) -> Void) {
-        self.reset()
         let panel = NSOpenPanel()
         panel.allowedFileTypes = ["public.image"]
         panel.canChooseDirectories = true
@@ -70,35 +71,36 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
                     framesCallback(images, dither.state == .on)
                 }
             }
+            self.reset()
         }
     }
 
     func beginSheetModal(for window: NSWindow,
-                         with image: NSImageRep,
+                         with inputImage: NSImageRep,
                          sheetCallback: @escaping(NSImageRep, Int, Int, Bool) -> Void) {
-        self.setImage(image)
+        let alert = NSAlert()
+        self.alert = alert
+        self.setImage(inputImage)
         self.updateGrid()
         // The width of the options view will change when used in the open panel - reset it to an appropriate value
         optionsView.setFrameSize(NSSize(width: 300, height: optionsView.frame.height))
         optionsView.isHidden = false
-        let alert = NSAlert()
         alert.accessoryView = optionsView
-        // We don't really want an icon but the alert necessarily has one - use the given image
-        let icon = NSImage(size: image.size)
-        icon.addRepresentation(image)
-        alert.icon = icon
         alert.messageText = ""
+        alert.informativeText = "(paste another image to apply mask)"
         let importButton = alert.addButton(withTitle: NSLocalizedString("Import", comment: ""))
         // The preview image will be nil when the grid is invalid - use this to control the enabled state of the import button
         importButton.bind(.enabled, to: preview!, withKeyPath: "image", options: [.valueTransformerName: NSValueTransformerName.isNotNilTransformerName])
         alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
         alert.beginSheetModal(for: window) { [self] modalResponse in
-            if modalResponse == .alertFirstButtonReturn {
+            if modalResponse == .alertFirstButtonReturn, let image {
                 sheetCallback(image, gridX, gridY, dither.state == .on)
             }
+            self.reset()
+            self.alert = nil
         }
         optionsView.window?.recalculateKeyViewLoop()
-        optionsView.window?.makeFirstResponder(optionsView.nextValidKeyView)
+        optionsView.window?.makeFirstResponder(optionsView)
     }
 
     func panel(_ sender: Any, validate url: URL) throws {
@@ -135,6 +137,28 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
             }
         }
         self.updateGrid()
+    }
+
+    func applyMask(_ mask: NSImageRep) {
+        guard let alert else { return }
+        guard let image = image as? NSBitmapImageRep,
+              let mask = mask as? NSBitmapImageRep,
+              mask.pixelsWide == image.pixelsWide,
+              mask.pixelsHigh == image.pixelsHigh
+        else {
+            NSSound.beep()
+            return
+        }
+        let blend = CIFilter.blendWithMask()
+        blend.inputImage = CIImage(bitmapImageRep: image)
+        blend.maskImage = CIImage(bitmapImageRep: mask)
+        if let newImage = blend.outputImage.map(NSBitmapImageRep.init) {
+            self.setImage(newImage)
+            self.updateGrid()
+        }
+        alert.informativeText = "(mask applied)"
+        // Prevent applying again
+        self.alert = nil
     }
 
     private func updateGrid() {
@@ -178,5 +202,24 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
         image.size = NSSize(width: image.pixelsWide, height: image.pixelsHigh)
         self.image = image
         imageSize.stringValue = "\(image.pixelsWide) x \(image.pixelsHigh)"
+        if let alert {
+            alert.icon = NSImage(size: image.size)
+            alert.icon.addRepresentation(image)
+        }
+    }
+}
+
+// View to allow pasting into the import alert
+// Allowing first responder breaks the key-view-loop so we need further overrides to fix it
+class ImportView: NSView {
+    @IBOutlet weak var importer: SpriteImporter!
+    override var acceptsFirstResponder: Bool { true }
+    override var canBecomeKeyView: Bool { false }
+
+    @objc func selectNextKeyView(_ sender: Any) {
+        window?.makeFirstResponder(nextValidKeyView)
+    }
+    @IBAction func paste(_ sender: Any) {
+        NSImageRep(pasteboard: .general).map(importer.applyMask)
     }
 }
