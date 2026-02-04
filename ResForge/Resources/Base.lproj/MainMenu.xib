@@ -576,6 +576,27 @@ CA
                         <action selector="revertResource:" target="-1" id="3yy-aw-af7"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" tag="6" id="qGn-E5-lk9">
+                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                </menuItem>
+                <menuItem title="Cut" id="cxa-ug-ZFm">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="cut:" target="-1" id="3ik-U0-xdP"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Copy" id="MrW-SA-hOw">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="copy:" target="-1" id="SI5-bc-tuN"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Delete" id="wn7-Iz-iLm">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="delete:" target="-1" id="2H4-Cu-nc5"/>
+                    </connections>
+                </menuItem>
             </items>
             <point key="canvasLocation" x="68" y="541"/>
         </menu>
