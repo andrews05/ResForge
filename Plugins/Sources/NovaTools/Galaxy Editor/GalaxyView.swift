@@ -5,14 +5,14 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     @IBOutlet weak var controller: GalaxyWindowController!
     @IBOutlet var scaleText: NSTextField!
     private(set) var transform = AffineTransform()
-    var isSavingSystem = false
+    var isSavingItem = false
 
     override var acceptsFirstResponder: Bool { true }
     override var isFlipped: Bool { true }
     override var subviews: [NSView] {
         didSet {
             self.transformSubviews()
-            self.restackSystems()
+            self.restackViews()
             undoManager?.removeAllActions()
         }
     }
@@ -30,10 +30,10 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         needsDisplay = true
     }
 
-    func restackSystems() {
+    func restackViews() {
         // Keep track of occupied locations - only the first system at a given point will be displayed
         var topViews: [NSPoint.Hash: SystemView] = [:]
-        selectedSystems = []
+        selectedItems = []
         for view in controller.systemViews.values {
             view.highlightCount = 1
             let key = view.point.hashable
@@ -55,7 +55,12 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
                 view.isHidden = false
             }
             if view.isHighlighted {
-                selectedSystems.append(view)
+                selectedItems.append(view)
+            }
+        }
+        for view in controller.nebulaViews.values {
+            if view.isHighlighted {
+                selectedItems.append(view)
             }
         }
     }
@@ -70,7 +75,6 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
     override func makeBackingLayer() -> CALayer {
         let layer = CALayer()
         layer.contentsScale = window?.backingScaleFactor ?? 1
-        layer.backgroundColor = .black
         layer.delegate = self
         return layer
     }
@@ -81,25 +85,6 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     func draw(_ layer: CALayer, in ctx: CGContext) {
         NSGraphicsContext.current = NSGraphicsContext(cgContext: ctx, flipped: true)
-
-        // Center lines
-        NSColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1).setFill()
-        NSRect(x: bounds.midX, y: 0, width: 1, height: bounds.height).frame()
-        NSRect(x: 0, y: bounds.midY, width: bounds.width, height: 1).frame()
-
-        // Nebulae
-        let font = NSFont.systemFont(ofSize: 11)
-        for (id, nebu) in controller.nebulae {
-            let rect = transform.transform(nebu.area)
-            if let image = controller.nebImages[id] {
-                image.draw(in: rect)
-            } else {
-                NSColor(red: 0.1, green: 0.3, blue: 0.1, alpha: 1).setFill()
-                rect.fill()
-                let textRect = NSRect(x: rect.origin.x + 4, y: rect.origin.y + 12, width: 0, height: 0)
-                nebu.name.draw(with: textRect, attributes: [.foregroundColor: NSColor.lightGray, .font: font])
-            }
-        }
 
         // Hyperlinks
         let points = controller.systemViews.mapValues(\.point)
@@ -121,7 +106,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         path.stroke()
     }
 
-    // MARK: - Pan and zoom
+    // MARK: - Zoom
 
     private let zoomLevels: [Double] = [27/64, 9/16, 3/4, 1, 4/3, 16/9, 64/27]
     private var zoomLevel = 4 {
@@ -131,6 +116,7 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
                 self.updateScale()
                 self.transformSubviews()
+                controller.backgroundView.transformSubviews()
 
                 self.centerScroll(transform.transform(oldPos))
                 enclosingScrollView.flashScrollers()
@@ -153,63 +139,43 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         zoomLevel = max(zoomLevel-1, 0)
     }
 
-    // Drag background to pan
-    override func mouseDragged(with event: NSEvent) {
-        if let clipView = superview as? NSClipView {
-            var origin = clipView.bounds.origin
-            origin.x -= event.deltaX
-            origin.y -= event.deltaY
-            self.scroll(origin)
-        }
-    }
-
     // MARK: - Selection
 
-    private(set) var selectedSystems: [SystemView] = []
+    private(set) var selectedItems: [ItemView] = []
 
     override func selectAll(_ sender: Any?) {
-        controller.systemTable.selectAll(self)
+        controller.resourceTable.selectAll(self)
     }
 
-    // Click background to deselect (if not holding shift or command and not dragging)
-    // Double click to create system
-    override func mouseDown(with event: NSEvent) {
-        if event.clickCount == 1 {
-            let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
-            if !toggle,
-               let e = window?.nextEvent(matching: [.leftMouseUp, .leftMouseDragged]),
-               e.type == .leftMouseUp {
-                controller.systemTable.deselectAll(self)
-            }
-        } else if let invert = transform.inverted() {
-            let point = self.convert(event.locationInWindow, from: nil)
-            controller.createSystem(position: invert.transform(point))
-        }
-    }
-
-    // Click system to select
-    // Double click to open selected systems
-    func mouseDown(system: SystemView, with event: NSEvent) {
+    // Click item to select
+    // Double click to open selected items
+    func mouseDown(item: ItemView, with event: NSEvent) {
         let toggle = event.modifierFlags.contains(.shift) || event.modifierFlags.contains(.command)
         if event.clickCount == 1 || toggle {
             dragOrigin = self.convert(event.locationInWindow, from: nil)
             window?.makeFirstResponder(self)
-            guard toggle || !system.isHighlighted else {
+            guard toggle || !item.isHighlighted else {
                 return
             }
-            let state = toggle ? !system.isHighlighted : true
+            let state = toggle ? !item.isHighlighted : true
             for view in controller.systemViews.values {
                 // Select/deselect all enabled systems at the same point
-                if view.isEnabled && view.point == system.point {
+                if view.isEnabled && view.point == item.point {
                     view.isHighlighted = state
                 } else if !toggle {
                     view.isHighlighted = false
                 }
             }
-            self.restackSystems()
-            controller.syncSelectionFromView(clicked: system)
+            if !toggle {
+                for view in controller.nebulaViews.values {
+                    view.isHighlighted = false
+                }
+            }
+            item.isHighlighted = state
+            self.restackViews()
+            controller.syncSelectionFromView(clicked: item)
         } else {
-            for view in selectedSystems {
+            for view in selectedItems {
                 controller.manager.open(resource: view.resource)
             }
         }
@@ -217,27 +183,27 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     // MARK: - Move systems
 
-    private var isMovingSystems = false
+    private var isMovingItems = false
     private var dragOrigin: NSPoint?
 
-    // Arrow keys to move systems, space to scroll to center
+    // Arrow keys to move items, space to scroll to center
     override func keyDown(with event: NSEvent) {
         let delta = event.modifierFlags.contains(.shift) ? 10.0 : 1.0
         switch event.specialKey {
         case .leftArrow:
-            self.moveSystems(x: 0 - delta, y: 0)
+            self.moveItems(x: 0 - delta, y: 0)
         case .rightArrow:
-            self.moveSystems(x: delta, y: 0)
+            self.moveItems(x: delta, y: 0)
         case .upArrow:
-            self.moveSystems(x: 0, y: 0 - delta)
+            self.moveItems(x: 0, y: 0 - delta)
         case .downArrow:
-            self.moveSystems(x: 0, y: delta)
+            self.moveItems(x: 0, y: delta)
         case _ where event.characters == " ":
             self.centerScroll(frame.center)
             return
         default:
             // Pass other key events to the table view for type-to-select
-            controller.systemTable.keyDown(with: event)
+            controller.resourceTable.keyDown(with: event)
             return
         }
         // Debounce saving
@@ -246,36 +212,43 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         }
     }
 
-    // Drag system to move
-    func mouseDragged(system: SystemView, with event: NSEvent) {
-        guard let dragOrigin, event.deltaX != 0 || event.deltaY != 0 else {
-            return
+    // Drag to move items, or pan if no drag origin
+    override func mouseDragged(with event: NSEvent) {
+        if let dragOrigin {
+            guard event.deltaX != 0 || event.deltaY != 0 else {
+                return
+            }
+            let origin = self.convert(event.locationInWindow, from: nil).constrained(within: bounds)
+            self.moveItems(x: origin.x - dragOrigin.x, y: origin.y - dragOrigin.y)
+            self.dragOrigin = origin
+            self.autoscroll(with: event)
+        } else if let clipView = enclosingScrollView?.contentView {
+            var origin = clipView.bounds.origin
+            origin.x -= event.deltaX
+            origin.y += event.deltaY
+            clipView.scroll(origin)
         }
-        let origin = self.convert(event.locationInWindow, from: nil).constrained(within: bounds)
-        self.moveSystems(x: origin.x - dragOrigin.x, y: origin.y - dragOrigin.y)
-        self.dragOrigin = origin
-        self.autoscroll(with: event)
     }
 
     // Release to apply move
-    func mouseUp(system: SystemView, with event: NSEvent) {
+    func mouseUp(item: ItemView, with event: NSEvent) {
         dragOrigin = nil
-        guard isMovingSystems else {
+        guard isMovingItems else {
             return
         }
         self.applyMove()
-        isMovingSystems = false
+        isMovingItems = false
     }
 
-    private func moveSystems(x: Double, y: Double) {
-        for view in selectedSystems {
+    private func moveItems(x: Double, y: Double) {
+        for view in selectedItems {
             view.point.x += x
             view.point.y += y
         }
-        if !isMovingSystems {
+        if !isMovingItems {
             // Restack after initial move in case any obscured systems need to be revealed
-            self.restackSystems()
-            isMovingSystems = true
+            self.restackViews()
+            isMovingItems = true
         }
         needsDisplay = true
     }
@@ -284,10 +257,16 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
         guard let invert = transform.inverted() else {
             return
         }
-        let term = selectedSystems.count == 1 ? "System" : "Systems"
+        let term = if selectedItems is [SystemView] {
+            selectedItems.count == 1 ? "System" : "Systems"
+        } else if selectedItems is [NebulaView] {
+            selectedItems.count == 1 ? "Nebula" : "Nebulae"
+        } else {
+            selectedItems.count == 1 ? "Item" : "Items"
+        }
         undoManager?.setActionName("Move \(term)")
         self.beginApplyMove()
-        for view in selectedSystems {
+        for view in selectedItems {
             view.move(to: invert.transform(view.point))
         }
         self.endApplyMove()
@@ -299,20 +278,20 @@ class GalaxyView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
 
     private func endApplyMove() {
         undoManager?.registerUndo(withTarget: self) { $0.beginApplyMove() }
-        self.restackSystems()
+        self.restackViews()
     }
 
     // Escape to cancel move
     override func cancelOperation(_ sender: Any?) {
         dragOrigin = nil
-        guard isMovingSystems else {
+        guard isMovingItems else {
             return
         }
-        for view in selectedSystems {
+        for view in selectedItems {
             view.updateFrame()
         }
-        self.restackSystems()
-        isMovingSystems = false
+        self.restackViews()
+        isMovingItems = false
         needsDisplay = true
     }
 

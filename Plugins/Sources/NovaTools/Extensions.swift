@@ -35,8 +35,14 @@ extension NSRect {
 extension NSView {
     /// Scrolls the view’s closest ancestor NSClipView object so a point in the view lies at the center of clip view's bounds rectangle.
     func centerScroll(_ point: NSPoint) {
-        if let rect = enclosingScrollView?.documentVisibleRect {
-            self.scroll(NSPoint(x: point.x - rect.width / 2, y: point.y - rect.height / 2))
+        if let enclosingScrollView {
+            let rect = enclosingScrollView.documentVisibleRect
+            let y = if enclosingScrollView.contentView.isFlipped {
+                point.y - rect.height / 2
+            } else {
+                bounds.height - point.y + rect.height / 2
+            }
+            self.scroll(NSPoint(x: point.x - rect.width / 2, y: y))
         }
     }
 }

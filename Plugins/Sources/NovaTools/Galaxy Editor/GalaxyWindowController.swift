@@ -8,13 +8,14 @@ class GalaxyWindowController: AbstractEditor, ResourceEditor {
     let resource: Resource
     let manager: RFEditorManager
 
-    @IBOutlet var systemTable: NSTableView!
+    @IBOutlet var resourceTable: NSTableView!
     @IBOutlet var galaxyView: GalaxyView!
+    @IBOutlet var backgroundView: BackgroundView!
     private(set) var systemViews: OrderedDictionary<Int, SystemView> = [:]
-    private(set) var nebulae: [Int: (name: String, area: NSRect)] = [:]
-    private(set) var nebImages: [Int: NSImage] = [:]
+    private(set) var nebulaViews: OrderedDictionary<Int, NebulaView> = [:]
     private var systemList: [Resource] = []
-    private var isSelectingSystems = false
+    private var nebulaList: [Resource] = []
+    private var isSelectingResources = false
 
     required init(resource: Resource, manager: RFEditorManager) {
         self.resource = resource
@@ -50,8 +51,7 @@ extension GalaxyWindowController {
 
     private func reload() {
         systemViews = [:]
-        nebulae = [:]
-        nebImages = [:]
+        nebulaViews = [:]
 
         let systs = manager.allResources(ofType: .system, currentDocumentOnly: false)
         for system in systs {
@@ -62,54 +62,37 @@ extension GalaxyWindowController {
 
         let nebus = manager.allResources(ofType: .nebula, currentDocumentOnly: false)
         for nebula in nebus {
-            if nebulae[nebula.id] == nil {
+            if nebulaViews[nebula.id] == nil {
                 self.read(nebula: nebula)
             }
         }
 
-        self.updateSystemList()
+        self.updateResourceLists()
     }
 
-    private func updateSystemList() {
+    private func updateResourceLists() {
         // Reverse list so first draws on top
         galaxyView.subviews = Array(systemViews.values).reversed()
-        // Don't include foreign systs in the list
+        backgroundView.subviews = Array(nebulaViews.values)
+        // Don't include foreign resources in the list
         systemList = manager.allResources(ofType: .system, currentDocumentOnly: true)
-        systemTable.reloadData()
+        nebulaList = manager.allResources(ofType: .nebula, currentDocumentOnly: true)
+        resourceTable.reloadData()
     }
 
     private func read(system: Resource) {
         if let view = systemViews[system.id], view.resource == system {
             try? view.read()
-        } else if let view = SystemView(system, isEnabled: system.document == manager.document) {
+        } else if let view = SystemView(system, manager: manager) {
             systemViews[system.id] = view
         }
     }
 
     private func read(nebula: Resource) {
-        let reader = BinaryDataReader(nebula.data)
-        do {
-            let rect = NSRect(
-                x: Double(try reader.read() as Int16),
-                y: Double(try reader.read() as Int16),
-                width: Double(try reader.read() as Int16),
-                height: Double(try reader.read() as Int16)
-            )
-            nebulae[nebula.id] = (nebula.name, rect)
-        } catch {}
-
-        if nebImages[nebula.id] == nil {
-            // Find the largest available image
-            let first = (nebula.id - 128) * 7 + 9500
-            for id in (first..<first+7).reversed() {
-                if let pict = manager.findResource(type: .picture, id: id) {
-                    pict.preview {
-                        self.nebImages[nebula.id] = $0
-                        self.galaxyView.needsDisplay = true
-                    }
-                    break
-                }
-            }
+        if let view = nebulaViews[nebula.id], view.resource == nebula {
+            try? view.read()
+        } else if let view = NebulaView(nebula, manager: manager) {
+            nebulaViews[nebula.id] = view
         }
     }
 
@@ -123,7 +106,7 @@ extension GalaxyWindowController {
 
     @IBAction func copy(_ sender: Any) {
         NSPasteboard.general.clearContents()
-        NSPasteboard.general.writeObjects(selectedSystems)
+        NSPasteboard.general.writeObjects(selectedResources)
     }
 
     @IBAction func paste(_ sender: Any) {
@@ -145,8 +128,8 @@ extension GalaxyWindowController {
             // Allow the DataChanged notification to create the view
             system.data = writer.data
             if let i = self.row(for: system) {
-                systemTable.selectRowIndexes([i], byExtendingSelection: false)
-                systemTable.scrollRowToVisible(i)
+                resourceTable.selectRowIndexes([i], byExtendingSelection: false)
+                resourceTable.scrollRowToVisible(i)
             }
         }
     }
@@ -163,10 +146,10 @@ extension GalaxyWindowController {
         if shouldReload {
             self.reload()
             if notification.name == .DocumentDidAddResources {
-                // Select added systems
-                selectedSystems = resources.filter { $0.type == .system }
-                if systemTable.selectedRow > 0 {
-                    systemTable.scrollRowToVisible(systemTable.selectedRow)
+                // Select added resources
+                selectedResources = resources.filter { $0.type == .system || $0.type == .nebula }
+                if resourceTable.selectedRow > 0 {
+                    resourceTable.scrollRowToVisible(resourceTable.selectedRow)
                 }
             }
         }
@@ -187,72 +170,81 @@ extension GalaxyWindowController {
         }
         if resource.type == .system {
             systemViews[resource.id]?.updateFrame()
-            if let i = self.row(for: resource) {
-                systemTable.reloadData(forRowIndexes: [i], columnIndexes: [1])
-            }
         } else if resource.type == .nebula {
-            galaxyView.needsDisplay = true
+            nebulaViews[resource.id]?.needsDisplay = true
+        }
+        if let i = self.row(for: resource) {
+            resourceTable.reloadData(forRowIndexes: [i], columnIndexes: [1])
         }
     }
 
     @objc func resourceDataChanged(_ notification: Notification) {
-        guard !galaxyView.isSavingSystem, let resource = notification.object as? Resource else {
+        guard !galaxyView.isSavingItem, let resource = notification.object as? Resource else {
             return
         }
         if resource.type == .system {
             self.read(system: resource)
-            self.updateSystemList()
+            self.updateResourceLists()
             self.syncSelectionFromView()
         } else if resource.type == .nebula {
             self.read(nebula: resource)
-            galaxyView.needsDisplay = true
+            self.updateResourceLists()
+            self.syncSelectionFromView()
         }
     }
 }
 
 extension GalaxyWindowController: NSTableViewDataSource, NSTableViewDelegate {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        systemList.count + 1
+        var rows = systemList.count + 1
+        if !nebulaList.isEmpty {
+            rows += nebulaList.count + 1
+        }
+        return rows
     }
 
     func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
-        row == 0
+        row == 0 || row == systemList.count + 1
     }
 
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        row != 0
+        row != 0 && row != systemList.count + 1
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let identifier = tableColumn?.identifier ?? NSUserInterfaceItemIdentifier("HeaderCell")
         let view = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
         if let tableColumn {
-            let system = systemList[row - 1]
+            let resource = self.resource(for: row)
             switch tableColumn.identifier.rawValue {
             case "id":
-                view.textField?.stringValue = "\(system.id)"
+                view.textField?.stringValue = "\(resource.id)"
             case "name":
-                view.textField?.stringValue = system.name
+                view.textField?.stringValue = resource.name
             default:
                 break
             }
+        } else if row == 0 {
+            view.textField?.stringValue = "Systems"
         } else {
-            view.textField?.stringValue = manager.document?.displayName ?? ""
+            view.textField?.stringValue = "Nebulae"
         }
         return view
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        guard !isSelectingSystems else {
+        guard !isSelectingResources else {
             return
         }
+        let table = notification.object as! NSTableView
         self.syncSelectionToView()
-        galaxyView.restackSystems()
+        galaxyView.restackViews()
 
-        // Scroll to last selected system, unless selected all
-        if systemTable.selectedRow > 0 && systemTable.selectedRowIndexes.count < systemList.count {
-            let system = systemList[systemTable.selectedRow - 1]
-            if let view = systemViews[system.id] {
+        // Scroll to last selected resource, unless selected all
+        if table.selectedRow > 0 && table.selectedRowIndexes.count < systemList.count + nebulaList.count {
+            let resource = self.resource(for: table.selectedRow)
+            let view = resource.type == .system ? systemViews[resource.id] : nebulaViews[resource.id]
+            if let view {
                 view.scrollToVisible(view.bounds.insetBy(dx: -4, dy: -4))
             }
         }
@@ -260,42 +252,55 @@ extension GalaxyWindowController: NSTableViewDataSource, NSTableViewDelegate {
 
     func syncSelectionToView() {
         for (i, system) in systemList.enumerated() {
-            systemViews[system.id]?.isHighlighted = systemTable.isRowSelected(i + 1)
+            systemViews[system.id]?.isHighlighted = resourceTable.isRowSelected(i + 1)
+        }
+        for (i, nebula) in nebulaList.enumerated() {
+            nebulaViews[nebula.id]?.isHighlighted = resourceTable.isRowSelected(i + systemList.count + 2)
         }
     }
 
-    func syncSelectionFromView(clicked: SystemView? = nil) {
-        isSelectingSystems = true
-        selectedSystems = galaxyView.selectedSystems.map(\.resource)
-        isSelectingSystems = false
+    func syncSelectionFromView(clicked: ItemView? = nil) {
+        isSelectingResources = true
+        selectedResources = galaxyView.selectedItems.map(\.resource)
+        isSelectingResources = false
         if let clicked, let i = self.row(for: clicked.resource) {
-            systemTable.scrollRowToVisible(i)
+            resourceTable.scrollRowToVisible(i)
         }
     }
 
-    @IBAction func doubleClickSystem(_ sender: Any) {
-        guard systemTable.clickedRow != 0 else {
+    @IBAction func doubleClickResource(_ sender: Any) {
+        guard !self.tableView(resourceTable, isGroupRow: resourceTable.clickedRow) else {
             return
         }
-        for system in selectedSystems {
-            manager.open(resource: system)
+        for resource in selectedResources {
+            manager.open(resource: resource)
         }
     }
 
     func row(for resource: Resource) -> Int? {
-        if let i = systemList.firstIndex(of: resource) {
+        if resource.type == .system, let i = systemList.firstIndex(of: resource) {
             return i + 1
+        } else if resource.type == .nebula, let i = nebulaList.firstIndex(of: resource) {
+            return i + systemList.count + 2
         }
         return nil
     }
 
-    var selectedSystems: [Resource] {
+    func resource(for row: Int) -> Resource {
+        if row <= systemList.count {
+            systemList[row - 1]
+        } else {
+            nebulaList[row - systemList.count - 2]
+        }
+    }
+
+    var selectedResources: [Resource] {
         get {
-            systemTable.selectedRowIndexes.map { systemList[$0 - 1] }
+            resourceTable.selectedRowIndexes.map(self.resource(for:))
         }
         set {
             let indexes = IndexSet(newValue.compactMap(self.row(for:)))
-            systemTable.selectRowIndexes(indexes, byExtendingSelection: false)
+            resourceTable.selectRowIndexes(indexes, byExtendingSelection: false)
         }
     }
 }

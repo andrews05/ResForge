@@ -1,9 +1,7 @@
 import AppKit
 import RFSupport
 
-class SystemView: NSView {
-    let resource: Resource
-    let isEnabled: Bool
+class SystemView: ItemView {
     private(set) var position = NSPoint.zero
     private(set) var links: [Int] = []
     private(set) var navDefaults: [Int] = []
@@ -11,21 +9,14 @@ class SystemView: NSView {
     private var attributes: [NSAttributedString.Key: Any] {
         [.foregroundColor: NSColor.white, .font: NSFont.systemFont(ofSize: 11)]
     }
-    private var galaxyView: GalaxyView? {
+    var showName = true
+    var galaxyView: GalaxyView? {
         superview as? GalaxyView
     }
-    var showName = true
-    var point = NSPoint.zero {
+    override var point: NSPoint {
         didSet {
             frame.origin.x = point.x - 6
             frame.origin.y = point.y - 6
-        }
-    }
-    var isHighlighted = false {
-        didSet {
-            if oldValue != isHighlighted {
-                needsDisplay = true
-            }
         }
     }
     var highlightCount = 1 {
@@ -36,18 +27,7 @@ class SystemView: NSView {
         }
     }
 
-    init?(_ system: Resource, isEnabled: Bool) {
-        resource = system
-        self.isEnabled = isEnabled
-        super.init(frame: .zero)
-        do {
-            try self.read()
-        } catch {
-            return nil
-        }
-    }
-
-    func read() throws {
+    override func read() throws {
         let reader = BinaryDataReader(resource.data)
         position.x = Double(try reader.read() as Int16)
         position.y = Double(try reader.read() as Int16)
@@ -68,12 +48,8 @@ class SystemView: NSView {
         self.addTrackingArea(tracking)
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func updateFrame() {
-        if let point = (superview as? GalaxyView)?.transform.transform(position) {
+    override func updateFrame() {
+        if let point = galaxyView?.transform.transform(position) {
             self.point = point
         }
         frame.size.height = 12
@@ -84,7 +60,7 @@ class SystemView: NSView {
         }
     }
 
-    func move(to newPos: NSPoint) {
+    override func move(to newPos: NSPoint) {
         let curPos = position
         position = NSPoint(x: newPos.x.rounded(), y: newPos.y.rounded())
         self.updateFrame()
@@ -136,9 +112,9 @@ class SystemView: NSView {
             writer.write(Int16(link), at: pos)
             pos += 2
         }
-        galaxyView?.isSavingSystem = true
+        galaxyView?.isSavingItem = true
         resource.data = writer.data
-        galaxyView?.isSavingSystem = false
+        galaxyView?.isSavingItem = false
         galaxyView?.needsDisplay = true
     }
 
@@ -196,7 +172,7 @@ class SystemView: NSView {
             if useRightMouse {
                 galaxyView?.rightMouseDown(system: self, with: event)
             } else {
-                galaxyView?.mouseDown(system: self, with: event)
+                galaxyView?.mouseDown(item: self, with: event)
             }
         }
     }
@@ -206,7 +182,7 @@ class SystemView: NSView {
             if useRightMouse {
                 galaxyView?.rightMouseDragged(system: self, with: event)
             } else {
-                galaxyView?.mouseDragged(system: self, with: event)
+                galaxyView?.mouseDragged(with: event)
             }
         }
     }
@@ -216,7 +192,7 @@ class SystemView: NSView {
             if useRightMouse {
                 galaxyView?.rightMouseUp(system: self, with: event)
             } else {
-                galaxyView?.mouseUp(system: self, with: event)
+                galaxyView?.mouseUp(item: self, with: event)
             }
         }
     }
