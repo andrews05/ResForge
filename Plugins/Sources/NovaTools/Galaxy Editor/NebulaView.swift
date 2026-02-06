@@ -1,9 +1,10 @@
 import AppKit
 import RFSupport
+import CoreImage.CIFilterBuiltins
 
 class NebulaView: ItemView {
     private(set) var rect = NSRect.zero
-    private(set) var image: NSImage?
+    private(set) var image: NSImageRep?
     var galaxyView: GalaxyView? {
         (superview as? BackgroundView)?.controller.galaxyView
     }
@@ -25,7 +26,10 @@ class NebulaView: ItemView {
         for id in (first..<first+7).reversed() {
             if let pict = manager.findResource(type: .picture, id: id) {
                 pict.preview { img in
-                    self.image = img
+                    // Converting to sRGB avoids glitches with the colorspace randomly going wrong at times
+                    if let bitmap = img?.representations.first as? NSBitmapImageRep {
+                        self.image = bitmap.converting(to: .sRGB, renderingIntent: .default)
+                    }
                     self.needsDisplay = true
                 }
                 break
@@ -61,6 +65,11 @@ class NebulaView: ItemView {
         resource.data = writer.data
         galaxyView?.isSavingItem = false
         galaxyView?.needsDisplay = true
+    }
+
+    override func makeBackingLayer() -> CALayer {
+        compositingFilter = CIFilter.screenBlendMode()
+        return super.makeBackingLayer()
     }
 
     override func draw(_ dirtyRect: NSRect) {
