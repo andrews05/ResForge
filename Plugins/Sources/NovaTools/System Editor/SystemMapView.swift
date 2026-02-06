@@ -1,7 +1,7 @@
 import AppKit
 import RFSupport
 
-class SystemMapView: NSView, CALayerDelegate, NSViewLayerContentScaleDelegate {
+class SystemMapView: NSView {
     @IBOutlet weak var controller: SystemWindowController!
     @IBOutlet var scaleText: NSTextField!
     private(set) var transform = AffineTransform()
