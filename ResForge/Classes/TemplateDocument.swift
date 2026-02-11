@@ -18,7 +18,7 @@ class TemplateDocument: NSDocument {
 
     override func read(from data: Data, ofType typeName: String) throws {
         if editor == nil {
-            guard let template = OpenTemplateDelegate.getSelectedTemplate() else {
+            guard let template = OpenTemplateDelegate.getSelectedTemplate() ?? EditorManager.shared.findResource(type: .template, name: typeName) else {
                 throw OpenTemplateError.noTemplate
             }
             let resource = Resource(type: ResourceType(typeName), id: 0, data: data)

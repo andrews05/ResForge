@@ -57,4 +57,21 @@ class OpenPanelDelegate: NSDocumentController, NSOpenSavePanelDelegate {
         forkSelect.item(at: 1)?.title = "\(FileFork.data.name) (\(dataString))"
         forkSelect.item(at: 2)?.title = "\(FileFork.rsrc.name) (\(rsrcString))"
     }
+
+    override func makeDocument(withContentsOf url: URL, ofType typeName: String) throws -> NSDocument {
+        let hasSelectedFork = useSelectedFork && forkIndex != 0
+        do {
+            return try super.makeDocument(withContentsOf: url, ofType: typeName)
+        } catch let error {
+            // Try to open as a TemplateDocument, unless a specific fork was requested
+            let ext = url.pathExtension.lowercased()
+            guard !hasSelectedFork,
+                  !ext.isEmpty,
+                  let doc = try? TemplateDocument(contentsOf: url, ofType: ".\(ext)")
+            else {
+                throw error
+            }
+            return doc
+        }
+    }
 }
