@@ -26,7 +26,8 @@ class ElementNCB: ElementCSTR {
         infoButton.target = self
         infoButton.action = #selector(showInfo(_:))
         self.updateButtonState(infoButton)
-        textField.nextKeyView = infoButton
+        // Set the button as the text field's target so we can easily access it when needed
+        textField.target = infoButton
         view.addSubview(infoButton)
     }
 
@@ -45,7 +46,7 @@ class ElementNCB: ElementCSTR {
     }
 
     func controlTextDidEndEditing(_ obj: Notification) {
-        if let infoButton = (obj.object as? NSControl)?.nextKeyView as? NSButton {
+        if let infoButton = (obj.object as? NSControl)?.target as? NSButton {
             self.updateButtonState(infoButton)
         }
     }
