@@ -51,9 +51,8 @@ class ElementRREF: BaseElement {
             button.font = .boldSystemFont(ofSize: 11)
         }
         button.title = buttonLabel
-        // Show add icon if resource does not exist, otherwise follow link icon
         let resource = manager.findResource(type: .init(resType), id: id)
-        button.image = NSImage(systemSymbolName: resource == nil ? "plus.circle" : "arrow.right.circle", accessibilityDescription: nil)
+        button.image = self.image(resource != nil)
         button.imagePosition = .imageRight
         button.target = self
         button.action = #selector(openResource(_:))
@@ -64,8 +63,15 @@ class ElementRREF: BaseElement {
         parentList.controller.openOrCreateResource(typeCode: resType, id: id) { [weak self] resource, _ in
             // Update button image
             if let button = sender as? NSButton, resource.id == self?.id {
-                button.image = NSImage(systemSymbolName: "arrow.right.circle", accessibilityDescription: nil)
+                button.image = self?.image(true)
             }
         }
+    }
+
+    // Show add icon if resource does not exist, otherwise follow link icon
+    private func image(_ hasResource: Bool) -> NSImage? {
+        let symbolConfig = NSImage.SymbolConfiguration(pointSize: 12, weight: .regular)
+        return NSImage(systemSymbolName: hasResource ? "arrow.right.circle" : "plus.circle", accessibilityDescription: nil)?
+            .withSymbolConfiguration(symbolConfig)
     }
 }
