@@ -12,6 +12,7 @@ extension Notification.Name {
 class SoundResource {
     private(set) var valid = false
     private(set) var playing = false
+    private(set) var format: AudioFormatID = 0
     private var streamDesc: AudioStreamBasicDescription!
     private var queueRef: AudioQueueRef?
     private var bufferRef: AudioQueueBufferRef?
@@ -113,7 +114,6 @@ class SoundResource {
         // Read sound headers
         let header = try SoundHeader(reader)
 
-        let format: UInt32
         let numChannels: UInt32
         switch header.encode {
         case .standard:
@@ -127,7 +127,6 @@ class SoundResource {
             numPackets = extHeader.numFrames
         case .compressed:
             let cmpHeader = try CmpSoundHeader(reader)
-            // MACE is not supported but this at least allows to see the format id in the info
             if cmpHeader.compressionID == .threeToOne {
                 format = kAudioFormatMACE3
             } else if cmpHeader.compressionID == .sixToOne {
@@ -135,8 +134,31 @@ class SoundResource {
             } else {
                 format = cmpHeader.format
             }
-            numChannels = header.length
             numPackets = cmpHeader.numFrames
+            numChannels = header.length
+        }
+
+        if format == kAudioFormatMACE3 || format == kAudioFormatMACE6 {
+            // Construct stream description as 16-bit big endian
+            streamDesc = getStreamDescription(format: k16BitBigEndianFormat, channels: numChannels, sampleRate: FixedToDouble(header.sampleRate))
+
+            // Decode MACE
+            let packetSize = format == kAudioFormatMACE3 ? 2 : 1
+            var dataSize = Int(numPackets * numChannels) * packetSize
+            if dataSize > reader.bytesRemaining {
+                dataSize = reader.bytesRemaining
+            }
+            numPackets *= 6
+            let decoded = Mace.decode(data: try reader.readData(length: dataSize), packetSize: packetSize, numChannels: Int(numChannels))
+
+            // Setup audio queue
+            let byteSize = UInt32(decoded.count * 2)
+            try initAudioQueue(byteSize)
+            decoded.withUnsafeBytes {
+                bufferRef!.pointee.mAudioData.copyMemory(from: $0.baseAddress!, byteCount: $0.count)
+            }
+            bufferRef!.pointee.mAudioDataByteSize = byteSize
+            return true
         }
 
         // Construct stream description
@@ -231,6 +253,7 @@ class SoundResource {
         }
         ExtAudioFileDispose(fRef!)
         bufferRef!.pointee.mAudioDataByteSize = bufferList.mBuffers.mDataByteSize
+        self.format = format
         self.valid = true
     }
 
@@ -341,18 +364,6 @@ class SoundResource {
         err = AudioFileWriteBytes(fRef!, false, 0, &bytes, bufferRef.pointee.mAudioData)
         AudioFileClose(fRef!)
         try err.throwError()
-    }
-
-    var format: AudioFormatID {
-        if streamDesc == nil {
-            return 0
-        } else if streamDesc.mFormatFlags & kAudioFormatFlagIsBigEndian != 0 {
-            return k16BitBigEndianFormat
-        } else if streamDesc.mFormatID == kAudioFormatLinearPCM {
-            return k8BitOffsetBinaryFormat
-        } else {
-            return streamDesc.mFormatID
-        }
     }
 
     var formatString: String {
