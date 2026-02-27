@@ -3,9 +3,10 @@ import RFSupport
 
 class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
     static var bundle: Bundle { .module }
-    static let supportedTypes = ["rlëD", "SMIV"]
+    static let supportedTypes = ["rlëD", "RLE#", "SMIV"]
     private static let typeMap: [String: Sprite.Type] = [
         "rlëD": SpriteWorld.self,
+        "RLE#": SpriteWorld.self,
         "SMIV": ShapeMachine.self,
     ]
 
