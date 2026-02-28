@@ -1,5 +1,6 @@
 import AppKit
 import RFSupport
+import ImageEditor
 
 // SpriteWorld RLE sprite, as seen in EV Nova
 class SpriteWorld: Sprite {
@@ -23,10 +24,10 @@ class SpriteWorld: Sprite {
             throw SpriteError.invalid
         }
         depth = Int(try reader.read() as UInt16)
-        guard depth == 16 || depth == 32 else {
+        guard depth == 8 || depth == 16 || depth == 32 else {
             throw SpriteError.unsupported
         }
-        try reader.advance(2) // Palette is only for 8-bit
+        try reader.advance(2) // Custom clut not currently supported
         frameCount = Int(try reader.read() as UInt16)
         try reader.advance(6)
     }
@@ -99,7 +100,12 @@ class SpriteWorld: Sprite {
                     throw SpriteError.invalid
                 }
                 let data = try reader.readData(length: byteCount)
-                if depth == 16 {
+                switch depth {
+                case 8:
+                    for pixel in data {
+                        ColorTable.system8[Int(pixel)].draw(to: &framePointer)
+                    }
+                case 16:
                     // Work directly with the bytes - this is much faster than reading the pixels one at a time
                     data.withUnsafeBytes { bytes in
                         // Note: we can't use `withMemoryRebound` as the data may not be aligned
@@ -107,10 +113,7 @@ class SpriteWorld: Sprite {
                             self.draw(UInt16(bigEndian: pixel), to: &framePointer)
                         }
                     }
-                    if byteCount % 4 != 0 {
-                        try reader.advance(2)
-                    }
-                } else if depth == 32 {
+                default:
                     // Copy the bytes, converting XRGB to RGBA
                     data.dropFirst().copyBytes(to: framePointer, count: byteCount - 1)
                     for i in stride(from: 3, to: byteCount, by: 4) {
@@ -118,12 +121,23 @@ class SpriteWorld: Sprite {
                     }
                     framePointer += byteCount
                 }
+                if byteCount % 4 != 0 {
+                    try reader.advance(4 - (byteCount % 4))
+                }
             case let .colorRun(byteCount):
                 x += byteCount / pixelSize
                 guard x <= frameWidth else {
                     throw SpriteError.invalid
                 }
-                if depth == 16 {
+                switch depth {
+                case 8:
+                    let idx = Int(try reader.read() as UInt8)
+                    try reader.advance(3)
+                    let color = ColorTable.system8[idx]
+                    for _ in 0..<byteCount {
+                        color.draw(to: &framePointer)
+                    }
+                case 16:
                     // The intention of this token is simply to repeat a single colour. But since the format is
                     // 4-byte aligned, it's technically possible to repeat two different 16-bit colour values.
                     // On big-endian machines this would presumably repeat them in order (untested), but on x86
@@ -132,9 +146,9 @@ class SpriteWorld: Sprite {
                     for i in 1...(byteCount/2) {
                         self.draw(pixels[i%2], to: &framePointer)
                     }
-                } else if depth == 32 {
+                default:
                     let pixel = try reader.readData(length: 4).dropFirst()
-                    for _ in 1...(byteCount/4) {
+                    for _ in 0..<(byteCount/4) {
                         pixel.copyBytes(to: framePointer, count: 3)
                         framePointer[3] = 0xFF
                         framePointer += 4

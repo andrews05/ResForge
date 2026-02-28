@@ -66,6 +66,7 @@ let package = Package(
             name: "NovaTools",
             dependencies: [.target(name: "RFSupport"),
                            .target(name: "TemplateEditor"),
+                           .target(name: "ImageEditor"),
                            .product(name: "OrderedCollections", package: "swift-collections"),
                            .product(name: "Parsing", package: "swift-parsing")],
             resources: [.process("Templates.rsrc")]),

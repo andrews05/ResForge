@@ -3,8 +3,9 @@ import RFSupport
 
 class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, ExportProvider {
     static var bundle: Bundle { .module }
-    static let supportedTypes = ["rlëD", "RLE#", "SMIV"]
+    static let supportedTypes = ["rlë8", "rlëD", "RLE#", "SMIV"]
     private static let typeMap: [String: Sprite.Type] = [
+        "rlë8": SpriteWorld.self,
         "rlëD": SpriteWorld.self,
         "RLE#": SpriteWorld.self,
         "SMIV": ShapeMachine.self,
@@ -16,7 +17,10 @@ class SpriteWindowController: AbstractEditor, ResourceEditor, PreviewProvider, E
     private var currentFrame = 0
     private var timer: Timer?
     private var writeableType: WriteableSprite.Type? {
-        return Self.typeMap[resource.typeCode] as? WriteableSprite.Type
+        if resource.typeCode == "rlëD" {
+            return SpriteWorld.self
+        }
+        return nil
     }
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var imageSize: NSTextField!

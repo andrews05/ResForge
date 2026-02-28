@@ -3,7 +3,7 @@ import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/ImagingWithQuickDraw.pdf#page=331
 
-struct ColorTable {
+public struct ColorTable {
     static let device: UInt16 = 0x8000
 
     static func read(_ reader: BinaryDataReader) throws -> [RGBColor] {
@@ -46,7 +46,7 @@ struct ColorTable {
     }
 
     /// Get a system color table by clut id.
-    static func get(id: Int16) throws -> [RGBColor] {
+    public static func get(id: Int16) throws -> [RGBColor] {
         switch id {
         case 1, 33:
             return Self.system1
@@ -70,15 +70,15 @@ struct ColorTable {
 }
 
 
-struct RGBColor: Hashable, ExpressibleByArrayLiteral {
-    typealias ArrayLiteralElement = UInt8
+public struct RGBColor: Hashable, ExpressibleByArrayLiteral {
+    public typealias ArrayLiteralElement = UInt8
     var red: UInt8 = 0
     var green: UInt8 = 0
     var blue: UInt8 = 0
     var alpha: UInt8 = 0xFF
 }
 
-extension RGBColor {
+public extension RGBColor {
     /// Convenience initialiser for static color tables.
     init(arrayLiteral elements: UInt8...) {
         red = elements[0]
@@ -114,7 +114,7 @@ extension RGBColor {
 }
 
 
-extension ColorTable {
+public extension ColorTable {
     /// White & black palette, from clut id 1 in the Mac OS System file.
     static let system1: [RGBColor] = [
         [255, 255, 255],
