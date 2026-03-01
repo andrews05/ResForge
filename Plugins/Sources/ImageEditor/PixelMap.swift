@@ -204,7 +204,7 @@ extension PixelMap {
                 for y in yRange {
                     let offset = y * rowBytes
                     for x in xRange {
-                        RGBColor(pixelData[offset + x * 2], pixelData[offset + x * 2 + 1]).draw(to: &bitmap)
+                        RGBColor(hi: pixelData[offset + x * 2], lo: pixelData[offset + x * 2 + 1]).draw(to: &bitmap)
                     }
                     bitmap += rep.bytesPerRow - (xRange.count * 4)
                 }

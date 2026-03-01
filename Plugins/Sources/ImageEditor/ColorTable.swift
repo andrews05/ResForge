@@ -72,10 +72,10 @@ public struct ColorTable {
 
 public struct RGBColor: Hashable, ExpressibleByArrayLiteral {
     public typealias ArrayLiteralElement = UInt8
-    var red: UInt8 = 0
-    var green: UInt8 = 0
-    var blue: UInt8 = 0
-    var alpha: UInt8 = 0xFF
+    public var red: UInt8 = 0
+    public var green: UInt8 = 0
+    public var blue: UInt8 = 0
+    public var alpha: UInt8 = 0xFF
 }
 
 public extension RGBColor {
@@ -87,7 +87,7 @@ public extension RGBColor {
     }
 
     /// Create a 24-bit RGBColor from an RGB555 byte pair.
-    init(_ hi: UInt8, _ lo: UInt8) {
+    init(hi: UInt8, lo: UInt8) {
         red = (hi << 1) & 0xF8
         green = (hi << 6) | (lo >> 2) & 0xF8
         blue = lo << 3
@@ -110,6 +110,13 @@ public extension RGBColor {
         UInt16(red & 0xF8) << 7 |
         UInt16(green & 0xF8) << 2 |
         UInt16(blue & 0xF8) >> 3
+    }
+
+    mutating func reduceTo555() {
+        red = (red & 0xF8) | (red >> 5)
+        green = (green & 0xF8) | (green >> 5)
+        blue = (blue & 0xF8) | (blue >> 5)
+        alpha = 0xFF
     }
 }
 

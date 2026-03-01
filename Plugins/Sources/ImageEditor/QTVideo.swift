@@ -132,7 +132,7 @@ struct QTVideo {
         let hi = input.load(fromByteOffset: inPos, as: UInt8.self)
         let lo = input.load(fromByteOffset: inPos + 1, as: UInt8.self)
         inPos += 2
-        return RGBColor(hi, lo)
+        return RGBColor(hi: hi, lo: lo)
     }
 
     private func blendColors(_ a: RGBColor, _ b: RGBColor) -> RGBColor {

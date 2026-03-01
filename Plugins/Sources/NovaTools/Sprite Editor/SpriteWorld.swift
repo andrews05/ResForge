@@ -99,27 +99,26 @@ class SpriteWorld: Sprite {
                 guard x <= frameWidth, byteCount % pixelSize == 0 else {
                     throw SpriteError.invalid
                 }
-                let data = try reader.readData(length: byteCount)
+                let pixelData = try reader.readData(length: byteCount)
                 switch depth {
                 case 8:
-                    for pixel in data {
+                    for pixel in pixelData {
                         ColorTable.system8[Int(pixel)].draw(to: &framePointer)
                     }
                 case 16:
-                    // Work directly with the bytes - this is much faster than reading the pixels one at a time
-                    data.withUnsafeBytes { bytes in
-                        // Note: we can't use `withMemoryRebound` as the data may not be aligned
-                        for pixel in bytes.bindMemory(to: UInt16.self) {
-                            self.draw(UInt16(bigEndian: pixel), to: &framePointer)
+                    // Work directly with the bytes to skip bounds checks
+                    pixelData.withUnsafeBytes { bytes in
+                        for i in 0..<(bytes.count/2) {
+                            RGBColor(hi: bytes[i * 2], lo: bytes[i * 2 + 1]).draw(to: &framePointer)
                         }
                     }
                 default:
                     // Copy the bytes, converting XRGB to RGBA
-                    data.dropFirst().copyBytes(to: framePointer, count: byteCount - 1)
-                    for i in stride(from: 3, to: byteCount, by: 4) {
-                        framePointer[i] = 0xFF
+                    pixelData.dropFirst().copyBytes(to: framePointer, count: byteCount - 1)
+                    for _ in 0..<(byteCount/4) {
+                        framePointer[3] = 0xFF
+                        framePointer += 4
                     }
-                    framePointer += byteCount
                 }
                 if byteCount % 4 != 0 {
                     try reader.advance(4 - (byteCount % 4))
@@ -129,25 +128,20 @@ class SpriteWorld: Sprite {
                 guard x <= frameWidth else {
                     throw SpriteError.invalid
                 }
+                let pixelData = try reader.readData(length: 4)
                 switch depth {
                 case 8:
-                    let idx = Int(try reader.read() as UInt8)
-                    try reader.advance(3)
-                    let color = ColorTable.system8[idx]
+                    let color = ColorTable.system8[Int(pixelData.first!)]
                     for _ in 0..<byteCount {
                         color.draw(to: &framePointer)
                     }
                 case 16:
-                    // The intention of this token is simply to repeat a single colour. But since the format is
-                    // 4-byte aligned, it's technically possible to repeat two different 16-bit colour values.
-                    // On big-endian machines this would presumably repeat them in order (untested), but on x86
-                    // versions of EV Nova they appear to be swapped. Here we reproduce the x86 behaviour.
-                    let pixels: [UInt16] = [try reader.read(), try reader.read()]
-                    for i in 1...(byteCount/2) {
-                        self.draw(pixels[i%2], to: &framePointer)
+                    let color = RGBColor(hi: pixelData[pixelData.startIndex], lo: pixelData[pixelData.startIndex + 1])
+                    for _ in 0..<(byteCount/2) {
+                        color.draw(to: &framePointer)
                     }
                 default:
-                    let pixel = try reader.readData(length: 4).dropFirst()
+                    let pixel = pixelData.dropFirst()
                     for _ in 0..<(byteCount/4) {
                         pixel.copyBytes(to: framePointer, count: 3)
                         framePointer[3] = 0xFF
@@ -158,19 +152,6 @@ class SpriteWorld: Sprite {
                 return
             }
         }
-    }
-
-    private func draw(_ pixel: UInt16, to framePointer: inout UnsafeMutablePointer<UInt8>) {
-        // Note: division is used here instead of bitshifts as it is much faster in unoptimised debug builds.
-        let r = UInt8((pixel & 0x7C00) / 0x80)
-        let g = UInt8((pixel & 0x03E0) / 0x04)
-        let b = UInt8((pixel & 0x001F) * 0x08)
-        // To accurately restore 5-bits to 8-bits (and match QuickDraw output), copy the upper 3 bits to the lower 3 bits.
-        framePointer[0] = r | (r / 0x20)
-        framePointer[1] = g | (g / 0x20)
-        framePointer[2] = b | (b / 0x20)
-        framePointer[3] = 0xFF
-        framePointer += 4
     }
 }
 
@@ -216,47 +197,46 @@ extension SpriteWorld: WriteableSprite {
             self.dither(frame)
         }
 
-        var framePointer = frame.bitmapData!
-        var lineCount = 0
-        var linePos = 0
-        var pixels: [UInt16] = []
-        for _ in 0..<frameHeight {
-            lineCount += 1
-            var transparent = 0
-            for _ in 0..<frameWidth {
-                if framePointer[3] == 0 {
-                    framePointer += 4
-                    transparent += 1
-                } else {
-                    if lineCount != 0 {
-                        // First pixel data for this line, write the line start
-                        // Doing this only on demand allows us to omit trailing blank lines in the frame
-                        for _ in 0..<lineCount {
-                            writer.write(RleOp.lineStart(0))
+        frame.bitmapData!.withMemoryRebound(to: RGBColor.self, capacity: frameWidth * frameHeight) { pixels in
+            var pixels = pixels
+            var lineCount = 0
+            var linePos = 0
+            var pixelData: [UInt16] = []
+            for _ in 0..<frameHeight {
+                lineCount += 1
+                var transparent = 0
+                for _ in 0..<frameWidth {
+                    if pixels.pointee.alpha == 0 {
+                        transparent += 1
+                    } else {
+                        if lineCount != 0 {
+                            // First pixel data for this line, write the line start
+                            // Doing this only on demand allows us to omit trailing blank lines in the frame
+                            for _ in 0..<lineCount {
+                                writer.write(RleOp.lineStart(0))
+                            }
+                            lineCount = 0
+                            linePos = writer.bytesWritten
                         }
-                        lineCount = 0
-                        linePos = writer.bytesWritten
-                    }
-                    if transparent != 0 {
-                        // Starting pixel data after transparency, write the skip
-                        if !pixels.isEmpty {
-                            // We have previous unwritten pixel data, write this first
-                            self.write(bigEndianPixels: &pixels)
+                        if transparent != 0 {
+                            // Starting pixel data after transparency, write the skip
+                            if !pixelData.isEmpty {
+                                // We have previous unwritten pixel data, write this first
+                                self.write(bigEndianPixels: &pixelData)
+                            }
+                            writer.write(RleOp.skip(transparent * 2))
+                            transparent = 0
                         }
-                        writer.write(RleOp.skip(transparent * 2))
-                        transparent = 0
+                        pixels.pointee.reduceTo555()
+                        pixelData.append(pixels.pointee.rgb555().bigEndian)
                     }
-                    let pixel = UInt16(framePointer[0] & 0xF8) * 0x80
-                              + UInt16(framePointer[1] & 0xF8) * 0x04
-                              + UInt16(framePointer[2] & 0xF8) / 0x08
-                    self.draw(pixel, to: &framePointer)
-                    pixels.append(pixel.bigEndian)
+                    pixels += 1
                 }
-            }
-            if !pixels.isEmpty {
-                self.write(bigEndianPixels: &pixels)
-                // Rewrite the line length
-                writer.write(RleOp.lineStart(writer.bytesWritten-linePos).rawValue, at: linePos-4)
+                if !pixelData.isEmpty {
+                    self.write(bigEndianPixels: &pixelData)
+                    // Rewrite the line length
+                    writer.write(RleOp.lineStart(writer.bytesWritten-linePos).rawValue, at: linePos-4)
+                }
             }
         }
         writer.write(RleOp.frameEnd)
