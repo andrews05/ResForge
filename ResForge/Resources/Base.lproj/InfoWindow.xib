@@ -14,6 +14,7 @@
                 <outlet property="documentView" destination="PG4-xU-c3S" id="BtM-Xs-QtG"/>
                 <outlet property="iconView" destination="EH9-LM-o2p" id="Ged-Dd-exT"/>
                 <outlet property="nameView" destination="c6h-l1-Ad7" id="YG8-Io-mEg"/>
+                <outlet property="placeholderText" destination="Rnu-zX-iwK" id="7wT-Rk-Uim"/>
                 <outlet property="placeholderView" destination="6" id="pX9-Ef-Dwp"/>
                 <outlet property="rID" destination="Wc5-m9-c69" id="A4I-fA-Wf7"/>
                 <outlet property="rName" destination="8h2-zb-fz3" id="Cnf-Vs-B85"/>
@@ -43,8 +44,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rnu-zX-iwK">
-                        <rect key="frame" x="83" y="79" width="86" height="16"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="No document" id="knw-Uv-RX8">
+                        <rect key="frame" x="81" y="79" width="90" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="No document" id="knw-Uv-RX8">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

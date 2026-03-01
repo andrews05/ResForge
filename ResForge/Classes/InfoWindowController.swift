@@ -6,6 +6,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     @IBOutlet var resourceView: NSView!
     @IBOutlet var documentView: NSView!
     @IBOutlet var typesView: NSView!
+    @IBOutlet var placeholderText: NSTextField!
 
     @IBOutlet var iconView: NSImageView!
     @IBOutlet var nameView: NSTextField!
@@ -24,6 +25,9 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
 
     @IBOutlet var resourceController: NSObjectController!
     @IBOutlet var documentController: NSObjectController!
+
+    private var selectionCount = 0
+    private var selectionSize = 0
 
     static var shared = InfoWindowController(windowNibName: "InfoWindow")
 
@@ -72,6 +76,11 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
 
             window?.contentView = resourceView
             window?.initialFirstResponder = rName
+        } else if selectionCount > 0 {
+            window?.title = NSLocalizedString("Resource Info", comment: "")
+            window?.contentView = placeholderView
+            let byteSize = rsrcSize.formatter!.string(for: selectionSize)!
+            placeholderText.stringValue = "\(selectionCount) resources\n\n\(byteSize)"
         } else if let document = documentController.content as? NSDocument ?? NSApp.mainWindow?.windowController?.document as? NSDocument {
             window?.title = NSLocalizedString("Document Info", comment: "")
 
@@ -100,10 +109,12 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
         } else {
             window?.title = NSLocalizedString("Document Info", comment: "")
             window?.contentView = placeholderView
+            placeholderText.stringValue = NSLocalizedString("No document", comment: "")
         }
     }
 
     private func setMainWindow(_ mainWindow: NSWindow?) {
+        selectionCount = 0
         if let editor = mainWindow?.windowController as? ResourceEditor {
             resourceController.content = editor.resource
             documentController.content = editor.resource.document
@@ -119,9 +130,12 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     }
 
     private func resource(for document: ResourceDocument) -> Resource? {
-        if document.dataSource.selectionCount() == 1 {
-            return document.dataSource.selectedResources().first
+        let selection = document.dataSource.selectedResources()
+        selectionCount = selection.count
+        if selectionCount == 1 {
+            return selection.first
         }
+        selectionSize = selection.reduce(0) { $0 + $1.data.count }
         return nil
     }
 

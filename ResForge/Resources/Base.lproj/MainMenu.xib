@@ -597,8 +597,17 @@ CA
                         <action selector="delete:" target="-1" id="2H4-Cu-nc5"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="gJL-Lv-feS">
+                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                </menuItem>
+                <menuItem title="Show Info…" id="mwu-Vb-Ooo">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showInfo:" target="-1" id="ARn-HE-rD3"/>
+                    </connections>
+                </menuItem>
             </items>
-            <point key="canvasLocation" x="68" y="541"/>
+            <point key="canvasLocation" x="-94" y="506"/>
         </menu>
     </objects>
 </document>
