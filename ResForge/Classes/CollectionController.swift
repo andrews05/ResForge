@@ -121,9 +121,12 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
     }
 
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        let resource = document.directory.filteredResources(type: currentType)[indexPath[1]]
         let view = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier("ResourceItem"), for: indexPath) as! ResourceItem
-        view.configure(resource)
+        // We need to safe unwrap document here. If the tab bar is visible, closing the window can
+        // somehow trigger a layout call after the document is gone.
+        if let resource = document?.directory.filteredResources(type: currentType)[indexPath[1]] {
+            view.configure(resource)
+        }
         return view
     }
 }
