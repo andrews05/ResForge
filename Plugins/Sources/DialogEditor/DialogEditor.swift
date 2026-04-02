@@ -80,9 +80,12 @@ public class DialogEditor: AbstractEditor, ResourceEditor {
     private func itemsFromData(_ data: Data) throws {
         let reader = BinaryDataReader(data)
         let itemCountMinusOne: Int16 = try reader.read()
-        for _ in 0...itemCountMinusOne {
-            let item = try DITLItemView(reader, manager: manager)
-            items.append(item)
+        // Guard against DITLs with 0 items
+        if itemCountMinusOne >= 0 {
+            for _ in 0...itemCountMinusOne {
+                let item = try DITLItemView(reader, manager: manager)
+                items.append(item)
+            }
         }
     }
 
