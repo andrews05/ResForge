@@ -11,10 +11,10 @@ class ElementOCNT<T: FixedWidthInteger>: BaseElement, GroupElement, CounterEleme
     private weak var lstc: ElementLSTB!
     @objc var count: Int {
         get {
-            Int(value)
+            T.isSigned ? Int(value) + 1 : Int(value)
         }
         set {
-            value = T(newValue)
+            value = T.isSigned ? T(newValue - 1) : T(newValue)
         }
     }
 
@@ -38,13 +38,9 @@ class ElementOCNT<T: FixedWidthInteger>: BaseElement, GroupElement, CounterEleme
 
     override func readData(from reader: BinaryDataReader) throws {
         lstc.reset()
-        if T.isSigned {
-            value = try reader.read() + 1
-            guard value >= 0 else {
-                throw TemplateError.dataMismatch(self)
-            }
-        } else {
-            value = try reader.read()
+        value = try reader.read()
+        guard count >= 0 else {
+            throw TemplateError.dataMismatch(self)
         }
         for _ in 0..<count {
             parentList.insert(lstc.createNext(), before: lstc)
@@ -52,10 +48,6 @@ class ElementOCNT<T: FixedWidthInteger>: BaseElement, GroupElement, CounterEleme
     }
 
     override func writeData(to writer: BinaryDataWriter) {
-        if T.isSigned {
-            writer.write(value - 1)
-        } else {
-            writer.write(value)
-        }
+        writer.write(value)
     }
 }
