@@ -21,7 +21,6 @@ class ElementKRID: KeyElement, GroupElement {
             parentList.remove(self)
             return
         }
-        currentSection.parentList = parentList
         parentList.insert(currentSection)
         try currentSection.subElements.configure()
         displayLabel += ": \(caseEl?.displayLabel ?? "Other")"

@@ -114,6 +114,9 @@ class ElementList {
     func remove(_ element: BaseElement) {
         elements.removeAll(where: { $0 == element })
         visibleElements.removeAll(where: { $0 == element })
+        if !configured {
+            currentIndex -= 1
+        }
     }
 
     // MARK: -
