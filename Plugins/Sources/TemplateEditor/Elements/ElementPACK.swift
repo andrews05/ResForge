@@ -27,7 +27,9 @@ class ElementPACK: BaseElement {
             guard let element = parentList.next(withLabel: label) else {
                 throw TemplateError.invalidStructure(self, NSLocalizedString("A named element was not found.", comment: ""))
             }
-            guard !(element is GroupElement) && !["PACK", "CASE", "CASR"].contains(element.type) else {
+            guard !(element is GroupElement),
+                  !(element is CollectionElement),
+                  !["PACK", "CASE", "CASR"].contains(element.type) else {
                 let message = String(format: NSLocalizedString("Cannot pack element of type ‘%@’.", comment: ""), element.type)
                 throw TemplateError.invalidStructure(self, message)
             }
