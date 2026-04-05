@@ -59,14 +59,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
     }
 
     override var formatter: Formatter {
-        sharedFormatter("\(min):\(max)") {
-            let formatter = NumberFormatter()
-            formatter.minimum = min as NSNumber
-            formatter.maximum = max as NSNumber
-            formatter.allowsFloats = false
-            formatter.nilSymbol = "\0"
-            return formatter
-        }
+        sharedFormatter("\(min):\(max)") { IntFormatter(min: min, max: max)}
     }
 
     // MARK: -
@@ -75,8 +68,8 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         parentElement = element
         parentList = element.parentList // Required to trigger itemValueUpdated
         width = element.width
-        min = (element.formatter as? NumberFormatter)?.minimum as? Int ?? Int.min
-        max = (element.formatter as? NumberFormatter)?.maximum as? Int ?? Int.max
+        min = (element.formatter as? IntFormatter)?.min ?? Int.min
+        max = (element.formatter as? IntFormatter)?.max ?? Int.max
         let range = min...max
 
         // Determine parameters from label

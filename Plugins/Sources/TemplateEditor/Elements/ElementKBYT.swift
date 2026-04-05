@@ -20,6 +20,6 @@ class ElementKBYT<T: FixedWidthInteger>: KeyElement {
 
     override var formatter: Formatter {
         let key = T.isSigned ? "INT" : "UINT"
-        return self.sharedFormatter("\(key)\(T.bitWidth)") { IntFormatter<T>() }
+        return self.sharedFormatter("\(key)\(T.bitWidth)") { IntFormatter(T.self) }
     }
 }

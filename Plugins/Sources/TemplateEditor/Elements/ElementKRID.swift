@@ -31,6 +31,6 @@ class ElementKRID: KeyElement, GroupElement {
     }
 
     override var formatter: Formatter {
-        self.sharedFormatter("INT16") { IntFormatter<Int16>() }
+        self.sharedFormatter("INT16") { IntFormatter(Int16.self) }
     }
 }

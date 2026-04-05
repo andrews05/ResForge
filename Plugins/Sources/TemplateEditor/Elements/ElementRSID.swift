@@ -78,7 +78,7 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
     }
 
     override var formatter: Formatter {
-        return self.sharedFormatter("INT\(T.bitWidth)") { IntFormatter<T>() }
+        self.sharedFormatter("INT\(T.bitWidth)") { IntFormatter(T.self) }
     }
 
     private func loadCases() {

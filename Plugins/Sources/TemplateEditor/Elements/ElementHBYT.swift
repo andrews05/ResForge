@@ -63,11 +63,11 @@ class HexFormatter<T: FixedWidthInteger & UnsignedInteger>: Formatter {
         let scanner = Scanner(string: string)
         let value = scanner.scanInt64(representation: .hexadecimal) ?? 0
         if !scanner.isAtEnd {
-            error?.pointee = NSLocalizedString("The value is not a valid hex string.", comment: "") as NSString
+            error?.pointee = "The value must be a hexadecimal string."
             return false
         }
         if value > T.max {
-            error?.pointee = NSLocalizedString("The value is too large.", comment: "") as NSString
+            error?.pointee = "The maximum value is \(self.string(for: T.max)!)." as NSString
             return false
         }
         obj?.pointee = value as NSNumber

@@ -2,7 +2,7 @@ import AppKit
 import RFSupport
 
 class ElementRECT: BaseElement {
-    static let formatter = IntFormatter<Int16>()
+    static let formatter = IntFormatter(Int16.self)
     @objc private var top: Int16 = 0
     @objc private var left: Int16 = 0
     @objc private var bottom: Int16 = 0

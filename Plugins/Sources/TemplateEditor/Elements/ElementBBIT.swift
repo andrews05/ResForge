@@ -90,13 +90,6 @@ class ElementBBIT<T: FixedWidthInteger & UnsignedInteger>: RangedElement<T> {
     }
 
     override var formatter: Formatter {
-        self.sharedFormatter("UINT\(bits)") {
-            let formatter = NumberFormatter()
-            formatter.minimum = 0
-            formatter.maximum = (1 << bits) - 1 as NSNumber
-            formatter.allowsFloats = false
-            formatter.nilSymbol = "\0"
-            return formatter
-        }
+        self.sharedFormatter("UINT\(bits)") { IntFormatter(min: 0, max: (1 << bits) - 1) }
     }
 }
