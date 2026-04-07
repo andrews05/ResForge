@@ -18,10 +18,7 @@ class ElementCHAR: CasedElement {
 }
 
 /// Formatter for a single MacRoman character, with support for hex representation of non-printable characters.
-class CharFormatter: Formatter {
-    private let hexFormatter = HexFormatter<UInt8>()
-    private let macRomanFormatter = MacRomanFormatter(stringLength: 1, exactLengthRequired: true)
-
+class CharFormatter: HexFormatter<UInt8> {
     public override func string(for obj: Any?) -> String? {
         guard let val = obj as? UInt8 else {
             return nil
@@ -31,7 +28,7 @@ class CharFormatter: Formatter {
             return ""
         case 1...31:
             // Non-printable characters should be hex formatted
-            return hexFormatter.string(for: val)
+            return super.string(for: val)
         default:
             // Otherwise render as MacRoman string
             return String(bytes: [val], encoding: .macOSRoman)
@@ -41,20 +38,20 @@ class CharFormatter: Formatter {
     public override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?,
                                         for string: String,
                                         errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
-        do {
-            // First try to interpret as MacRoman character
-            let char = try macRomanFormatter.getObjectValue(for: string) as? String
-            obj?.pointee = (char?.data(using: .macOSRoman)?.first ?? 0) as AnyObject
-        } catch let err {
-            do {
-                // If MacRoman fails, try interpreting as hex
-                obj?.pointee = try hexFormatter.getObjectValue(for: string)
-            } catch _ {
-                // If both fail, return the MacRoman error
-                error?.pointee = err.localizedDescription as NSString?
+        if string.isEmpty {
+            obj?.pointee = 0 as AnyObject
+            return true
+        } else if string.count == 1 {
+            guard let char = string.data(using: .macOSRoman)?.first else {
+                error?.pointee = "The character is not valid for Mac OS Roman encoding."
                 return false
             }
+            obj?.pointee = char as AnyObject
+            return true
+        } else if super.getObjectValue(obj, for: string, errorDescription: nil) {
+            return true
         }
-        return true
+        error?.pointee = "The value must be a single character."
+        return false
     }
 }
