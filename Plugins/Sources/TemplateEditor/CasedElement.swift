@@ -37,7 +37,7 @@ open class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSCo
     @discardableResult
     public func defaultValue() -> AnyHashable? {
         // Attempt to get a default value from the meta value, or the first case (if not dynamic)
-       if let value = self.parseMetaValue() {
+       if let value = self.value(for: metaValue) {
             self.setValue(value, forKey: "value")
             return value
         } else if let firstCase = cases.values.first, !firstCase.label.isEmpty {
@@ -46,13 +46,6 @@ open class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSCo
         } else {
             return nil
         }
-    }
-
-    func parseMetaValue() -> AnyHashable? {
-        if let metaValue {
-            return try? formatter.getObjectValue(for: metaValue) as? AnyHashable
-        }
-        return nil
     }
 
     func readCases() throws {
@@ -126,7 +119,7 @@ open class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSCo
         // However, if it was copy/pasted from another field it will be the first component
         // To account for both, return the last component only if it passes the formatter
         if components.count > 1,
-           self.formatter.getObjectValue(nil, for: components.last!, errorDescription: nil) {
+           formatter.getObjectValue(nil, for: components.last!, errorDescription: nil) {
             return components.last
         }
         return components.first

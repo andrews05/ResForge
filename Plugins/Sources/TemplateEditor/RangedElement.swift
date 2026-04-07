@@ -57,7 +57,7 @@ class RangedElement<T: FixedWidthInteger>: CasedElement, RangedController {
         }
         if let casrs {
             // Configure default value
-            if let defaultValue = self.parseMetaValue() as? T {
+            if let defaultValue = self.value(for: metaValue) as? T {
                 tValue = defaultValue
                 if self.matchingCase() == nil {
                     throw TemplateError.invalidStructure(self, NSLocalizedString("Default value doesn't match any CASR.", comment: ""))

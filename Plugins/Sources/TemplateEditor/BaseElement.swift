@@ -127,4 +127,17 @@ extension FormattedElement {
         Self.sharedFormatters[key] = formatter
         return formatter
     }
+
+    func defaultValue() -> AnyHashable? {
+        return self.value(for: metaValue)
+    }
+
+    func value(for string: String?) -> AnyHashable? {
+        if let string {
+            var object: AnyObject?
+            formatter.getObjectValue(&object, for: string, errorDescription: nil)
+            return object as? AnyHashable
+        }
+        return nil
+    }
 }

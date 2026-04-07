@@ -4,7 +4,7 @@ import RFSupport
 // Implements BB08, WB16, LB32, QB64
 // These types would otherwise be equivalent to UBYT etc so we do a special case here to instead display a grid of checkboxes.
 // The meta value may be either a default value or an id reference to STR# resource containing names for each bit (e.g. "#128")
-class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
+class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: BaseElement, FormattedElement {
     @objc private var value: UInt = 0 {
         didSet {
             // The field is not bound to the value so we need to update it manually
@@ -26,11 +26,12 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
     }
 
     override func configure() throws {
-        // Cases not actually supported but we still want to allow default values
-        self.defaultValue()
-        
+        if let v = self.defaultValue() as? UInt {
+            value = v
+        }
+
         // Check for an id reference and try to load names from a STR#
-        if let metaValue,
+        else if let metaValue,
            case let scanner = Scanner(string: metaValue),
            scanner.scanString("#") != nil,
            let listID = scanner.scanInt(),
@@ -128,7 +129,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         writer.write(T(value))
     }
 
-    override var formatter: Formatter {
+    var formatter: Formatter {
         self.sharedFormatter("HEX\(T.bitWidth)") { HexFormatter<T>() }
     }
 
@@ -194,7 +195,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement {
         guard let stringValue = NSPasteboard.general.readObjects(forClasses: [NSString.self])?.first as? String else {
             return nil
         }
-        return try? formatter.getObjectValue(for: stringValue) as? UInt
+        return self.value(for: stringValue) as? UInt
     }
 
     private func setValue(_ newValue: UInt) {
