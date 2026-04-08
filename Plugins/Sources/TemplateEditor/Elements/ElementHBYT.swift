@@ -61,8 +61,7 @@ class HexFormatter<T: FixedWidthInteger & UnsignedInteger>: Formatter {
             string = String(string.dropFirst())
         }
         let scanner = Scanner(string: string)
-        let value = scanner.scanInt64(representation: .hexadecimal) ?? 0
-        if !scanner.isAtEnd {
+        guard let value = scanner.scanInt64(representation: .hexadecimal), scanner.isAtEnd else {
             error?.pointee = "The value must be a hexadecimal string."
             return false
         }
