@@ -10,12 +10,17 @@ class ElementUNIV: ElementEXTN {
     }
 
     override func readData(from reader: BinaryDataReader) throws {
+		try reader.advance(2)
         try super.readData(from: reader)
-        try reader.advance(2)
     }
 
     override func writeData(to writer: BinaryDataWriter) {
+		// Pad with a clone of the exponent and sign bits
+        var exponent = UInt16(value.exponentBitPattern)
+        if value.sign == FloatingPointSign.minus {
+            exponent &= 0x8000
+        }
+        writer.write(exponent)
         super.writeData(to: writer)
-        writer.write(Int16(0))
     }
 }
