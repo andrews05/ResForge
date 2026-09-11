@@ -277,6 +277,7 @@ public class TemplateParser {
         "SCPC": ElementDBYT<Int16>.self,    // MacOS script code (ScriptCode)
         "LNGC": ElementDBYT<Int16>.self,    // MacOS language code (LangCode)
         "RGNC": ElementDBYT<Int16>.self,    // MacOS region code (RegionCode)
+        "CODE": ElementHEXD.self,
     ]) { $1 }
 
     /// Register a custom element. These are considered non-standard and contain at least one character that is not uppercase ascii.

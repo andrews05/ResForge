@@ -199,7 +199,7 @@ COLR|QuickDraw Color RGB Triplet|6 bytes||✓|✓|🟢
 WCOL|15-bit Color|2 bytes|||✓|🟢
 LCOL|24-bit Color|4 bytes|||✓|🟢
 CLUT|Color Lookup Table Hex Dump|any||✓||🔴
-CODE|680x0 Disassembled Code Dump|any||✓||🔴
+CODE|680x0 Disassembled Code Dump|any||✓||🟡
 
 ### Big and Little-Endian Parsing
 
