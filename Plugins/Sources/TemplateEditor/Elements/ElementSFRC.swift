@@ -4,10 +4,10 @@ import RFSupport
 class ElementSFRC: CasedElement {
     static let fixed1 = Double(1 << 16)
 
-    private var intValue: Int16 = 0
+    private var intValue: UInt16 = 0
     @objc private var value: NSNumber {
         get { Double(intValue) / Self.fixed1 as NSNumber }
-        set { intValue = Int16(round(newValue as! Double * Self.fixed1)) }
+        set { intValue = UInt16(round(newValue as! Double * Self.fixed1)) }
     }
 
     required init(type: String, label: String) {
@@ -29,8 +29,8 @@ class ElementSFRC: CasedElement {
             formatter.hasThousandSeparators = false
             formatter.numberStyle = .scientific
             formatter.maximumFractionDigits = 5
-            formatter.minimum = Double(Int16.min) / Self.fixed1 as NSNumber
-            formatter.maximum = Double(Int16.max) / Self.fixed1 as NSNumber
+            formatter.minimum = Double(UInt16.min) / Self.fixed1 as NSNumber
+            formatter.maximum = Double(UInt16.max) / Self.fixed1 as NSNumber
             formatter.nilSymbol = "\0"
             return formatter
         }
