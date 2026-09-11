@@ -110,7 +110,7 @@ WHEX|Word Length Hex Dump|2 to 64KB||✓|✓|🔵
 LHEX|Long Length Hex Dump|4 to 4GB||✓|✓|🔵
 BSHX|Byte Length - 1 Hex Dump|1 to 255||✓|✓|🔵
 WSHX|Word Length - 2 Hex Dump|2 to 64KB-2||✓|✓|🔵
-LHEX|Long Length - 4 Hex Dump|4 to 4GB-4||✓|✓|🔵
+LSHX|Long Length - 4 Hex Dump|4 to 4GB-4||✓|✓|🔵
 Hnmm|Fixed-Length Hex Dump|$_nmm_ bytes|✓|✓|✓|🔵
 HEXS|Sized Hex Dump|any||✓||🔵
 HEXD|Hex Dump|any|✓|✓|✓|🔵
@@ -162,7 +162,7 @@ KHWD|Unsigned Hex Word Key|2 bytes||✓|✓|🟢
 KHLG|Unsigned Hex Long Key|4 bytes||✓|✓|🟢
 KHQD|Unsigned Hex Quad Key|8 bytes||||🟢
 KCHR|Single ASCII Character Key|1 byte||✓|✓|🟢
-KNAM|Four-Character Type Key|4 bytes||✓|✓|🟢
+KTYP|Four-Character Type Key|4 bytes||✓|✓|🟢
 KRID|Key on Current Resource ID|0 bytes||✓|✓|🟢
 KEYB|Begin Keyed Item for Previous CASE|0 bytes||✓|✓|🟢
 KEYE|End of Keyed Item|0 bytes||✓|✓|🟢
