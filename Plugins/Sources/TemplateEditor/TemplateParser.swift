@@ -118,10 +118,6 @@ public class TemplateParser {
         // fractions
         "REAL": ElementREAL.self,           // single precision float
         "DOUB": ElementDOUB.self,           // double precision float
-        "EXTN": ElementEXTN.self,           // extended precision float
-        "XT96": ElementUNIV.self,           // padded extended precision float
-        "UNIV": ElementUNIV.self,           // padded extended precision float
-        "DBDB": ElementDBDB.self,           // Two double precision floats
         "FIXD": ElementFIXD.self,           // 16:16 fixed precision
         "FRAC": ElementFRAC.self,           // 2:30 fixed precision
         "SFRC": ElementSFRC.self,           // 0:16 fixed precision

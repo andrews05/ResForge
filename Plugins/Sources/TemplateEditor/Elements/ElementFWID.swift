@@ -28,7 +28,7 @@ class ElementFWID: CasedElement {
             let formatter = NumberFormatter()
             formatter.hasThousandSeparators = false
             formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 5
+            formatter.maximumFractionDigits = 4
             formatter.minimum = Double(Int16.min) / Self.fixed1 as NSNumber
             formatter.maximum = Double(Int16.max) / Self.fixed1 as NSNumber
             formatter.nilSymbol = "\0"

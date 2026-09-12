@@ -27,8 +27,8 @@ class ElementFRAC: CasedElement {
         self.sharedFormatter {
             let formatter = NumberFormatter()
             formatter.hasThousandSeparators = false
-            formatter.numberStyle = .scientific
-            formatter.maximumFractionDigits = 5
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 9
             formatter.minimum = Double(Int32.min) / Self.fixed1 as NSNumber
             formatter.maximum = Double(Int32.max) / Self.fixed1 as NSNumber
             formatter.nilSymbol = "\0"
