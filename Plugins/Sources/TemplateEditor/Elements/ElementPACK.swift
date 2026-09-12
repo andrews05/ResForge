@@ -45,7 +45,7 @@ class ElementPACK: BaseElement {
             // When packing multiple elements, attempt to reduce the width
             if subElements.count > 1 {
                 let maxWidth = Self.blockSize * 6
-                if element.width > maxWidth || element.width == 0 {
+                if element.width > maxWidth || (element.width == 0 && element != subElements.last) {
                     element.width = maxWidth
                 }
                 if let element = element as? RangedController {
