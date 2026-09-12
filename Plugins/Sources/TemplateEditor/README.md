@@ -73,10 +73,10 @@ XT96|Extended 96-bit SANE Float|12 bytes||✓||🔴
 UNIV|THINK C Universal 96-bit Float|12 bytes||✓||🔴
 DBDB|PowerPC Double Double|16 bytes||✓||🔴
 FIXD|16:16 Fixed Point Number|4 bytes||✓||🟢 🅱️
-FRAC|2:30 Fixed Point Number|4 bytes||✓||🔴
-SFRC|0:16 Fixed Point Small Fraction|2 bytes||✓||🔴
-FWID|4:12 Fixed Point Font Width|2 bytes||✓||🔴
-FXYZ|1:15 Fixed Point Colour Component|2 bytes||✓||🔴
+FRAC|2:30 Fixed Point Number|4 bytes||✓||🟢 🅱️
+SFRC|0:16 Fixed Point Small Fraction|2 bytes||✓||🟢 🅱️
+FWID|4:12 Fixed Point Font Width|2 bytes||✓||🟢 🅱️
+FXYZ|1:15 Fixed Point Colour Component|2 bytes||✓||🟢 🅱️
 
 
 ### Text and String Field Types
