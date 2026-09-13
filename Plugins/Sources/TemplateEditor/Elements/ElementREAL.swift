@@ -18,15 +18,6 @@ class ElementREAL: CasedElement {
     }
 
     override var formatter: Formatter {
-        self.sharedFormatter {
-            let formatter = NumberFormatter()
-            formatter.hasThousandSeparators = false
-            formatter.numberStyle = .scientific
-            formatter.maximumSignificantDigits = 7
-            formatter.minimum = 0
-            formatter.maximum = Float.greatestFiniteMagnitude as NSNumber
-            formatter.nilSymbol = "\0"
-            return formatter
-        }
+        self.sharedFormatter { FloatFormatter<Float>() }
     }
 }
