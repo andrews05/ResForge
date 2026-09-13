@@ -29,8 +29,10 @@ class ElementFXYZ: CasedElement {
             formatter.hasThousandSeparators = false
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 5
-            formatter.minimum = Double(Int16.min) / Self.fixed1 as NSNumber
-            formatter.maximum = Double(Int16.max) / Self.fixed1 as NSNumber
+            // The actual max value will be rounded up for display, so we should set
+            // the min/max display values directly instead of trying to calculate them.
+            formatter.minimum = -1
+            formatter.maximum = 0.99997
             formatter.nilSymbol = "\0"
             return formatter
         }

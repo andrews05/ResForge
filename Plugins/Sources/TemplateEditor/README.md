@@ -2,7 +2,7 @@
 
 This document outlines all template field types that have been defined by various editors. ResForge currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
-* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (64 of 95)
+* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (68 of 95)
 * All of [Rezilla's additions](https://html-preview.github.io/?url=https://github.com/chrisballinger/rezilla/blob/master/RezillaHelp/English.lproj/RezillaHelp/47.html) (5)
 * ResForge's own additions (21)
 
