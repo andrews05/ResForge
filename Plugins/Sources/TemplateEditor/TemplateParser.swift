@@ -119,6 +119,10 @@ public class TemplateParser {
         "REAL": ElementREAL.self,           // single precision float
         "DOUB": ElementDOUB.self,           // double precision float
         "FIXD": ElementFIXD.self,           // 16:16 fixed precision
+        "FRAC": ElementFRAC.self,           // 2:30 fixed precision
+        "SFRC": ElementSFRC.self,           // 0:16 fixed precision
+        "FWID": ElementFWID.self,           // 4:12 fixed precision
+        "FXYZ": ElementFXYZ.self,           // 1:15 fixed precision
 
         // strings
         "PSTR": ElementPSTR<UInt8>.self,    // Pascal string
