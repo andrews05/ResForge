@@ -11,8 +11,7 @@ class ElementDATE: BaseElement {
 
     override func configure() throws {
         blockWidth = 8
-        value = Date()
-        tValue += UInt32(TimeZone.current.secondsFromGMT())
+        value = Date(timeIntervalSinceNow: Double(TimeZone.current.secondsFromGMT()))
     }
 
     override func configure(view: NSView) {
