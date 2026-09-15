@@ -139,7 +139,7 @@ class ClassicFormat: ResourceFileFormat {
                 throw ResourceFormatError.typeAttributesNotSupported
             }
             for resource in resources {
-                guard Self.isValid(id: resource.id) else {
+                guard self.isValid(id: resource.id) else {
                     throw ResourceFormatError.invalidID(resource.id)
                 }
                 let offset = writer.bytesWritten - dataOffset

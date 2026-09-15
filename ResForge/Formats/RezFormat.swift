@@ -129,7 +129,7 @@ struct RezFormat: ResourceFileFormat {
                 throw ResourceFormatError.typeAttributesNotSupported
             }
             for resource in resources {
-                guard Self.isValid(id: resource.id) else {
+                guard self.isValid(id: resource.id) else {
                     throw ResourceFormatError.invalidID(resource.id)
                 }
                 // Use inout closure to get or store the default in the dictionary with only one lookup

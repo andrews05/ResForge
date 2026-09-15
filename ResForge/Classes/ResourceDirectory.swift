@@ -195,7 +195,7 @@ class ResourceDirectory {
     /// Find the next available resource ID from a given starting point in a set of existing IDs.
     func nextAvailableID(in existingIDs: OrderedSet<Int>, startingAt index: inout Int) -> Int {
         var id = existingIDs[index]
-        let max = type(of: document.format).IDType.max
+        let max = document.format.maxID
         // Keep incrementing from the starting point until we find an unused id
         repeat {
             if id == max {

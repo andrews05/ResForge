@@ -21,16 +21,15 @@ extension ResourceFileFormat {
     typealias IDType = Int16
     var supportsResAttributes: Bool { false }
     var supportsTypeAttributes: Bool { false }
+    var minID: Int { Int(IDType.min) }
+    var maxID: Int { Int(IDType.max) }
 
     func filenameExtension(for url: URL?) -> String? {
         return nil
     }
 
-    static func isValid(id: Int) -> Bool {
-        return Int(IDType.min)...Int(IDType.max) ~= id
-    }
     func isValid(id: Int) -> Bool {
-        return Self.isValid(id: id)
+        return minID...maxID ~= id
     }
 }
 
