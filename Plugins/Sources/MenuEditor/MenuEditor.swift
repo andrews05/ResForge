@@ -5,6 +5,12 @@ import RFSupport
 // https://dev.os9.ca/techpubs/mac/MacAppProgGuide/MacAppProgGuide-86.html#MARKER-2-35
 
 public class MenuEditor: AbstractEditor, ResourceEditor {
+    enum CommandSize {
+        case none
+        case int16
+        case int32
+    }
+
     public static var bundle: Bundle { .module }
     public static let supportedTypes = [
         "MENU",
@@ -12,13 +18,18 @@ public class MenuEditor: AbstractEditor, ResourceEditor {
         "CMNU"
     ]
 
-    @IBOutlet weak var menuTable: NSTableView!
+    public static func register() {
+        ValueTransformer.setValueTransformer(CharCodeTransformer(), forName: .charCodeTransformerName)
+        PluginRegistry.register(Self.self)
+    }
+
     public let resource: Resource
     public let createMenuTitle: String? = "Add Menu Item"
-    private let manager: RFEditorManager
-    private var fieldEditorForMenuPreview: NSTextView!
+    let manager: RFEditorManager
 
-    private var menuInfo = Menu()
+    @IBOutlet weak var menuTable: NSTableView!
+    private var fieldEditorForMenuPreview: NSTextView!
+    private var menuInfo: Menu!
 
     public override var windowNibName: NSNib.Name {
         "MenuEditorWindow"
@@ -28,6 +39,7 @@ public class MenuEditor: AbstractEditor, ResourceEditor {
         self.resource = resource
         self.manager = manager
         super.init(window: nil)
+        menuInfo = Menu(editor: self)
     }
 
     required init?(coder: NSCoder) {
@@ -37,162 +49,95 @@ public class MenuEditor: AbstractEditor, ResourceEditor {
     public override func windowDidLoad() {
         self.loadItems()
         menuTable.reloadData()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: Menu.nameDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: Menu.enabledDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(rowContentStyleAffectingThingDidChangeNotification(_:)), name: MenuItem.nameDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.keyEquivalentDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.markCharacterDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.styleByteDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.menuCommandDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(itemChangeNotification(_:)), name: MenuItem.iconDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(rowContentStyleAffectingThingDidChangeNotification(_:)), name: MenuItem.submenuIDDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(enabledChangeNotification(_:)), name: MenuItem.enabledDidChangeNotification, object: nil)
     }
 
     /// For inspector UI to bind to.
-    var selectedItem: Any? = nil
+    @objc dynamic var selectedItem: Any?
+    @objc dynamic var selectedMenu: Menu?
+    @objc dynamic var selectedMenuItem: MenuItem?
 
-    @objc func rowContentStyleAffectingThingDidChangeNotification(_ notification: Notification) {
-        if let item = notification.object as? MenuItem,
-           let itemIndex = menuInfo.items.firstIndex(of: item),
+    var commandSize: CommandSize {
+        switch resource.typeCode {
+        case "cmnu": .int16
+        case "CMNU": .int32
+        default: .none
+        }
+    }
+
+    func updateRow(for item: MenuItem) {
+        if let itemIndex = menuInfo.items.firstIndex(of: item),
            let itemRowView = menuTable.rowView(atRow: itemIndex + 1, makeIfNecessary: false) as? MenuItemTableRowView {
             if item.name.hasPrefix("-") {
                 itemRowView.contentStyle = .separator
-            } else if item.submenuID != 0 {
+            } else if item.hasSubmenu {
                 itemRowView.contentStyle = .submenu
             } else {
                 itemRowView.contentStyle = .normal
             }
-            self.setDocumentEdited(true)
         }
     }
 
-    @objc func itemChangeNotification(_ notification: Notification) {
-        if notification.object as? Menu == menuInfo {
-            self.setDocumentEdited(true)
-        } else if let item = notification.object as? MenuItem,
-                  menuInfo.items.contains(item) {
-            self.setDocumentEdited(true)
-        }
-    }
-
-    @objc func enabledChangeNotification(_ notification: Notification) {
-        if notification.object as? Menu == menuInfo {
-            self.setDocumentEdited(true)
-        } else if let item = notification.object as? MenuItem,
-                  let itemIndex = menuInfo.items.firstIndex(of: item) {
-            menuInfo.setEnabled(item.isEnabled, at: itemIndex)
-            menuTable.reloadData()
-            self.setDocumentEdited(true)
-        }
-    }
-
-    var commandsSize: MenuItem.CommandsSize {
-        let commandsSize: MenuItem.CommandsSize
-        if resource.typeCode == "cmnu" {
-            commandsSize = .int16
-        } else if resource.typeCode == "CMNU" {
-            commandsSize = .int32
-        } else {
-            commandsSize = .none
-        }
-        return commandsSize
-    }
-
-    private func itemsFromData(_ data: Data) throws -> Menu {
-        let newMenu = Menu()
+    private func itemsFromData(_ data: Data) throws {
         let reader = BinaryDataReader(data)
-        newMenu.menuID = try reader.read()
+        menuInfo.menuID = try reader.read()
         try reader.advance(2)   // menu width
         try reader.advance(2)   // menu height
-        newMenu.mdefID = try reader.read()
+        menuInfo.mdefID = try reader.read()
         try reader.advance(2)   // filler
-        newMenu.enableFlags = try reader.read()
-        newMenu.name = try reader.readPString()
-
-        var itemEnableBitIndex = 1
+        menuInfo.enableFlags = try reader.read()
+        menuInfo.name = try reader.readPString()
 
         while reader.bytesRemaining > 5 {
-            let newItem = MenuItem(commandsSize: commandsSize, manager: manager)
+            let newItem = MenuItem(editor: self)
             newItem.name = try reader.readPString()
-            let iconID: UInt8 = try reader.read()
-            let keyEquivalent: UInt8 = try reader.read()
-            var markCharacter: UInt8 = try reader.read()
-            newItem.styleByte = try reader.read()
-            newItem.isEnabled = (newMenu.enableFlags & (1 << itemEnableBitIndex)) != 0
-            newItem.iconID = (iconID == 0) ? 0 : Int(iconID) + 256
-            if keyEquivalent == 0x1b {
-                newItem.submenuID = Int(markCharacter)
-                markCharacter = 0
-            } else if keyEquivalent >= 0x1B && keyEquivalent <= 0x1F {
-                newItem.iconType = keyEquivalent
-            } else if keyEquivalent != 0 {
-                newItem.keyEquivalent = String(data: Data([keyEquivalent]), encoding: .macOSRoman) ?? ""
-            }
-            if markCharacter != 0 {
-                newItem.markCharacter = String(data: Data([markCharacter]), encoding: .macOSRoman) ?? ""
-            }
+            newItem.iconCode = try reader.read()
+            newItem.keyCode = try reader.read()
+            newItem.markCode = try reader.read()
+            newItem.style = try reader.read()
+            newItem.isEnabled = menuInfo.isEnabled(at: menuInfo.items.count)
 
-            itemEnableBitIndex += 1
-
-            switch commandsSize {
+            switch commandSize {
             case .int16:
                 if (reader.bytesRead % 2) != 0 {
                     try reader.advance(1)
                 }
-                let shortCommand: UInt16 = try reader.read()
-                newItem.menuCommand = UInt32(shortCommand)
+                newItem.menuCommand = UInt32(try reader.read() as UInt16)
             case .int32:
                 if (reader.bytesRead % 2) != 0 {
                     try reader.advance(1)
                 }
-                let longCommand: UInt32 = try reader.read()
-                newItem.menuCommand = longCommand
+                newItem.menuCommand = try reader.read()
             case .none:
-                break // only breaks out of switch
+                break
             }
 
-            newMenu.items.append(newItem)
+            menuInfo.items.append(newItem)
         }
         try reader.advance(1)
-
-        return newMenu
     }
 
     /// Parse the resource into our ``items`` list.
     private func loadItems() {
+        menuInfo = Menu(editor: self)
         if resource.data.isEmpty {
-            createEmptyResource()
+            self.setDocumentEdited(true)
+        } else {
+            do {
+                try itemsFromData(resource.data)
+            } catch {
+                self.window?.presentError(error)
+            }
+            self.setDocumentEdited(false)
         }
-        do {
-            menuInfo = try itemsFromData(resource.data)
-        } catch {
-            menuInfo = Menu()
-            self.window?.presentError(error)
-        }
-    }
-
-    /// Create a valid but empty Menu resource. Used when we are opened for an empty resource.
-    private func createEmptyResource() {
-        let writer = BinaryDataWriter()
-        writer.write(Int16(resource.id))
-        writer.write(Int16(0)) // width
-        writer.write(Int16(0)) // height
-        writer.write(Int16(0)) // mdef ID
-        writer.write(Int16(0)) // filler
-        writer.write(UInt32.max) // enableFlags
-        let newName = (resource.name.isEmpty ? NSLocalizedString("New Menu", comment: "") : resource.name)
-        try! writer.writePString(newName) // menu title
-        writer.write(UInt8(0)) // zero terminator
-        resource.data = writer.data
-
-        self.setDocumentEdited(true)
     }
 
     private func currentResourceStateAsData() throws -> Data {
-        let writer = BinaryDataWriter()
+        // Update enable flags
+        for (i, item) in menuInfo.items.enumerated() {
+            menuInfo.setEnabled(item.isEnabled, at: i)
+        }
 
+        let writer = BinaryDataWriter()
         writer.write(menuInfo.menuID)
         writer.write(Int16(0)) // width
         writer.write(Int16(0)) // height
@@ -202,19 +147,12 @@ public class MenuEditor: AbstractEditor, ResourceEditor {
         try writer.writePString(menuInfo.name)
         for item in menuInfo.items {
             try writer.writePString(item.name)
-            writer.write((item.iconID == 0) ? UInt8(0) : UInt8(item.iconID - 256))
-            if item.submenuID == 0 {
-                let keyEquivalentBytes = [UInt8](item.keyEquivalent.data(using: .macOSRoman) ?? Data())
-                writer.write(keyEquivalentBytes.first ?? UInt8(0))
-                let markCharacterBytes = [UInt8](item.markCharacter.data(using: .macOSRoman) ?? Data())
-                writer.write(markCharacterBytes.first ?? UInt8(0))
-            } else {
-                writer.write(UInt8(0x1b))
-                writer.write(UInt8(item.submenuID))
-            }
-            writer.write(item.styleByte)
+            writer.write(item.iconCode)
+            writer.write(item.keyCode)
+            writer.write(item.markCode)
+            writer.write(item.style)
 
-            switch commandsSize {
+            switch commandSize {
             case .int16:
                 if (writer.bytesWritten % 2) != 0 {
                     writer.write(UInt8(0))
@@ -226,7 +164,7 @@ public class MenuEditor: AbstractEditor, ResourceEditor {
                 }
                 writer.write(item.menuCommand)
             case .none:
-                break // only breaks out of switch
+                break
             }
         }
         writer.write(UInt8(0)) // zero terminator
@@ -240,17 +178,14 @@ public class MenuEditor: AbstractEditor, ResourceEditor {
         } catch {
             self.window?.presentError(error)
         }
-
         self.setDocumentEdited(false)
     }
 
     /// Revert the resource to its on-disk state.
     @IBAction public func revertResource(_ sender: Any) {
-        self.window?.contentView?.undoManager?.removeAllActions()
+        undoManager?.removeAllActions()
         self.loadItems()
         menuTable.reloadData()
-
-        self.setDocumentEdited(false)
     }
 
     @IBAction func createNewItem(_ sender: Any?) {
@@ -258,62 +193,62 @@ public class MenuEditor: AbstractEditor, ResourceEditor {
         if selRow == -1 {
             selRow = menuInfo.items.count // No need to subtract 1, because title already offset the index by 1 compared to items.
         }
-        menuInfo.items.insert(MenuItem(name: NSLocalizedString("New Menu Item", comment: "name for new menu items"), commandsSize: commandsSize, manager: manager), at: selRow)
-
+        menuInfo.items.insert(MenuItem(editor: self), at: selRow)
         menuTable.reloadData()
         menuTable.selectRowIndexes([selRow + 1], byExtendingSelection: false) // +1 to account for title row
-
         self.setDocumentEdited(true)
     }
 
     @IBAction func delete(_ sender: Any?) {
-        do {
-            let oldData = try currentResourceStateAsData()
-            var deletedCount = 0
-
-            for row in menuTable.selectedRowIndexes.reversed() {
-                if row > 0 { // Don't allow deleting title.
-                    menuInfo.items.remove(at: row - 1)
-                    deletedCount += 1
-                }
+        var deletedCount = 0
+        for row in menuTable.selectedRowIndexes.reversed() {
+            if row > 0 { // Don't allow deleting title.
+                menuInfo.items.remove(at: row - 1)
+                deletedCount += 1
             }
-
-            if deletedCount > 0 {
-                menuTable.reloadData()
-                self.window?.contentView?.undoManager?.beginUndoGrouping()
-                self.window?.contentView?.undoManager?.setActionName((deletedCount > 0) ? NSLocalizedString("Delete Items", comment: "") : NSLocalizedString("Delete Item", comment: ""))
-                self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-                self.window?.contentView?.undoManager?.endUndoGrouping()
-
-                self.setDocumentEdited(true)
-            }
-        } catch {
-            self.window?.presentError(error)
         }
+        if deletedCount > 0 {
+            menuTable.reloadData()
+            self.setDocumentEdited(true)
+        }
+        // Undo not fully supported yet
+//        do {
+//            let oldData = try currentResourceStateAsData()
+//            var deletedCount = 0
+//            for row in menuTable.selectedRowIndexes.reversed() {
+//                if row > 0 { // Don't allow deleting title.
+//                    menuInfo.items.remove(at: row - 1)
+//                    deletedCount += 1
+//                }
+//            }
+//            if deletedCount > 0 {
+//                menuTable.reloadData()
+//                undoManager?.setActionName((deletedCount > 0) ? NSLocalizedString("Delete Items", comment: "") : NSLocalizedString("Delete Item", comment: ""))
+//                undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+//                self.setDocumentEdited(true)
+//            }
+//        } catch {
+//            self.window?.presentError(error)
+//        }
     }
 
-    private func undoRedoResourceData(_ data: Data) {
-        do {
-            let oldData = try currentResourceStateAsData()
-            self.window?.contentView?.undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
-
-            do {
-                menuInfo = try self.itemsFromData(data)
-                menuTable.reloadData()
-
-                self.setDocumentEdited(true)
-            } catch {
-                self.window?.presentError(error)
-            }
-        } catch {
-            self.window?.presentError(error)
-        }
-    }
-
+//    private func undoRedoResourceData(_ data: Data) {
+//        do {
+//            let oldData = try currentResourceStateAsData()
+//            undoManager?.registerUndo(withTarget: self, handler: { $0.undoRedoResourceData(oldData) })
+//
+//            menuInfo = Menu(editor: self)
+//            try self.itemsFromData(data)
+//            menuTable.reloadData()
+//
+//            self.setDocumentEdited(true)
+//        } catch {
+//            self.window?.presentError(error)
+//        }
+//    }
 }
 
 extension MenuEditor: NSTableViewDataSource, NSTableViewDelegate {
-
     static let titleColumn = NSUserInterfaceItemIdentifier("Name")
     static let shortcutColumn = NSUserInterfaceItemIdentifier("Shortcut")
     static let markColumn = NSUserInterfaceItemIdentifier("Mark")
@@ -352,7 +287,7 @@ extension MenuEditor: NSTableViewDataSource, NSTableViewDelegate {
         }
         if row > 0 && menuInfo.items[row - 1].name.hasPrefix("-") {
             rowView.contentStyle = .separator
-        } else if row > 0 && menuInfo.items[row - 1].submenuID != 0 {
+        } else if row > 0 && menuInfo.items[row - 1].hasSubmenu {
             rowView.contentStyle = .submenu
         } else {
             rowView.contentStyle = .normal
@@ -361,34 +296,24 @@ extension MenuEditor: NSTableViewDataSource, NSTableViewDelegate {
     }
 
     public func tableViewSelectionDidChange(_ notification: Notification) {
-        self.willChangeValue(forKey: "selectedItem")
         let selRow = menuTable.selectedRow
         if selRow == -1 {
+            selectedMenu = nil
+            selectedMenuItem = nil
             selectedItem = nil
         } else if selRow == 0 {
-            selectedItem = menuInfo
+            selectedMenu = menuInfo
+            selectedMenuItem = nil
+            selectedItem = selectedMenu
         } else {
-            selectedItem = menuInfo.items[selRow - 1]
+            selectedMenu = nil
+            selectedMenuItem = menuInfo.items[selRow - 1]
+            selectedItem = selectedMenuItem
         }
-        self.didChangeValue(forKey: "selectedItem")
     }
-
 }
 
 extension MenuEditor {
-
-    public override func value(forKey key: String) -> Any? {
-        if key == "selectedItem" {
-            return selectedItem
-        } else {
-            return super.value(forKey: key)
-        }
-    }
-
-}
-
-extension MenuEditor {
-
     func windowWillReturnFieldEditor(_ sender: NSWindow, to client: Any?) -> Any? {
         // Ensure that the edit fields in the menu editor are all black on white,
         // no matter whether menu item is disabled or if it's the white-on-black menu title.
@@ -402,5 +327,4 @@ extension MenuEditor {
         fieldEditorForMenuPreview.textColor = NSColor.textColor
         return fieldEditorForMenuPreview
     }
-
 }

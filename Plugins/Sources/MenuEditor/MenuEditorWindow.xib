@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,20 +18,20 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="556" width="502" height="334"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1410"/>
             <value key="minSize" type="size" width="240" height="120"/>
             <view key="contentView" misplaced="YES" id="18">
                 <rect key="frame" x="0.0" y="0.0" width="502" height="334"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="18" horizontalPageScroll="10" verticalLineScroll="18" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
-                        <rect key="frame" x="-1" y="-1" width="292" height="336"/>
+                        <rect key="frame" x="-1" y="-1" width="291" height="336"/>
                         <clipView key="contentView" id="Q0k-GS-R3n">
-                            <rect key="frame" x="1" y="1" width="290" height="334"/>
+                            <rect key="frame" x="1" y="1" width="289" height="334"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" floatsGroupRows="NO" id="oOj-xi-kqb">
-                                    <rect key="frame" x="0.0" y="0.0" width="290" height="334"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="289" height="334"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -69,7 +69,12 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="RGo-ON-Gf1" name="value" keyPath="objectValue.markCharacter" id="DgR-ar-J7x"/>
+                                                                <binding destination="RGo-ON-Gf1" name="hidden" keyPath="objectValue.hasSubmenu" id="adl-Ak-Ges"/>
+                                                                <binding destination="RGo-ON-Gf1" name="value" keyPath="objectValue.markCode" id="TZa-jM-z9t">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">RFCharCodeTransformer</string>
+                                                                    </dictionary>
+                                                                </binding>
                                                                 <binding destination="RGo-ON-Gf1" name="textColor" keyPath="objectValue.textColor" id="oJ1-6S-eU3"/>
                                                             </connections>
                                                         </textField>
@@ -183,7 +188,16 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="akf-VV-HfX" name="value" keyPath="objectValue.keyEquivalent" id="RkL-cr-asY"/>
+                                                                <binding destination="akf-VV-HfX" name="hidden" keyPath="objectValue.hasKeyEquivalent" id="Uwi-z0-1sO">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                    </dictionary>
+                                                                </binding>
+                                                                <binding destination="akf-VV-HfX" name="value" keyPath="objectValue.keyCode" id="4Ey-ox-CID">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">RFCharCodeTransformer</string>
+                                                                    </dictionary>
+                                                                </binding>
                                                                 <binding destination="akf-VV-HfX" name="textColor" keyPath="objectValue.textColor" id="qCV-26-Kzv"/>
                                                             </connections>
                                                         </textField>
@@ -195,7 +209,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="akf-VV-HfX" name="hidden" keyPath="objectValue.hasKeyEquivalent" id="79F-Ni-bIA">
+                                                                <binding destination="akf-VV-HfX" name="hidden" keyPath="objectValue.hasValidKeyEquivalent" id="irT-x0-nhg">
                                                                     <dictionary key="options">
                                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                     </dictionary>
@@ -238,17 +252,17 @@
                         </scroller>
                     </scrollView>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="64d-80-xuj" userLabel="Inspector Stack View">
-                        <rect key="frame" x="299" y="0.0" width="191" height="354"/>
+                        <rect key="frame" x="298" y="4" width="192" height="448"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mkd-DJ-7f3" userLabel="Enabled Stack View">
-                                <rect key="frame" x="40" y="338" width="151" height="16"/>
+                                <rect key="frame" x="0.0" y="432" width="192" height="16"/>
                                 <subviews>
                                     <customView verticalHuggingPriority="100" id="Xpt-F5-fga">
                                         <rect key="frame" x="3" y="2" width="67" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
-                                    <button verticalHuggingPriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="8jz-NL-5Wd">
-                                        <rect key="frame" x="76" y="-1" width="75" height="18"/>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8jz-NL-5Wd">
+                                        <rect key="frame" x="78" y="0.0" width="114" height="16"/>
                                         <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Ccb-Cl-FAc">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -268,29 +282,26 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AbZ-go-Ck0" userLabel="ID Stack View">
-                                <rect key="frame" x="0.0" y="309" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="400" width="192" height="24"/>
                                 <subviews>
-                                    <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="1dy-JZ-eeI">
-                                        <rect key="frame" x="-2" y="3" width="114" height="16"/>
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1dy-JZ-eeI">
+                                        <rect key="frame" x="-2" y="4" width="74" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Menu ID:" id="GdD-y2-mgl">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="nVB-8y-NcJ">
-                                        <rect key="frame" x="118" y="0.0" width="73" height="21"/>
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nVB-8y-NcJ">
+                                        <rect key="frame" x="78" y="0.0" width="114" height="24"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="fCf-AG-Cmh">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="cg5-1I-bUF">
-                                                <real key="minimum" value="-32767"/>
-                                                <real key="maximum" value="32768"/>
-                                            </numberFormatter>
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="selectedItem.menuID" id="vHo-o4-t9b"/>
+                                            <binding destination="-2" name="value" keyPath="selectedMenu.menuID" id="m6I-Si-zed"/>
+                                            <outlet property="formatter" destination="HXV-fC-ufL" id="7vJ-tZ-hu8"/>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -306,33 +317,34 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="selectedItem.isItem" id="22N-sB-USF"/>
+                                    <binding destination="-2" name="hidden" keyPath="selectedMenu" id="n6d-M3-dsi">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSIsNil</string>
+                                        </dictionary>
+                                    </binding>
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DKS-Xg-pXR" userLabel="MDEF Stack View">
-                                <rect key="frame" x="0.0" y="280" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="368" width="192" height="24"/>
                                 <subviews>
-                                    <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="53h-zB-gK1">
-                                        <rect key="frame" x="-2" y="3" width="114" height="16"/>
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="53h-zB-gK1">
+                                        <rect key="frame" x="-2" y="4" width="74" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="MDEF ID:" id="AGn-nV-bh8">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="SJa-TN-hnR">
-                                        <rect key="frame" x="118" y="0.0" width="73" height="21"/>
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SJa-TN-hnR">
+                                        <rect key="frame" x="78" y="0.0" width="114" height="24"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="htV-bP-WkK">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="RJb-bX-vXS">
-                                                <real key="minimum" value="-32767"/>
-                                                <real key="maximum" value="32768"/>
-                                            </numberFormatter>
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="selectedItem.mdefID" id="TqQ-d9-TGh"/>
+                                            <binding destination="-2" name="value" keyPath="selectedMenu.mdefID" id="8SV-tF-Thg"/>
+                                            <outlet property="formatter" destination="HXV-fC-ufL" id="2a6-Aq-JBv"/>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -345,40 +357,41 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="selectedItem.isItem" id="cSZ-SN-Bsw"/>
+                                    <binding destination="-2" name="hidden" keyPath="selectedMenu" id="G2F-g9-j9i">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSIsNil</string>
+                                        </dictionary>
+                                    </binding>
                                 </connections>
                             </stackView>
-                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q2b-Qp-1JV" userLabel="Style Stack View">
-                                <rect key="frame" x="0.0" y="252" width="191" height="20"/>
+                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IeJ-56-fjv" userLabel="Special Stack View">
+                                <rect key="frame" x="0.0" y="336" width="192" height="24"/>
                                 <subviews>
-                                    <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="Ty4-0S-dYi">
-                                        <rect key="frame" x="-2" y="3" width="114" height="16"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Style:" id="3z6-Jw-79B">
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tTR-Ac-PZk">
+                                        <rect key="frame" x="-2" y="4" width="74" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Special:" id="svg-8y-D80">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dlj-3c-orU">
-                                        <rect key="frame" x="115" y="-4" width="80" height="25"/>
-                                        <popUpButtonCell key="cell" type="push" title="Plain" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="g2r-Yj-HhQ" id="esU-2I-aSe">
+                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Znu-yW-sN3">
+                                        <rect key="frame" x="78" y="0.0" width="114" height="24"/>
+                                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="WQl-dr-L4Y" id="jhq-oo-TId">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="message"/>
-                                            <menu key="menu" id="0ss-UM-UQ6">
+                                            <menu key="menu" id="9NW-MJ-zPN">
                                                 <items>
-                                                    <menuItem title="Plain" state="on" id="g2r-Yj-HhQ"/>
-                                                    <menuItem title="Bold" tag="1" id="u5L-Jt-xIB"/>
-                                                    <menuItem title="Italic" tag="2" id="2Io-Zi-rrc"/>
-                                                    <menuItem title="Underline" tag="4" id="nKs-TF-XC9"/>
-                                                    <menuItem title="Outline" tag="8" id="Jnt-NP-Ss6"/>
-                                                    <menuItem title="Shadow" tag="16" id="6dB-Jz-djv"/>
-                                                    <menuItem title="Condense" tag="32" id="07y-Ee-QT9"/>
-                                                    <menuItem title="Extend" tag="64" id="mUR-wU-0c7"/>
+                                                    <menuItem title="None" state="on" id="WQl-dr-L4Y"/>
+                                                    <menuItem title="Has Submenu" tag="27" id="lRO-wT-reN"/>
+                                                    <menuItem title="Other Script" tag="28" id="ybd-gm-EDR"/>
+                                                    <menuItem title="Shrink Icon" tag="29" id="ASp-sW-7jZ"/>
+                                                    <menuItem title="Use SICN" tag="30" id="cTW-ze-jeB"/>
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
                                         <connections>
-                                            <binding destination="-2" name="selectedTag" keyPath="selectedItem.styleByte" id="hE4-3t-uua"/>
+                                            <binding destination="-2" name="selectedTag" keyPath="selectedMenuItem.special" id="qEW-LX-MRJ"/>
                                         </connections>
                                     </popUpButton>
                                 </subviews>
@@ -391,28 +404,28 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="selectedItem.isItem" id="lQg-cP-4yH">
+                                    <binding destination="-2" name="hidden" keyPath="selectedMenuItem" id="PbZ-jU-7AO">
                                         <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                            <string key="NSValueTransformerName">NSIsNil</string>
                                         </dictionary>
                                     </binding>
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xuD-Ae-TIh" userLabel="Icon Stack View">
-                                <rect key="frame" x="0.0" y="223" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="304" width="151" height="24"/>
                                 <subviews>
-                                    <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="Ycr-zv-CON" userLabel="Icon:">
-                                        <rect key="frame" x="-2" y="3" width="114" height="16"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Icon:" id="5TR-aN-JV9">
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ycr-zv-CON">
+                                        <rect key="frame" x="-2" y="4" width="74" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Icon ID:" id="5TR-aN-JV9">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="g6k-VQ-8Jy">
-                                        <rect key="frame" x="118" y="0.0" width="73" height="21"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="f7R-2n-Raw">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="cAS-0l-NtB">
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g6k-VQ-8Jy">
+                                        <rect key="frame" x="78" y="0.0" width="73" height="24"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="257-511" drawsBackground="YES" usesSingleLineMode="YES" id="f7R-2n-Raw">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="ZfZ-zM-tFn">
                                                 <real key="minimum" value="257"/>
                                                 <real key="maximum" value="511"/>
                                             </numberFormatter>
@@ -421,7 +434,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="selectedItem.iconID" id="5VW-9a-lOH"/>
+                                            <binding destination="-2" name="value" keyPath="selectedMenuItem.iconID" id="AMt-qw-ohQ"/>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -434,41 +447,36 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="selectedItem.isItem" id="yDY-HB-6g6">
+                                    <binding destination="-2" name="hidden" keyPath="selectedMenuItem.hasIcon" id="cCJ-m4-ToA">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
                                     </binding>
                                 </connections>
                             </stackView>
-                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IeJ-56-fjv" userLabel="Icon Type Stack View">
-                                <rect key="frame" x="0.0" y="195" width="191" height="20"/>
+                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IFl-nT-tiq" userLabel="Script Stack View">
+                                <rect key="frame" x="0.0" y="272" width="151" height="24"/>
                                 <subviews>
-                                    <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="tTR-Ac-PZk">
-                                        <rect key="frame" x="-2" y="3" width="114" height="16"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Icon Type:" id="svg-8y-D80">
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MJQ-jg-z6F">
+                                        <rect key="frame" x="-2" y="4" width="74" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Script:" id="hD3-79-P5F">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Znu-yW-sN3">
-                                        <rect key="frame" x="115" y="-4" width="80" height="25"/>
-                                        <popUpButtonCell key="cell" type="push" title="ICON 32 x 32" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="WQl-dr-L4Y" id="jhq-oo-TId">
-                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="message"/>
-                                            <menu key="menu" id="9NW-MJ-zPN">
-                                                <items>
-                                                    <menuItem title="ICON 32 x 32" state="on" id="WQl-dr-L4Y"/>
-                                                    <menuItem title="ICON 16 x 16" tag="29" id="ASp-sW-7jZ"/>
-                                                    <menuItem title="SICN" tag="30" id="cTW-ze-jeB"/>
-                                                </items>
-                                            </menu>
-                                        </popUpButtonCell>
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rl4-bs-Qha">
+                                        <rect key="frame" x="78" y="0.0" width="73" height="24"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="sap-6J-wO0">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="selectedTag" keyPath="selectedItem.iconType" id="PJb-A2-E4U"/>
+                                            <binding destination="-2" name="value" keyPath="selectedMenuItem.iconCode" id="Gr8-vg-cPM"/>
+                                            <outlet property="formatter" destination="t68-0I-xP3" id="X8d-7P-MiX"/>
                                         </connections>
-                                    </popUpButton>
+                                    </textField>
                                 </subviews>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
@@ -479,7 +487,7 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="selectedItem.isItem" id="36T-wh-OQV">
+                                    <binding destination="-2" name="hidden" keyPath="selectedMenuItem.hasScriptCode" id="btt-wn-oB9">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -487,29 +495,26 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fce-T5-IgR" userLabel="Submenu Stack View">
-                                <rect key="frame" x="0.0" y="166" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="240" width="151" height="24"/>
                                 <subviews>
-                                    <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="4o3-HS-pkX" userLabel="Submenu:">
-                                        <rect key="frame" x="-2" y="3" width="114" height="16"/>
+                                    <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="4o3-HS-pkX">
+                                        <rect key="frame" x="-2" y="4" width="74" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Submenu:" id="Dyn-MM-8k9">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="GRI-vK-VBD">
-                                        <rect key="frame" x="118" y="0.0" width="73" height="21"/>
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GRI-vK-VBD">
+                                        <rect key="frame" x="78" y="0.0" width="73" height="24"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="Mie-nz-lCj">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="jvd-Rg-lzC">
-                                                <real key="minimum" value="1"/>
-                                                <real key="maximum" value="255"/>
-                                            </numberFormatter>
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="selectedItem.submenuID" id="C3a-6S-dyd"/>
+                                            <binding destination="-2" name="value" keyPath="selectedMenuItem.markCode" id="1Oj-6X-u8o"/>
+                                            <outlet property="formatter" destination="t68-0I-xP3" id="uv5-dP-vjC"/>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -522,7 +527,7 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="selectedItem.isItem" id="zfg-IW-R3Q">
+                                    <binding destination="-2" name="hidden" keyPath="selectedMenuItem.hasSubmenu" id="hnQ-OJ-imB">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -530,18 +535,18 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXn-jk-okw" userLabel="CMNU Command Stack View">
-                                <rect key="frame" x="0.0" y="137" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="208" width="192" height="24"/>
                                 <subviews>
-                                    <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="76Y-nP-lpq">
-                                        <rect key="frame" x="-2" y="3" width="114" height="16"/>
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="76Y-nP-lpq">
+                                        <rect key="frame" x="-2" y="4" width="74" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Command:" id="nnG-Dy-yeP">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="DQg-LP-QQW">
-                                        <rect key="frame" x="118" y="0.0" width="73" height="21"/>
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DQg-LP-QQW">
+                                        <rect key="frame" x="78" y="0.0" width="114" height="24"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="TYPE" drawsBackground="YES" usesSingleLineMode="YES" id="vhL-5F-lGP">
                                             <customFormatter key="formatter" id="Hon-AV-u3W" customClass="MacRomanFormatter" customModule="RFSupport">
                                                 <userDefinedRuntimeAttributes>
@@ -556,7 +561,11 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="selectedItem.menuCommand" id="QpS-mT-kXL"/>
+                                            <binding destination="-2" name="value" keyPath="selectedMenuItem.menuCommand" id="H4n-1P-phe">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">RFFourCharCodeTransformer</string>
+                                                </dictionary>
+                                            </binding>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -569,7 +578,7 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="selectedItem.has4CCCommand" id="nbQ-W9-qPP">
+                                    <binding destination="-2" name="hidden" keyPath="selectedMenuItem.has4CCCommand" id="z2s-fL-Wd4">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -577,10 +586,10 @@
                                 </connections>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="500" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u4U-Je-HW0" userLabel="cmnu Command Stack View">
-                                <rect key="frame" x="0.0" y="108" width="191" height="21"/>
+                                <rect key="frame" x="0.0" y="176" width="192" height="24"/>
                                 <subviews>
-                                    <textField focusRingType="none" verticalHuggingPriority="800" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="4My-Se-Meq">
-                                        <rect key="frame" x="-2" y="3" width="114" height="16"/>
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4My-Se-Meq">
+                                        <rect key="frame" x="-2" y="4" width="74" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Command:" id="xoI-l0-czX">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -588,18 +597,21 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="xlN-Rz-lcT">
-                                        <rect key="frame" x="118" y="0.0" width="73" height="21"/>
+                                        <rect key="frame" x="78" y="0.0" width="114" height="24"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="0" drawsBackground="YES" usesSingleLineMode="YES" id="3M2-WQ-1Ps">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="9KI-9b-8U8">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="o8U-Fu-Rwo">
                                                 <real key="minimum" value="0.0"/>
                                                 <real key="maximum" value="65535"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="nil" keyPath="nilSymbol"/>
+                                                </userDefinedRuntimeAttributes>
                                             </numberFormatter>
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="selectedItem.menuCommand" id="WYa-KH-JRe"/>
+                                            <binding destination="-2" name="value" keyPath="selectedMenuItem.menuCommand" id="LaO-uO-I1A"/>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -612,18 +624,136 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="selectedItem.hasInt16Command" id="u11-pU-zrt">
+                                    <binding destination="-2" name="hidden" keyPath="selectedMenuItem.hasInt16Command" id="kZp-sn-f61">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
                                     </binding>
                                 </connections>
                             </stackView>
-                            <customView verticalHuggingPriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="bik-hd-VQL">
-                                <rect key="frame" x="0.0" y="0.0" width="191" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="171" id="Q3C-Zj-W84"/>
-                                </constraints>
+                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q2b-Qp-1JV" userLabel="Style Stack View">
+                                <rect key="frame" x="0.0" y="8" width="192" height="160"/>
+                                <subviews>
+                                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ty4-0S-dYi">
+                                        <rect key="frame" x="-2" y="144" width="74" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Style:" id="3z6-Jw-79B">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kOB-aH-6Ok">
+                                        <rect key="frame" x="78" y="0.0" width="114" height="160"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Kx-jw-1bJ">
+                                                <rect key="frame" x="0.0" y="144" width="50" height="16"/>
+                                                <buttonCell key="cell" type="check" title="Bold" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="MtF-R8-Y5I">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="selectedMenuItem.isBold" id="Igl-sE-dbp"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ChY-PH-WPm">
+                                                <rect key="frame" x="0.0" y="120" width="51" height="16"/>
+                                                <buttonCell key="cell" type="check" title="Italic" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Rz1-7s-AF4">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="selectedMenuItem.isItalic" id="whB-Ss-S3v"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FAu-wI-PzN">
+                                                <rect key="frame" x="0.0" y="96" width="81" height="16"/>
+                                                <buttonCell key="cell" type="check" title="Underline" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cwL-Dv-8Pk">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="selectedMenuItem.isUnderline" id="3kz-Be-oXY"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Teh-Qe-5Fn">
+                                                <rect key="frame" x="0.0" y="72" width="66" height="16"/>
+                                                <buttonCell key="cell" type="check" title="Outline" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gAL-rx-4kb">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="selectedMenuItem.isOutline" id="u8j-cR-Mw4"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bLs-p5-JIk">
+                                                <rect key="frame" x="0.0" y="48" width="71" height="16"/>
+                                                <buttonCell key="cell" type="check" title="Shadow" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="mF2-PV-J2e">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="selectedMenuItem.isShadow" id="X2N-9L-52H"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="07j-rL-HlV">
+                                                <rect key="frame" x="0.0" y="24" width="92" height="16"/>
+                                                <buttonCell key="cell" type="check" title="Condensed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kns-U9-XIv">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="selectedMenuItem.isCondensed" id="wIt-aS-m3L"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i3x-0z-ZKs">
+                                                <rect key="frame" x="0.0" y="0.0" width="79" height="16"/>
+                                                <buttonCell key="cell" type="check" title="Extended" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Dmz-9f-CAa">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="selectedMenuItem.isExtended" id="vky-Bh-adn"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                                <connections>
+                                    <binding destination="-2" name="hidden" keyPath="selectedMenuItem" id="Kcb-nZ-L9l">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSIsNil</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </stackView>
+                            <customView verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="bik-hd-VQL">
+                                <rect key="frame" x="0.0" y="0.0" width="192" height="0.0"/>
                             </customView>
                         </subviews>
                         <constraints>
@@ -633,23 +763,26 @@
                             <constraint firstItem="u4U-Je-HW0" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="E3A-aS-OL4"/>
                             <constraint firstItem="DKS-Xg-pXR" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="E4k-0q-XGf"/>
                             <constraint firstItem="53h-zB-gK1" firstAttribute="trailing" secondItem="1dy-JZ-eeI" secondAttribute="trailing" id="FZY-KE-qUC"/>
-                            <constraint firstItem="4o3-HS-pkX" firstAttribute="trailing" secondItem="Ty4-0S-dYi" secondAttribute="trailing" id="GzU-of-eFf"/>
                             <constraint firstItem="eXn-jk-okw" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="K0C-Sa-xiV"/>
+                            <constraint firstItem="1dy-JZ-eeI" firstAttribute="trailing" secondItem="Ycr-zv-CON" secondAttribute="trailing" id="MFA-7I-hhr"/>
                             <constraint firstAttribute="trailing" secondItem="Q2b-Qp-1JV" secondAttribute="trailing" id="PSb-fH-sSG"/>
                             <constraint firstAttribute="trailing" secondItem="AbZ-go-Ck0" secondAttribute="trailing" id="Pok-5l-Rir"/>
                             <constraint firstItem="1dy-JZ-eeI" firstAttribute="trailing" secondItem="Xpt-F5-fga" secondAttribute="trailing" id="Psi-Ww-qwj"/>
                             <constraint firstItem="Ty4-0S-dYi" firstAttribute="trailing" secondItem="1dy-JZ-eeI" secondAttribute="trailing" id="SrR-A2-iyD"/>
                             <constraint firstItem="Q2b-Qp-1JV" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="Tqy-KT-eQ0"/>
-                            <constraint firstItem="xlN-Rz-lcT" firstAttribute="leading" secondItem="GRI-vK-VBD" secondAttribute="leading" id="WOG-ql-sfO"/>
+                            <constraint firstItem="1dy-JZ-eeI" firstAttribute="trailing" secondItem="tTR-Ac-PZk" secondAttribute="trailing" id="Z6V-PI-9yj"/>
                             <constraint firstAttribute="trailing" secondItem="mkd-DJ-7f3" secondAttribute="trailing" id="fHg-VP-J3o"/>
                             <constraint firstAttribute="trailing" secondItem="eXn-jk-okw" secondAttribute="trailing" id="gcS-Bf-hmH"/>
                             <constraint firstAttribute="trailing" secondItem="u4U-Je-HW0" secondAttribute="trailing" id="hC8-GB-Zna"/>
                             <constraint firstAttribute="trailing" secondItem="bik-hd-VQL" secondAttribute="trailing" id="hNu-D1-lne"/>
-                            <constraint firstItem="tTR-Ac-PZk" firstAttribute="trailing" secondItem="Ycr-zv-CON" secondAttribute="trailing" id="pFY-V5-WOg"/>
+                            <constraint firstItem="1dy-JZ-eeI" firstAttribute="trailing" secondItem="4o3-HS-pkX" secondAttribute="trailing" id="ht5-Mc-LGZ"/>
+                            <constraint firstItem="1dy-JZ-eeI" firstAttribute="trailing" secondItem="MJQ-jg-z6F" secondAttribute="trailing" id="iUt-QA-OQ7"/>
+                            <constraint firstItem="1dy-JZ-eeI" firstAttribute="trailing" secondItem="4My-Se-Meq" secondAttribute="trailing" id="lvT-e5-3nk"/>
                             <constraint firstItem="AbZ-go-Ck0" firstAttribute="leading" secondItem="64d-80-xuj" secondAttribute="leading" id="pQl-ut-tA2"/>
-                            <constraint firstItem="4o3-HS-pkX" firstAttribute="trailing" secondItem="Ycr-zv-CON" secondAttribute="trailing" id="xuR-7h-aST"/>
+                            <constraint firstAttribute="width" constant="192" id="v1W-I3-pNg"/>
                         </constraints>
                         <visibilityPriorities>
+                            <integer value="1000"/>
                             <integer value="1000"/>
                             <integer value="1000"/>
                             <integer value="1000"/>
@@ -672,21 +805,35 @@
                             <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
                         </customSpacing>
                     </stackView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="64d-80-xuj" firstAttribute="top" secondItem="18" secondAttribute="top" constant="12" id="81X-kB-Wed"/>
                     <constraint firstItem="H9d-D8-19n" firstAttribute="leading" secondItem="18" secondAttribute="leading" constant="-1" id="GSr-Dc-0K8"/>
                     <constraint firstAttribute="trailing" secondItem="64d-80-xuj" secondAttribute="trailing" constant="12" id="Od1-r5-DgE"/>
                     <constraint firstAttribute="bottom" secondItem="H9d-D8-19n" secondAttribute="bottom" constant="-1" id="UsI-0x-UNi"/>
-                    <constraint firstAttribute="trailing" secondItem="H9d-D8-19n" secondAttribute="trailing" constant="211" id="X0c-OX-PiL"/>
-                    <constraint firstItem="64d-80-xuj" firstAttribute="top" secondItem="H9d-D8-19n" secondAttribute="top" constant="12" id="Z8y-PV-yVh"/>
-                    <constraint firstAttribute="bottom" secondItem="64d-80-xuj" secondAttribute="bottom" id="vwZ-Da-ODY"/>
-                    <constraint firstItem="H9d-D8-19n" firstAttribute="top" secondItem="18" secondAttribute="top" constant="2" id="wdp-8S-x6Y"/>
+                    <constraint firstAttribute="bottom" secondItem="64d-80-xuj" secondAttribute="bottom" constant="4" id="vwZ-Da-ODY"/>
+                    <constraint firstItem="H9d-D8-19n" firstAttribute="top" secondItem="18" secondAttribute="top" constant="-1" id="wdp-8S-x6Y"/>
                     <constraint firstItem="64d-80-xuj" firstAttribute="leading" secondItem="H9d-D8-19n" secondAttribute="trailing" constant="8" symbolic="YES" id="zUi-qr-oOy"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="215" y="441"/>
         </window>
+        <numberFormatter formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="HXV-fC-ufL" userLabel="Int16 Formatter">
+            <real key="minimum" value="-32768"/>
+            <real key="maximum" value="32767"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="nil" keyPath="nilSymbol"/>
+            </userDefinedRuntimeAttributes>
+        </numberFormatter>
+        <numberFormatter formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="t68-0I-xP3" userLabel="UInt8 Formatter">
+            <real key="minimum" value="0.0"/>
+            <real key="maximum" value="255"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="nil" keyPath="nilSymbol"/>
+            </userDefinedRuntimeAttributes>
+        </numberFormatter>
     </objects>
 </document>
