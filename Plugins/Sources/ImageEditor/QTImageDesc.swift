@@ -1,7 +1,7 @@
 import AppKit
 import RFSupport
 
-// https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#509
+// https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#page=509
 
 struct QTImageDesc {
     static let png = UInt32(fourCharString: "png ")

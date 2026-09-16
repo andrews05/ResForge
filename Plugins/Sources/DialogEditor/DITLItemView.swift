@@ -1,7 +1,7 @@
 import AppKit
 import RFSupport
 
-// https://developer.apple.com/library/archive/documentation/mac/pdf/MacintoshToolboxEssentials.pdf#777
+// https://developer.apple.com/library/archive/documentation/mac/pdf/MacintoshToolboxEssentials.pdf#page=777
 // https://dev.os9.ca/techpubs/mac/Toolbox/Toolbox-438.html
 
 @objc enum DITLItemType: UInt8 {

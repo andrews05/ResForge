@@ -1,6 +1,8 @@
 import AppKit
 import RFSupport
 
+// https://developer.apple.com/library/archive/documentation/mac/pdf/MacintoshToolboxEssentials.pdf#page=327
+// https://dev.os9.ca/techpubs/mac/MacAppProgGuide/MacAppProgGuide-86.html#MARKER-2-35
 
 public class MenuEditor: AbstractEditor, ResourceEditor {
     public static var bundle: Bundle { .module }

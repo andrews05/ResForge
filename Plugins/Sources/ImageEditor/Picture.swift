@@ -249,7 +249,7 @@ extension Picture {
     }
 
     private mutating func readQuickTime(_ reader: BinaryDataReader) throws {
-        // https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#484
+        // https://vintageapple.org/inside_r/pdf/QuickTime_1993.pdf#page=484
         let size = Int(try reader.read() as UInt32)
 
         // Construct a new reader constrained to the specified size
