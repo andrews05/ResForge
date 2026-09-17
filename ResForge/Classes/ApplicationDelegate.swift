@@ -37,6 +37,8 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Register transformers
+        ValueTransformer.setValueTransformer(FourCharCodeTransformer(), forName: .fourCharCodeTransformerName)
         // Load plugins and support resources
         for plugin in plugins {
             plugin.register()

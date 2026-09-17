@@ -31,10 +31,6 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
 
     static var shared = InfoWindowController(windowNibName: "InfoWindow")
 
-    override func windowWillLoad() {
-        ValueTransformer.setValueTransformer(FourCharCodeTransformer(), forName: .fourCharCodeTransformerName)
-    }
-
     override func windowDidLoad() {
         self.setMainWindow(NSApp.mainWindow)
 
@@ -196,27 +192,6 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
             }
         }
     }
-}
-
-class FourCharCodeTransformer: ValueTransformer {
-    override func transformedValue(_ value: Any?) -> Any? {
-        return (value as! FourCharCode).fourCharString
-    }
-
-    override func reverseTransformedValue(_ value: Any?) -> Any? {
-        if let value = value as? String {
-            return FourCharCode(fourCharString: value)
-        }
-        return 0
-    }
-
-    override class func allowsReverseTransformation() -> Bool {
-        true
-    }
-}
-
-extension NSValueTransformerName {
-    static let fourCharCodeTransformerName = Self("FourCharCodeTransformer")
 }
 
 // These extensions allow the outline and collection views to change selection with a single click while the info window is key.

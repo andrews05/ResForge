@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -121,10 +121,10 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="ktG-Wh-efq" name="value" keyPath="selection.hfsType" id="CYD-qV-DVn">
+                                <binding destination="ktG-Wh-efq" name="value" keyPath="selection.hfsType" id="Q8e-x1-Uc0">
                                     <dictionary key="options">
                                         <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
-                                        <string key="NSValueTransformerName">FourCharCodeTransformer</string>
+                                        <string key="NSValueTransformerName">RFFourCharCodeTransformer</string>
                                     </dictionary>
                                 </binding>
                                 <outlet property="delegate" destination="-2" id="cxm-Fu-Kgu"/>
@@ -139,10 +139,10 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="ktG-Wh-efq" name="value" keyPath="selection.hfsCreator" id="CfX-wn-69g">
+                                <binding destination="ktG-Wh-efq" name="value" keyPath="selection.hfsCreator" id="LEq-Va-ghn">
                                     <dictionary key="options">
                                         <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
-                                        <string key="NSValueTransformerName">FourCharCodeTransformer</string>
+                                        <string key="NSValueTransformerName">RFFourCharCodeTransformer</string>
                                     </dictionary>
                                 </binding>
                                 <outlet property="delegate" destination="-2" id="oOd-vB-6W5"/>
