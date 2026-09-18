@@ -2,11 +2,14 @@
 
 This document outlines all template field types that have been defined by various editors. ResForge currently supports:
 * All of [ResEdit's original types](https://developer.apple.com/library/archive/documentation/mac/pdf/ResEditReference.pdf) (34)
-* Many of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (68 of 95)
+* Most of [Resorcerer's additions](http://www.digitale-heimat.de/~anne/anne/Sommer_2000/pdf/resorcerer%20docu/383%20The%20Template%20Editor.pdf) (68 of 95)
 * All of [Rezilla's additions](https://html-preview.github.io/?url=https://github.com/chrisballinger/rezilla/blob/master/RezillaHelp/English.lproj/RezillaHelp/47.html) (5)
 * ResForge's own additions (21)
 
-In addition to standard TMPL resources, ResForge also supports "basic" templates in the form of TMPB resources. These templates operate on a reduced set of field types and enable the bulk data view and CSV import/export for the associated resource type.
+> [!NOTE]
+> There are currently no plans to implement any of the remaining fields from Resorcerer. However, if you have a need for them (or for a new field type entirely), please feel free to ask.
+
+In addition to standard TMPL resources, ResForge also supports "basic" templates in the form of `TMPB` resources. These templates operate on a reduced set of field types and enable the bulk data view and CSV import/export for the associated resource type.
 
 ### Key
 
@@ -18,7 +21,7 @@ In addition to standard TMPL resources, ResForge also supports "basic" templates
 
 🔴 Not Supported
 
-🅱️ Permitted in TMPB
+🅱️ Permitted in `TMPB`
 
 ### Decimal and Hex Integer Field Types
 

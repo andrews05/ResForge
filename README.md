@@ -1,6 +1,6 @@
 # ResForge
 
-![ResForge](https://github.com/andrews05/ResForge/raw/master/ResForge/Assets.xcassets/ResForge.appiconset/ResForge_128.png)
+![ResForge](ResForge/Assets.xcassets/ResForge.appiconset/ResForge_128.png)
 
 ResForge is a resource editor for macOS, capable of editing classic resource fork files and related formats. Based on [ResKnife](https://github.com/nickshanks/ResKnife) by Nicholas Shanks and Uli Kusterer, this derivative of the project has been rewritten for modern macOS systems.
 
@@ -15,7 +15,7 @@ ResForge is compatible with macOS 11 or later and runs natively on both 64-bit I
 ## Features
 
 * Hexadecimal editor, powered by [HexFiend](https://github.com/HexFiend/HexFiend).
-* Template editor, supporting a wide array of [field types](https://github.com/andrews05/ResForge/tree/master/Plugins/Sources/TemplateEditor#template-editor).
+* Template editor, supporting a wide array of [field types](Plugins/Sources/TemplateEditor#template-editor).
   * User-defined templates, loaded automatically from resource files in `~/Library/Application Support/ResForge/`.
   * Template-driven bulk data view, with CSV import/export.
   * Generic binary file editor, via the `Open with Template…` menu item.
