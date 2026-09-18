@@ -17,7 +17,7 @@ class ImportPanel: NSObject, NSOpenSavePanelDelegate {
             self.select(type: "STR ")
         }
         let panel = NSOpenPanel()
-        panel.allowedFileTypes = ["csv"]
+        panel.allowedContentTypes = [.commaSeparatedText]
         panel.accessoryView = accessoryView
         panel.isAccessoryViewDisclosed = true
         panel.delegate = self

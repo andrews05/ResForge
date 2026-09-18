@@ -88,7 +88,7 @@ public class SoundEditor: AbstractEditor, ResourceEditor, ExportProvider {
 
     @IBAction func importSound(_ sender: Any) {
         let panel = NSOpenPanel()
-        panel.allowedFileTypes = ["public.audio"]
+        panel.allowedContentTypes = [.audio]
         panel.accessoryView = accessoryView
         panel.isAccessoryViewDisclosed = true
         panel.prompt = "Import"

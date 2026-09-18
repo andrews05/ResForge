@@ -93,7 +93,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
                     rsrcSize.integerValue = values.totalFileSize! - values.fileSize!
                 } catch {}
             } else {
-                iconView.image = NSWorkspace.shared.icon(forFileType: "com.resforge.resource-file")
+                iconView.image = NSWorkspace.shared.icon(for: ClassicFormat.type)
                 nameView.stringValue = document.displayName
             }
 

@@ -1,4 +1,5 @@
 import AppKit
+import UniformTypeIdentifiers
 import RFSupport
 import TemplateEditor
 
@@ -254,8 +255,8 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             let filename = resource.filenameForExport(using: exporter)
             panel.nameFieldStringValue = "\(filename.name).\(filename.ext)"
             panel.isExtensionHidden = false
-            if exporter != nil {
-                panel.allowedFileTypes = [filename.ext]
+            if exporter != nil, let type = UTType(filenameExtension: filename.ext) {
+                panel.allowedContentTypes = [type]
             }
             panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
                 if modalResponse == .OK, let url = panel.url {
@@ -569,7 +570,7 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
             self.presentError(error)
         }
         let panel = NSSavePanel()
-        panel.allowedFileTypes = ["csv"]
+        panel.allowedContentTypes = [.commaSeparatedText]
         panel.nameFieldStringValue = "\(type.code).csv"
         panel.beginSheetModal(for: self.windowForSheet!) { modalResponse in
             if modalResponse == .OK, let url = panel.url {

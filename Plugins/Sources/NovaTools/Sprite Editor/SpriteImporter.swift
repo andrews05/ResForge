@@ -56,7 +56,7 @@ class SpriteImporter: NSObject, NSOpenSavePanelDelegate {
                          sheetCallback: @escaping(NSImageRep, Int, Int, Bool) -> Void,
                          framesCallback: @escaping([NSImageRep], Bool) -> Void) {
         let panel = NSOpenPanel()
-        panel.allowedFileTypes = ["public.image"]
+        panel.allowedContentTypes = [.image]
         panel.canChooseDirectories = true
         panel.delegate = self
         panel.accessoryView = optionsView

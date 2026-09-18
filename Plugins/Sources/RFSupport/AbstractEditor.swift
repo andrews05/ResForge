@@ -1,4 +1,5 @@
 import AppKit
+import UniformTypeIdentifiers
 
 /// The abstract editor provides some default functionality for save handling. Do not extend this without also conforming to ResourceEditor.
 open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValidation {
@@ -72,8 +73,8 @@ open class AbstractEditor: NSWindowController, NSWindowDelegate, NSMenuItemValid
         let filename = resource.filenameForExport(using: exporter)
         panel.nameFieldStringValue = "\(filename.name).\(filename.ext)"
         panel.isExtensionHidden = false
-        if exporter != nil {
-            panel.allowedFileTypes = [filename.ext]
+        if exporter != nil, let type = UTType(filenameExtension: filename.ext) {
+            panel.allowedContentTypes = [type]
         }
         panel.beginSheetModal(for: self.window!) { returnCode in
             if returnCode == .OK, let url = panel.url {

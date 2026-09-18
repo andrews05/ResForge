@@ -1,9 +1,11 @@
 import Foundation
+import UniformTypeIdentifiers
 import RFSupport
 
 // https://developer.apple.com/library/archive/documentation/mac/pdf/MoreMacintoshToolbox.pdf#page=151
 
 class ClassicFormat: ResourceFileFormat {
+    static let type = UTType(exportedAs: "com.resforge.resource-file")
     static let defaultExtension = "rsrc"
     // We want to make the format's filename extension simply a "suggestion" and not force it in any manner, but the
     // standard behaviour makes this difficult to achieve nicely. NSSavePanel.allowsOtherFileTypes isn't sufficient as
