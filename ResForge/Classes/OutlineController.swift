@@ -80,12 +80,12 @@ class OutlineController: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSourc
     }
 
     func updateRow(oldIndex: Int?, newIndex: Int?, parent: Any?) {
-        if let oldIndex {
-            if let newIndex {
+        if let oldIndex, let newIndex {
+            if oldIndex != newIndex {
                 outlineView.moveItem(at: oldIndex, inParent: parent, to: newIndex, inParent: parent)
-            } else {
-                outlineView.removeItems(at: IndexSet([oldIndex]), inParent: parent)
             }
+        } else if let oldIndex {
+            outlineView.removeItems(at: IndexSet([oldIndex]), inParent: parent)
         } else if let newIndex {
             outlineView.insertItems(at: IndexSet([newIndex]), inParent: parent)
         }

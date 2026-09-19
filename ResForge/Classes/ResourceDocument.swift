@@ -136,6 +136,12 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         return true
     }
 
+    override func save(_ sender: Any?) {
+        // Ensure any controls have ended editing
+        NSApp.mainWindow?.makeFirstResponder(nil)
+        super.save(sender)
+    }
+
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
         if saveOperation == .saveOperation && fork == .rsrc, let fileURL {
             // In place save of resource fork. We want to preserve all other aspects of the file, such as the data fork and finder flags.
