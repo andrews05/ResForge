@@ -64,25 +64,21 @@ class CollectionController: NSObject, NSCollectionViewDelegate, NSCollectionView
 
     func updated(resource: Resource, oldIndex: Int?) {
         let newIndex = document.directory.filteredResources(type: resource.type).firstIndex(of: resource)
-        if let oldIndex {
+        if let oldIndex, let newIndex {
             let old: IndexPath = [0, oldIndex]
-            if let newIndex {
+            // Reconfigure rather than reloading, to avoid rendering and selection issues
+            (collectionView.item(at: old) as? ResourceItem)?.configure(resource)
+            if oldIndex != newIndex {
                 let new: IndexPath = [0, newIndex]
-                // Collection view doesn't retain selection when reloading - we need to keep track of it ourselves
-                let selected = collectionView.selectionIndexPaths.contains(old)
-                if old == new {
-                    collectionView.reloadItems(at: [new])
-                } else {
-                    collectionView.animator().moveItem(at: old, to: new)
-                    collectionView.animator().reloadItems(at: [new])
+                collectionView.animator().moveItem(at: old, to: new)
+                if collectionView.selectionIndexPaths.contains(new) {
+                    collectionView.scrollToItems(at: [new], scrollPosition: .nearestHorizontalEdge)
                 }
-                if selected {
-                    collectionView.selectItems(at: [new], scrollPosition: old == new ? [] : .nearestHorizontalEdge)
-                }
-            } else {
-                collectionView.animator().deleteItems(at: [old])
-                NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
             }
+        } else if let oldIndex {
+            let old: IndexPath = [0, oldIndex]
+            collectionView.animator().deleteItems(at: [old])
+            NotificationCenter.default.post(name: .DocumentSelectionDidChange, object: document)
         } else if let newIndex {
             let new: IndexPath = [0, newIndex]
             collectionView.animator().insertItems(at: [new])
@@ -206,8 +202,8 @@ class ResourceCollection: NSCollectionView {
         // Begin editing the selected item when enter is pressed
         if selectionIndexPaths.count == 1 {
             self.scrollToItems(at: selectionIndexPaths, scrollPosition: .nearestHorizontalEdge)
-            let item = self.item(at: selectionIndexPaths.first!) as! ResourceItem
-            item.beginEditing()
+            let item = self.item(at: selectionIndexPaths.first!) as? ResourceItem
+            item?.beginEditing()
         }
     }
 
@@ -234,7 +230,7 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
     @IBOutlet var textBox: NSBox!
     @IBOutlet var nameField: NSTextField!
     @IBOutlet var statusIcon: NSImageView!
-    private(set) var resource: Resource!
+    @objc dynamic private(set) var resource: Resource!
 
     override var isSelected: Bool {
         didSet {
@@ -274,7 +270,6 @@ class ResourceItem: NSCollectionViewItem, NSTextFieldDelegate {
         self.resource = resource
         imageView?.image = nil
         textField?.stringValue = String(resource.id)
-        nameField.bind(.value, to: resource, withKeyPath: "name")
         // Hide name when empty to prevent it from being a click target
         nameField.isHidden = resource.name.isEmpty
         statusIcon.image = resource.statusIcon()
