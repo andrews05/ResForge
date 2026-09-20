@@ -1,25 +1,26 @@
 import AppKit
 import RFSupport
 
+// QuickDraw point stores a vertical and horizontal co-ordinate, opposite of typical x,y points
 class ElementPNT: BaseElement {
-    @objc private var x: Int16 = 0
-    @objc private var y: Int16 = 0
+    @objc private var v: Int16 = 0
+    @objc private var h: Int16 = 0
 
     override func configure() throws {
         blockWidth = 4
     }
 
     override func configure(view: NSView) {
-        ElementRECT.configure(fields: ["x", "y"], in: view, for: self)
+        ElementRECT.configure(fields: ["v", "h"], in: view, for: self)
     }
 
     override func readData(from reader: BinaryDataReader) throws {
-        x = try reader.read()
-        y = try reader.read()
+        v = try reader.read()
+        h = try reader.read()
     }
 
     override func writeData(to writer: BinaryDataWriter) {
-        writer.write(x)
-        writer.write(y)
+        writer.write(v)
+        writer.write(h)
     }
 }

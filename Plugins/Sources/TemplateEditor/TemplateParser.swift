@@ -59,7 +59,7 @@ public class TemplateParser {
             if !basic {
                 fallthrough
             }
-            let fields = type == "RECT" ? ["T", "L", "B", "R"] : ["X", "Y"]
+            let fields = type == "RECT" ? ["T", "L", "B", "R"] : ["V", "H"]
             let dwrd = registry["DWRD"]!
             var elements: [BaseElement] = []
             for f in fields {
