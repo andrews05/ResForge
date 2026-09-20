@@ -32,13 +32,22 @@ class ElementHEXD: BaseElement {
         textField.drawsBackground = false
         textField.font = NSFont.userFixedPitchFont(ofSize: 11)
         if let data {
-            var count = 0
-            textField.stringValue = data.map {
-                count += 1
-                return String(format: count.isMultiple(of: 4) ? "%02X " : "%02X", $0)
-            } .joined()
+            textField.stringValue = self.formatHex(data)
         }
         view.addSubview(textField)
+    }
+
+    // Format data as hex string in 4-byte chunks
+    private func formatHex(_ data: Data) -> String {
+        var count = 0
+        return data.reduce(into: "") { result, byte in
+            result.append(String(byte / 16, radix: 16, uppercase: true))
+            result.append(String(byte % 16, radix: 16, uppercase: true))
+            count += 1
+            if count.isMultiple(of: 4) {
+                result.append(" ")
+            }
+        }
     }
 
     private func setRowHeight() {

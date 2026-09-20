@@ -70,7 +70,9 @@ public extension StringProtocol {
 public extension Data {
     /// Returns a hexadecimal String representation of the Data.
     var hexadecimal: String {
-        return map { String(format: "%02X", $0) }
-            .joined()
+        return reduce(into: "") { result, byte in
+            result.append(String(byte / 16, radix: 16, uppercase: true))
+            result.append(String(byte % 16, radix: 16, uppercase: true))
+        }
     }
 }
