@@ -71,6 +71,12 @@ public class DialogEditor: AbstractEditor, ResourceEditor {
         isSelectingItems = false
     }
 
+    func updateRow(for item: DITLItemView) {
+        if let idx = items.firstIndex(of: item) {
+            itemList.reloadData(forRowIndexes: [idx], columnIndexes: [1])
+        }
+    }
+
     /// Reload the views representing our ``items`` list.
     private func updateView() {
         documentView.subviews = items
@@ -202,7 +208,7 @@ extension DialogEditor: NSTableViewDelegate, NSTableViewDataSource {
         guard let tableColumn else { return nil }
         let view = tableView.makeView(withIdentifier: tableColumn.identifier, owner: self) as! NSTableCellView
         if tableColumn.identifier.rawValue == "num" {
-            view.textField?.integerValue = row
+            view.textField?.integerValue = row + 1
         } else if tableColumn.identifier.rawValue == "name" {
             let item = items[row]
             view.textField?.placeholderString = item.type.name

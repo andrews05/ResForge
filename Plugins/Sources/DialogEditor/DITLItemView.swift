@@ -103,6 +103,7 @@ class DITLItemView: NSView {
             undoManager?.registerUndo(withTarget: self) { $0.type = oldValue }
             controller?.setDocumentEdited(true)
             controller?.reflectSelectedItem()
+            controller?.updateRow(for: self)
         }
     }
     /// Is this item clickable?
@@ -121,6 +122,7 @@ class DITLItemView: NSView {
             undoManager?.setActionName(NSLocalizedString("Change Item Text", comment: ""))
             undoManager?.registerUndo(withTarget: self) { $0.text = oldValue }
             controller?.setDocumentEdited(true)
+            controller?.updateRow(for: self)
         }
     }
     /// Resource referenced by this item (e.g. ICON ID for an icon item PICT for picture, CNTL for control etc.)
