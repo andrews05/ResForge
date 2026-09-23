@@ -28,7 +28,6 @@ public class MenuEditor: AbstractEditor, ResourceEditor {
     let manager: RFEditorManager
 
     @IBOutlet weak var menuTable: NSTableView!
-    private var fieldEditorForMenuPreview: NSTextView!
     private var menuInfo: Menu!
 
     public override var windowNibName: NSNib.Name {
@@ -266,12 +265,11 @@ extension MenuEditor: NSTableViewDataSource, NSTableViewDelegate {
     }
 
     @MainActor public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let tableColumn = tableColumn else { return nil }
-        if row == 0 && tableColumn.identifier != MenuEditor.titleColumn {
-            return NSTableCellView()
+        guard let tableColumn else { return nil }
+        if row == 0 && tableColumn.identifier != Self.titleColumn {
+            return nil
         }
-        let view = menuTable.makeView(withIdentifier: tableColumn.identifier, owner: self) as? NSTableCellView ?? NSTableCellView()
-        return view
+        return menuTable.makeView(withIdentifier: tableColumn.identifier, owner: self)
     }
 
     public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
@@ -310,21 +308,5 @@ extension MenuEditor: NSTableViewDataSource, NSTableViewDelegate {
             selectedMenuItem = menuInfo.items[selRow - 1]
             selectedItem = selectedMenuItem
         }
-    }
-}
-
-extension MenuEditor {
-    func windowWillReturnFieldEditor(_ sender: NSWindow, to client: Any?) -> Any? {
-        // Ensure that the edit fields in the menu editor are all black on white,
-        // no matter whether menu item is disabled or if it's the white-on-black menu title.
-        guard let client = client as? NSTextField,
-              let clientParent = client.superview as? NSTableCellView,
-              let _ = clientParent.objectValue else { return nil }
-        if fieldEditorForMenuPreview == nil {
-            fieldEditorForMenuPreview = NSTextView.fieldEditor()
-        }
-        fieldEditorForMenuPreview.backgroundColor = NSColor.textBackgroundColor
-        fieldEditorForMenuPreview.textColor = NSColor.textColor
-        return fieldEditorForMenuPreview
     }
 }

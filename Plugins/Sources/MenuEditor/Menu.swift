@@ -10,7 +10,7 @@ class Menu: NSObject {
         }
         set {
             setEnabled(newValue, at: -1)
-            textColor = isEnabled ? .textBackgroundColor : .systemGray
+            textColor = isEnabled ? .controlTextColor : .disabledControlTextColor
             editor.setDocumentEdited(true)
         }
     }
@@ -31,7 +31,7 @@ class Menu: NSObject {
     }
 
     var items: [MenuItem] = []
-    @objc dynamic var textColor = NSColor.textBackgroundColor
+    @objc dynamic var textColor = NSColor.controlTextColor
     @objc var iconImage: NSImage? { nil } // Required for binding
 
     init(editor: MenuEditor) {

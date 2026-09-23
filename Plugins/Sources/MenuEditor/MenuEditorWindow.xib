@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25098" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25098"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,21 +17,21 @@
         <window title="Menu Editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="17">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="0.0" y="556" width="502" height="334"/>
+            <rect key="contentRect" x="0.0" y="556" width="470" height="334"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1410"/>
             <value key="minSize" type="size" width="240" height="120"/>
             <view key="contentView" misplaced="YES" id="18">
-                <rect key="frame" x="0.0" y="0.0" width="502" height="334"/>
+                <rect key="frame" x="0.0" y="0.0" width="470" height="334"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="18" horizontalPageScroll="10" verticalLineScroll="18" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9d-D8-19n">
-                        <rect key="frame" x="-1" y="-1" width="291" height="336"/>
+                        <rect key="frame" x="-1" y="-1" width="259" height="336"/>
                         <clipView key="contentView" id="Q0k-GS-R3n">
-                            <rect key="frame" x="1" y="1" width="289" height="334"/>
+                            <rect key="frame" x="1" y="1" width="257" height="334"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" floatsGroupRows="NO" id="oOj-xi-kqb">
-                                    <rect key="frame" x="0.0" y="0.0" width="289" height="334"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" floatsGroupRows="NO" id="oOj-xi-kqb">
+                                    <rect key="frame" x="0.0" y="0.0" width="257" height="334"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -46,7 +46,6 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView misplaced="YES" id="RGo-ON-Gf1">
                                                     <rect key="frame" x="0.0" y="0.0" width="22" height="17"/>
@@ -92,7 +91,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="Name" width="200" minWidth="40" maxWidth="1000" id="sR9-n1-K32">
+                                        <tableColumn identifier="Name" width="199" minWidth="40" maxWidth="1000" id="sR9-n1-K32">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -102,24 +101,25 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="XDg-6m-dtd">
-                                                    <rect key="frame" x="22" y="0.0" width="200" height="24"/>
+                                                    <rect key="frame" x="22" y="0.0" width="199" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zDX-EO-Cr9">
-                                                            <rect key="frame" x="0.0" y="4" width="0.0" height="16"/>
+                                                            <rect key="frame" x="4" y="4" width="0.0" height="16"/>
                                                             <constraints>
+                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="20" id="dSS-4F-RwH"/>
                                                                 <constraint firstAttribute="height" constant="16" id="eUF-58-lex"/>
                                                             </constraints>
-                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="LVn-02-IjU"/>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="left" imageScaling="proportionallyDown" id="LVn-02-IjU"/>
                                                             <connections>
                                                                 <binding destination="XDg-6m-dtd" name="value" keyPath="objectValue.iconImage" id="uoN-rk-SdT"/>
                                                             </connections>
                                                         </imageView>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="91H-at-hQY">
-                                                            <rect key="frame" x="2" y="3" width="200" height="19"/>
+                                                            <rect key="frame" x="2" y="3" width="195" height="19"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" usesSingleLineMode="YES" id="g0d-pv-Og9">
                                                                 <customFormatter key="formatter" id="GXa-GX-Cpe" customClass="MacRomanFormatter" customModule="RFSupport">
                                                                     <userDefinedRuntimeAttributes>
@@ -142,10 +142,10 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="91H-at-hQY" secondAttribute="bottom" id="2Qy-WG-Lje"/>
-                                                        <constraint firstItem="zDX-EO-Cr9" firstAttribute="leading" secondItem="XDg-6m-dtd" secondAttribute="leading" id="8Dg-s8-gb2"/>
-                                                        <constraint firstAttribute="trailing" secondItem="91H-at-hQY" secondAttribute="trailing" id="9x6-fa-guO"/>
+                                                        <constraint firstItem="zDX-EO-Cr9" firstAttribute="leading" secondItem="XDg-6m-dtd" secondAttribute="leading" constant="4" id="8Dg-s8-gb2"/>
+                                                        <constraint firstAttribute="trailing" secondItem="91H-at-hQY" secondAttribute="trailing" constant="4" id="9x6-fa-guO"/>
                                                         <constraint firstItem="91H-at-hQY" firstAttribute="centerY" secondItem="XDg-6m-dtd" secondAttribute="centerY" id="V1a-MT-o4S"/>
-                                                        <constraint firstItem="91H-at-hQY" firstAttribute="leading" secondItem="zDX-EO-Cr9" secondAttribute="trailing" constant="4" id="aXp-Bn-Kdn"/>
+                                                        <constraint firstItem="91H-at-hQY" firstAttribute="leading" secondItem="zDX-EO-Cr9" secondAttribute="trailing" id="aXp-Bn-Kdn"/>
                                                         <constraint firstItem="zDX-EO-Cr9" firstAttribute="centerY" secondItem="XDg-6m-dtd" secondAttribute="centerY" id="hgw-QF-bE3"/>
                                                         <constraint firstItem="91H-at-hQY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="XDg-6m-dtd" secondAttribute="top" id="oDb-lw-fs9"/>
                                                     </constraints>
@@ -165,10 +165,9 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView misplaced="YES" id="akf-VV-HfX">
-                                                    <rect key="frame" x="222" y="0.0" width="36" height="17"/>
+                                                    <rect key="frame" x="221" y="0.0" width="36" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="800" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FRb-sP-p63">
@@ -243,7 +242,7 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mWa-Fc-iYa">
-                            <rect key="frame" x="1" y="441" width="290" height="16"/>
+                            <rect key="frame" x="1" y="318" width="257" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="mUu-Gd-CMj">
@@ -252,7 +251,7 @@
                         </scroller>
                     </scrollView>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="64d-80-xuj" userLabel="Inspector Stack View">
-                        <rect key="frame" x="298" y="4" width="192" height="448"/>
+                        <rect key="frame" x="266" y="4" width="192" height="448"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mkd-DJ-7f3" userLabel="Enabled Stack View">
                                 <rect key="frame" x="0.0" y="432" width="192" height="16"/>

@@ -36,9 +36,9 @@ class MenuItemTableRowView : NSTableRowView {
             
         case .titleCell:
             box.origin.x += 16 // keep these two lines in sync with XIB "Mark" and "Shortcut" column widths.
-            box.size.width -= 16 + 25;
+            box.size.width -= 16 + 30;
             if !isSelected {
-                NSColor.textColor.setFill()
+                NSColor.unemphasizedSelectedTextBackgroundColor.setFill()
             } else {
                 NSColor.controlAccentColor.setFill()
             }

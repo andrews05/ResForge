@@ -25,7 +25,7 @@ class MenuItem: NSObject {
 
     @objc var isEnabled = true {
         didSet {
-            textColor = isEnabled ? .textColor : .disabledControlTextColor
+            textColor = isEnabled ? .controlTextColor : .disabledControlTextColor
             editor.setDocumentEdited(true)
         }
     }
