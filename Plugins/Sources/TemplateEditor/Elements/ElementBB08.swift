@@ -4,8 +4,8 @@ import RFSupport
 // Implements BB08, WB16, LB32, QB64
 // These types would otherwise be equivalent to UBYT etc so we do a special case here to instead display a grid of checkboxes.
 // The meta value may be either a default value or an id reference to STR# resource containing names for each bit (e.g. "#128")
-class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: BaseElement, FormattedElement {
-    @objc private var value: UInt = 0 {
+class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement, NSMenuDelegate {
+    @objc private var value: UInt64 = 0 {
         didSet {
             // The field is not bound to the value so we need to update it manually
             valueField?.objectValue = value
@@ -26,7 +26,8 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: BaseElement, Formatte
     }
 
     override func configure() throws {
-        if let v = self.defaultValue() as? UInt {
+        try self.readCases()
+        if let v = self.defaultValue() as? UInt64 {
             value = v
         }
 
@@ -122,14 +123,14 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: BaseElement, Formatte
     }
 
     override func readData(from reader: BinaryDataReader) throws {
-        value = UInt(try reader.read() as T)
+        value = UInt64(try reader.read() as T)
     }
 
     override func writeData(to writer: BinaryDataWriter) {
         writer.write(T(value))
     }
 
-    var formatter: Formatter {
+    override var formatter: Formatter {
         self.sharedFormatter("HEX\(T.bitWidth)") { HexFormatter<T>() }
     }
 
@@ -153,7 +154,28 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: BaseElement, Formatte
         actionButton.menu = actions
         actionButton.target = self
         actionButton.action = #selector(self.actionMenu(_:))
+        actionButton.sendAction(on: .leftMouseDown)
+
+        if !cases.isEmpty {
+            actions.delegate = self
+            actions.addItem(NSMenuItem.separator())
+            for caseEl in cases.values {
+                let item = NSMenuItem(title: caseEl.displayLabel, action: #selector(self.applyCase(_:)), keyEquivalent: "")
+                item.representedObject = caseEl.value
+                item.target = self
+                item.toolTip = caseEl.displayValue
+                actions.addItem(item)
+            }
+        }
+
         return actionButton
+    }
+
+    // Mark the current case
+    func menuNeedsUpdate(_ menu: NSMenu) {
+        for item in menu.items {
+            item.state = item.representedObject as? UInt64 == value ? .on : .off
+        }
     }
 
     @IBAction private func actionMenu(_ sender: NSButton) {
@@ -191,14 +213,21 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: BaseElement, Formatte
         self.setValue(0)
     }
 
-    private func readValueFromPasteboard() -> UInt? {
+    // Set value from case menu item
+    @IBAction private func applyCase(_ sender: Any) {
+        if let value = (sender as? NSMenuItem)?.representedObject as? UInt64 {
+            self.setValue(value)
+        }
+    }
+
+    private func readValueFromPasteboard() -> UInt64? {
         guard let stringValue = NSPasteboard.general.readObjects(forClasses: [NSString.self])?.first as? String else {
             return nil
         }
-        return self.value(for: stringValue) as? UInt
+        return self.value(for: stringValue) as? UInt64
     }
 
-    private func setValue(_ newValue: UInt) {
+    private func setValue(_ newValue: UInt64) {
         guard newValue != value else {
             return
         }
