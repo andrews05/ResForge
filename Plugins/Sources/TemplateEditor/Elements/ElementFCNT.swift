@@ -8,6 +8,7 @@ class ElementFCNT: BaseElement, GroupElement, CounterElement {
         // Read count from label - hex value denoted by leading '$' or '0x'
         let scanner = Scanner(string: label)
         if scanner.scanString("$") != nil {
+            // Note: there's no `scanUInt32`, but when scanning with hex representation the number will never be negative
             let value = scanner.scanInt32(representation: .hexadecimal) ?? 0
             count = Int(value)
         } else if label.starts(with: "0x") {
