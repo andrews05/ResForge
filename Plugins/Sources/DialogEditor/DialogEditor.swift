@@ -17,6 +17,7 @@ public class DialogEditor: AbstractEditor, ResourceEditor {
     @IBOutlet var documentView: DITLDocumentView!
     @IBOutlet var tabView: NSTabView!
     @IBOutlet var itemList: NSTableView!
+    @IBOutlet var dlogLink: NSButton!
     @objc dynamic var selectedItem: DITLItemView?
     @objc dynamic var hasSelection = false
     private var items = [DITLItemView]()
@@ -38,7 +39,9 @@ public class DialogEditor: AbstractEditor, ResourceEditor {
 
     public override func windowDidLoad() {
         self.loadItems()
-        self.loadDLOG()
+        if let dlog = self.loadDLOG() {
+            try? self.parseDLOG(dlog)
+        }
         self.updateView()
 
         // Allow re-arranging the items
@@ -109,26 +112,30 @@ public class DialogEditor: AbstractEditor, ResourceEditor {
         }
     }
 
-    private func loadDLOG() {
-        guard let dlog = manager.findResource(type: ResourceType("DLOG"), id: resource.id)
+    private func loadDLOG() -> Resource? {
+        let dlog = manager.findResource(type: ResourceType("DLOG"), id: resource.id)
                 ?? manager.findResource(type: ResourceType("ALRT"), id: resource.id)
-        else {
-            return
-        }
-        do {
-            // Note we don't check here whether the DLOG actually references this DITL
-            let reader = BinaryDataReader(dlog.data)
-            let top = Int(try reader.read() as Int16)
-            let left = Int(try reader.read() as Int16)
-            let bottom = Int(try reader.read() as Int16)
-            let right = Int(try reader.read() as Int16)
-            var size = NSSize(width: right - left, height: bottom - top)
+        dlogLink.isHidden = dlog == nil
+        return dlog
+    }
+
+    private func parseDLOG(_ dlog: Resource) throws {
+        dlogLink.title = "\(dlog.typeCode) \(dlog.id)"
+        // Note we don't check here whether the DLOG actually references this DITL
+        let reader = BinaryDataReader(dlog.data)
+        let top = Int(try reader.read() as Int16)
+        let left = Int(try reader.read() as Int16)
+        let bottom = Int(try reader.read() as Int16)
+        let right = Int(try reader.read() as Int16)
+        let width = right - left
+        let height = bottom - top
+        dlogLink.title = "\(dlogLink.title): \(width)x\(height)"
+        if width > 0 && height > 0 {
+            var size = NSSize(width: width, height: height)
             documentView.dialogBounds = NSRect(origin: .zero, size: size)
             size.width += (window?.contentView?.frame.width ?? 0) - (documentView.enclosingScrollView?.documentVisibleRect.width ?? 0) + 16
             size.height += 16
             window?.setContentSize(size)
-        } catch {
-            // Ignore
         }
     }
 
@@ -181,6 +188,12 @@ public class DialogEditor: AbstractEditor, ResourceEditor {
         if remainingItems.count != items.count {
             window?.undoManager?.setActionName(NSLocalizedString("Delete Item", comment: ""))
             self.undoRedoItems(remainingItems)
+        }
+    }
+
+    @IBAction func openDialog(_ sender: Any?) {
+        if let dlog = self.loadDLOG() {
+            manager.open(resource: dlog)
         }
     }
 
