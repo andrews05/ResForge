@@ -10,6 +10,11 @@ class DITLDocumentView: NSView {
     var controller: DialogEditor? {
         window?.windowController as? DialogEditor
     }
+    var backgroundImage: NSImage? {
+        didSet {
+            needsDisplay = true
+        }
+    }
     @IBOutlet var widthConstraint: NSLayoutConstraint!
     @IBOutlet var heightConstraint: NSLayoutConstraint!
 
@@ -23,10 +28,14 @@ class DITLDocumentView: NSView {
 
     override func draw(_ dirtyRect: NSRect) {
         if let dialogBounds {
-            NSColor.white.setFill()
-            dialogBounds.fill()
-            NSColor.systemGray.setFill()
-            dialogBounds.insetBy(dx: -1, dy: -1).frame()
+            if let backgroundImage {
+                backgroundImage.draw(in: dialogBounds, from: .zero, operation: .copy, fraction: 0.5, respectFlipped: true, hints: nil)
+            } else {
+                NSColor.white.setFill()
+                dialogBounds.fill()
+                NSColor.systemGray.setFill()
+                dialogBounds.insetBy(dx: -1, dy: -1).frame()
+            }
         }
     }
     

@@ -22,6 +22,7 @@ public class DialogEditor: AbstractEditor, ResourceEditor {
     @objc dynamic var hasSelection = false
     private var items = [DITLItemView]()
     private var isSelectingItems = false
+    private var metadata: DialogMeta?
 
     public override var windowNibName: NSNib.Name {
         "DialogEditorWindow"
@@ -106,6 +107,7 @@ public class DialogEditor: AbstractEditor, ResourceEditor {
         } else {
             do {
                 try itemsFromData(resource.data)
+                self.loadMeta()
             } catch {
                 window?.presentError(error)
             }
@@ -136,6 +138,29 @@ public class DialogEditor: AbstractEditor, ResourceEditor {
             size.width += (window?.contentView?.frame.width ?? 0) - (documentView.enclosingScrollView?.documentVisibleRect.width ?? 0) + 16
             size.height += 16
             window?.setContentSize(size)
+        }
+    }
+
+    private func loadMeta() {
+        // Find and use meta only if the item count matches
+        if let meta = DialogMeta.idMap[resource.id], meta.itemNames.count == items.count {
+            metadata = meta
+            self.updateMetaNames()
+            if let pictID = meta.backgroundPictID,
+               let pict = manager.findResource(type: .picture, id: pictID) {
+                pict.preview { [weak self] in
+                    self?.documentView.backgroundImage = $0
+                }
+            }
+        }
+    }
+
+    private func updateMetaNames() {
+        guard let names = metadata?.itemNames else {
+            return
+        }
+        for (i, item) in items.enumerated() {
+            item.metaName = i < names.count ? names[i] : nil
         }
     }
 
@@ -207,6 +232,7 @@ public class DialogEditor: AbstractEditor, ResourceEditor {
         items = newItems
         window?.undoManager?.registerUndo(withTarget: self) { $0.undoRedoItems(oldItems, selectDiff: selectDiff) }
         self.setDocumentEdited(true)
+        self.updateMetaNames()
         self.updateView()
         self.selectionDidChange()
     }
@@ -224,7 +250,7 @@ extension DialogEditor: NSTableViewDelegate, NSTableViewDataSource {
             view.textField?.integerValue = row + 1
         } else if tableColumn.identifier.rawValue == "name" {
             let item = items[row]
-            view.textField?.placeholderString = item.type.name
+            view.textField?.placeholderString = item.metaName ?? item.type.name
             view.textField?.stringValue = item.text
         }
         return view

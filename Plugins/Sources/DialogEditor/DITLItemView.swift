@@ -154,6 +154,13 @@ class DITLItemView: NSView {
         helpItemType == .HMScanAppendhdlg
     }
 
+    /// Custom item name, shown when the item is a user item
+    var metaName: String? {
+        didSet {
+            needsDisplay = true
+        }
+    }
+
     /// Is this object selected for editing/moving/resizing?
     var selected = false {
         didSet {
@@ -297,6 +304,9 @@ class DITLItemView: NSView {
         switch type {
         case .userItem:
             self.colorBox(.systemBlue.withAlphaComponent(0.7), in: bounds)
+            if let metaName {
+                metaName.draw(at: NSPoint(x: 3, y: 3))
+            }
         case .button:
             NSColor.white.setFill()
             NSColor.black.setStroke()

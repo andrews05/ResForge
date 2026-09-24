@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25098" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25098"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,7 +22,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="556" width="750" height="352"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1800" height="1130"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1410"/>
             <value key="minSize" type="size" width="500" height="200"/>
             <view key="contentView" id="18">
                 <rect key="frame" x="0.0" y="0.0" width="750" height="352"/>
@@ -37,13 +37,13 @@
                         </textFieldCell>
                     </textField>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Fh-0b-ukU">
-                        <rect key="frame" x="-1" y="21" width="140" height="308"/>
+                        <rect key="frame" x="-1" y="21" width="150" height="308"/>
                         <clipView key="contentView" id="yzF-me-2u9">
-                            <rect key="frame" x="1" y="1" width="138" height="306"/>
+                            <rect key="frame" x="1" y="1" width="148" height="306"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="fullWidth" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="19" rowSizeStyle="automatic" viewBased="YES" id="SXP-nf-vKb">
-                                    <rect key="frame" x="0.0" y="0.0" width="138" height="306"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="148" height="306"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="4" height="0.0"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -81,7 +81,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="name" width="100" minWidth="40" maxWidth="1000" id="m5e-Zg-wTM">
+                                        <tableColumn identifier="name" width="110" minWidth="40" maxWidth="1000" id="m5e-Zg-wTM">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -94,11 +94,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="zJ9-W4-t1j">
-                                                    <rect key="frame" x="32" y="0.0" width="104" height="19"/>
+                                                    <rect key="frame" x="32" y="0.0" width="114" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6E4-he-kXH">
-                                                            <rect key="frame" x="0.0" y="2" width="104" height="16"/>
+                                                            <rect key="frame" x="0.0" y="2" width="114" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="yUn-gp-emC">
                                                                 <font key="font" usesAppearanceFont="YES"/>
@@ -122,7 +122,7 @@
                             </subviews>
                         </clipView>
                         <constraints>
-                            <constraint firstAttribute="width" constant="140" id="9Qj-yE-Qk1"/>
+                            <constraint firstAttribute="width" constant="150" id="9Qj-yE-Qk1"/>
                         </constraints>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="HRO-mv-7U2">
                             <rect key="frame" x="1" y="289" width="138" height="16"/>
@@ -162,9 +162,9 @@ CA
                         </connections>
                     </button>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PtH-kU-h2h">
-                        <rect key="frame" x="138" y="-1" width="404" height="354"/>
+                        <rect key="frame" x="148" y="-1" width="394" height="354"/>
                         <clipView key="contentView" id="Yh0-a6-CPU">
-                            <rect key="frame" x="1" y="1" width="402" height="352"/>
+                            <rect key="frame" x="1" y="1" width="392" height="352"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view translatesAutoresizingMaskIntoConstraints="NO" id="z3g-LT-GbE" userLabel="Document View" customClass="DITLDocumentView" customModule="DialogEditor">
@@ -188,7 +188,7 @@ CA
                             <color key="backgroundColor" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="jgj-Kb-j7w">
-                            <rect key="frame" x="1" y="336" width="402" height="17"/>
+                            <rect key="frame" x="1" y="336" width="392" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2VW-jZ-w9D">
