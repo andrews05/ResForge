@@ -29,21 +29,21 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement, NSMenuD
         try self.readCases()
         if let v = self.defaultValue() as? UInt64 {
             value = v
-        }
-
-        // Check for an id reference and try to load names from a STR#
-        else if let metaValue,
-           case let scanner = Scanner(string: metaValue),
-           scanner.scanString("#") != nil,
-           let listID = scanner.scanInt(),
-           let list = manager.findResource(type: .stringList, id: listID) {
-            let reader = BinaryDataReader(list.data)
-            do {
-                try reader.advance(2)
-                for _ in 0..<T.bitWidth {
-                    bitNames.append(try reader.readPString())
-                }
-            } catch {}
+        } else if let metaValue {
+            // Check for an id reference and try to load names from a STR#
+            let scanner = Scanner(string: metaValue)
+            scanner.charactersToBeSkipped = nil
+            if scanner.scanString("#") != nil,
+               let listID = scanner.scanInt(),
+               let list = manager.findResource(type: .stringList, id: listID) {
+                let reader = BinaryDataReader(list.data)
+                do {
+                    try reader.advance(2)
+                    for _ in 0..<T.bitWidth {
+                        bitNames.append(try reader.readPString())
+                    }
+                } catch {}
+            }
         }
     }
 

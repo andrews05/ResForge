@@ -42,11 +42,11 @@ class ElementRSID<T: FixedWidthInteger & SignedInteger>: CasedElement, LinkingCo
         // Determine parameters from label
         let regex = try! NSRegularExpression(pattern: "(?:.*['‘](.{4})['’])?(?:.*?(-?[0-9]+) *[+]([0-9]+)?)?", options: [])
         let result = regex.firstMatch(in: label, options: [], range: NSRange(location: 0, length: label.count))
-        if let nsr = result?.range(at: 2), let r = Range(nsr, in: label), let i = Int(label[r]) {
-            offset = i
+        if let nsr = result?.range(at: 2), let r = Range(nsr, in: label), let i = T(label[r]) {
+            offset = Int(i)
         }
-        if let nsr = result?.range(at: 3), let r = Range(nsr, in: label), let i = Int(label[r]) {
-            range = offset...(offset + i)
+        if let nsr = result?.range(at: 3), let r = Range(nsr, in: label), let i = T(label[r]) {
+            range = offset...(offset + Int(i))
         }
 
         try super.configure()

@@ -23,10 +23,15 @@ class ElementRREF: BaseElement {
             throw TemplateError.invalidStructure(self, NSLocalizedString("Could not determine resource type from label.", comment: ""))
         }
         resType = typeCode
-        let isRelative = scanner.scanString("#") == nil
-        id = scanner.scanInt() ?? 0
-        if isRelative {
-            id += parentList.controller.resource.id
+        if scanner.scanString("#") != nil {
+            // Absolute id
+            scanner.charactersToBeSkipped = nil
+            id = scanner.scanInt() ?? 0
+        } else {
+            // Offset for relative id
+            id = scanner.scanInt() ?? 0
+            // Use wrapping addition for safety, rather than trying to enforce a sane value for the offset
+            id &+= parentList.controller.resource.id
         }
         if scanner.isAtEnd {
             buttonLabel = "\(resType) #\(id)"

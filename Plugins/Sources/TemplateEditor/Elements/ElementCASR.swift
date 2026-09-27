@@ -77,6 +77,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
         var hasMax = false
         if let metaValue {
             let scanner = Scanner(string: metaValue)
+            scanner.charactersToBeSkipped = nil
             if let min = scanner.scanInt() {
                 guard range ~= min else {
                     throw TemplateError.invalidStructure(self, NSLocalizedString("Minimum value out of range for field type.", comment: ""))
@@ -84,7 +85,6 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
                 self.min = min
                 hasMin = true
             }
-            scanner.charactersToBeSkipped = nil
             if scanner.scanString("..") != nil {
                 if let max = scanner.scanInt() {
                     guard range ~= max else {
@@ -93,7 +93,7 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
                     self.max = max
                     hasMax = true
                 }
-                scanner.charactersToBeSkipped = .whitespacesAndNewlines
+                scanner.charactersToBeSkipped = .whitespaces
                 if scanner.scanString("~") != nil {
                     guard hasMin else {
                         throw TemplateError.invalidStructure(self, NSLocalizedString("Normal requires explicit minimum.", comment: ""))
@@ -102,13 +102,14 @@ class ElementCASR: CasedElement, LinkingComboBoxDelegate {
                     guard let normal = scanner.scanInt() else {
                         throw TemplateError.invalidStructure(self, NSLocalizedString("No value given for normal.", comment: ""))
                     }
-                    scanner.charactersToBeSkipped = .whitespacesAndNewlines
+                    scanner.charactersToBeSkipped = .whitespaces
                     // Invert if min greater than max, or if min is negative and no max was specified (i.e. from min down)
                     invert = min > max || (min < 0 && !hasMax)
-                    offset = (invert ? -min : min) - normal
+                    // Use wrapping operators for safety, rather than trying to enforce a sane value for the normal
+                    offset = (invert ? -min : min) &- normal
                     min = normal
                     if hasMax {
-                        max = (invert ? -max : max) - offset
+                        max = (invert ? -max : max) &- offset
                     }
                 }
                 if scanner.scanString("'") != nil,
