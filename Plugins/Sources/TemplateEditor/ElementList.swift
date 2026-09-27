@@ -17,6 +17,12 @@ class ElementList {
         self.controller = controller
     }
 
+    static func validate(_ template: Resource, controller: TemplateEditor) throws {
+        let list = ElementList(controller: controller)
+        list.elements = try TemplateParser(template: template, manager: controller.manager).parse()
+        try list.configure()
+    }
+
     func copy() throws -> ElementList {
         let list = ElementList(controller: controller, parent: parentElement)
         list.elements = elements.map({ $0.copy() as BaseElement })

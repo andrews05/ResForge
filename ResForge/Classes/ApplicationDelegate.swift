@@ -48,6 +48,10 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         for url in appSupport {
             SupportRegistry.scanForResources(in: url.appendingPathComponent("ResForge"))
         }
+
+        #if DEBUG
+        TemplateEditor.validate(SupportRegistry.directory.resources(ofType: .template), manager: EditorManager.shared)
+        #endif
     }
 
     func application(_ sender: NSApplication, openFile filename: String) -> Bool {

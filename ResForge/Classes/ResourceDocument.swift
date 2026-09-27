@@ -114,6 +114,10 @@ class ResourceDocument: NSDocument, NSWindowDelegate, NSDraggingDestination, NST
         directory.reset(resourceMap)
         dataSource?.reload()
         self.undoManager?.enableUndoRegistration()
+
+        #if DEBUG
+        TemplateEditor.validate(directory.resources(ofType: .template), manager: editorManager)
+        #endif
     }
 
     override class var autosavesInPlace: Bool { false }

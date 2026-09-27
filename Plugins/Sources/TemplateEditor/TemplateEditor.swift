@@ -1,5 +1,8 @@
 import AppKit
 import RFSupport
+#if DEBUG
+import os
+#endif
 
 enum TemplateEdited {
     case none
@@ -38,24 +41,53 @@ open class TemplateEditor: AbstractEditor, ResourceEditor {
         self.filter = filter
         super.init(window: nil)
 
-        // Add observer before possible failure as deinit will still run regardless
-        UserDefaults.standard.addObserver(self, forKeyPath: Self.resourceNameInTemplate, context: nil)
-
         if !self.load(data: resource.data) {
             return nil
         }
 
+        UserDefaults.standard.addObserver(self, forKeyPath: Self.resourceNameInTemplate, context: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.resourceDataDidChange(_:)), name: .ResourceDataDidChange, object: resource)
         NotificationCenter.default.addObserver(self, selector: #selector(self.templateDataDidChange(_:)), name: .ResourceDataDidChange, object: template)
     }
 
     deinit {
-        UserDefaults.standard.removeObserver(self, forKeyPath: Self.resourceNameInTemplate)
+        if isWindowLoaded {
+            UserDefaults.standard.removeObserver(self, forKeyPath: Self.resourceNameInTemplate)
+        }
     }
 
     required public init(resource: Resource, manager: RFEditorManager) {
         fatalError("init(resource:manager:) has not been implemented")
     }
+
+    #if DEBUG
+    private init(template: Resource, manager: RFEditorManager) {
+        self.resource = template
+        self.manager = manager
+        self.template = template
+        self.filter = nil
+        super.init(window: nil)
+    }
+
+    public static func validate(_ templates: [Resource], manager: RFEditorManager) {
+        guard let first = templates.first else {
+            return
+        }
+        // Skip templates that might be used as an include and aren't valid on their own
+        let toValidate = templates.filter { $0.name.count == 4 || $0.name.first == "." }
+        let logger = Logger()
+        logger.debug("Validating \(toValidate.count) of \(templates.count) templates...")
+        let controller = TemplateEditor(template: first, manager: manager)
+        for tmpl in toValidate {
+            do {
+                try ElementList.validate(tmpl, controller: controller)
+            } catch let e {
+                logger.error("\(tmpl.typeCode) \(tmpl.id) “\(tmpl.name)”: \(e.localizedDescription)")
+            }
+        }
+        logger.debug("Validation complete.")
+    }
+    #endif
 
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
