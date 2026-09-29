@@ -96,18 +96,18 @@ class SoundResource {
         // Read sound list
         let reader = BinaryDataReader(data)
         let soundFormat = try reader.read() as SoundFormat
-        let command = switch soundFormat {
+        let snd: SoundList? = switch soundFormat {
         case .first:
-            try SndListResource(reader).commandPart.last
+            try SndListResource(reader)
         case .second:
-            try Snd2ListResource(reader).commandPart.last
+            try Snd2ListResource(reader)
         }
 
-        // The last command must be sampled sound with the sound header immediately following
-        guard let command,
-              command.cmd == .offsetBuffer || command.cmd == .offsetSound,
-              command.param2 == reader.bytesRead
-        else {
+        // Check for a sampled sound command with the sound header immediately following
+        let isSampled = snd?.commandPart.contains {
+            ($0.cmd == .offsetBuffer || $0.cmd == .offsetSound) && $0.param2 == reader.bytesRead
+        }
+        guard isSampled == true else {
             return false
         }
 

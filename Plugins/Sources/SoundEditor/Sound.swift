@@ -129,7 +129,11 @@ struct ModRef {
     var modInit: InitOptions
 }
 
-struct SndListResource {
+protocol SoundList {
+    var commandPart: [SndCommand] { get }
+}
+
+struct SndListResource: SoundList {
     var format: SoundFormat = .first
     var numModifiers: Int16
     var modifierPart: [ModRef]
@@ -168,7 +172,7 @@ extension SndListResource {
 }
 
 // HyperCard sound resource format
-struct Snd2ListResource {
+struct Snd2ListResource: SoundList {
     var format: SoundFormat = .second
     var refCount: Int16
     var numCommands: Int16
