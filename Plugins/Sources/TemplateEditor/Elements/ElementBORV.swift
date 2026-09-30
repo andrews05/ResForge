@@ -21,12 +21,12 @@ class ElementBORV<T: FixedWidthInteger & UnsignedInteger>: ElementHBYT<T> {
             // Set the element to true/false for the checkbox state
             caseEl.value = (tValue & value) == value
         }
-        rowHeight = Double(cases.count * 20) + 2
+        rowHeight = Double(cases.count * 20) + 4
     }
 
     override func configure(view: NSView) {
         var frame = view.frame
-        frame.origin.y += 1
+        frame.origin.y += 2
         frame.size.height = 20
         for caseEl in cases.values {
             let checkbox = ElementBOOL.createCheckbox(with: frame, for: caseEl)

@@ -3,6 +3,7 @@ import AppKit
 // An extension of NSComboBox that allows displaying a link button inside the cell
 // This is used by RSID and CASR to open referenced resources
 class LinkingComboBox: NSComboBox {
+    static let linkPadding: Double = if #available(macOS 26, *) { 11 } else { 16 }
     override class var cellClass: AnyClass? {
         get { LinkingComboBoxCell.self }
         set { }
@@ -16,7 +17,7 @@ class LinkingComboBox: NSComboBox {
     override init(frame frameRect: NSRect) {
         var buttonFrame = NSRect(x: frameRect.width - 38, y: 4, width: 16, height: 16)
         if #available(macOS 26, *) {
-            buttonFrame.origin.x -= 1
+            buttonFrame.origin.x -= 6
         }
         linkButton = NSButton(frame: buttonFrame)
         super.init(frame: frameRect)
@@ -42,7 +43,7 @@ class LinkingComboBox: NSComboBox {
             // If currently editing the field, the clip view frame will need updating
             for clip in subviews where clip is NSClipView {
                 var frame = clip.frame
-                frame.size.width += linkButton.isHidden ? 16 : -16
+                frame.size.width += linkButton.isHidden ? Self.linkPadding : -Self.linkPadding
                 clip.frame = frame
             }
         }
@@ -62,7 +63,7 @@ class LinkingComboBoxCell: NSComboBoxCell {
         // Ensure the text does not overlap the link button
         var dRect = super.drawingRect(forBounds: rect)
         if let control = controlView as? LinkingComboBox, control.linkIcon != nil {
-            dRect.size.width -= 16
+            dRect.size.width -= LinkingComboBox.linkPadding
         }
         return dRect
     }

@@ -17,12 +17,10 @@ class ElementDATE: BaseElement {
     override func configure(view: NSView) {
         var frame = view.frame
         if #available(macOS 26, *) {
-            // Note: this control is taller than other elements on macOS 26. Setting `controlSize = .small` fixes
-            // the height but makes the text misaligned. The taller height seems like a better compromise for now.
             frame.origin.x += 1
-            frame.size.width = width - 5
-        } else {
             frame.origin.y -= 1
+            frame.size.width = width - 9
+        } else {
             frame.size.width = width - 4
             frame.size.height = 24
         }
@@ -30,7 +28,6 @@ class ElementDATE: BaseElement {
         picker.minDate = Date(timeIntervalSinceReferenceDate: -Self.hfsToRef)
         picker.maxDate = Date(timeIntervalSinceReferenceDate: Double(UInt32.max)-Self.hfsToRef)
         picker.timeZone = TimeZone(secondsFromGMT: 0)
-        picker.font = NSFont.systemFont(ofSize: 12)
         picker.drawsBackground = true
         picker.action = #selector(TemplateEditor.itemValueUpdated(_:))
         picker.bind(.value, to: self, withKeyPath: "value")

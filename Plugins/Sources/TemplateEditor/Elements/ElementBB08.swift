@@ -22,7 +22,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement, NSMenuD
     required init(type: String, label: String) {
         super.init(type: type, label: label)
         blockWidth = 6
-        rowHeight = Double(T.bitWidth/8 * 20) + 21
+        rowHeight = Double(T.bitWidth/8 * 20) + 22
     }
 
     override func configure() throws {
@@ -50,7 +50,7 @@ class ElementBB08<T: FixedWidthInteger & UnsignedInteger>: CasedElement, NSMenuD
     override func configure(view: NSView) {
         // Create hex representation
         var frame = view.frame
-        frame.origin.y += 4
+        frame.origin.y += 5
         frame.size.width = 134
         frame.size.height = 14
         let valueField = NSTextField(labelWithString: "")

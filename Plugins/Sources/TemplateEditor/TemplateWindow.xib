@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25098" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25098"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,13 +26,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="554" height="400"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35">
+                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35">
                         <rect key="frame" x="0.0" y="0.0" width="554" height="400"/>
                         <clipView key="contentView" id="ZgB-a4-tUl">
                             <rect key="frame" x="0.0" y="0.0" width="554" height="400"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" tableStyle="plain" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationMarkerFollowsCell="NO" outlineTableColumn="37" id="36" customClass="TabbableOutlineView" customModule="TemplateEditor">
+                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" tableStyle="plain" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" autosaveName="" rowHeight="24" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationMarkerFollowsCell="NO" outlineTableColumn="37" id="36" customClass="TabbableOutlineView" customModule="TemplateEditor">
                                     <rect key="frame" x="0.0" y="0.0" width="554" height="400"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="6" height="0.0"/>
@@ -52,11 +52,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="xI4-fZ-IZP" userLabel="Label">
-                                                    <rect key="frame" x="3" y="0.0" width="150" height="22"/>
+                                                    <rect key="frame" x="3" y="0.0" width="150" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FUM-Fz-dnU">
-                                                            <rect key="frame" x="0.0" y="2" width="150" height="15"/>
+                                                            <rect key="frame" x="0.0" y="3" width="150" height="15"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="XAc-fn-92z">
                                                                 <font key="font" metaFont="systemBold" size="12"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -65,7 +65,7 @@
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="FUM-Fz-dnU" firstAttribute="top" secondItem="xI4-fZ-IZP" secondAttribute="top" constant="5" id="BPb-gx-ZUk"/>
+                                                        <constraint firstItem="FUM-Fz-dnU" firstAttribute="top" secondItem="xI4-fZ-IZP" secondAttribute="top" constant="6" id="BPb-gx-ZUk"/>
                                                         <constraint firstAttribute="trailing" secondItem="FUM-Fz-dnU" secondAttribute="trailing" constant="2" id="DMf-qT-E7p"/>
                                                         <constraint firstItem="FUM-Fz-dnU" firstAttribute="leading" secondItem="xI4-fZ-IZP" secondAttribute="leading" constant="2" id="wVj-Xa-83v"/>
                                                     </constraints>
@@ -74,11 +74,11 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="listLabel" id="hgb-pb-eOm" customClass="TemplateLabelView" customModule="TemplateEditor">
-                                                    <rect key="frame" x="3" y="22" width="150" height="22"/>
+                                                    <rect key="frame" x="3" y="24" width="150" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3bN-4y-Fu0">
-                                                            <rect key="frame" x="0.0" y="2" width="150" height="15"/>
+                                                            <rect key="frame" x="0.0" y="3" width="150" height="15"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="List Label" id="i8r-wt-zIr">
                                                                 <font key="font" metaFont="systemBold" size="12"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -88,7 +88,7 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="3bN-4y-Fu0" firstAttribute="leading" secondItem="hgb-pb-eOm" secondAttribute="leading" constant="2" id="MnC-78-UhT"/>
-                                                        <constraint firstItem="3bN-4y-Fu0" firstAttribute="top" secondItem="hgb-pb-eOm" secondAttribute="top" constant="5" id="Uho-1X-kC3"/>
+                                                        <constraint firstItem="3bN-4y-Fu0" firstAttribute="top" secondItem="hgb-pb-eOm" secondAttribute="top" constant="6" id="Uho-1X-kC3"/>
                                                         <constraint firstAttribute="trailing" secondItem="3bN-4y-Fu0" secondAttribute="trailing" constant="2" id="jad-ty-XRS"/>
                                                     </constraints>
                                                     <connections>
@@ -96,11 +96,11 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="listEndLabel" id="hbr-Yq-Ifg" userLabel="Button View" customClass="TemplateLabelView" customModule="TemplateEditor">
-                                                    <rect key="frame" x="3" y="44" width="150" height="22"/>
+                                                    <rect key="frame" x="3" y="48" width="150" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ELL-5z-5Ng">
-                                                            <rect key="frame" x="0.0" y="2" width="53" height="15"/>
+                                                            <rect key="frame" x="0.0" y="3" width="53" height="15"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="List End" id="cCS-q1-DHL">
                                                                 <font key="font" metaFont="systemBold" size="12"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -108,7 +108,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AfV-CP-gIS">
-                                                            <rect key="frame" x="55" y="-1" width="70" height="20"/>
+                                                            <rect key="frame" x="55" y="0.0" width="70" height="20"/>
                                                             <buttonCell key="cell" type="roundRect" title="New Item" bezelStyle="roundedRect" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="f6k-Km-cUE">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="smallSystem"/>
@@ -120,7 +120,7 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="ELL-5z-5Ng" firstAttribute="leading" secondItem="hbr-Yq-Ifg" secondAttribute="leading" constant="2" id="FQe-so-7P1"/>
-                                                        <constraint firstItem="ELL-5z-5Ng" firstAttribute="top" secondItem="hbr-Yq-Ifg" secondAttribute="top" constant="5" id="Jue-Ei-wUt"/>
+                                                        <constraint firstItem="ELL-5z-5Ng" firstAttribute="top" secondItem="hbr-Yq-Ifg" secondAttribute="top" constant="6" id="Jue-Ei-wUt"/>
                                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AfV-CP-gIS" secondAttribute="trailing" constant="2" id="cKf-jU-9tb"/>
                                                         <constraint firstItem="AfV-CP-gIS" firstAttribute="leading" secondItem="ELL-5z-5Ng" secondAttribute="trailing" constant="4" id="ev5-5X-U9L"/>
                                                         <constraint firstItem="AfV-CP-gIS" firstAttribute="firstBaseline" secondItem="ELL-5z-5Ng" secondAttribute="firstBaseline" id="tPe-ys-jlX"/>
@@ -130,7 +130,7 @@
                                                     </connections>
                                                 </tableCellView>
                                                 <tableCellView identifier="groupView" id="emB-cD-7ej">
-                                                    <rect key="frame" x="3" y="66" width="150" height="20"/>
+                                                    <rect key="frame" x="3" y="72" width="150" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="tXR-v5-Vmv">

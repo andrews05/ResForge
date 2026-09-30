@@ -17,7 +17,7 @@ open class BaseElement: ValueTransformer, NSTextFieldDelegate {
     var metaValue: String?
     /// The list of the template field containing us, or the template window's list.
     weak var parentList: ElementList!
-    var rowHeight: Double = 22
+    var rowHeight: Double = 24
     var visible: Bool = true
     public internal(set) var width: Double
     /// The width of the element as number of blocks.

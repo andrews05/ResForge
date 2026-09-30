@@ -90,7 +90,6 @@ open class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSCo
             frame.size.width -= 4
         }
         frame.size.height = 24
-        frame.origin.y -= 1
         let combo = (self is LinkingComboBoxDelegate) ? LinkingComboBox(frame: frame) : NSComboBox(frame: frame)
         combo.completes = true
         combo.numberOfVisibleItems = 10
@@ -98,9 +97,6 @@ open class CasedElement: BaseElement, FormattedElement, NSComboBoxDelegate, NSCo
         combo.placeholderString = type
         combo.usesDataSource = true
         combo.dataSource = self
-        if #available(macOS 26, *) {
-            combo.controlSize = .small
-        }
         // The formatter isn't directly compatible with the values displayed by the combo box
         // Use a combination of value transformation with immediate validation to run the formatter manually
         combo.bind(.value, to: self, withKeyPath: "value", options: [.valueTransformer: self, .validatesImmediately: true])

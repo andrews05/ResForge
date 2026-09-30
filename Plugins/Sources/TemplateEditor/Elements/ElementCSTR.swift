@@ -115,9 +115,9 @@ open class ElementCSTR: CasedElement {
             }
             let frame = field.cell!.expansionFrame(withFrame: baseFrame, in: field)
             let height = if #available(macOS 26, *) {
-                Double(frame.height) + 2
+                Double(frame.height) + 4
             } else {
-                Double(frame.height) + 7
+                Double(frame.height) + 8
             }
             if height != rowHeight {
                 rowHeight = height

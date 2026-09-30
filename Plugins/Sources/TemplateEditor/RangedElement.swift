@@ -83,13 +83,12 @@ class RangedElement<T: FixedWidthInteger>: CasedElement, RangedController {
             let orig = view.frame
             var frame = view.frame
             if #available(macOS 26, *) {
-                frame.origin.y -= 1
                 frame.size.width = popupWidth - 4
                 frame.size.height = 24
             } else {
                 frame.origin.x -= 2
                 frame.size.width = popupWidth + 1
-                frame.size.height = 25
+                frame.size.height = 26
             }
             let select = NSPopUpButton(frame: frame)
             select.target = self
