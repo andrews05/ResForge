@@ -36,9 +36,13 @@ class MenuItem: NSObject {
         }
     }
     @objc dynamic var iconCode: UInt8 = 0 {
+        willSet {
+            self.willChangeValue(for: \.iconID)
+        }
         didSet {
             updateIcon()
             editor.setDocumentEdited(true)
+            self.didChangeValue(for: \.iconID)
         }
     }
     @objc dynamic var keyCode: UInt8 = 0 {
@@ -126,13 +130,6 @@ extension MenuItem {
         }
         set {
             iconCode = newValue.map({ UInt8($0.intValue - 256) }) ?? 0
-        }
-    }
-
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        switch key {
-        case "iconID": ["iconCode"]
-        default: []
         }
     }
 

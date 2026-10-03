@@ -19,7 +19,7 @@ public class NovaTools: RFPlugin {
 }
 
 extension NovaTools: PlaceholderProvider {
-    public static var supportedTypes = ["dësc"]
+    public static let supportedTypes = ["dësc"]
 
     public static func placeholderName(for resource: Resource) -> String? {
         switch resource.typeCode {
@@ -44,7 +44,7 @@ extension ResourceType {
 }
 
 extension NovaTools: TypeIconProvider {
-    public static var typeIcons = [
+    public static let typeIcons = [
         "bööm": "💥",
         "chär": "🧑‍🚀",
         "cölr": "🎨",

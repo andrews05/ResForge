@@ -111,7 +111,7 @@ class TypeAttributesEditor: NSRuleEditor, NSRuleEditorDelegate, NSTextFieldDeleg
 }
 
 class AttributeNameFormatter: Formatter {
-    static var shared = AttributeNameFormatter()
+    static let shared = AttributeNameFormatter()
 
     let disallowed = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_").inverted
 

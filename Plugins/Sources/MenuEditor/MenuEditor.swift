@@ -252,11 +252,11 @@ extension MenuEditor: NSTableViewDataSource, NSTableViewDelegate {
     static let shortcutColumn = NSUserInterfaceItemIdentifier("Shortcut")
     static let markColumn = NSUserInterfaceItemIdentifier("Mark")
 
-    @MainActor public func numberOfRows(in tableView: NSTableView) -> Int {
+    public func numberOfRows(in tableView: NSTableView) -> Int {
         return menuInfo.items.count + 1
     }
 
-    @MainActor public func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+    public func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         if row != 0 {
             return menuInfo.items[row - 1]
         } else {
@@ -264,7 +264,7 @@ extension MenuEditor: NSTableViewDataSource, NSTableViewDelegate {
         }
     }
 
-    @MainActor public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let tableColumn else { return nil }
         if row == 0 && tableColumn.identifier != Self.titleColumn {
             return nil

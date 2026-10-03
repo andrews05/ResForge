@@ -103,7 +103,8 @@ class MenuItemTableRowView : NSTableRowView {
         if contentStyle == .separator {
             let contentBox = bounds.insetBy(dx: 2, dy: 0)
             NSColor.lightGray.setStroke()
-            NSBezierPath.strokeLine(from: NSPoint(x: contentBox.minX + 1, y: trunc(contentBox.midY) + 0.5), to: NSPoint(x: contentBox.maxX - 1, y: trunc(contentBox.midY) + 0.5))
+            let midY = contentBox.midY.rounded(.towardZero) + 0.5
+            NSBezierPath.strokeLine(from: NSPoint(x: contentBox.minX + 1, y: midY), to: NSPoint(x: contentBox.maxX - 1, y: midY))
         } else if contentStyle == .submenu {
             var contentBox = bounds.insetBy(dx: 3, dy: 3)
             contentBox.size.width = contentBox.size.height / 2.0

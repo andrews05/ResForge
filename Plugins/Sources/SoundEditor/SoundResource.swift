@@ -18,7 +18,7 @@ class SoundResource {
     private var bufferRef: AudioQueueBufferRef?
     private var numPackets: UInt32 = 0
 
-    static var formatNames = [
+    static let formatNames = [
         k8BitOffsetBinaryFormat: "8-bit Linear PCM",
         k16BitBigEndianFormat: "16-bit Linear PCM",
         kAudioFormatAppleIMA4: "IMA 4:1",

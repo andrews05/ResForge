@@ -29,7 +29,7 @@ class InfoWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDel
     private var selectionCount = 0
     private var selectionSize = 0
 
-    static var shared = InfoWindowController(windowNibName: "InfoWindow")
+    static let shared = InfoWindowController(windowNibName: "InfoWindow")
 
     override func windowDidLoad() {
         self.setMainWindow(NSApp.mainWindow)

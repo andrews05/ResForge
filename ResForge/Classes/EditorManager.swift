@@ -6,7 +6,7 @@ class EditorManager: RFEditorManager {
     private var editorWindows: [String: ResourceEditor] = [:]
     private unowned var _document: ResourceDocument?
     var document: NSDocument? { _document }
-    static var shared = EditorManager()
+    static let shared = EditorManager()
 
     init() {}
     
