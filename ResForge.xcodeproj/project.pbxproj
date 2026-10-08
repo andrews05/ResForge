@@ -32,7 +32,6 @@
 		49AA1E662DC06EA80065E1C7 /* SupportRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968C03E24C78D7400716AB9 /* SupportRegistry.swift */; };
 		49AA91E02DC08054007944F6 /* NovaTools in Frameworks */ = {isa = PBXBuildFile; productRef = 49AA91DF2DC08054007944F6 /* NovaTools */; };
 		49AA91E22DC08B89007944F6 /* ImageEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 49AA91E12DC08B89007944F6 /* ImageEditor */; };
-		49AA91E42DC08DE1007944F6 /* MenuEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 49AA91E32DC08DE1007944F6 /* MenuEditor */; };
 		49AA91E62DC08EC2007944F6 /* SoundEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 49AA91E52DC08EC2007944F6 /* SoundEditor */; };
 		49AA91FE2DC0A902007944F6 /* RFSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 49AA91FD2DC0A902007944F6 /* RFSupport */; };
 		49D6D349271BAA9F002DEA97 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 49D6D348271BAA9F002DEA97 /* OrderedCollections */; };
@@ -202,7 +201,6 @@
 				49D6D349271BAA9F002DEA97 /* OrderedCollections in Frameworks */,
 				496107642DC0E71000D73B44 /* TemplateEditor in Frameworks */,
 				49AA91E02DC08054007944F6 /* NovaTools in Frameworks */,
-				49AA91E42DC08DE1007944F6 /* MenuEditor in Frameworks */,
 				49AA91E62DC08EC2007944F6 /* SoundEditor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,7 +355,6 @@
 				498001B02DC05A6F006C39BE /* DialogEditor */,
 				49AA91DF2DC08054007944F6 /* NovaTools */,
 				49AA91E12DC08B89007944F6 /* ImageEditor */,
-				49AA91E32DC08DE1007944F6 /* MenuEditor */,
 				49AA91E52DC08EC2007944F6 /* SoundEditor */,
 				49AA91FD2DC0A902007944F6 /* RFSupport */,
 				496107632DC0E71000D73B44 /* TemplateEditor */,
@@ -784,10 +781,6 @@
 		49AA91E12DC08B89007944F6 /* ImageEditor */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ImageEditor;
-		};
-		49AA91E32DC08DE1007944F6 /* MenuEditor */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MenuEditor;
 		};
 		49AA91E52DC08EC2007944F6 /* SoundEditor */ = {
 			isa = XCSwiftPackageProductDependency;

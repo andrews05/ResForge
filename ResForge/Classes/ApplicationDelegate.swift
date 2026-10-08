@@ -5,7 +5,6 @@ import RFSupport
 import TemplateEditor
 import DialogEditor
 import ImageEditor
-import MenuEditor
 import NovaTools
 import SoundEditor
 
@@ -14,7 +13,6 @@ let plugins: [RFPlugin.Type] = [
     TemplateEditor.self,
     DialogEditor.self,
     ImageEditor.self,
-    MenuEditor.self,
     NovaTools.self,
     SoundEditor.self,
 ]
