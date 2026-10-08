@@ -445,28 +445,37 @@ class DITLItemView: NSView {
 
     /// Move the view and any other selected views around in response to the user dragging it.
     private func trackDrag(for startEvent: NSEvent) {
-        var lastPos = superview!.convert(startEvent.locationInWindow, from: nil)
-        var didChange = false
-        let selection = (superview?.subviews as? [DITLItemView] ?? []).filter(\.selected)
+        guard let documentView = controller?.documentView else {
+            return
+        }
+        var lastPos = documentView.convert(startEvent.locationInWindow, from: nil)
+        var origin: NSPoint?
+        let selection = documentView.items.filter(\.selected)
         while let currEvent = window?.nextEvent(matching: [.leftMouseDragged, .leftMouseUp]),
               currEvent.type == .leftMouseDragged {
-            let currPos = superview!.convert(currEvent.locationInWindow, from: nil)
-            let distance = NSSize(width: currPos.x - lastPos.x, height: currPos.y - lastPos.y)
-            if !didChange {
-                undoManager?.beginUndoGrouping()
-                undoManager?.setActionName(NSLocalizedString("Move Item", comment: ""))
-                didChange = true
+            if currEvent.deltaX == 0 && currEvent.deltaY == 0 {
+                continue
+            }
+            let currPos = documentView.convert(currEvent.locationInWindow, from: nil)
+            let offset = NSPoint(x: currPos.x - lastPos.x, y: currPos.y - lastPos.y)
+            if origin == nil {
+                origin = frame.origin
+                controller?.setDocumentEdited(true)
             }
             for item in selection {
-                item.rawFrame = item.rawFrame.offsetBy(dx: distance.width, dy: distance.height)
+                item.frame = item.frame.offsetBy(dx: offset.x, dy: offset.y)
             }
             lastPos = currPos
         }
-        if didChange {
+        if let origin {
             for item in selection {
-                item.rawFrame = item.rawFrame.rounded
+                item.frame = item.frame.rounded
             }
-            undoManager?.endUndoGrouping()
+            let action = selection.count == 1 ? "Move Item" : "Move Items"
+            undoManager?.setActionName(NSLocalizedString(action, comment: ""))
+            let offset = NSPoint(x: frame.minX - origin.x, y: frame.minY - origin.y)
+            undoManager?.registerUndo(withTarget: documentView) { $0.moveItems(selection, x: -offset.x, y: -offset.y) }
+            documentView.updateMinSize()
         }
     }
     

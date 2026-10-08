@@ -15,6 +15,7 @@ class DITLDocumentView: NSView {
             needsDisplay = true
         }
     }
+    private var movingItems: [DITLItemView]? = nil
     @IBOutlet var widthConstraint: NSLayoutConstraint!
     @IBOutlet var heightConstraint: NSLayoutConstraint!
 
@@ -52,5 +53,52 @@ class DITLDocumentView: NSView {
         }
         widthConstraint.constant = minSize.width + 16
         heightConstraint.constant = minSize.height + 16
+    }
+
+    // Arrow keys to move items
+    override func keyDown(with event: NSEvent) {
+        let delta = event.modifierFlags.contains(.shift) ? 10.0 : 1.0
+        let offset: NSPoint
+        switch event.specialKey {
+        case .leftArrow:
+            offset = NSPoint(x: -delta, y: 0)
+        case .rightArrow:
+            offset = NSPoint(x: delta, y: 0)
+        case .upArrow:
+            offset = NSPoint(x: 0, y: -delta)
+        case .downArrow:
+            offset = NSPoint(x: 0, y: delta)
+        default:
+            super.keyDown(with: event)
+            return
+        }
+
+        if movingItems == nil {
+            let selection = items.filter(\.selected)
+            guard !selection.isEmpty else {
+                return
+            }
+            movingItems = selection
+            undoManager?.beginUndoGrouping()
+            let action = selection.count == 1 ? "Move Item" : "MoveItems"
+            undoManager?.setActionName(NSLocalizedString(action, comment: ""))
+            controller?.setDocumentEdited(true)
+        }
+
+        self.moveItems(movingItems!, x: offset.x, y: offset.y)
+
+        // Debounce undo tracking
+        if window?.nextEvent(matching: .keyDown, until: Date(timeIntervalSinceNow: 0.2), inMode: .eventTracking, dequeue: false) == nil {
+            undoManager?.endUndoGrouping()
+            movingItems = nil
+        }
+    }
+
+    func moveItems(_ items: [DITLItemView], x: Double, y: Double) {
+        for view in items {
+            view.frame = view.frame.offsetBy(dx: x, dy: y)
+        }
+        undoManager?.registerUndo(withTarget: self) { $0.moveItems(items, x: -x, y: -y) }
+        self.updateMinSize()
     }
 }
