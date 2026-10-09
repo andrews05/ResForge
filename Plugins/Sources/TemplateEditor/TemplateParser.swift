@@ -59,7 +59,9 @@ public class TemplateParser {
             if !basic {
                 fallthrough
             }
-            let fields = type == "RECT" ? ["T", "L", "B", "R"] : ["V", "H"]
+            // Note: PNT is technically supposed to be V,H rather than X,Y but currently the only
+            // basic templates using it are for EV Nova where the values are X,Y
+            let fields = type == "RECT" ? ["T", "L", "B", "R"] : ["X", "Y"]
             let dwrd = registry["DWRD"]!
             var elements: [BaseElement] = []
             for f in fields {
