@@ -3,12 +3,15 @@ import RFSupport
 
 // https://github.com/Olde-Skuul/burgerlib/blob/master/source/file/brrezfile.cpp
 
-struct RezFormat: ResourceFileFormat {
+class RezFormat: ResourceFileFormat {
     static let typeName = "com.resforge.rez-file"
-    let name = NSLocalizedString("Rez File", comment: "")
+    var name: String {
+        oldFormat ? NSLocalizedString("Rez File", comment: "") : NSLocalizedString("Rez File (new format)", comment: "")
+    }
+    private var oldFormat = true
 
     static let signature = UInt32(fourCharString: "BRGR")
-    static let type = 1
+    static let groupType = 1
     static let mapName = "resource.map"
     static let resourceNameLength = 256
 
@@ -21,12 +24,16 @@ struct RezFormat: ResourceFileFormat {
         let numGroups = try reader.read() as UInt32
         let headerLength = try reader.read() as UInt32
         let groupType = try reader.read() as UInt32
+        oldFormat = (groupType >> 24) < 32
+        if !oldFormat {
+            // "New" format, skip compression codecs
+            try reader.advance(8)
+        }
         let baseIndex = Int(try reader.read() as UInt32)
         let numEntries = Int(try reader.read() as UInt32)
         guard signature == Self.signature,
               numGroups == 1,
               headerLength <= data.count,
-              groupType == Self.type,
               numEntries >= 1
         else {
             throw CocoaError(.fileReadCorruptFile)
@@ -38,8 +45,8 @@ struct RezFormat: ResourceFileFormat {
         for _ in 0..<numEntries {
             offsets.append(Int(try reader.read() as UInt32))
             sizes.append(Int(try reader.read() as UInt32))
-            // Skip name offset - we'll just assume the resource map is the last entry
-            try reader.advance(4)
+            // Skip name offset (and compressed size) - we'll just assume the resource map is the last entry
+            try reader.advance(oldFormat ? 4 : 8)
         }
 
         // Read map info
@@ -90,9 +97,8 @@ struct RezFormat: ResourceFileFormat {
 
     func write(_ resourceMap: ResourceMap) throws -> Data {
         // Known constants
-        let rootHeaderLength = 12
-        let groupHeaderLength = 12
-        let resourceOffsetLength = 12
+        let numGroups = 1
+        let maxOldOffset = 1 << 29 // In old format, upper 3 offset bits are flags
         let mapHeaderLength = 8
         let typeInfoLength = 12
         let resourceInfoLength = 10 + Self.resourceNameLength
@@ -101,9 +107,26 @@ struct RezFormat: ResourceFileFormat {
         let numTypes = resourceMap.count
         let numResources = resourceMap.values.map(\.count).reduce(0, +)
         let numEntries = numResources + 1 // Resource map is the last entry
-        let nameListOffset = groupHeaderLength + (numEntries * resourceOffsetLength)
-        let headerLength = nameListOffset + Self.mapName.count + 1
-        let numGroups = 1
+        let totalResourceSize = resourceMap.values.reduce(0) { sum, resources in
+             resources.reduce(sum) { $0 + $1.data.count }
+        }
+
+        // Start with the old format
+        var rootHeaderLength = 12
+        var groupHeaderLength = 12
+        var resourceOffsetLength = 12
+        var nameListOffset = groupHeaderLength + (numEntries * resourceOffsetLength)
+        var headerLength = nameListOffset + Self.mapName.count + 1
+        // If offsets would be too big for the old format then switch to new format
+        // (Note we don't account for deduplication here)
+        oldFormat = (rootHeaderLength + headerLength + totalResourceSize) < maxOldOffset
+        if !oldFormat {
+            rootHeaderLength = 24
+            groupHeaderLength = 8
+            resourceOffsetLength = 16
+            nameListOffset = groupHeaderLength + (numEntries * resourceOffsetLength)
+            headerLength = nameListOffset + Self.mapName.count + 1
+        }
         var index = 1 // Base index
 
         let writer = BinaryDataWriter(bigEndian: false)
@@ -112,10 +135,20 @@ struct RezFormat: ResourceFileFormat {
         writer.write(Self.signature, bigEndian: true)
         writer.write(UInt32(numGroups))
         writer.write(UInt32(headerLength))
+        if !oldFormat {
+            // Unsure exactly what should go in the codecs, but it can't just be 0 or else it will
+            // be interpreted as the old format
+            let noneCodec = UInt32(fourCharString: "none")
+            writer.write(noneCodec, bigEndian: true)
+            writer.write(noneCodec, bigEndian: true)
+            writer.write(noneCodec, bigEndian: true)
+        }
         assert(writer.bytesWritten == rootHeaderLength)
 
         // Write group header
-        writer.write(UInt32(Self.type))
+        if oldFormat {
+            writer.write(UInt32(Self.groupType))
+        }
         writer.write(UInt32(index))
         writer.write(UInt32(numEntries))
         assert(writer.bytesWritten == rootHeaderLength + groupHeaderLength)
@@ -136,7 +169,8 @@ struct RezFormat: ResourceFileFormat {
                 let offset = {$0}(&dataOffsets[resource.data, default: resourceDataOffset])
                 writer.write(UInt32(offset))
                 writer.write(UInt32(resource.data.count))
-                writer.advance(4) // Skip name offset
+                // Skip name offset (and compressed size)
+                writer.advance(oldFormat ? 4 : 8)
                 if offset == resourceDataOffset {
                     resourceDataOffset += resource.data.count
                     resourcesToWrite.append(resource)
@@ -145,11 +179,15 @@ struct RezFormat: ResourceFileFormat {
         }
 
         // Write map offsets
+        assert(!oldFormat || resourceDataOffset < maxOldOffset)
         var resourceListOffset = mapHeaderLength + (numTypes * typeInfoLength)
         let mapLength = resourceListOffset + (numResources * resourceInfoLength)
         writer.write(UInt32(resourceDataOffset))
         writer.write(UInt32(mapLength))
         writer.write(UInt32(nameListOffset))
+        if !oldFormat {
+            writer.advance(4) // Skip compressed size
+        }
         assert(writer.bytesWritten == rootHeaderLength + nameListOffset)
 
         // Write map name
